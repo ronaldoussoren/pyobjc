@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glNormalPointer</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glNormal.3G.xml" title="glNormal"/><link rel="next" href="glOrtho.3G.xml" title="glOrtho"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glNormalPointer</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glNormal.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glOrtho.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glNormalPointer.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glNormalPointer.3G-name"/><h2>Name</h2><p>glNormalPointer, glNormalPointerb, glNormalPointerd, glNormalPointerf, glNormalPointeri, glNormalPointers &#8212; define an array of normals</p></div><div class="refsynopsisdiv"><a name="glNormalPointer.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glNormalPointer</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>type</tt></i>, GLsizei <i><tt>stride</tt></i>, const GLvoid *<i><tt>pointer</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glNormalPointer.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glNormalPointer</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>type</tt></i>, <i><tt>stride</tt></i>, <i><tt>pointer</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glNormalPointerb</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pointer</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glNormalPointerd</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pointer</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glNormalPointerf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pointer</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glNormalPointeri</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pointer</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glNormalPointers</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pointer</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>type</tt></i></span></dt><dd>
+						Specifies the data type of each coordinate in the array. Symbolic constants <tt>GL_BYTE</tt>,
+						<tt>GL_SHORT</tt>, <tt>GL_INT</tt>, <tt>GL_FLOAT</tt>, and
+						<tt>GL_DOUBLE</tt> are accepted. The initial value is <tt>GL_FLOAT</tt>.
+					</dd><dt><span class="term"><i><tt>stride</tt></i></span></dt><dd>
+						Specifies the byte offset between consecutive normals. If <i><tt>stride</tt></i> is 0- the initial
+						value-the normals are understood to be tightly packed in the array. The initial value is 0.
+					</dd><dt><span class="term"><i><tt>pointer</tt></i></span></dt><dd>
+						Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-description"/><h2>Description</h2><p>
+			<tt>glNormalPointer</tt> specifies the location and data of an array of normals to use when rendering.
+			<i><tt>type</tt></i> specifies the data type of the normal coordinates and <i><tt>stride</tt></i> gives
+			the byte stride from one normal to the next, allowing vertexes and attributes to be packed into a single array or
+			stored in separate arrays. (Single-array storage may be more efficient on some implementations; see <a href="glInterleavedArrays.3G.xml">glInterleavedArrays</a>.) When a normal array is specified, <i><tt>type</tt></i>, <i><tt>stride</tt></i>, and
+			<i><tt>pointer</tt></i> are saved as client-side state.
+		</p><p>
+			To enable and disable the normal array, call <a href="glEnableClientState.3G.xml"><tt>glEnableClientState</tt></a> and <a href="glEnableClientState.3G.xml"><tt>glDisableClientState</tt></a> with the argument <tt>GL_NORMAL_ARRAY</tt>. If enabled,
+			the normal array is used when <a href="glDrawArrays.3G.xml"><tt>glDrawArrays</tt></a>, <a href="glDrawElements.3G.xml"><tt>glDrawElements</tt></a>, or <a href="glArrayElement.3G.xml"><tt>glArrayElement</tt></a> is called.
+		</p><p>
+			Use <a href="glDrawArrays.3G.xml"><tt>glDrawArrays</tt></a> to construct a sequence of primitives (all of the same type)
+			from prespecified vertex and vertex attribute arrays. Use <a href="glArrayElement.3G.xml"><tt>glArrayElement</tt></a> to
+			specify primitives by indexing vertexes and vertex attributes and <a href="glDrawElements.3G.xml"><tt>glDrawElements</tt></a> to construct a sequence of primitives by indexing vertexes and vertex
+			attributes.
+		</p></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-notes"/><h2>Notes</h2><p>
+			<tt>glNormalPointer</tt> is available only if the GL version is 1.1 or greater.
+		</p><p>
+			The normal array is initially disabled and isn't accessed when <a href="glArrayElement.3G.xml"><tt>glArrayElement</tt></a>,
+			<a href="glDrawElements.3G.xml"><tt>glDrawElements</tt></a>, or <a href="glDrawArrays.3G.xml"><tt>glDrawArrays</tt></a> is
+			called.
+		</p><p>
+			Execution of <tt>glNormalPointer</tt> is not allowed between <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding <a href="glBegin.3G.xml"><tt>glEnd</tt></a>, but an
+			error may or may not be generated. If an error is not generated, the operation is undefined.
+		</p><p>
+			<tt>glNormalPointer</tt> is typically implemented on the client side.
+		</p><p>
+			Since the normal array parameters are client-side state, they are not saved or restored by <a href="glPushAttrib.3G.xml"><tt>glPushAttrib</tt></a> and <a href="glPushAttrib.3G.xml"><tt>glPopAttrib</tt></a>. Use <a href="glPushClientAttrib.3G.xml"><tt>glPushClientAttrib</tt></a> and <a href="glPushClientAttrib.3G.xml"><tt>glPopClientAttrib</tt></a>
+			instead.
+		</p></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>type</tt></i> is not an accepted value.
+		</p><p>
+			<tt>GL_INVALID_VALUE</tt> is generated if <i><tt>stride</tt></i> is negative.
+		</p></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_NORMAL_ARRAY</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_NORMAL_ARRAY_TYPE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_NORMAL_ARRAY_STRIDE</tt>
+		</p><p>
+			<a href="glGetPointerv.3G.xml"><tt>glGetPointerv</tt></a> with argument <tt>GL_NORMAL_ARRAY_POINTER</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glNormalPointer.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glArrayElement.3G.xml">glArrayElement</a>, <a href="glColorPointer.3G.xml">glColorPointer</a>, <a href="glDrawArrays.3G.xml">glDrawArrays</a>, <a href="glDrawElements.3G.xml">glDrawElements</a>, <a href="glEdgeFlagPointer.3G.xml">glEdgeFlagPointer</a>, <a href="glEnable.3G.xml">glEnable</a>, <a href="glGetPointerv.3G.xml">glGetPointerv</a>, <a href="glIndexPointer.3G.xml">glIndexPointer</a>, <a href="glInterleavedArrays.3G.xml">glInterleavedArrays</a>, <a href="glPushClientAttrib.3G.xml">glPushClientAttrib</a>, <a href="glTexCoordPointer.3G.xml">glTexCoordPointer</a>, <a href="glVertexPointer.3G.xml">glVertexPointer</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glNormal.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glOrtho.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glNormal </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glOrtho</td></tr></table></div></body></html>

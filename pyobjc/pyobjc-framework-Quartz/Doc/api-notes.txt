@@ -1,0 +1,34 @@
+=======================================
+API Notes for the CoreGraphics bindings
+=======================================
+
+Introduction
+------------
+
+This document describes special considerations for the PyObjC based CoreGraphics
+bindings.
+
+Callbacks
+---------
+
+The ``userinfo`` for ``CGDataConsumerCreate``, ``CGDataProviderCreate``,
+``CGDataProviderCreateDirect``, ``CGDataProviderCreateDirectAccess``,
+``CGDataProviderCreateSequential``, ``CGDataProviderCreateWithData``,
+``CGDisplayRegisterReconfigurationCallback``, 
+``CGDisplayRemoveReconfigurationCallback``, 
+``CGFunctionCreate``, ``CGRegisterScreenRefreshCallback``, 
+``CGReleaseScreenRefreshRects``, ``CGScreenRegisterMoveCallback``,
+``CGScreenUnregisterMoveCallback``, ``CGUnregisterScreenRefreshCallback``,
+``CGPDFDictionaryApplyFunction``, ``CGPathApply``, ``CGPatternCreate``,
+``CGEventTapCreate``, ``CGEventTapCreateForPSN``, ``CGPDFOperatorTableSetCallback`` and ``CGPSConverterCreate``  can be any Python object.
+
+The function arguments for these functions can be any Python callable, 
+including bound methods. Functions mentioned earlier that have a struct with
+callback functions take in tuple with those callbacks in Python.
+
+``CGEventTapCreate`` and ``CGEventTapCreateForPSN`` leak some memory when they
+are called. This is needed to avoid memory management problems. It is therefore
+advisable not to call these functions, are at least call them a small number
+of times.
+
+``CGPDFOperatorTableSetCallback`` is not supported at the moment.

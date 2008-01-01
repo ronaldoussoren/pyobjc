@@ -1,0 +1,216 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='JSClassDefinition' type='{JSClassDefinition="version"i"attributes"I"className"*"parentClass"^{OpaqueJSClass}"staticValues"^{?}"staticFunctions"^{?}"initialize"^?"finalize"^?"hasProperty"^?"getProperty"^?"setProperty"^?"deleteProperty"^?"getPropertyNames"^?"callAsFunction"^?"callAsConstructor"^?"hasInstance"^?"convertToType"^?}' type64='{JSClassDefinition="version"i"attributes"I"className"*"parentClass"^{OpaqueJSClass}"staticValues"^{?}"staticFunctions"^{?}"initialize"^?"finalize"^?"hasProperty"^?"getProperty"^?"setProperty"^?"deleteProperty"^?"getPropertyNames"^?"callAsFunction"^?"callAsConstructor"^?"hasInstance"^?"convertToType"^?}' />
+  <struct name='JSStaticFunction' type='{JSStaticFunction="name"*"callAsFunction"^?"attributes"I}' type64='{JSStaticFunction="name"*"callAsFunction"^?"attributes"I}' />
+  <struct name='JSStaticValue' type='{JSStaticValue="name"*"getProperty"^?"setProperty"^?"attributes"I}' type64='{JSStaticValue="name"*"getProperty"^?"setProperty"^?"attributes"I}' />
+  <opaque name='JSClassRef' type='^{OpaqueJSClass=}' type64='^{OpaqueJSClass=}' />
+  <opaque name='JSContextRef' type='^{OpaqueJSContext=}' type64='^{OpaqueJSContext=}' />
+  <opaque name='JSGlobalContextRef' type='^{OpaqueJSContext=}' type64='^{OpaqueJSContext=}' />
+  <opaque name='JSObjectRef' type='^{OpaqueJSValue=}' type64='^{OpaqueJSValue=}' />
+  <opaque name='JSPropertyNameAccumulatorRef' type='^{OpaqueJSPropertyNameAccumulator=}' type64='^{OpaqueJSPropertyNameAccumulator=}' />
+  <opaque name='JSPropertyNameArrayRef' type='^{OpaqueJSPropertyNameArray=}' type64='^{OpaqueJSPropertyNameArray=}' />
+  <opaque name='JSStringRef' type='^{OpaqueJSString=}' type64='^{OpaqueJSString=}' />
+  <opaque name='JSValueRef' type='^{OpaqueJSValue=}' type64='^{OpaqueJSValue=}' />
+  <constant name='kJSClassDefinitionEmpty' type='{JSClassDefinition=iI*^{OpaqueJSClass}^{?}^{?}^?^?^?^?^?^?^?^?^?^?^?}' />
+  <function name='JSCheckScriptSyntax'>
+    <retval type='B' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='i' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSClassCreate'>
+    <retval type='^{OpaqueJSClass=}' />
+    <arg type='^{?=iI*^{OpaqueJSClass}^{?}^{?}^?^?^?^?^?^?^?^?^?^?^?}' />
+  </function>
+  <function name='JSClassRelease'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSClass=}' />
+  </function>
+  <function name='JSEvaluateScript'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='i' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSGarbageCollect'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+  </function>
+  <function name='JSGlobalContextRelease'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+  </function>
+  <function name='JSObjectCallAsConstructor'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{OpaqueJSValue}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectCallAsFunction'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='L' type64='L' />
+    <arg type='^^{OpaqueJSValue}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectDeleteProperty'>
+    <retval type='B' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectGetProperty'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectGetPropertyAtIndex'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='I' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectMake'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSClass=}' />
+    <arg type='^v' />
+  </function>
+  <function name='JSObjectMakeConstructor'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSClass=}' />
+    <arg type='^?' />
+  </function>
+  <function name='JSObjectMakeFunction'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='I' />
+    <arg type='^r^{OpaqueJSString}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='i' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectMakeFunctionWithCallback'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^?' />
+  </function>
+  <function name='JSObjectSetPrivate'>
+    <retval type='B' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^v' />
+  </function>
+  <function name='JSObjectSetProperty'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='I' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectSetPropertyAtIndex'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='I' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectSetPrototype'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSValue=}' />
+  </function>
+  <function name='JSPropertyNameAccumulatorAddName'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSPropertyNameAccumulator=}' />
+    <arg type='^{OpaqueJSString=}' />
+  </function>
+  <function name='JSPropertyNameArrayGetNameAtIndex'>
+    <retval type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSPropertyNameArray=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='JSPropertyNameArrayRelease'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSPropertyNameArray=}' />
+  </function>
+  <function name='JSStringCreateWithCharacters'>
+    <retval type='^{OpaqueJSString=}' />
+    <arg type='^S' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='JSStringGetUTF8CString'>
+    <retval type='L' type64='Q' />
+    <arg type='^{OpaqueJSString=}' />
+    <arg type='*' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='JSStringRelease'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSString=}' />
+  </function>
+  <function name='JSValueIsEqual'>
+    <retval type='B' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueIsInstanceOfConstructor'>
+    <retval type='B' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueProtect'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+  </function>
+  <function name='JSValueToNumber'>
+    <retval type='d' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueToObject'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueToStringCopy'>
+    <retval type='^{OpaqueJSString=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+    <arg type='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueUnprotect'>
+    <retval type='v' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSValue=}' />
+  </function>
+</signatures>
+

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glOrtho</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glNormalPointer.3G.xml" title="glNormalPointer"/><link rel="next" href="glPassThrough.3G.xml" title="glPassThrough"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glOrtho</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glNormalPointer.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glPassThrough.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glOrtho.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glOrtho.3G-name"/><h2>Name</h2><p>glOrtho &#8212; multiply the current matrix with an orthographic matrix</p></div><div class="refsynopsisdiv"><a name="glOrtho.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glOrtho</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLdouble <i><tt>left</tt></i>, GLdouble <i><tt>right</tt></i>, GLdouble <i><tt>bottom</tt></i>, GLdouble <i><tt>top</tt></i>, GLdouble <i><tt>zNear</tt></i>, GLdouble <i><tt>zFar</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glOrtho.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glOrtho</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>left</tt></i>, <i><tt>right</tt></i>, <i><tt>bottom</tt></i>, <i><tt>top</tt></i>, <i><tt>zNear</tt></i>, <i><tt>zFar</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glOrtho.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>left</tt></i>, <i><tt>right</tt></i></span></dt><dd>
+						Specify the coordinates for the left and right vertical clipping planes.
+					</dd><dt><span class="term"><i><tt>bottom</tt></i>, <i><tt>top</tt></i></span></dt><dd>
+						Specify the coordinates for the bottom and top horizontal clipping planes.
+					</dd><dt><span class="term"><i><tt>zNear</tt></i>, <i><tt>zFar</tt></i></span></dt><dd>
+						Specify the distances to the nearer and farther depth clipping planes. These values are negative if the
+						plane is to be behind the viewer.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glOrtho.3G-description"/><h2>Description</h2><p>
+			<tt>glOrtho</tt> describes a transformation that produces a parallel projection. The current matrix (see
+			<a href="glMatrixMode.3G.xml">glMatrixMode</a>) is multiplied by this matrix and the result replaces the current matrix, as if <tt>glMultMatrix</tt> were called with the following matrix as its argument: </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mo>(</mml:mo>
+						<mml:mtable>
+							<mml:mtr>
+								<mml:mtd columnalign="center">
+									<mml:mfrac>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>right</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mi>left</mml:mi>
+										</mml:mrow>
+									</mml:mfrac>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:msub>
+										<mml:mi>t</mml:mi>
+										<mml:mi>x</mml:mi>
+									</mml:msub>
+								</mml:mtd>
+							</mml:mtr>
+							<mml:mtr>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mfrac>
+										<mml:mn>2</mml:mn>
+										<mml:mrow>
+											<mml:mi>top</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mi>bottom</mml:mi>
+										</mml:mrow>
+									</mml:mfrac>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:msub>
+										<mml:mi>t</mml:mi>
+										<mml:mi>y</mml:mi>
+									</mml:msub>
+								</mml:mtd>
+							</mml:mtr>
+							<mml:mtr>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mfrac>
+										<mml:mn>-2</mml:mn>
+										<mml:mrow>
+											<mml:mi>zFar</mml:mi>
+											<mml:mo>-</mml:mo>
+											<mml:mi>zNear</mml:mi>
+										</mml:mrow>
+									</mml:mfrac>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:msub>
+										<mml:mi>t</mml:mi>
+										<mml:mi>z</mml:mi>
+									</mml:msub>
+								</mml:mtd>
+							</mml:mtr>
+							<mml:mtr>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>0</mml:mn>
+								</mml:mtd>
+								<mml:mtd columnalign="center">
+									<mml:mn>1</mml:mn>
+								</mml:mtd>
+							</mml:mtr>
+						</mml:mtable>
+						<mml:mo>)</mml:mo>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			where </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msub>
+							<mml:mi>t</mml:mi>
+							<mml:mi>x</mml:mi>
+						</mml:msub>
+						<mml:mo>=</mml:mo>
+						<mml:mo>-</mml:mo>
+						<mml:mfrac>
+							<mml:mrow>
+								<mml:mi>right</mml:mi>
+								<mml:mo>+</mml:mo>
+								<mml:mi>left</mml:mi>
+							</mml:mrow>
+							<mml:mrow>
+								<mml:mi>right</mml:mi>
+								<mml:mo>-</mml:mo>
+								<mml:mi>left</mml:mi>
+							</mml:mrow>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msub>
+							<mml:mi>t</mml:mi>
+							<mml:mi>y</mml:mi>
+						</mml:msub>
+						<mml:mo>=</mml:mo>
+						<mml:mo>-</mml:mo>
+						<mml:mfrac>
+							<mml:mrow>
+								<mml:mi>top</mml:mi>
+								<mml:mo>+</mml:mo>
+								<mml:mi>bottom</mml:mi>
+							</mml:mrow>
+							<mml:mrow>
+								<mml:mi>top</mml:mi>
+								<mml:mo>-</mml:mo>
+								<mml:mi>bottom</mml:mi>
+							</mml:mrow>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:msub>
+							<mml:mi>t</mml:mi>
+							<mml:mi>z</mml:mi>
+						</mml:msub>
+						<mml:mo>=</mml:mo>
+						<mml:mo>-</mml:mo>
+						<mml:mfrac>
+							<mml:mrow>
+								<mml:mi>zFar</mml:mi>
+								<mml:mo>+</mml:mo>
+								<mml:mi>zNear</mml:mi>
+							</mml:mrow>
+							<mml:mrow>
+								<mml:mi>zFar</mml:mi>
+								<mml:mo>-</mml:mo>
+								<mml:mi>zNear</mml:mi>
+							</mml:mrow>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			Typically, the matrix mode is <tt>GL_PROJECTION</tt>, and (<i><tt>left</tt></i>,
+			<i><tt>bottom</tt></i>, -<i><tt>zNear</tt></i>) and (<i><tt>right</tt></i>,
+			<i><tt>top</tt></i>, -<i><tt>zNear</tt></i>) specify the points on the near clipping plane that are
+			mapped to the lower left and upper right corners of the window, respectively, assuming that the eye is located at (0,
+			0, 0). -<i><tt>zFar</tt></i> specifies the location of the far clipping plane. Both <i><tt>zNear</tt></i>
+			and <i><tt>zFar</tt></i> can be either positive or negative.
+		</p><p>
+			Use <a href="glPushMatrix.3G.xml"><tt>glPushMatrix</tt></a> and <a href="glPushMatrix.3G.xml"><tt>glPopMatrix</tt></a> to
+			save and restore the current matrix stack.
+		</p></div><div class="refsect1" lang="en"><a name="glOrtho.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glOrtho</tt> is executed between the
+			execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glOrtho.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGet</tt> with argument <tt>GL_MATRIX_MODE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_COLOR_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_MODELVIEW_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_PROJECTION_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_TEXTURE_MATRIX</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glOrtho.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glFrustum.3G.xml">glFrustum</a>, <a href="glMatrixMode.3G.xml">glMatrixMode</a>, <a href="glMultMatrix.3G.xml">glMultMatrix</a>, <a href="glPushMatrix.3G.xml">glPushMatrix</a>, <a href="glViewport.3G.xml">glViewport</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glNormalPointer.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glPassThrough.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glNormalPointer </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glPassThrough</td></tr></table></div></body></html>

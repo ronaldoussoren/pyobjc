@@ -1,0 +1,15 @@
+include ChangeLog *.txt *.html MANIFEST.in NEWS setup.py
+graft Doc
+graft Examples
+graft Installer?Package
+graft Lib
+graft Modules
+graft ProjectBuilder?Extras
+graft Scripts
+graft Xcode
+graft libffi-src
+graft setup-lib
+graft source-deps
+global-exclude .DS_Store
+global-exclude *.pbxuser
+global-exclude *.pyc

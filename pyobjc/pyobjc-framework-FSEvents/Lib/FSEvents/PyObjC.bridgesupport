@@ -1,0 +1,118 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='0.9'>
+  <struct name='FSEventStreamContext' type='{FSEventStreamContext="version"i"info"^v"retain"^?"release"^?"copyDescription"^?}' />
+  <opaque name='ConstFSEventStreamRef' type='^{__FSEventStream=}' />
+  <opaque name='FSEventStreamRef' type='^{__FSEventStream=}' />
+  <enum name='kFSEventStreamCreateFlagNoDefer' value='2' />
+  <enum name='kFSEventStreamCreateFlagNone' value='0' />
+  <enum name='kFSEventStreamCreateFlagUseCFTypes' value='1' />
+  <enum name='kFSEventStreamEventFlagEventIdsWrapped' value='8' />
+  <enum name='kFSEventStreamEventFlagHistoryDone' value='16' />
+  <enum name='kFSEventStreamEventFlagKernelDropped' value='4' />
+  <enum name='kFSEventStreamCreateFlagWatchRoot' value='4' />
+  <enum name='kFSEventStreamEventFlagMustScanSubDirs' value='1' />
+  <enum name='kFSEventStreamEventFlagNone' value='0' />
+  <enum name='kFSEventStreamEventFlagUserDropped' value='2' />
+  <enum name='kFSEventStreamEventIdSinceNow' value='-1' />
+  <enum name='kFSEventStreamEventFlagRootChanged' value='32' />
+  <function name='FSEventStreamCopyDescription'>
+    <retval already_retained='true' type='^{__CFString=}' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamCopyPathsBeingWatched'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamCreate'>
+    <retval already_retained='true' type='^{__FSEventStream=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{FSEventStreamContext=i^v^?^?^?}' type64='^{FSEventStreamContext=q^v^?^?^?}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='Q' />
+    <arg type='d' />
+    <arg type='L' />
+  </function>
+  <function name='FSEventStreamCreateRelativeToDevice'>
+    <retval already_retained='true' type='^{__FSEventStream=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{FSEventStreamContext=i^v^?^?^?}' type64='^{FSEventStreamContext=q^v^?^?^?}' />
+    <arg type='i' />
+    <arg type='^{__CFArray=}' />
+    <arg type='Q' />
+    <arg type='d' />
+    <arg type='L' />
+  </function>
+  <function name='FSEventStreamFlushAsync'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamFlushSync'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamGetDeviceBeingWatched'>
+    <retval type='i' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamGetLatestEventId'>
+    <retval type='Q' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamInvalidate'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamRelease'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamRetain'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamScheduleWithRunLoop'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='FSEventStreamShow'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamStart'>
+    <retval type='B' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamStop'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+  </function>
+  <function name='FSEventStreamUnscheduleFromRunLoop'>
+    <retval type='v' />
+    <arg type='^{__FSEventStream=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='FSEventsCopyUUIDForDevice'>
+    <retval already_retained='true' type='^{__CFUUID=}' />
+    <arg type='i' />
+  </function>
+  <function name='FSEventsGetCurrentEventId'>
+    <retval type='Q' />
+  </function>
+  <function name='FSEventsGetLastEventIdForDeviceBeforeTime'>
+    <retval type='Q' />
+    <arg type='i' />
+    <arg type='d' />
+  </function>
+  <function name='FSEventsPurgeEventsForDeviceUpToEventId'>
+    <retval type='B' />
+    <arg type='i' />
+    <arg type='Q' />
+  </function>
+</signatures>
+

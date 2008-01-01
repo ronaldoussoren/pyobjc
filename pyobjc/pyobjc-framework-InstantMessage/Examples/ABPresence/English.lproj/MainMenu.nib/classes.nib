@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = PeopleDataSource; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_table" = NSTableView; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = ServiceWatcher; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

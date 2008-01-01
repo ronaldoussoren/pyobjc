@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glCopyPixels</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glCopyConvolutionFilter2D.3G.xml" title="glCopyConvolutionFilter2D"/><link rel="next" href="glCopyTexImage1D.3G.xml" title="glCopyTexImage1D"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glCopyPixels</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glCopyConvolutionFilter2D.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glCopyTexImage1D.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glCopyPixels.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glCopyPixels.3G-name"/><h2>Name</h2><p>glCopyPixels &#8212; copy pixels in the frame buffer</p></div><div class="refsynopsisdiv"><a name="glCopyPixels.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glCopyPixels</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLint <i><tt>x</tt></i>, GLint <i><tt>y</tt></i>, GLsizei <i><tt>width</tt></i>, GLsizei <i><tt>height</tt></i>, GLenum <i><tt>type</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glCopyPixels.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glCopyPixels</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>x</tt></i>, <i><tt>y</tt></i>, <i><tt>width</tt></i>, <i><tt>height</tt></i>, <i><tt>type</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>x</tt></i>, <i><tt>y</tt></i></span></dt><dd>
+						Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied.
+					</dd><dt><span class="term"><i><tt>width</tt></i>, <i><tt>height</tt></i></span></dt><dd>
+						Specify the dimensions of the rectangular region of pixels to be copied. Both must be nonnegative.
+					</dd><dt><span class="term"><i><tt>type</tt></i></span></dt><dd>
+						Specifies whether color values, depth values, or stencil values are to be copied. Symbolic constants
+						<tt>GL_COLOR</tt>, <tt>GL_DEPTH</tt>, and <tt>GL_STENCIL</tt> are
+						accepted.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-description"/><h2>Description</h2><p>
+			<tt>glCopyPixels</tt> copies a screen-aligned rectangle of pixels from the specified frame buffer location
+			to a region relative to the current raster position. Its operation is well defined only if the entire pixel source
+			region is within the exposed portion of the window. Results of copies from outside the window, or from regions of the
+			window that are not exposed, are hardware dependent and undefined.
+		</p><p>
+			<i><tt>x</tt></i> and <i><tt>y</tt></i> specify the window coordinates of the lower left corner of the
+			rectangular region to be copied. <i><tt>width</tt></i> and <i><tt>height</tt></i> specify the dimensions
+			of the rectangular region to be copied. Both <i><tt>width</tt></i> and <i><tt>height</tt></i> must not be
+			negative.
+		</p><p>
+			Several parameters control the processing of the pixel data while it is being copied. These parameters are set with
+			three commands: <tt>glPixelTransfer</tt>, <tt>glPixelMap</tt>, and <a href="glPixelZoom.3G.xml"><tt>glPixelZoom</tt></a>. This reference
+			page describes the effects on <tt>glCopyPixels</tt> of most, but not all, of the parameters specified by
+			these three commands.
+		</p><p>
+			<tt>glCopyPixels</tt> copies values from each pixel with the lower left-hand corner at <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mfenced separator=",">
+						<mml:mrow>
+							<mml:mi>x</mml:mi>
+							<mml:mo>+</mml:mo>
+							<mml:mi>i</mml:mi>
+						</mml:mrow>
+						<mml:mrow>
+							<mml:mi>y</mml:mi>
+							<mml:mo>+</mml:mo>
+							<mml:mi>j</mml:mi>
+						</mml:mrow>
+					</mml:mfenced>
+				</mml:math> for <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mn>0</mml:mn>
+					<mml:mo>&#8804;</mml:mo>
+					<mml:mi>i</mml:mi>
+					<mml:mo>&lt;</mml:mo>
+					<mml:mi>width</mml:mi>
+				</mml:math> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mn>0</mml:mn>
+					<mml:mo>&#8804;</mml:mo>
+					<mml:mi>j</mml:mi>
+					<mml:mo>&lt;</mml:mo>
+					<mml:mi>height</mml:mi>
+				</mml:math>. This pixel is said to be the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>i</mml:mi>
+				</mml:math>th pixel in the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>j</mml:mi>
+					<mml:mtext>th</mml:mtext>
+				</mml:math> row. Pixels are copied in row order from the lowest to the highest row, left to right in each row.
+		</p><p>
+			<i><tt>type</tt></i> specifies whether color, depth, or stencil data is to be copied. The details of the
+			transfer for each data type are as follows:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_COLOR</tt></span></dt><dd><p>
+						Indices or RGBA colors are read from the buffer currently specified as the read source buffer (see
+						<a href="glReadBuffer.3G.xml">glReadBuffer</a>). If the GL is in color index mode, each index that is read from this buffer is converted
+						to a fixed-point with an unspecified number of bits to the right of the binary point. Each index is then
+						shifted left by <tt>GL_INDEX_SHIFT</tt> bits, and added to
+						<tt>GL_INDEX_OFFSET</tt>. If <tt>GL_INDEX_SHIFT</tt> is negative, the shift is to
+						the right. In either case, zero bits fill otherwise unspecified bit locations in the result. If
+						<tt>GL_MAP_COLOR</tt> is true, the index is replaced with the value that it references in
+						lookup table <tt>GL_PIXEL_MAP_I_TO_I</tt>. Whether the lookup replacement of the index is done
+						or not, the integer part of the index is then ANDed with <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:msup>
+									<mml:mn>2</mml:mn>
+									<mml:mi>b</mml:mi>
+								</mml:msup>
+								<mml:mo>-</mml:mo>
+								<mml:mn>1</mml:mn>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>b</mml:mi>
+							</mml:math> is the number of bits in a color index buffer.
+					</p><p>
+						If the GL is in RGBA mode, the red, green, blue, and alpha components of each pixel that is read are
+						converted to an internal floating-point with unspecified precision. The conversion maps the largest
+						representable component value to 1.0, and component value 0 to 0.0. The resulting floating-point color
+						values are then multiplied by <tt>GL_c_SCALE</tt> and added to <tt>GL_c_BIAS</tt>,
+						where <i><tt>c</tt></i> is RED, GREEN, BLUE, and ALPHA for the respective color components. The
+						results are clamped to the range [0,1]. If <tt>GL_MAP_COLOR</tt> is true, each color component
+						is scaled by the size of lookup table <tt>GL_PIXEL_MAP_c_TO_c</tt>, then replaced by the value
+						that it references in that table. <i><tt>c</tt></i> is R, G, B, or A.
+					</p><p>
+						If the <tt>GL_ARB_imaging</tt> extension is supported, the color values may be additionally
+						processed by color-table lookups, color-matrix transformations, and convolution filters.
+					</p><p>
+						The GL then converts the resulting indices or RGBA colors to fragments by attaching the current raster
+						position <i><tt>z</tt></i> coordinate and texture coordinates to each pixel, then assigning window
+						coordinates <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>x</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>i</mml:mi>
+									</mml:mrow>
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>y</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>j</mml:mi>
+									</mml:mrow>
+								</mml:mfenced>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+								</mml:mfenced>
+							</mml:math> is the current raster position, and the pixel was the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>i</mml:mi>
+							</mml:math>th pixel in the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>j</mml:mi>
+							</mml:math>th row. These pixel fragments are then treated just like the fragments generated by
+						rasterizing points, lines, or polygons. Texture mapping, fog, and all the fragment operations are applied
+						before the fragments are written to the frame buffer.
+					</p></dd><dt><span class="term"><tt>GL_DEPTH</tt></span></dt><dd><p>
+						Depth values are read from the depth buffer and converted directly to an internal floating-point with
+						unspecified precision. The resulting floating-point depth value is then multiplied by
+						<tt>GL_DEPTH_SCALE</tt> and added to <tt>GL_DEPTH_BIAS</tt>. The result is clamped
+						to the range [0,1].
+					</p><p>
+						The GL then converts the resulting depth components to fragments by attaching the current raster position
+						color or color index and texture coordinates to each pixel, then assigning window coordinates
+						<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>x</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>i</mml:mi>
+									</mml:mrow>
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>y</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>j</mml:mi>
+									</mml:mrow>
+								</mml:mfenced>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+								</mml:mfenced>
+							</mml:math> is the current raster position, and the pixel was the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>i</mml:mi>
+							</mml:math>th pixel in the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>j</mml:mi>
+							</mml:math>th row. These pixel fragments are then treated just like the fragments generated by
+						rasterizing points, lines, or polygons. Texture mapping, fog, and all the fragment operations are applied
+						before the fragments are written to the frame buffer.
+					</p></dd><dt><span class="term"><tt>GL_STENCIL</tt></span></dt><dd>
+						Stencil indices are read from the stencil buffer and converted to an internal fixed-point with an
+						unspecified number of bits to the right of the binary point. Each fixed-point index is then shifted left by
+						<tt>GL_INDEX_SHIFT</tt> bits, and added to <tt>GL_INDEX_OFFSET</tt>. If
+						<tt>GL_INDEX_SHIFT</tt> is negative, the shift is to the right. In either case, zero bits fill
+						otherwise unspecified bit locations in the result. If <tt>GL_MAP_STENCIL</tt> is true, the
+						index is replaced with the value that it references in lookup table
+						<tt>GL_PIXEL_MAP_S_TO_S</tt>. Whether the lookup replacement of the index is done or not, the
+						integer part of the index is then ANDed with <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:msup>
+									<mml:mn>2</mml:mn>
+									<mml:mi>b</mml:mi>
+								</mml:msup>
+								<mml:mo>-</mml:mo>
+								<mml:mn>1</mml:mn>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>b</mml:mi>
+							</mml:math> is the number of bits in the stencil buffer. The resulting stencil indices are then
+						written to the stencil buffer such that the index read from the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>i</mml:mi>
+							</mml:math>th location of the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>j</mml:mi>
+							</mml:math>th row is written to location <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>x</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>i</mml:mi>
+									</mml:mrow>
+									<mml:mrow>
+										<mml:msub>
+											<mml:mi>y</mml:mi>
+											<mml:mi>r</mml:mi>
+										</mml:msub>
+										<mml:mo>+</mml:mo>
+										<mml:mi>j</mml:mi>
+									</mml:mrow>
+								</mml:mfenced>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mfenced separator=",">
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+								</mml:mfenced>
+							</mml:math> is the current raster position. Only the pixel ownership test, the scissor test, and the
+						stencil writemask affect these write operations.
+					</dd></dl></div><p>
+			The rasterization described thus far assumes pixel zoom factors of 1.0. If
+		</p><p>
+			<a href="glPixelZoom.3G.xml"><tt>glPixelZoom</tt></a> is used to change the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>x</mml:mi>
+				</mml:math> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>y</mml:mi>
+				</mml:math> pixel zoom factors, pixels are converted to fragments as follows. If <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mfenced separator=",">
+						<mml:msub>
+							<mml:mi>x</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>y</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+					</mml:mfenced>
+				</mml:math>) is the current raster position, and a given pixel is in the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>i</mml:mi>
+				</mml:math>th location in the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>j</mml:mi>
+				</mml:math>th row of the source pixel rectangle, then fragments are generated for pixels whose centers are in the
+			rectangle with corners at
+		</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+				<mml:mtable>
+					<mml:mtr>
+						<mml:mtd>
+							<mml:mfenced separator=",">
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub>
+										<mml:mi>zoom</mml:mi>
+										<mml:mi>x</mml:mi>
+									</mml:msub>
+									<mml:mi>i</mml:mi>
+								</mml:mrow>
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub>
+										<mml:mi>zoom</mml:mi>
+										<mml:mi>y</mml:mi>
+									</mml:msub>
+									<mml:mi>j</mml:mi>
+								</mml:mrow>
+							</mml:mfenced>
+						</mml:mtd>
+					</mml:mtr>
+					<mml:mtr>
+						<mml:mtd>
+							<mml:mtext>and</mml:mtext>
+						</mml:mtd>
+					</mml:mtr>
+					<mml:mtr>
+						<mml:mtd>
+							<mml:mfenced separator=",">
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub>
+										<mml:mi>zoom</mml:mi>
+										<mml:mi>x</mml:mi>
+									</mml:msub>
+									<mml:mfenced separator=",">
+										<mml:mrow>
+											<mml:mi>i</mml:mi>
+											<mml:mo>+</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:mfenced>
+								</mml:mrow>
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub>
+										<mml:mi>zoom</mml:mi>
+										<mml:mi>y</mml:mi>
+									</mml:msub>
+									<mml:mfenced separator=",">
+										<mml:mrow>
+											<mml:mi>j</mml:mi>
+											<mml:mo>+</mml:mo>
+											<mml:mn>1</mml:mn>
+										</mml:mrow>
+									</mml:mfenced>
+								</mml:mrow>
+							</mml:mfenced>
+						</mml:mtd>
+					</mml:mtr>
+				</mml:mtable>
+			</mml:math></div><p>
+			where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>zoom</mml:mi>
+						<mml:mi>x</mml:mi>
+					</mml:msub>
+				</mml:math> is the value of <tt>GL_ZOOM_X</tt> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>zoom</mml:mi>
+						<mml:mi>y</mml:mi>
+					</mml:msub>
+				</mml:math> is the value of <tt>GL_ZOOM_Y</tt>.
+		</p></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-examples"/><h2>Examples</h2><p>
+			To copy the color pixel in the lower left corner of the window to the current raster position, use
+		</p><pre class="programlisting">glCopyPixels(0, 0, 1, 1, GL_COLOR);</pre></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-notes"/><h2>Notes</h2><p>
+			Modes specified by <tt>glPixelStore</tt> have no effect on the operation of
+			<tt>glCopyPixels</tt>.
+		</p></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>type</tt></i> is not an accepted value.
+		</p><p>
+			<tt>GL_INVALID_VALUE</tt> is generated if either <i><tt>width</tt></i> or
+			<i><tt>height</tt></i> is negative.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <i><tt>type</tt></i> is <tt>GL_DEPTH</tt>
+			and there is no depth buffer.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <i><tt>type</tt></i> is
+			<tt>GL_STENCIL</tt> and there is no stencil buffer.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glCopyPixels</tt> is executed between the
+			execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_POSITION</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_POSITION_VALID</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glCopyPixels.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glColorTable.3G.xml">glColorTable</a>, <a href="glConvolutionFilter1D.3G.xml">glConvolutionFilter1D</a>, <a href="glConvolutionFilter2D.3G.xml">glConvolutionFilter2D</a>, <a href="glDepthFunc.3G.xml">glDepthFunc</a>, <a href="glDrawBuffer.3G.xml">glDrawBuffer</a>, <a href="glDrawPixels.3G.xml">glDrawPixels</a>, <a href="glMatrixMode.3G.xml">glMatrixMode</a>, <a href="glPixelMap.3G.xml">glPixelMap</a>, <a href="glPixelTransfer.3G.xml">glPixelTransfer</a>, <a href="glPixelZoom.3G.xml">glPixelZoom</a>, <a href="glRasterPos.3G.xml">glRasterPos</a>, <a href="glReadBuffer.3G.xml">glReadBuffer</a>, <a href="glReadPixels.3G.xml">glReadPixels</a>, <a href="glSeparableFilter2D.3G.xml">glSeparableFilter2D</a>, <a href="glStencilFunc.3G.xml">glStencilFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glCopyConvolutionFilter2D.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glCopyTexImage1D.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glCopyConvolutionFilter2D </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glCopyTexImage1D</td></tr></table></div></body></html>

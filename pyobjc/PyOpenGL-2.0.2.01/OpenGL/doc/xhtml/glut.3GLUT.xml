@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glut</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="reference-GLUT.xml" title="GLUT"/><link rel="next" href="glutAddMenuEntry.3GLUT.xml" title="glutAddMenuEntry"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glut</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference-GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutAddMenuEntry.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glut.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glut.3GLUT-name"/><h2>Name</h2><p>glut &#8212; an introduction to the OpenGL Utility Toolkit</p></div><div class="refsynopsisdiv"><a name="glut.3GLUT-synopsis"/><h2>Synopsis</h2><pre class="programlisting">#include &lt;GL/glut.h&gt;</pre></div><div class="refsect1" lang="en"><a name="glut.3GLUT-description"/><h2>Description</h2><p>
+			The OpenGL Utility Toolkit (GLUT) is a programming interface with ANSI C and FORTRAN bindings for writing window system
+			independent OpenGL programs. The toolkit supports the following functionality:
+		</p><div class="itemizedlist"><ul type="disc"><li>
+					Multiple windows for OpenGL rendering.
+				</li><li>
+					Callback driven event processing.
+				</li><li>
+					Various input devices including keyboard, mouse, tablet, dial and button box, joystick, and Spaceball.
+				</li><li>
+					An "idle" routine and timers.
+				</li><li>
+					A simple, cascading pop-up menu facility.
+				</li><li>
+					Utility routines to generate various solid and wire frame objects.
+				</li><li>
+					Support for bitmap and stroke fonts.
+				</li><li>
+					Miscellaneous window management functions, including managing overlays, dynamic video resizing, and
+					game-oriented full screen support.
+				</li></ul></div><p>
+			An ANSI C implementation of GLUT for both the X Window System (X11) and Windows 95, 98, and NT (Win32) has been
+			implemented by the author. Language bindings for FORTRAN and Ada are available. C++ programs can call GLUT directly
+			through the C interface. MacOS and OS/2 implementations of GLUT are also available.
+		</p></div><div class="refsect1" lang="en"><a name="glut.3GLUT-background"/><h2>Background</h2><p>
+			One of the major accomplishments in the specification of OpenGL was the isolation of window system dependencies from
+			OpenGL's rendering model. The result is that OpenGL is window system independent.
+		</p><p>
+			Window system operations such as the creation of a rendering window and the handling of window system events are left
+			to the native window system to define. Necessary interactions between OpenGL and the window system such as creating and
+			binding an OpenGL context to a window are described separately from the OpenGL specification in a window system
+			dependent specification. For example, the GLX specification describes the standard by which OpenGL interacts with the X
+			Window System. Likewise, the WGL interface defines how OpenGL interacts with Microsoft's Windows operating system.
+		</p><p>
+			The predecessor to OpenGL is IRIS GL. Unlike OpenGL, IRIS GL does specify how rendering windows are created and
+			manipulated. IRIS GL's windowing interface is reasonably popular largely because it is simple to use. IRIS GL
+			programmers can worry about graphics programming without needing to be an expert in programming the native window
+			system. Experience also demonstrated that IRIS GL's windowing interface was high-level enough that it could be
+			retargeted to different window systems. Silicon Graphics migrated from NeWS to the X Window System without any major
+			changes to IRIS GL's basic windowing interface. </p><p>
+				
+			</p><p> Removing window system operations from OpenGL is a sound decision because it allows the OpenGL graphics system
+			to be retargeted to various systems including powerful but expensive graphics workstations as well as mass-production
+			graphics systems like video games, set-top boxes for interactive television, and PCs.
+		</p><p>
+			Unfortunately, the lack of a window system interface for OpenGL is a gap in OpenGL's utility. Learning native window
+			system APIs such as the X Window System's Xlib or Motif can be daunting. Even those familiar with native window system
+			APIs need to understand the interface that binds OpenGL to the native window system. And when an OpenGL program is
+			written using the native window system interface, despite the portability of the program's OpenGL rendering code, the
+			program itself will be window system dependent.
+		</p><p>
+			Testing and documenting OpenGL's functionality lead to the development of the tk and aux toolkits. The aux toolkit is
+			used in the examples found in the OpenGL Programming Guide. Unfortunately, aux has numerous limitations and its utility
+			is largely limited to toy programs. The tk library has more functionality than aux but was developed in an ad hoc
+			fashion and still lacks much important functionality that IRIS GL programmers expect, like pop-up menus and overlays.
+		</p><p>
+			GLUT is designed to fill the need for a window system independent programming interface for OpenGL programs. The
+			interface is designed to be simple yet still meet the needs of useful OpenGL programs. Features from the IRIS GL, aux,
+			and tk interfaces are included to make it easy for programmers used to these interfaces to develop programs for GLUT.
+		</p></div><div class="refsect1" lang="en"><a name="glut.3GLUT-philosphy"/><h2>Philosphy</h2><p>
+			GLUT simplifies the implementation of programs using OpenGL rendering. The GLUT application programming interface (API)
+			requires very few routines to display a graphics scene rendered using OpenGL. The GLUT API (like the OpenGL API) is
+			stateful. Most initial GLUT state is defined and the initial state is reasonable for simple programs.
+		</p><p>
+			The GLUT routines also take relatively few parameters. No pointers are returned. The only pointers passed into GLUT are
+			pointers to character strings (all strings passed to GLUT are copied, not referenced) and opaque font handles.
+		</p><p>
+			The GLUT API is (as much as reasonable) window system independent. For this reason, GLUT does not return any native
+			window system handles, pointers, or other data structures. More subtle window system dependencies such as reliance on
+			window system dependent fonts are avoided by GLUT; instead, GLUT supplies its own (limited) set of fonts.
+		</p><p>
+			For programming ease, GLUT provides a simple menu sub-API. While the menuing support is designed to be implemented as
+			pop-up menus, GLUT gives window system leeway to support the menu functionality in another manner (pull-down menus for
+			example).
+		</p><p>
+			Two of the most important pieces of GLUT state are the current window and current menu. Most window and menu routines
+			affect the current window or menu respectively. Most callbacks implicitly set the current window and menu to the
+			appropriate window or menu responsible for the callback. GLUT is designed so that a program with only a single window
+			and/or menu will not need to keep track of any window or menu identifiers. This greatly simplifies very simple GLUT
+			programs.
+		</p><p>
+			GLUT is designed for simple to moderately complex programs focused on OpenGL rendering. GLUT implements its own event
+			loop. For this reason, mixing GLUT with other APIs that demand their own event handling structure may be difficult. The
+			advantage of a builtin event dispatch loop is simplicity.
+		</p><p>
+			GLUT contains routines for rendering fonts and geometric objects, however GLUT makes no claims on the OpenGL display
+			list name space. For this reason, none of the GLUT rendering routines use OpenGL display lists. It is up to the GLUT
+			programmer to compile the output from GLUT rendering routines into display lists if this is desired.
+		</p><p>
+			GLUT routines are logically organized into several sub-APIs according to their functionality. The sub-APIs are:
+		</p><div class="variablelist"><dl><dt><span class="term">Initialization.</span></dt><dd>
+						Command line processing, window system initialization, and initial window creation state are controlled by
+						these routines.
+					</dd><dt><span class="term">Beginning Event Processing.</span></dt><dd>
+						This routine enters GLUT's event processing loop. This routine never returns, and it continuously calls
+						GLUT callbacks as necessary.
+					</dd><dt><span class="term">Window Management.</span></dt><dd>
+						These routines create and control windows.
+					</dd><dt><span class="term">Overlay Management.</span></dt><dd>
+						These routines establish and manage overlays for windows.
+					</dd><dt><span class="term">Menu Management.</span></dt><dd>
+						These routines create and control pop-up menus.
+					</dd><dt><span class="term">Callback Registration.</span></dt><dd>
+						These routines register callbacks to be called by the GLUT event processing loop.
+					</dd><dt><span class="term">Color Index Colormap Management.</span></dt><dd>
+						These routines allow the manipulation of color index colormaps for windows.
+					</dd><dt><span class="term">Game-oriented Full Screen Mode.</span></dt><dd>
+						These routines allow OpenGL to be used in a full screen mode at various display resolutions and depths.
+					</dd><dt><span class="term">State Retrieval.</span></dt><dd>
+						These routines allows programs to retrieve state from GLUT.
+					</dd><dt><span class="term">Font Rendering.</span></dt><dd>
+						These routines allow rendering of stroke and bitmap fonts.
+					</dd><dt><span class="term">Geometric Shape Rendering.</span></dt><dd>
+						These routines allow the rendering of 3D geometric objects including spheres, cones, icosahedrons, and
+						teapots.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glut.3GLUT-conventions"/><h2>Conventions</h2><p>
+			GLUT window and screen coordinates are expressed in pixels. The upper left hand corner of the screen or a window is
+			(0,0). X coordinates increase in a rightward direction; Y coordinates increase in a downward direction. Note: This is
+			inconsistent with OpenGL's coordinate scheme that generally considers the lower left hand coordinate of a window to be
+			at (0,0) but is consistent with most popular window systems.
+		</p><p>
+			Integer identifiers in GLUT begin with one, not zero. So window identifiers, menu identifiers, and menu item indexes
+			are based from one, not zero.
+		</p><p>
+			In GLUT's ANSI C binding, for most routines, basic types (int, char*) are used as parameters. In routines where the
+			parameters are directly passed to OpenGL routines, OpenGL types (GLfloat) are used.
+		</p><p>
+			The header files for GLUT should be included in GLUT programs with the following include directive:
+		</p><pre class="programlisting">#include &lt;GL/glut.h&gt;</pre><p>
+			Because a very large window system software vendor (who will remain nameless) has an apparent inability to appreciate
+			that OpenGL's API is independent of their window system API, portable ANSI C GLUT programs should not directly include
+			&lt;GL/gl.h&gt; or &lt;GL/glu.h&gt;. Instead, ANSI C GLUT programs should rely on &lt;GL/glut.h&gt; to include the
+			necessary OpenGL and GLU related header files.
+		</p><p>
+			The ANSI C GLUT library archive is typically named libglut.a on Unix systems. GLUT programs need to link with the
+			system's OpenGL and GLUT libraries (and any libraries these libraries potentially depend on). A set of window system
+			dependent libraries may also be necessary for linking GLUT programs. For example, programs using the X11 GLUT
+			implementation typically need to link with Xlib, the X extension library, possibly the X Input extension library, the X
+			miscellaneous utilities library, and the math library. An example X11/Unix compile line would look like:
+		</p><pre class="programlisting">cc -o foo foo.c -lglut -lGLU -lGL -lXmu -lXi -lXext -lX11 -lm</pre></div><div class="refsect1" lang="en"><a name="glut.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutAddMenuEntry.3GLUT.xml">glutAddMenuEntry</a>, <a href="glutAddSubMenu.3GLUT.xml">glutAddSubMenu</a>, <a href="glutAttachMenu.3GLUT.xml">glutAttachMenu</a>, <a href="glutBitmapCharacter.3GLUT.xml">glutBitmapCharacter</a>, <a href="glutBitmapLength.3GLUT.xml">glutBitmapLength</a>, <a href="glutBitmapWidth.3GLUT.xml">glutBitmapWidth</a>, <a href="glutButtonBoxFunc.3GLUT.xml">glutButtonBoxFunc</a>, <a href="glutChangeToMenuEntry.3GLUT.xml">glutChangeToMenuEntry</a>, <a href="glutChangeToSubMenu.3GLUT.xml">glutChangeToSubMenu</a>, <a href="glutCopyColormap.3GLUT.xml">glutCopyColormap</a>, <a href="glutCreateMenu.3GLUT.xml">glutCreateMenu</a>, <a href="glutCreateSubWindow.3GLUT.xml">glutCreateSubWindow</a>, <a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutDestroyMenu.3GLUT.xml">glutDestroyMenu</a>, <a href="glutDestroyWindow.3GLUT.xml">glutDestroyWindow</a>, <a href="glutDeviceGet.3GLUT.xml">glutDeviceGet</a>, <a href="glutDialsFunc.3GLUT.xml">glutDialsFunc</a>, <a href="glutDisplayFunc.3GLUT.xml">glutDisplayFunc</a>, <a href="glutEnterGameMode.3GLUT.xml">glutEnterGameMode</a>, <a href="glutEntryFunc.3GLUT.xml">glutEntryFunc</a>, <a href="glutEstablishOverlay.3GLUT.xml">glutEstablishOverlay</a>, <a href="glutExtensionSupported.3GLUT.xml">glutExtensionSupported</a>, <a href="glutForceJoystickFunc.3GLUT.xml">glutForceJoystickFunc</a>, <a href="glutFullScreen.3GLUT.xml">glutFullScreen</a>, <a href="glutGameModeGet.3GLUT.xml">glutGameModeGet</a>, <a href="glutGameModeString.3GLUT.xml">glutGameModeString</a>, <a href="glutGet.3GLUT.xml">glutGet</a>, <a href="glutGetColor.3GLUT.xml">glutGetColor</a>, <a href="glutGetModifiers.3GLUT.xml">glutGetModifiers</a>, <a href="glutIdleFunc.3GLUT.xml">glutIdleFunc</a>, <a href="glutIgnoreKeyRepeat.3GLUT.xml">glutIgnoreKeyRepeat</a>, <a href="glutInit.3GLUT.xml">glutInit</a>, <a href="glutInitDisplayMode.3GLUT.xml">glutInitDisplayMode</a>, <a href="glutInitDisplayString.3GLUT.xml">glutInitDisplayString</a>, <a href="glutInitWindowPosition.3GLUT.xml">glutInitWindowPosition</a>, <a href="glutJoystickFunc.3GLUT.xml">glutJoystickFunc</a>, <a href="glutKeyboardFunc.3GLUT.xml">glutKeyboardFunc</a>, <a href="glutKeyboardUpFunc.3GLUT.xml">glutKeyboardUpFunc</a>, <a href="glutLayerGet.3GLUT.xml">glutLayerGet</a>, <a href="glutLeaveGameMode.3GLUT.xml">glutLeaveGameMode</a>, <a href="glutMainLoop.3GLUT.xml">glutMainLoop</a>, <a href="glutMenuStatusFunc.3GLUT.xml">glutMenuStatusFunc</a>, <a href="glutMotionFunc.3GLUT.xml">glutMotionFunc</a>, <a href="glutMouseFunc.3GLUT.xml">glutMouseFunc</a>, <a href="glutOverlayDisplayFunc.3GLUT.xml">glutOverlayDisplayFunc</a>, <a href="glutPopWindow.3GLUT.xml">glutPopWindow</a>, <a href="glutPositionWindow.3GLUT.xml">glutPositionWindow</a>, <a href="glutPostOverlayRedisplay.3GLUT.xml">glutPostOverlayRedisplay</a>, <a href="glutPostRedisplay.3GLUT.xml">glutPostRedisplay</a>, <a href="glutRemoveMenuItem.3GLUT.xml">glutRemoveMenuItem</a>, <a href="glutRemoveOverlay.3GLUT.xml">glutRemoveOverlay</a>, <a href="glutReportErrors.3GLUT.xml">glutReportErrors</a>, <a href="glutReshapeFunc.3GLUT.xml">glutReshapeFunc</a>, <a href="glutReshapeWindow.3GLUT.xml">glutReshapeWindow</a>, <a href="glutSetColor.3GLUT.xml">glutSetColor</a>, <a href="glutSetCursor.3GLUT.xml">glutSetCursor</a>, <a href="glutSetMenu.3GLUT.xml">glutSetMenu</a>, <a href="glutSetupVideoResizing.3GLUT.xml">glutSetupVideoResizing</a>, <a href="glutSetWindow.3GLUT.xml">glutSetWindow</a>, <a href="glutSetWindowTitle.3GLUT.xml">glutSetWindowTitle</a>, <a href="glutShowOverlay.3GLUT.xml">glutShowOverlay</a>, <a href="glutShowWindow.3GLUT.xml">glutShowWindow</a>, <a href="glutSolidCone.3GLUT.xml">glutSolidCone</a>, <a href="glutSolidCube.3GLUT.xml">glutSolidCube</a>, <a href="glutSolidDodecahedron.3GLUT.xml">glutSolidDodecahedron</a>, <a href="glutSolidIcosahedron.3GLUT.xml">glutSolidIcosahedron</a>, <a href="glutSolidOctahedron.3GLUT.xml">glutSolidOctahedron</a>, <a href="glutSolidSphere.3GLUT.xml">glutSolidSphere</a>, <a href="glutSolidTeapot.3GLUT.xml">glutSolidTeapot</a>, <a href="glutSolidTetrahedron.3GLUT.xml">glutSolidTetrahedron</a>, <a href="glutSolidTorus.3GLUT.xml">glutSolidTorus</a>, <a href="glutSpaceballButtonFunc.3GLUT.xml">glutSpaceballButtonFunc</a>, <a href="glutSpaceballMotionFunc.3GLUT.xml">glutSpaceballMotionFunc</a>, <a href="glutSpaceballRotateFunc.3GLUT.xml">glutSpaceballRotateFunc</a>, <a href="glutSpecialFunc.3GLUT.xml">glutSpecialFunc</a>, <a href="glutSpecialUpFunc.3GLUT.xml">glutSpecialUpFunc</a>, <a href="glutStopVideoResizing.3GLUT.xml">glutStopVideoResizing</a>, <a href="glutStrokeCharacter.3GLUT.xml">glutStrokeCharacter</a>, <a href="glutStrokeLength.3GLUT.xml">glutStrokeLength</a>, <a href="glutStrokeLengthf.3GLUT.xml">glutStrokeLengthf</a>, <a href="glutStrokeWidth.3GLUT.xml">glutStrokeWidth</a>, <a href="glutStrokeWidthf.3GLUT.xml">glutStrokeWidthf</a>, <a href="glutSwapBuffers.3GLUT.xml">glutSwapBuffers</a>, <a href="glutTabletButtonFunc.3GLUT.xml">glutTabletButtonFunc</a>, <a href="glutTabletMotionFunc.3GLUT.xml">glutTabletMotionFunc</a>, <a href="glutTimerFunc.3GLUT.xml">glutTimerFunc</a>, <a href="glutUseLayer.3GLUT.xml">glutUseLayer</a>, <a href="glutVideoPan.3GLUT.xml">glutVideoPan</a>, <a href="glutVideoResizeGet.3GLUT.xml">glutVideoResizeGet</a>, <a href="glutVideoResize.3GLUT.xml">glutVideoResize</a>, <a href="glutVisibilityFunc.3GLUT.xml">glutVisibilityFunc</a>, <a href="glutWarpPointer.3GLUT.xml">glutWarpPointer</a>, <a href="glutWindowStatusFunc.3GLUT.xml">glutWindowStatusFunc</a></span>
+		</p></div><div class="refsect1" lang="en"><a name="glut.3GLUT-references"/><h2>References</h2><p>
+			Mark Kilgard, <i><tt>Programming OpenGL for the X Window System</tt></i>, Addison-Wesley, ISBN 0-201-48359-9,
+			1996. Chapters 4 is a comprehensive tutorial about using GLUT. Chapter 5 explores OpenGL with seven different GLUT
+			examples. Appendix B is a complete functional description of the GLUT API. Appendix C documents GLUT's
+			programmer-visible state.
+		</p><p>
+			Mark Kilgard, <i><tt>The OpenGL Utility Toolkit (GLUT) Programming Interface API Version 3</tt></i> (the
+			official GLUT specification).
+		</p><p>
+			Mason Woo, Jackie Neider, Tom Davis, Dave Shriner, <i><tt>OpenGL 1.2 Programming Guide, Third Edition: The Official
+			Guide to Learning OpenGL, Version 1.2</tt></i>, Addison-Wesley, ISBN 0-201-60458-2, 1999. The best all-around
+			introduction to OpenGL uses GLUT for its examples.
+		</p><p>
+			Ed Angel, <i><tt>Interactive Computer Graphics: A Top-Down Approach with OpenGL</tt></i>, Addison-Wesley, ISBN
+			0-201-13859-7X, 1999. An undergraduate computer graphics textbook that uses GLUT for its programming examples.
+		</p></div><div class="refsect1" lang="en"><a name="glut.3GLUT-web_references"/><h2>Web References</h2><table class="simplelist" border="0" summary="Simple list"><tr><td><a href="http://reality.sgi.com/mjk/glut3/glut3.html" target="_top">Main GLUT page</a></td></tr><tr><td><a href="http://reality.sgi.com/mjk/glut3/glut-faq.html" target="_top">GLUT Frequently Asked Question list</a></td></tr><tr><td><a href="http://reality.sgi.com/mjk/spec3/spec3.html" target="_top">The OpenGL Utility Toolkit (GLUT) Programming
+			Interface API Version 3</a> (<a href="http://reality.sgi.com/mjk/glut3/glut-3.spec.ps.gz" target="_top">PostScript</a>)</td></tr><tr><td>OpenGL and X: An OpenGL Toolkit article (<a href="http://reality.sgi.com/mjk/glut3/glut.column1.ps.gz" target="_top">PostScript</a>)</td></tr></table></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="reference-GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutAddMenuEntry.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">GLUT </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutAddMenuEntry</td></tr></table></div></body></html>

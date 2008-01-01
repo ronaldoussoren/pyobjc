@@ -1,0 +1,29 @@
+Metadata-Version: 1.0
+Name: py2app
+Version: 0.4.1.dev-r487
+Summary: Create standalone Mac OS X applications with Python
+Home-page: http://undefined.org/python/#py2app
+Author: Bob Ippolito
+Author-email: bob@redivi.com
+License: MIT or PSF License
+Download-URL: http://undefined.org/python/#py2app
+Description: py2app is a Python setuptools command which will allow
+        you to make standalone Mac OS X application bundles
+        and plugins from Python scripts.
+        
+        py2app is similar in purpose and design to py2exe for
+        Windows.
+        
+Platform: MacOS X
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Environment :: MacOS X :: Cocoa
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Objective C
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: User Interfaces
+Classifier: Topic :: Software Development :: Build Tools

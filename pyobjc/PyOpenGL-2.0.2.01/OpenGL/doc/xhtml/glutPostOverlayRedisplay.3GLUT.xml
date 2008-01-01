@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutPostOverlayRedisplay</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutPositionWindow.3GLUT.xml" title="glutPositionWindow"/><link rel="next" href="glutPostRedisplay.3GLUT.xml" title="glutPostRedisplay"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutPostOverlayRedisplay</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutPositionWindow.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutPostRedisplay.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutPostOverlayRedisplay.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutPostOverlayRedisplay.3GLUT-name"/><h2>Name</h2><p>glutPostOverlayRedisplay, glutPostWindowOverlayRedisplay &#8212; marks the overlay of the current or specified window as needing to be redisplayed.</p></div><div class="refsynopsisdiv"><a name="glutPostOverlayRedisplay.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutPostOverlayRedisplay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr><tr><td valign="top"><code>void <tt>glutPostWindowOverlayRedisplay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>win</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutPostOverlayRedisplay.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutPostOverlayRedisplay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glutPostWindowOverlayRedisplay</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>win</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutPostOverlayRedisplay.3GLUT-description"/><h2>Description</h2><p>
+			Mark the overlay of current window as needing to be redisplayed. The next iteration through <a href="glutMainLoop.3GLUT.xml"><tt>glutMainLoop</tt></a>, the window's overlay display callback (or simply the display callback if
+			no overlay display callback is registered) will be called to redisplay the window's overlay plane. Multiple calls to
+			<tt>glutPostOverlayRedisplay</tt> before the next display callback opportunity (or overlay display callback
+			opportunity if one is registered) generate only a single redisplay. <tt>glutPostOverlayRedisplay</tt> may
+			be called within a window's display or overlay display callback to re-mark that window for redisplay.
+		</p><p>
+			Logically, overlay damage notification for a window is treated as a <tt>glutPostOverlayRedisplay</tt> on
+			the damaged window. Unlike damage reported by the window system, <tt>glutPostOverlayRedisplay</tt> will not
+			set to true the overlay's damaged status (returned by <tt>glutLayerGet(GLUT_OVERLAY_DAMAGED)</tt>.
+		</p><p>
+			If the window you want to post an overlay redisplay on is not already current (and you do not require it to be
+			immediately made current), using <tt>glutPostWindowOverlayRedisplay</tt> is more efficient that calling
+			<a href="glutSetWindow.3GLUT.xml"><tt>glutSetWindow</tt></a> to the desired window and then calling
+			<tt>glutPostOverlayRedisplay</tt>.
+		</p></div><div class="refsect1" lang="en"><a name="glutPostOverlayRedisplay.3GLUT-example"/><h2>Example</h2><p>
+			If you are doing an interactive effect like rubberbanding in the overlay, it is a good idea to structure your rendering
+			to minimize flicker (most overlays are single-buffered). Only clear the overlay if you know that the window has been
+			damaged. Otherwise, try to simply erase what you last drew and redraw it in an updated position. Here is an example
+			overlay display callback used to implement overlay rubberbanding:
+		</p><pre class="programlisting">void redrawOverlay(void)
+{
+    static int prevStretchX, prevStretchY;
+
+    if (glutLayerGet(GLUT_OVERLAY_DAMAGED)) {
+		/* Damage means we need a full clear. */
+        glClear(GL_COLOR_BUFFER_BIT);
+    } else {
+		/* Undraw last rubber-band. */
+        glIndexi(transparent);
+        glBegin(GL_LINE_LOOP);
+        glVertex2i(anchorX, anchorY);
+        glVertex2i(anchorX, prevStretchY);
+        glVertex2i(prevStretchX, prevStretchY);
+        glVertex2i(prevStretchX, anchorY);
+        glEnd();
+    }
+    glIndexi(red);
+    glBegin(GL_LINE_LOOP);
+    glVertex2i(anchorX, anchorY);
+    glVertex2i(anchorX, stretchY);
+    glVertex2i(stretchX, stretchY);
+    glVertex2i(stretchX, anchorY);
+    glEnd();
+    prevStretchX = stretchX;
+    prevStretchY = stretchY;
+}</pre><p>
+			Notice how <tt>glutLayerGet(GLUT_OVERLAY_DAMAGED)</tt> is used to determine if a clear
+			needs to take place because of damage; if a clear is unnecessary, it is faster to just draw the last rubberband using
+			the transparent pixel.
+		</p><p>
+			When the application is through with the rubberbanding effect, the best way to get ride of the rubberband is to simply
+			hide the overlay by calling <a href="glutShowOverlay.3GLUT.xml"><tt>glutHideOverlay</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glutPostOverlayRedisplay.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutPostRedisplay.3GLUT.xml">glutPostRedisplay</a>, <a href="glutEstablishOverlay.3GLUT.xml">glutEstablishOverlay</a>, <a href="glutLayerGet.3GLUT.xml">glutLayerGet</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutPositionWindow.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutPostRedisplay.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutPositionWindow </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutPostRedisplay</td></tr></table></div></body></html>

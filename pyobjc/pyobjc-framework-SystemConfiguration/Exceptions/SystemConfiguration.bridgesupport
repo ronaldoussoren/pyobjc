@@ -1,0 +1,264 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='SCBondStatusGetTypeID' name='SCBondStatusRef' />
+  <cftype gettypeid_func='SCDynamicStoreGetTypeID' name='SCDynamicStoreRef' />
+  <cftype gettypeid_func='SCNetworkConnectionGetTypeID' name='SCNetworkConnectionRef' />
+  <cftype gettypeid_func='SCNetworkInterfaceGetTypeID' name='SCNetworkInterfaceRef' />
+  <cftype gettypeid_func='SCNetworkProtocolGetTypeID' name='SCNetworkProtocolRef' />
+  <cftype gettypeid_func='SCNetworkReachabilityGetTypeID' name='SCNetworkReachabilityRef' />
+  <cftype gettypeid_func='SCNetworkServiceGetTypeID' name='SCNetworkServiceRef' />
+  <cftype gettypeid_func='SCNetworkSetGetTypeID' name='SCNetworkSetRef' />
+  <cftype gettypeid_func='SCPreferencesGetTypeID' name='SCPreferencesRef' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' />
+  <function name='DHCPClientPreferencesCopyApplicationOptions'>
+    <retval c_array_length_in_arg='1' type='^C' type64='^C' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='DHCPClientPreferencesSetApplicationOptions'>
+    <arg c_array_length_in_arg='2' index='1' type='^C' type64='^C' type_modifier='n' />
+  </function>
+  <function name='SCBondInterfaceCopyAll'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCBondInterfaceCopyAvailableMemberInterfaces'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCBondInterfaceCopyStatus'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCBondInterfaceCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCCopyLastError'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreAddTemporaryValue'>
+    <arg comment='CFTypeID' index='2' type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreAddValue'>
+    <arg comment='CFTypeID' index='2' type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreCopyComputerName'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='SCDynamicStoreCopyConsoleUser'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='SCDynamicStoreCopyDHCPInfo'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyKeyList'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyLocalHostName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyLocation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyMultiple'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyNotifiedKeys'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyProxies'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreCopyValue'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+  </function>
+  <function comment='manual wrapper' name='SCDynamicStoreCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreCreateRunLoopSource'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='SCDynamicStoreCreateWithOptions'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type='^?' type64='^?' />
+    <arg index='4' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreate' variadic='true'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' printf_format='true' type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateComputerName'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateConsoleUser'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateHostNames'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateLocation'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkGlobalEntity'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkInterface'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkInterfaceEntity'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkServiceEntity'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateProxies'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCDynamicStoreSetValue'>
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='SCErrorString'>
+    <retval comment='string' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='SCNetworkCheckReachabilityByAddress'>
+    <arg index='0' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='SCNetworkCheckReachabilityByName'>
+    <arg comment='string' index='0' numeric='false' type='*' type64='*' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='SCNetworkConnectionCopyExtendedStatus'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkConnectionCopyServiceID'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkConnectionCopyStatistics'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkConnectionCopyUserOptions'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkConnectionCopyUserPreferences'>
+    <arg already_retained='true' index='1' type_modifier='o' />
+    <arg already_retained='true' index='2' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='SCNetworkConnectionCreateWithServiceID'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' type='^?' type64='^?' />
+    <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCNetworkInterfaceCopyAll'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMTU'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaOptions'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaSubTypeOptions'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaSubTypes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkInterfaceCreateWithInterface'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithAddress'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='n' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithAddressPair'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type_modifier='n' />
+    <arg index='2' type_modifier='n' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithName'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='string' index='1' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='SCNetworkReachabilityGetFlags'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='SCNetworkReachabilitySetCallback'>
+    <arg index='1' type='^?' type64='^?' />
+    <arg index='2' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCNetworkServiceCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkServiceCopyAll'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkServiceCopyProtocol'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkServiceCopyProtocols'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkServiceCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkSetCopy'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkSetCopyAll'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkSetCopyCurrent'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkSetCopyServices'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCNetworkSetCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCPreferencesAddValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='SCPreferencesCopyKeyList'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCPreferencesCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCPreferencesCreateWithAuthorization'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='3' type='^{AuthorizationOpaqueRef=}' type64='^{AuthorizationOpaqueRef=}' />
+  </function>
+  <function name='SCPreferencesGetValue'>
+    <retval comment='CFTypeRef' type='@' type64='@' />
+  </function>
+  <function name='SCPreferencesPathCreateUniqueChild'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function comment='manual wrapper' name='SCPreferencesSetCallback'>
+    <arg function_pointer='true' index='1' type='^?' type64='^?' />
+    <arg index='2' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCPreferencesSetValue'>
+    <arg comment='CFTypeRef' index='2' type='@' type64='@' />
+  </function>
+  <function name='SCVLANInterfaceCopyAll'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCVLANInterfaceCopyAvailablePhysicalInterfaces'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SCVLANInterfaceCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+</signatures>

@@ -1,0 +1,39 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                closeProgress = id; 
+                filterPackages = id; 
+                installPackage = id; 
+                savePreferences = id; 
+                visitHome = id; 
+            }; 
+            CLASS = PackageDatabase; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                databaseMaintainer = id; 
+                databaseName = id; 
+                installButton = id; 
+                installDependencies = id; 
+                installationLocation = id; 
+                installationLog = id; 
+                installationPanel = id; 
+                installationProgress = id; 
+                installationTitle = id; 
+                itemDescription = NSTextView; 
+                itemHome = NSTextField; 
+                itemInstalled = NSTextField; 
+                itemStatus = NSTextField; 
+                overwrite = id; 
+                packageTable = NSTableView; 
+                prerequisitesTable = id; 
+                progressOK = id; 
+                showHidden = id; 
+                verbose = id; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutDisplayFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutDialsFunc.3GLUT.xml" title="glutDialsFunc"/><link rel="next" href="glutEnterGameMode.3GLUT.xml" title="glutEnterGameMode"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutDisplayFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutDialsFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutEnterGameMode.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutDisplayFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutDisplayFunc.3GLUT-name"/><h2>Name</h2><p>glutDisplayFunc &#8212; sets the display callback for the current window.</p></div><div class="refsynopsisdiv"><a name="glutDisplayFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutDisplayFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)(void));</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutDisplayFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutDisplayFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutDisplayFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new display callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutDisplayFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutDisplayFunc</tt> sets the display callback for the current window. When GLUT determines that the
+			normal plane for the window needs to be redisplayed, the display callback for the window is called. Before the
+			callback, the current window is set to the window needing to be redisplayed and (if no overlay display callback is
+			registered) the layer in use is set to the normal plane. The display callback is called with no parameters. The entire
+			normal plane region should be redisplayed in response to the callback (this includes ancillary buffers if your program
+			depends on their state).
+		</p><p>
+			GLUT determines when the display callback should be triggered based on the window's redisplay state. The redisplay
+			state for a window can be either set explicitly by calling <a href="glutPostRedisplay.3GLUT.xml"><tt>glutPostRedisplay</tt></a>
+			or implicitly as the result of window damage reported by the window system. Multiple posted redisplays for a window are
+			coalesced by GLUT to minimize the number of display callbacks called.
+		</p><p>
+			When an overlay is established for a window, but there is no overlay display callback registered, the display callback
+			is used for redisplaying both the overlay and normal plane (that is, it will be called if either the redisplay state or
+			overlay redisplay state is set). In this case, the layer in use is not implicitly changed on entry to the display
+			callback.
+		</p><p>
+			See <a href="glutOverlayDisplayFunc.3GLUT.xml"><tt>glutOverlayDisplayFunc</tt></a> to understand how distinct callbacks for the
+			overlay and normal plane of a window may be established.
+		</p><p>
+			When a window is created, no display callback exists for the window. It is the responsibility of the programmer to
+			install a display callback for the window before the window is shown. A display callback must be registered for any
+			window that is shown. If a window becomes displayed without a display callback being registered, a fatal error occurs.
+			Passing <tt>NULL</tt> to glutDisplayFunc is illegal as of GLUT 3.0; there is no way to "deregister" a
+			display callback (though another callback routine can always be registered).
+		</p><p>
+			Upon return from the display callback, the normal damaged state of the window (returned by calling <tt>glutLayerGet(GLUT_NORMAL_DAMAGED)</tt> is cleared. If there is no overlay display callback
+			registered the overlay damaged state of the window (returned by calling <tt>glutLayerGet(GLUT_OVERLAY_DAMAGED)</tt> is also cleared.
+		</p></div><div class="refsect1" lang="en"><a name="glutDisplayFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutCreateMenu.3GLUT.xml">glutCreateMenu</a>, <a href="glutPostRedisplay.3GLUT.xml">glutPostRedisplay</a>, <a href="glutOverlayDisplayFunc.3GLUT.xml">glutOverlayDisplayFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutDialsFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutEnterGameMode.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutDialsFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutEnterGameMode</td></tr></table></div></body></html>

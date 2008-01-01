@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Structure of the PyObjC package</title>
+</head>
+<body>
+<h2>Structure of the PyObjC package</h2>
+<h2><a name="introduction">Introduction</a></h2>
+<p>This document gives an overview of the PyObjC for developers (of the package).</p>
+<p>One of the sections describes how all of it works, and some of the limitations.</p>
+<p>This document is a incomplete, it should be updated.</p>
+<h2><a name="methods">Methods</a></h2>
+<p>Classes are scanned for methods when the Python wrapper for a class is created.
+We then create Python wrappers for those methods.  This way users can use the
+normal Python introspection methods to check which methods are available.</p>
+<p>There are several occasions when these method tables are rescanned, because
+classes can grow new methods when categories are loaded into the runtime.
+Additionally, it is known that some Cocoa frameworks in Mac OS X change
+their method tables when the first instance is created.</p>
+<h2><a name="subclassing">Subclassing</a></h2>
+<p>It is possible to subclass Objective-C classes from Python.  These classes
+end up in a structure containing both a Python type object and an Objective-C
+class.  Instances of these classes also contain both a Python instance and
+an Objective-C object.</p>
+<p>The first Python subclass of an Objective-C class introduces a new instance
+variable in the Objective-C object to store the pointer to the Python half of
+the cluster.  This variable is always referenced by name.  The Python half is 
+a subclass of <code><span>objc_object</span></code> that already contains a pointer to an Objective-C 
+object.  This first subclass also introduces a number of class and instance
+methods that the PyObjC bridge uses to maintain the illusion of a single
+object on both sides.  Check class-builder.m for details.</p>
+<h2><a name="directory-structure">Directory structure</a></h2>
+<dl>
+<dt>Doc/</dt>
+<dd><p>Documentation</p>
+</dd>
+<dt>Examples/</dt>
+<dd><p>Example scripts and applets.</p>
+</dd>
+<dt>Lib/</dt>
+<dd><p>The pure Python parts of the packages that comprise PyObjC.  Currently
+contains the packages 'objc', 'PyObjCScripts', 'PyObjCTools' and the
+semi-automatically generated wrappers for the 'AddressBook',
+'AppKit', 'ExceptionHandling', 'Foundation', 'InterfaceBuilder', 'Message',
+'PreferencePanes', 'ScreenSaver', 'SecurityInterface' and 'WebKit'
+frameworks.</p>
+</dd>
+<dt>Modules/</dt>
+<dd><p>Extension modules related to the packages in 'Lib'.</p>
+</dd>
+<dt>Scripts/</dt>
+<dd><p>Scripts used during building and/or development of PyObjC.</p>
+</dd>
+<dt>Installer Package/</dt>
+<dd><p>Resources used for building the Apple Installer packages.</p>
+</dd>
+<dt>Xcode/</dt>
+<dd><p>Xcode templates for PyObjC development.</p>
+</dd>
+<dt>libffi-src/</dt>
+<dd><p>A local copy of libffi, the Foreign Function Interface library used by
+PyObjC.</p>
+</dd>
+<dt>setup-lib/</dt>
+<dd><p>Modules used by setup.py for building and distributing PyObjC.</p>
+</dd>
+<dt>source-deps/</dt>
+<dd><p>Local copies of Python packages and modules used by PyObjC that are not
+expected to be found in the minimum supported version of Python.  These
+are not automatically installed by setup.py, but some may be included in
+a bdist_mpkg installer (currently, just py2app).</p>
+</dd>
+</dl>
+<h2><a name="reference-counts">Reference counts</a></h2>
+<p>The Objective-C rules for reference counts are pretty easy: A small number
+of class methods (<code><span>alloc</span></code>, <code><span>allocWithZone:</span></code>, <code><span>copy</span></code>, ...) transfer
+object ownership to the caller.  For all other objects you have to call
+<code><span>retain</span></code> if you want to keep a reference.  This includes all factory
+methods, such as <code><span>[NSString</span> <span>stringWithCString:&quot;bla&quot;]</span></code>!</p>
+<p>When programming Cocoa in Python, you rarely need to worry about
+reference counts: the <code><span>objc</span></code> module makes this completely transparent to
+user.  This is mostly implemented in <code><span>[de]pythonify_c_value</span></code>.  Additonal
+code is needed when calling methods that transfer ownership of their return
+value (as described above) and when updating a instance variable in an
+Objective-C object (retain new and release old, in that order).  Both are
+implemented.</p>
+<h2><a name="strings">Strings</a></h2>
+<p>Python <code><span>unicode</span></code> instances are proxied by the <code><span>OC_PythonUnicode</span></code> subclass
+of <code><span>NSString</span></code>.  This is a proxy, and will maintain the identity of the
+original <code><span>unicode</span></code> instance.</p>
+<p><code><span>NSString</span></code> instances are represented in Python as a subtype of <code><span>unicode</span></code>:
+<code><span>objc.pyobjc_unicode</span></code>.  This performs a conversion, because Python's
+<code><span>unicode</span></code> type is immutable, but it also maintains a <i>reference</i> to the
+original <code><span>NSString</span></code>.  <code><span>NSString</span></code> and <code><span>NSMutableString</span></code> methods are
+available from the <code><span>objc.pyobjc_unicode</span></code> object, though they do not show up
+via Python's introspection mechanisms.  In order to get the latest Python
+representation of a <code><span>NSMutableString</span></code>, use the return value of its <code><span>self()</span></code>
+method.</p>
+<p>Python <code><span>str</span></code> instances are proxied by the <code><span>OC_PythonString</span></code> subclass of
+<code><span>NSString</span></code>.  This is a proxy, and will maintain the identity of the
+original <code><span>str</span></code> instance.  <code><span>OC_PythonString</span></code> will use the default encoding
+of <code><span>NSString</span></code>, so its results might be surprising if you are using non-ASCII
+text.  It is recommended that you use <code><span>unicode</span></code> whenever possible.  In order
+to help you determine where you are not using <code><span>unicode</span></code>, it is possible
+to trigger an <code><span>objc.PyObjCStrBridgeWarning</span></code> warning whenever a <code><span>str</span></code>
+instance crosses the bridge:</p>
+<pre>
+import objc
+objc.setStrBridgeEnabled(False)
+</pre>
+<p>To promote these to an exception, do the following:</p>
+<pre>
+import objc
+import warnings
+warnings.filterwarnings('error', objc.PyObjCStrBridgeWarning)
+</pre>
+</body>
+</html>

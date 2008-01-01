@@ -1,0 +1,68 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='NSObject'>
+    <method selector='eventDidFail:withError:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+  </class>
+  <class name='SBElementArray'>
+    <method selector='arrayByApplyingSelector:'>
+      <arg index='0' sel_of_type='@@:' />
+    </method>
+    <method selector='arrayByApplyingSelector:withObject:'>
+      <arg index='0' sel_of_type='@@:@' />
+    </method>
+  </class>
+  <class name='SBObject'>
+    <method comment='fixme' selector='sendEvent:id:parameters:' variadic='true' />
+  </class>
+  <class name='NSObject'>
+    <method selector='eventDidFail:withError:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+  </class>
+  <class name='SBElementArray'>
+    <method selector='arrayByApplyingSelector:'>
+      <arg index='0' sel_of_type='@@:' />
+    </method>
+    <method selector='arrayByApplyingSelector:withObject:'>
+      <arg index='0' sel_of_type='@@:@' />
+    </method>
+  </class>
+  <class name='SBObject'>
+    <method comment='fixme' selector='sendEvent:id:parameters:' variadic='true' />
+  </class>
+  <class name='NSObject'>
+    <method selector='eventDidFail:withError:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+  </class>
+  <class name='SBElementArray'>
+    <method selector='arrayByApplyingSelector:'>
+      <arg index='0' sel_of_type='@@:' />
+    </method>
+    <method selector='arrayByApplyingSelector:withObject:'>
+      <arg index='0' sel_of_type='@@:@' />
+    </method>
+  </class>
+  <class name='SBObject'>
+    <method comment='fixme' selector='sendEvent:id:parameters:' variadic='true' />
+  </class>
+  <class name='NSObject'>
+    <method selector='eventDidFail:withError:'>
+      <arg index='0' type='r^{AEDesc=I^^{OpaqueAEDataStorageType}}' />
+    </method>
+  </class>
+  <class name='SBElementArray'>
+    <method selector='arrayByApplyingSelector:'>
+      <arg index='0' sel_of_type='@@:' />
+    </method>
+    <method selector='arrayByApplyingSelector:withObject:'>
+      <arg index='0' sel_of_type='@@:@' />
+    </method>
+  </class>
+  <class name='SBObject'>
+    <method comment='fixme' selector='sendEvent:id:parameters:' variadic='true' />
+  </class>
+</signatures>

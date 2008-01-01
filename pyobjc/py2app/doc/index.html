@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>py2app - Create standalone Mac OS X applications with Python</title>
+<link rel="stylesheet" href="documentation.css" type="text/css" />
+</head>
+<body>
+<div class="document" id="py2app-create-standalone-mac-os-x-applications-with-python">
+<h1 class="title">py2app - Create standalone Mac OS X applications with Python</h1>
+<div class="contents topic">
+<p class="topic-title first"><a id="contents" name="contents">Contents</a></p>
+<ul class="simple">
+<li><a class="reference" href="#abstract" id="id1" name="id1">Abstract</a></li>
+<li><a class="reference" href="#installation" id="id2" name="id2">Installation</a><ul>
+<li><a class="reference" href="#uninstalling-py2app-0-2-x-or-earlier" id="id3" name="id3">Uninstalling py2app 0.2.x (or earlier)</a></li>
+<li><a class="reference" href="#installing-with-easy-install" id="id4" name="id4">Installing with easy_install</a></li>
+<li><a class="reference" href="#installing-from-source" id="id5" name="id5">Installing from source</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#upgrade-notes" id="id6" name="id6">Upgrade Notes</a></li>
+<li><a class="reference" href="#tutorial" id="id7" name="id7">Tutorial</a><ul>
+<li><a class="reference" href="#create-a-setup-py-file" id="id8" name="id8">Create a setup.py file</a></li>
+<li><a class="reference" href="#clean-up-your-build-directories" id="id9" name="id9">Clean up your build directories</a></li>
+<li><a class="reference" href="#development-with-alias-mode" id="id10" name="id10">Development with alias mode</a></li>
+<li><a class="reference" href="#running-your-application" id="id11" name="id11">Running your application</a></li>
+<li><a class="reference" href="#building-for-deployment" id="id12" name="id12">Building for deployment</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#online-resources" id="id13" name="id13">Online Resources</a></li>
+<li><a class="reference" href="#tweaking-your-info-plist" id="id14" name="id14">Tweaking your Info.plist</a><ul>
+<li><a class="reference" href="#commonly-customized-keys" id="id15" name="id15">Commonly customized keys</a></li>
+<li><a class="reference" href="#specifying-customizations" id="id16" name="id16">Specifying customizations</a></li>
+<li><a class="reference" href="#universal-binaries" id="id17" name="id17">Universal Binaries</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#example-setup-py-templates" id="id18" name="id18">Example setup.py templates</a><ul>
+<li><a class="reference" href="#basic" id="id19" name="id19">Basic</a></li>
+<li><a class="reference" href="#self-bootstrapping" id="id20" name="id20">Self-bootstrapping</a></li>
+<li><a class="reference" href="#cross-platform" id="id21" name="id21">Cross-platform</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#py2app-options" id="id22" name="id22">py2app Options</a><ul>
+<li><a class="reference" href="#option-reference" id="id23" name="id23">Option Reference</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#recipes" id="id24" name="id24">Recipes</a><ul>
+<li><a class="reference" href="#common-causes-for-incompatibility" id="id25" name="id25">Common causes for incompatibility</a></li>
+<li><a class="reference" href="#built-in-recipes" id="id26" name="id26">Built-in recipes</a></li>
+<li><a class="reference" href="#developing-recipes" id="id27" name="id27">Developing Recipes</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#implementation-details" id="id28" name="id28">Implementation Details</a><ul>
+<li><a class="reference" href="#argument-parsing" id="id29" name="id29">Argument Parsing</a></li>
+<li><a class="reference" href="#run-build-command" id="id30" name="id30">Run build command</a></li>
+<li><a class="reference" href="#depdency-resolution-via-modulegraph" id="id31" name="id31">Depdency resolution via modulegraph</a></li>
+<li><a class="reference" href="#apply-recipes" id="id32" name="id32">Apply recipes</a></li>
+<li><a class="reference" href="#apply-filters" id="id33" name="id33">Apply filters</a></li>
+<li><a class="reference" href="#produce-graphs" id="id34" name="id34">Produce graphs</a></li>
+<li><a class="reference" href="#create-the-app-bundle" id="id35" name="id35">Create the .app bundle</a></li>
+<li><a class="reference" href="#include-mach-o-dependencies" id="id36" name="id36">Include Mach-O dependencies</a></li>
+<li><a class="reference" href="#strip-the-result" id="id37" name="id37">Strip the result</a></li>
+<li><a class="reference" href="#copy-python-configuration" id="id38" name="id38">Copy Python configuration</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#scripts-installed-by-py2app" id="id39" name="id39">Scripts installed by py2app</a><ul>
+<li><a class="reference" href="#py2applet" id="id40" name="id40">py2applet</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#dependencies" id="id41" name="id41">Dependencies</a></li>
+<li><a class="reference" href="#license" id="id42" name="id42">License</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id1" id="abstract" name="abstract">Abstract</a></h1>
+<p>py2app is a Python <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> command which will allow you
+to make standalone application bundles and plugins from Python
+scripts. py2app is similar in purpose and design to <a class="reference" href="http://cheeseshop.python.org/pypi/py2exe/">py2exe</a> for
+Windows.</p>
+<p>This documentation corresponds to version 0.3.5 of py2app.</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id2" id="installation" name="installation">Installation</a></h1>
+<div class="section">
+<h2><a class="toc-backref" href="#id3" id="uninstalling-py2app-0-2-x-or-earlier" name="uninstalling-py2app-0-2-x-or-earlier">Uninstalling py2app 0.2.x (or earlier)</a></h2>
+<p>If you have a pre-setuptools version of py2app installed, you must first
+remove it before installing (you may have to run the interpreter with sudo,
+depending on how and where py2app was originally installed). There are
+three paths that need to be removed: <tt class="docutils literal"><span class="pre">py2app</span></tt> and <tt class="docutils literal"><span class="pre">py2app.pth</span></tt> in your
+site-packages folder, and the <tt class="docutils literal"><span class="pre">py2applet</span></tt> script which may be in
+<tt class="docutils literal"><span class="pre">/usr/local/bin/</span></tt> or otherwise in the bin directory belonging to the Python
+framework that was installed.</p>
+<p>Here is a Python script that should find these three paths and remove them
+if they exist (you may have to use sudo):</p>
+<pre class="literal-block">
+#!/usr/bin/env python
+import os, shutil
+from distutils.sysconfig import *
+py2app = os.path.join(get_python_lib(), 'py2app')
+import shutil
+if os.path.isdir(py2app):
+    print &quot;Removing &quot; + py2app
+    shutil.rmtree(py2app)
+
+if os.path.exists(py2app + '.pth'):
+    print &quot;Removing &quot; + py2app + '.pth'
+    os.unlink(py2app + '.pth')
+
+for path in os.environ['PATH'].split(':'):
+    script = os.path.join(path, 'py2applet')
+    if os.path.exists(script):
+        print &quot;Removing &quot; + script
+        os.unlink(script)
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id4" id="installing-with-easy-install" name="installing-with-easy-install">Installing with easy_install</a></h2>
+<p>To install py2app using <a class="reference" href="http://peak.telecommunity.com/DevCenter/EasyInstall">easy_install</a> you must make sure you have a recent
+version of <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> installed (as of this writing, 0.6b4 or later):</p>
+<pre class="literal-block">
+$ curl -O http://peak.telecommunity.com/dist/ez_setup.py
+$ sudo python ez_setup.py -U setuptools
+</pre>
+<p>To install or upgrade to the latest released version of py2app:</p>
+<pre class="literal-block">
+$ sudo easy_install -U py2app
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id5" id="installing-from-source" name="installing-from-source">Installing from source</a></h2>
+<p>To install py2app from source, simply use the normal procedure for
+installing any Python package. Since py2app uses <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a>,
+all dependencies (including <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> itself) will be automatically
+acquired and installed for you as appropriate:</p>
+<pre class="literal-block">
+$ python setup.py install
+</pre>
+<p>If you're using a svn checkout, it's recommended to use the <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a>
+<a class="reference" href="http://peak.telecommunity.com/DevCenter/setuptools#development-mode">develop command</a>, which will simply activate py2app directly from your
+source directory. This way you can do a <tt class="docutils literal"><span class="pre">svn</span> <span class="pre">up</span></tt> or make changes to the
+source code without re-installing every time:</p>
+<pre class="literal-block">
+$ python setup.py develop
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="upgrade-notes" name="upgrade-notes">Upgrade Notes</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">setup.py</span></tt> template has changed slightly in py2app 0.3 in order
+to accommodate the enhancements brought on by <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a>. Old <tt class="docutils literal"><span class="pre">setup.py</span></tt>
+scripts look like this:</p>
+<pre class="literal-block">
+from distutils.core import setup
+import py2app
+
+setup(
+    app=[&quot;myscript.py&quot;],
+)
+</pre>
+<p>New py2app scripts should look like this:</p>
+<pre class="literal-block">
+from setuptools import setup
+setup(
+    app=[&quot;myscript.py&quot;],
+    setup_requires=[&quot;py2app&quot;],
+)
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="tutorial" name="tutorial">Tutorial</a></h1>
+<p>Converting your scripts to Mac OS X applications is easy with py2app.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id8" id="create-a-setup-py-file" name="create-a-setup-py-file">Create a setup.py file</a></h2>
+<p>The first step is to create a <tt class="docutils literal"><span class="pre">setup.py</span></tt> file for your script. <tt class="docutils literal"><span class="pre">setup.py</span></tt>
+is the &quot;project file&quot; that tells <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> everything it needs to know
+to build your application. We'll use the <a class="reference" href="#py2applet">py2applet</a> script to do that:</p>
+<pre class="literal-block">
+$ py2applet --make-setup MyApplication.py
+Wrote setup.py
+</pre>
+<p>If your application has an icon (in <tt class="docutils literal"><span class="pre">.icns</span></tt> format) or data files that it
+requires, you should also specify them as arguments to <a class="reference" href="#py2applet">py2applet</a>.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id9" id="clean-up-your-build-directories" name="clean-up-your-build-directories">Clean up your build directories</a></h2>
+<p>Before starting development or switching development modes it's usually
+a good idea to ensure that your <tt class="docutils literal"><span class="pre">build</span></tt> and <tt class="docutils literal"><span class="pre">dist</span></tt> directories are
+cleaned out:</p>
+<pre class="literal-block">
+$ rm -rf build dist
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id10" id="development-with-alias-mode" name="development-with-alias-mode">Development with alias mode</a></h2>
+<p>Alias mode (the <tt class="docutils literal"><span class="pre">-A</span></tt> or <tt class="docutils literal"><span class="pre">--alias</span></tt> option) instructs py2app to build
+an application bundle that uses your source and data files in-place. It
+does not create standalone applications, and the applications built in
+alias mode are not portable to other machines. This mode is similar to the
+<a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> <tt class="docutils literal"><span class="pre">develop</span></tt> command, or <a class="reference" href="http://developer.apple.com/tools/xcode/">Xcode</a>'s zero-link feature.</p>
+<p>To build the application in alias mode, execute <tt class="docutils literal"><span class="pre">setup.py</span></tt> with the
+<tt class="docutils literal"><span class="pre">py2app</span></tt> command and specify the <tt class="docutils literal"><span class="pre">-A</span></tt> option (or <tt class="docutils literal"><span class="pre">--alias</span></tt>):</p>
+<pre class="literal-block">
+$ python setup.py py2app -A
+</pre>
+<p>After this, py2app will spit out a bunch of messages to your terminal
+and you'll end up with new <tt class="docutils literal"><span class="pre">build</span></tt> and <tt class="docutils literal"><span class="pre">dist</span></tt> folders. The <tt class="docutils literal"><span class="pre">build</span></tt>
+folder contains build sludge that you'll never need to touch,
+and the <tt class="docutils literal"><span class="pre">dist</span></tt> folder contains your application bundle.
+The application bundle will be named after your script; if your script was
+named <tt class="docutils literal"><span class="pre">MyApplication.py</span></tt>, then your application bundle will be named
+<tt class="docutils literal"><span class="pre">MyApplication.app</span></tt>. Note that Finder displays application bundles without
+the <tt class="docutils literal"><span class="pre">.app</span></tt> extension.</p>
+<p>You only need to run this command again when you add data files or change
+options. Changes to your source code won't require rebuilding!</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id11" id="running-your-application" name="running-your-application">Running your application</a></h2>
+<p>During development, it's often useful to have your application
+attached to the Terminal. This allows you to better debug it, e.g. by
+inserting <tt class="docutils literal"><span class="pre">import</span> <span class="pre">pdb;</span> <span class="pre">pdb.set_trace()</span></tt> into your code to inspect it
+interactively at runtime.</p>
+<p>To run your application directly from the Terminal:</p>
+<pre class="literal-block">
+$ ./dist/MyApplication.app/Contents/MacOS/MyApplication
+</pre>
+<p>To start your application normally with LaunchServices, you can use the
+<tt class="docutils literal"><span class="pre">open</span></tt> tool:</p>
+<pre class="literal-block">
+$ open -a dist/MyApplication.app
+</pre>
+<p>If you want to specify &quot;open document&quot; events, to simulate dropping files on
+your application, just specify them as additional arguments to <tt class="docutils literal"><span class="pre">open</span></tt>.</p>
+<p>You may of course also double-click your application from Finder.</p>
+<p>When run normally, your application's stdout and stderr output will go to the
+Console logs. To see them, open the Console application:</p>
+<pre class="literal-block">
+$ open -a Console
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id12" id="building-for-deployment" name="building-for-deployment">Building for deployment</a></h2>
+<p>After you've got your application working smoothly in alias mode, it's time
+to start building a redistributable version. Since we're switching from
+alias mode to normal mode, you should remove your <tt class="docutils literal"><span class="pre">build</span></tt> and <tt class="docutils literal"><span class="pre">dist</span></tt>
+folders as above.</p>
+<p>Building a redistributable application consists of simply running the
+<tt class="docutils literal"><span class="pre">py2app</span></tt> command:</p>
+<pre class="literal-block">
+$ python setup.py py2app
+</pre>
+<p>This will assemble your application as <tt class="docutils literal"><span class="pre">dist/MyApplication.app</span></tt>. Since
+this application is self-contained, you will have to run the <tt class="docutils literal"><span class="pre">py2app</span></tt>
+command again any time you change any source code, data files, options, etc.</p>
+<p>The easiest way to wrap your application up for distribution at this point
+is simply to right-click the application from Finder and choose
+&quot;Create Archive&quot;.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="online-resources" name="online-resources">Online Resources</a></h1>
+<p>There are several online resources to help you get along with py2app.</p>
+<dl class="docutils">
+<dt>Mailing list:</dt>
+<dd><a class="reference" href="http://www.python.org/community/sigs/current/pythonmac-sig/">http://www.python.org/community/sigs/current/pythonmac-sig/</a></dd>
+<dt>Trac (issue tracker/wiki/source browser):</dt>
+<dd><a class="reference" href="http://trac.pythonmac.org/py2app/">http://trac.pythonmac.org/py2app/</a></dd>
+<dt>Subversion Trunk (latest sources):</dt>
+<dd><a class="reference" href="http://svn.pythonmac.org/py2app/py2app/trunk/">http://svn.pythonmac.org/py2app/py2app/trunk/</a></dd>
+<dt>CheeseShop Entry:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/py2app/">http://cheeseshop.python.org/pypi/py2app/</a></dd>
+</dl>
+<p>If you're looking for help, pay special attention to the <tt class="docutils literal"><span class="pre">examples</span></tt>
+folder in the source, which demonstrates many common use cases.</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id14" id="tweaking-your-info-plist" name="tweaking-your-info-plist">Tweaking your Info.plist</a></h1>
+<p>It's often useful to make some tweaks to your Info.plist file to change how
+your application behaves and interacts with Mac OS X. The most complete
+reference for the keys available to you is in Apple's
+<a class="reference" href="http://developer.apple.com/documentation/MacOSX/Conceptual/BPRuntimeConfig/index.html">Runtime Configuration Guidelines</a>.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id15" id="commonly-customized-keys" name="commonly-customized-keys">Commonly customized keys</a></h2>
+<p>Here are some commonly customized property list keys relevant to py2app
+applications:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">CFBundleDocumentTypes</span></tt>:</dt>
+<dd>An array of dictionaries describing document types supported by the bundle.
+Use this to associate your application with opening or editing document
+types, and/or to assign icons to document types.</dd>
+<dt><tt class="docutils literal"><span class="pre">CFBundleGetInfoString</span></tt>:</dt>
+<dd>The text shown by Finder's Get Info panel.</dd>
+<dt><tt class="docutils literal"><span class="pre">CFBundleIdentifier</span></tt>:</dt>
+<dd>The identifier string for your application (in reverse-domain syntax),
+e.g. <tt class="docutils literal"><span class="pre">&quot;org.pythonmac.py2app&quot;</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">CFBundleURLTypes</span></tt>:</dt>
+<dd>An array of dictionaries describing URL schemes supported by the bundle.</dd>
+<dt><tt class="docutils literal"><span class="pre">LSBackgroundOnly</span></tt>:</dt>
+<dd>If <tt class="docutils literal"><span class="pre">True</span></tt>, the bundle will be a faceless background application.</dd>
+<dt><tt class="docutils literal"><span class="pre">LSUIElement</span></tt>:</dt>
+<dd>If <tt class="docutils literal"><span class="pre">True</span></tt>, the bundle will be an agent application. It will not appear
+in the Dock or Force Quit window, but still can come to the foreground
+and present a UI.</dd>
+<dt><tt class="docutils literal"><span class="pre">NSServices</span></tt>:</dt>
+<dd>An array of dictionaries specifying the services provided by the
+application.</dd>
+</dl>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id16" id="specifying-customizations" name="specifying-customizations">Specifying customizations</a></h2>
+<p>There are three ways to specify <tt class="docutils literal"><span class="pre">Info.plist</span></tt> customizations to py2app.</p>
+<p>You can specify an Info.plist XML file on the command-line with the
+<tt class="docutils literal"><span class="pre">--plist</span></tt> option, or as a string in your <tt class="docutils literal"><span class="pre">setup.py</span></tt>:</p>
+<pre class="literal-block">
+setup(
+    app=['MyApplication.py'],
+    options=dict(py2app=dict(
+        plist='Info.plist',
+    )),
+)
+</pre>
+<p>You may also specify the plist as a Python dict in the <tt class="docutils literal"><span class="pre">setup.py</span></tt>:</p>
+<pre class="literal-block">
+setup(
+    app=['MyApplication.py'],
+    options=dict(py2app=dict(
+        plist=dict(
+            LSPrefersPPC=True,
+        ),
+    )),
+)
+</pre>
+<p>Or you may use a hybrid approach using the standard library plistlib module:</p>
+<pre class="literal-block">
+from plistlib import Plist
+plist = Plist.fromFile('Info.plist')
+plist.update(dict(
+    LSPrefersPPC=True,
+))
+setup(
+    app=['MyApplication.py'],
+    options=dict(py2app=dict(
+        plist=plist,
+    )),
+)
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id17" id="universal-binaries" name="universal-binaries">Universal Binaries</a></h2>
+<p>py2app is currently fully compatible with Universal Binaries, however
+it does not try and detect which architectures your application will
+correctly run on.</p>
+<p>If you are building your application with a version of Python that is not
+universal, or have extensions that are not universal, then you must set
+the <tt class="docutils literal"><span class="pre">LSPrefersPPC</span></tt> Info.plist key to <tt class="docutils literal"><span class="pre">True</span></tt>. This will force the
+application to run translated with Rosetta by default. This is necessary
+because the py2app bootstrap application is universal, so Finder
+will try and launch natively by default.</p>
+<p>Alternatively, the <tt class="docutils literal"><span class="pre">--prefer-ppc</span></tt> option can be used as a shortcut to
+ensure that this Info.plist key is set.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id18" id="example-setup-py-templates" name="example-setup-py-templates">Example setup.py templates</a></h1>
+<div class="section">
+<h2><a class="toc-backref" href="#id19" id="basic" name="basic">Basic</a></h2>
+<p>The simplest possible <tt class="docutils literal"><span class="pre">setup.py</span></tt> script to build a py2app application
+looks like the following:</p>
+<pre class="literal-block">
+&quot;&quot;&quot;
+py2app build script for MyApplication
+
+Usage:
+    python setup.py py2app
+&quot;&quot;&quot;
+from setuptools import setup
+setup(
+    app=[&quot;MyApplication.py&quot;],
+    setup_requires=[&quot;py2app&quot;],
+)
+</pre>
+<p>The <a class="reference" href="#py2applet">py2applet</a> script can create <tt class="docutils literal"><span class="pre">setup.py</span></tt> files of this variety
+for you automatically:</p>
+<pre class="literal-block">
+$ py2applet --make-setup MyApplication.py
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id20" id="self-bootstrapping" name="self-bootstrapping">Self-bootstrapping</a></h2>
+<p>For ease of distribution, you may wish to have your <tt class="docutils literal"><span class="pre">setup.py</span></tt> script
+automatically ensure that <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> is installed. This requires having a
+copy of <tt class="docutils literal"><span class="pre">ez_setup</span></tt> in your project, which can be obtained from here:</p>
+<pre class="literal-block">
+http://peak.telecommunity.com/dist/ez_setup.py
+</pre>
+<p>Or it may be referenced from <a class="reference" href="http://svnbook.red-bean.com/en/1.1/ch07s04.html">svn:externals</a> as such:</p>
+<pre class="literal-block">
+ez_setup svn://svn.eby-sarna.com/svnroot/ez_setup
+</pre>
+<p>If choosing the <a class="reference" href="http://svnbook.red-bean.com/en/1.1/ch07s04.html">svn:externals</a> approach you should consider that your
+project's source code will depend on a third party, which has reliability
+and security implications. Also note that the <tt class="docutils literal"><span class="pre">ez_setup</span></tt> external uses
+the <tt class="docutils literal"><span class="pre">svn://</span></tt> protocol (TCP port 3690) rather than <tt class="docutils literal"><span class="pre">http://</span></tt> so it is
+somewhat less likely to work behind some firewalls or proxies.</p>
+<p>Once this is done, you simply add the two line <tt class="docutils literal"><span class="pre">ez_setup</span></tt> preamble to the
+very beginning of your <tt class="docutils literal"><span class="pre">setup.py</span></tt>:</p>
+<pre class="literal-block">
+&quot;&quot;&quot;
+py2app build script for MyApplication.
+
+Will automatically ensure that all build prerequisites are available
+via ez_setup.
+
+Usage:
+    python setup.py py2app
+&quot;&quot;&quot;
+import ez_setup
+ez_setup.use_setuptools()
+
+from setuptools import setup
+setup(
+    app=[&quot;MyApplication.py&quot;],
+    setup_requires=[&quot;py2app&quot;],
+)
+</pre>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id21" id="cross-platform" name="cross-platform">Cross-platform</a></h2>
+<p>Cross-platform applications can share a <tt class="docutils literal"><span class="pre">setup.py</span></tt> script for both
+<a class="reference" href="http://cheeseshop.python.org/pypi/py2exe/">py2exe</a> and py2app. Here is an example <a class="reference" href="#self-bootstrapping">Self-bootstrapping</a>
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> that will build an application on Windows or Mac OS X:</p>
+<pre class="literal-block">
+ &quot;&quot;&quot;
+ py2app/py2exe build script for MyApplication.
+
+ Will automatically ensure that all build prerequisites are available
+ via ez_setup
+
+ Usage (Mac OS X):
+     python setup.py py2app
+
+ Usage (Windows):
+     python setup.py py2exe
+ &quot;&quot;&quot;
+ import ez_setup
+ ez_setup.use_setuptools()
+
+ import sys
+ from setuptools import setup
+
+ mainscript = 'MyApplication.py'
+
+ if sys.platform == 'darwin':
+     extra_options = dict(
+         setup_requires=['py2app'],
+         app=[mainscript],
+         # Cross-platform applications generally expect sys.argv to
+         # be used for opening files.
+         options=dict(py2app=dict(argv_emulation=True)),
+     )
+ elif sys.platform == 'win32':
+     extra_options = dict(
+         setup_requires=['py2exe'],
+         app=[mainscript],
+     )
+else:
+     extra_options = dict(
+         # Normally unix-like platforms will use &quot;setup.py install&quot;
+         # and install the main script as such
+         scripts=[mainscript],
+     )
+
+setup(
+    name=&quot;MyApplication&quot;,
+    **extra_options
+)
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id22" id="py2app-options" name="py2app-options">py2app Options</a></h1>
+<p>Options can be specified to py2app to influence the build procedure in three
+different ways:</p>
+<p>At the command line:</p>
+<pre class="literal-block">
+$ python setup.py py2app --argv-emulation
+</pre>
+<p>In your <tt class="docutils literal"><span class="pre">setup.py</span></tt>:</p>
+<pre class="literal-block">
+setup(
+    app=['MyApplication.py'],
+    options=dict(py2app=dict(
+        argv_emulation=1,
+    )),
+)
+</pre>
+<p>In a <tt class="docutils literal"><span class="pre">setup.cfg</span></tt> file:</p>
+<pre class="literal-block">
+[py2app]
+argv-emulation=1
+</pre>
+<p>Note that when translating command-line options for use in <tt class="docutils literal"><span class="pre">setup.py</span></tt>, you
+must replace hyphens (<tt class="docutils literal"><span class="pre">-</span></tt>) with underscores (<tt class="docutils literal"><span class="pre">_</span></tt>). <tt class="docutils literal"><span class="pre">setup.cfg</span></tt> files
+may use either hyphens or underscores, but command-line options must always
+use the hyphens.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id23" id="option-reference" name="option-reference">Option Reference</a></h2>
+<p>To enumerate the options that py2app supports, use the following command:</p>
+<pre class="literal-block">
+$ python setup.py py2app --help
+</pre>
+<p>Options for 'py2app' command:</p>
+<pre class="literal-block">
+--optimize (-O)         optimization level: -O1 for &quot;python -O&quot;, -O2 for
+                        &quot;python -OO&quot;, and -O0 to disable [default: -O0]
+--includes (-i)         comma-separated list of modules to include
+--packages (-p)         comma-separated list of packages to include
+--iconfile              Icon file to use
+--excludes (-e)         comma-separated list of modules to exclude
+--dylib-excludes (-E)   comma-separated list of frameworks or dylibs to
+                        exclude
+--datamodels            xcdatamodels to be compiled and copied into
+                        Resources
+--resources (-r)        comma-separated list of additional data files and
+                        folders to include (not for code!)
+--frameworks (-f)       comma-separated list of additional frameworks and
+                        dylibs to include
+--plist (-P)            Info.plist template file, dict, or plistlib.Plist
+--extension             Bundle extension [default:.app for app, .plugin for
+                        plugin]
+--graph (-g)            output module dependency graph
+--xref (-x)             output module cross-reference as html
+--no-strip              do not strip debug and local symbols from output
+--no-chdir (-C)         do not change to the data directory
+                        (Contents/Resources) [forced for plugins]
+--semi-standalone (-s)  depend on an existing installation of Python 2.4
+--alias (-A)            Use an alias to current source file (for development
+                        only!)
+--argv-emulation (-a)   Use argv emulation [disabled for plugins]
+--argv-inject           Inject some commands into the argv
+--use-pythonpath        Allow PYTHONPATH to effect the interpreter's
+                        environment
+--bdist-base (-b)       base directory for build library (default is build)
+--dist-dir (-d)         directory to put final built distributions in
+                        (default is dist)
+--site-packages         include the system and user site-packages into
+                        sys.path
+--strip (-S)            strip debug and local symbols from output (on by
+                        default, for compatibility)
+--prefer-ppc            Force application to run translated on i386
+                        (LSPrefersPPC=True)
+--debug-modulegraph     Drop to pdb console after the module finding phase
+                        is complete
+--debug-skip-macholib   skip macholib phase (app will not be standalone!)
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id24" id="recipes" name="recipes">Recipes</a></h1>
+<p>py2app includes a mechanism for working around package incompatibilities,
+and stripping unwanted dependencies automatically. These are called recipes.</p>
+<p>A future version of py2app will support packaging of <a class="reference" href="http://peak.telecommunity.com/DevCenter/PythonEggs">Python Eggs</a>. Once
+this is established, recipes will be obsolete since eggs contain all of the
+metadata needed to build a working standalone application.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id25" id="common-causes-for-incompatibility" name="common-causes-for-incompatibility">Common causes for incompatibility</a></h2>
+<p>Some Python packages are written in such a way that they aren't compatible
+with being packaged. There are two main causes of this:</p>
+<ul class="simple">
+<li>Using <tt class="docutils literal"><span class="pre">__import__</span></tt> or otherwise importing code without usage of the
+<tt class="docutils literal"><span class="pre">import</span></tt> statement.</li>
+<li>Requiring in-package data files</li>
+</ul>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id26" id="built-in-recipes" name="built-in-recipes">Built-in recipes</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">cjkcodecs</span></tt>:</dt>
+<dd>All codecs in the package are imported.</dd>
+<dt><tt class="docutils literal"><span class="pre">docutils</span></tt>:</dt>
+<dd>Several of its internal components are automatically imported
+(<tt class="docutils literal"><span class="pre">languages</span></tt>, <tt class="docutils literal"><span class="pre">parsers</span></tt>, <tt class="docutils literal"><span class="pre">readers</span></tt>, <tt class="docutils literal"><span class="pre">writers</span></tt>,
+<tt class="docutils literal"><span class="pre">parsers.rst.directives</span></tt>, <tt class="docutils literal"><span class="pre">parsers.rst.langauges</span></tt>).</dd>
+<dt><tt class="docutils literal"><span class="pre">matplotlib</span></tt>:</dt>
+<dd>A dependency on <tt class="docutils literal"><span class="pre">pytz.zoneinfo.UTC</span></tt> is implied, and the <tt class="docutils literal"><span class="pre">matplotlib</span></tt>
+package is included in its entirety out of the zip file.</dd>
+<dt><tt class="docutils literal"><span class="pre">numpy</span></tt>:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">numpy</span></tt> package is included in its entirety out of the zip file.</dd>
+<dt><tt class="docutils literal"><span class="pre">PIL</span></tt>:</dt>
+<dd>Locates and includes all image plugins (Python modules that end with
+<tt class="docutils literal"><span class="pre">ImagePlugin.py</span></tt>), removes unwanted dependencies on <tt class="docutils literal"><span class="pre">Tkinter</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">pydoc</span></tt>:</dt>
+<dd>The implicit references on the several modules are removed (<tt class="docutils literal"><span class="pre">Tkinter</span></tt>,
+<tt class="docutils literal"><span class="pre">tty</span></tt>, <tt class="docutils literal"><span class="pre">BaseHTTPServer</span></tt>, <tt class="docutils literal"><span class="pre">mimetools</span></tt>, <tt class="docutils literal"><span class="pre">select</span></tt>, <tt class="docutils literal"><span class="pre">threading</span></tt>,
+<tt class="docutils literal"><span class="pre">ic</span></tt>, <tt class="docutils literal"><span class="pre">getopt</span></tt>, <tt class="docutils literal"><span class="pre">nturl2path</span></tt>).</dd>
+<dt><tt class="docutils literal"><span class="pre">pygame</span></tt>:</dt>
+<dd>Several data files that are included in the zip file where <tt class="docutils literal"><span class="pre">pygame</span></tt> can
+find them (<tt class="docutils literal"><span class="pre">freesansbold.ttf</span></tt>, <tt class="docutils literal"><span class="pre">pygame_icon.tiff</span></tt>,
+<tt class="docutils literal"><span class="pre">pygame_icon.icns</span></tt>).</dd>
+<dt><tt class="docutils literal"><span class="pre">PyOpenGL</span></tt>:</dt>
+<dd>If the installed version of PyOpenGL reads a <tt class="docutils literal"><span class="pre">version</span></tt> file to determine
+its version, then the <tt class="docutils literal"><span class="pre">OpenGL</span></tt> package is included in its entirety out of
+the zip file.</dd>
+<dt><tt class="docutils literal"><span class="pre">scipy</span></tt>:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">scipy</span></tt> and <tt class="docutils literal"><span class="pre">numpy</span></tt> packages are included in their entirety
+out of the zip file.</dd>
+<dt><tt class="docutils literal"><span class="pre">sip</span></tt>:</dt>
+<dd>If <tt class="docutils literal"><span class="pre">sip</span></tt> is detected, then all sip-using packages are included
+(e.g. PyQt).</dd>
+</dl>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id27" id="developing-recipes" name="developing-recipes">Developing Recipes</a></h2>
+<p>py2app currently searches for recipes only in the <tt class="docutils literal"><span class="pre">py2app.recipes</span></tt> module.
+A recipe is an object that implements a <tt class="docutils literal"><span class="pre">check(py2app_cmd,</span> <span class="pre">modulegraph)</span></tt>
+method.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">py2app_cmd</span></tt>:</dt>
+<dd>The py2app command instance (a subclass of <tt class="docutils literal"><span class="pre">setuptools.Command</span></tt>).
+See the source for <tt class="docutils literal"><span class="pre">py2app.build_app</span></tt> for reference.</dd>
+<dt><tt class="docutils literal"><span class="pre">modulegraph</span></tt>:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">modulegraph.modulegraph.ModuleGraph</span></tt> instance.</dd>
+</dl>
+<p>A recipe should return either <tt class="docutils literal"><span class="pre">None</span></tt> or a <tt class="docutils literal"><span class="pre">dict</span></tt> instance.</p>
+<p>If a recipe returns <tt class="docutils literal"><span class="pre">None</span></tt> it should not have performed any actions with
+side-effects, and it may be called again zero or more times.</p>
+<p>If a recipe returns a <tt class="docutils literal"><span class="pre">dict</span></tt> instance, it will not be called again. The
+returned <tt class="docutils literal"><span class="pre">dict</span></tt> may have any of these optional string keys:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">filters</span></tt>:</dt>
+<dd>A list of filter functions to be called with every module in the
+modulegraph during flattening. If the filter returns False, the module
+and any of its dependencies will not be included in the output. This is
+similar in purpose to the <tt class="docutils literal"><span class="pre">excludes</span></tt> option, but can be any predicate
+(e.g. to exclude all modules in a given path).</dd>
+<dt><tt class="docutils literal"><span class="pre">loader_files</span></tt>:</dt>
+<dd>Used to include data files inside the <tt class="docutils literal"><span class="pre">site-packages.zip</span></tt>. This is a
+list of 2-tuples: <tt class="docutils literal"><span class="pre">[(subdir,</span> <span class="pre">files),</span> <span class="pre">...]</span></tt>. <tt class="docutils literal"><span class="pre">subdir</span></tt> is the path
+within <tt class="docutils literal"><span class="pre">site-packages.zip</span></tt> and <tt class="docutils literal"><span class="pre">files</span></tt> is the list of files to include
+in that directory.</dd>
+<dt><tt class="docutils literal"><span class="pre">packages</span></tt>:</dt>
+<dd>A list of package names to be included in their entirety outside of the
+<tt class="docutils literal"><span class="pre">site-packages.zip</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">prescripts</span></tt>:</dt>
+<dd>A list of additional Python scripts to run before initializing the main
+script. This is often used to monkey-patch included modules so that they
+work in a frozen environment. The prescripts may be module names,
+file names, or file-like objects containing Python code (e.g. StringIO).
+Note that if a file-like object is used, it will not currently be scanned
+for additional dependencies.</dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id28" id="implementation-details" name="implementation-details">Implementation Details</a></h1>
+<p>For those interested in the implementation of py2app, here's a quick
+rundown of what happens.</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id29" id="argument-parsing" name="argument-parsing">Argument Parsing</a></h2>
+<p>When <tt class="docutils literal"><span class="pre">setup.py</span></tt> is run, the normal <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> / <a class="reference" href="http://docs.python.org/lib/module-distutils.html">distutils</a>
+<tt class="docutils literal"><span class="pre">sys.argv</span></tt> parsing takes place.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id30" id="run-build-command" name="run-build-command">Run build command</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">build</span></tt> command is run to ensure that any extensions specified in the
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> will be built prior to the <tt class="docutils literal"><span class="pre">py2app</span></tt> command. The build
+directory will be added to <tt class="docutils literal"><span class="pre">sys.path</span></tt> so that <tt class="docutils literal"><span class="pre">modulegraph</span></tt> will find
+the extensions built during this command.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id31" id="depdency-resolution-via-modulegraph" name="depdency-resolution-via-modulegraph">Depdency resolution via modulegraph</a></h2>
+<p>The main script is compiled to Python bytecode and analyzed by modulegraph
+for <tt class="docutils literal"><span class="pre">import</span></tt> bytecode. It uses this to build a dependency graph of all
+involved Python modules.</p>
+<p>The dependency graph is primed with any <tt class="docutils literal"><span class="pre">--includes</span></tt>, <tt class="docutils literal"><span class="pre">--excludes</span></tt>, or
+<tt class="docutils literal"><span class="pre">--packages</span></tt> options.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id32" id="apply-recipes" name="apply-recipes">Apply recipes</a></h2>
+<p>All of the <a class="reference" href="#recipes">Recipes</a> will be run in order to find library-specific tweaks
+necessary to build the application properly.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id33" id="apply-filters" name="apply-filters">Apply filters</a></h2>
+<p>All filters specified in recipes or otherwise added to the py2app Command
+object will be run to filter out the dependency graph.</p>
+<p>The built-in filter <tt class="docutils literal"><span class="pre">not_system_filter</span></tt> will
+always be run for every application built. This ensures that the contents
+of your Mac OS X installation (<tt class="docutils literal"><span class="pre">/usr/</span></tt>, <tt class="docutils literal"><span class="pre">/System/</span></tt>, excluding
+<tt class="docutils literal"><span class="pre">/usr/local/</span></tt>) will be excluded.</p>
+<p>If the <tt class="docutils literal"><span class="pre">--semi-standalone</span></tt> option is used (forced if a vendor Python is
+being used), then the <tt class="docutils literal"><span class="pre">not_stdlib_filter</span></tt> will be automatically added to
+ensure that the Python standard library is not included.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id34" id="produce-graphs" name="produce-graphs">Produce graphs</a></h2>
+<p>If the <tt class="docutils literal"><span class="pre">--xref</span></tt> or <tt class="docutils literal"><span class="pre">--graph</span></tt> option is used, then the <tt class="docutils literal"><span class="pre">modulegraph</span></tt> is
+output to HTML or <a class="reference" href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> respectively. The <tt class="docutils literal"><span class="pre">.html</span></tt> or <tt class="docutils literal"><span class="pre">.dot</span></tt> file
+will be in the <tt class="docutils literal"><span class="pre">dist</span></tt> folder, and will share the application's name.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id35" id="create-the-app-bundle" name="create-the-app-bundle">Create the .app bundle</a></h2>
+<p>An application bundle will be created with the name of your application.</p>
+<p>The <tt class="docutils literal"><span class="pre">Contents/Info.plist</span></tt> will be created from the <tt class="docutils literal"><span class="pre">dict</span></tt> or filename
+given in the <tt class="docutils literal"><span class="pre">plist</span></tt> option. py2app will fill in any missing keys as
+necessary.</p>
+<p>A <tt class="docutils literal"><span class="pre">__boot__.py</span></tt> script will be created in the <tt class="docutils literal"><span class="pre">Contents/Resources/</span></tt> folder
+of the application bundle. This script runs any prescripts used by the
+application and then your main script.</p>
+<p>If the <tt class="docutils literal"><span class="pre">--alias</span></tt> option is being used, the build procedure is finished.</p>
+<p>The main script of your application will be copied <em>as-is</em> to the
+<tt class="docutils literal"><span class="pre">Contents/Resources/</span></tt> folder of the application bundle. If you want to
+obfuscate anything (by having it as a <tt class="docutils literal"><span class="pre">.pyc</span></tt> in the zip), then you
+<em>must not</em> place it in the main script!</p>
+<p>Packages that were explicitly included with the <tt class="docutils literal"><span class="pre">packages</span></tt> option, or by
+a recipe, will be placed in <tt class="docutils literal"><span class="pre">Contents/Resources/lib/python2.X/</span></tt>.</p>
+<p>A zip file containing all Python dependencies is created at
+<tt class="docutils literal"><span class="pre">Contents/Resources/Python/site-packages.zip</span></tt>.</p>
+<p>Extensions (which can't be included in the zip) are copied to the
+<tt class="docutils literal"><span class="pre">Contents/Resources/lib/python2.X/lib-dynload/</span></tt> folder.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id36" id="include-mach-o-dependencies" name="include-mach-o-dependencies">Include Mach-O dependencies</a></h2>
+<p><a class="reference" href="http://cheeseshop.python.org/pypi/macholib/">macholib</a> is used to ensure the application will run on other computers
+without the need to install additional components. All Mach-O
+files (executables, frameworks, bundles, extensions) used by the application
+are located and copied into the application bundle.</p>
+<p>The Mach-O load commands for these Mach-O files are then rewritten to be
+<tt class="docutils literal"><span class="pre">&#64;executable_path/../Frameworks/</span></tt> relative, so that dyld knows to find
+them inside the application bundle.</p>
+<p><tt class="docutils literal"><span class="pre">Python.framework</span></tt> is special-cased here so as to only include the bare
+minimum, otherwise the documentation, entire standard library, etc. would've
+been included. If the <tt class="docutils literal"><span class="pre">--semi-standalone</span></tt> option or a vendor Python is used,
+then the <tt class="docutils literal"><span class="pre">Python.framework</span></tt> is ignored. All other vendor files (those in
+<tt class="docutils literal"><span class="pre">/usr/</span></tt> or <tt class="docutils literal"><span class="pre">/System/</span></tt> excluding <tt class="docutils literal"><span class="pre">/usr/local/</span></tt>) are also excluded.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id37" id="strip-the-result" name="strip-the-result">Strip the result</a></h2>
+<p>Unless the <tt class="docutils literal"><span class="pre">--no-strip</span></tt> option is specified, all Mach-O files in the
+application bundle are stripped using the <a class="reference" href="x-man-page://1/strip">strip</a> tool. This removes
+debugging symbols to make your application smaller.</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id38" id="copy-python-configuration" name="copy-python-configuration">Copy Python configuration</a></h2>
+<p>This only occurs when not using a vendor Python or using the
+<tt class="docutils literal"><span class="pre">--semi-standalone</span></tt> option.</p>
+<p>The Python configuration, which is used by <tt class="docutils literal"><span class="pre">distutils</span></tt> and <tt class="docutils literal"><span class="pre">pkg_resources</span></tt>
+is copied to <tt class="docutils literal"><span class="pre">Contents/Resources/lib/python2.X/config/</span></tt>. This is needed
+to acquire settings relevant to the way Python was built.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id39" id="scripts-installed-by-py2app" name="scripts-installed-by-py2app">Scripts installed by py2app</a></h1>
+<div class="section">
+<h2><a class="toc-backref" href="#id40" id="py2applet" name="py2applet">py2applet</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">py2applet</span></tt> script can be used either to create an application
+quickly in-place, or to generate a <tt class="docutils literal"><span class="pre">setup.py</span></tt> file that does the same.</p>
+<p>In normal usage, simply run <tt class="docutils literal"><span class="pre">py2applet</span></tt> with the options you would
+normally pass to the <tt class="docutils literal"><span class="pre">py2app</span></tt> command, plus the names of any scripts,
+packages, icons, plist files, or data files that you want to generate
+the application from.</p>
+<p>The <tt class="docutils literal"><span class="pre">--argv-emulation</span></tt> option is assumed to be desired by default for
+<tt class="docutils literal"><span class="pre">py2applet</span></tt> scripts.</p>
+<p>The first <tt class="docutils literal"><span class="pre">.py</span></tt> file is the main script. The application's name will
+be derived from this main script.</p>
+<p>The first <tt class="docutils literal"><span class="pre">.icns</span></tt> file, if any, will be used as the application's icon
+(equivalent to using the <tt class="docutils literal"><span class="pre">--iconfile</span></tt> option).</p>
+<p>Any folder given that contains an <tt class="docutils literal"><span class="pre">__init__.py</span></tt> will be wholly included as
+out of the zip file (equivalent to using the <tt class="docutils literal"><span class="pre">--packages</span></tt> option).</p>
+<p>Any other file or folder will be included in the <tt class="docutils literal"><span class="pre">Contents/Resources/</span></tt>
+directory of the application bundle (equivalent to the <tt class="docutils literal"><span class="pre">--resources</span></tt>
+option).</p>
+<p>If <tt class="docutils literal"><span class="pre">--make-setup</span></tt> is passed as the first option to <tt class="docutils literal"><span class="pre">py2applet</span></tt>, it will
+generate a <tt class="docutils literal"><span class="pre">setup.py</span></tt> file that would do the above if run. This can
+be used to quickly generate a <tt class="docutils literal"><span class="pre">setup.py</span></tt> for a new project, or if you
+need to tweak a few complex options. The <a class="reference" href="#tutorial">Tutorial</a> demonstrates this
+functionality.</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id41" id="dependencies" name="dependencies">Dependencies</a></h1>
+<p>Note that these dependencies should automatically be satisfied by the
+installation procedure and do not need to be acquired separately.</p>
+<dl class="docutils">
+<dt>setuptools:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> provides enhancements to <a class="reference" href="http://docs.python.org/lib/module-distutils.html">distutils</a>, as well as the
+mechanisms for creating and working with <a class="reference" href="http://peak.telecommunity.com/DevCenter/PythonEggs">Python Eggs</a>. py2app
+is distributed only as a <a class="reference" href="http://peak.telecommunity.com/DevCenter/PythonEggs">Python Egg</a>.</dd>
+<dt>bdist_mpkg:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/bdist_mpkg/">bdist_mpkg</a> is another <a class="reference" href="http://cheeseshop.python.org/pypi/setuptools/">setuptools</a> command that allows users to
+build Installer packages from Python packages. py2app does not
+actually depend on <a class="reference" href="http://cheeseshop.python.org/pypi/bdist_mpkg/">bdist_mpkg</a>, however previous versions of
+py2app were distributed with <a class="reference" href="http://cheeseshop.python.org/pypi/bdist_mpkg/">bdist_mpkg</a> so it is a dependency
+for convenience and familiarity.</dd>
+<dt>macholib:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/macholib/">macholib</a> reads and writes the Mach-O object file format.
+Used by py2app to build a dependency graph of dyld and framework
+dependencies for your application, and then to copy them into your
+application and rewrite their load commands to be <tt class="docutils literal"><span class="pre">&#64;executable_path</span></tt>
+relative. The end result is that your application is going to be
+completely standalone beyond a default install of Mac OS X. You no
+longer have to worry about linking all of your dependencies statically,
+using <a class="reference" href="x-man-page://1/install_name_tool">install_name_tool</a>, etc. It's all taken care of!</dd>
+<dt>modulegraph:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/modulegraph/">modulegraph</a> is a replacement for the Python standard library
+<a class="reference" href="http://docs.python.org/lib/module-modulefinder.html">modulefinder</a>. Stores the module dependency tree in a graph data
+structure and allows for advanced filtering and analysis capabilities,
+such as <a class="reference" href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> dot output.</dd>
+<dt>altgraph:</dt>
+<dd><a class="reference" href="http://cheeseshop.python.org/pypi/altgraph/">altgraph</a> is a fork of <a class="reference" href="http://www.personal.psu.edu/staff/i/u/iua1/">Istvan Albert</a>'s graphlib, and it used
+internally by both <a class="reference" href="http://cheeseshop.python.org/pypi/macholib/">macholib</a> and <a class="reference" href="http://cheeseshop.python.org/pypi/modulegraph/">modulegraph</a>. It contains
+several small feature and performance enhancements over the original
+graphlib.</dd>
+</dl>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id42" id="license" name="license">License</a></h1>
+<p>py2app may be distributed under the <a class="reference" href="http://www.opensource.org/licenses/mit-license.php">MIT</a> or <a class="reference" href="http://www.python.org/psf/license.html">PSF</a> open source
+licenses.</p>
+<p>Copyright (c) 2004-2006 Bob Ippolito &lt;bob at redivi.com&gt;.</p>
+</div>
+</div>
+</body>
+</html>

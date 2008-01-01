@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutFullScreen</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutForceJoystickFunc.3GLUT.xml" title="glutForceJoystickFunc"/><link rel="next" href="glutGameModeGet.3GLUT.xml" title="glutGameModeGet"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutFullScreen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutForceJoystickFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutGameModeGet.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutFullScreen.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutFullScreen.3GLUT-name"/><h2>Name</h2><p>glutFullScreen &#8212; requests that the current window be made full screen.</p></div><div class="refsynopsisdiv"><a name="glutFullScreen.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutFullScreen</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutFullScreen.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutFullScreen</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutFullScreen.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutFullScreen</tt> requests that the current window be made full screen. The exact semantics of what
+			full screen means may vary by window system. The intent is to make the window as large as possible and disable any
+			window decorations or borders added the window system. The window width and height are not guaranteed to be the same as
+			the screen width and height, but that is the intent of making a window full screen.
+		</p><p>
+			<tt>glutFullScreen</tt> is defined to work only on top-level windows.
+		</p><p>
+			The <tt>glutFullScreen</tt> requests are not processed immediately. The request is executed after returning
+			to the main event loop. This allows multiple <a href="glutReshapeWindow.3GLUT.xml"><tt>glutReshapeWindow</tt></a>, <a href="glutPositionWindow.3GLUT.xml"><tt>glutPositionWindow</tt></a>, and <tt>glutFullScreen</tt> requests to the same window
+			to be coalesced.
+		</p><p>
+			Subsequent <a href="glutReshapeWindow.3GLUT.xml"><tt>glutReshapeWindow</tt></a> and <a href="glutPositionWindow.3GLUT.xml"><tt>glutPositionWindow</tt></a> requests on the window will disable the full screen status of the
+			window.
+		</p></div><div class="refsect1" lang="en"><a name="glutFullScreen.3GLUT-x_implementation_notes"/><h2>X Implementation Notes</h2><p>
+			In the X implementation of GLUT, full screen is implemented by sizing and positioning the window to cover the entire
+			screen and posting the _MOTIF_WM_HINTS property on the window requesting absolutely no decorations. Non-Motif window
+			managers may not respond to _MOTIF_WM_HINTS.
+		</p></div><div class="refsect1" lang="en"><a name="glutFullScreen.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutReshapeWindow.3GLUT.xml">glutReshapeWindow</a>, <a href="glutPositionWindow.3GLUT.xml">glutPositionWindow</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutForceJoystickFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutGameModeGet.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutForceJoystickFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutGameModeGet</td></tr></table></div></body></html>

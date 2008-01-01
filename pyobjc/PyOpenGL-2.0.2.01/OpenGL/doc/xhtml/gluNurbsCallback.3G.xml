@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluNurbsCallback</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluNextContour.3G.xml" title="gluNextContour"/><link rel="next" href="gluNurbsCallbackData.3G.xml" title="gluNurbsCallbackData"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluNurbsCallback</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluNextContour.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluNurbsCallbackData.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluNurbsCallback.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluNurbsCallback.3G-name"/><h2>Name</h2><p>gluNurbsCallback &#8212; define a callback for a NURBS object</p></div><div class="refsynopsisdiv"><a name="gluNurbsCallback.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluNurbsCallback</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUnurbs* <i><tt>nurb</tt></i>, GLenum <i><tt>which</tt></i>, _GLfuncptr <i><tt>CallBackFunc</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluNurbsCallback.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluNurbsCallback</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>nurb</tt></i>, <i><tt>which</tt></i>, <i><tt>CallBackFunc</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluNurbsCallback.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>nurb</tt></i></span></dt><dd>
+						Specifies the NURBS object (created with <a href="gluNewNurbsRenderer.3G.xml"><tt>gluNewNurbsRenderer</tt></a>).
+					</dd><dt><span class="term"><i><tt>which</tt></i></span></dt><dd>
+						Specifies the callback being defined. Valid values are <tt>GLU_NURBS_BEGIN</tt>,
+						<tt>GLU_NURBS_VERTEX</tt>, <tt>GLU_NURBS_NORMAL</tt>,
+						<tt>GLU_NURBS_COLOR</tt>, <tt>GLU_NURBS_TEXTURE_COORD</tt>,
+						<tt>GLU_NURBS_END</tt>, <tt>GLU_NURBS_BEGIN_DATA</tt>,
+						<tt>GLU_NURBS_VERTEX_DATA</tt>, <tt>GLU_NURBS_NORMAL_DATA</tt>,
+						<tt>GLU_NURBS_COLOR_DATA</tt>, <tt>GLU_NURBS_TEXTURE_COORD_DATA</tt>,
+						<tt>GLU_NURBS_END_DATA</tt>, and <tt>GLU_NURBS_ERROR</tt>.
+					</dd><dt><span class="term"><i><tt>CallBackFunc</tt></i></span></dt><dd>
+						Specifies the function that the callback calls.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluNurbsCallback.3G-description"/><h2>Description</h2><p>
+			<tt>gluNurbsCallback</tt> is used to define a callback to be used by a NURBS object. If the specified
+			callback is already defined, then it is replaced. If <i><tt>CallBackFunc</tt></i> is <tt>NULL</tt>,
+			then this callback will not get invoked and the related data, if any, will be lost.
+		</p><p>
+			Except the error callback, these callbacks are used by NURBS tessellator (when <tt>GLU_NURBS_MODE</tt> is
+			set to be <tt>GLU_NURBS_TESSELLATOR</tt>) to return back the OpenGL polygon primitives resulting from the
+			tessellation. Note that there are two versions of each callback: one with a user data pointer and one without. If both
+			versions for a particular callback are specified then the callback with the user data pointer will be used. Note that
+			``userData'' is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>.
+		</p><p>
+			The error callback function is effective no matter which value that <tt>GLU_NURBS_MODE</tt> is set to. All
+			other callback functions are effective only when <tt>GLU_NURBS_MODE</tt> is set to
+			<tt>GLU_NURBS_TESSELLATOR</tt>.
+		</p><p>
+			The legal callbacks are as follows:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GLU_NURBS_BEGIN</tt></span></dt><dd>
+						The begin callback indicates the start of a primitive. The function takes a single argument of type GLenum,
+						which can be one of <tt>GL_LINES</tt>, <tt>GL_LINE_STRIP</tt>,
+						<tt>GL_TRIANGLE_FAN</tt>, <tt>GL_TRIANGLE_STRIP</tt>,
+						<tt>GL_TRIANGLES</tt>, or <tt>GL_QUAD_STRIP</tt>. The default begin callback
+						function is <tt>NULL</tt>. The function prototype for this callback looks like: void begin (
+						GLenum type );
+					</dd><dt><span class="term"><tt>GLU_NURBS_BEGIN_DATA</tt></span></dt><dd>
+						The same as the <tt>GLU_NURBS_BEGIN</tt> callback except that it takes an additional pointer
+						argument. This pointer is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void beginData
+						(GLenum type, void *userData);
+					</dd><dt><span class="term"><tt>GLU_NURBS_VERTEX</tt></span></dt><dd>
+						The vertex callback indicates a vertex of the primitive. The coordinates of the vertex are stored in the
+						parameter ``vertex''. All the generated vertices have dimension 3, that is, homogeneous coordinates have
+						been transformed into affine coordinates. The default vertex callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void vertex (
+						GLfloat *vertex );
+					</dd><dt><span class="term"><tt>GLU_NURBS_VERTEX_DATA</tt></span></dt><dd>
+						This is the same as the <tt>GLU_NURBS_VERTEX</tt> callback, except that it takes an additional
+						pointer argument. This pointer is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void vertexData (
+						GLfloat *vertex, void *userData );
+					</dd><dt><span class="term"><tt>GLU_NURBS_NORMAL</tt></span></dt><dd>
+						The normal callback is invoked as the vertex normal is generated. The components of the normal are stored
+						in the parameter ``normal''. In the case of a NURBS curve, the callback function is effective only when the
+						user provides a normal map (<tt>GL_MAP1_NORMAL</tt>). In the case of a NURBS surface, if a
+						normal map (<tt>GL_MAP2_NORMAL</tt>) is provided, then the generated normal is computed from
+						the normal map. If a normal map is not provided then a surface normal is computed in a manner similar to
+						that described for evaluators when <tt>GL_AUTO_NORMAL</tt> is enabled. The default normal
+						callback function is <tt>NULL</tt>. The function prototype for this callback function looks
+						like: void normal ( GLfloat *normal );
+					</dd><dt><span class="term"><tt>GLU_NURBS_NORMAL_DATA</tt></span></dt><dd>
+						The same as the <tt>GLU_NURBS_NORMAL</tt> callback except that it takes an additional pointer
+						argument. This pointer is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void normalData (
+						GLfloat *normal, void *userData );
+					</dd><dt><span class="term"><tt>GLU_NURBS_COLOR</tt></span></dt><dd>
+						The color callback is invoked as the color of a vertex is generated. The components of the color are stored
+						in the parameter ``color''. This callback is effective only when the user provides a color map
+						(<tt>GL_MAP1_COLOR_4</tt> or <tt>GL_MAP2_COLOR_4</tt>). ``color'' contains four
+						components: R,G,B,A. The default color callback function is <tt>NULL</tt>. The prototype for
+						this callback function looks like: void color ( GLfloat *color );
+					</dd><dt><span class="term"><tt>GLU_NURBS_COLOR_DATA</tt></span></dt><dd>
+						The same as the <tt>GLU_NURBS_COLOR</tt> callback except that it takes an additional pointer
+						argument. This pointer is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void colorData (
+						GLfloat *color, void *userData );
+					</dd><dt><span class="term"><tt>GLU_NURBS_TEXTURE_COORD</tt></span></dt><dd>
+						The texture callback is invoked as the texture coordinates of a vertex are generated. These coordinates are
+						stored in the parameter ``texCoord''. The number of texture coordinates can be 1, 2, 3, or 4 depending on
+						which type of texture map is specified (<tt>GL_MAP1_TEXTURE_COORD_1</tt>,
+						<tt>GL_MAP1_TEXTURE_COORD_2</tt>, <tt>GL_MAP1_TEXTURE_COORD_3</tt>,
+						<tt>GL_MAP1_TEXTURE_COORD_4</tt>, <tt>GL_MAP2_TEXTURE_COORD_1</tt>,
+						<tt>GL_MAP2_TEXTURE_COORD_2</tt>, <tt>GL_MAP2_TEXTURE_COORD_3</tt>,
+						<tt>GL_MAP2_TEXTURE_COORD_4</tt>). If no texture map is specified, this callback function will
+						not be called. The default texture callback function is <tt>NULL</tt>. The function prototype
+						for this callback function looks like: void texCoord ( GLfloat *texCoord );
+					</dd><dt><span class="term"><tt>GLU_NURBS_TEXTURE_COORD_DATA</tt></span></dt><dd>
+						This is the same as the <tt>GLU_NURBS_TEXTURE_COORD</tt> callback, except that it takes an
+						additional pointer argument. This pointer is a copy of the pointer that was specified at the last call to
+						<a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void texCoordData
+						(GLfloat *texCoord, void *userData);
+					</dd><dt><span class="term"><tt>GLU_NURBS_END</tt></span></dt><dd>
+						The end callback is invoked at the end of a primitive. The default end callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void end ( void );
+					</dd><dt><span class="term"><tt>GLU_NURBS_END_DATA</tt></span></dt><dd>
+						This is the same as the <tt>GLU_NURBS_END</tt> callback, except that it takes an additional
+						pointer argument. This pointer is a copy of the pointer that was specified at the last call to <a href="gluNurbsCallbackData.3G.xml"><tt>gluNurbsCallbackData</tt></a>. The default callback function is
+						<tt>NULL</tt>. The function prototype for this callback function looks like: void endData (
+						void *userData );
+					</dd><dt><span class="term"><tt>GLU_NURBS_ERROR</tt></span></dt><dd>
+						The error function is called when an error is encountered. Its single argument is of type GLenum, and it
+						indicates the specific error that occurred. There are 37 errors unique to NURBS named
+						<tt>GLU_NURBS_ERROR1</tt> through <tt>GLU_NURBS_ERROR37</tt>. Character strings
+						describing these errors can be retrieved with <a href="gluErrorString.3G.xml"><tt>gluErrorString</tt></a>.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluNurbsCallback.3G-notes"/><h2>Notes</h2><p>
+			<tt>gluNurbsCallback</tt> is available only if the GLU version is 1.2 or greater.
+		</p><p>
+			GLU version 1.2 supports only the <tt>GLU_ERROR</tt> parameter for <i><tt>which</tt></i>. The
+			<tt>GLU_ERROR</tt> value is deprecated in GLU version 1.3 in favor of <tt>GLU_NURBS_ERROR</tt>.
+			All other accepted values for <i><tt>CallBackFunc</tt></i> are available only if the GLU version is 1.3 or
+			greater.
+		</p></div><div class="refsect1" lang="en"><a name="gluNurbsCallback.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluErrorString.3G.xml">gluErrorString</a>, <a href="gluNewNurbsRenderer.3G.xml">gluNewNurbsRenderer</a>, <a href="gluNurbsCallbackData.3G.xml">gluNurbsCallbackData</a>, <a href="gluNurbsProperty.3G.xml">gluNurbsProperty</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluNextContour.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluNurbsCallbackData.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluNextContour </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluNurbsCallbackData</td></tr></table></div></body></html>

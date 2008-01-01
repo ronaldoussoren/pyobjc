@@ -1,0 +1,243 @@
+<?xml version='1.0'?>
+<!-- minimal data for the CGL framework that allows access to OpenGL, 
+     we're relying on PyOpenGL for full access to OpenGL -->
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='0.9'>
+  <opaque name='CGLContextObj' type='^{_CGLContextObject=}'/>
+  <opaque name='CGLPBufferObj' type='^{_CGLPBufferObject=}'/>
+  <opaque name='CGLPixelFormatObj' type='^{_CGLPixelFormatObject=}'/>
+  <opaque name='CGLRendererInfoObj' type='^{_CGLRendererInfoObject=}'/>
+  <enum name='CGL_VERSION_1_0' value='1'/>
+  <enum name='CGL_VERSION_1_1' value='1'/>
+  <enum name='CGL_VERSION_1_2' value='1'/>
+  <function name='CGLChoosePixelFormat'>
+    <arg type='^i'/>
+    <arg type='^^{_CGLPixelFormatObject}'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLClearDrawable'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLCopyContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='I'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLCreateContext'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^^{_CGLContextObject}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLCreatePBuffer'>
+    <arg type='i'/>
+    <arg type='i'/>
+    <arg type='I'/>
+    <arg type='I'/>
+    <arg type='i'/>
+    <arg type='^^{_CGLPBufferObject}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDescribePBuffer'>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <arg type='^i'/>
+    <arg type='^i'/>
+    <arg type='^I'/>
+    <arg type='^I'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDescribePixelFormat'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+    <arg type='i'/>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDescribeRenderer'>
+    <arg type='^{_CGLRendererInfoObject=}'/>
+    <arg type='i'/>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDestroyContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDestroyPBuffer'>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDestroyPixelFormat'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDestroyRendererInfo'>
+    <arg type='^{_CGLRendererInfoObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLDisable'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLEnable'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLErrorString'>
+    <arg type='i'/>
+    <retval type='*'/>
+  </function>
+  <function name='CGLFlushDrawable'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLGetContextRetainCount'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='I'/>
+  </function>
+  <function name='CGLGetCurrentContext'>
+    <retval type='^{_CGLContextObject=}'/>
+  </function>
+  <function name='CGLGetOffScreen'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^i'/>
+    <arg type='^i'/>
+    <arg type='^i'/>
+    <arg type='^^v'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLGetOption'>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLGetPBuffer'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^^{_CGLPBufferObject}'/>
+    <arg type='^I'/>
+    <arg type='^i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLGetPBufferRetainCount'>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <retval type='I'/>
+  </function>
+  <function name='CGLGetParameter'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLGetPixelFormat'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='^{_CGLPixelFormatObject=}'/>
+  </function>
+  <function name='CGLGetPixelFormatRetainCount'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+    <retval type='I'/>
+  </function>
+  <function name='CGLGetVersion'>
+    <arg type='^i'/>
+    <arg type='^i'/>
+  </function>
+  <function name='CGLGetVirtualScreen'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLIsEnabled'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLLockContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLQueryRendererInfo'>
+    <arg type='I'/>
+    <arg type='^^{_CGLRendererInfoObject}'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLReleaseContext'>
+    <arg type='^{_CGLContextObject=}'/>
+  </function>
+  <function name='CGLReleasePBuffer'>
+    <arg type='^{_CGLPBufferObject=}'/>
+  </function>
+  <function name='CGLReleasePixelFormat'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+  </function>
+  <function name='CGLRetainContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='^{_CGLContextObject=}'/>
+  </function>
+  <function name='CGLRetainPBuffer'>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <retval type='^{_CGLPBufferObject=}'/>
+  </function>
+  <function name='CGLRetainPixelFormat'>
+    <arg type='^{_CGLPixelFormatObject=}'/>
+    <retval type='^{_CGLPixelFormatObject=}'/>
+  </function>
+  <function name='CGLSetCurrentContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetFullScreen'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetOffScreen'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <arg type='i'/>
+    <arg type='i'/>
+    <arg type='^v'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetOption'>
+    <arg type='i'/>
+    <arg type='i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetPBuffer'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <arg type='I'/>
+    <arg type='i'/>
+    <arg type='i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetParameter'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <arg type='^i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLSetVirtualScreen'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='i'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLTexImagePBuffer'>
+    <arg type='^{_CGLContextObject=}'/>
+    <arg type='^{_CGLPBufferObject=}'/>
+    <arg type='I'/>
+    <retval type='i'/>
+  </function>
+  <function name='CGLUnlockContext'>
+    <arg type='^{_CGLContextObject=}'/>
+    <retval type='i'/>
+  </function>
+</signatures>

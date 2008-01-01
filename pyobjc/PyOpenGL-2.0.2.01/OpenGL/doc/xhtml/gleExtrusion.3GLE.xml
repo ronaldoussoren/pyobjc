@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gleExtrusion</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLE.xml" title="GLE"/><link rel="previous" href="gle.3GLE.xml" title="gle"/><link rel="next" href="gleHelicoid.3GLE.xml" title="gleHelicoid"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gleExtrusion</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gle.3GLE.xml">Prev</a> </td><th width="60%" align="center">GLE</th><td width="20%" align="right"> <a accesskey="n" href="gleHelicoid.3GLE.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gleExtrusion.3GLE"/><div class="titlepage"/><div class="refnamediv"><a name="gleExtrusion.3GLE-name"/><h2>Name</h2><p>gleExtrusion &#8212; Extrude arbitrary 2D contour along arbitrary 3D path.</p></div><div class="refsynopsisdiv"><a name="gleExtrusion.3GLE-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gleExtrusion</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>ncp</tt></i>, gleDouble <i><tt>contour</tt></i>[][2], gleDouble <i><tt>cont_normal</tt></i>[][2], gleDouble <i><tt>up</tt></i>[3], int <i><tt>npoints</tt></i>, gleDouble <i><tt>point_array</tt></i>[][3], float <i><tt>color_array</tt></i>[][3]);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gleExtrusion.3GLE-python_specification"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gleExtrusion</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>contour</tt></i>[][2], <i><tt>cont_normal</tt></i>[][2], <i><tt>up</tt></i>[3], <i><tt>point_array</tt></i>[][3], <i><tt>color_array</tt></i>[][3]) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gleExtrusion.3GLE-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>ncp</tt></i></span></dt><dd>
+						number of contour points
+					</dd><dt><span class="term"><i><tt>contour</tt></i></span></dt><dd>
+						2D contour
+					</dd><dt><span class="term"><i><tt>cont_normal</tt></i></span></dt><dd>
+						2D contour normals
+					</dd><dt><span class="term"><i><tt>up</tt></i></span></dt><dd>
+						up vector for contour
+					</dd><dt><span class="term"><i><tt>npoints</tt></i></span></dt><dd>
+						numpoints in poly-line
+					</dd><dt><span class="term"><i><tt>point_array</tt></i></span></dt><dd>
+						polyline vertices
+					</dd><dt><span class="term"><i><tt>color_array</tt></i></span></dt><dd>
+						colors at polyline verts
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gleExtrusion.3GLE-description"/><h2>Description</h2><p>
+			Extrude arbitrary 2D contour along arbitrary 3D path. The argument <i><tt>contour</tt></i> specifies the 2D
+			contour to be extruded, while the argument <i><tt>point_array</tt></i> specifies the path along which to
+			extrude. The vector <i><tt>up</tt></i> defines the orientation of the contour y-axis in real 3D space.
+		</p><p>
+			Note that neither the very first segment, nor the very last segment are drawn. The first and last segments serve only
+			to define the angle of the join at the very ends of the polyline. Thus, to draw one segment, three must be specified.
+			To draw two segments, four must be specified, etc.
+		</p><p>
+			The normal array may be <tt>NULL</tt>. If it is, normal vectors will <i><tt>not</tt></i>
+			be automatically generated, and the object will look terrible when lit.
+		</p><p>
+			The color array may be <tt>NULL</tt>. If <tt>NULL</tt>, the current color is used. If not
+			<tt>NULL</tt>, the <a href="glColor.3G.xml"><tt>glColor3f</tt></a> routine is used to set the color;
+			therefore, specifying the <a href="glColorMaterial.3G.xml"><tt>glColorMaterial</tt></a> subroutine before this primitive can
+			be used to set diffuse, specular, ambient, etc. colors.
+		</p></div><div class="refsect1" lang="en"><a name="gleExtrusion.3GLE-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gleTwistExtrusion.3GLE.xml">gleTwistExtrusion</a>, <a href="gleSuperExtrusion.3GLE.xml">gleSuperExtrusion</a></span>
+		</p></div><div class="refsect1" lang="en"><a name="gleExtrusion.3GLE-author"/><h2>Author</h2><p>
+			Linas Vepstas
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gle.3GLE.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLE.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gleHelicoid.3GLE.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gle </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gleHelicoid</td></tr></table></div></body></html>

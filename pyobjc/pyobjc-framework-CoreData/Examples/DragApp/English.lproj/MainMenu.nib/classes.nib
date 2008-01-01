@@ -1,0 +1,14 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {saveAction = id; }; 
+            CLASS = DragAppAppDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {clubWindow = NSWindow; peopleWindow = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = DragSupportDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

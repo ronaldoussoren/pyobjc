@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+PyObjC Examples</title>
+</head>
+<body>
+<h2>PyObjC Examples</h2>
+<h2><a name="simple-scripts-that-demo-the-core-modules">Simple scripts that demo the core modules</a></h2>
+<p>The directory <a href="Scripts">Scripts</a> contains a number of simple command-line scripts
+that make use of Cocoa features.</p>
+<ul>
+<li><a href="Scripts/autoreadme.py">autoreadme.py</a><p>This script is a daemon that will open the ReadMe file in the root of any
+(removable) volume that is inserted while this script is running.</p>
+<p>The script is part of <a href="http://macdevcenter.com/pub/a/mac/2003/01/31/pyobjc_one.html">Introduction to PyObjC</a>, an article at O'Reilly
+<a href="http://macdevcenter.com/">MacDevCenter.com</a>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/debugging.py">debugging.py</a><p>This script shows how to use <code><span>PyObjCTools.Debugging</span></code> to show tracebacks
+of all (Cocoa) exceptions (handled and unhandled).</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/dictionary.py">dictionary.py</a><p>Demonstrate the usage of an <code><span>NSMutableDictionary</span></code> object with both
+Objective-C and Python dictionary syntax.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/exportBook.py">exportBook.py</a><p>An example of using the <code><span>AddressBook</span></code> framework, this script exports some
+of the information about people in your addressbook to a CSV file.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/findPython.py">findPython.py</a><p>Demonstrate the usage of <code><span>objc.loadBundleFunctions</span></code> to access
+functionality from the standard C library on Mac OS X (<code><span>libSystem</span></code>,
+which is also available as the <code><span>System.framework</span></code> bundle).  This
+example uses the dyld runtime to determine which dylib the Python
+runtime came from.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/HelloWorld.py">HelloWorld.py</a><p>Demonstrates a nib-less Cocoa GUI (purely for informational purposes, you
+probably shouldn't make a habit of this)</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/kvo-debugging.py">kvo-debugging.py</a><p>XXX
+An example script that demonstrates how PyObjC interacts with Key-Value
+Observing (KVO) at the lowest level.  This script was used to debug
+the PyObjC runtime and should not be used as a guideline for writing
+new KVO code.  It may be interesting to some until we ensure that we
+have proper unit tests for KVO and remove this example!</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/pydict-to-objcdict.py">pydict-to-objcdict.py</a><p>Shows how <code><span>PyObjCTools.Conversion</span></code> can be used to convert a Python
+collection into an Objective-C property list.  These functions should
+not typically be necessary as the proxies for Python objects are
+compatible with Objective-C plists.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/rendezvous.py">rendezvous.py</a><p>Use an NSNetService class to look for servers using rendezvous.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/signal-demo.py">signal-demo.py</a><p>Demonstrates how to get a backtrace when handling a fatal signal using
+<code><span>PyObjCTools.Signals</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/stdinreader.py">stdinreader.py</a><p>Demonstrates how to write a console runloop based application that uses
+<code><span>NSFileHandle</span></code> to read stdin asynchronously.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/subclassing-objective-c.py">subclassing-objective-c.py</a><p>A doctest that demonstrates the subclassing of an Objective-C class from
+Python.  Note that it is typically discouraged to define a <code><span>__del__</span></code>
+method.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/super-call.py">super-call.py</a><p>Demonstrates how create a subclass of an Objective-C class that overrides
+a selector, but calls the super implementation using Python syntax
+equivalent to <code><span>[super</span> <span>init]</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Scripts/wmEnable.py">wmEnable.py</a><p>Another <code><span>objc.loadBundleFunctions</span></code> demonstration that shows how to
+call into a private CoreGraphics SPI and enable full WindowManager
+access from a process that would not otherwise have it due to a
+quirk in the implementation of WindowManager (the reason why <code><span>pythonw</span></code>
+should be used instead of <code><span>python</span></code>).  Use at your own risk!</p>
+</li>
+</ul>
+<h2><a name="cocoa-applications">Cocoa Applications</a></h2>
+<p>The directory <a href="AppKit">AppKit</a> contains example applications using the Cocoa
+Application Framework (aka &quot;AppKit&quot;).</p>
+<p>Most of the following examples contain a <code><span>setup.py</span></code> script that can
+build an application. See <a href="../Doc/intro.html#building-applications">Building applications</a> for details how to invoke
+these scripts. Some examples contain an <code><span>Xcode</span></code> or <code><span>Project</span> <span>Builder</span></code>
+project file; simply double-click it and choose <code><span>Build</span> <span>and</span> <span>Run</span></code>, or invoke
+<code><span>xcodebuild</span></code> or <code><span>pbxbuild</span></code> from the command line depending on which you
+have installed.</p>
+<ul>
+<li><a href="AppKit/ClassBrowser">ClassBrowser</a><p>A simple class browser, demonstrating the use of <code><span>NSBrowser</span></code>
+(a &quot;column view&quot; hierarchical widget) and <code><span>NSTableView</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/CurrencyConverter">CurrencyConverter</a><p>A simple NIB based application. Start with this one. Also see the 
+<a href="../Doc/tutorial/tutorial.html">PyObjC tutorial</a>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/DotView">DotView</a><p>A simple one-window demo showing how to custom drawing in a custom
+<code><span>NSView</span></code>. Additionally shows how easy it is to embed a view in an
+<code><span>NSScrollView</span></code>, as well as how to use an <code><span>NSColorWell</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/FieldGraph">FieldGraph</a><p>This shows an simple example of an MVC based application, that also
+makes use of <code><span>NSBezierPaths</span></code>.  Contains a <code><span>Project</span> <span>Builder</span></code> project,
+as well as a <code><span>setup.py</span></code> script.</p>
+<p>The application calculates the field pattern and RMS field of an antenna 
+array with up to three elements.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/HotKeyPYthon">HotKeyPython</a><p>Demonstrates how to use Carbon global hot keys from a PyObjC application.
+Also demonstrates how to use a <code><span>NSApplication</span></code> subclass.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/iClass">iClass</a><p>A more elaborate class browser; demonstrates <code><span>NSOutlineView</span></code> and
+<code><span>NSTableView</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/PackageManager">PackageManager</a><p>An implementation of the MacPython PackageManager application using
+Cocoa.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/PyInterpreter">PyInterpreter</a><p>A full featured embedded Python interpreter.  This demonstrates
+more complicated uses of <code><span>NSTextView</span></code>, manual event dispatching,
+and the new text completion feature of OS X 10.3.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/PyObjCLauncher">PyObjCLauncher</a><p>A reimplementation of the Python script launcher helper application
+in PyObjC.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/PythonBrowser">PythonBrowser</a><p>A reusable Python object browser, demonstrating the use of <code><span>NSOutlineView</span></code>
+as well as how to use an <code><span>NSWindowController</span></code> subclass to create a window
+from a menu action.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/SimpleService">SimpleService</a><p>Shows how to implement entries for the Services menu.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/TableModel">TableModel</a><p>Basic demo that shows how to use a <code><span>NSTableView</span></code>.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/TinyTinyEdit">TinyTinyEdit</a><p>A minimal Document-based text editor application.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/TinyURLService">TinyURLService</a><p>Another simple service, this one converts URL or strings from the
+pasteboard to tinyurl.com equivalents.</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/ToDo">Todo</a><p>A more complex NIB based applications. This is a document-based application.
+The code is a translation into Python of an example project in 
+<a href="http://www.oreilly.com/catalog/learncocoa2/">Learning Cocoa</a> from O'Reilly</p>
+</li>
+</ul>
+<ul>
+<li><a href="AppKit/WebServicesTool">WebServicesTool</a><p>Queries an XML-RPC enabled web server for the methods that it implements.
+Demonstrates a more advanced use of an <code><span>NSTableView</span></code>, how to make a
+toolbar as well as how to use multi-threading.  Contains a
+<code><span>Project</span> <span>Builder</span></code> project as well as a <code><span>setup.py</span></code> script.</p>
+</li>
+</ul>
+<h2><a name="cocoa-bindings">Cocoa Bindings</a></h2>
+<p>The <a href="CocoaBindings">CocoaBindings</a> directory contains a number of examples that make use of
+Key-Value Coding and Cocoa Bindings. These scripts require Mac OS X 10.3 or
+later.</p>
+<ul>
+<li><a href="CocoaBindings/Bookmarks">Bookmarks</a><p>Shows custom array controller that implements table view data
+source methods to support drag and drop, including copying
+objects from one window to another, drop of URLs, and 
+re-ordering of the content array.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/ControlledPreferences">ControlledPreferences</a><p>Demonstrates how to use Cocoa Bindings to simplify storing and
+retrieving user preferences.  Also demonstrates how to use an
+<code><span>NSValueTransformer</span></code> to archive/unarchive a non-property-list
+type automatically (<code><span>NSColor</span></code>, in this case).</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/CurrencyConvBinding">CurrencyConvBinding</a><p>A rewrite of <a href="AppKit/CurrencyConverter">CurrencyConverter</a> using Cocoa Bindings.</p>
+<p>Originally from
+<a href="http://developer.apple.com/documentation/Cocoa/Conceptual/CurrencyConverterBindings/index.html">Introduction to Developing Cocoa Applications Using Bindings</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/FilteringController">FilteringController</a><p>Demonstrates how to subclass <code><span>NSArrayController</span></code> to implement filtering
+of a <code><span>NSTableView</span></code>.  Also demonstrates the use of indexed accessors.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/GraphicsBindings">GraphicsBindings</a><blockquote>
+<p>Shows the use of a custom controller, a value transformer, and two custom
+bindings-enabled views. One view is a control that allows you to set the
+angle and offset of a shadow; the other view observes and displays a
+collection of graphic objects.</p>
+</blockquote>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/ManualBindings">ManualBindings</a><p>A simple example that illustrates establishing bindings
+programmatically, including a number of options such as validation
+and an array operator, and indexed accessor methods. A custom model
+object implements custom validation method.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/TableModel">TableModel</a><p>Shows how to fill an <code><span>NSTableView</span></code> using Key-Value Coding.  Contains
+contains an <code><span>Xcode</span></code> project as well as a <code><span>setup.py</span></code> script.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/TableModelWithSearch">TableModelWithSearch</a><p>A more advanced example of Key-Value Coding. This uses a custom 
+<code><span>NSArrayController</span></code>.  Contains contains an <code><span>Xcode</span></code> project
+as well as a <code><span>setup.py</span></code> script.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/TemperatureTransformer">TemperatureTransformer</a><p>An example that uses <code><span>NSValueTransformer</span></code> to convert between Celsius
+and Fahrenheit.</p>
+<p>Based on Apple's <a href="http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html">Value Transformers</a> documentation,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<ul>
+<li><a href="CocoaBindings/ToDos">ToDos</a><p>Shows two array controllers, one to manage the contents of a table
+view, the other to manage a pop-up menu in a table column. Also 
+shows two value transformers to alter the color of text.</p>
+<p>Originally from <a href="http://homepage.mac.com/mmalc/CocoaExamples/controllers.html">Cocoa Bindings Examples and Hints</a>,
+converted to PyObjC by u.fiedler.</p>
+</li>
+</ul>
+<h2><a name="coredata">CoreData</a></h2>
+<p>The directory <a href="CoreData">CoreData</a> contains a number of examples
+that use the CoreData framework. This framework is available
+in MacOS X 10.4 and later.</p>
+<ul>
+<li><a href="CoreData/OutlineEdit">OutlineEdit</a><p>A python version of the OutlineEdit example that's included with
+Xcode 2.0.</p>
+</li>
+</ul>
+<h2><a name="foundation">Foundation</a></h2>
+<p>The directory <a href="#foundation">Foundation</a> contains a number of examples
+that use only Foundation facilities.</p>
+<ul>
+<li><a href="Foundation/simple-kvo.py">simple-kvo.py</a><p>Demonstrates the use of Key-Value Observing from a simple
+script, without a runloop.  Requires Mac OS X 10.3 or later.</p>
+</li>
+</ul>
+<h2><a name="inject">Inject</a></h2>
+<p>The directory <a href="Inject">Inject</a> contains a number of examples that use the
+<code><span>objc.inject</span></code> facility to inject code into another process.  These
+examples require Mac OS X 10.3 or later.</p>
+<ul>
+<li><a href="Inject/IDNSnitch">IDNSnitch</a><p>A proof of concept <a href="http://bob.pythonmac.org/archives/2005/02/07/idn-spoofing-defense-for-safari/">IDN spoofing defense</a> for Safari (tested with
+v1.2.4 on Mac OS X 10.3.8).  Demonstrates how to write an application
+that detects the launch of another application by bundle identifier,
+how to use <code><span>objc.inject</span></code> to load code into another application,
+how to override the implementation of an existing class but still
+call back into the original implementation, and how to reduce the
+size of such an application/plugin combination by using symlinks
+to share object files (the PyObjC extensions in this case).</p>
+</li>
+</ul>
+<ul>
+<li><a href="Inject/InjectInterpreter">InjectInterpreter</a>:<p>Shows how to inject an in-process Python interpreter into another
+process.  Based on the AppKit PyInterpreter example.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Inject/ClassBrowser">InjectBrowser</a>:<p>Shows how to inject an in-process Python class browser into another
+process.  Based on the AppKit ClassBrowser example.</p>
+</li>
+</ul>
+<h2><a name="opengl">OpenGL</a></h2>
+<p>The directory <a href="OpenGL">OpenGL</a> contains a number of examples that use OpenGL with
+a Cocoa UI.  These examples also require <a href="http://pyopengl.sourceforge.net/">PyOpenGL</a>.</p>
+<ul>
+<li><a href="OpenGL/OpenGLDemo">OpenGLDemo</a><p>A simple program that shows how to use OpenGL in a Cocoa program.  It is a 
+port of Apple's &quot;CocoaGL&quot; example.</p>
+</li>
+</ul>
+<h2><a name="plugins">Plugins</a></h2>
+<p>The directory <a href="Plugins">Plugins</a> contains a number of examples that embed a Python
+plugin into another application.  Note that due to an implementation detail
+of the py2app bundle template, these plugins are only compatible with
+Mac OS X 10.3 and later.</p>
+<ul>
+<li><a href="Plugins/EnvironmentPrefs">EnvironmentPrefs</a><p>This <code><span>NSPreferencePane</span></code> can be used to edit the default environment
+for the current user. It also is a simple example of a localized application.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Plugins/ProgressViewPalette">ProgressViewPalette</a><p>A simple InterfaceBuilder palette written in Python.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Plugins/SillyBallsSaver">SillyBallsSaver</a><p>A simple screensaver written in Python.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Plugins/WebKitInterpreter">WebKitInterpreter</a><p>Uses the new WebKit Cocoa plugin API available in Safari 1.3
+and later to embed a PyInterpreter in the browser.</p>
+</li>
+</ul>
+<h2><a name="twisted-integration">Twisted Integration</a></h2>
+<p>The directory <a href="Twisted">Twisted</a> contains a number of examples that use
+<a href="http://www.twistedmatrix.com">Twisted (2.0 or later)</a> with Cocoa.</p>
+<ul>
+<li><a href="Twisted/WebServicesTool">WebServicesTool</a><p>This is a refactor of the WebServicesTool example that is made much simpler
+and faster by using Twisted.</p>
+</li>
+</ul>
+<ul>
+<li><a href="Twisted/WebServicesTool-ControllerLayer">WebServicesTool-ControllerLayer</a><p>This is an even simpler refactor of the Twisted WebServicesTool example that
+uses Cocoa Bindings to remove a lot of the UI related code.</p>
+</li>
+</ul>
+<h2><a name="webkit">WebKit</a></h2>
+<p>The directory <a href="WebKit">WebKit</a> contains a number of examples that use the <code><span>WebKit</span></code>
+framework, the HTML rendering engine from Safari.</p>
+<ul>
+<li><a href="WebKit/PyDocURLProtocol">PyDocURLProtocol</a><p>This example implements a subclass of <code><span>NSURLProtocol</span></code> that can be used
+to load the <code><span>pydoc</span></code> documentation of a module.</p>
+<p>It also includes a simple documentation browser using <code><span>WebKit</span></code> and the 
+<code><span>PyDocURLProtocol</span></code> class.</p>
+</li>
+</ul>
+<h2><a name="some-work-in-progress-examples">Some work-in-progress examples</a></h2>
+<p>The directory <a href="NonFunctional">NonFunctional</a> may contain a number of examples that are not working
+for one reason or another. The most likely reason is that example relies on features
+that have not yet been implemented.</p>
+</body>
+</html>

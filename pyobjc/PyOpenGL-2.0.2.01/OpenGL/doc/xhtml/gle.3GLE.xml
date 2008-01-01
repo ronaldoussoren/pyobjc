@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gle</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLE.xml" title="GLE"/><link rel="previous" href="reference-GLE.xml" title="GLE"/><link rel="next" href="gleExtrusion.3GLE.xml" title="gleExtrusion"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gle</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference-GLE.xml">Prev</a> </td><th width="60%" align="center">GLE</th><td width="20%" align="right"> <a accesskey="n" href="gleExtrusion.3GLE.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gle.3GLE"/><div class="titlepage"/><div class="refnamediv"><a name="gle.3GLE-name"/><h2>Name</h2><p>gle &#8212; an introduction to the GLE Tubing &amp; Extrusions Library</p></div><div class="refsynopsisdiv"><a name="gle.3GLE-synopsis"/><h2>Synopsis</h2><pre class="programlisting">#include &lt;GL/gle.h&gt;</pre></div><div class="refsect1" lang="en"><a name="gle.3GLE-description"/><h2>Description</h2><p>
+			The GLE Tubing and Extrusion Library is a graphics application programming interface (API). The library consists of a
+			number of "C" language subroutines for drawing tubing and extrusions. The library is distributed in source
+			code form, in a package that includes documentation, a VRML proposal, Makefiles, and full source code and header files.
+			It uses the OpenGL (TM) programming API to perform the actual drawing of the tubing and extrusions.
+		</p><p>
+			A "sweep" or "extrusion" is a 2D contour (polyline) that is swept or extruded along a 3D path
+			(polyline). For example, sweeping a circle along a straight line will generate a cylinder. Sweeping a circle along a
+			circular path will generate a doughnut (torus).
+		</p><p>
+			The library also includes a set of utility routines for drawing some of the more common extruded shapes: a
+			polycylinder, a polycone, a generalized torus (circle swept along a helical path), a "helix" (arbitrary
+			contour swept along a helical path) and a "lathe" (arbitrary contour swept along a helical path, with torsion
+			used to keep the contour aligned).
+		</p><p>
+			The most general extrusion supported by this library allows an arbitrary 2D contour to be swept around an arbitrary 3D
+			path. A set of normal vectors can be specified to go along with the contour; the normal vectors determine the
+			appearance of the contour when lighting is turned on. A set of colors and affine matrices can be specified to go along
+			with the 3D path. The colors are used to color along the path. The affine matrices are used to operate on the contour
+			as it is swept along. If no affine matrices are specified, the contour is extruded using the mathematical concept of
+			"parallel translation" or "Gaussian translation". That is, the contour is moved (and drawn) along
+			the extrusion path in a "straight" manner. If there are affine matrices, they are applied to the contour at
+			each extrusion segment before the segment is drawn.
+		</p><p>
+			The affine matrices allow work in a quasi-non-Euclidean space. They essentially allow the contour to be distorted as it
+			is swept along. The allow the contour to be rotated, translated and rescaled as it is drawn. For example, a rescaling
+			will turn a polycylinder into a poly-cone, since the circle that is being extruded is scaled to a different size at
+			each extrusion vertex. A rotation allows the contour to be spun around while it is being extruded, thus for instance
+			allowing drill-bit type shapes to be drawn. A translation allows the appearance of shearing in real space; that is,
+			taking a contour and displacing it, without otherwise bending it. Note that the affines are 2x3 matrices, not 3x4
+			matrices, since they apply to the 2D contour as it is being extruded.
+		</p></div><div class="refsect1" lang="en"><a name="gle.3GLE-web_site"/><h2>Web Site</h2><p>
+			<a href="http://linas.org/gle/index.html" target="_top">http://linas.org/gle/index.html</a>
+		</p></div><div class="refsect1" lang="en"><a name="gle.3GLE-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gleExtrusion.3GLE.xml">gleExtrusion</a>, <a href="gleHelicoid.3GLE.xml">gleHelicoid</a>, <a href="gleLathe.3GLE.xml">gleLathe</a>, <a href="glePolyCone.3GLE.xml">glePolyCone</a>, <a href="glePolyCylinder.3GLE.xml">glePolyCylinder</a>, <a href="gleScrew.3GLE.xml">gleScrew</a>, <a href="gleSetJoinStyle.3GLE.xml">gleSetJoinStyle</a>, <a href="gleSpiral.3GLE.xml">gleSpiral</a>, <a href="gleSuperExtrusion.3GLE.xml">gleSuperExtrusion</a>, <a href="gleTextureMode.3GLE.xml">gleTextureMode</a>, <a href="gleToroid.3GLE.xml">gleToroid</a>, <a href="gleTwistExtrusion.3GLE.xml">gleTwistExtrusion</a>, <a href="gleTwistExtrusion.3GLE.xml">gleTwistExtrusion</a>, <a href="gleSuperExtrusion.3GLE.xml">gleSuperExtrusion</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="reference-GLE.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLE.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gleExtrusion.3GLE.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">GLE </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gleExtrusion</td></tr></table></div></body></html>

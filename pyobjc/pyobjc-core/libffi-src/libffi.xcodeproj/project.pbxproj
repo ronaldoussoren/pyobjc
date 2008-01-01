@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D615B6E0B84B5160064908B /* darwin64.S in Sources */ = {isa = PBXBuildFile; fileRef = 4D615B6C0B84B5160064908B /* darwin64.S */; };
+		4D615B6F0B84B5160064908B /* x86-ffi64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D615B6D0B84B5160064908B /* x86-ffi64.c */; };
+		774A68780AB08B5000FBC511 /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = 774A68760AB08B5000FBC511 /* prep_cif.c */; };
+		774A68790AB08B5000FBC511 /* types.c in Sources */ = {isa = PBXBuildFile; fileRef = 774A68770AB08B5000FBC511 /* types.c */; };
+		774A68820AB08B6D00FBC511 /* ppc-asm.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A687A0AB08B6D00FBC511 /* ppc-asm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A68830AB08B6D00FBC511 /* ppc-darwin.S in Sources */ = {isa = PBXBuildFile; fileRef = 774A687B0AB08B6D00FBC511 /* ppc-darwin.S */; };
+		774A68840AB08B6D00FBC511 /* ppc-darwin_closure.S in Sources */ = {isa = PBXBuildFile; fileRef = 774A687C0AB08B6D00FBC511 /* ppc-darwin_closure.S */; };
+		774A68860AB08B6D00FBC511 /* ppc-ffi_darwin.c in Sources */ = {isa = PBXBuildFile; fileRef = 774A687E0AB08B6D00FBC511 /* ppc-ffi_darwin.c */; };
+		774A68870AB08B6D00FBC511 /* ppc-ffitarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A687F0AB08B6D00FBC511 /* ppc-ffitarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A68910AB08B7A00FBC511 /* x86-darwin.S in Sources */ = {isa = PBXBuildFile; fileRef = 774A688A0AB08B7A00FBC511 /* x86-darwin.S */; };
+		774A68940AB08B7A00FBC511 /* x86-ffi_darwin.c in Sources */ = {isa = PBXBuildFile; fileRef = 774A688D0AB08B7A00FBC511 /* x86-ffi_darwin.c */; };
+		774A68950AB08B7A00FBC511 /* x86-ffitarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A688E0AB08B7A00FBC511 /* x86-ffitarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A689E0AB08BEB00FBC511 /* ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A689A0AB08BEB00FBC511 /* ffi.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A689F0AB08BEB00FBC511 /* ffi_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A689B0AB08BEB00FBC511 /* ffi_common.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A68A00AB08BEB00FBC511 /* fficonfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A689C0AB08BEB00FBC511 /* fficonfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		774A68A10AB08BEB00FBC511 /* ffitarget.h in Headers */ = {isa = PBXBuildFile; fileRef = 774A689D0AB08BEB00FBC511 /* ffitarget.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4D615B6C0B84B5160064908B /* darwin64.S */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.asm; path = darwin64.S; sourceTree = "<group>"; };
+		4D615B6D0B84B5160064908B /* x86-ffi64.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "x86-ffi64.c"; sourceTree = "<group>"; };
+		774A68580AB08A7400FBC511 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		774A68590AB08A8300FBC511 /* README */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		774A68760AB08B5000FBC511 /* prep_cif.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = prep_cif.c; sourceTree = "<group>"; };
+		774A68770AB08B5000FBC511 /* types.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = types.c; sourceTree = "<group>"; };
+		774A687A0AB08B6D00FBC511 /* ppc-asm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ppc-asm.h"; sourceTree = "<group>"; };
+		774A687B0AB08B6D00FBC511 /* ppc-darwin.S */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.asm; path = "ppc-darwin.S"; sourceTree = "<group>"; };
+		774A687C0AB08B6D00FBC511 /* ppc-darwin_closure.S */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.asm; path = "ppc-darwin_closure.S"; sourceTree = "<group>"; };
+		774A687E0AB08B6D00FBC511 /* ppc-ffi_darwin.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "ppc-ffi_darwin.c"; sourceTree = "<group>"; };
+		774A687F0AB08B6D00FBC511 /* ppc-ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "ppc-ffitarget.h"; path = "../include/ppc-ffitarget.h"; sourceTree = "<group>"; };
+		774A688A0AB08B7A00FBC511 /* x86-darwin.S */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.asm; path = "x86-darwin.S"; sourceTree = "<group>"; };
+		774A688D0AB08B7A00FBC511 /* x86-ffi_darwin.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "x86-ffi_darwin.c"; sourceTree = "<group>"; };
+		774A688E0AB08B7A00FBC511 /* x86-ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = "x86-ffitarget.h"; path = "../include/x86-ffitarget.h"; sourceTree = "<group>"; };
+		774A689A0AB08BEB00FBC511 /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ffi.h; path = include/ffi.h; sourceTree = "<group>"; };
+		774A689B0AB08BEB00FBC511 /* ffi_common.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ffi_common.h; path = include/ffi_common.h; sourceTree = "<group>"; };
+		774A689C0AB08BEB00FBC511 /* fficonfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = fficonfig.h; path = include/fficonfig.h; sourceTree = "<group>"; };
+		774A689D0AB08BEB00FBC511 /* ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ffitarget.h; path = include/ffitarget.h; sourceTree = "<group>"; };
+		774A68EB0AB0BC2400FBC511 /* README.MacOSX */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README.MacOSX; sourceTree = "<group>"; };
+		D2AAC046055464E500DB518D /* libffi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libffi.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* libffi */ = {
+			isa = PBXGroup;
+			children = (
+				774A68990AB08BD200FBC511 /* include */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = libffi;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				774A68760AB08B5000FBC511 /* prep_cif.c */,
+				774A68770AB08B5000FBC511 /* types.c */,
+				774A685A0AB08AC500FBC511 /* powerpc */,
+				774A68630AB08AC500FBC511 /* x86 */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* libffi.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		774A685A0AB08AC500FBC511 /* powerpc */ = {
+			isa = PBXGroup;
+			children = (
+				774A687A0AB08B6D00FBC511 /* ppc-asm.h */,
+				774A687B0AB08B6D00FBC511 /* ppc-darwin.S */,
+				774A687C0AB08B6D00FBC511 /* ppc-darwin_closure.S */,
+				774A687E0AB08B6D00FBC511 /* ppc-ffi_darwin.c */,
+				774A687F0AB08B6D00FBC511 /* ppc-ffitarget.h */,
+			);
+			path = powerpc;
+			sourceTree = "<group>";
+		};
+		774A68630AB08AC500FBC511 /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				4D615B6C0B84B5160064908B /* darwin64.S */,
+				4D615B6D0B84B5160064908B /* x86-ffi64.c */,
+				774A688A0AB08B7A00FBC511 /* x86-darwin.S */,
+				774A688D0AB08B7A00FBC511 /* x86-ffi_darwin.c */,
+				774A688E0AB08B7A00FBC511 /* x86-ffitarget.h */,
+			);
+			path = x86;
+			sourceTree = "<group>";
+		};
+		774A68990AB08BD200FBC511 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				774A689A0AB08BEB00FBC511 /* ffi.h */,
+				774A689B0AB08BEB00FBC511 /* ffi_common.h */,
+				774A689C0AB08BEB00FBC511 /* fficonfig.h */,
+				774A689D0AB08BEB00FBC511 /* ffitarget.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				774A68EB0AB0BC2400FBC511 /* README.MacOSX */,
+				774A68590AB08A8300FBC511 /* README */,
+				774A68580AB08A7400FBC511 /* LICENSE */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				774A68820AB08B6D00FBC511 /* ppc-asm.h in Headers */,
+				774A68870AB08B6D00FBC511 /* ppc-ffitarget.h in Headers */,
+				774A68950AB08B7A00FBC511 /* x86-ffitarget.h in Headers */,
+				774A689E0AB08BEB00FBC511 /* ffi.h in Headers */,
+				774A689F0AB08BEB00FBC511 /* ffi_common.h in Headers */,
+				774A68A00AB08BEB00FBC511 /* fficonfig.h in Headers */,
+				774A68A10AB08BEB00FBC511 /* ffitarget.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC045055464E500DB518D /* libffi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "libffi" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libffi;
+			productName = libffi;
+			productReference = D2AAC046055464E500DB518D /* libffi.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "libffi" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* libffi */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* libffi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				774A68780AB08B5000FBC511 /* prep_cif.c in Sources */,
+				774A68790AB08B5000FBC511 /* types.c in Sources */,
+				774A68830AB08B6D00FBC511 /* ppc-darwin.S in Sources */,
+				774A68840AB08B6D00FBC511 /* ppc-darwin_closure.S in Sources */,
+				774A68860AB08B6D00FBC511 /* ppc-ffi_darwin.c in Sources */,
+				774A68910AB08B7A00FBC511 /* x86-darwin.S in Sources */,
+				774A68940AB08B7A00FBC511 /* x86-ffi_darwin.c in Sources */,
+				4D615B6E0B84B5160064908B /* darwin64.S in Sources */,
+				4D615B6F0B84B5160064908B /* x86-ffi64.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/lib;
+				PRODUCT_NAME = ffi;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/lib;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/include;
+				PRODUCT_NAME = ffi;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc64;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = (
+					"-DMACOSX",
+					"-arch",
+					ppc64,
+				);
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = ppc64;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = (
+					"-DMACOSX",
+					"-arch",
+					ppc64,
+				);
+				PREBINDING = NO;
+				PUBLIC_HEADERS_FOLDER_PATH = ../include/ffi;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "libffi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "libffi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

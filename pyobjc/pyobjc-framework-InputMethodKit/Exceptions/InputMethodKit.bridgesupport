@@ -1,0 +1,59 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='IMKCandidates'>
+    <method selector='selectionKeysKeylayout'>
+      <retval comment='CF type' type='^{__TISInputSource=}' />
+    </method>
+    <method selector='setSelectionKeysKeylayout:'>
+      <arg comment='CF type' index='0' type='^{__TISInputSource=}' />
+    </method>
+  </class>
+  <class name='IMKInputController'>
+    <method selector='doCommandBySelector:commandDictionary:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='didCommandBySelector:client:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
+      <arg index='3' type='^B' type_modifier='o' />
+    </method>
+  </class>
+  <class name='IMKCandidates'>
+    <method selector='selectionKeysKeylayout'>
+      <retval comment='CF type' type='^{__TISInputSource=}' />
+    </method>
+    <method selector='setSelectionKeysKeylayout:'>
+      <arg comment='CF type' index='0' type='^{__TISInputSource=}' />
+    </method>
+  </class>
+  <class name='IMKInputController'>
+    <method selector='doCommandBySelector:commandDictionary:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='didCommandBySelector:client:'>
+      <arg index='0' type=':' />
+    </method>
+    <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
+      <arg index='3' type='^B' type_modifier='o' />
+    </method>
+  </class>
+  <class name='IMKCandidates'>
+    <method selector='selectionKeysKeylayout'>
+      <retval comment='CF type' type='^{__TISInputSource=}' />
+    </method>
+    <method selector='setSelectionKeysKeylayout:'>
+      <arg comment='CF type' index='0' type='^{__TISInputSource=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
+      <arg index='3' type='^B' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

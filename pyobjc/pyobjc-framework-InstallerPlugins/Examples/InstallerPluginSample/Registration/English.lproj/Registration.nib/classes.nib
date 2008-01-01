@@ -1,0 +1,36 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = InstallerPane; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                contentView = NSView; 
+                firstKeyView = NSView; 
+                initialKeyView = NSView; 
+                lastKeyView = NSView; 
+                nextPane = InstallerPane; 
+                parentSection = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = InstallerSection; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {firstPane = InstallerPane; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = RegistrationPane; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                uiFirstNameField = NSTextField; 
+                uiLastNameField = NSTextField; 
+                uiOrganizationField = NSTextField; 
+                uiSerialNumberField = NSTextField; 
+            }; 
+            SUPERCLASS = InstallerPane; 
+        }
+    ); 
+    IBVersion = 1; 
+}

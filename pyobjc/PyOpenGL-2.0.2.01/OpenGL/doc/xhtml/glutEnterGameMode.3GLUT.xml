@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutEnterGameMode</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutDisplayFunc.3GLUT.xml" title="glutDisplayFunc"/><link rel="next" href="glutEntryFunc.3GLUT.xml" title="glutEntryFunc"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutEnterGameMode</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutDisplayFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutEntryFunc.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutEnterGameMode.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutEnterGameMode.3GLUT-name"/><h2>Name</h2><p>glutEnterGameMode, glutLeaveGameMode &#8212; enters and leaves GLUT's game mode.</p></div><div class="refsynopsisdiv"><a name="glutEnterGameMode.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutEnterGameMode</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr><tr><td valign="top"><code>void <tt>glutLeaveGameMode</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutEnterGameMode.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutEnterGameMode</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glutLeaveGameMode</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutEnterGameMode.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutEnterGameMode</tt> is designed to enable high-performance fullscreen GLUT rendering, possibly at a
+			different screen display format. Calling <tt>glutEnterGameMode</tt> creates a special fullscreen GLUT
+			window (with its own callbacks and OpenGL rendering context state). If the game mode string describes a possible screen
+			display format, GLUT also changes the screen display format to the one described by the game mode string.
+			<tt>glutLeaveGameMode</tt> leaves the GLUT game mode and returns the screen display format to its default
+			format.
+		</p><p>
+			When game mode is entered, certain GLUT functionality is disable to facilitate high-performance fullscreen rendering.
+			GLUT pop-up menus are not available while in game mode. Other created windows and subwindows are not displayed in GLUT
+			game mode. Game mode will also hide all other applications running on the computer's display screen. The intent of
+			these restrictions is to eliminate window clipping issues, permit screen display format changes, and permit fullscreen
+			rendering optimization such as page flipping for fullscreen buffer swaps.
+		</p><p>
+			The value returned by <tt>glutEnterGameMode</tt> is a unique small integer identifier for the fullscreen
+			window. The range of allocated identifiers starts at one. This window identifier can be used when calling <a href="glutSetWindow.3GLUT.xml"><tt>glutSetWindow</tt></a>.
+		</p><p>
+			After leaving game mode, the GLUT functionality disabled in game mode is available again. The game mode window (and its
+			OpenGL rendering state) is destroyed when leaving game mode. Any windows and subwindows created before entering the
+			game mode are displayed in their previous locations. The OpenGL state of normal GLUT windows and subwindows is not
+			disturbed by entering and/or leaving game mode.
+		</p><p>
+			The following GLUT routines are ignored in game mode: <a href="glutFullScreen.3GLUT.xml"><tt>glutFullScreen</tt></a>,
+			<a href="glutSetWindowTitle.3GLUT.xml"><tt>glutSetWindowTitle</tt></a>, <a href="glutSetWindowTitle.3GLUT.xml"><tt>glutSetIconTitle</tt></a>,
+			<a href="glutPositionWindow.3GLUT.xml"><tt>glutPositionWindow</tt></a>, <a href="glutReshapeWindow.3GLUT.xml"><tt>glutReshapeWindow</tt></a>, <a href="glutPopWindow.3GLUT.xml"><tt>glutPopWindow</tt></a>, <a href="glutPopWindow.3GLUT.xml"><tt>glutPushWindow</tt></a>, <a href="glutShowWindow.3GLUT.xml"><tt>glutIconifyWindow</tt></a>, <a href="glutShowWindow.3GLUT.xml"><tt>glutShowWindow</tt></a>, <a href="glutShowWindow.3GLUT.xml"><tt>glutHideWindow</tt></a>.
+		</p><p>
+			<tt>glutEnterGameMode</tt> can be called when already in game mode. This will destroy the previous game
+			mode window (including any OpenGL rendering state) and create a new game mode window with a new OpenGL rendering
+			context. Also if <tt>glutEnterGameMode</tt> is called when already in game mode and if the game mode string
+			has changed and describes a possible screen display format, the new screen display format takes effect. A reshape
+			callback is generated if the game mode window changes size due to a screen display format change.
+		</p><p>
+			Re-entering game mode provides a mechanism for changing the screen display format while already in game mode. Note
+			though that the game mode window's OpenGL state is lost in this process and the application is responsible for
+			re-initializing the newly created game mode window OpenGL state when re-entering game mode.
+		</p><p>
+			Game mode cannot be entered while pop-up menus are in use.
+		</p><p>
+			Note that the <tt>glutEnterGameMode</tt> and <a href="glutFullScreen.3GLUT.xml"><tt>glutFullScreen</tt></a>
+			routines operate differently. <a href="glutFullScreen.3GLUT.xml"><tt>glutFullScreen</tt></a> simply makes the current window
+			match the size of the screen. <a href="glutFullScreen.3GLUT.xml"><tt>glutFullScreen</tt></a> does not change the screen
+			display format and does not disable any GLUT features such as pop-up menus; <a href="glutFullScreen.3GLUT.xml"><tt>glutFullScreen</tt></a> continues to operate in a "windowed" mode of operation.
+			<tt>glutEnterGameMode</tt> creates a new window style, possibly changes the screen display mode, limits
+			GLUT functionality, and hides other applications.
+		</p></div><div class="refsect1" lang="en"><a name="glutEnterGameMode.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutGameModeGet.3GLUT.xml">glutGameModeGet</a>, <a href="glutGameModeString.3GLUT.xml">glutGameModeString</a>, <a href="glutInitDisplayString.3GLUT.xml">glutInitDisplayString</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutDisplayFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutEntryFunc.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutDisplayFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutEntryFunc</td></tr></table></div></body></html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutLayerGet</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutKeyboardUpFunc.3GLUT.xml" title="glutKeyboardUpFunc"/><link rel="next" href="glutMainLoop.3GLUT.xml" title="glutMainLoop"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutLayerGet</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutKeyboardUpFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutMainLoop.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutLayerGet.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutLayerGet.3GLUT-name"/><h2>Name</h2><p>glutLayerGet &#8212; retrieves GLUT state pertaining to the layers of the current window.</p></div><div class="refsynopsisdiv"><a name="glutLayerGet.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>int <tt>glutLayerGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>info</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutLayerGet.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutLayerGet</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>info</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutLayerGet.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>info</tt></i></span></dt><dd><p>
+						Name of device information to retrieve.
+					</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_OVERLAY_POSSIBLE</tt></span></dt><dd>
+									Whether an overlay could be established for the current window given the current initial
+									display mode. If false, <a href="glutEstablishOverlay.3GLUT.xml"><tt>glutEstablishOverlay</tt></a> will fail
+									with a fatal error if called.
+								</dd><dt><span class="term"><tt>GLUT_LAYER_IN_USE</tt></span></dt><dd>
+									Either <tt>GLUT_NORMAL</tt> or <tt>GLUT_OVERLAY</tt> depending on
+									whether the normal plane or overlay is the layer in use.
+								</dd><dt><span class="term"><tt>GLUT_HAS_OVERLAY</tt></span></dt><dd>
+									If the current window has an overlay established.
+								</dd><dt><span class="term"><tt>GLUT_TRANSPARENT_INDEX</tt></span></dt><dd>
+									The transparent color index of the overlay of the current window; negative one is returned if
+									no overlay is in use.
+								</dd><dt><span class="term"><tt>GLUT_NORMAL_DAMAGED</tt></span></dt><dd>
+									True if the normal plane of the current window has damaged (by window system activity) since
+									the last display callback was triggered. Calling <a href="glutPostRedisplay.3GLUT.xml"><tt>glutPostRedisplay</tt></a> will not set this true.
+								</dd><dt><span class="term"><tt>GLUT_OVERLAY_DAMAGED</tt></span></dt><dd>
+									True if the overlay plane of the current window has damaged (by window system activity) since
+									the last display callback was triggered. Calling <a href="glutPostRedisplay.3GLUT.xml"><tt>glutPostRedisplay</tt></a> or <a href="glutPostOverlayRedisplay.3GLUT.xml"><tt>glutPostOverlayRedisplay</tt></a> will not set this true. Negative one is
+									returned if no overlay is in use.
+								</dd></dl></div></dd></dl></div></div><div class="refsect1" lang="en"><a name="glutLayerGet.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutLayerGet</tt> retrieves GLUT layer information for the current window represented by integers. The
+			<i><tt>info</tt></i> parameter determines what type of layer information to return.
+		</p></div><div class="refsect1" lang="en"><a name="glutLayerGet.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutEstablishOverlay.3GLUT.xml">glutEstablishOverlay</a>, <a href="glutUseOverlay.3GLUT.xml">glutUseOverlay</a>, <a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutSetColor.3GLUT.xml">glutSetColor</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutKeyboardUpFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutMainLoop.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutKeyboardUpFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutMainLoop</td></tr></table></div></body></html>

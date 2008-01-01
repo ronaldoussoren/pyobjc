@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glBitmap</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glBindTexture.3G.xml" title="glBindTexture"/><link rel="next" href="glBlendColor.3G.xml" title="glBlendColor"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glBitmap</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glBindTexture.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glBlendColor.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glBitmap.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glBitmap.3G-name"/><h2>Name</h2><p>glBitmap &#8212; draw a bitmap</p></div><div class="refsynopsisdiv"><a name="glBitmap.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glBitmap</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLsizei <i><tt>width</tt></i>, GLsizei <i><tt>height</tt></i>, GLfloat <i><tt>xorig</tt></i>, GLfloat <i><tt>yorig</tt></i>, GLfloat <i><tt>xmove</tt></i>, GLfloat <i><tt>ymove</tt></i>, const GLubyte *<i><tt>bitmap</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glBitmap.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glBitmap</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>width</tt></i>, <i><tt>height</tt></i>, <i><tt>xorig</tt></i>, <i><tt>yorig</tt></i>, <i><tt>xmove</tt></i>, <i><tt>ymove</tt></i>, <i><tt>bitmap</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glBitmap.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>width</tt></i>, <i><tt>height</tt></i></span></dt><dd>
+						Specify the pixel width and height of the bitmap image.
+					</dd><dt><span class="term"><i><tt>xorig</tt></i>, <i><tt>yorig</tt></i></span></dt><dd>
+						Specify the location of the origin in the bitmap image. The origin is measured from the lower left corner
+						of the bitmap, with right and up being the positive axes.
+					</dd><dt><span class="term"><i><tt>xmove</tt></i>, <i><tt>ymove</tt></i></span></dt><dd>
+						Specify the <i><tt>x</tt></i> and <i><tt>y</tt></i> offsets to be added to the current raster
+						position after the bitmap is drawn.
+					</dd><dt><span class="term"><i><tt>bitmap</tt></i></span></dt><dd>
+						Specifies the address of the bitmap image.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glBitmap.3G-description"/><h2>Description</h2><p>
+			A bitmap is a binary image. When drawn, the bitmap is positioned relative to the current raster position, and frame
+			buffer pixels corresponding to 1's in the bitmap are written using the current raster color or index. Frame buffer
+			pixels corresponding to 0's in the bitmap are not modified.
+		</p><p>
+			<tt>glBitmap</tt> takes seven arguments. The first pair specifies the width and height of the bitmap image.
+			The second pair specifies the location of the bitmap origin relative to the lower left corner of the bitmap image. The
+			third pair of arguments specifies <i><tt>x</tt></i> and <i><tt>y</tt></i> offsets to be added to the
+			current raster position after the bitmap has been drawn. The final argument is a pointer to the bitmap image itself.
+		</p><p>
+			The bitmap image is interpreted like image data for the <a href="glDrawPixels.3G.xml"><tt>glDrawPixels</tt></a> command,
+			with <i><tt>width</tt></i> and <i><tt>height</tt></i> corresponding to the width and height arguments of
+			that command, and with <i><tt>type</tt></i> set to <tt>GL_BITMAP</tt> and
+			<i><tt>format</tt></i> set to <tt>GL_COLOR_INDEX</tt>. Modes specified using <tt>glPixelStore</tt> affect the interpretation of bitmap image data; modes specified using
+			<tt>glPixelTransfer</tt> do not.
+		</p><p>
+			If the current raster position is invalid, <tt>glBitmap</tt> is ignored. Otherwise, the lower left corner
+			of the bitmap image is positioned at the window coordinates
+		</p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+				<mml:mtable>
+					<mml:mtr>
+						<mml:mtd>
+							<mml:msub>
+								<mml:mi>x</mml:mi>
+								<mml:mi>w</mml:mi>
+							</mml:msub>
+							<mml:mo>=</mml:mo>
+							<mml:mfenced separator="," open="&#8970;" close="&#8971;">
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub>
+										<mml:mi>x</mml:mi>
+										<mml:mi>o</mml:mi>
+									</mml:msub>
+								</mml:mrow>
+							</mml:mfenced>
+						</mml:mtd>
+					</mml:mtr>
+					<mml:mtr>
+						<mml:mtd>
+							<mml:msub>
+								<mml:mi>y</mml:mi>
+								<mml:mi>w</mml:mi>
+							</mml:msub>
+							<mml:mo>=</mml:mo>
+							<mml:mfenced separator="," open="&#8970;" close="&#8971;">
+								<mml:mrow>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>r</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub>
+										<mml:mi>y</mml:mi>
+										<mml:mi>o</mml:mi>
+									</mml:msub>
+								</mml:mrow>
+							</mml:mfenced>
+						</mml:mtd>
+					</mml:mtr>
+				</mml:mtable>
+			</mml:math></div><p>
+			where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mfenced separator=",">
+						<mml:msub>
+							<mml:mi>x</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>y</mml:mi>
+							<mml:mi>r</mml:mi>
+						</mml:msub>
+					</mml:mfenced>
+				</mml:math> is the raster position and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mfenced separator=",">
+						<mml:msub>
+							<mml:mi>x</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>y</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+					</mml:mfenced>
+				</mml:math> is the bitmap origin. Fragments are then generated for each pixel corresponding to a 1 (one) in the
+			bitmap image. These fragments are generated using the current raster <i><tt>z</tt></i> coordinate, color or
+			color index, and current raster texture coordinates. They are then treated just as if they had been generated by a
+			point, line, or polygon, including texture mapping,
+		</p><p>
+			fogging, and all per-fragment operations such as alpha and depth testing.
+		</p><p>
+			After the bitmap has been drawn, the <i><tt>x</tt></i> and <i><tt>y</tt></i> coordinates of the current
+			raster position are offset by <i><tt>xmove</tt></i> and <i><tt>ymove</tt></i>. No change is made to the
+			<i><tt>z</tt></i> coordinate of the current raster position, or to the current raster color, texture
+			coordinates, or index.
+		</p></div><div class="refsect1" lang="en"><a name="glBitmap.3G-notes"/><h2>Notes</h2><p>
+			To set a valid raster position outside the viewport, first set a valid raster position inside the viewport, then call
+			<tt>glBitmap</tt> with <tt>NULL</tt> as the <i><tt>bitmap</tt></i> parameter and with
+			<i><tt>xmove</tt></i> and <i><tt>ymove</tt></i> set to the offsets of the new raster position. This
+			technique is useful when panning an image around the viewport.
+		</p></div><div class="refsect1" lang="en"><a name="glBitmap.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_VALUE</tt> is generated if <i><tt>width</tt></i> or <i><tt>height</tt></i> is
+			negative.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glBitmap</tt> is executed between the
+			execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glBitmap.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_POSITION</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_COLOR</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_DISTANCE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_INDEX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_TEXTURE_COORDS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_CURRENT_RASTER_POSITION_VALID</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glBitmap.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glDrawPixels.3G.xml">glDrawPixels</a>, <a href="glPixelStore.3G.xml">glPixelStore</a>, <a href="glPixelTransfer.3G.xml">glPixelTransfer</a>, <a href="glRasterPos.3G.xml">glRasterPos</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glBindTexture.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glBlendColor.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glBindTexture </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glBlendColor</td></tr></table></div></body></html>

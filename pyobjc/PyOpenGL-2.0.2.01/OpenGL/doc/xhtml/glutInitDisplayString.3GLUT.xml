@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutInitDisplayString</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutInitDisplayMode.3GLUT.xml" title="glutInitDisplayMode"/><link rel="next" href="glutInitWindowPosition.3GLUT.xml" title="glutInitWindowPosition"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutInitDisplayString</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutInitDisplayMode.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutInitWindowPosition.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutInitDisplayString.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutInitDisplayString.3GLUT-name"/><h2>Name</h2><p>glutInitDisplayString &#8212; sets the initial display mode via a string.</p></div><div class="refsynopsisdiv"><a name="glutInitDisplayString.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutInitDisplayString</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>char *<i><tt>string</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutInitDisplayString.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutInitDisplayString</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>string</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutInitDisplayString.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>string</tt></i></span></dt><dd>
+						Display mode description string, see below.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutInitDisplayString.3GLUT-description"/><h2>Description</h2><p>
+			The initial display mode description string is used when creating top-level windows, subwindows, and overlays to
+			determine the OpenGL display mode for the to-be-created window or overlay.
+		</p><p>
+			The string is a list of zero or more capability descriptions separated by spaces and tabs. Each capability description
+			is a capability name that is optionally followed by a comparator and a numeric value. For example, "double"
+			and "depth&gt;=12" are both valid criteria.
+		</p><p>
+			The capability descriptions are translated into a set of criteria used to select the appropriate frame buffer
+			configuration.
+		</p><p>
+			The criteria are matched in strict left to right order of precdence. That is, the first specified criteria (leftmost)
+			takes precedence over the later criteria for non-exact criteria (greater than, less than, etc. comparators). Exact
+			criteria (equal, not equal compartors) must match exactly so precedence is not relevant.
+		</p><p>
+			The numeric value is an integer that is parsed according to ANSI C's <tt>strtol(str, strptr,
+			0)</tt> behavior. This means that decimal, octal (leading 0), and hexidecimal values (leading 0x) are accepeted.
+		</p><p>
+			The valid compartors are:
+		</p><div class="variablelist"><dl><dt><span class="term"><span class="bold"><b>=</b></span></span></dt><dd>
+						Equal.
+					</dd><dt><span class="term"><span class="bold"><b>!=</b></span></span></dt><dd>
+						Not equal.
+					</dd><dt><span class="term"><span class="bold"><b>&lt;</b></span></span></dt><dd>
+						Less than and preferring larger difference (the least is best).
+					</dd><dt><span class="term"><span class="bold"><b>&gt;</b></span></span></dt><dd>
+						Greater than and preferring larger differences (the most is best).
+					</dd><dt><span class="term"><span class="bold"><b>&lt;=</b></span></span></dt><dd>
+						Less than or equal and preferring larger difference (the least is best).
+					</dd><dt><span class="term"><span class="bold"><b>&gt;=</b></span></span></dt><dd>
+						Greater than or equal and preferring more instead of less. This comparator is useful for allocating
+						resources like color precsion or depth buffer precision where the maximum precison is generally preferred.
+						Contrast with the tilde (~) comprator.
+					</dd><dt><span class="term"><span class="bold"><b>~</b></span></span></dt><dd>
+						Greater than or equal but preferring less instead of more. This compartor is useful for allocating
+						resources such as stencil bits or auxillary color buffers where you would rather not over allocate. When
+						the compartor and numeric value are not specified, each capability name has a different default (one
+						default is to require a a compartor and numeric value).
+					</dd></dl></div><p>
+			The valid capability names are:
+		</p><div class="variablelist"><dl><dt><span class="term"><span class="bold"><b>alpha</b></span></span></dt><dd>
+						Alpha color buffer precision in bits. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>acca</b></span></span></dt><dd>
+						Red, green, blue, and alpha accumulation buffer precision in bits. Default is "&gt;=1" for red,
+						green, blue, and alpha capabilities.
+					</dd><dt><span class="term"><span class="bold"><b>acc</b></span></span></dt><dd>
+						Red, green, and green accumulation buffer precision in bits and zero bits of alpha accumulation buffer
+						precision. Default is "&gt;=1" for red, green, and blue capabilities, and "~0" for the
+						alpha capability.
+					</dd><dt><span class="term"><span class="bold"><b>blue</b></span></span></dt><dd>
+						Blue color buffer precision in bits. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>buffer</b></span></span></dt><dd>
+						Number of bits in the color index color buffer. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>conformant</b></span></span></dt><dd>
+						Boolean indicating if the frame buffer configuration is conformant or not. Conformance information is based
+						on GLX's EXT_visual_rating extension if supported. If the extension is not supported, all visuals are
+						assumed conformat. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>depth</b></span></span></dt><dd>
+						Number of bits of precsion in the depth buffer. Default is "&gt;=12".
+					</dd><dt><span class="term"><span class="bold"><b>double</b></span></span></dt><dd>
+						Boolean indicating if the color buffer is double buffered. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>green</b></span></span></dt><dd>
+						Green color buffer precision in bits. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>index</b></span></span></dt><dd>
+						Boolean if the color model is color index or not. True is color index. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>num</b></span></span></dt><dd>
+						A special capability name indicating where the value represents the Nth frame buffer configuration matching
+						the description string. When not specified, glutInitDisplayString also returns the first (best matching)
+						configuration. num requires a compartor and numeric value.
+					</dd><dt><span class="term"><span class="bold"><b>red</b></span></span></dt><dd>
+						Red color buffer precision in bits. Default is "&gt;=1".
+					</dd><dt><span class="term"><span class="bold"><b>rgba</b></span></span></dt><dd>
+						Number of bits of red, green, blue, and alpha in the RGBA color buffer. Default is "&gt;=1" for
+						red, green, blue, and alpha capabilities, and "=1" for the RGBA color model capability.
+					</dd><dt><span class="term"><span class="bold"><b>rgb</b></span></span></dt><dd>
+						Number of bits of red, green, and blue in the RGBA color buffer and zero bits of alpha color buffer
+						precision. Default is "&gt;=1" for the red, green, and blue capabilities, and "~0" for
+						alpha capability, and "=1" for the RGBA color model capability.
+					</dd><dt><span class="term"><span class="bold"><b>luminance</b></span></span></dt><dd><p>
+						Number of bits of red in the RGBA and zero bits of green, blue (alpha not specified) of color buffer
+						precision. Default is "&gt;=1" for the red capabilitis, and "=0" for the green and blue
+						capabilities, and "=1" for the RGBA color model capability, and, for X11, "=1" for the
+						StaticGray ("xstaticgray") capability.
+					</p><p>
+						SGI InfiniteReality (and other future machines) support a 16-bit luminance (single channel) display mode
+						(an additional 16-bit alpha channel can also be requested). The red channel maps to gray scale and green
+						and blue channels are not available. A 16-bit precision luminance display mode is often appropriate for
+						medical imaging applications. Do not expect many machines to support extended precision luminance display
+						modes.
+					</p></dd><dt><span class="term"><span class="bold"><b>stencil</b></span></span></dt><dd>
+						Number of bits in the stencil buffer.
+					</dd><dt><span class="term"><span class="bold"><b>single</b></span></span></dt><dd>
+						Boolean indicate the color buffer is single buffered. Double buffer capability "=1".
+					</dd><dt><span class="term"><span class="bold"><b>stereo</b></span></span></dt><dd>
+						Boolean indicating the color buffer is supports OpenGL-style stereo. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>samples</b></span></span></dt><dd>
+						Indicates the number of multisamples to use based on GLX's SGIS_multisample extension (for antialiasing).
+						Default is "&lt;=4". This default means that a GLUT application can request multipsampling if
+						available by simply specifying "samples".
+					</dd><dt><span class="term"><span class="bold"><b>slow</b></span></span></dt><dd>
+						Boolean indicating if the frame buffer configuration is slow or not. For the X11 implementation of GLUT,
+						slowness information is based on GLX's EXT_visual_rating extension if supported. If the EXT_visual_rating
+						extension is not supported, all visuals are assumed fast. For the Win32 implementation of GLUT, slowness is
+						based on if the underlying Pixel Format Descriptor (PFD) is marked "generic" and not
+						"accelerated". This implies that Microsoft's relatively slow software OpenGL implementation is
+						used by this PFD. Note that slowness is a relative designation relative to other frame buffer
+						configurations available. The intent of the slow capability is to help programs avoid frame buffer
+						configurations that are slower (but perhaps higher precision) for the current machine. Default is
+						"&gt;=0" if not comparator and numeric value are provided. This default means that slow visuals
+						are used in preference to fast visuals, but fast visuals will still be allowed.
+					</dd><dt><span class="term"><span class="bold"><b>win32pfd</b></span></span></dt><dd>
+						Only recognized on GLUT implementations for Win32, this capability name matches the Win32 Pixel Format
+						Descriptor by numer. win32pfd requires a compartor and numeric value.
+					</dd><dt><span class="term"><span class="bold"><b>xvisual</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, this capability name matches the X visual
+						ID by number. xvisual requires a compartor and numeric value.
+					</dd><dt><span class="term"><span class="bold"><b>xstaticgray</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type StaticGray. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>xgrayscale</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type GrayScale. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>xstaticcolor</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type StaticColor. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>xpseudocolor</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type PsuedoColor. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>xtruecolor</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type TrueColor. Default is "=1".
+					</dd><dt><span class="term"><span class="bold"><b>xdirectcolor</b></span></span></dt><dd>
+						Only recongized on GLUT implementations for the X Window System, boolean indicating if the frame buffer
+						configuration's X visual is of type DirectColor. Default is "=1".
+					</dd></dl></div><p>
+			Unspecifed capability descriptions will result in unspecified criteria being generated. These unspecified criteria help
+			<tt>glutInitDisplayString</tt> behave sensibly with terse display mode description strings. For example, if
+			no "slow" capability description is provided, fast frame buffer configurations will be choosen in preference
+			to slow frame buffer configurations, but slow frame buffer configurations will still be choosen if no better fast frame
+			buffer configuration is available.
+		</p></div><div class="refsect1" lang="en"><a name="glutInitDisplayString.3GLUT-example"/><h2>Example</h2><p>
+			Here is an examples using <tt>glutInitDisplayString</tt>:
+		</p><pre class="programlisting">glutInitDisplayString("stencil~2 rgb double depth&gt;=16 samples");</pre><p>
+			The above call requests a window with an RGBA color model (but requesting no bits of alpha), a depth buffer with at
+			least 16 bits of precsion but preferring more, mutlisampling if available, and at least 2 bits of stencil (favoring
+			less stencil to more as long as 2 bits are available).
+		</p></div><div class="refsect1" lang="en"><a name="glutInitDisplayString.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutInit.3GLUT.xml">glutInit</a>, <a href="glutCreateWindow.3GLUT.xml">glutCreateWindow</a>, <a href="glutInitDisplayMode.3GLUT.xml">glutInitDisplayMode</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutInitDisplayMode.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutInitWindowPosition.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutInitDisplayMode </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutInitWindowPosition</td></tr></table></div></body></html>

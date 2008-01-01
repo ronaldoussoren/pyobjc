@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# This is MacOS X 10.2 specific
+
+if [ ! -d /usr/local/bin/. ]; then
+	mkdir -p /usr/local/bin
+fi
+
+cp /usr/lib/python2.2/site-packages/PyObjC/bin/* /usr/local/bin
+if [ $? != 0 ]; then
+	echo "Could not move scripts to the correct location"
+	exit 1
+fi
+
+rm -r /usr/lib/python2.2/site-packages/PyObjC/bin
+if [ $? != 0 ]; then
+	echo "Could not move scripts to the correct location [2]"
+	exit 1
+fi
+
+exit 0

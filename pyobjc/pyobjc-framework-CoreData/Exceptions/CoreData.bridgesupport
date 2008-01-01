@@ -1,0 +1,514 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <arg index='7' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <arg index='7' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <arg index='7' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <arg index='7' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='observationInfo'>
+      <retval comment='context' type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg comment='context' index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <arg index='0' type_modifier='N' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg comment='context' index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <arg index='7' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

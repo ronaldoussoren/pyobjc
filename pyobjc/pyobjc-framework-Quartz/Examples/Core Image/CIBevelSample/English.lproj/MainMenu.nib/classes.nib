@@ -1,0 +1,8 @@
+{
+    IBClasses = (
+        {CLASS = CIBevelView; LANGUAGE = ObjC; SUPERCLASS = SampleCIView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = SampleCIView; LANGUAGE = ObjC; SUPERCLASS = NSOpenGLView; }
+    ); 
+    IBVersion = 1; 
+}

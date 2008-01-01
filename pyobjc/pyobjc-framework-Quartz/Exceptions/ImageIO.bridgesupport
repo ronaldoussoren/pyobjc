@@ -1,0 +1,45 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='CGImageDestinationGetTypeID' name='CGImageDestinationRef' />
+  <cftype gettypeid_func='CGImageSourceGetTypeID' name='CGImageSourceRef' />
+  <function name='CGImageDestinationCopyTypeIdentifiers'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageDestinationCreateWithData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageDestinationCreateWithDataConsumer'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageDestinationCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCopyProperties'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCopyPropertiesAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCopyTypeIdentifiers'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateImageAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateIncremental'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateThumbnailAtIndex'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateWithData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateWithDataProvider'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+</signatures>

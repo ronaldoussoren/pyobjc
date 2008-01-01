@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='JSClassDefinition' />
+  <struct name='JSStaticFunction' />
+  <struct name='JSStaticValue' />
+  <opaque name='JSClassRef' />
+  <opaque name='JSContextRef' />
+  <opaque name='JSGlobalContextRef' />
+  <opaque name='JSObjectRef' />
+  <opaque name='JSPropertyNameAccumulatorRef' />
+  <opaque name='JSPropertyNameArrayRef' />
+  <opaque name='JSStringRef' />
+  <opaque name='JSValueRef' />
+  <function name='JSCheckScriptSyntax'>
+    <arg index='4' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSClassCreate'>
+    <arg index='0' type='^{?=iI*^{OpaqueJSClass}^{?}^{?}^?^?^?^?^?^?^?^?^?^?^?}' type64='^{?=iI*^{OpaqueJSClass}^{?}^{?}^?^?^?^?^?^?^?^?^?^?^?}' />
+  </function>
+  <function name='JSEvaluateScript'>
+    <arg index='5' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectCallAsConstructor'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+    <arg index='4' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectCallAsFunction'>
+    <arg index='4' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+    <arg index='5' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectDeleteProperty'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectGetPrivate'>
+    <retval type='^v' type64='^v' />
+  </function>
+  <function name='JSObjectGetProperty'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectGetPropertyAtIndex'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectMake'>
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='JSObjectMakeConstructor'>
+    <arg index='2' type='^?' type64='^?' />
+  </function>
+  <function name='JSObjectMakeFunction'>
+    <arg index='3' type='^r^{OpaqueJSString}' type64='^r^{OpaqueJSString}' />
+    <arg index='7' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectMakeFunctionWithCallback'>
+    <arg index='2' type='^?' type64='^?' />
+  </function>
+  <function name='JSObjectSetPrivate'>
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function name='JSObjectSetProperty'>
+    <arg index='5' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSObjectSetPropertyAtIndex'>
+    <arg index='4' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSStringCopyCFString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='JSStringCreateWithCharacters'>
+    <arg index='0' type='^S' type64='^S' />
+  </function>
+  <function name='JSStringCreateWithUTF8CString'>
+    <arg index='0' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='JSStringGetCharactersPtr'>
+    <retval type='^S' type64='^S' />
+  </function>
+  <function name='JSStringGetUTF8CString'>
+    <arg index='1' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='JSStringIsEqualToUTF8CString'>
+    <arg index='1' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='JSValueIsEqual'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueIsInstanceOfConstructor'>
+    <arg index='3' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueToNumber'>
+    <arg index='2' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueToObject'>
+    <arg index='2' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+  <function name='JSValueToStringCopy'>
+    <arg index='2' type='^^{OpaqueJSValue}' type64='^^{OpaqueJSValue}' />
+  </function>
+</signatures>

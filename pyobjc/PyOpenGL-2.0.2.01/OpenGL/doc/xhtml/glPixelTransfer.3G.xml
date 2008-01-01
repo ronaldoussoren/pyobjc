@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glPixelTransfer</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glPixelStore.3G.xml" title="glPixelStore"/><link rel="next" href="glPixelZoom.3G.xml" title="glPixelZoom"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glPixelTransfer</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glPixelStore.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glPixelZoom.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glPixelTransfer.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glPixelTransfer.3G-name"/><h2>Name</h2><p>glPixelTransferf, glPixelTransferi &#8212; set pixel transfer modes</p></div><div class="refsynopsisdiv"><a name="glPixelTransfer.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glPixelTransferf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, GLfloat <i><tt>param</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glPixelTransferi</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>pname</tt></i>, GLint <i><tt>param</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glPixelTransfer.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glPixelTransferf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glPixelTransferi</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd><p>
+						Specifies the symbolic name of the pixel transfer parameter to be set. Must be one of the following:
+						<tt>GL_MAP_COLOR</tt>, <tt>GL_MAP_STENCIL</tt>,
+						<tt>GL_INDEX_SHIFT</tt>, <tt>GL_INDEX_OFFSET</tt>,
+						<tt>GL_RED_SCALE</tt>, <tt>GL_RED_BIAS</tt>, <tt>GL_GREEN_SCALE</tt>,
+						<tt>GL_GREEN_BIAS</tt>, <tt>GL_BLUE_SCALE</tt>, <tt>GL_BLUE_BIAS</tt>,
+						<tt>GL_ALPHA_SCALE</tt>, <tt>GL_ALPHA_BIAS</tt>,
+						<tt>GL_DEPTH_SCALE</tt>, or <tt>GL_DEPTH_BIAS</tt>.
+					</p><p>
+						Additionally, if the <tt>GL_ARB_imaging</tt> extension is supported, the following symbolic
+						names are accepted: <tt>GL_POST_COLOR_MATRIX_RED_SCALE</tt>,
+						<tt>GL_POST_COLOR_MATRIX_GREEN_SCALE</tt>,
+						<tt>GL_POST_COLOR_MATRIX_BLUE_SCALE</tt>,
+						<tt>GL_POST_COLOR_MATRIX_ALPHA_SCALE</tt>, <tt>GL_POST_COLOR_MATRIX_RED_BIAS</tt>,
+						<tt>GL_POST_COLOR_MATRIX_GREEN_BIAS</tt>, <tt>GL_POST_COLOR_MATRIX_BLUE_BIAS</tt>,
+						<tt>GL_POST_COLOR_MATRIX_ALPHA_BIAS</tt>, <tt>GL_POST_CONVOLUTION_RED_SCALE</tt>,
+						<tt>GL_POST_CONVOLUTION_GREEN_SCALE</tt>, <tt>GL_POST_CONVOLUTION_BLUE_SCALE</tt>,
+						<tt>GL_POST_CONVOLUTION_ALPHA_SCALE</tt>, <tt>GL_POST_CONVOLUTION_RED_BIAS</tt>,
+						<tt>GL_POST_CONVOLUTION_GREEN_BIAS</tt>, <tt>GL_POST_CONVOLUTION_BLUE_BIAS</tt>,
+						and <tt>GL_POST_CONVOLUTION_ALPHA_BIAS</tt>.
+					</p></dd><dt><span class="term"><i><tt>param</tt></i></span></dt><dd>
+						Specifies the value that <i><tt>pname</tt></i> is set to.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-description"/><h2>Description</h2><p>
+			<tt>glPixelTransfer</tt> sets pixel transfer modes that affect the operation of
+			subsequent <a href="glCopyPixels.3G.xml"><tt>glCopyPixels</tt></a>, <a href="glCopyTexImage1D.3G.xml"><tt>glCopyTexImage1D</tt></a>, <a href="glCopyTexImage2D.3G.xml"><tt>glCopyTexImage2D</tt></a>, <a href="glCopyTexSubImage1D.3G.xml"><tt>glCopyTexSubImage1D</tt></a>, <a href="glCopyTexSubImage2D.3G.xml"><tt>glCopyTexSubImage2D</tt></a>,
+			<a href="glCopyTexSubImage3D.3G.xml"><tt>glCopyTexSubImage3D</tt></a>, <a href="glDrawPixels.3G.xml"><tt>glDrawPixels</tt></a>,
+			<a href="glReadPixels.3G.xml"><tt>glReadPixels</tt></a>, <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>, <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>, <a href="glTexSubImage1D.3G.xml"><tt>glTexSubImage1D</tt></a>, <a href="glTexSubImage2D.3G.xml"><tt>glTexSubImage2D</tt></a>, and <a href="glTexSubImage3D.3G.xml"><tt>glTexSubImage3D</tt></a> commands. Additionally, if the <tt>GL_ARB_imaging</tt>
+			subset is supported, the routines <a href="glColorTable.3G.xml"><tt>glColorTable</tt></a>, <a href="glColorSubTable.3G.xml"><tt>glColorSubTable</tt></a>, <a href="glConvolutionFilter1D.3G.xml"><tt>glConvolutionFilter1D</tt></a>,
+			<a href="glConvolutionFilter2D.3G.xml"><tt>glConvolutionFilter2D</tt></a>, <a href="glHistogram.3G.xml"><tt>glHistogram</tt></a>,
+			<a href="glMinmax.3G.xml"><tt>glMinmax</tt></a>, and <a href="glSeparableFilter2D.3G.xml"><tt>glSeparableFilter2D</tt></a> are
+			also affected. The algorithms that are specified by pixel transfer modes operate on pixels after they are read from the
+			frame buffer (<a href="glCopyPixels.3G.xml"><tt>glCopyPixels</tt></a> <a href="glCopyTexImage1D.3G.xml"><tt>glCopyTexImage1D</tt></a>, <a href="glCopyTexImage2D.3G.xml"><tt>glCopyTexImage2D</tt></a>, <a href="glCopyTexSubImage1D.3G.xml"><tt>glCopyTexSubImage1D</tt></a>, <a href="glCopyTexSubImage2D.3G.xml"><tt>glCopyTexSubImage2D</tt></a>,
+			<a href="glCopyTexSubImage3D.3G.xml"><tt>glCopyTexSubImage3D</tt></a>, and <a href="glReadPixels.3G.xml"><tt>glReadPixels</tt></a>), or unpacked from client memory (<a href="glDrawPixels.3G.xml"><tt>glDrawPixels</tt></a>, <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>, <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>, <a href="glTexSubImage1D.3G.xml"><tt>glTexSubImage1D</tt></a>, <a href="glTexSubImage2D.3G.xml"><tt>glTexSubImage2D</tt></a>, and <a href="glTexSubImage3D.3G.xml"><tt>glTexSubImage3D</tt></a>). Pixel transfer operations happen in the same order, and in the same
+			manner, regardless of the command that resulted in the pixel operation. Pixel storage modes (see <a href="glPixelStore.3G.xml">glPixelStore</a>) control the unpacking of pixels being read from client memory, and the packing of pixels being written
+			back into client memory.
+		</p><p>
+			Pixel transfer operations handle four fundamental pixel types: <i><tt>color</tt></i>, <i><tt>color
+			index</tt></i>, <i><tt>depth</tt></i>, and <i><tt>stencil</tt></i>. <i><tt>Color</tt></i>
+			pixels consist of four floating-point values with unspecified mantissa and exponent sizes, scaled such that 0
+			represents zero intensity and 1 represents full intensity. <i><tt>Color indices</tt></i> comprise a single
+			fixed-point value, with unspecified precision to the right of the binary point. <i><tt>Depth</tt></i> pixels
+			comprise a single floating-point value, with unspecified mantissa and exponent sizes, scaled such that 0.0 represents
+			the minimum depth buffer value, and 1.0 represents the maximum depth buffer value. Finally,
+			<i><tt>stencil</tt></i> pixels comprise a single fixed-point value, with unspecified precision to the right of
+			the binary point.
+		</p><p>
+			The pixel transfer operations performed on the four basic pixel types are as follows:
+		</p><div class="variablelist"><dl><dt><span class="term">Color</span></dt><dd><p>
+						Each of the four color components is multiplied by a scale factor, then added to a bias factor. That is,
+						the red component is multiplied by <tt>GL_RED_SCALE</tt>, then added to
+						<tt>GL_RED_BIAS</tt>; the green component is multiplied by <tt>GL_GREEN_SCALE</tt>,
+						then added to <tt>GL_GREEN_BIAS</tt>; the blue component is multiplied by
+						<tt>GL_BLUE_SCALE</tt>, then added to <tt>GL_BLUE_BIAS</tt>; and the alpha
+						component is multiplied by <tt>GL_ALPHA_SCALE</tt>, then added to
+						<tt>GL_ALPHA_BIAS</tt>. After all four color components are scaled and biased, each is clamped
+						to the range [0,1]. All color, scale, and bias values are specified with <tt>glPixelTransfer</tt>.
+					</p><p>
+						If <tt>GL_MAP_COLOR</tt> is true, each color component is scaled by the size of the
+						corresponding color-to-color map, then replaced by the contents of that map indexed by the scaled
+						component. That is, the red component is scaled by <tt>GL_PIXEL_MAP_R_TO_R_SIZE</tt>, then
+						replaced by the contents of <tt>GL_PIXEL_MAP_R_TO_R</tt> indexed by itself. The green component
+						is scaled by <tt>GL_PIXEL_MAP_G_TO_G_SIZE</tt>, then replaced by the contents of
+						<tt>GL_PIXEL_MAP_G_TO_G</tt> indexed by itself. The blue component is scaled by
+						<tt>GL_PIXEL_MAP_B_TO_B_SIZE</tt>, then replaced by the contents of
+						<tt>GL_PIXEL_MAP_B_TO_B</tt> indexed by itself. And the alpha component is scaled by
+						<tt>GL_PIXEL_MAP_A_TO_A_SIZE</tt>, then replaced by the contents of
+						<tt>GL_PIXEL_MAP_A_TO_A</tt> indexed by itself. All components taken from the maps are then
+						clamped to the range [0,1]. <tt>GL_MAP_COLOR</tt> is specified with <tt>glPixelTransfer</tt>. The contents of the various maps are specified with
+						<tt>glPixelMap</tt>.
+					</p><p>
+						If the <tt>GL_ARB_imaging</tt> extension is supported, each of the four color components may be
+						scaled and biased after tranformation by the color matrix. That is, the red component is multiplied by
+						<tt>GL_POST_COLOR_MATRIX_RED_SCALE</tt>, then added to
+						<tt>GL_POST_COLOR_MATRIX_RED_BIAS</tt>; the green component is multiplied by
+						<tt>GL_POST_COLOR_MATRIX_GREEN_SCALE</tt>, then added to
+						<tt>GL_POST_COLOR_MATRIX_GREEN_BIAS</tt>; the blue component is multiplied by
+						<tt>GL_POST_COLOR_MATRIX_BLUE_SCALE</tt>, then added to
+						<tt>GL_POST_COLOR_MATRIX_BLUE_BIAS</tt>; and the alpha component is multiplied by
+						<tt>GL_POST_COLOR_MATRIX_ALPHA_SCALE</tt>, then added to
+						<tt>GL_POST_COLOR_MATRIX_ALPHA_BIAS</tt>. After all four color components are scaled and
+						biased, each is clamped to the range [0,1].
+					</p><p>
+						Similiarly, if the <tt>GL_ARB_imaging</tt> extension is supported, each of the four color
+						components may be scaled and biased after processing by the enabled convolution filter. That is, the red
+						component is multiplied by <tt>GL_POST_CONVOLUTION_RED_SCALE</tt>, then added to
+						<tt>GL_POST_CONVOLUTION_RED_BIAS</tt>; the green component is multiplied by
+						<tt>GL_POST_CONVOLUTION_GREEN_SCALE</tt>, then added to
+						<tt>GL_POST_CONVOLUTION_GREEN_BIAS</tt>; the blue component is multiplied by
+						<tt>GL_POST_CONVOLUTION_BLUE_SCALE</tt>, then added to
+						<tt>GL_POST_CONVOLUTION_BLUE_BIAS</tt>; and the alpha component is multiplied by
+						<tt>GL_POST_CONVOLUTION_ALPHA_SCALE</tt>, then added to
+						<tt>GL_POST_CONVOLUTION_ALPHA_BIAS</tt>. After all four color components are scaled and biased,
+						each is clamped to the range [0,1].
+					</p></dd><dt><span class="term">Color index</span></dt><dd>
+						Each color index is shifted left by <tt>GL_INDEX_SHIFT</tt> bits; any bits beyond the number of
+						fraction bits carried by the fixed-point index are filled with zeros. If
+						<tt>GL_INDEX_SHIFT</tt> is negative, the shift is to the right, again zero filled. Then
+						<tt>GL_INDEX_OFFSET</tt> is added to the index. <tt>GL_INDEX_SHIFT</tt> and
+						<tt>GL_INDEX_OFFSET</tt> are specified with
+					</dd></dl></div><p>
+			<tt>glPixelTransfer</tt>.
+		</p><p>
+			From this point, operation diverges depending on the required of the resulting pixels. If the resulting pixels are to
+			be written to a color index buffer, or if they are being read back to client memory in
+			<tt>GL_COLOR_INDEX</tt> , the pixels continue to be treated as indices. If
+			<tt>GL_MAP_COLOR</tt> is true, each index is masked by <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:msup>
+							<mml:mn>2</mml:mn>
+							<mml:mi>n</mml:mi>
+						</mml:msup>
+						<mml:mo>-</mml:mo>
+						<mml:mn>1</mml:mn>
+					</mml:mrow>
+				</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>n</mml:mi>
+				</mml:math> is <tt>GL_PIXEL_MAP_I_TO_I_SIZE</tt>, then replaced by the contents of
+			<tt>GL_PIXEL_MAP_I_TO_I</tt> indexed by the masked value. <tt>GL_MAP_COLOR</tt> is specified
+			with <tt>glPixelTransfer</tt>. The contents of the index map is specified with
+			<tt>glPixelMap</tt>.
+		</p><p>
+			If the resulting pixels are to be written to an RGBA color buffer, or if they are read back to client memory in a other
+			than <tt>GL_COLOR_INDEX</tt>, the pixels are converted from indices to colors by referencing the four maps
+			<tt>GL_PIXEL_MAP_I_TO_R</tt>, <tt>GL_PIXEL_MAP_I_TO_G</tt>,
+			<tt>GL_PIXEL_MAP_I_TO_B</tt>, and <tt>GL_PIXEL_MAP_I_TO_A</tt>. Before being dereferenced, the
+			index is masked by <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:msup>
+							<mml:mn>2</mml:mn>
+							<mml:mi>n</mml:mi>
+						</mml:msup>
+						<mml:mo>-</mml:mo>
+						<mml:mn>1</mml:mn>
+					</mml:mrow>
+				</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>n</mml:mi>
+				</mml:math> is <tt>GL_PIXEL_MAP_I_TO_R_SIZE</tt> for the red map,
+			<tt>GL_PIXEL_MAP_I_TO_G_SIZE</tt> for the green map, <tt>GL_PIXEL_MAP_I_TO_B_SIZE</tt> for the
+			blue map, and <tt>GL_PIXEL_MAP_I_TO_A_SIZE</tt> for the alpha map. All components taken from the maps are
+			then clamped to the range [0,1]. The contents of the four maps is specified with <tt>glPixelMap</tt>.
+		</p><div class="variablelist"><dl><dt><span class="term">Depth</span></dt><dd>
+						Each depth value is multiplied by <tt>GL_DEPTH_SCALE</tt>, added to
+						<tt>GL_DEPTH_BIAS</tt>, then clamped to the range [0,1].
+					</dd><dt><span class="term">Stencil</span></dt><dd>
+						Each index is shifted <tt>GL_INDEX_SHIFT</tt> bits just as a color index is, then added to
+						<tt>GL_INDEX_OFFSET</tt>. If <tt>GL_MAP_STENCIL</tt> is true, each index is masked
+						by <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:msup>
+										<mml:mn>2</mml:mn>
+										<mml:mi>n</mml:mi>
+									</mml:msup>
+									<mml:mo>-</mml:mo>
+									<mml:mn>1</mml:mn>
+								</mml:mrow>
+							</mml:math>, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mi>n</mml:mi>
+							</mml:math> is <tt>GL_PIXEL_MAP_S_TO_S_SIZE</tt>, then replaced by the contents of
+						<tt>GL_PIXEL_MAP_S_TO_S</tt> indexed by the masked value.
+					</dd></dl></div><p>
+			The following table gives the type, initial value, and range of valid values for each of the pixel transfer parameters
+			that are set with <tt>glPixelTransfer</tt>.
+		</p><div class="informaltable"><table border="1"><colgroup><col/><col/><col/><col/></colgroup><tbody><tr><td><i><tt>pname</tt></i></td><td align="center"><span class="bold"><b>Type</b></span></td><td align="center"><span class="bold"><b>Initial Value</b></span></td><td align="center"><span class="bold"><b>Valid Range</b></span></td></tr><tr><td><tt>GL_MAP_COLOR</tt></td><td align="center">boolean</td><td align="center">false</td><td align="center">true/false</td></tr><tr><td><tt>GL_MAP_STENCIL</tt></td><td align="center">boolean</td><td align="center">false</td><td align="center">true/false</td></tr><tr><td><tt>GL_INDEX_SHIFT</tt></td><td align="center">integer</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_INDEX_OFFSET</tt></td><td align="center">integer</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_RED_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_GREEN_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_BLUE_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_ALPHA_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_DEPTH_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_RED_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_GREEN_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_BLUE_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_ALPHA_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_DEPTH_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_RED_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_GREEN_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_BLUE_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_ALPHA_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_RED_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_GREEN_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_BLUE_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_COLOR_MATRIX_ALPHA_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_RED_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_GREEN_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_BLUE_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_ALPHA_SCALE</tt></td><td align="center">float</td><td align="center">1</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_RED_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_GREEN_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_BLUE_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr><tr><td><tt>GL_POST_CONVOLUTION_ALPHA_BIAS</tt></td><td align="center">float</td><td align="center">0</td><td align="center">(-&#8734;,&#8734;)</td></tr></tbody></table></div><p>
+			<tt>glPixelTransferf</tt> can be used to set any pixel transfer parameter. If the parameter type is
+			boolean, 0 implies false and any other value implies true. If <i><tt>pname</tt></i> is an integer parameter,
+			<i><tt>param</tt></i> is rounded to the nearest integer.
+		</p><p>
+			Likewise, <tt>glPixelTransferi</tt> can be used to set any of the pixel transfer parameters. Boolean
+			parameters are set to false if <i><tt>param</tt></i> is 0 and to true otherwise. <i><tt>param</tt></i> is
+			converted to floating point before being assigned to real-valued parameters.
+		</p></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-notes"/><h2>Notes</h2><p>
+			If a <a href="glColorTable.3G.xml"><tt>glColorTable</tt></a>, <a href="glColorSubTable.3G.xml"><tt>glColorSubTable</tt></a>,
+			<a href="glConvolutionFilter1D.3G.xml"><tt>glConvolutionFilter1D</tt></a>, <a href="glConvolutionFilter2D.3G.xml"><tt>glConvolutionFilter2D</tt></a>, <a href="glCopyPixels.3G.xml"><tt>glCopyPixels</tt></a>, <a href="glCopyTexImage1D.3G.xml"><tt>glCopyTexImage1D</tt></a>, <a href="glCopyTexImage2D.3G.xml"><tt>glCopyTexImage2D</tt></a>, <a href="glCopyTexSubImage1D.3G.xml"><tt>glCopyTexSubImage1D</tt></a>, <a href="glCopyTexSubImage2D.3G.xml"><tt>glCopyTexSubImage2D</tt></a>,
+			<a href="glCopyTexSubImage3D.3G.xml"><tt>glCopyTexSubImage3D</tt></a>, <a href="glDrawPixels.3G.xml"><tt>glDrawPixels</tt></a>,
+			<a href="glReadPixels.3G.xml"><tt>glReadPixels</tt></a>, <a href="glSeparableFilter2D.3G.xml"><tt>glSeparableFilter2D</tt></a>,
+			<a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>, <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>, <a href="glTexSubImage1D.3G.xml"><tt>glTexSubImage1D</tt></a>, <a href="glTexSubImage2D.3G.xml"><tt>glTexSubImage2D</tt></a>, or <a href="glTexSubImage3D.3G.xml"><tt>glTexSubImage3D</tt></a>. command is
+			placed in a display list (see <a href="glNewList.3G.xml">glNewList</a> and <a href="glCallList.3G.xml"><tt>glCallList</tt></a>), the pixel transfer mode settings in effect
+			when the display list is <span class="emphasis"><em>executed</em></span>are the ones that are used. They may be different from the
+			settings when the command was compiled into the display list.
+		</p></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>pname</tt></i> is not an accepted value.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glPixelTransfer</tt> is
+			executed between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of
+			<a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGet</tt> with argument <tt>GL_MAP_COLOR</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_MAP_STENCIL</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_INDEX_SHIFT</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_INDEX_OFFSET</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_RED_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_RED_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_GREEN_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_GREEN_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_BLUE_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_BLUE_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_ALPHA_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_ALPHA_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_DEPTH_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_DEPTH_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_RED_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_RED_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_GREEN_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_GREEN_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_BLUE_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_BLUE_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_ALPHA_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_COLOR_MATRIX_ALPHA_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_RED_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_RED_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_GREEN_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_GREEN_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_BLUE_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_BLUE_BIAS</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_ALPHA_SCALE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_POST_CONVOLUTION_ALPHA_BIAS</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glPixelTransfer.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glCallList.3G.xml">glCallList</a>, <a href="glColorTable.3G.xml">glColorTable</a>, <a href="glColorSubTable.3G.xml">glColorSubTable</a>, <a href="glConvolutionFilter1D.3G.xml">glConvolutionFilter1D</a>, <a href="glConvolutionFilter2D.3G.xml">glConvolutionFilter2D</a>, <a href="glCopyPixels.3G.xml">glCopyPixels</a>, <a href="glCopyTexImage1D.3G.xml">glCopyTexImage1D</a>, <a href="glCopyTexImage2D.3G.xml">glCopyTexImage2D</a>, <a href="glCopyTexSubImage1D.3G.xml">glCopyTexSubImage1D</a>, <a href="glCopyTexSubImage2D.3G.xml">glCopyTexSubImage2D</a>, <a href="glCopyTexSubImage3D.3G.xml">glCopyTexSubImage3D</a>, <a href="glDrawPixels.3G.xml">glDrawPixels</a>, <a href="glNewList.3G.xml">glNewList</a>, <a href="glPixelMap.3G.xml">glPixelMap</a>, <a href="glPixelStore.3G.xml">glPixelStore</a>, <a href="glPixelZoom.3G.xml">glPixelZoom</a>, <a href="glReadPixels.3G.xml">glReadPixels</a>, <a href="glTexImage1D.3G.xml">glTexImage1D</a>, <a href="glTexImage2D.3G.xml">glTexImage2D</a>, <a href="glTexImage3D.3G.xml">glTexImage3D</a>, <a href="glTexSubImage1D.3G.xml">glTexSubImage1D</a>, <a href="glTexSubImage2D.3G.xml">glTexSubImage2D</a>, <a href="glTexSubImage3D.3G.xml">glTexSubImage3D</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glPixelStore.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glPixelZoom.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glPixelStore </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glPixelZoom</td></tr></table></div></body></html>

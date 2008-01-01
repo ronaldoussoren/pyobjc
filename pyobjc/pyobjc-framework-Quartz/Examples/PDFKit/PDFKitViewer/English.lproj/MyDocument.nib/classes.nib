@@ -1,0 +1,32 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {takeDestinationFromOutline = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = MyDocument; LANGUAGE = ObjC; SUPERCLASS = NSDocument; }, 
+        {
+            ACTIONS = {
+                doFind = id; 
+                performFindPanelAction = id; 
+                takeDestinationFromOutline = id; 
+                takeFindString = id; 
+                toggleDrawer = id; 
+            }; 
+            CLASS = MyPDFDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_drawer" = NSDrawer; 
+                "_noOutlineText" = NSTextField; 
+                "_outlineView" = NSOutlineView; 
+                "_pdfView" = PDFView; 
+                "_searchProgress" = NSProgressIndicator; 
+                "_searchTable" = NSTableView; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }
+    ); 
+    IBVersion = 1; 
+}

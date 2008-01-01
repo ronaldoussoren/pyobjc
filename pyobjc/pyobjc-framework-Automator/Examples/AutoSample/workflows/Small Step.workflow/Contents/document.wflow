@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>130</string>
+	<key>AMApplicationVersion</key>
+	<string>2.0</string>
+	<key>AMDocumentVersion</key>
+	<string>1</string>
+	<key>AMWorkflowOptions</key>
+	<dict/>
+	<key>WorkflowIsShared</key>
+	<false/>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMIconPath</key>
+				<string>/Applications/TextEdit.app</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>com.apple.Automator.Action.Input</key>
+					<dict/>
+					<key>com.apple.Automator.Action.Output</key>
+					<dict/>
+					<key>enteredText</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.text-object</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Get Specified Text.action</string>
+				<key>ActionName</key>
+				<string>Get Specified Text</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>enteredText</key>
+					<string>one small step for auto, one huge step for computer users</string>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>TextEdit</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.GetSpecifiedText</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<false/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryText</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMAppleScriptAction</string>
+				<key>Keywords</key>
+				<array>
+					<string>Get</string>
+					<string>Text</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>82C34AFB-4A52-472F-8B14-25F95251004E</string>
+				<key>UUID</key>
+				<string>0DE0EED4-01E1-4BA5-B2F7-DE2C8DF4C0A1</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>TextEdit</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>enteredText</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>281.000000:843.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Get Specified Text.action/Contents/Resources/English.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.text-object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0</string>
+				<key>AMIconPath</key>
+				<string>/Applications/TextEdit.app</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>com.apple.Automator.Action.Input</key>
+					<dict/>
+					<key>com.apple.Automator.Action.Output</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.textedit.document-object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/New TextEdit Document.action</string>
+				<key>ActionName</key>
+				<string>New TextEdit Document</string>
+				<key>ActionParameters</key>
+				<dict/>
+				<key>Application</key>
+				<array>
+					<string>TextEdit</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.CreateNewTextEditDocument</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<false/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryText</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMAppleScriptAction</string>
+				<key>InputUUID</key>
+				<string>877B7133-4D65-4586-9EC5-E5A0217D13DC</string>
+				<key>Keywords</key>
+				<array>
+					<string>Create</string>
+					<string>Make</string>
+					<string>Document</string>
+					<string>Text</string>
+					<string>New</string>
+					<string>Display</string>
+					<string>Open</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>FDC77BFE-4539-4729-9F21-3E92568A1B56</string>
+				<key>StartAction</key>
+				<false/>
+				<key>UUID</key>
+				<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>TextEdit</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+			</dict>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>028A1006-F489-48CA-9CEE-72EF67CBEDF2</key>
+		<dict>
+			<key>from</key>
+			<string>8229E551-657D-4157-80C9-A01B0593C6CA - 8229E551-657D-4157-80C9-A01B0593C6CA</string>
+			<key>to</key>
+			<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E - 97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+		</dict>
+		<key>038878DE-D1AA-4366-BFAD-6CD1ED0BBC9E</key>
+		<dict>
+			<key>from</key>
+			<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E - 97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+		</dict>
+		<key>092FB108-DC88-49DC-A090-ABBBFF3DE4BB</key>
+		<dict>
+			<key>from</key>
+			<string>0DE0EED4-01E1-4BA5-B2F7-DE2C8DF4C0A1 - 0DE0EED4-01E1-4BA5-B2F7-DE2C8DF4C0A1</string>
+			<key>to</key>
+			<string>8229E551-657D-4157-80C9-A01B0593C6CA - 8229E551-657D-4157-80C9-A01B0593C6CA</string>
+		</dict>
+		<key>7180D78C-30F0-4CD8-8511-15A40342052E</key>
+		<dict>
+			<key>from</key>
+			<string>0DE0EED4-01E1-4BA5-B2F7-DE2C8DF4C0A1 - 0DE0EED4-01E1-4BA5-B2F7-DE2C8DF4C0A1</string>
+			<key>to</key>
+			<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E - 97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+		</dict>
+		<key>744CF143-50C9-436A-A9FF-EEDE7C1C1582</key>
+		<dict>
+			<key>from</key>
+			<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E - 97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+			<key>to</key>
+			<string>8229E551-657D-4157-80C9-A01B0593C6CA - 8229E551-657D-4157-80C9-A01B0593C6CA</string>
+		</dict>
+		<key>ACF4901C-2AE9-446F-ADEF-2DF04CFA13DE</key>
+		<dict>
+			<key>from</key>
+			<string>97E427EB-33FD-4A65-A80B-ED2E6E351F4E - 97E427EB-33FD-4A65-A80B-ED2E6E351F4E</string>
+			<key>to</key>
+			<string>8229E551-657D-4157-80C9-A01B0593C6CA - 8229E551-657D-4157-80C9-A01B0593C6CA</string>
+		</dict>
+	</dict>
+	<key>state</key>
+	<dict>
+		<key>EditorSplitViewPosition</key>
+		<real>838</real>
+		<key>MainSplitViewPosition_v2</key>
+		<real>338</real>
+		<key>windowFrame</key>
+		<string>{{390, 94}, {900, 934}}</string>
+		<key>windowFrameTopLeft</key>
+		<string>{{390, 0}, {900, 934}}</string>
+		<key>workflowViewScrollPosition</key>
+		<string>{{0, 0}, {562, 838}}</string>
+	</dict>
+</dict>
+</plist>

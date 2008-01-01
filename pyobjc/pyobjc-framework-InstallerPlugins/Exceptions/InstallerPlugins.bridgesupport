@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <opaque ignore='true' name='InstallerPane_Private*' />
+  <opaque ignore='true' name='InstallerSection_Private*' />
+  <opaque ignore='true' name='InstallerState_Private*' />
+</signatures>

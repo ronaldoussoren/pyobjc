@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Tutorial - Adding Python code to an existing ObjC application</title>
+</head>
+<body>
+<h2>Tutorial - Adding Python code to an existing ObjC application</h2>
+<p>In this tutorial we are going to take an existing ObjC application and
+add Python and PyObjC to it.  One of the reasons why you may want to do
+this is because some things are much simpler in Python than in ObjC, mainly
+due to the rich library Python has.</p>
+<p>To follow the tutorial you need:</p>
+<blockquote>
+<ul>
+<li>PyObjC 1.3.1</li>
+<li>py2app 0.2 or later (included in the binary installer for PyObjC)</li>
+<li>Python 2.3 or later (note: PyObjC is NOT compatible with MacPython-OS9)</li>
+<li>Mac OS X 10.3 or later</li>
+<li>Xcode Tools</li>
+</ul>
+</blockquote>
+<p>If you do not have a <code><span>/Developer</span></code> folder, then you do not have Xcode Tools
+installed.  See <a href="http://developer.apple.com/tools/download/">Getting the Xcode Tools</a>.</p>
+<p>The application we are going to modify is Apple's SimpleComboBox example.
+This example shows you how to use combo boxes, but that is not what interests
+us right now: the application pretends to be a database application that allows
+you to keep notes (such as track list) for your CD collection.  With such an
+application it feels silly that even though you want to type notes on
+the CD you are currently playing in iTunes you still have to retype
+album title, artist and genre.  This is what we are going to fix: we
+are going to add a button &quot;ask iTunes&quot;, which will use Python's
+AppleScript support to ask iTunes about the currently playing track
+and fill in the fields for you.</p>
+<p>Follow these steps:</p>
+<ol type="1">
+<li>Make a copy of <code><span>/Developer/Examples/AppKit/SimpleComboBox</span></code> to work on.
+Let's call this <code><span>SimpleComboBoxPlus</span></code>:<pre>
+$ cp -R /Developer/Examples/AppKit/SimpleComboBox SimpleComboBoxPlus
+</pre>
+</li>
+</ol>
+<blockquote>
+<p>From this point on, all shell commands take place from this
+<code><span>SimpleComboBoxPlus</span></code> folder.</p>
+</blockquote>
+<ol start="2" type="1">
+<li>Open it in Xcode, build it, and see what it does.</li>
+<li>Open <code><span>CDInfoDocument.nib</span></code>.  Select the Class View, <code><span>NSObject</span></code>, subclass
+as <code><span>ITunesCommunication</span></code>.  Give the class an <code><span>askITunes:</span></code> action.
+Instantiate the class as object <code><span>ITunesCommunication</span></code>.  This wll be the
+class that we write in Python.</li>
+<li>Go to the object view again, open the Window.</li>
+<li>Move the text box down a bit to make space, add a button &quot;ask iTunes&quot;.</li>
+<li>Connect this button to the <code><span>askITunes:</span></code> action of the
+<code><span>ITunesCommunication</span></code> object.</li>
+<li><dl>
+<dt>We now need to write the code implementing the <code><span>ITunesCommunication</span></code></dt>
+<dd>class.  As this tutorial is about using PyObjC in existing ObjC programs
+and not about PyObjC itself, we are going to skip writing the code and
+simply copy <code><span>src/ITunesCommunication_1.py</span></code> to <code><span>ITunesCommunication.py</span></code>.</dd>
+</dl>
+</li>
+<li>Now we need to create the build script for our plugin, create a file named
+<code><span>setup.py</span></code> with the following contents:<pre>
+from distutils.core import setup
+import py2app
+
+setup(
+    plugin = ['ITunesCommunication.py']
+)   
+</pre>
+<p>You may also copy this file from <code><span>src/setup.py</span></code>.</p>
+</li>
+<li>Run the setup script to create a temporary plugin bundle for development:<pre>
+$ python setup.py py2app -A
+</pre>
+<p>Note that we use the <code><span>-A</span></code> argument to create an alias plugin bundle at
+<code><span>dist/ITunesCommunication.py</span></code>.  Alias bundles contain an alias to the
+main script (<code><span>ITunesCommunication.py</span></code>) and symlinks to the data files
+(none in this case).  This allows us to keep working on the source files
+without having to rebuild the application.  This alias bundle is similar
+to a ZeroLink executable in Xcode - it is for DEVELOPMENT ONLY, and will
+not work on other machines.</p>
+</li>
+<li>Add <code><span>dist/ITunesCommunication.plugin</span></code> to the Resources folder in your
+Xcode project.  You can do this by ctrl-clicking the Resources folder
+and choosing &quot;Add Existing Files...&quot;.  Make sure to choose
+&quot;Create Folder References for any added folders&quot;.</li>
+<li>Open <code><span>main.m</span></code>, it is in the &quot;Other Sources&quot; folder in your Xcode
+project, and change the main(...) function to the following:<pre>
+int main(int argc, const char *argv[]) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *pluginPath = [[NSBundle mainBundle]
+                                pathForResource:@&quot;ITunesCommunication&quot;
+                                         ofType:@&quot;plugin&quot;];
+    NSBundle *pluginBundle = [NSBundle bundleWithPath:pluginPath];
+    [pluginBundle load];
+    [pool release];
+    return NSApplicationMain(argc, argv);
+}
+</pre>
+<p>You may also copy a full main.m from <code><span>src/main.m</span></code>.  This code ensures
+that our ITunesCommunication plugin is loaded before the nib
+files.</p>
+</li>
+<li>Build and run.  When you press the &quot;Ask iTunes&quot; the &quot;CD Title&quot; and
+&quot;Band Name&quot; fields will be filled with one of the best albums of the last
+few years :-)</li>
+<li>Now we need to make the program talk to iTunes.  The current MacPython
+interface to the Open Scripting Architecture requires an extra step when
+compared to AppleScript: you need to manually generate a Python package
+that wraps all the AppleScript terminology for an application.  To make
+matters more complicated iTunes is one of those special cases where the
+standard way to generate this package (start the application, ask it for
+its terminology) does not work, so we have to actually look into the
+bowels of <code><span>iTunes.app</span></code>.  This leads to the following hefty command line
+which you should run in the <code><span>SimpleComboBoxPlus</span></code> directory:<pre>
+$ cd SimpleComboBoxPlus
+$ pythonw -c &quot;from gensuitemodule import main;main()&quot; \
+    --output iTunes --creator hook --resource \
+    /Applications/iTunes.app/Contents/Resources/iTunes.rsrc
+</pre>
+</li>
+<li>Finally, add the code to <code><span>ITunesCommunication.py</span></code> to actually communicate
+with iTunes.  We cop out and copy it from <code><span>src/ITunesCommunication_2.py</span></code>.</li>
+<li>Build and run.  If you press the button when iTunes is playing the Title
+and Band names will be filled, otherwise they will be cleared.  In a real
+application you would disable the &quot;Ask iTunes&quot; button unless iTunes was
+active.  All that is left as an exercise to the reader.</li>
+<li>To make this application redistributable, perform the following commands
+to make the plugin redistributable:<pre>
+$ rm -rf dist
+$ python setup.py py2app
+</pre>
+<p>Then, from Xcode, clean your project (shift-cmd-K), switch to Deployment
+mode, and rebuild.</p>
+</li>
+</ol>
+<h2><a name="a-minor-variation">A minor variation</a></h2>
+<p>There a several projects that improve upon the built-in AppleScript support
+(or to be more precise &quot;application scripting support&quot;).  One of those is
+<a href="http://freespace.virgin.net/hamish.sanderson/appscript.html">AppScript</a>.</p>
+<p>When you have this module installed you can replace the contents of
+<code><span>ITunesCommuncation.py</span></code> with <code><span>src/ITunesCommunication_AppScript.py</span></code>,
+and you can skip step 13 entirely.</p>
+</body>
+</html>

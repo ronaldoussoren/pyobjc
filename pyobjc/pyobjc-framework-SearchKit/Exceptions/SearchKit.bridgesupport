@@ -1,0 +1,165 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='SKDocumentGetTypeID' name='SKDocumentRef' />
+  <cftype gettypeid_func='SKIndexDocumentIteratorGetTypeID' name='SKIndexDocumentIteratorRef' />
+  <cftype gettypeid_func='SKIndexGetTypeID' name='SKIndexRef' />
+  <cftype gettypeid_func='SKSearchGroupGetTypeID' name='SKSearchGroupRef' />
+  <cftype gettypeid_func='SKSearchGetTypeID' name='SKSearchRef' />
+  <cftype gettypeid_func='SKSearchResultsGetTypeID' name='SKSearchResultsRef' />
+  <cftype gettypeid_func='SKSummaryGetTypeID' name='SKSummaryRef' />
+  <function name='SKDocumentCopyURL'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='0' type='@' type64='@' />
+  </function>
+  <function name='SKDocumentCreate'>
+    <retval already_cfretained='true' already_retained='true' type='@' type64='@' />
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKDocumentCreateWithURL'>
+    <retval already_cfretained='true' already_retained='true' type='@' type64='@' />
+  </function>
+  <function name='SKDocumentGetName'>
+    <arg index='0' type='@' type64='@' />
+  </function>
+  <function name='SKDocumentGetParent'>
+    <retval type='@' type64='@' />
+    <arg index='0' type='@' type64='@' />
+  </function>
+  <function name='SKDocumentGetSchemeName'>
+    <arg index='0' type='@' type64='@' />
+  </function>
+  <function name='SKIndexAddDocument'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexAddDocumentWithText'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexCopyDocumentForDocumentID'>
+    <retval already_cfretained='true' already_retained='true' type='@' type64='@' />
+  </function>
+  <function name='SKIndexCopyDocumentIDArrayForTermID'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKIndexCopyDocumentProperties'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexCopyDocumentRefsForDocumentIDs'>
+    <arg c_array_length_in_arg='1' index='2' />
+    <arg c_array_length_in_arg='1' index='3' type='^@' type64='^@' />
+  </function>
+  <function name='SKIndexCopyDocumentURLsForDocumentIDs'>
+    <arg c_array_length_in_arg='1' index='2' />
+    <arg already_retained='true' c_array_length_in_arg='1' index='3' />
+  </function>
+  <function name='SKIndexCopyInfoForDocumentIDs'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
+    <arg already_retained='true' c_array_length_in_arg='1' index='3' type_modifier='o' />
+    <arg c_array_length_in_arg='1' index='4' type_modifier='o' />
+  </function>
+  <function name='SKIndexCopyTermIDArrayForDocumentID'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKIndexCopyTermStringForTermID'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKIndexCreateWithMutableData'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKIndexCreateWithURL'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKIndexDocumentIteratorCopyNext'>
+    <retval already_cfretained='true' already_retained='true' type='@' type64='@' />
+  </function>
+  <function name='SKIndexDocumentIteratorCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexGetDocumentID'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexGetDocumentState'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexMoveDocument'>
+    <arg index='1' type='@' type64='@' />
+    <arg index='2' type='@' type64='@' />
+  </function>
+  <function name='SKIndexRemoveDocument'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexRenameDocument'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKIndexSetDocumentProperties'>
+    <arg index='1' type='@' type64='@' />
+  </function>
+  <function name='SKSearchCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSearchFindMatches'>
+    <arg c_array_length_in_arg='1,5' index='2' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' index='3' type_modifier='o' />
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='SKSearchGroupCopyIndexes'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSearchGroupCreate'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSearchResultsCopyMatchingTerms'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSearchResultsCreateWithDocuments'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='context' index='3' type='^v' type64='^v' />
+    <arg function_pointer='true' index='4' type='^?' type64='^?'>
+      <retval type='b' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='^v' />
+    </arg>
+  </function>
+  <function name='SKSearchResultsCreateWithQuery'>
+    <retval already_cfretained='true' already_retained='true' />
+    <arg comment='context' index='4' type='^v' type64='^v' />
+    <arg function_pointer='true' index='5' type='^?' type64='^?'>
+      <retval type='b' />
+      <arg type='@' />
+      <arg type='@' />
+      <arg type='^v' />
+    </arg>
+  </function>
+  <function comment='deprecated' name='SKSearchResultsGetInfoInRange'>
+    <arg c_array_length_in_arg='1' c_array_length_in_result='true' index='2' type='^@' type64='^@' type_modifier='o' />
+    <arg c_array_length_in_arg='1' c_array_length_in_result='true' index='3' type_modifier='o' />
+    <arg c_array_length_in_arg='1' c_array_length_in_result='true' index='4' type_modifier='o' />
+  </function>
+  <function name='SKSummaryCopyParagraphAtIndex'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSummaryCopyParagraphSummaryString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSummaryCopySentenceAtIndex'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSummaryCopySentenceSummaryString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSummaryCreateWithString'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='SKSummaryGetParagraphSummaryInfo'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='SKSummaryGetSentenceSummaryInfo'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+  </function>
+</signatures>

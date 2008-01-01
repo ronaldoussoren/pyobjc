@@ -1,0 +1,47 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {"" = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = MyBaseGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = MyBezierGradientView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = MyBaseGradientView; 
+        }, 
+        {CLASS = MyFromCenterGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = MyLineGradientView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = MyRectGradientView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = MyBaseGradientView; 
+        }, 
+        {
+            ACTIONS = {
+                angleSliderChange = id; 
+                endColor = id; 
+                radialDraw = id; 
+                startColor = id; 
+                swapColors = id; 
+            }; 
+            CLASS = MyWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                angle = NSTextField; 
+                angleSlider = NSSlider; 
+                bezierGradientView = MyBezierGradientView; 
+                endColorWell = NSColorWell; 
+                radialCheck = NSButton; 
+                radialExplainText = NSTextField; 
+                rectGradientView = MyRectGradientView; 
+                startColorWell = NSColorWell; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

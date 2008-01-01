@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <function name='IMComparePersonStatus'>
+    <retval type='i' type64='q' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <class name='IMVideoDataSource'>
+    <method selector='getOpenGLBufferContext:pixelFormat:' type='v@:^^{_CGLContextObject}^^{_CGLPixelFormatObject}' />
+    <method selector='getPixelBufferPixelFormat:' type='v@:^I' />
+    <method selector='renderIntoOpenGLBuffer:onScreen:forTime:' type='B@:^{__CVBuffer=}^i^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+    <method selector='renderIntoPixelBuffer:forTime:' type='B@:^{__CVBuffer=}^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+  </class>
+  <class name='NSObject'>
+    <method selector='renderIntoOpenGLBuffer:onScreen:forTime:'>
+      <retval type='B' />
+      <arg index='0' type='^{__CVBuffer=}' />
+      <arg index='1' type_modifier='n' />
+      <arg index='2' type_modifier='n' />
+    </method>
+    <method selector='renderIntoPixelBuffer:forTime:'>
+      <retval type='B' />
+      <arg index='0' type='^{__CVBuffer=}' />
+      <arg index='1' type_modifier='n' />
+    </method>
+  </class>
+</signatures>
+

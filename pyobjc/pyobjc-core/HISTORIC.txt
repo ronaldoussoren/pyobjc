@@ -1,0 +1,143 @@
+This file contains the contents of some older README files and is mostly of
+historic interest. Sometime we'll convert this into a more interesting read.
+
+
+
+
+If you are reading this from the PyObjC disk image that contains the Installer
+package, simply Install the package and look in /Developer/Python/PyObjC/Examples
+
+Documentation is pretty incomplete at the moment, look in 
+/Developer/Python/PyObjC/Documentation for the documentation we have.
+
+The PyObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
+
+If you are installing from the Installer package, it also installs a Project Builder template for building Python based Cocoa applications.  Once installed, create a new "Cocoa-Python Application" project in Project Builder.  The newly created project includes an application delegate implementation and a simple set of Cocoa controls-- i.e. it provides a complete example of how to build a Cocoa application using Python and the PyObjC bridge.
+
+The latest information can always be found at:
+
+    http://pyobjc.sourceforge.net/
+
+b.bum
+bbum@codefab.com
+12-Oct-2002
+
+History:
+
+Ronald Oussoren <ronaldoussoren@mac.com> rewrote most of the module in 2002.  Ronald made it possible to subclass Objective-C classes from Python and added nearly complete support for the Foundation, the AppKit and the AddressBook frameworks.
+
+In the fall of 2002, Bill Bumgarner<bbum@codefab.com> added support for non-Framework builds of python.  Ronald and Bill subsequently added support for the Apple supplied build of Python.   Bill created the Project Builder template that allows for building standalone Cocoa applications that are implemented in Project Builder.
+
+Steve Majewski <sdm7g@minsky.med.virginia.edu> and Bill Bumgarner <bbum@codefab.com> picked up Lele's work in early November, 2000. Steve significanlty improved compatibility with OS X.
+
+Lele Gaifax built the original module which dates back to September 1996.  Lele's original list of contributors/motivators was as follows:
+
+I should say "Grazie" to many persons that made this possible, but to some in particular:
+
+Guido van Rossum <guido@CNRI.Reston.VA.US>:
+  Long list of motivation omitted ;-)
+
+Thomas Breuel <tmb@best.com>:
+  He first inspired me with good ideas.
+
+Ted Horst <ted_horst@il.us.swissbank.com>:
+  His own ObjC module and kind comments helped me a lot.
+
+Bill Bumgarner <bbum@friday.com>:
+        He contribuited the standalone packaging setup, good comments and his own implementation of the Streams and Pasteboards support. He  maintained also several Python-related packages for NeXTSTEP: see <ftp://ftp.thoughtport.net/pub/next/lang> [long gone;  see http://www.friday.com/software/python/]
+
+...and of course to the entire ObjC-SIG community.
+
+Older README
+------------
+
+The PyObjC package provides the glue needed to interface the Python
+interpreter with the Objective-C language. The 'objc' module makes Objective-C
+objects and classes available as first-class Python citizens, it is not only
+possible to use Objective-C objects but you can also subclass Objective-C 
+classes.
+
+The package maintainers currently only work on supporting Mac OS X, the GNU
+runtime and GnuStep are not supported at the moment (patches to change that 
+are welcome).
+
+The python situation on Mac OS X is a bit vague at the moment, PyObjC is known
+to work using the following versions of python:
+- Fink's python 2.2 
+  Building GUI applications requires some manual work, mostly because I
+  (ronald) primary use a private build of a development snapshot of Python 2.3
+- Python 2.3 (from CVS)
+  If you use a framework build it is easy to build python based standalone 
+  GUI applications (see Examples/iClass).
+- Apple's python 2.2 on 10.2
+  Same issues as Finks's python 2.2. 
+
+----
+Older README:
+
+Steve Majewski <sdm7g@minsky.med.virginia.edu> picked up Lele's work
+in early November, 2000 and revived an otherwise stagnant project.
+
+Steve and I have since collaborated-- working out several kinks in
+building the module on OSX,OSX Server under with Python 2.0.
+
+This is, by no means, a work that is anywhere near complete!
+
+There will be a SourceForge process as soon as possible.  Until then,
+send me-- bbum@codefab.com-- email to find the latest statest and be
+added to a mailing list if SourceForge doesn't come through soon.
+
+b.bum
+bbum@codefab.com
+
+----
+
+Original README:
+
+The ObjC package provides the glue needed to interface the Python
+interpreter with the Objective-C language.
+
+My effort went in two direction: first of all, let the user use a
+syntax similar to the Objective-C native one: x.alloc().init() is
+the Python way of doing [[x alloc] init]; secondly, the module should
+support the GNU Objective-C runtime as well as the NeXTSTEP one.
+The first is there, the second... almost: it needs to be tested,
+since my current situation does not let me try it.
+
+The current implementation has bugs, the major of them in the handling
+of methods returning big structures by value. See BUGS.
+
+Wanna cooperate? Starts from FIXME.
+
+You can find visible user changes in NEWS For more
+details, consult ChangeLog. 
+
+For build instructions, read INSTALL. It contains instruction
+to build the manual section too.
+
+The package comes with some examples/demos: you can find them in the
+Demo/ directory.
+
+
+I should say "Grazie" to many persons that made this possible, but to
+some in particular:
+
+Guido van Rossum <guido@CNRI.Reston.VA.US>:
+        Long list of motivation omitted ;-)
+
+Thomas Breuel <tmb@best.com>:
+        He first inspired me with good ideas.
+
+Ted Horst <ted_horst@il.us.swissbank.com>:
+        His own ObjC module and kind comments helped me a lot.
+
+Bill Bumgarner <bbum@friday.com>:
+        He contribuited the standalone packaging setup, good comments and
+        his own implementation of the Streams and Pasteboards support. He
+        maintains also several Python-related packages for NeXTSTEP: see
+        <ftp://ftp.thoughtport.net/pub/next/lang>.
+
+and of course to the entire ObjC-SIG community.
+
+Copyright (C) 1996,97,98 by Lele Gaifax <lele@seldati.it>
+

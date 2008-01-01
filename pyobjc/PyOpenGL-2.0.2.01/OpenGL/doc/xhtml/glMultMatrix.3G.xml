@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glMultMatrix</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glMinmax.3G.xml" title="glMinmax"/><link rel="next" href="glMultiTexCoordARB.3G.xml" title="glMultiTexCoordARB"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glMultMatrix</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glMinmax.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glMultiTexCoordARB.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glMultMatrix.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glMultMatrix.3G-name"/><h2>Name</h2><p>glMultMatrixd, glMultMatrixf &#8212; multiply the current matrix with the specified matrix</p></div><div class="refsynopsisdiv"><a name="glMultMatrix.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glMultMatrixd</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>const GLdouble *<i><tt>m</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glMultMatrixf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>const GLfloat *<i><tt>m</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glMultMatrix.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glMultMatrixd</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>m</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glMultMatrixf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>m</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>m</tt></i></span></dt><dd>
+						Points to 16 consecutive values that are used as the elements of a <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+								<mml:mrow>
+									<mml:mn>4</mml:mn>
+									<mml:mo>×</mml:mo>
+									<mml:mn>4</mml:mn>
+								</mml:mrow>
+							</mml:math> column-major matrix.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-description"/><h2>Description</h2><p>
+			<tt>glMultMatrix</tt> multiplies the current matrix with the one specified using
+			<i><tt>m</tt></i>, and replaces the current matrix with the product.
+		</p><p>
+			The current matrix is determined by the current matrix mode (see <a href="glMatrixMode.3G.xml">glMatrixMode</a>). It is either the projection matrix, modelview matrix, or the texture matrix.
+		</p></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-examples"/><h2>Examples</h2><p>
+			If the current matrix is <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>C</mml:mi>
+				</mml:math>, and the coordinates to be transformed are, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>v</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:mi>v</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>0</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mi>v</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mi>v</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>2</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mi>v</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>3</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mo>)</mml:mo>
+					</mml:mrow>
+				</mml:math>. Then the current transformation is <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>C</mml:mi>
+						<mml:mo>×</mml:mo>
+						<mml:mi>v</mml:mi>
+					</mml:mrow>
+				</mml:math>, or </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mrow>
+							<mml:mo>(</mml:mo>
+							<mml:mtable>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>0</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>4</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>8</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>12</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>1</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>5</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>9</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>13</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>2</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>6</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>10</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>14</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>3</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>7</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>11</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>15</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+							</mml:mtable>
+							<mml:mo>)</mml:mo>
+						</mml:mrow>
+						<mml:mo>×</mml:mo>
+						<mml:mrow>
+							<mml:mo>(</mml:mo>
+							<mml:mtable>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>0</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>1</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>2</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>3</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+							</mml:mtable>
+							<mml:mo>)</mml:mo>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			Calling <tt>glMultMatrix</tt> with an argument of <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>m</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mi>m</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>0</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mi>m</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>1</mml:mn>
+						<mml:mo>]</mml:mo>
+						<mml:mi>m</mml:mi>
+						<mml:mo>[</mml:mo>
+						<mml:mn>15</mml:mn>
+						<mml:mo>]</mml:mo>
+					</mml:mrow>
+				</mml:math> replaces the current transformation with <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mo>(</mml:mo>
+						<mml:mi>C</mml:mi>
+						<mml:mo>×</mml:mo>
+						<mml:mi>M</mml:mi>
+						<mml:mo>)</mml:mo>
+						<mml:mo>×</mml:mo>
+						<mml:mi>v</mml:mi>
+					</mml:mrow>
+				</mml:math>, or </p><div class="informalequation"><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" mode="display" overflow="scroll">
+					<mml:mrow>
+						<mml:mrow>
+							<mml:mo>(</mml:mo>
+							<mml:mtable>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>0</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>4</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>8</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>12</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>1</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>5</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>9</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>13</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>2</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>6</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>10</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>14</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>3</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>7</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>11</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>c</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>15</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+							</mml:mtable>
+							<mml:mo>)</mml:mo>
+						</mml:mrow>
+						<mml:mo>×</mml:mo>
+						<mml:mrow>
+							<mml:mo>(</mml:mo>
+							<mml:mtable>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>0</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>4</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>8</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>12</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>1</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>5</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>9</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>13</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>2</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>6</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>10</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>14</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>3</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>7</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>11</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+									<mml:mtd columnalign="center">
+										<mml:mi>m</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>15</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+							</mml:mtable>
+							<mml:mo>)</mml:mo>
+						</mml:mrow>
+						<mml:mo>×</mml:mo>
+						<mml:mrow>
+							<mml:mo>(</mml:mo>
+							<mml:mtable>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>0</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>1</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>2</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+								<mml:mtr>
+									<mml:mtd columnalign="center">
+										<mml:mi>v</mml:mi>
+										<mml:mo>[</mml:mo>
+										<mml:mn>3</mml:mn>
+										<mml:mo>]</mml:mo>
+									</mml:mtd>
+								</mml:mtr>
+							</mml:mtable>
+							<mml:mo>)</mml:mo>
+						</mml:mrow>
+					</mml:mrow>
+				</mml:math></div><p>
+		</p><p>
+			Where '<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mo>×</mml:mo>
+				</mml:math>' denotes matrix multiplication, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>v</mml:mi>
+				</mml:math> is represented as a <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mn>4</mml:mn>
+						<mml:mo>×</mml:mo>
+						<mml:mn>1</mml:mn>
+					</mml:mrow>
+				</mml:math> matrix.
+		</p></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-notes"/><h2>Notes</h2><p>
+			While the elements of the matrix may be specified with single or double precision, the GL may store or operate on these
+			values in less than single precision.
+		</p><p>
+			In many computer languages <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mn>4</mml:mn>
+						<mml:mo>×</mml:mo>
+						<mml:mn>4</mml:mn>
+					</mml:mrow>
+				</mml:math> arrays are represented in row-major order. The transformations just described represent these
+			matrices in column-major order. The order of the multiplication is important. For example, if the current
+			transformation is a rotation, and <tt>glMultMatrix</tt> is called with a translation
+			matrix, the translation is done directly on the coordinates to be transformed, while the rotation is done on the
+			results of that translation.
+		</p></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glMultMatrix</tt> is
+			executed between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of
+			<a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGet</tt> with argument <tt>GL_MATRIX_MODE</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_COLOR_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_MODELVIEW_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_PROJECTION_MATRIX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_TEXTURE_MATRIX</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glMultMatrix.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glLoadIdentity.3G.xml">glLoadIdentity</a>, <a href="glLoadMatrix.3G.xml">glLoadMatrix</a>, <a href="glMatrixMode.3G.xml">glMatrixMode</a>, <a href="glPushMatrix.3G.xml">glPushMatrix</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glMinmax.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glMultiTexCoordARB.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glMinmax </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glMultiTexCoordARB</td></tr></table></div></body></html>

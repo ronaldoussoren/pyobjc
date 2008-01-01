@@ -1,0 +1,80 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='AMAction'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='runWithInput:fromAction:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMWorkflow'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='runWorkflowAtURL:withInput:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMAction'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='runWithInput:fromAction:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMWorkflow'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='runWorkflowAtURL:withInput:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMAction'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='runWithInput:fromAction:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMWorkflow'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='runWorkflowAtURL:withInput:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMAction'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='runWithInput:fromAction:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMWorkflow'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='runWorkflowAtURL:withInput:error:'>
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='writeToURL:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

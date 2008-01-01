@@ -1,0 +1,12 @@
+
+
+// WARNING
+// This file is copied from CocoaApp_Prefix.pch.  Keep the two in sync.
+// --- file resumes after here ---
+//
+// Prefix header for all source files of the 'xcPROJECTNAMExc' target in the 'xcPROJECTNAMExc' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

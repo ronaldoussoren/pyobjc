@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glEnable</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glEdgeFlagPointer.3G.xml" title="glEdgeFlagPointer"/><link rel="next" href="glEnableClientState.3G.xml" title="glEnableClientState"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glEnable</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glEdgeFlagPointer.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glEnableClientState.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glEnable.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glEnable.3G-name"/><h2>Name</h2><p>glEnable, glDisable &#8212; enable or disable server-side GL capabilities</p></div><div class="refsynopsisdiv"><a name="glEnable.3G-c_spec-enable"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glEnable</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>cap</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glEnable.3G-python_spec-enable"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glEnable</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>cap</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glEnable.3G-parameters-enable"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>cap</tt></i></span></dt><dd>
+						Specifies a symbolic constant indicating a GL capability.
+					</dd></dl></div></div><div class="refsynopsisdiv"><a name="glEnable.3G-c_spec-disable"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glDisable</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>cap</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glEnable.3G-python_spec-disable"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glDisable</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>cap</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glEnable.3G-parameters-disable"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>cap</tt></i></span></dt><dd>
+						Specifies a symbolic constant indicating a GL capability.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glEnable.3G-description"/><h2>Description</h2><p>
+			<tt>glEnable</tt> and <tt>glDisable</tt> enable and disable various capabilities. Use <a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> or <tt>glGet</tt> to determine the current
+			setting of any capability. The initial value for each capability with the exception of <tt>GL_DITHER</tt>
+			is <tt>GL_FALSE</tt>. The initial value for <tt>GL_DITHER</tt> is <tt>GL_TRUE</tt>.
+		</p><p>
+			Both <tt>glEnable</tt> and <tt>glDisable</tt> take a single argument,
+			<i><tt>cap</tt></i>, which can assume one of the following values:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_ALPHA_TEST</tt></span></dt><dd>
+						If enabled, do alpha testing. See <a href="glAlphaFunc.3G.xml"><tt>glAlphaFunc</tt></a>.
+					</dd><dt><span class="term"><tt>GL_AUTO_NORMAL</tt></span></dt><dd>
+						If enabled, generate normal vectors when either <tt>GL_MAP2_VERTEX_3</tt> or
+						<tt>GL_MAP2_VERTEX_4</tt> is used to generate vertices. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_BLEND</tt></span></dt><dd>
+						If enabled, blend the incoming RGBA color values with the values in the color buffers. See <a href="glBlendFunc.3G.xml"><tt>glBlendFunc</tt></a>.
+					</dd><dt><span class="term"><tt>GL_CLIP_PLANE</tt><i><tt>i</tt></i></span></dt><dd>
+						If enabled, clip geometry against user-defined clipping plane <i><tt>i</tt></i>. See <a href="glClipPlane.3G.xml"><tt>glClipPlane</tt></a>.
+					</dd><dt><span class="term"><tt>GL_COLOR_LOGIC_OP</tt></span></dt><dd>
+						If enabled, apply the currently selected logical operation to the incoming RGBA color and color buffer
+						values. See <a href="glLogicOp.3G.xml"><tt>glLogicOp</tt></a>.
+					</dd><dt><span class="term"><tt>GL_COLOR_MATERIAL</tt></span></dt><dd>
+						If enabled, have one or more material parameters track the current color. See <a href="glColorMaterial.3G.xml"><tt>glColorMaterial</tt></a>.
+					</dd><dt><span class="term"><tt>GL_COLOR_TABLE</tt></span></dt><dd>
+						If enabled, preform a color table lookup on the incoming RGBA color values. See <a href="glColorTable.3G.xml"><tt>glColorTable</tt></a>.
+					</dd><dt><span class="term"><tt>GL_CONVOLUTION_1D</tt></span></dt><dd>
+						If enabled, perform a 1D convolution operation on incoming RGBA color values. See <a href="glConvolutionFilter1D.3G.xml"><tt>glConvolutionFilter1D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_CONVOLUTION_2D</tt></span></dt><dd>
+						If enabled, perform a 2D convolution operation on incoming RGBA color values. See <a href="glConvolutionFilter2D.3G.xml"><tt>glConvolutionFilter2D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_CULL_FACE</tt></span></dt><dd>
+						If enabled, cull polygons based on their winding in window coordinates. See <a href="glCullFace.3G.xml"><tt>glCullFace</tt></a>.
+					</dd><dt><span class="term"><tt>GL_DEPTH_TEST</tt></span></dt><dd>
+						If enabled, do depth comparisons and update the depth buffer. Note that even if the depth buffer exists and
+						the depth mask is non-zero, the depth buffer is not updated if the depth test is disabled. See <a href="glDepthFunc.3G.xml"><tt>glDepthFunc</tt></a> and
+					</dd></dl></div><p>
+			<a href="glDepthRange.3G.xml"><tt>glDepthRange</tt></a>.
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_DITHER</tt></span></dt><dd>
+						If enabled, dither color components or indices before they are written to the color buffer.
+					</dd><dt><span class="term"><tt>GL_FOG</tt></span></dt><dd>
+						If enabled, blend a fog color into the posttexturing color. See <tt>glFog</tt>.
+					</dd><dt><span class="term"><tt>GL_HISTOGRAM</tt></span></dt><dd>
+						If enabled, histogram incoming RGBA color values. See <a href="glHistogram.3G.xml"><tt>glHistogram</tt></a>.
+					</dd><dt><span class="term"><tt>GL_INDEX_LOGIC_OP</tt></span></dt><dd>
+						If enabled, apply the currently selected logical operation to the incoming index and color buffer indices.
+						See
+					</dd></dl></div><p>
+			<a href="glLogicOp.3G.xml"><tt>glLogicOp</tt></a>.
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_LIGHT</tt><i><tt>i</tt></i></span></dt><dd>
+						If enabled, include light <i><tt>i</tt></i> in the evaluation of the lighting equation. See
+						<tt>glLightModel</tt> and <tt>glLight</tt>.
+					</dd><dt><span class="term"><tt>GL_LIGHTING</tt></span></dt><dd>
+						If enabled, use the current lighting parameters to compute the vertex color or index. Otherwise, simply
+						associate the current color or index with each vertex. See
+					</dd></dl></div><p>
+			<tt>glMaterial</tt>, <tt>glLightModel</tt>, and
+			<tt>glLight</tt>.
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_LINE_SMOOTH</tt></span></dt><dd>
+						If enabled, draw lines with correct filtering. Otherwise, draw aliased lines. See <a href="glLineWidth.3G.xml"><tt>glLineWidth</tt></a>.
+					</dd><dt><span class="term"><tt>GL_LINE_STIPPLE</tt></span></dt><dd>
+						If enabled, use the current line stipple pattern when drawing lines. See <a href="glLineStipple.3G.xml"><tt>glLineStipple</tt></a>.
+					</dd><dt><span class="term"><tt>GL_MAP1_COLOR_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate RGBA values. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_INDEX</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate color indices. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_NORMAL</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate normals. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_TEXTURE_COORD_1</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate <i><tt>s</tt></i> texture coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_TEXTURE_COORD_2</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate <i><tt>s</tt></i> and <i><tt>t</tt></i> texture coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_TEXTURE_COORD_3</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate <i><tt>s</tt></i>, <i><tt>t</tt></i>, and <i><tt>r</tt></i> texture
+						coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_TEXTURE_COORD_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate <i><tt>s</tt></i>, <i><tt>t</tt></i>, <i><tt>r</tt></i>, and
+						<i><tt>q</tt></i> texture coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_VERTEX_3</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate <i><tt>x</tt></i>, <i><tt>y</tt></i>, and <i><tt>z</tt></i> vertex
+						coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP1_VERTEX_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord1</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh1</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint1</tt></a>
+						generate homogeneous <i><tt>x</tt></i>, <i><tt>y</tt></i>, <i><tt>z</tt></i>, and
+						<i><tt>w</tt></i> vertex coordinates. See <tt>glMap1</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_COLOR_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate RGBA values. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_INDEX</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate color indices. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_NORMAL</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate normals. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_TEXTURE_COORD_1</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate <i><tt>s</tt></i> texture coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_TEXTURE_COORD_2</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate <i><tt>s</tt></i> and <i><tt>t</tt></i> texture coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_TEXTURE_COORD_3</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate <i><tt>s</tt></i>, <i><tt>t</tt></i>, and <i><tt>r</tt></i> texture
+						coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_TEXTURE_COORD_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate <i><tt>s</tt></i>, <i><tt>t</tt></i>, <i><tt>r</tt></i>, and
+						<i><tt>q</tt></i> texture coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_VERTEX_3</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate <i><tt>x</tt></i>, <i><tt>y</tt></i>, and <i><tt>z</tt></i> vertex
+						coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MAP2_VERTEX_4</tt></span></dt><dd>
+						If enabled, calls to <tt>glEvalCoord2</tt>, <a href="glEvalMesh.3G.xml"><tt>glEvalMesh2</tt></a>, and <a href="glEvalPoint.3G.xml"><tt>glEvalPoint2</tt></a>
+						generate homogeneous <i><tt>x</tt></i>, <i><tt>y</tt></i>, <i><tt>z</tt></i>, and
+						<i><tt>w</tt></i> vertex coordinates. See <tt>glMap2</tt>.
+					</dd><dt><span class="term"><tt>GL_MINMAX</tt></span></dt><dd>
+						If enabled, compute the minimum and maximum values of incoming RGBA color values. See <a href="glMinmax.3G.xml"><tt>glMinmax</tt></a>.
+					</dd><dt><span class="term"><tt>GL_NORMALIZE</tt></span></dt><dd>
+						If enabled, normal vectors specified with <tt>glNormal</tt> are scaled to
+						unit length after transformation. See <tt>glNormal</tt>.
+					</dd><dt><span class="term"><tt>GL_POINT_SMOOTH</tt></span></dt><dd>
+						If enabled, draw points with proper filtering. Otherwise, draw aliased points. See <a href="glPointSize.3G.xml"><tt>glPointSize</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POLYGON_OFFSET_FILL</tt></span></dt><dd>
+						If enabled, and if the polygon is rendered in <tt>GL_FILL</tt> mode, an offset is added to
+						depth values of a polygon's fragments before the depth comparison is performed. See <a href="glPolygonOffset.3G.xml"><tt>glPolygonOffset</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POLYGON_OFFSET_LINE</tt></span></dt><dd>
+						If enabled, and if the polygon is rendered in <tt>GL_LINE</tt> mode, an offset is added to
+						depth values of a polygon's fragments before the depth comparison is performed. See <a href="glPolygonOffset.3G.xml"><tt>glPolygonOffset</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POLYGON_OFFSET_POINT</tt></span></dt><dd>
+						If enabled, an offset is added to depth values of a polygon's fragments before the depth comparison is
+						performed, if the polygon is rendered in <tt>GL_POINT</tt> mode. See <a href="glPolygonOffset.3G.xml"><tt>glPolygonOffset</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POLYGON_SMOOTH</tt></span></dt><dd>
+						If enabled, draw polygons with proper filtering. Otherwise, draw aliased polygons. For correct anti-aliased
+						polygons, an alpha buffer is needed and the polygons must be sorted front to back.
+					</dd><dt><span class="term"><tt>GL_POLYGON_STIPPLE</tt></span></dt><dd>
+						If enabled, use the current polygon stipple pattern when rendering polygons. See <a href="glPolygonStipple.3G.xml"><tt>glPolygonStipple</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POST_COLOR_MATRIX_COLOR_TABLE</tt></span></dt><dd>
+						If enabled, preform a color table lookup on RGBA color values after color matrix transformation. See
+						<a href="glColorTable.3G.xml"><tt>glColorTable</tt></a>.
+					</dd><dt><span class="term"><tt>GL_POST_CONVOLUTION_COLOR_TABLE</tt></span></dt><dd>
+						If enabled, preform a color table lookup on RGBA color values after convolution. See <a href="glColorTable.3G.xml"><tt>glColorTable</tt></a>.
+					</dd><dt><span class="term"><tt>GL_RESCALE_NORMAL</tt></span></dt><dd>
+						If enabled, normal vectors specified with <tt>glNormal</tt> are scaled to
+						unit length after transformation. See <tt>glNormal</tt>.
+					</dd><dt><span class="term"><tt>GL_SEPARABLE_2D</tt></span></dt><dd>
+						If enabled, perform a two-dimensional convolution operation using a separable convolution filter on
+						incoming RGBA color values. See <a href="glSeparableFilter2D.3G.xml"><tt>glSeparableFilter2D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_SCISSOR_TEST</tt></span></dt><dd>
+						If enabled, discard fragments that are outside the scissor rectangle. See <a href="glScissor.3G.xml"><tt>glScissor</tt></a>.
+					</dd><dt><span class="term"><tt>GL_STENCIL_TEST</tt></span></dt><dd>
+						If enabled, do stencil testing and update the stencil buffer. See <a href="glStencilFunc.3G.xml"><tt>glStencilFunc</tt></a> and <a href="glStencilOp.3G.xml"><tt>glStencilOp</tt></a>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_1D</tt></span></dt><dd>
+						If enabled, one-dimensional texturing is performed (unless two- or three-dimensional texturing is also
+						enabled). See <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_2D</tt></span></dt><dd>
+						If enabled, two-dimensional texturing is performed (unless three-dimensional texturing is also enabled).
+						See <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_3D</tt></span></dt><dd>
+						If enabled, three-dimensional texturing is performed. See <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_GEN_Q</tt></span></dt><dd>
+						If enabled, the <i><tt>q</tt></i> texture coordinate is computed using the texture generation
+						function defined with <tt>glTexGen</tt>. Otherwise, the current
+						<i><tt>q</tt></i> texture coordinate is used. See <tt>glTexGen</tt>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_GEN_R</tt></span></dt><dd>
+						If enabled, the <i><tt>r</tt></i> texture coordinate is computed using the texture generation
+						function defined with <tt>glTexGen</tt>. Otherwise, the current
+						<i><tt>r</tt></i> texture coordinate is used. See <tt>glTexGen</tt>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_GEN_S</tt></span></dt><dd>
+						If enabled, the <i><tt>s</tt></i> texture coordinate is computed using the texture generation
+						function defined with <tt>glTexGen</tt>. Otherwise, the current
+						<i><tt>s</tt></i> texture coordinate is used. See <tt>glTexGen</tt>.
+					</dd><dt><span class="term"><tt>GL_TEXTURE_GEN_T</tt></span></dt><dd>
+						If enabled, the <i><tt>t</tt></i> texture coordinate is computed using the texture generation
+						function defined with <tt>glTexGen</tt>. Otherwise, the current
+						<i><tt>t</tt></i> texture coordinate is used. See <tt>glTexGen</tt>.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glEnable.3G-notes"/><h2>Notes</h2><p>
+			<tt>GL_POLYGON_OFFSET_FILL</tt>, <tt>GL_POLYGON_OFFSET_LINE</tt>,
+			<tt>GL_POLYGON_OFFSET_POINT</tt>, <tt>GL_COLOR_LOGIC_OP</tt>, and
+			<tt>GL_INDEX_LOGIC_OP</tt> are available only if the GL version is 1.1 or greater.
+		</p><p>
+			<tt>GL_RESCALE_NORMAL</tt>, and <tt>GL_TEXTURE_3D</tt> are available only if the GL version is
+			1.2 or greater.
+		</p><p>
+			<tt>GL_COLOR_TABLE</tt>, <tt>GL_CONVOLUTION_1D</tt>, <tt>GL_CONVOLUTION_2D</tt>,
+			<tt>GL_HISTOGRAM</tt>, <tt>GL_MINMAX</tt>,
+			<tt>GL_POST_COLOR_MATRIX_COLOR_TABLE</tt>, <tt>GL_POST_CONVOLUTION_COLOR_TABLE</tt>, and
+			<tt>GL_SEPARABLE_2D</tt> are available only if <tt>GL_ARB_imaging</tt> is returned from
+			<tt>glGet</tt> with an argument of <tt>GL_EXTENSIONS</tt>.
+		</p><p>
+			If <tt>GL_ARB_multitexture</tt> is supported, <tt>GL_TEXTURE_1D</tt>,
+			<tt>GL_TEXTURE_2D</tt>, <tt>GL_TEXTURE_3D</tt>, <tt>GL_TEXTURE_GEN_S</tt>,
+			<tt>GL_TEXTURE_GEN_T</tt>, <tt>GL_TEXTURE_GEN_R</tt>, and <tt>GL_TEXTURE_GEN_Q</tt>
+			enable or disable the respective state for the active texture unit specified with <a href="glActiveTextureARB.3G.xml"><tt>glActiveTextureARB</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glEnable.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>cap</tt></i> is not one of the values listed
+			previously.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glEnable</tt> or
+			<tt>glDisable</tt> is executed between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a>
+			and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glEnable.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glActiveTextureARB.3G.xml">glActiveTextureARB</a>, <a href="glAlphaFunc.3G.xml">glAlphaFunc</a>, <a href="glBlendFunc.3G.xml">glBlendFunc</a>, <a href="glClipPlane.3G.xml">glClipPlane</a>, <a href="glColorMaterial.3G.xml">glColorMaterial</a>, <a href="glCullFace.3G.xml">glCullFace</a>, <a href="glDepthFunc.3G.xml">glDepthFunc</a>, <a href="glDepthRange.3G.xml">glDepthRange</a>, <a href="glEnableClientState.3G.xml">glEnableClientState</a>, <a href="glFog.3G.xml">glFog</a>, <a href="glGet.3G.xml">glGet</a>, <a href="glIsEnabled.3G.xml">glIsEnabled</a>, <a href="glLight.3G.xml">glLight</a>, <a href="glLightModel.3G.xml">glLightModel</a>, <a href="glLineWidth.3G.xml">glLineWidth</a>, <a href="glLineStipple.3G.xml">glLineStipple</a>, <a href="glLogicOp.3G.xml">glLogicOp</a>, <a href="glMap1.3G.xml">glMap1</a>, <a href="glMap2.3G.xml">glMap2</a>, <a href="glMaterial.3G.xml">glMaterial</a>, <a href="glNormal.3G.xml">glNormal</a>, <a href="glPointSize.3G.xml">glPointSize</a>, <a href="glPolygonMode.3G.xml">glPolygonMode</a>, <a href="glPolygonOffset.3G.xml">glPolygonOffset</a>, <a href="glPolygonStipple.3G.xml">glPolygonStipple</a>, <a href="glScissor.3G.xml">glScissor</a>, <a href="glStencilFunc.3G.xml">glStencilFunc</a>, <a href="glStencilOp.3G.xml">glStencilOp</a>, <a href="glTexGen.3G.xml">glTexGen</a>, <a href="glTexImage1D.3G.xml">glTexImage1D</a>, <a href="glTexImage2D.3G.xml">glTexImage2D</a>, <a href="glTexImage3D.3G.xml">glTexImage3D</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glEdgeFlagPointer.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glEnableClientState.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glEdgeFlagPointer </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glEnableClientState</td></tr></table></div></body></html>

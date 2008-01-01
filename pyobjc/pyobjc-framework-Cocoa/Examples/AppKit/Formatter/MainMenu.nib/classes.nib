@@ -1,0 +1,7 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = MyFormatter; LANGUAGE = ObjC; SUPERCLASS = NSFormatter; }
+    ); 
+    IBVersion = 1; 
+}

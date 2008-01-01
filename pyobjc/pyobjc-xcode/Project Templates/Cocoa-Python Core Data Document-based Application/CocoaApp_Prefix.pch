@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'xcPROJECTNAMExc' target in the 'xcPROJECTNAMExc' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+    #import <Cocoa/Cocoa.h>
+#endif

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMAccepts</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Optional</key>
+		<false/>
+		<key>Types</key>
+		<array>
+			<string>com.apple.addressbook.person-object</string>
+		</array>
+	</dict>
+	<key>AMApplication</key>
+	<array>
+		<string>Address Book</string>
+		<string>iChat</string>
+	</array>
+	<key>AMCanShowWhenRun</key>
+	<true/>
+	<key>AMCategory</key>
+	<string>iChat</string>
+	<key>AMDefaultParameters</key>
+	<dict/>
+	<key>AMDescription</key>
+	<dict>
+		<key>AMDAlert</key>
+		<string>iChat must be running for this action to work properly.</string>
+		<key>AMDNote</key>
+		<string>Information will not be returned for the current user.</string>
+		<key>AMDSummary</key>
+		<string>This action returns the Instant Message information of the people passed from the previous action.</string>
+	</dict>
+	<key>AMIconName</key>
+	<string>iChat</string>
+	<key>AMKeywords</key>
+	<array>
+		<string>Instant</string>
+		<string>Message</string>
+		<string>IM</string>
+	</array>
+	<key>AMName</key>
+	<string>Get Buddy Info</string>
+	<key>AMProvides</key>
+	<dict>
+		<key>Container</key>
+		<string>List</string>
+		<key>Types</key>
+		<array>
+			<string>com.apple.cocoa.string</string>
+		</array>
+	</dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Get Buddy Info</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Get Buddy Info version 1.0, Copyright (c) 2005, Apple Computer, Inc.</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
+	<key>CFBundleIdentifier</key>
+	<string>org.pythonmac.AutomatorExamples.GetBuddyInfo</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Get Buddy Info</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>NSPrincipalClass</key>
+	<string>GetBuddyInfo</string>
+</dict>
+</plist>

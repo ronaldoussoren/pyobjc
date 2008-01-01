@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glTexGen</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glTexEnv.3G.xml" title="glTexEnv"/><link rel="next" href="glTexImage1D.3G.xml" title="glTexImage1D"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glTexGen</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glTexEnv.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glTexImage1D.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glTexGen.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glTexGen.3G-name"/><h2>Name</h2><p>glTexGend, glTexGenf, glTexGeni, glTexGendv, glTexGenfv, glTexGeniv &#8212; control the generation of texture coordinates</p></div><div class="refsynopsisdiv"><a name="glTexGen.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glTexGend</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, GLdouble <i><tt>param</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexGenf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, GLfloat <i><tt>param</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexGeni</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, GLint <i><tt>param</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glTexGen.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glTexGend</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexGenf</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexGeni</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>param</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glTexGen.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>coord</tt></i></span></dt><dd>
+						Specifies a texture coordinate. Must be one of <tt>GL_S</tt>, <tt>GL_T</tt>,
+						<tt>GL_R</tt>, or <tt>GL_Q</tt>.
+					</dd><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies the symbolic name of the texture-coordinate generation function. Must be
+						<tt>GL_TEXTURE_GEN_MODE</tt>.
+					</dd><dt><span class="term"><i><tt>param</tt></i></span></dt><dd>
+						Specifies a single-valued texture generation parameter, one of <tt>GL_OBJECT_LINEAR</tt>,
+						<tt>GL_EYE_LINEAR</tt>, or <tt>GL_SPHERE_MAP</tt>.
+					</dd></dl></div></div><div class="refsynopsisdiv"><a name="glTexGen.3G-c_spec-v"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glTexGendv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, const GLdouble *<i><tt>params</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexGenfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, const GLfloat *<i><tt>params</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>glTexGeniv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLenum <i><tt>coord</tt></i>, GLenum <i><tt>pname</tt></i>, const GLint *<i><tt>params</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glTexGen.3G-python_spec-v"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glTexGendv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexGenfv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>glTexGeniv</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>coord</tt></i>, <i><tt>pname</tt></i>, <i><tt>params</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glTexGen.3G-parameters-v"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>coord</tt></i></span></dt><dd>
+						Specifies a texture coordinate. Must be one of <tt>GL_S</tt>, <tt>GL_T</tt>,
+						<tt>GL_R</tt>, or <tt>GL_Q</tt>.
+					</dd><dt><span class="term"><i><tt>pname</tt></i></span></dt><dd>
+						Specifies the symbolic name of the texture-coordinate generation function or function parameters. Must be
+						<tt>GL_TEXTURE_GEN_MODE</tt>, <tt>GL_OBJECT_PLANE</tt>, or
+						<tt>GL_EYE_PLANE</tt>.
+					</dd><dt><span class="term"><i><tt>params</tt></i></span></dt><dd>
+						Specifies a pointer to an array of texture generation parameters. If <i><tt>pname</tt></i> is
+						<tt>GL_TEXTURE_GEN_MODE</tt>, then the array must contain a single symbolic constant, one of
+						<tt>GL_OBJECT_LINEAR</tt>, <tt>GL_EYE_LINEAR</tt>, or
+						<tt>GL_SPHERE_MAP</tt>. Otherwise, <i><tt>params</tt></i> holds the coefficients for the
+						texture-coordinate generation function specified by <i><tt>pname</tt></i>.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glTexGen.3G-description"/><h2>Description</h2><p>
+			<tt>glTexGen</tt> selects a texture-coordinate generation function or supplies
+			coefficients for one of the functions. <i><tt>coord</tt></i> names one of the (<i><tt>s</tt></i>,
+			<i><tt>t</tt></i>, <i><tt>r</tt></i>, <i><tt>q</tt></i>) texture coordinates; it must be one of
+			the symbols <tt>GL_S</tt>, <tt>GL_T</tt>, <tt>GL_R</tt>, or
+			<tt>GL_Q</tt>. <i><tt>pname</tt></i> must be one of three symbolic constants:
+			<tt>GL_TEXTURE_GEN_MODE</tt>, <tt>GL_OBJECT_PLANE</tt>, or <tt>GL_EYE_PLANE</tt>.
+			If <i><tt>pname</tt></i> is <tt>GL_TEXTURE_GEN_MODE</tt>, then <i><tt>params</tt></i> chooses
+			a mode, one of <tt>GL_OBJECT_LINEAR</tt>, <tt>GL_EYE_LINEAR</tt>, or
+			<tt>GL_SPHERE_MAP</tt>. If <i><tt>pname</tt></i> is either <tt>GL_OBJECT_PLANE</tt> or
+			<tt>GL_EYE_PLANE</tt>, <i><tt>params</tt></i> contains coefficients for the corresponding texture
+			generation function.
+		</p><p>
+			If the texture generation function is <tt>GL_OBJECT_LINEAR</tt>, the function
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>g</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>1</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>x</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>2</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>y</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>3</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>z</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>4</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>w</mml:mi>
+							<mml:mi>o</mml:mi>
+						</mml:msub>
+					</mml:mrow>
+				</mml:math>
+		</p><p>
+			is used, where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>g</mml:mi>
+				</mml:math> is the value computed for the coordinate named in <i><tt>coord</tt></i>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>1</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>2</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>3</mml:mn>
+					</mml:msub>
+				</mml:math>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>4</mml:mn>
+					</mml:msub>
+				</mml:math> are the four values supplied in <i><tt>params</tt></i>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>x</mml:mi>
+						<mml:mi>o</mml:mi>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>y</mml:mi>
+						<mml:mi>o</mml:mi>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>z</mml:mi>
+						<mml:mi>o</mml:mi>
+					</mml:msub>
+				</mml:math>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>w</mml:mi>
+						<mml:mi>o</mml:mi>
+					</mml:msub>
+				</mml:math> are the object coordinates of the vertex. This function can be used, for example, to texture-map
+			terrain using sea level as a reference plane (defined by <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>1</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>2</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>3</mml:mn>
+					</mml:msub>
+				</mml:math>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>4</mml:mn>
+					</mml:msub>
+				</mml:math>). The altitude of a terrain vertex is computed by the <tt>GL_OBJECT_LINEAR</tt>
+			coordinate generation function as its distance from sea level; that altitude can then be used to index the texture
+			image to map white snow onto peaks and green grass onto foothills.
+		</p><p>
+			If the texture generation function is <tt>GL_EYE_LINEAR</tt>, the function
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>g</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>1</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msub>
+							<mml:mi>x</mml:mi>
+							<mml:mi>e</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>2</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msub>
+							<mml:mi>y</mml:mi>
+							<mml:mi>e</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>3</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msub>
+							<mml:mi>z</mml:mi>
+							<mml:mi>e</mml:mi>
+						</mml:msub>
+						<mml:mo>+</mml:mo>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>4</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msub>
+							<mml:mi>w</mml:mi>
+							<mml:mi>e</mml:mi>
+						</mml:msub>
+					</mml:mrow>
+				</mml:math>
+		</p><p>
+			is used, where
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mo>(</mml:mo>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>1</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>2</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>3</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msup>
+							<mml:msub>
+								<mml:mi>p</mml:mi>
+								<mml:mn>4</mml:mn>
+							</mml:msub>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:mo>)</mml:mo>
+						<mml:mo>=</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>1</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>2</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>3</mml:mn>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>p</mml:mi>
+							<mml:mn>4</mml:mn>
+						</mml:msub>
+						<mml:mo>)</mml:mo>
+						<mml:msup>
+							<mml:mi>M</mml:mi>
+							<mml:mn>-1</mml:mn>
+						</mml:msup>
+					</mml:mrow>
+				</mml:math>
+		</p><p>
+			and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>x</mml:mi>
+						<mml:mi>e</mml:mi>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>y</mml:mi>
+						<mml:mi>e</mml:mi>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>z</mml:mi>
+						<mml:mi>e</mml:mi>
+					</mml:msub>
+				</mml:math>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>w</mml:mi>
+						<mml:mi>e</mml:mi>
+					</mml:msub>
+				</mml:math> are the eye coordinates of the vertex, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>1</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>2</mml:mn>
+					</mml:msub>
+				</mml:math>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>3</mml:mn>
+					</mml:msub>
+				</mml:math>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:msub>
+						<mml:mi>p</mml:mi>
+						<mml:mn>4</mml:mn>
+					</mml:msub>
+				</mml:math> are the values supplied in <i><tt>params</tt></i>, and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>M</mml:mi>
+				</mml:math> is the modelview matrix when <tt>glTexGen</tt> is invoked. If
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>M</mml:mi>
+				</mml:math> is poorly conditioned or singular, texture coordinates generated by the resulting function may be
+			inaccurate or undefined.
+		</p><p>
+			Note that the values in <i><tt>params</tt></i> define a reference plane in eye coordinates. The modelview matrix
+			that is applied to them may not be the same one in effect when the polygon vertices are transformed. This function
+			establishes a field of texture coordinates that can produce dynamic contour lines on moving objects.
+		</p><p>
+			If <i><tt>pname</tt></i> is <tt>GL_SPHERE_MAP</tt> and <i><tt>coord</tt></i> is either
+			<tt>GL_S</tt> or <tt>GL_T</tt>, <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>s</mml:mi>
+				</mml:math> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>t</mml:mi>
+				</mml:math> texture coordinates are generated as follows. Let <i><tt>u</tt></i> be the unit vector
+			pointing from the origin to the polygon vertex (in eye coordinates). Let <i><tt>n</tt></i> sup prime be the
+			current normal, after transformation to eye coordinates. Let
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>f</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mo>(</mml:mo>
+						<mml:msub>
+							<mml:mi>f</mml:mi>
+							<mml:mi>x</mml:mi>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>f</mml:mi>
+							<mml:mi>y</mml:mi>
+						</mml:msub>
+						<mml:msub>
+							<mml:mi>f</mml:mi>
+							<mml:mi>z</mml:mi>
+						</mml:msub>
+						<mml:msup>
+							<mml:mo>)</mml:mo>
+							<mml:mi>T</mml:mi>
+						</mml:msup>
+					</mml:mrow>
+				</mml:math> be the reflection vector such that
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>f</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mi>u</mml:mi>
+						<mml:mo>-</mml:mo>
+						<mml:mn>2</mml:mn>
+						<mml:msup>
+							<mml:mi>n</mml:mi>
+							<mml:mo>'</mml:mo>
+						</mml:msup>
+						<mml:msup>
+							<mml:msup>
+								<mml:mi>n</mml:mi>
+								<mml:mo>'</mml:mo>
+							</mml:msup>
+							<mml:mi>T</mml:mi>
+						</mml:msup>
+						<mml:mi>u</mml:mi>
+					</mml:mrow>
+				</mml:math>
+		</p><p>
+			Finally, let <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>m</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mn>2</mml:mn>
+						<mml:msqrt>
+							<mml:mrow>
+								<mml:msup>
+									<mml:msub>
+										<mml:mi>f</mml:mi>
+										<mml:mi>x</mml:mi>
+									</mml:msub>
+									<mml:mrow>
+										<mml:mn>2</mml:mn>
+									</mml:mrow>
+								</mml:msup>
+								<mml:mo>+</mml:mo>
+								<mml:msup>
+									<mml:msub>
+										<mml:mi>f</mml:mi>
+										<mml:mi>y</mml:mi>
+									</mml:msub>
+									<mml:mrow>
+										<mml:mn>2</mml:mn>
+									</mml:mrow>
+								</mml:msup>
+								<mml:mo>+</mml:mo>
+								<mml:mo>(</mml:mo>
+								<mml:msub>
+									<mml:mi>f</mml:mi>
+									<mml:mi>z</mml:mi>
+								</mml:msub>
+								<mml:mo>+</mml:mo>
+								<mml:mn>1</mml:mn>
+								<mml:msup>
+									<mml:mo>)</mml:mo>
+									<mml:mn>2</mml:mn>
+								</mml:msup>
+							</mml:mrow>
+						</mml:msqrt>
+					</mml:mrow>
+				</mml:math>. Then the values assigned to the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>s</mml:mi>
+				</mml:math> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>t</mml:mi>
+				</mml:math> texture coordinates are
+		</p><p>
+			<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>s</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mfrac>
+							<mml:msub>
+								<mml:mi>f</mml:mi>
+								<mml:mi>x</mml:mi>
+							</mml:msub>
+							<mml:mi>m</mml:mi>
+						</mml:mfrac>
+						<mml:mo>+</mml:mo>
+						<mml:mfrac>
+							<mml:mn>1</mml:mn>
+							<mml:mn>2</mml:mn>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math> <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>t</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mfrac>
+							<mml:msub>
+								<mml:mi>f</mml:mi>
+								<mml:mi>y</mml:mi>
+							</mml:msub>
+							<mml:mi>m</mml:mi>
+						</mml:mfrac>
+						<mml:mo>+</mml:mo>
+						<mml:mfrac>
+							<mml:mn>1</mml:mn>
+							<mml:mn>2</mml:mn>
+						</mml:mfrac>
+					</mml:mrow>
+				</mml:math>
+		</p><p>
+			To enable or disable a texture-coordinate generation function, call <a href="glEnable.3G.xml"><tt>glEnable</tt></a>
+			or <a href="glEnable.3G.xml"><tt>glDisable</tt></a> with one of the symbolic texture-coordinate names
+			(<tt>GL_TEXTURE_GEN_S</tt>, <tt>GL_TEXTURE_GEN_T</tt>, <tt>GL_TEXTURE_GEN_R</tt>,
+			or <tt>GL_TEXTURE_GEN_Q</tt>) as the argument. When enabled, the specified texture coordinate is computed
+			according to the generating function associated with that coordinate. When disabled, subsequent vertices take the
+			specified texture coordinate from the current set of texture coordinates. Initially, all texture generation functions
+			are set to <tt>GL_EYE_LINEAR</tt> and are disabled. Both <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>s</mml:mi>
+				</mml:math> plane equations are (1, 0, 0, 0), both <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>t</mml:mi>
+				</mml:math> plane equations are (0, 1, 0, 0), and all <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>r</mml:mi>
+				</mml:math> and <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mi>q</mml:mi>
+				</mml:math> plane equations are (0, 0, 0, 0).
+		</p><p>
+			When the <tt>GL_ARB_multitexture</tt> extension is supported, <tt>glTexGen</tt> set the texture generation parameters for the currently active texture unit,
+			selected with <a href="glActiveTextureARB.3G.xml"><tt>glActiveTextureARB</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glTexGen.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_ENUM</tt> is generated when <i><tt>coord</tt></i> or <i><tt>pname</tt></i> is
+			not an accepted defined value, or when <i><tt>pname</tt></i> is <tt>GL_TEXTURE_GEN_MODE</tt> and
+			<i><tt>params</tt></i> is not an accepted defined value.
+		</p><p>
+			<tt>GL_INVALID_ENUM</tt> is generated when <i><tt>pname</tt></i> is
+			<tt>GL_TEXTURE_GEN_MODE</tt>, <i><tt>params</tt></i> is <tt>GL_SPHERE_MAP</tt>, and
+			<i><tt>coord</tt></i> is either <tt>GL_R</tt> or <tt>GL_Q</tt>.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glTexGen</tt> is executed
+			between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a> and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glTexGen.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<tt>glGetTexGen</tt>
+		</p><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_TEXTURE_GEN_S</tt>
+		</p><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_TEXTURE_GEN_T</tt>
+		</p><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_TEXTURE_GEN_R</tt>
+		</p><p>
+			<a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a> with argument <tt>GL_TEXTURE_GEN_Q</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glTexGen.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glActiveTextureARB.3G.xml">glActiveTextureARB</a>, <a href="glCopyPixels.3G.xml">glCopyPixels</a>, <a href="glCopyTexImage2D.3G.xml">glCopyTexImage2D</a>, <a href="glCopyTexSubImage1D.3G.xml">glCopyTexSubImage1D</a>, <a href="glCopyTexSubImage2D.3G.xml">glCopyTexSubImage2D</a>, <a href="glCopyTexSubImage3D.3G.xml">glCopyTexSubImage3D</a>, <a href="glTexEnv.3G.xml">glTexEnv</a>, <a href="glTexImage1D.3G.xml">glTexImage1D</a>, <a href="glTexImage2D.3G.xml">glTexImage2D</a>, <a href="glTexImage3D.3G.xml">glTexImage3D</a>, <a href="glTexParameter.3G.xml">glTexParameter</a>, <a href="glTexSubImage1D.3G.xml">glTexSubImage1D</a>, <a href="glTexSubImage2D.3G.xml">glTexSubImage2D</a>, <a href="glTexSubImage3D.3G.xml">glTexSubImage3D</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glTexEnv.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glTexImage1D.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glTexEnv </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glTexImage1D</td></tr></table></div></body></html>

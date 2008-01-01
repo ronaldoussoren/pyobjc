@@ -1,0 +1,305 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='NSObject'>
+    <method selector='CGLContextObj'>
+      <retval type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bufferBaseAddress'>
+      <retval type='^v' />
+    </method>
+    <method selector='bufferColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='canRenderWithCGLContext:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockTextureRepresentationWithColorSpace:forBounds:'>
+      <arg index='0' type='^{CGColorSpace=}' />
+    </method>
+    <method comment='fixme' selector='logMessage:' variadic='true' />
+    <method selector='outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='3' type='^v' />
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='outputImageProviderFromTextureWithPixelFormat:pixelsWide:pixelsHigh:name:flipped:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='releaseRenderedTexture:forCGLContext:'>
+      <arg index='1' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='renderToBuffer:withBytesPerRow:pixelFormat:forBounds:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='renderWithCGLContext:forBounds:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='textureColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='textureMatrix'>
+      <retval comment='fixme' type='^f' />
+    </method>
+    <method selector='unbindTextureRepresentationFromCGLContext:textureUnit:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+  </class>
+  <class name='QCRenderer'>
+    <method selector='initOffScreenWithSize:colorSpace:composition:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGLContext:pixelFormat:colorSpace:composition:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='2' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithComposition:colorSpace:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='CGLContextObj'>
+      <retval type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bufferBaseAddress'>
+      <retval type='^v' />
+    </method>
+    <method selector='bufferColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='canRenderWithCGLContext:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockTextureRepresentationWithColorSpace:forBounds:'>
+      <arg index='0' type='^{CGColorSpace=}' />
+    </method>
+    <method comment='fixme' selector='logMessage:' variadic='true' />
+    <method selector='outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='3' type='^v' />
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='outputImageProviderFromTextureWithPixelFormat:pixelsWide:pixelsHigh:name:flipped:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='releaseRenderedTexture:forCGLContext:'>
+      <arg index='1' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='renderToBuffer:withBytesPerRow:pixelFormat:forBounds:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='renderWithCGLContext:forBounds:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='textureColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='textureMatrix'>
+      <retval comment='fixme' type='^f' />
+    </method>
+    <method selector='unbindTextureRepresentationFromCGLContext:textureUnit:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+  </class>
+  <class name='QCRenderer'>
+    <method selector='initOffScreenWithSize:colorSpace:composition:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGLContext:pixelFormat:colorSpace:composition:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='2' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithComposition:colorSpace:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='CGLContextObj'>
+      <retval type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bufferBaseAddress'>
+      <retval type='^v' />
+    </method>
+    <method selector='bufferColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='canRenderWithCGLContext:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockTextureRepresentationWithColorSpace:forBounds:'>
+      <arg index='0' type='^{CGColorSpace=}' />
+    </method>
+    <method comment='fixme' selector='logMessage:' variadic='true' />
+    <method selector='outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='3' type='^v' />
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='outputImageProviderFromTextureWithPixelFormat:pixelsWide:pixelsHigh:name:flipped:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
+      <arg index='5' type='^?' />
+      <arg index='6' type='^v' />
+      <arg index='7' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='releaseRenderedTexture:forCGLContext:'>
+      <arg index='1' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='renderToBuffer:withBytesPerRow:pixelFormat:forBounds:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='renderWithCGLContext:forBounds:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='textureColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='textureMatrix'>
+      <retval comment='fixme' type='^f' />
+    </method>
+    <method selector='unbindTextureRepresentationFromCGLContext:textureUnit:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+  </class>
+  <class name='QCRenderer'>
+    <method selector='initOffScreenWithSize:colorSpace:composition:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGLContext:pixelFormat:colorSpace:composition:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='2' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithComposition:colorSpace:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='CGLContextObj'>
+      <retval type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='bufferBaseAddress'>
+      <retval type='^v' />
+    </method>
+    <method selector='bufferColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='canRenderWithCGLContext:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='imageColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='lockTextureRepresentationWithColorSpace:forBounds:'>
+      <arg index='0' type='^{CGColorSpace=}' />
+    </method>
+    <method comment='fixme' selector='logMessage:' variadic='true' />
+    <method selector='releaseRenderedTexture:forCGLContext:'>
+      <arg index='1' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='renderToBuffer:withBytesPerRow:pixelFormat:forBounds:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='renderWithCGLContext:forBounds:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='textureColorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method selector='textureMatrix'>
+      <retval comment='fixme' type='^f' />
+    </method>
+    <method selector='unbindTextureRepresentationFromCGLContext:textureUnit:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+  </class>
+  <class name='QCRenderer'>
+    <method selector='initOffScreenWithSize:colorSpace:composition:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGLContext:pixelFormat:colorSpace:composition:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='2' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithComposition:colorSpace:'>
+      <arg index='1' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+</signatures>

@@ -1,0 +1,9 @@
+Run 'triangle.py' and use the right button to zoom out of the molecule.  
+Use the left button to spin.
+
+The routine used to generate the molecular surface is due to:
+
+Sanner, M.F., Spehner, J.-C., and Olson, A.J. (1996) Reduced surface: an
+efficient way to compute molecular surfaces. Biopolymers, Vol. 38, (3),
+305-320.
+

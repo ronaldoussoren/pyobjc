@@ -1,0 +1,380 @@
+For detailed build and installation instructions, see the
+project web site:
+
+	http://pyopengl.sourceforge.net/
+
+For quick install try:
+
+	"python setup.py install"
+
+See "python setup.py install --help" for options.
+
+Be sure to uninstall previous versions of PyOpenGL first.  This is very
+important when upgrading from PyOpenGL 1.5 to PyOpenGL 2.  Failure to
+do so may result in odd behavior.  To manual remove a previous installation
+of PyOpenGL just delete the "OpenGL" directory located in the Python site
+packages directory.
+
+Setup requires a platform specific configuration file located in
+the config directory.  These files have names like win32.cfg, linux.cfg, or
+mac.cfg.  The name is basically constructed from sys.platform stripped of all
+version or architecture information.  For instance, linux-i386 -> linux.  If
+you end up creating your own configuration file for a new platform then do
+us all a favor and send it to the PyOpenGL SourceForge group.
+
+Change Log:
+
+2.0.1.09 --> 2.0.2.01
+
+	Note:
+		Due to the restructuring, you will probably want to remove any
+		previous versions of PyOpenGL from your system before installing.
+		Although the old version shouldn't actually cause any problems
+		for the new version, it will hang around as lots of useless
+		modules you don't really need.
+
+	Note:
+		The use of SWIG 1.3.23 introduces more rigorous type-checking for
+		a number of datatypes, particularly GLuint, GLint and GLsize.  
+		You will  likely find at least a few uses in your code which 
+		relies on the old behaviour.  I have explicitly loosened the
+		extra checking in cases where passing in floats is very common
+		(such as in specifying bitmap-operation width, height, x, y, 
+		etceteras).  If there is something else you feel must be loosened,
+		let me know.
+		
+	INCOMPATIBLE CHANGE:
+		As a consequence of the previous, code which used negative values
+		for glListBase *will fail*.  This was done in one of the demos,
+		and should not have been.  I don't even know how it was working in
+		the old code, but it definitely won't work with 2.0.2
+
+	Internals:
+
+		2.1 dev branch changes (pre-restructuring merged) into the 2.0.x
+		maintenance branch.
+
+		Changed to using SWIG 1.3.23 (most recent released SWIG)
+
+			Required modification (and simplification) of the error-handling
+			code in all modules.
+
+			Required renaming all C modules.
+
+			Modules now generally use Python shadow wrappers (swig default).
+
+			Config test fixed (but unfortunately, it now runs for every
+			module, regardless of whether it iss really being built).  This
+			behaviour will be eliminated if I can get the time.
+			
+			New typemaps for GLsizei, GLint x and GLint y, which allow for
+			passing in floats.  This tries to duplicate the older SWIG 1.3.13
+			operations which provided automated conversion from float to
+			int types.
+			
+
+	Build:
+
+		More changes to try to build properly on Fedora Core 2, or more
+		generally, in the presence of FreeGLUT.
+
+	Extensions:
+
+		A couple of extensions copied from the 2.1 branch to the
+		2.0.x branch
+
+			ATI.vertex_array_object
+			ARB.window_pos
+
+		Both now have demos in OpenGLContext.  However, vertex_array_object
+		seems to have a bug either in the wrapper, the driver or the
+		extension itself (on my hardware).
+
+
+2.0.1.08 --> 2.0.1.09
+
+	INCOMPATIBLE CHANGE:
+
+		glDrawPixelsXX fixes to use arrays specified with "natural" ordering,
+		that is, a 200x100 pixel array is specified as an array with shape
+		of (200,100,3), rather than (100,200,3).  This matches the semantics of
+		the string form, and allows glGetPixels and glGetTextureLevel results
+		to be passed directly in to glDrawPixelsXX.  If you need to use the
+		previous form, set:
+			array.shape = (array.shape[1],array.shape[0]) + array.shape[2:]
+		before the call to glDrawPixels
+
+	Fix bug with glGetTexLevel where width was queried twice instead of height,
+	were also queried in the reverse order (see glDrawPixelsXX changes).
+
+	Also fix off-by-one bug in the code to generate the glGetTexLevel array
+	(for the dimensions, which would have resulted in unusable images had anyone
+	 been able to get past the previous bug).
+
+	Memory leak fix for Numeric versions of _PyObject_FromArray
+
+	Brian Leair's submitted versions of NEHE tutorials 13, 41-45 and 48
+
+	Togl:
+
+		Fix for yet more Togl building problems in modern Linux (Gentoo, Fedora Core)
+
+		Avoid warning message if Togl is not set to build
+
+	Added placeholder files for the directories used in building the
+	documentation set.
+
+	Use include and lib directories for compiling version-selector files,
+	warn on failure to compile version selector.
+
+	Support Python 2.4 distutils bdist_wininst, which now has the customisation
+	point we need (and doesn't work with the old sub-class that produces the
+				   customisation point for Python 2.3 and below)
+
+	Print message to stderr on failure of a glu tessellation callback notifying
+	the user of from where the traceback came.
+
+2.0.1.07 --> 2.0.1.08
+
+	Backport of dev-2_1 Togl build fixes
+
+	glMap1d/glMap1f fix for parameter reference in the typemap
+	
+	Added __init__.py to da demo.
+	
+	Fix for systems where a SWIG version > 1.3.13 is installed.
+
+2.0.1.06 --> 2.0.1.07
+
+	Bug-fixes for a number of Feedback-Buffer crashes (courtesy
+	of Andrew Lentvorski).
+	
+	Documentation rebuilt to show new version.
+
+2.0.1.05 --> 2.0.1.06
+
+	3-character patch to the darwin.cfg file for OS-X to
+	eliminate specification of "GLU" library (which is 
+	covered by the -framework:OpenGL argument).
+	
+	Ben Decker's .cfg and config.h changes for the DJGPP/DOS
+	build.
+
+2.0.1.04 --> 2.0.1.05
+
+	Integration of the OS-X patches from Bob Ippolito and 
+	Andrew Straw:
+	
+		* Change the layout of the packages so that there are 
+		no two pyds in the package with the same name.  This
+		should also benefit systems such as Py2exe and the 
+		McMillan installer.
+		
+		* Make UnixCCompiler use ranlib on OS-X
+		
+		* Workaround for Apple's GLUT implementation changing 
+		the current working directory on initialisation
+		
+		* Eliminates Unix-style linking parameters for OpenGL
+		libraries in favour of -framework: link arguments (on
+		OS-X only, of course)
+		
+	Andrew Straw's patch to provide somewhat more informative
+	error messages when dynamically loaded modules are not
+	available.
+	
+	Disabling of Togl building by default for Win32.  This
+	is likely to become "disable Togl" for the next version
+	of PyOpenGL unless some white knight steps up to save
+	the (rather ugly) damsel.  Also added explicit code to
+	check for Tk 8.4 and refuse to build Togl in that 
+	situation (which causes crashes) even if the config 
+	flag says to try.
+	
+	*.pdb added to the list of files excluded in the manifest
+	file.
+	
+	Warning printf added when users try to load OpenGL 1.1
+	array functions under OpenGL < 1.1 (if such users really
+	exist).
+	
+	Eliminated the use of a C++ idiom for initialising a 
+	variable to the result of a function in the GLU module, 
+	switched to the C idiom of declaring then calling.
+	
+2.0.1.03 --> 2.0.1.04
+
+	glutXXXFunc functions (callback registrations for 
+	the current window) now raise RunTimeError if there 
+	is no current window.Bug #711491
+	
+	GLE fixes to bugs introduced during switch to 
+	swig 1.3.13 and not caught until now. Bug #663543.
+ 	Upshot is that GLE now works (it likely hasn't
+	since 2.0.0) (MCF)
+	
+	Fix for unchecked selection-buffer index problem (MCF)
+	
+	Added sanity checks to tkScale method of the Tkinter 
+	Opengl widget.  Now restricted to no more than a 
+	thousand-fold delta on a single drag of the mouse. (MCF)
+	
+	Made failure of gluProject raise an error instead of 
+	silently returning None (MCF)
+		
+	Build:
+
+		Changes to support building on Python 1.5.2.  (MCF)
+		
+		RPM-building fixes and tweaks. (MCF)
+		
+		More robust handling of wrong swig versions (RD)
+		
+		Eliminated obsolete sdist_fw command. (MCF)
+		
+		bdist_wininst renaming scheme added (windows 
+		packages will indicate the version of Numeric Python
+		against which they were compiled). (MCF)
+		
+		Added code to include stub libraries for Togl-1.6 (MCF)
+	
+	Docs:
+	
+		Documentation-generation updated to use modern
+		versions of tools and/or replace tools with 
+		still-available open-source ones where possible. (MCF)
+		
+		Moved user-manual sections of documentation out
+		of the main reference text. (MCF)
+		
+		Moved extensions.htm to documentation directory (MCF)
+		
+		Split license out into a stand-alone html file. (MCF)
+	
+
+2.0.1.02 --> 2.0.1.03
+
+	Fix for multiple-simultaneous GLU-tessellators
+	bug reported by Maciej, secondary fix for
+	NURBS copy/paste errors. (MCF)
+
+	Fix for missing image-saving functionality in
+	conesave demonstration, also fixed inconsistent
+	use of tabs/spaces. (MCF)
+
+	Switch to TOGL 1.6, this is the current CVS
+	version of the package, rather than a particular
+	release. TOGL development is fairly slow,
+	so waiting for a new release doesn't seem practical.
+	This change should allow compilation with Tk 8.4
+	(or any earlier version). Note that TOGL 1.5 is still
+	included in case someone needs the earlier version
+	for some reason.  Version 1.5 will probably be removed 
+	during the next release cycle (i.e. ~2.0.2+) (MCF)
+
+	texture_compression fixes (again), from a patch
+	by Thomas Wouters. These appear to be simple
+	copy and paste errors.  Hopefully this will be the
+	last time this error needs to be fixed ;) . (RD)
+
+	Added a version check for swig 1.3.13. This is
+	likely to be revisited fairly soon, the fix
+	simply avoids problems with incompatible versions,
+	it doesn't try to do anything fancy. (RD)
+
+2.0.1.01 --> 2.0.1.02
+
+	Fix for texture compression typo error (RD)
+
+	Introduction of HPUX configuration file. (RD)
+
+	Fix for double-free errors in GLU 
+	Tesselator and Quadratic objects.
+	(Similar to the fix in the previous alpha for the 
+	NURB objects) (MCF)
+
+2.0.0.45 -> 2.0.1.01 Changes:
+	Bug Fixes:
+		Eliminated GLUT_ALPHA bit from initialisers to allow GLUT
+		demos to run on machines without support for ALPHA,
+		particularly sunos5 (error report #498073)
+							 
+		Eliminating SyntaxWarning under Python 2.2 for
+		from x import * inside a function.  (Demo/tom/logo.py)
+							 
+		Fixed bug #617949, also took opportunity to replace the
+		attrocious indenting style (sometimes 2, sometimes 3,
+		sometimes 4 spaces) with simple tab-only indentation.
+		(Demo/redbook/fog.py)
+							 
+		Fixed logic error for gluDeleteNurbsRenderer, basically,
+		you wound up getting the delete method of the object
+		called twice, once when gluDeleteNurbsRenderer was called,
+		and another time when the object was actually deleted.
+		Added a null function that is called instead of
+		gluDeleteNurbsRenderer, so that only object deletion
+		actually cleans up after the nurbs renderer, but code using
+		gluDeleteNurbsRenderer will generally work.
+		
+		Switched use of glFog to glFogv, appears to be a minor API
+		change in that old, loose code doesn't work any more :(
+		(Demo/tom/fog.py).
+							 
+		One-line fix for [ 532670 ] bug in _glTexCoordPointer,
+		tested with sample code given on the pygame list.
+		
+		Fix for reported error in Tk Raw OpenGL widget, plus a few
+		try-finally catches to try to make things a little more
+		reliable.
+		
+		Fixed typemap memory leak for byte, ubyte and short types
+		(Very minor change, basically switched to using
+		 PyInt_AsLong alone to get $input as an integer.
+		 PyNumber_Int creates a new reference, so it would leak
+		 memory, and the coercian is apparently done by
+		 PyInt_AsLong anyway.)
+		
+		[ 561595 ] glGetDoublev memory leak  Fixed memory leak
+		caused by use of PyArray_FromDimsAndData
+		
+		Fixed typo in GL/ARB/texture_compression.i
+
+	SWIG 1.3.13 updates:
+		There were a number of bugs introduced, then fixed, they
+		aren't logged here, see cvs's log for details.
+
+		Lots of changes all through the interface definitions
+		Changed the pragma(python) code = ""entries to the new
+		style shadow %{ %}way.
+		
+		Updated to use "%exception" instead of "%except" (which
+		is now deprecated by the SWIG people). This doesn't
+		actually allow compilation with SWIG 1.3.15u, but it
+		does get rid of the bulk of the warning messages. GLE's
+		module name still causes failures when compiled with
+		1.3.15u.
+		
+		Added an extra check for swig in build_w command.
+
+	Build/packaging system:
+		Added ..\include and ..\lib to the win32 config to have
+		a place to put these that isn't going to require win32
+		to be installed just to figure out the correct directory.
+		
+		Integrated Jack Jansen's Darwin/OS-X build patch
+		(unconfirmed whether this is now working)
+		
+		Updated setup.py email to point to the sourceforge list,
+		rather than the ancient yahoo one.
+	  
+	Misc:
+		Quieted a few warnings with explicit brackets around
+		assignment-as-value.
+
+		Added missing semicolon in WGL interface file, Got rid
+		of duplicate typedef for WORD.
+		
+		glutSetWindow.3GLUT.xml docs return-value declaration fixed
+		
+		glGenLists.3G.xml Fixed return-value declaration
+		(bug #637090)

@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <cftype gettypeid_func='DCSDictionaryGetTypeID' name='DCSDictionaryRef' type='^{__DCSDictionary=}' type64='^{__DCSDictionary=}' />
+  <function name='DCSCopyTextDefinition'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__DCSDictionary=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+  </function>
+  <function name='DCSGetTermRangeInString'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <arg type='^{__DCSDictionary=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='l' type64='l' />
+  </function>
+</signatures>
+

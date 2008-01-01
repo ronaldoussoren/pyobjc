@@ -1,0 +1,77 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                fieldDisplay0 = id; 
+                fieldDisplay1 = id; 
+                fieldDisplay2 = id; 
+                fieldSlider0 = id; 
+                fieldSlider1 = id; 
+                fieldSlider2 = id; 
+                phaseDisplay0 = id; 
+                phaseDisplay1 = id; 
+                phaseDisplay2 = id; 
+                phaseSlider0 = id; 
+                phaseSlider1 = id; 
+                phaseSlider2 = id; 
+                settingDrawerButton = id; 
+                spacingDisplay = id; 
+                spacingSlider = id; 
+            }; 
+            CLASS = CGraphController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                RMSGainDisplay = NSTextField; 
+                fieldDisplay0 = NSTextField; 
+                fieldDisplay1 = NSTextField; 
+                fieldDisplay2 = NSTextField; 
+                fieldNormalizeCheck = NSButton; 
+                fieldSlider0 = NSSlider; 
+                fieldSlider1 = NSSlider; 
+                fieldSlider2 = NSSlider; 
+                graphModel = CGraphModel; 
+                graphView = CGraphView; 
+                phaseDisplay0 = NSTextField; 
+                phaseDisplay1 = NSTextField; 
+                phaseDisplay2 = NSTextField; 
+                phaseSlider0 = NSSlider; 
+                phaseSlider1 = NSSlider; 
+                phaseSlider2 = NSSlider; 
+                settingDrawer = NSDrawer; 
+                spacingDisplay = NSTextField; 
+                spacingSlider = NSSlider; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = CGraphModel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                azmuthDisplay = id; 
+                azmuthSlider = id; 
+                mapOffsetEWDisplay = id; 
+                mapOffsetEWSlider = id; 
+                mapOffsetNSDisplay = id; 
+                mapOffsetNSSlider = id; 
+                mapScaleDisplay = id; 
+                mapScaleSlider = id; 
+                mapVisibleSlider = id; 
+            }; 
+            CLASS = CGraphView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                azmuthDisplay = NSTextField; 
+                azmuthSlider = NSSlider; 
+                mapOffsetEWDisplay = NSTextField; 
+                mapOffsetEWSlider = NSSlider; 
+                mapOffsetNSDisplay = NSTextField; 
+                mapOffsetNSSlider = NSSlider; 
+                mapScaleDisplay = NSTextField; 
+                mapScaleSlider = NSSlider; 
+                mapVisibleSlider = NSSlider; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

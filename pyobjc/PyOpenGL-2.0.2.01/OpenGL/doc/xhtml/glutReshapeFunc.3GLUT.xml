@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutReshapeFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutReportErrors.3GLUT.xml" title="glutReportErrors"/><link rel="next" href="glutReshapeWindow.3GLUT.xml" title="glutReshapeWindow"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutReshapeFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutReportErrors.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutReshapeWindow.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutReshapeFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutReshapeFunc.3GLUT-name"/><h2>Name</h2><p>glutReshapeFunc &#8212; sets the reshape callback for the current window.</p></div><div class="refsynopsisdiv"><a name="glutReshapeFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutReshapeFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)(int width, int height));</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutReshapeFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutReshapeFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutReshapeFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new reshape callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutReshapeFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutReshapeFunc</tt> sets the reshape callback for the current window. The reshape callback is
+			triggered when a window is reshaped. A reshape callback is also triggered immediately before a window's first display
+			callback after a window is created or whenever an overlay for the window is established. The
+			<i><tt>width</tt></i> and <i><tt>height</tt></i> parameters of the callback specify the new window size
+			in pixels. Before the callback, the current window is set to the window that has been reshaped.
+		</p><p>
+			If a reshape callback is not registered for a window or <tt>NULL</tt> is passed to
+			<tt>glutReshapeFunc</tt> (to deregister a previously registered callback), the default reshape callback is
+			used. This default callback will simply call <tt>glViewport(0,0,width,height)</tt> on
+			the normal plane (and on the overlay if one exists).
+		</p><p>
+			If an overlay is established for the window, a single reshape callback is generated. It is the callback's
+			responsibility to update both the normal plane and overlay for the window (changing the layer in use as necessary).
+		</p><p>
+			When a top-level window is reshaped, subwindows are not reshaped. It is up to the GLUT program to manage the size and
+			positions of subwindows within a top-level window. Still, reshape callbacks will be triggered for subwindows when their
+			size is changed using <a href="glutReshapeWindow.3GLUT.xml"><tt>glutReshapeWindow</tt></a>.
+		</p></div><div class="refsect1" lang="en"><a name="glutReshapeFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutDisplayFunc.3GLUT.xml">glutDisplayFunc</a>, <a href="glutReshapeWindow.3GLUT.xml">glutReshapeWindow</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutReportErrors.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutReshapeWindow.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutReportErrors </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutReshapeWindow</td></tr></table></div></body></html>

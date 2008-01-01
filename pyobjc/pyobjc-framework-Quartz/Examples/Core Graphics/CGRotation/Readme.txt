@@ -1,0 +1,1 @@
+CGRotation is a Cocoa application that demonstrates how to use the Current Transformation Matrix (CTM) to apply rotation, scaling and transformation to an image for display. It also demonstrates simple usage of ImageIO to load and save images and how to get the pixel data from a CGImageRef into an arbitrary buffer.

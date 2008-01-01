@@ -1,0 +1,12 @@
+{
+    IBClasses = (
+        {CLASS = Converter; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = CurrencyConvBindingDocument; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

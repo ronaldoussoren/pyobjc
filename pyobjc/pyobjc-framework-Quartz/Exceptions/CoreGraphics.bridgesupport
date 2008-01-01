@@ -1,0 +1,774 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='CGAffineTransform' />
+  <struct name='CGDataConsumerCallbacks' />
+  <struct name='CGDataProviderCallbacks' />
+  <struct name='CGDataProviderDirectAccessCallbacks' />
+  <struct name='CGDataProviderDirectCallbacks' />
+  <struct name='CGDataProviderSequentialCallbacks' />
+  <struct name='CGDeviceByteColor' />
+  <struct name='CGDeviceColor' />
+  <struct name='CGEventTapInformation' />
+  <struct name='CGFunctionCallbacks' />
+  <struct name='CGPSConverterCallbacks' />
+  <struct name='CGPathElement' />
+  <struct name='CGPatternCallbacks' />
+  <struct name='CGPoint' />
+  <struct name='CGRect' />
+  <struct name='CGScreenUpdateMoveDelta' />
+  <struct name='CGSize' />
+  <opaque name='CGDirectPaletteRef' />
+  <opaque name='CGDisplayConfigRef' />
+  <opaque name='CGEventTapProxy' />
+  <opaque name='CGPDFArrayRef' />
+  <opaque name='CGPDFContentStreamRef' />
+  <opaque name='CGPDFDictionaryRef' />
+  <opaque name='CGPDFOperatorTableRef' />
+  <opaque name='CGPDFScannerRef' />
+  <opaque name='CGPDFStreamRef' />
+  <opaque name='CGPDFStringRef' />
+  <opaque name='CGDirectDisplayID' />
+  <cftype gettypeid_func='CGColorGetTypeID' name='CGColorRef' />
+  <cftype gettypeid_func='CGColorSpaceGetTypeID' name='CGColorSpaceRef' />
+  <cftype gettypeid_func='CGContextGetTypeID' name='CGContextRef' />
+  <cftype gettypeid_func='CGDataConsumerGetTypeID' name='CGDataConsumerRef' />
+  <cftype gettypeid_func='CGDataProviderGetTypeID' name='CGDataProviderRef' />
+  <cftype gettypeid_func='CGEventGetTypeID' name='CGEventRef' />
+  <cftype gettypeid_func='CGEventSourceGetTypeID' name='CGEventSourceRef' />
+  <cftype gettypeid_func='CGFontGetTypeID' name='CGFontRef' />
+  <cftype gettypeid_func='CGFunctionGetTypeID' name='CGFunctionRef' />
+  <cftype gettypeid_func='CGGradientGetTypeID' name='CGGradientRef' />
+  <cftype gettypeid_func='CGImageGetTypeID' name='CGImageRef' />
+  <cftype gettypeid_func='CGLayerGetTypeID' name='CGLayerRef' />
+  <cftype gettypeid_func='CGMutablePathGetTypeID' name='CGMutablePathRef' />
+  <cftype gettypeid_func='CGPDFDocumentGetTypeID' name='CGPDFDocumentRef' />
+  <cftype gettypeid_func='CGPDFPageGetTypeID' name='CGPDFPageRef' />
+  <cftype gettypeid_func='CGPSConverterGetTypeID' name='CGPSConverterRef' />
+  <cftype gettypeid_func='CGPathGetTypeID' name='CGPathRef' />
+  <cftype gettypeid_func='CGPatternGetTypeID' name='CGPatternRef' />
+  <cftype gettypeid_func='CGShadingGetTypeID' name='CGShadingRef' />
+  <function name='CGAcquireDisplayFadeReservation'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGBeginDisplayConfiguration'>
+    <arg index='0' type_modifier='o' />
+  </function>
+  <function name='CGBitmapContextCreate'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='0' type_modifier='n' />
+  </function>
+  <function name='CGBitmapContextCreateImage'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGBitmapContextGetData'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CGColorCreate'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+  </function>
+  <function name='CGColorCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorCreateCopyWithAlpha'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorCreateGenericCMYK'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorCreateGenericGray'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorCreateGenericRGB'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorCreateWithPattern'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+  </function>
+  <function name='CGColorGetComponents'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CGColorSpaceCopyICCProfile'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+  </function>
+  <function name='CGColorSpaceCreateCalibratedGray'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateCalibratedRGB'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceCMYK'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceGray'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateDeviceRGB'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateICCBased'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+  </function>
+  <function name='CGColorSpaceCreateIndexed'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+  </function>
+  <function name='CGColorSpaceCreateLab'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreatePattern'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateWithName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGColorSpaceCreateWithPlatformColorSpace'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^{OpaqueCMProfileRef=}' type64='^{OpaqueCMProfileRef=}' />
+  </function>
+  <function name='CGColorSpaceGetColorTable'>
+    <arg c_array_of_variable_length='true' index='1' type_modifier='N' />
+  </function>
+  <function name='CGContextAddLines'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextAddRects'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextBeginPage'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGContextClipToRects'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextFillRects'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextSelectFont'>
+    <arg comment='string' index='1' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='CGContextSetFillColor'>
+    <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextSetFillPattern'>
+    <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+  </function>
+  <function name='CGContextSetLineDash'>
+    <arg c_array_length_in_arg='3' index='2' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGContextSetStrokeColor'>
+    <arg c_array_of_variable_length='true' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextSetStrokePattern'>
+    <arg c_array_of_variable_length='true' index='2' type_modifier='n' />
+  </function>
+  <function name='CGContextShowGlyphs'>
+    <arg c_array_length_in_arg='1' index='1' type_modifier='n' />
+  </function>
+  <function name='CGContextShowGlyphsAtPoint'>
+    <arg c_array_length_in_arg='4' index='3' type_modifier='n' />
+  </function>
+  <function name='CGContextShowGlyphsAtPositions'>
+    <arg c_array_length_in_arg='3' index='1' />
+    <arg c_array_length_in_arg='3' index='2' />
+  </function>
+  <function name='CGContextShowGlyphsWithAdvances'>
+    <arg c_array_length_in_arg='3' index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='2' type_modifier='n' />
+  </function>
+  <function name='CGContextShowText'>
+    <arg comment='string' index='1' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='CGContextShowTextAtPoint'>
+    <arg comment='string' index='3' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='CGContextStrokeLineSegments'>
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+  </function>
+  <function comment='manual wrapper' name='CGDataConsumerCreate'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='1' type='r^{CGDataConsumerCallbacks=^?^?}' type64='r^{CGDataConsumerCallbacks=^?^?}' />
+  </function>
+  <function name='CGDataConsumerCreateWithCFData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGDataConsumerCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGDataProviderCopyData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreate'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='1' type='r^{CGDataProviderCallbacks=^?^?^?^?}' type64='r^{CGDataProviderCallbacks=^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateDirect'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='2' type='r^{CGDataProviderDirectCallbacks=I^?^?^?^?}' type64='r^{CGDataProviderDirectCallbacks=I^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateDirectAccess'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='2' type='r^{CGDataProviderDirectAccessCallbacks=^?^?^?^?}' type64='r^{CGDataProviderDirectAccessCallbacks=^?^?^?^?}' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateSequential'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='1' type='r^{CGDataProviderSequentialCallbacks=I^?^?^?^?}' type64='r^{CGDataProviderSequentialCallbacks=I^?^?^?^?}' />
+  </function>
+  <function name='CGDataProviderCreateWithCFData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function comment='manual wrapper' name='CGDataProviderCreateWithData'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='1' type='^v' type64='^v' />
+    <arg function_pointer='true' index='3' type='^?' type64='^?' />
+  </function>
+  <function name='CGDataProviderCreateWithFilename'>
+    <retval already_cfretained='true' />
+    <arg comment='string' index='0' numeric='false' type='*' type64='*' />
+  </function>
+  <function name='CGDataProviderCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGDisplayAddressForPosition'>
+    <retval c_array_of_variable_length='true' comment='peek into display buffer' />
+  </function>
+  <function name='CGDisplayBaseAddress'>
+    <retval c_array_of_variable_length='true' comment='peek into display buffer' />
+  </function>
+  <function name='CGDisplayBestModeForParameters'>
+    <arg index='4' type_modifier='o' />
+  </function>
+  <function name='CGDisplayBestModeForParametersAndRefreshRate'>
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='CGDisplayBestModeForParametersAndRefreshRateWithProperty'>
+    <arg index='6' type_modifier='o' />
+  </function>
+  <function name='CGDisplayCopyColorSpace'>
+    <retval already_cfretained='true' />
+  </function>
+  <function comment='manual wrapper' name='CGDisplayRegisterReconfigurationCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGDisplayRemoveReconfigurationCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function name='CGEventCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateData'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+  </function>
+  <function name='CGEventCreateFromData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateKeyboardEvent'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateMouseEvent'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateScrollWheelEvent' variadic='true'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventCreateSourceFromEvent'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGEventKeyboardGetUnicodeString'>
+    <arg index='2' type_modifier='o' />
+    <arg c_array_length_in_arg='1,2' comment='and 2 on output' index='3' type_modifier='o' />
+  </function>
+  <function name='CGEventKeyboardSetUnicodeString'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' unicode_string='true' />
+  </function>
+  <function name='CGEventPostToPSN'>
+    <arg index='0' type='^{ProcessSerialNumber=II}' type64='^{ProcessSerialNumber=II}' type_modifier='n' />
+  </function>
+  <function name='CGEventSourceCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function comment='manual wrapper' name='CGEventTapCreate'>
+    <retval already_cfretained='true' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
+    <arg index='4' type='^?' type64='^?' />
+    <arg index='5' type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGEventTapCreateForPSN'>
+    <retval already_cfretained='true' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
+    <arg index='0' type='^{ProcessSerialNumber=II}' type64='^{ProcessSerialNumber=II}' type_modifier='n' />
+    <arg index='4' type='^?' type64='^?' />
+    <arg index='5' type='^v' type64='^v' />
+  </function>
+  <function name='CGFontCopyFullName'>
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+  </function>
+  <function name='CGFontCopyGlyphNameForGlyph'>
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+  </function>
+  <function name='CGFontCopyPostScriptName'>
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+  </function>
+  <function name='CGFontCopyTableForTag'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+  </function>
+  <function name='CGFontCopyTableTags'>
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  </function>
+  <function name='CGFontCopyVariationAxes'>
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  </function>
+  <function name='CGFontCopyVariations'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGFontCreateCopyWithVariations'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGFontCreatePostScriptEncoding'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+  </function>
+  <function name='CGFontCreatePostScriptSubset'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg c_array_length_in_arg='4' index='3' type_modifier='n' />
+  </function>
+  <function name='CGFontCreateWithDataProvider'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGFontCreateWithFontName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGFontCreateWithPlatformFont'>
+    <retval already_cfretained='true' />
+    <arg comment='ATSFontRef' index='0' type='L' type64='L' />
+  </function>
+  <function name='CGFontGetGlyphAdvances'>
+    <arg c_array_length_in_arg='2' index='1' />
+    <arg c_array_length_in_arg='2' index='3' />
+  </function>
+  <function name='CGFontGetGlyphBBoxes'>
+    <arg c_array_length_in_arg='2' index='1' />
+    <arg c_array_length_in_arg='2' index='3' />
+  </function>
+  <function comment='manual wrapper' name='CGFunctionCreate'>
+    <retval already_cfretained='true' />
+    <arg comment='context' index='0' type='^v' type64='^v' />
+    <arg c_array_of_variable_length='true' comment='2*arg1' index='2' null_accepted='true' type_modifier='n' />
+    <arg c_array_of_variable_length='true' comment='2*arg3' index='4' null_accepted='true' type_modifier='n' />
+    <arg index='5' type='r^{CGFunctionCallbacks=I^?^?}' type64='r^{CGFunctionCallbacks=I^?^?}' />
+  </function>
+  <function name='CGGLContextCreate'>
+    <retval already_cfretained='true' />
+    <arg comment='fixme: opengl context' index='0' type='^v' type64='^v' />
+  </function>
+  <function name='CGGetActiveDisplayList'>
+    <arg c_array_length_in_arg='0,2' comment='and in arg 2 on return...' index='1' null_accepted='true' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplayTransferByFormula'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+    <arg index='4' type_modifier='o' />
+    <arg index='5' type_modifier='o' />
+    <arg index='6' type_modifier='o' />
+    <arg index='7' type_modifier='o' />
+    <arg index='8' type_modifier='o' />
+    <arg index='9' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplayTransferByTable'>
+    <arg c_array_length_in_arg='1,5' comment='and in arg 5 on output' index='2' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' comment='and in arg 5 on output' index='3' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' comment='and in arg 5 on output' index='4' type_modifier='o' />
+    <arg index='5' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithOpenGLDisplayMask'>
+    <arg c_array_length_in_arg='1,3' comment='and in arg 3 on return...' index='2' null_accepted='true' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithPoint'>
+    <arg c_array_length_in_arg='1,3' comment='and in arg 3 on return...' index='2' null_accepted='true' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CGGetDisplaysWithRect'>
+    <arg c_array_length_in_arg='1,3' comment='and in arg 3 on return...' index='2' null_accepted='true' type_modifier='o' />
+    <arg index='3' type_modifier='o' />
+  </function>
+  <function name='CGGetEventTapList'>
+    <arg c_array_length_in_arg='0,2' comment='and in 2 on output' index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGGetLastMouseDelta'>
+    <arg index='0' type_modifier='o' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGGetOnlineDisplayList'>
+    <arg c_array_length_in_arg='0,2' comment='and in arg 2 on return' index='1' null_accepted='true' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGGradientCreateWithColorComponents'>
+    <retval already_cfretained='true' />
+    <arg c_array_length_in_arg='3' index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='2' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGGradientCreateWithColors'>
+    <retval already_cfretained='true' />
+    <arg c_array_length_in_arg='1' comment='arg1 is a CFArray' index='2' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGImageCreate'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='8' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGImageCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageCreateCopyWithColorSpace'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageCreateWithImageInRect'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageCreateWithJPEGDataProvider'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGImageCreateWithMask'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageCreateWithMaskingColors'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGImageCreateWithPNGDataProvider'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGImageGetDecode'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function name='CGImageMaskCreate'>
+    <retval already_cfretained='true' />
+    <arg c_array_of_variable_length='true' index='6' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGLayerCreateWithContext'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPDFArrayGetArray'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetBoolean'>
+    <arg index='2' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetDictionary'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetInteger'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetName'>
+    <arg index='2' numeric='false' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetNumber'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetObject'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetStream'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFArrayGetString'>
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFContentStreamGetResource'>
+    <retval type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg comment='string' index='2' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CGPDFContextCreate'>
+    <retval already_cfretained='true' />
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPDFContextCreateWithURL'>
+    <retval already_cfretained='true' />
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function comment='manual wrapper' name='CGPDFDictionaryApplyFunction'>
+    <arg index='1' type='^?' type64='^?' />
+    <arg index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CGPDFDictionaryGetArray'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetBoolean'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetDictionary'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetInteger'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetName'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' numeric='false' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetNumber'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetObject'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetStream'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDictionaryGetString'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDocumentCreateWithProvider'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPDFDocumentCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPDFDocumentGetVersion'>
+    <arg index='1' type_modifier='o' />
+    <arg index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFDocumentUnlockWithPassword'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+  </function>
+  <function name='CGPDFObjectGetType'>
+    <arg index='0' type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+  </function>
+  <function comment='users will have to use "unpack" theirselfes' name='CGPDFObjectGetValue'>
+    <arg index='0' type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
+    <arg c_array_of_variable_length='true' index='2' type_modifier='o' />
+  </function>
+  <function name='CGPDFOperatorTableSetCallback'>
+    <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
+    <arg function_pointer='true' index='2' type='^?' type64='^?' />
+  </function>
+  <function name='CGPDFScannerCreate'>
+    <arg comment='context' index='2' type='^v' type64='^v' />
+  </function>
+  <function name='CGPDFScannerPopArray'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopBoolean'>
+    <arg index='1' type='^B' type64='^B' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopDictionary'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopInteger'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopName'>
+    <arg index='1' numeric='false' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopNumber'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopObject'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopStream'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFScannerPopString'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFStreamCopyData'>
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPDFStringCopyDate'>
+    <retval already_cfretained='true' type='^{__CFDate=}' type64='^{__CFDate=}' />
+  </function>
+  <function name='CGPDFStringCopyTextString'>
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+  </function>
+  <function name='CGPDFStringGetBytePtr'>
+    <retval c_array_of_variable_length='true' />
+  </function>
+  <function comment='manual wrapper' name='CGPSConverterCreate'>
+    <retval already_cfretained='true' />
+    <arg index='0' type='^v' type64='^v' />
+    <arg index='1' type='r^{CGPSConverterCallbacks=I^?^?^?^?^?^?^?}' type64='r^{CGPSConverterCallbacks=I^?^?^?^?^?^?^?}' />
+  </function>
+  <function name='CGPaletteCreateWithByteSamples'>
+    <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+  </function>
+  <function name='CGPaletteCreateWithSamples'>
+    <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+  </function>
+  <function name='CGPathAddArc'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddArcToPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddCurveToPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddEllipseInRect'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddLineToPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddLines'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='2' />
+  </function>
+  <function name='CGPathAddPath'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddQuadCurveToPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddRect'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathAddRects'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='2' />
+  </function>
+  <function comment='manual wrapper' name='CGPathApply'>
+    <arg comment='context' index='1' type='^v' type64='^v' />
+    <arg index='2' type='^?' type64='^?' />
+  </function>
+  <function name='CGPathContainsPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function name='CGPathCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPathCreateMutable'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPathCreateMutableCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGPathIsRect'>
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function name='CGPathMoveToPoint'>
+    <arg index='1' null_accepted='true' type_modifier='n' />
+  </function>
+  <function comment='manual wrapper' name='CGPatternCreate'>
+    <retval already_cfretained='true' />
+    <arg comment='context' index='0' type='^v' type64='^v' />
+    <arg index='7' type='r^{CGPatternCallbacks=I^?^?}' type64='r^{CGPatternCallbacks=I^?^?}' />
+  </function>
+  <function name='CGPointCreateDictionaryRepresentation'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGPointMakeWithDictionaryRepresentation'>
+    <arg index='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+  </function>
+  <function name='CGPostMouseEvent' variadic='true' />
+  <function name='CGPostScrollWheelEvent' variadic='true' />
+  <function name='CGRectCreateDictionaryRepresentation'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGRectDivide'>
+    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg index='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function name='CGRectMakeWithDictionaryRepresentation'>
+    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function comment='manual wrapper' name='CGRegisterScreenRefreshCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg comment='context' index='1' type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGReleaseScreenRefreshRects'>
+    <arg index='0' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function comment='manual wrapper' name='CGScreenRegisterMoveCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg comment='context' index='1' type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper' name='CGScreenUnregisterMoveCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg comment='context' index='1' type='^v' type64='^v' />
+  </function>
+  <function name='CGSessionCopyCurrentDictionary'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGSetDisplayTransferByByteTable'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
+    <arg c_array_length_in_arg='1' index='3' type_modifier='n' />
+    <arg c_array_length_in_arg='1' index='4' type_modifier='n' />
+  </function>
+  <function name='CGSetDisplayTransferByTable'>
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
+    <arg c_array_length_in_arg='1' index='3' type_modifier='n' />
+    <arg c_array_length_in_arg='1' index='4' type_modifier='n' />
+  </function>
+  <function name='CGShadingCreateAxial'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGShadingCreateRadial'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGShieldingWindowID'>
+    <retval type='^v' type64='I' />
+  </function>
+  <function name='CGSizeCreateDictionaryRepresentation'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  </function>
+  <function name='CGSizeMakeWithDictionaryRepresentation'>
+    <arg index='1' type='^{CGSize=ff}' type64='^{CGSize=dd}' />
+  </function>
+  <function comment='manual wrapper' name='CGUnregisterScreenRefreshCallback'>
+    <arg index='0' type='^?' type64='^?' />
+    <arg index='1' type='^v' type64='^v' />
+  </function>
+  <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenRefreshRects'>
+    <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+    <arg index='1' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenUpdateRects'>
+    <arg index='1' type_modifier='o' />
+    <arg c_array_length_in_arg='3' comment='manual wrapper' index='2' type_modifier='o' />
+    <arg index='3' type='^I' type64='^Q' />
+    <arg index='4' type='^{_CGScreenUpdateMoveDelta=ii}' type64='^{_CGScreenUpdateMoveDelta=ii}' />
+  </function>
+  <function name='CGWindowListCopyWindowInfo'>
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  </function>
+  <function name='CGWindowListCreate'>
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  </function>
+  <function name='CGWindowListCreateDescriptionFromArray'>
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  </function>
+  <function name='CGWindowListCreateImage'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CGWindowListCreateImageFromArray'>
+    <retval already_cfretained='true' />
+  </function>
+</signatures>

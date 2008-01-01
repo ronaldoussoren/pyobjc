@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutSpecialUpFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutSpecialFunc.3GLUT.xml" title="glutSpecialFunc"/><link rel="next" href="glutStrokeCharacter.3GLUT.xml" title="glutStrokeCharacter"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutSpecialUpFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutSpecialFunc.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutStrokeCharacter.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutSpecialUpFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutSpecialUpFunc.3GLUT-name"/><h2>Name</h2><p>glutSpecialUpFunc &#8212; sets the special keyboard up (key release) callback for the current window.</p></div><div class="refsynopsisdiv"><a name="glutSpecialUpFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutSpecialUpFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>void (*<i><tt>func</tt></i>)(int key, int x, int y));</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutSpecialUpFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutSpecialUpFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>func</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutSpecialUpFunc.3GLUT-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>func</tt></i></span></dt><dd>
+						The new special callback function.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="glutSpecialUpFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutSpecialUpFunc</tt> sets the special keyboard up (key release) callback for the current window. The
+			special keyboard up callback is triggered when keyboard function or directional keys are released. The
+			<i><tt>key</tt></i> callback parameter is a <tt>GLUT_KEY_*</tt> constant for the special key
+			pressed. The <i><tt>x</tt></i> and <i><tt>y</tt></i> callback parameters indicate the mouse in window
+			relative coordinates when the key was pressed. When a new window is created, no special up callback is initially
+			registered and special key releases in the window are ignored. Passing <tt>NULL</tt> to
+			<tt>glutSpecialUpFunc</tt> disables the generation of special up callbacks.
+		</p><p>
+			During a special up callback, <a href="glutGetModifiers.3GLUT.xml"><tt>glutGetModifiers</tt></a> may be called to determine the
+			state of modifier keys when the key release generating the callback occurred.
+		</p><p>
+			To avoid the reporting of key release/press pairs due to auto repeat, use <a href="glutIgnoreKeyRepeat.3GLUT.xml"><tt>glutIgnoreKeyRepeat</tt></a> to ignore auto repeated keystrokes.
+		</p><p>
+			An implementation should do its best to provide ways to generate all the <tt>GLUT_KEY_</tt>* special keys.
+			The available <tt>GLUT_KEY_*</tt> values are:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GLUT_KEY_F1</tt></span></dt><dd>
+						F1 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F2</tt></span></dt><dd>
+						F2 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F3</tt></span></dt><dd>
+						F3 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F4</tt></span></dt><dd>
+						F4 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F5</tt></span></dt><dd>
+						F5 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F6</tt></span></dt><dd>
+						F6 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F7</tt></span></dt><dd>
+						F7 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F8</tt></span></dt><dd>
+						F8 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F9</tt></span></dt><dd>
+						F9 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F10</tt></span></dt><dd>
+						F10 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F11</tt></span></dt><dd>
+						F11 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_F12</tt></span></dt><dd>
+						F12 function key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_LEFT</tt></span></dt><dd>
+						Left directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_UP</tt></span></dt><dd>
+						Up directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_RIGHT</tt></span></dt><dd>
+						Right directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_DOWN</tt></span></dt><dd>
+						Down directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_PAGE_UP</tt></span></dt><dd>
+						Page up directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_PAGE_DOWN</tt></span></dt><dd>
+						Page down directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_HOME</tt></span></dt><dd>
+						Home directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_END</tt></span></dt><dd>
+						End directional key.
+					</dd><dt><span class="term"><tt>GLUT_KEY_INSERT</tt></span></dt><dd>
+						Inset directional key.
+					</dd></dl></div><p>
+			Note that the escape, backspace, and delete keys are generated as an ASCII character.
+		</p></div><div class="refsect1" lang="en"><a name="glutSpecialUpFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutSpecialFunc.3GLUT.xml">glutSpecialFunc</a>, <a href="glutKeyboardFunc.3GLUT.xml">glutKeyboardFunc</a>, <a href="glutKeyboardUpFunc.3GLUT.xml">glutKeyboardUpFunc</a>, <a href="glutMouseFunc.3GLUT.xml">glutMouseFunc</a>, <a href="glutSpaceballButtonFunc.3GLUT.xml">glutSpaceballButtonFunc</a>, <a href="glutButtonBoxFunc.3GLUT.xml">glutButtonBoxFunc</a>, <a href="glutTabletButtonFunc.3GLUT.xml">glutTabletButtonFunc</a>, <a href="glutGetModifiers.3GLUT.xml">glutGetModifiers</a>, <a href="glutIgnoreKeyRepeat.3GLUT.xml">glutIgnoreKeyRepeat</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutSpecialFunc.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutStrokeCharacter.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutSpecialFunc </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutStrokeCharacter</td></tr></table></div></body></html>

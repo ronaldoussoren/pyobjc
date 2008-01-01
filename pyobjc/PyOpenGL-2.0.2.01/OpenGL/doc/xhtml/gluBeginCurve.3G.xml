@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluBeginCurve</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="reference-GLU.xml" title="GLU"/><link rel="next" href="gluBeginPolygon.3G.xml" title="gluBeginPolygon"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluBeginCurve</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference-GLU.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluBeginPolygon.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluBeginCurve.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluBeginCurve.3G-name"/><h2>Name</h2><p>gluBeginCurve, gluEndCurve &#8212; delimit a NURBS curve definition</p></div><div class="refsynopsisdiv"><a name="gluBeginCurve.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluBeginCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUnurbs *<i><tt>nurb</tt></i>);</code></td></tr><tr><td valign="top"><code>void <tt>gluEndCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUnurbs *<i><tt>nurb</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluBeginCurve.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluBeginCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>nurb</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>gluEndCurve</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>nurb</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluBeginCurve.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>nurb</tt></i></span></dt><dd>
+						Specifies the NURBS object (created with <a href="gluNewNurbsRenderer.3G.xml"><tt>gluNewNurbsRenderer</tt></a>).
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluBeginCurve.3G-description"/><h2>Description</h2><p>
+			Use <tt>gluBeginCurve</tt> to mark the beginning of a NURBS curve definition. After calling
+			<tt>gluBeginCurve</tt>, make one or more calls to <a href="gluNurbsCurve.3G.xml"><tt>gluNurbsCurve</tt></a> to
+			define the attributes of the curve. Exactly one of the calls to <a href="gluNurbsCurve.3G.xml"><tt>gluNurbsCurve</tt></a>
+			must have a curve type of <tt>GL_MAP1_VERTEX_3</tt> or <tt>GL_MAP1_VERTEX_4</tt>. To mark the
+			end of the NURBS curve definition, call <tt>gluEndCurve</tt>.
+		</p><p>
+			GL evaluators are used to render the NURBS curve as a series of line segments. Evaluator state is preserved during
+			rendering with <a href="glPushAttrib.3G.xml"><tt>glPushAttrib</tt></a>(<tt>GL_EVAL_BIT</tt>) and <a href="glPushAttrib.3G.xml"><tt>glPopAttrib</tt></a>(). See the <a href="glPushAttrib.3G.xml"><tt>glPushAttrib</tt></a> reference
+			page for details on exactly what state these calls preserve.
+		</p></div><div class="refsect1" lang="en"><a name="gluBeginCurve.3G-example"/><h2>Example</h2><p>
+			The following commands render a textured NURBS curve with normals; texture coordinates and normals are also specified
+			as NURBS curves:
+		</p><pre class="programlisting">gluBeginCurve(nobj);
+gluNurbsCurve(nobj, ..., GL_MAP1_TEXTURE_COORD_2);
+gluNurbsCurve(nobj, ..., GL_MAP1_NORMAL);
+gluNurbsCurve(nobj, ..., GL_MAP1_VERTEX_4);
+gluEndCurve(nobj);</pre></div><div class="refsect1" lang="en"><a name="gluBeginCurve.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluBeginSurface.3G.xml">gluBeginSurface</a>, <a href="gluBeginTrim.3G.xml">gluBeginTrim</a>, <a href="gluNewNurbsRenderer.3G.xml">gluNewNurbsRenderer</a>, <a href="gluNurbsCurve.3G.xml">gluNurbsCurve</a>, <a href="glPushAttrib.3G.xml">glPushAttrib</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="reference-GLU.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluBeginPolygon.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">GLU </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluBeginPolygon</td></tr></table></div></body></html>

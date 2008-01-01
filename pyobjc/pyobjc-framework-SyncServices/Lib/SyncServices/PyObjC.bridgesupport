@@ -1,0 +1,235 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/CoreData.framework/CoreData' />
+  <constant name='ISyncAvailabilityChangedNotification' type='@' />
+  <constant name='ISyncChangePropertyActionKey' type='@' />
+  <constant name='ISyncChangePropertyClear' type='@' />
+  <constant name='ISyncChangePropertyNameKey' type='@' />
+  <constant name='ISyncChangePropertySet' type='@' />
+  <constant name='ISyncChangePropertyValueKey' type='@' />
+  <constant name='ISyncClientTypeApplication' type='@' />
+  <constant name='ISyncClientTypeDevice' type='@' />
+  <constant name='ISyncClientTypePeer' type='@' />
+  <constant name='ISyncClientTypeServer' type='@' />
+  <constant name='ISyncErrorDomain' type='@' />
+  <constant name='ISyncInvalidEntityException' type='@' />
+  <constant name='ISyncInvalidRecordException' type='@' />
+  <constant name='ISyncInvalidRecordIdentifiersKey' type='@' />
+  <constant name='ISyncInvalidRecordReasonsKey' type='@' />
+  <constant name='ISyncInvalidRecordsKey' type='@' />
+  <constant name='ISyncRecordEntityNameKey' type='@' />
+  <constant name='ISyncServerUnavailableException' type='@' />
+  <constant name='ISyncSessionCancelledException' type='@' />
+  <constant name='ISyncSessionUnavailableException' type='@' />
+  <constant name='ISyncUnsupportedEntityException' type='@' />
+  <enum name='ISyncChangeTypeAdd' value='1' />
+  <enum name='ISyncChangeTypeDelete' value='3' />
+  <enum name='ISyncChangeTypeModify' value='2' />
+  <enum name='ISyncSessionClientAlreadySyncingError' value='100' />
+  <enum name='ISyncSessionDriverChangeAccepted' value='1' />
+  <enum name='ISyncSessionDriverChangeError' value='3' />
+  <enum name='ISyncSessionDriverChangeIgnored' value='2' />
+  <enum name='ISyncSessionDriverChangeRefused' value='0' />
+  <enum name='ISyncSessionDriverFatalError' value='300' />
+  <enum name='ISyncSessionDriverModeFast' value='1' />
+  <enum name='ISyncSessionDriverModeRefresh' value='3' />
+  <enum name='ISyncSessionDriverModeSlow' value='2' />
+  <enum name='ISyncSessionDriverPullFailureError' value='201' />
+  <enum name='ISyncSessionDriverRegistrationError' value='200' />
+  <enum name='ISyncSessionUserCanceledSessionError' value='101' />
+  <enum name='ISyncStatusCancelled' value='5' />
+  <enum name='ISyncStatusErrors' value='4' />
+  <enum name='ISyncStatusFailed' value='6' />
+  <enum name='ISyncStatusNever' value='7' />
+  <enum name='ISyncStatusRunning' value='1' />
+  <enum name='ISyncStatusSuccess' value='2' />
+  <enum name='ISyncStatusWarnings' value='3' />
+  <informal_protocol name='ISyncSessionDriverDataSourceOptionalMethods'>
+    <method selector='changedRecordsForEntityName:moreComing:error:' type='@@:@^B^@' />
+    <method selector='changesForEntityName:moreComing:error:' type='@@:@^B^@' />
+    <method selector='entityNamesToPull' type='@@:' />
+    <method selector='entityNamesToSync' type='@@:' />
+    <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:' type='@@:@^B^@' />
+    <method selector='lastAnchorForEntityName:' type='@@:@' />
+    <method selector='nextAnchorForEntityName:' type='@@:@' />
+    <method selector='sessionBeginTimeout' type='d@:' />
+    <method selector='sessionPullChangesTimeout' type='d@:' />
+  </informal_protocol>
+  <informal_protocol name='ISyncSessionDriverDelegate'>
+    <method selector='sessionDriver:didPullAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriver:didPushAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriver:didRegisterClientAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriver:willFinishSessionAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriver:willPullAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriver:willPushAndReturnError:' type='B@:@^@' />
+    <method selector='sessionDriverDidCancelSession:' type='v@:@' />
+    <method selector='sessionDriverDidFinishSession:' type='v@:@' />
+    <method selector='sessionDriverWillCancelSession:' type='v@:@' />
+  </informal_protocol>
+  <informal_protocol name='SyncUIHelperInformalProtocol'>
+    <method selector='attributedStringForIdentityPropertiesWithNames:inRecord:comparisonRecords:firstLineAttributes:secondLineAttributes:' type='@@:@@@@@' />
+    <method selector='attributedStringForPropertiesWithNames:inRecord:comparisonRecords:defaultAttributes:' type='@@:@@@@' />
+  </informal_protocol>
+  <class name='ISyncClient'>
+    <method selector='canPullChangesForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='canPushChangesForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='isEnabledForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='setEnabled:forEntityNames:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShouldReplaceClientRecords:forEntityNames:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShouldSynchronize:withClientsOfType:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setSyncAlertHandler:selector:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+    <method selector='shouldReplaceClientRecordsForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldSynchronizeWithClientsOfType:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='ISyncManager'>
+    <method selector='isEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='registerSchemaWithBundlePath:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='ISyncRecordSnapshot'>
+    <method selector='recordIdentifierForReference:isModified:'>
+      <arg index='1' type='^B' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncSession'>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:lastAnchors:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method selector='clientLostRecordWithIdentifier:shouldReplaceOnNextSync:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='isCancelled'>
+      <retval type='B' />
+    </method>
+    <method selector='prepareToPullChangesForEntityNames:beforeDate:'>
+      <retval type='B' />
+    </method>
+    <method selector='prepareToPullChangesInBackgroundForEntityNames:target:selector:'>
+      <arg index='2' sel_of_type='v@:@@' />
+    </method>
+    <method selector='shouldPullChangesForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldPushAllRecordsForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldPushChangesForEntityName:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldReplaceAllRecordsOnClientForEntityName:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='ISyncSessionDriver'>
+    <method selector='handlesSyncAlerts'>
+      <retval type='B' />
+    </method>
+    <method selector='setHandlesSyncAlerts:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='startAsynchronousSync:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='sync'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+    </method>
+    <method selector='changedRecordsForEntityName:moreComing:error:'>
+      <arg index='1' type='^B' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='changesForEntityName:moreComing:error:'>
+      <arg index='1' type='^B' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='deleteAllRecordsForEntityName:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:'>
+      <arg index='1' type='^B' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='isEqual:'>
+      <retval type='B' />
+    </method>
+    <method selector='persistentStoreCoordinator:willDeleteRecordWithIdentifier:inSyncSession:'>
+      <retval type='B' />
+    </method>
+    <method selector='persistentStoreCoordinatorShouldStartSyncing:'>
+      <retval type='B' />
+    </method>
+    <method selector='recordsForEntityName:moreComing:error:'>
+      <arg index='1' type='^B' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPullAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPushAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didRegisterClientAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willFinishSessionAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPullAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPushAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='shouldApplyRecord:withRecordIdentifier:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='syncWithClient:inBackground:handler:error:'>
+      <retval type='B' />
+      <arg index='1' type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+  </class>
+</signatures>
+

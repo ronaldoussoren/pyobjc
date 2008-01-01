@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+Coding style for PyObjC</title>
+<meta name="Author" content="Ronald Oussoren" />
+<meta name="Author" content="Bill Bumgarner" />
+<meta name="Contact" content="pyobjc-dev@lists.sourceforge.net" />
+<meta name="copyright" content="2002 The PyObjC Project" />
+</head>
+<body>
+<h2>Coding style for PyObjC</h2>
+<table>
+<tbody valign="top">
+<tr><th >Author:</th>
+<td>Ronald Oussoren</td></tr>
+<tr><th >Author:</th>
+<td>Bill Bumgarner</td></tr>
+<tr><th >Contact:</th>
+<td><a href="mailto:pyobjc-dev@lists.sourceforge.net">pyobjc-dev@lists.sourceforge.net</a></td></tr>
+<tr><th>URL:</th><td><a href="http://pyobjc.sourceforge.net/">http://pyobjc.sourceforge.net/</a><br />
+</td>
+</tr>
+<tr><th >Copyright:</th>
+<td>2002 The PyObjC Project</td></tr>
+</tbody>
+</table>
+<table border="1" width="80%" align="center"><tbody><tr><td><i><center>Contents</center></i><br />
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#python-code">Python code</a></li>
+<li><a href="#c-code">C code</a></li>
+<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#rest-in-docstrings">ReST in DocStrings</a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<h2><a href="#id1">Introduction</a></h2>
+<p>This document describes the coding style for PyObjC.  Please use this style for
+new code and try apply this style to existing code while working on it.</p>
+<p>The management summary: 4-space indents in Python code, 1-TAB indents in C
+code.</p>
+<h2><a href="#id2">Python code</a></h2>
+<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0008.txt">PEP 8</a>).  For consistency with
+Cocoa we use mixed-case identifiers (like <code><span>lookUpClass</span></code>).</p>
+<p>PyObjC extensions to Apple frameworks should be clearly marked as such, 
+preferably by prefixing names with <code><span>PyObjC</span></code> or <code><span>pyobjc</span></code>.  This should make
+it clear to users where they should look for documentation of an item: The
+Apple documentation or ours.</p>
+<h2><a href="#id3">C code</a></h2>
+<p>The coding style for core Python is used (see <a href="http://www.python.org/peps/pep-0007.txt">PEP 7</a>).  We use <code><span>PyObjC</span></code> 
+instead of <code><span>Py</span></code> as the prefix for globally visible symbols.</p>
+<p>All (Objective-)C files in <code><span>Modules/objc/</span></code> should include <code><span>&quot;pyobjc.h&quot;</span></code> as
+their first include.  The (Objective-)C files in the wrappers for frameworks
+should include <code><span>&quot;pyobjc-api.h&quot;</span></code> and should not use other include-files in
+<code><span>Modules/objc</span></code> other than <code><span>pyobjc-api.h</span></code> and <code><span>wrapper-const-table.h</span></code>.</p>
+<h2><a href="#id4">Documentation</a></h2>
+<p>All items exported by the objc module and all PyObjC extensions to Apple
+frameworks (the AppKit and Foundation modules) should be documented using
+docstrings.</p>
+<p>All documentation-- both standalone documents and docstrings-- should be
+marked up using <a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> [ReST].</p>
+<h3><a href="#id5">ReST in DocStrings</a></h3>
+<p><a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> can be used in doc strings.   ReST in DocStrings works
+exactly like a standalone ReST document, but the ReST is broken up slightly
+differently.</p>
+<p>To format the DocStrings to be ReST compatible, make the following
+changes/additions to the source.  These examples were taken from source found
+in the DocUtils source tree.</p>
+<ol type="1">
+<li>Add appropriate ReST style fields to the top of the document as comments:<pre>
+# Author: David Goodger
+# Contact: goodger@users.sourceforge.net
+# Copyright: This module has been placed in the public domain.
+</pre>
+</li>
+<li>Add a module level variable that indicates that ReST is used to format
+the text contained in the docstrings:<pre>
+__docformat__ = 'reStructuredText'
+</pre>
+</li>
+<li>Format all other DocStrings as one normally would in Python.   Use ReST
+style markup where appropriate.   For example, bulleted lists and
+sections might commonly appear in the module or class docstrings.   The
+docstrings for individual methods may use example blocks, hyperlinks, or
+any other ReST markup.</li>
+</ol>
+</body>
+</html>

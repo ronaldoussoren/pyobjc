@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='DCSDictionaryGetTypeID' name='DCSDictionaryRef' />
+  <function name='DCSCopyTextDefinition'>
+    <retval already_cfretained='true' already_retained='true' />
+  </function>
+  <function name='DCSShowDictionaryServiceWindow'>
+    <arg comment='CFTypeRef' index='3' type='^{__CTFont=}' type64='^{__CTFont=}' />
+    <arg index='6' null_accepted='true' type_modifier='n' />
+  </function>
+</signatures>

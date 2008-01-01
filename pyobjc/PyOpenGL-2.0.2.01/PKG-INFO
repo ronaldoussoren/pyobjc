@@ -1,0 +1,21 @@
+Metadata-Version: 1.0
+Name: PyOpenGL
+Version: 2.0.2.01
+Summary: OpenGL bindings for Python
+Home-page: http://pyopengl.sourceforge.net
+Author: PyOpenGL SourceForge group
+Author-email: pyopengl-devel@lists.sourceforge.net
+License: License :: OSI Approved :: BSD License
+Description: OpenGL bindings for Python including support for GL extensions, GLU, WGL, GLUT, GLE, and Tk
+Platform: aix
+Platform: cygwin
+Platform: darwin
+Platform: freebsd
+Platform: hp-ux11
+Platform: irix
+Platform: linux
+Platform: mac
+Platform: ms-dos5
+Platform: openbsd
+Platform: sunos
+Platform: win32

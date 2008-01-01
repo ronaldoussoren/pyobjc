@@ -1,0 +1,229 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <class name='ISyncClient'>
+    <method selector='setSyncAlertHandler:selector:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncRecordSnapshot'>
+    <method selector='recordIdentifierForReference:isModified:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncSession'>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:lastAnchors:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method selector='prepareToPullChangesInBackgroundForEntityNames:target:selector:'>
+      <arg index='2' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncSessionDriver'>
+    <method selector='startAsynchronousSync:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changedRecordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changesForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='deleteAllRecordsForEntityName:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='recordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didRegisterClientAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willFinishSessionAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='syncWithClient:inBackground:handler:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncClient'>
+    <method selector='setSyncAlertHandler:selector:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncRecordSnapshot'>
+    <method selector='recordIdentifierForReference:isModified:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncSession'>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:lastAnchors:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method selector='prepareToPullChangesInBackgroundForEntityNames:target:selector:'>
+      <arg index='2' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncSessionDriver'>
+    <method selector='startAsynchronousSync:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changedRecordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changesForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='deleteAllRecordsForEntityName:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='recordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didRegisterClientAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willFinishSessionAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='syncWithClient:inBackground:handler:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncClient'>
+    <method selector='setSyncAlertHandler:selector:'>
+      <arg index='1' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncRecordSnapshot'>
+    <method selector='recordIdentifierForReference:isModified:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ISyncSession'>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method class_method='true' selector='beginSessionInBackgroundWithClient:entityNames:target:selector:lastAnchors:'>
+      <arg index='3' sel_of_type='v@:@@' />
+    </method>
+    <method selector='prepareToPullChangesInBackgroundForEntityNames:target:selector:'>
+      <arg index='2' sel_of_type='v@:@@' />
+    </method>
+  </class>
+  <class name='ISyncSessionDriver'>
+    <method selector='startAsynchronousSync:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:'>
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changedRecordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='changesForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='deleteAllRecordsForEntityName:error:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='recordsForEntityName:moreComing:error:'>
+      <arg index='1' type_modifier='o' />
+      <arg index='2' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:didRegisterClientAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willFinishSessionAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPullAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+    <method selector='sessionDriver:willPushAndReturnError:'>
+      <arg index='1' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='syncWithClient:inBackground:handler:error:'>
+      <arg index='3' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+</signatures>

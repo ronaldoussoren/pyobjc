@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluPartialDisk</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluOrtho2D.3G.xml" title="gluOrtho2D"/><link rel="next" href="gluPerspective.3G.xml" title="gluPerspective"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluPartialDisk</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluOrtho2D.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluPerspective.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluPartialDisk.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluPartialDisk.3G-name"/><h2>Name</h2><p>gluPartialDisk &#8212; draw an arc of a disk</p></div><div class="refsynopsisdiv"><a name="gluPartialDisk.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluPartialDisk</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUquadric* <i><tt>quad</tt></i>, GLdouble <i><tt>inner</tt></i>, GLdouble <i><tt>outer</tt></i>, GLint <i><tt>slices</tt></i>, GLint <i><tt>loops</tt></i>, GLdouble <i><tt>start</tt></i>, GLdouble <i><tt>sweep</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluPartialDisk.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluPartialDisk</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>quad</tt></i>, <i><tt>inner</tt></i>, <i><tt>outer</tt></i>, <i><tt>slices</tt></i>, <i><tt>loops</tt></i>, <i><tt>start</tt></i>, <i><tt>sweep</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluPartialDisk.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>quad</tt></i></span></dt><dd>
+						Specifies a quadrics object (created with <a href="gluNewQuadric.3G.xml"><tt>gluNewQuadric</tt></a>).
+					</dd><dt><span class="term"><i><tt>inner</tt></i></span></dt><dd>
+						Specifies the inner radius of the partial disk (can be 0).
+					</dd><dt><span class="term"><i><tt>outer</tt></i></span></dt><dd>
+						Specifies the outer radius of the partial disk.
+					</dd><dt><span class="term"><i><tt>slices</tt></i></span></dt><dd>
+						Specifies the number of subdivisions around the <i><tt>z</tt></i> axis.
+					</dd><dt><span class="term"><i><tt>loops</tt></i></span></dt><dd>
+						Specifies the number of concentric rings about the origin into which the partial disk is subdivided.
+					</dd><dt><span class="term"><i><tt>start</tt></i></span></dt><dd>
+						Specifies the starting angle, in degrees, of the disk portion.
+					</dd><dt><span class="term"><i><tt>sweep</tt></i></span></dt><dd>
+						Specifies the sweep angle, in degrees, of the disk portion.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluPartialDisk.3G-description"/><h2>Description</h2><p>
+			<tt>gluPartialDisk</tt> renders a partial disk on the <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>z</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mn>0</mml:mn>
+					</mml:mrow>
+				</mml:math> plane. A partial disk is similar to a full disk, except that only the subset of the disk from
+			<i><tt>start</tt></i> through <i><tt>start</tt></i> + <i><tt>sweep</tt></i> is included (where 0
+			degrees is along the +<i><tt>yaxis,
+90 degrees along the +x</tt></i> axis, 180 degrees along the -<i><tt>y</tt></i> axis, and 270 degrees along the
+-<i><tt>x</tt></i> axis).
+		</p><p>
+			The partial disk has a radius of <i><tt>outer</tt></i>, and contains a concentric circular hole with a radius of
+			<i><tt>inner</tt></i>. If <i><tt>inner</tt></i> is 0, then no hole is generated. The partial disk is
+			subdivided around the <i><tt>z</tt></i> axis into slices (like pizza slices), and also about the
+			<i><tt>z</tt></i> axis into rings (as specified by <i><tt>slices</tt></i> and
+			<i><tt>loops</tt></i>, respectively).
+		</p><p>
+			With respect to orientation, the +<i><tt>z</tt></i> side of the partial disk is considered to be outside (see
+			<a href="gluQuadricOrientation.3G.xml">gluQuadricOrientation</a>). This means that if the orientation is set to <tt>GLU_OUTSIDE</tt>, then any normals
+			generated point along the +<i><tt>z</tt></i> axis. Otherwise, they point along the -<i><tt>z</tt></i>
+			axis.
+		</p><p>
+			If texturing is turned on (with <a href="gluQuadricTexture.3G.xml"><tt>gluQuadricTexture</tt></a>), texture coordinates are
+			generated linearly such that where <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+					<mml:mrow>
+						<mml:mi>r</mml:mi>
+						<mml:mo>=</mml:mo>
+						<mml:mi>outer</mml:mi>
+					</mml:mrow>
+				</mml:math>, the value at (<i><tt>r</tt></i>, 0, 0) is (1.0, 0.5), at (0, <i><tt>r</tt></i>, 0) it
+			is (0.5, 1.0), at (-<i><tt>r</tt></i>, 0, 0) it is (0.0, 0.5), and at (0, -<i><tt>r</tt></i>, 0) it is
+			(0.5, 0.0).
+		</p></div><div class="refsect1" lang="en"><a name="gluPartialDisk.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluCylinder.3G.xml">gluCylinder</a>, <a href="gluDisk.3G.xml">gluDisk</a>, <a href="gluNewQuadric.3G.xml">gluNewQuadric</a>, <a href="gluQuadricOrientation.3G.xml">gluQuadricOrientation</a>, <a href="gluQuadricTexture.3G.xml">gluQuadricTexture</a>, <a href="gluSphere.3G.xml">gluSphere</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluOrtho2D.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluPerspective.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluOrtho2D </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluPerspective</td></tr></table></div></body></html>

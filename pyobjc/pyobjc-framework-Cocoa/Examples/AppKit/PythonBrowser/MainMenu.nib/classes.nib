@@ -1,0 +1,18 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {pickRandomModule = id; }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {newBrowser = id; }; 
+            CLASS = PythonBrowserAppDelegate; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = PythonBrowserModel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

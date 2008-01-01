@@ -1,0 +1,56 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = IKImageBrowserView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_dataSource" = id; 
+                "_delegate" = id; 
+                "_dragDestinationDelegate" = id; 
+                "_horizontalScroller" = NSScroller; 
+                "_verticalScroller" = NSScroller; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = IKPhotoBrowserSuperClass; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {
+                copy = id; 
+                cut = id; 
+                duplicate = id; 
+                openWithFinder = id; 
+                paste = id; 
+                remove = id; 
+                revealInFinder = id; 
+                selectAll = id; 
+            }; 
+            CLASS = IKPhotoBrowserView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                "_dataSource" = id; 
+                "_delegate" = id; 
+                "_dragDestinationDelegate" = id; 
+                "_scroller" = NSScroller; 
+            }; 
+            SUPERCLASS = IKPhotoBrowserSuperClass; 
+        }, 
+        {CLASS = IKView; LANGUAGE = ObjC; SUPERCLASS = NSOpenGLView; }, 
+        {
+            ACTIONS = {addImageButtonClicked = id; zoomSliderDidChange = id; }; 
+            CLASS = ImageBrowserController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {imageBrowser = IKImageBrowserView; }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }, 
+        {
+            ACTIONS = {addPhotoButtonClicked = id; zoomSliderDidChange = id; }; 
+            CLASS = PhotoBrowserController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {"_photoBrowser" = id; "_status" = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

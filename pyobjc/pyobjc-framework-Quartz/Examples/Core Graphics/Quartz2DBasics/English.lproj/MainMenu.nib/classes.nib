@@ -1,0 +1,20 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {exportAsPDF = id; exportAsPNG = id; print = id; }; 
+            CLASS = MyAppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {theView = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {print = id; setDrawCommand = id; }; 
+            CLASS = MyView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentMenuItem = id; }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}

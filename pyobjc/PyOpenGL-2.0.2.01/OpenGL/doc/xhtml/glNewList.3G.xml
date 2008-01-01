@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glNewList</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GL.xml" title="GL"/><link rel="previous" href="glMultiTexCoordARB.3G.xml" title="glMultiTexCoordARB"/><link rel="next" href="glNormal.3G.xml" title="glNormal"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glNewList</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glMultiTexCoordARB.3G.xml">Prev</a> </td><th width="60%" align="center">GL</th><td width="20%" align="right"> <a accesskey="n" href="glNormal.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glNewList.3G"/><div class="titlepage"/><div class="refnamediv"><a name="glNewList.3G-name"/><h2>Name</h2><p>glNewList, glEndList &#8212; create or replace a display list</p></div><div class="refsynopsisdiv"><a name="glNewList.3G-c_spec-new"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glNewList</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLuint <i><tt>list</tt></i>, GLenum <i><tt>mode</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glNewList.3G-python_spec-new"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glNewList</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>list</tt></i>, <i><tt>mode</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glNewList.3G-parameters-new"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>list</tt></i></span></dt><dd>
+						Specifies the display-list name.
+					</dd><dt><span class="term"><i><tt>mode</tt></i></span></dt><dd>
+						Specifies the compilation mode, which can be <tt>GL_COMPILE</tt> or
+						<tt>GL_COMPILE_AND_EXECUTE</tt>.
+					</dd></dl></div></div><div class="refsynopsisdiv"><a name="glNewList.3G-c_spec-end"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glEndList</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glNewList.3G-python_spec-end"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glEndList</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glNewList.3G-description"/><h2>Description</h2><p>
+			Display lists are groups of GL commands that have been stored for subsequent execution. Display lists are created with
+			<tt>glNewList</tt>. All subsequent commands are placed in the display list, in the order issued, until
+			<tt>glEndList</tt> is called.
+		</p><p>
+			<tt>glNewList</tt> has two arguments. The first argument, <i><tt>list</tt></i>, is a positive
+			integer that becomes the unique name for the display list. Names can be created and reserved with <a href="glGenLists.3G.xml"><tt>glGenLists</tt></a> and tested for uniqueness with <a href="glIsList.3G.xml"><tt>glIsList</tt></a>. The second argument, <i><tt>mode</tt></i>, is a symbolic constant that
+			can assume one of two values:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GL_COMPILE</tt></span></dt><dd>
+						Commands are merely compiled.
+					</dd><dt><span class="term"><tt>GL_COMPILE_AND_EXECUTE</tt></span></dt><dd>
+						Commands are executed as they are compiled into the display list.
+					</dd></dl></div><p>
+			Certain commands are not compiled into the display list but are executed immediately, regardless of the display-list
+			mode. These commands are <a href="glAreTexturesResident.3G.xml"><tt>glAreTexturesResident</tt></a>, <a href="glColorPointer.3G.xml"><tt>glColorPointer</tt></a>, <a href="glDeleteLists.3G.xml"><tt>glDeleteLists</tt></a>, <a href="glDeleteTextures.3G.xml"><tt>glDeleteTextures</tt></a>, <a href="glEnableClientState.3G.xml"><tt>glDisableClientState</tt></a>,
+			<a href="glEdgeFlagPointer.3G.xml"><tt>glEdgeFlagPointer</tt></a>, <a href="glEnableClientState.3G.xml"><tt>glEnableClientState</tt></a>, <a href="glFeedbackBuffer.3G.xml"><tt>glFeedbackBuffer</tt></a>,
+			<a href="glFinish.3G.xml"><tt>glFinish</tt></a>, <a href="glFlush.3G.xml"><tt>glFlush</tt></a>, <a href="glGenLists.3G.xml"><tt>glGenLists</tt></a>, <a href="glGenTextures.3G.xml"><tt>glGenTextures</tt></a>, <a href="glIndexPointer.3G.xml"><tt>glIndexPointer</tt></a>, <a href="glInterleavedArrays.3G.xml"><tt>glInterleavedArrays</tt></a>, <a href="glIsEnabled.3G.xml"><tt>glIsEnabled</tt></a>, <a href="glIsList.3G.xml"><tt>glIsList</tt></a>, <a href="glIsTexture.3G.xml"><tt>glIsTexture</tt></a>, <a href="glNormalPointer.3G.xml"><tt>glNormalPointer</tt></a>, <a href="glPushClientAttrib.3G.xml"><tt>glPopClientAttrib</tt></a>, <tt>glPixelStore</tt>, <a href="glPushClientAttrib.3G.xml"><tt>glPushClientAttrib</tt></a>, <a href="glReadPixels.3G.xml"><tt>glReadPixels</tt></a>, <a href="glRenderMode.3G.xml"><tt>glRenderMode</tt></a>, <a href="glSelectBuffer.3G.xml"><tt>glSelectBuffer</tt></a>, <a href="glTexCoordPointer.3G.xml"><tt>glTexCoordPointer</tt></a>, <a href="glVertexPointer.3G.xml"><tt>glVertexPointer</tt></a>, and all of
+			the <tt>glGet</tt> commands.
+		</p><p>
+			Similarly, <a href="glTexImage1D.3G.xml"><tt>glTexImage1D</tt></a>, <a href="glTexImage2D.3G.xml"><tt>glTexImage2D</tt></a>, and <a href="glTexImage3D.3G.xml"><tt>glTexImage3D</tt></a> are executed
+			immediately and not compiled into the display list when their first argument is
+			<tt>GL_PROXY_TEXTURE_1D</tt>, <tt>GL_PROXY_TEXTURE_1D</tt>, or
+			<tt>GL_PROXY_TEXTURE_3D</tt>, respectively.
+		</p><p>
+			When the <tt>GL_ARB_imaging</tt> extension is supported, <a href="glHistogram.3G.xml"><tt>glHistogram</tt></a> executes immediately when its argument is
+			<tt>GL_PROXY_HISTOGRAM</tt>. Similarly, <a href="glColorTable.3G.xml"><tt>glColorTable</tt></a> executes
+			immediately when its first argument is <tt>glPROXY_COLOR_TABLE</tt>, <tt>glPROXY_POST_CONVOLUTION_COLOR_TABLE</tt>, or <tt>glPROXY_POST_COLOR_MATRIX_COLOR_TABLE</tt>.
+		</p><p>
+			When the <tt>GL_ARB_multitexture</tt> extension is supported, <a href="glClientActiveTextureARB.3G.xml"><tt>glClientActiveTextureARB</tt></a> is not compiled into display lists, but executed immediately.
+		</p><p>
+			When <tt>glEndList</tt> is encountered, the display-list definition is completed by associating the list
+			with the unique name <i><tt>list</tt></i> (specified in the <tt>glNewList</tt> command). If a
+			display list with name <i><tt>list</tt></i> already exists, it is replaced only when
+			<tt>glEndList</tt> is called.
+		</p></div><div class="refsect1" lang="en"><a name="glNewList.3G-notes"/><h2>Notes</h2><p>
+			<a href="glCallList.3G.xml"><tt>glCallList</tt></a> and <a href="glCallLists.3G.xml"><tt>glCallLists</tt></a> can be
+			entered into display lists. Commands in the display list or lists executed by <a href="glCallList.3G.xml"><tt>glCallList</tt></a> or <a href="glCallLists.3G.xml"><tt>glCallLists</tt></a> are not included in
+			the display list being created, even if the list creation mode is <tt>GL_COMPILE_AND_EXECUTE</tt>.
+		</p><p>
+			A display list is just a group of commands and arguments, so errors generated by commands in a display list must be
+			generated when the list is executed. If the list is created in <tt>GL_COMPILE</tt> mode, errors are not
+			generated until the list is executed.
+		</p></div><div class="refsect1" lang="en"><a name="glNewList.3G-errors"/><h2>Errors</h2><p>
+			<tt>GL_INVALID_VALUE</tt> is generated if <i><tt>list</tt></i> is 0.
+		</p><p>
+			<tt>GL_INVALID_ENUM</tt> is generated if <i><tt>mode</tt></i> is not an accepted value.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glEndList</tt> is called without a preceding
+			<tt>glNewList</tt>, or if <tt>glNewList</tt> is called while a display list is being defined.
+		</p><p>
+			<tt>GL_INVALID_OPERATION</tt> is generated if <tt>glNewList</tt> or
+			<tt>glEndList</tt> is executed between the execution of <a href="glBegin.3G.xml"><tt>glBegin</tt></a>
+			and the corresponding execution of <a href="glBegin.3G.xml"><tt>glEnd</tt></a>.
+		</p><p>
+			<tt>GL_OUT_OF_MEMORY</tt> is generated if there is insufficient memory to compile the display list. If the
+			GL version is 1.1 or greater, no change is made to the previous contents of the display list, if any, and no other
+			change is made to the GL state. (It is as if no attempt had been made to create the new display list.)
+		</p></div><div class="refsect1" lang="en"><a name="glNewList.3G-associated_gets"/><h2>Associated Gets</h2><p>
+			<a href="glIsList.3G.xml"><tt>glIsList</tt></a>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_LIST_INDEX</tt>
+		</p><p>
+			<tt>glGet</tt> with argument <tt>GL_LIST_MODE</tt>
+		</p></div><div class="refsect1" lang="en"><a name="glNewList.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glCallList.3G.xml">glCallList</a>, <a href="glCallLists.3G.xml">glCallLists</a>, <a href="glDeleteLists.3G.xml">glDeleteLists</a>, <a href="glGenLists.3G.xml">glGenLists</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glMultiTexCoordARB.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GL.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glNormal.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glMultiTexCoordARB </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glNormal</td></tr></table></div></body></html>

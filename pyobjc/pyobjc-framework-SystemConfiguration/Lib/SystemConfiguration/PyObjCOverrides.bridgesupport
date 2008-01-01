@@ -1,0 +1,179 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <cftype gettypeid_func='SCBondStatusGetTypeID' name='SCBondStatusRef' type='^{__SCBondStatus=}' type64='^{__SCBondStatus=}' />
+  <cftype gettypeid_func='SCDynamicStoreGetTypeID' name='SCDynamicStoreRef' type='^{__SCDynamicStore=}' type64='^{__SCDynamicStore=}' />
+  <cftype gettypeid_func='SCNetworkConnectionGetTypeID' name='SCNetworkConnectionRef' type='^{__SCNetworkConnection=}' type64='^{__SCNetworkConnection=}' />
+  <cftype gettypeid_func='SCNetworkInterfaceGetTypeID' name='SCNetworkInterfaceRef' type='^{__SCNetworkInterface=}' type64='^{__SCNetworkInterface=}' />
+  <cftype gettypeid_func='SCNetworkProtocolGetTypeID' name='SCNetworkProtocolRef' type='^{__SCNetworkProtocol=}' type64='^{__SCNetworkProtocol=}' />
+  <cftype gettypeid_func='SCNetworkReachabilityGetTypeID' name='SCNetworkReachabilityRef' type='^{__SCNetworkReachability=}' type64='^{__SCNetworkReachability=}' />
+  <cftype gettypeid_func='SCNetworkServiceGetTypeID' name='SCNetworkServiceRef' type='^{__SCNetworkService=}' type64='^{__SCNetworkService=}' />
+  <cftype gettypeid_func='SCNetworkSetGetTypeID' name='SCNetworkSetRef' type='^{__SCNetworkSet=}' type64='^{__SCNetworkSet=}' />
+  <cftype gettypeid_func='SCPreferencesGetTypeID' name='SCPreferencesRef' type='^{__SCPreferences=}' type64='^{__SCPreferences=}' />
+  <constant name='kSCEntNetNetInfo' type='^{__CFString=}' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' type='^{__SCNetworkInterface=}' />
+  <constant name='kSCPropNetNetInfoBindingMethods' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoBroadcastServerTag' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoServerAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoServerTags' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserGID' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserName' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserUID' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsBroadcast' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsDHCP' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsManual' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoDefaultServerTag' type='^{__CFString=}' />
+  <string_constant name='kSCNetworkConnectionBytesIn' nsstring='true' value='BytesIn' />
+  <string_constant name='kSCNetworkConnectionBytesOut' nsstring='true' value='BytesOut' />
+  <string_constant name='kSCNetworkConnectionErrorsIn' nsstring='true' value='ErrorsIn' />
+  <string_constant name='kSCNetworkConnectionErrorsOut' nsstring='true' value='ErrorsOut' />
+  <string_constant name='kSCNetworkConnectionPacketsIn' nsstring='true' value='PacketsIn' />
+  <string_constant name='kSCNetworkConnectionPacketsOut' nsstring='true' value='PacketsOut' />
+  <function name='DHCPClientPreferencesCopyApplicationOptions'>
+    <retval c_array_length_in_arg='1' type='^C' type64='^C' />
+    <arg type='^{__CFString=}' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='DHCPClientPreferencesSetApplicationOptions'>
+    <retval type='B' />
+    <arg type='^{__CFString=}' />
+    <arg c_array_length_in_arg='2' type='^C' type64='^C' type_modifier='n' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='SCBondInterfaceCreate'>
+    <retval already_retained='true' type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCDynamicStoreAddTemporaryValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreAddValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreCopyValue'>
+    <retval type='@' type64='@' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function comment='manual wrapper' name='SCDynamicStoreCreate'>
+    <retval already_retained='true' type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreCreateRunLoopSource'>
+    <retval already_retained='true' type='^{__CFRunLoopSource=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function comment='manual wrapper' name='SCDynamicStoreCreateWithOptions'>
+    <retval already_retained='true' type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreate' variadic='true'>
+    <retval already_retained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg printf_format='true' type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreSetValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^v' type64='^v' />
+  </function>
+  <function name='SCErrorString'>
+    <retval type='*' type64='*' />
+    <arg type='i' />
+  </function>
+  <function name='SCNetworkCheckReachabilityByName'>
+    <retval type='B' />
+    <arg type='*' type64='*' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCNetworkConnectionCopyUserPreferences'>
+    <retval type='B' />
+    <arg type='^{__CFDictionary=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFDictionary}' type_modifier='o' />
+  </function>
+  <function comment='manual wrapper' name='SCNetworkConnectionCreateWithServiceID'>
+    <retval already_retained='true' type='^{__SCNetworkConnection=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaOptions'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^^{__CFDictionary}' type_modifier='o' />
+    <arg type='^^{__CFDictionary}' type_modifier='o' />
+    <arg type='^^{__CFArray}' type_modifier='o' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithName'>
+    <retval already_retained='true' type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='*' type64='*' />
+  </function>
+  <function comment='manual wrapper' name='SCNetworkReachabilitySetCallback'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkReachability=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCPreferencesAddValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCPreferencesCreateWithAuthorization'>
+    <retval already_retained='true' type='^{__SCPreferences=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{AuthorizationOpaqueRef=}' type64='^{AuthorizationOpaqueRef=}' />
+  </function>
+  <function name='SCPreferencesGetValue'>
+    <retval type='@' type64='@' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function comment='manual wrapper' name='SCPreferencesSetCallback'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg function_pointer='true' type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCPreferencesSetComputerName'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='SCPreferencesSetValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCVLANInterfaceCreate'>
+    <retval already_retained='true' type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFNumber=}' />
+  </function>
+</signatures>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>glutForceJoystickFunc</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLUT.xml" title="GLUT"/><link rel="previous" href="glutExtensionSupported.3GLUT.xml" title="glutExtensionSupported"/><link rel="next" href="glutFullScreen.3GLUT.xml" title="glutFullScreen"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">glutForceJoystickFunc</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="glutExtensionSupported.3GLUT.xml">Prev</a> </td><th width="60%" align="center">GLUT</th><td width="20%" align="right"> <a accesskey="n" href="glutFullScreen.3GLUT.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="glutForceJoystickFunc.3GLUT"/><div class="titlepage"/><div class="refnamediv"><a name="glutForceJoystickFunc.3GLUT-name"/><h2>Name</h2><p>glutForceJoystickFunc &#8212; forces current window's joystick callback to be called.</p></div><div class="refsynopsisdiv"><a name="glutForceJoystickFunc.3GLUT-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>glutForceJoystickFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="glutForceJoystickFunc.3GLUT-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>glutForceJoystickFunc</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="glutForceJoystickFunc.3GLUT-description"/><h2>Description</h2><p>
+			<tt>glutForceJoystickFunc</tt> forces the current window's joystick callback to be called, reporting the
+			latest joystick state.
+		</p><p>
+			The joystick callback is called either due to polling of the joystick at the uniform timer interval set by <a href="glutJoystickFunc.3GLUT.xml"><tt>glutJoystickFunc</tt></a>'s <i><tt>pollInterval</tt></i> (specified in milliseconds) or in
+			response to calling <tt>glutForceJoystickFunc</tt>. If the <i><tt>pollInterval</tt></i> is
+			non-positive, no joystick polling is performed and the GLUT application must frequently (usually from an idle callback)
+			call <tt>glutForceJoystickFunc</tt>.
+		</p><p>
+			The joystick callback will be called once (if one exists) for each time <tt>glutForceJoystickFunc</tt> is
+			called. The callback is called from <a href="glutJoystickFunc.3GLUT.xml"><tt>glutJoystickFunc</tt></a>. That is, when <a href="glutJoystickFunc.3GLUT.xml"><tt>glutJoystickFunc</tt></a> returns, the callback will have already happened.
+		</p></div><div class="refsect1" lang="en"><a name="glutForceJoystickFunc.3GLUT-glut_implementation_notes_for_x11"/><h2>Glut Implementation Notes For X11</h2><p>
+			The current implementation of GLUT for X11 supports the joystick API, but not actual joystick input. A future
+			implementation of GLUT for X11 may add joystick support.
+		</p></div><div class="refsect1" lang="en"><a name="glutForceJoystickFunc.3GLUT-glut_implementation_notes_for_win32"/><h2>Glut Implementation Notes For Win32</h2><p>
+			The current implementation of GLUT for Win32 supports the joystick API and joystick input, but does so through the
+			dated joySetCapture and joyGetPosEx Win32 Multimedia API. The current GLUT joystick support for Win32 has all the
+			limitations of the Win32 Multimedia API joystick support. A future implementation of GLUT for Win32 may use
+			DirectInput.
+		</p></div><div class="refsect1" lang="en"><a name="glutForceJoystickFunc.3GLUT-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="glutJoystickFunc.3GLUT.xml">glutJoystickFunc</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="glutExtensionSupported.3GLUT.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLUT.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="glutFullScreen.3GLUT.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">glutExtensionSupported </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> glutFullScreen</td></tr></table></div></body></html>

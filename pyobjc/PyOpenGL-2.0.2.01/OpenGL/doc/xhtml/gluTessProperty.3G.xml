@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gluTessProperty</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLU.xml" title="GLU"/><link rel="previous" href="gluTessNormal.3G.xml" title="gluTessNormal"/><link rel="next" href="gluTessVertex.3G.xml" title="gluTessVertex"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gluTessProperty</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gluTessNormal.3G.xml">Prev</a> </td><th width="60%" align="center">GLU</th><td width="20%" align="right"> <a accesskey="n" href="gluTessVertex.3G.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gluTessProperty.3G"/><div class="titlepage"/><div class="refnamediv"><a name="gluTessProperty.3G-name"/><h2>Name</h2><p>gluTessProperty &#8212; set a tessellation object property</p></div><div class="refsynopsisdiv"><a name="gluTessProperty.3G-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gluTessProperty</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>GLUtesselator* <i><tt>tess</tt></i>, GLenum <i><tt>which</tt></i>, GLdouble <i><tt>data</tt></i>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gluTessProperty.3G-python_spec"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gluTessProperty</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>tess</tt></i>, <i><tt>which</tt></i>, <i><tt>data</tt></i>) &#8594; <tt>None</tt></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gluTessProperty.3G-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>tess</tt></i></span></dt><dd>
+						Specifies the tessellation object (created with <a href="gluNewTess.3G.xml"><tt>gluNewTess</tt></a>).
+					</dd><dt><span class="term"><i><tt>which</tt></i></span></dt><dd>
+						Specifies the property to be set. Valid values are <tt>GLU_TESS_WINDING_RULE</tt>,
+						<tt>GLU_TESS_BOUNDARY_ONLY</tt>, <tt>GLU_TESS_TOLERANCE</tt>.
+					</dd><dt><span class="term"><i><tt>data</tt></i></span></dt><dd>
+						Specifies the value of the indicated property.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gluTessProperty.3G-description"/><h2>Description</h2><p>
+			<tt>gluTessProperty</tt> is used to control properties stored in a tessellation object. These properties
+			affect the way that the polygons are interpreted and rendered. The legal values for <i><tt>which</tt></i> are as
+			follows:
+		</p><div class="variablelist"><dl><dt><span class="term"><tt>GLU_TESS_WINDING_RULE</tt></span></dt><dd><p>
+						Determines which parts of the polygon are on the "interior". <i><tt>data</tt></i> may be
+						set to one of <tt>GLU_TESS_WINDING_ODD</tt>, <tt>GLU_TESS_WINDING_NONZERO</tt>,
+						<tt>GLU_TESS_WINDING_POSITIVE</tt>, or <tt>GLU_TESS_WINDING_NEGATIVE</tt>, or
+						<tt>GLU_TESS_WINDING_ABS_GEQ_TWO</tt>.
+					</p><p>
+						To understand how the winding rule works, consider that the input contours partition the plane into
+						regions. The winding rule determines which of these regions are inside the polygon.
+					</p><p>
+						For a single contour C, the winding number of a point x is simply the signed number of revolutions we make
+						around x as we travel once around C (where CCW is positive). When there are several contours, the
+						individual winding numbers are summed. This procedure associates a signed integer value with each point x
+						in the plane. Note that the winding number is the same for all points in a single region.
+					</p><p>
+						The winding rule classifies a region as "inside" if its winding number belongs to the chosen
+						category (odd, nonzero, positive, negative, or absolute value of at least two). The previous GLU
+						tessellator (prior to GLU 1.2) used the "odd" rule. The "nonzero" rule is another
+						common way to define the interior. The other three rules are useful for polygon CSG operations.
+					</p></dd><dt><span class="term"><tt>GLU_TESS_BOUNDARY_ONLY</tt></span></dt><dd>
+						Is a boolean value ("value" should be set to GL_TRUE or GL_FALSE). When set to GL_TRUE, a set of
+						closed contours separating the polygon interior and exterior are returned instead of a tessellation.
+						Exterior contours are oriented CCW with respect to the normal; interior contours are oriented CW. The
+						<tt>GLU_TESS_BEGIN</tt> and <tt>GLU_TESS_BEGIN_DATA</tt> callbacks use the type
+						GL_LINE_LOOP for each contour.
+					</dd><dt><span class="term"><tt>GLU_TESS_TOLERANCE</tt></span></dt><dd><p>
+						Specifies a tolerance for merging features to reduce the size of the output. For example, two vertices that
+						are very close to each other might be replaced by a single vertex. The tolerance is multiplied by the
+						largest coordinate magnitude of any input vertex; this specifies the maximum distance that any feature can
+						move as the result of a single merge operation. If a single feature takes part in several merge operations,
+						the total distance moved could be larger.
+					</p><p>
+						Feature merging is completely optional; the tolerance is only a hint. The implementation is free to merge
+						in some cases and not in others, or to never merge features at all. The initial tolerance is 0.
+					</p><p>
+						The current implementation merges vertices only if they are exactly coincident, regardless of the current
+						tolerance. A vertex is spliced into an edge only if the implementation is unable to distinguish which side
+						of the edge the vertex lies on. Two edges are merged only when both endpoints are identical.
+					</p></dd></dl></div></div><div class="refsect1" lang="en"><a name="gluTessProperty.3G-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gluGetTessProperty.3G.xml">gluGetTessProperty</a>, <a href="gluNewTess.3G.xml">gluNewTess</a></span>
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gluTessNormal.3G.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLU.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gluTessVertex.3G.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gluTessNormal </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gluTessVertex</td></tr></table></div></body></html>

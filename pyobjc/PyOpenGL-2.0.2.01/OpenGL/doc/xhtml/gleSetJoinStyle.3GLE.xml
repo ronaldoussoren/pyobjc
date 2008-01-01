@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:mml="http://www.w3.org/1998/Math/MathML"
+><head><title>gleSetJoinStyle</title><link rel="stylesheet" href="style.css" type="text/css"/><meta name="generator" content="DocBook XSL Stylesheets V1.59.1"/><link rel="home" href="index.xml" title="PyOpenGL 2.0.1.09 Man Pages"/><link rel="up" href="reference-GLE.xml" title="GLE"/><link rel="previous" href="gleScrew.3GLE.xml" title="gleScrew"/><link rel="next" href="gleSetNumSides.3GLE.xml" title="gleSetNumSides"/></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gleSetJoinStyle</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gleScrew.3GLE.xml">Prev</a> </td><th width="60%" align="center">GLE</th><td width="20%" align="right"> <a accesskey="n" href="gleSetNumSides.3GLE.xml">Next</a></td></tr></table><hr/></div><div class="refentry" lang="en"><a name="gleSetJoinStyle.3GLE"/><div class="titlepage"/><div class="refnamediv"><a name="gleSetJoinStyle.3GLE-name"/><h2>Name</h2><p>gleSetJoinStyle, gleGetJoinStyle &#8212; Query and Set the GLE join style flags.</p></div><div class="refsynopsisdiv"><a name="gleSetJoinStyle.3GLE-c_spec"/><h2>C Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code>void <tt>gleSetJoinStyle</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>int <i><tt>style</tt></i>);</code></td></tr><tr><td valign="top"><code>int <tt>gleGetJoinStyle</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>);</code></td></tr></table></div><div class="refsynopsisdiv"><a name="gleSetJoinStyle.3GLE-python_specification"/><h2>Python Specification</h2><table class="funcprototype" border="0" cellpadding="0" cellspacing="0"><tr><td valign="top"><code><tt>gleSetJoinStyle</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code><i><tt>style</tt></i>) &#8594; <tt>None</tt></code></td></tr><tr><td valign="top"><code><tt>gleGetJoinStyle</tt></code></td><td valign="top"><code>(</code></td><td valign="top"><code>) &#8594; <i><tt>style</tt></i></code></td></tr></table></div><div class="refsect1" lang="en"><a name="gleSetJoinStyle.3GLE-parameters"/><h2>Parameters</h2><div class="variablelist"><dl><dt><span class="term"><i><tt>style</tt></i></span></dt><dd>
+						bitwise OR of flags
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gleSetJoinStyle.3GLE-description"/><h2>Description</h2><p>
+			Query and set the GLE join style flags. This word is a bitwise OR of the flags described below.
+		</p><p>
+			The initial join style
+			is <tt>TUBE_JN_ANGLE</tt> | <tt>TUBE_JN_CAP</tt> | <tt>TUBE_NORM_FACET</tt>.
+		</p><div class="variablelist"><p class="title"><b>Extrusion Join Styles</b></p><dl><dt><span class="term"><tt>TUBE_JN_RAW</tt></span></dt><dd>
+						Draw polycylinders, polycones, extrusions, etc. with no special treatment of the extrusion ends.
+					</dd><dt><span class="term"><tt>TUBE_JN_ANGLE</tt></span></dt><dd>
+						Draw polycylinders, polycones, extrusions, etc. by extending the different segments until they butt into
+						each other with an angular style.
+					</dd><dt><span class="term"><tt>TUBE_JN_CUT</tt></span></dt><dd><p>
+						Draw polycylinders, polycones, extrusions, etc. by joining together the different segments and slicing off
+						the joint at half the angle between the segments. A cap is drawn. Note that the slicing plane runs through
+						the origin of the contour coordinate system. Thus, the amount of slice can be varied by offsetting the
+						contour with respect to the origin.
+					</p><p>
+						Note that when two segments meet at a shallow angle, the cut join style will potentially shave off a whole
+						lot of the contour, leading to "surprising" results...
+					</p></dd><dt><span class="term"><tt>TUBE_JN_ROUND</tt></span></dt><dd>
+						Joints will be rounded. Strictly speaking, the part of the joint above the origin will be rounded. The part
+						below the origin will come together in an angular join.
+					</dd><dt><span class="term"><tt>TUBE_JN_MASK</tt></span></dt><dd>
+						Mask bits. This can be used to mask off the bit field that defines the join style.
+					</dd></dl></div><div class="variablelist"><p class="title"><b>End Caps</b></p><dl><dt><span class="term"><tt>TUBE_JN_CAP</tt></span></dt><dd>
+						If this is set, a cap will be drawn at each end of the extrusion.
+					</dd></dl></div><div class="variablelist"><p class="title"><b>Automatic Normal Vector Generation</b></p><dl><dt><span class="term"><tt>TUBE_NORM_FACET</tt></span></dt><dd>
+						A normal vector is generated per facet. Useful for having an extrusion have a "faceted" look,
+						such as when extruding a square &#8212; each of the four sides of the square will look flat.
+					</dd><dt><span class="term"><tt>TUBE_NORM_EDGE</tt></span></dt><dd>
+						Normal vectors are generated so that they lie along edges. Useful for making angular things look rounded
+						under lighting. For example, when extruding a hexagon and using this flag, the hexagonal extrusion will
+						look (more like a) smooth perfectly round cylinder, rather than a six-sided shape.
+					</dd><dt><span class="term"><tt>TUBE_NORM_PATH_EDGE</tt></span></dt><dd>
+						Normal vectors are generated so that they both lie on edges, and so that they interpolate between
+						neighboring segments. Useful for drawing "spaghetti" &#8212; extrusions that follow a spline
+						path. Because the spline path must be "tessellated" into small straight segments, each segment
+						will look straight unless this flag is set.
+					</dd><dt><span class="term"><tt>TUBE_NORM_MASK</tt></span></dt><dd>
+						A mask useful for masking out the "norm" bits.
+					</dd></dl></div><div class="variablelist"><p class="title"><b>Closed or Open Contours</b></p><dl><dt><span class="term"><tt>TUBE_CONTOUR_CLOSED</tt></span></dt><dd>
+						If this bit is set, the contour will be treated as a "closed" contour, where the last point
+						connects back up to the first. It is useful to set this flag when drawing closed shapes (such as extruded
+						cylinders, star-shapes, I-Beams, etc. When drawing open extrusions (e.g. corrugated sheet metal), you
+						<span class="bold"><b>don't</b></span> want to set this flag.
+					</dd></dl></div></div><div class="refsect1" lang="en"><a name="gleSetJoinStyle.3GLE-bugs"/><h2>Bugs</h2><p>
+			Multiple threads using GLE share a single global join style (although this should be easily fixable because GLE does
+			use a centralized graphics context).
+		</p></div><div class="refsect1" lang="en"><a name="gleSetJoinStyle.3GLE-see_also"/><h2>See Also</h2><p>
+			<span class="simplelist"><a href="gleExtrusion.3GLE.xml">gleExtrusion</a>, <a href="gleTextureMode.3GLE.xml">gleTextureMode</a></span>
+		</p></div><div class="refsect1" lang="en"><a name="gleSetJoinStyle.3GLE-author"/><h2>Author</h2><p>
+			Linas Vepstas
+		</p></div></div><div class="navfooter"><hr/><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gleScrew.3GLE.xml">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="reference-GLE.xml">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="gleSetNumSides.3GLE.xml">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gleScrew </td><td width="20%" align="center"><a accesskey="h" href="index.xml">Home</a></td><td width="40%" align="right" valign="top"> gleSetNumSides</td></tr></table></div></body></html>
