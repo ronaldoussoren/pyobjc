@@ -1,0 +1,17 @@
+<html xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>PyObjC Examples</title>
+  </head>
+
+  <body>
+    <h1>PyObjC Examples</h1>
+
+    <div py:for="title, subpath, samples in samplelist">
+      <a href="${subpath}/index.html"><h2>${title}</h2></a>
+      <div py:for="path, name, summary in samples">
+        <a href="${path}/index.html"><h3>${name}</h3></a>
+        <p py:if="summary">Markup(${summary})</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title py:content="title">Sample name</title>
+
+    <style>
+      .readme {
+        background-color: #f8f8f8;
+        border: 1px solid;
+        margin-left: 2em;
+        padding: 1em;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function selectSource() {
+          source=document.forms.sourceselector.sources.value;
+          if (source != "") {
+            document.location = source;
+          }
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1 py:content="title">Sample name</h1>
+
+    <p><a href="${zipname}">Download the sample</a></p>
+
+    <form name="sourceselector">
+      <select name="sources" onchange="selectSource()">
+        <option value="" selected="selected">Select a source file</option>
+        <option py:for="name, path in sources" value="${path}">${name}</option>
+      </select>
+    </form>
+
+    <div class="readme" py:content="Markup(readme)">Readme for the example</div>
+  </body>
+</html>
