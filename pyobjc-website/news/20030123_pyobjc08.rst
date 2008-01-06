@@ -1,0 +1,7 @@
+PyObjC 0.8 released
+===================
+
+PyObjC v0.8 has finally shipped!  A disk image and source tarball are available at SourceForge. The PyObjC installer package now contains examples that are installed into /Developer/Examples/PyObjC.
+
+There are many new features and bug fixes found within this release.  Please see the Changelog for details.  Documentation is still lacking.  It will be improved in the next release.
+

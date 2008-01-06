@@ -1,0 +1,8 @@
+PyObjC 1.1a0 released
+=====================
+
+A prerelease of the upcoming 1.1 release of PyObjC is available. This version
+contains numereous improvements, especially when you're using PyObjC on Panther.
+
+There currently is no binary installer for Mac OS X 10.2, that will be made
+available with the next release.

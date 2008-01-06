@@ -27,6 +27,7 @@ sys.path.append('lib')
 
 import sitegen
 import samples
+import news
 
 
 
@@ -53,6 +54,14 @@ class buildsite (Command):
         frameworkList = [dn for dn in os.listdir('..') if dn.startswith('pyobjc-framework') ]
         #frameworkList = ['pyobjc-framework-Cocoa']
 
+        root_menu=[
+                ('Home', '/index.html'),
+                ('News', '/news.html'),
+                ('About', '/about.html'),
+                ('History&People', '/people.html'),
+                ('Links', '/links.html'),
+        ]
+
         generator = sitegen.SiteGenerator('templates', 'htdocs')
 
         log.info("Copying static resources")
@@ -61,11 +70,30 @@ class buildsite (Command):
             log.info(" - %s" % (subdir,))
             generator.copy(os.path.join('resources', subdir), subdir)
 
+
+
         log.info("Copying static HTML")
         for fn in os.listdir('static'):
             if fn.startswith('.'): continue
             log.info(" - %s" % (fn,))
-            generator.copyReST(os.path.join('static', fn), os.path.splitext(fn)[0] + '.html')
+            generator.copyReST(os.path.join('static', fn), os.path.splitext(fn)[0] + '.html', bottommenu=root_menu)
+
+        log.info("Processing news items")
+        newsItems = news.parseNews('news')
+
+
+        log.info("Emitting news")
+        generator.emitHTML("/news.html", "news.html",  news=newsItems, bottommenu=root_menu)
+        for item in newsItems:
+            # Generate seperate files for the news items, will be used from an RSS feed.
+            generator.emitHTML('/news/%s.html'%(item['basename'],), 'news-item.html', newsitem=item, bottommenu=root_menu)
+
+        log.info("Emitting homepage")
+        generator.emitHTML("/index.html", "site-index.html",  
+                pyobjc_version='2.0',
+                pyobjc_release_date='October 24th 2007',
+                news=newsItems,
+                bottommenu=root_menu)
 
         samples.generateSamples(generator, '/examples', '..', frameworkList)
 
