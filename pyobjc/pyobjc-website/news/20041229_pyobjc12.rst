@@ -1,0 +1,6 @@
+PyObjC 1.2 released
+===================
+
+PyObjC 1.2 is finally here!  See the `NEWS file`__ for details.
+
+.. __: /NEWS-1.2.html

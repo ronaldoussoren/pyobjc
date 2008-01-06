@@ -1,0 +1,12 @@
+Interim release 0.7.0
+=====================
+
+On or about this date, an interim release of PyObjC was made available as a disk image that contained the 
+binary module (compatible with Apple's build of Python included with OS X 10.2), a Project Builder project 
+template for building Cocoa applications using Python, and a basic README.
+
+Version 0.7.0 represents a huge step forward over the previous version (0.6.1).  Of note, 0.7.0 vastly 
+improved the inter-language messaging mechanism, the bridging of various classes, improved support for 
+features specific to the Foundation and AppKit, support for the Address Book framework, and subclassing 
+of Objective-C classes in Python.
+

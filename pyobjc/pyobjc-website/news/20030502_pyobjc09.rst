@@ -1,0 +1,9 @@
+PyObjC 0.9 released
+===================
+
+PyObjC 0.9 has shipped. A disk image with an installer package and the sources are available at SourceForge. 
+There are many new features and bugfixes, see the NEWS file for details.
+
+The PyObjC installer package installs a number of examples and project builder templates as wel as 
+documentation into /Developer. Users of MacPython 2.3b1 can install this release using the PackageManager
+application.

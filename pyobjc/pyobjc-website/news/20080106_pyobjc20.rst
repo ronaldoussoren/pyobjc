@@ -1,0 +1,16 @@
+PyObjC 2.0 included in MacOSX Leopard
+=====================================
+
+Mac OS X 10.5 (Leopard) contains many new features, one of which is a new major release of PyObjC: PyObjC 2.0.
+
+The `NEWS file`__ provides the best overview of new features, the following list is a small overview:
+
+.. __: /NEWS-2.0.html
+
+* The package ``pyobjc`` is split into several smaller packages, this will make future updates easier.
+
+* PyObjC now supports the bridgesupport metadata format, which makes it easier to support new frameworks
+  without having to write C code. The same metadata format is also used by RubyCocoa.
+
+* Class methods are modelled better, allowing one have a class method and instance method with the same name (
+  which is used in several occassions in the Cocoa frameworks).

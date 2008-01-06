@@ -61,8 +61,9 @@ class SiteGenerator (object):
                  path = path[1:]
 
             dirpath = os.path.dirname(outputpath)
-            if dirpath == '.':
+            if dirpath == '.' or dirpath == '':
                 return path
+
             else:
                 rootpath = os.path.sep.join(['..'] * (1+dirpath.count(os.path.sep)))
                 return os.path.join(rootpath, path)

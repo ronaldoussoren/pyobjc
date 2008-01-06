@@ -1,0 +1,9 @@
+PyObjC 1.1b2 released
+=====================
+
+A new prerelease of the upcoming 1.1 release of PyObjC is available.
+
+Please report any problem with this release at pyobjc-dev@lists.sourceforge.net.
+
+**NOTE:** >Python 2.2 support is tested less than Python 2.3 support, because most developers have 
+moved to Mac OS X 10.3.
