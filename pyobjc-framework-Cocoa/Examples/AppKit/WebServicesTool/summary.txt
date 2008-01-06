@@ -1,0 +1,3 @@
+Queries an XML-RPC enabled web server for the methods that it implements. 
+Demonstrates a more advanced use of an ``NSTableView``, how to make a toolbar 
+as well as how to use multi-threading. 

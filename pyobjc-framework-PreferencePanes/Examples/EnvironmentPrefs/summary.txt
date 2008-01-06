@@ -1,0 +1,1 @@
+This ``NSPreferencePane`` can be used to edit the default environment for the current user. It also is a simple example of a localized application.

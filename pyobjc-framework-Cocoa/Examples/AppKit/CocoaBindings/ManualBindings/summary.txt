@@ -1,0 +1,9 @@
+A simple example that illustrates establishing bindings programmatically, 
+including a number of options such as validation and an array operator, and 
+indexed accessor methods. A custom model object implements custom validation 
+method.
+
+Originally from `Cocoa Bindings Examples and Hints`__, converted to PyObjC by 
+u.fiedler.
+
+.. __: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html

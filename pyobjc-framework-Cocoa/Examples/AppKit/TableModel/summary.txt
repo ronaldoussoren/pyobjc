@@ -1,0 +1,1 @@
+A basic demo that shows how to use an ``NSTableView``.

@@ -1,0 +1,7 @@
+Demonstrates how to subclass ``NSArrayController`` to implement filtering of a 
+``NSTableView``. Also demonstrates the use of indexed accessors.
+
+Originally from `Cocoa Bindings Examples and Hints`__, converted to 
+PyObjC by u.fiedler.
+
+.. __: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html

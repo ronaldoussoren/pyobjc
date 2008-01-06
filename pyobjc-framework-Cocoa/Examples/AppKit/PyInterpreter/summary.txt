@@ -1,0 +1,2 @@
+A full featured embedded Python interpreter. This demonstrates more complicated uses of ``NSTextView``, manual event dispatching, and the new text 
+completion feature of OS X 10.3.

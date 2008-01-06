@@ -1,0 +1,2 @@
+A more advanced example of Key-Value Coding. This uses a custom 
+``NSArrayController``. 

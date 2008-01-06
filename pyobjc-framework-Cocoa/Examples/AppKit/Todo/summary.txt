@@ -1,0 +1,6 @@
+A more complex NIB based applications. This is a document-based application. 
+
+The code is a translation into Python of an example project in 
+`Learning Cocoa`__ from O'Reilly
+
+.. __: http://www.oreilly.com/catalog/learncocoa2/

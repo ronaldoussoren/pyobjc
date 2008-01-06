@@ -1,0 +1,1 @@
+A simple screensaver written in Python.

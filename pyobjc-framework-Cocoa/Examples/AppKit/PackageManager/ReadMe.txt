@@ -12,7 +12,7 @@ This application is a Cocoa version of the Package Manager application that
 is included with MacPython.
 
 This is a first version of the application, using an unmodified ``pimp`` 
-module, it does not implement the ideas described on the `NewPackageManager`__
+module, it does not implement the ideas described on the NewPackageManager
 page on the `MacPython wiki`_.
 
 Features w.r.t. the official Package Manager:

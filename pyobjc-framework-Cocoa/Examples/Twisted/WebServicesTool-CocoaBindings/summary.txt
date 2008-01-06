@@ -1,0 +1,1 @@
+This is an even simpler refactor of the Twisted WebServicesTool example that uses Cocoa Bindings to remove a lot of the UI related code.

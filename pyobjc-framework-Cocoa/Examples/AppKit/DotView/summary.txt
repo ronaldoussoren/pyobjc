@@ -1,0 +1,1 @@
+A simple one-window demo showing how to custom drawing in a custom ``NSView``. Additionally shows how easy it is to embed a view in an ``NSScrollView``, as well as how to use an ``NSColorWell``.
