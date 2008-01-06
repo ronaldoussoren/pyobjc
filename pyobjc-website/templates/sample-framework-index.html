@@ -13,7 +13,7 @@
 
     <div py:for="path, name, summary in samples">
       <a href="${path}/index.html"><h2>${name}</h2></a>
-      <p py:if="summary">Markup(${summary})</p>
+      <p py:if="summary">${Markup(summary)}</p>
     </div>
   </body>
 </html>

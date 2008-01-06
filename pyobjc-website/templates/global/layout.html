@@ -1,24 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://genshi.edgewall.org/" py:strip="">
-    <head py:match="head" once="true" py:attrs="select('@*')">
+<html 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:py="http://genshi.edgewall.org/" 
+  py:strip="">
+    <head py:match="head" py:attrs="select('@*')">
         <title py:with="title = list(select('title/text()'))">
             ${title}
         </title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" href="../css/layout.css" type="text/css" />
-        <link rel="start" href="/index.html" />
-        <link rel="copyright" href="/legal.html" />
+        <link rel="stylesheet" href="${url('/css/layout.css')}" type="text/css" />
+        <link py:replace="select('link')" />
+        <link rel="start" href="${url('/index.html')}" />
+        <link rel="copyright" href="${url('/legal.html')}" />
+        <meta py:replace="select('meta')" />
+        <script py:replace="select('script')" />
+        <style py:replace="select('style')" />
     </head>
-    <body py:match="body" once="true" py:attrs="select('@*')">
-        <p>
-            ${select('*[local-name()!="title"]')}
-        </p>
+    <body py:match="body" py:attrs="select('@*')">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr valign="bottom">
                 <td width="150" valign="middle" bgcolor="#FFFFFF" class="corner">
                     <center>
-                        <a href="../index.html"><img src="../img/dogsnake.jpg" width="125" height="86" border="0" alt="PyObjC" /></a>
+                      <a href="${url('/index.html')}"><img src="${url('/img/dogsnake.jpg')}" width="125" height="86" border="0" alt="PyObjC" /></a>
                     </center>
                 </td>
                 <td class="banner" width="15">
@@ -29,11 +33,11 @@
                 </td>
             </tr>
             <tr valign="top">
-                <td width="150" align="left" style="background-image:url(../img/top-line.gif)" class="banner">
-                    <img src="../img/title2-2.gif" width="125" height="8" border="0" alt="" />
+              <td width="150" align="left" style="background-image:url(${url('/img/top-line.gif')})" class="banner">
+                <img src="${url('img/title2-2.gif')}" width="125" height="8" border="0" alt="" />
                 </td>
-                <td colspan="2" width="90%" style="background-image:url(../img/top-line.gif)" class="banner">
-                    <img src="../img/shim.gif" width="1" height="8" border="0" alt="" />
+                <td colspan="2" width="90%" style="background-image:url(${url('img/top-line.gif')})" class="banner">
+                  <img src="${url('/img/shim.gif')}" width="1" height="8" border="0" alt="" />
                 </td>
             </tr>
         </table>
@@ -43,56 +47,37 @@
                     <table border="0" cellpadding="0" cellspacing="0" width="120">
                         <tr align="left">
                             <td colspan="2" bgcolor="#DDDDDD" class="layout">
-                                <img src="../img/sect-head.gif" width="120" height="26" border="0" alt="Sections:" />
+                              <img src="${url('/img/sect-head.gif')}" width="120" height="26" border="0" alt="Sections:" />
                             </td>
                         </tr>
-                        <tr align="left">
+                        <tr py:for="title, link in topmenu" align="left">
                             <td colspan="2">
-                                <a href="../index.html">Home</a>
-                            </td>
-                        </tr>
-                        <tr align="left">
-                            <td colspan="2">
-                                <a href="../doc/index.html">Documentation</a>
-                            </td>
-                        </tr>
-                        <tr align="left">
-                            <td colspan="2">
-                                <a href="../development/index.html">Development</a>
-                            </td>
-                        </tr>
-                        <tr align="left">
-                            <td colspan="2">
-                                <a href="../software/index.html">Download</a>
-                            </td>
-                        </tr>
-                        <tr align="left">
-                            <td colspan="2" bgcolor="#87B9E7">
-                                <a href="../examples/index.html">Examples</a>
-                            </td>
-                        </tr>
-                        <tr align="left">
-                            <td colspan="2">
-                                <a href="http://sourceforge.net/mail/?group_id=14534">Mailing Lists</a>
+                              <a href="${url(link)}">${title}</a>
                             </td>
                         </tr>
                         <tr align="left">
                             <td height="3" colspan="2" bgcolor="#999999" class="layout"></td>
                         </tr>
-                        <tr align="left">
+                        <tr align="left" py:if="bottommenu">
                             <td colspan="2" bgcolor="#DDDDDD" class="layout">
-                                <img src="../img/nav-head.gif" width="120" height="26" border="0" alt="Navigation:" />
+                              <img src="${url('/img/nav-head.gif')}" width="120" height="26" border="0" alt="Navigation:" />
                             </td>
                         </tr>
-                        <tr class="layout" align="left" valign="middle" bgcolor="#87B9E7">
-                            <td class="layout">
-                                <img src="../img/nav-downicon.gif" width="18" height="15" border="0" alt="- " />
+                        <tr py:for="title, link in bottommenu" class="layout" align="left" valign="middle" >
+                            <td py:if="not link" class="layout">
+                              <img src="${url('/img/nav-downicon.gif')}" width="18" height="15" border="0" alt="- " />
                             </td>
-                            <td bgcolor="#87B9E7" class="layout">
-                                <span class="nav">Examples</span>
+                            <td py:if="not link" bgcolor="#87B9E7" class="layout">
+                              <span class="nav">${title}</span>
+                            </td>
+                            <td py:if="link" class="layout">
+                              <a href="${url(link)}"><img src="${url('/img/nav-normicon.gif')}" width="18" height="15" border="0" alt="- "/></a>
+                            </td>
+                            <td py:if="link" class="layout">
+                              <span class="nav"><a href="${url(link)}">${title}</a></span>
                             </td>
                         </tr>
-                        <tr class="layout" bgcolor="#FFFFFF">
+                        <tr class="layout" bgcolor="#FFFFFF" py:if="bottommenu">
                             <td class="layout" height="1"></td>
                             <td class="layout" height="1"></td>
                         </tr>
@@ -136,7 +121,7 @@
                         </tr>
                         <tr>
                             <td height="7" class="layout">
-                                <img src="../img/shim.gif" width="1" height="7" border="0" alt="" />
+                              <img src="${url('/img/shim.gif')}" width="1" height="7" border="0" alt="" />
                             </td>
                         </tr>
                     </table>

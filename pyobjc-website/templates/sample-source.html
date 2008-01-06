@@ -26,9 +26,19 @@
 
     <form name="sourceselector">
       <select name="sources" onchange="selectSource()">
-        <option py:for="name, path in sources" value="${path}">${name}</option>
+        <option value="index.html">Description</option>
+        <option py:for="name, path, selected in sources" value="${path}" selected="${selected}">${name}</option>
       </select>
     </form>
+
+    <noscript>
+      <!-- add a list of files for users that don't have javascript enabled -->
+      <ul>
+        <li><a href="index.html">Description</a></li>
+        <li py:for="name, path in sources"><a href="${path}">${name}</a></li>
+      </ul>
+    </noscript>
+
 
     <p py:content="Markup(body)">The actual source code</p>
   </body>

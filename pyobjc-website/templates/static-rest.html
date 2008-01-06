@@ -1,0 +1,13 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="layout.html" />
+  <head>
+    <title py:content="title">Page name</title>
+    <link rel="stylesheet" href="${url('/css/rest.css')}" type="text/css" />
+  </head>
+
+  <body class="index">
+    <div py:content="Markup(html_body)">Body does here</div>
+  </body>
+</html>
