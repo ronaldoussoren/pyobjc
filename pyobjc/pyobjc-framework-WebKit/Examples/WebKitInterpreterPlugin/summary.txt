@@ -1,0 +1,1 @@
+Uses the new WebKit Cocoa plugin API available in Safari 1.3 and later to embed a PyInterpreter in the browser.

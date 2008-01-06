@@ -1,0 +1,7 @@
+An example that uses ``NSValueTransformer`` to convert between Celsius and 
+Fahrenheit.
+
+Based on `Apple's Value Transformers`__ documentation, converted to PyObjC 
+by u.fiedler.
+
+.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html

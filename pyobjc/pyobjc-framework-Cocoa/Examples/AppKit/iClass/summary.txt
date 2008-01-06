@@ -1,0 +1,2 @@
+A more elaborate class browser; demonstrates ``NSOutlineView`` and 
+``NSTableView``.

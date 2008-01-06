@@ -1,0 +1,1 @@
+A simple program that shows how to use OpenGL in a Cocoa program. It is a port of Apple's "CocoaGL" example.

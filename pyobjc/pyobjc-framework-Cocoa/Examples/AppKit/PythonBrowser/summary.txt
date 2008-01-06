@@ -1,0 +1,3 @@
+A reusable Python object browser, demonstrating the use of ``NSOutlineView`` 
+as well as how to use an ``NSWindowController`` subclass to create a window 
+from a menu action.

@@ -1,0 +1,3 @@
+This example implements a subclass of NSURLProtocol that can be used to load the pydoc documentation of a module.
+
+It also includes a simple documentation browser using WebKit and the PyDocURLProtocol class.

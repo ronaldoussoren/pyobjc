@@ -1,0 +1,9 @@
+Demonstrates how to use Cocoa Bindings to simplify storing and retrieving user 
+preferences. Also demonstrates how to use an ``NSValueTransformer`` to 
+archive/unarchive a non-property-list type automatically (``NSColor``, in 
+this case).
+
+Originally from `Cocoa Bindings Examples and Hints`__, converted to PyObjC by 
+u.fiedler.
+
+.. __: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html

@@ -1,0 +1,7 @@
+Shows custom array controller that implements table view data source methods to support drag and drop, including copying objects from one window to another, 
+drop of URLs, and re-ordering of the content array.
+
+Originally from `Cocoa Bindings Examples and Hints`__, converted to PyObjC by 
+u.fiedler.
+
+.. __: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html

@@ -1,0 +1,9 @@
+Shows two array controllers, one to manage the contents of a table view, the 
+other to manage a pop-up menu in a table column. Also shows two value 
+transformers to alter the color of text.
+
+Originally from `Cocoa Bindings Examples and Hints`__, converted to PyObjC 
+by u.fiedler.
+
+.. __: http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
+

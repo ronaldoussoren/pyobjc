@@ -1,0 +1,1 @@
+A simple class browser, demonstrating the use of ``NSBrowser`` (a "column view" hierarchical widget) and ``NSTableView``.

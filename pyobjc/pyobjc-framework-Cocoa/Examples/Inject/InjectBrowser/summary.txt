@@ -1,0 +1,2 @@
+Shows how to inject an in-process Python class browser into another process. 
+Based on the AppKit ClassBrowser example.

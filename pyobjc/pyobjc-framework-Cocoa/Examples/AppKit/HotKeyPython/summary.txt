@@ -1,0 +1,1 @@
+Demonstrates how to use Carbon global hot keys from a PyObjC application. Also demonstrates how to use a ``NSApplication`` subclass.

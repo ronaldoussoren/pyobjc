@@ -1,0 +1,1 @@
+A minimal document-based text editor application.
