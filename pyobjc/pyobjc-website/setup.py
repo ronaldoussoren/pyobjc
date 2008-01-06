@@ -25,6 +25,7 @@ import sys, os
 # The truly interesting code is in the 'lib' directory, make that available.
 sys.path.append('lib')
 
+import sitegen
 import samples
 
 
@@ -50,10 +51,23 @@ class buildsite (Command):
                     "Run me in a complete checkout of the pyobjc trunk")
 
         frameworkList = [dn for dn in os.listdir('..') if dn.startswith('pyobjc-framework') ]
-        frameworkList = ['pyobjc-framework-Cocoa']
+        #frameworkList = ['pyobjc-framework-Cocoa']
 
+        generator = sitegen.SiteGenerator('templates', 'htdocs')
 
-        samples.generateSamples('..', 'htdocs/examples', frameworkList)
+        log.info("Copying static resources")
+        for subdir in os.listdir('resources'):
+            if subdir.startswith('.'): continue
+            log.info(" - %s" % (subdir,))
+            generator.copy(os.path.join('resources', subdir), subdir)
+
+        log.info("Copying static HTML")
+        for fn in os.listdir('static'):
+            if fn.startswith('.'): continue
+            log.info(" - %s" % (fn,))
+            generator.copyReST(os.path.join('static', fn), os.path.splitext(fn)[0] + '.html')
+
+        samples.generateSamples(generator, '/examples', '..', frameworkList)
 
 class publishsite (Command):
     description = "Publish the website"

@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:py="http://genshi.edgewall.org/"
   xmlns:xi="http://www.w3.org/2001/XInclude" >
@@ -11,12 +9,15 @@
   <body>
     <h1>PyObjC Examples</h1>
 
-    <div py:for="title, subpath, samples in samplelist">
-      <a href="${subpath}/index.html"><h2>${title}</h2></a>
-      <div py:for="path, name, summary in samples">
-        <a href="${subpath}/${path}/index.html"><h3>${name}</h3></a>
-        <p py:if="summary">Markup(${summary})</p>
-      </div>
-    </div>
+    <p>PyObjC has a large number of sample projects, please use the navigation menu on the left, or below, to skip to 
+    the examples for a specific framework.</p>
+
+    <ul>
+      <li py:for="framework, link in bottommenu"><a href="${link}/">${framework}</a></li>
+    </ul>
+
+    <p><em>Note:</em> a number of examples still use <code>NibClassBuilder.AutoBaseClass</code>. This is deprecated
+    behaviour, but we haven't updated all sample code yet.</p>
+
   </body>
 </html>

@@ -6,6 +6,7 @@
   <xi:include href="layout.html" />
   <head>
     <title py:content="title">Sample name</title>
+    <link rel="stylesheet" href="${url('/css/rest.css')}" type="text/css" />
 
     <style>
       .readme {
@@ -37,6 +38,13 @@
         <option py:for="name, path in sources" value="${path}">${name}</option>
       </select>
     </form>
+
+    <noscript>
+      <!-- add a list of files for users that don't have javascript enabled -->
+      <ul>
+        <li py:for="name, path in sources"><a href="${path}">${name}</a></li>
+      </ul>
+    </noscript>
 
     <div class="readme" py:content="Markup(readme)">Readme for the example</div>
   </body>

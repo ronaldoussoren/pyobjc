@@ -7,7 +7,6 @@ and index.html with a description of the example and furthermore HTML files
 with colorized source code.
 """
 
-__all__ = ('convertSample',)
 
 from pygments import highlight
 from pygments.lexers import get_lexer_for_filename
@@ -15,7 +14,6 @@ from pygments.formatters import HtmlFormatter
 
 from docutils.core import publish_parts
 
-from genshi.template import MarkupTemplate, TemplateLoader
 
 from distutils import log
 
@@ -27,16 +25,14 @@ import shutil
 gSkipDirectories = ('.svn', 'CVS')
 gZipTemplate = "PyObjCExample-%s.zip"
 
-gTemplateDir = os.path.join(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-        'templates')
-gTemplateLoader = TemplateLoader(gTemplateDir)
-
 def zipDirectory(outputname, inputdir):
     """
     Create a zipfile containing all files in a directory, but skipping
     version-management turds.
     """
+    outdn = os.path.dirname(outputname)
+    if not os.path.exists(outdn):
+        os.makedirs(outdn)
 
     zf = zipfile.ZipFile(outputname, 'w')
     basename = os.path.basename(outputname)[:-4]
@@ -126,19 +122,18 @@ def restToHTML(inputFile):
 
 
 
-def convertSample(name, inputdir, outputdir):
+def convertSample(generator, outputdir, name, inputdir, allProjects):
     """
     Convert an example from the source tree to part of the website
 
     Returns a small summary of the example.
     """
 
-    if os.path.exists(outputdir):
-        shutil.rmtree(outputdir)
-    os.makedirs(outputdir)
-
     zipname = gZipTemplate % name
-    zipDirectory(os.path.join(outputdir, zipname), inputdir)
+    
+    zipDirectory(
+            generator.localPathForSitePath(os.path.join(outputdir, zipname)), 
+            inputdir)
 
     coloredFiles = colorizeSources(inputdir, outputdir)
 
@@ -155,35 +150,32 @@ def convertSample(name, inputdir, outputdir):
     else:
         readme = "A PyObjC Example without documentation"
 
-    tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-index.html"), 'r').read(),
-            loader=gTemplateLoader)
-    stream = tmpl.generate(
+    generator.emitHTML(
+            os.path.join(outputdir, 'index.html'),
+            'sample-index.html',
+
             title=name,
             sources=[item[:2] for item in coloredFiles],
             zipname=zipname,
             readme=readme,
+            bottommenu=allProjects,
             )
-    fp = open(os.path.join(outputdir, "index.html"), 'w')
-    fp.write(stream.render('html'))
-    fp.close()
 
-
-    tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-source.html"), 'r').read(),
-            loader=gTemplateLoader)
     for realpath, htmlpath, style, body in coloredFiles:
-        sources=[item[:2] for item in coloredFiles if item[1] != htmlpath]
-        sources.insert(0, (realpath, htmlpath))
-        stream = tmpl.generate(
-            title='%s -- %s'%(name, realpath),
-            sources=sources,
-            style=style,
-            zipname=zipname,
-            body=body)
-        fp = open(os.path.join(outputdir, htmlpath), 'w')
-        fp.write(stream.render('html'))
-        fp.close()
+        sources=[(item[0], item[1], '') for item in coloredFiles if item[1] != htmlpath]
+        sources.insert(0, (realpath, htmlpath, 'selected'))
+
+
+        generator.emitHTML(
+                os.path.join(outputdir, htmlpath),
+                'sample-source.html',
+
+                title='%s -- %s'%(name, realpath),
+                sources=sources,
+                style=style,
+                zipname=zipname,
+                body=body,
+                bottommenu=allProjects)
 
     # XXX: We should extract a small summary from the readme file to use
     # on the sample index package (and not a seperate summary file).
@@ -191,68 +183,79 @@ def convertSample(name, inputdir, outputdir):
         return restToHTML(summary)
     return ""
 
-def samplesForProject(title, package, inputdir, outputdir):
+def haveSamplesForProject(inputdir):
+    for dirpath, dirnames, filenames in os.walk(inputdir):
+        for dn in dirnames:
+            if os.path.exists(os.path.join(dirpath, dn, 'setup.py')):
+                return True
+    return False
+
+def samplesForProject(generator, outputdir, framework, package, inputdir, allProjects=[]):
     inputdir = os.path.join(inputdir, 'Examples')
     outputdir = os.path.join(outputdir, package)
-    if os.path.exists(outputdir):
-        shutil.rmtree(outputdir)
-
     if not os.path.exists(inputdir):
         return None
 
     samples = []
+    bottommenu=[]
+    if allProjects:
+        for title, subdir in allProjects:
+            if title == framework:
+                bottommenu.append((title, ''))
+            else:
+                bottommenu.append((title, subdir))
+
     for dirpath, dirnames, filenames in os.walk(inputdir):
         for dn in dirnames:
             if os.path.exists(os.path.join(dirpath, dn, 'setup.py')):
                 # Found a sample
                 relpath = os.path.join(dirpath[len(inputdir)+1:], dn)
-                summary = convertSample(dn, os.path.join(dirpath, dn),
-                        os.path.join(outputdir, relpath))
+                summary = convertSample(generator, 
+                        os.path.join(outputdir, relpath),
+                        dn, os.path.join(dirpath, dn), allProjects)
                 samples.append((relpath, dn, summary))
 
     if samples:
-        tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-framework-index.html"), 'r').read(),
-            loader=gTemplateLoader)
-        stream = tmpl.generate(
-            title="Examples for %s" % (title,),
-            samples=samples)
-        fp = open(os.path.join(outputdir, "index.html"), 'w')
-        fp.write(stream.render('html'))
-        fp.close()
+
+        generator.emitHTML(
+                os.path.join(outputdir, 'index.html'),
+                'sample-framework-index.html',
+                title="Examples for %s" % (framework,),
+                samples=samples,
+                bottommenu=bottommenu,
+                )
     return samples
 
-def generateSamples(basedir, outputdir, frameworkList):
+def generateSamples(generator, outputdir, basedir, frameworkList):
     log.info("Generating HTML for sample code")
     allSamples = []
-    if os.path.exists(outputdir):
-        shutil.rmtree(outputdir)
+
+    allProjects = []
+    for nm in frameworkList:
+        framework = '%s' % ( nm[len('pyobjc-framework-'):], )
+        if haveSamplesForProject(os.path.join(basedir, nm)):
+            allProjects.append((framework, os.path.join(outputdir, nm, 'index.html')))
 
     for nm in frameworkList:
-        title = 'The %s framework' % ( nm[len('pyobjc-framework-'):], )
-        log.info(" - %s" % title)
+        framework = '%s' % ( nm[len('pyobjc-framework-'):], )
+        log.info(" - %s" % framework)
         listing = samplesForProject(
-                title,
+                generator, 
+                outputdir,
+                framework,
                 nm,
                 os.path.join(basedir, nm),
-                outputdir)
+                allProjects)
 
         if listing:
-            allSamples.append((title, nm, listing))
+            allSamples.append((framework, nm, listing))
 
     if allSamples:
-        tmpl = MarkupTemplate(
-            open(os.path.join(gTemplateDir, "sample-global-index.html"), 'r').read(),
-            loader=gTemplateLoader)
-        stream = tmpl.generate(
-            samplelist=allSamples)
-        fp = open(os.path.join(outputdir, "index.html"), 'w')
-        fp.write(stream.render('html'))
-        fp.close()
-
-
-
-if __name__ == "__main__":
-    #convertSample("ClassBrowser", "../../pyobjc-framework-Cocoa/Examples/AppKit/ClassBrowser", "samples/ClassBrowser")
-    #convertSample("AutoSample", "../../pyobjc-framework-Automator/Examples/AutoSample", "samples/AutoSample")
-    samplesForProject('TTILE', 'pyobjc-framework-Cocoa', '../../pyobjc-framework-Cocoa', 'samples')
+        bottommenu = []
+        for framework, nm, listing in allSamples:
+            bottommenu.append((framework, os.path.join(nm, 'index.html')))
+        generator.emitHTML(
+                os.path.join(outputdir, 'index.html'),
+                'sample-global-index.html',
+                samplelist=allSamples,
+                bottommenu=bottommenu)
