@@ -10,7 +10,7 @@
         <link rel="start" href="/index.html" />
         <link rel="copyright" href="/legal.html" />
     </head>
-    <body>
+    <body py:match="body" once="true" py:attrs="select('@*')">
         <p>
             ${select('*[local-name()!="title"]')}
         </p>
