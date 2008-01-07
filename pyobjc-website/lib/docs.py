@@ -55,9 +55,36 @@ def makeBottomMenu(htmlroot, sourceroot, projects):
 
     return allProjects
 
-def generateProjectDocumentation(generator, projhtml, projroot, name, allProjects):
+def generateProjectDocumentation(generator, projhtml, projroot, newsfile, name, allProjects):
     doclist = []
     description = ''
+
+    if os.path.exists(newsfile):
+        newshtml = os.path.join(projhtml, 'news.html')
+        doclist.append(('Current NEWS', newshtml))
+        content = open(newsfile, 'r').read()
+
+        parts =  publish_parts(
+            source=content,
+            source_path=os.path.basename(newsfile),
+            writer_name='html',
+            settings_overrides=dict(
+                input_encoding='utf-8',
+                initial_header_level=2,
+            ))
+
+        title=parts['title']
+        if not title:
+            title = os.path.splitext(fn)[0]
+        generator.emitHTML(
+            newshtml,
+            'documentation-doc.html',
+
+            name=name,
+            title=title,
+            body=parts['body'],
+            bottommenu=allProjects,
+        )
 
     for fn in os.listdir(projroot):
         if fn.endswith('.html') or fn in ('.svn', 'CVS'):
@@ -212,7 +239,8 @@ def generateDocs(generator, htmlroot, sourceroot, projects):
 
     for project in projects:
         projroot = os.path.join(sourceroot, project, 'Doc')
-        if not os.path.exists(projroot):
+        newsfile = os.path.join(sourceroot, project, 'NEWS.txt')
+        if not os.path.exists(projroot) and not os.path.exists(newsfile):
             continue
 
         else:
@@ -222,7 +250,7 @@ def generateDocs(generator, htmlroot, sourceroot, projects):
             projhtml = os.path.join(htmlroot, project)
 
             description, projdocs = generateProjectDocumentation(
-                generator, projhtml, projroot, name, allProjects)
+                generator, projhtml, projroot, newsfile, name, allProjects)
             documentListing.append((name, description, projdocs))
 
     generator.emitHTML(

@@ -19,8 +19,7 @@ from setuptools import Command, setup
 from distutils.errors  import DistutilsError
 from distutils import log
 
-
-import sys, os
+import sys, os, shutil
 
 # The truly interesting code is in the 'lib' directory, make that available.
 sys.path.append('lib')
@@ -65,6 +64,10 @@ class buildsite (Command):
 
         generator = sitegen.SiteGenerator('templates', 'htdocs')
 
+        if os.path.exists('htdocs'):
+            shutil.rmtree('htdocs')
+        os.mkdir('htdocs')
+
         log.info("Copying static resources")
         for subdir in os.listdir('resources'):
             if subdir.startswith('.'): continue
@@ -93,7 +96,7 @@ class buildsite (Command):
         generator.emitHTML("/index.html", "site-index.html",  
                 pyobjc_version='2.0',
                 pyobjc_release_date='October 24th 2007',
-                news=newsItems,
+                news=news.newsSelection(newsItems),
                 bottommenu=root_menu)
 
         docs.generateDocs(generator, '/documentation', '..', ['pyobjc-core'] + frameworkList)

@@ -20,8 +20,8 @@ gTemplateIncludes = os.path.join(gTemplateDir, 'global')
 gTopMenu=[
     ('Home',            '/index.html'),
     ('Documentation',   '/documentation/index.html'),
-    ('Development',     '/development/index.html'),
-    ('Download',        '/software/index.html'),
+    ('Development',     '/development.html'),
+    ('Download',        '/downloads.html'),
     ('Examples',        '/examples/index.html'),
     ('Mailing lists',   'http://sourceforge.net/mail/?group_id=14534'),
 ]
@@ -105,7 +105,7 @@ class SiteGenerator (object):
         if not os.path.exists(outdn):
             os.makedirs(outdn)
 
-        tmpl = MarkupTemplate(open(infn, 'r').read(), loader=self._makeLoader(infn))
+        tmpl = MarkupTemplate(open(infn, 'r').read(), loader=self._makeLoader(infn), lookup='strict')
         variables = self._makeGlobals(_htmlpath)
         variables.update(kwds)
         stream = tmpl.generate(**variables)
