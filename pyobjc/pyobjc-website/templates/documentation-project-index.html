@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="layout.html" />
+  <head>
+    <title>PyObjC - Documentation for ${name}</title>
+  </head>
+
+  <body class="index">
+    <h1>PyObjC - Documentation for ${name}</h1>
+
+    <p py:if="description">${description}</p>
+
+     <ul>
+       <li py:for="title, link in documents"><a href="${url(link)}">${title}</a></li>
+     </ul>
+
+  </body>
+</html>

@@ -1,5 +1,8 @@
 """
 A class that deals with generating the website.
+
+TODO: add a way to syntax-color embedded source code, possibly based
+on: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252170
 """
 import os, shutil
 
@@ -16,7 +19,7 @@ gTemplateIncludes = os.path.join(gTemplateDir, 'global')
 
 gTopMenu=[
     ('Home',            '/index.html'),
-    ('Documentation',   '/doc/index.html'),
+    ('Documentation',   '/documentation/index.html'),
     ('Development',     '/development/index.html'),
     ('Download',        '/software/index.html'),
     ('Examples',        '/examples/index.html'),
