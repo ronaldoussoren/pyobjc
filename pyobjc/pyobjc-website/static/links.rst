@@ -23,7 +23,7 @@ Python on the Mac
 The building blocks
 -------------------
 
-* `Python` - the python interpreter
+* `Python`_ - the python interpreter
 
 * `Objective-C`_ - the objective-C programming language
 
@@ -36,12 +36,10 @@ Similar Projects
 
 * `CamelBones`_ - a Perl<->ObjC bridge
   
-.. _`CamelBones`: http://camelbones.sourceforge.net/
-
 * `FScript`_ - a lightweight object-oriented scripting layer designed for OS X
-  
-.. _`FScript`: http://www.fscript.org/
 
-* And many more.... the F-Script folks have put together an `an excellent collection of links!`__
+* And many more.... hyperjeff.net has put together an `an excellent collection of links!`__
   
-.. __: http://www.fscript.org/links.htm
+.. __: http://osx.hyperjeff.net/Reference/cocoa.php
+.. _`FScript`: http://www.fscript.org/
+.. _`CamelBones`: http://camelbones.sourceforge.net/

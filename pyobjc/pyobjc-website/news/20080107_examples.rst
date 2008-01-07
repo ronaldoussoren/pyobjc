@@ -1,0 +1,7 @@
+Updated website
+===============
+
+The website has been updated with documentation and examples from PyObjC 2.0.
+
+It is now possible to browse the source code for examples and download complete
+examples.

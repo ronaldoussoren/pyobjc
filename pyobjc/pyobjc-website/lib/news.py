@@ -11,7 +11,7 @@ def newsSelection(listing, maxAge=90, minitems=5):
     quarter and at least 5 news items.
     """
     result = []
-    mindate = datetime.date.today() - datetime.date.timedelta(maxAge)
+    mindate = datetime.date.today() - datetime.timedelta(maxAge)
     mindate = mindate.strftime('%Y-%m-%d')
     for item in listing:
         if len(result) < minitems:

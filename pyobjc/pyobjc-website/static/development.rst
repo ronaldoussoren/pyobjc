@@ -16,7 +16,7 @@ that recent versions of OSX already ship with a subversion client.
 .. __: http://www.codingmonkeys.de/mbo/
 
 You can fetch a snapshot of the current development tree using a WebDAV connection to <http://svn.red-bean.com/pyobjc/trunk/>
-or <http://svn.red-bean.com/pyobjc/trunk/>, just copy the ``pyobjc`` folder to a local disk.
+or <https://svn.red-bean.com/pyobjc/trunk/>, just copy the ``pyobjc`` folder to a local disk.
 
 Bug tracker and older files
 ---------------------------
