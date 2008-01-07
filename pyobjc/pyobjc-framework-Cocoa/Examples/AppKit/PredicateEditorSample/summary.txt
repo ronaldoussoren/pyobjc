@@ -1,0 +1,6 @@
+"PredicateEditorSample" is a Cocoa application that demonstrates how to use 
+the ``NSPredicateEditor`` class.  The ``NSPredicateEditor`` class is a 
+subclass of ``NSRuleEditor`` that is specialized for editing ``NSPredicate`` 
+objects.  This sample is intended to show how to use the many different 
+features and aspects of this control and leverages Spotlight to search your 
+Address Book.

@@ -1,0 +1,1 @@
+Image transitions using Core Image.
