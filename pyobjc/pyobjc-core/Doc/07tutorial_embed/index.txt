@@ -58,7 +58,7 @@ Follow these steps:
 7. We now need to write the code implementing the ``ITunesCommunication``
     class.  As this tutorial is about using PyObjC in existing ObjC programs
     and not about PyObjC itself, we are going to skip writing the code and
-    simply copy ``src/ITunesCommunication_1.py`` to ``ITunesCommunication.py``.
+    simply copy ``ITunesCommunication_1.py`` to ``ITunesCommunication.py``.
 
 8. Now we need to create the build script for our plugin, create a file named
    ``setup.py`` with the following contents::
@@ -70,7 +70,7 @@ Follow these steps:
             plugin = ['ITunesCommunication.py']
         )   
 
-   You may also copy this file from ``src/setup.py``. 
+   You may also copy this file from ``setup.py``. 
 
 9. Run the setup script to create a temporary plugin bundle for development::
 
@@ -104,7 +104,7 @@ Follow these steps:
         }
 
 
-    You may also copy a full main.m from ``src/main.m``.  This code ensures
+    You may also copy a full main.m from ``main.m``.  This code ensures
     that our ITunesCommunication plugin is loaded before the nib
     files.
 
@@ -128,7 +128,7 @@ Follow these steps:
             /Applications/iTunes.app/Contents/Resources/iTunes.rsrc
     
 14. Finally, add the code to ``ITunesCommunication.py`` to actually communicate
-    with iTunes.  We cop out and copy it from ``src/ITunesCommunication_2.py``.
+    with iTunes.  We cop out and copy it from ``ITunesCommunication_2.py``.
     
 15. Build and run.  If you press the button when iTunes is playing the Title
     and Band names will be filled, otherwise they will be cleared.  In a real
@@ -154,5 +154,5 @@ There a several projects that improve upon the built-in AppleScript support
 .. _`AppScript`: http://freespace.virgin.net/hamish.sanderson/appscript.html
 
 When you have this module installed you can replace the contents of
-``ITunesCommuncation.py`` with ``src/ITunesCommunication_AppScript.py``,
+``ITunesCommuncation.py`` with ``ITunesCommunication_AppScript.py``,
 and you can skip step 13 entirely.

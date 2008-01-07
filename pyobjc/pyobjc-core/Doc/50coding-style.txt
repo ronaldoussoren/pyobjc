@@ -1,6 +1,6 @@
-=======================
-Coding style for PyObjC 
-=======================
+====================================
+(Developers) Coding style for PyObjC 
+====================================
 
 :authors: Ronald Oussoren,
           Bill Bumgarner

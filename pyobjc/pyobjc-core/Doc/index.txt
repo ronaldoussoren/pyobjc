@@ -77,11 +77,11 @@ you want to write Cocoa programs in Python.
 
 .. _`Xcode Python templates`: Xcode-Templates.html
 
-.. _`An introduction to PyObjC`: intro.html
+.. _`An introduction to PyObjC`: 01intro.html
 
-.. _`Coding style for PyObjC`: coding-style.html
+.. _`Coding style for PyObjC`: 50coding-style.html
 
-.. _`Using LibFFI with PyObjC`: libffi.html
+.. _`Using LibFFI with PyObjC`: 51libffi.html
 
 .. _`PyObjC Architecture`: architecture.html
 
