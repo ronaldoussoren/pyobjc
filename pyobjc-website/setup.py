@@ -28,6 +28,7 @@ sys.path.append('lib')
 import sitegen
 import samples
 import news
+import docs
 
 
 
@@ -95,6 +96,7 @@ class buildsite (Command):
                 news=newsItems,
                 bottommenu=root_menu)
 
+        docs.generateDocs(generator, '/documentation', '..', ['pyobjc-core'] + frameworkList)
         samples.generateSamples(generator, '/examples', '..', frameworkList)
 
 class publishsite (Command):
