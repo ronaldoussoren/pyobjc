@@ -1,0 +1,1 @@
+Translation into python of and ADC example of the same name.

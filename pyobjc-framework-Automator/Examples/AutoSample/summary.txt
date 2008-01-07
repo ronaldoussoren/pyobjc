@@ -1,0 +1,12 @@
+Overview
+========
+
+This sample displays a single window containing a list of workflows and a read only AMWorkflowView.  The workflows listed are the ones found in the Application's resources in the folder::
+
+        /AutoSample.app/Contents/Resources/workflows/
+
+When the application starts up it scans the workflows folder and loads each Automator workflow found there as an instance of ``AMWorkflow``.  It then stores these ``AMWorkflow`` instances in an array along with the file names.  That array is used as the backing store for the ``NSTableView`` in the window.
+
+When a click is received on the name of a workflow in the ``NSTableView``, the workflow is displayed in the ``AMWorkflowView`` on the right hand side of the window.
+
+When a double-click is received on the name of a workflow in the ``NSTableView`` (or, when the "run" button is pressed), the selected workflow is displayed in the ``AMWorkflowView`` on the right hand side of the window and it is run.
