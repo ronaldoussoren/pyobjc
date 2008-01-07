@@ -46,7 +46,7 @@ Getting Started
    
 .. _`Developing Cocoa Objective-C Applications: a Tutorial`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html
 .. _`chapter 3`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html?http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/chapter03/chapter_3_section_1.html
-.. _step3-MainMenu.nib: step3-MainMenu.nib
+.. _step3-MainMenu.nib: step3-MainMenu.nib.zip
    
 4. Create the skeleton Python script by running the ``nibclassbuilder`` script.
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for
@@ -61,7 +61,7 @@ Getting Started
    
    The result of this can be seen in step4-CurrencyConverter.py_.
 
-.. _step4-CurrencyConverter.py: step4-CurrencyConverter.py
+.. _step4-CurrencyConverter.py: step4-CurrencyConverter.py.html
                
 Testing the user interface
 --------------------------
@@ -79,7 +79,7 @@ Testing the user interface
 
    The result of this can be seen in step5-setup.py_.
 
-.. _step5-setup.py: step5-setup.py
+.. _step5-setup.py: step5-setup.py.html
    
 6. Run the setup script to create a temporary application bundle for
    development::
@@ -152,7 +152,7 @@ Writing the code
    The application should now be fully functional, try it.  The results of what
    we have up to now can be seen in step8-CurrencyConverter.py_.
    
-.. _step8-CurrencyConverter.py: step8-CurrencyConverter.py
+.. _step8-CurrencyConverter.py: step8-CurrencyConverter.py.html
    
 Extending the functionality
 ---------------------------
@@ -225,7 +225,7 @@ Debugging
 12. Fix the final bug by testing for ``rate == 0.0`` in ``invertRate_()``.
     The result is in the step12-src_ directory.
     
-.. _step12-src: step12-src
+.. _step12-src: step12-src.zip
    
 Creating a redistributable application
 --------------------------------------
