@@ -63,7 +63,7 @@
 			PyErr_Clear();
 			rval = 0;
 		}
-		if ((unsigned)buffer_len > NSUIntegerMax) {
+		if ((NSUInteger)buffer_len > NSUIntegerMax) {
 			rval = NSUIntegerMax;
 		} else {
 			rval = buffer_len;

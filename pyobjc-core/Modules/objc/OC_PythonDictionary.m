@@ -372,6 +372,7 @@ static PyObject* mapTypes = NULL;
 	 * Forcefully disable coding for now, to avoid generating invalid
 	 * encoded streams.
 	 */        
+	//abort();
 	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", value->ob_type->tp_name, coder];
 }
 

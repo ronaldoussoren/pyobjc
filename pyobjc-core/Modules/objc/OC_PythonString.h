@@ -62,8 +62,8 @@
  * Primitive NSString methods
  *
  */
--(unsigned)length;
--(unichar)characterAtIndex:(unsigned)index;
+-(NSUInteger)length;
+-(unichar)characterAtIndex:(NSUInteger)index;
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange;
 
 @end

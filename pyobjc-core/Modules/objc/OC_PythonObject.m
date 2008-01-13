@@ -986,7 +986,7 @@ static  PyObject* setKeyFunc = NULL;
         rval = PyObject_Hash([self pyObject]);
         if (rval == -1) {
             PyErr_Clear();
-            rval = (int)[self pyObject];
+            rval = (unsigned)[self pyObject];
         }
         PyObjC_GIL_RETURN((unsigned)rval);
     PyObjC_END_WITH_GIL

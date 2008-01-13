@@ -93,6 +93,7 @@ CFLAGS=[
     #"-Wstrict-overflow",
     "-g",
     #"-fobjc-gc",
+    "-fexceptions",
 
     ## Arghh, a stupid compiler flag can cause problems. Don't 
     ## enable -O0 if you value your sanity. With -O0 PyObjC will crash

@@ -138,7 +138,7 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 		pyres = pyself;
 	}
 
-	if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+	if (PyObjCObject_Check(pyself) && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
 		if (pyself != pyres && !PyErr_Occurred()) {
 			PyObjCObject_ClearObject(pyself);
 		}

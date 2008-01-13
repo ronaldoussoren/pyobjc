@@ -790,12 +790,6 @@ ffi_prep_closure(
 	} ldu;
 #endif
 
-typedef union
-{
-	float	f;
-	double	d;
-} ffi_dblfl;
-
 /*	The trampoline invokes ffi_closure_ASM, and on entry, r11 holds the
 	address of the closure. After storing the registers that could possibly
 	contain parameters to be passed into the stack frame and setting up space

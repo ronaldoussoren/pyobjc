@@ -45,7 +45,7 @@ PyObjC_CFTypeToID(PyObject* argument)
  *
  */
 PyObject* 
-PyObjC_IDToCFType(id argument)
+PyObjC_IDToCFType(id argument __attribute__((__unused__)))
 {
 #ifndef __OBJC2__
 	CFTypeRef typeRef = (CFTypeRef)argument;

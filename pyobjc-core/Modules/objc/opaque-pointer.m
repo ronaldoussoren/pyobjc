@@ -282,10 +282,10 @@ error_cleanup:
 		PyObjC_free_closure(cl);
 	}
 	if (to_c) {
-		PyObjC_free_closure(to_c);
+		PyObjC_free_closure((ffi_closure*)to_c);
 	}
 	if (from_c) {
-		PyObjC_free_closure(from_c);
+		PyObjC_free_closure((ffi_closure*)from_c);
 	}
 	Py_XDECREF(v);
 	Py_XDECREF(w);

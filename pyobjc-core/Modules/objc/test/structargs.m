@@ -9,7 +9,7 @@
 {
 }
 -(NSString*)compP:(NSPoint)aPoint aRect:(NSRect)aRect anOp:(int)op;
--(unsigned)stackPtr;
+-(size_t)stackPtr;
 -(NSRect)someRect;
 -(NSRect)someRectWithRect:(NSRect)rect;
 -(NSRect)someRectWithX:(int)x Y:(int)y H:(int)h W:(int)w;
@@ -46,11 +46,16 @@
 			NSStringFromRect(aRect),
 			op];
 }
--(unsigned)stackPtr
+
+static size_t ident(size_t v)
+{
+	return v;
+}
+-(size_t)stackPtr
 {
 	char c;
 
-	return ((unsigned)&c)+1;
+	return ident(((size_t)&c)+1);
 }
 @end
 
