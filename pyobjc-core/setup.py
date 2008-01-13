@@ -90,6 +90,7 @@ CFLAGS=[
     "-no-cpp-precomp",
     "-Wno-long-double",
     #"-Wselector",
+    #"-Wstrict-overflow",
     "-g",
     #"-fobjc-gc",
 

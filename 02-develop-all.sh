@@ -14,8 +14,8 @@ do (
 	echo $proj
 	cd ${proj}
 	rm -rf build
-	python2.5 setup.py test
-	python2.5 setup.py develop
+	python2.6 setup.py test
+	python2.6 setup.py develop
 ); done
 
 exit 0
