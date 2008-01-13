@@ -1663,7 +1663,7 @@ static 	char buf[1024];
 + (NSData*)fetchData:(NSCoder*)coder
 {
 	void* data;
-	unsigned length;
+	NSUInteger length;
 
 	data = [coder decodeBytesWithReturnedLength:&length];
 	return [NSData dataWithBytes:data length:length];

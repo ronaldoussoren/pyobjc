@@ -49,8 +49,6 @@ static struct Struct2 invokeHelper = { 0, 0, { 0, 0, 0, 0, 0 } };
 {
 }
 -(void)methodWithMyStruct: (struct Struct2)val1 andShort:(short)val2;
-
-
 @end
 
 @implementation PyObjCTest_NSInvoke 
@@ -61,17 +59,19 @@ static struct Struct2 invokeHelper = { 0, 0, { 0, 0, 0, 0, 0 } };
 }
 @end
 
-#ifndef GNU_RUNTIME
-
-
 BEGIN_UNITTEST(CheckNSInvoke)
 	/* This is not a 'real' unittest, but is used to disable a number of
 	 * other tests (in objc.test.test_methods2) when NSInvocation isn't
 	 * working correctly (MacOS X at least upto 10.2.6).
 	 * [Panther previews also have this problem]
 	 *
-	 * GNUstep is even worse, this test causes a crash of the interpreter,
+	 * Leopard is even worse, this test causes a crash of the interpreter when
+         * running on PPC64.
 	 */
+#ifdef __ppc64__
+	ASSERT_EQUALS(0, 1, "%d");
+#endif
+
 	PyObjCTest_NSInvoke* obj = [[PyObjCTest_NSInvoke alloc] init];
 	NSInvocation* inv;
 	struct Struct2 v1 = { 1, 2, { 3, 4, 5, 6, 7 } };
@@ -95,15 +95,6 @@ BEGIN_UNITTEST(CheckNSInvoke)
 	ASSERT_EQUALS(invokeHelper.s[4], v1.s[4], "%d");
 
 END_UNITTEST
-
-#else
-
-BEGIN_UNITTEST(CheckNSInvoke)
-	/* Force failure, see comment above */
-	ASSERT_EQUALS(0, 1, "%d");
-END_UNITTEST
-
-#endif
 
 
 BEGIN_UNITTEST(StructSize)

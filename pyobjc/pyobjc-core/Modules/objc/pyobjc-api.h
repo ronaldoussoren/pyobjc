@@ -42,7 +42,7 @@ struct PyObjC_WeakLink {
 
 
 /* threading support */
-#if 1
+#if 0
 #define PyObjC_DURING \
 		Py_BEGIN_ALLOW_THREADS \
 		NS_DURING

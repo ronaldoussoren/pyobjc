@@ -86,15 +86,18 @@ proto_new(PyTypeObject* type __attribute__((__unused__)),
 	PyObject* args, PyObject* kwds)
 {
 static	char*	keywords[] = { "name", "supers", "selectors", NULL };
-	PyObjCFormalProtocol* result = NULL;
 	char* name;
 	PyObject* supers;
 	PyObject* selectors;
 	Py_ssize_t i, len;
+
+#ifndef __LP64__
+	PyObjCFormalProtocol* result = NULL;
 	Py_ssize_t numInstance = 0;
 	Py_ssize_t numClass = 0;
 	struct Protocol_struct* theProtocol = NULL;
 	struct objc_method_description* c;
+#endif
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:formal_protocol",
 			keywords, &name, &supers, &selectors)) { 

@@ -39,6 +39,7 @@ static PyObject*
 ObjCErr_PyExcForName(const char* value)
 {
 	/* XXX: This table should be changeable from python */
+	printf("finding exception for '%s'\n", value);
 	if (strcmp(value, "NSRangeException") == 0) {
 		return PyExc_IndexError;
 	}  else if (strcmp(value, "NSInvalidArgumentException") == 0) {

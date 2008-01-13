@@ -532,7 +532,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 			pyres = pyself;
 		}
 
-		if (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED) {
+		if (PyObjCObject_Check(self) && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)) {
 			if (self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(pyself);
 			}

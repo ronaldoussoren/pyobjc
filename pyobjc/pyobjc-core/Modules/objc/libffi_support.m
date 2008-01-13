@@ -57,7 +57,7 @@ static const char gCFRangeEncoding[1024] = { 0 };
 #    error "Need FFI_CLOSURES!"
 #endif
 
-#if 1 /* Usefull during debugging, only used in the debugger */
+#if 0 /* Usefull during debugging, only used in the debugger */
 static void describe_ffitype(ffi_type* type)
 {
 	switch (type->type) {
@@ -3577,8 +3577,12 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		goto error_cleanup;
 	}
 
-	isUninitialized = ((PyObjCObject*)self)->flags  & PyObjCObject_kUNINITIALIZED;
-	((PyObjCObject*)self)->flags  &= ~PyObjCObject_kUNINITIALIZED;
+	if (PyObjCObject_Check(self)) {
+		isUninitialized = ((PyObjCObject*)self)->flags  & PyObjCObject_kUNINITIALIZED;
+		((PyObjCObject*)self)->flags  &= ~PyObjCObject_kUNINITIALIZED;
+	} else {
+		isUninitialized = NO;
+        }
 
 	if (methinfo->ob_size >= 3) {
 	}
@@ -3600,10 +3604,12 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 
 	PyObjC_HANDLER
+		NSLog(@"caught exception: %@", localException);
 		PyObjCErr_FromObjC(localException);
+
 	PyObjC_ENDHANDLER
 
-	if (isUninitialized) {
+	if (isUninitialized && PyObjCObject_Check(self)) {
 		((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;
 	}
 
@@ -3676,7 +3682,6 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 	const char* rettype;
 	ffi_status rv;
 	int i;
-	BOOL variadicAllArgs = NO;
 
 	rettype = methinfo->rettype.type;
 

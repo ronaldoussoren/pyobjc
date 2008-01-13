@@ -74,6 +74,13 @@ enum {
 };
 
 void ffi_prep_args(extended_cif*   inEcif, unsigned *const stack);
+
+typedef union
+{
+        float   f;
+        double  d;
+} ffi_dblfl;
+
 int ffi_closure_helper_DARWIN( ffi_closure*    closure,
         void*                   rvalue, unsigned long*  pgr,
         ffi_dblfl*              pfr);
