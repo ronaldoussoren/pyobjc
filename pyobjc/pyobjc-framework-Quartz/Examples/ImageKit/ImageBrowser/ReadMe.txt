@@ -7,7 +7,7 @@ slider.
 
 This sample should present a reasonably complete correctly formed Cocoa 
 application which can be used as a starting point for using the ``ImageBrowser``
- in a Cocoa applications. 
+in a Cocoa applications. 
 
 Usual steps to use the ImageKit image browser in your application:
 
@@ -73,7 +73,7 @@ Usual steps to use the ImageKit image browser in your application:
 
     Here is a sample code of a simple implementation of a data source item::
 
-    class myItemObject (NSObject, IKImageBrowserItem):
+      class myItemObject (NSObject, IKImageBrowserItem):
 	_path = objc.ivar()
 
 	def mageRepresentationType(self):
