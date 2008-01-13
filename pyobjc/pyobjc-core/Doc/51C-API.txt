@@ -1,11 +1,11 @@
-================================================
-Documentation for the PyObjC C-API (Preliminary)
-================================================
+=============================================================
+(Developers) Documentation for the PyObjC C-API (Preliminary)
+=============================================================
 
 Introduction
 ------------
 
-*WARNING: This API is unstable and might change in the future. Please let
+*WARNING: This API is unstable and will change in the future. Please let
 us know if you want to use the C-API in your own code*
 
 The PyObjC package can be extended in C (or more likely Objective-C) using

@@ -208,4 +208,4 @@ This section remains to be written.  Contributions will be gratefully accepted
 :-)
 
 
-.. _`Creating your first PyObjC application`: tutorial/tutorial.html
+.. _`Creating your first PyObjC application`: tutorial/index.html

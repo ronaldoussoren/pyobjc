@@ -422,11 +422,11 @@
   </function>
   <function comment='manual wrapper' name='CFCalendarAddComponents' variadic='true'>
     <arg index='1' type_modifier='N' />
-    <arg comment='format string, but not printf' index='3' type='r*' type64='r*' />
+    <arg comment='format string, but not printf' index='3' numeric='false' type='r*' type64='r*' />
   </function>
   <function comment='manual wrapper' name='CFCalendarComposeAbsoluteTime' variadic='true'>
     <arg index='1' type_modifier='o' />
-    <arg comment='format string, but not printf' index='2' type='r*' type64='r*' />
+    <arg comment='format string, but not printf' index='2' numeric='false' type='r*' type64='r*' />
   </function>
   <function name='CFCalendarCopyCurrent'>
     <retval already_cfretained='true' already_retained='true' />
@@ -441,10 +441,10 @@
     <retval already_cfretained='true' already_retained='true' />
   </function>
   <function comment='manual wrapper' name='CFCalendarDecomposeAbsoluteTime' variadic='true'>
-    <arg comment='format string, not printf' index='2' type='r*' type64='r*' />
+    <arg comment='format string, not printf' index='2' numeric='false' type='r*' type64='r*' />
   </function>
   <function comment='manual wrapper' name='CFCalendarGetComponentDifference' variadic='true'>
-    <arg comment='format string, not printf' index='4' type='r*' type64='r*' />
+    <arg comment='format string, not printf' index='4' numeric='false' type='r*' type64='r*' />
   </function>
   <function name='CFCalendarGetMaximumRangeOfUnit' />
   <function name='CFCalendarGetMinimumRangeOfUnit' />
@@ -1049,7 +1049,7 @@
     <arg comment='string' index='1' numeric='false' type='r*' type64='r*' />
   </function>
   <function name='CFStringAppendCharacters'>
-    <arg c_array_length_in_arg='2' comment='Unicode string' index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='2' comment='Unicode string' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringAppendFormat' variadic='true' />
   <function ignore='true' name='CFStringAppendFormatAndArguments' />
@@ -1087,7 +1087,7 @@
   </function>
   <function name='CFStringCreateMutableWithExternalCharactersNoCopy'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='2' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringCreateWithBytes'>
     <retval already_cfretained='true' already_retained='true' />
@@ -1107,11 +1107,11 @@
   </function>
   <function name='CFStringCreateWithCharacters'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='2' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringCreateWithCharactersNoCopy'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg c_array_length_in_arg='2' index='1' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='2' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringCreateWithFileSystemRepresentation'>
     <retval already_cfretained='true' already_retained='true' />
@@ -1158,10 +1158,10 @@
     <retval numeric='false' type='S' type64='S' />
   </function>
   <function name='CFStringGetCharacters'>
-    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
+    <arg c_array_length_in_arg='1' index='2' type='r^T' type64='r^T' type_modifier='o' />
   </function>
   <function name='CFStringGetCharactersPtr'>
-    <retval c_array_of_variable_length='true' comment='UTF-8 string' />
+    <retval c_array_of_variable_length='true' comment='UTF-8 string' type='r^T' type64='r^T' />
   </function>
   <function name='CFStringGetFileSystemRepresentation'>
     <arg c_array_length_in_arg='2' index='1' numeric='false' type_modifier='o' />
@@ -1191,7 +1191,7 @@
   </function>
   <function name='CFStringReplace' />
   <function name='CFStringSetExternalCharactersNoCopy'>
-    <arg c_array_length_in_arg='3' index='1' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='3' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringTokenizerCopyBestStringLanguage'>
     <retval already_cfretained='true' already_retained='true' />

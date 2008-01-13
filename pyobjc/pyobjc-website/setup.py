@@ -19,7 +19,7 @@ from setuptools import Command, setup
 from distutils.errors  import DistutilsError
 from distutils import log
 
-import sys, os, shutil
+import sys, os, shutil, subprocess, stat
 
 # The truly interesting code is in the 'lib' directory, make that available.
 sys.path.append('lib')
@@ -106,15 +106,21 @@ class publishsite (Command):
     description = "Publish the website"
     user_options = [
         ('skip-build', None,
-            "Skip the build phase")
+            "Skip the build phase"),
+        ('username=', None,
+            "login to use at SF.net (default to ronaldoussoren)"),
     ]
 
 
     def initialize_options(self):
         self.finalized = False
         self.skip_build = False
+        self.username = None
 
     def finalize_options(self):
+        if self.username is None:
+            self.username = 'ronaldoussoren'
+
         self.finalized = True
 
 
@@ -122,9 +128,27 @@ class publishsite (Command):
         if not self.skip_build:
             self.run_command('build')
 
-        raise DistutilsError("publishsite is not implemented yet")
+        # First ensure that files are group-writable, that makes it
+        # easier to update the website from several accounts.
+        log.info("Makeing files group-writable")
+        for dirpath, dirnames, filenames in os.walk('htdocs'):
+            for fn in dirnames +filenames:
+                st = os.stat(os.path.join(dirpath, fn))
+                mode = stat.S_IMODE(st.st_mode) | stat.S_IWGRP
+                os.chmod(os.path.join(dirpath, fn), mode)
 
-
+        # Use rsync to push the new version of the website to SF.net
+        log.info("Running rsync")
+        p = subprocess.Popen(['rsync', 
+            '-C', '-e', 'ssh', '--delete', '--delete-after', '-v', '-rltgoDz', 
+            '--exclude', 'cvs-snapshots',
+            'htdocs/', self.username + '@shell.sourceforge.net:/home/groups/p/py/pyobjc/htdocs/'])
+        status = p.wait()
+        if status != 0:
+            log.error("Rsync failed with exit code %s", status)
+            raise DistutilsError("rsync failed")
+    
+        log.info("Update is ready, don't forget to check the website!")
 #
 # Run distutils
 #
@@ -135,6 +159,7 @@ setup(
         cmdclass=dict(
             build=buildsite,
             publish=publishsite,
+            install=publishsite,
         ),
         setup_requires = [
             'docutils >=0.4',

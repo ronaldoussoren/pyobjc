@@ -37,6 +37,13 @@ import optparse
 import string
 import pkg_resources
 import StringIO
+
+# Temporary definitions, to help find problematic API's
+##objc._C_UNICHAR = 'T'
+##objc._C_CHAR_AS_TEXT = 't'
+##objc._C_CPPBOOL = 'Z'
+##objc._C_CHAR_AS_INT = 'z'
+
 try:
     set
 except NameError:
@@ -623,6 +630,24 @@ class FrameworkMetadata (object):
             self.special_type_encodings.add(objc._C_CONST+objc._C_PTR+objc._C_UNICHAR)
         else:
             objc._C_UNICHAR = self.encodedType('unichar')[0]
+
+        if hasattr(objc, '_C_CHAR_AS_TEXT'):
+            self.special_type_encodings.add(objc._C_CHAR_AS_TEXT)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_CHAR_AS_TEXT)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_PTR+objc._C_CHAR_AS_TEXT)
+            self.special_type_encodings.add(objc._C_CONST+objc._C_PTR+objc._C_CHAR_AS_TEXT)
+
+        if hasattr(objc, '_C_CHAR_AS_INT'):
+            self.special_type_encodings.add(objc._C_CHAR_AS_INT)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_CHAR_AS_INT)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_PTR+objc._C_CHAR_AS_INT)
+            self.special_type_encodings.add(objc._C_CONST+objc._C_PTR+objc._C_CHAR_AS_INT)
+
+        if hasattr(objc, '_C_CPPBOOL'):
+            self.special_type_encodings.add(objc._C_CPPBOOL)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_CPPBOOL)
+            self.special_type_encodings.add(objc._C_PTR+objc._C_PTR+objc._C_CPPBOOL)
+            self.special_type_encodings.add(objc._C_CONST+objc._C_PTR+objc._C_CPPBOOL)
 
         # Due to a bug in the compiler 'unsigned char*' gets @encode-d into
         # the wrong value, try to compensate for that.
@@ -1809,17 +1834,33 @@ class FrameworkMetadata (object):
             self.types['bool *'] = objc._C_PTR + objc._C_CPPBOOL
 
         for tp in ('unichar', 'UniChar'):
-            self.types[tp] = objc._C_UNICHAR
-            self.types[tp+'*'] = objc._C_PTR + objc._C_UNICHAR
-            self.types[tp+' *'] = objc._C_PTR + objc._C_UNICHAR
-            self.types[tp+'**'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
-            self.types[tp+' **'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
-            self.types[tp+'* *'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
-            self.types[tp+' * *'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
+            for col in (self.types, self.types64):
+                col[tp] = objc._C_UNICHAR
+                col[tp+'*'] = objc._C_PTR + objc._C_UNICHAR
+                col[tp+' *'] = objc._C_PTR + objc._C_UNICHAR
+                col[tp+'**'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
+                col[tp+' **'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
+                col[tp+'* *'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
+                col[tp+' * *'] = objc._C_PTR + objc._C_PTR + objc._C_UNICHAR
 
-            self.types['const ' + tp] = objc._C_CONST + objc._C_UNICHAR
-            self.types['const ' + tp + '*' ] = objc._C_CONST + objc._C_PTR + objc._C_UNICHAR
-            self.types['const ' + tp + ' *' ] = objc._C_CONST + objc._C_PTR + objc._C_UNICHAR
+                col['const ' + tp] = objc._C_CONST + objc._C_UNICHAR
+                col['const ' + tp + '*' ] = objc._C_CONST + objc._C_PTR + objc._C_UNICHAR
+                col['const ' + tp + ' *' ] = objc._C_CONST + objc._C_PTR + objc._C_UNICHAR
+
+        if hasattr(objc, '_C_CHAR_AS_INT'):
+            for tp in ('int8_t',):
+                for col in self.types, self.types64:
+                    col[tp] = objc._C_CHAR_AS_INT
+                    col[tp + '*'] = objc._C_PTR + objc._C_CHAR_AS_INT
+                    col[tp + ' *'] = objc._C_PTR + objc._C_CHAR_AS_INT
+                    col[tp + '**'] = objc._C_PTR + objc._C_PTR + objc._C_CHAR_AS_INT
+                    col[tp + '* *'] = objc._C_PTR + objc._C_PTR + objc._C_CHAR_AS_INT
+                    col[tp + ' **'] = objc._C_PTR + objc._C_PTR + objc._C_CHAR_AS_INT
+                    col[tp + ' * *'] = objc._C_PTR + objc._C_PTR + objc._C_CHAR_AS_INT
+                    col['const ' + tp] = objc._C_CONST + objc._C_CHAR_AS_INT
+                    col['const ' + tp + '*'] = objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_INT
+                    col['const ' + tp + ' *'] = objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_INT
+
 
         # CFTypeRef is a typedef for 'void*', which isn't exactly useful for
         # the metadata files.

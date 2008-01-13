@@ -1,6 +1,6 @@
-==========================
-The PyObjC release process
-==========================
+=======================================
+(Developers) The PyObjC release process
+=======================================
 
 .. :author: Ronald Oussoren
 
