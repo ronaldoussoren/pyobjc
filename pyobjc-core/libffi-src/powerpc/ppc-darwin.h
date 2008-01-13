@@ -22,6 +22,7 @@
    OTHER DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
+
 #define L(x) x
 
 #define SF_ARG9		MODE_CHOICE(56,112)
@@ -56,6 +57,7 @@
 	((x) == FFI_TYPE_UINT32 || (x) == FFI_TYPE_SINT32 ||\
 	(x) == FFI_TYPE_INT || (x) == FFI_TYPE_FLOAT)
 
+
 #if !defined(LIBFFI_ASM)
 
 enum {
@@ -73,6 +75,7 @@ enum {
 	FLAG_RETVAL_REFERENCE	= 1 << (31 - 4)
 };
 
+
 void ffi_prep_args(extended_cif*   inEcif, unsigned *const stack);
 
 typedef union
@@ -84,7 +87,6 @@ typedef union
 int ffi_closure_helper_DARWIN( ffi_closure*    closure,
         void*                   rvalue, unsigned long*  pgr,
         ffi_dblfl*              pfr);
-
 
 
 #if defined(__ppc64__)

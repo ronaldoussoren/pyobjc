@@ -106,9 +106,15 @@ class DgTestCase (unittest.TestCase):
         libdir = os.path.join('build', 'temp.%s-%d.%d'%(get_platform(), sys.version_info[0], sys.version_info[1]), 'libffi-src')
         libffiobjects = self.object_files(libdir)
 
-        commandline='MACOSX_DEPLPOYMENT_TARGET=%s cc %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s 2>&1'%(
+        if self.filename.endswith('.m'):
+            extra_link = '-framework Foundation'
+        else:
+            extra_link = ''
+
+        commandline='MACOSX_DEPLPOYMENT_TARGET=%s cc %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),
-                get_config_var('CFLAGS'), self.filename, ' '.join(libffiobjects))
+                get_config_var('CFLAGS'), self.filename, ' '.join(libffiobjects),
+		extra_link)
 
         fp = os.popen(commandline)
         data = fp.read()
@@ -140,7 +146,7 @@ class DgTestCase (unittest.TestCase):
 def testSuiteForDirectory(dirname):
     tests = []
     for fn in os.listdir(dirname):
-        if not fn.endswith('.c'): continue
+        if not fn.endswith('.c') and not fn.endswith('.m'): continue
         tst = DgTestCase(os.path.join(dirname, fn))
         if alltests and tst.shortDescription() not in alltests:
             continue

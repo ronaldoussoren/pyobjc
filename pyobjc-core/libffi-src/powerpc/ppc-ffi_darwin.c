@@ -28,13 +28,13 @@
    OTHER DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
-#include <ffi.h>
-#include <ffi_common.h>
+#include "ffi.h"
+#include "ffi_common.h"
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ppc-darwin.h>
+#include "ppc-darwin.h"
 #include <architecture/ppc/mode_independent_asm.h>
 
 #if defined(POWERPC_DARWIN)
@@ -815,7 +815,7 @@ ffi_closure_helper_DARWIN(
 	unsigned int		nf = 0;	/* number of FPRs already used.  */
 	unsigned int		ng = 0;	/* number of GPRs already used.  */
 	ffi_cif*			cif = closure->cif;
-	long				avn = cif->nargs;
+	unsigned int				avn = cif->nargs;
 	void**				avalue = alloca(cif->nargs * sizeof(void*));
 	ffi_type**			arg_types = cif->arg_types;
 
@@ -892,9 +892,9 @@ ffi_closure_helper_DARWIN(
 						size_al = ALIGN(arg_types[i]->size, 8);
 
 					if (size_al < 3)
-						avalue[i] = (void*)pgr + MODE_CHOICE(4,8) - size_al;
+						avalue[i] = (char*)pgr + MODE_CHOICE(4,8) - size_al;
 					else
-						avalue[i] = (void*)pgr;
+						avalue[i] = (char*)pgr;
 
 					ng	+= (size_al + 3) / sizeof(long);
 					pgr += (size_al + 3) / sizeof(long);

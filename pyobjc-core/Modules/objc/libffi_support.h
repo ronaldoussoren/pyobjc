@@ -1,11 +1,7 @@
 #ifndef PyObjC_FFI_SUPPORT_H
 #define PyObjC_FFI_SUPPORT_H
 
-#ifdef WITH_SYSTEM_FFI
-#include <ffi/ffi.h>
-#else
-#include "ffi.h"
-#endif
+#include "ffi/ffi.h"
 
 #ifndef FFI_CLOSURES
 #    error "Need FFI_CLOSURES!"

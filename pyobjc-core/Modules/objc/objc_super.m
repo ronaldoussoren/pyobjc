@@ -148,5 +148,4 @@ PyTypeObject PyObjCSuper_Type = {
 	PyType_GenericAlloc,			/* tp_alloc */
 	PyType_GenericNew,			/* tp_new */
 	PyObject_GC_Del,        		/* tp_free */
-	1,					/* tp_is_gc */
 };
