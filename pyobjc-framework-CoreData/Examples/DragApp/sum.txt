@@ -1,2 +1,0 @@
-How to implment Drag&Drop in an application that uses CoreData and 
-``NSTableView`` instances.
