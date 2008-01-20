@@ -3348,7 +3348,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	volatile int      useStret;
 	volatile int      flags;
 	SEL		  theSel;
-	int		  isUninitialized;
+	volatile int		  isUninitialized;
 	BOOL		  variadicAllArgs = NO;
 
 	/* True iff output arguments are also in the argument list */

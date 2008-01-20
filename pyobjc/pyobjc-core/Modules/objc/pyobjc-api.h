@@ -32,6 +32,13 @@ typedef int Py_ssize_t;
 #endif
 #endif
 
+#ifndef NSUInteger
+# define NSUInteger unsigned int
+#endif
+#ifndef NSInteger
+# define NSInteger int
+#endif
+
 
 #import <Foundation/NSException.h>
 
@@ -42,7 +49,7 @@ struct PyObjC_WeakLink {
 
 
 /* threading support */
-#if 0
+#ifdef NO_OBJC2_RUNTIME
 #define PyObjC_DURING \
 		Py_BEGIN_ALLOW_THREADS \
 		NS_DURING
