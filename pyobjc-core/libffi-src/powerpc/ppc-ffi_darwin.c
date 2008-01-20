@@ -37,8 +37,20 @@
 #include "ppc-darwin.h"
 #include <architecture/ppc/mode_independent_asm.h>
 
+#if 0
 #if defined(POWERPC_DARWIN)
 #include <libkern/OSCacheControl.h>	// for sys_icache_invalidate()
+#endif
+
+#else 
+
+/* Explicit prototype instead of including a header to allow compilation
+ * on Tiger systems.
+ */
+
+#pragma weak sys_icache_invalidate
+extern void sys_icache_invalidate(void *start, size_t len);
+
 #endif
 
 extern void ffi_closure_ASM(void);
@@ -748,7 +760,9 @@ ffi_prep_closure(
 
 			// Flush the icache. Only necessary on Darwin.
 #if defined(POWERPC_DARWIN)
-			sys_icache_invalidate(closure->tramp, FFI_TRAMPOLINE_SIZE);
+			if (sys_icache_invalidate) {
+				sys_icache_invalidate(closure->tramp, FFI_TRAMPOLINE_SIZE);
+			}
 #else
 			flush_range(closure->tramp, FFI_TRAMPOLINE_SIZE);
 #endif

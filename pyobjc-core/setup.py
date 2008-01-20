@@ -186,8 +186,6 @@ FFI_SOURCE=[
 
 EXTRA_SOURCE = FFI_SOURCE
 EXTRA_CFLAGS = FFI_CFLAGS
-#EXTRA_SOURCE = []
-#EXTRA_CFLAGS = []
 
 CorePackages = [ 'objc' ]
 objcExtension = Extension("objc._objc",

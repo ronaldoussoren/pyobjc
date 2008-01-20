@@ -613,6 +613,12 @@ objc20_class_addMethodList(Class cls,
 }
 #endif
 
+static BOOL
+compat_class_isMetaClass(Class cls)
+{
+	return CLS_GETINFO(cls, CLS_META) == CLS_META;
+}
+
 static BOOL 
 compat_class_addMethodList(Class cls,
 		struct PyObjC_method* list, unsigned int count)
@@ -796,6 +802,7 @@ BOOL (*PyObjC_class_addMethodList)(Class,
 		struct PyObjC_method*, unsigned int) = NULL;
 Ivar* (*PyObjC_class_copyIvarList)(Class, unsigned int*) = NULL;
 Protocol** (*PyObjC_class_copyProtocolList)(Class, unsigned int*) = NULL;
+BOOL (*PyObjC_class_isMetaClass)(Class) = NULL;
 
 SEL (*PyObjC_method_getName)(Method m) = NULL;
 IMP (*PyObjC_method_getImplementation)(Method m) = NULL;
@@ -879,6 +886,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	SETUP(class_copyProtocolList);
 	SETUP(class_copyMethodList);
 	SETUP(class_getName);
+	SETUP(class_isMetaClass);
 
 	SETUP(method_getName);
 	SETUP(method_getTypeEncoding);

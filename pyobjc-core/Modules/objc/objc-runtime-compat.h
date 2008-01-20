@@ -93,6 +93,8 @@ extern BOOL (*PyObjC_class_addMethodList)(Class,
 extern Ivar* (*PyObjC_class_copyIvarList)(Class, unsigned int*);
 extern Protocol** (*PyObjC_class_copyProtocolList)(Class, unsigned int*);
 
+extern BOOL (*PyObjC_class_isMetaClass)(Class);
+
 extern SEL (*PyObjC_method_getName)(Method m);
 extern const char *(*PyObjC_method_getTypeEncoding)(Method m);
 extern IMP (*PyObjC_method_getImplementation)(Method m);
@@ -146,6 +148,7 @@ extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 #define class_copyIvarList		PyObjC_class_copyIvarList
 #define class_copyProtocolList		PyObjC_class_copyProtocolList
 #define class_conformsToProtocol	PyObjC_class_conformsToProtocol
+#define class_isMetaClass		PyObjC_class_isMetaClass
 
 #define method_getName 			PyObjC_method_getName
 #define method_getTypeEncoding   	PyObjC_method_getTypeEncoding
