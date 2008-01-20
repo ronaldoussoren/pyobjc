@@ -15,6 +15,7 @@
 
 #include <Python.h>
 #include <pyobjc-api.h>
+#include <pyobjc-compat.h>
 
 #import <Foundation/Foundation.h>
 

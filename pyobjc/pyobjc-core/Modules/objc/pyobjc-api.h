@@ -32,14 +32,6 @@ typedef int Py_ssize_t;
 #endif
 #endif
 
-#ifndef NSUInteger
-# define NSUInteger unsigned int
-#endif
-#ifndef NSInteger
-# define NSInteger int
-#endif
-
-
 #import <Foundation/NSException.h>
 
 struct PyObjC_WeakLink {

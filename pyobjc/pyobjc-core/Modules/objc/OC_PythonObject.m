@@ -247,6 +247,15 @@ end:
 		if (PyErr_Occurred()) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
+		
+		/* Check if the object is "datetime-like" */
+		instance = [OC_PythonDate depythonifyObject:obj];
+		if (instance != nil) {
+			PyObjC_GIL_RETURN(instance);
+		} 
+		if (PyErr_Occurred()) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 
 		/* If all else fails use the generic proxy */
 		instance = [[self alloc] initWithObject:obj];
