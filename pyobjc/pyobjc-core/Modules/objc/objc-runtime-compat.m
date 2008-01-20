@@ -821,7 +821,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	 */
 	PyObjC_class_addMethodList  = compat_class_addMethodList;
 	PyObjC_methodlist_magic     = compat_methodlist_magic;
-	PyObjC_objc_disposeClassPair   = compat_objc_freeClassPair;
+	PyObjC_objc_disposeClassPair   = compat_objc_disposeClassPair;
 	PyObjC_preclass_addMethod   = compat_preclass_addMethod;
 	PyObjC_preclass_addIvar     = compat_preclass_addIvar;
 	PyObjC_preclass_addProtocol = compat_preclass_addProtocol;

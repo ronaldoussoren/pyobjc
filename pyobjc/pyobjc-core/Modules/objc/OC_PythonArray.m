@@ -298,6 +298,7 @@ static PyObject* mapTypes = NULL;
 	 * encoded streams.
 	 */        
 	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", value->ob_type->tp_name, coder];
+	
 }
 
 - initWithCoder:(NSCoder*)coder
