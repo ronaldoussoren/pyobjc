@@ -7,6 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.1 (...)
 -----------------
 
+- There now is a custom proxy class for instances of ``datetime.date`` and
+  ``datetime.datetime``, which takes away the need to manually convert these
+  instances before using them from Objective-C (such as using an 
+  ``NSDateFormatter``)
 
 - PyObjC can now run in 64-bit mode.
 
@@ -14,8 +18,8 @@ Version 2.1 (...)
   haven't tried running real programs yet and hence there might be issues 
   lurking below the surface.
 
-  NOTE2: PPC64 support is completely untested, aka "it compiles and therefore 
-  must work".
+  NOTE: 64-bit support does not yet work on PPC due to a bug in libffi which
+  prefents catching Objective-C exceptions.
 
   This requires Leopard (OSX 10.5), earlier version of the OS don't have a 
   64-bit Objective-C runtime at all.  This currently also requires a copy of 

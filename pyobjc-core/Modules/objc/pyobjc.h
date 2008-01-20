@@ -36,6 +36,7 @@
 #include "OC_PythonUnicode.h"
 #include "OC_PythonString.h"
 #include "OC_PythonEnumerator.h"
+#include "OC_PythonDate.h"
 #include "method-signature.h"
 #include "objc_util.h"
 #include "objc-class.h"

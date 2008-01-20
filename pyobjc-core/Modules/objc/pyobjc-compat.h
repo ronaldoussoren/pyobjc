@@ -60,7 +60,10 @@ typedef int Py_ssize_t;
 
 #else
 
+#ifndef Py_ARG_SIZE_T
 #define Py_ARG_SIZE_T "n"
+#endif
+
 #endif
 
 
