@@ -3604,7 +3604,6 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 
 	PyObjC_HANDLER
-		NSLog(@"caught exception: %@", localException);
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER

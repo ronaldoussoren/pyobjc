@@ -62,6 +62,7 @@ retval_on_stack(
 /* ffi_prep_args is called by the assembly routine once stack space
    has been allocated for the function's arguments */
 /*@-exportheader@*/
+extern void ffi_prep_args(char*, extended_cif*);
 void
 ffi_prep_args(
 	char*			stack,
@@ -228,7 +229,7 @@ ffi_call_STDCALL(
 void
 ffi_call(
 /*@dependent@*/	ffi_cif*	cif, 
-				void		(*fn)(), 
+				void		(*fn)(void), 
 /*@out@*/		void*		rvalue, 
 /*@dependent@*/	void**		avalue)
 {

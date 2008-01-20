@@ -10,6 +10,15 @@ def Version(s):
         return LooseVersion(s)
 
 def sw_vers(_cache=[]):
+    # Using os.popen makes it annoyinly hard to debug using gdb...
+    try:
+        import plistlib
+
+        pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
+        _cache.append(Version(pl['ProductVersion']))
+    except (ImportError, KeyError):
+        pass
+
     if not _cache:
         info = os.popen('/usr/bin/sw_vers').read().splitlines()
         for line in info:
