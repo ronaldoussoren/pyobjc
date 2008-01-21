@@ -417,6 +417,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 
 	if (isCFProxyClass) {
 		objc_class = nil;
+
 	} else {
 		/* First generate the objective-C class. This may change the
 		 * class dict.

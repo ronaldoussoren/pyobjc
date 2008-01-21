@@ -657,7 +657,6 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 	int retval = -1;
 	PyObject* v;
 
-
 	if (name == NULL || type == NULL || *type == '\0') {
 		retval = 0;
 		goto end;
@@ -666,8 +665,6 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 	if (tollfree != NULL) {
 		Class cls = objc_lookUpClass(tollfree);
 		if (cls == NULL) {
-			//PyErr_SetString(PyObjCExc_NoSuchClassError,
-			//	tollfree);
 			retval = 0;
 			goto end;
 		}
@@ -691,7 +688,7 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 			Class cls = objc_lookUpClass("NSCFType");
 			if (cls == NULL) {
 				PyErr_SetString(PyObjCExc_NoSuchClassError,
-					tollfree);
+					"NSCFType");
 				goto end;
 			}
 			if (PyObjCPointerWrapper_RegisterID(type) == -1) {
@@ -727,13 +724,13 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 		}
 	}
 
+	retval = 0;	
+
 	if (v != NULL) {
 		retval = PyDict_SetItemString(globalDict, name, v);
 		Py_DECREF(v);
 	}
 
-
-	retval = 0;	
 end:
 	if (name) xmlFree(name);
 	if (type) xmlFree(type);
