@@ -113,6 +113,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 		/* This type is the same as an already registered type,
 		 * return that type
 		 */
+		Py_DECREF(cf);
 		Py_INCREF(result);
 		return result;
 	}
@@ -188,10 +189,10 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 
 	/* Force an artificially high refcount to avoid deallocation of the
 	 * class.
-	 * XXX: This is necessary to avoid problems when there are import 
-	 * error, but that needs further investigation.
+	 * XXX: This code is wrong, it hides the real problem, but I (ronald)
+	 * have no idea where that problem hides itself.
 	 */
-	Py_INCREF(result);
+	Py_INCREF(result->ob_type);
 
 	return result;
 }

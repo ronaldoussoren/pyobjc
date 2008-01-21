@@ -37,6 +37,7 @@ class TestCase (unittest.TestCase):
         finally:
             gc.collect()
             del p
+            gc.collect()
             
             if _useleaks:
                 leaksAfter = leaks()
@@ -47,7 +48,5 @@ class TestCase (unittest.TestCase):
                         # in leaksBefore.
                         for ln in leaksAfter:
                             print ln
-
-
 
 main = unittest.main

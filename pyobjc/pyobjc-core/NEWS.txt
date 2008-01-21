@@ -30,6 +30,9 @@ Version 2.1 (...)
   code. Neither are supported by the 64-bit runtime APIs (that is, it is a 
   restriction in Apple's Objective-C 2.0 runtime).
 
+- BUGFIX: The wrappers for CoreFoundation types no longer create a new type 
+  in the Objective-C runtime, that type wasn't used anywhere and was an 
+  unwanted side-effect of how CoreFoundation types are wrapped.
 
 Version 2.0.1 (...)
 -------------------
@@ -40,11 +43,6 @@ Version 2.0.1 (...)
 - BUGFIX: don't crash when printing CF objects that are magic cookies.
 
 - BUGFIX: It is now possible to override ``respondsToSelector:`` in Python.
-
-- BUGFIX: The wrappers for CoreFoundation types no longer create a new type 
-  in the Objective-C runtime, that type wasn't used anywhere and was an 
-  unwanted side-effect of how CoreFoundation types are wrapped.
-
 
 - Add support for interacting with '@synchronized' blocks in Objective-C.
 
