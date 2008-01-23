@@ -13,7 +13,7 @@ class GetBuddyInfo (AMBundleAction):
             count = input.numberOfItems()
 
             for i in range(1, count+1):
-                personDescriptor = input.desciptorAtIndex_(i)
+                personDescriptor = input.descriptorAtIndex_(i)
                 if personDescriptor is not None:
                     # get the uid of the person from this descriptor
                     if (personDescriptor.descriptorType() == typeObjectSpecifier):
