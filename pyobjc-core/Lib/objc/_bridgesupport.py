@@ -39,7 +39,7 @@ NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
 _gBridgeSupportDirectories = (
         '/System/Library/BridgeSupport',
         '/Library/BridgeSupport',
-        '~/Library/BridgeSupport',
+        os.path.expanduser('~/Library/BridgeSupport'),
     )
 
 for method in ('alloc', 'copy', 'copyWithZone:', 'mutableCopy', 'mutableCopyWithZone:'):
@@ -156,7 +156,7 @@ def initFrameworkWrapper(frameworkName,
             data = open(path, 'rb').read()
             doc = ET.fromstring(data)
 
-            dylib_path = os.path.join(dn, framworkName + '.dylib')
+            dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
                 _parseBridgeSupport(data, globals, frameworkName, dylib_path)
             else:
