@@ -6,6 +6,7 @@ for proj in  \
 	altgraph \
 	macholib \
 	modulegraph \
+	bdist_mpkg \
 	py2app \
 	pyobjc-core \
 	pyobjc-metadata \
@@ -14,11 +15,9 @@ do (
 	echo $proj
 	cd ${proj}
 	rm -rf build
-	python2.6 setup.py test
-	python2.6 setup.py develop
+	python2.5 setup.py test
+	python2.5 setup.py develop
 ); done
-
-exit 0
 
 (
    cd PyOpenGL-2.0.2.01
