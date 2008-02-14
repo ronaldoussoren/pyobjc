@@ -101,6 +101,28 @@ class TestFromObjCSuperToObjCClass(objc.test.TestCase):
         self.assert_(MEClass.aNewClassMethod.isClassMethod)
         self.assertEquals(MEClass.aNewClassMethod(), 'Foo cls')
 
+    def testAddedMethodType(self):
+        def anotherNewClassMethod(cls):
+            "CLS DOC STRING"
+            return "BAR CLS"
+        anotherNewClassMethod = classmethod(anotherNewClassMethod)
+
+        def anotherNewMethod(self):
+            "INST DOC STRING"
+            return "BAR SELF"
+
+        self.assert_(not MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
+        self.assert_(not MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
+
+        objc.classAddMethods(MEClass, [anotherNewClassMethod, anotherNewMethod])
+        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
+        self.assert_(MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
+
+        self.assertEquals(MEClass.anotherNewClassMethod.__doc__, "CLS DOC STRING")
+        self.assertEquals(MEClass.anotherNewMethod.__doc__, "INST DOC STRING")
+
+
+
 
 class TestFromPythonClassToObjCClass(objc.test.TestCase):
 
