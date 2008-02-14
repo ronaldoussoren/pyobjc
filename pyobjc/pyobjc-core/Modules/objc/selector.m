@@ -264,6 +264,9 @@ base_required(PyObject* _self, void* closure __attribute__((__unused__)))
 	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kREQUIRED));
 }
 
+
+
+
 static PyGetSetDef base_getset[] = {
 	{
 		"isRequired",
@@ -1561,6 +1564,17 @@ pysel_get_callable(PyObject* _self, void* closure __attribute__((__unused__)))
 	return self->callable;
 }
 
+PyDoc_STRVAR(pysel_docstring_doc,
+	"The document string for a method");
+static PyObject*
+pysel_docstring(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
+
+	PyObject* docstr = PyObject_GetAttrString(self->callable, "__doc__");
+	return docstr;
+}
+
 static PyGetSetDef pysel_getset[] = {
 	{
 		"callable",
@@ -1569,6 +1583,14 @@ static PyGetSetDef pysel_getset[] = {
 		pysel_get_callable_doc,
 		0
 	},
+	{
+		"__doc__",
+		pysel_docstring,
+		0,
+		pysel_docstring_doc,
+		0
+	},
+
 	{
 		NULL,
 		NULL,
