@@ -12,7 +12,7 @@ import struct
 import objc
 
 def fourCharToInt(code):
-    return struct.unpack('l', code)[0]
+    return struct.unpack('>l', code)[0]
 
 class PyDocEventHandler (NSObject):
     webview = objc.IBOutlet('webview')
