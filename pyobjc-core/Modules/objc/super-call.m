@@ -336,7 +336,7 @@ PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 			return NULL;
 		}
 		retval = PyObjCFFI_MakeIMPForSignature(
-				methinfo, imp);
+				methinfo, PyObjCSelector_GetSelector(sel), imp);
 		Py_DECREF(methinfo);
 		return retval;
 	}

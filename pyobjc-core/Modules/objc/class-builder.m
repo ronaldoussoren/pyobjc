@@ -432,6 +432,136 @@ error_cleanup:
  *   oops this doesn't work, rewrite class, reload and continue testing in
  *   the running app)
  */
+
+
+/* PyObjC uses a number of typecode descriptors that aren't available in
+ * the objc runtime.  Remove these from the type string (inline).
+ */
+static void tc2tc(char* buf)
+{
+	/* Skip pointer declarations and anotations */
+	for (;;) {
+		switch(*buf) {
+		case _C_PTR:
+		case _C_IN:
+		case _C_OUT:
+		case _C_INOUT:
+		case _C_ONEWAY:
+		case _C_CONST:
+			buf++;
+			break;
+		default:
+			goto exit;
+		}
+	}
+exit:
+
+	switch (*buf) {
+	case _C_NSBOOL:
+	case _C_CHAR_AS_INT:
+	case _C_CHAR_AS_TEXT:
+		*buf = _C_CHR;
+		break;
+
+	case _C_UNICHAR:
+		*buf = _C_SHT;
+		break;
+
+	case _C_STRUCT_B:
+		while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
+		}
+		while (*buf && *buf != _C_STRUCT_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			tc2tc(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+
+	case _C_UNION_B:
+		while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
+		}
+		while (*buf && *buf != _C_UNION_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			tc2tc(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+
+
+	case _C_ARY_B:
+		while (isdigit(*++buf));
+		tc2tc(buf);
+		break;
+	}
+}
+void PyObjC_RemoveInternalTypeCodes(char* buf)
+{
+	while(buf && *buf) {
+		tc2tc(buf);
+		buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+	}
+}
+
+static BOOL same_signature(const char* sig1, const char* sig2)
+{
+	while (sig1 && *sig1 && sig2 && *sig2) {
+		const char* end1 = PyObjCRT_SkipTypeSpec(sig1);
+		const char* end2 = PyObjCRT_SkipTypeSpec(sig2);
+
+		/* Check for an invalid signature: */
+		if (end1 == NULL) return NO;
+		if (end2 == NULL) return NO;
+
+		const char* t1 = end1 - 1;
+		while (t1 != sig1 && isdigit(*t1)) {
+			t1--;
+		}
+		t1++;
+
+		const char* t2 = end2 - 1;
+		while (t2 != sig2 && isdigit(*t2)) {
+			t2--;
+		}
+		t2++;
+
+		if (t1 - sig1 != t2 - sig2) {
+			/* Elements don't have same size */
+			return NO;
+		}
+		if (strncmp(sig1, sig2, t1-sig1) != 0) {
+			/* Elements don't have same value */
+			return NO;
+		}
+		sig1 = end1;
+		sig2 = end2;
+	}
+	
+	/* We reached the end of one of the signatures,
+	 * check that we reached both ends 
+	 */
+	if (sig1 && *sig1) {
+		return NO;
+	}
+	if (sig2 && *sig2) {
+		return NO;
+	}
+	return YES;
+}
+
 Class 
 PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		char* name, PyObject* class_dict, PyObject* meta_dict)
@@ -471,52 +601,16 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 	if ((cur_class = objc_lookUpClass(name)) != NULL) {
 		/*
-		 * Only allow redefinition of classes that are defined in
-		 * python and are in the same module.
-		 * This allows using reload() without hiding erroneous
-		 * redefinition (e.g. someone forgetting that classnames
-		 * must be globally unique).
-		 *
-		 * XXX: and how does this work? I don't think we actually 
-		 * rebuild the class!
+		 * NOTE: we used to allow redefinition of a class if the
+		 * redefinition is in the same module. This code was removed
+		 * because that functionality isn't possible with the ObjC 2.0
+		 * runtime API.
 		 */
 
-		PyObject* tmp = PyObjCClass_New(cur_class);
-		PyObject* m1;
-		PyObject* m2;
-
-		if (!PyObjCClass_HasPythonImplementation(tmp)) {
-			PyErr_Format(PyObjCExc_Error, 
-				"%s is overriding existing Objective-C class", 
-				name);
-			goto error_cleanup;
-		} 
-
-		m1 = PyObject_GetAttrString(tmp, "__module__");
-		if (m1 == NULL) {
-			PyErr_Clear();
-		}
-
-		m2 = PyDict_GetItemString(class_dict, "__module__");
-		if (m2 == NULL) {
-			PyErr_Clear();
-		}
-
-		if (m1 == NULL || m2 == NULL || 
-				PyObject_RichCompareBool(m1, m2, Py_EQ) != 1) {
-			Py_XDECREF(m1);
-			Py_XDECREF(m2);
-			if (PyErr_Occurred()) {
-				goto error_cleanup;
-			}
-			PyErr_Format(PyObjCExc_Error, 
-				"%s is overriding existing Objective-C class", 
-				name);
-			goto error_cleanup;
-		}
-		Py_DECREF(m1);
-		Py_DECREF(m2);
-		Py_DECREF(tmp);
+		PyErr_Format(PyObjCExc_Error, 
+			"%s is overriding existing Objective-C class", 
+			name);
+		goto error_cleanup;
 	}
 	if (strspn(name, IDENT_CHARS) != strlen(name)) {
 		PyErr_Format(PyObjCExc_Error, "'%s' not a valid name", name);
@@ -670,6 +764,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	/* Allocate the class as soon as possible, for new selector objects */
 	new_class = objc_allocateClassPair(super_class, name, 0);
 	if (new_class == 0) {
+		PyErr_Format(PyObjCExc_Error, 
+			"Cannot allocateClassPair for %s", name);
 		goto error_cleanup;
 	}
 	
@@ -983,7 +1079,21 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 				meth = class_getClassMethod(super_class,
 					sel->sel_selector);
-				if (meth) is_override = 1;
+				if (meth) {
+					is_override = 1;
+
+					if (!same_signature(method_getTypeEncoding(meth), 
+						sel->sel_native_signature)) {
+						
+						PyObject* repr = PyObject_Repr((PyObject*)sel);
+						if (repr == NULL) goto error_cleanup;
+						PyErr_Format(PyObjCExc_BadPrototypeError,
+							"%s has signature that is not compatible with super-class",
+							PyString_AsString(repr));
+						Py_DECREF(repr);
+						goto error_cleanup;
+					}
+				}
 				cls = new_meta_class;
 
 				/* Class method: the value should be in the
@@ -1008,7 +1118,20 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			} else {
 				meth = class_getInstanceMethod(super_class,
 					sel->sel_selector);
-				if (meth) is_override = 1;
+				if (meth) {
+					is_override = 1;
+					if (!same_signature(method_getTypeEncoding(meth), 
+						sel->sel_native_signature)) {
+						
+						PyObject* repr = PyObject_Repr((PyObject*)sel);
+						if (repr == NULL) goto error_cleanup;
+						PyErr_Format(PyObjCExc_BadPrototypeError,
+							"%s has signature that is not compatible with super-class",
+							PyString_AsString(repr));
+						Py_DECREF(repr);
+						goto error_cleanup;
+					}
+				}
 				cls = new_class;
 
 				if (shouldCopy) {
@@ -1030,7 +1153,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 
 			if (!preclass_addMethod(cls, sel->sel_selector, imp,
-						sel->sel_python_signature)) {
+						sel->sel_native_signature)) {
 				goto error_cleanup;
 			}
 
@@ -1395,17 +1518,17 @@ object_method_methodSignatureForSelector(
 	
 	PyObjC_END_WITH_GIL
 
-	NS_DURING
+	PyObjC_DURING
 		*presult =  [NSMethodSignature signatureWithObjCTypes:(
 				(PyObjCSelector*)pymeth)->sel_python_signature];
-	NS_HANDLER
+	PyObjC_HANDLER
 		PyObjC_BEGIN_WITH_GIL
 			Py_DECREF(pymeth);
 			Py_DECREF(pyself);
 
 		PyObjC_END_WITH_GIL
 		[localException raise];
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 	PyObjC_BEGIN_WITH_GIL
 		Py_DECREF(pymeth);
@@ -1955,20 +2078,20 @@ object_method_setValue_forKey_(
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	// Set up a KVO stack so you only get one notification from this
-	NS_DURING
+	PyObjC_DURING
 		if (_KVOHackLevel() == BROKEN_KVO) {
 			[self willChangeValueForKey:key];
 		}
-	NS_HANDLER
-	NS_ENDHANDLER
+	PyObjC_HANDLER
+	PyObjC_ENDHANDLER
 #endif
 
-	NS_DURING
+	PyObjC_DURING
 		// First check super
 		objc_superSetClass(spr, (Class)userdata);
 		objc_superSetReceiver(spr, self);
 		(void)objc_msgSendSuper(&spr, _meth, value, key);
-	NS_HANDLER
+	PyObjC_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
@@ -2030,7 +2153,7 @@ object_method_setValue_forKey_(
 #endif
 			[localException raise];
 		}
-	NS_ENDHANDLER
+	PyObjC_ENDHANDLER
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	// Pop the KVO stack

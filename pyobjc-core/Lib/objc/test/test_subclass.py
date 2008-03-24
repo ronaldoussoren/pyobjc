@@ -350,7 +350,7 @@ class TestOverridingSpecials(objc.test.TestCase):
             def raise__(self):
                 pass
 
-            def froobnicate__(self):
+            def froobnicate__(self, a, b):
                 pass
 
         # XXX: workaround for a 'feature' in class-builder.m, that code 

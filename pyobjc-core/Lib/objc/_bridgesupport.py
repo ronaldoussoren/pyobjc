@@ -67,21 +67,7 @@ def initFrameworkWrapper(frameworkName,
     either one embedded in the framework or one in a BrigeSupport library
     directory).
     """
-    try:
-        if scan_classes is None:
-            bundle = objc.loadBundle(
-                frameworkName,
-                globals,
-                bundle_identifier=frameworkIdentifier)
-
-        else:
-            bundle = objc.loadBundle(
-                frameworkName,
-                globals,
-                bundle_identifier=frameworkIdentifier,
-                scan_classes=scan_classes)
-    
-    except ImportError:
+    if frameworkIdentifier is None:
         if scan_classes is None:
             bundle = objc.loadBundle(
                 frameworkName,
@@ -93,6 +79,34 @@ def initFrameworkWrapper(frameworkName,
                 globals,
                 bundle_path=frameworkPath,
                 scan_classes=scan_classes)
+
+    else:
+        try:
+            if scan_classes is None:
+                bundle = objc.loadBundle(
+                    frameworkName,
+                    globals,
+                    bundle_identifier=frameworkIdentifier)
+
+            else:
+                bundle = objc.loadBundle(
+                    frameworkName,
+                    globals,
+                    bundle_identifier=frameworkIdentifier,
+                    scan_classes=scan_classes)
+        
+        except ImportError:
+            if scan_classes is None:
+                bundle = objc.loadBundle(
+                    frameworkName,
+                    globals,
+                    bundle_path=frameworkPath)
+            else:
+                bundle = objc.loadBundle(
+                    frameworkName,
+                    globals,
+                    bundle_path=frameworkPath,
+                    scan_classes=scan_classes)
 
 
     # Make the objc module available, because it contains a lot of useful
@@ -305,6 +319,10 @@ _structConvenience("unsigned_long", objc._C_ULNG)
 _structConvenience("unsigned_long_long", objc._C_ULNG_LNG)
 _structConvenience("float", objc._C_FLT)
 _structConvenience("double", objc._C_DBL)
+_structConvenience("BOOL", objc._C_NSBOOL)
+_structConvenience("UniChar", objc._C_UNICHAR)
+_structConvenience("char_text", objc._C_CHAR_AS_TEXT)
+_structConvenience("char_int", objc._C_CHAR_AS_INT)
 
 objc._setStructConvenience(_structConvenience)
 del objc._setStructConvenience

@@ -20,7 +20,7 @@ IMP PyObjCFFI_MakeClosure(PyObjCMethodSignature* signature,
 			PyObjCFFI_ClosureFunc func, void* userdata);
 void* PyObjCFFI_FreeClosure(IMP closure);
 
-IMP PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, PyObject* callable);
+IMP PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject* callable);
 IMP PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector);
 PyObject *PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args);
 void PyObjCFFI_FreeIMP(IMP imp);
@@ -38,8 +38,7 @@ int PyObjCFFI_ParseArguments(
 	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 	PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf, Py_ssize_t argbuf_len,
 	void** byref, struct byref_attr* byref_attr,
-	ffi_type** arglist, void** values,
-	BOOL allArgsPresent);
+	ffi_type** arglist, void** values);
 
 PyObject* PyObjCFFI_BuildResult(
 	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,

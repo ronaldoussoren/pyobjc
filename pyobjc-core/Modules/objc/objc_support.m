@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
- * Copyright (c) 2002, 2003 Ronald Oussoren
+ * Copyright (c) 2002-2008 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -282,6 +282,10 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_VOID:
 	case _C_LNG_LNG:
 	case _C_ULNG_LNG:
+	case _C_UNICHAR:
+	case _C_CHAR_AS_TEXT:
+	case _C_CHAR_AS_INT:
+	case _C_NSBOOL:
 		++type;
 		break;
 
@@ -404,6 +408,10 @@ PyObjCRT_NextField(const char *type)
 	case _C_VOID:
 	case _C_LNG_LNG:
 	case _C_ULNG_LNG:
+	case _C_UNICHAR:
+	case _C_CHAR_AS_TEXT:
+	case _C_CHAR_AS_INT:
+	case _C_NSBOOL:
 	case _C_BFLD: /* Not really 1 character, but close enough  */
 		++type;
 		break;
@@ -535,8 +543,12 @@ PyObjCRT_AlignOfType (const char *type)
 	case _C_SHT:   return __alignof__ (short);
 	case _C_USHT:  return __alignof__ (unsigned short);
 #ifdef _C_BOOL
-	case _C_BOOL:   return __alignof__ (BOOL);
+	case _C_BOOL:   return __alignof__ (bool); 
 #endif
+	case _C_UNICHAR:	return __alignof__(UniChar);
+	case _C_CHAR_AS_TEXT:	return __alignof__(char);
+	case _C_CHAR_AS_INT:	return __alignof__(char);
+	case _C_NSBOOL:		return __alignof__(BOOL);
 	case _C_INT:   return __alignof__ (int);
 	case _C_UINT:  return __alignof__ (unsigned int);
 	case _C_LNG:   return __alignof__ (long);
@@ -669,7 +681,7 @@ PyObjCRT_SizeOfType (const char *type)
 	case _C_SHT:     return sizeof(short);
 	case _C_USHT:    return sizeof(unsigned short);
 #ifdef _C_BOOL
-	case _C_BOOL:    return sizeof(BOOL);
+	case _C_BOOL:    return sizeof(bool);
 #endif
 	case _C_INT:     return sizeof(int);
 	case _C_UINT:    return sizeof(unsigned int);
@@ -679,6 +691,10 @@ PyObjCRT_SizeOfType (const char *type)
 	case _C_DBL:     return sizeof(double);
 	case _C_LNG_LNG:  return sizeof(long long);
 	case _C_ULNG_LNG: return sizeof(unsigned long long);
+	case _C_UNICHAR:	return sizeof(UniChar);
+	case _C_CHAR_AS_TEXT:	return sizeof(char);
+	case _C_CHAR_AS_INT:	return sizeof(char);
+	case _C_NSBOOL:		return sizeof(BOOL);
 
 	case _C_PTR:
 	case _C_CHARPTR:
@@ -827,7 +843,8 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 
 	case _C_VOID:
 	case _C_CHR:
-		return PyString_FromString(*(char**)curdatum);
+	case _C_CHAR_AS_TEXT:
+		return PyString_FromString((char*)curdatum);
 		break;
 
 	case _C_USHT:
@@ -881,6 +898,22 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 			curdatum += sizeofitem;
 		}
 		break;
+
+	case _C_UNICHAR:
+		while (*(UniChar*)curdatum != 0) {
+			count ++;
+			curdatum += sizeofitem;
+		}
+		break;
+
+	case _C_CHAR_AS_INT:
+		while (*(char*)curdatum != 0) {
+			count ++;
+			curdatum += sizeofitem;
+		}
+		break;
+
+	
 	default:
 		PyErr_Format(PyExc_TypeError,
 			"Cannot deal with NULL-terminated array of %s",
@@ -972,7 +1005,9 @@ pythonify_c_struct (const char *type, void *datum)
 	}
 
 	haveTuple = 0;
-	ret = PyObjC_CreateRegisteredStruct(type_start, type_end-type_start);
+	const char* oc_typestr = NULL;
+	ret = PyObjC_CreateRegisteredStruct(type_start, 
+			type_end-type_start, &oc_typestr);
 	if (ret == NULL) {
 		int nitems;
 
@@ -990,9 +1025,23 @@ pythonify_c_struct (const char *type, void *datum)
 		haveTuple = 1;
 		ret = PyTuple_New (nitems);
 		if (!ret) return NULL;
+
+		item = type;
+	} else {
+		item = type;
+
+		if (oc_typestr != NULL) {
+			item = oc_typestr + 1;
+			while (*item && *item != '=') {
+				item++;
+			}
+			if (*item) {
+				item++;
+			}
+		}
 	}
 
-	item = type;
+
 	offset = itemidx = 0;
 	while (*item != _C_STRUCT_E) {
 		PyObject *pyitem;
@@ -1376,7 +1425,19 @@ pythonify_c_value (const char *type, void *datum)
 	type = PyObjCRT_SkipTypeQualifiers (type);
 
 	switch (*type) {
+	case _C_UNICHAR:
+		{
+			Py_UNICODE	c  = (Py_UNICODE)(*(UniChar*)datum);
+			retobject = PyUnicode_FromUnicode(&c, 1);
+		}
+		break;
+
+	case _C_CHAR_AS_TEXT:
+		retobject = PyString_FromStringAndSize((char*)datum, 1);
+		break;
+
 	case _C_CHR:
+	case _C_CHAR_AS_INT:
 		/* 
 		 * We don't return a string because BOOL is an alias for
 		 * char (at least on MacOS X)
@@ -1407,9 +1468,13 @@ pythonify_c_value (const char *type, void *datum)
 
 #ifdef _C_BOOL
 	case _C_BOOL:
-		retobject = (PyObject *) PyBool_FromLong (*(BOOL*) datum);
+		retobject = (PyObject *) PyBool_FromLong (*(bool*) datum);
 		break;
 #endif
+
+	case _C_NSBOOL:
+		retobject = (PyObject *) PyBool_FromLong (*(BOOL*) datum);
+		break;
 
 	case _C_INT:
 		retobject = (PyObject *) PyInt_FromLong (*(int*) datum);
@@ -1579,16 +1644,24 @@ PyObjCRT_SizeOfReturnType(const char* type)
 {
 	PyObjC_Assert(type != NULL, -1);
 
+#if 1 /* def __ppc__ */
 	switch(*type) {
 	case _C_CHR:
 	case _C_BOOL:
 	case _C_UCHR:
 	case _C_SHT:
 	case _C_USHT:
+	case _C_UNICHAR:
+	case _C_CHAR_AS_TEXT:
+	case _C_CHAR_AS_INT:
+	case _C_NSBOOL:
 		return sizeof(long);
 	default:
 		return PyObjCRT_SizeOfType(type);
 	}
+#else
+		return PyObjCRT_SizeOfType(type);
+#endif
 }
 
 /*
@@ -1779,6 +1852,7 @@ const char* type, PyObject* argument, void* datum)
 	switch (*type) {
 #ifdef _C_BOOL
 	case _C_BOOL:
+	case _C_NSBOOL:
 		if (PyObject_IsTrue(argument)) {
 			*(int*) datum = YES;
 		} else {
@@ -1787,6 +1861,25 @@ const char* type, PyObject* argument, void* datum)
 		return 0;
 
 #endif
+	case _C_CHAR_AS_INT:
+		r = depythonify_signed_int_value(argument, "char",
+			&temp, CHAR_MIN, CHAR_MAX);
+		if (r == 0) {
+			*(int*)datum = temp;
+		}
+		return r;
+	
+	case _C_CHAR_AS_TEXT:
+		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
+			*(int*) datum = PyString_AsString (argument)[0];
+			return 0;
+		} else {
+			PyErr_Format(PyExc_ValueError,
+				"Expecting string of length 1");
+			return -1;
+		}
+		break;
+
 	case _C_CHR: 
 		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
 			*(int*) datum = PyString_AsString (argument)[0];
@@ -1799,6 +1892,26 @@ const char* type, PyObject* argument, void* datum)
 			*(int*)datum = temp;
 		}
 		return r;
+
+	case _C_UNICHAR:
+		if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
+			*(int*)datum = (int)(*PyUnicode_AsUnicode(argument));
+			return 0;
+
+		} else if (PyString_Check(argument)) {
+			PyObject* u = PyUnicode_FromObject(argument);
+			if (u == NULL) {
+				return -1;
+			}
+			if (PyUnicode_Check(u) && PyUnicode_GetSize(u) == 1) {
+				*(int*)datum = (int)(*PyUnicode_AsUnicode(u));
+				Py_DECREF(u);
+				return 0;
+			} 
+			Py_DECREF(u);
+		}
+		PyErr_SetString(PyExc_ValueError, "Expecting unicode string of length 1");
+		return -1;
 
 	case _C_UCHR:
 		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
@@ -1854,13 +1967,27 @@ pythonify_c_return_value (const char *type, void *datum)
 
 	switch(*type) {
 	case _C_BOOL:
+	case _C_NSBOOL:
 		return PyBool_FromLong(*(int*)datum);
 
 	case _C_CHR: 
+	case _C_CHAR_AS_INT: 
 	case _C_SHT:
 		return pythonify_c_value(intType, datum);
 	case _C_UCHR: case _C_USHT:
 		return pythonify_c_value(uintType, datum);
+
+	case _C_CHAR_AS_TEXT:
+		{
+			char ch = *(int*)datum;
+			return PyString_FromStringAndSize(&ch, 1);
+		}
+
+	case _C_UNICHAR:
+		{
+			Py_UNICODE ch = *(int*)datum;
+			return PyUnicode_FromUnicode(&ch, 1);
+		}
 
 	default:
 		return pythonify_c_value(type, datum);
@@ -1924,6 +2051,24 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		}
 		return r;
 
+	case _C_CHAR_AS_INT:
+		r = depythonify_signed_int_value(argument, "char",
+			&temp, CHAR_MIN, CHAR_MAX);
+		if (r == 0) {
+			*(char*)datum = temp;
+		}
+		return r;
+
+	case _C_CHAR_AS_TEXT:
+		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
+			*(char*) datum = PyString_AsString (argument)[0];
+			return 0;
+		} else {
+			PyErr_SetString(PyExc_ValueError,
+					"Expecting string of length 1");
+			return -1;
+		}
+
 	case _C_UCHR:
 		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
 			*(unsigned char*) datum = 
@@ -1954,10 +2099,34 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		return r;
 
 #ifdef _C_BOOL
-	case _C_BOOL:
-		*(BOOL*)datum = PyObject_IsTrue(argument);
+	case _C_BOOL: 
+		*(bool*)datum = PyObject_IsTrue(argument);
 		return 0;
 #endif
+
+	case _C_NSBOOL: 
+		*(BOOL*)datum = PyObject_IsTrue(argument);
+		return 0;
+
+	case _C_UNICHAR:
+		if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
+			*(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(argument));
+			return 0;
+
+		} else if (PyString_Check(argument)) {
+			PyObject* u = PyUnicode_FromObject(argument);
+			if (u == NULL) {
+				return -1;
+			}
+			if (PyUnicode_Check(u) && PyUnicode_GetSize(u) == 1) {
+				*(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(u));
+				Py_DECREF(u);
+				return 0;
+			} 
+			Py_DECREF(u);
+		}
+		PyErr_SetString(PyExc_ValueError, "Expecting unicode string of length 1");
+		return -1;
 
 	case _C_INT:
 		r = depythonify_signed_int_value(argument, "int",

@@ -408,7 +408,7 @@ static int set_defaults(PyObject* self, const char* typestr)
 			break;
 
 		case _C_STRUCT_B:
-			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr);
+			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr, NULL);
 			if (v != NULL) {
 				/* call init */
 				r = v->ob_type->tp_init(v, NULL, NULL);
@@ -921,7 +921,7 @@ PyObjC_MakeStructType(
 static PyObject* structRegistry = NULL;
 
 PyObject* 
-PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len)
+PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_encoding)
 {
 	PyTypeObject* type;
 	PyObject* result;
@@ -956,6 +956,15 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len)
 	}
 
 	PyObject_GC_Track(result);
+
+	if (objc_encoding) {
+		PyObject* typestr = PyDict_GetItemString(type->tp_dict, "__typestr__");
+		if (typestr != NULL) {
+			*objc_encoding = PyString_AsString(typestr);
+		} else {
+			*objc_encoding = signature;
+		}
+	}
 	return result;
 }
 
@@ -1105,6 +1114,13 @@ PyObjC_RegisterStructType(
 		/* This leaks some memory, but we cannot safely
 		 * deallocate the type
 		 */
+		return NULL;
+	}
+
+	/* Register again using the typecode used in the ObjC runtime */
+	PyObjC_RemoveInternalTypeCodes(signature);
+	r = PyDict_SetItemString(structRegistry, signature, structType);
+	if (r == -1) {
 		return NULL;
 	}
 

@@ -313,6 +313,8 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		objcMethod->name = PyObjCSelector_GetSelector(aMethod);
 		objcMethod->type = strdup(
 				PyObjCSelector_Signature(aMethod));
+
+		PyObjC_RemoveInternalTypeCodes(objcMethod->type);
 		if (objcMethod->type == NULL) {
 			goto cleanup_and_return_error;
 		}
@@ -1804,6 +1806,12 @@ struct objc_typestr_values {
 	{ "_C_LNGLNG", _C_LNG_LNG },
 	{ "_C_ULNGLNG", _C_ULNG_LNG },
 
+	/* PyObjC specific */
+	{ "_C_NSBOOL",	_C_NSBOOL },
+	{ "_C_UNICHAR", _C_UNICHAR },
+	{ "_C_CHAR_AS_TEXT", _C_CHAR_AS_TEXT },
+	{ "_C_CHAR_AS_INT", _C_CHAR_AS_INT },
+
 	{ NULL, 0 }
 };
 
@@ -1903,8 +1911,6 @@ init_objc(void)
 				PyString_FromStringAndSize(&cur->value, 1));
 		}
 	}
-	/* Add a _C_NSBOOL value, the actual type might vary acros platforms */
-	PyModule_AddStringConstant(m, "_C_NSBOOL", @encode(BOOL));
 
 	/* Add _C_CFTYPEID to avoid hardcoding this in our python code */
 	PyModule_AddStringConstant(m, "_C_CFTYPEID", @encode(CFTypeID));

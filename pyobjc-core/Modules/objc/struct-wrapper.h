@@ -77,6 +77,11 @@ PyObject* PyObjC_RegisterStructType(
  * @function PyObjC_CreateRegisteredStruct
  * @param signature  An Objective-C signature for a struct type
  * @param len        Length of the signature string
+ * @param objc_signature 
+ *                If not null this will be set to the signature that
+ *                was used to register the struct type. This might include
+ *                type codes that are private to PyObjC (such as _C_NSBOOL)
+ *
  * @result A new instance or NULL
  * @discussion
  *     This function will not set an error when it cannot find or create
@@ -85,6 +90,6 @@ PyObject* PyObjC_RegisterStructType(
  *     The returned instance is uninitialized, all fields are NULL. The 
  *     __init__ method has not been called.
  */     
-PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len);
+PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature);
 
 #endif /* PyObjC_STRUCT_MEMBER */

@@ -511,10 +511,6 @@ terminology, there are three kinds of pointers that can be used in a method:
     receive a NULL pointer for this argument, otherwise it will receive a 
     valid pointer. 
 
-    You can also leave out all output arguments from the argument list, in
-    which case the values default to ``None``. This feature is deprecated
-    and wil emit a deprecation warning.
-
 ``inout``:
     A combination of in and out (a value is passed by reference, and mutated
     upon return).  Unlike ``out``, these arguments remain in the argument list,
@@ -556,17 +552,7 @@ selector named ``getNumberOfRows:columns:`` with the following signature::
 
 This method is used from Python like this::
 
-   rowCount, columnCount = matrix.getNumberOfRows_columns_()
-
-Alternatively you may use::
-
    rowCount, columnCount = matrix.getNumberOfRows_columns_(None, None)
-
-This way of calling the method is more verbose and basically only usefull when
-you want to surpress one of the arguments. This can be usefull for methods that
-have an ``NSError**`` argument: most of those allow passing in a NULL pointer
-and won't create an error object in that case which can be a significant
-speedup for tight loops.
 
 When a function or method has an array of values and the length of that array
 as arguments, ``None`` may be passed as the length to specify that the length
@@ -574,7 +560,7 @@ of the given sequence should be used.
 
 Python's ``array.array`` type may be used to represent a C array if the
 typestr and size match what is expected by the selector.  Numeric, numarray,
-and other third party array types are not supported in PyObjC 1.3.5.
+and other third party array types are not supported at the moment.
 
 When defining methods in an Objective-C subclass, the bridge must provide
 type signatures for each method to the Objective-C runtime.  The default

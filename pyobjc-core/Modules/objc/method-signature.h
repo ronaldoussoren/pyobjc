@@ -45,8 +45,6 @@ struct _PyObjC_ArgDescr {
 	BOOL		printfFormat:1;
 	BOOL 		alreadyRetained:1;
 	BOOL 		alreadyCFRetained:1;
-	BOOL 		numeric:1;
-	BOOL		unicodeString:1;
 	BOOL		callableRetained:1; /* False iff the closure can be cleaned up after the call */
 };
 
@@ -61,8 +59,6 @@ struct _PyObjCMethodSignature {
 	struct _PyObjC_ArgDescr argtype[1];
 };
 
-extern PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
-		const char* sig);
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata);
 
@@ -81,5 +77,10 @@ PyObjC_registerMetaData(PyObject*, PyObject*, PyObject*);
 extern PyObject* 
 PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
+static inline PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
+		const char* sig)
+{
+	return PyObjCMethodSignature_WithMetaData(sig, NULL);
+}
 
 #endif /* PyObjC_METHODSIGNATURE_H */

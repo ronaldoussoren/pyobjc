@@ -10,6 +10,7 @@ an NSPoint, but using our own types)
 import objc.test
 import objc
 from objc.test.structs import *
+from objc.test.fnd import NSObject
 
 
 class TestStructs (objc.test.TestCase):
@@ -64,6 +65,38 @@ class TestStructs (objc.test.TestCase):
         self.assertEquals(x, v.first + v.second)
         self.assertEquals(v.first, 1)
         self.assertEquals(v.second, 2)
+
+    def testStructCallback(self):
+        """
+        Regression test for an issue reported on the PyObjC mailinglist.
+        """
+        tp = objc.createStructType("FooStruct", '{FooStruct="first"i"second"i}', None)
+
+        StructArrayDelegate = objc.informal_protocol(
+            "StructArrayDelegate",
+            [
+                objc.selector(None, "arrayOf4Structs:",
+                    signature="@@:[4{FooStruct=ii}]"),
+            ])
+
+        class OC_PyStruct (NSObject):
+            
+            def arrayOf4Structs_(self, value):
+                return value
+
+        self.assertEquals(OC_PyStruct.arrayOf4Structs_.signature, "@@:[4{FooStruct=" + objc._C_INT + objc._C_INT + "}]")
+
+        o = OC_PyStruct.alloc().init()
+        v = OC_StructTest.callArrayOf4Structs_(o)
+        self.assertEquals(len(v), 4)
+        for i in range(3):
+            self.assert_(isinstance(v[i], tp))
+
+        self.assertEquals(v[0], tp(1, 2))
+        self.assertEquals(v[1], tp(3, 4))
+        self.assertEquals(v[2], tp(5, 6))
+        self.assertEquals(v[3], tp(7, 8))
+
 
 if __name__ == "__main__":
     objc.test.main()

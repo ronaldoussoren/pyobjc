@@ -7,11 +7,6 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.1 (...)
 -----------------
 
-- There now is a custom proxy class for instances of ``datetime.date`` and
-  ``datetime.datetime``, which takes away the need to manually convert these
-  instances before using them from Objective-C (such as using an 
-  ``NSDateFormatter``)
-
 - PyObjC can now run in 64-bit mode.
 
   NOTE: 64-bit support is beta quality, that is: all unittests pass, but I 
@@ -30,12 +25,89 @@ Version 2.1 (...)
   code. Neither are supported by the 64-bit runtime APIs (that is, it is a 
   restriction in Apple's Objective-C 2.0 runtime).
 
+- There now is a custom proxy class for instances of ``datetime.date`` and
+  ``datetime.datetime``, which takes away the need to manually convert these
+  instances before using them from Objective-C (such as using an 
+  ``NSDateFormatter``)
+
+- A new decorator: ``objc.namedselector`` for overriding the Objective-C
+  selector. Usage::
+
+  	class MyObject (NSObject):
+
+	    @objc.namedselector("foo:bar:")
+	    def foobar(self, foo, bar):
+	       pass
+
+- A number of new type signature values were added. These are not present
+  in the Objective-C runtime, but are used to more precisely describe the
+  type of some arguments. 
+
+  The new values are:
+
+  * _C_UNICHAR:   A "UniChar" value in Objective-C
+
+  * _C_NSBOOL:    A "BOOL" value in Objective-C
+
+  * _C_CHAR_AS_INT: A "char" in Objective-C that is used as a number
+
+  * _C_CHAR_AS_TEXT: A "char" in Objective-C that is used as a character
+
+  PyObjC will automaticly translate these values into the correct Objective-C
+  type encoding when communicating with the Objective-C runtime, making this
+  change transparent to anyone but Python users.
+
+  NOTE: _C_CHR is of course still supported, with the same semi-schizofrenic
+  behaviour as always.
+
+  NOTE2: The non-standard metadata extensions we used before to indicate
+  that a C short is used as a unicode string are no longer supported.
+
+- Output arguments are no longer optional. They must be specified both in 
+  method implementations and method calls. In PyObjC 2.0 they were optional,
+  but raised a deprecation warning, for backward compatiblity with PyObjC 1.x.
+  
+  The backward compatibility code was removed because it made code more
+  complicated and actually caused some bugs.
+
+- In PyObjC 1.x you could redefine an Objective-C class, as long as you 
+  redefined it in the same module (such as by reloading a module). That 
+  functionality didn't work in PyObjC 2.0 and is now completely removed 
+  because the functionality isn't supported by the Objective-C 2.0 runtime.
+
 - BUGFIX: The wrappers for CoreFoundation types no longer create a new type 
   in the Objective-C runtime, that type wasn't used anywhere and was an 
   unwanted side-effect of how CoreFoundation types are wrapped.
 
-Version 2.0.1 (...)
--------------------
+- BUGFIX: The docstring for newly defined methods is no longer hidden
+  by PyObjC. That is, given this code::
+
+  	class MyObject (NSObject):
+	    def doit(self):
+	        "do something"
+		return 1 + 2
+
+  ``MyObject.doit.__doc__`` now evaluates to ``"do something"``, in previous
+  versions of PyObjC the docstring was ``None``.
+
+- BUGFIX: Fixed calling and implementation methods where one or more 
+  of the arguments are defined as arrays, like this::
+
+  	-(void)fooCallback:(NSRect[4])rects;
+
+  There were various issues that caused these to not work correctly in
+  all earlier versions of PyObjC (which wasn't noticed earlier because
+  Apple's frameworks don't use this construction).
+
+- BUGFIX: correctly select the native implementation of the compatiblity
+  routines for the ObjC 2.0 runtime API when running on 10.5 (when compiled
+  for OSX 10.3 or later). 
+
+- BUGFIX: fix a number of compatibility routines (ObjC 2.0 runtime API  
+  on OSX 10.4 or earlier).
+
+Version 2.0.1 (included with OSX 10.5.2)
+----------------------------------------
 
 - BUGFIX: ``objc.inject`` works on Leopard (at least on Intel Macs, haven't
   tested on PPC). 

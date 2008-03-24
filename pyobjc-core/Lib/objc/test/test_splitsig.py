@@ -76,12 +76,18 @@ class SplitSignatureTest (objc.test.TestCase):
             "setKey4",
             "get_key2",
             "read_bar",
+            "setFoo_",
+            "method_with_embedded_underscores",
+            "methodWithArg_",
+            "myMethod",
+            "twoargs",
 
             # dictionary methods
             'get',
         ]
 
         for cls in objc.getClassList():
+            if cls.__name__.startswith('OC_'): continue
             for selName in cls.__dict__.keys():
                 if selName in EXCEPTIONS: continue
                 if selName.startswith('__') and selName.endswith('__'): continue

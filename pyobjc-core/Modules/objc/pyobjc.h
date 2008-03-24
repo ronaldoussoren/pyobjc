@@ -60,6 +60,8 @@
 #include "varlist.h"
 #include "parsexml.h"
 #include "objc_super.h"
+#include "picklecoder.h"
+#include "pycoder.h"
 
 
 /*

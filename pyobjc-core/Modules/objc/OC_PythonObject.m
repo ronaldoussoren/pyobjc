@@ -1067,17 +1067,17 @@ static  PyObject* setKeyFunc = NULL;
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-	/* 
-	 * Forcefully disable coding for now, to avoid generating invalid
-	 * encoded streams.
-	 */
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", [self pyObject]->ob_type->tp_name, coder];
+	PyObjC_encode_object(coder, [self pyObject]);
 }
 
 - initWithCoder:(NSCoder*)coder
 {
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Decoding python objects is not supported", coder];
-	return nil;
+	pyObject = PyObjC_decode_object(coder);
+	if (pyObject == NULL) {
+		[self release];
+		return nil;
+	}
+	return self;
 }
 
 /* NOTE: NSProxy does not implement isKindOfClass on Leopard, therefore we 
