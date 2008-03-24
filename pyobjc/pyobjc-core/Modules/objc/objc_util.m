@@ -14,6 +14,8 @@ PyObject* PyObjCExc_InternalError;
 PyObject* PyObjCExc_UnInitDeallocWarning;
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
+PyObject* PyObjCExc_BadPrototypeError;
+
 
 
 int 
@@ -31,6 +33,7 @@ PyObjCUtil_Init(PyObject* module)
 	NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
 	NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning", PyExc_Warning);
 	NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
+	NEW_EXC(PyObjCExc_BadPrototypeError, "BadPrototypeError", PyObjCExc_Error);
 
 	return 0;
 }
@@ -536,6 +539,25 @@ struct_elem_code(const char* typestr)
 	}
 	return res;
 }
+
+static BOOL
+code_compatible(char array_code, char type_code) 
+{
+	if (array_code == type_code) {
+		return YES;
+	}
+	switch (type_code) {
+	case _C_NSBOOL:
+		return (array_code == _C_CHR) || (array_code == _C_UCHR);
+	case _C_CHAR_AS_INT:
+		return (array_code == _C_CHR) || (array_code == _C_UCHR);
+	case _C_CHAR_AS_TEXT:
+		return (array_code == _C_CHR);
+	case _C_UNICHAR:
+		return (array_code == _C_SHT);
+	}
+	return NO;
+}
 		
 
 /*
@@ -548,6 +570,7 @@ struct_elem_code(const char* typestr)
  * 'elementType' or an appropriatly typed and shaped numeric array.
  * 
  * XXX: Numeric arrays are not yet supported.
+ * XXX: Unicode arrays are not yet support (_C_UNICHAR)
  */
 int	
 PyObjC_PythonToCArray(
@@ -567,12 +590,16 @@ PyObjC_PythonToCArray(
 		return -1;
 	}
 
-	if (eltsize == 1 || eltsize == 0) {
+	if ((eltsize == 1 || eltsize == 0) && 
+		!(*elementType == _C_NSBOOL || *elementType == _C_BOOL || *elementType == _C_CHAR_AS_INT) ) {
 		/* A simple byte-array */
 		char* buf;
 		Py_ssize_t bufsize;
+		int have_buffer;
 
-		if (buffer_get(writable, pythonList, (void**)&buf, &bufsize) == -1) {
+
+		have_buffer = buffer_get(writable, pythonList, (void**)&buf, &bufsize);
+		if (have_buffer == -1) {
 			if (writable) {
 				/* Ensure that the expected semantics still work
 				 * when the passed in buffer is read-only
@@ -602,28 +629,89 @@ PyObjC_PythonToCArray(
 				}
 				return SHOULD_FREE;
 			}
+		}
+
+		if (have_buffer != -1) {
+			if (size == NULL) {
+				*array = buf;
+
+			} else if (*size == -1) {
+				*array = buf;
+				*size = bufsize;
+
+			} else {
+				if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
+					PyErr_Format(PyExc_ValueError,
+						"Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
+						"of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+					return -1;
+				}
+				*array = buf;
+				*bufobj = pythonList;
+				Py_INCREF(pythonList);
+			}
+			return SHOULD_IGNORE;
+		}
+
+		PyErr_Clear();
+	} 
+
+	if (*elementType == _C_UNICHAR && PyUnicode_Check(pythonList)) {
+		Py_ssize_t bufsize = PyUnicode_GetSize(pythonList);
+
+		if (*size == -1) {
+			*size = bufsize;
+		} else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
+			PyErr_Format(PyExc_ValueError,
+				"Requesting unicode buffer of %"PY_FORMAT_SIZE_T"d, have unicode buffer "
+				"of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
 			return -1;
 		}
-		if (size == NULL) {
-			*array = buf;
 
-		} else if (*size == -1) {
-			*array = buf;
-			*size = bufsize;
-
+		if (writable) {
+			*array = PyMem_Malloc(*size * sizeof(UniChar));
+			memcpy(*array, PyUnicode_AsUnicode(pythonList), *size * sizeof(UniChar));
+			return SHOULD_FREE;
 		} else {
-			if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
-				PyErr_Format(PyExc_ValueError,
-					"Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
-					"of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
-				return -1;
-			}
-			*array = buf;
+			*array = PyUnicode_AsUnicode(pythonList);
 			*bufobj = pythonList;
 			Py_INCREF(pythonList);
+			return SHOULD_IGNORE;
 		}
-		return SHOULD_IGNORE;
-	} 
+
+	} else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {
+		PyObject* u = PyUnicode_Decode(
+				PyString_AsString(pythonList),
+				PyString_Size(pythonList),
+				NULL, NULL);
+		if (u == NULL) {
+			return -1;
+		}
+
+		Py_ssize_t bufsize = PyUnicode_GetSize(u);
+
+		if (*size == -1) {
+			*size = bufsize;
+		} else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
+			PyErr_Format(PyExc_ValueError,
+				"Requesting unicode buffer of %"PY_FORMAT_SIZE_T"d, have unicode buffer "
+				"of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+			Py_DECREF(u);
+			return -1;
+		}
+
+		if (writable) {
+			*array = PyMem_Malloc(*size * sizeof(UniChar));
+			memcpy(*array, PyUnicode_AsUnicode(u), *size * sizeof(UniChar));
+			Py_DECREF(u);
+			return SHOULD_FREE;
+		} else {
+			*array = PyUnicode_AsUnicode(u);
+			*bufobj = u;
+			return SHOULD_IGNORE;
+		}
+	}
+
 
 	/* A more complex array */
 
@@ -635,13 +723,13 @@ PyObjC_PythonToCArray(
 		char* buf;
 		Py_ssize_t bufsize;
 		char code = array_typestr(pythonList);
-		if (code == *elementType) {
+		if (code_compatible(code, *elementType)) {
 			/* Simple array, ok */
 		} else if (*elementType == _C_ARY_B) {
 			/* Array of arrays, 'code' must be the same as the
 			 * element-type of the array.
 			 */
-			if (code != array_elem_code(elementType)) {
+			if (!code_compatible(code, array_elem_code(elementType))) {
 				PyErr_Format(PyExc_ValueError, 
 					"type mismatch between array.array "
 					"of %c and and C array of %s",
@@ -654,7 +742,7 @@ PyObjC_PythonToCArray(
 			 * the field-types of the structs (that is, the struct
 			 * must contain one or more fields of type 'code').
 			 */
-			if (code != struct_elem_code(elementType)) {
+			if (!code_compatible(code, struct_elem_code(elementType))) {
 				PyErr_Format(PyExc_ValueError, 
 					"type mismatch between array.array "
 					"of %c and and C array of %s",
@@ -720,6 +808,18 @@ PyObjC_PythonToCArray(
 	} else {
 		Py_ssize_t seqlen;
 		Py_ssize_t pycount;
+
+		if (*elementType == _C_NSBOOL) {
+			if (PyString_Check(pythonList)) {
+				PyErr_Format(PyExc_ValueError, "Need array of BOOL, got string");
+				return -1;
+			}
+		} else if (*elementType == _C_CHAR_AS_INT) {
+			if (PyString_Check(pythonList)) {
+				PyErr_Format(PyExc_ValueError, "Need array of small integers, got string");
+				return -1;
+			}
+		}
 		PyObject* seq = PySequence_Fast(pythonList, 
 					"converting to a C array");
 		if (seq == NULL) {
@@ -783,9 +883,21 @@ PyObjC_CArrayToPython(
 		return NULL;
 	}
 
+
 	if (eltsize == 1 || eltsize == 0) {
-		/* Special case for buffer-like objects */
-		return PyString_FromStringAndSize(array, size);
+		if (*elementType != _C_NSBOOL && *elementType != _C_BOOL && *elementType != _C_CHAR_AS_INT) {
+			/* Special case for buffer-like objects */
+			return PyString_FromStringAndSize(array, size);
+		}
+	}
+
+	if (*elementType == _C_UNICHAR) {
+#if defined(PyObjC_UNICODE_FAST_PATH)
+		result = PyUnicode_FromUnicode((Py_UNICODE*)array, size);
+#else
+#		error "Sorry, Wide Unicode builds not supported at the moment"	
+#endif			
+		return result;
 	}
 
 	result = PyTuple_New(size);
@@ -966,8 +1078,18 @@ PyObjC_CArrayToPython2(
 	}
 
 	if (eltsize == 1 || eltsize == 0) {
-		/* Special case for buffer-like objects */
-		return PyString_FromStringAndSize(array, size);
+		if (*elementType != _C_NSBOOL && *elementType != _C_BOOL && *elementType != _C_CHAR_AS_INT) {
+			/* Special case for buffer-like objects */
+			return PyString_FromStringAndSize(array, size);
+		}
+	}
+	if (*elementType == _C_UNICHAR) {
+#if defined(PyObjC_UNICODE_FAST_PATH)
+		result = PyUnicode_FromUnicode((Py_UNICODE*)array, size);
+#else
+#		error "Sorry, Wide Unicode builds not supported at the moment"	
+#endif			
+		return result;
 	}
 
 	result = PyTuple_New(size);

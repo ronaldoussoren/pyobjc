@@ -4,7 +4,7 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector' ]
 
 from _objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
 import sys, textwrap
@@ -81,6 +81,23 @@ def accessor(func, typeSignature='@'):
         return selector(func, signature=typeSignature + "@:")
 
     raise TypeError("%s takes too many arguments to be an accessor" % (funcName,))
+
+def namedselector(name, signature=None):
+    """
+    Python 2.4 decorator for overriding the Objective-C SEL for a method, usage:
+
+        @namedselector("foo:bar:")
+        def foobar(self, foo, bar):
+            return foo + bar
+    """
+    if signature is not None:
+        def _namedselector(func):
+            return selector(func, selector=name, signature=signature)
+    else:
+        def _namedselector(func):
+            return selector(func, selector=name)
+
+    return _namedselector
 
 def typedAccessor(typeSignature):
     """
@@ -198,3 +215,5 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
     exec getter in classDict
 
     classDict[ivarName] = ivar(type=type)
+
+

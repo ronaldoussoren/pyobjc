@@ -72,4 +72,7 @@ int PyObjCClass_UnbuildClass(Class new_class);
  */
 int PyObjCClass_FinishClass(Class objc_class);
 
+
+void PyObjC_RemoveInternalTypeCodes(char* buf);
+
 #endif /* OBJC_CLASS_BUILDER */

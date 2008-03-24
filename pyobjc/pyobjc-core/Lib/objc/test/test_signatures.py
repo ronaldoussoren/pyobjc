@@ -109,7 +109,7 @@ class PyOCTestTypeStr(objc.test.TestCase):
 
     def testNativeSignature(self):
         s = objc.selector(lambda(x,y):1, signature="ii")
-        self.assertEquals(s.native_signature, None)
+        self.assertEquals(s.native_signature, "ii")
 
         self.assertRaises((TypeError, AttributeError), setattr, s, 'native_signature', 'v@:ii')
 

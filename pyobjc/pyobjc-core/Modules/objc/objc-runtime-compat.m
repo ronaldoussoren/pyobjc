@@ -4,6 +4,8 @@
  * This code works by poking into the ObjC runtime, which means loads of 
  * warnings on 10.5+ ;-)
  */
+
+#define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 
 BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
@@ -533,7 +535,8 @@ compat_preclass_addProtocol(Class cls, Protocol* protocol)
 		return NO;
 	}
 	cls->protocols = protocols;
-	protocols->list[protocols->count++] = protocol;
+	protocols->list[protocols->count] = protocol;
+	protocols->count++;
 	return YES;
 }
 	
@@ -694,7 +697,9 @@ compat_protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BO
 	*outCount = 0;
 	for (i = 0; i < list->count; i++) {
 		if (list->list[i].name == NULL) continue;
-		result[*outCount++] = list->list[i];
+		result[*outCount].name = list->list[i].name;
+		result[*outCount].types = list->list[i].types;
+		(*outCount)++;
 	}
 
 	return result;
@@ -857,7 +862,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	}
 
 #   define SETUP(funcname) \
-	if (funcname == NULL) { \
+	if ((funcname) == NULL) { \
 		PyObjC_##funcname = compat_##funcname; \
 	} else { \
 		PyObjC_##funcname = funcname; \

@@ -11,6 +11,13 @@
 -(void)method2:(int)v;
 @end
 
+@interface OC_TestProtocolClass : NSObject <OC_TestProtocol>
+{}
+@end
+
+@implementation OC_TestProtocolClass
+@end
+
 static PyMethodDef protocol_methods[] = {
 	{ 0, 0, 0, 0 }
 };

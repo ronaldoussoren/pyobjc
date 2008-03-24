@@ -449,25 +449,17 @@ class TestArraysOut (objc.test.TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            v = OC_MetaDataTest.fill4Tuple_on_(o)
-            self.assertEquals(list(v), list(range(9, 13)))
-        finally:
-            del warnings.filters[0]
+        v = OC_MetaDataTest.fill4Tuple_on_(None, o)
+        self.assertEquals(list(v), list(range(9, 13)))
 
         v = OC_MetaDataTest.fill4Tuple_on_(None, o)
         self.assertEquals(list(v), list(range(9, 13)))
 
         self.assertRaises(ValueError, OC_MetaDataTest.fill4Tuple_on_, objc.NULL, o)
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            n, v = OC_MetaDataTest.nullfill4Tuple_on_(o)
-            self.assertEquals(n, 1)
-            self.assertEquals(list(v), list(range(1, 5)))
-        finally:
-            del warnings.filters[0]
+        n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
+        self.assertEquals(n, 1)
+        self.assertEquals(list(v), list(range(1, 5)))
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
         self.assertEquals(n, 1)
@@ -483,12 +475,6 @@ class TestArraysOut (objc.test.TestCase):
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            self.assertRaises(TypeError, OC_MetaDataTest.fillStringArray_on_, o)
-        finally:
-            del warnings.filters[0]
-
         self.assertRaises(TypeError, OC_MetaDataTest.fillStringArray_on_, None, o)
         self.assertRaises(ValueError, OC_MetaDataTest.fillStringArray_on_, objc.NULL, o)
 
@@ -501,35 +487,21 @@ class TestArraysOut (objc.test.TestCase):
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            v = OC_MetaDataTest.fillArray_count_on_(3, o)
-            self.assertEquals(list(v),  [10, 11, 12])
-        finally:
-            del warnings.filters[0]
-
         v = OC_MetaDataTest.fillArray_count_on_(None, 3, o)
         self.assertEquals(list(v),  [10, 11, 12])
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            v = OC_MetaDataTest.fillArray_count_on_(5, o)
-            self.assertEquals(list(v),  [10, 11, 12, 13, 14])
+        v = OC_MetaDataTest.fillArray_count_on_(None, 5, o)
+        self.assertEquals(list(v),  [10, 11, 12, 13, 14])
 
-            v = OC_MetaDataTest.fillArray_count_on_(0, o)
-            self.assertEquals(list(v),  [])
+        v = OC_MetaDataTest.fillArray_count_on_(None, 0, o)
+        self.assertEquals(list(v),  [])
 
-            self.assertRaises(ValueError, OC_MetaDataTest.fillArray_count_on_, objc.NULL, 0, o)
-        
-            n, v = OC_MetaDataTest.nullfillArray_count_on_(3, o)
-            self.assertEquals(n, 2)
-            self.assertEquals(list(v),  [30,31,32])
-            n, v = OC_MetaDataTest.nullfillArray_count_on_(None, 3, o)
-            self.assertEquals(n, 2)
-            self.assertEquals(list(v),  [30,31,32])
+        self.assertRaises(ValueError, OC_MetaDataTest.fillArray_count_on_, objc.NULL, 0, o)
+    
+        n, v = OC_MetaDataTest.nullfillArray_count_on_(None, 3, o)
+        self.assertEquals(n, 2)
+        self.assertEquals(list(v),  [30,31,32])
 
-        finally:
-            del warnings.filters[0]
 
         n, v = OC_MetaDataTest.nullfillArray_count_on_(objc.NULL, 3, o)
         self.assertEquals(n, 1)
@@ -538,17 +510,13 @@ class TestArraysOut (objc.test.TestCase):
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            c, v = OC_MetaDataTest.fillArray_uptoCount_on_(20, o)
-            self.assertEquals(c, 10)
-            self.assertEquals(list(v),  [i+10 for i in range(10)])
+        c, v = OC_MetaDataTest.fillArray_uptoCount_on_(None, 20, o)
+        self.assertEquals(c, 10)
+        self.assertEquals(list(v),  [i+10 for i in range(10)])
 
-            c, v = OC_MetaDataTest.maybeFillArray_on_(o)
-            self.assertEquals(c, 2)
-            self.assertEquals(list(v),  [0, 1])
-        finally:
-            del warnings.filters[0]
+        c, v = OC_MetaDataTest.maybeFillArray_on_(None, o)
+        self.assertEquals(c, 2)
+        self.assertEquals(list(v),  [0, 1])
 
 class TestArraysInOut (objc.test.TestCase):
     def testFixedSize(self):
@@ -769,20 +737,15 @@ class TestByReference (objc.test.TestCase):
     def testOutput(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            div, rem = OC_MetaDataTest.divBy5_remainder_on_(55, o)
-            self.assertEquals(div, 55 / 7)
-            self.assertEquals(rem, 55 % 7)
+        div, rem = OC_MetaDataTest.divBy5_remainder_on_(55, None, o)
+        self.assertEquals(div, 55 / 7)
+        self.assertEquals(rem, 55 % 7)
 
-            div, rem = OC_MetaDataTest.divBy5_remainder_on_(13, o)
-            self.assertEquals(div, 13 / 7)
-            self.assertEquals(rem, 13 % 7)
-        finally:
-            del warnings.filters[0]
+        div, rem = OC_MetaDataTest.divBy5_remainder_on_(13, None, o)
+        self.assertEquals(div, 13 / 7)
+        self.assertEquals(rem, 13 % 7)
 
-        # XXX: To be fixed: 
-        #self.assertRaises(ValueError, OC_MetaDataTest.divBy5_remainder_on_, 42, objc.NULL, o)
+        self.assertRaises(ValueError, OC_MetaDataTest.divBy5_remainder_on_, 42, objc.NULL, o)
 
     def testInputOutput(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -800,15 +763,11 @@ class TestByReference (objc.test.TestCase):
             return int(value, 0)
 
         # All arguments present
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, 2, o)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 3)
-            self.assertEquals(y, 9)
-            self.assertEquals(z, 10)
-        finally:
-            del warnings.filters[0]
+        r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEquals(y, 9)
+        self.assertEquals(z, 10)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
         self.assertEquals(len(r), 3)
@@ -817,15 +776,11 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(z, 10)
 
         # Argument 1 is NULL
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, 2, o)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-            self.assertEquals(y, 11)
-            self.assertEquals(z, 12)
-        finally:
-            del warnings.filters[0]
+        r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEquals(y, 11)
+        self.assertEquals(z, 12)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
         self.assertEquals(len(r), 3)
@@ -841,15 +796,11 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(z, 14)
 
         # Argument 3 is NULL
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, objc.NULL, o)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-            self.assertEquals(y, 15)
-            self.assertEquals(z, objc.NULL)
-        finally:
-            del warnings.filters[0]
+        r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEquals(y, 15)
+        self.assertEquals(z, objc.NULL)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
         self.assertEquals(len(r), 3)

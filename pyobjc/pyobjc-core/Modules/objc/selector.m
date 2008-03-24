@@ -874,7 +874,13 @@ PyObjCSelector_New(PyObject* callable,
 
 	result->sel_selector = selector;
 	result->sel_python_signature = signature;
-	result->sel_native_signature = NULL;
+	result->sel_native_signature = PyObjCUtil_Strdup(signature);
+	if (result->sel_native_signature == NULL) {
+		Py_DECREF(result);
+		return NULL;
+	}
+	PyObjC_RemoveInternalTypeCodes(result->sel_native_signature);
+
 	result->sel_self = NULL;
 	result->sel_class = cls;
 	result->sel_flags = 0;
@@ -1273,6 +1279,10 @@ PyObjCSelector_DefaultSelector(const char* methname)
 
 	cur = buf + ln;
 	if (cur - buf > 3) {
+		if (cur[-1] != '_') {
+			return sel_registerName(buf);
+		}
+
 		if (cur[-1] == '_' && cur[-2] == '_') {
 			cur[-2] = '\0';
 			if (PyObjC_IsPythonKeyword(buf)) {

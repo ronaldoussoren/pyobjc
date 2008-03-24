@@ -39,7 +39,6 @@ static const char* gBooleanAttributes[] = {
 	"c_array_delimited_by_null",
 	"null_accepted', ",
 	"c_array_of_variable_length",
-	"unicode_string",
 	"printf_format",
 	NULL
 };
@@ -61,6 +60,91 @@ static function_pointer find_function(struct functionlist* functions, char* name
 		functions++;
 		}
 	return NULL;
+}
+
+/*
+ * Inline rewrite of typestrings from a metadata file. 
+ * This fixes an issue with metadata files: metadata files use
+ * _C_BOOL to represent type 'BOOL', but that the string should
+ * be used to represent 'bool' which has a different size on
+ * PPC. Therefore swap usage of _C_BOOL and _C_NSBOOL in data
+ * from metadata files.
+ */
+static void typecode2typecode(char* buf)
+{
+	/* Skip pointer declarations and anotations */
+	for (;;) {
+		switch(*buf) {
+		case _C_PTR:
+		case _C_IN:
+		case _C_OUT:
+		case _C_INOUT:
+		case _C_ONEWAY:
+		case _C_CONST:
+			buf++;
+			break;
+		default:
+		      goto exit;
+		}
+	}
+exit:
+
+	switch (*buf) {
+	case _C_BOOL:
+		*buf = _C_NSBOOL;
+		break;
+	case _C_NSBOOL:
+		*buf = _C_BOOL;
+		break;
+
+	case _C_STRUCT_B:
+		while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
+		}
+		while (*buf && *buf != _C_STRUCT_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			typecode2typecode(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+
+	case _C_UNION_B:
+		while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
+		}
+		while (*buf && *buf != _C_UNION_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			typecode2typecode(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+
+
+	case _C_ARY_B:
+		while (isdigit(*++buf));
+		typecode2typecode(buf);
+		break;
+	}
+}
+
+static void typestr2typestr(char* buf)
+{
+	while (buf && *buf) {
+		typecode2typecode(buf);
+		buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+	}
 }
 
 int
@@ -155,6 +239,8 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	int r;
 
 	s = attribute_string(node, "type", "type64");
+	typestr2typestr(s);
+
 	if (s && *s) {
 		v = PyString_FromString(s);
 		if (v == NULL) {
@@ -191,6 +277,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	if (s) xmlFree(s);
 
 	s = attribute_string(node, "sel_of_type", "sel_of_type64");
+	typestr2typestr(s);
 	if (s && *s) {
 		v = PyString_FromString(s);
 		if (v == NULL) {
@@ -244,16 +331,6 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 		if (r == -1) {
 			Py_DECREF(result);
 			return NULL;
-		}
-	}
-
-	/* Don't use attribute_bool because the default is non-trivial */
-	s = attribute_string(node, "numeric", NULL);
-	if (s && *s) {
-		if (strcmp(s, "true") == 0) {
-			r = PyDict_SetItemString(result, "numeric", Py_True);
-		} else {
-			r = PyDict_SetItemString(result, "numeric", Py_False);
 		}
 	}
 
@@ -421,6 +498,8 @@ handle_opaque(xmlNode* cur_node, PyObject* globalDict)
 	char* name = attribute_string(cur_node, "name", NULL);
 	char* type = attribute_string(cur_node, "type", "type64");
 
+	typestr2typestr(type);
+
 	if (name != NULL && type != NULL && *type != '\0' ) {
 		/* We've found a valid opaque type */
 		PyObject* value = PyObjCCreateOpaquePointerType(
@@ -449,6 +528,8 @@ handle_constant(xmlNode* cur_node, PyObject* globalDict)
 {
 	char* name = attribute_string(cur_node, "name", NULL);
 	char* type = attribute_string(cur_node, "type", "type64");
+
+	typestr2typestr(type);
 
 	if (name != NULL && type != NULL && *type != '\0' ) {
 		if (type[0] == _C_STRUCT_B) {
@@ -656,6 +737,8 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 	char* tollfree = attribute_string(cur_node, "tollfree", NULL);
 	int retval = -1;
 	PyObject* v;
+
+	typestr2typestr(type);
 
 	if (name == NULL || type == NULL || *type == '\0') {
 		retval = 0;
@@ -1186,6 +1269,8 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 		char* type = attribute_string(method, "type", "type64");
 		BOOL isClassMethod = attribute_bool(method, "classmethod", NULL, NO);
 
+		typestr2typestr(type);
+
 		if (selector != NULL && type != NULL) {
 			if (methodList == NULL) {
 				methodList = PyList_New(0);
@@ -1300,6 +1385,7 @@ handle_struct(xmlNode* cur_node, PyObject* globalDict)
 {
 	char* name = attribute_string(cur_node, "name", NULL);
 	char* type = attribute_string(cur_node, "type", "type64");
+	typestr2typestr(type);
 
 	if (name != NULL && type != NULL && *type != '\0') {
 		PyObject* v = PyObjC_RegisterStructType(

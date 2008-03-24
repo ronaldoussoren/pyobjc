@@ -17,6 +17,9 @@ struct FooStruct {
 }
 +(struct FooStruct)createWithFirst:(int)first andSecond:(int)second;
 +(int)sumFields:(struct FooStruct)foo;
+-(NSObject*)arrayOf4Structs:(struct FooStruct[4])argument;
+
++(NSObject*)callArrayOf4Structs:(OC_StructTest*)object;
 @end
 
 @implementation OC_StructTest
@@ -31,6 +34,22 @@ struct FooStruct {
 +(int)sumFields:(struct FooStruct)foo
 {
 	return foo.first + foo.second;
+}
+
++(NSObject*)callArrayOf4Structs:(OC_StructTest*)object
+{
+static	struct FooStruct structs[4] = {
+		{ 1, 2 },
+		{ 3, 4 },
+		{ 5, 6 },
+		{ 7, 8 },
+	};
+
+	return [object arrayOf4Structs:structs];
+}
+-(NSObject*)arrayOf4Structs:(struct FooStruct[4])argument;
+{
+	return [NSData dataWithBytes:(void*)argument length:sizeof(argument)];
 }
 
 @end

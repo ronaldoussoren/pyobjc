@@ -26,27 +26,15 @@ class TestArraysOut (objc.test.TestCase):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('fill4Tuple:')
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            v = m(o)
-            self.assertEquals(list(v), [0, -1, -8, -27])
-        finally:
-            del warnings.filters[0]
-
         v = m(o, None)
         self.assertEquals(list(v), [0, -1, -8, -27])
 
         self.assertRaises(ValueError, m, o, objc.NULL)
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-
-            m = o.methodForSelector_('nullfill4Tuple:')
-            n, v = m(o)
-            self.assertEquals(n, 1)
-            self.assertEquals(list(v), [0, -1, -8, -27])
-        finally:
-            del warnings.filters[0]
+        m = o.methodForSelector_('nullfill4Tuple:')
+        n, v = m(o, None)
+        self.assertEquals(n, 1)
+        self.assertEquals(list(v), [0, -1, -8, -27])
 
         n, v = m(o, None)
         self.assertEquals(n, 1)
@@ -64,12 +52,6 @@ class TestArraysOut (objc.test.TestCase):
         # Output only arrays of null-terminated arrays cannot be
         # wrapped automaticly. How is the bridge supposed to know
         # how much memory it should allocate for the C-array?
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            self.assertRaises(TypeError, m, o)
-        finally:
-            del warnings.filters[0]
-        
         self.assertRaises(TypeError, m, o, None)
         self.assertRaises(ValueError, m, o, objc.NULL)
 
@@ -84,36 +66,27 @@ class TestArraysOut (objc.test.TestCase):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('fillArray:count:')
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            v = m(o, 3)
-            self.assertEquals(list(v),  [0,1,4])
+        v = m(o, None, 3)
+        self.assertEquals(list(v),  [0,1,4])
 
-            v = m(o, None, 3)
-            self.assertEquals(list(v),  [0,1,4])
+        v = m(o, None, 3)
+        self.assertEquals(list(v),  [0,1,4])
 
-            v = m(o, 5)
-            self.assertEquals(list(v),  [0,1,4,9,16])
+        v = m(o, None, 5)
+        self.assertEquals(list(v),  [0,1,4,9,16])
 
-            v = m(o, 0)
-            self.assertEquals(list(v),  [])
-        finally:
-            del warnings.filters[0]
+        v = m(o, None, 0)
+        self.assertEquals(list(v),  [])
 
         self.assertRaises(ValueError, m, o, objc.NULL, 0)
         
-
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            m = o.methodForSelector_('nullfillArray:count:')
-            n, v = m(o, 3)
-            self.assertEquals(n, 1)
-            self.assertEquals(list(v),  [0,1,4])
-            n, v = m(o, None, 3)
-            self.assertEquals(n, 1)
-            self.assertEquals(list(v),  [0,1,4])
-        finally:
-            del warnings.filters[0]
+        m = o.methodForSelector_('nullfillArray:count:')
+        n, v = m(o, None, 3)
+        self.assertEquals(n, 1)
+        self.assertEquals(list(v),  [0,1,4])
+        n, v = m(o, None, 3)
+        self.assertEquals(n, 1)
+        self.assertEquals(list(v),  [0,1,4])
 
 
         n, v = m(o, objc.NULL, 3)
@@ -124,19 +97,14 @@ class TestArraysOut (objc.test.TestCase):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('fillArray:uptoCount:')
 
+        c, v = m(o, None, 20)
+        self.assertEquals(c, 10)
+        self.assertEquals(list(v),  [i+2 for i in range(10)])
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            c, v = m(o, 20)
-            self.assertEquals(c, 10)
-            self.assertEquals(list(v),  [i+2 for i in range(10)])
-
-            m = o.methodForSelector_('maybeFillArray:')
-            c, v = m(o)
-            self.assertEquals(c, 2)
-            self.assertEquals(list(v),  [10, 11])
-        finally:
-            del warnings.filters[0]
+        m = o.methodForSelector_('maybeFillArray:')
+        c, v = m(o, None)
+        self.assertEquals(c, 2)
+        self.assertEquals(list(v),  [10, 11])
 
 
 
@@ -395,17 +363,13 @@ class TestByReference (objc.test.TestCase):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('divBy5:remainder:')
 
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            div, rem = m(o, 55)
-            self.assertEquals(div, 11)
-            self.assertEquals(rem, 0)
+        div, rem = m(o, 55, None)
+        self.assertEquals(div, 11)
+        self.assertEquals(rem, 0)
 
-            div, rem = m(o, 13)
-            self.assertEquals(div, 2)
-            self.assertEquals(rem, 3)
-        finally:
-            del warnings.filters[0]
+        div, rem = m(o, 13, None)
+        self.assertEquals(div, 2)
+        self.assertEquals(rem, 3)
 
         # To be fixed: 
         #self.assertRaises(ValueError, m, o, 42, objc.NULL)
@@ -429,15 +393,11 @@ class TestByReference (objc.test.TestCase):
             return int(value, 0)
 
         # All arguments present
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = m(o, 1, 2)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(None, map(makeNum, r))), 3)
-            self.assertEquals(y, 3)
-            self.assertEquals(z, -1)
-        finally:
-            del warnings.filters[0]
+        r, y, z = m(o, 1, None, 2)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(None, map(makeNum, r))), 3)
+        self.assertEquals(y, 3)
+        self.assertEquals(z, -1)
 
         r, y, z = m(o, 1, None, 2)
         self.assertEquals(len(r), 3)
@@ -446,15 +406,11 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(z, -1)
 
         # Argument 1 is NULL
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = m(o, objc.NULL, 2)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-            self.assertEquals(y, 40)
-            self.assertEquals(z, -2)
-        finally:
-            del warnings.filters[0]
+        r, y, z = m(o, objc.NULL, None, 2)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
+        self.assertEquals(y, 40)
+        self.assertEquals(z, -2)
 
         r, y, z = m(o, objc.NULL, None, 2)
         self.assertEquals(len(r), 3)
@@ -470,15 +426,11 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(z, -1)
 
         # Argument 3 is NULL
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-        try:
-            r, y, z = m(o, 1, objc.NULL)
-            self.assertEquals(len(r), 3)
-            self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-            self.assertEquals(y, 43)
-            self.assertEquals(z, objc.NULL)
-        finally:
-            del warnings.filters[0]
+        r, y, z = m(o, 1, None, objc.NULL)
+        self.assertEquals(len(r), 3)
+        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
+        self.assertEquals(y, 43)
+        self.assertEquals(z, objc.NULL)
 
         r, y, z = m(o, 1, None, objc.NULL)
         self.assertEquals(len(r), 3)

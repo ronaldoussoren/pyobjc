@@ -35,6 +35,15 @@
 #define _C_ULNG_LNG  'Q'
 #define _C_BOOL     'B'         /* (Objective-)C++ 'bool' */
 
+
+/* These don't actually exist in the Objective-C runtime, but are used
+ * by the bridge to simplify code.
+ */
+#define _C_UNICHAR	'T'
+#define _C_CHAR_AS_TEXT 't'
+#define _C_CHAR_AS_INT	'z'
+#define _C_NSBOOL	'Z'
+
 struct PyObjC_method {
 	SEL	    name;
 	IMP	    imp;
@@ -124,6 +133,7 @@ extern struct objc_method_description (*PyObjC_protocol_getMethodDescription)(Pr
 extern id (*PyObjC_object_getIvar)(id obj, Ivar ivar);
 extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 
+#ifndef PYOBJC_COMPAT_IMPL
 #define object_getIvar			PyObjC_object_getIvar
 #define object_setIvar			PyObjC_object_setIvar
 #define protocol_getName		PyObjC_protocol_getName
@@ -167,6 +177,8 @@ extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 #define protocol_copyClassMethodDescriptionList 		PyObjC_protocol_copyClassMethodDescriptionList
 #define protocol_copyOptionalInstanceMethodDescriptionList	PyObjC_protocol_copyOptionalInstanceMethodDescriptionList
 #define protocol_copyOptionalClassMethodDescriptionList 	PyObjC_protocol_copyOptionalClassMethodDescriptionList
+
+#endif /* !PYOBJC_COMPAT_IMPL */
 
 #else
 

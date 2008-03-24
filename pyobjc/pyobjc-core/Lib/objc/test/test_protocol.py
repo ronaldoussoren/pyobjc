@@ -77,7 +77,7 @@ if sys.maxint < 2 ** 32:
                     class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
                         def method1(self): pass
 
-                    self.fail()
+                    self.fail("class not implementing protocol, yet created")
                 except TypeError:
                     pass
 

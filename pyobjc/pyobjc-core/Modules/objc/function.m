@@ -80,7 +80,6 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	Py_ssize_t byref_out_count;
 	Py_ssize_t plain_count;
 	Py_ssize_t argbuf_len;
-	int allArgsPresent = 0;
 	int r;
 	int cif_arg_count;
 	BOOL variadicAllArgs = NO;
@@ -134,18 +133,10 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 			self->methinfo->ob_size - 2, PyTuple_Size(args));
 			return NULL;
 		}
-	} else if (PyTuple_Size(args) == self->methinfo->ob_size) {
-		allArgsPresent = 1;
-
-	} else if (PyTuple_Size(args) != (plain_count + byref_in_count)) {
+	} else if (PyTuple_Size(args) != self->methinfo->ob_size) {
 		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-			plain_count + byref_in_count, PyTuple_Size(args));
+			self->methinfo->ob_size, PyTuple_Size(args));
 		return NULL;
-	} else {
-		if (PyErr_WarnEx(PyExc_DeprecationWarning, 
-			"Not all arguments to an Objective-C function are present", 1) < 0) {
-			return NULL;
-		}
 	}
 
 
@@ -168,8 +159,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	cif_arg_count = PyObjCFFI_ParseArguments(
 		self->methinfo, 0, args,
 		align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type), sizeof(void*)),
-		argbuf, argbuf_len, byref, byref_attr, arglist, values,
-		allArgsPresent);
+		argbuf, argbuf_len, byref, byref_attr, arglist, values);
 	if (cif_arg_count == -1) {
 		goto error;
 	}

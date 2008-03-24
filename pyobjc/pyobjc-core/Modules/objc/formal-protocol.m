@@ -536,7 +536,8 @@ static int
 do_verify(
 	const char* protocol_name, 
 	struct objc_method_description* descr, 
-	int is_class, 
+	BOOL is_class, 
+	BOOL is_required,
 	char* name,
 	PyObject* super_class, 
 	PyObject* clsdict, PyObject* metadict)
@@ -549,16 +550,21 @@ do_verify(
 		meth = findSelInDict(clsdict, descr->name);
 	}
 	if (meth == NULL || !PyObjCSelector_Check(meth)) {
-
+		
 		meth = PyObjCClass_FindSelector(super_class, descr->name, is_class);
 		if (meth == NULL || !PyObjCSelector_Check(meth)) {
-			PyErr_Format(PyExc_TypeError,
-				"class %s does not full implement protocol "
-				"%s: no implementation for %s",
-				name,
-				protocol_name,
-				sel_getName(descr->name));
-			return 0;
+			if (is_required) {
+				PyErr_Format(PyExc_TypeError,
+					"class %s does not full implement protocol "
+					"%s: no implementation for %s",
+					name,
+					protocol_name,
+					sel_getName(descr->name));
+				return 0;
+			} else {
+				/* Method is not required, ignore */
+				return 1;
+			}
 		}
 	}
 
@@ -630,13 +636,25 @@ do_check(
 		free(parents);
 	}
 
-	unsigned methCount;
+	unsigned int methCount;
 	struct objc_method_description* methinfo;
 
+	methCount = 0;
 	methinfo = protocol_copyMethodDescriptionList(protocol, YES, YES, &methCount);
 	if (methinfo) {
 		for (idx = 0; idx < methCount; idx++) {
-			if (!do_verify(protocol_name, methinfo + idx, NO, name, super_class, clsdict, metadict)) {
+			if (!do_verify(protocol_name, methinfo + idx, NO, YES, name, super_class, clsdict, metadict)) {
+				free(methinfo);
+				return 0;
+			}
+		}
+		free(methinfo);
+	}
+
+	methinfo = protocol_copyMethodDescriptionList(protocol, NO, YES, &methCount);
+	if (methinfo) {
+		for (idx = 0; idx < methCount; idx++) {
+			if (!do_verify(protocol_name, methinfo + idx, NO, NO, name, super_class, clsdict, metadict)) {
 				free(methinfo);
 				return 0;
 			}
@@ -647,7 +665,18 @@ do_check(
 	methinfo = protocol_copyMethodDescriptionList(protocol, YES, NO, &methCount);
 	if (methinfo) {
 		for (idx = 0; idx < methCount; idx++) {
-			if (!do_verify(protocol_name, methinfo + idx, YES, name, super_class, clsdict, metadict)) {
+			if (!do_verify(protocol_name, methinfo + idx, YES, YES, name, super_class, clsdict, metadict)) {
+				free(methinfo);
+				return 0;
+			}
+		}
+		free(methinfo);
+	}
+
+	methinfo = protocol_copyMethodDescriptionList(protocol, NO, NO, &methCount);
+	if (methinfo) {
+		for (idx = 0; idx < methCount; idx++) {
+			if (!do_verify(protocol_name, methinfo + idx, YES, NO, name, super_class, clsdict, metadict)) {
 				free(methinfo);
 				return 0;
 			}
