@@ -12,8 +12,9 @@ sources or nibs.)
 See also the iClass demo.
 """
 
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 from objc import getClassList, objc_object
+from Foundation import *
 
 
 try:
@@ -31,23 +32,16 @@ try:
 except ImportError:
     pass
 
-
-NibClassBuilder.extractClasses("ClassBrowser")
-
-
 def _sortClasses(classList):
     classes = [(cls.__name__, cls) for cls in classList]
     classes.sort()
     return [cls for name, cls in classes]
 
 
-# class defined in ClassBrowser.nib
-class ClassBrowserDelegate(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSObject
-    # The following outlets are added to the class:
-    # browser
-    # pathLabel
-    # table
+class ClassBrowserDelegate (NSObject):
+    browser = objc.IBOutlet()
+    pathLabel = objc.IBOutlet()
+    table = objc.IBOutlet()
 
     selectedClassMethods = None
 
@@ -77,7 +71,7 @@ class ClassBrowserDelegate(NibClassBuilder.AutoBaseClass):
         self.columns.append(subclasses)
         return len(subclasses)
 
-    # action method, called when the user clicks somewhere in the browser
+    @objc.IBAction
     def browserAction_(self, browser):
         self.pathLabel.setStringValue_(browser.path())
 
@@ -96,10 +90,14 @@ class ClassBrowserDelegate(NibClassBuilder.AutoBaseClass):
             # only after that cls.__dict__ actually contains the methods.
             # Do a dummy hasattr() to make sure the class is initialized.
             hasattr(self.selectedClass, "alloc")
-            self.selectedClassMethods = ['-' + obj.selector for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
-                                         if hasattr(obj, "selector")]
-            self.selectedClassMethods += ['+' + obj.selector for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
-                                         if hasattr(obj, "selector")]
+            self.selectedClassMethods = [
+                '-' + obj.selector for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
+                 if hasattr(obj, "selector")
+            ]
+            self.selectedClassMethods += [
+                '+' + obj.selector for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
+                if hasattr(obj, "selector")
+            ]
             self.selectedClassMethods.sort()
 
         self.table.reloadData()
@@ -115,7 +113,6 @@ class ClassBrowserDelegate(NibClassBuilder.AutoBaseClass):
 
     def tableView_shouldEditTableColumn_row_(self, tableView, col, row):
         return 0
-
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()
