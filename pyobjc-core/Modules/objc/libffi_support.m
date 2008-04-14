@@ -1765,8 +1765,11 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
 
 		if (stubUserdata->argCount == methinfo->ob_size - 1 && !haveVarArgs && !haveVarKwds) {
 			/* OK */
-		} else if (stubUserdata->argCount == 0 && haveVarArgs && haveVarKwds) {
-			/* OK */
+		} else if (stubUserdata->argCount <= 1 && haveVarArgs && haveVarKwds) {
+			/* OK: 
+			 *    def m(self, *args, **kwds), or 
+			 *    def m(*args, **kwds)  
+			 */
 		} else {
 			/* Wrong number of arguments, raise an error */
 			PyObject* repr = PyObject_Repr(callable);
@@ -3320,7 +3323,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	} else if (PyTuple_Size(args) != methinfo->ob_size - 2) {
 
 		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-			plain_count + byref_in_count, PyTuple_Size(args));
+			methinfo->ob_size - 2, PyTuple_Size(args));
 		goto error_cleanup;
 	}
 
