@@ -163,6 +163,17 @@ class TestInheritedProtoype (objc.test.TestCase):
             def replacementObjectForArchiver_(*args, **kwds):
                 pass
 
+
+        # Also allow versions with an explicit self argument, those
+        # are commonly used as well.
+        class OC_InPro_AllOpt3 (NSObject):
+            def init(self, *args, **kwds):
+                pass
+
+        class OC_InPro_AllOpt4 (NSObject):
+            def replacementObjectForArchiver_(self, *args, **kwds):
+                pass
+
     def testOptionalArgs(self):
         # BAD: optional arguments, which don't exist in Objective-C
         try:
