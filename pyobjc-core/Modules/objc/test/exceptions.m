@@ -19,6 +19,7 @@ static NSString* addSomeUnicode(NSString* input)
 -(void)raiseUnicodeName;
 -(void)raiseUnicodeReason;
 -(void)raiseUnicodeWithInfo;
+-(void)raiseAString;
 @end
 
 @implementation PyObjCTestExceptions
@@ -62,6 +63,11 @@ static NSString* addSomeUnicode(NSString* input)
 				addSomeUnicode(@"value2"), 
 					addSomeUnicode(@"key2"),
 				NULL]] raise];
+}
+
+-(void)raiseAString
+{
+	@throw @"thrown string";
 }
 
 @end

@@ -30,6 +30,17 @@ Version 2.1 (...)
   instances before using them from Objective-C (such as using an 
   ``NSDateFormatter``)
 
+- There is experimental support for archiving Python objects 
+  using an ``NSKeyedArchiver``. 
+
+- Objective-C classes that support the ``NSCopying`` protocol can now be
+  copied using ``copy.copy`` as well.
+
+- Objective-C classes that support the ``NSCoding`` protocol can now be
+  copied using ``copy.deepcopy``.
+
+- Pure Python objects now support the ``NSCopying`` protocol.
+
 - A new decorator: ``objc.namedselector`` for overriding the Objective-C
   selector. Usage::
 
@@ -74,6 +85,27 @@ Version 2.1 (...)
   redefined it in the same module (such as by reloading a module). That 
   functionality didn't work in PyObjC 2.0 and is now completely removed 
   because the functionality isn't supported by the Objective-C 2.0 runtime.
+
+- Adds custom wrappers for some more Python types:
+
+  * ``OC_PythonNumber``: wraps python numeric types
+
+    This is used instead of ``NSNumber`` because we might loose information
+    otherwise (such as when using custom subclasses of ``int``).
+
+  * ``OC_PythonSet``: wraps a python set
+
+- BUGFIX: using the ``@throw`` syntax one can raise arbitrary objects as
+  exceptions (not just instances of NSException) in Objective-C. All 
+  instances of NSObject are now converted to Python exceptions, throwing 
+  some other object (such as a C++ exception) will still case a fatal
+  error due to an uncaught exception. 
+
+  (SF Bug: 1741095)
+
+- BUGFIX: ``repr(CoreFoundation.kCFAllocatorUseContext)`` now works
+
+  (SF Bug: 1827746)
 
 - BUGFIX: The wrappers for CoreFoundation types no longer create a new type 
   in the Objective-C runtime, that type wasn't used anywhere and was an 

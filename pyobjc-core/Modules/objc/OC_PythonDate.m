@@ -75,6 +75,12 @@ static PyObject* datetime_types = NULL;
 	Py_INCREF(value);
 	return value;
 }
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	Py_INCREF(value);
+	return value;
+}
 
 -(void)release
 {
@@ -101,18 +107,68 @@ static PyObject* datetime_types = NULL;
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-	/* 
-	 * Forcefully disable coding for now, to avoid generating invalid
-	 * encoded streams.
-	 */        
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", value->ob_type->tp_name, coder];
-	
+	PyObjC_encodeWithCoder(value, coder);
+}
+
+
+/* 
+ * Helper method for initWithCoder, needed to deal with
+ * recursive objects (e.g. o.value = o)
+ */
+-(void)pyobjcSetValue:(NSObject*)other
+{
+	PyObject* v = PyObjC_IdToPython(other);
+	Py_XDECREF(value);
+	value = v;
 }
 
 - initWithCoder:(NSCoder*)coder
 {
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Decoding python objects is not supported", coder];
-	return nil;
+	value = NULL;
+
+	if (PyObjC_Decoder != NULL) {
+		PyObjC_BEGIN_WITH_GIL
+			PyObject* cdr = PyObjC_IdToPython(coder);
+			if (cdr == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			PyObject* setValue;
+			PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+			setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+
+			PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+			Py_DECREF(cdr);
+			Py_DECREF(setValue);
+			Py_DECREF(selfAsPython);
+
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			Py_XDECREF(value);
+			value = v;
+
+			NSObject* proxy = PyObjC_FindObjCProxy(value);
+			if (proxy == NULL) {
+				PyObjC_RegisterObjCProxy(value, self);
+			} else {
+				[self release];
+				[proxy retain];
+				self = (OC_PythonDate*)proxy;
+			}
+
+
+		PyObjC_END_WITH_GIL
+
+		return self;
+
+	} else {
+		[NSException raise:NSInvalidArgumentException
+				format:@"decoding Python objects is not supported"];
+		return nil;
+
+	}
 }
 
 -(NSDate*)_make_oc_value

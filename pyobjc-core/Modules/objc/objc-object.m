@@ -876,29 +876,3 @@ PyObjCObject_ClearObject(PyObject* object)
 			((PyObjCObject*)object)->objc_object, object);
 	((PyObjCObject*)object)->objc_object = nil;
 }
-
-PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie)
-{
-	PyObject* result;
-
-	result = PyObjC_FindPythonProxy(objc_object);
-	if (result) {
-		*cookie = 0;
-		return result;
-	}
-
-	*cookie = 1;
-	result = PyObjCObject_New(objc_object, 
-			PyObjCObject_kSHOULD_NOT_RELEASE, NO);
-	return result;
-}
-
-void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
-{
-	if (cookie && proxy->ob_refcnt != 1) {
-		CFRetain(PyObjCObject_GetObject(proxy));
-		((PyObjCObject*)proxy)-> flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
-	} 
-	Py_DECREF(proxy);
-}
-

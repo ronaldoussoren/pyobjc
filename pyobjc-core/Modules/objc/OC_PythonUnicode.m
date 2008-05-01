@@ -20,11 +20,21 @@
 	return self;
 }
 
+
 -(PyObject*)__pyobjc_PythonObject__
 {
 	Py_INCREF(value);
 	return value;
 }
+
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	Py_INCREF(value);
+	return value;
+}
+
+
 
 -(void)release
 {
@@ -134,6 +144,187 @@
 	[((NSString *)[self __realObject__]) getCharacters:buffer range:aRange];
 }
 
+
 #endif /* PyObjC_UNICODE_FAST_PATH */
+
+/*
+ * NSCoding support 
+ *
+ * We need explicit NSCoding support to get full fidelity, otherwise we'll
+ * get archived as generic NSStrings.
+ */
+- (id)initWithCharactersNoCopy:(unichar *)characters 
+			length:(NSUInteger)length 
+		  freeWhenDone:(BOOL)flag
+{
+#ifndef PyObjC_UNICODE_FAST_PATH
+# error "Wide UNICODE builds are not supported at the moment"
+#endif
+	PyObjC_BEGIN_WITH_GIL
+		value = PyUnicode_FromUnicode((Py_UNICODE*)characters, length);
+		if (value == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+	PyObjC_END_WITH_GIL;
+	if (flag) {
+		free(characters);
+	}
+	return self;
+}
+
+
+/* 
+ * Helper method for initWithCoder, needed to deal with
+ * recursive objects (e.g. o.value = o)
+ */
+-(void)pyobjcSetValue:(NSObject*)other
+{
+	PyObject* v = PyObjC_IdToPython(other);
+	Py_XDECREF(value);
+	value = v;
+}
+
+- initWithCoder:(NSCoder*)coder
+{
+	int ver;
+	if ([coder allowsKeyedCoding]) {
+		ver = [coder decodeInt32ForKey:@"pytype"];
+	} else {
+		[coder decodeValueOfObjCType:@encode(int) at:&ver];
+	}
+	if (ver == 1) {
+		self = [super initWithCoder:coder];
+		return self;
+	} else if (ver == 2) {
+
+		if (PyObjC_Decoder != NULL) {
+			PyObjC_BEGIN_WITH_GIL
+				PyObject* cdr = PyObjC_IdToPython(coder);
+				if (cdr == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				PyObject* setValue;
+				PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+				setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+
+				PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+				Py_DECREF(cdr);
+				Py_DECREF(setValue);
+				Py_DECREF(selfAsPython);
+
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				Py_XDECREF(value);
+				value = v;
+
+				NSObject* proxy = PyObjC_FindObjCProxy(value);
+				if (proxy == NULL) {
+					PyObjC_RegisterObjCProxy(value, self);
+				} else {
+					[self release];
+					[proxy retain];
+					self = (OC_PythonUnicode*)proxy;
+				}
+
+
+			PyObjC_END_WITH_GIL
+
+			return self;
+
+		} else {
+			[NSException raise:NSInvalidArgumentException
+					format:@"decoding Python objects is not supported"];
+			return nil;
+
+		}
+	} else {
+		[NSException raise:NSInvalidArgumentException
+			format:@"encoding Python objects is not supported"];
+		return nil;
+	}
+}
+
+-(void)encodeWithCoder:(NSCoder*)coder
+{
+	if (PyUnicode_CheckExact(value)) {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:1 forKey:@"pytype"];
+		} else {
+			int v = 1;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		[super encodeWithCoder:coder];
+	} else {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:2 forKey:@"pytype"];
+		} else {
+			int v = 2;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+
+		PyObjC_encodeWithCoder(value, coder);
+	}
+}
+
+#if 1
+
+
+-(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver 
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForCoder:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForPortCoder:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(Class)classForArchiver
+{
+	return [OC_PythonUnicode class];
+}
+
+-(Class)classForKeyedArchiver
+{
+	return [OC_PythonUnicode class];
+}
+
+-(Class)classForCoder
+{
+	return [OC_PythonUnicode class];
+}
+
+-(Class)classForPortCoder
+{
+	return [OC_PythonUnicode class];
+}
+
+/* Ensure that we can be unarchived as a generic string by pure ObjC
+ * code.
+ */
++classFallbacksForKeyedArchiver
+{
+	return [NSArray arrayWithObject:@"NSString"];
+}
+
+#endif
 
 @end /* implementation OC_PythonUnicode */

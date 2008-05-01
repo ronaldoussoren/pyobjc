@@ -57,7 +57,8 @@ struct PyObjC_WeakLink {
 		Py_BEGIN_ALLOW_THREADS \
 		@try {
 
-#define PyObjC_HANDLER } @catch(NSException* localException) {
+#define PyObjC_HANDLER } @catch(NSObject* _localException) { \
+		NSException* localException __attribute__((__unused__))= (NSException*)_localException;
 
 #define PyObjC_ENDHANDLER \
 		} \

@@ -74,5 +74,15 @@ class TestExceptionsFromObjC (unittest.TestCase):
                 u'key2\u1234\u2049': u'value2\u1234\u2049',
             })
 
+    def testRaisingStringsInObjectiveC(self):
+        # Bug #1741095, @throw anNSString
+
+        o = PyObjCTestExceptions.alloc().init()
+        try:
+            o.raiseAString()
+
+        except objc.error, e:
+            self.assertEquals(e._pyobjc_exc_, u"thrown string")
+
 if __name__ == "__main__":
     unittest.main()

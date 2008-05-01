@@ -1765,7 +1765,7 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
 
 		if (stubUserdata->argCount == methinfo->ob_size - 1 && !haveVarArgs && !haveVarKwds) {
 			/* OK */
-		} else if (stubUserdata->argCount <= 1 && haveVarArgs && haveVarKwds) {
+		} else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
 			/* OK: 
 			 *    def m(self, *args, **kwds), or 
 			 *    def m(*args, **kwds)  
@@ -1847,7 +1847,7 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject
 
 		if (stubUserdata->argCount == methinfo->ob_size - 1&& !haveVarArgs && !haveVarKwds) {
 			/* OK */
-		} else if (stubUserdata->argCount == 0 && haveVarArgs && haveVarKwds) {
+		} else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
 			/* OK */
 		} else {
 			/* Wrong number of arguments, raise an error */

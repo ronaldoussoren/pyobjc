@@ -159,6 +159,12 @@ static PyObject* mapTypes = NULL;
 	Py_INCREF(value);
 	return value;
 }
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	Py_INCREF(value);
+	return value;
+}
 
 -(NSUInteger)count
 {
@@ -366,19 +372,193 @@ static PyObject* mapTypes = NULL;
 }
 
 
-- (void)encodeWithCoder:(NSCoder*)coder
+- initWithObjects:(NSObject**)objects 
+	  forKeys:(NSObject**)keys 
+	    count:(NSUInteger)count
 {
-	/* 
-	 * Forcefully disable coding for now, to avoid generating invalid
-	 * encoded streams.
-	 */        
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", value->ob_type->tp_name, coder];
+	/* This implementation is needed for our support for the NSCoding
+	 * protocol, NSDictionary's initWithCoder: will call this method.
+	 */
+	NSUInteger i;
+
+	PyObjC_BEGIN_WITH_GIL
+		for  (i = 0; i < count; i++) {
+			PyObject* k;
+			PyObject* v;
+			int r;
+
+			if (objects[i] == [NSNull null]) {
+				v = Py_None;
+				Py_INCREF(Py_None);
+			} else {
+				v = PyObjC_IdToPython(objects[i]);
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+			}
+
+			if (keys[i] == [NSNull null]) {
+				k = Py_None;
+				Py_INCREF(Py_None);
+			} else {
+				k = PyObjC_IdToPython(keys[i]);
+				if (k == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+			}
+
+			r = PyDict_SetItem(value, k, v);
+			Py_DECREF(k); Py_DECREF(v);
+
+			if (r == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+		}
+	PyObjC_END_WITH_GIL
+	return self;
+}
+
+/* 
+ * Helper method for initWithCoder, needed to deal with
+ * recursive objects (e.g. o.value = o)
+ */
+-(void)pyobjcSetValue:(NSObject*)other
+{
+	PyObject* v = PyObjC_IdToPython(other);
+	Py_XDECREF(value);
+	value = v;
 }
 
 - initWithCoder:(NSCoder*)coder
 {
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Decoding python objects is not supported", coder];
+	int code;
+	if ([coder allowsKeyedCoding]) {
+		code = [coder decodeInt32ForKey:@"pytype"];
+	} else {
+		[coder decodeValueOfObjCType:@encode(int) at:&code];
+	}
+	switch (code) {
+	case 1:
+		PyObjC_BEGIN_WITH_GIL
+			value = PyDict_New();
+			if (value == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+		PyObjC_END_WITH_GIL
+
+		self = [super initWithCoder:coder];
+		return self;
+	
+	case 2:
+		if (PyObjC_Decoder != NULL) {
+			PyObjC_BEGIN_WITH_GIL
+				PyObject* cdr = PyObjC_IdToPython(coder);
+				if (cdr == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				PyObject* setValue;
+				PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+				setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+
+				PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+				Py_DECREF(cdr);
+				Py_DECREF(setValue);
+				Py_DECREF(selfAsPython);
+
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				Py_XDECREF(value);
+				value = v;
+
+				NSObject* proxy = PyObjC_FindObjCProxy(value);
+				if (proxy == NULL) {
+					PyObjC_RegisterObjCProxy(value, self);
+				} else {
+					[self release];
+					[proxy retain];
+					self = (OC_PythonDictionary*)proxy;
+				}
+
+
+			PyObjC_END_WITH_GIL
+
+			return self;
+
+		} else {
+			[NSException raise:NSInvalidArgumentException
+					format:@"decoding Python objects is not supported"];
+			return nil;
+
+		}
+	}
+	[NSException raise:NSInvalidArgumentException
+			format:@"decoding Python objects is not supported"];
+	[self release];
 	return nil;
 }
+
+- (void)encodeWithCoder:(NSCoder*)coder
+{
+	if (1 && PyDict_CheckExact(value)) {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:1 forKey:@"pytype"];
+		} else {
+			int v = 1;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		[super encodeWithCoder:coder];
+
+	} else {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:2 forKey:@"pytype"];
+		} else {
+			int v = 2;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		PyObjC_encodeWithCoder(value, coder);
+
+	}
+}
+
+
+#if 1
+
+-(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
+{
+	(void)archiver;
+	return self;
+}
+
+-(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+{
+	(void)archiver;
+	return self;
+}
+
+
+-(Class)classForArchiver
+{
+	return [OC_PythonDictionary class];
+}
+
+-(Class)classForKeyedArchiver
+{
+	return [OC_PythonDictionary class];
+}
+
+-(Class)classForCoder
+{
+	return [OC_PythonDictionary class];
+}
+
+-(Class)classForPortCoder
+{
+	return [OC_PythonDictionary class];
+}
+
+#endif
 
 @end  // interface OC_PythonDictionary
