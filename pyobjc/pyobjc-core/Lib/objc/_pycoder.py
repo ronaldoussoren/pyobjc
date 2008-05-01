@@ -4,8 +4,11 @@ Implementation of NSCoding for OC_PythonObject and friends
 NOTE: this only works with a keyed archiver, not with a plain archiver. It 
 should be easy enough to change this later on if needed.
 
-FIXME: encoding for lists and tuples is far from optimal
-FIXME: need versioning
+A minor problem with NSCoding support is that NSCoding restores
+graphs recusively while Pickle does so depth-first (more of less). 
+This can cause problems when the object state contains the
+object itself, which is why we need a 'setValue' callback for the
+load_* functions below.
 """
 import objc
 from types import *
@@ -283,6 +286,10 @@ def setupPythonObject():
                     cls.__name__, str(err)), sys.exc_info()[2]
 
             
+        # We now have the object, but haven't set the correct
+        # state yet.  Tell the bridge about this value right
+        # away, that's needed because `value` might be part
+        # of the object state which we'll retrieve next.
         setValue(value)
 
         state = coder.decodeObjectForKey_(kSTATE)
@@ -312,13 +319,14 @@ def setupPythonObject():
 
     def load_reduce(coder, setValue):
         func = coder.decodeObjectForKey_(kFUNC)
-
-        # XXX: a problem: ``args`` might contain
-        # the object we want to recover (either
-        # directly or somewhere in the object graph)
         args = coder.decodeObjectForKey_(kARGS)
 
         value = func(*args)
+
+        # We now have the object, but haven't set the correct
+        # state yet.  Tell the bridge about this value right
+        # away, that's needed because `value` might be part
+        # of the object state which we'll retrieve next.
         setValue(value)
 
         listitems = coder.decodeObjectForKey_(kLIST)

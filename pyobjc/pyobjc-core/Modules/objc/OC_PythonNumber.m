@@ -104,9 +104,89 @@
 
 -(NSDecimal)decimalValue
 {
-	/* FIXME */
-	[NSException raise:NSInvalidArgumentException
-	              format:@"Cannot convert python number to NSDecimal"];
+	NSDecimal result;
+	NSDecimalNumber* num;
+
+	unsigned long long mantissa = 0;
+	unsigned short exponent = 0;
+	BOOL negative = NO;
+
+	PyObjC_BEGIN_WITH_GIL
+		if (PyInt_Check(value)) {
+			long lng = PyInt_AsLong(value);
+			if (lng < 0) {
+				mantissa = -lng;
+				exponent = 0;
+				negative = YES;
+			} else {
+				mantissa = lng;
+				exponent = 0;
+				negative = NO;
+			}
+
+		} else if (PyLong_Check(value)) {
+			mantissa = PyLong_AsUnsignedLongLong(value);
+			if (PyErr_Occurred()) {
+				long long lng;
+				PyErr_Clear();
+				lng = PyLong_AsLongLong(value);
+				if (PyErr_Occurred()) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				if (lng < 0) {
+					mantissa = -lng;
+					exponent = 0;
+					negative = YES;
+				} else {
+					mantissa = lng;
+					exponent = 0;
+					negative = NO;
+				}
+			} else {
+				exponent = 0;
+				negative = NO;
+			}
+
+		} else if (PyFloat_Check(value)) {
+			PyObject* strVal = PyObject_Repr(value);
+			PyObject* uniVal = NULL;
+
+			if (strVal == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
+			Py_DECREF(strVal);
+			if (uniVal == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			NSString* stringVal = PyObjC_PythonToId(uniVal);
+			Py_DECREF(uniVal);
+			
+			num = [[NSDecimalNumber alloc] initWithString:stringVal];
+			result = [num decimalValue];
+			[num release];
+			PyObjC_GIL_RETURN(result);
+
+		} else {
+			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
+					value->ob_type->tp_name);
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+	PyObjC_END_WITH_GIL
+
+
+
+	num = [[NSDecimalNumber alloc] 
+		initWithMantissa:mantissa
+			exponent:exponent
+		      isNegative:negative];
+	result = [num decimalValue];
+	[num release];
+	return result;
 }
 
 -(double)doubleValue
@@ -296,7 +376,7 @@
 			} else {
 				[self release];
 				[proxy retain];
-				self = (OC_PythonObject*)proxy;
+				self = (OC_PythonNumber*)proxy;
 			}
 
 
