@@ -53,6 +53,14 @@ process and to generate wrappers.
 Core Objective-C runtime
 ------------------------
 
+In Objective-C you can raise arbitrary values as exceptions using the ``@throw``
+syntax. PyObjC will only convert exception values that are Objective-C
+instances to Python exceptions, raising other values will cause a
+fatal error due to an uncaught exception.
+
+Apple's frameworks only raise instances of ``NSException``, and 
+other exception values are frowned upon (at best).
+
 Addressbook framework
 ---------------------
 

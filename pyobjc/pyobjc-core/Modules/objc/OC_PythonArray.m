@@ -77,6 +77,13 @@ static PyObject* mapTypes = NULL;
 	return value;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	Py_INCREF(value);
+	return value;
+}
+
 -(void)release
 {
 	/* See comment in OC_PythonUnicode */
@@ -291,21 +298,201 @@ static PyObject* mapTypes = NULL;
 	PyObjC_END_WITH_GIL;
 }
 
-- (void)encodeWithCoder:(NSCoder*)coder
+-(void)encodeWithCoder:(NSCoder*)coder
 {
-	/* 
-	 * Forcefully disable coding for now, to avoid generating invalid
-	 * encoded streams.
-	 */        
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Encoding python objects of type %s is not supported", value->ob_type->tp_name, coder];
-	
+	/*
+	 * Instances of 'list' and 'tuple' are encoded directly,
+	 * for other sequences use the generic pickle support code.
+	 */
+	if (1 && PyTuple_CheckExact(value)) {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:1 forKey:@"pytype"];
+		} else {
+			int v = 1;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		[super encodeWithCoder:coder];
+	} else if (1 && PyList_CheckExact(value)) {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:2 forKey:@"pytype"];
+		} else {
+			int v = 2;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		[super encodeWithCoder:coder];
+	} else {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:3 forKey:@"pytype"];
+		} else {
+			int v = 3;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+		PyObjC_encodeWithCoder(value, coder);
+
+	}
 }
 
-- initWithCoder:(NSCoder*)coder
+/*
+ * A basic implementation of -initWithObjects:count:. This method is needed
+ * to support NSCoding for Python sequences.
+ */
+-(id)initWithObjects:(NSObject**)objects count:(NSUInteger)count
 {
-	[NSException raise:NSInvalidArgumentException format:@"PyObjC: Decoding python objects is not supported", coder];
+	NSUInteger i;
+	PyObjC_BEGIN_WITH_GIL
+		for  (i = 0; i < count; i++) {
+			PyObject* v = PyObjC_IdToPython(objects[i]);
+			if (v == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+			int r = PyList_Append(value,  v);
+			if (r == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+			Py_DECREF(v);
+		}
+
+	PyObjC_END_WITH_GIL
+	return self;
+}
+
+/* 
+ * Helper method for initWithCoder, needed to deal with
+ * recursive objects (e.g. o.value = o)
+ */
+-(void)pyobjcSetValue:(NSObject*)other
+{
+	PyObject* v = PyObjC_IdToPython(other);
+	Py_XDECREF(value);
+	value = v;
+}
+
+-(id)initWithCoder:(NSCoder*)coder
+{
+	PyObject* t;
+	int code;
+	if ([coder allowsKeyedCoding]) {
+		code = [coder decodeInt32ForKey:@"pytype"];
+	} else {
+		[coder decodeValueOfObjCType:@encode(int) at:&code];
+	}
+
+	PyObjC_BEGIN_WITH_GIL
+		value = PyList_New(0);
+		if (value == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+	PyObjC_END_WITH_GIL
+
+	switch (code) {
+	case 1:
+	      [super initWithCoder:coder];
+	      PyObjC_BEGIN_WITH_GIL
+		      t = value;
+		      value = PyList_AsTuple(t);
+		      Py_DECREF(t);
+		      if (value == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+		      }
+	      PyObjC_END_WITH_GIL
+	      return self;
+
+	case 2:
+	      [super initWithCoder:coder];
+	      return self;
+
+	case 3:
+
+		if (PyObjC_Decoder != NULL) {
+			PyObjC_BEGIN_WITH_GIL
+				PyObject* cdr = PyObjC_IdToPython(coder);
+				if (cdr == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				PyObject* setValue;
+				PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+				setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+
+				PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+				Py_DECREF(cdr);
+				Py_DECREF(setValue);
+				Py_DECREF(selfAsPython);
+
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+
+				Py_XDECREF(value);
+				value = v;
+
+				NSObject* proxy = PyObjC_FindObjCProxy(value);
+				if (proxy == NULL) {
+					PyObjC_RegisterObjCProxy(value, self);
+				} else {
+					[self release];
+					[proxy retain];
+					self = (OC_PythonArray*)proxy;
+				}
+
+
+			PyObjC_END_WITH_GIL
+
+			return self;
+		}
+	}
+
+	[NSException raise:NSInvalidArgumentException
+			format:@"decoding Python objects is not supported"];
+	[self release];
 	return nil;
 }
 
+
+#if 1
+-(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver 
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForCoder:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(NSObject*)replacementObjectForPortCoder:(NSKeyedArchiver*)archiver
+{
+	(void)(archiver);
+	return self;
+}
+
+-(Class)classForArchiver
+{
+	return [OC_PythonArray class];
+}
+
+-(Class)classForKeyedArchiver
+{
+	return [OC_PythonArray class];
+}
+
+-(Class)classForCoder
+{
+	return [OC_PythonArray class];
+}
+
+-(Class)classForPortCoder
+{
+	return [OC_PythonArray class];
+}
+#endif
 
 @end /* implementation OC_PythonArray */

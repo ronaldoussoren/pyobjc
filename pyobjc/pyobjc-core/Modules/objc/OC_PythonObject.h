@@ -28,8 +28,15 @@
 #import <Foundation/NSDictionary.h>
 #import <Foundation/NSMethodSignature.h>
 
+extern PyObject* PyObjC_Encoder;
+extern PyObject* PyObjC_Decoder;
 
-@interface OC_PythonObject : NSProxy 
+extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
+
+
+
+
+@interface OC_PythonObject : NSProxy  <NSCopying>
 {
   PyObject *pyObject;
 }
@@ -89,6 +96,18 @@
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
 - initWithCoder:(NSCoder*)coder;
++classFallbacksForKeyedArchiver;
+-(NSObject*)replacementObjectForArchiver:(NSObject*)archiver;
+-(NSObject*)replacementObjectForKeyedArchiver:(NSObject*)archiver;
+-(NSObject*)replacementObjectForCoder:(NSObject*)archiver;
+-(NSObject*)replacementObjectForPortCoder:(NSObject*)archiver;
+-(Class)classForArchiver;
+-(Class)classForKeyedArchiver;
++(Class)classForUnarchiver;
++(Class)classForKeyedUnarchiver;
+-(Class)classForCoder;
+-(Class)classForPortCoder;
+-(id)awakeAfterUsingCoder:(NSCoder*)coder;
 
 @end /* OC_PythonObject class interface */
 

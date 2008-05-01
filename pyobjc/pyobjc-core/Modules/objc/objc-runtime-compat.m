@@ -8,6 +8,11 @@
 #define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 
+
+
+
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__)
+
 BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
 {
 	if (parent == nil) return YES;
@@ -16,14 +21,10 @@ BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
 		if (child == parent) {
 			return YES;
 		}
-		child = class_getSuperclass(child);
+		child = PyObjC_class_getSuperclass(child);
 	}
 	return NO;
 }
-
-
-
-#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__)
 
 #import <mach-o/dyld.h>
 #import <mach-o/getsect.h>
@@ -908,6 +909,20 @@ void PyObjC_SetupRuntimeCompat(void)
 }
 
 #else
+
+
+BOOL PyObjC_class_isSubclassOf(Class child, Class parent)
+{
+	if (parent == nil) return YES;
+
+	while (child != nil) {
+		if (child == parent) {
+			return YES;
+		}
+		child = class_getSuperclass(child);
+	}
+	return NO;
+}
 
 BOOL PyObjC_class_addMethodList(Class cls,
 		struct PyObjC_method* list, unsigned int count)

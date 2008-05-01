@@ -37,6 +37,7 @@
 #include "OC_PythonString.h"
 #include "OC_PythonEnumerator.h"
 #include "OC_PythonDate.h"
+#include "OC_PythonNumber.h"
 #include "method-signature.h"
 #include "objc_util.h"
 #include "objc-class.h"
@@ -61,7 +62,6 @@
 #include "parsexml.h"
 #include "objc_super.h"
 #include "picklecoder.h"
-#include "pycoder.h"
 
 
 /*

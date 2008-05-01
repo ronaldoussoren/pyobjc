@@ -37,6 +37,9 @@
 @interface NSObject (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 +(PyObject*)__pyobjc_PythonObject__;
+
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
++(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation NSObject (PyObjCSupport)
@@ -69,11 +72,32 @@
 	return rval;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	PyObject* result = PyObjC_FindPythonProxy(self);
+	if (result) {
+		*cookie = 0;
+		return result;
+	}
+
+	*cookie = 1;
+	return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+}
+
++(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	return (PyObject *)PyObjCClass_New(self);
+}
+
 @end /* PyObjCSupport */
 
 @interface NSProxy (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 +(PyObject*)__pyobjc_PythonObject__;
+
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
++(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation NSProxy (PyObjCSupport)
@@ -102,10 +126,28 @@
 	return rval;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	PyObject* result = PyObjC_FindPythonProxy(self);
+	if (result) {
+		*cookie = 0;
+		return result;
+	}
+
+	*cookie = 1;
+	return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
+}
+
++(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	return (PyObject *)PyObjCClass_New(self);
+}
 @end /* PyObjCSupport */
 
 @interface Protocol (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation Protocol (PyObjCSupport)
@@ -121,10 +163,23 @@
 	return rval;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	PyObject *rval;
+
+	*cookie = 0;
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = PyObjCFormalProtocol_ForProtocol(self);
+	}
+	return rval;
+}
+
 @end /* PyObjCSupport */
 
 @interface Object (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation Object (PyObjCSupport)
@@ -142,10 +197,25 @@
 	return rval;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	PyObject *rval;
+
+	*cookie = 0;
+	rval = PyObjC_FindPythonProxy(self);
+	if (rval == NULL) {
+		rval = (PyObject *)PyObjCObject_New(self,
+				PyObjCObject_kCLASSIC, NO);
+		PyObjC_RegisterPythonProxy(self, rval);
+	}
+	return rval;
+}
+
 @end /* PyObjCSupport */
 
 @interface NSString (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSString (PyObjCSupport) */
 
 @implementation NSString (PyObjCSupport)
@@ -157,10 +227,17 @@
 	return rval;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	return (PyObject *)PyObjCUnicode_New(self);
+}
+
 @end /* NSString (PyObjCSupport) */
 
 @interface NSNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSNumber (PyObjCSupport) */
 
 @implementation NSNumber (PyObjCSupport)
@@ -191,10 +268,17 @@
 	}
 	return rval;
 }
+
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	return [self __pyobjc_PythonObject__];
+}
 @end
 
 @interface NSDecimalNumber (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSDecimalNumber (PyObjCSupport) */
 
 @implementation NSDecimalNumber (PyObjCSupport)
@@ -210,6 +294,12 @@
 	}
 
 	return rval;
+}
+
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	return [self __pyobjc_PythonObject__];
 }
 @end
 
@@ -2462,3 +2552,16 @@ PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 }
 
 
+PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie)
+{
+	return [(NSObject*)objc_object __pyobjc_PythonTransient__:cookie];
+}
+
+void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
+{
+	if (cookie && proxy->ob_refcnt != 1) {
+		CFRetain(PyObjCObject_GetObject(proxy));
+		((PyObjCObject*)proxy)-> flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
+	}
+	Py_DECREF(proxy);
+}

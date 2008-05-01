@@ -75,6 +75,28 @@ PyObjCErr_FromObjC(NSException* localException)
 
 	state = PyGILState_Ensure();
 
+	if (![localException isKindOfClass:[NSException class]]) {
+		/* We caught some random objects as the exception, so the minimal possible
+		 */
+		PyErr_SetString(PyObjCExc_Error, "non-NSException object caught");
+
+		PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
+		if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
+			PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
+		}
+
+		PyObject* exc = PyObjC_IdToPython(localException);
+		if (exc == NULL) {
+			PyErr_Clear();
+		} else {
+			PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc);
+		}
+		Py_DECREF(exc); exc = NULL;
+		PyErr_Restore(exc_type, exc_value, exc_traceback);
+		PyGILState_Release(state);
+		return;
+	}
+
 	exception = ObjCErr_PyExcForName([[localException name] UTF8String]);
 
 	userInfo = [localException userInfo];
@@ -201,6 +223,13 @@ PyObjCErr_AsExc(void)
 
 	PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
 
+	args = PyObject_GetAttrString(exc_value, "_pyobjc_exc_");
+	if (args == NULL) {
+		PyErr_Clear();
+	} else {
+		return PyObjC_PythonToId(args);
+	}
+
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
 	if (args == NULL) {
 		PyErr_Clear();
@@ -290,7 +319,10 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 	if (state) {
 		PyGILState_Release(*state);
 	}
+	@throw exc;
+#if 0
 	[exc raise];
+#endif
 }
 
 

@@ -33,6 +33,14 @@
 	return value;
 }
 
+-(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+{
+	*cookie = 0;
+	Py_INCREF(value);
+	return value;
+}
+
+
 -(void)release
 {
 	/* See comment in OC_PythonUnicode */
