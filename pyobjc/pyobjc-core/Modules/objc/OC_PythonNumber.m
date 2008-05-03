@@ -259,7 +259,7 @@
 			result =  (long long)PyFloat_AsDouble(value);
 			PyObjC_GIL_RETURN(result);
 		} else if (PyLong_Check(value)) {
-			result =  PyLong_AsLongLong(value);
+			result =  PyLong_AsUnsignedLongLongMask(value);
 			PyObjC_GIL_RETURN(result);
 		}
 	PyObjC_END_WITH_GIL
@@ -281,7 +281,7 @@
 			result =  (unsigned long long)PyFloat_AsDouble(value);
 			PyObjC_GIL_RETURN(result);
 		} else if (PyLong_Check(value)) {
-			result =  PyLong_AsUnsignedLongLong(value);
+			result =  PyLong_AsUnsignedLongLongMask(value);
 			PyObjC_GIL_RETURN(result);
 		}
 	PyObjC_END_WITH_GIL
@@ -314,13 +314,19 @@
 		if (repr == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
+
+		PyObject* uniVal = PyUnicode_FromEncodedObject(repr, "ascii", "strict");
+		Py_DECREF(repr);
+		if (PyErr_Occurred()) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
 	
-		result = PyObjC_PythonToId(repr);
+		result = PyObjC_PythonToId(uniVal);
+		Py_DECREF(uniVal);
 		if (PyErr_Occurred()) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		Py_DECREF(repr);
 
 	PyObjC_END_WITH_GIL
 	return (NSString*)result;
@@ -392,6 +398,55 @@
 	}
 }
 
+- (NSComparisonResult)compare:(NSNumber *)aNumber
+{
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* other = PyObjC_IdToPython(aNumber);
+		if (other == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		int r = PyObject_Compare(value, other);
+		Py_DECREF(other);
+		if (PyErr_Occurred()) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		if (r < 0) {
+			PyObjC_GIL_RETURN(NSOrderedAscending);
+		} else if (r > 0) {
+			PyObjC_GIL_RETURN(NSOrderedDescending);
+		} else {
+			PyObjC_GIL_RETURN(NSOrderedSame);
+		}
+
+
+	PyObjC_END_WITH_GIL
+}
+
+-(BOOL)isEqualToNumber:(NSNumber*)aNumber
+{
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* other = PyObjC_IdToPython(aNumber);
+		if (other == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		int r = PyObject_RichCompareBool(value, other, Py_EQ);
+		Py_DECREF(other);
+		if (r == -1) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
+		if (r) {
+			PyObjC_GIL_RETURN(YES);
+		} else {
+			PyObjC_GIL_RETURN(NO);
+		}
+
+	PyObjC_END_WITH_GIL
+}
+
 #if 1
 
 -(NSObject*)replacementObjectForArchiver:(NSObject*)archiver
@@ -447,6 +502,19 @@
 {
 	return [OC_PythonNumber class];
 }
+
+-(id)copy
+{
+	return [self copyWithZone:0];
+}
+
+-(id)copyWithZone:(NSZone*)zone
+{
+	(void)zone;
+	[self retain];
+	return self;
+}
+
 
 #endif
 @end
