@@ -221,5 +221,22 @@ class TestNSCopying (objc.test.TestCase):
         self.assertEquals(o.x, 42)
         self.assertEquals(o.intVal(), 40)
 
+
+NSMutableArray = objc.lookUpClass("NSMutableArray")
+import copy
+
+class TestPyCopyObjC (objc.test.TestCase):
+    # Testcases that ensure that copy.copy works
+    # with Objective-C objects as well.
+
+    def testCopyArray(self):
+        a = NSMutableArray.arrayWithArray_(['a', 'b', 'c'])
+        self.assert_(isinstance(a, NSMutableArray))
+
+        b = copy.copy(a)
+        self.assert_(isinstance(b, NSMutableArray))
+        self.assert_(list(a) == list(b))
+
+
 if __name__ == "__main__":
     objc.test.main()

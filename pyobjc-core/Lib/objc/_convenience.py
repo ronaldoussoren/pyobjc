@@ -561,16 +561,17 @@ CONVENIENCE_METHODS['copyWithZone:'] = (
     ('__copy__', lambda self: self.copyWithZone_(None)),
 )
 
-NSKeyedArchiver = lookUpClass('NSKeyedArchiver')
-NSKeyedUnarchiver = lookUpClass('NSKeyedUnarchiver')
-def coder_deepcopy(self):
-    buf = NSKeyedArchiver.archivedDataWithRootObject_(self)
-    result = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-    return result
-
-CONVENIENCE_METHODS['encodeWithCoder:'] = (
-    ('__deepcopy__', coder_deepcopy ),
-)
+# This won't work:
+#NSKeyedArchiver = lookUpClass('NSKeyedArchiver')
+#NSKeyedUnarchiver = lookUpClass('NSKeyedUnarchiver')
+#def coder_deepcopy(self, memo):
+#   buf = NSKeyedArchiver.archivedDataWithRootObject_(self)
+#   result = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
+#   return result
+#
+#CONVENIENCE_METHODS['encodeWithCoder:'] = (
+#   ('__deepcopy__', coder_deepcopy ),
+#)
 
 CLASS_METHODS['NSNull'] = (
     ('__nonzero__',  lambda self: False ),
