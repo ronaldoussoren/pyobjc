@@ -30,7 +30,6 @@ Version 2.1 (...)
   instances before using them from Objective-C (such as using an 
   ``NSDateFormatter``)
 
-- There is experimental support for archiving Python objects 
   using an ``NSKeyedArchiver``. 
 
 - Objective-C classes that support the ``NSCopying`` protocol can now be
@@ -93,7 +92,9 @@ Version 2.1 (...)
     This is used instead of ``NSNumber`` because we might loose information
     otherwise (such as when using custom subclasses of ``int``).
 
-  * ``OC_PythonSet``: wraps a python set
+  * ``OC_PythonSet``: wraps a python set and is a subclass of ``NSMutableSet``
+
+- BUGFIX: ``OC_PythonEnumerator`` now actually works.
 
 - BUGFIX: using the ``@throw`` syntax one can raise arbitrary objects as
   exceptions (not just instances of NSException) in Objective-C. All 

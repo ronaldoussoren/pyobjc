@@ -30,6 +30,7 @@
 
 extern PyObject* PyObjC_Encoder;
 extern PyObject* PyObjC_Decoder;
+extern PyObject* PyObjC_CopyFunc;
 
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 

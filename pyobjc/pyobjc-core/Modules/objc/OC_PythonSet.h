@@ -1,10 +1,11 @@
 #include "pyobjc.h"
 
-@interface OC_PythonNumber : NSNumber
+@interface OC_PythonSet : NSMutableSet
 {
 	PyObject* value;
 }
 
++ depythonifyObject:(PyObject*)object;
 + newWithPythonObject:(PyObject*)value;
 - initWithPythonObject:(PyObject*)value;
 -(void)dealloc;

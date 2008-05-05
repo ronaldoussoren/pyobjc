@@ -167,6 +167,16 @@ PyObject* PyObjC_CopyFunc = NULL;
 		} else {
 			r = -1;
 		}
+
+	} else if (PyAnySet_Check(argument)) {
+		rval = [OC_PythonSet newWithPythonObject:argument];
+		if (rval) {
+			PyObjC_RegisterObjCProxy(argument, rval);
+			r = 0;
+		} else {
+			r = -1;
+		}
+
 	} else if ((rval = PyObjC_CFTypeToID(argument))) {
 		// unwrapped cf
 		r = 0;
@@ -267,6 +277,16 @@ end:
 			PyObjC_GIL_FORWARD_EXC();
 		}
 		
+		/* Check if the object is "set-like" */
+		instance = [OC_PythonSet depythonifyObject:obj];
+		if (instance != nil) {
+			PyObjC_RegisterObjCProxy(obj, instance);
+			PyObjC_GIL_RETURN(instance);
+		} 
+		if (PyErr_Occurred()) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+
 		/* Check if the object is "datetime-like" */
 		instance = [OC_PythonDate depythonifyObject:obj];
 		if (instance != nil) {
