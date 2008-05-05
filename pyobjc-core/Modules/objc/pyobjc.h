@@ -38,6 +38,7 @@
 #include "OC_PythonEnumerator.h"
 #include "OC_PythonDate.h"
 #include "OC_PythonNumber.h"
+#include "OC_PythonSet.h"
 #include "method-signature.h"
 #include "objc_util.h"
 #include "objc-class.h"
