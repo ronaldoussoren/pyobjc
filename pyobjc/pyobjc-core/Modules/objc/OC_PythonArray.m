@@ -449,50 +449,56 @@ static PyObject* mapTypes = NULL;
 }
 
 
-#if 1
--(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver 
+-(id)copyWithZone:(NSZone*)zone
 {
-	(void)(archiver);
-	return self;
+	if (PyObjC_CopyFunc) {
+		PyObjC_BEGIN_WITH_GIL
+			PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc,
+					value, NULL);
+
+			if (copy == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			} 
+
+			NSObject* result = PyObjC_PythonToId(copy);
+			Py_DECREF(copy);
+
+			if (PyErr_Occurred()) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			[result retain];
+
+			PyObjC_GIL_RETURN(result);
+
+		PyObjC_END_WITH_GIL
+	} else {
+		return [super copyWithZone:zone];
+	}
 }
 
--(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+-(id)mutableCopyWithZone:(NSZone*)zone
 {
-	(void)(archiver);
-	return self;
-}
+	if (PyObjC_CopyFunc) {
+		PyObjC_BEGIN_WITH_GIL
+			PyObject* copy = PySequence_List(value);
+			if (copy == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			} 
 
--(NSObject*)replacementObjectForCoder:(NSKeyedArchiver*)archiver
-{
-	(void)(archiver);
-	return self;
-}
+			NSObject* result = PyObjC_PythonToId(copy);
+			Py_DECREF(copy);
 
--(NSObject*)replacementObjectForPortCoder:(NSKeyedArchiver*)archiver
-{
-	(void)(archiver);
-	return self;
-}
+			if (PyErr_Occurred()) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
 
--(Class)classForArchiver
-{
-	return [OC_PythonArray class];
-}
+			[result retain];
+			PyObjC_GIL_RETURN(result);
 
--(Class)classForKeyedArchiver
-{
-	return [OC_PythonArray class];
+		PyObjC_END_WITH_GIL
+	} else {
+		return [super mutableCopyWithZone:zone];
+	}
 }
-
--(Class)classForCoder
-{
-	return [OC_PythonArray class];
-}
-
--(Class)classForPortCoder
-{
-	return [OC_PythonArray class];
-}
-#endif
-
 @end /* implementation OC_PythonArray */

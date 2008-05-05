@@ -523,42 +523,63 @@ static PyObject* mapTypes = NULL;
 	}
 }
 
-
-#if 1
-
--(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
+-(id)copyWithZone:(NSZone*)zone
 {
-	(void)archiver;
-	return self;
+	if (PyObjC_CopyFunc) {
+		PyObjC_BEGIN_WITH_GIL
+			PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc,
+					value, NULL);
+			if (copy == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			} 
+
+			NSObject* result = PyObjC_PythonToId(copy);
+			Py_DECREF(copy);
+
+			if (PyErr_Occurred()) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			[result retain];
+
+			PyObjC_GIL_RETURN(result);
+
+		PyObjC_END_WITH_GIL
+	} else {
+		return [super copyWithZone:zone];
+	}
 }
 
--(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+-(id)mutableCopyWithZone:(NSZone*)zone
 {
-	(void)archiver;
-	return self;
+	if (PyObjC_CopyFunc) {
+		PyObjC_BEGIN_WITH_GIL
+			PyObject* copy = PyDict_New();
+			if (copy == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			} 
+
+			int r = PyDict_Update(copy, value);
+			if (r == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			} 
+
+			NSObject* result = PyObjC_PythonToId(copy);
+			Py_DECREF(copy);
+
+			if (PyErr_Occurred()) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			[result retain];
+
+			PyObjC_GIL_RETURN(result);
+
+		PyObjC_END_WITH_GIL
+	} else {
+		return [super mutableCopyWithZone:zone];
+	}
 }
 
-
--(Class)classForArchiver
-{
-	return [OC_PythonDictionary class];
-}
-
--(Class)classForKeyedArchiver
-{
-	return [OC_PythonDictionary class];
-}
-
--(Class)classForCoder
-{
-	return [OC_PythonDictionary class];
-}
-
--(Class)classForPortCoder
-{
-	return [OC_PythonDictionary class];
-}
-
-#endif
 
 @end  // interface OC_PythonDictionary

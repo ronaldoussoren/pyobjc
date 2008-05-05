@@ -399,7 +399,7 @@ end:
 
 	} else {
 		PyObjC_BEGIN_WITH_GIL
-			copy = PyObject_CallFunction(PyObjC_CopyFunc, "O", pyObject);
+			copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, pyObject, NULL);
 			if (copy == NULL) {
 				PyObjC_GIL_FORWARD_EXC();
 			}

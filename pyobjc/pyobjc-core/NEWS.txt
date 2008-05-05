@@ -35,8 +35,14 @@ Version 2.1 (...)
 - Objective-C classes that support the ``NSCopying`` protocol can now be
   copied using ``copy.copy`` as well.
 
-- Objective-C classes that support the ``NSCoding`` protocol can now be
-  copied using ``copy.deepcopy``.
+.. 
+   it would be nice to have the following, but that's not easy to achieve::
+	- Objective-C classes that support the ``NSCoding`` protocol can now be
+	  copied using ``copy.deepcopy``.
+
+- ``OC_PythonArray`` and ``OC_PythonDictionary`` now explicitly implement
+  ``copyWithZone:`` and ``mutableCopyWithZone:``, copies will now be 
+  Python objects instead of regular ``NSDictionary`` instances.
 
 - Pure Python objects now support the ``NSCopying`` protocol.
 
