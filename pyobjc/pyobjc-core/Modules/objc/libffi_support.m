@@ -3452,8 +3452,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 
 	PyErr_Clear();
-	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, r,
-		signature_to_ffi_return_type(rettype), arglist);
+	ffi_type* retsig = signature_to_ffi_return_type(rettype);
+	if (retsig == NULL) goto error_cleanup;
+	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, r, retsig, arglist);
 	if (r != FFI_OK) {
 		PyErr_Format(PyExc_RuntimeError,
 			"Cannot setup FFI CIF [%d]", r);

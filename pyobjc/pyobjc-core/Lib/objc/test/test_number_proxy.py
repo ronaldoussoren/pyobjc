@@ -1,5 +1,8 @@
 """
 Tests for the proxy of Python numbers
+
+NOTE: Decimal conversion is not tested, the required proxy is part of 
+the Foundation bindings :-(
 """
 import sys
 import objc.test
@@ -403,25 +406,67 @@ class TestPyNumber (objc.test.TestCase):
 
 class TestInteractions (objc.test.TestCase):
     # Test interactions between Python and NSNumber numbers
+
     def testMixedCompare(self):
         # compare for:
         #   - python number to nsnumber
         #   - nsnumber to python number
         # For: (bool, int, long, float) vs (char, short, ...)
-        pass
+        methods = [
+                'numberWithInt_',
+                'numberWithChar_',
+                'numberWithLong_',
+                'numberWithDouble_',
+            ]
+
+        self.assertEqual(OC_TestNumber.compareA_andB_(42, 42), NSOrderedSame)
+        for m in methods:
+            self.assertEqual(OC_TestNumber.compareA_andB_(getattr(NSNumber, m)(42), 42), NSOrderedSame)
+            self.assertEqual(OC_TestNumber.compareA_andB_(42, getattr(NSNumber, m)(42)), NSOrderedSame)
+
+        self.assertEqual(OC_TestNumber.compareA_andB_(42, 99), NSOrderedAscending)
+        for m in methods:
+            self.assertEqual(OC_TestNumber.compareA_andB_(getattr(NSNumber, m)(42), 99), NSOrderedAscending)
+            self.assertEqual(OC_TestNumber.compareA_andB_(42, getattr(NSNumber, m)(99)), NSOrderedAscending)
 
     def testMixedEquals(self):
         # isEqualToNumber for:
         #   - python number to nsnumber
         #   - nsnumber to python number
         # For: (bool, int, long, float) vs (char, short, ...)
-        pass
+        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithInt_(0)))
+        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithLong_(0)))
+        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithFloat_(0)))
+        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 0))
+        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 0))
+        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0))
+
+        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithInt_(0)))
+        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithLong_(0)))
+        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithFloat_(0)))
+        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 42))
+        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 42))
+        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42))
 
 
 class TestNumberFormatter (objc.test.TestCase):
     # Test behaviour of an NSNumberFormatter, both with 
     # Python numbers and NSNumbers
-    pass
+    def testFormatting(self):
+        formatter = NSNumberFormatter.alloc().init()
+
+        n = NSNumber.numberWithInt_(42)
+        p = 42
+        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
+
+        n = NSNumber.numberWithInt_(-42)
+        p = -42
+        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
+
+
+        n = NSNumber.numberWithDouble_(10.42)
+        p = 10.42
+        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
 
 if __name__ == "__main__":
     objc.test.main()
