@@ -1000,7 +1000,13 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 			/* FALL THROUGH */
 		case _C_IN: case _C_CONST:
-			if (argtype[1] == _C_PTR || argtype[1] == _C_CHARPTR) {
+			if (argtype[1] == _C_PTR && argtype[2] == _C_VOID && methinfo->argtype[i].ptrType == PyObjC_kPointerPlain) {
+				/* A plain 'void*' that was marked up.
+				 * This is wrong, but happens in the official metadata included
+				 * with 10.5.x
+				 */
+				v = pythonify_c_value(argtype, args[i]);
+			} else if (argtype[1] == _C_PTR || argtype[1] == _C_CHARPTR) {
 				const char* resttype;
 
 				if (argtype[1] == _C_PTR) {
@@ -1763,7 +1769,8 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
 			return NULL;
 		}
 
-		if (stubUserdata->argCount == methinfo->ob_size - 1 && !haveVarArgs && !haveVarKwds) {
+
+		if (stubUserdata->argCount == methinfo->ob_size && !haveVarArgs && !haveVarKwds) {
 			/* OK */
 		} else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
 			/* OK: 
@@ -1999,7 +2006,16 @@ int PyObjCFFI_CountArguments(
 			break;
 
 		case _C_IN: case _C_CONST:
-			if (argtype[1] == _C_PTR) {
+			if (argtype[1] == _C_PTR && argtype[2] == _C_VOID && methinfo->argtype[i].ptrType == PyObjC_kPointerPlain) {
+				itemSize = PyObjCRT_SizeOfType(argtype);
+				itemAlign = PyObjCRT_AlignOfType(argtype);
+				if (itemSize == -1) {
+					return -1;
+				}
+				*argbuf_len = align(*argbuf_len, itemAlign);
+				(*argbuf_len) += itemSize;
+				(*plain_count)++;
+			} else if (argtype[1] == _C_PTR) {
 				(*byref_in_count) ++;
 				itemSize = PyObjCRT_SizeOfType(argtype+2);
 				itemAlign = PyObjCRT_AlignOfType(argtype+2);
@@ -2315,12 +2331,85 @@ int PyObjCFFI_ParseArguments(
 			case _C_INOUT:
 			case _C_IN:
 			case _C_CONST:
+				if (argtype[1] == _C_PTR && argtype[2] == _C_VOID && methinfo->argtype[i].ptrType == PyObjC_kPointerPlain) {
+					argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
+					arg = argbuf + argbuf_cur;
+					argbuf_cur += PyObjCRT_SizeOfType(argtype);
+					PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
 
-				if (argtype[1] == _C_CHARPTR || (argtype[1] == _C_PTR && !PyObjCPointerWrapper_HaveWrapper(argtype+1))) {
+					if (methinfo->argtype[i].printfFormat) {
+						printf_format = argument;
+						Py_INCREF(argument);
+					}
+
+					error = depythonify_c_value (
+						argtype, 
+						argument, 
+						arg);
+
+					arglist[i] = signature_to_ffi_type(argtype);
+					values[i] = arg;
+
+				} else if (argtype[1] == _C_CHARPTR || (argtype[1] == _C_PTR && !PyObjCPointerWrapper_HaveWrapper(argtype+1))) {
 					/* Allocate space and encode */
 					const char* resttype = argtype + 2;
 					if (argtype[1] == _C_CHARPTR) {
 						resttype = gCharEncoding;
+					} else if (argtype[2] == _C_UNDEF) {
+						/* This better be a function argument, other types of 'undefined' arguments
+						 * aren't supported.
+						 */
+						if (methinfo->argtype[i].callable == NULL) {
+							PyErr_SetString(PyExc_ValueError, "calling method/function with 'undefined' argument");
+							return -1;
+						}
+						argbuf_cur = align(argbuf_cur, __alignof__(PyObjC_callback_function));
+						arg = argbuf + argbuf_cur;
+						argbuf_cur += sizeof(PyObjC_callback_function);
+						PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
+						arglist[i] = signature_to_ffi_type(argtype);
+						values[i] = arg;
+
+						if (argument == Py_None) {
+							*(PyObjC_callback_function*)arg = NULL;
+
+						} else {
+							PyObjC_callback_function closure;
+							PyObject* v = PyObject_GetAttrString(argument, "pyobjc_closure");
+							if (v == NULL) {
+								if (!methinfo->argtype[i].callableRetained) {
+									/* The callback isn't retained by the called function,
+									 * therefore we can safely synthesize a closure and
+									 * clean it up after the call.
+									 */
+									PyErr_Clear();
+
+									closure = PyObjCFFI_MakeFunctionClosure(
+											methinfo->argtype[i].callable, 
+											argument
+										);
+									if (closure == NULL) {
+										return -1;
+									}
+									byref_attr[i].buffer = PyCObject_FromVoidPtr(
+										closure,
+										(void(*)(void*))PyObjCFFI_FreeIMP);
+								} else {
+									PyErr_SetString(PyExc_TypeError,
+										"Callable argument is not a PyObjC closure");
+									return -1;
+								}
+
+							} else {
+								if (!PyCObject_Check(v) || PyCObject_GetDesc(v) != &PyObjCMethodSignature_Type) {
+									PyErr_SetString(PyExc_TypeError,
+										"Invalid pyobjc_closure attribute");
+								}
+								closure = PyCObject_AsVoidPtr(v);
+							}
+							*(PyObjC_callback_function*)arg = closure;
+						}
+						break;
 					}
 
 					if (argument == PyObjC_NULL || argument == Py_None) {
