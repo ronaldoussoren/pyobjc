@@ -4,7 +4,7 @@ Tests for the proxy of Python numbers
 NOTE: Decimal conversion is not tested, the required proxy is part of 
 the Foundation bindings :-(
 """
-import sys
+import sys, os
 import objc.test
 from objc.test.fnd import NSNumber, NSNumberFormatter
 from objc.test.pythonnumber import OC_TestNumber
@@ -136,21 +136,32 @@ class TestNSNumber (objc.test.TestCase):
         #   unsigned long long lv = v;
         #   printf("%llu\n", lv);
 
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551488)
+        if int(os.uname()[2].split('.')[0]) == 8:
+            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+
+        else:
+            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551488)
         self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
 
         # Overflow
         v = NSNumber.numberWithDouble_(float(2**64 + 99))
 
         self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
+
+        if sys.byteorder == 'big':
+            self.assertEquals(OC_TestNumber.numberAsChar_(v), -1)
+            self.assertEquals(OC_TestNumber.numberAsShort_(v), -1)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 255)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
+        else:
+            self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
 
     def testCompare(self):
         self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(1)), NSOrderedAscending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithUnsignedLongLong_(2**63)), NSOrderedAscending)
+        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithUnsignedLongLong_(2**40)), NSOrderedAscending)
         self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(42.0)), NSOrderedAscending)
 
         self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(-1)), NSOrderedDescending)
@@ -341,17 +352,28 @@ class TestPyNumber (objc.test.TestCase):
         else:
             self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551489)
 
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+        if sys.byteorder == 'big':
+            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 4294967169)
+        else:
+            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+
         self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
 
         # Overflow
         v = float(2**64 + 99)
 
         self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
+
+        if sys.byteorder == 'big':
+            self.assertEquals(OC_TestNumber.numberAsChar_(v), -1)
+            self.assertEquals(OC_TestNumber.numberAsShort_(v), -1)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 255)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
+        else:
+            self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
+            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
 
     def testCompare(self):
         self.assertEquals(OC_TestNumber.compareA_andB_(0, 1), NSOrderedAscending)

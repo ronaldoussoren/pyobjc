@@ -48,7 +48,20 @@ static Py_ssize_t item_count = 0;
  * ignore everything beyond the end of the struct name.
  */
 static int find_end_of_structname(const char* signature) {
-	if (signature[1] == _C_STRUCT_B) {
+	if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
+		char* end1;
+		char* end2;
+
+		end1 = strchr(signature, _C_STRUCT_E);
+		end2 = strchr(signature, '=');
+
+		if (end2 == NULL) {
+			return end1 - signature;
+		} else {
+			return end2 - signature;
+		}
+
+	} else if (signature[1] == _C_STRUCT_B) {
 		char* end1;
 		char* end2;
 
@@ -75,13 +88,20 @@ FindWrapper(const char* signature)
 	for (i = 0; i < item_count; i++) {
 		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
 			/* See comment just above find_end_of_structname */
-			if (signature[1] != _C_STRUCT_B) {
-				if (signature[items[i].offset] == '\0') {
-					return items + i;
-				}
-			} else {
+			if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
 				char ch = signature[items[i].offset];
 				if (ch == '=' || ch == _C_STRUCT_E) {
+					return items + i;
+				}
+
+			} else if (signature[1] == _C_STRUCT_B) {
+				char ch = signature[items[i].offset];
+				if (ch == '=' || ch == _C_STRUCT_E) {
+					return items + i;
+				}
+
+			} else {
+				if (signature[items[i].offset] == '\0') {
 					return items + i;
 				}
 			}

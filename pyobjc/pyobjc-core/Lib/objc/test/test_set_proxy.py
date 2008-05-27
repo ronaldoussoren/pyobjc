@@ -7,6 +7,10 @@ from objc.test.fnd import NSSet, NSMutableSet, NSPredicate, NSObject, NSNull
 from objc.test.pythonset import OC_TestSet
 import objc
 
+import os
+
+onLeopard = int(os.uname()[2].split('.')[0]) >= 9
+
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 
 class OC_SetPredicate (NSPredicate):
@@ -92,13 +96,14 @@ class BasicSetTests:
         self.assert_(not OC_TestSet.set_containsObject_(s, 4))
         self.assert_(OC_TestSet.set_containsObject_(s, 2))
 
-    def testFilteredSetUsingPredicate(self):
-        s = self.setClass(range(10))
-        p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
+    if onLeopard:
+        def testFilteredSetUsingPredicate(self):
+            s = self.setClass(range(10))
+            p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
 
-        o = OC_TestSet.set_filteredSetUsingPredicate_(s, p)
-        self.assertEquals(o, self.setClass([0, 2, 4, 6, 8]))
-        self.assertEquals(len(s), 10)
+            o = OC_TestSet.set_filteredSetUsingPredicate_(s, p)
+            self.assertEquals(o, self.setClass([0, 2, 4, 6, 8]))
+            self.assertEquals(len(s), 10)
 
     def testMakeObjectsPerform(self):
         o1 = OC_TestElem(1)
@@ -181,9 +186,10 @@ class TestImmutableSet (objc.test.TestCase, BasicSetTests):
         self.assertRaises(TypeError,
                 OC_TestSet.set_addObjectsFromArray_, o, [4, 5, 6])
 
-        self.assertRaises(TypeError,
-                OC_TestSet.set_filterUsingPredicate_, o, 
-                NSPredicate.predicateWithValue_(True))
+        if onLeopard:
+            self.assertRaises(TypeError,
+                    OC_TestSet.set_filterUsingPredicate_, o, 
+                    NSPredicate.predicateWithValue_(True))
 
         self.assertRaises(TypeError,
                 OC_TestSet.set_intersectSet_, o, self.setClass([2,3,4]))
@@ -243,12 +249,13 @@ class TestMutableSet (objc.test.TestCase, BasicSetTests):
         OC_TestSet.set_intersectSet_(s1, s2)
         self.assertEquals(s1, self.setClass([3]))
 
-    def testFilterSet(self):
-        s = self.setClass(range(10))
-        p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
+    if onLeopard:
+        def testFilterSet(self):
+            s = self.setClass(range(10))
+            p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
 
-        OC_TestSet.set_filterUsingPredicate_(s, p)
-        self.assertEquals(s, self.setClass([0, 2, 4, 6, 8]))
+            OC_TestSet.set_filterUsingPredicate_(s, p)
+            self.assertEquals(s, self.setClass([0, 2, 4, 6, 8]))
 
     def testAddObject(self):
         s = self.setClass([1,2,3])

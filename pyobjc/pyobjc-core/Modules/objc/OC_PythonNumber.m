@@ -274,14 +274,15 @@
 	unsigned long long result;
 
 	PyObjC_BEGIN_WITH_GIL
-		if (PyInt_Check(value)) {
+		if (PyLong_Check(value)) {
+			result =  PyLong_AsUnsignedLongLongMask(value);
+			PyObjC_GIL_RETURN(result);
+		} else if (PyInt_Check(value)) {
 			result =  (unsigned long long)PyInt_AsLong(value);
 			PyObjC_GIL_RETURN(result);
 		} else if (PyFloat_Check(value)) {
-			result =  (unsigned long long)PyFloat_AsDouble(value);
-			PyObjC_GIL_RETURN(result);
-		} else if (PyLong_Check(value)) {
-			result =  PyLong_AsUnsignedLongLongMask(value);
+			double temp = PyFloat_AsDouble(value);
+			result =  (unsigned long long)temp;
 			PyObjC_GIL_RETURN(result);
 		}
 	PyObjC_END_WITH_GIL

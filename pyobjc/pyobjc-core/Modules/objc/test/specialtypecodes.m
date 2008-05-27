@@ -7,6 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef NSINTEGER_DEFINED
+
+typedef unsigned int NSUInteger;
+
+#endif
+
 typedef struct _EmbeddedBool {
 	int count;
 	BOOL isValid;
