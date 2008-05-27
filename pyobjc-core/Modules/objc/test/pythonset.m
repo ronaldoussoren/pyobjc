@@ -3,6 +3,13 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef NSINTEGER_DEFINED
+
+typedef unsigned int NSUInteger;
+
+#endif
+
+
 @interface OC_TestSet : NSObject {}
 @end
 
@@ -56,6 +63,7 @@
 {
 	return [set descriptionWithLocale:locale];
 }
+
 
 +(NSSet*)set:(NSSet*)set filteredSetUsingPredicate:(NSPredicate*)predicate
 {
