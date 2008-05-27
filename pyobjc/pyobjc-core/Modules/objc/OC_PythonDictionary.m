@@ -500,6 +500,12 @@ static PyObject* mapTypes = NULL;
 	return nil;
 }
 
+-(Class)classForCoder
+{
+	return [OC_PythonDictionary class];
+}
+
+
 - (void)encodeWithCoder:(NSCoder*)coder
 {
 	if (1 && PyDict_CheckExact(value)) {

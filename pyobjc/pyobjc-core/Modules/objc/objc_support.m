@@ -728,6 +728,9 @@ PyObjCRT_AlignOfType (const char *type)
 	case _C_BFLD:
 		return 1;
 
+	case _C_UNDEF:
+		return __alignof__(void*);
+
 	default:
 		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_AlignOfType: Unhandled type '%#x' %s", *type, type);
@@ -883,6 +886,9 @@ PyObjCRT_SizeOfType (const char *type)
 			return (i+7)/8;
 		}
 		break;
+
+	case _C_UNDEF:
+		return sizeof(void*);
 
 	default:
 		PyErr_Format(PyObjCExc_InternalError, 

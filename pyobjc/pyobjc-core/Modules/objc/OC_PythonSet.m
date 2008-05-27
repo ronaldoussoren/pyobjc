@@ -107,6 +107,12 @@ static PyObject* mapTypes = NULL;
 
 /* NSCoding support */
 
+-(Class)classForCoder
+{
+	return [OC_PythonSet class];
+}
+
+
 - (void)encodeWithCoder:(NSCoder*)coder
 {
 	PyObjC_encodeWithCoder(value, coder);

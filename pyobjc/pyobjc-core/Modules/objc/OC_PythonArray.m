@@ -304,7 +304,7 @@ static PyObject* mapTypes = NULL;
 	 * Instances of 'list' and 'tuple' are encoded directly,
 	 * for other sequences use the generic pickle support code.
 	 */
-	if (1 && PyTuple_CheckExact(value)) {
+	if (PyTuple_CheckExact(value)) {
 		if ([coder allowsKeyedCoding]) {
 			[coder encodeInt32:1 forKey:@"pytype"];
 		} else {
@@ -312,7 +312,7 @@ static PyObject* mapTypes = NULL;
 			[coder encodeValueOfObjCType:@encode(int) at:&v];
 		}
 		[super encodeWithCoder:coder];
-	} else if (1 && PyList_CheckExact(value)) {
+	} else if (PyList_CheckExact(value)) {
 		if ([coder allowsKeyedCoding]) {
 			[coder encodeInt32:2 forKey:@"pytype"];
 		} else {
@@ -336,6 +336,11 @@ static PyObject* mapTypes = NULL;
  * A basic implementation of -initWithObjects:count:. This method is needed
  * to support NSCoding for Python sequences.
  */
+-(Class)classForCoder
+{
+	return [OC_PythonArray class];
+}
+
 -(id)initWithObjects:(NSObject**)objects count:(NSUInteger)count
 {
 	NSUInteger i;
