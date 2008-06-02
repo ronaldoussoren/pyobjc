@@ -690,6 +690,10 @@ a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 .. _`Key-Value Coding`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/
 .. _`Key-Value Observing`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/
 
+NOTE: Key-Value Observing is not supported for "pure" python objects, that
+is instances of classes that don't inherit from ``NSObject``. Adding such 
+support is not possible adding a KVO-like interface to the Python interpreter.
+
 Categories
 ..........
 
