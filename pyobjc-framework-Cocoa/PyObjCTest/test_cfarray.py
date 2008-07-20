@@ -67,6 +67,99 @@ class TestCFArray (unittest.TestCase):
 
         self.assertEquals(array, [0, 1, 2, 3, 4, 5])
 
+    def testTypeID(self):
+        v = CFArrayGetTypeID()
+        self.failUnless( isinstance(v, (int, long)) )
+
+    def testCopy(self):
+        array = CFArrayCreate(None, [1,2,3,4], 4)
+        self.assertEquals(array, [1,2,3,4])
+        self.assert_(isinstance(array, CFArrayRef))
+
+        cpy = CFArrayCreateCopy(None, array)
+        self.assertEquals(cpy, [1,2,3,4])
+        self.assert_(isinstance(cpy, CFArrayRef))
+
+        cpy = CFArrayCreateMutableCopy(None, 0, array)
+        self.assertEquals(cpy, [1,2,3,4])
+        self.assert_(isinstance(cpy, CFMutableArrayRef))
+        self.failIf( cpy is array )
+
+
+    def testCounts(self):
+        array = CFArrayCreate(None, [1,2,3,4,4,2], 6)
+        self.assertEquals(array, [1,2,3,4,4,2])
+        self.assert_(isinstance(array, CFArrayRef))
+
+        self.failUnless(  CFArrayGetCount(array) == 6 )
+        self.failUnless(  CFArrayGetCountOfValue(array, (0,6), 4) == 2 )
+        self.failUnless(  CFArrayGetCountOfValue(array, (0,6), 2) == 2 )
+        self.failUnless(  CFArrayGetCountOfValue(array, (0,6), 3) == 1 )
+
+    def testContains(self):
+        array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6)
+        self.assertEquals(array, [u"a",2,3,4,4,2])
+        self.assert_(isinstance(array, CFArrayRef))
+
+        self.failIf( CFArrayContainsValue(array, (0, 6), u"hello") )
+        self.failUnless( CFArrayContainsValue(array, (0, 6), 4) )
+        self.failIf( CFArrayContainsValue(array, (0, 2), 4) )
+
+        self.failUnless( CFArrayGetFirstIndexOfValue(array, (0, 6), 3) == 2 )
+        self.failUnless( CFArrayGetFirstIndexOfValue(array, (0, 6), 2) == 1 )
+        self.failUnless( CFArrayGetFirstIndexOfValue(array, (0, 6), u"hello") == kCFNotFound )
+
+        self.failUnless( CFArrayGetLastIndexOfValue(array, (0, 6), 3) == 2 )
+        self.failUnless( CFArrayGetLastIndexOfValue(array, (0, 6), 2) == 5 )
+        self.failUnless( CFArrayGetLastIndexOfValue(array, (0, 6), u"hello") == kCFNotFound )
+
+
+    def testGetting(self):
+        array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6)
+        self.assertEquals(array, [u"a",2,3,4,4,2])
+        self.assert_(isinstance(array, CFArrayRef))
+
+        self.failUnless(   CFArrayGetValueAtIndex(array, 0) == u"a"  )
+        self.failUnless(   CFArrayGetValueAtIndex(array, 1) == 2  )
+
+        vals = CFArrayGetValues(array, (0, 3), None)
+        self.failUnless( isinstance(vals, tuple) )
+        self.failUnless( vals == (u"a", 2, 3) )
+        
+
+    def testUpdating(self):
+        array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6)
+        self.assertEquals(array, [u"a",2,3,4,4,2])
+        self.assert_(isinstance(array, CFArrayRef))
+        array = CFArrayCreateMutableCopy(None, 0, array)
+
+
+        CFArrayAppendValue(array, u"foo")
+        self.assertEquals(array, [u"a",2,3,4,4,2,u"foo"])
+
+        CFArrayInsertValueAtIndex(array, 1, 4)
+        self.assertEquals(array, [u"a",4, 2,3,4,4,2,u"foo"])
+
+        CFArrayRemoveValueAtIndex(array, 2)
+        self.assertEquals(array, [u"a",4, 3,4,4,2,u"foo"])
+
+        CFArraySetValueAtIndex(array, 2, u"two")
+        self.assertEquals(array, [u"a",4, u"two",4,4,2,u"foo"])
+
+
+        CFArrayExchangeValuesAtIndices(array, 1,2)
+        self.assertEquals(array, [u"a",u"two",4,4,4,2,u"foo"])
+
+        CFArrayReplaceValues(array, (2,3), (u'a', u'b', u'c', u'd', u'e', u'f'), 6)
+        self.assertEquals(array, [u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo'])
+
+        array2 = CFArrayCreate(None, [u'hello', u'earth'], 2)
+        CFArrayAppendArray(array, array2, (0,2))
+        self.assertEquals(array, [u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo', u'hello', u'earth'])
+
+        CFArrayRemoveAllValues(array)
+        self.assertEquals(array, [])
+
 
 if __name__ == "__main__":
     unittest.main()
