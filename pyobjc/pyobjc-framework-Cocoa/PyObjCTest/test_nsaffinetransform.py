@@ -167,5 +167,18 @@ class TestNSAffineTransformStruct (unittest.TestCase):
         self.assertRaises(TypeError, operator.delslice, p, 0, 2)
 
 
+class TestAffineTransform (unittest.TestCase):
+    def testStructReturn (self):
+        transform = NSAffineTransform.transform()
+        s = transform.transformStruct()
+        self.failUnless(isinstance(s, NSAffineTransformStruct))
+
+        s = NSAffineTransformStruct(0, 1, 2, 3, 4, 5)
+        transform.setTransformStruct_(s)
+
+        t = transform.transformStruct()
+        self.failUnless(isinstance(t, NSAffineTransformStruct))
+        self.assertEquals(s, t)
+
 if __name__ == "__main__":
     unittest.main()

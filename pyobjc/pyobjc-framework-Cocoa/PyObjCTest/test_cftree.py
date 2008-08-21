@@ -2,6 +2,9 @@ from CoreFoundation import *
 import unittest
 
 class TestCFTree (unittest.TestCase):
+    def testDummy(self):
+        self.fail("CFTree tests are not yet complete")
+
     def testCreation(self):
         context = object()
         tree = CFTreeCreate(None, context)
