@@ -1,0 +1,109 @@
+import unittest
+from CoreFoundation import *
+
+
+class TestSet (unittest.TestCase):
+    def testTypeID(self):
+        self.failUnless(isinstance(CFSetGetTypeID(), (int, long)))
+
+    def testMagicConstants(self):
+        # Some magic constants 
+        self.failUnless(kCFTypeSetCallBacks == 1)
+        self.failUnless(kCFCopyStringSetCallBacks == 2)
+
+    def testCreation(self):
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        self.failUnless(isinstance(st, CFSetRef))
+        self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
+
+
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFCopyStringSetCallBacks)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        st = CFSetCreateMutable(None, 0)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        st = CFSetCreateMutable(None, 0, kCFTypeSetCallBacks)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        st = CFSetCreateMutable(None, 0, kCFCopyStringSetCallBacks)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        cp = CFSetCreateMutableCopy(None, 0, st)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        cp = CFSetCreateCopy(None, st)
+        self.failUnless(isinstance(st, CFSetRef))
+
+    def testInspection(self):
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        self.failUnless(isinstance(st, CFSetRef))
+        self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
+
+        v = CFSetGetCount(st)
+        self.failUnless(v == 3)
+
+        v = CFSetGetCountOfValue(st, u'd')
+        self.failUnless(v == 0)
+        v = CFSetGetCountOfValue(st, u'b')
+        self.failUnless(v == 1)
+
+        v = CFSetContainsValue(st, u'd')
+        self.failUnless(v is False)
+        v = CFSetContainsValue(st, u'b')
+        self.failUnless(v is True)
+
+        v = CFSetGetValue(st, u'd')
+        self.failUnless(v is None)
+
+        v = CFSetGetValue(st, u'b')
+        self.failUnless(v == u'b')
+
+        present, value = CFSetGetValueIfPresent(st, u'c', None)
+        self.failUnless(present is True)
+        self.failUnless(value == u'c')
+
+        values = CFSetGetValues(st, None)
+        values = list(values)
+        values.sort()
+        self.failUnless(values == [u'a', u'b', u'c'])
+
+    def testApplying(self):
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        self.failUnless(isinstance(st, CFSetRef))
+        self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
+
+        context = []
+        def callback(value, context):
+            context.append(value)
+
+        CFSetApplyFunction(st, callback, context)
+        self.failUnless(len(context) == 3)
+        context.sort()
+        self.failUnless(context == [u'a', u'b', u'c'])
+
+    def testMutation(self):
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        self.failUnless(isinstance(st, CFSetRef))
+        self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
+        st = CFSetCreateMutableCopy(None, 0, st)
+        self.failUnless(isinstance(st, CFSetRef))
+
+        self.failUnless(CFSetGetCount(st) == 3)
+        CFSetSetValue(st, 'c')
+        self.failUnless(CFSetGetCount(st) == 3)
+        CFSetSetValue(st, 'd')
+        self.failUnless(CFSetGetCount(st) == 4)
+
+        CFSetRemoveValue(st, 'c')
+        self.failUnless(CFSetGetCount(st) == 3)
+
+        CFSetRemoveAllValues(st)
+        self.failUnless(CFSetGetCount(st) == 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

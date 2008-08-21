@@ -31,6 +31,9 @@ def stripDocType(val):
 
 
 class TestNSNumber( unittest.TestCase ):
+    def testFixme(self):
+        self.fail("need attention")
+
     def testSimple(self):
         self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
         self.assertEquals(NSNumber.numberWithInt_(1), 1)

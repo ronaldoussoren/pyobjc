@@ -9,6 +9,9 @@ class TestHelper (NSObject):
         foo[0] += 1
 
 class TestNSUndoManager(unittest.TestCase):
+    def testFail(self):
+        self.fail("Add tests that check undo calling methods with odd signatures")
+
     def testUndoManager(self):
         x = TestHelper.new()
         m = NSUndoManager.new()
@@ -55,9 +58,6 @@ if hasattr(Foundation, 'NSIndexSpecifier'):
 class TestSubclassingUndo(unittest.TestCase):
     # Bugreport: 678759 Subclassing NSUndoManager fails
 
-    pass
-
-if 0:
     def testSubclass(self):
         class UndoSubclass (NSUndoManager):
             pass
@@ -70,6 +70,18 @@ if 0:
         m.undo()
 
         self.assertEquals(l[0], 1)
+
+    def testConstants(self):
+        self.failUnless(isinstance(NSUndoManagerCheckpointNotification, unicode))
+        self.failUnless(isinstance(NSUndoManagerWillUndoChangeNotification, unicode))
+        self.failUnless(isinstance(NSUndoManagerWillRedoChangeNotification, unicode))
+
+        self.failUnless(isinstance(NSUndoManagerDidUndoChangeNotification, unicode))
+        self.failUnless(isinstance(NSUndoManagerDidRedoChangeNotification, unicode))
+
+        self.failUnless(isinstance(NSUndoManagerDidOpenUndoGroupNotification, unicode))
+        self.failUnless(isinstance(NSUndoManagerWillCloseUndoGroupNotification, unicode))
+
 
 if __name__ == '__main__':
     unittest.main( )
