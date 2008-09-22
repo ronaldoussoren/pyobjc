@@ -774,7 +774,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">print:</string>
+						<string key="label">printDocument:</string>
 						<reference key="source" ref="1014"/>
 						<reference key="destination" ref="49223823"/>
 					</object>
