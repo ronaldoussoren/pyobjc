@@ -22,7 +22,7 @@ class xcPROJECTNAMEASIDENTIFIERxcDocument(NSDocument):
         super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).windowControllerDidLoadNib_(aController)
 
     def dataOfType_error_(self, typeName, outError):
-        return None
+        return None, NSError.errorWithDomain_code_userInfo_(NSOSStatusErrorDomain, -4, None) # -4 is unimpErr from CarbonCore
     
     def readFromData_ofType_error_(self, data, typeName, outError):
-        return NO
+        return NO, NSError.errorWithDomain_code_userInfo_(NSOSStatusErrorDomain, -4, None) # -4 is unimpErr from CarbonCore
