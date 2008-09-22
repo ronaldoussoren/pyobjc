@@ -1,0 +1,438 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1CD0B18905B1CA07009E9F0F /* JVAutoEmotionDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B18705B1CA07009E9F0F /* JVAutoEmotionDisplay.h */; };
+		1CD0B18A05B1CA07009E9F0F /* JVAutoEmotionDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD0B18805B1CA07009E9F0F /* JVAutoEmotionDisplay.m */; };
+		1CD0B3E305B1CC2A009E9F0F /* JVBuddy.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3CC05B1CC2A009E9F0F /* JVBuddy.h */; };
+		1CD0B3E405B1CC2A009E9F0F /* JVChatConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3CD05B1CC2A009E9F0F /* JVChatConsole.h */; };
+		1CD0B3E505B1CC2A009E9F0F /* JVChatController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3CE05B1CC2A009E9F0F /* JVChatController.h */; };
+		1CD0B3E605B1CC2B009E9F0F /* JVChatRoom.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3CF05B1CC2A009E9F0F /* JVChatRoom.h */; };
+		1CD0B3E705B1CC2B009E9F0F /* JVChatRoomMember.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D005B1CC2A009E9F0F /* JVChatRoomMember.h */; };
+		1CD0B3E805B1CC2B009E9F0F /* JVChatTranscript.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D105B1CC2A009E9F0F /* JVChatTranscript.h */; };
+		1CD0B3E905B1CC2B009E9F0F /* JVChatWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D205B1CC2A009E9F0F /* JVChatWindowController.h */; };
+		1CD0B3EA05B1CC2B009E9F0F /* JVDirectChat.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D305B1CC2A009E9F0F /* JVDirectChat.h */; };
+		1CD0B3EB05B1CC2B009E9F0F /* JVInspectorController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D405B1CC2A009E9F0F /* JVInspectorController.h */; };
+		1CD0B3EC05B1CC2B009E9F0F /* JVPreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D505B1CC2A009E9F0F /* JVPreferencesController.h */; };
+		1CD0B3ED05B1CC2B009E9F0F /* MVBuddyListController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D605B1CC2A009E9F0F /* MVBuddyListController.h */; };
+		1CD0B3EE05B1CC2B009E9F0F /* MVChatConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D705B1CC2A009E9F0F /* MVChatConnection.h */; };
+		1CD0B3EF05B1CC2B009E9F0F /* MVChatPluginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D805B1CC2A009E9F0F /* MVChatPluginManager.h */; };
+		1CD0B3F005B1CC2B009E9F0F /* MVChatPluginManagerAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3D905B1CC2A009E9F0F /* MVChatPluginManagerAdditions.h */; };
+		1CD0B3F105B1CC2B009E9F0F /* MVChatScriptPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DA05B1CC2A009E9F0F /* MVChatScriptPlugin.h */; };
+		1CD0B3F205B1CC2B009E9F0F /* MVConnectionsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DB05B1CC2A009E9F0F /* MVConnectionsController.h */; };
+		1CD0B3F305B1CC2B009E9F0F /* MVFileTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DC05B1CC2A009E9F0F /* MVFileTransferController.h */; };
+		1CD0B3F405B1CC2B009E9F0F /* NSAttributedStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DD05B1CC2A009E9F0F /* NSAttributedStringAdditions.h */; };
+		1CD0B3F505B1CC2B009E9F0F /* NSColorAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DE05B1CC2A009E9F0F /* NSColorAdditions.h */; };
+		1CD0B3F605B1CC2B009E9F0F /* NSMethodSignatureAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3DF05B1CC2A009E9F0F /* NSMethodSignatureAdditions.h */; };
+		1CD0B3F705B1CC2B009E9F0F /* NSNumberAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3E005B1CC2A009E9F0F /* NSNumberAdditions.h */; };
+		1CD0B3F805B1CC2B009E9F0F /* NSPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3E105B1CC2A009E9F0F /* NSPreferences.h */; };
+		1CD0B3F905B1CC2B009E9F0F /* NSStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CD0B3E205B1CC2A009E9F0F /* NSStringAdditions.h */; };
+		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
+		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		1CD0B18705B1CA07009E9F0F /* JVAutoEmotionDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JVAutoEmotionDisplay.h; sourceTree = SOURCE_ROOT; };
+		1CD0B18805B1CA07009E9F0F /* JVAutoEmotionDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JVAutoEmotionDisplay.m; sourceTree = SOURCE_ROOT; };
+		1CD0B3CC05B1CC2A009E9F0F /* JVBuddy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVBuddy.h; path = ../../Headers/JVBuddy.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3CD05B1CC2A009E9F0F /* JVChatConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatConsole.h; path = ../../Headers/JVChatConsole.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3CE05B1CC2A009E9F0F /* JVChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatController.h; path = ../../Headers/JVChatController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3CF05B1CC2A009E9F0F /* JVChatRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatRoom.h; path = ../../Headers/JVChatRoom.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D005B1CC2A009E9F0F /* JVChatRoomMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatRoomMember.h; path = ../../Headers/JVChatRoomMember.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D105B1CC2A009E9F0F /* JVChatTranscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatTranscript.h; path = ../../Headers/JVChatTranscript.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D205B1CC2A009E9F0F /* JVChatWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatWindowController.h; path = ../../Headers/JVChatWindowController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D305B1CC2A009E9F0F /* JVDirectChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVDirectChat.h; path = ../../Headers/JVDirectChat.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D405B1CC2A009E9F0F /* JVInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVInspectorController.h; path = ../../Headers/JVInspectorController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D505B1CC2A009E9F0F /* JVPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVPreferencesController.h; path = ../../Headers/JVPreferencesController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D605B1CC2A009E9F0F /* MVBuddyListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVBuddyListController.h; path = ../../Headers/MVBuddyListController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D705B1CC2A009E9F0F /* MVChatConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatConnection.h; path = ../../Headers/MVChatConnection.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D805B1CC2A009E9F0F /* MVChatPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatPluginManager.h; path = ../../Headers/MVChatPluginManager.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3D905B1CC2A009E9F0F /* MVChatPluginManagerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatPluginManagerAdditions.h; path = ../../Headers/MVChatPluginManagerAdditions.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DA05B1CC2A009E9F0F /* MVChatScriptPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatScriptPlugin.h; path = ../../Headers/MVChatScriptPlugin.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DB05B1CC2A009E9F0F /* MVConnectionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVConnectionsController.h; path = ../../Headers/MVConnectionsController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DC05B1CC2A009E9F0F /* MVFileTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVFileTransferController.h; path = ../../Headers/MVFileTransferController.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DD05B1CC2A009E9F0F /* NSAttributedStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAttributedStringAdditions.h; path = ../../Headers/NSAttributedStringAdditions.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DE05B1CC2A009E9F0F /* NSColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorAdditions.h; path = ../../Headers/NSColorAdditions.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3DF05B1CC2A009E9F0F /* NSMethodSignatureAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMethodSignatureAdditions.h; path = ../../Headers/NSMethodSignatureAdditions.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3E005B1CC2A009E9F0F /* NSNumberAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSNumberAdditions.h; path = ../../Headers/NSNumberAdditions.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3E105B1CC2A009E9F0F /* NSPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSPreferences.h; path = ../../Headers/NSPreferences.h; sourceTree = SOURCE_ROOT; };
+		1CD0B3E205B1CC2A009E9F0F /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringAdditions.h; path = ../../Headers/NSStringAdditions.h; sourceTree = SOURCE_ROOT; };
+		8D5B49B6048680CD000E48DA /* Auto Emotion Display.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Auto Emotion Display.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D5B49B3048680CD000E48DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Auto Emotion Display */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Classes */,
+				1CD0B3CB05B1CC2A009E9F0F /* Headers */,
+				089C167CFE841241C02AAC07 /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				19C28FB8FE9D52D311CA2CBB /* Products */,
+			);
+			name = "Auto Emotion Display";
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
+				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
+			);
+			name = "Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C167CFE841241C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B7048680CD000E48DA /* Info.plist */,
+				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1CD0B18805B1CA07009E9F0F /* JVAutoEmotionDisplay.m */,
+				1CD0B18705B1CA07009E9F0F /* JVAutoEmotionDisplay.h */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				089C1672FE841209C02AAC07 /* Foundation.framework */,
+				089C167FFE841241C02AAC07 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D5B49B6048680CD000E48DA /* Auto Emotion Display.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1CD0B3CB05B1CC2A009E9F0F /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				1CD0B3CC05B1CC2A009E9F0F /* JVBuddy.h */,
+				1CD0B3CD05B1CC2A009E9F0F /* JVChatConsole.h */,
+				1CD0B3CE05B1CC2A009E9F0F /* JVChatController.h */,
+				1CD0B3CF05B1CC2A009E9F0F /* JVChatRoom.h */,
+				1CD0B3D005B1CC2A009E9F0F /* JVChatRoomMember.h */,
+				1CD0B3D105B1CC2A009E9F0F /* JVChatTranscript.h */,
+				1CD0B3D205B1CC2A009E9F0F /* JVChatWindowController.h */,
+				1CD0B3D305B1CC2A009E9F0F /* JVDirectChat.h */,
+				1CD0B3D405B1CC2A009E9F0F /* JVInspectorController.h */,
+				1CD0B3D505B1CC2A009E9F0F /* JVPreferencesController.h */,
+				1CD0B3D605B1CC2A009E9F0F /* MVBuddyListController.h */,
+				1CD0B3D705B1CC2A009E9F0F /* MVChatConnection.h */,
+				1CD0B3D805B1CC2A009E9F0F /* MVChatPluginManager.h */,
+				1CD0B3D905B1CC2A009E9F0F /* MVChatPluginManagerAdditions.h */,
+				1CD0B3DA05B1CC2A009E9F0F /* MVChatScriptPlugin.h */,
+				1CD0B3DB05B1CC2A009E9F0F /* MVConnectionsController.h */,
+				1CD0B3DC05B1CC2A009E9F0F /* MVFileTransferController.h */,
+				1CD0B3DD05B1CC2A009E9F0F /* NSAttributedStringAdditions.h */,
+				1CD0B3DE05B1CC2A009E9F0F /* NSColorAdditions.h */,
+				1CD0B3DF05B1CC2A009E9F0F /* NSMethodSignatureAdditions.h */,
+				1CD0B3E005B1CC2A009E9F0F /* NSNumberAdditions.h */,
+				1CD0B3E105B1CC2A009E9F0F /* NSPreferences.h */,
+				1CD0B3E205B1CC2A009E9F0F /* NSStringAdditions.h */,
+			);
+			name = Headers;
+			path = ../../Headers;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8D5B49AD048680CD000E48DA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CD0B18905B1CA07009E9F0F /* JVAutoEmotionDisplay.h in Headers */,
+				1CD0B3E305B1CC2A009E9F0F /* JVBuddy.h in Headers */,
+				1CD0B3E405B1CC2A009E9F0F /* JVChatConsole.h in Headers */,
+				1CD0B3E505B1CC2A009E9F0F /* JVChatController.h in Headers */,
+				1CD0B3E605B1CC2B009E9F0F /* JVChatRoom.h in Headers */,
+				1CD0B3E705B1CC2B009E9F0F /* JVChatRoomMember.h in Headers */,
+				1CD0B3E805B1CC2B009E9F0F /* JVChatTranscript.h in Headers */,
+				1CD0B3E905B1CC2B009E9F0F /* JVChatWindowController.h in Headers */,
+				1CD0B3EA05B1CC2B009E9F0F /* JVDirectChat.h in Headers */,
+				1CD0B3EB05B1CC2B009E9F0F /* JVInspectorController.h in Headers */,
+				1CD0B3EC05B1CC2B009E9F0F /* JVPreferencesController.h in Headers */,
+				1CD0B3ED05B1CC2B009E9F0F /* MVBuddyListController.h in Headers */,
+				1CD0B3EE05B1CC2B009E9F0F /* MVChatConnection.h in Headers */,
+				1CD0B3EF05B1CC2B009E9F0F /* MVChatPluginManager.h in Headers */,
+				1CD0B3F005B1CC2B009E9F0F /* MVChatPluginManagerAdditions.h in Headers */,
+				1CD0B3F105B1CC2B009E9F0F /* MVChatScriptPlugin.h in Headers */,
+				1CD0B3F205B1CC2B009E9F0F /* MVConnectionsController.h in Headers */,
+				1CD0B3F305B1CC2B009E9F0F /* MVFileTransferController.h in Headers */,
+				1CD0B3F405B1CC2B009E9F0F /* NSAttributedStringAdditions.h in Headers */,
+				1CD0B3F505B1CC2B009E9F0F /* NSColorAdditions.h in Headers */,
+				1CD0B3F605B1CC2B009E9F0F /* NSMethodSignatureAdditions.h in Headers */,
+				1CD0B3F705B1CC2B009E9F0F /* NSNumberAdditions.h in Headers */,
+				1CD0B3F805B1CC2B009E9F0F /* NSPreferences.h in Headers */,
+				1CD0B3F905B1CC2B009E9F0F /* NSStringAdditions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8D5B49AC048680CD000E48DA /* Auto Emotion Display */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77B579260E8846C000AE417C /* Build configuration list for PBXNativeTarget "Auto Emotion Display" */;
+			buildPhases = (
+				8D5B49AD048680CD000E48DA /* Headers */,
+				8D5B49AF048680CD000E48DA /* Resources */,
+				8D5B49B1048680CD000E48DA /* Sources */,
+				8D5B49B3048680CD000E48DA /* Frameworks */,
+				8D5B49B5048680CD000E48DA /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Auto Emotion Display";
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = "Auto Emotion Display";
+			productReference = 8D5B49B6048680CD000E48DA /* Auto Emotion Display.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 77B579250E8846C000AE417C /* Build configuration list for PBXProject "Auto Emotion Display" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 089C166AFE841209C02AAC07 /* Auto Emotion Display */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D5B49AC048680CD000E48DA /* Auto Emotion Display */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D5B49AF048680CD000E48DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		8D5B49B5048680CD000E48DA /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D5B49B1048680CD000E48DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CD0B18A05B1CA07009E9F0F /* JVAutoEmotionDisplay.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C167EFE841241C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		77B579170E8846BA00AE417C /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Development;
+		};
+		77B579180E8846BA00AE417C /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Deployment;
+		};
+		77B579190E8846BA00AE417C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Default;
+		};
+		77B5791A0E8846BA00AE417C /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Colloquy/PlugIns";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Auto Emotion Display";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = YES;
+			};
+			name = Development;
+		};
+		77B5791B0E8846BA00AE417C /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Colloquy/PlugIns";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Auto Emotion Display";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Deployment;
+		};
+		77B5791C0E8846BA00AE417C /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_ENABLE_TRIGRAPHS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Application Support/Colloquy/PlugIns";
+				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_STYLE = Bundle;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Auto Emotion Display";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		77B579250E8846C000AE417C /* Build configuration list for PBXProject "Auto Emotion Display" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77B579170E8846BA00AE417C /* Development */,
+				77B579180E8846BA00AE417C /* Deployment */,
+				77B579190E8846BA00AE417C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+		77B579260E8846C000AE417C /* Build configuration list for PBXNativeTarget "Auto Emotion Display" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77B5791A0E8846BA00AE417C /* Development */,
+				77B5791B0E8846BA00AE417C /* Deployment */,
+				77B5791C0E8846BA00AE417C /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
