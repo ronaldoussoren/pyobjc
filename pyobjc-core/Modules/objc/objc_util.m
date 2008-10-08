@@ -623,11 +623,23 @@ PyObjC_PythonToCArray(
 	}
 
 	if ((eltsize == 1 || eltsize == 0) && 
-		!(*elementType == _C_NSBOOL || *elementType == _C_BOOL || *elementType == _C_CHAR_AS_INT) ) {
+		!(*elementType == _C_NSBOOL || *elementType == _C_BOOL || *elementType == _C_CHAR_AS_INT)) {
 		/* A simple byte-array */
+		/* Note: PyUnicode is explicitly excluded because it
+		 * implemenents the character buffer interface giving access
+		 * to the raw implementation. That's almost always not want
+		 * you want.
+		 */
 		char* buf;
 		Py_ssize_t bufsize;
 		int have_buffer;
+
+		if (PyUnicode_Check(pythonList)) {
+			PyErr_Format(PyExc_TypeError,
+				"Expecting byte-buffer, got %s",
+				pythonList->ob_type->tp_name);
+			return -1;
+		}
 
 
 		have_buffer = buffer_get(writable, pythonList, (void**)&buf, &bufsize);

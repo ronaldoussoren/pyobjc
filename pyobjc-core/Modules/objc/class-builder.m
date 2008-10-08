@@ -2078,20 +2078,20 @@ object_method_setValue_forKey_(
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	// Set up a KVO stack so you only get one notification from this
-	PyObjC_DURING
+	NS_DURING
 		if (_KVOHackLevel() == BROKEN_KVO) {
 			[self willChangeValueForKey:key];
 		}
-	PyObjC_HANDLER
-	PyObjC_ENDHANDLER
+	NS_HANDLER
+	NS_ENDHANDLER
 #endif
 
-	PyObjC_DURING
+	NS_DURING
 		// First check super
 		objc_superSetClass(spr, (Class)userdata);
 		objc_superSetReceiver(spr, self);
 		(void)objc_msgSendSuper(&spr, _meth, value, key);
-	PyObjC_HANDLER
+	NS_HANDLER
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
 		 */
@@ -2153,7 +2153,7 @@ object_method_setValue_forKey_(
 #endif
 			[localException raise];
 		}
-	PyObjC_ENDHANDLER
+	NS_ENDHANDLER
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	// Pop the KVO stack

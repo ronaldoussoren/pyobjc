@@ -38,8 +38,12 @@ isLittleEndian = (sys.byteorder == 'little')
 NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
 _gBridgeSupportDirectories = (
         '/System/Library/BridgeSupport',
-        '/Library/BridgeSupport',
-        os.path.expanduser('~/Library/BridgeSupport'),
+
+# Don't use the rest of the default search path to avoid relying on data that
+# might be on a single system. That would make it harder to create standalone
+# apps in some cases.
+#        '/Library/BridgeSupport',
+#        os.path.expanduser('~/Library/BridgeSupport'),
     )
 
 for method in ('alloc', 'copy', 'copyWithZone:', 'mutableCopy', 'mutableCopyWithZone:'):
@@ -118,7 +122,9 @@ def initFrameworkWrapper(frameworkName,
     globals['super'] = objc.super
 
     if 1:
-        # Prefer PyObjC's metadata for now
+        # Look for metadata in the Python wrapper and prefer that over the
+        # data in the framework or in system locations. 
+        # Needed because the system bridgesupport files are buggy.
         try:
             exists = pkg_resources.resource_exists(
                     frameworkName, "PyObjC.bridgesupport")

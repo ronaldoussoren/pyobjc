@@ -131,6 +131,12 @@ num_struct_fields(const char* argtype)
 	
 	argtype++;
 	while (*argtype != _C_STRUCT_E) {
+		if (*argtype == '"') {
+			/* Skip field name */
+			argtype++;
+			while (*argtype++ != '"') {}
+		}
+
 		argtype = PyObjCRT_SkipTypeSpec(argtype);
 		if (argtype == NULL) return -1;
 		res ++;
@@ -182,7 +188,7 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	type->alignment = PyObjCRT_AlignOfType(argtype);
 
 	/* Libffi doesn't really know about arrays as part of larger 
-	 * data-structres (e.g. struct foo { int field[3]; };). We fake it
+	 * data-structures (e.g. struct foo { int field[3]; };). We fake it
 	 * by treating the nested array as a struct. These seems to work 
 	 * fine on MacOS X.
 	 */
@@ -266,6 +272,11 @@ struct_to_ffi_type(const char* argtype)
 	if (*curtype == '=') {
 		curtype ++;
 		while (*curtype != _C_STRUCT_E) {
+			if (*curtype == '"') {
+				/* Skip field name */
+				curtype++;
+				while (*curtype++ != '"') {}
+			}
 			type->elements[field_count] = 
 				signature_to_ffi_type(curtype);
 			if (type->elements[field_count] == NULL) {
@@ -1978,7 +1989,11 @@ int PyObjCFFI_CountArguments(
 
 		switch (*argtype) {
 		case _C_INOUT:
-			if (argtype[1] == _C_PTR) {
+			if (argtype[1] == _C_PTR && PyObjCPointerWrapper_HaveWrapper(argtype+1)) {
+				itemAlign = PyObjCRT_AlignOfType(argtype+1);
+				itemSize = PyObjCRT_SizeOfType(argtype+1);
+
+			} else if (argtype[1] == _C_PTR) {
 				(*byref_out_count) ++;
 				(*byref_in_count) ++;
 				itemAlign = PyObjCRT_AlignOfType(argtype+2);
@@ -3242,6 +3257,7 @@ PyObjCFFI_BuildResult(
 			}
 		}
 	}
+
 	return result;
 
 error_cleanup:

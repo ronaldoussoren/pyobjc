@@ -295,7 +295,7 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
-install_requires = setup_requires = ['py2app>=0.4.0', 'bdist_mpkg>=0.4.2']
+install_requires = setup_requires = [] # ['py2app>=0.4.0', 'bdist_mpkg>=0.4.2']
 
 dist = setup(
     name = "pyobjc-core", 
