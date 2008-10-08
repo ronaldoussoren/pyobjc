@@ -254,6 +254,9 @@ PyObjC_VarList_New(const char* tp, void* array)
 	if (tp == NULL) {
 		return NULL;
 	}
+	if (*tp == _C_VOID) {
+		*(char*)tp = _C_CHAR_AS_TEXT;
+	}
 	result = PyObject_New(PyObjC_VarList, &PyObjC_VarList_Type);
 	if (result == NULL) {
 		return NULL;

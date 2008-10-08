@@ -86,17 +86,17 @@ class TestPickle(objc.test.TestCase):
         import pickle
 
         o = NSObject.alloc().init()
-        self.assertRaises(TypeError, pickle.dumps, o, 0)
-        self.assertRaises(TypeError, pickle.dumps, o, 1)
-        self.assertRaises(TypeError, pickle.dumps, o, 2)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 0)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
 
     def testCPicklePure(self):
         import cPickle as pickle
 
         o = NSObject.alloc().init()
-        self.assertRaises(TypeError, pickle.dumps, o, 0)
-        self.assertRaises(TypeError, pickle.dumps, o, 1)
-        self.assertRaises(TypeError, pickle.dumps, o, 2)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 0)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
+        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
 
 
 class TestDescription (objc.test.TestCase):

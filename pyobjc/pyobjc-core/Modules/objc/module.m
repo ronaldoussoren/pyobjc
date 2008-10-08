@@ -314,7 +314,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		objcMethod->type = strdup(
 				PyObjCSelector_Signature(aMethod));
 
-		PyObjC_RemoveInternalTypeCodes(objcMethod->type);
+		PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type));
 		if (objcMethod->type == NULL) {
 			goto cleanup_and_return_error;
 		}

@@ -732,6 +732,8 @@ PyObjCRT_AlignOfType (const char *type)
 		return __alignof__(void*);
 
 	default:
+		printf("alignoftype\n");
+		abort();
 		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_AlignOfType: Unhandled type '%#x' %s", *type, type);
 		return -1;
@@ -2015,7 +2017,7 @@ const char* type, PyObject* argument, void* datum)
 				PyString_AsString (argument)[0];
 			return 0;
 		}
-		r = depythonify_unsigned_int_value(argument, "unsigned short",
+		r = depythonify_unsigned_int_value(argument, "unsigned char",
 			&utemp, UCHAR_MAX);
 		if (r == 0) {
 			*(unsigned int*)datum = utemp;
@@ -2171,7 +2173,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				PyString_AsString (argument)[0];
 			return 0;
 		}
-		r = depythonify_unsigned_int_value(argument, "unsigned short",
+		r = depythonify_unsigned_int_value(argument, "unsigned char",
 			&utemp, UCHAR_MAX);
 		if (r == 0) {
 			*(unsigned char*)datum = utemp;
