@@ -10,18 +10,16 @@
 
 from sys import maxint
 from Foundation import *
-from AppKit import NSArrayController, NSColor, NSCalibratedRGBColorSpace
-from objc import ivar
+from AppKit import *
 from random import random
 from math import fabs
-from PyObjCTools import NibClassBuilder
 
-class GraphicsArrayController(NibClassBuilder.AutoBaseClass): # NSArrayController
+class GraphicsArrayController (NSArrayController):
     """Allow filtering by color, just for the fun of it"""
 
-    filterColor = ivar('filterColor')
-    newCircle = ivar('newCircle')
-    shouldFilter = ivar('shouldFilter', 'c')
+    filterColor = objc.IBOutlet()
+    newCircle = objc.IBOuetlet()
+    shouldFilter = objc.ivar.BOOL()
 
     def arrangeObjects_(self, objects):
         "Filtering is not yet connected in IB!"

@@ -93,6 +93,7 @@ class TestDateFormatter (unittest.TestCase):
 
         CFDateFormatterSetProperty(fmt, kCFDateFormatterIsLenient, True)
         v2 = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
+        print v2
         self.failUnless(v2 is True)
         
 

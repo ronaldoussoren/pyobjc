@@ -9,19 +9,16 @@
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
-from Foundation import * 
+from Cocoa import * 
 
-NibClassBuilder.extractClasses("GraphicsBindingsDocument")
-
-class GraphicsBindingsDocument(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSDocument
-    # The following outlets are added to the class:
-    # graphicsView, shadowInspector, graphicsController
-
-    graphics = objc.ivar('graphics')
+class GraphicsBindingsDocument (NSDocument):
+    graphicsView = objc.IBOutlet()
+    shadowInspector = objc.IBOutlet()
+    graphicsController = objc.IBOutlet()
+    graphics = objc.ivar()
 
     def init(self):
         self = super(GraphicsBindingsDocument, self).init()
@@ -78,4 +75,3 @@ class GraphicsBindingsDocument(NibClassBuilder.AutoBaseClass):
 
 vt = RadiansToDegreesTransformer.alloc().init()
 NSValueTransformer.setValueTransformer_forName_(vt, u"RadiansToDegreesTransformer")
-

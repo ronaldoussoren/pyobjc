@@ -7,16 +7,13 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from PyObjCTools import NibClassBuilder, AppHelper
-import objc
-from Foundation import NSKeyedArchiver, NSKeyedUnarchiver
+from PyObjCTools import AppHelper
+from Cocoa import *
 
-NibClassBuilder.extractClasses("FilteringControllerDocument")
 
-class FilteringControllerDocument(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSDocument
-    # The following outlets are added to the class:
-    # peopleController
+
+class FilteringControllerDocument (NSDocument):
+    peopleController = objc.IBOutlet()
 
     def init(self):
         self = super(FilteringControllerDocument, self).init()
@@ -46,25 +43,22 @@ class FilteringControllerDocument(NibClassBuilder.AutoBaseClass):
     def setPeople_(self, people):
         self._k_people[:] = people
 
+    @objc.accessor
     def countOfPeople(self):
         return len(self._k_people)
-    countOfPeople = objc.accessor(countOfPeople)
         
+    @objc.accessor
     def objectInPeopleAtIndex_(self, idx):
         return self._k_people[idx]
-    objectInPeopleAtIndex_ = objc.accessor(objectInPeopleAtIndex_)
         
+    @objc.accessor
     def insertObject_inPeopleAtIndex_(self, obj, idx):
         self._k_people.insert(idx, obj)
-    insertObject_inPeopleAtIndex_ = objc.accessor(insertObject_inPeopleAtIndex_)
 
+    @objc.accessor
     def removeObjectFromPeopleAtIndex_(self, idx):
         del self._k_people[idx]
-    removeObjectFromPeopleAtIndex_ = objc.accessor(removeObjectFromPeopleAtIndex_)
         
+    @objc.accessor
     def replaceObjectInPeopleAtIndex_withObject_(self, idx, obj):
         self._k_people[idx] = obj
-    replaceObjectInPeopleAtIndex_withObject_ = objc.accessor(replaceObjectInPeopleAtIndex_withObject_)
-
-
-		

@@ -41,7 +41,7 @@ class TestURL (unittest.TestCase):
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, False)
         self.failUnless( isinstance(data, CFDataRef) )
         val = str(data)
-        self.assertEquals(val, url)
+        self.assertEquals(val, url.replace(' ', '%20'))
 
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, True)
         self.failUnless( isinstance(data, CFDataRef) )

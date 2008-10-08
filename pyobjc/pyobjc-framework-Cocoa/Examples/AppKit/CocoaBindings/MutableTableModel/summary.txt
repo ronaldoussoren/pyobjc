@@ -1,1 +1,3 @@
 A mutable ``NSTableView`` using Cocoa Bindings.
+
+FIXME: uses nidump

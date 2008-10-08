@@ -40,29 +40,29 @@ class TestString (unittest.TestCase):
         self.failUnless(kCFStringNormalizationFormKC == 3)
 
 
-        self.failUnless(instance(kCFStringTransformStripCombiningMarks, unicode))
-        self.failUnless(instance(kCFStringTransformToLatin, unicode))
-        self.failUnless(instance(kCFStringTransformFullwidthHalfwidth, unicode))
-        self.failUnless(instance(kCFStringTransformLatinKatakana, unicode))
-        self.failUnless(instance(kCFStringTransformLatinHiragana, unicode))
-        self.failUnless(instance(kCFStringTransformHiraganaKatakana, unicode))
-        self.failUnless(instance(kCFStringTransformMandarinLatin, unicode))
-        self.failUnless(instance(kCFStringTransformLatinHangul, unicode))
-        self.failUnless(instance(kCFStringTransformLatinArabic, unicode))
-        self.failUnless(instance(kCFStringTransformLatinHebrew, unicode))
-        self.failUnless(instance(kCFStringTransformLatinThai, unicode))
-        self.failUnless(instance(kCFStringTransformLatinCyrillic, unicode))
-        self.failUnless(instance(kCFStringTransformLatinGreek, unicode))
-        self.failUnless(instance(kCFStringTransformToXMLHex, unicode))
-        self.failUnless(instance(kCFStringTransformToUnicodeName, unicode))
-        self.failUnless(instance(kCFStringTransformStripDiacritics, unicode))
+        self.failUnless(isinstance(kCFStringTransformStripCombiningMarks, unicode))
+        self.failUnless(isinstance(kCFStringTransformToLatin, unicode))
+        self.failUnless(isinstance(kCFStringTransformFullwidthHalfwidth, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinKatakana, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinHiragana, unicode))
+        self.failUnless(isinstance(kCFStringTransformHiraganaKatakana, unicode))
+        self.failUnless(isinstance(kCFStringTransformMandarinLatin, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinHangul, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinArabic, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinHebrew, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinThai, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinCyrillic, unicode))
+        self.failUnless(isinstance(kCFStringTransformLatinGreek, unicode))
+        self.failUnless(isinstance(kCFStringTransformToXMLHex, unicode))
+        self.failUnless(isinstance(kCFStringTransformToUnicodeName, unicode))
+        self.failUnless(isinstance(kCFStringTransformStripDiacritics, unicode))
 
 
 
 
     def testCFSTR(self):
         v = CFSTR(u"hello")
-        self.failUnless(isinstance(v, CFStringRef))
+        self.failUnless(isinstance(v, unicode))
 
 
 

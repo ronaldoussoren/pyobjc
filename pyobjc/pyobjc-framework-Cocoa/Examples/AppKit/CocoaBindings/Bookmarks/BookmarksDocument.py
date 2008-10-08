@@ -8,20 +8,13 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
-from PyObjCTools import NibClassBuilder
 from Foundation import *
 
 # BookmarksDocument defines this as it may be used for copy and paste
 # in addition to just drag and drop
 CopiedRowsType = u"COPIED_ROWS_TYPE"
 
-NibClassBuilder.extractClasses("BookmarksDocument")
-
-class BookmarksDocument(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSDocument
-    # The following outlets are added to the class:
-    # window??? is connected in IB but can not be accessed?
-
+class BookmarksDocument (NSDocument):
     bookmarksArray = objc.ivar('bookmarksArray')
 
     def init(self):

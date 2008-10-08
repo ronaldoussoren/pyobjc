@@ -7,11 +7,9 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from AppKit import NSDragOperationLink
-from PyObjCTools import NibClassBuilder
+from AppKit import *
 
-class DNDTableView(NibClassBuilder.AutoBaseClass):
-    # Subclass of NSTableView
+class DNDTableView (NSTableView):
     
     def draggingSourceOperationMaskForLocal_(self, flag):
         # This is a bug fix. See 

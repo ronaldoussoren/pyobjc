@@ -1,9 +1,6 @@
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder
 
-NibClassBuilder.extractClasses("CurrencyConvBindingDocument")
-
-class CurrencyConvBindingDocument(NibClassBuilder.AutoBaseClass):
+class CurrencyConvBindingDocument (NSObject):
     def windowNibName(self):
         return "CurrencyConvBindingDocument"

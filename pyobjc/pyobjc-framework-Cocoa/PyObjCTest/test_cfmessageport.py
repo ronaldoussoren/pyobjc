@@ -43,15 +43,23 @@ class TestMessagePort (unittest.TestCase):
 
         global didInvalidate
         didInvalidate = False
+
+        @objc.callbackFor(CFMessagePortSetInvalidationCallBack)
         def invalidate(port, info):
             global didInvalidate
             didInvalidate = True
 
         CFMessagePortSetInvalidationCallBack(port, invalidate)
         cb = CFMessagePortGetInvalidationCallBack(port)
-        self.failUnless(cb is invalidate)
 
-        rls = CFMessagePortCreateRunLoopSource(None, port)
+        # XXX: Without writing a custom wrapper we cannot guarantee this
+        #self.failUnless(cb is invalidate)
+
+        cb(None, None)
+        self.failUnless(didInvalidate is True)
+        didInvalidate = False
+
+        rls = CFMessagePortCreateRunLoopSource(None, port, 0)
         self.failUnless(isinstance(rls, CFRunLoopSourceRef))
 
         self.failUnless(CFMessagePortIsValid(port))
