@@ -13,13 +13,10 @@ from FontNameToDisplayNameTransformer import FontNameToDisplayNameTransformer
 from Foundation import *
 from AppKit import *
 from PyObjCTools.KeyValueCoding import *
-from PyObjCTools import NibClassBuilder
 
-NibClassBuilder.extractClasses("MainMenu")
-
-class PreferencesPanelController(NibClassBuilder.AutoBaseClass):
-    # NSWindowController
+class PreferencesPanelController (NSWindowController):
         
+    @objc.IBAction
     def changeTextFont_(self, sender):
         "The user changed the current font selection, so update the default font"
         
@@ -39,6 +36,7 @@ class PreferencesPanelController(NibClassBuilder.AutoBaseClass):
         self.window().makeFirstResponder_(self.window())
     
 		
+    @objc.IBAction
     def changeFont_(self, sender):
         "This is the message the font panel sends when a new font is selected"
         # Get selected font

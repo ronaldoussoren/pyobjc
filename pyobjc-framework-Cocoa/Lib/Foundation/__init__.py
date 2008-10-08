@@ -28,3 +28,22 @@ from Foundation._data import *
 from Foundation._netservice import *
 from Foundation._string import *
 
+import Foundation._nsobject
+
+YES = objc.YES
+NO = objc.NO
+
+def MIN(a, b):
+    if a < b:
+        return a
+    else:
+        return b
+
+def MAX(a, b):
+    if a < b:
+        return b
+    else:
+        return a
+
+ABS = abs
+

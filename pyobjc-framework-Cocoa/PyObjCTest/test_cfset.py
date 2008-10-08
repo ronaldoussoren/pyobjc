@@ -6,30 +6,15 @@ class TestSet (unittest.TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFSetGetTypeID(), (int, long)))
 
-    def testMagicConstants(self):
-        # Some magic constants 
-        self.failUnless(kCFTypeSetCallBacks == 1)
-        self.failUnless(kCFCopyStringSetCallBacks == 2)
-
     def testCreation(self):
-        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
         self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
-
 
         st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
 
-        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFCopyStringSetCallBacks)
-        self.failUnless(isinstance(st, CFSetRef))
-
-        st = CFSetCreateMutable(None, 0)
-        self.failUnless(isinstance(st, CFSetRef))
-
         st = CFSetCreateMutable(None, 0, kCFTypeSetCallBacks)
-        self.failUnless(isinstance(st, CFSetRef))
-
-        st = CFSetCreateMutable(None, 0, kCFCopyStringSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
 
         cp = CFSetCreateMutableCopy(None, 0, st)
@@ -39,7 +24,7 @@ class TestSet (unittest.TestCase):
         self.failUnless(isinstance(st, CFSetRef))
 
     def testInspection(self):
-        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
         self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
 
@@ -72,7 +57,7 @@ class TestSet (unittest.TestCase):
         self.failUnless(values == [u'a', u'b', u'c'])
 
     def testApplying(self):
-        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
         self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
 
@@ -86,7 +71,7 @@ class TestSet (unittest.TestCase):
         self.failUnless(context == [u'a', u'b', u'c'])
 
     def testMutation(self):
-        st = CFSetCreate(None, [u"a", u"b", u"c"], 3)
+        st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.failUnless(isinstance(st, CFSetRef))
         self.failUnless(isinstance(st, objc.lookUpClass('NSSet')))
         st = CFSetCreateMutableCopy(None, 0, st)

@@ -9,6 +9,6 @@ import py2app
 
 setup(
     name="MutableTableModel",
-    app=["__main__.py"],
+    app=["main.py"],
     data_files=["English.lproj"],
 )

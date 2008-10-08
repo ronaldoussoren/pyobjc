@@ -14,15 +14,13 @@
 
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder
 from BookmarksDocument import CopiedRowsType
 
 MovedRowsType = u"MOVED_ROWS_TYPE"
 
-class DNDArrayController(NibClassBuilder.AutoBaseClass):
-    # NSArrayController subclass
-    # IBOutlet tableView
+class DNDArrayController (NSArrayController):
     # DNDArrayController is delegate and dataSource of tableView
+    tableView = objc.IBOutlet()
 
     def awakeFromNib(self):
         "register for drag and drop"

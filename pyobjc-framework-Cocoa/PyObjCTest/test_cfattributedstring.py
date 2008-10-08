@@ -52,7 +52,6 @@ class TestAttributedString (unittest.TestCase):
         self.failUnless( v == {u'foo': 42, u'bar': 'baz' } )
         self.failUnless( rng == objc.NULL )
 
-
         v, rng = CFAttributedStringGetAttributeAndLongestEffectiveRange(val, 1, u'bar', (0,5), None)
         self.failUnless( v == 'baz' )
         self.failUnless( rng == (0, 5) )

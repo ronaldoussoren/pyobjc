@@ -62,7 +62,7 @@ mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void *_info)
 	PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
+		PyTuple_GET_ITEM(info, 2),
 		"NO", py_f, PyTuple_GET_ITEM(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);

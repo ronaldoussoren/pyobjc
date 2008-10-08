@@ -1,5 +1,4 @@
 from Foundation import NSLog, NSMutableArray
-from PyObjCTools import NibClassBuilder
 import os
 
 FIELDS = "name password uid gid class change expire gecos home_dir shell".split()
@@ -11,13 +10,13 @@ def getPasswords():
     ])
 
 
-NibClassBuilder.extractClasses("MainMenu")
-class TableModelAppDelegate(NibClassBuilder.AutoBaseClass):
+class TableModelAppDelegate (NSObject):
     def passwords(self):
         if not hasattr(self, '_cachedpasswords'):
             self._cachedpasswords = getPasswords()
         return self._cachedpasswords
 
+    @objc.IBAction
     def insertRecord_(self, sender):
         passwords = self.passwords()
 

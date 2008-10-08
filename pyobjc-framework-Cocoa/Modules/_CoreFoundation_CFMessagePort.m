@@ -120,10 +120,14 @@ mod_CFMessagePortCreateLocal(
 		return NULL;
 	}
 
-	PyObject* result =  PyObjC_ObjCToPython(@encode(CFMessagePortRef), &rv);
+	PyObject* result =  Py_BuildValue("OO",
+			PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
+			PyBool_FromLong(shouldFree));
+
 	if (rv != NULL) {
 		CFRelease(rv);
 	}
+
 	return result;
 }
 

@@ -8,7 +8,7 @@ class TestCFDictionary (unittest.TestCase):
         dictionary = CFDictionaryCreate(None,
                 ('aap', 'noot', 'mies', 'wim'),
                 ('monkey', 'nut', 'missy', 'john'),
-                4)
+                4, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.assert_(isinstance(dictionary, CFDictionaryRef))
         self.assertEquals(dictionary, {
                 'aap': 'monkey',
@@ -17,7 +17,7 @@ class TestCFDictionary (unittest.TestCase):
                 'wim': 'john'
             })
 
-        dictionary = CFDictionaryCreateMutable(None, 0)
+        dictionary = CFDictionaryCreateMutable(None, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.assert_(isinstance(dictionary, CFMutableDictionaryRef))
         CFDictionarySetValue(dictionary, 'hello', 'world')
         self.assertEquals(dictionary, {'hello': 'world'})
@@ -25,43 +25,43 @@ class TestCFDictionary (unittest.TestCase):
     def testApplyFunction(self):
         dictionary = CFDictionaryCreate(None,
                 ('aap', 'noot', 'mies', 'wim'),
-                ('monkey', 'nut', 'missy', 'john'), 4)
+                ('monkey', 'nut', 'missy', 'john'), 4, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
 
         context = []
 
         def function(key, value, context):
             context.append((key, value))
 
-        CFDictionaryApplyFunction(dct, function, context)
+        CFDictionaryApplyFunction(dictionary, function, context)
 
         context.sort()
         self.failUnless(len(context) == 4)
         self.assertEquals(context,
                 [
-                    ('aap', 'monkey'),
-                    ('noot', 'nut'),
-                    ('mies', 'missy'),
-                    ('wim', 'john')
+                    (u'aap', u'monkey'),
+                    (u'mies', u'missy'),
+                    (u'noot', u'nut'),
+                    (u'wim', u'john')
                 ])
 
     def testTypeID(self):
         self.failUnless(isinstance(CFDictionaryGetTypeID(), (int, long)))
 
     def testCreation(self):
-        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 43], 2)
+        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 43], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.failUnless(isinstance(dct, CFDictionaryRef))
 
         dct = CFDictionaryCreateCopy(None, dct)
         self.failUnless(isinstance(dct, CFDictionaryRef))
 
-        dct = CFDictionaryCreateMutable(None, 0)
+        dct = CFDictionaryCreateMutable(None, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.failUnless(isinstance(dct, CFDictionaryRef))
 
         dct = CFDictionaryCreateMutableCopy(None, 0, dct)
         self.failUnless(isinstance(dct, CFDictionaryRef))
 
     def testInspection(self):
-        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 42], 2)
+        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 42], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.failUnless(isinstance(dct, CFDictionaryRef))
 
         self.failUnless(CFDictionaryGetCount(dct) == 2)
@@ -96,7 +96,7 @@ class TestCFDictionary (unittest.TestCase):
         self.failUnless(keys == ['key1', 'key2'])
 
     def testMutation(self):
-        dct = CFDictionaryCreateMutable(None, 0)
+        dct = CFDictionaryCreateMutable(None, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.failUnless(CFDictionaryGetCount(dct) == 0)
 
         CFDictionaryAddValue(dct, u"key1", u"value1")
