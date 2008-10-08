@@ -291,6 +291,30 @@ PyTypeObject PyObjCFunc_Type =
 	0					/* tp_del */
 };
 
+PyObject*
+PyObjCFunc_WithMethodSignature(PyObject* name, void* func, PyObjCMethodSignature* methinfo)
+{
+	func_object* result;
+
+	result = PyObject_NEW(func_object, &PyObjCFunc_Type);
+	if (result == NULL) return NULL;
+
+	result->function = func;
+	result->doc = NULL;
+	result->name = name;
+	Py_XINCREF(name);
+	result->module = NULL;
+	result->methinfo = methinfo;
+	Py_XINCREF(methinfo);
+
+	result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
+	if (result->cif == NULL) {
+		Py_DECREF(result);
+		return NULL;	
+	}
+	
+	return (PyObject*)result;
+}
 
 
 PyObject* 

@@ -2949,7 +2949,18 @@ PyObjCFFI_BuildResult(
 		}
 
 		/* Pointer values: */
-		if (*tp == _C_CHARPTR || (*tp == _C_PTR && !PyObjCPointerWrapper_HaveWrapper(tp))) {
+		if (tp[0] == _C_PTR && tp[1] == _C_UNDEF && methinfo->rettype.callable) {
+			if (*(void**)pRetval == NULL) {
+				objc_result = Py_None;
+				Py_INCREF(Py_None);
+			} else {
+				objc_result = PyObjCFunc_WithMethodSignature(NULL, *(void**)pRetval, methinfo->rettype.callable);
+				if (objc_result == NULL) {
+					return NULL;
+				}
+			}
+
+		} else if (*tp == _C_CHARPTR || (*tp == _C_PTR && !PyObjCPointerWrapper_HaveWrapper(tp))) {
 			const char* resttype = tp + 1;
 			if (*tp == _C_CHARPTR) {
 				resttype = gCharEncoding;

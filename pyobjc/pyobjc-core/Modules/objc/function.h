@@ -9,6 +9,9 @@ extern PyTypeObject PyObjCFunc_Type;
 extern PyObject*
 PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc, PyObject* meta);
 
+extern PyObject* 
+PyObjCFunc_WithMethodSignature(PyObject* name, void* func, PyObjCMethodSignature* signature);
+
 extern PyObjCMethodSignature*
 PyObjCFunc_GetMethodSignature(PyObject* func);
 
