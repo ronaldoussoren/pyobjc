@@ -111,7 +111,12 @@ PyObject* PyObjC_CopyFunc = NULL;
 			r = -1;
 		}
 	} else if (PyBool_Check(argument)) {
-		rval = [OC_PythonNumber newWithPythonObject:argument]; 
+		if (argument == Py_True) {
+			rval = [NSNumber numberWithBool:1];
+		} else  {
+			rval = [NSNumber numberWithBool:0];
+		}
+		//rval = [OC_PythonNumber newWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
