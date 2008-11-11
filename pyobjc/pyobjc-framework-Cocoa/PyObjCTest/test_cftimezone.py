@@ -38,7 +38,7 @@ class TestTree (unittest.TestCase):
 
         newmap = NSDictionary.dictionaryWithDictionary_({
                 NSString.stringWithString_('AAA'):
-                    NSString.stringWithString_('Europe/Amseterdam')})
+                    NSString.stringWithString_('Europe/Amsterdam')})
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
         self.failUnless(v is None)
 

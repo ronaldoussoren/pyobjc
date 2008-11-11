@@ -42,7 +42,7 @@ class TestUserNotification (unittest.TestCase):
         self.failUnless(error == 0)
 
         error = CFUserNotificationCancel(ref)
-        self.failUnless(error == 0)
+        self.assertEquals(error, 0)
         
         v = CFUserNotificationGetResponseValue(ref, kCFUserNotificationTextFieldValuesKey, 0)
         self.failUnless(v is None or isinstance(v, unicode))
