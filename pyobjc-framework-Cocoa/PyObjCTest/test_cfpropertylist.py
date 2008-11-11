@@ -4,10 +4,6 @@ from CoreFoundation import *
 
 class TestPropertyList (unittest.TestCase):
     def testFunctions(self):
-        # FIXME: this doesn't work as expected:
-        # dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
-
-
         dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
         self.failUnless(isinstance(dta, CFDataRef))
 
@@ -30,9 +26,37 @@ class TestPropertyList (unittest.TestCase):
         self.failUnless(valid is True)
 
     def testStreams(self):
-        #CFPropertyListWriteToStream(CFPropertyListRef propertyList, CFWriteStreamRef stream, CFPropertyListFormat format, CFStringRef *errorString);
-        #CFPropertyListRef CFPropertyListCreateFromStream(CFAllocatorRef allocator, CFReadStreamRef stream, CFIndex streamLength, CFOptionFlags mutabilityOption, CFPropertyListFormat *format, CFStringRef *errorString);
-        self.fail("Implement stream related tests")
+
+        stream = CFWriteStreamCreateWithAllocatedBuffers(kCFAllocatorDefault, kCFAllocatorDefault)
+        r = CFWriteStreamOpen(stream)
+        self.failUnless(r)
+
+        value = {u'key1': 42, u'key2': 1}
+
+        rval, errorString = CFPropertyListWriteToStream(value, stream, 
+                kCFPropertyListXMLFormat_v1_0, None)
+        self.failUnless(isinstance(rval, (int, long)))
+        self.failUnless(rval)
+        self.failUnless(errorString is None)
+
+        buf = CFWriteStreamCopyProperty(stream, kCFStreamPropertyDataWritten)
+        self.failUnless(isinstance(buf, CFDataRef))
+        buf = CFDataGetBytes(buf, (0, CFDataGetLength(buf)), None)
+        self.failUnless(isinstance(buf, str))
+
+        self.failUnless('<key>key1</key>' in buf)
+        self.failUnless('<integer>42</integer>' in buf)
+        self.failUnless('<key>key2</key>' in buf)
+        self.failUnless('<integer>1</integer>' in buf)
+
+        stream = CFReadStreamCreateWithBytesNoCopy(None, buf, len(buf), kCFAllocatorNull)
+        r = CFReadStreamOpen(stream)
+        self.failUnless(r)
+
+        res, format, errorString = CFPropertyListCreateFromStream(None, stream, 0, 0, None, None)
+        self.assertEquals(format, kCFPropertyListXMLFormat_v1_0)
+        self.failUnless(errorString is None)
+        self.assertEquals(res, value)
 
 
 

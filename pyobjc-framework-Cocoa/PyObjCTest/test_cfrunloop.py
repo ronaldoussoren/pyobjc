@@ -3,9 +3,6 @@ from CoreFoundation import *
 
 
 class TestRunLoop (unittest.TestCase):
-    def testDummy(self):
-        self.fail("CFRunLoop tests not implemented yet")
-
 
     def testConstants(self):
         self.failUnless(kCFRunLoopRunFinished == 1)
@@ -57,29 +54,32 @@ class TestRunLoop (unittest.TestCase):
         CFRunLoopWakeUp(loop)
         CFRunLoopStop(loop)
 
-        # CFRunLoopRun
-        # CFRunLoopRunInMode
+        res = CFRunLoopRunInMode("mode", 2.0, True)
+        self.failUnless(isinstance(res, (int, long)))
+        self.assertEquals(res, kCFRunLoopRunFinished)
+
+        #CFRunLoopRun()
+        self.fail("cfrunloop tests")
 
     def testObserver(self):
         #CF_EXPORT Boolean CFRunLoopContainsObserver(CFRunLoopRef rl, CFRunLoopObserverRef observer, CFStringRef mode);
         #CF_EXPORT void CFRunLoopAddObserver(CFRunLoopRef rl, CFRunLoopObserverRef observer, CFStringRef mode);
         #CF_EXPORT void CFRunLoopRemoveObserver(CFRunLoopRef rl, CFRunLoopObserverRef observer, CFStringRef mode);
-        pass
+        self.fail("cfrunloopobserver tests")
 
 
     def testTimer(self):
         #CF_EXPORT Boolean CFRunLoopContainsTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode);
         #CF_EXPORT void CFRunLoopAddTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode);
         #CF_EXPORT void CFRunLoopRemoveTimer(CFRunLoopRef rl, CFRunLoopTimerRef timer, CFStringRef mode);
-        pass
+        self.fail("cftimer tests")
 
     def testSource(self):
         #CF_EXPORT Boolean CFRunLoopContainsSource(CFRunLoopRef rl, CFRunLoopSourceRef source, CFStringRef mode);
         #CF_EXPORT void CFRunLoopAddSource(CFRunLoopRef rl, CFRunLoopSourceRef source, CFStringRef mode);
         #CF_EXPORT void CFRunLoopRemoveSource(CFRunLoopRef rl, CFRunLoopSourceRef source, CFStringRef mode);
 
-        pass
-
+        self.fail("cfrunloopsource tests")
 
 
 
