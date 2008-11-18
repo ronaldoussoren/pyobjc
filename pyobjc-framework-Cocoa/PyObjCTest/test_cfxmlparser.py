@@ -3,8 +3,7 @@ from CoreFoundation import *
 
 
 class TestXMLParser (unittest.TestCase):
-    def testDummy(self):
-        self.fail("CFXMLParser tests not implemented yet")
+    # Note: This doesn't actually test the API
 
     def testTypeID(self):
         self.failUnless(isinstance(CFXMLParserGetTypeID(), (int, long)))

@@ -245,3 +245,12 @@ CFTree
 * The ``context`` attribute (that is ``context`` argument for
   ``CFTreeCreate`` and ``CFTreeGetContext``) can be an arbitrary python
   object, it is not a ``CFTreeContext`` structure as in C.
+
+CFXMLParser, CFXMLNode
+----------------------
+
+* These API's are not supported for now. The ``Create`` functions need
+  manual wrappers, which haven't been written yet. There are also no
+  uninttests for the automaticly created bindings.
+
+* Use a Python XML parser (such as ElementTree) instead.

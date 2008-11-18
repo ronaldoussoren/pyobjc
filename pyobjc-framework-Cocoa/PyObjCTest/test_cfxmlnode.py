@@ -3,10 +3,7 @@ from CoreFoundation import *
 
 
 class TestXMLNode (unittest.TestCase):
-    def testDummy(self):
-        self.fail("CFXMLNode tests not implemented yet")
-
-
+    # NOTE: This doesn't actually test the API
 
 
     def testConstants(self):
