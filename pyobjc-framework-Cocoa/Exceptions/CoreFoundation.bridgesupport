@@ -870,7 +870,7 @@
   </function>
   <function name='CFPropertyListCreateFromStream'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg index='4' type_modifier='n' />
+    <arg index='4' type_modifier='o' />
     <arg already_retained='true' index='5' type_modifier='o' />
   </function>
   <function name='CFPropertyListCreateFromXMLData'>
@@ -891,7 +891,7 @@
   </function>
   <function comment='user must pass kCAllocatorNull as the bytesDeallocator!' name='CFReadStreamCreateWithBytesNoCopy'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg c_array_length_in_arg='2' index='1' type='^v' type64='^v'/>
+    <arg c_array_length_in_arg='2' index='1' type='^v' type64='^v' type_modifier='n'/>
   </function>
   <function name='CFReadStreamCreateWithFile'>
     <retval already_cfretained='true' already_retained='true' />
@@ -901,7 +901,7 @@
     <arg index='2' type_modifier='o' />
   </function>
   <function name='CFReadStreamRead'>
-    <arg c_array_length_in_arg='2' index='1' type_modifier='o' type='^v' type64='^v' />
+    <arg c_array_length_in_result='true'  c_array_length_in_arg='2' index='1' type_modifier='o' type='^v' type64='^v' />
   </function>
   <function comment='manual wrapper' name='CFReadStreamSetClient' ignore='true' >
     <arg index='2' type='^?' type64='^?' />
@@ -991,12 +991,14 @@
   <function name='CFSocketCopyPeerAddress'>
     <retval already_cfretained='true' already_retained='true' />
   </function>
-  <function name='CFSocketCopyRegisteredSocketSignature'>
+  <function name='CFSocketRegisterSocketSignature' ignore='true' comment='does not work according to docs' />
+  <function name='CFSocketRegisterValue' ignore='true' comment='does not work according to docs' />
+  <function name='CFSocketCopyRegisteredSocketSignature' ignore='true'  comment='does not workign according to docs'>
     <arg index='0' type_modifier='n' />
     <arg index='3' type_modifier='o' />
     <arg index='4' type_modifier='o' />
   </function>
-  <function name='CFSocketCopyRegisteredValue'>
+  <function name='CFSocketCopyRegisteredValue' ignore='true'  comment='does not workign according to docs'>
     <arg index='0' type_modifier='n' />
     <arg index='3' type='^@' type64='^@' type_modifier='o' />
     <arg index='4' type_modifier='o' />
@@ -1033,10 +1035,10 @@
     <arg index='0' type_modifier='n' />
     <arg index='3' null_accepted='false' type_modifier='n' />
   </function>
-  <function name='CFSocketRegisterValue'>
+  <function name='CFSocketRegisterValue' ignore='true' comment='does not work according to docs'>
     <arg index='0' type_modifier='n' />
   </function>
-  <function name='CFSocketUnregister'>
+  <function name='CFSocketUnregister' ignore='true' comment='does not work according to docs'>
     <arg index='0' type_modifier='n' />
   </function>
   <function name='CFStreamCreateBoundPair'>
@@ -1062,7 +1064,9 @@
   <function name='CFStringAppendCharacters'>
     <arg c_array_length_in_arg='2' comment='Unicode string' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
-  <function name='CFStringAppendFormat' variadic='true' />
+  <function name='CFStringAppendFormat' variadic='true' >
+	  <arg index=2 printf_format='true' />
+  </function>
   <function ignore='true' name='CFStringAppendFormatAndArguments' />
   <function name='CFStringAppendPascalString' ignore='true' comment='Do not use from python'>
     <arg comment='pascal string' index='1' type='*' type64='*' />
@@ -1130,7 +1134,10 @@
   </function>
   <function name='CFStringCreateWithFormat' variadic='true'>
     <retval already_cfretained='true' already_retained='true' />
+    <arg index='2' printf_format='true' />
   </function>
+  <function ignore='true' name='CFShow' />
+  <function ignore='true' name='CFShowStr' />
   <function ignore='true' name='CFStringCreateWithFormatAndArguments' />
   <function name='CFStringCreateWithPascalString' ignore='true' comment='FIXME: Do not use from python'>
     <retval already_cfretained='true' already_retained='true' />
@@ -1211,7 +1218,7 @@
     <retval already_cfretained='true' already_retained='true' />
   </function>
   <function name='CFStringTokenizerGetCurrentSubTokens'>
-	  <arg index='1' type_modifier='o' c_array_length_in_arg='2' c_array_length_in_retval='true' />
+	  <arg index='1' type_modifier='o' c_array_length_in_arg='2' c_array_length_in_result='true' />
   </function>
   <function name='CFStringTokenizerGetCurrentTokenRange' />
   <function name='CFStringTransform'>
@@ -1388,16 +1395,16 @@
     <arg index='1' type_modifier='o' />
   </function>
   <function name='CFURLGetByteRangeForComponent'>
-    <arg index='2' type_modifier='n' />
+    <arg index='2' type_modifier='o' />
   </function>
   <function name='CFURLGetBytes'>
-    <arg c_array_length_in_arg='2' index='1' type_modifier='o' type='^v' type64='^v' />
+    <arg c_array_length_in_arg='2' c_array_length_in_result='true' index='1' type_modifier='o' type='^v' type64='^v' />
   </function>
   <function name='CFURLGetFSRef'>
     <arg index='1' type_modifier='o' />
   </function>
   <function name='CFURLGetFileSystemRepresentation'>
-    <arg c_array_length_in_arg='3' comment='string' index='2' type_modifier='o'  type='^t' type64='^t' />
+    <arg c_array_length_in_arg='3' c_array_delmited_by_null='true' comment='string' index='2' type_modifier='o'  type='^t' type64='^t' />
   </function>
   <function name='CFURLWriteDataAndPropertiesToResource'>
     <arg index='3' type_modifier='o' />
@@ -1445,7 +1452,7 @@
   </function>
   <function comment='fixme' name='CFWriteStreamCreateWithBuffer'>
     <retval already_cfretained='true' already_retained='true' />
-    <arg c_array_length_in_arg='2' comment='buffer must not die until the stream is disposed off' index='1' type='^v' type64='^v'/>
+    <arg c_array_length_in_arg='2' comment='buffer must not die until the stream is disposed off' index='1' type='^v' type64='^v' type_modifier='n' />
   </function>
   <function name='CFWriteStreamCreateWithFile'>
     <retval already_cfretained='true' already_retained='true' />
@@ -1455,7 +1462,7 @@
     <arg index='3' type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
   </function>
   <function name='CFWriteStreamWrite'>
-    <arg c_array_length_in_arg='2' index='1' type='^v' type64='^v'/>
+    <arg c_array_length_in_arg='2' index='1' type='^v' type64='^v' type_modifier='n' />
   </function>
   <function name='CFXMLCreateStringByEscapingEntities'>
     <retval already_cfretained='true' already_retained='true' />

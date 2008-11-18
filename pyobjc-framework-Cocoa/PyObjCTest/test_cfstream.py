@@ -294,17 +294,86 @@ class TestStream (unittest.TestCase):
         self.assertEquals(status, kCFStreamStatusNotOpen)
 
     def testReadSocketASync(self):
-        # CFReadStreamSetClient
-        # CFReadStreamScheduleWithRunLoop
-        #CFReadStreamUnscheduleFromRunLoop
-        self.fail("read socket async")
+        rl = CFRunLoopGetCurrent()
+
+        strval = "hello world"
+        readStream = CFReadStreamCreateWithBytesNoCopy(None,
+                strval, len(strval), kCFAllocatorNull)
+        self.failUnless(isinstance(readStream, CFReadStreamRef))
+
+        data = {}
+
+        state = []
+        def callback(stream, kind, info):
+            state.append((stream, kind, info))
+
+        status = CFReadStreamGetStatus(readStream)
+        self.failUnless(isinstance(status, (int, long)))
+        self.assertEquals(status, kCFStreamStatusNotOpen)
+
+        CFReadStreamOpen(readStream)
+         
+        ok = CFReadStreamSetClient(readStream,
+                kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
+                callback, data)
+        self.failUnless(ok)
+
+        CFReadStreamScheduleWithRunLoop(readStream, rl, kCFRunLoopDefaultMode)
+        try:
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+            CFRunLoopWakeUp(rl)
+        finally:
+            CFReadStreamClose(readStream)
+            CFReadStreamUnscheduleFromRunLoop(readStream, rl, kCFRunLoopDefaultMode)
+            ok = CFReadStreamSetClient(readStream,
+                kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
+                callback, objc.NULL)
+            self.failUnless(ok)
+
+        self.failUnless(len(state) == 1)
+        self.failUnless(state[0][0] is readStream)
+        self.failUnless(state[0][2] is data)
+        self.assertEquals(state[0][1], kCFStreamEventHasBytesAvailable)
+
 
     def testWriteSocketAsync(self):
-        # CFWriteStreamSetClient
-        # CFWriteStreamScheduleWithRunLoop
-        #CFWriteStreamUnscheduleFromRunLoop
-        self.fail("write socket async")
+        rl = CFRunLoopGetCurrent()
 
+        import array
+        a = array.array('c', " "*20)
+
+        writeStream = CFWriteStreamCreateWithBuffer(None, a, 20)
+        self.failUnless(isinstance(writeStream, CFWriteStreamRef))
+
+        r = CFWriteStreamOpen(writeStream)
+        self.failUnless(r is True)
+
+        data = {}
+        state = []
+        def callback(stream, kind, info):
+            state.append((stream, kind, info))
+
+        ok = CFWriteStreamSetClient(writeStream,
+                kCFStreamEventCanAcceptBytes | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
+                callback, data)
+        self.failUnless(ok)
+
+        CFReadStreamScheduleWithRunLoop(writeStream, rl, kCFRunLoopDefaultMode)
+        try:
+            CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+            CFRunLoopWakeUp(rl)
+        finally:
+            CFReadStreamClose(writeStream)
+            CFReadStreamUnscheduleFromRunLoop(writeStream, rl, kCFRunLoopDefaultMode)
+            ok = CFWriteStreamSetClient(writeStream,
+                kCFStreamEventCanAcceptBytes | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
+                callback, objc.NULL)
+            self.failUnless(ok)
+
+        self.failUnless(len(state) == 1)
+        self.failUnless(state[0][0] is writeStream)
+        self.failUnless(state[0][2] is data)
+        self.assertEquals(state[0][1], kCFStreamEventCanAcceptBytes)
 
 if __name__ == "__main__":
     unittest.main()

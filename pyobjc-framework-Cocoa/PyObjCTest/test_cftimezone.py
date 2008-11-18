@@ -1,9 +1,9 @@
-import unittest
+import unittest, time
 from CoreFoundation import *
-from Foundation import NSDictionary, NSString
+from Foundation import NSDictionary, NSString, NSMutableDictionary
 
 
-class TestTree (unittest.TestCase):
+class TestTimeZone (unittest.TestCase):
     def testTypeID(self):
         id = CFTimeZoneGetTypeID()
         self.failUnless(isinstance(id, (int, long)))
@@ -36,9 +36,14 @@ class TestTree (unittest.TestCase):
             self.failUnless( isinstance(key, unicode) )
             self.failUnless( isinstance(value, unicode) )
 
-        newmap = NSDictionary.dictionaryWithDictionary_({
-                NSString.stringWithString_('AAA'):
-                    NSString.stringWithString_('Europe/Amsterdam')})
+        #newmap = NSDictionary.dictionaryWithDictionary_({
+                #NSString.stringWithString_('AAA'):
+                    #NSString.stringWithString_('Europe/Amsterdam')})
+
+        newmap = NSMutableDictionary.dictionaryWithDictionary_(map)
+        newmap[u'AAA'] = u'Europe/Amsterdam'
+        newmap = newmap.copy()
+
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
         self.failUnless(v is None)
 
@@ -50,8 +55,66 @@ class TestTree (unittest.TestCase):
         finally:
             CFTimeZoneSetAbbreviationDictionary(map)
 
-    def testDummy(self):
-        self.fail("CFTimeZone tests are incomplete (start at CFTimeZoneCreate)")
+    def testZoneObject(self):
+        data = open('/usr/share/zoneinfo/posixrules', 'r').read()
+        data = buffer(data)
+        zone = CFTimeZoneCreate(None, u"Europe/Amsterdam", data)
+        self.failUnless(isinstance(zone, CFTimeZoneRef))
+
+        zone = CFTimeZoneCreateWithTimeIntervalFromGMT(None, 3600)
+        self.failUnless(isinstance(zone, CFTimeZoneRef))
+
+        offset = CFTimeZoneGetSecondsFromGMT(zone, time.time())
+        self.assertEquals(offset, 3600)
+
+        zone = CFTimeZoneCreateWithName(None, "Europe/Amsterdam", True)
+        self.failUnless(isinstance(zone, CFTimeZoneRef))
+
+        name = CFTimeZoneGetName(zone)
+        self.assertEquals(name, u"Europe/Amsterdam")
+
+        data = CFTimeZoneGetData(zone)
+        self.failUnless(isinstance(data, CFDataRef))
+
+        abbrev = CFTimeZoneCopyAbbreviation(zone, time.time())
+        self.failUnless(isinstance(abbrev, unicode))
+
+        dt = CFGregorianDate(
+                year = 2008,
+                month = 7,
+                day = 1,
+                hour = 12,
+                minute = 0,
+                second = 0)
+
+        r = CFTimeZoneIsDaylightSavingTime(zone, 
+                CFGregorianDateGetAbsoluteTime(dt, zone))
+        self.failUnless(r is True)
+
+        dt = CFGregorianDate(
+                year = 2008,
+                month = 11,
+                day = 1,
+                hour = 12,
+                minute = 0,
+                second = 0)
+
+        r = CFTimeZoneIsDaylightSavingTime(zone, 
+                CFGregorianDateGetAbsoluteTime(dt, zone))
+        self.failUnless(r is False)
+
+        offset = CFTimeZoneGetDaylightSavingTimeOffset(zone, 
+                CFGregorianDateGetAbsoluteTime(dt, zone))
+        self.failUnless(isinstance(offset, float))
+
+        dt = CFTimeZoneGetNextDaylightSavingTimeTransition(
+                zone, CFGregorianDateGetAbsoluteTime(dt, zone))
+        self.failUnless(isinstance(dt, float))
+
+        nm = CFTimeZoneCopyLocalizedName(zone, 
+                kCFTimeZoneNameStyleShortStandard, CFLocaleCopyCurrent())
+        self.failUnless(isinstance(nm, unicode))
+
 
 
     def testConstants(self):

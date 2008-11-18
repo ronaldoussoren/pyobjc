@@ -1,10 +1,400 @@
-import unittest
+import unittest, array
 from CoreFoundation import *
+import CoreFoundation
 
 
 class TestString (unittest.TestCase):
-    def testDummy(self):
-        self.fail("CFString tests not implemented yet")
+    def testTypeID(self):
+        v = CFStringGetTypeID()
+        self.failUnless(isinstance(v, (int, long)))
+
+    def testNoPascalStrings(self):
+        self.failIf(hasattr(CoreFoundation, 'CFStringCreateWithPascalString'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringCreateWithPascalStringNoCopy'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringGetPascalString'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringGetPascalStringPtr'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringAppendPascalString'))
+
+    def testCreation(self):
+        s = CFStringCreateWithCString(None, "hello world", kCFStringEncodingASCII)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"hello world")
+
+        s = CFStringCreateWithBytes(None, "hello world", 5, kCFStringEncodingASCII, False)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"hello")
+
+        s = CFStringCreateWithCharacters(None, u"HELLO", 5)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"HELLO")
+
+        # NOTE: the deallocator must be kCFAllocatorNull
+        s = CFStringCreateWithCStringNoCopy(None, "hello world", 
+                kCFStringEncodingASCII, kCFAllocatorNull)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"hello world")
+
+        
+        s = CFStringCreateWithBytesNoCopy(None, "hello world", 5, kCFStringEncodingASCII, False, kCFAllocatorNull)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"hello")
+
+        s = CFStringCreateWithCharactersNoCopy(None, u"HELLO", 5, kCFAllocatorNull)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.failUnless(isinstance(s, unicode))
+        self.assertEquals(s, u"HELLO")
+
+        del s
+
+        s = CFStringCreateWithSubstring(None,
+                u"Hello world", CFRange(2, 4))
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"Hello world"[2:6])
+
+        s = CFStringCreateCopy(None, u"foo the bar")
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"foo the bar")
+
+        s = CFStringCreateWithFormat(None, None, "hello %s = %d",
+                "foo", 52)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"hello foo = 52")
+
+        self.failIf(hasattr(CoreFoundation, 
+            "CFStringCreateWithFormatAndArguments"))
+
+    def testCreateMutable(self):
+        s = CFStringCreateMutable(None, 0)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"")
+
+        s = CFStringCreateMutableCopy(None, 0, u"foobar")
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"foobar")
+
+        b = array.array('u', u"hello world")
+        s = CFStringCreateMutableWithExternalCharactersNoCopy(
+                None, b, len(b), len(b), kCFAllocatorNull)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"hello world")
+
+        b[0] = u'H'
+
+
+        # The objc_unicode proxy is immutable
+        self.assertEquals(s, u"hello world")
+
+        # The changed string can be accessed directly though:
+        s = s.nsstring()
+        self.assertEquals(s, u"Hello world")
+
+        b2 = array.array('u', u" " * 40)
+        CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
+        self.assertEquals(s, ' ' * len(b))
+        b2[0] = u'X'
+        self.assertEquals(s, 'X' + (' ' * (len(b)-1)))
+
+    def testFunctions(self):
+        v = CFStringGetLength(u"bla bla")
+        self.assertEquals(v, 7)
+
+        v = CFStringGetCharacterAtIndex(u"zing", 2)
+        self.failUnless(isinstance(v, unicode))
+        self.failIf(isinstance(v, objc.pyobjc_unicode))
+        self.assertEquals(v, u'n')
+
+        v = CFStringGetCharacters(u"foo", CFRange(0, 3), None)
+        self.failUnless(isinstance(v, unicode))
+        self.failIf(isinstance(v, objc.pyobjc_unicode))
+        self.assertEquals(v, u'foo')
+
+        ok, buf = CFStringGetCString(u"sing along", None, 100, kCFStringEncodingUTF8)
+        self.failUnless(ok)
+
+        # Annoyingly metadata cannot represent the exact interface
+        if '\0' in buf:
+            buf = buf[:buf.index('\0')]
+        self.assertEquals(buf, 'sing along')
+        self.failUnless(isinstance(buf, str))
+
+        s = CFStringGetCStringPtr(u"apenootjes", kCFStringEncodingASCII)
+        if s is not objc.NULL:
+            self.assertEquals(s, "apenootjes")
+            self.failUnless(isinstance(s, str))
+
+        s = CFStringGetCharactersPtr(u"apenootjes")
+        if s is not objc.NULL:
+            self.assertEquals(s, "apenootjes")
+            self.failUnless(isinstance(s, unicode))
+
+        idx, buf, used = CFStringGetBytes(u"apenootjes",
+                CFRange(1, 4), kCFStringEncodingASCII,
+                chr(0), True, None, 50, None)
+        self.assertEquals(idx, 4)
+        self.failUnless(isinstance(buf, str))
+        self.assertEquals(buf, 'peno')
+        self.assertEquals(used, 4)
+
+        s = CFStringCreateFromExternalRepresentation(None,
+                buffer('hello world'), kCFStringEncodingUTF8)
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"hello world")
+
+        data = CFStringCreateExternalRepresentation(None, s, 
+                kCFStringEncodingUTF16BE, chr(0))
+        self.failUnless(isinstance(data, CFDataRef))
+        val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
+        self.assertEquals(val, 
+                '\0h\0e\0l\0l\0o\0 \0w\0o\0r\0l\0d')
+
+        v = CFStringGetSmallestEncoding(s)
+        self.failUnless(isinstance(v, (int, long)))
+        v = CFStringGetFastestEncoding(s)
+        self.failUnless(isinstance(v, (int, long)))
+        v = CFStringGetSystemEncoding()
+        self.failUnless(isinstance(v, (int, long)))
+        v = CFStringGetMaximumSizeForEncoding(100, kCFStringEncodingUTF8)
+        self.failUnless(isinstance(v, (int, long)))
+
+        ok, buf = CFStringGetFileSystemRepresentation(u"/path/to/nowhere.txt",
+                None, 100)
+        self.failUnless(ok)
+        if '\0' in buf:
+            buf = buf[:buf.index('\0')]
+        self.assertEquals(buf, '/path/to/nowhere.txt')
+        self.failUnless(isinstance(buf, str))
+
+        idx = CFStringGetMaximumSizeOfFileSystemRepresentation(u"/tmp")
+        self.failUnless(isinstance(idx, (int, long)))
+
+        s = CFStringCreateWithFileSystemRepresentation(None, "/tmp")
+        self.failUnless(isinstance(s, objc.pyobjc_unicode))
+        self.assertEquals(s, u"/tmp")
+        self.assertRaises((TypeError, ValueError),
+                CFStringCreateWithFileSystemRepresentation, None, u"/tmp")
+
+
+        r = CFStringCompareWithOptionsAndLocale(
+                u"aas", u"noot", 
+                CFRange(0, 3),
+                kCFCompareBackwards, CFLocaleCopyCurrent())
+        self.assertEquals(r, kCFCompareLessThan)
+
+        r = CFStringCompareWithOptions(u"aap", u"noot", CFRange(0, 3), 0)
+        self.assertEquals(r, kCFCompareLessThan)
+
+        r = CFStringCompare(u"aap", u"AAP", kCFCompareCaseInsensitive)
+        self.assertEquals(r, kCFCompareEqualTo)
+
+        found, rng = CFStringFindWithOptionsAndLocale(
+                u"the longer string", u"longer",
+                CFRange(0, 17), 0, CFLocaleCopyCurrent(), None)
+        self.failUnless(found is True)
+        self.failUnless(isinstance(rng, CFRange))
+        self.assertEquals(rng, CFRange(4, 6))
+
+        found, rng = CFStringFindWithOptions(
+                u"the longer string", u"longer",
+                CFRange(0, 17), 0, None)
+        self.failUnless(found is True)
+        self.failUnless(isinstance(rng, CFRange))
+        self.assertEquals(rng, CFRange(4, 6))
+
+        arr = CFStringCreateArrayWithFindResults(
+                None, u"word a world a world",
+                u"world", CFRange(0, 20), 0)
+        self.failUnless(isinstance(arr, CFArrayRef))
+        self.assertEquals(len(arr), 2)
+
+        rng = CFStringFind("hello world", "world", 0)
+        self.assertEquals(rng, CFRange(6, 5))
+
+        ok = CFStringHasPrefix(u"hello", u"he")
+        self.failUnless(ok is True)
+        ok = CFStringHasPrefix(u"hello", u"ge")
+        self.failUnless(ok is False)
+
+        ok = CFStringHasSuffix(u"hello", "lo")
+        self.failUnless(ok is True)
+
+        rng = CFStringGetRangeOfComposedCharactersAtIndex(
+                u"hello world", 5)
+        self.failUnless(isinstance(rng, CFRange))
+
+        found, rng = CFStringFindCharacterFromSet("hello  world",
+                CFCharacterSetGetPredefined(kCFCharacterSetWhitespace),
+                CFRange(0, 12), 0, None)
+        self.failUnless(found is True)
+        self.failUnless(isinstance(rng, CFRange))
+
+        lineBeginIndex, lineEndIndex, contentsEndIndex = CFStringGetLineBounds(
+                u"hello\n\nworld", CFRange(0, 12), None, None, None)
+        self.assertEquals(lineBeginIndex, 0)
+        self.assertEquals(lineEndIndex, 12)
+        self.assertEquals(contentsEndIndex, 12)
+
+        paraBeginIndex, paraEndIndex, contentsEndIndex = CFStringGetParagraphBounds(
+                u"hello\n\nworld", CFRange(0, 12), None, None, None)
+        self.assertEquals(paraBeginIndex, 0)
+        self.assertEquals(paraEndIndex, 12)
+        self.assertEquals(contentsEndIndex, 12)
+
+        result = CFStringCreateByCombiningStrings(None,
+                [u"hello", u"world"], "//")
+        self.assertEquals(result, u"hello//world")
+
+        result = CFStringCreateArrayBySeparatingStrings(None,
+                "hello world", " ")
+        self.assertEquals(result, ["hello", "world"])
+
+        v = CFStringGetIntValue(u"1000")
+        self.assertEquals(v, 1000)
+
+        v = CFStringGetDoubleValue(u"1000")
+        self.assertEquals(v, 1000.0)
+
+        v = CFStringGetDoubleValue(u"1000.5")
+        self.assertEquals(v, 1000.5)
+
+    def testMutableFunctions(self):
+        s = CFStringCreateMutable(None, 0)
+        # Ensure that we actually see updates:
+        s = s.nsstring()
+
+        CFStringAppendCharacters(s, u"hel", 3)
+        self.assertEquals(s, u"hel")
+
+        CFStringAppendCString(s, "lo world", kCFStringEncodingUTF8)
+        self.assertEquals(s, u"hello world")
+
+        CFStringAppendFormat(s, None, ": %s = %d", "x", 99)
+        self.assertEquals(s, u"hello world: x = 99")
+
+        self.failIf(hasattr(CoreFoundation, 'CFStringAppendFormatAndArguments'))
+
+        CFStringInsert(s, 2, "--")
+        self.assertEquals(s, u"he--llo world: x = 99")
+
+        CFStringDelete(s, CFRange(0, 8))
+        self.assertEquals(s, u"world: x = 99")
+
+        CFStringReplace(s, CFRange(0, 4), "WOR")
+        self.assertEquals(s, u"WORd: x = 99")
+
+        CFStringReplaceAll(s, "WHOOPS")
+        self.assertEquals(s, u"WHOOPS")
+
+        CFStringReplaceAll(s, u"BLAblaBLAblaBLA")
+        self.assertEquals(s, u"BLAblaBLAblaBLA")
+
+        CFStringFindAndReplace(s, "BL", " fo ", CFRange(0, 15), 0)
+        self.assertEquals(s, " fo Abla fo Abla fo A")
+
+        CFStringReplaceAll(s, u"abc")
+        CFStringPad(s, " ", 9, 0)
+        self.assertEquals(s, u"abc      ")
+
+        CFStringReplaceAll(s, u"abc")
+        CFStringPad(s, ". ", 9, 1)
+        self.assertEquals(s, u"abc . . .")
+
+        CFStringReplaceAll(s, u"abcdef")
+        CFStringPad(s, ". ", 3, 0)
+        self.assertEquals(s, u"abc")
+
+        CFStringReplaceAll(s, u"aHelloaaa")
+        CFStringTrim(s, u'a')
+        self.assertEquals(s, u"Hello")
+
+        CFStringReplaceAll(s, u"* * * *abc * ")
+        CFStringTrim(s, u'* ')
+        self.assertEquals(s, u"*abc ")
+        
+        
+        CFStringReplaceAll(s, u" \tHello world  \t ")
+        CFStringTrimWhitespace(s)
+        self.assertEquals(s, u"Hello world")
+
+
+        CFStringReplaceAll(s, u"AbC")
+        CFStringLowercase(s, CFLocaleCopyCurrent())
+        self.assertEquals(s, u'abc')
+
+        CFStringReplaceAll(s, u"AbC")
+        CFStringUppercase(s, CFLocaleCopyCurrent())
+        self.assertEquals(s, u'ABC')
+
+        CFStringReplaceAll(s, u"hello world")
+        CFStringCapitalize(s, CFLocaleCopyCurrent())
+        self.assertEquals(s, u'Hello World')
+
+        CFStringNormalize(s, kCFStringNormalizationFormKD)
+        self.assertEquals(s, u'Hello World')
+
+        CFStringFold(s, kCFCompareCaseInsensitive, CFLocaleCopyCurrent())
+        self.assertEquals(s, u'hello world')
+
+        CFStringReplaceAll(s, u"A C")
+        ok, rng = CFStringTransform(s, CFRange(0, 3), kCFStringTransformToXMLHex, 
+                                        False)
+        self.assertEquals(s, 'A C') 
+        self.failUnless(ok is True)
+        self.assertEquals(rng, CFRange(0, 3))
+
+    def testStringEncoding(self):
+        ok = CFStringIsEncodingAvailable(kCFStringEncodingUTF8)
+        self.failUnless(ok is True)
+
+        encodings = CFStringGetListOfAvailableEncodings()
+        self.failUnless(isinstance(encodings, objc.varlist))
+        for e in encodings:
+            if e == kCFStringEncodingInvalidId:
+                break
+            self.failUnless(isinstance(e, (int, long)))
+
+        s = CFStringGetNameOfEncoding(kCFStringEncodingUTF8)
+        self.assertEquals(s, 'Unicode (UTF-8)')
+
+        v = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8)
+        self.failUnless(isinstance(v, (int, long)))
+
+        t = CFStringConvertNSStringEncodingToEncoding(v)
+        self.assertEquals(t, kCFStringEncodingUTF8)
+
+        v = CFStringConvertEncodingToWindowsCodepage(kCFStringEncodingISOLatin1)
+        self.failUnless(isinstance(v, (int, long)))
+
+        t = CFStringConvertWindowsCodepageToEncoding(v)
+        self.assertEquals(t, kCFStringEncodingISOLatin1)
+
+        v = CFStringConvertEncodingToIANACharSetName(kCFStringEncodingUTF8)
+        self.failUnless(isinstance(v, unicode))
+        self.assertEquals(v, 'UTF-8')
+
+        t = CFStringConvertIANACharSetNameToEncoding(v)
+        self.assertEquals(t, kCFStringEncodingUTF8)
+
+        v = CFStringGetMostCompatibleMacStringEncoding(kCFStringEncodingWindowsLatin1)
+        self.assertEquals(v, kCFStringEncodingMacRoman)
+
+    
+
+        
+
+
+
+
+
+
+    def testNoInlineBuffer(self):
+        self.failIf(hasattr(CoreFoundation, 'CFStringInlineBuffer'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringInitInlineBuffer'))
+        self.failIf(hasattr(CoreFoundation, 'CFStringGetCharacterFromInlineBuffer'))
 
 
     def testConstants(self):
@@ -58,7 +448,10 @@ class TestString (unittest.TestCase):
         self.failUnless(isinstance(kCFStringTransformStripDiacritics, unicode))
 
 
-
+    def testNoPrivate(self):
+        self.failIf(hasattr(CoreFoundation, 'CFShow'))
+        self.failIf(hasattr(CoreFoundation, 'CFShowStr'))
+        self.failIf(hasattr(CoreFoundation, '__CFStringMakeConstantString'))
 
     def testCFSTR(self):
         v = CFSTR(u"hello")

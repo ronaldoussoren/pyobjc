@@ -9,23 +9,23 @@
   <struct name='CFGregorianUnits' type='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' type64='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' />
   <struct name='CFRange' type='{_CFRange="location"i"length"i}' type64='{_CFRange="location"q"length"q}' />
   <struct name='CFSetCallBacks' type='{_CFSetCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' type64='{_CFSetCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' />
-  <struct name='CFSocketSignature' type='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData}}' type64='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData}}' />
+  <struct name='CFSocketSignature' type='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' type64='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"}' />
   <struct name='CFStreamError' type='{_CFStreamError="domain"i"error"i}' type64='{_CFStreamError="domain"q"error"i}' />
   <struct name='CFSwappedFloat32' type='{_CFSwappedFloat32="v"I}' type64='{_CFSwappedFloat32="v"I}' />
   <struct name='CFSwappedFloat64' type='{_CFSwappedFloat64="v"Q}' type64='{_CFSwappedFloat64="v"Q}' />
   <struct name='CFTreeContext' type='{_CFTreeContext="version"i"info"^v"retain"^?"release"^?"copyDescription"^?}' type64='{_CFTreeContext="version"q"info"^v"retain"^?"release"^?"copyDescription"^?}' />
   <struct name='CFUUIDBytes' type='{_CFUUIDBytes="byte0"C"byte1"C"byte2"C"byte3"C"byte4"C"byte5"C"byte6"C"byte7"C"byte8"C"byte9"C"byte10"C"byte11"C"byte12"C"byte13"C"byte14"C"byte15"C}' type64='{_CFUUIDBytes="byte0"C"byte1"C"byte2"C"byte3"C"byte4"C"byte5"C"byte6"C"byte7"C"byte8"C"byte9"C"byte10"C"byte11"C"byte12"C"byte13"C"byte14"C"byte15"C}' />
-  <struct name='CFXMLAttributeDeclarationInfo' type='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString}"typeString"^{__CFString}"defaultString"^{__CFString}}' type64='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString}"typeString"^{__CFString}"defaultString"^{__CFString}}' />
-  <struct name='CFXMLAttributeListDeclarationInfo' type='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"i"attributes"^{?}}' type64='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"q"attributes"^{?}}' />
-  <struct name='CFXMLDocumentInfo' type='{_CFXMLDocumentInfo="sourceURL"^{__CFURL}"encoding"I}' type64='{_CFXMLDocumentInfo="sourceURL"^{__CFURL}"encoding"I}' />
-  <struct name='CFXMLDocumentTypeInfo' type='{_CFXMLDocumentTypeInfo="externalID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}}' type64='{_CFXMLDocumentTypeInfo="externalID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}}' />
-  <struct name='CFXMLElementInfo' type='{_CFXMLElementInfo="attributes"^{__CFDictionary}"attributeOrder"^{__CFArray}"isEmpty"C"_reserved"[3c]}' type64='{_CFXMLElementInfo="attributes"^{__CFDictionary}"attributeOrder"^{__CFArray}"isEmpty"C"_reserved"[3c]}' />
-  <struct name='CFXMLElementTypeDeclarationInfo' type='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString}}' type64='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString}}' />
-  <struct name='CFXMLEntityInfo' type='{_CFXMLEntityInfo="entityType"i"replacementText"^{__CFString}"entityID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}"notationName"^{__CFString}}' type64='{_CFXMLEntityInfo="entityType"q"replacementText"^{__CFString}"entityID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}"notationName"^{__CFString}}' />
-  <struct name='CFXMLEntityReferenceInfo' type='{_CFXMLEntityReferenceInfo="entityType"i}' type64='{_CFXMLEntityReferenceInfo="entityType"q}' />
-  <struct name='CFXMLExternalID' type='{_CFXMLExternalID="systemID"^{__CFURL}"publicID"^{__CFString}}' type64='{_CFXMLExternalID="systemID"^{__CFURL}"publicID"^{__CFString}}' />
-  <struct name='CFXMLNotationInfo' type='{_CFXMLNotationInfo="externalID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}}' type64='{_CFXMLNotationInfo="externalID"{?="systemID"^{__CFURL}"publicID"^{__CFString}}}' />
-  <struct name='CFXMLProcessingInstructionInfo' type='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString}}' type64='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString}}' />
+  <struct name='CFXMLAttributeDeclarationInfo' type='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString=}"typeString"^{__CFString=}"defaultString"^{__CFString=}}' type64='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString=}"typeString"^{__CFString=}"defaultString"^{__CFString=}}' />
+  <struct name='CFXMLAttributeListDeclarationInfo' type='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"i"attributes"^{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}' type64='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"q"attributes"^{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}' />
+  <struct name='CFXMLDocumentInfo' type='{_CFXMLDocumentInfo="sourceURL"^{__CFURL=}"encoding"I}' type64='{_CFXMLDocumentInfo="sourceURL""encoding"I}' />
+  <struct name='CFXMLDocumentTypeInfo' type='{_CFXMLDocumentTypeInfo="externalID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}' type64='{_CFXMLDocumentTypeInfo="externalID"{_CFXMLExternalID=^{__CFString=}}}' />
+  <struct name='CFXMLElementInfo' type='{_CFXMLElementInfo="attributes"^{__CFDictionary=}"attributeOrder"^{__CFArray=}"isEmpty"B}' type64='{_CFXMLElementInfo="attributes""attributeOrder""isEmpty"B}' />
+  <struct name='CFXMLElementTypeDeclarationInfo' type='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString=}}' type64='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString=}}' />
+  <struct name='CFXMLEntityInfo' type='{_CFXMLEntityInfo="entityType"i"replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}"notationName"^{__CFString=}}' type64='{_CFXMLEntityInfo="entityType""replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFString=}}"notationName"^{__CFString=}}' />
+  <struct name='CFXMLEntityReferenceInfo' type='{_CFXMLEntityReferenceInfo="entityType"i}' type64='{_CFXMLEntityReferenceInfo="entityType"}' />
+  <struct name='CFXMLExternalID' type='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' type64='{_CFXMLExternalID="systemID""publicID"^{__CFString=}}' />
+  <struct name='CFXMLNotationInfo' type='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}' type64='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFString=}}}' />
+  <struct name='CFXMLProcessingInstructionInfo' type='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' type64='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' />
   <cftype gettypeid_func='CFAllocatorGetTypeID' name='CFAllocatorRef' type='^{__CFAllocator=}' type64='^{__CFAllocator=}' />
   <cftype gettypeid_func='CFArrayGetTypeID' name='CFArrayRef' tollfree='NSCFArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
   <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFAttributedStringRef' tollfree='NSCFAttributedString' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' />
@@ -59,7 +59,6 @@
   <cftype gettypeid_func='CFNumberFormatterGetTypeID' name='CFNumberFormatterRef' type='^{__CFNumberFormatter=}' type64='^{__CFNumberFormatter=}' />
   <cftype gettypeid_func='CFNumberGetTypeID' name='CFNumberRef' tollfree='NSCFNumber' type='^{__CFNumber=}' type64='^{__CFNumber=}' />
   <cftype gettypeid_func='CFPlugInInstanceGetTypeID' name='CFPlugInInstanceRef' type='^{__CFPlugInInstance=}' type64='^{__CFPlugInInstance=}' />
-  <cftype gettypeid_func='CFPlugInGetTypeID' name='CFPlugInRef' type='^{__CFBundle=}' type64='^{__CFBundle=}' />
   <cftype gettypeid_func='CFReadStreamGetTypeID' name='CFReadStreamRef' tollfree='NSCFInputStream' type='^{__CFReadStream=}' type64='^{__CFReadStream=}' />
   <cftype gettypeid_func='CFRunLoopObserverGetTypeID' name='CFRunLoopObserverRef' type='^{__CFRunLoopObserver=}' type64='^{__CFRunLoopObserver=}' />
   <cftype gettypeid_func='CFRunLoopGetTypeID' name='CFRunLoopRef' type='^{__CFRunLoop=}' type64='^{__CFRunLoop=}' />
@@ -1344,11 +1343,6 @@
     <retval type='^{__CFBundle=}' />
     <arg type='^{__CFString=}' />
   </function>
-  <function name='CFBundleGetDataPointerForName'>
-    <retval c_array_of_variable_length='true' type='^v' />
-    <arg type='^{__CFBundle=}' />
-    <arg type='^{__CFString=}' />
-  </function>
   <function name='CFBundleGetDevelopmentRegion'>
     <retval type='^{__CFString=}' />
     <arg type='^{__CFBundle=}' />
@@ -1608,7 +1602,7 @@
   </function>
   <function name='CFDataAppendBytes'>
     <arg type='^{__CFData=}' />
-    <arg type='^v' type64='^v' type_modifier='n' c_array_length_in_arg='2' />
+    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='n' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFDataCreate'>
@@ -2361,7 +2355,7 @@
     <arg type='^{__CFReadStream=}' />
     <arg type='l' type64='l' />
     <arg type='L' type64='L' />
-    <arg type='^i' type64='^i' type_modifier='n' />
+    <arg type='^i' type64='^i' type_modifier='o' />
     <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='CFPropertyListCreateFromXMLData'>
@@ -2403,7 +2397,7 @@
   <function name='CFReadStreamCreateWithBytesNoCopy'>
     <retval already_cfretained='true' type='^{__CFReadStream=}' />
     <arg type='^{__CFAllocator=}' />
-    <arg c_array_length_in_arg='2' type='^v' type64='^v' />
+    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='n' />
     <arg type='l' type64='l' />
     <arg type='^{__CFAllocator=}' />
   </function>
@@ -2440,7 +2434,7 @@
   <function name='CFReadStreamRead'>
     <retval type='l' type64='q' />
     <arg type='^{__CFReadStream=}' />
-    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='o' />
+    <arg c_array_length_in_arg='2' c_array_length_in_result='true' type='^v' type64='^v' type_modifier='o' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFReadStreamScheduleWithRunLoop'>
@@ -2677,10 +2671,6 @@
     <arg type='@' type64='@' />
     <arg type='^@' type64='^@' type_modifier='o' />
   </function>
-  <function name='CFSetGetValues'>
-    <arg type='^{__CFSet=}' />
-    <arg c_array_of_variable_length='true' type='^@' type64='^@' type_modifier='o' />
-  </function>
   <function name='CFSetRemoveAllValues'>
     <arg type='^{__CFSet=}' />
   </function>
@@ -2696,12 +2686,6 @@
     <arg type='^{__CFSet=}' />
     <arg type='@' type64='@' />
   </function>
-  <function name='CFShow'>
-    <arg type='@' />
-  </function>
-  <function name='CFShowStr'>
-    <arg type='^{__CFString=}' />
-  </function>
   <function name='CFSocketConnectToAddress'>
     <retval type='l' />
     <arg type='^{__CFSocket=}' />
@@ -2715,22 +2699,6 @@
   <function name='CFSocketCopyPeerAddress'>
     <retval already_cfretained='true' type='^{__CFData=}' />
     <arg type='^{__CFSocket=}' />
-  </function>
-  <function name='CFSocketCopyRegisteredSocketSignature'>
-    <retval type='l' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-    <arg type='d' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='o' />
-    <arg type='^^{__CFData}' type_modifier='o' />
-  </function>
-  <function name='CFSocketCopyRegisteredValue'>
-    <retval type='l' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-    <arg type='d' />
-    <arg type='^{__CFString=}' />
-    <arg type='^@' type64='^@' type_modifier='o' />
-    <arg type='^^{__CFData}' type_modifier='o' />
   </function>
   <function name='CFSocketCreateRunLoopSource'>
     <retval already_cfretained='true' type='^{__CFRunLoopSource=}' />
@@ -2767,20 +2735,6 @@
     <retval type='B' />
     <arg type='^{__CFSocket=}' />
   </function>
-  <function name='CFSocketRegisterSocketSignature'>
-    <retval type='l' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-    <arg type='d' />
-    <arg type='^{__CFString=}' />
-    <arg null_accepted='false' type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-  </function>
-  <function name='CFSocketRegisterValue'>
-    <retval type='l' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-    <arg type='d' />
-    <arg type='^{__CFString=}' />
-    <arg type='@' />
-  </function>
   <function name='CFSocketSendData'>
     <retval type='l' />
     <arg type='^{__CFSocket=}' />
@@ -2800,12 +2754,6 @@
     <arg type='^{__CFSocket=}' />
     <arg type='L' type64='L' />
   </function>
-  <function name='CFSocketUnregister'>
-    <retval type='l' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
-    <arg type='d' />
-    <arg type='^{__CFString=}' />
-  </function>
   <function name='CFStreamCreateBoundPair'>
     <arg type='^{__CFAllocator=}' />
     <arg already_retained='true' type='^^{__CFReadStream}' type_modifier='o' />
@@ -2814,7 +2762,7 @@
   </function>
   <function name='CFStreamCreatePairWithPeerSocketSignature'>
     <arg type='^{__CFAllocator=}' />
-    <arg type='^{_CFSocketSignature=iii^{__CFData}}' type_modifier='n' />
+    <arg type='^{_CFSocketSignature=iii^{__CFData=}}' type64='^{_CFSocketSignature=iii^{__CFData=}}' type_modifier='n' />
     <arg type='^^{__CFReadStream}' type_modifier='o' />
     <arg type='^^{__CFWriteStream}' type_modifier='o' />
   </function>
@@ -2848,7 +2796,7 @@
   <function name='CFStringAppendFormat' variadic='true'>
     <arg type='^{__CFString=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' printf_format='true' />
   </function>
   <function name='CFStringCapitalize'>
     <arg type='^{__CFString=}' />
@@ -3008,7 +2956,7 @@
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' printf_format='true' />
   </function>
   <function name='CFStringCreateWithSubstring'>
     <retval already_cfretained='true' type='^{__CFString=}' />
@@ -3245,7 +3193,7 @@
   <function name='CFStringTokenizerGetCurrentSubTokens'>
     <retval type='l' type64='q' />
     <arg type='^{__CFStringTokenizer=}' />
-    <arg c_array_length_in_arg='2' type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg c_array_length_in_result='true' c_array_length_in_arg='2' type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
     <arg type='l' type64='l' />
     <arg type='^{__CFArray=}' />
   </function>
@@ -3637,12 +3585,12 @@
     <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
     <arg type='^{__CFURL=}' />
     <arg type='l' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='n' />
+    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
   </function>
   <function name='CFURLGetBytes'>
     <retval type='l' type64='q' />
     <arg type='^{__CFURL=}' />
-    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='o' />
+    <arg c_array_length_in_arg='2' c_array_length_in_result='true' type='^v' type64='^v' type_modifier='o' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFURLGetFSRef'>
@@ -3654,7 +3602,7 @@
     <retval type='B' />
     <arg type='^{__CFURL=}' />
     <arg type='B' />
-    <arg c_array_length_in_arg='3' type='^t' type64='^t' type_modifier='o' />
+    <arg c_array_delmited_by_null='true' c_array_length_in_arg='3' type='^t' type64='^t' type_modifier='o' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFURLGetPortNumber'>
@@ -3842,7 +3790,7 @@
   <function name='CFWriteStreamCreateWithBuffer'>
     <retval already_cfretained='true' type='^{__CFWriteStream=}' />
     <arg type='^{__CFAllocator=}' />
-    <arg c_array_length_in_arg='2' type='^v' type64='^v' />
+    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='n'/>
     <arg type='l' type64='l' />
   </function>
   <function name='CFWriteStreamCreateWithFile'>
@@ -3884,7 +3832,7 @@
   <function name='CFWriteStreamWrite'>
     <retval type='l' type64='q' />
     <arg type='^{__CFWriteStream=}' />
-    <arg c_array_length_in_arg='2' type='^v' type64='^v' />
+    <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='n'/>
     <arg type='l' type64='l' />
   </function>
   <function name='CFXMLCreateStringByEscapingEntities'>

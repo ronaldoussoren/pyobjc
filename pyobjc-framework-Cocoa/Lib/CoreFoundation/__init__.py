@@ -33,8 +33,10 @@ from CoreFoundation._CFRunLoopObserver import *
 from CoreFoundation._CFRunLoopTimer import *
 from CoreFoundation._CFWriteStream import *
 from CoreFoundation._CFRunLoopObserver import *
+from CoreFoundation._CFRunLoopSource import *
 from CoreFoundation._CFRunLoopTimer import *
 from CoreFoundation._CFSet import *
+from CoreFoundation._CFSocket import *
 
 #
 # 'Emulation' for CFArray contructors
