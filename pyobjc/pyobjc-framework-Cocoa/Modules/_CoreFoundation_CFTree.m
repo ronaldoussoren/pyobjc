@@ -177,6 +177,61 @@ mod_CFTreeCreate(
 	return py_tree;
 }
 
+static PyObject*
+mod_CFTreeGetChildren(
+	PyObject* self __attribute__((__unused__)),
+	PyObject* args)
+{
+	PyObject* py_tree;
+	PyObject* py_buffer;
+	CFTreeRef tree;
+	CFIndex count;
+	CFTreeRef* children = NULL;
+	PyObject* result;
+
+	if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_buffer)) {
+		return NULL;
+	}
+
+	if (py_buffer != Py_None) {
+		PyErr_SetString(PyExc_ValueError, "buffer must be None");
+		return NULL;
+	}
+
+	if (PyObjC_PythonToObjC(@encode(CFTreeRef), py_tree, &tree) < 0) {
+		return NULL;
+	}
+
+	PyObjC_DURING
+		count = CFTreeGetChildCount(tree);
+		children = malloc(count * sizeof(CFTreeRef));
+		if (children != NULL) {
+			CFTreeGetChildren(tree, children);
+		}
+
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+
+	PyObjC_ENDHANDLER
+
+	if (children == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+		
+
+	if (PyErr_Occurred()) {
+		if (children) {
+			free(children);
+		}
+		return NULL;
+	}
+
+	result = PyObjC_CArrayToPython(@encode(CFTreeRef), children, count);
+	free(children);
+	return result;
+}
+
 
 static PyMethodDef mod_methods[] = {
         {
@@ -196,6 +251,12 @@ static PyMethodDef mod_methods[] = {
 		(PyCFunction)mod_CFTreeSetContext,
 		METH_VARARGS,
 		NULL
+	},
+	{
+		"CFTreeGetChildren",
+		(PyCFunction)mod_CFTreeGetChildren,
+		METH_VARARGS,
+		NULL,
 	},
 	{ 0, 0, 0, 0 } /* sentinel */
 };

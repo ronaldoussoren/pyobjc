@@ -3,8 +3,44 @@ from CoreFoundation import *
 
 
 class TestStringTokenizer (unittest.TestCase):
-    def testDummy(self):
-        self.fail("CFStringTokenizer tests not implemented yet")
+    def testFunctions(self):
+        s = u"Spring eens over een boom"
+        v = CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
+        self.assertEquals(v, 'nl')
+
+        v = CFStringTokenizerGetTypeID()
+        self.failUnless(isinstance(v, (int, long)))
+
+        tok = CFStringTokenizerCreate(
+                None, s, (0, len(s)), kCFStringTokenizerUnitWord, 
+                CFLocaleCopyCurrent())
+        self.failUnless(isinstance(tok, CFStringTokenizerRef))
+
+        v = CFStringTokenizerGoToTokenAtIndex(tok, 2)
+        self.assertEquals(v, kCFStringTokenizerTokenNormal)
+
+        v = CFStringTokenizerGetCurrentTokenRange(tok)
+        self.assertEquals(v, CFRange(0, 6))
+
+        v = CFStringTokenizerAdvanceToNextToken(tok)
+        self.assertEquals(v, kCFStringTokenizerTokenNormal)
+
+        v = CFStringTokenizerGetCurrentTokenRange(tok)
+        self.assertEquals(v, CFRange(7, 4))
+
+        v = CFStringTokenizerCopyCurrentTokenAttribute(tok, kCFStringTokenizerAttributeLanguage)
+        self.failUnless(v is None)
+
+
+        s = u"A dog jumped over a log. And then some more."
+        CFStringTokenizerSetString(tok, s, (0, len(s)))
+
+        subref = []
+        idx, ranges = CFStringTokenizerGetCurrentSubTokens(tok, None, 20, subref)
+        self.assertEquals(idx, 0)
+        self.assertEquals(ranges, ())
+        self.assertEquals(subref, [])
+
 
 
     def testConstants(self):

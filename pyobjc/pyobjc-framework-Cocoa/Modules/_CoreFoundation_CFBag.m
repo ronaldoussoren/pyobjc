@@ -84,7 +84,6 @@ mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)),
 	PyObject* py_allocator;
 	Py_ssize_t count;
 	CFAllocatorRef allocator;
-	int r;
 	CFBagRef bag;
 
 

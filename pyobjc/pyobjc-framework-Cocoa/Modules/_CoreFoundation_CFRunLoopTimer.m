@@ -167,6 +167,11 @@ mod_CFRunLoopTimerGetContext(
 		return NULL;
 	}
 
+	if (context.info == NULL) {
+		Py_INCREF(PyObjC_NULL);
+		return PyObjC_NULL;
+	}
+
 	Py_INCREF(PyTuple_GET_ITEM((PyObject*)context.info, 1));
 	return PyTuple_GET_ITEM((PyObject*)context.info, 1);
 }

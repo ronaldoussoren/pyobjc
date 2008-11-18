@@ -63,6 +63,7 @@ mod_CFReadStreamSetClient(
 	PyObject* info;
 	CFReadStreamRef stream;
 	CFOptionFlags streamEvents;
+	CFStreamClientContext context;
 
 	if (!PyArg_ParseTuple(args, "OOOO", &py_stream, &py_streamEvents, &callout, &info)) {
 		return NULL;
@@ -75,18 +76,21 @@ mod_CFReadStreamSetClient(
 		return NULL;
 	}
 
-	CFStreamClientContext context = mod_CFStreamClientContext;
-	context.info = Py_BuildValue("OO", callout, info);
-	if (context.info == NULL) {
-		return NULL;
+	if (info != PyObjC_NULL) {
+		context = mod_CFStreamClientContext;
+		context.info = Py_BuildValue("OO", callout, info);
+		if (context.info == NULL) {
+			return NULL;
+		}
 	}
+
 
 	Boolean rv = FALSE;
 	PyObjC_DURING
-		if (callout == Py_None) {
+		if (info == PyObjC_NULL) {
 			rv = CFReadStreamSetClient(
 				stream, streamEvents, 
-				NULL, &context);
+				mod_CFReadStreamClientCallBack, NULL);
 		} else {
 			rv = CFReadStreamSetClient(
 				stream, streamEvents, 
@@ -99,8 +103,10 @@ mod_CFReadStreamSetClient(
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
+	if (info != PyObjC_NULL) {
+		Py_DECREF((PyObject*)context.info);
+	}
 
-	Py_DECREF((PyObject*)context.info);
 	if (PyErr_Occurred()) {
 		return NULL;
 	}
