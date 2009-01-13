@@ -7,6 +7,42 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.1 (...)
 -----------------
 
+- Added ``PyObjC.TestSupport``. This is an unsupported module containing
+  useful functionality for testing PyObjC itself.
+
+- Added ``free_result`` attribute to the ``retval`` element in metadata
+  files. When this attribute has value ``'true'`` the return value of the
+  C function (or ObjC-method) will be free-ed using the function ``free()``,
+  otherwise the bridge assumes other code is reponsible to free the result.
+
+  This is to be used for low-level C API's that return a pointer to a
+  dynamicly allocated array that is to be free-ed by the caller. One example
+  is the function ``DHCPClientPreferencesCopyApplicationOptions`` in the
+  SystemConfiguration framework.
+
+- Added ``objc.context``, which is helpfull for dealing with "context" 
+  arguments as used by several Cocoa APIs. The context argument must be
+  a number in Python, while you'd prefer to pass in an arbitrary object 
+  instead. The ``objc.context`` registry allows you to get a context 
+  integer for an arbitrary Python object, and retrieve that later on.
+
+  To get the context integer for a Python object::
+      
+      ctx = objc.context.register(myValue)
+
+  To unregister the object when you no longer need the context integer::
+
+      objc.context.unregister(myValue)
+
+  To retrieve the Python object given a context integer::
+
+      myValue = objc.context.get(ctx)
+
+
+  NOTE: This API is particularly handy when using Key-Value Observing, where
+  the context number should be a unique value to make ensure that KVO usage
+  by the superclass doesn't get confused with your own usage of KVO.
+
 - PyObjC can now run in 64-bit mode.
 
   NOTE: 64-bit support is beta quality, that is: all unittests pass, but I 

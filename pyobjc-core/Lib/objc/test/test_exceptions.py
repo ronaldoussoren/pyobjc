@@ -5,9 +5,10 @@
 #
 from objc.test.exceptions import *
 
-import unittest, objc
+from PyObjCTools.TestSupport import *
+import objc
 
-class TestExceptionsFromObjC (unittest.TestCase):
+class TestExceptionsFromObjC (TestCase):
     def testSimple(self):
         o = PyObjCTestExceptions.alloc().init()
 
@@ -85,4 +86,4 @@ class TestExceptionsFromObjC (unittest.TestCase):
             self.assertEquals(e._pyobjc_exc_, u"thrown string")
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

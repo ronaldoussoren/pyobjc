@@ -1,11 +1,11 @@
 from objc.test.fnd import NSNumber
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc._pythonify import OC_PythonInt, OC_PythonFloat, OC_PythonLong
 import pickle
 import cPickle
 import sys
 
-class TestPickleNumber (objc.test.TestCase):
+class TestPickleNumber (TestCase):
 
     def testPickleInt(self):
         v = NSNumber.numberWithInt_(42)
@@ -68,4 +68,4 @@ class TestPickleNumber (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

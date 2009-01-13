@@ -395,7 +395,25 @@ static int set_defaults(PyObject* self, const char* typestr)
 			v = PyBool_FromLong(0);
 			break;
 #endif
+		case _C_NSBOOL:
+			v = PyBool_FromLong(0);
+			break;
 
+		case _C_CHAR_AS_TEXT:
+			{
+				char ch = 0;
+				v = PyString_FromStringAndSize(&ch, 1);
+			}
+			break;
+
+		case _C_UNICHAR:
+			{
+				Py_UNICODE ch = 0;
+				v = PyUnicode_FromUnicode(&ch, 1);
+			}
+			break;
+
+		case _C_CHAR_AS_INT:
 		case _C_CHR: case _C_UCHR:
 		case _C_SHT: case _C_USHT:
 		case _C_INT: case _C_UINT:
@@ -416,6 +434,12 @@ static int set_defaults(PyObject* self, const char* typestr)
 					Py_DECREF(v);
 					return -1;
 				}
+			} else if (!PyErr_Occurred()) {
+				/* this is a struct-type without a struct
+				 * wrapper. Default to None
+				 */
+				v = Py_None;
+				Py_INCREF(Py_None);
 			}
 				
 
@@ -459,7 +483,7 @@ struct_init(
 	int r;
 
 	if (self == NULL) {
-		*(void**)retval = NULL;
+		*(int**)retval = 0;
 		return;
 	}
 

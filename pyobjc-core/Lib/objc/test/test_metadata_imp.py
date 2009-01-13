@@ -10,18 +10,18 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 
 from objc.test.metadata import *
 import objc.test.test_metadata # to get the right metadata
 import warnings
 
 
-class TestArrayDefault (objc.test.TestCase):
+class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?
     pass
 
-class TestArraysOut (objc.test.TestCase):
+class TestArraysOut (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('fill4Tuple:')
@@ -108,7 +108,7 @@ class TestArraysOut (objc.test.TestCase):
 
 
 
-class TestArraysInOut (objc.test.TestCase):
+class TestArraysInOut (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('reverse4Tuple:')
@@ -206,7 +206,7 @@ class TestArraysInOut (objc.test.TestCase):
         self.assertEquals(len(v), 2)
         self.assertEquals(list(v),  [4, 3])
 
-class TestArraysIn (objc.test.TestCase):
+class TestArraysIn (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('make4Tuple:')
@@ -290,7 +290,7 @@ class TestArraysIn (objc.test.TestCase):
         self.assertEquals(len(v), 4)
         self.assertEquals(list(v), [1,2,3,4])
 
-class TestArrayReturns (objc.test.TestCase):
+class TestArrayReturns (TestCase):
     # TODO:
     # - Add null-terminated arrays of various supported types:
     #   -> integers
@@ -342,7 +342,7 @@ class TestArrayReturns (objc.test.TestCase):
         v = m(o)
         self.assertEquals(v, objc.NULL)
 
-class TestByReference (objc.test.TestCase):
+class TestByReference (TestCase):
     # Pass by reference arguments. 
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
@@ -440,4 +440,4 @@ class TestByReference (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -1,7 +1,8 @@
-import objc.test, sys
+import sys
+from PyObjCTools.TestSupport import *
 from objc.test.voidpointer import OC_TestVoidPointer
 
-class TestVoidPointer (objc.test.TestCase):
+class TestVoidPointer (TestCase):
     def testVoidPointerMethods(self):
         o = OC_TestVoidPointer.alloc().init()
         self.assertEquals(o.getvalue(), 0)
@@ -13,5 +14,5 @@ class TestVoidPointer (objc.test.TestCase):
         self.assertEquals(o.getvalue(), sys.maxint + 1)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()
 

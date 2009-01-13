@@ -1,6 +1,6 @@
 import objc
 import objc.test.fnd as Foundation
-import objc.test
+from PyObjCTools.TestSupport import *
 import os
 
 NSObject = objc.lookUpClass('NSObject')
@@ -15,7 +15,7 @@ FUNCTIONS=[
     ( u'NSClassFromString', S(objc._C_CLASS, objc._C_ID) ),
 ]
 
-class TestBundleFunctions (objc.test.TestCase):
+class TestBundleFunctions (TestCase):
     def setUp(self):
         self.bundle = Foundation.NSBundle.bundleForClass_(Foundation.NSBundle)
 
@@ -51,6 +51,6 @@ class TestBundleFunctions (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()
 
 

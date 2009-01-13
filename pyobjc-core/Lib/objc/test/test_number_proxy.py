@@ -5,7 +5,7 @@ NOTE: Decimal conversion is not tested, the required proxy is part of
 the Foundation bindings :-(
 """
 import sys, os
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSNumber, NSNumberFormatter
 from objc.test.pythonnumber import OC_TestNumber
 import objc
@@ -17,7 +17,7 @@ NSOrderedAscending = -1
 NSOrderedSame = 0
 NSOrderedDescending = 1
 
-class TestNSNumber (objc.test.TestCase):
+class TestNSNumber (TestCase):
     # These testcases check the behaviour of NSNumber, these
     # are mostly here to verify that NSNumbers behave as
     # we expect them to.
@@ -190,7 +190,7 @@ class TestNSNumber (objc.test.TestCase):
         self.assertEquals(v, u"264")
 
 
-class TestPyNumber (objc.test.TestCase):
+class TestPyNumber (TestCase):
     # Basic tests of the proxy methods
 
     def testClasses(self):
@@ -426,7 +426,7 @@ class TestPyNumber (objc.test.TestCase):
         self.assert_(isinstance(v, unicode))
         self.assertEquals(v, u"True")
 
-class TestInteractions (objc.test.TestCase):
+class TestInteractions (TestCase):
     # Test interactions between Python and NSNumber numbers
 
     def testMixedCompare(self):
@@ -471,7 +471,7 @@ class TestInteractions (objc.test.TestCase):
         self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42))
 
 
-class TestNumberFormatter (objc.test.TestCase):
+class TestNumberFormatter (TestCase):
     # Test behaviour of an NSNumberFormatter, both with 
     # Python numbers and NSNumbers
     def testFormatting(self):
@@ -491,4 +491,4 @@ class TestNumberFormatter (objc.test.TestCase):
         self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

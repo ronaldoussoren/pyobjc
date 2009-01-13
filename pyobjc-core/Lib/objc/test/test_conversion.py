@@ -3,7 +3,7 @@ Some basic tests for converting values to and from Objective-C
 
 TODO: This only tests C values at the moment.
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.testbndl import pyObjCPy, carrayMaker
 from objc.test.testbndl import UCHAR_MAX
 from objc.test.testbndl import CHAR_MAX, CHAR_MIN
@@ -18,7 +18,7 @@ import objc
 import array, sys
 
 
-class TestNumbers (objc.test.TestCase):
+class TestNumbers (TestCase):
     """
     Test of conversion of numbers, especially boundary cases
     """
@@ -205,7 +205,7 @@ class TestNumbers (objc.test.TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, "1")
 
 
-class TestStruct (objc.test.TestCase):
+class TestStruct (TestCase):
     """
     Structs are usually represented as tuples, but any sequence type is
     accepted as input, as long as it has the right number of elements
@@ -244,7 +244,7 @@ class TestStruct (objc.test.TestCase):
         self.assertEquals(inval, pyObjCPy(signature, iter(inval)))
         self.assertEquals(inval, pyObjCPy(signature, iter(list(inval))))
 
-class TestArray (objc.test.TestCase):
+class TestArray (TestCase):
     def test_simple(self):
         signature = '[10i]'
         value = tuple(range(10))
@@ -260,7 +260,7 @@ class TestArray (objc.test.TestCase):
         self.assertRaises(ValueError, pyObjCPy, signature, iter(value[:9]))
         self.assertRaises(TypeError, pyObjCPy, signature, None)
 
-class TestCArray (objc.test.TestCase):
+class TestCArray (TestCase):
     # Tests for the PyObjC_PythonToCArray (C-)function, this function is
     # used to build variable-length C Arrays from Python objects.
 
@@ -433,7 +433,7 @@ class TestCArray (objc.test.TestCase):
 
 
 
-class PyOCTestTypeStr(objc.test.TestCase):
+class PyOCTestTypeStr(TestCase):
     #
     # Check that typestrings have the expected values.
     # We currently depend on these values in this file as wel as in the
@@ -472,4 +472,4 @@ class PyOCTestTypeStr(objc.test.TestCase):
         self.assertEquals(objc._C_INOUT, "N")
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 
 setSignature = objc.setSignatureForSelector
@@ -60,7 +60,7 @@ objc.registerMetaDataForSelector("OCTestNULL", "on:callOut:", dict(
 
 from objc.test.NULL import *
 
-class TestNULL (objc.test.TestCase):
+class TestNULL (TestCase):
     def testNULL(self):
         self.assert_(hasattr(objc, 'NULL'))
         self.assertEquals(repr(objc.NULL), 'objc.NULL')
@@ -107,7 +107,7 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
         return 441;
     callOut_ = objc.selector(callOut_, signature='v@:o^i')    
 
-class TestNULLArguments (objc.test.TestCase):
+class TestNULLArguments (TestCase):
     def testCallInOutNULL(self):
         obj = OCTestNULL.alloc().init()
 
@@ -229,4 +229,4 @@ class TestNULLArguments (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

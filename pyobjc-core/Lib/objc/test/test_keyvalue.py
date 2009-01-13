@@ -5,7 +5,7 @@ NOTE: Testcases here should be synchronized with the Key-Value Coding tests
 in PyObjCTools.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import *
 
 
@@ -68,7 +68,7 @@ class KeyValueClass3 (object):
 
     roprop = property(lambda self: u"read-only")
 
-class PyKeyValueCoding (objc.test.TestCase):
+class PyKeyValueCoding (TestCase):
     def testNoPrivateVars(self):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
@@ -238,7 +238,7 @@ class PyKeyValueCoding (objc.test.TestCase):
         self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
 
 
-class TestAccMethod (objc.test.TestCase):
+class TestAccMethod (TestCase):
     def testStrCap(self):
         class Foo:
             def callme(self):
@@ -285,22 +285,22 @@ class AbstractKVCodingTest:
         self.assertEquals(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"indirectHead.indirectNumber"))
 
-class TestObjCKVCoding(AbstractKVCodingTest, objc.test.TestCase):
+class TestObjCKVCoding(AbstractKVCodingTest, TestCase):
     def setUp(self):
         self.base = PyObjCTest_KVBaseClass.new()
         self.path = PyObjCTest_KVPathClass.new()
 
-class TestPythonKVCoding(AbstractKVCodingTest, objc.test.TestCase):
+class TestPythonKVCoding(AbstractKVCodingTest, TestCase):
     def setUp(self):
         self.base = KVPyBase()
         self.path = KVPyPath()
 
-class TestPythonSubObjCContainerCoding(AbstractKVCodingTest, objc.test.TestCase):
+class TestPythonSubObjCContainerCoding(AbstractKVCodingTest, TestCase):
     def setUp(self):
         self.base = KVPySubObjCBase.new()
         self.path = KVPySubObjCPath.new()
 
-class TestPythonSubOverObjC(AbstractKVCodingTest, objc.test.TestCase):
+class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
     def setUp(self):
         self.base = KVPySubOverObjCBase.new()
         self.path = KVPySubOverObjCPath.new()
@@ -329,7 +329,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
     # MacOS X 10.3 and later use 'setValue:forKey: u' instead of
     # 'takeValue:forKey: u', test these as wel.
 
-    class PyKeyValueCoding_10_3 (objc.test.TestCase):
+    class PyKeyValueCoding_10_3 (TestCase):
         def testPythonConvention(self):
             o = KeyValueClass2()
 
@@ -424,7 +424,7 @@ class PyObjC_TestKeyValueSource (NSObject):
         return u"Hello world"
 
 if PyObjCTest_KeyValueObserver is not None:
-    class TestKeyValueObservingFromNative (objc.test.TestCase):
+    class TestKeyValueObservingFromNative (TestCase):
         # This test makes uses of Key-Value Coding/Observing from Objective-C.
         # Versions of PyObjC upto 2003-12-29 crashed on this test due to the way
         # key-value observing is implemented in Cocoa.
@@ -490,7 +490,7 @@ if PyObjCTest_KeyValueObserver is not None:
             global DEALLOCS
             DEALLOCS += 1
 
-    class TestKeyValueObservingFromPython (objc.test.TestCase):
+    class TestKeyValueObservingFromPython (TestCase):
         # Check for using KVO in python.
 
         def testAutomaticObserving(self):
@@ -644,4 +644,4 @@ if PyObjCTest_KeyValueObserver is not None:
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

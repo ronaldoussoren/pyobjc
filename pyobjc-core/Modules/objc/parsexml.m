@@ -40,6 +40,7 @@ static const char* gBooleanAttributes[] = {
 	"null_accepted', ",
 	"c_array_of_variable_length",
 	"printf_format",
+	"free_result",
 	NULL
 };
 

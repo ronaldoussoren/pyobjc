@@ -1,7 +1,7 @@
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 
-class TestProtocols (objc.test.TestCase):
+class TestProtocols (TestCase):
     def testBasic(self):
         p = objc.protocolNamed('NSObject')
         self.assert_(isinstance(p, objc.formal_protocol))
@@ -11,4 +11,4 @@ class TestProtocols (objc.test.TestCase):
         self.assertRaises(objc.ProtocolError, objc.protocolNamed, "PyObjCFooBarProtocol")
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

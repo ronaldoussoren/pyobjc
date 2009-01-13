@@ -1,9 +1,9 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.structpointer2 import *
 from objc.test.structpointer1 import *
 
-class TestOpaqueStructPointer (objc.test.TestCase):
+class TestOpaqueStructPointer (TestCase):
     def testPointer(self):
 
         # Check that the TestPointerStructPtr has a signature that is 
@@ -18,4 +18,4 @@ class TestOpaqueStructPointer (objc.test.TestCase):
         self.assert_(isinstance(v, TestStructPointerStructPtr))
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

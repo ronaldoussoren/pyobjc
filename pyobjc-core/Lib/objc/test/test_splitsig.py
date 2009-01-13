@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 
 
@@ -40,7 +40,7 @@ except ImportError:
 import sys
 
 
-class SplitSignatureTest (objc.test.TestCase):
+class SplitSignatureTest (TestCase):
 
     def testSplitSignature(self):
     # This is a very expensive test, with 1 goal: Verify that all method
@@ -108,4 +108,4 @@ class SplitSignatureTest (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

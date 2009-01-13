@@ -1,8 +1,8 @@
 import objc
 import objc.test.fnd as Foundation
-import objc.test
+from PyObjCTools.TestSupport import *
 
-class TestBundleVariables (objc.test.TestCase):
+class TestBundleVariables (TestCase):
     def setUp(self):
         self.bundle = Foundation.NSBundle.bundleForClass_(Foundation.NSBundle)
 
@@ -34,6 +34,6 @@ class TestBundleVariables (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()
 
 

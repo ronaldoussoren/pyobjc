@@ -4,7 +4,7 @@ Minimal tests for sequence proxies
 NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
 import sys
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSArray, NSMutableArray, NSPredicate, NSObject, NSNull
 from objc.test.pythonset import OC_TestSet
 import objc
@@ -37,7 +37,7 @@ class BasicSequenceTests:
 
 
 
-class TestImmutableSequence (objc.test.TestCase, BasicSequenceTests):
+class TestImmutableSequence (TestCase, BasicSequenceTests):
     seqClass = tuple
 
     def testCopy(self):
@@ -56,7 +56,7 @@ class TestImmutableSequence (objc.test.TestCase, BasicSequenceTests):
                 OC_TestSet.set_addObject_, o, 4)
 
 
-class TestMutableSequence (objc.test.TestCase, BasicSequenceTests):
+class TestMutableSequence (TestCase, BasicSequenceTests):
     seqClass = list
 
     def testCopy(self):
@@ -74,4 +74,4 @@ class TestMutableSequence (objc.test.TestCase, BasicSequenceTests):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

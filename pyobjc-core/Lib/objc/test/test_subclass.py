@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.testbndl import PyObjC_TestClass3
 import sys
@@ -9,7 +9,7 @@ NSObject = objc.lookUpClass('NSObject')
 NSArray = objc.lookUpClass('NSArray')
 NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
 
-class TestSubclassing(objc.test.TestCase):
+class TestSubclassing(TestCase):
     def testMethodRaise(self):
         # Defining a method whose name is a keyword followed by two underscores
         # should define the method name without underscores in the runtime,
@@ -101,7 +101,7 @@ class TestSubclassing(objc.test.TestCase):
             self.assert_(x.getArgumentTypeAtIndex_(3).startswith('i'))
 
 
-class TestSelectors(objc.test.TestCase):
+class TestSelectors(TestCase):
     def testSelectorRepr(self):
         class SelectorRepr(NSObject):
             def foo(self):
@@ -110,7 +110,7 @@ class TestSelectors(objc.test.TestCase):
         self.assert_(repr(SelectorRepr.foo).startswith('<unbound selector foo of SelectorRepr at'))
 
 
-class TestCopying (objc.test.TestCase):
+class TestCopying (TestCase):
 
     def testCopy(self):
         class MyCopyClass (NSObject):
@@ -176,7 +176,7 @@ class TestCopying (objc.test.TestCase):
         o = MITestClass2.alloc().init()
         self.assertEquals(o.mixinMethod(), "foo")
 
-class TestClassMethods (objc.test.TestCase):
+class TestClassMethods (TestCase):
 
     def testClassMethod(self):
         """ check that classmethod()-s are converted to selectors """
@@ -200,7 +200,7 @@ class TestClassMethods (objc.test.TestCase):
         self.assert_(isinstance(StaticMethodTest.stMeth, types.FunctionType))
 
 
-class TestOverridingSpecials(objc.test.TestCase):
+class TestOverridingSpecials(TestCase):
     def testOverrideSpecialMethods(self):
         aList = [0]
 
@@ -418,4 +418,4 @@ class TestOverridingSpecials(objc.test.TestCase):
 
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

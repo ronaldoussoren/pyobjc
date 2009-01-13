@@ -1,8 +1,8 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSDateFormatter, NSArray, NSDate
 import datetime
 
-class TestNSDateProxy (objc.test.TestCase):
+class TestNSDateProxy (TestCase):
     # Test for proxied datetime.date and datetime.datetime objects,
     # these have a custom proxy class.
 
@@ -34,4 +34,4 @@ class TestNSDateProxy (objc.test.TestCase):
 
         
 if __name__ == "__main__":
-    objc.test.main()
+    main()

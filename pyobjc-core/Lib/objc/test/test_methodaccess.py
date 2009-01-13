@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import sys
 
@@ -8,7 +8,7 @@ NSProxy = objc.lookUpClass('NSProxy')
 
 
 
-class MethodAccessTest (objc.test.TestCase):
+class MethodAccessTest (TestCase):
 
     def testObjCObject(self):
         # Trying to access the methods of objc.objc_object should not
@@ -68,10 +68,10 @@ class MethodAccessTest (objc.test.TestCase):
 
         self.assert_(hasattr(NSObject.pyobjc_classMethods, "alloc"))
 
-class ClassAndInstanceMethods(objc.test.TestCase):
+class ClassAndInstanceMethods(TestCase):
     def testClassThroughInstance(self):
         # Class methods are not accessible through instances.
         self.assertRaises(AttributeError, getattr, NSObject.new(), 'alloc')
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

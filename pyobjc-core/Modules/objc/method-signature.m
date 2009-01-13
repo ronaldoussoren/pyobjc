@@ -119,6 +119,7 @@ static PyObjCMethodSignature* new_methodsignature(
 	retval->ob_size = nargs;
 	retval->suggestion = NULL;
 	retval->variadic = NO;
+	retval->free_result = NO;
 	retval->null_terminated_array = NO;
 	retval->signature = PyObjCUtil_Strdup(signature);
 	if (retval->signature == NULL) {
@@ -519,6 +520,14 @@ PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature,
 			Py_DECREF(methinfo);
 			return NULL;
 		}
+
+		if (retval != NULL) {
+			PyObject* av = PyDict_GetItemString(metadata, "free_result");
+			if (av && PyObject_IsTrue(av)) {
+				methinfo->free_result = YES;
+			}
+			Py_XDECREF(av);
+		}
 	}
 
 
@@ -707,7 +716,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
 	if (descr->ptrType != PyObjC_kPointerPlain) {
 		v = PyBool_FromLong(descr->arraySizeInRetval);
 		if (v == NULL) goto error;
-		r = PyDict_SetItemString(result, "c_array_length_in_retval", v);
+		r = PyDict_SetItemString(result, "c_array_length_in_result", v);
 		Py_DECREF(v);
 		if (r == -1) goto error;
 	}

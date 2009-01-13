@@ -11,10 +11,10 @@ method defintions:
         o.myMethod_() # should also work, arg == 1
 """
 
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSObject
 
-class TestInheritedProtoype (objc.test.TestCase):
+class TestInheritedProtoype (TestCase):
     # 
     # These tests check for methods that are inherited from a superclass and
     # therefore have an explict method signature. The number of arguments in
@@ -194,7 +194,7 @@ class TestInheritedProtoype (objc.test.TestCase):
         except objc.BadPrototypeError:
             pass
 
-class TestExplicitPrototype (objc.test.TestCase):
+class TestExplicitPrototype (TestCase):
     # 
     # These tests check for methods with an explict method signature in the
     # python code (not inheritted). The python code should match the provided
@@ -369,7 +369,7 @@ class TestExplicitPrototype (objc.test.TestCase):
         except objc.BadPrototypeError:
             pass
 
-class TestImplicitSignature (objc.test.TestCase):
+class TestImplicitSignature (TestCase):
     # 
     # These tests check for methods that aren't inheritted and don't have
     # an explicit prototype either
@@ -516,4 +516,4 @@ class TestImplicitSignature (objc.test.TestCase):
         self.assertEquals(OC_ImplProto_Variations.methodWithArg_.signature, "v@:@")
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -10,7 +10,7 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 import warnings
 import array
 
@@ -343,11 +343,11 @@ def setupMetaData():
 
 setupMetaData()
 
-class TestArrayDefault (objc.test.TestCase):
+class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?
     pass
 
-class TestArraysOut (objc.test.TestCase):
+class TestArraysOut (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
 
@@ -434,7 +434,7 @@ class TestArraysOut (objc.test.TestCase):
         self.assertEquals(list(v),  [10, 11])
 
 
-class TestArraysInOut (objc.test.TestCase):
+class TestArraysInOut (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
 
@@ -545,7 +545,7 @@ class TestArraysInOut (objc.test.TestCase):
         self.assertEquals(len(v), 2)
         self.assertEquals(list(v),  [4, 3])
 
-class TestArraysIn (objc.test.TestCase):
+class TestArraysIn (TestCase):
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
 
@@ -628,7 +628,7 @@ class TestArraysIn (objc.test.TestCase):
         self.assertRaises(ValueError, o.makeIntArray_count_, a, 21)
 
 
-class TestArrayReturns (objc.test.TestCase):
+class TestArrayReturns (TestCase):
     # TODO:
     # - Add null-terminated arrays of various supported types:
     #   -> integers
@@ -673,7 +673,7 @@ class TestArrayReturns (objc.test.TestCase):
         v = o.nullStringArray()
         self.assertEquals(v, objc.NULL)
 
-class TestByReference (objc.test.TestCase):
+class TestByReference (TestCase):
     # Pass by reference arguments. 
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
@@ -762,7 +762,7 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(y, 43)
         self.assertEquals(z, objc.NULL)
 
-class TestPrintfFormat (objc.test.TestCase):
+class TestPrintfFormat (TestCase):
     def test_nsformat(self):
         o = OC_MetaDataTest.new()
 
@@ -890,20 +890,20 @@ class TestPrintfFormat (objc.test.TestCase):
             self.assertEquals(list(v), [ fmt, fmt%args ])
 
 
-class TestVariadic (objc.test.TestCase):
+class TestVariadic (TestCase):
     def testRaises(self):
         o = OC_MetaDataTest.new()
 
         self.assertRaises(TypeError, o.varargsMethodWithObjects_, 1)
         self.assertRaises(TypeError, o.varargsMethodWithObjects_, 1, 2, 3)
 
-class TestIgnore (objc.test.TestCase):
+class TestIgnore (TestCase):
     def testRaises(self):
         o = OC_MetaDataTest.new()
 
         self.assertRaises(TypeError, o.ignoreMethod)
 
-class TestMetaDataAccess (objc.test.TestCase):
+class TestMetaDataAccess (TestCase):
     def testSuggestions(self):
         meta = OC_MetaDataTest.varargsMethodWithObjects_.__metadata__()
         self.assert_(isinstance(meta, dict))
@@ -967,7 +967,7 @@ class TestMetaDataAccess (objc.test.TestCase):
         self.assertEquals(meta['classmethod'], False)
 
 
-class TestBuffers (objc.test.TestCase):
+class TestBuffers (TestCase):
     # Some tests that check if buffer APIs get sane treatment
 
     def testInChars(self):
@@ -1078,7 +1078,7 @@ class TestBuffers (objc.test.TestCase):
         self.assertEquals(str(buffer(v)), '\xab'*44);
         self.assert_(v is a)
 
-class TestVariableLengthValue (objc.test.TestCase):
+class TestVariableLengthValue (TestCase):
 
     def testResult(self):
         o = OC_MetaDataTest.alloc().init()
@@ -1114,7 +1114,7 @@ class TestVariableLengthValue (objc.test.TestCase):
 
         # XXX: Hard crash when using o.makeVariableLengthArray_halfCount_???
 
-class TestVariadicArray (objc.test.TestCase):
+class TestVariadicArray (TestCase):
     def testObjects(self):
         o = OC_MetaDataTest.alloc().init()
 
@@ -1131,4 +1131,4 @@ class TestVariadicArray (objc.test.TestCase):
         self.assertEquals(v, list(range(40)))
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()
