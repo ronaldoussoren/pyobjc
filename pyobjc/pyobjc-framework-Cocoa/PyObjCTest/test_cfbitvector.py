@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 def byte2bits(val):
@@ -10,7 +10,7 @@ def byte2bits(val):
             result.append(0)
     return result
 
-class TestBitVector (unittest.TestCase):
+class TestBitVector (TestCase):
     def testGetTypeID(self):
         v = CFBitVectorGetTypeID()
         self.failUnless(  isinstance(v, (int, long))   )
@@ -118,4 +118,4 @@ class TestBitVector (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

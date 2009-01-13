@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestStringTokenizer (unittest.TestCase):
+class TestStringTokenizer (TestCase):
     def testFunctions(self):
         s = u"Spring eens over een boom"
         v = CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
@@ -63,4 +63,4 @@ class TestStringTokenizer (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

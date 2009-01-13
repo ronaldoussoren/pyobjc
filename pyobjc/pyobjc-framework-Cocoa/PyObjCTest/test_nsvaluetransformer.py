@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestValueTrans (unittest.TestCase):
+class TestValueTrans (TestCase):
     def testConstants(self):
         self.failUnless(isinstance(NSNegateBooleanTransformerName, unicode))
         self.failUnless(isinstance(NSIsNilTransformerName, unicode))
@@ -10,4 +10,4 @@ class TestValueTrans (unittest.TestCase):
         self.failUnless(isinstance(NSKeyedUnarchiveFromDataTransformerName, unicode))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

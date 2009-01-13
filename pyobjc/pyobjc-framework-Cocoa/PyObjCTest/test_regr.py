@@ -3,7 +3,7 @@ import AppKit
 from Foundation import NSLog, NSAutoreleasePool, NSObject
 from threading import Thread
 import os
-import unittest
+from PyObjCTools.TestSupport import *
 
 class ReturnAStruct (NSObject):
     def someRectWithRect_(self, ((x, y), (h, w))):
@@ -12,7 +12,7 @@ class ReturnAStruct (NSObject):
         signature='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}')
 
 
-class TestRegr (unittest.TestCase):
+class TestRegr (TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
@@ -98,4 +98,4 @@ class TestRegr (unittest.TestCase):
                 AppKit.NSOpenGLPFANoRecovery, AppKit.NSOpenGLPFAColorSize, 32))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

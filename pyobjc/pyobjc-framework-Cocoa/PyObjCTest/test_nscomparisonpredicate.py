@@ -1,13 +1,16 @@
-from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestCompare (unittest.TestCase):
+from Foundation import *
+
+class TestNSComparisonPredicate (TestCase):
     def testConstants(self):
-        self.assertEquals(NSCaseInsensitivePredicateOption, 0x01)
-        self.assertEquals(NSDiacriticInsensitivePredicateOption, 0x02)
+        self.assertEquals(NSCaseInsensitivePredicateOption, 1)
+        self.assertEquals(NSDiacriticInsensitivePredicateOption, 2)
+
         self.assertEquals(NSDirectPredicateModifier, 0)
         self.assertEquals(NSAllPredicateModifier, 1)
         self.assertEquals(NSAnyPredicateModifier, 2)
+
         self.assertEquals(NSLessThanPredicateOperatorType, 0)
         self.assertEquals(NSLessThanOrEqualToPredicateOperatorType, 1)
         self.assertEquals(NSGreaterThanPredicateOperatorType, 2)
@@ -24,4 +27,5 @@ class TestCompare (unittest.TestCase):
         self.assertEquals(NSBetweenPredicateOperatorType, 100)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
+

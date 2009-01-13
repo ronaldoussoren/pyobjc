@@ -1,7 +1,8 @@
-import unittest, sys
+from PyObjCTools.TestSupport import *
+import sys
 from CoreFoundation import *
 
-class TestCFNumber (unittest.TestCase):
+class TestCFNumber (TestCase):
     def testCFNumberGetValue(self):
         number = 42
 
@@ -237,4 +238,4 @@ class TestCFNumber (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

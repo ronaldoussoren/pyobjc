@@ -1,9 +1,9 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestNSValue (unittest.TestCase):
+class TestNSValue (TestCase):
     def testFixme(self):
         self.fail("Write some tests")
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

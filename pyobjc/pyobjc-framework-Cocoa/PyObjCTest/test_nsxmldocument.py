@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestXMLDocument (unittest.TestCase):
+class TestXMLDocument (TestCase):
     def testConstants(self):
         self.assertEquals(NSXMLDocumentXMLKind, 0)
         self.assertEquals(NSXMLDocumentXHTMLKind, 1)
@@ -33,4 +33,4 @@ class TestXMLDocument (unittest.TestCase):
             'o^@')
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

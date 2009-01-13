@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 import Foundation
 
-class TestNSStreamUsage(unittest.TestCase):
+class TestNSStreamUsage(TestCase):
 
     def testUsage(self):
         # Test the usage of methods that require extra work
@@ -26,4 +26,4 @@ class TestNSStreamUsage(unittest.TestCase):
         outputStream.close()
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

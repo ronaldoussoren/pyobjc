@@ -1,10 +1,10 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import array
 from CoreFoundation import *
 import os
 
 
-class TestURL (unittest.TestCase):
+class TestURL (TestCase):
     def testTypeID(self):
         val = CFURLGetTypeID()
         self.failUnless( isinstance(val, (int, long)) )
@@ -302,4 +302,4 @@ class TestURL (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

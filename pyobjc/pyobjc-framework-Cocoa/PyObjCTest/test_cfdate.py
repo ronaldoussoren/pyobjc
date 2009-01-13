@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import time
 from CoreFoundation import *
 
 
-class TestDate (unittest.TestCase):
+class TestDate (TestCase):
     def testTypeID(self):
         v = CFDateGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -101,4 +101,4 @@ class TestDate (unittest.TestCase):
         
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

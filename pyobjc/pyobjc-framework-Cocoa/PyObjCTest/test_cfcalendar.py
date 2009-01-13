@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
-class TestCFCalendarVariadic (unittest.TestCase):
+class TestCFCalendarVariadic (TestCase):
     def testCFCalendarComposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
@@ -196,4 +196,4 @@ class TestCFCalendarVariadic (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

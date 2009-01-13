@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestXMLParser (unittest.TestCase):
+class TestXMLParser (TestCase):
     # Note: This doesn't actually test the API
 
     def testTypeID(self):
@@ -46,4 +46,4 @@ class TestXMLParser (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

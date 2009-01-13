@@ -1,10 +1,10 @@
 import Foundation
 import objc
 
-import unittest
+from PyObjCTools.TestSupport import *
 
 
-class TestNSLockProtocols (unittest.TestCase):
+class TestNSLockProtocols (TestCase):
 
     def testLockIsLock(self):
         # Test for bug #1735937
@@ -14,4 +14,4 @@ class TestNSLockProtocols (unittest.TestCase):
         self.assert_(lock.conformsToProtocol_(Foundation.protocols.NSLocking))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

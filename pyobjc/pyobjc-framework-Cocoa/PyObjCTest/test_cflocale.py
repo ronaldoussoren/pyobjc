@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestLocale (unittest.TestCase):
+class TestLocale (TestCase):
 
     def testGetTypeID(self):
         self.failUnless(isinstance(CFLocaleGetTypeID(), (int, long)))
@@ -97,4 +97,4 @@ class TestLocale (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

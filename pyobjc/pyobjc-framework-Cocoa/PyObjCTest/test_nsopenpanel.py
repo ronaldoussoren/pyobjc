@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
-class TestOpenPanel (unittest.TestCase):
+class TestOpenPanel (TestCase):
     def dont_testOpenPanelSignature(self):
         """
         This test failed sometime after the 1.0b1 release (on Panther).
@@ -17,4 +17,4 @@ class TestOpenPanel (unittest.TestCase):
             'v@:@@@@@:i')
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

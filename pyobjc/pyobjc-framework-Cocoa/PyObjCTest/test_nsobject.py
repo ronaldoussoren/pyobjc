@@ -1,9 +1,52 @@
-import unittest
-import objc
+from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSObjectInteraction(unittest.TestCase):
+class TestNSObjectFunctions (TestCase):
+    def testAllocation(self):
+        o = NSAllocateObject(NSObject, 0, None)
+        self.failUnless(isinstance(o, NSObject))
+
+        o = NSAllocateObject(NSObject, 50, None)
+        self.failUnless(isinstance(o, NSObject))
+
+        NSDeallocateObject(None)
+
+    def testCopy(self):
+        o = NSObject.alloc().init()
+        self.failUnless(isinstance(o, NSObject))
+        o2 = NSCopyObject(o, 50, None)
+        self.failUnless(isinstance(o2, NSObject))
+
+    def testShouldRetain(self):
+        o = NSObject.alloc().init()
+        self.failUnless(isinstance(o, NSObject))
+
+        v = NSShouldRetainWithZone(o, None)
+        self.failUnless((v is True) or (v is False))
+
+    def testRefCounts(self):
+        o = NSObject.alloc().init()
+
+        cnt = NSExtraRefCount(o)
+        self.failUnless(isinstance(cnt, (int, long)))
+
+        NSIncrementExtraRefCount(o)
+        v = NSExtraRefCount(o)
+        self.assertEquals(v, cnt+1)
+
+        v = NSDecrementExtraRefCountWasZero(o)
+        self.failUnless(v is False)
+
+        v = NSExtraRefCount(o)
+        self.assertEquals(v, cnt)
+
+
+
+
+
+
+class TestNSObjectInteraction(TestCase):
     def testCallingInstanceMethodWithClassSelf(self):
         self.assertRaises(TypeError, NSObject.description, NSObject)
         self.assertRaises(TypeError, NSObject.description, "hello")
@@ -40,4 +83,4 @@ class TestNSObjectInteraction(unittest.TestCase):
             a = NSObject.alloc().init()
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

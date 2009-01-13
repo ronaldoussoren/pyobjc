@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class FoundationErrorsTest (unittest.TestCase):
+class FoundationErrorsTest (TestCase):
     def testConstants(self):
         self.assertEquals(NSFileNoSuchFileError, 4)
         self.assertEquals(NSFileLockingError, 255)
@@ -36,4 +36,4 @@ class FoundationErrorsTest (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

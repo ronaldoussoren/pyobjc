@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class PythonListAsValue (unittest.TestCase):
+class PythonListAsValue (TestCase):
 
     def testSettingPythonList(self):
         defaults = NSUserDefaults.standardUserDefaults()
@@ -49,4 +49,4 @@ class PythonListAsValue (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

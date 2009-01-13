@@ -1,11 +1,11 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import sys
 import struct
 
 import Foundation
 import os
 
-class GlobalFunctionTest (unittest.TestCase):
+class GlobalFunctionTest (TestCase):
     if sys.platform == 'darwin':
         def testNSFileTypeForHFSTypeCode(self):
             self.assertEquals("'rtfx'",
@@ -59,7 +59,7 @@ class GlobalFunctionTest (unittest.TestCase):
         self.assert_(hasattr(Foundation, 'NSTemporaryDirectory'))
         self.assert_(hasattr(Foundation, 'NSDecrementExtraRefCountWasZero'))
 
-class GlobalVariablesTest (unittest.TestCase):
+class GlobalVariablesTest (TestCase):
     def testMisc(self):
         # enum
         self.assert_(hasattr(Foundation, 'NS_LittleEndian'))
@@ -71,7 +71,7 @@ class GlobalVariablesTest (unittest.TestCase):
         if sys.platform == 'darwin':
             self.assert_(hasattr(Foundation, 'NSFoundationVersionNumber'))
 
-class NSLogTest (unittest.TestCase):
+class NSLogTest (TestCase):
     def startCaptureStderr(self):
         self.realStderr = os.dup(2)
         self.capturedStderr = open("/tmp/stderr.$$", "wb")
@@ -110,4 +110,4 @@ class NSLogTest (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

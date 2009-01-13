@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import sys
 import time
@@ -7,7 +7,7 @@ from objc.test import testbndl
 
 from Foundation import *
 
-class ThreadingTest (unittest.TestCase):
+class ThreadingTest (TestCase):
     def setUp(self):
         # Set a very small check interval, this will make it more likely
         # that the interpreter crashes when threading is done incorrectly.
@@ -111,4 +111,4 @@ class ThreadingTest (unittest.TestCase):
         self.assert_(isinstance(retval, Dummy))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

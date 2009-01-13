@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestXMLElement (unittest.TestCase):
+class TestXMLElement (TestCase):
     def testOutputArgs(self):
         n =  NSXMLElement.alloc().init()
         self.assertEquals(
@@ -9,4 +9,4 @@ class TestXMLElement (unittest.TestCase):
             'o^@')
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

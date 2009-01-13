@@ -2,10 +2,10 @@
 # Tests for the struct-wrapper for NSAffineTransformStruct
 #
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 import operator
 
-class TestNSAffineTransformStruct (unittest.TestCase):
+class TestNSAffineTransformStruct (TestCase):
     def testConstructor(self):
         p = NSAffineTransformStruct()
         self.assert_(isinstance(p, NSAffineTransformStruct))
@@ -167,7 +167,7 @@ class TestNSAffineTransformStruct (unittest.TestCase):
         self.assertRaises(TypeError, operator.delslice, p, 0, 2)
 
 
-class TestAffineTransform (unittest.TestCase):
+class TestAffineTransform (TestCase):
     def testStructReturn (self):
         transform = NSAffineTransform.transform()
         s = transform.transformStruct()
@@ -180,5 +180,7 @@ class TestAffineTransform (unittest.TestCase):
         self.failUnless(isinstance(t, NSAffineTransformStruct))
         self.assertEquals(s, t)
 
+
+
 if __name__ == "__main__":
-    unittest.main()
+    main()

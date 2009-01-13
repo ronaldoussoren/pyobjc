@@ -1,15 +1,21 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import array
 
-from Foundation import NSData, NSMutableData
+from Foundation import *
 from objc.test.testbndl import PyObjC_TestClass3
 
 rawBytes = "a\x13b\x00cd\xFFef\xEFgh"
 otherBytes = array.array('c')
 otherBytes.fromstring('12345678901234567890' * 5)
 
-class TestNSData(unittest.TestCase):
+class TestNSData(TestCase):
+    def testConstants(self):
+        self.assertEquals(NSMappedRead, 1)
+        self.assertEquals(NSUncachedRead, 2)
+
+        self.assertEquals(NSAtomicWrite, 1)
+
     def assertDataContents(self, d1, d2, rawData):
         self.assertEquals(len(d1), d1.length(), "d1: len() and -length didn't match.")
         self.assertEquals(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d1), len(rawData)))
@@ -22,10 +28,30 @@ class TestNSData(unittest.TestCase):
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         self.assertDataContents(data, mutableData, rawBytes)
 
+    def testAppendBytes_length_(self):
+        self.fail("NSMutableData.appendBytes_length_")
+
+    def testreplaceBytesInRange_withBytes_(self):
+        self.fail("NSMutableData.replaceBytesInRange_withBytes_")
+
+    def testreplaceBytesInRange_withBytes_replacementLength_(self):
+        self.fail("NSMutableData.replaceBytesInRange_withBytes_replacementLength_")
+
+    def testDataWithBytesNoCopy_length_freeWhenDone_(self):
+        data = NSData.dataWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
+        mutableData = NSMutableData.dataWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
+        self.assertDataContents(data, mutableData, rawBytes)
+
     def testInitWithBytes_length_(self):
         """Test -initWithBytes:length:"""
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = NSMutableData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
+        self.assertDataContents(data, mutableData, rawBytes)
+
+    def testInitWithBytesNoCopy_length_freeWhenDone_(self):
+        """Test -initWithBytesNoCopy:length:"""
+        data = NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
+        mutableData = NSMutableData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testBytes(self):
@@ -79,6 +105,30 @@ class TestNSData(unittest.TestCase):
 
             mutableBytes[0:len(mutableBytes)] = bytes[0:len(bytes)]
 
+    def testInitWithContents(self):
+        b, err = NSData.alloc().initWithContentsOfFile_options_error_(
+                "/etc/hosts", 0, None)
+        self.failUnless(isinstance(b, NSData))
+        self.failUnless(err is None)
+
+        b = NSData.alloc().initWithContentsOfFile_options_error_(
+                "/etc/hosts.nosuchfile", 0, None)
+        self.failUnless(b2 is None)
+        self.failUnless(isinstance(err, NSError))
+
+        url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts', False)
+        b = NSData.alloc().initWithContentsOfURL_options_error_(
+                url, 0, None)
+        self.failUnless(isinstance(b, NSData))
+        self.failUnless(err is None)
+
+        url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts.nosuchfile', False)
+        b = NSData.alloc().initWithContentsOfURL_options_error_(
+                url, 0, None)
+        self.failUnless(b2 is None)
+        self.failUnless(isinstance(err, NSError))
+
+
 class MyData (NSData):
     def dataWithBytes_length_(self, bytes, length):
         return ("data", bytes, length)
@@ -131,7 +181,7 @@ class MyData5(NSData):
 
 
 
-class TestMyData (unittest.TestCase):
+class TestMyData (TestCase):
     # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
     def testData(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
@@ -146,6 +196,10 @@ class TestMyData (unittest.TestCase):
         b = PyObjC_TestClass3.getBytes_(r)
         self.assertEquals(str(b.bytes()), 'hello world')
 
+        self.assertEquals(b.getBytes_length_(None, 4), 'hell')
+        self.assertEquals(b.getBytes_range_(None, NSRange(2, 4)), 'llo ')
+
+
     def testBytesNone(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData4, 1)
         self.assertEquals(b.bytes(), None)
@@ -154,8 +208,10 @@ class TestMyData (unittest.TestCase):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
         self.assertRaises(ValueError, b.bytes)
 
+
+
 import array
-class TestBuffer(unittest.TestCase):
+class TestBuffer(TestCase):
     def testArray(self):
         a = array.array('c', 'foo')
         m = NSMutableData.dataWithData_(a)
@@ -174,7 +230,10 @@ class TestBuffer(unittest.TestCase):
         self.assertEquals(b[:], m[:])
         self.assert_(objc.repythonify(b) is b)
         self.assertEquals(buffer(m)[:], m[:])
-        
+
+
+
+
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestNumberFormatter (unittest.TestCase):
+class TestNumberFormatter (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFNumberFormatterGetTypeID(), (int, long)))
 
@@ -114,4 +114,4 @@ class TestNumberFormatter (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

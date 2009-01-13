@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import re
 import sys
@@ -30,7 +30,7 @@ def stripDocType(val):
     return r.replace(u'version="0.9"', u'version="1.0"')
 
 
-class TestNSNumber( unittest.TestCase ):
+class TestNSNumber( TestCase ):
     def testFixme(self):
         self.fail("need attention")
 
@@ -163,7 +163,7 @@ class TestNSNumber( unittest.TestCase ):
 
 
 if objc.platform == 'MACOSX':
-    class TestPropList (unittest.TestCase):
+    class TestPropList (TestCase):
         #Test if numbers are stored properly in property-list. The most
         #important part of the testcase are boolean values.
         #
@@ -202,7 +202,7 @@ if objc.platform == 'MACOSX':
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
 if isinstance(NSDecimalNumber.decimalNumberWithString_(u'1.00'), NSDecimalNumber):
-    class TestDecimalNumber (unittest.TestCase):
+    class TestDecimalNumber (TestCase):
         # NSDecimalNumber is treated specially
 
         # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
@@ -212,7 +212,7 @@ if isinstance(NSDecimalNumber.decimalNumberWithString_(u'1.00'), NSDecimalNumber
             self.assert_(isinstance(o, NSDecimalNumber))
 
 else:
-    class TestDecimalNumber (unittest.TestCase):
+    class TestDecimalNumber (TestCase):
         # NSDecimalNumber is treated specially
 
         # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
@@ -222,4 +222,4 @@ else:
             self.assert_(isinstance(o, NSDecimal))
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

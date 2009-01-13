@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from objc.test.testbndl import PyObjC_TestClass3
 from Foundation import NSHost
 
-class TestNSHost (unittest.TestCase):
+class TestNSHost (TestCase):
     def testCreation(self):
         #
         # This gives an exception on GNUstep:
@@ -29,4 +29,4 @@ class TestNSHost (unittest.TestCase):
         self.assertEquals(o.address(), u'127.0.0.1')
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

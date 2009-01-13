@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestMessagePort (unittest.TestCase):
+class TestMessagePort (TestCase):
     def testConstants(self):
         self.failUnless(kCFMessagePortSuccess == 0)
         self.failUnless(kCFMessagePortSendTimeout == -1)
@@ -83,4 +83,4 @@ class TestMessagePort (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

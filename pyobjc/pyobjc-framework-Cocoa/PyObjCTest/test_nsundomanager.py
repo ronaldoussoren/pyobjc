@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
@@ -8,7 +8,7 @@ class TestHelper (NSObject):
     def incFoo_(self, foo):
         foo[0] += 1
 
-class TestNSUndoManager(unittest.TestCase):
+class TestNSUndoManager(TestCase):
     def testFail(self):
         self.fail("Add tests that check undo calling methods with odd signatures")
 
@@ -35,7 +35,7 @@ class TestNSUndoManager(unittest.TestCase):
 # but that involves setting up a UI; instead use NSIndexSpecifier
 
 if hasattr(Foundation, 'NSIndexSpecifier'):
-    class TestUndoInt(unittest.TestCase):
+    class TestUndoInt(TestCase):
         class UndoInt(NSObject):
             undo = NSUndoManager.alloc().init()
             idx = NSIndexSpecifier.alloc().init()
@@ -55,7 +55,7 @@ if hasattr(Foundation, 'NSIndexSpecifier'):
 ## end Undo Integer test
 
 
-class TestSubclassingUndo(unittest.TestCase):
+class TestSubclassingUndo(TestCase):
     # Bugreport: 678759 Subclassing NSUndoManager fails
 
     def testSubclass(self):
@@ -84,4 +84,4 @@ class TestSubclassingUndo(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

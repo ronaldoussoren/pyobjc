@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 
-class TestSubclassing(unittest.TestCase):
+class TestSubclassing(TestCase):
     def testBasicSubclassing(self):
         class NSObjectSubclass(NSObject):
             def someRandomMethod(self):
@@ -25,4 +25,4 @@ class TestSubclassing(unittest.TestCase):
         self.assert_( subclassInstance is subclassInstance.self(), "Identity check failed." )
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

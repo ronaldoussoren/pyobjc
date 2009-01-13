@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestNSXMLNodeOptions (unittest.TestCase):
+class TestNSXMLNodeOptions (TestCase):
     def testConstants(self):
         self.assertEquals(NSXMLNodeOptionsNone, 0)
         self.assertEquals(NSXMLNodeIsCDATA, 1 << 0)
@@ -40,4 +40,4 @@ class TestNSXMLNodeOptions (unittest.TestCase):
             0xFFF00000))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

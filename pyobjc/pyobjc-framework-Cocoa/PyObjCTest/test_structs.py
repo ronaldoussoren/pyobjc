@@ -2,10 +2,10 @@
 # Tests for the struct-wrappers for NSPoint, NSSize, NSRange and NSRect.
 #
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 import operator
 
-class TestNSPoint (unittest.TestCase):
+class TestNSPoint (TestCase):
     def testConstructor(self):
         p = NSPoint()
         self.assert_(isinstance(p, NSPoint))
@@ -133,7 +133,7 @@ class TestNSPoint (unittest.TestCase):
         self.assertRaises(TypeError, operator.delslice, p, 0, 1)
         self.assertRaises(TypeError, operator.delslice, p, 0, 2)
 
-class TestNSSize (unittest.TestCase):
+class TestNSSize (TestCase):
     def testConstructor(self):
         p = NSSize()
         self.assert_(isinstance(p, NSSize))
@@ -165,7 +165,7 @@ class TestNSSize (unittest.TestCase):
         self.assertEquals(p.width, 1)
         self.assertEquals(p.height, 2)
 
-class TestNSRange (unittest.TestCase):
+class TestNSRange (TestCase):
     def testConstructor(self):
         p = NSRange()
         self.assert_(isinstance(p, NSRange))
@@ -197,7 +197,7 @@ class TestNSRange (unittest.TestCase):
         self.assertEquals(p.width, 1)
         self.assertEquals(p.height, 2)
 
-class TestNSRect (unittest.TestCase):
+class TestNSRect (TestCase):
     def testConstructor(self):
         p = NSRect()
         self.assert_(isinstance(p, NSRect))
@@ -236,4 +236,4 @@ class TestNSRect (unittest.TestCase):
         self.assertEquals(p.size.height, 4)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

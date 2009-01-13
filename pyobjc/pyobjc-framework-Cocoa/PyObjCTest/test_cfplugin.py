@@ -1,7 +1,7 @@
 """
 No tests for CFPlugin: these API's are unsupported for the moment.
 """
-import unittest
+from PyObjCTools.TestSupport import *
 import CoreFoundation
 
 symbols = [
@@ -54,12 +54,12 @@ symbols = [
         'CFPlugInInstanceCreateWithInstanceDataSize',
 ]
 
-class  TestPluginNotSuppported( unittest.TestCase):
+class  TestPluginNotSuppported( TestCase):
     def testUnsupported(self):
         for sym in symbols:
             if hasattr(CoreFoundation, sym):
                 self.fail("Unsupported symbol present: %s"%(sym,))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 

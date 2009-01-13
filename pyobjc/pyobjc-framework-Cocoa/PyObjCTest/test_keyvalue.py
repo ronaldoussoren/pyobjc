@@ -10,7 +10,7 @@ TODO:
     - More key-error tests, the tests don't cover all relevant code yet.
 """
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import sys
 from objc.test.testbndl import PyObjC_TestClass3 as STUB
 from Foundation import *
@@ -133,7 +133,7 @@ class KeyValueObserver (NSObject):
         self.observed.append( (keyPath, object, change) )
 
 
-class PyKeyValueCoding (unittest.TestCase):
+class PyKeyValueCoding (TestCase):
     def testNoPrivateVars(self):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
@@ -382,7 +382,7 @@ class PyKeyValueCoding (unittest.TestCase):
             finally:
                 o.removeObserver_forKeyPath_(observer, u'key3')
 
-class PyKeyValueCodingExplicit (unittest.TestCase):
+class PyKeyValueCodingExplicit (TestCase):
 
     def testValueForKey(self):
         o = KeyValueClass1Explicit.alloc().init()
@@ -507,7 +507,7 @@ class PyKeyValueCodingExplicit (unittest.TestCase):
         self.assertEquals(o._values['multiple']._values['level2']._values['level3']._values['keyB'], 9.999)
 
 
-class TestBaseExceptions (unittest.TestCase):
+class TestBaseExceptions (TestCase):
     """
     Check that NSObject implementation of Key-Value coding raises the
     exception that we expect it to raise.
@@ -531,4 +531,4 @@ class TestBaseExceptions (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

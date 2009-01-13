@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import Foundation
 
-class TestNSPredicate (unittest.TestCase):
+class TestNSPredicate (TestCase):
     def testSimple(self):
         pred = Foundation.NSPredicate.predicateWithFormat_("a == 42")
         self.assertEquals(pred.predicateFormat(), "a == 42")
@@ -14,4 +14,4 @@ class TestNSPredicate (unittest.TestCase):
         self.assertRaises(ValueError, Foundation.NSPredicate.predicateWithFormat_, "a == %d")
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

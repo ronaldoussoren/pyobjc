@@ -1,13 +1,28 @@
 #
 # Some tests for NSDecimal (C type) and NSDecimalNumber (Objective-C class)
 #
-import unittest
+from PyObjCTools.TestSupport import *
 from Foundation import *
 import operator
 import objc
 import sys
 
-class TestNSDecimal (unittest.TestCase):
+class TestNSDecimal (TestCase):
+    def testConstants(self):
+        self.assertEquals(NSRoundPlain, 0)
+        self.assertEquals(NSRoundDown, 1)
+        self.assertEquals(NSRoundUp, 2)
+        self.assertEquals(NSRoundBankers, 3)
+
+        self.assertEquals(NSCalculationNoError, 0)
+        self.assertEquals(NSCalculationLossOfPrecision, 1)
+        self.assertEquals(NSCalculationUnderflow, 2)
+        self.assertEquals(NSCalculationOverflow, 3)
+        self.assertEquals(NSCalculationDivideByZero, 4)
+
+        self.assertEquals(NSDecimalMaxSize, 8)
+        self.assertEquals(NSDecimalNoScale, (2**15)-1)
+
     def testCreation(self):
         o = NSDecimal(u"1.25")
         self.assert_(isinstance(o, NSDecimal))
@@ -49,8 +64,6 @@ class TestNSDecimal (unittest.TestCase):
         self.assertRaises(OverflowError, NSDecimal, -1L << 128)
 
     def testFunction(self):
-        # We only test addition, as all function wrappers are generated this
-        # should be enough to verify that the machinery is working correctly.
         o = NSDecimal(u"1.5")
         p = NSDecimal(12345, -2, objc.YES)
         r = NSDecimal(u"-121.95")
@@ -59,6 +72,21 @@ class TestNSDecimal (unittest.TestCase):
         NSDecimalAdd(q, o, p, NSRoundPlain)
 
         self.assertEquals(str(q), str(r))
+
+        v = NSDecimalIsNotANumber(o)
+        self.failUnless(v is False)
+
+        self.fail('NSDecimalCopy')
+        self.fail('NSDecimalCompact')
+        self.fail('NSDecimalCompare')
+        self.fail('NSDecimalRound')
+        self.fail('NSDecimalNormalize')
+        self.fail('NSDecimalAdd')
+        self.fail('NSDecimalSubtract')
+        self.fail('NSDecimalMultiply')
+        self.fail('NSDecimalDivide')
+        self.fail('NSDecimalPower')
+        self.fail('NSDecimalString')
 
     def testCompare(self):
         small = NSDecimal(u"1")
@@ -95,12 +123,12 @@ class TestNSDecimal (unittest.TestCase):
         o = NSDecimal(1.1)
         self.assertAlmostEquals(o.as_float(), 1.1)
 
-    if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+    if not hasattr(TestCase, 'assertAlmostEquals'):
         def assertAlmostEquals(self, val1, val2, eta=0.000001):
             self.assert_(abs(val1 - val2) < eta)
 
 
-class TestNSDecimalNumber (unittest.TestCase):
+class TestNSDecimalNumber (TestCase):
     def testCreation1(self):
         o = NSDecimalNumber.decimalNumberWithString_(u"1.1234")
         self.assertEquals(o.description(), u"1.1234")
@@ -119,7 +147,7 @@ class TestNSDecimalNumber (unittest.TestCase):
         o = NSDecimalNumber.alloc().initWithDecimal_(p)
         self.assertEquals(o.description(), u"1.1234")
 
-class NSDecimalOperators (unittest.TestCase):
+class NSDecimalOperators (TestCase):
     def testCoerce(self):
         r = NSDecimal(1)
 
@@ -453,7 +481,7 @@ class NSDecimalOperators (unittest.TestCase):
         o /= p
         self.assertEquals(o, r)
 
-class NSDecimalNumberOperators (unittest.TestCase):
+class NSDecimalNumberOperators (TestCase):
     def testAddition(self):
         r = NSDecimal()
         o = NSDecimalNumber.decimalNumberWithDecimal_(NSDecimal(1))
@@ -562,5 +590,6 @@ class NSDecimalNumberOperators (unittest.TestCase):
         self.assertRaises(TypeError, divmod, o, 2)
         self.assertRaises(TypeError, divmod, 2, o)
 
+
 if __name__ == "__main__":
-    unittest.main()
+    main()

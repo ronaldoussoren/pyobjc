@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestAttributedString (unittest.TestCase):
+class TestAttributedString (TestCase):
 
     def testTypeID(self):
         v = CFAttributedStringGetTypeID()
@@ -126,4 +126,4 @@ class TestAttributedString (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

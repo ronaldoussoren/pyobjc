@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 
 from objc import *
 from Foundation import *
@@ -12,7 +12,7 @@ try:
     from Carbon.CF import *
 
 
-    class TestTollFreeBridging( unittest.TestCase ):
+    class TestTollFreeBridging( TestCase ):
         def testExplicitToCF(self):
             o = NSArray.arrayWithArray_((u"a", 1, 1.9))
             self.assert_(isinstance(o, NSArray))
@@ -45,4 +45,4 @@ except ImportError:
     pass
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

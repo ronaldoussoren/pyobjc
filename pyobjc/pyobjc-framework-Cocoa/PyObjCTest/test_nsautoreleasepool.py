@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 
-class TestNSAutoreleasePoolInteraction(unittest.TestCase):
+class TestNSAutoreleasePoolInteraction(TestCase):
 
     def testNSAutoreleasePoolPlain(self):
         pool = NSAutoreleasePool.alloc().init()
@@ -12,4 +12,4 @@ class TestNSAutoreleasePoolInteraction(unittest.TestCase):
         bar.addObject_( u"a" ) # should still exist because of python GC
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

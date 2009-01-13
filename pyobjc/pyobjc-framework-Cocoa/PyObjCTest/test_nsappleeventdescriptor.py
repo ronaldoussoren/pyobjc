@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestAED (unittest.TestCase):
+class TestAED (TestCase):
     def testCreateWithBytes(self):
         self.fail("+ (NSAppleEventDescriptor *)descriptorWithDescriptorType:(DescType)descriptorType bytes:(const void *)bytes length:(NSUInteger)byteCount;")
         self.fail("- (id)initWithDescriptorType:(DescType)descriptorType bytes:(const void *)bytes length:(NSUInteger)byteCount;")
@@ -16,4 +16,4 @@ class TestAED (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

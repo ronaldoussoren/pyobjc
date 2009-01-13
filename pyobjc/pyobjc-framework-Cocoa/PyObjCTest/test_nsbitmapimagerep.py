@@ -1,11 +1,11 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import array
 
 from objc import YES, NO
 from AppKit import NSBitmapImageRep, NSDeviceRGBColorSpace, NSCalibratedWhiteColorSpace
 
-class TestNSBitmapImageRep(unittest.TestCase):
+class TestNSBitmapImageRep(TestCase):
     def testInstantiation(self):
         # widthxheight RGB 24bpp image
         width = 256
@@ -78,7 +78,7 @@ class TestNSBitmapImageRep(unittest.TestCase):
         self.assertEquals(len(bitmapData), len(singlePlane))
         self.assertEquals(bitmapData, singlePlane)
 
-class TestBadCreation(unittest.TestCase):
+class TestBadCreation(TestCase):
 
     # Redirect stderr to /dev/null for the duration of this test, 
     # NSBitmapImageRep will write an error message to stderr.
@@ -107,4 +107,4 @@ class TestBadCreation(unittest.TestCase):
             y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

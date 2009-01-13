@@ -12,14 +12,14 @@
 #
 
 import sys
-import unittest
+from PyObjCTools.TestSupport import *
 
 import objc
 
 if sys.platform == 'darwin':
     import AppKit
 
-    class TestWeirdness(unittest.TestCase):
+    class TestWeirdness(TestCase):
 
         def doWeirdness(self, className, methodToTest):
             c = objc.lookUpClass(className)
@@ -39,4 +39,4 @@ if sys.platform == 'darwin':
 
 
 if __name__ == '__main__':
-    unittest.main()
+    main()

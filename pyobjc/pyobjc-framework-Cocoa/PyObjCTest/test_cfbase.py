@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import CoreFoundation
 
 
-class TestBase (unittest.TestCase):
+class TestBase (TestCase):
     def testConstants(self):
         self.assertEquals(TRUE, 1)
         self.assertEquals(FALSE, 0)
@@ -142,4 +142,4 @@ class TestBase (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

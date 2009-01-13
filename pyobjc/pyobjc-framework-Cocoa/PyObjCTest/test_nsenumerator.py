@@ -1,11 +1,15 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
+import Foundation
 
-class TestNSEnumeratorInteraction(unittest.TestCase):
+class TestNSEnumeratorInteraction(TestCase):
     def setUp(self):
         self.arrayContainer = NSArray.arrayWithArray_(range(100))
+
+    def testNoFastEnumeration(self):
+        self.failIf( hasattr(Foundation, 'NSFastEnumerationState') )
 
     def testInOperator(self):
         y = []
@@ -17,4 +21,4 @@ class TestNSEnumeratorInteraction(unittest.TestCase):
             self.assertEquals(y[i], self.arrayContainer[i])
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

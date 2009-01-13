@@ -1,9 +1,10 @@
-import unittest, time
+from PyObjCTools.TestSupport import *
+import time
 from CoreFoundation import *
 from Foundation import NSDictionary, NSString, NSMutableDictionary
 
 
-class TestTimeZone (unittest.TestCase):
+class TestTimeZone (TestCase):
     def testTypeID(self):
         id = CFTimeZoneGetTypeID()
         self.failUnless(isinstance(id, (int, long)))
@@ -130,4 +131,4 @@ class TestTimeZone (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

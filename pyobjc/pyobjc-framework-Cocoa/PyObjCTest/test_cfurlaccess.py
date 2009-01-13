@@ -1,8 +1,9 @@
-import unittest, os
+import os
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestURLAccess (unittest.TestCase):
+class TestURLAccess (TestCase):
     def testConstants(self):
         self.failUnless( kCFURLUnknownError == -10  )
         self.failUnless( kCFURLUnknownSchemeError == -11    )
@@ -57,4 +58,4 @@ class TestURLAccess (unittest.TestCase):
             
                 
 if __name__ == "__main__":
-    unittest.main()
+    main()

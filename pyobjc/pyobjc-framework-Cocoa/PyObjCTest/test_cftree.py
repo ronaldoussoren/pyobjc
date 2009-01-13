@@ -1,7 +1,7 @@
 from CoreFoundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestCFTree (unittest.TestCase):
+class TestCFTree (TestCase):
     def testCreation(self):
         context = object()
         tree = CFTreeCreate(None, context)
@@ -132,4 +132,4 @@ class TestCFTree (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
