@@ -1,10 +1,10 @@
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass('NSObject')
 
 
-class TestBasicIMP (objc.test.TestCase):
+class TestBasicIMP (TestCase):
     # Test the basic functionality of IMP's. Imp's are basically unbound
     # selectors if you look at the interface. The implementation refers to
     # the actual functions that implements the method for calling the IMP
@@ -57,4 +57,4 @@ class TestBasicIMP (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

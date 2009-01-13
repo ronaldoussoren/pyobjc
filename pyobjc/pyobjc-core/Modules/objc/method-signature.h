@@ -54,6 +54,7 @@ struct _PyObjCMethodSignature {
 	const char* signature;
 	BOOL variadic:1;
 	BOOL null_terminated_array:1;
+	BOOL		free_result:1;
 	PyObject*   suggestion;
 	struct _PyObjC_ArgDescr rettype;
 	struct _PyObjC_ArgDescr argtype[1];

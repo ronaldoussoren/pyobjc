@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.sockaddr import PyObjCTestSockAddr
 
@@ -23,7 +23,7 @@ objc.registerMetaDataForSelector("PyObjCTestSockAddr", "getIPv6Addr:",
 
 
 
-class TestSockAddrSupport (unittest.TestCase):
+class TestSockAddrSupport (TestCase):
     def testToObjC(self):
         o = PyObjCTestSockAddr
         
@@ -46,4 +46,4 @@ class TestSockAddrSupport (unittest.TestCase):
         self.assertEquals(v, ('::1', 443, 2, 3))
         
 if __name__ == "__main__":
-	unittest.main()
+	main()

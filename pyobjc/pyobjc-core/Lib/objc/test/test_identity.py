@@ -8,11 +8,12 @@
 #   to plists, ...)
 # - Implement the required functionality
 
-import objc.test, sys, os
+import sys, os
 import objc
 from objc.test.identity import *
+from PyObjCTools.TestSupport import *
 
-class TestPythonRoundTrip (objc.test.TestCase):
+class TestPythonRoundTrip (TestCase):
     # TODO: verify
 
     def testBasicPython(self):
@@ -51,7 +52,7 @@ class TestPythonRoundTrip (objc.test.TestCase):
             self.assert_(v is container.storedObject, repr(v))
 
 
-class ObjCRoundTrip (objc.test.TestCase):
+class ObjCRoundTrip (TestCase):
     # TODO: NSProxy
 
     def testNSObject(self):
@@ -148,7 +149,7 @@ class ObjCRoundTrip (objc.test.TestCase):
         self.assert_(container.isSameObjectAsStored_(v), repr(v))
 
 
-class ObjCtoPython (objc.test.TestCase):
+class ObjCtoPython (TestCase):
     # TODO: NSProxy
 
     def assertFetchingTwice(self, container, message = None):
@@ -241,7 +242,7 @@ class ObjCtoPython (objc.test.TestCase):
         container.setStoredObjectToResultOf_on_("zero", cls)
         self.assertFetchingTwice(container, "decimal")
 
-class PythonToObjC (objc.test.TestCase):
+class PythonToObjC (TestCase):
     # TODO: verify
 
     def testPlainObjects(self):
@@ -279,7 +280,7 @@ class PythonToObjC (objc.test.TestCase):
 
             self.assert_(container.isSameObjectAsStored_(v), repr(v))
 
-class TestSerializingDataStructures (objc.test.TestCase):
+class TestSerializingDataStructures (TestCase):
     # OC_Python{Array,Dictionary} used to contain specialized 
     # identity-preservation code. It is unclear why this was added, it might
     # have to do with writing data to plist files.
@@ -312,4 +313,4 @@ class TestSerializingDataStructures (objc.test.TestCase):
         
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -1,10 +1,10 @@
 """
 Test some basic features of signature strings.
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 
-class PyOCTestTypeStr(objc.test.TestCase):
+class PyOCTestTypeStr(TestCase):
     def testSelectorSignatures(self):
 
         self.assert_(
@@ -130,4 +130,4 @@ class PyOCTestTypeStr(objc.test.TestCase):
 
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

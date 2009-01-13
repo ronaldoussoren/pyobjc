@@ -48,7 +48,7 @@ else:
     BRIDGED_TYPES.append((FSSpec, FSSpec_to_struct))
 
 def _bridgePythonTypes():
-    # python TO Obj-C
+    # Python to Obj-C
     OC_PythonObject = lookUpClass('OC_PythonObject')
     try:
         if BRIDGED_TYPES:

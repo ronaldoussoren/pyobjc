@@ -34,6 +34,7 @@ from _compat import *
 from _pythonify import *
 from _functions import *
 from _locking import *
+from _context import *
 
 import _pycoder
 

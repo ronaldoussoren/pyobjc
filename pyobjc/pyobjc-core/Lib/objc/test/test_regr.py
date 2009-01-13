@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test import structargs
 from objc.test import testbndl
 
@@ -6,7 +6,7 @@ import objc, sys
 from objc.test.fnd import NSObject
 
 
-class TestRegressions(objc.test.TestCase):
+class TestRegressions(TestCase):
     def testNSObjectRespondsToCommonMethods(self):
         self.assert_(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
         self.assert_(NSObject.instancesRespondToSelector_('init'))
@@ -131,4 +131,4 @@ if sys.byteorder == 'little':
         self.assertEquals(p.testWithObject_(o) % 16, o.stackPtr() % 16)
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

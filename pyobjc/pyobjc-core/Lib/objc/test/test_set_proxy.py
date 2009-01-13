@@ -2,7 +2,7 @@
 Tests for the proxy of Python sets
 """
 import sys
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSSet, NSMutableSet, NSPredicate, NSObject, NSNull
 from objc.test.pythonset import OC_TestSet
 import objc
@@ -162,7 +162,7 @@ class BasicSetTests:
         self.assert_(isinstance(o, unicode))
 
 
-class TestImmutableSet (objc.test.TestCase, BasicSetTests):
+class TestImmutableSet (TestCase, BasicSetTests):
     setClass = frozenset
 
     def testCopy(self):
@@ -207,7 +207,7 @@ class TestImmutableSet (objc.test.TestCase, BasicSetTests):
                 OC_TestSet.removeAllObjecsFromSet_, o)
 
 
-class TestMutableSet (objc.test.TestCase, BasicSetTests):
+class TestMutableSet (TestCase, BasicSetTests):
     setClass = set
 
     def testCopy(self):
@@ -293,4 +293,4 @@ class TestMutableSet (objc.test.TestCase, BasicSetTests):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

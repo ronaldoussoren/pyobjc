@@ -3,14 +3,14 @@ Some tests for arrays in method arguments (the 'int foo[4]' type of array).
 
 This tests both calling such methods, as well as implementing methods with such arguments.
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import array
 from objc.test.arrays import *
 from objc.test.fnd import NSObject
 
 
-class TestArrayCalling (objc.test.TestCase):
+class TestArrayCalling (TestCase):
     def testArrayOfInts(self):
         o = OC_ArrayTest.alloc().init()
 
@@ -133,7 +133,7 @@ StructArrayDelegate = objc.informal_protocol(
     ]
 )
 
-class TestArrayCallbacks (objc.test.TestCase):
+class TestArrayCallbacks (TestCase):
     def testCallArrayInt(self):
         class OC_TestArrayInt_In (NSObject):
             def arrayOf4Ints_(self, array):
@@ -178,4 +178,4 @@ class TestArrayCallbacks (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

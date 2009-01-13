@@ -7,7 +7,7 @@ import os
 
 import sys, copy_reg
 
-import objc.test
+from PyObjCTools.TestSupport import *
 
 from objc.test.fnd import NSArchiver, NSUnarchiver
 from objc.test.fnd import NSKeyedArchiver, NSKeyedUnarchiver
@@ -56,7 +56,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
     # For some reason NSCoding support doesn't work on OSX 10.4 yet, ignore these
     # tests for now
-    class TestKeyedArchiveSimple (objc.test.TestCase):
+    class TestKeyedArchiveSimple (TestCase):
         def testBasicObjects(self):
             buf = NSKeyedArchiver.archivedDataWithRootObject_(a_function)
             self.assert_(isinstance(buf, NSData))
@@ -252,7 +252,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
 
 
-    class TestKeyedArchivePlainPython (objc.test.TestCase, test.pickletester.AbstractPickleTests):
+    class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTests):
         # Ensure that we don't run every test case three times
         def setUp(self):
             self._protocols = test.pickletester.protocols
@@ -397,7 +397,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
     # Second set of tests: test if archiving a graph that
     # contains both python and objective-C objects works correctly.
     #
-    class TestKeyedArchiveMixedGraphs (objc.test.TestCase):
+    class TestKeyedArchiveMixedGraphs (TestCase):
         def dumps(self, arg, proto=0, fast=0):
             # Ignore proto and fast
             return NSKeyedArchiver.archivedDataWithRootObject_(arg)
@@ -438,8 +438,8 @@ if int(os.uname()[2].split('.')[0]) >= 9:
     # And finally some tests to check if archiving of Python
     # subclasses of NSObject works correctly.
     #
-    class TestArchivePythonObjCSubclass (objc.test.TestCase):
+    class TestArchivePythonObjCSubclass (TestCase):
         pass
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

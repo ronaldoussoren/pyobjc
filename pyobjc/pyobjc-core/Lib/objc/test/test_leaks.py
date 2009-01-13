@@ -1,7 +1,7 @@
 """
 Check if we manage retainCounts correctly.
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.fnd import *
 
@@ -32,7 +32,7 @@ class MemberClass (NSObject):
         self.slot1 = LeaksClass.alloc().init()
         return self
 
-class TestRetains(objc.test.TestCase):
+class TestRetains(TestCase):
     def testPyClass(self):
 
         global LeaksDel
@@ -107,4 +107,4 @@ class TestRetains(objc.test.TestCase):
 
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

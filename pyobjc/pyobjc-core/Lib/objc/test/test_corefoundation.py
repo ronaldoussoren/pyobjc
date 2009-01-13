@@ -2,7 +2,7 @@
 Testcases for the CoreFoundation wrappers introduced in 1.5
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 import re
 
 from objc.test.corefoundation import *
@@ -22,7 +22,7 @@ CFDateRef = objc.registerCFSignature(
         "NSDate",
     )
 
-class TestCoreFoundation (objc.test.TestCase):
+class TestCoreFoundation (TestCase):
     def testTollFree(self):
         obj = OC_TestCoreFoundation.today()
 
@@ -94,6 +94,6 @@ class TestCoreFoundation (objc.test.TestCase):
         self.assert_( not hasattr( cftype, 'myMethod'))
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()
     
 

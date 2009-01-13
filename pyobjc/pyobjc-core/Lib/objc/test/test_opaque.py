@@ -1,8 +1,8 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.opaque import *
 
-class TestFromPython (objc.test.TestCase):
+class TestFromPython (TestCase):
     def testBasic (self):
         tp = objc.createOpaquePointerType(
                 "BarHandle", BarEncoded, "BarHandle doc")
@@ -20,7 +20,7 @@ class TestFromPython (objc.test.TestCase):
         self.assertEquals(OC_OpaqueTest.nullBar(), None)
 
 
-class TestFromC (objc.test.TestCase):
+class TestFromC (TestCase):
     def testMutable(self):
         self.assert_( isinstance(FooHandle, type) )
 
@@ -68,4 +68,4 @@ class TestFromC (objc.test.TestCase):
         self.assertEquals(f.__pointer__, g.__pointer__)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

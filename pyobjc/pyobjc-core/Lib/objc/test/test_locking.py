@@ -5,7 +5,7 @@ These tests take an annoyingly long time to ensure that we'd hit a race conditio
 locking doesn't actually lock. It should be possible to find a faster mechanism for this.
 """
 import sys
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import threading
 import time
@@ -76,7 +76,7 @@ class BaseClass (objc.lookUpClass('NSObject')):
     def appendToList_(self, value):
         self.list.append(value)
 
-class TestLockingBasic (objc.test.TestCase):
+class TestLockingBasic (TestCase):
 
     def testBasicLocking(self):
         lst = []
@@ -133,7 +133,7 @@ if sys.version_info[:2] >= (2, 5):
     # a compile error on earlier editions of python, hence and ugly exec statement.
     exec """
 from __future__ import with_statement
-class TestLockingWithStatement (objc.test.TestCase):
+class TestLockingWithStatement (TestCase):
 
     def testBasicLocking(self):
         lst = []
@@ -161,4 +161,4 @@ class TestLockingWithStatement (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

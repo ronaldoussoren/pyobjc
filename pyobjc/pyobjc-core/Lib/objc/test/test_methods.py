@@ -33,7 +33,7 @@ NOTES:
 - See also testbndl.m, the implementation there must be synchronized
   with this file.
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import sys
 import struct
@@ -98,7 +98,7 @@ def makeCFloat(value):
     return struct.unpack('f',struct.pack('f', value))[0]
 
 
-class PyOCTestSimpleReturns(objc.test.TestCase):
+class PyOCTestSimpleReturns(TestCase):
     #
     # Test returns of simple types from instance and classs methods
     #
@@ -323,7 +323,7 @@ class PyOCTestSimpleReturns(objc.test.TestCase):
         self.assertEquals(obj.dummy2Func(), ((1,2,3,4),))
 
 
-class PyOCTestSimpleArguments(objc.test.TestCase):
+class PyOCTestSimpleArguments(TestCase):
     #
     # Test argument passing of single basic values.
     #
@@ -499,7 +499,7 @@ class PyOCTestSimpleArguments(objc.test.TestCase):
         self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8,6,4,2,1),))
 
 
-class PyOCTestByReferenceArguments(objc.test.TestCase):
+class PyOCTestByReferenceArguments(TestCase):
     #
     # Test argument passing of single basic values by reference.
     #
@@ -900,7 +900,7 @@ class MyOCClass (objc.lookUpClass('NSObject')):
     doubleArg_ = objc.selector(doubleArg_, signature=OC_TestClass1.doubleArg_.signature)
 
 
-class OCPyTestSimpleCalls(objc.test.TestCase):
+class OCPyTestSimpleCalls(TestCase):
     #
     # Test argument passing of single basic values by reference.
     #
@@ -1235,7 +1235,7 @@ class OCPyTestSimpleCalls(objc.test.TestCase):
         for o in POINTS:
             self.assertEquals(self.obj.invokeInstanceNSPointFuncOf_(self.ocobj), o)
 
-class OCPyTestSimpleArguments(objc.test.TestCase):
+class OCPyTestSimpleArguments(TestCase):
     #
     # Test argument passing of single basic values.
     #
@@ -1261,4 +1261,4 @@ class OCPyTestSimpleArguments(objc.test.TestCase):
         self.assertEquals(self.obj.invokeInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

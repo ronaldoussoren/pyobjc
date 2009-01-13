@@ -17,7 +17,8 @@ TODO:
 - Add tests with these types in struct definitions
 - Review test cases to make sure the tests are complete enough
 """
-import objc.test, weakref
+import weakref
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSObject
 
 from objc.test.specialtypecodes import *
@@ -81,7 +82,7 @@ def setupMetaData():
 
 setupMetaData()
 
-class TestTypeCode_BOOL (objc.test.TestCase):
+class TestTypeCode_BOOL (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
@@ -162,4 +163,4 @@ class TestTypeCode_BOOL (objc.test.TestCase):
         self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, "\x00\x01\x00\x01")
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

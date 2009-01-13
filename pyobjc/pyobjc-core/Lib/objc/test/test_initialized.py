@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.initialize import OC_TestInitialize
 
 class OC_TestInitializePython (OC_TestInitialize):
@@ -12,7 +12,7 @@ class OC_TestInitializePython2 (OC_TestInitialize):
         OBJECT_LIST.append(self)
         return self
 
-class TestInitializing (objc.test.TestCase):
+class TestInitializing (TestCase):
     #
     # These tests make sure that we don't call retain/release on objects
     # that are not yet initialized.
@@ -80,4 +80,4 @@ class TestInitializing (objc.test.TestCase):
         self.assertEquals(v, start)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import sys
 
@@ -17,7 +17,7 @@ if sys.maxint >= 2 ** 32:
     pass
 
 else:
-    class TestPosing(objc.test.TestCase):
+    class TestPosing(TestCase):
         def testPosing(self):
 
             class PoseClass(BaseClass):
@@ -43,4 +43,4 @@ else:
 
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

@@ -4,7 +4,7 @@ Tests for the new-style metadata format interface.
 These tests are for global function
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 import warnings
 
 from objc.test.metadatafunction import *
@@ -253,16 +253,16 @@ _FunctionTable = [
 
 objc._loadFunctionList(function_list, globals(),  _FunctionTable, False)
 
-class TestExists (objc.test.TestCase):
+class TestExists (TestCase):
     def testFunctionsExists(self):
         for item in _FunctionTable:
             self.assert_( item[0] in globals() )
 
-class TestArrayDefault (objc.test.TestCase):
+class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?
     pass
 
-class TestArraysOut (objc.test.TestCase):
+class TestArraysOut (TestCase):
     def testFixedSize(self):
         v = fill4Tuple_(None)
         self.assertEquals(list(v), [0, -1, -8, -27])
@@ -329,7 +329,7 @@ class TestArraysOut (objc.test.TestCase):
         self.assertEquals(list(v),  [10, 11])
 
 
-class TestArraysInOut (objc.test.TestCase):
+class TestArraysInOut (TestCase):
     def testFixedSize(self):
 
         a = (1,2,3,4)
@@ -415,7 +415,7 @@ class TestArraysInOut (objc.test.TestCase):
         self.assertEquals(len(v), 2)
         self.assertEquals(list(v),  [4, 3])
 
-class TestArraysIn (objc.test.TestCase):
+class TestArraysIn (TestCase):
     def testFixedSize(self):
 
         v = make4Tuple_((1.0, 4.0, 8.0, 12.5))
@@ -484,7 +484,7 @@ class TestArraysIn (objc.test.TestCase):
         self.assertEquals(len(v), 4)
         self.assertEquals(list(v), [1,2,3,4])
 
-class TestArrayReturns (objc.test.TestCase):
+class TestArrayReturns (TestCase):
     # TODO:
     # - Add null-terminated arrays of various supported types:
     #   -> integers
@@ -526,7 +526,7 @@ class TestArrayReturns (objc.test.TestCase):
         v = nullStringArray()
         self.assertEquals(v, objc.NULL)
 
-class TestByReference (objc.test.TestCase):
+class TestByReference (TestCase):
     # Pass by reference arguments. 
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
@@ -605,7 +605,7 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(y, 43)
         self.assertEquals(z, objc.NULL)
 
-class TestPrintfFormat (objc.test.TestCase):
+class TestPrintfFormat (TestCase):
     def test_nsformat(self):
 
         v = makeArrayWithFormat_("%3d", 10)
@@ -623,4 +623,4 @@ class TestPrintfFormat (objc.test.TestCase):
         self.assertEquals(list(v), [ "hello %s", "hello world"])
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

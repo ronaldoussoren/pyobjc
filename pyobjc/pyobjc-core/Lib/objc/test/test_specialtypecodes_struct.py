@@ -4,7 +4,8 @@ Tests for using special type codes in struct definitions
 TODO:
 * _C_UNICHAR, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT
 """
-import objc.test, weakref
+import weakref
+from PyObjCTools.TestSupport import *
 from objc.test.fnd import NSObject
 
 from objc.test.specialtypecodes import *
@@ -28,7 +29,7 @@ EmbeddedBoolArrayStruct = objc.createStructType(
 
 
 
-class TestRecode (objc.test.TestCase):
+class TestRecode (TestCase):
     # Use recode to test to/from Objective-C. 
     #
     # This has limited because in 'real life' we'd encode/decode based on a
@@ -54,7 +55,7 @@ class TestRecode (objc.test.TestCase):
         self.assert_(w.valid[3] is False)
 
 
-class TestObjectiveC (objc.test.TestCase):
+class TestObjectiveC (TestCase):
     # Use an Objective-C class to test to/from Objective-C. 
     #
     def testBoolStruct(self):
@@ -79,4 +80,4 @@ class TestObjectiveC (objc.test.TestCase):
         self.assert_(w.valid[3] is False)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 
 import objc
 import sys
@@ -27,8 +27,8 @@ class TestClass (NSObject):
     doubleVar = objc.ivar('doubleVar', objc._C_DBL)
 
 
-class TestInstanceVariables(objc.test.TestCase):
-    if not hasattr(objc.test.TestCase, 'assertAlmostEquals'):
+class TestInstanceVariables(TestCase):
+    if not hasattr(TestCase, 'assertAlmostEquals'):
         def assertAlmostEquals(self, val1, val2):
             self.assert_(abs(val1 - val2) < 0.000001)
 
@@ -105,7 +105,7 @@ class TestInstanceVariables(objc.test.TestCase):
         self.assertRaises(TypeError, delattr, self.object.idVar)
 
 
-class TestAllInstanceVariables (objc.test.TestCase):
+class TestAllInstanceVariables (TestCase):
     # Some tests for accessing any instance variable, even those not 
     # declared in python.
 
@@ -236,4 +236,4 @@ class TestAllInstanceVariables (objc.test.TestCase):
     
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

@@ -1,6 +1,6 @@
 # FIXME: This test suite seems to polute it's environment, other tests fail
 # when this test suite is active!
-import objc.test
+from PyObjCTools.TestSupport import *
 import sys
 
 import objc
@@ -39,7 +39,7 @@ class PurePython:
     def purePythonMethod(self):
         return u"<pure-py>"
 
-class TestFromObjCSuperToObjCClass(objc.test.TestCase):
+class TestFromObjCSuperToObjCClass(TestCase):
     def testBasicBehavior(self):
         anInstance = Methods.new()
         self.assertEquals(anInstance.description(), u"<methods>")
@@ -124,7 +124,7 @@ class TestFromObjCSuperToObjCClass(objc.test.TestCase):
 
 
 
-class TestFromPythonClassToObjCClass(objc.test.TestCase):
+class TestFromPythonClassToObjCClass(TestCase):
 
     def testPythonSourcedMethods(self):
         # 20031227, Ronald: Assigning the methods works alright, but actually
@@ -185,7 +185,7 @@ class TestFromPythonClassToObjCClass(objc.test.TestCase):
 
 
 
-class TestClassAsignments (objc.test.TestCase):
+class TestClassAsignments (TestCase):
     def testAssignAMethod(self):
         MEClass.doSomethingElse = lambda self: 2*2
         MEClass.doDuplicate_ = lambda self, x: 2*x
@@ -217,7 +217,7 @@ class TestClassAsignments (objc.test.TestCase):
         self.assertRaises(AttributeError, delattr, theClass, 'alloc')
         self.assertRaises(AttributeError, delattr, theClass, 'init')
 
-class TestCategory (objc.test.TestCase):
+class TestCategory (TestCase):
     # Tests of objc.Category
 
     def testPyClassCategory(self):
@@ -316,4 +316,4 @@ class TestCategory (objc.test.TestCase):
 
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

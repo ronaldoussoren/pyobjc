@@ -7,13 +7,13 @@ XXX: Add tests that check that the type actually works as expected:
 Add tests for nested structs as well (that is assert that NSRect.location is 
 an NSPoint, but using our own types)
 """
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.structs import *
 from objc.test.fnd import NSObject
 
 
-class TestStructs (objc.test.TestCase):
+class TestStructs (TestCase):
     def testCreateExplicit(self):
         tp = objc.createStructType("FooStruct", "{_FooStruct=ffff}", ["a","b","c","d"])
         self.assert_(isinstance(tp, type))
@@ -99,4 +99,4 @@ class TestStructs (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

@@ -6,7 +6,8 @@ This file provides a nice unittest wrapper around the functions in that file,
 the code in this file defines a class CTests that has the functions in the
 unitest.m file as its methods.
 """
-import objc.test, sys, platform
+import sys, platform
+from PyObjCTools.TestSupport import *
 from  objc.test import ctests
 
 names = [ x for x in dir (ctests) if not x.startswith('_') ]
@@ -46,7 +47,7 @@ def test_%s(self):
 for n in names:
     methods['test_%s'%(n,)] = make_test(n)
 
-CTests = type(objc.test.TestCase)('CTests', (objc.test.TestCase,), methods)
+CTests = type(TestCase)('CTests', (TestCase,), methods)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

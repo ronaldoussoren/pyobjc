@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.testclassandinst import PyObjC_TestClassAndInstance, PyObjC_TestUnallocatable
 
@@ -27,7 +27,7 @@ class PyObjC_TestClassAndInstanceInstanceOverride(PyObjC_TestClassAndInstance):
 #     def isInstance__inst__(self):
 #         return objc.NO
 
-class TestClassAndInstance(objc.test.TestCase):
+class TestClassAndInstance(TestCase):
     def testClassAndInstanceInstanceOverrideWorkaround(self):
         self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.pyobjc_classMethods.isInstance())
         self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.alloc().init().pyobjc_instanceMethods.isInstance())
@@ -76,4 +76,4 @@ class TestClassAndInstance(objc.test.TestCase):
         self.assertEquals(PyObjC_TestUnallocatable.alloc(), None)
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

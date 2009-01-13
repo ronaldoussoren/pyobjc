@@ -1,10 +1,10 @@
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 
 if 0:
-    class VarargsMethod (objc.test.TestCase):
+    class VarargsMethod (TestCase):
         def testVariableArgumentCount(self):
             class VarArgsClass1 (NSObject):
                 def instanceMethod1_(self, arg1, *args):
@@ -58,4 +58,4 @@ if 0:
             self.assertEquals(l, [{'foo':'bar', 'baz':'foo'}])
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

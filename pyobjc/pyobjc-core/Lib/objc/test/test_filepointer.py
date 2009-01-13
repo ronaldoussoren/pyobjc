@@ -1,11 +1,11 @@
 from objc.test.filepointer import OC_TestFilePointer
-import objc.test
+from PyObjCTools.TestSupport import *
 
 fp = open('/etc/passwd', 'r')
 gFirstPasswdLine = fp.readline()
 fp.close()
 
-class TestFilePointer (objc.test.TestCase):
+class TestFilePointer (TestCase):
     def testOpenInPython(self):
         fp = open('/etc/passwd', 'r')
         o = OC_TestFilePointer.new()
@@ -59,4 +59,4 @@ class TestFilePointer (objc.test.TestCase):
         self.assertEquals(fp.mode, 'a+')
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

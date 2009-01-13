@@ -3063,6 +3063,10 @@ PyObjCFFI_BuildResult(
 					return NULL;
 				}
 
+				if (methinfo->free_result) {
+					free(*(void**)pRetval);
+				}
+
 			}
 	 	}
 

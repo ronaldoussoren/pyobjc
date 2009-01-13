@@ -1,12 +1,11 @@
-import objc.test
-
+from PyObjCTools.TestSupport import *
 import objc
 from objc.test.testbndl import PyObjC_TestClass4
 import fnd as Foundation
 from objc.test.fnd import NSObject, NSArray, NSAttributedString
 
 
-class TestConstants(objc.test.TestCase):
+class TestConstants(TestCase):
     def testBooleans(self):
         self.assert_(objc.YES, "YES was not true.")
         self.assert_(not objc.NO, "NO was true.")
@@ -16,7 +15,7 @@ class TestConstants(objc.test.TestCase):
         self.assert_(not objc.nil, "nil is not nil/None.")
 
 
-class TestObjCRuntime (objc.test.TestCase):
+class TestObjCRuntime (TestCase):
     # Tests for objc.runtime
     def setUp(self):
         import warnings
@@ -42,7 +41,7 @@ class TestObjCRuntime (objc.test.TestCase):
                           "objc.runtime.NSObject and objc.lookUpClass('NSObject') were different.")
 
 
-class TestClassLookup(objc.test.TestCase):
+class TestClassLookup(TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
         self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "")
         self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "ThisClassReallyShouldNotExist")
@@ -61,7 +60,7 @@ class TestClassLookup(objc.test.TestCase):
         self.assert_(NSException in objc.getClassList(), "getClassList() does not appear to contain NSException class")
         self.assert_(NSMutableArray in objc.getClassList(), "getClassList() does not appear to contain NSMutableArray class")
 
-class TestMethodInvocation(objc.test.TestCase):
+class TestMethodInvocation(TestCase):
     def setUp(self):
         self.NSObjectInstance = NSObject.alloc().init()
 
@@ -75,11 +74,11 @@ class TestMethodInvocation(objc.test.TestCase):
         self.assertEqual(self.NSObjectInstance.pyobjc_instanceMethods.self(), self.NSObjectInstance.self())
         self.assertEqual(type(self.NSObjectInstance).pyobjc_instanceMethods.self(self.NSObjectInstance), self.NSObjectInstance.self())
 
-class TestClassDict(objc.test.TestCase):
+class TestClassDict(TestCase):
     def testDict(self):
         self.assert_("attributesAtIndex_longestEffectiveRange_inRange_" in NSAttributedString.__dict__)
 
-class TestPickle(objc.test.TestCase):
+class TestPickle(TestCase):
     # We don't support pickling at the moment, make sure we enforce that.
 
     def testPicklePure(self):
@@ -99,7 +98,7 @@ class TestPickle(objc.test.TestCase):
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
 
 
-class TestDescription (objc.test.TestCase):
+class TestDescription (TestCase):
     def testSimple(self):
         TESTS   = [u'a'], u'hello', 2
         a = NSArray.arrayWithArray_([u'a'])
@@ -109,4 +108,4 @@ class TestDescription (objc.test.TestCase):
             self.assertEquals(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

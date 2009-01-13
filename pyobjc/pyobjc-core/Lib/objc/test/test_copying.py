@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 
 NSObject = objc.lookUpClass("NSObject")
@@ -88,7 +88,7 @@ class OC_TestCopy4 (OC_CopyBase):
         other.z = "hello"
         return other
 
-class TestNSCopying (objc.test.TestCase):
+class TestNSCopying (TestCase):
     def testCopyingWithoutSuperFromObjC(self):
         v = OC_TestCopy1.alloc().init()
         self.assert_(not v.copyWithZone_.isClassMethod)
@@ -225,7 +225,7 @@ class TestNSCopying (objc.test.TestCase):
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 import copy
 
-class TestPyCopyObjC (objc.test.TestCase):
+class TestPyCopyObjC (TestCase):
     # Testcases that ensure that copy.copy works
     # with Objective-C objects as well.
 
@@ -239,4 +239,4 @@ class TestPyCopyObjC (objc.test.TestCase):
 
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

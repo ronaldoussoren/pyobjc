@@ -1,11 +1,11 @@
 """
 Tests for accessing methods through classes and instances
 """
-import unittest
+from PyObjCTools.TestSupport import *
 from objc.test.clinmeth import *
 import objc
 
-class TestClassMethods (unittest.TestCase):
+class TestClassMethods (TestCase):
     # Some very basic tests that check that getattr on instances doesn't
     # return a class method and that getattr on classes prefers classmethods
     # over instance methods (and v.v. for getattr on instances)
@@ -37,7 +37,7 @@ class TestClassMethods (unittest.TestCase):
         self.assertEquals(m(), 2)
 
 
-class TestInstanceMethods (unittest.TestCase):
+class TestInstanceMethods (TestCase):
     # Check that instance methods can be accessed through the instance, and 
     # also through the class when no class method of the same name is 
     # available.
@@ -58,7 +58,7 @@ class TestInstanceMethods (unittest.TestCase):
 
         self.assertEquals(m(), 1)
 
-class TestSuper (unittest.TestCase):
+class TestSuper (TestCase):
     # Tests that check if super() behaves as expected (which is the most likely
     # reason for failure).
 
@@ -87,5 +87,5 @@ class TestSuper (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 

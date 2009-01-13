@@ -1116,6 +1116,10 @@ PyObjC_CArrayToPython2(
 	Py_ssize_t i;
 	Py_ssize_t eltsize;
 
+	if (size == -1) {
+		size = 0;
+	}
+
 	eltsize = PyObjCRT_SizeOfType(elementType);
 	if (eltsize == -1) {
 		return NULL;

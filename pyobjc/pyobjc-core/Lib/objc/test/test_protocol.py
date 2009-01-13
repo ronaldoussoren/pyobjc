@@ -1,4 +1,4 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 import objc
 import warnings
 import sys
@@ -18,7 +18,7 @@ MyProto = objc.informal_protocol("MyProto", (
     objc.selector(None, selector="testMethod2:", signature="v@:i", isRequired=0)
 ))
 
-class TestInformalProtocols(objc.test.TestCase):
+class TestInformalProtocols(TestCase):
 
 
     def testMissingProto(self):
@@ -64,7 +64,7 @@ if sys.maxint < 2 ** 32:
 
     if OC_TestProtocol is not None:
 
-        class TestFormalOCProtocols(objc.test.TestCase):
+        class TestFormalOCProtocols(TestCase):
             
             def testImplementFormalProtocol(self):
 
@@ -108,7 +108,7 @@ if sys.maxint < 2 ** 32:
 
 
 
-    class TestFormalProtocols (objc.test.TestCase):
+    class TestFormalProtocols (TestCase):
         # Implement unittests for formal protocols here.
         #
 
@@ -244,4 +244,4 @@ if sys.maxint < 2 ** 32:
             self.assertEquals(1, 0)
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

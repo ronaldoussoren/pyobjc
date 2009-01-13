@@ -7,8 +7,9 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
-import objc.test, weakref
+import weakref
 from objc.test.fnd import NSObject
+from PyObjCTools.TestSupport import *
 
 from objc.test.specialtypecodes import *
 import array
@@ -83,7 +84,7 @@ def setupMetaData():
 
 setupMetaData()
 
-class TestTypeCode_int8 (objc.test.TestCase):
+class TestTypeCode_int8 (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
@@ -166,4 +167,4 @@ class TestTypeCode_int8 (objc.test.TestCase):
         self.assertEquals(w, (ord('h'), ord('a'), ord('n'), ord('d')))
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

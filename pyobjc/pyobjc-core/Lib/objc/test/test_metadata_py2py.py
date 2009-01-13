@@ -13,7 +13,7 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 
 from objc.test.metadata import *
 
@@ -24,7 +24,7 @@ from objc.test.test_metadata_py import Py_MetaDataTest_AllArgs
 if 0:
     from objc.test.test_metadata_py2 import Py_MetaDataTest_OutputOptional
 
-class TestArraysOut_AllArgs (objc.test.TestCase):
+class TestArraysOut_AllArgs (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -105,7 +105,7 @@ class TestArraysOut_AllArgs (objc.test.TestCase):
         self.assertEquals(list(v),  [0, 1])
 
 if 0:
-    class TestArraysOut_OutputOptional (objc.test.TestCase):
+    class TestArraysOut_OutputOptional (TestCase):
         def testFixedSize(self):
             o = Py_MetaDataTest_OutputOptional.new()
 
@@ -185,7 +185,7 @@ if 0:
             self.assertEquals(c, 2)
             self.assertEquals(list(v),  [0, 1])
 
-class TestArraysInOut_AllArgs (objc.test.TestCase):
+class TestArraysInOut_AllArgs (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -281,7 +281,7 @@ class TestArraysInOut_AllArgs (objc.test.TestCase):
         self.assertEquals(len(v), 2)
         self.assertEquals(list(v),  [45, 51])
 
-class TestArraysIn_AllArgs (objc.test.TestCase):
+class TestArraysIn_AllArgs (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -361,7 +361,7 @@ class TestArraysIn_AllArgs (objc.test.TestCase):
         self.assertEquals(len(v), 4)
         self.assertEquals(list(v), [1,2,3,4])
 
-class TestArrayReturns_AllArgs (objc.test.TestCase):
+class TestArrayReturns_AllArgs (TestCase):
     # TODO:
     # - Add null-terminated arrays of various supported types:
     #   -> integers
@@ -399,7 +399,7 @@ class TestArrayReturns_AllArgs (objc.test.TestCase):
         v = o.nullStringArray()
         self.assertEquals(v, objc.NULL)
 
-class TestByReference_AllArgs (objc.test.TestCase):
+class TestByReference_AllArgs (TestCase):
     # Pass by reference arguments. 
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
@@ -491,4 +491,4 @@ class TestByReference_AllArgs (objc.test.TestCase):
         self.assertEquals(z, 16) # , objc.NULL)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

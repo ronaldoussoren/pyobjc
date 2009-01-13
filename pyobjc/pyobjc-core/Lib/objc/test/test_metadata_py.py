@@ -10,7 +10,7 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 import objc
-import objc.test
+from PyObjCTools.TestSupport import *
 import warnings
 
 from objc.test.metadata import *
@@ -441,11 +441,11 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
         elif z is objc.NULL:
             return [x, y, z], 15, 16
 
-class TestArrayDefault (objc.test.TestCase):
+class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?
     pass
 
-class TestArraysOut (objc.test.TestCase):
+class TestArraysOut (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -518,7 +518,7 @@ class TestArraysOut (objc.test.TestCase):
         self.assertEquals(c, 2)
         self.assertEquals(list(v),  [0, 1])
 
-class TestArraysInOut (objc.test.TestCase):
+class TestArraysInOut (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -608,7 +608,7 @@ class TestArraysInOut (objc.test.TestCase):
         self.assertEquals(len(v), 2)
         self.assertEquals(list(v),  [45, 51])
 
-class TestArraysIn (objc.test.TestCase):
+class TestArraysIn (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -680,7 +680,7 @@ class TestArraysIn (objc.test.TestCase):
         self.assertEquals(len(v), 4)
         self.assertEquals(list(v), [1,2,3,4])
 
-class TestArrayReturns (objc.test.TestCase):
+class TestArrayReturns (TestCase):
     # TODO:
     # - Add null-terminated arrays of various supported types:
     #   -> integers
@@ -718,7 +718,7 @@ class TestArrayReturns (objc.test.TestCase):
         v = OC_MetaDataTest.nullStringArrayOn_(o)
         self.assertEquals(v, objc.NULL)
 
-class TestByReference (objc.test.TestCase):
+class TestByReference (TestCase):
     # Pass by reference arguments. 
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
@@ -809,4 +809,4 @@ class TestByReference (objc.test.TestCase):
         self.assertEquals(z, objc.NULL)
 
 if __name__ == "__main__":
-    objc.test.main()
+    main()

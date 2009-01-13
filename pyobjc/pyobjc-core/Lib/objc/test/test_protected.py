@@ -1,7 +1,7 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 from objc.test.protected import *
 
-class TestProtected (objc.test.TestCase):
+class TestProtected (TestCase):
     def testProtectedNotInDir(self):
 
         d = dir(PyObjCTest_Protected)

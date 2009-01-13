@@ -1,8 +1,8 @@
-import objc.test
+from PyObjCTools.TestSupport import *
 
 import objc
 
-class TestAllocateBuffer(objc.test.TestCase):
+class TestAllocateBuffer(TestCase):
     def testBadLengths(self):
         self.assertRaises(ValueError, objc.allocateBuffer, 0)
         self.assertRaises(ValueError, objc.allocateBuffer, -1000)
@@ -23,5 +23,5 @@ class TestAllocateBuffer(objc.test.TestCase):
                 raise
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()
     objc.recycleAutoreleasePool()
