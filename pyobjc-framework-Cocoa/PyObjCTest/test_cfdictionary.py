@@ -1,8 +1,8 @@
 from CoreFoundation import *
 from Foundation import NSDictionary, NSMutableDictionary
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestCFDictionary (unittest.TestCase):
+class TestCFDictionary (TestCase):
 
     def testCreation(self):
         dictionary = CFDictionaryCreate(None,
@@ -124,4 +124,4 @@ class TestCFDictionary (unittest.TestCase):
         self.failUnless(CFDictionaryGetCount(dct) == 0)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

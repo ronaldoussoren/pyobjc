@@ -1,11 +1,11 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import types
 import warnings
 
 from Foundation import *
 
-class TestNSString(unittest.TestCase):
+class TestNSString(TestCase):
     def testClassTree(self):
         self.assert_(issubclass(objc.pyobjc_unicode, unicode))
 
@@ -57,7 +57,7 @@ class TestNSString(unittest.TestCase):
         self.assertEquals(l.length, 0)
 
 
-class TestNSStringBridging(unittest.TestCase):
+class TestNSStringBridging(TestCase):
     def setUp(self):
         self.nsUniString = NSString.stringWithString_(u"unifoo")
         self.pyUniString = u"unifoo"
@@ -110,7 +110,7 @@ class TestNSStringBridging(unittest.TestCase):
         v = self.nsUniString.stringByAppendingString_
         self.assert_(isinstance(v, objc.selector))
 
-class TestMutable(unittest.TestCase):
+class TestMutable(TestCase):
     def testSync(self):
         """
         Test that python and ObjC string representation are not
@@ -123,7 +123,7 @@ class TestMutable(unittest.TestCase):
         ocStr.appendString_(u" world")
         self.assertEquals(pyStr, u"hello")
 
-class TestPickle(unittest.TestCase):
+class TestPickle(TestCase):
     """
     Testcases for pickling of Objective-C strings. Those are pickled as
     unicode strings.
@@ -195,4 +195,4 @@ class TestPickle(unittest.TestCase):
         self.assertEquals(v.nsstring(), "hello bar baz")
 
 if __name__ == '__main__':
-    unittest.main()
+    main()

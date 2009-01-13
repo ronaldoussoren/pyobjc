@@ -1,8 +1,8 @@
 from CoreFoundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
 
-class TestCFBundle (unittest.TestCase):
+class TestCFBundle (TestCase):
 
     def testMainBundle(self):
         bundle = CFBundleGetMainBundle()
@@ -269,4 +269,4 @@ class TestCFBundle (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

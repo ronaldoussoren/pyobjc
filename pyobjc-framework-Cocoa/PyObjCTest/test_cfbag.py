@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
-class TestCFBag (unittest.TestCase):
+class TestCFBag (TestCase):
 
     def testCreation(self):
         bag = CFBagCreate(None, [1,1,2,3,4], 5)
@@ -112,4 +112,4 @@ class TestCFBag (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

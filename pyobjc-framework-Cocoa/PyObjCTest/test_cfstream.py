@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import errno, time, os, socket
 
 
-class TestStream (unittest.TestCase):
+class TestStream (TestCase):
     def testConstants(self):
         self.failUnless(kCFStreamStatusNotOpen == 0)
         self.failUnless(kCFStreamStatusOpening == 1)
@@ -376,4 +376,4 @@ class TestStream (unittest.TestCase):
         self.assertEquals(state[0][1], kCFStreamEventCanAcceptBytes)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

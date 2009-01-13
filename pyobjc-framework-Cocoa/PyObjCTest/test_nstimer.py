@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import gc
 
 from objc import *
@@ -12,7 +12,7 @@ class PythonClass (object):
         self.fireCount += 1
 
 
-class TestNSTimer(unittest.TestCase):
+class TestNSTimer(TestCase):
 
     def _testHelp(self):
         obj = PythonClass()
@@ -48,4 +48,4 @@ class TestNSTimer(unittest.TestCase):
         self.assertEquals(after, before)
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

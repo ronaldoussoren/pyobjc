@@ -1,9 +1,10 @@
-import unittest, array
+from PyObjCTools.TestSupport import *
+import array
 from CoreFoundation import *
 import CoreFoundation
 
 
-class TestString (unittest.TestCase):
+class TestString (TestCase):
     def testTypeID(self):
         v = CFStringGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -459,7 +460,7 @@ class TestString (unittest.TestCase):
 
 
 
-class TestStringEncodingExt (unittest.TestCase):
+class TestStringEncodingExt (TestCase):
     def testConstants(self):
         self.failUnless( kCFStringEncodingMacJapanese == 1 )
         self.failUnless( kCFStringEncodingMacChineseTrad == 2 )
@@ -590,4 +591,4 @@ class TestStringEncodingExt (unittest.TestCase):
         self.failUnless( kCFStringEncodingShiftJIS_X0213_00 == 0x0628 )
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

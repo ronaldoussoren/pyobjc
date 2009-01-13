@@ -1,8 +1,9 @@
-import unittest, os
+from PyObjCTools.TestSupport import *
+import os
 from CoreFoundation import *
 
 
-class TestPreferences (unittest.TestCase):
+class TestPreferences (TestCase):
     def testGetting(self):
         v = CFPreferencesCopyAppValue("WindowCloseAction", "com.apple.Terminal")
         self.failUnless(isinstance(v, unicode))
@@ -94,4 +95,4 @@ class TestPreferences (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

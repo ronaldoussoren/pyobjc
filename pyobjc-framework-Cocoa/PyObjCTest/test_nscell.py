@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from AppKit import NSCell
 
-class TestNSCell(unittest.TestCase):
+class TestNSCell(TestCase):
     def testUnicode(self):
         u = u'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'
         cell = NSCell.alloc().initTextCell_(u)
@@ -23,4 +23,4 @@ class TestNSCell(unittest.TestCase):
         self.assertEquals(cell.floatValue(), f)
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

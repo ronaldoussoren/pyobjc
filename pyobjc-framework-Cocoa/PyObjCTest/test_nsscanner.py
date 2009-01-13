@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 
-class TestNSScannerUsage(unittest.TestCase):
+class TestNSScannerUsage(TestCase):
 
     # Python 2.2 doesn't have this one:
     def assertAlmostEquals(self, val1, val2, message=None):
@@ -49,4 +49,4 @@ class TestNSScannerUsage(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

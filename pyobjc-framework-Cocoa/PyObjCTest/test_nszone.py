@@ -1,11 +1,12 @@
-import unittest, objc
+from PyObjCTools.TestSupport import *
+import objc
 from Foundation import *
 
 # HACK
 import Foundation
 NSZonePtr = getattr(Foundation, 'NSZone*')
 
-class TestNSZone (unittest.TestCase):
+class TestNSZone (TestCase):
     def testWithZones(self):
         obj = NSObject.allocWithZone_(None).init()
         zone = obj.zone()
@@ -75,4 +76,4 @@ class TestNSZone (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

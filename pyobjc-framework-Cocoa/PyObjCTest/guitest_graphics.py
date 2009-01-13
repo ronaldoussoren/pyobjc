@@ -3,7 +3,7 @@ Some tests for difficult wrapped graphics functions and methods
 
 NOTE: These require a WindowServer connection on MacOS X
 """
-import unittest
+from PyObjCTools.TestSupport import *
 from AppKit import *
 from Foundation import *
 import array
@@ -44,7 +44,7 @@ class SimpleImage:
         pixel = self.data[offset:offset + self.pixbytes]
         return pixel
 
-class RectTest (unittest.TestCase):
+class RectTest (TestCase):
     def setUp(self):
 
         # Force NSApp initialisation, needed for some of the tests
@@ -129,4 +129,4 @@ class RectTest (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

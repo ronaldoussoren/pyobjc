@@ -1,5 +1,5 @@
 import sys
-import objc.test
+from PyObjCTools.TestSupport import *
 
 import objc
 import struct
@@ -15,7 +15,7 @@ class OC_TestConveniences(NSObject):
     def hash(self):
         return self.hashValue
 
-class TestConveniences(objc.test.TestCase):
+class TestConveniences(TestCase):
 
     def testHash(self):
         for hashValue in (0, sys.maxint, sys.maxint + 1L, 0xFFFFFFFFL):
@@ -28,4 +28,4 @@ class TestConveniences(objc.test.TestCase):
             self.assertEquals(hash(o), expect, 'o.hash() == 0x%X | %r != %r' % (o.hash(), hash(o), expect))
 
 if __name__ == '__main__':
-    objc.test.main()
+    main()

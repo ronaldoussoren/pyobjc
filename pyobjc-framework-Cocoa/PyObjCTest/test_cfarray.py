@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import NSArray, NSMutableArray
 
-class TestCFArray (unittest.TestCase):
+class TestCFArray (TestCase):
     def testCFArrayIsNSArray(self):
         self.assert_(issubclass(CFArrayRef, NSArray))
         self.assert_(issubclass(CFMutableArrayRef, NSMutableArray))
@@ -162,4 +162,4 @@ class TestCFArray (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

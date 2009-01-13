@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import AppKit
 
-class TestNSBitmapImageRep (unittest.TestCase):
+class TestNSBitmapImageRep (TestCase):
 
     def test_getTIFFCompressionTypes(self):
         r = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_()
@@ -18,4 +18,4 @@ class TestNSBitmapImageRep (unittest.TestCase):
         self.assert_(reduce(lambda x, y: x and isinstance(x, int), lst, True))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

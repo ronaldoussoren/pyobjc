@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import AppKit
 import objc
 
-class ContantTest (unittest.TestCase):
+class ContantTest (TestCase):
 
     def testNSFloatingWindowLevel(self):
         # NSFloatingWindowLevel is a define in Objective-C, up-to 1.0rc1
@@ -22,4 +22,4 @@ class ContantTest (unittest.TestCase):
         self.assert_(isinstance(AppKit.NSUpArrowFunctionKey, unicode))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

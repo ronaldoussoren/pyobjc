@@ -1,8 +1,9 @@
-import unittest, sys
+from PyObjCTools.TestSupport import *
+import sys
 from CoreFoundation import *
 
 
-class TestByteOrder (unittest.TestCase):
+class TestByteOrder (TestCase):
 
     def testConstants(self):
         self.failUnless(CFByteOrderUnknown == 0)
@@ -99,4 +100,4 @@ class TestByteOrder (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

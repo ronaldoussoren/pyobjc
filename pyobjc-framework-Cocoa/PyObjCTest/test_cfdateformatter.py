@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestDateFormatter (unittest.TestCase):
+class TestDateFormatter (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFDateGetTypeID(), (int, long)))
 
@@ -97,4 +97,4 @@ class TestDateFormatter (unittest.TestCase):
         
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

@@ -1,6 +1,4 @@
-# TODO: Tests for calling
-#   initWithObjects:forKeys:count and dictionaryWithObjects:forKeys:count
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import types
 import sys
@@ -10,7 +8,7 @@ from objc.test.testbndl import PyObjC_TestClass3
 from Foundation import *
 
 
-class TestNSDictionarySubclassing(unittest.TestCase):
+class TestNSDictionarySubclassing(TestCase):
     # These tests seem to be specific for MacOSX
     def testExceptionInInit(self):
         if objc.platform != 'MACOSX': return
@@ -69,7 +67,7 @@ class TestNSDictionarySubclassing(unittest.TestCase):
             pass
 
 
-class TestNSDictionaryInteraction(unittest.TestCase):
+class TestNSDictionaryInteraction(TestCase):
     def testMethods(self):
         for nm in dir(types.DictType):
             if nm.startswith('__'):
@@ -209,7 +207,7 @@ class MyDictionary2 (MyDictionaryBase):
         if not self is MyDictionary2: raise AssertionError, self
         return (objects, keys, count)
 
-class TestSubclassing (unittest.TestCase):
+class TestSubclassing (TestCase):
     def testInitWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
 
@@ -226,7 +224,7 @@ class TestSubclassing (unittest.TestCase):
         self.assertEquals(len(o[1]), 4)
         self.assertEquals(len(o[0]), 4)
 
-class TestVariadic (unittest.TestCase):
+class TestVariadic (TestCase):
     def testDictionaryWithObjectsAndKeys(self):
         o = NSDictionary.dictionaryWithObjectsAndKeys_(
                 42, 'a',
@@ -253,5 +251,9 @@ class TestVariadic (unittest.TestCase):
         self.assertEquals(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSMutableDictionary))
 
+    def testGetObjectsAndKeys(self):
+        self.fail("getObjects:andKeys:")
+
+
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

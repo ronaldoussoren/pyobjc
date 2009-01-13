@@ -1,11 +1,11 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 from objc.test.testbndl import PyObjC_TestClass4
 
-class TestNSCoderUsage(unittest.TestCase):
-    if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+class TestNSCoderUsage(TestCase):
+    if not hasattr(TestCase, 'assertAlmostEquals'):
         # XXX Move to a PyObjC unittest module?
         def assertAlmostEquals(self, val1, val2):
             self.assert_ (abs(val1 - val2) <  0.000001)
@@ -79,7 +79,7 @@ class MyCoder (NSCoder):
     def decodeBytesWithReturnedLength_(self):
         return ("ABCDEabcde", 10)
 
-class TestPythonCoder(unittest.TestCase):
+class TestPythonCoder(TestCase):
     #
     # This test accesses a NSCoder implemented in Python from Objective-C
     #
@@ -111,4 +111,4 @@ class TestPythonCoder(unittest.TestCase):
         self.assertEquals(tuple(range(10)), tuple(d))
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

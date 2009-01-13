@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestCharacterSet (unittest.TestCase):
+class TestCharacterSet (TestCase):
     def testTypeId(self):
         v = CFCharacterSetGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -116,4 +116,4 @@ class TestCharacterSet (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

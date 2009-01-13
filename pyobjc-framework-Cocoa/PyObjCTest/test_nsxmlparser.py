@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestNSXMLParser (unittest.TestCase):
+class TestNSXMLParser (TestCase):
     def testConstants(self):
         self.assertEquals(NSXMLParserInternalError, 1)
         self.assertEquals(NSXMLParserOutOfMemoryError, 2)
@@ -99,4 +99,4 @@ class TestNSXMLParser (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

@@ -1,14 +1,14 @@
 # Test special methods of NSBezierPath
 # TODO: Test implementing these in python.
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from AppKit import NSBezierPath,  NSMoveToBezierPathElement
 from AppKit import NSLineToBezierPathElement, NSCurveToBezierPathElement
 from AppKit import NSClosePathBezierPathElement
 
-class TestNSBezierPath(unittest.TestCase):
-    if not hasattr(unittest.TestCase, 'assertAlmostEquals'):
+class TestNSBezierPath(TestCase):
+    if not hasattr(TestCase, 'assertAlmostEquals'):
         def assertAlmostEquals(self, val1, val2):
             self.assert_(abs(val1 - val2) < 0.000001)
 
@@ -116,4 +116,4 @@ class TestNSBezierPath(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestPropertyList (unittest.TestCase):
+class TestPropertyList (TestCase):
     def testFunctions(self):
         dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
         self.failUnless(isinstance(dta, CFDataRef))
@@ -73,4 +73,4 @@ class TestPropertyList (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

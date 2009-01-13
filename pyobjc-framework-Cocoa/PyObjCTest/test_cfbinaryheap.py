@@ -1,8 +1,8 @@
 from CoreFoundation import *
 
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestCFBinaryHeap (unittest.TestCase):
+class TestCFBinaryHeap (TestCase):
 
     def testCreation(self):
         heap = CFBinaryHeapCreate(
@@ -102,4 +102,4 @@ class TestCFBinaryHeap (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

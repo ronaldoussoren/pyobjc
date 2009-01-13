@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestXMLDTD (unittest.TestCase):
+class TestXMLDTD (TestCase):
 
     def testOutputArgs(self):
         n =  NSXMLDTD.alloc().init()
@@ -15,4 +15,4 @@ class TestXMLDTD (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

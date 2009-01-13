@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 
-class TestNSSetInteraction(unittest.TestCase):
+class TestNSSetInteraction(TestCase):
     def __testRepeatedAllocInit( self ):
         for i in range(1,1000):
             a = NSSet.alloc().init()
@@ -56,7 +56,7 @@ class TestNSSetInteraction(unittest.TestCase):
         self.assert_(2 in y)
         self.assert_(3 in z)
 
-class TestVariadic (unittest.TestCase):
+class TestVariadic (TestCase):
     def testSetWithObjects(self):
         o = NSSet.setWithObjects_()
         self.assertEquals(len(o), 0)
@@ -152,4 +152,4 @@ class TestVariadic (unittest.TestCase):
         self.assert_(isinstance(o, NSMutableSet))
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

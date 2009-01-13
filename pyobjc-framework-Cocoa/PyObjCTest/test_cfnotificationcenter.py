@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestNotificationCenter (unittest.TestCase):
+class TestNotificationCenter (TestCase):
 
     def testTypeID(self):
         self.failUnless(isinstance(CFNotificationCenterGetTypeID(), (int, long)))
@@ -69,4 +69,4 @@ class TestNotificationCenter (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

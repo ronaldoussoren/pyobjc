@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import NSString
 
 
-class TestError (unittest.TestCase):
+class TestError (TestCase):
 
     def testTypeID(self):
         self.failUnless(isinstance(CFErrorGetTypeID(), (int, long)))
@@ -68,4 +68,4 @@ class TestError (unittest.TestCase):
         self.failUnless(isinstance(kCFErrorUnderlyingErrorKey, unicode))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

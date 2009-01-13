@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
-class TestUserNotification (unittest.TestCase):
+class TestUserNotification (TestCase):
     def testTypeID(self):
         id = CFUserNotificationGetTypeID()
         self.failUnless( isinstance(id, (int, long)) )
@@ -108,4 +108,4 @@ class TestUserNotification (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

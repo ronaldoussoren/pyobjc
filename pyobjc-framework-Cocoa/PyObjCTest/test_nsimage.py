@@ -1,7 +1,7 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import AppKit
 
-class TestNSImage (unittest.TestCase):
+class TestNSImage (TestCase):
     def test_compositePoint(self):
         # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
         ws = AppKit.NSWorkspace.sharedWorkspace()
@@ -17,4 +17,4 @@ class TestNSImage (unittest.TestCase):
         comboIcon.unlockFocus()
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

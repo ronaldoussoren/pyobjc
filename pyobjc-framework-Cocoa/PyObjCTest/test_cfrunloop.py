@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestRunLoop (unittest.TestCase):
+class TestRunLoop (TestCase):
 
     def testConstants(self):
         self.failUnless(kCFRunLoopRunFinished == 1)
@@ -232,4 +232,4 @@ class TestRunLoop (unittest.TestCase):
         self.failUnless(state[0][3] == kCFRunLoopDefaultMode)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

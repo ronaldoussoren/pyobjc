@@ -2,11 +2,11 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import Foundation
 import os
 
-class TestFoundation (unittest.TestCase):
+class TestFoundation (TestCase):
     def testClasses(self):
         pass
         # self.assert_( hasattr(Foundation, 'CLASSNAME') )
@@ -106,5 +106,5 @@ class TestFoundation (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 

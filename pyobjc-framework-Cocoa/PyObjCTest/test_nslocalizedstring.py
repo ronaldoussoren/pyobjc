@@ -1,10 +1,10 @@
 # Place holder for real tests.
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import NSLocalizedString
 
-class TestNSLocalizedString(unittest.TestCase):
+class TestNSLocalizedString(TestCase):
     def testBasic(self):
         # This is mostly a regression tests, the function used to crash on
         # this...
@@ -18,4 +18,4 @@ class TestNSLocalizedString(unittest.TestCase):
         #self.assertEquals (s.nsstring().description(), u"hello world")
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import re
 from CoreFoundation import *
 
 
-class TestCFUUIDAPI (unittest.TestCase):
+class TestCFUUIDAPI (TestCase):
     def testTypeID(self):
         v = CFUUIDGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -119,4 +119,4 @@ class TestCFUUIDAPI (unittest.TestCase):
         self.failUnless( hasattr(o, 'byte15') )
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

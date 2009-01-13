@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 import os
 
@@ -6,7 +6,7 @@ from objc import YES, NO
 from AppKit import NSWorkspace
 
 
-class TestNSWorkspace(unittest.TestCase):
+class TestNSWorkspace(TestCase):
     def testInfoForFile(self):
         ws = NSWorkspace.sharedWorkspace()
 
@@ -84,4 +84,4 @@ class TestNSWorkspace(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

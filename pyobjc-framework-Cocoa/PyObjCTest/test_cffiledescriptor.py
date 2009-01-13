@@ -2,11 +2,11 @@
 FIXME: None of these tests actually use the filedescriptor
 """
 
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestFileDescriptor (unittest.TestCase):
+class TestFileDescriptor (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFFileDescriptorGetTypeID(), (int, long)))
 
@@ -41,4 +41,4 @@ class TestFileDescriptor (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

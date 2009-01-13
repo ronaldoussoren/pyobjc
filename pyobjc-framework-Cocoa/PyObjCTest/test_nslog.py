@@ -1,8 +1,9 @@
-import unittest, os
+from PyObjCTools.TestSupport import *
+import os
 from Foundation import *
 import Foundation
 
-class TestNSLog (unittest.TestCase):
+class TestNSLog (TestCase):
     def _redirect(self):
         fd = os.open('pyobjc-test-nslog.txt', os.O_RDWR|os.O_CREAT, 0666)
         self.real_stderr = os.dup(2)
@@ -45,9 +46,9 @@ class TestNSLog (unittest.TestCase):
         finally:
             data = self._cleanup().rstrip()
 
-class TestNSLogv (unittest.TestCase):
+class TestNSLogv (TestCase):
     def testNotSuchThing(self):
         self.assert_(not hasattr(Foundation, 'NSLogv'))
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

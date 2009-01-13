@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestXMLDTDNode (unittest.TestCase):
+class TestXMLDTDNode (TestCase):
     def testConstants(self):
         self.assertEquals(NSXMLEntityGeneralKind, 1)
         self.assertEquals(NSXMLEntityParsedKind, 2)
@@ -25,4 +25,4 @@ class TestXMLDTDNode (unittest.TestCase):
         self.assertEquals(NSXMLElementDeclarationElementKind, 20)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

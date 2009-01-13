@@ -1,11 +1,11 @@
 """
 FIXME: None of these tests actually use the MachPort
 """
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestMachPort (unittest.TestCase):
+class TestMachPort (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFMachPortGetTypeID(), (int, long)))
 
@@ -53,4 +53,4 @@ class TestMachPort (unittest.TestCase):
         self.failUnless(didInvalidate)
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

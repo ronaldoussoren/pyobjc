@@ -1,7 +1,7 @@
 from Foundation import *
-import unittest
+from PyObjCTools.TestSupport import *
 
-class TestAE (unittest.TestCase):
+class TestAE (TestCase):
     def testConstants(self):
         self.failUnless(isinstance(NSAppleScriptErrorMessage, unicode))
         self.failUnless(isinstance(NSAppleScriptErrorNumber, unicode))
@@ -10,11 +10,26 @@ class TestAE (unittest.TestCase):
         self.failUnless(isinstance(NSAppleScriptErrorRange, unicode))
 
     def testOutput(self):
-        self.fail('- (BOOL)compileAndReturnError:(NSDictionary **)errorInfo;')
-        self.fail('- (NSAppleEventDescriptor *)executeAndReturnError:(NSDictionary **)errorInfo;')
-        self.fail('- (NSAppleEventDescriptor *)executeAppleEvent:(NSAppleEventDescriptor *)event error:(NSDictionary **)errorInfo;')
-        self.fail('- (id)initWithContentsOfURL:(NSURL *)url error:(NSDictionary **)errorInfo;')
+        obj = NSAppleScript.alloc().initWithSource_(
+                'tell application Terminal to do Xscript "ls -l"')
+        ok, error = obj.compileAndReturnError_(None)
+        self.failUnless(ok is False)
+        self.failUnless(isinstance(error, NSDictionary))
+
+        obj = NSAppleScript.alloc().initWithSource_(
+                'tell application "Terminal" to do script "ls -l"')
+        m = obj.compileAndReturnError_.__metadata__()
+        self.failUnless(m['arguments'][2]['type'].startswith('o^'))
+
+        m = obj.executeAndReturnError_.__metadata__()
+        self.failUnless(m['arguments'][2]['type'].startswith('o^'))
+
+        m = obj.executeAppleEvent_error_.__metadata__()
+        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
+
+        m = obj.initWithContentsOfURL_error_.__metadata__()
+        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

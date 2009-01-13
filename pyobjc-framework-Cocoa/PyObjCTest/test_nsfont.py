@@ -1,4 +1,4 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 import AppKit
@@ -6,7 +6,7 @@ import AppKit
 import os
 ON_JAGUAR=((os.uname()[0] == 'Darwin') and (int(os.uname()[2][0]) <= '6'))
 
-class TestNSFont(unittest.TestCase):
+class TestNSFont(TestCase):
     def matrixEquals(self, value1, value2):
         self.assertEquals(len(value1), len(value2))
         for v1, v2 in zip(value1, value2):
@@ -63,4 +63,4 @@ class TestNSFont(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main( )
+    main( )

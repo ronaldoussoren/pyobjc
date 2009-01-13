@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestXMLNode (unittest.TestCase):
+class TestXMLNode (TestCase):
     # NOTE: This doesn't actually test the API
 
 
@@ -77,4 +77,4 @@ class TestXMLNode (unittest.TestCase):
         self.failUnless( hasattr(o, 'entityType') )
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

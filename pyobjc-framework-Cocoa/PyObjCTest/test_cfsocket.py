@@ -1,10 +1,10 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import socket, time, struct
 from CoreFoundation import *
 import CoreFoundation
 
 
-class TestSocket (unittest.TestCase):
+class TestSocket (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFSocketGetTypeID(), (int, long)))
 
@@ -170,4 +170,4 @@ class TestSocket (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

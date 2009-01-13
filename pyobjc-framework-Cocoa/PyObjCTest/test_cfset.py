@@ -1,8 +1,8 @@
-import unittest
+from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestSet (unittest.TestCase):
+class TestSet (TestCase):
     def testTypeID(self):
         self.failUnless(isinstance(CFSetGetTypeID(), (int, long)))
 
@@ -91,4 +91,4 @@ class TestSet (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()

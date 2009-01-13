@@ -1,9 +1,9 @@
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
 
-class TestNSArrayInteraction(unittest.TestCase):
+class TestNSArrayInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
             a = NSArray.alloc().init()
@@ -179,7 +179,7 @@ class TestNSArrayInteraction(unittest.TestCase):
         self.assert_(y[2] == 3)
         self.assert_(z[3] == 4)
 
-class TestNSArraySpecialMethods(unittest.TestCase):
+class TestNSArraySpecialMethods(TestCase):
     """
     Test calling 'difficult' methods from Python
     """
@@ -238,7 +238,7 @@ class TestNSArraySpecialMethods(unittest.TestCase):
         self.assertEquals(a, (u'a', u'b', u'c'))
         self.assertEquals(b, (u'c', u'b', u'a'))
 
-class TestNSMutableArrayInteraction(unittest.TestCase):
+class TestNSMutableArrayInteraction(TestCase):
 
     def testRemoveObjects(self):
         a = NSMutableArray.arrayWithArray_(range(10))
@@ -393,7 +393,7 @@ class TestNSMutableArrayInteraction(unittest.TestCase):
 
         # FIXME: test the entire interface of list.insert
 
-class TestVariadic (unittest.TestCase):
+class TestVariadic (TestCase):
     def testArrayWithObjects(self):
         a = NSArray.arrayWithObjects_(u"foo", u"bar", None)
         self.assertEquals(a, (u"foo", u"bar"))
@@ -413,4 +413,4 @@ class TestVariadic (unittest.TestCase):
         self.assert_(isinstance(a, NSMutableArray))
 
 if __name__ == '__main__':
-    unittest.main()
+    main()
