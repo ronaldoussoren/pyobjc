@@ -1,12 +1,20 @@
 <?xml version='1.0'?>
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/CoreServices.framework/CoreServices' />
   <class name='CBIdentity'>
     <method selector='CSIdentity'>
       <retval type='^{__CSIdentity=}' />
     </method>
     <method class_method='true' selector='identityWithCSIdentity:'>
       <arg index='0' type='^{__CSIdentity=}' />
+    </method>
+    <method selector='isHidden'>
+      <retval type='B' />
+    </method>
+    <method selector='isMemberOfGroup:'>
+      <retval type='B' />
     </method>
   </class>
   <class name='CBIdentityAuthority'>
@@ -18,18 +26,26 @@
     </method>
   </class>
   <class name='CBIdentityPicker'>
+    <method selector='allowsMultipleSelection'>
+      <retval type='B' />
+    </method>
     <method selector='runModalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' sel_of_type='v@:@i^v' sel_of_type64='v@:@l^v' type=':' />
+      <arg index='2' sel_of_type='v@:@i^v' />
       <arg index='3' type='^v' />
     </method>
-  <method selector='runModalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' sel_of_type='v@:@i^v' sel_of_type64='v@:@l^v' type=':' />
-      <arg index='3' type='^v' />
+    <method selector='setAllowsMultipleSelection:'>
+      <arg index='0' type='B' />
     </method>
   </class>
   <class name='CBUserIdentity'>
+    <method selector='authenticateWithPassword:'>
+      <retval type='B' />
+    </method>
     <method selector='certificate'>
       <retval type='^{OpaqueSecCertificateRef=}' />
+    </method>
+    <method selector='isEnabled'>
+      <retval type='B' />
     </method>
   </class>
 </signatures>

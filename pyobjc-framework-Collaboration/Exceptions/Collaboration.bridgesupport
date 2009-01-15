@@ -82,4 +82,31 @@
       <retval type='^{OpaqueSecCertificateRef=}' />
     </method>
   </class>
+  <class name='CBIdentity'>
+    <method selector='CSIdentity'>
+      <retval type='^{__CSIdentity=}' />
+    </method>
+    <method class_method='true' selector='identityWithCSIdentity:'>
+      <arg index='0' type='^{__CSIdentity=}' />
+    </method>
+  </class>
+  <class name='CBIdentityAuthority'>
+    <method selector='CSIdentityAuthority'>
+      <retval type='^{__CSIdentityAuthority=}' />
+    </method>
+    <method class_method='true' selector='identityAuthorityWithCSIdentityAuthority:'>
+      <arg index='0' type='^{__CSIdentityAuthority=}' />
+    </method>
+  </class>
+  <class name='CBIdentityPicker'>
+    <method selector='runModalForWindow:modalDelegate:didEndSelector:contextInfo:'>
+      <arg index='2' sel_of_type='v@:@i^v' />
+      <arg comment='context' index='3' type='^v' />
+    </method>
+  </class>
+  <class name='CBUserIdentity'>
+    <method selector='certificate'>
+      <retval type='^{OpaqueSecCertificateRef=}' />
+    </method>
+  </class>
 </signatures>
