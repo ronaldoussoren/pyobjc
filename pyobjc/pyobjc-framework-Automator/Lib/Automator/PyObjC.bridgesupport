@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <enum name='AMActionApplicationResourceError' value='-206' />
+  <enum name='AMActionApplicationVersionResourceError' value='-207' />
+  <enum name='AMActionArchitectureMismatchError' value='-202' />
+  <enum name='AMActionExceptionError' value='-213' />
+  <enum name='AMActionExecutionError' value='-212' />
+  <enum name='AMActionFileResourceError' value='-208' />
+  <enum name='AMActionInitializationError' value='-211' />
+  <enum name='AMActionInsufficientDataError' value='-215' />
+  <enum name='AMActionIsDeprecatedError' value='-216' />
+  <enum name='AMActionLicenseResourceError' value='-209' />
+  <enum name='AMActionLinkError' value='-205' />
+  <enum name='AMActionLoadError' value='-204' />
+  <enum name='AMActionNotLoadableError' value='-201' />
+  <enum name='AMActionPropertyListInvalidError' value='-214' />
+  <enum name='AMActionRequiredActionResourceError' value='-210' />
+  <enum name='AMActionRuntimeMismatchError' value='-203' />
+  <enum name='AMConversionFailedError' value='-302' />
+  <enum name='AMConversionNoDataError' value='-301' />
+  <enum name='AMConversionNotPossibleError' value='-300' />
+  <enum name='AMNoSuchActionError' value='-200' />
+  <enum name='AMUserCanceledError' value='-128' />
+  <enum name='AMWorkflowNewerActionVersionError' value='-111' />
+  <enum name='AMWorkflowNewerVersionError' value='-100' />
+  <enum name='AMWorkflowOlderActionVersionError' value='-112' />
+  <enum name='AMWorkflowPropertyListInvalidError' value='-101' />
+  <string_constant name='AMActionErrorKey' nsstring='true' value='AMActionErrorKey' />
+  <string_constant name='AMAutomatorErrorDomain' nsstring='true' value='com.apple.Automator' />
+  <informal_protocol name='AMWorkflowControllerDelegate'>
+    <method selector='workflowController:didError:' type='v@:@@' />
+    <method selector='workflowController:didRunAction:' type='v@:@@' />
+    <method selector='workflowController:willRunAction:' type='v@:@@' />
+    <method selector='workflowControllerDidRun:' type='v@:@' />
+    <method selector='workflowControllerDidStop:' type='v@:@' />
+    <method selector='workflowControllerWillRun:' type='v@:@' />
+    <method selector='workflowControllerWillStop:' type='v@:@' />
+  </informal_protocol>
+  <class name='AMAction'>
+    <method selector='ignoresInput'>
+      <retval type='B' />
+    </method>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='initWithDefinition:fromArchive:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='runWithInput:fromAction:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMBundleAction'>
+    <method selector='hasView'>
+      <retval type='B' />
+    </method>
+    <method selector='initWithDefinition:fromArchive:'>
+      <arg index='1' type='B' />
+    </method>
+  </class>
+  <class name='AMShellScriptAction'>
+    <method selector='remapLineEndings'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='AMWorkflow'>
+    <method selector='initWithContentsOfURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='runWorkflowAtURL:withInput:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='setValue:forVariableWithName:'>
+      <retval type='B' />
+    </method>
+    <method selector='writeToURL:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+  <class name='AMWorkflowController'>
+    <method selector='canRun'>
+      <retval type='B' />
+    </method>
+    <method selector='isRunning'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='AMWorkflowView'>
+    <method selector='isEditable'>
+      <retval type='B' />
+    </method>
+    <method selector='setEditable:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+</signatures>
+
