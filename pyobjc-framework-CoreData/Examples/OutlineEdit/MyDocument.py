@@ -1,13 +1,12 @@
-from PyObjCTools import NibClassBuilder
 from CoreData import *
 from AppKit import *
-
-NibClassBuilder.extractClasses("MyDocument")
 
 prioritySortDescriptions = NSArray.arrayWithObject_(
         NSSortDescriptor.alloc().initWithKey_ascending_("value", True))
 
-class MyDocument (NibClassBuilder.AutoBaseClass):
+class MyDocument (NSPersistentDocument):
+    outlineTreeController = objc.IBOutlet()
+
     def initWithType_error_(self, tp, error):
         self, error = super(MyDocument, self).initWithType_error_(tp, error)
         if self is None:
