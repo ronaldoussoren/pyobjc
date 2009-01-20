@@ -19,7 +19,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-AddressBook',
-    version="2.0",
+    version="2.2b1",
     description = "Wrappers for the framework AddressBook on Mac OS X",
     long_description = __doc__,
     author = 'Ronald Oussoren',
@@ -28,11 +28,6 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "AddressBook" ],
     package_dir = { '': 'Lib' },
-    ext_modules = [
-        Extension('AddressBook._callback',
-                [ 'Modules/_callback.m' ],
-                extra_link_args=['-framework', 'AddressBook']),
-    ],
     setup_requires = [ 
     ],
     install_requires = [ 

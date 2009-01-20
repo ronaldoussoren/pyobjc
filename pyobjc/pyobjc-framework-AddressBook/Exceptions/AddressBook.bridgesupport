@@ -41,7 +41,7 @@
     <arg index='0' type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCopyRecordForUniqueId'>
-    <retval type='@' type64='@' />
+    <retval type='@' type64='@' already_cfretained='true' />
     <arg index='1' type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCopyRecordTypeFromUniqueId'>
@@ -220,7 +220,7 @@
     <arg index='1' type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABRecordCreateCopy'>
-    <retval comment='CFTypeRef' type='@' type64='@' />
+    <retval comment='CFTypeRef' type='@' type64='@' already_cfretained='true' />
     <arg comment='CFTypeRef' index='0' type='@' />
   </function>
   <function name='ABRecordIsReadOnly'>
@@ -252,6 +252,19 @@
     <arg index='1' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg index='2' type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
+  <class name='ABAddressBook'>
+    <method selector='saveAndReturnError:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ABPeoplePickerView'>
+    <method selector='setGroupDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+    <method selector='setNameDoubleAction:'>
+      <arg index='0' sel_of_type='v@:@' />
+    </method>
+  </class>
   <class name='ABAddressBook'>
     <method selector='saveAndReturnError:'>
       <arg index='0' null_accepted='true' type_modifier='o' />

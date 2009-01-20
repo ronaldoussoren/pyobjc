@@ -174,63 +174,69 @@
   <function name='ABAddPropertiesAndTypes'>
     <retval type='l' type64='q' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFDictionary=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='ABAddRecord'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABAddressBookRef=}' />
     <arg type='@' type64='@' />
   </function>
-  <function comment='manually wrapped' name='ABBeginLoadingImageDataForClient'>
+  <function name='ABBeginLoadingImageDataForClient'>
     <retval type='l' type64='q' />
     <arg type='^{__ABPerson=}' />
-    <arg function_pointer='true' type='^?' type64='^?' />
+    <arg function_pointer='true' type='^?' type64='^?' >
+	    <retval type='^v'/>
+	    <arg type='@' />
+	    <arg type='l' type64='l'/>
+	    <arg type='^v' />
+    </arg>
+
     <arg type='^v' type64='^v' />
   </function>
   <function name='ABCancelLoadingImageDataForTag'>
     <arg type='l' type64='l' />
   </function>
   <function name='ABCopyArrayOfAllGroups'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABCopyArrayOfAllPeople'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABCopyArrayOfMatchingRecords'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABAddressBookRef=}' />
     <arg type='^{__ABSearchElementRef=}' />
   </function>
   <function name='ABCopyArrayOfPropertiesForRecordType'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCopyDefaultCountryCode'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABCopyLocalizedPropertyOrLabel'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCopyRecordForUniqueId'>
-    <retval type='@' type64='@' />
+    <retval type='@' type64='@' already_cfretained='true' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCopyRecordTypeFromUniqueId'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABCreateFormattedAddressFromDictionary'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFDictionary=}' />
+    <arg type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='ABGetMe'>
     <retval type='^{__ABPerson=}' />
@@ -240,31 +246,31 @@
     <retval type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABGroupAddGroup'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABGroup=}' />
   </function>
   <function name='ABGroupAddMember'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABGroupCopyArrayOfAllMembers'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABGroup=}' />
   </function>
   <function name='ABGroupCopyArrayOfAllSubgroups'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABGroup=}' />
   </function>
   <function name='ABGroupCopyDistributionIdentifier'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABPerson=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABGroupCopyParentGroups'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABGroup=}' />
   </function>
   <function name='ABGroupCreate'>
@@ -272,60 +278,60 @@
   </function>
   <function name='ABGroupCreateSearchElement'>
     <retval already_cfretained='true' type='^{__ABSearchElementRef=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABGroupRemoveGroup'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABGroup=}' />
   </function>
   <function name='ABGroupRemoveMember'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABGroupSetDistributionIdentifier'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABGroup=}' />
     <arg type='^{__ABPerson=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABHasUnsavedChanges'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABLocalizedPropertyOrLabel'>
-    <retval type='@' />
+    <retval type='@' already_cfretained='true' />
     <arg type='@' />
   </function>
   <function name='ABMultiValueAdd'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='@' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='ABMultiValueCopyIdentifierAtIndex'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABMultiValueCopyLabelAtIndex'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABMultiValueCopyPrimaryIdentifier'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABMultiValue=}' />
   </function>
   <function name='ABMultiValueCopyValueAtIndex'>
-    <retval already_cfretained='true' type='@' />
+    <retval already_cfretained='true' type='@' type64='@' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='l' type64='l' />
   </function>
@@ -350,13 +356,13 @@
   <function name='ABMultiValueIndexForIdentifier'>
     <retval type='l' type64='q' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABMultiValueInsert'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='@' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='l' type64='l' />
     <arg type='^^{__CFString}' type_modifier='o' />
   </function>
@@ -365,37 +371,37 @@
     <arg type='^{__ABMultiValue=}' />
   </function>
   <function name='ABMultiValueRemove'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABMultiValueReplaceLabel'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABMultiValueReplaceValue'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='@' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABMultiValueSetPrimaryIdentifier'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPersonCopyImageData'>
-    <retval already_cfretained='true' type='^{__CFData=}' />
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABPersonCopyParentGroups'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABPersonCopyVCardRepresentation'>
-    <retval already_cfretained='true' type='^{__CFData=}' />
+    <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABPersonCreate'>
@@ -403,24 +409,24 @@
   </function>
   <function name='ABPersonCreateSearchElement'>
     <retval already_cfretained='true' type='^{__ABSearchElementRef=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
     <arg type='l' type64='l' />
   </function>
   <function name='ABPersonCreateWithVCardRepresentation'>
     <retval already_cfretained='true' type='^{__ABPerson=}' />
-    <arg type='^{__CFData=}' />
+    <arg type='^{__CFData=}' type64='^{__CFData=}' />
   </function>
   <function name='ABPersonSetImageData'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABPerson=}' />
-    <arg type='^{__CFData=}' />
+    <arg type='^{__CFData=}' type64='^{__CFData=}' />
   </function>
   <function name='ABPickerAddProperty'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerChangeAttributes'>
     <arg type='^{OpaqueABPicker=}' />
@@ -431,33 +437,33 @@
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCopyColumnTitle'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerCopyDisplayedProperty'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCopyProperties'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCopySelectedGroups'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCopySelectedIdentifiers'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{OpaqueABPicker=}' />
     <arg type='^{__ABPerson=}' />
   </function>
   <function name='ABPickerCopySelectedRecords'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCopySelectedValues'>
-    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerCreate'>
@@ -473,7 +479,7 @@
   <function name='ABPickerDeselectIdentifier'>
     <arg type='^{OpaqueABPicker=}' />
     <arg type='^{__ABPerson=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerDeselectRecord'>
     <arg type='^{OpaqueABPicker=}' />
@@ -495,23 +501,23 @@
     <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
   </function>
   <function name='ABPickerIsVisible'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{OpaqueABPicker=}' />
   </function>
   <function name='ABPickerRemoveProperty'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerSelectGroup'>
     <arg type='^{OpaqueABPicker=}' />
     <arg type='^{__ABGroup=}' />
-    <arg type='B' />
+    <arg type='Z' />
   </function>
   <function name='ABPickerSelectIdentifier'>
     <arg type='^{OpaqueABPicker=}' />
     <arg type='^{__ABPerson=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='B' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='Z' />
   </function>
   <function name='ABPickerSelectInAddressBook'>
     <arg type='^{OpaqueABPicker=}' />
@@ -519,12 +525,12 @@
   <function name='ABPickerSelectRecord'>
     <arg type='^{OpaqueABPicker=}' />
     <arg type='@' />
-    <arg type='B' />
+    <arg type='Z' />
   </function>
   <function name='ABPickerSetColumnTitle'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerSetDelegate'>
     <arg type='^{OpaqueABPicker=}' />
@@ -532,7 +538,7 @@
   </function>
   <function name='ABPickerSetDisplayedProperty'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABPickerSetFrame'>
     <arg type='^{OpaqueABPicker=}' />
@@ -540,62 +546,62 @@
   </function>
   <function name='ABPickerSetVisibility'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='B' />
+    <arg type='Z' />
   </function>
   <function name='ABRecordCopyRecordType'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
   </function>
   <function name='ABRecordCopyUniqueId'>
-    <retval already_cfretained='true' type='^{__CFString=}' />
+    <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
   </function>
   <function name='ABRecordCopyValue'>
-    <retval already_cfretained='true' type='@' />
+    <retval already_cfretained='true' type='@' type64='@' />
     <arg type='@' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABRecordCreateCopy'>
-    <retval type='@' type64='@' />
+    <retval type='@' type64='@' already_cfretained='true' />
     <arg type='@' />
   </function>
   <function name='ABRecordIsReadOnly'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='@' />
   </function>
   <function name='ABRecordRemoveValue'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='@' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <function name='ABRecordSetValue'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='@' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
   </function>
   <function name='ABRemoveProperties'>
     <retval type='l' type64='q' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFArray=}' type64='^{__CFArray=}' />
   </function>
   <function name='ABRemoveRecord'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABAddressBookRef=}' />
     <arg type='@' />
   </function>
   <function name='ABSave'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABAddressBookRef=}' />
   </function>
   <function name='ABSearchElementCreateWithConjunction'>
     <retval already_cfretained='true' type='^{__ABSearchElementRef=}' />
     <arg type='l' type64='l' />
-    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' type64='^{__CFArray=}' />
   </function>
   <function name='ABSearchElementMatchesRecord'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{__ABSearchElementRef=}' />
     <arg type='@' />
   </function>
@@ -606,8 +612,8 @@
   <function name='ABTypeOfProperty'>
     <retval type='l' type64='q' />
     <arg type='^{__ABAddressBookRef=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
+    <arg type='^{__CFString=}' type64='^{__CFString=}' />
   </function>
   <informal_protocol name='ABActionDelegate'>
     <method selector='actionProperty' type='@@:' />

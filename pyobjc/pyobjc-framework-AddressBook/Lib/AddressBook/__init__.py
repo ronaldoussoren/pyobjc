@@ -15,4 +15,4 @@ __bundle__ = _objc.initFrameworkWrapper("AddressBook",
     globals=globals())
 
 # Implementation of functions that cannot be wrapped automaticly.
-from AddressBook._callback import *
+#from AddressBook._callback import *
