@@ -2,22 +2,24 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
-import DictionaryServices
+from PyObjCTools.TestSupport import *
+from DictionaryServices import *
 
-class TestDictionaryServices (unittest.TestCase):
+class TestDictionaryServices (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(DictionaryServices, 'DCSDictionaryRef') )
-        self.assert_( issubclass(DictionaryServices.DCSDictionaryRef, objc.lookUpClass('NSCFType')) )
-        self.assert_( DictionaryServices.DCSDictionaryRef is not objc.lookUpClass('NSCFType') )
+        self.failUnless( issubclass(DCSDictionaryRef, objc.lookUpClass('NSCFType')) )
+        self.failUnless( DCSDictionaryRef is not objc.lookUpClass('NSCFType') )
 
-
-
+    
     def testFunctions(self):
-        self.assert_( hasattr(DictionaryServices, 'DCSGetTermRangeInString') )
-        self.assert_( hasattr(DictionaryServices, 'DCSCopyTextDefinition') )
+        r = DCSGetTermRangeInString(None, u"the hello world program", 5)
+        self.failUnlessIsInstance(r, CFRange)
+        self.failUnlessEqual(r, (4, 5))
+
+        r = DCSCopyTextDefinition(None, u"the hello world program", r)
+        self.failUnlessIsInstance(r, unicode)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 
