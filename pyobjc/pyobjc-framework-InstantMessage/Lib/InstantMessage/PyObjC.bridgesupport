@@ -1,0 +1,80 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <constant name='IMAVManagerStateChangedNotification' type='@' />
+  <constant name='IMAVManagerURLToShareChangedNotification' type='@' />
+  <constant name='IMCapabilityAudioConference' type='@' />
+  <constant name='IMCapabilityDirectIM' type='@' />
+  <constant name='IMCapabilityFileSharing' type='@' />
+  <constant name='IMCapabilityFileTransfer' type='@' />
+  <constant name='IMCapabilityText' type='@' />
+  <constant name='IMCapabilityVideoConference' type='@' />
+  <constant name='IMMyStatusChangedNotification' type='@' />
+  <constant name='IMPersonAVBusyKey' type='@' />
+  <constant name='IMPersonCapabilitiesKey' type='@' />
+  <constant name='IMPersonEmailKey' type='@' />
+  <constant name='IMPersonFirstNameKey' type='@' />
+  <constant name='IMPersonIdleSinceKey' type='@' />
+  <constant name='IMPersonInfoChangedNotification' type='@' />
+  <constant name='IMPersonLastNameKey' type='@' />
+  <constant name='IMPersonPictureDataKey' type='@' />
+  <constant name='IMPersonScreenNameKey' type='@' />
+  <constant name='IMPersonServiceNameKey' type='@' />
+  <constant name='IMPersonStatusChangedNotification' type='@' />
+  <constant name='IMPersonStatusKey' type='@' />
+  <constant name='IMPersonStatusMessageKey' type='@' />
+  <constant name='IMServiceStatusChangedNotification' type='@' />
+  <constant name='IMStatusImagesChangedAppearanceNotification' type='@' />
+  <enum name='IMAVInactive' value='0' />
+  <enum name='IMAVPending' value='4' />
+  <enum name='IMAVRequested' value='1' />
+  <enum name='IMAVRunning' value='5' />
+  <enum name='IMAVShuttingDown' value='2' />
+  <enum name='IMAVStartingUp' value='3' />
+  <enum name='IMPersonStatusAvailable' value='4' />
+  <enum name='IMPersonStatusAway' value='3' />
+  <enum name='IMPersonStatusIdle' value='2' />
+  <enum name='IMPersonStatusNoStatus' value='5' />
+  <enum name='IMPersonStatusOffline' value='1' />
+  <enum name='IMPersonStatusUnknown' value='0' />
+  <enum name='IMServiceStatusDisconnected' value='1' />
+  <enum name='IMServiceStatusLoggedIn' value='4' />
+  <enum name='IMServiceStatusLoggedOut' value='0' />
+  <enum name='IMServiceStatusLoggingIn' value='3' />
+  <enum name='IMServiceStatusLoggingOut' value='2' />
+  <enum name='IMVideoOptimizationDefault' value='0' />
+  <enum name='IMVideoOptimizationReplacement' value='2' />
+  <enum name='IMVideoOptimizationStills' value='1' />
+  <function name='IMComparePersonStatus'>
+    <retval type='i' type64='q' />
+    <arg type='I' />
+    <arg type='I' />
+  </function>
+  <informal_protocol name='IMVideoDataSource'>
+    <method selector='getOpenGLBufferContext:pixelFormat:' type='v@:^^{_CGLContextObject}^^{_CGLPixelFormatObject}' />
+    <method selector='getPixelBufferPixelFormat:' type='v@:^I' />
+    <method selector='renderIntoOpenGLBuffer:onScreen:forTime:' type='B@:^{__CVBuffer=}^i^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+    <method selector='renderIntoPixelBuffer:forTime:' type='B@:^{__CVBuffer=}^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+  </informal_protocol>
+  <class name='NSObject'>
+    <method selector='getOpenGLBufferContext:pixelFormat:'>
+      <arg index='0' type_modifier='o' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='getPixelBufferPixelFormat:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='renderIntoOpenGLBuffer:onScreen:forTime:'>
+      <retval type='B' />
+      <arg index='0' type='^{__CVBuffer=}' />
+      <arg index='1' type_modifier='n' />
+      <arg index='2' type_modifier='n' />
+    </method>
+    <method selector='renderIntoPixelBuffer:forTime:'>
+      <retval type='B' />
+      <arg index='0' type='^{__CVBuffer=}' />
+      <arg index='1' type_modifier='n' />
+    </method>
+  </class>
+</signatures>
+
