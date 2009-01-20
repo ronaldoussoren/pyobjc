@@ -1,0 +1,360 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='NSAddedPersistentStoresKey' type='@' />
+  <constant name='NSAffectedObjectsErrorKey' type='@' />
+  <constant name='NSAffectedStoresErrorKey' type='@' />
+  <constant name='NSBinaryStoreType' type='@' />
+  <constant name='NSCoreDataVersionNumber' type='d' />
+  <constant name='NSDeletedObjectsKey' type='@' />
+  <constant name='NSDetailedErrorsKey' type='@' />
+  <constant name='NSErrorMergePolicy' type='@' />
+  <constant name='NSIgnorePersistentStoreVersioningOption' type='@' />
+  <constant name='NSInMemoryStoreType' type='@' />
+  <constant name='NSInsertedObjectsKey' type='@' />
+  <constant name='NSInvalidatedAllObjectsKey' type='@' />
+  <constant name='NSInvalidatedObjectsKey' type='@' />
+  <constant name='NSManagedObjectContextDidSaveNotification' type='@' />
+  <constant name='NSManagedObjectContextObjectsDidChangeNotification' type='@' />
+  <constant name='NSMergeByPropertyObjectTrumpMergePolicy' type='@' />
+  <constant name='NSMergeByPropertyStoreTrumpMergePolicy' type='@' />
+  <constant name='NSMigratePersistentStoresAutomaticallyOption' type='@' />
+  <constant name='NSMigrationDestinationObjectKey' type='@' />
+  <constant name='NSMigrationEntityMappingKey' type='@' />
+  <constant name='NSMigrationManagerKey' type='@' />
+  <constant name='NSMigrationPropertyMappingKey' type='@' />
+  <constant name='NSMigrationSourceObjectKey' type='@' />
+  <constant name='NSOverwriteMergePolicy' type='@' />
+  <constant name='NSPersistentStoreCoordinatorStoresDidChangeNotification' type='@' />
+  <constant name='NSPersistentStoreOSCompatibility' type='@' />
+  <constant name='NSPersistentStoreTimeoutOption' type='@' />
+  <constant name='NSReadOnlyPersistentStoreOption' type='@' />
+  <constant name='NSRefreshedObjectsKey' type='@' />
+  <constant name='NSRemovedPersistentStoresKey' type='@' />
+  <constant name='NSRollbackMergePolicy' type='@' />
+  <constant name='NSSQLiteErrorDomain' type='@' />
+  <constant name='NSSQLitePragmasOption' type='@' />
+  <constant name='NSSQLiteStoreType' type='@' />
+  <constant name='NSStoreModelVersionHashesKey' type='@' />
+  <constant name='NSStoreModelVersionIdentifiersKey' type='@' />
+  <constant name='NSStoreTypeKey' type='@' />
+  <constant name='NSStoreUUIDKey' type='@' />
+  <constant name='NSUUIDChangedPersistentStoresKey' type='@' />
+  <constant name='NSUpdatedObjectsKey' type='@' />
+  <constant name='NSValidateXMLStoreOption' type='@' />
+  <constant name='NSValidationKeyErrorKey' type='@' />
+  <constant name='NSValidationObjectErrorKey' type='@' />
+  <constant name='NSValidationPredicateErrorKey' type='@' />
+  <constant name='NSValidationValueErrorKey' type='@' />
+  <constant name='NSXMLStoreType' type='@' />
+  <enum name='NSAddEntityMappingType' value='2' />
+  <enum name='NSBinaryDataAttributeType' value='1000' />
+  <enum name='NSBooleanAttributeType' value='800' />
+  <enum name='NSCascadeDeleteRule' value='2' />
+  <enum name='NSCopyEntityMappingType' value='4' />
+  <enum name='NSCoreDataError' value='134060' />
+  <enum name='NSCoreDataVersionNumber10_4' value='46.0' />
+  <enum name='NSCoreDataVersionNumber10_4_3' value='77.0' />
+  <enum name='NSCustomEntityMappingType' value='1' />
+  <enum name='NSDateAttributeType' value='900' />
+  <enum name='NSDecimalAttributeType' value='400' />
+  <enum name='NSDenyDeleteRule' value='3' />
+  <enum name='NSDoubleAttributeType' value='500' />
+  <enum name='NSEntityMigrationPolicyError' value='134170' />
+  <enum name='NSFetchRequestExpressionType' value='50' />
+  <enum name='NSFloatAttributeType' value='600' />
+  <enum name='NSInteger16AttributeType' value='100' />
+  <enum name='NSInteger32AttributeType' value='200' />
+  <enum name='NSInteger64AttributeType' value='300' />
+  <enum name='NSManagedObjectContextLockingError' value='132000' />
+  <enum name='NSManagedObjectExternalRelationshipError' value='133010' />
+  <enum name='NSManagedObjectIDResultType' value='1' />
+  <enum name='NSManagedObjectMergeError' value='133020' />
+  <enum name='NSManagedObjectReferentialIntegrityError' value='133000' />
+  <enum name='NSManagedObjectResultType' value='0' />
+  <enum name='NSManagedObjectValidationError' value='1550' />
+  <enum name='NSMigrationCancelledError' value='134120' />
+  <enum name='NSMigrationError' value='134110' />
+  <enum name='NSMigrationManagerDestinationStoreError' value='134160' />
+  <enum name='NSMigrationManagerSourceStoreError' value='134150' />
+  <enum name='NSMigrationMissingMappingModelError' value='134140' />
+  <enum name='NSMigrationMissingSourceModelError' value='134130' />
+  <enum name='NSNoActionDeleteRule' value='0' />
+  <enum name='NSNullifyDeleteRule' value='1' />
+  <enum name='NSPersistentStoreCoordinatorLockingError' value='132010' />
+  <enum name='NSPersistentStoreIncompatibleSchemaError' value='134020' />
+  <enum name='NSPersistentStoreIncompatibleVersionHashError' value='134100' />
+  <enum name='NSPersistentStoreIncompleteSaveError' value='134040' />
+  <enum name='NSPersistentStoreInvalidTypeError' value='134000' />
+  <enum name='NSPersistentStoreOpenError' value='134080' />
+  <enum name='NSPersistentStoreOperationError' value='134070' />
+  <enum name='NSPersistentStoreSaveError' value='134030' />
+  <enum name='NSPersistentStoreTimeoutError' value='134090' />
+  <enum name='NSPersistentStoreTypeMismatchError' value='134010' />
+  <enum name='NSRemoveEntityMappingType' value='3' />
+  <enum name='NSSQLiteError' value='134180' />
+  <enum name='NSStringAttributeType' value='700' />
+  <enum name='NSTransformEntityMappingType' value='5' />
+  <enum name='NSTransformableAttributeType' value='1800' />
+  <enum name='NSUndefinedAttributeType' value='0' />
+  <enum name='NSUndefinedEntityMappingType' value='0' />
+  <enum name='NSValidationDateTooLateError' value='1630' />
+  <enum name='NSValidationDateTooSoonError' value='1640' />
+  <enum name='NSValidationInvalidDateError' value='1650' />
+  <enum name='NSValidationMissingMandatoryPropertyError' value='1570' />
+  <enum name='NSValidationMultipleErrorsError' value='1560' />
+  <enum name='NSValidationNumberTooLargeError' value='1610' />
+  <enum name='NSValidationNumberTooSmallError' value='1620' />
+  <enum name='NSValidationRelationshipDeniedDeleteError' value='1600' />
+  <enum name='NSValidationRelationshipExceedsMaximumCountError' value='1590' />
+  <enum name='NSValidationRelationshipLacksMinimumCountError' value='1580' />
+  <enum name='NSValidationStringPatternMatchingError' value='1680' />
+  <enum name='NSValidationStringTooLongError' value='1660' />
+  <enum name='NSValidationStringTooShortError' value='1670' />
+  <class name='NSAtomicStore'>
+    <method selector='load:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='save:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSEntityDescription'>
+    <method selector='isAbstract'>
+      <retval type='B' />
+    </method>
+    <method selector='isKindOfEntity:'>
+      <retval type='B' />
+    </method>
+    <method selector='setAbstract:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='NSEntityMigrationPolicy'>
+    <method selector='beginEntityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='createDestinationInstancesForSourceInstance:entityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='createRelationshipsForDestinationInstance:entityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='endEntityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='endInstanceCreationForEntityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='endRelationshipCreationForEntityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='performCustomValidationForEntityMapping:manager:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSFetchRequest'>
+    <method selector='includesPropertyValues'>
+      <retval type='B' />
+    </method>
+    <method selector='includesSubentities'>
+      <retval type='B' />
+    </method>
+    <method selector='returnsObjectsAsFaults'>
+      <retval type='B' />
+    </method>
+    <method selector='setIncludesPropertyValues:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setIncludesSubentities:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setReturnsObjectsAsFaults:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='NSFetchRequestExpression'>
+    <method class_method='true' selector='expressionForFetch:context:countOnly:'>
+      <arg index='2' type='B' />
+    </method>
+    <method selector='isCountOnlyRequest'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSManagedObject'>
+    <method selector='hasFaultForRelationshipNamed:'>
+      <retval type='B' />
+    </method>
+    <method selector='isDeleted'>
+      <retval type='B' />
+    </method>
+    <method selector='isFault'>
+      <retval type='B' />
+    </method>
+    <method selector='isInserted'>
+      <retval type='B' />
+    </method>
+    <method selector='isUpdated'>
+      <retval type='B' />
+    </method>
+    <method selector='observationInfo'>
+      <retval type='^v' />
+    </method>
+    <method selector='setObservationInfo:'>
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='validateForDelete:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='validateForInsert:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='validateForUpdate:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='validateValue:forKey:error:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='N' />
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSManagedObjectContext'>
+    <method selector='countForFetchRequest:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='executeFetchRequest:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='hasChanges'>
+      <retval type='B' />
+    </method>
+    <method selector='observeValueForKeyPath:ofObject:change:context:'>
+      <arg index='3' type='^v' />
+    </method>
+    <method selector='obtainPermanentIDsForObjects:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='propagatesDeletesAtEndOfEvent'>
+      <retval type='B' />
+    </method>
+    <method selector='refreshObject:mergeChanges:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='retainsRegisteredObjects'>
+      <retval type='B' />
+    </method>
+    <method selector='save:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='setPropagatesDeletesAtEndOfEvent:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setRetainsRegisteredObjects:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='tryLock'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSManagedObjectID'>
+    <method selector='isTemporaryID'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSManagedObjectModel'>
+    <method selector='isConfiguration:compatibleWithStoreMetadata:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSMigrationManager'>
+    <method selector='migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>
+      <retval type='B' />
+      <arg index='7' type_modifier='o' />
+    </method>
+  </class>
+  <class name='NSPersistentStore'>
+    <method selector='isReadOnly'>
+      <retval type='B' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreWithURL:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='setReadOnly:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='NSPersistentStoreCoordinator'>
+    <method selector='addPersistentStoreWithType:configuration:URL:options:error:'>
+      <arg index='4' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreOfType:URL:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='metadataForPersistentStoreWithURL:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='migratePersistentStore:toURL:options:withType:error:'>
+      <arg index='4' type_modifier='o' />
+    </method>
+    <method selector='removePersistentStore:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='setMetadata:forPersistentStoreOfType:URL:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='setURL:forPersistentStore:'>
+      <retval type='B' />
+    </method>
+    <method selector='tryLock'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='NSPropertyDescription'>
+    <method selector='isIndexed'>
+      <retval type='B' />
+    </method>
+    <method selector='isOptional'>
+      <retval type='B' />
+    </method>
+    <method selector='isTransient'>
+      <retval type='B' />
+    </method>
+    <method selector='setIndexed:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setOptional:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setTransient:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='NSRelationshipDescription'>
+    <method selector='isToMany'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+

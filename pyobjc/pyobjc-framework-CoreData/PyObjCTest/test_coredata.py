@@ -2,10 +2,10 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import CoreData
 
-class TestCoreData (unittest.TestCase):
+class TestCoreData (TestCase):
     def testClasses(self):
         self.assert_( hasattr(CoreData, 'NSAtomicStore') )
         self.assert_( isinstance(CoreData.NSAtomicStore, objc.objc_class) )
@@ -30,5 +30,4 @@ class TestCoreData (unittest.TestCase):
         self.assert_( isinstance(CoreData.NSErrorMergePolicy, objc.objc_object) )
 
 if __name__ == "__main__":
-    unittest.main()
-
+    main()

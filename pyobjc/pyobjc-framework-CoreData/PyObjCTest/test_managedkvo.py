@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-import unittest
+from PyObjCTools.TestSupport import *
 import objc
 
 import Foundation
@@ -9,7 +9,7 @@ import CoreData
 class CoreDataTestObject (CoreData.NSManagedObject):
     pass
 
-class Test (unittest.TestCase):
+class Test (TestCase):
     def setUp(self):
 	self.entity = CoreData.NSEntityDescription.new()
 	self.entity.setName_('TestEntity')
@@ -37,19 +37,19 @@ class Test (unittest.TestCase):
 	managedObject.setValue_forKey_(testValue, u'testAttribute')
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
 	testValue = u'BobFred'
 	managedObject.setValue_forKey_(testValue, u'testAttribute')
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
 	testValue = u'Zebras have long legs.'
 	managedObject.testAttribute = testValue
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
     def testPythonicAttribute(self):
 	managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
@@ -66,7 +66,7 @@ class Test (unittest.TestCase):
 	
 	self.assertRaises(Foundation.NSUnknownKeyException, managedObject.valueForKey_(u'attributeWithoutModel'))
 	
-class TestSubclass (unittest.TestCase):
+class TestSubclass (TestCase):
     def setUp(self):
 	self.entity = CoreData.NSEntityDescription.new()
 	self.entity.setName_('TestObject')
@@ -123,4 +123,4 @@ class TestSubclass (unittest.TestCase):
 	
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
