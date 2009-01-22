@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-InstallerPlugins',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the framework InstallerPlugins on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
