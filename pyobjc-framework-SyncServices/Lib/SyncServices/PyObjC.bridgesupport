@@ -163,25 +163,26 @@
   </class>
   <class name='NSObject'>
     <method selector='applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:'>
-      <arg index='2' type_modifier='o' />
-      <arg index='3' type_modifier='o' />
-      <arg index='4' type_modifier='o' />
+      <retval type='i' type64='i' />
+      <arg index='2' type_modifier='o' type='^@'/>
+      <arg index='3' type_modifier='o' type='^@'/>
+      <arg index='4' type_modifier='o' type='^@'/>
     </method>
     <method selector='changedRecordsForEntityName:moreComing:error:'>
       <arg index='1' type='^B' type_modifier='o' />
-      <arg index='2' type_modifier='o' />
+      <arg index='2' type_modifier='o' type='^@'/>
     </method>
     <method selector='changesForEntityName:moreComing:error:'>
       <arg index='1' type='^B' type_modifier='o' />
-      <arg index='2' type_modifier='o' />
+      <arg index='2' type_modifier='o' type='^@'/>
     </method>
     <method selector='deleteAllRecordsForEntityName:error:'>
       <retval type='B' />
-      <arg index='1' type_modifier='o' />
+      <arg index='1' type_modifier='o' type='^@'/>
     </method>
     <method selector='identifiersForRecordsToDeleteForEntityName:moreComing:error:'>
       <arg index='1' type='^B' type_modifier='o' />
-      <arg index='2' type_modifier='o' />
+      <arg index='2' type_modifier='o' type='^@'/>
     </method>
     <method selector='isEqual:'>
       <retval type='B' />
