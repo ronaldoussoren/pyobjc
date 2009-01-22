@@ -2,10 +2,10 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import ScreenSaver
 
-class TestScreenSaver (unittest.TestCase):
+class TestScreenSaver (TestCase):
     def testClasses(self):
         self.assert_( hasattr(ScreenSaver, 'ScreenSaverDefaults') )
         self.assert_( isinstance(ScreenSaver.ScreenSaverDefaults, objc.objc_class) )
@@ -46,5 +46,5 @@ class TestScreenSaver (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 
