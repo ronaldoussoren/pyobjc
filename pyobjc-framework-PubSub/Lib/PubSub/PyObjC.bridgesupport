@@ -1,0 +1,112 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='PSEnclosureDownloadStateDidChangeNotification' type='@' />
+  <constant name='PSErrorDomain' type='@' />
+  <constant name='PSFeedAddedEntriesKey' type='@' />
+  <constant name='PSFeedDidChangeEntryFlagsKey' type='@' />
+  <constant name='PSFeedEntriesChangedNotification' type='@' />
+  <constant name='PSFeedRefreshingNotification' type='@' />
+  <constant name='PSFeedRemovedEntriesKey' type='@' />
+  <constant name='PSFeedUpdatedEntriesKey' type='@' />
+  <enum name='PSAtomFormat' value='2' />
+  <enum name='PSEnclosureDownloadDidFail' value='4' />
+  <enum name='PSEnclosureDownloadDidFinish' value='3' />
+  <enum name='PSEnclosureDownloadIsActive' value='2' />
+  <enum name='PSEnclosureDownloadIsIdle' value='0' />
+  <enum name='PSEnclosureDownloadIsQueued' value='1' />
+  <enum name='PSEnclosureDownloadWasDeleted' value='5' />
+  <enum name='PSFeedSettingsIntervalDefault' value='0.0' />
+  <enum name='PSFeedSettingsIntervalNever' value='-1' />
+  <enum name='PSFeedSettingsUnlimitedSize' value='0' />
+  <enum name='PSInternalError' value='1' />
+  <enum name='PSLinkToAlternate' value='7' />
+  <enum name='PSLinkToAtom' value='2' />
+  <enum name='PSLinkToAtomService' value='3' />
+  <enum name='PSLinkToFOAF' value='4' />
+  <enum name='PSLinkToOther' value='0' />
+  <enum name='PSLinkToRSD' value='5' />
+  <enum name='PSLinkToRSS' value='1' />
+  <enum name='PSLinkToSelf' value='6' />
+  <enum name='PSNotAFeedError' value='2' />
+  <enum name='PSRSSFormat' value='1' />
+  <enum name='PSUnknownFormat' value='0' />
+  <null_const name='PSFeedSettingsAllTypes' />
+  <informal_protocol name='PSClientDelegate'>
+    <method selector='enclosure:downloadStateDidChange:' type='v@:@i' />
+    <method selector='feed:didAddEntries:' type='v@:@@' />
+    <method selector='feed:didChangeFlagsInEntries:' type='v@:@@' />
+    <method selector='feed:didRemoveEntriesWithIdentifiers:' type='v@:@@' />
+    <method selector='feed:didUpdateEntries:' type='v@:@@' />
+    <method selector='feedDidBeginRefresh:' type='v@:@' />
+    <method selector='feedDidEndRefresh:' type='v@:@' />
+  </informal_protocol>
+  <class name='PSClient'>
+    <method selector='addFeed:'>
+      <retval type='B' />
+    </method>
+    <method selector='removeFeed:'>
+      <retval type='B' />
+    </method>
+    <method selector='isPrivate'>
+      <retval type='B' />
+    </method>
+    <method selector='setPrivate:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PSEntry'>
+    <method selector='isRead'>
+      <retval type='B' />
+    </method>
+    <method selector='isFlagged'>
+      <retval type='B' />
+    </method>
+    <method selector='isCurrent'>
+      <retval type='B' />
+    </method>
+    <method selector='setCurrent:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setFlagged:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setRead:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PSEnclosure'>
+    <method selector='download:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+  </class>
+  <class name='PSFeed'>
+    <method selector='XMLRepresentationWithEntries:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='refresh:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='isRefreshing'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='PSFeedSettings'>
+    <method selector='downloadsEnclosures'>
+      <retval type='B' />
+    </method>
+    <method selector='refreshesInBackground'>
+      <retval type='B' />
+    </method>
+    <method selector='setDownloadsEnclosures:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setRefreshesInBackground:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+</signatures>
+

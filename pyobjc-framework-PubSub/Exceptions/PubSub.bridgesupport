@@ -41,4 +41,14 @@
       <arg index='0' null_accepted='true' type_modifier='o' />
     </method>
   </class>
+  <class name='PSEnclosure'>
+    <method selector='download:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
+  <class name='PSFeed'>
+    <method selector='refresh:'>
+      <arg index='0' null_accepted='true' type_modifier='o' />
+    </method>
+  </class>
 </signatures>
