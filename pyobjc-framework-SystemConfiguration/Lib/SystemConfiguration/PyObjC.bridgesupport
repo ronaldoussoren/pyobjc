@@ -1,0 +1,1174 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/Security.framework/Security' />
+  <cftype gettypeid_func='SCBondStatusGetTypeID' name='SCBondStatusRef' type='^{__SCBondStatus=}' type64='^{__SCBondStatus=}' />
+  <cftype gettypeid_func='SCDynamicStoreGetTypeID' name='SCDynamicStoreRef' type='^{__SCDynamicStore=}' type64='^{__SCDynamicStore=}' />
+  <cftype gettypeid_func='SCNetworkConnectionGetTypeID' name='SCNetworkConnectionRef' type='^{__SCNetworkConnection=}' type64='^{__SCNetworkConnection=}' />
+  <cftype gettypeid_func='SCNetworkInterfaceGetTypeID' name='SCNetworkInterfaceRef' type='^{__SCNetworkInterface=}' type64='^{__SCNetworkInterface=}' />
+  <cftype gettypeid_func='SCNetworkProtocolGetTypeID' name='SCNetworkProtocolRef' type='^{__SCNetworkProtocol=}' type64='^{__SCNetworkProtocol=}' />
+  <cftype gettypeid_func='SCNetworkReachabilityGetTypeID' name='SCNetworkReachabilityRef' type='^{__SCNetworkReachability=}' type64='^{__SCNetworkReachability=}' />
+  <cftype gettypeid_func='SCNetworkServiceGetTypeID' name='SCNetworkServiceRef' type='^{__SCNetworkService=}' type64='^{__SCNetworkService=}' />
+  <cftype gettypeid_func='SCNetworkSetGetTypeID' name='SCNetworkSetRef' type='^{__SCNetworkSet=}' type64='^{__SCNetworkSet=}' />
+  <cftype gettypeid_func='SCPreferencesGetTypeID' name='SCPreferencesRef' type='^{__SCPreferences=}' type64='^{__SCPreferences=}' />
+  <constant name='kCFErrorDomainSystemConfiguration' type='^{__CFString=}' />
+  <constant name='kSCBondStatusDeviceAggregationStatus' type='^{__CFString=}' />
+  <constant name='kSCBondStatusDeviceCollecting' type='^{__CFString=}' />
+  <constant name='kSCBondStatusDeviceDistributing' type='^{__CFString=}' />
+  <constant name='kSCCompAnyRegex' type='^{__CFString=}' />
+  <constant name='kSCCompGlobal' type='^{__CFString=}' />
+  <constant name='kSCCompHostNames' type='^{__CFString=}' />
+  <constant name='kSCCompInterface' type='^{__CFString=}' />
+  <constant name='kSCCompNetwork' type='^{__CFString=}' />
+  <constant name='kSCCompService' type='^{__CFString=}' />
+  <constant name='kSCCompSystem' type='^{__CFString=}' />
+  <constant name='kSCCompUsers' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreDomainFile' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreDomainPlugin' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreDomainPrefs' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreDomainSetup' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreDomainState' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropNetInterfaces' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropNetPrimaryInterface' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropNetPrimaryService' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropNetServiceIDs' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropSetupCurrentSet' type='^{__CFString=}' />
+  <constant name='kSCDynamicStorePropSetupLastUpdated' type='^{__CFString=}' />
+  <constant name='kSCDynamicStoreUseSessionKeys' type='^{__CFString=}' />
+  <constant name='kSCEntNet6to4' type='^{__CFString=}' />
+  <constant name='kSCEntNetAirPort' type='^{__CFString=}' />
+  <constant name='kSCEntNetAppleTalk' type='^{__CFString=}' />
+  <constant name='kSCEntNetDHCP' type='^{__CFString=}' />
+  <constant name='kSCEntNetDNS' type='^{__CFString=}' />
+  <constant name='kSCEntNetEthernet' type='^{__CFString=}' />
+  <constant name='kSCEntNetFireWire' type='^{__CFString=}' />
+  <constant name='kSCEntNetIPSec' type='^{__CFString=}' />
+  <constant name='kSCEntNetIPv4' type='^{__CFString=}' />
+  <constant name='kSCEntNetIPv6' type='^{__CFString=}' />
+  <constant name='kSCEntNetInterface' type='^{__CFString=}' />
+  <constant name='kSCEntNetL2TP' type='^{__CFString=}' />
+  <constant name='kSCEntNetLink' type='^{__CFString=}' />
+  <constant name='kSCEntNetModem' type='^{__CFString=}' />
+  <constant name='kSCEntNetNetInfo' type='^{__CFString=}' />
+  <constant name='kSCEntNetPPP' type='^{__CFString=}' />
+  <constant name='kSCEntNetPPPSerial' type='^{__CFString=}' />
+  <constant name='kSCEntNetPPPoE' type='^{__CFString=}' />
+  <constant name='kSCEntNetPPTP' type='^{__CFString=}' />
+  <constant name='kSCEntNetProxies' type='^{__CFString=}' />
+  <constant name='kSCEntNetSMB' type='^{__CFString=}' />
+  <constant name='kSCEntUsersConsoleUser' type='^{__CFString=}' />
+  <constant magic_cookie='true' name='kSCNetworkInterfaceIPv4' type='^{__SCNetworkInterface=}' />
+  <constant name='kSCNetworkInterfaceType6to4' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeBluetooth' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeBond' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeEthernet' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeFireWire' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeIEEE80211' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeIPv4' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeIrDA' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeL2TP' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeModem' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypePPP' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypePPTP' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeSerial' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeVLAN' type='^{__CFString=}' />
+  <constant name='kSCNetworkInterfaceTypeWWAN' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeAppleTalk' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeDNS' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeIPv4' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeIPv6' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeProxies' type='^{__CFString=}' />
+  <constant name='kSCNetworkProtocolTypeSMB' type='^{__CFString=}' />
+  <constant name='kSCPrefCurrentSet' type='^{__CFString=}' />
+  <constant name='kSCPrefNetworkServices' type='^{__CFString=}' />
+  <constant name='kSCPrefSets' type='^{__CFString=}' />
+  <constant name='kSCPrefSystem' type='^{__CFString=}' />
+  <constant name='kSCPropInterfaceName' type='^{__CFString=}' />
+  <constant name='kSCPropMACAddress' type='^{__CFString=}' />
+  <constant name='kSCPropNet6to4Relay' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortAllowNetCreation' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortAuthPassword' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortAuthPasswordEncryption' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortJoinMode' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortPowerEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortPreferredNetwork' type='^{__CFString=}' />
+  <constant name='kSCPropNetAirPortSavePasswords' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkComputerName' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkComputerNameEncoding' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkConfigMethod' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkDefaultZone' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkNetworkID' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkNetworkRange' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkNodeID' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkSeedNetworkRange' type='^{__CFString=}' />
+  <constant name='kSCPropNetAppleTalkSeedZones' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSDomainName' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSOptions' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSSearchDomains' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSSearchOrder' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSServerAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSServerPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSServerTimeout' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSSortList' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSSupplementalMatchDomains' type='^{__CFString=}' />
+  <constant name='kSCPropNetDNSSupplementalMatchOrders' type='^{__CFString=}' />
+  <constant name='kSCPropNetEthernetMTU' type='^{__CFString=}' />
+  <constant name='kSCPropNetEthernetMediaOptions' type='^{__CFString=}' />
+  <constant name='kSCPropNetEthernetMediaSubType' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecAuthenticationMethod' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecLocalCertificate' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecLocalIdentifier' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecLocalIdentifierType' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecSharedSecret' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPSecSharedSecretEncryption' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4Addresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4BroadcastAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4ConfigMethod' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4DHCPClientID' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4DestAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4Router' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv4SubnetMasks' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6Addresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6ConfigMethod' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6DestAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6Flags' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6PrefixLength' type='^{__CFString=}' />
+  <constant name='kSCPropNetIPv6Router' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaceDeviceName' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaceHardware' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaceSubType' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaceSupportsModemOnHold' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaceType' type='^{__CFString=}' />
+  <constant name='kSCPropNetInterfaces' type='^{__CFString=}' />
+  <constant name='kSCPropNetL2TPIPSecSharedSecret' type='^{__CFString=}' />
+  <constant name='kSCPropNetL2TPIPSecSharedSecretEncryption' type='^{__CFString=}' />
+  <constant name='kSCPropNetL2TPTransport' type='^{__CFString=}' />
+  <constant name='kSCPropNetLinkActive' type='^{__CFString=}' />
+  <constant name='kSCPropNetLinkDetaching' type='^{__CFString=}' />
+  <constant name='kSCPropNetLocalHostName' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemAccessPointName' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemConnectSpeed' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemConnectionPersonality' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemConnectionScript' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemDataCompression' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemDeviceContextID' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemDeviceModel' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemDeviceVendor' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemDialMode' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemErrorCorrection' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemHoldCallWaitingAudibleAlert' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemHoldDisconnectOnAnswer' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemHoldEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemHoldReminder' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemHoldReminderTime' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemNote' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemPulseDial' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemSpeaker' type='^{__CFString=}' />
+  <constant name='kSCPropNetModemSpeed' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoBindingMethods' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoBroadcastServerTag' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoServerAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetNetInfoServerTags' type='^{__CFString=}' />
+  <constant name='kSCPropNetOverridePrimary' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPACSPEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthEAPPlugins' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthName' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthPassword' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthPasswordEncryption' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthPrompt' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPAuthProtocol' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCCPEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCCPMPPE128Enabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCCPMPPE40Enabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommAlternateRemoteAddress' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommConnectDelay' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommDisplayTerminalWindow' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommRedialCount' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommRedialEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommRedialInterval' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommRemoteAddress' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommTerminalScript' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPCommUseTerminalScript' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPConnectTime' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDeviceLastCause' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDialOnDemand' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectOnFastUserSwitch' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectOnIdle' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectOnIdleTimer' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectOnLogout' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectOnSleep' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPDisconnectTime' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPIPCPCompressionVJ' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPIPCPUsePeerDNS' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPIdleReminder' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPIdleReminderTimer' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPCompressionACField' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPCompressionPField' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPEchoEnabled' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPEchoFailure' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPEchoInterval' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPMRU' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPMTU' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPReceiveACCM' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLCPTransmitACCM' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLastCause' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPLogfile' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPOverridePrimary' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPPlugins' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPRetryConnectTime' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPSessionTimer' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPStatus' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPUseSessionTimer' type='^{__CFString=}' />
+  <constant name='kSCPropNetPPPVerboseLogging' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesExceptionsList' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesExcludeSimpleHostnames' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesFTPEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesFTPPassive' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesFTPPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesFTPProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesGopherEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesGopherPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesGopherProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPSEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPSPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesHTTPSProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesProxyAutoConfigEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesProxyAutoConfigURLString' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesProxyAutoDiscoveryEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesRTSPEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesRTSPPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesRTSPProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesSOCKSEnable' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesSOCKSPort' type='^{__CFString=}' />
+  <constant name='kSCPropNetProxiesSOCKSProxy' type='^{__CFString=}' />
+  <constant name='kSCPropNetSMBNetBIOSName' type='^{__CFString=}' />
+  <constant name='kSCPropNetSMBNetBIOSNodeType' type='^{__CFString=}' />
+  <constant name='kSCPropNetSMBNetBIOSScope' type='^{__CFString=}' />
+  <constant name='kSCPropNetSMBWINSAddresses' type='^{__CFString=}' />
+  <constant name='kSCPropNetSMBWorkgroup' type='^{__CFString=}' />
+  <constant name='kSCPropNetServiceOrder' type='^{__CFString=}' />
+  <constant name='kSCPropSystemComputerName' type='^{__CFString=}' />
+  <constant name='kSCPropSystemComputerNameEncoding' type='^{__CFString=}' />
+  <constant name='kSCPropUserDefinedName' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserGID' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserName' type='^{__CFString=}' />
+  <constant name='kSCPropUsersConsoleUserUID' type='^{__CFString=}' />
+  <constant name='kSCPropVersion' type='^{__CFString=}' />
+  <constant name='kSCResvInactive' type='^{__CFString=}' />
+  <constant name='kSCResvLink' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortAuthPasswordEncryptionKeychain' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortJoinModeAutomatic' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortJoinModePreferred' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortJoinModeRanked' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortJoinModeRecent' type='^{__CFString=}' />
+  <constant name='kSCValNetAirPortJoinModeStrongest' type='^{__CFString=}' />
+  <constant name='kSCValNetAppleTalkConfigMethodNode' type='^{__CFString=}' />
+  <constant name='kSCValNetAppleTalkConfigMethodRouter' type='^{__CFString=}' />
+  <constant name='kSCValNetAppleTalkConfigMethodSeedRouter' type='^{__CFString=}' />
+  <constant name='kSCValNetIPSecAuthenticationMethodCertificate' type='^{__CFString=}' />
+  <constant name='kSCValNetIPSecAuthenticationMethodSharedSecret' type='^{__CFString=}' />
+  <constant name='kSCValNetIPSecLocalIdentifierTypeKeyID' type='^{__CFString=}' />
+  <constant name='kSCValNetIPSecSharedSecretEncryptionKeychain' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodBOOTP' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodDHCP' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodINFORM' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodLinkLocal' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodManual' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv4ConfigMethodPPP' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv6ConfigMethod6to4' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv6ConfigMethodAutomatic' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv6ConfigMethodManual' type='^{__CFString=}' />
+  <constant name='kSCValNetIPv6ConfigMethodRouterAdvertisement' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceSubTypeL2TP' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceSubTypePPPSerial' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceSubTypePPPoE' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceSubTypePPTP' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceType6to4' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceTypeEthernet' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceTypeFireWire' type='^{__CFString=}' />
+  <constant name='kSCValNetInterfaceTypePPP' type='^{__CFString=}' />
+  <constant name='kSCValNetL2TPIPSecSharedSecretEncryptionKeychain' type='^{__CFString=}' />
+  <constant name='kSCValNetL2TPTransportIP' type='^{__CFString=}' />
+  <constant name='kSCValNetL2TPTransportIPSec' type='^{__CFString=}' />
+  <constant name='kSCValNetModemDialModeIgnoreDialTone' type='^{__CFString=}' />
+  <constant name='kSCValNetModemDialModeManual' type='^{__CFString=}' />
+  <constant name='kSCValNetModemDialModeWaitForDialTone' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsBroadcast' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsDHCP' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoBindingMethodsManual' type='^{__CFString=}' />
+  <constant name='kSCValNetNetInfoDefaultServerTag' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthPasswordEncryptionKeychain' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthPasswordEncryptionToken' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthPromptAfter' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthPromptBefore' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthProtocolCHAP' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthProtocolEAP' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthProtocolMSCHAP1' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthProtocolMSCHAP2' type='^{__CFString=}' />
+  <constant name='kSCValNetPPPAuthProtocolPAP' type='^{__CFString=}' />
+  <constant name='kSCValNetSMBNetBIOSNodeTypeBroadcast' type='^{__CFString=}' />
+  <constant name='kSCValNetSMBNetBIOSNodeTypeHybrid' type='^{__CFString=}' />
+  <constant name='kSCValNetSMBNetBIOSNodeTypeMixed' type='^{__CFString=}' />
+  <constant name='kSCValNetSMBNetBIOSNodeTypePeer' type='^{__CFString=}' />
+  <enum name='kSCBondStatusLinkInvalid' value='1' />
+  <enum name='kSCBondStatusNoPartner' value='2' />
+  <enum name='kSCBondStatusNotInActiveGroup' value='3' />
+  <enum name='kSCBondStatusOK' value='0' />
+  <enum name='kSCBondStatusUnknown' value='999' />
+  <enum name='kSCNetworkConnectionConnected' value='2' />
+  <enum name='kSCNetworkConnectionConnecting' value='1' />
+  <enum name='kSCNetworkConnectionDisconnected' value='0' />
+  <enum name='kSCNetworkConnectionDisconnecting' value='3' />
+  <enum name='kSCNetworkConnectionInvalid' value='-1' />
+  <enum name='kSCNetworkConnectionPPPAuthenticating' value='5' />
+  <enum name='kSCNetworkConnectionPPPConnected' value='8' />
+  <enum name='kSCNetworkConnectionPPPConnectingLink' value='2' />
+  <enum name='kSCNetworkConnectionPPPDialOnTraffic' value='3' />
+  <enum name='kSCNetworkConnectionPPPDisconnected' value='0' />
+  <enum name='kSCNetworkConnectionPPPDisconnectingLink' value='10' />
+  <enum name='kSCNetworkConnectionPPPHoldingLinkOff' value='11' />
+  <enum name='kSCNetworkConnectionPPPInitializing' value='1' />
+  <enum name='kSCNetworkConnectionPPPNegotiatingLink' value='4' />
+  <enum name='kSCNetworkConnectionPPPNegotiatingNetwork' value='7' />
+  <enum name='kSCNetworkConnectionPPPSuspended' value='12' />
+  <enum name='kSCNetworkConnectionPPPTerminating' value='9' />
+  <enum name='kSCNetworkConnectionPPPWaitingForCallBack' value='6' />
+  <enum name='kSCNetworkConnectionPPPWaitingForRedial' value='13' />
+  <enum name='kSCNetworkFlagsConnectionAutomatic' value='8' />
+  <enum name='kSCNetworkFlagsConnectionRequired' value='4' />
+  <enum name='kSCNetworkFlagsInterventionRequired' value='16' />
+  <enum name='kSCNetworkFlagsIsDirect' value='131072' />
+  <enum name='kSCNetworkFlagsIsLocalAddress' value='65536' />
+  <enum name='kSCNetworkFlagsReachable' value='2' />
+  <enum name='kSCNetworkFlagsTransientConnection' value='1' />
+  <enum name='kSCPreferencesNotificationApply' value='2' />
+  <enum name='kSCPreferencesNotificationCommit' value='1' />
+  <enum name='kSCStatusAccessError' value='1003' />
+  <enum name='kSCStatusFailed' value='1001' />
+  <enum name='kSCStatusInvalidArgument' value='1002' />
+  <enum name='kSCStatusKeyExists' value='1005' />
+  <enum name='kSCStatusLocked' value='1006' />
+  <enum name='kSCStatusMaxLink' value='3006' />
+  <enum name='kSCStatusNeedLock' value='1007' />
+  <enum name='kSCStatusNoConfigFile' value='3003' />
+  <enum name='kSCStatusNoKey' value='1004' />
+  <enum name='kSCStatusNoLink' value='3004' />
+  <enum name='kSCStatusNoPrefsSession' value='3001' />
+  <enum name='kSCStatusNoStoreServer' value='2002' />
+  <enum name='kSCStatusNoStoreSession' value='2001' />
+  <enum name='kSCStatusNotifierActive' value='2003' />
+  <enum name='kSCStatusOK' value='0' />
+  <enum name='kSCStatusPrefsBusy' value='3002' />
+  <enum name='kSCStatusReachabilityUnknown' value='4001' />
+  <enum name='kSCStatusStale' value='3005' />
+  <string_constant name='kSCNetworkConnectionBytesIn' nsstring='true' value='BytesIn' />
+  <string_constant name='kSCNetworkConnectionBytesOut' nsstring='true' value='BytesOut' />
+  <string_constant name='kSCNetworkConnectionErrorsIn' nsstring='true' value='ErrorsIn' />
+  <string_constant name='kSCNetworkConnectionErrorsOut' nsstring='true' value='ErrorsOut' />
+  <string_constant name='kSCNetworkConnectionPacketsIn' nsstring='true' value='PacketsIn' />
+  <string_constant name='kSCNetworkConnectionPacketsOut' nsstring='true' value='PacketsOut' />
+  <function name='DHCPClientPreferencesCopyApplicationOptions'>
+    <retval c_array_length_in_arg='1' type='^C' type64='^C' free_result='true' />
+    <arg type='^{__CFString=}' />
+    <arg type='^i' type64='^i' type_modifier='o' />
+  </function>
+  <function name='DHCPClientPreferencesSetApplicationOptions'>
+    <retval type='B' />
+    <arg type='^{__CFString=}' />
+    <arg c_array_length_in_arg='2' type='^C' type64='^C' type_modifier='n' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='DHCPInfoGetLeaseStartTime'>
+    <retval type='^{__CFDate=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='DHCPInfoGetOptionData'>
+    <retval type='^{__CFData=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='C' />
+  </function>
+  <function name='SCBondInterfaceCopyAll'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCBondInterfaceCopyAvailableMemberInterfaces'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCBondInterfaceCopyStatus'>
+    <retval already_cfretained='true' type='^{__SCBondStatus=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCBondInterfaceCreate'>
+    <retval already_cfretained='true' type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCBondInterfaceGetMemberInterfaces'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCBondInterfaceGetOptions'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCBondInterfaceRemove'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCBondInterfaceSetLocalizedDisplayName'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCBondInterfaceSetMemberInterfaces'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCBondInterfaceSetOptions'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCBondStatusGetInterfaceStatus'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCBondStatus=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCBondStatusGetMemberInterfaces'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__SCBondStatus=}' />
+  </function>
+  <function name='SCBondStatusGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCCopyLastError'>
+    <retval already_cfretained='true' type='^{__CFError=}' />
+  </function>
+  <function name='SCDynamicStoreAddTemporaryValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreAddValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreCopyComputerName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCDynamicStoreCopyConsoleUser'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^I' type_modifier='o' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCDynamicStoreCopyDHCPInfo'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreCopyKeyList'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreCopyLocalHostName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCDynamicStore=}' />
+  </function>
+  <function name='SCDynamicStoreCopyLocation'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCDynamicStore=}' />
+  </function>
+  <function name='SCDynamicStoreCopyMultiple'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCDynamicStoreCopyNotifiedKeys'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCDynamicStore=}' />
+  </function>
+  <function name='SCDynamicStoreCopyProxies'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCDynamicStore=}' />
+  </function>
+  <function name='SCDynamicStoreCopyValue'>
+    <retval type='@' type64='@' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreCreate'>
+    <retval already_cfretained='true' type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreCreateRunLoopSource'>
+    <retval already_cfretained='true' type='^{__CFRunLoopSource=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='l' type64='l' />
+  </function>
+  <function name='SCDynamicStoreCreateWithOptions'>
+    <retval already_cfretained='true' type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCDynamicStoreGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCDynamicStoreKeyCreate' variadic='true'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg printf_format='true' type='@' type64='@' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateComputerName'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateConsoleUser'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateHostNames'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateLocation'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkGlobalEntity'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkInterface'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkInterfaceEntity'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateNetworkServiceEntity'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreKeyCreateProxies'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__CFAllocator=}' />
+  </function>
+  <function name='SCDynamicStoreNotifyValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreRemoveValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCDynamicStoreSetMultiple'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCDynamicStoreSetNotificationKeys'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCDynamicStoreSetValue'>
+    <retval type='B' />
+    <arg type='^{__SCDynamicStore=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCError'>
+    <retval type='i' />
+  </function>
+  <function name='SCErrorString'>
+    <retval type='*' type64='*' />
+    <arg type='i' />
+  </function>
+  <function name='SCNetworkCheckReachabilityByAddress'>
+    <retval type='B' />
+    <arg type='^{sockaddr=CC[14c]}' type_modifier='n' />
+    <arg type='I' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCNetworkCheckReachabilityByName'>
+    <retval type='B' />
+    <arg type='*' type64='*' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCNetworkConnectionCopyExtendedStatus'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkConnection=}' />
+  </function>
+  <function name='SCNetworkConnectionCopyServiceID'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCNetworkConnection=}' />
+  </function>
+  <function name='SCNetworkConnectionCopyStatistics'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkConnection=}' />
+  </function>
+  <function name='SCNetworkConnectionCopyUserOptions'>
+    <retval already_cfretained='true' type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkConnection=}' />
+  </function>
+  <function name='SCNetworkConnectionCopyUserPreferences'>
+    <retval type='B' />
+    <arg type='^{__CFDictionary=}' />
+    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_retained='true' type='^^{__CFDictionary}' type_modifier='o' />
+  </function>
+  <function name='SCNetworkConnectionCreateWithServiceID'>
+    <retval already_cfretained='true' type='^{__SCNetworkConnection=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCNetworkConnectionGetStatus'>
+    <retval type='i' />
+    <arg type='^{__SCNetworkConnection=}' />
+  </function>
+  <function name='SCNetworkConnectionGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkConnectionScheduleWithRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkConnection=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkConnectionStart'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkConnection=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkConnectionStop'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkConnection=}' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkConnectionUnscheduleFromRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkConnection=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkInterfaceCopyAll'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMTU'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^i' type_modifier='o' />
+    <arg type='^i' type_modifier='o' />
+    <arg type='^i' type_modifier='o' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaOptions'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^^{__CFDictionary}' type_modifier='o' />
+    <arg type='^^{__CFDictionary}' type_modifier='o' />
+    <arg type='^^{__CFArray}' type_modifier='o' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaSubTypeOptions'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkInterfaceCopyMediaSubTypes'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCNetworkInterfaceCreateWithInterface'>
+    <retval already_cfretained='true' type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkInterfaceForceConfigurationRefresh'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetBSDName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetConfiguration'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetExtendedConfiguration'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetHardwareAddressString'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetInterface'>
+    <retval type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetInterfaceType'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetLocalizedDisplayName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetSupportedInterfaceTypes'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetSupportedProtocolTypes'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkInterfaceGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkInterfaceRefreshConfiguration'>
+    <retval type='B' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkInterfaceSetConfiguration'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCNetworkInterfaceSetExtendedConfiguration'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCNetworkInterfaceSetMTU'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='i' />
+  </function>
+  <function name='SCNetworkInterfaceSetMediaOptions'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCNetworkProtocolGetConfiguration'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkProtocol=}' />
+  </function>
+  <function name='SCNetworkProtocolGetEnabled'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkProtocol=}' />
+  </function>
+  <function name='SCNetworkProtocolGetProtocolType'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkProtocol=}' />
+  </function>
+  <function name='SCNetworkProtocolGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkProtocolSetConfiguration'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkProtocol=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCNetworkProtocolSetEnabled'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkProtocol=}' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithAddress'>
+    <retval already_cfretained='true' type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{sockaddr=CC[14c]}' type_modifier='n' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithAddressPair'>
+    <retval already_cfretained='true' type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{sockaddr=CC[14c]}' type_modifier='n' />
+    <arg type='^{sockaddr=CC[14c]}' type_modifier='n' />
+  </function>
+  <function name='SCNetworkReachabilityCreateWithName'>
+    <retval already_cfretained='true' type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='*' type64='*' />
+  </function>
+  <function name='SCNetworkReachabilityGetFlags'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkReachability=}' />
+    <arg type='^I' type_modifier='o' />
+  </function>
+  <function name='SCNetworkReachabilityGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkReachabilityScheduleWithRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkReachabilitySetCallback'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkReachability=}' />
+    <arg type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCNetworkReachabilityUnscheduleFromRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkReachability=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkServiceAddProtocolType'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkServiceCopy'>
+    <retval already_cfretained='true' type='^{__SCNetworkService=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkServiceCopyAll'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCNetworkServiceCopyProtocol'>
+    <retval already_cfretained='true' type='^{__SCNetworkProtocol=}' />
+    <arg type='^{__SCNetworkService=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkServiceCopyProtocols'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceCreate'>
+    <retval already_cfretained='true' type='^{__SCNetworkService=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkServiceEstablishDefaultConfiguration'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceGetEnabled'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceGetInterface'>
+    <retval type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceGetName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceGetServiceID'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkServiceRemove'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkServiceRemoveProtocolType'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkServiceSetEnabled'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+    <arg type='B' />
+  </function>
+  <function name='SCNetworkServiceSetName'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkService=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkSetAddService'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkSetContainsInterface'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCNetworkSetCopy'>
+    <retval already_cfretained='true' type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkSetCopyAll'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCNetworkSetCopyCurrent'>
+    <retval already_cfretained='true' type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCNetworkSetCopyServices'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetCreate'>
+    <retval already_cfretained='true' type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCNetworkSetGetName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetGetServiceOrder'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetGetSetID'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCNetworkSetRemove'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetRemoveService'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+    <arg type='^{__SCNetworkService=}' />
+  </function>
+  <function name='SCNetworkSetSetCurrent'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+  </function>
+  <function name='SCNetworkSetSetName'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCNetworkSetSetServiceOrder'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkSet=}' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='SCPreferencesAddValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCPreferencesApplyChanges'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesCommitChanges'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesCopyKeyList'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesCreate'>
+    <retval already_cfretained='true' type='^{__SCPreferences=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesCreateWithAuthorization'>
+    <retval already_cfretained='true' type='^{__SCPreferences=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{AuthorizationOpaqueRef=}' type64='^{AuthorizationOpaqueRef=}' />
+  </function>
+  <function name='SCPreferencesGetSignature'>
+    <retval type='^{__CFData=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='SCPreferencesGetValue'>
+    <retval type='@' type64='@' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesLock'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='B' />
+  </function>
+  <function name='SCPreferencesPathCreateUniqueChild'>
+    <retval already_cfretained='true' type='^{__CFString=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesPathGetLink'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesPathGetValue'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesPathRemoveValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesPathSetLink'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesPathSetValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCPreferencesRemoveValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesScheduleWithRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesSetCallback'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg function_pointer='true' type='^?' type64='^?' />
+    <arg type='^{?=i^v^?^?^?}' type64='^{?=q^v^?^?^?}' />
+  </function>
+  <function name='SCPreferencesSetComputerName'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='L' type64='L' />
+  </function>
+  <function name='SCPreferencesSetLocalHostName'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCPreferencesSetValue'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' type64='@' />
+  </function>
+  <function name='SCPreferencesSynchronize'>
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesUnlock'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCPreferencesUnscheduleFromRunLoop'>
+    <retval type='B' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCVLANInterfaceCopyAll'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+    <arg type='^{__SCPreferences=}' />
+  </function>
+  <function name='SCVLANInterfaceCopyAvailablePhysicalInterfaces'>
+    <retval already_cfretained='true' type='^{__CFArray=}' />
+  </function>
+  <function name='SCVLANInterfaceCreate'>
+    <retval already_cfretained='true' type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCPreferences=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFNumber=}' />
+  </function>
+  <function name='SCVLANInterfaceGetOptions'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCVLANInterfaceGetPhysicalInterface'>
+    <retval type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCVLANInterfaceGetTag'>
+    <retval type='^{__CFNumber=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCVLANInterfaceRemove'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+  </function>
+  <function name='SCVLANInterfaceSetLocalizedDisplayName'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='SCVLANInterfaceSetOptions'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='SCVLANInterfaceSetPhysicalInterfaceAndTag'>
+    <retval type='B' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__SCNetworkInterface=}' />
+    <arg type='^{__CFNumber=}' />
+  </function>
+</signatures>
+

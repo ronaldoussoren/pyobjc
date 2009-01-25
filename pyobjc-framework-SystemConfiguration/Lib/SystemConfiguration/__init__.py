@@ -15,3 +15,6 @@ __bundle__ = _objc.initFrameworkWrapper("SystemConfiguration",
     globals=globals())
 
 from SystemConfiguration._manual import *
+
+SCBondInterfaceRef = SCNetworkInterfaceRef
+SCVLANInterfaceRef = SCNetworkInterfaceRef
