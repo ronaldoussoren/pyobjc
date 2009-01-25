@@ -39,13 +39,13 @@
     <arg type='@' type64='@' />
   </function>
   <function name='SKDocumentCreate'>
-    <retval already_cfretained='true' type='@' type64='@' />
+	  <retval already_cfretained='true' type='@' type64='@' />
     <arg type='^{__CFString=}' />
     <arg type='@' type64='@' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='SKDocumentCreateWithURL'>
-    <retval already_cfretained='true' type='@' type64='@' />
+	  <retval already_cfretained='true' type='@' type64='@' />
     <arg type='^{__CFURL=}' />
   </function>
   <function name='SKDocumentGetName'>
