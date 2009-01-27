@@ -10,12 +10,38 @@ import objc
 import os as _os
 import gc as _gc
 import subprocess as _subprocess
+import sys as _sys
+import struct as _struct
 
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
 _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
 _useleaks = False
 _leaksVerbose = False
+
+def fourcc(v):
+    """
+    Decode four-character-code integer definition
+
+    (e.g. 'abcd')
+    """
+    return _struct.unpack('>i', v)[0]
+
+def cast_int(value):
+    """
+    Cast value to 32bit integer
+
+    Usage:
+        cast_int(1 << 31) == -1
+
+    (where as: 1 << 31 == 2147483648)
+    """
+    value = value & 0xffffffff
+    if value & 0x80000000:
+        value =   ~value + 1 & 0xffffffff
+        return -value
+    else:
+        return value
 
 _os_release = None
 def os_release():
@@ -30,6 +56,23 @@ def os_release():
     pl = _pl.readPlist('/System/Library/CoreServices/SystemVersion.plist')
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
+
+def onlyOn32Bit(function):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @onlyOn32Bit
+            def test32BitOnly(self):
+                pass
+
+    The test runs only on 32-bit systems
+    """
+    if _sys.maxint > 2 ** 32:
+        return None
+    else:
+        return function
 
 
 def min_os_level(release):
@@ -48,13 +91,9 @@ def min_os_level(release):
 
     else:
         def decorator(function):
-            def result(self):
-                pass
+            return None
 
-            result.func_name = function.func_name
-            return result
-
-
+    return decorator
 
 
 
@@ -74,11 +113,149 @@ class TestCase (_unittest.TestCase):
 
     This also adds a number of useful assertion methods
     """
+    def failUnlessIsNone(self, value, message = None):
+        if value is not None:
+            sel.fail(message, "%r is not %r"%(value, test))
+
+    def failIfIsNone(self, value,  message = None):
+        if value is None:
+            sel.fail(message, "%r is not %r"%(value, test))
+
+    def failUnlessArgIsCFRetained(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info['arguments'][argno+offset]['already_cfretained']:
+            self.fail(message or "%r is not cfretained"%(method,))
+
+    def failIfArgIsCFRetained(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if info['arguments'][argno+offset]['already_cfretained']:
+            self.fail(message or "%r is cfretained"%(method,))
+
+    def failUnlessResultIsCFRetained(self, method, message = None):
+        info = method.__metadata__()
+        if not info['retval']['already_cfretained']:
+            self.fail(message or "%r is not cfretained"%(method,))
+
+    def failIfResultIsCFRetained(self, method, message = None):
+        info = method.__metadata__()
+        if info['retval']['already_cfretained']:
+            self.fail(message or "%r is cfretained"%(method,))
+
+    def failUnlessResultIsRetained(self, method, message = None):
+        info = method.__metadata__()
+        if not info['retval']['already_retained']:
+            self.fail(message or "%r is not retained"%(method,))
+
+    def failIfResultIsRetained(self, method, message = None):
+        info = method.__metadata__()
+        if info['retval']['already_retained']:
+            self.fail(message or "%r is retained"%(method,))
+
+    def failUnlessResultHasType(self, method, tp, message=None):
+        info = method.__metadata__()
+        type = info['retval']['type']
+        if type != tp:
+            self.fail(message or "result of %r is not of type %r, but %r"%(
+                method, tp, type))
+        
+    def failUnlessArgHasType(self, method, argno, tp, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if type != tp:
+            self.fail(message or "arg %d of %s is not of type %r, but %r"%(
+                argno, method, tp, type))
+
+    def failUnlessArgIsSEL(self, method, argno, sel_type, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if type != objc._C_SEL:
+            self.fail(message or "arg %d of %s is not of type SEL"%(
+                argno, method))
+
+        st = info['arguments'][argno+offset]['sel_of_type']
+        if st != sel_type:
+            self.fail(message or "arg %d of %s doesn't have sel_type %r"%(
+                argno, method, seltype))
+
+    def failUnlessResultIsBOOL(self, method, message=None):
+        info = method.__metadata__()
+        type = info['retval']['type']
+        if type != objc._C_NSBOOL:
+            self.fail(message or "result of %s is not of type BOOL"%(
+                method))
+
+    def failUnlessArgIsBOOL(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if type != objc._C_NSBOOL:
+            self.fail(message or "arg %d of %s is not of type BOOL"%(
+                argno, method))
+
+    def failUnlessArgIsOut(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if not type.startswith('o^'):
+            self.fail(message or "arg %d of %s is not an 'out' argument"%(
+                argno, method))
+
+    def failUnlessArgIsInOut(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if not type.startswith('N^'):
+            self.fail(message or "arg %d of %s is not an 'inout' argument"%(
+                argno, method))
+
+    def failUnlessArgIsIn(self, method, argno, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if not type.startswith('n^'):
+            self.fail(message or "arg %d of %s is not an 'in' argument"%(
+                argno, method))
+
+
+    def failUnlessStartswith(self, value, check, message=None):
+        if not value.startswith(check):
+            self.fail(message or "not %r.startswith(%r)"%(value, check))
+
     def failUnlessIsInstance(self, value, types, message=None):
-        self.failUnless(isinstance(value, types), message)
+        if not isinstance(value, types):
+            self.fail(message or "%s is not an instance of %r"%(value, types))
 
     def failIfIsInstance(self, value, types, message=None):
-        self.failUnless(isinstance(value, types), message)
+        if isinstance(value, types):
+            self.fail(message or "%s is an instance of %r"%(value, types))
 
     assertIsInstance = failUnlessIsInstance
 

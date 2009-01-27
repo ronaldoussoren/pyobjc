@@ -10,6 +10,8 @@
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSURL.h>
 
+#include <dlfcn.h>
+
 static CFBundleRef 
 NSBundle2CFBundle(NSBundle* bundle)
 {
