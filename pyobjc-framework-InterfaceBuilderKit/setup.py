@@ -24,7 +24,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-InterfaceBuilderKit',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
