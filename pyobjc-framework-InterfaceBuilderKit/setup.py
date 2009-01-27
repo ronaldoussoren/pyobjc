@@ -5,6 +5,12 @@ These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
+
+NOTE: To run the unittests for this framework use::
+
+    $ env DYLD_FRAMEWORK_PATH='/Developer/Library/PrivateFrameworks/' python setup.py test
+
+This is needed because the InterfaceBuilderKit framework won't load otherwise.
 '''
 import ez_setup
 ez_setup.use_setuptools()
