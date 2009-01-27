@@ -787,18 +787,23 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			}
 		}
 	}
+	if (PyErr_Occurred()) {
+		goto error_cleanup;
+	}
 
 	/* First round, count new instance-vars and check for overridden 
 	 * methods.
 	 */
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GET_ITEM(key_list, i);
+#if 0
 		if (PyErr_Occurred()) {
 			PyErr_SetString(PyObjCExc_InternalError,
 				"PyObjCClass_BuildClass: "
 				"Cannot fetch key in keylist");
 			goto error_cleanup;
 		}
+#endif
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL) {

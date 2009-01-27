@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <ctype.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
 
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
@@ -1914,6 +1915,15 @@ init_objc(void)
 
 	/* Add _C_CFTYPEID to avoid hardcoding this in our python code */
 	PyModule_AddStringConstant(m, "_C_CFTYPEID", @encode(CFTypeID));
+
+	/* Likewise for _C_NSInteger and _C_NSUInteger */
+	PyModule_AddStringConstant(m, "_C_NSInteger", @encode(NSInteger));
+	PyModule_AddStringConstant(m, "_C_NSUInteger", @encode(NSUInteger));
+	PyModule_AddStringConstant(m, "_C_CFIndex", @encode(CFIndex));
+
+
+	PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in));
+	PyModule_AddIntConstant(m, "_size_sockaddr_ip6", sizeof(struct sockaddr_in6));
 
 
 	PyModule_AddStringConstant(m, "__version__", OBJC_VERSION);

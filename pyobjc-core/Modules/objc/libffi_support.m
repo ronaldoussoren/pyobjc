@@ -1279,10 +1279,21 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 				if (err == -1) {
 					if (res == Py_None) {
-						PyErr_Format(PyExc_ValueError,
-						   "%s: returned None, expecting "
-						   "a value",
-						   sel_getName(*(SEL*)args[1]));
+						if (userdata->isMethod) {
+							PyErr_Format(PyExc_ValueError,
+							   "%s: returned None, expecting "
+							   "a value",
+							   sel_getName(*(SEL*)args[1]));
+						} else {
+							PyObject* repr = PyObject_Repr(
+								userdata->callable);
+							PyErr_Format(PyExc_ValueError,
+							   "%s: returned None, expecting "
+							   "a value",
+							   PyString_AsString(repr));
+							Py_XDECREF(repr);
+						}
+
 					}
 					Py_DECREF(res); 
 					goto error;
@@ -1290,10 +1301,20 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 		} else {
 			if (res != Py_None) {
-				PyErr_Format(PyExc_ValueError,
-					"%s: did not return None, expecting "
-					"void return value",
-					sel_getName(*(SEL*)args[1]));
+				if (userdata->isMethod) {
+					PyErr_Format(PyExc_ValueError,
+						"%s: did not return None, expecting "
+						"void return value",
+						sel_getName(*(SEL*)args[1]));
+				} else {
+					PyObject* repr = PyObject_Repr(
+						userdata->callable);
+					PyErr_Format(PyExc_ValueError,
+					   "%s: returned None, expecting "
+					   "a value",
+					   PyString_AsString(repr));
+					Py_XDECREF(repr);
+				}
 				goto error;
 			}
 			//*((int*)resp) = 0;
