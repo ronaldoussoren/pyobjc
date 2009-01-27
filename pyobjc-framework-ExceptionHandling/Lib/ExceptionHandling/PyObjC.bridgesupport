@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='NSStackTraceKey' type='@' />
+  <constant name='NSUncaughtRuntimeErrorException' type='@' />
+  <constant name='NSUncaughtSystemExceptionException' type='@' />
+  <enum name='NSHandleOtherExceptionMask' value='512' />
+  <enum name='NSHandleTopLevelExceptionMask' value='128' />
+  <enum name='NSHandleUncaughtExceptionMask' value='2' />
+  <enum name='NSHandleUncaughtRuntimeErrorMask' value='32' />
+  <enum name='NSHandleUncaughtSystemExceptionMask' value='8' />
+  <enum name='NSHangOnEveryExceptionMask' value='31' />
+  <enum name='NSHangOnOtherExceptionMask' value='16' />
+  <enum name='NSHangOnTopLevelExceptionMask' value='8' />
+  <enum name='NSHangOnUncaughtExceptionMask' value='1' />
+  <enum name='NSHangOnUncaughtRuntimeErrorMask' value='4' />
+  <enum name='NSHangOnUncaughtSystemExceptionMask' value='2' />
+  <enum name='NSLogAndHandleEveryExceptionMask' value='1023' />
+  <enum name='NSLogOtherExceptionMask' value='256' />
+  <enum name='NSLogTopLevelExceptionMask' value='64' />
+  <enum name='NSLogUncaughtExceptionMask' value='1' />
+  <enum name='NSLogUncaughtRuntimeErrorMask' value='16' />
+  <enum name='NSLogUncaughtSystemExceptionMask' value='4' />
+  <function name='NSExceptionHandlerResume' />
+  <informal_protocol name='NSExceptionHandlerDelegate'>
+    <method selector='exceptionHandler:shouldHandleException:mask:' type='B@:@@I' type64='B@:@@Q' />
+    <method selector='exceptionHandler:shouldLogException:mask:' type='B@:@@I' type64='B@:@@Q' />
+  </informal_protocol>
+  <class name='NSObject'>
+    <method selector='exceptionHandler:shouldHandleException:mask:'>
+      <retval type='B' />
+    </method>
+    <method selector='exceptionHandler:shouldLogException:mask:'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+
