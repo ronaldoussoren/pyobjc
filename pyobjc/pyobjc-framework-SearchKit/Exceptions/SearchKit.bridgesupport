@@ -46,12 +46,12 @@
     <arg index='1' type='@' type64='@' />
   </function>
   <function name='SKIndexCopyDocumentRefsForDocumentIDs'>
-    <arg c_array_length_in_arg='1' index='2' />
-    <arg c_array_length_in_arg='1' index='3' type='^@' type64='^@' />
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
+    <arg c_array_length_in_arg='1' index='3' type='^@' type64='^@' type_modifier='o' />
   </function>
   <function name='SKIndexCopyDocumentURLsForDocumentIDs'>
-    <arg c_array_length_in_arg='1' index='2' />
-    <arg already_retained='true' c_array_length_in_arg='1' index='3' />
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
+    <arg already_retained='true' c_array_length_in_arg='1' index='3' type_modifier='o' />
   </function>
   <function name='SKIndexCopyInfoForDocumentIDs'>
     <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
@@ -127,7 +127,7 @@
     <retval already_cfretained='true' already_retained='true' />
     <arg comment='context' index='4' type='^v' type64='^v' />
     <arg function_pointer='true' index='5' type='^?' type64='^?'>
-      <retval type='b' />
+      <retval type='B' />
       <arg type='@' />
       <arg type='@' />
       <arg type='^v' />

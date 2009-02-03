@@ -4,7 +4,7 @@ from SearchKit import *
 
 class TestSKDocument (TestCase):
     def testTypes(self):
-        self.failUnlessIsInstance(SKDocumentRef, objc.objc_class)
+        self.failUnlessIsCFType(SKDocumentRef)
 
     def testFunctions(self):
         self.failUnlessIsInstance(SKDocumentGetTypeID(), (int,  long))

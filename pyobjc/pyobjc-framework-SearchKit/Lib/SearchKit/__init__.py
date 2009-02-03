@@ -28,14 +28,37 @@ except NameError:
 
         pool = NSAutoreleasePool.alloc().init()
         try:
-            r = SKIndexCreateWithMutableData(NSMutableData.data(),
+            rI = SKIndexCreateWithMutableData(NSMutableData.data(),
                     None, kSKIndexInverted, None)
 
-            indexID = CFGetTypeID(r)
+            indexID = CFGetTypeID(rI)
 
-            r = SKIndexDocumentIteratorCreate(r, None)
+            r = SKIndexDocumentIteratorCreate(rI, None)
             iterID = CFGetTypeID(r)
+            del r
 
+            r = SKSearchGroupCreate([rI])
+            groupID = CFGetTypeID(r)
+
+            r = SKSearchResultsCreateWithQuery(r, ".*", kSKSearchRanked, 1, None, None)
+            resultID = CFGetTypeID(r)
+
+            if SKSearchGetTypeID() == 0:
+                # Type doesn't get registered unless you try to use it.
+                # That's no good for PyObjC, therefore forcefully create
+                # a SKSearch object
+                SKSearchCreate(rI, "q", 0)
+                searchref = objc.registerCFSignature(
+                        "SKSearchRef", "^{__SKSearch=}", SKSearchGetTypeID())
+            else:
+                searchref = SKSearchRef
+
+            del r
+            del rI
+
+            r = SKSummaryCreateWithString("foo")
+            summaryID = CFGetTypeID(r)
+            del r
 
         finally:
             del pool
@@ -46,12 +69,45 @@ except NameError:
         def SKIndexDocumentIteratorGetTypeID():
             return iterID
 
+        def SKSearchGroupGetTypeID():
+            return groupID
+
+        def SKSearchResultsGetTypeID():
+            return resultID
+
+        def SKSummaryGetTypeID():
+            return summaryID
+
         indexType = objc.registerCFSignature(
                 "SKIndexRef", "^{__SKIndex=}", indexID)
         iterType = objc.registerCFSignature(
                 "SKIndexDocumentIteratorRef", "^{__SKIndexDocumentIterator=}", indexID)
+        groupType = objc.registerCFSignature(
+                "SKSearchGroupRef", "^{__SKSearchGroup=}", groupID)
+        resultType = objc.registerCFSignature(
+                "SKSearchResultsRef", "^{__SKSearchResults=}", resultID)
+        summaryType = objc.registerCFSignature(
+                "SKSummaryRef", "^{__SKSummary=}", summaryID)
 
-        return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType)
+        # For some reason SKDocumentGetTypeID doesn't return the right value
+        # when the framework loader calls it the first time around,
+        # by this time the framework is fully initialized and we get
+        # the correct result.
+        SKDocumentRef = objc.registerCFSignature(
+                "SKDocumentRef", "@", SKDocumentGetTypeID())
+
+
+        return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType, 
+                SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
+                SKSummaryGetTypeID, summaryType,
+                SKDocumentRef, searchref)
 
     (SKIndexGetTypeID, SKIndexRef, 
-            SKIndexDocumentIteratorGetTypeID, SKIndexDocumentRef) = workaround()
+        SKIndexDocumentIteratorGetTypeID, SKIndexDocumentRef, 
+        SKSearchGroupGetTypeID, SKSearchGroupRef,
+        SKSearchResultsGetTypeID, SKSearchResultsRef,
+        SKSummaryGetTypeID, SKSummaryRef,
+        SKDocumentRef, SKSearchRef,
+    ) = workaround()
+
+    del workaround
