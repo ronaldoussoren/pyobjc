@@ -102,11 +102,23 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	/*
 	 * First look for an already registerd type
 	 */
+	if (encoding[0] != _C_ID) {
+		if (PyObjCPointerWrapper_RegisterID(encoding) == -1) {
+			return NULL;
+		}
+	}
+	if (typeID == 0) {
+		/* Partially registered type, just wrap is a
+		 * a plain CFTypeRef
+		 */
+		return NULL;
+	}
 
 	PyObject* cf = PyLong_FromUnsignedLongLong(typeID);
 	if (cf == NULL) {
 		return NULL;
 	}
+
 
 	result = PyDict_GetItem(gTypeid2class, cf);
 	if (result != NULL) {
@@ -179,12 +191,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 		return NULL;
 	}
 
-	if (PyObjCPointerWrapper_RegisterID(encoding) == -1) {
-		PyDict_DelItem(gTypeid2class, cf);
-		Py_DECREF(cf);
-		Py_DECREF(result);
-		return NULL;
-	}
 	Py_DECREF(cf); cf = NULL;
 
 	/* Force an artificially high refcount to avoid deallocation of the
