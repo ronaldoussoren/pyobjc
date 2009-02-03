@@ -6,9 +6,9 @@
   <cftype gettypeid_func='SKIndexDocumentIteratorGetTypeID' name='SKIndexDocumentIteratorRef' type='^{__SKIndexDocumentIterator=}' type64='^{__SKIndexDocumentIterator=}' />
   <cftype gettypeid_func='SKIndexGetTypeID' name='SKIndexRef' type='^{__SKIndex=}' type64='^{__SKIndex=}' />
   <cftype gettypeid_func='SKSearchGroupGetTypeID' name='SKSearchGroupRef' type='^{__SKSearchGroup=}' type64='^{__SKSearchGroup=}' />
-  <cftype gettypeid_func='SKSearchGetTypeID' name='SKSearchRef' type='^{__SKSearch=}' type64='^{__SKSearch=}' />
   <cftype gettypeid_func='SKSearchResultsGetTypeID' name='SKSearchResultsRef' type='^{__SKSearchResults=}' type64='^{__SKSearchResults=}' />
   <cftype gettypeid_func='SKSummaryGetTypeID' name='SKSummaryRef' type='^{__SKSummary=}' type64='^{__SKSummary=}' />
+  <cftype gettypeid_func='SKSearchGetTypeID' name='SKSearchRef' type='^{__SKSearch=}' type64='^{__SKSearch=}' />
   <constant name='kSKEndTermChars' type='^{__CFString=}' />
   <constant name='kSKLanguageTypes' type='^{__CFString=}' />
   <constant name='kSKMaximumTerms' type='^{__CFString=}' />
@@ -102,14 +102,14 @@
   <function name='SKIndexCopyDocumentRefsForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' />
-    <arg c_array_length_in_arg='1' type='^@' type64='^@' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^@' type64='^@' type_modifier='o' />
   </function>
   <function name='SKIndexCopyDocumentURLsForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' />
-    <arg already_retained='true' c_array_length_in_arg='1' type='^^{__CFURL}' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='n' />
+    <arg already_retained='true' c_array_length_in_arg='1' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='SKIndexCopyInfoForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
@@ -317,7 +317,7 @@
     <arg type='l' type64='l' />
     <arg type='^v' type64='^v' />
     <arg function_pointer='true' type='^?' type64='^?'>
-      <retval type='b' />
+      <retval type='B' />
       <arg type='@' />
       <arg type='@' />
       <arg type='^v' />

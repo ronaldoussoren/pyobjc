@@ -29,36 +29,50 @@ class TestSKSearch (TestCase):
         index = SKIndexCreateWithMutableData(
                 data, "pyobjc.test", kSKIndexInverted, None)
         self.failUnlessIsInstance(index, SKIndexRef)
+        doc = SKDocumentCreateWithURL(
+            CFURLCreateWithFileSystemPath(
+            None, u"/Library/Documentation/Acknowledgements.rtf",
+            kCFURLPOSIXPathStyle, False))
+        doc2 = SKDocumentCreateWithURL(
+            CFURLCreateWithFileSystemPath(
+            None, u"/Library/Documentation/iPod/Acknowledgements.rtf",
+            kCFURLPOSIXPathStyle, False))
+        SKIndexAddDocumentWithText(index, doc, "copyright and licenses", True)
+        SKIndexAddDocumentWithText(index, doc2, "copyright and licenses for iPod", True)
+        SKIndexFlush(index)
 
 
         grp = SKSearchGroupCreate([index])
         self.failUnlessIsInstance(grp, SKSearchGroupRef)
 
-        self.failUnlessResultIsCFRetained(SKSearchGroupCopyIndexes)
-        a = SKSearchGroupCopyIndexes(grp)
-        self.failUnlessIsInstance(a, CFArrayRef)
 
         l = []
 
-        @objc.selectorFor(SKSearchResultsCreateWithQuery)
+        @objc.callbackFor(SKSearchResultsCreateWithQuery)
         def callback(idx, doc, ctx):
             l.append([idx, doc, ctx])
+            return True
 
         ctx = 10
+
         res = SKSearchResultsCreateWithQuery(
-                grp, "copyright", kSKSearchRanked, 10, ctx, callback)
+                grp, u"apache", kSKSearchRequiredRanked, 2, ctx, callback)
         self.failUnlessIsInstance(res, SKSearchResultsRef)
-        print l
 
-        v = SKSearchResultsCreateWithDocuments(
-                grp, [], 0, ctx, callback)
-        self.failUnlessIsInstance(v, SKSearchResultsRef)
-        print l
+        res = SKSearchResultsCreateWithDocuments(
+                grp, [doc], 10, ctx, callback)
+        self.failUnlessIsInstance(res, SKSearchResultsRef)
+        self.failUnlessEqual(len(l), 2)
+        self.failUnlessEqual(l[0][0], index)
+        self.failUnlessIsInstance(l[0][1], SKDocumentRef)
+        self.failUnlessEqual(l[0][2], ctx)
 
-        v = SKSearchResultsGetCount(res)
-        self.failUnlessIsInstance(v, (int, long))
+        cnt = SKSearchResultsGetCount(res)
+        self.failUnlessIsInstance(cnt, (int, long))
+        self.failUnless(cnt > 0)
 
-        v, o1, o2, o3 = SKSearchResultsGetInfoInRange(res, CFRange(0, 10), None, None, None)
+
+        v, o1, o2, o3 = SKSearchResultsGetInfoInRange(res, CFRange(0, cnt), None, None, None)
         self.failUnlessIsInstance(v, int)
         self.failUnlessIsInstance(o1, tuple)
         if o1:
@@ -70,33 +84,32 @@ class TestSKSearch (TestCase):
         if o3:
             self.failUnlessIsInstance(o3[0], float)
 
-        v = SKSearchResultsCopyMatchingTerms(res, 0)
+        v = SKSearchResultsCopyMatchingTerms(res, 1)
         self.failUnlessIsInstance(v, CFArrayRef)
 
         src = SKSearchCreate(index, "copyright", kSKSearchOptionFindSimilar)
         self.failUnlessIsInstance(src, SKSearchRef)
 
         v, o1, o2, o3 = SKSearchFindMatches(src, 10, None, None, 1.0, None)
-        self.failUnlessEqual(v, bool)
-        self.failUnlessEqual(o1, tuple)
+        self.failUnlessIsInstance(v, bool)
+        self.failUnlessIsInstance(o1, tuple)
         if o1:
-            self.failUnlesssInstance(o1[0], (int, long))
-        self.failUnlessEqual(o2, tuple)
+            self.failUnlessIsInstance(o1[0], (int, long))
+        self.failUnlessIsInstance(o2, tuple)
         if o2:
-            self.failUnlesssInstance(o2[0], (int, long))
-        self.failUnlessEqual(o3, float)
+            self.failUnlessIsInstance(o2[0], float)
+        self.failUnlessIsInstance(o3, (int, long))
 
         v1, v2 = SKIndexCopyInfoForDocumentIDs(
                 index, o3, o1, None, None)
         if v1:
-            self.failUnlesssInstance(v1[0], unicode)
-        self.failUnlessEqual(v2, tuple)
+            self.failUnlessIsInstance(v1[0], unicode)
+        self.failUnlessIsInstance(v2, tuple)
         if v2:
-            self.failUnlesssInstance(v2[0], (int, long))
+            self.failUnlessIsInstance(v2[0], (int, long))
 
         v = SKIndexCopyDocumentRefsForDocumentIDs(
-            index,
-            o3, o1, None)
+            index, o3, o1, None)
         self.failUnlessIsInstance(v, tuple)
         if v:
             self.failUnlessIsInstance(v[0], SKDocumentRef)
@@ -106,6 +119,10 @@ class TestSKSearch (TestCase):
         self.failUnlessIsInstance(v, tuple)
         if v:
             self.failUnlessIsInstance(v[0], CFURLRef)
+
+        self.failUnlessResultIsCFRetained(SKSearchGroupCopyIndexes)
+        a = SKSearchGroupCopyIndexes(grp)
+        self.failUnlessIsInstance(a, CFArrayRef)
 
         SKSearchCancel(src)
 
