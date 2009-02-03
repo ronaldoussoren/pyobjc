@@ -105,6 +105,7 @@ def _leaks():
 
 
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
+_nscftype = objc.lookUpClass('NSCFType')
 
 class TestCase (_unittest.TestCase):
     """
@@ -113,9 +114,24 @@ class TestCase (_unittest.TestCase):
 
     This also adds a number of useful assertion methods
     """
+    def failUnlessIsCFType(self, tp, message = None):
+        if not isinstance(tp, objc.objc_class):
+            self.fail(message or "%r is not a CFTypeRef type"%(tp,))
+
+        if tp is _nscftype:
+            self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
+
+    def failUnlessIsOpaquePointer(self, tp, message = None):
+        if not hasattr(tp, "__pointer__"):
+            self.fail(message or "%r is not an opaque-pointer"%(tp,))
+
+        if not hasattr(tp, "__typestr__"):
+            self.fail(message or "%r is not an opaque-pointer"%(tp,))
+
+
     def failUnlessIsNone(self, value, message = None):
         if value is not None:
-            sel.fail(message, "%r is not %r"%(value, test))
+            sel.fail(message or "%r is not %r"%(value, test))
 
     def failIfIsNone(self, value,  message = None):
         if value is None:

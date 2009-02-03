@@ -389,7 +389,7 @@ signature_to_ffi_type(const char* argtype)
 		return &ffi_type_pointer;
 	default:
 		PyErr_Format(PyExc_NotImplementedError,
-			"Type '%#x' not supported", *argtype);
+			"Type '%#x' (%c) not supported", *argtype, *argtype);
 		return NULL;
 	}
 }
