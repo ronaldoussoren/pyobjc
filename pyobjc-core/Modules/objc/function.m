@@ -23,6 +23,8 @@ typedef struct {
 	PyObject* module;
 } func_object;
 
+
+
 PyDoc_STRVAR(func_metadata_doc, "Return a dict that describes the metadata for this function.");
 static PyObject* func_metadata(PyObject* self)
 {
@@ -71,6 +73,32 @@ static PyMemberDef func_members[] = {
 		NULL
 	}
 };
+
+static PyObject* func_repr(PyObject* _self)
+{
+	func_object* self = (func_object*)_self;
+	char buf[128];
+
+	if (self->name == NULL) {
+		snprintf(buf, 128, "<objc.function object at %p>", self);
+	} else if (PyString_Check(self->name)) {
+		snprintf(buf, 128, "<objc.function '%s' at %p>", PyString_AsString(self->name), self);
+	} else {
+		PyObject* name_repr = PyObject_Repr(self->name);
+		if (name_repr == NULL) {
+			return NULL;
+		}
+		if (!PyString_Check(name_repr)) {
+			snprintf(buf, 128, "<objc.function object at %p>", self);
+		} else {
+			snprintf(buf, 128, "<objc.function '%s' at %p>", PyString_AsString(name_repr), self);
+		}
+		Py_DECREF(name_repr);
+	}
+	return PyString_FromString(buf);
+}
+
+
 
 static PyObject* 
 func_call(PyObject* s, PyObject* args, PyObject* kwds)
@@ -252,7 +280,7 @@ PyTypeObject PyObjCFunc_Type =
 	0,					/* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
-	0,					/* tp_repr */
+	func_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,					/* tp_as_mapping */
