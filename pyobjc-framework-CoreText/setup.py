@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 import ez_setup
 ez_setup.use_setuptools()
 
-from setuptools import setup
+from setuptools import setup, Extension
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
 except ImportError:
@@ -27,6 +27,11 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "CoreText" ],
     package_dir = { '': 'Lib' },
+    ext_modules = [
+            Extension('CoreText._manual',
+                [ 'Modules/_manual.m' ],
+                extra_link_args=['-framework', 'CoreServices']),
+    ],
     setup_requires = [ 
     ],
     install_requires = [ 
