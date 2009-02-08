@@ -2,14 +2,14 @@
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='1.0'>
   <struct name='CTParagraphStyleSetting' />
-  <cftype gettypeid_func='CTFontCollectionGetTypeID' name='CTFontCollectionRef' />
-  <cftype gettypeid_func='CTFontDescriptorGetTypeID' name='CTFontDescriptorRef' />
-  <cftype gettypeid_func='CTFontGetTypeID' name='CTFontRef' />
+  <cftype gettypeid_func='CTFontCollectionGetTypeID' name='CTFontCollectionRef'  tollfree='NSCTFontCollectionRef' />
+  <cftype gettypeid_func='CTFontDescriptorGetTypeID' name='CTFontDescriptorRef'  tollfree='NSCTFontDescriptor' />
+  <cftype gettypeid_func='CTFontGetTypeID' name='CTFontRef' tollfree='NSCTFont' />
   <cftype gettypeid_func='CTFrameGetTypeID' name='CTFrameRef' />
   <cftype gettypeid_func='CTFramesetterGetTypeID' name='CTFramesetterRef' />
-  <cftype gettypeid_func='CTGlyphInfoGetTypeID' name='CTGlyphInfoRef' />
+  <cftype gettypeid_func='CTGlyphInfoGetTypeID' name='CTGlyphInfoRef' tollfree='NSCTGlyphInfo'  />
   <cftype gettypeid_func='CTLineGetTypeID' name='CTLineRef' />
-  <cftype gettypeid_func='CTParagraphStyleGetTypeID' name='CTParagraphStyleRef' />
+  <cftype gettypeid_func='CTParagraphStyleGetTypeID' name='CTParagraphStyleRef'  />
   <cftype gettypeid_func='CTRunGetTypeID' name='CTRunRef' />
   <cftype gettypeid_func='CTTextTabGetTypeID' name='CTTextTabRef' />
   <cftype gettypeid_func='CTTypesetterGetTypeID' name='CTTypesetterRef' />
@@ -24,8 +24,13 @@
   </function>
   <function name='CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback'>
     <retval already_cfretained='true' />
-    <arg comment='XXX: sort-like callback' index='1' type='^?' type64='^?' />
-    <arg index='2' type='^v' type64='^v' />
+    <arg index='1' type='^?' type64='^?' function_pointer='true' function_pointer_retained='false' >
+        <retval type='i' />
+	<arg type='^{__CTFontDescriptor=}' />
+        <arg type='^{__CTFontDescriptor=}' />
+	<arg type='@' />
+    </arg>
+    <arg index='2' type='@' type64='@' />
   </function>
   <function name='CTFontCollectionCreateWithFontDescriptors'>
     <retval already_cfretained='true' />
@@ -58,8 +63,8 @@
     <retval already_cfretained='true' />
   </function>
   <function name='CTFontCopyGraphicsFont'>
-    <retval already_retained='true' type='^{CGFont=}' type64='^{CGFont=}' />
-    <arg index='1' null_accepted='true' type_modifier='o' />
+    <retval already_cfretained='true' type='^{CGFont=}' type64='^{CGFont=}' />
+    <arg index='1' null_accepted='true' type_modifier='o' already_cfretained='true' />
   </function>
   <function name='CTFontCopyLocalizedName'>
     <retval already_cfretained='true' />
@@ -100,6 +105,10 @@
   </function>
   <function name='CTFontCreateForString'>
     <retval already_cfretained='true' />
+  </function>
+  <function name='CTFontCreatePathForGlyph'>
+    <retval type='^{CGPath=}' type64='^{CGPath=}' />
+    <arg index='2' type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
   </function>
   <function name='CTFontCreateUIFontForLanguage'>
     <retval already_cfretained='true' />
@@ -157,23 +166,24 @@
     <retval already_cfretained='true' />
   </function>
   <function name='CTFontGetAdvancesForGlyphs'>
-    <arg index='2' type_modifier='n' />
-    <arg index='3' null_accepted='true' type_modifier='o' />
+    <arg index='2' type_modifier='n' c_array_length_in_arg='4' />
+    <arg index='3' null_accepted='true' type_modifier='o' c_array_length_in_arg='4' />
   </function>
   <function name='CTFontGetBoundingRectsForGlyphs'>
-    <arg index='2' type_modifier='n' />
-    <arg index='3' null_accepted='true' type_modifier='o' />
+    <arg index='2' type_modifier='n' c_array_length_in_arg='4' />
+    <arg index='3' null_accepted='true' type_modifier='o' c_array_length_in_arg='4' />
   </function>
   <function name='CTFontGetGlyphsForCharacters'>
-    <arg index='1' type_modifier='n' unicode_string='true' />
+    <arg index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='3' index='1' type_modifier='n' type='T' type64='T' />
     <arg c_array_length_in_arg='3' index='2' type_modifier='o' />
   </function>
   <function name='CTFontGetPlatformFont'>
-    <arg index='1' null_accepted='true' type_modifier='o' />
+    <arg index='1' null_accepted='true' type_modifier='o' already_cfretained='true' />
   </function>
   <function name='CTFontGetVerticalTranslationsForGlyphs'>
-    <arg index='1' type_modifier='n' />
-    <arg index='2' type_modifier='o' />
+    <arg index='1' type_modifier='n' c_array_length_in_arg='3' />
+    <arg index='2' type_modifier='o' c_array_length_in_arg='3' />
   </function>
   <function name='CTFrameDraw'>
     <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
@@ -216,7 +226,7 @@
     <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
   </function>
   <function name='CTLineGetOffsetForStringIndex'>
-    <arg index='2' type='^f' type64='^d' />
+    <arg index='2' type='^f' type64='^d' type_modifier='o'/>
   </function>
   <function name='CTLineGetTypographicBounds'>
     <arg index='1' null_accepted='true' type_modifier='o' />
@@ -231,31 +241,31 @@
     <retval already_cfretained='true' />
   </function>
   <function name='CTParagraphStyleGetValueForSpecifier'>
-    <arg c_array_length_in_arg='2' index='3' />
+    <arg c_array_length_in_arg='2' index='3' type_modifier='o'/>
   </function>
   <function name='CTRunDraw'>
     <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
   </function>
   <function name='CTRunGetGlyphs'>
-    <arg c_array_length_in_arg='1' index='2' type_modifier='o' unicode_string='true' />
+    <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
   </function>
   <function name='CTRunGetGlyphsPtr'>
-    <retval type='r^S' type64='r^S' />
+    <retval type='r^S' type64='r^S' c_array_of_variable_length='true' />
   </function>
   <function name='CTRunGetImageBounds'>
     <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
   </function>
   <function name='CTRunGetPositions'>
-    <arg index='2' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+    <arg index='2' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' c_array_length_in_arg='1' />
   </function>
   <function name='CTRunGetPositionsPtr'>
-    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' />
+    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' c_array_of_variable_length='true' />
   </function>
   <function name='CTRunGetStringIndices'>
     <arg c_array_length_in_arg='1' index='2' type_modifier='o' />
   </function>
   <function name='CTRunGetStringIndicesPtr'>
-    <retval type='r^i' type64='r^q' />
+    <retval type='r^i' type64='r^q' c_array_of_variable_length='true' />
   </function>
   <function name='CTRunGetTypographicBounds'>
     <arg index='2' type_modifier='o' />
