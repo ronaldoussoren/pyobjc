@@ -206,8 +206,8 @@ class TestCase (_unittest.TestCase):
 
         st = info['arguments'][argno+offset]['sel_of_type']
         if st != sel_type:
-            self.fail(message or "arg %d of %s doesn't have sel_type %r"%(
-                argno, method, seltype))
+            self.fail(message or "arg %d of %s doesn't have sel_type %r but %r"%(
+                argno, method, sel_type, info['arguments'][argno+offset]['sel_of_type']))
 
     def failUnlessResultIsBOOL(self, method, message=None):
         info = method.__metadata__()
