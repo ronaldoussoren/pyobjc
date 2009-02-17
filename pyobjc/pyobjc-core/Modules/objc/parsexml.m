@@ -847,6 +847,7 @@ handle_class(xmlNode* cur_node)
 
 		BOOL variadic = attribute_bool(method, "variadic", NULL, NO);
 		BOOL c_array = attribute_bool(method, "c_array_delimited_by_null", NULL, NO);
+		char* c_length = attribute_string(method, "c_array_length_in_arg", NULL);
 		BOOL ignore = attribute_bool(method, "ignore", NULL, NO);
 
 		PyObject* metadata = PyDict_New();
@@ -919,6 +920,27 @@ handle_class(xmlNode* cur_node)
 				xmlFree(selname);
 				xmlFree(classname);
 				return -1;
+			}
+
+			if (c_length != NULL) {
+				long cnt = strtol(c_length, NULL, 10);
+
+				v = PyInt_FromLong(cnt);
+				if (v == NULL) {
+					Py_DECREF(metadata);
+					Py_XDECREF(pyClassname);
+					xmlFree(selname);
+					xmlFree(classname);
+					return -1;
+				}
+				r = PyDict_SetItemString(metadata, "c_array_length_in_arg", v);
+				if (r == -1) {
+					Py_DECREF(metadata);
+					Py_XDECREF(pyClassname);
+					xmlFree(selname);
+					xmlFree(classname);
+					return -1;
+				}
 			}
 		}
 
@@ -1123,6 +1145,26 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 			return -1;
 		}
 		Py_DECREF(v);
+
+		char* ch = attribute_string(cur_node, "c_array_length_in_arg", NULL);
+		if (ch) {
+			long count = strtol(ch, NULL, 10);
+			v = PyInt_FromLong(count);
+			if (v == NULL) {
+				xmlFree(name);
+				Py_DECREF(metadata);
+				Py_DECREF(arguments);
+				return -1;
+			}
+
+			if (PyDict_SetItemString(metadata, "c_array_length_in_arg", v) < 0)  {
+				xmlFree(name);
+				Py_DECREF(metadata);
+				Py_DECREF(v);
+				return -1;
+			}
+			Py_DECREF(v);
+		}
 	}
 
 	PyObject* siglist = PyList_New(0);

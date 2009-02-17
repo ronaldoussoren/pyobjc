@@ -189,17 +189,17 @@
 				PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
 				setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-				PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+				PyObject* v2 = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
 				Py_DECREF(cdr);
 				Py_DECREF(setValue);
 				Py_DECREF(selfAsPython);
 
-				if (v == NULL) {
+				if (v2 == NULL) {
 					PyObjC_GIL_FORWARD_EXC();
 				}
 
 				Py_XDECREF(value);
-				value = v;
+				value = v2;
 
 				NSObject* proxy = PyObjC_FindObjCProxy(value);
 				if (proxy == NULL) {
@@ -207,7 +207,7 @@
 				} else {
 					[self release];
 					[proxy retain];
-					self = (OC_PythonObject*)proxy;
+					self = (OC_PythonString*)proxy;
 				}
 
 

@@ -910,22 +910,35 @@ static int parse_varargs_array(
 	PyObjCMethodSignature* methinfo,
 	PyObject* argtuple, Py_ssize_t argoffset,
 	void** byref,
-	ffi_type** arglist, void** values)
+	ffi_type** arglist, void** values, int count)
 {
 	Py_ssize_t curarg = methinfo->ob_size-1;
 	Py_ssize_t maxarg = PyTuple_Size(argtuple);
+	Py_ssize_t argSize;
+
+	if (count != -1) {
+		if (maxarg - curarg != count) {
+			PyErr_Format(PyExc_ValueError, "Wrong number of variadic arguments, need %d, got %d",
+					count, (maxarg - curarg));
+			return -1;
+		}
+	}
 
 	struct _PyObjC_ArgDescr* argType = (
 			methinfo->argtype + methinfo->ob_size - 1);
 
-	if (argType->type[0] != _C_ID) {
-		PyErr_Format(PyExc_TypeError,
-			"variadic null-terminated arrays only supported for type '%c', not '%s' || %s", _C_ID, argType->type, PyObject_REPR((PyObject*)methinfo));
-		return -1;
+	argSize = PyObjCRT_SizeOfType(argType->type);
+
+	if (count == -1) {
+		if (argType->type[0] != _C_ID) {
+			PyErr_Format(PyExc_TypeError,
+				"variadic null-terminated arrays only supported for type '%c', not '%s' || %s", _C_ID, argType->type, PyObject_REPR((PyObject*)methinfo));
+			return -1;
+		}
 	}
 
 	for (;argoffset < maxarg; curarg++, argoffset++) {
-		byref[curarg]  = PyMem_Malloc(sizeof(id));
+		byref[curarg]  = PyMem_Malloc(argSize);
 		if (byref[curarg] == NULL) {
 			return -1;
 		}
@@ -2169,7 +2182,7 @@ int PyObjCFFI_ParseArguments(
 	 */
 
 	Py_ssize_t meth_arg_count;
-	if (methinfo->variadic && methinfo->null_terminated_array) {
+	if (methinfo->variadic && (methinfo->null_terminated_array || (methinfo->arrayArg != -1))) {
 		meth_arg_count = methinfo->ob_size - 1;
 	}  else {
 		meth_arg_count = methinfo->ob_size;
@@ -2931,7 +2944,24 @@ int PyObjCFFI_ParseArguments(
 		r = parse_varargs_array(
 				methinfo,
 				args, py_arg, byref, 
-				arglist, values);
+				arglist, values, -1);
+		if (r == -1) {
+			return -1;
+		}
+		return r;
+	} else if (methinfo->variadic && methinfo->arrayArg != -1) {
+		int r;
+		Py_ssize_t cnt = extract_count(
+			methinfo->argtype[methinfo->arrayArg].type,
+			values[methinfo->arrayArg]);
+		if (cnt == -1) {
+			return -1;
+		}
+
+		r = parse_varargs_array(
+				methinfo,
+				args, py_arg, byref, 
+				arglist, values, cnt);
 		if (r == -1) {
 			return -1;
 		}
@@ -3395,7 +3425,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		flags = meth->sel_flags;
 	}
 	rettype = methinfo->rettype.type;
-	variadicAllArgs = methinfo->variadic && methinfo->null_terminated_array;
+	variadicAllArgs = methinfo->variadic && (methinfo->null_terminated_array || methinfo->arrayArg != -1);
 
 	if (methinfo->suggestion != NULL) {
 		PyErr_SetObject(PyExc_TypeError, methinfo->suggestion);
