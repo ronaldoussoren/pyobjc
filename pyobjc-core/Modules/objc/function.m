@@ -151,6 +151,8 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 		return NULL;
 	}
 
+	variadicAllArgs = self->methinfo->variadic && (self->methinfo->null_terminated_array || self->methinfo->arrayArg != -1);
+
 	if (variadicAllArgs) {
 		if (byref_in_count != 0 || byref_out_count != 0) {
 			PyErr_Format(PyExc_TypeError, "Sorry, printf format with by-ref args not supported");

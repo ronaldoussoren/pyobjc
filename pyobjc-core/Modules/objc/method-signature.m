@@ -574,14 +574,20 @@ PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature,
 		methinfo->null_terminated_array = YES;
 	}
 
+	methinfo->arrayArg = -1;
+	v = PyDict_GetItemString(metadata, "c_array_length_in_arg");
+	if (v && PyInt_Check(v)) {
+		methinfo->arrayArg = PyInt_AsLong(v);
+	}
 
 	methinfo->variadic = NO;
 	v = PyDict_GetItemString(metadata, "variadic");
 	if (v && PyObject_IsTrue(v)) {
 		methinfo->variadic = YES;
 
-		if (methinfo->suggestion == NULL 
-					&& !methinfo->null_terminated_array) {
+		if ((methinfo->suggestion == NULL)
+					&& (!methinfo->null_terminated_array)
+					&& (methinfo->arrayArg == -1)) {
 			for (i = 0; i < methinfo->ob_size; i++) {
 				if (methinfo->argtype[i].printfFormat) {
 					return methinfo;
@@ -761,8 +767,13 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
 		Py_DECREF(v);
 		if (r == -1) goto error;
 	}
-
-
+	if (methinfo->variadic && methinfo->arrayArg != -1) {
+		v = PyInt_FromLong(methinfo->arrayArg);
+		if (v == NULL) goto error;
+		r = PyDict_SetItemString(result, "c_array_length_in_arg", v);
+		Py_DECREF(v);
+		if (r == -1) goto error;
+	}
 
 	if (methinfo->suggestion) {
 		r = PyDict_SetItemString(result, "suggestion", 

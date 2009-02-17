@@ -52,6 +52,7 @@ struct _PyObjCMethodSignature {
 	PyObject_VAR_HEAD
 
 	const char* signature;
+	int  arrayArg;
 	BOOL variadic:1;
 	BOOL null_terminated_array:1;
 	BOOL		free_result:1;
