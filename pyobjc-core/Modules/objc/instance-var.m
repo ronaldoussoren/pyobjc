@@ -166,7 +166,8 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 	}
 	
 	NSString* ocName = [NSString stringWithUTF8String:self->name];
-	[objc willChangeValueForKey:ocName];
+
+	// [objc willChangeValueForKey:ocName];
 
 	if (self->isSlot) {
 		PyObject** slotval = (PyObject**)(
@@ -175,7 +176,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 		Py_XDECREF(*slotval);
 		*slotval = value;
 
-		[objc didChangeValueForKey:ocName];
+		// [objc didChangeValueForKey:ocName];
 		return 0;
 	}
 
@@ -185,7 +186,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 
 		res = depythonify_c_value(@encode(id), value, &new_value);
 		if (res == -1) {
-			[objc didChangeValueForKey:ocName];
+			// [objc didChangeValueForKey:ocName];
 			return -1;
 		}
 
@@ -200,24 +201,24 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 		}
 
 		object_setIvar(objc, var, new_value);
-		[objc didChangeValueForKey:ocName];
+		// [objc didChangeValueForKey:ocName];
 
 		return 0;
 	}
 
 	size = PyObjCRT_SizeOfType(ivar_getTypeEncoding(var));
 	if (size == -1) {
-		[objc didChangeValueForKey:ocName];
+		// [objc didChangeValueForKey:ocName];
 		return -1;
 	}
 	res = depythonify_c_value(ivar_getTypeEncoding(var), value, 
 		(void*)(((char*)objc)+ivar_getOffset(var)));
 	if (res == -1) {
-		[objc didChangeValueForKey:ocName];
+		// [objc didChangeValueForKey:ocName];
 		return -1;
 	}
 
-	[objc didChangeValueForKey:ocName];
+	// [objc didChangeValueForKey:ocName];
 	return 0;
 }
 

@@ -226,7 +226,7 @@ PyObjCUnicode_New(NSString* value)
 	PyObjCUnicodeObject* result;
 // XXX - I don't know how to get gcc to let me use sizeof(unichar)
 #ifdef PyObjC_UNICODE_FAST_PATH
-	int length = [value length];
+	Py_ssize_t length = [value length];
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
 	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
 	if (PyUnicode_AS_UNICODE(result) == NULL) {

@@ -19,7 +19,7 @@
  * XXX: for reasons beyond my current comprehension the "legacy" block must be active, otherwise we
  * get a fatal python error.
  */
-#if 1 || !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_3
+#if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_3
 
 /* Deal with platforms that don't support KVO */
 
@@ -61,9 +61,9 @@ static void
 _UseKVO(NSObject *self, NSString *key, BOOL willChange)
 {           
     PyObjC_DURING
-        if ([key characterAtIndex:0] == (unichar)'_') return;
-
-        if (willChange) {
+        if ([key characterAtIndex:0] == (unichar)'_') {
+	    /* pass */
+	} else if (willChange) {
             [self willChangeValueForKey:key];
         } else {
             [self didChangeValueForKey:key];

@@ -195,8 +195,17 @@ class TestPyNumber (TestCase):
 
     def testClasses(self):
         # Ensure that python numbers are proxied using the right proxy type
-        for v in (True, False, 0, 1, 2**32+1, 2**64+1, 42.5):
+        for v in (0, 1, 2**32+1, 2**64+1, 42.5):
             self.assert_(OC_TestNumber.numberClass_(v) is OC_PythonNumber)
+
+        # The booleans True and False must be proxied as the corresponding
+        # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code
+        # get's upset.
+        boolClass = objc.lookUpClass('NSCFBoolean')
+        for v in (True, False):
+            self.assert_(OC_TestNumber.numberClass_(v) is boolClass)
+            self.assert_(objc.repythonify(v) is v)
+
 
     def testPythonIntConversions(self):
         # Conversions to other values. Note that values are converted
@@ -420,11 +429,11 @@ class TestPyNumber (TestCase):
 
         v = OC_TestNumber.numberDescription_(False)
         self.assert_(isinstance(v, unicode))
-        self.assertEquals(v, u"False")
+        self.assertEquals(v, u"0")
 
         v = OC_TestNumber.numberDescription_(True)
         self.assert_(isinstance(v, unicode))
-        self.assertEquals(v, u"True")
+        self.assertEquals(v, u"1")
 
 class TestInteractions (TestCase):
     # Test interactions between Python and NSNumber numbers
