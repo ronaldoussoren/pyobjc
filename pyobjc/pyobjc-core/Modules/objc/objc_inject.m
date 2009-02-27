@@ -244,13 +244,16 @@ static void
 INJECT_test_func(void) {
 }
 
+#if defined (__i386__)
+extern void __pthread_set_self(char*);
+#endif
+
 static void
 INJECT_ENTRY(ptrdiff_t codeOffset, objc_inject_param *param, size_t paramSize __attribute__((__unused__)), char *dummy_pthread_struct __attribute__((__unused__))) {
 #if defined (__i386__)
 	// On intel, per-pthread data is a zone of data that must be allocated.
 	// if not, all function trying to access per-pthread data (all mig functions for instance)
 	// will crash. 
-	extern void __pthread_set_self(char*);
 	__pthread_set_self(dummy_pthread_struct);
 #endif
 	func_wrappers *f = &param->f;

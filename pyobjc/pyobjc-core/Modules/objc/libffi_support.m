@@ -910,7 +910,7 @@ static int parse_varargs_array(
 	PyObjCMethodSignature* methinfo,
 	PyObject* argtuple, Py_ssize_t argoffset,
 	void** byref,
-	ffi_type** arglist, void** values, int count)
+	ffi_type** arglist, void** values, Py_ssize_t count)
 {
 	Py_ssize_t curarg = methinfo->ob_size-1;
 	Py_ssize_t maxarg = PyTuple_Size(argtuple);
@@ -918,7 +918,7 @@ static int parse_varargs_array(
 
 	if (count != -1) {
 		if (maxarg - curarg != count) {
-			PyErr_Format(PyExc_ValueError, "Wrong number of variadic arguments, need %d, got %d",
+			PyErr_Format(PyExc_ValueError, "Wrong number of variadic arguments, need %" PY_FORMAT_SIZE_T "d, got %" PY_FORMAT_SIZE_T "d",
 					count, (maxarg - curarg));
 			return -1;
 		}

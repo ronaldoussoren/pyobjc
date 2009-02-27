@@ -243,8 +243,5 @@ if sys.maxint < 2 ** 32:
             # cause a warning when called.
             self.assertEquals(1, 0)
 
-        def test_Missing(self):
-            self.fail("Implement test for class that doesn't implement a formal protocl, seems to be missing")
-
 if __name__ == '__main__':
     main()
