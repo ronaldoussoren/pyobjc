@@ -20,30 +20,16 @@ sources or nibs.)
 # -> Scroll View), and *no* work in the code. It was too easy, so for kicks
 # I added zoom functionality and a "Show rulers" checkbox.
 
-from AppKit import NSBezierPath, NSColor, NSRectFill
-from AppKit import NSCommandKeyMask
-from PyObjCTools import NibClassBuilder, AppHelper
-
-try:
-    True, False
-except NameError:
-    # True and False are not defined in Python before Python 2.2.1
-    True, False = 1, 0
-
-
-# create ObjC classes as defined in MainMenu.nib
-NibClassBuilder.extractClasses("MainMenu")
-
+from Cocoa import *
+from PyObjCTools import AppHelper
 
 ZOOM = 2.0
 
 
 # class defined in MainMenu.nib
-class DotView(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSView
-    # The following outlets are added to the class:
-    # colorWell
-    # sizeSlider
+class DotView(NSView):
+    colorWell = objc.IBOutlet()
+    sizeSlider = objc.IBOutlet()
 
     def initWithFrame_(self, frame):
         self.center = (50.0, 50.0)
@@ -59,6 +45,7 @@ class DotView(NibClassBuilder.AutoBaseClass):
         scrollView.setHasHorizontalRuler_(1)
         scrollView.setHasVerticalRuler_(1)
 
+    @objc.IBAction
     def zoomIn_(self, sender):
         (x, y), (bw, bh) = self.bounds()
         (x, y), (fw, fh) = self.frame()
@@ -66,6 +53,7 @@ class DotView(NibClassBuilder.AutoBaseClass):
         self.setFrameSize_((fw * ZOOM, fh * ZOOM))
         self.setNeedsDisplay_(True)
 
+    @objc.IBAction
     def zoomOut_(self, sender):
         (x, y), (bw, bh) = self.bounds()
         (x, y), (fw, fh) = self.frame()
@@ -73,6 +61,7 @@ class DotView(NibClassBuilder.AutoBaseClass):
         self.setFrameSize_((fw / ZOOM, fh / ZOOM))
         self.setNeedsDisplay_(True)
 
+    @objc.IBAction
     def setRulersVisible_(self, button):
         scrollView = self.superview().superview()
         scrollView.setRulersVisible_(button.state())
@@ -114,10 +103,12 @@ class DotView(NibClassBuilder.AutoBaseClass):
         self.color.set()
         NSBezierPath.bezierPathWithOvalInRect_(dotRect).fill()
 
+    @objc.IBAction
     def setRadius_(self, sender):
         self.radius = sender.floatValue()
         self.setNeedsDisplay_(True)
 
+    @objc.IBAction
     def setColor_(self, sender):
         self.color = sender.color()
         self.setNeedsDisplay_(True)
