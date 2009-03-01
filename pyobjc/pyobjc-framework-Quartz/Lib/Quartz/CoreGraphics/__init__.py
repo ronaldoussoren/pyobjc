@@ -16,11 +16,13 @@ __bundle__ = _objc.initFrameworkWrapper("CoreGraphics",
         "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework"),
     globals=globals(), 
     inlineTab=_inline_list_,
+    frameworkResourceName="Quartz.CoreGraphics",
     scan_classes=False)
 
 from Quartz.CoreGraphics._callbacks import *
 from Quartz.CoreGraphics._doubleindirect import *
 from Quartz.CoreGraphics._sortandmap import *
+from Quartz.CoreGraphics._cgwindow import *
 
 setCGPathElement(CGPathElement)
 del setCGPathElement
@@ -33,6 +35,30 @@ kCGEventFilterMaskPermitAllEvents = (
 
 def CGEventMaskBit(eventType):
     return (1 << eventType)
+
+
+# Some pseudo-constants
+kCGBaseWindowLevel = CGWindowLevelForKey(kCGBaseWindowLevelKey)
+kCGMinimumWindowLevel = CGWindowLevelForKey(kCGMinimumWindowLevelKey)
+kCGDesktopWindowLevel = CGWindowLevelForKey(kCGDesktopWindowLevelKey)
+kCGDesktopIconWindowLevel = CGWindowLevelForKey(kCGDesktopIconWindowLevelKey)
+kCGBackstopMenuLevel = CGWindowLevelForKey(kCGBackstopMenuLevelKey)
+kCGNormalWindowLevel = CGWindowLevelForKey(kCGNormalWindowLevelKey)
+kCGFloatingWindowLevel = CGWindowLevelForKey(kCGFloatingWindowLevelKey)
+kCGTornOffMenuWindowLevel = CGWindowLevelForKey(kCGTornOffMenuWindowLevelKey)
+kCGDockWindowLevel = CGWindowLevelForKey(kCGDockWindowLevelKey)
+kCGMainMenuWindowLevel = CGWindowLevelForKey(kCGMainMenuWindowLevelKey)
+kCGStatusWindowLevel = CGWindowLevelForKey(kCGStatusWindowLevelKey)
+kCGModalPanelWindowLevel = CGWindowLevelForKey(kCGModalPanelWindowLevelKey)
+kCGPopUpMenuWindowLevel = CGWindowLevelForKey(kCGPopUpMenuWindowLevelKey)
+kCGDraggingWindowLevel = CGWindowLevelForKey(kCGDraggingWindowLevelKey)
+kCGScreenSaverWindowLevel = CGWindowLevelForKey(kCGScreenSaverWindowLevelKey)
+kCGCursorWindowLevel = CGWindowLevelForKey(kCGCursorWindowLevelKey)
+kCGOverlayWindowLevel = CGWindowLevelForKey(kCGOverlayWindowLevelKey)
+kCGHelpWindowLevel = CGWindowLevelForKey(kCGHelpWindowLevelKey)
+kCGUtilityWindowLevel = CGWindowLevelForKey(kCGUtilityWindowLevelKey)
+kCGAssistiveTechHighWindowLevel = CGWindowLevelForKey(kCGAssistiveTechHighWindowLevelKey)
+kCGMaximumWindowLevel = CGWindowLevelForKey(kCGMaximumWindowLevelKey)
 
 # Some useful tools
 from Quartz.CoreGraphics._contextmanager import *   
