@@ -11,6 +11,9 @@ and (Objective-)C frameworks
 
 NOTE: The actual wrappers are subpackages of ``Quartz``, they are not toplevel
 packages to avoid name clashes with Apple provided wrappers for CoreGraphics.
+
+WARNING: Running the unittests will change your display settings during the
+testrun, which will probably mess up your window layout.
 '''
 import ez_setup
 ez_setup.use_setuptools()

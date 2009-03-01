@@ -321,8 +321,24 @@ class TestCGContext (TestCase):
                             kCGPatternTilingConstantSpacing, True, drawPattern)
             self.failUnlessIsInstance(pattern, CGPatternRef)
 
-            CGContextSetFillPattern(context, pattern)
-            CGContextSetStrokePattern(context, pattern)
+            CGContextSetFillColorSpace(context, CGColorSpaceCreatePattern(None))
+            CGContextSetStrokeColorSpace(context, CGColorSpaceCreatePattern(None))
+            CGContextSetFillPattern(context, pattern, (1.0,1.0,1.0,1.0))
+            CGContextSetStrokePattern(context, pattern, (1.0,1.0,1.0,1.0))
+
+            provider = CGDataProviderCreateWithCFData(buffer(
+                            open('/System/Library/CoreServices/DefaultDesktop.jpg', 'rb').read()))
+            image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
+            self.failUnlessIsInstance(image, CGImageRef)
+
+            CGContextDrawImage(context, ((0, 0), (70, 50)), image)
+            CGContextDrawTiledImage(context, ((0, 0), (10, 10)), image)
+
+            provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 20 * 10))
+            mask = CGImageMaskCreate(20, 10, 8, 32, 80, provider, None, True)
+            self.failUnlessIsInstance(mask, CGImageRef)
+
+            CGContextClipToMask(context, CGRectMake(0, 0, 50, 90), mask)
 
         finally:
             CGContextEndPage(context)
@@ -331,9 +347,6 @@ class TestCGContext (TestCase):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
     def testMissing(self):
-        self.fail("CGContextClipToMask")
-        self.fail("CGContextDrawImage")
-        self.fail("CGContextDrawTiledImage")
         self.fail("CGContextShowGlyphsAtPositions")
         self.fail("CGContextShowGlyphs")
         self.fail("CGContextShowGlyphsAtPoint")

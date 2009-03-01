@@ -3026,14 +3026,14 @@
     <arg type='S' />
     <arg type='i' />
   </function>
-  <function name='CGPostMouseEvent' variadic='true'>
+  <function name='CGPostMouseEvent' variadic='true' c_array_length_in_arg='2'>
     <retval type='i' />
     <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
     <arg type='i' />
     <arg type='I' />
     <arg type='i' />
   </function>
-  <function name='CGPostScrollWheelEvent' variadic='true'>
+  <function name='CGPostScrollWheelEvent' variadic='true' c_array_length_in_arg='0'>
     <retval type='i' />
     <arg type='I' />
     <arg type='i' />
@@ -3171,7 +3171,12 @@
   <function name='CGRestorePermanentDisplayConfiguration' />
   <function comment='manual wrapper' name='CGScreenRegisterMoveCallback'>
     <retval type='i' />
-    <arg type='^?' type64='^?' />
+    <arg type='^?' type64='^?' function_pointer='true' >
+	    <retval type='v' />
+	    <arg type='I' />
+	    <arg type='I' />
+	    <arg type='^v' />
+    </arg>
     <arg type='^v' type64='^v' />
   </function>
   <function comment='manual wrapper' name='CGScreenUnregisterMoveCallback'>
