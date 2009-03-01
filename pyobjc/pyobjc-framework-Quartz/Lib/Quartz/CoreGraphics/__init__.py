@@ -60,5 +60,7 @@ kCGUtilityWindowLevel = CGWindowLevelForKey(kCGUtilityWindowLevelKey)
 kCGAssistiveTechHighWindowLevel = CGWindowLevelForKey(kCGAssistiveTechHighWindowLevelKey)
 kCGMaximumWindowLevel = CGWindowLevelForKey(kCGMaximumWindowLevelKey)
 
+CGSetLocalEventsFilterDuringSupressionState = CGSetLocalEventsFilterDuringSuppressionState
+
 # Some useful tools
 from Quartz.CoreGraphics._contextmanager import *   

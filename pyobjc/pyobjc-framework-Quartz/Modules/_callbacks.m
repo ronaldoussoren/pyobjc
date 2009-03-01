@@ -970,8 +970,10 @@ insert_callback_info(
 		if (info->list[i].callback == NULL) {
 			info->list[i].callback = callback;
 			info->list[i].user_info = user_info;
+			info->list[i].real_info = real_info;
 			Py_INCREF(callback);
 			Py_INCREF(user_info);
+			Py_INCREF(real_info);
 			return 0;
 		}
 	}
@@ -983,6 +985,13 @@ insert_callback_info(
 			PyErr_NoMemory();
 			return -1;
 		}
+		info->list[0].callback = callback;
+		info->list[0].user_info = user_info;
+		info->list[0].real_info = real_info;
+		Py_INCREF(callback);
+		Py_INCREF(user_info);
+		Py_INCREF(real_info);
+		info->count = 1;
 	} else {
 		struct callback_struct* tmp;
 
@@ -994,6 +1003,10 @@ insert_callback_info(
 		info->list = tmp;
 		info->list[info->count].callback = callback;
 		info->list[info->count].user_info = user_info;
+		info->list[info->count].real_info = real_info;
+		Py_INCREF(callback);
+		Py_INCREF(user_info);
+		Py_INCREF(real_info);
 		info->count++;
 	}
 	return 0;
@@ -1019,7 +1032,7 @@ find_callback_info(
 
 		return info->list[i].real_info;
 	}
-	PyErr_SetString(PyExc_ValueError, "Cannot found callback info");
+	PyErr_SetString(PyExc_ValueError, "Cannot find callback info");
 	return NULL;
 }
 
@@ -1095,9 +1108,10 @@ m_CGDisplayRegisterReconfigurationCallback(
 {
 	PyObject* callback;
 	PyObject* userinfo;
+	CGError err;
 
 
-	if (PyArg_ParseTuple(args, "OO", &callback, &userinfo)) {
+	if (!PyArg_ParseTuple(args, "OO", &callback, &userinfo)) {
 		return NULL;
 	}
 	if (!PyCallable_Check(callback)) {
@@ -1106,13 +1120,15 @@ m_CGDisplayRegisterReconfigurationCallback(
 	}
 
 	PyObject* real_info = Py_BuildValue("OO", callback, userinfo);
-	
+
+	err = -1;
 	PyObjC_DURING
-		CGDisplayRegisterReconfigurationCallback(
+		err = CGDisplayRegisterReconfigurationCallback(
 			m_CGDisplayReconfigurationCallBack, real_info);
 
 
 	PyObjC_HANDLER
+		err = -1;
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
@@ -1123,7 +1139,7 @@ m_CGDisplayRegisterReconfigurationCallback(
 	}
 
 	if (insert_callback_info(&display_reconfig_callback, 
-				callback, userinfo, real_info) < 0) {
+				callback, userinfo, real_info) == -1) {
 		CGDisplayRemoveReconfigurationCallback(
 			m_CGDisplayReconfigurationCallBack,
 			real_info);
@@ -1131,8 +1147,7 @@ m_CGDisplayRegisterReconfigurationCallback(
 		return NULL;
 	}
 
-	Py_INCREF(Py_None);
-	return Py_None;
+	return PyObjC_ObjCToPython(@encode(CGError), &err);
 }
 
 static PyObject*
@@ -1153,8 +1168,9 @@ m_CGDisplayRemoveReconfigurationCallback(
 		return NULL;
 	}
 
+	CGError err = -1;
 	PyObjC_DURING
-		CGDisplayRemoveReconfigurationCallback(
+		err = CGDisplayRemoveReconfigurationCallback(
 			m_CGDisplayReconfigurationCallBack,
 			real_info);
 
@@ -1169,8 +1185,7 @@ m_CGDisplayRemoveReconfigurationCallback(
 
 	remove_callback_info(&display_reconfig_callback, callback, userinfo);
 
-	Py_INCREF(Py_None);
-	return Py_None;
+	return PyObjC_ObjCToPython(@encode(CGError), &err);
 }
 
 /*
@@ -1346,7 +1361,7 @@ m_CGRegisterScreenRefreshCallback(
 	PyObject* userinfo;
 
 
-	if (PyArg_ParseTuple(args, "OO", &callback, &userinfo)) {
+	if (!PyArg_ParseTuple(args, "OO", &callback, &userinfo)) {
 		return NULL;
 	}
 	if (!PyCallable_Check(callback)) {
@@ -1356,8 +1371,9 @@ m_CGRegisterScreenRefreshCallback(
 
 	PyObject* real_info = Py_BuildValue("OO", callback, userinfo);
 	
+	CGError err = -1;
 	PyObjC_DURING
-		CGRegisterScreenRefreshCallback(
+		err = CGRegisterScreenRefreshCallback(
 			m_CGScreenRefreshCallback, real_info);
 
 	PyObjC_HANDLER
@@ -1379,8 +1395,7 @@ m_CGRegisterScreenRefreshCallback(
 		return NULL;
 	}
 
-	Py_INCREF(Py_None);
-	return Py_None;
+	return PyObjC_ObjCToPython(@encode(CGError), &err);
 }
 
 static PyObject*
