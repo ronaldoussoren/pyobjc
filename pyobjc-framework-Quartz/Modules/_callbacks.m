@@ -24,7 +24,7 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 	PyGILState_STATE   state = PyGILState_Ensure();
 
 	PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 0), "Ot#l",
+			PyTuple_GET_ITEM(info, 0), "Os#l",
 			PyTuple_GET_ITEM(info, 2), buffer, count, count);
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
@@ -672,9 +672,7 @@ m_releaseData(void* _info, const void* data, size_t size)
 	if (PyTuple_GET_ITEM(info, 1) != Py_None) {
 		PyObject* result = PyObject_CallFunction(
 				PyTuple_GET_ITEM(info, 1),
-				"Ol",
-				PyTuple_GET_ITEM(info, 0),
-				size);
+				"O", PyTuple_GET_ITEM(info, 0));
 		if (result == NULL) {
 			PyObjC_FreeCArray(tag, (void*)data);
 			Py_DECREF(info);
@@ -764,8 +762,8 @@ m_CGFunctionEvaluateCallback(void* _info, const float* inData, float* outData)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	domdim = PyInt_AsLong(PyTuple_GET_ITEM(info, 3));
-	rangedim = PyInt_AsLong(PyTuple_GET_ITEM(info, 4));
+	domdim = PyInt_AsLong(PyTuple_GET_ITEM(info, 2));
+	rangedim = PyInt_AsLong(PyTuple_GET_ITEM(info, 3));
 
 	PyObject* input;
 	if (inData) {
@@ -814,7 +812,7 @@ static CGFunctionCallbacks m_CGFunctionCallbacks = {
 };
 
 PyDoc_STRVAR(doc_CGFunctionCreate,
-	"CGFunctionCreate(info, domainDimension, domain, rangeDimension, range, (evaluate, release) -> functionref");
+	"CGFunctionCreate(info, domainDimension, domain, rangeDimension, range, evaluate) -> functionref");
 static PyObject*
 m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 		PyObject* args)
@@ -825,7 +823,6 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* rangeDim;
 	PyObject* range;
 	PyObject* evaluate;
-	PyObject* release;
 	size_t domainDimension;
 	size_t rangeDimension;
 	float* domainArr;
@@ -836,9 +833,9 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	int rangeTag;
 	int domainTag;
 
-	if (!PyArg_ParseTuple(args, "OOOOO(OO)", 
+	if (!PyArg_ParseTuple(args, "OOOOOO", 
 			&info, &domDim, &domain, &rangeDim, 
-			&range, &evaluate, &release)) {
+			&range, &evaluate)) {
 		return NULL;
 	}
 
@@ -848,11 +845,6 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	if (PyObjC_PythonToObjC(@encode(size_t), rangeDim, &rangeDimension) < 0){
 		return NULL;
 	}
-	if (release != Py_None && !PyCallable_Check(release)) {
-		PyErr_SetString(PyExc_TypeError, "release not callable");
-		return NULL;
-	}
-
 	if (domain == Py_None) {
 		domainArr = NULL;
 		domainTag = -1;
@@ -902,8 +894,8 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 
 	PyObject* real_info;
 
-	real_info = Py_BuildValue("OOOll",
-		info, evaluate, release, domainDimension, rangeDimension);
+	real_info = Py_BuildValue("OOll",
+		info, evaluate, domainDimension, rangeDimension);
 	if (real_info == NULL) {
 		return NULL;
 	}
@@ -1638,10 +1630,9 @@ m_CGPatternDrawPatternCallback(
 
 	PyObject* result = PyObject_CallFunction(
 			PyTuple_GET_ITEM(info, 0),
-			"NO",
-			PyTuple_GET_ITEM(info, 2),
+			"ON",
+			PyTuple_GET_ITEM(info, 1),
 			ctx);
-
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -1655,17 +1646,6 @@ m_CGPatternReleaseInfoCallback(void* _info)
 	PyObject* info = (PyObject*)_info;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
-
-	if (PyTuple_GET_ITEM(info, 1) != Py_None) {
-		PyObject* result = PyObject_CallFunction(
-				PyTuple_GET_ITEM(info, 1),
-				"O",
-				PyTuple_GET_ITEM(info, 2));
-		if (result == NULL) {
-			PyObjCErr_ToObjCWithGILState(&state);
-		}
-		Py_DECREF(result);
-	}	
 	Py_DECREF(info);
 
 	PyGILState_Release(state);
@@ -1688,25 +1668,20 @@ m_CGPatternCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* py_tiling;
 	PyObject* py_isColored;
 	PyObject* draw;
-	PyObject* release;
 	CGRect bounds;
 	CGAffineTransform matrix;
 	CGPatternTiling tiling;
 	int isColored;
 
 
-	if (!PyArg_ParseTuple(args, "OOOffOO(OO)",
+	if (!PyArg_ParseTuple(args, "OOOffOOO",
 		&info, &py_bounds, &py_matrix, &xStep, &yStep,
-		&py_tiling, &py_isColored, &draw, &release)) {
+		&py_tiling, &py_isColored, &draw)) {
 
 		return NULL;
 	}
 	if (!PyCallable_Check(draw)) {
 		PyErr_SetString(PyExc_TypeError, "drawPattern is not callable");
-		return NULL;
-	}
-	if (release != Py_None && !PyCallable_Check(draw)) {
-		PyErr_SetString(PyExc_TypeError, "releaseInfo is not callable");
 		return NULL;
 	}
 	if (PyObjC_PythonToObjC(@encode(CGRect), py_bounds, &bounds) < 0) {
@@ -1724,7 +1699,11 @@ m_CGPatternCreate(PyObject* self __attribute__((__unused__)),
 		isColored = false;
 	}
 
-	PyObject* real_info = Py_BuildValue("OOO", draw, release, info);
+	PyObject* real_info = Py_BuildValue("OO", draw, info);
+	if (real_info == NULL) {
+		return NULL;
+	}
+
 	CGPatternRef result = NULL;
 
 	PyObjC_DURING

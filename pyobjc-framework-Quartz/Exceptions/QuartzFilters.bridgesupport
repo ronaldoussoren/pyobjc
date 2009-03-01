@@ -9,4 +9,12 @@
       <arg index='0' type='^{CGContext=}' />
     </method>
   </class>
+  <class name='QuartzFilter'>
+    <method selector='applyToContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method selector='removeFromContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+  </class>
 </signatures>

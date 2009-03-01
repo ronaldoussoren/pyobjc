@@ -22,7 +22,7 @@ __bundle__ = _objc.initFrameworkWrapper("CoreGraphics",
 from Quartz.CoreGraphics._callbacks import *
 from Quartz.CoreGraphics._doubleindirect import *
 from Quartz.CoreGraphics._sortandmap import *
-from Quartz.CoreGraphics._cgwindow import *
+from Quartz.CoreGraphics._coregraphics import *
 
 setCGPathElement(CGPathElement)
 del setCGPathElement

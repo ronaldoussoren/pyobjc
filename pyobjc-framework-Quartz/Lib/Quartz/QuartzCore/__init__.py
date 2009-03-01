@@ -13,5 +13,6 @@ __bundle__ = _objc.initFrameworkWrapper("QuartzCore",
     frameworkIdentifier="com.apple.QuartzCore",
     frameworkPath=_objc.pathForFramework(
         "/System/Library/Frameworks/QuartzCore.framework"),
+    frameworkResourceName="Quartz.QuartzCore",
     globals=globals())
 

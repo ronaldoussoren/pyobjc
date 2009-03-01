@@ -1,0 +1,310 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/AppKit.framework/AppKit' />
+  <constant name='PDFDocumentAuthorAttribute' type='@' />
+  <constant name='PDFDocumentCreationDateAttribute' type='@' />
+  <constant name='PDFDocumentCreatorAttribute' type='@' />
+  <constant name='PDFDocumentDidBeginFindNotification' type='@' />
+  <constant name='PDFDocumentDidBeginPageFindNotification' type='@' />
+  <constant name='PDFDocumentDidBeginPageWriteNotification' type='@' />
+  <constant name='PDFDocumentDidBeginWriteNotification' type='@' />
+  <constant name='PDFDocumentDidEndFindNotification' type='@' />
+  <constant name='PDFDocumentDidEndPageFindNotification' type='@' />
+  <constant name='PDFDocumentDidEndPageWriteNotification' type='@' />
+  <constant name='PDFDocumentDidEndWriteNotification' type='@' />
+  <constant name='PDFDocumentDidFindMatchNotification' type='@' />
+  <constant name='PDFDocumentDidUnlockNotification' type='@' />
+  <constant name='PDFDocumentKeywordsAttribute' type='@' />
+  <constant name='PDFDocumentModificationDateAttribute' type='@' />
+  <constant name='PDFDocumentProducerAttribute' type='@' />
+  <constant name='PDFDocumentSubjectAttribute' type='@' />
+  <constant name='PDFDocumentTitleAttribute' type='@' />
+  <constant name='PDFThumbnailViewDocumentEditedNotification' type='@' />
+  <constant name='PDFViewAnnotationHitNotification' type='@' />
+  <constant name='PDFViewAnnotationWillHitNotification' type='@' />
+  <constant name='PDFViewChangedHistoryNotification' type='@' />
+  <constant name='PDFViewCopyPermissionNotification' type='@' />
+  <constant name='PDFViewDisplayBoxChangedNotification' type='@' />
+  <constant name='PDFViewDisplayModeChangedNotification' type='@' />
+  <constant name='PDFViewDocumentChangedNotification' type='@' />
+  <constant name='PDFViewPageChangedNotification' type='@' />
+  <constant name='PDFViewPrintPermissionNotification' type='@' />
+  <constant name='PDFViewScaleChangedNotification' type='@' />
+  <constant name='PDFViewSelectionChangedNotification' type='@' />
+  <enum name='kPDFActionNamedFind' value='8' />
+  <enum name='kPDFActionNamedFirstPage' value='3' />
+  <enum name='kPDFActionNamedGoBack' value='5' />
+  <enum name='kPDFActionNamedGoForward' value='6' />
+  <enum name='kPDFActionNamedGoToPage' value='7' />
+  <enum name='kPDFActionNamedLastPage' value='4' />
+  <enum name='kPDFActionNamedNextPage' value='1' />
+  <enum name='kPDFActionNamedNone' value='0' />
+  <enum name='kPDFActionNamedPreviousPage' value='2' />
+  <enum name='kPDFActionNamedPrint' value='9' />
+  <enum name='kPDFActionNamedZoomIn' value='10' />
+  <enum name='kPDFActionNamedZoomOut' value='11' />
+  <enum name='kPDFAnnotationArea' value='4' />
+  <enum name='kPDFBorderStyleBeveled' value='2' />
+  <enum name='kPDFBorderStyleDashed' value='1' />
+  <enum name='kPDFBorderStyleInset' value='3' />
+  <enum name='kPDFBorderStyleSolid' value='0' />
+  <enum name='kPDFBorderStyleUnderline' value='4' />
+  <enum name='kPDFControlArea' value='16' />
+  <enum name='kPDFDestinationUnspecifiedValue' value='3.4028234663852886e+38' />
+  <enum name='kPDFDisplayBoxArtBox' value='4' />
+  <enum name='kPDFDisplayBoxBleedBox' value='2' />
+  <enum name='kPDFDisplayBoxCropBox' value='1' />
+  <enum name='kPDFDisplayBoxMediaBox' value='0' />
+  <enum name='kPDFDisplayBoxTrimBox' value='3' />
+  <enum name='kPDFDisplaySinglePage' value='0' />
+  <enum name='kPDFDisplaySinglePageContinuous' value='1' />
+  <enum name='kPDFDisplayTwoUp' value='2' />
+  <enum name='kPDFDisplayTwoUpContinuous' value='3' />
+  <enum name='kPDFIconArea' value='64' />
+  <enum name='kPDFLineStyleCircle' value='2' />
+  <enum name='kPDFLineStyleClosedArrow' value='5' />
+  <enum name='kPDFLineStyleDiamond' value='3' />
+  <enum name='kPDFLineStyleNone' value='0' />
+  <enum name='kPDFLineStyleOpenArrow' value='4' />
+  <enum name='kPDFLineStyleSquare' value='1' />
+  <enum name='kPDFLinkArea' value='8' />
+  <enum name='kPDFMarkupTypeHighlight' value='0' />
+  <enum name='kPDFMarkupTypeStrikeOut' value='1' />
+  <enum name='kPDFMarkupTypeUnderline' value='2' />
+  <enum name='kPDFNoArea' value='0' />
+  <enum name='kPDFPageArea' value='1' />
+  <enum name='kPDFPopupArea' value='128' />
+  <enum name='kPDFPrintPageScaleDownToFit' value='2' />
+  <enum name='kPDFPrintPageScaleNone' value='0' />
+  <enum name='kPDFPrintPageScaleToFit' value='1' />
+  <enum name='kPDFTextAnnotationIconComment' value='0' />
+  <enum name='kPDFTextAnnotationIconHelp' value='3' />
+  <enum name='kPDFTextAnnotationIconInsert' value='6' />
+  <enum name='kPDFTextAnnotationIconKey' value='1' />
+  <enum name='kPDFTextAnnotationIconNewParagraph' value='4' />
+  <enum name='kPDFTextAnnotationIconNote' value='2' />
+  <enum name='kPDFTextAnnotationIconParagraph' value='5' />
+  <enum name='kPDFTextArea' value='2' />
+  <enum name='kPDFTextFieldArea' value='32' />
+  <enum name='kPDFWidgetCheckBoxControl' value='2' />
+  <enum name='kPDFWidgetPushButtonControl' value='0' />
+  <enum name='kPDFWidgetRadioButtonControl' value='1' />
+  <enum name='kPDFWidgetUnknownControl' value='-1' />
+  <informal_protocol name='PDFDocumentDelegate'>
+    <method selector='didMatchString:' type='v@:@' />
+  </informal_protocol>
+  <informal_protocol name='PDFDocumentNotifications'>
+    <method selector='documentDidBeginDocumentFind:' type='v@:@' />
+    <method selector='documentDidBeginPageFind:' type='v@:@' />
+    <method selector='documentDidEndDocumentFind:' type='v@:@' />
+    <method selector='documentDidEndPageFind:' type='v@:@' />
+    <method selector='documentDidFindMatch:' type='v@:@' />
+    <method selector='documentDidUnlock:' type='v@:@' />
+  </informal_protocol>
+  <informal_protocol name='PDFViewDelegate'>
+    <method selector='PDFViewOpenPDF:forRemoteGoToAction:' type='v@:@@' />
+    <method selector='PDFViewPerformFind:' type='v@:@' />
+    <method selector='PDFViewPerformGoToPage:' type='v@:@' />
+    <method selector='PDFViewPerformPrint:' type='v@:@' />
+    <method selector='PDFViewPrintJobTitle:' type='@@:@' />
+    <method selector='PDFViewWillChangeScaleFactor:toScale:' type='f@:@f' type64='d@:@d' />
+    <method selector='PDFViewWillClickOnLink:withURL:' type='v@:@@' />
+  </informal_protocol>
+  <class name='PDFActionResetForm'>
+    <method selector='fieldsIncludedAreCleared'>
+      <retval type='B' />
+    </method>
+    <method selector='setFieldsIncludedAreCleared:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFAnnotation'>
+    <method selector='hasAppearanceStream'>
+      <retval type='B' />
+    </method>
+    <method selector='setShouldDisplay:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShouldPrint:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='shouldDisplay'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldPrint'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='PDFAnnotationButtonWidget'>
+    <method selector='allowsToggleToOff'>
+      <retval type='B' />
+    </method>
+    <method selector='isHighlighted'>
+      <retval type='B' />
+    </method>
+    <method selector='setHighlighted:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFAnnotationChoiceWidget'>
+    <method selector='isListChoice'>
+      <retval type='B' />
+    </method>
+    <method selector='setIsListChoice:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFAnnotationLink'>
+    <method selector='setHighlighted:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFAnnotationPopup'>
+    <method selector='isOpen'>
+      <retval type='B' />
+    </method>
+    <method selector='setIsOpen:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFDocument'>
+    <method selector='allowsCopying'>
+      <retval type='B' />
+    </method>
+    <method selector='allowsPrinting'>
+      <retval type='B' />
+    </method>
+    <method selector='isEncrypted'>
+      <retval type='B' />
+    </method>
+    <method selector='isFinding'>
+      <retval type='B' />
+    </method>
+    <method selector='isLocked'>
+      <retval type='B' />
+    </method>
+    <method selector='unlockWithPassword:'>
+      <retval type='B' />
+    </method>
+    <method selector='writeToFile:'>
+      <retval type='B' />
+    </method>
+    <method selector='writeToFile:withOptions:'>
+      <retval type='B' />
+    </method>
+    <method selector='writeToURL:'>
+      <retval type='B' />
+    </method>
+    <method selector='writeToURL:withOptions:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='PDFOutline'>
+    <method selector='isOpen'>
+      <retval type='B' />
+    </method>
+    <method selector='setIsOpen:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFPage'>
+    <method selector='displaysAnnotations'>
+      <retval type='B' />
+    </method>
+    <method selector='setDisplaysAnnotations:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFSelection'>
+    <method selector='drawForPage:active:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='drawForPage:withBox:active:'>
+      <arg index='2' type='B' />
+    </method>
+  </class>
+  <class name='PDFThumbnailView'>
+    <method selector='allowsDragging'>
+      <retval type='B' />
+    </method>
+    <method selector='allowsMultipleSelection'>
+      <retval type='B' />
+    </method>
+    <method selector='setAllowsDragging:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setAllowsMultipleSelection:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='PDFView'>
+    <method selector='allowsDragging'>
+      <retval type='B' />
+    </method>
+    <method selector='autoScales'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoBack'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoForward'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoToFirstPage'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoToLastPage'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoToNextPage'>
+      <retval type='B' />
+    </method>
+    <method selector='canGoToPreviousPage'>
+      <retval type='B' />
+    </method>
+    <method selector='canZoomIn'>
+      <retval type='B' />
+    </method>
+    <method selector='canZoomOut'>
+      <retval type='B' />
+    </method>
+    <method selector='displaysAsBook'>
+      <retval type='B' />
+    </method>
+    <method selector='displaysPageBreaks'>
+      <retval type='B' />
+    </method>
+    <method selector='pageForPoint:nearest:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='printWithInfo:autoRotate:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='printWithInfo:autoRotate:pageScaling:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='setAllowsDragging:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setAutoScales:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setCurrentSelection:animate:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='setDisplaysAsBook:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setDisplaysPageBreaks:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShouldAntiAlias:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='shouldAntiAlias'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+

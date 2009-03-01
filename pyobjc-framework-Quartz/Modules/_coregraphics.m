@@ -194,6 +194,88 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
 	return rv;
 }
 
+static PyObject*
+m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), 
+		PyObject* args)
+{
+	PyObject* py_data;
+	PyObject* py_width;
+	PyObject* py_height;
+	PyObject* py_bitsPerComponent;
+	PyObject* py_bytesPerRow;
+	PyObject* py_colorSpace;
+	PyObject* py_bitmapInfo;
+
+	void*	data;
+	size_t  width;
+	size_t  height;
+	size_t  bitsPerComponent;
+	size_t  bytesPerRow;
+	CGColorSpaceRef colorSpace;
+	CGBitmapInfo bitmapInfo;
+
+	if (!PyArg_ParseTuple(args, "OOOOOOO", &py_data, &py_width, &py_height, &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace, &py_bitmapInfo)) {
+		return NULL;
+	}
+
+	if (PyObjC_PythonToObjC(@encode(size_t), py_width, &width) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(CGColorSpaceRef), py_colorSpace, &colorSpace) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(CGBitmapInfo), py_bitmapInfo, &bitmapInfo) == -1) {
+		return NULL;
+	}
+
+	if (py_data == Py_None) {
+		data = NULL;
+
+	} else if (PyUnicode_Check(py_data)) {
+		PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
+		return NULL;
+
+	} else {
+		Py_ssize_t size;
+
+		if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
+			return NULL;
+		}
+	}
+
+
+	CGContextRef ctx = NULL;
+	PyObjC_DURING
+		ctx = CGBitmapContextCreate(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo);
+
+	PyObjC_HANDLER
+		ctx = NULL;
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (ctx == NULL && PyErr_Occurred()) {
+		return NULL;
+	}
+
+	if (ctx == NULL)  {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyObject* rv = PyObjC_ObjCToPython(@encode(CGContextRef), &ctx);
+	CFRelease(ctx);
+	return rv;
+}
+
 
 static PyMethodDef m_methods[] = {
 	{
@@ -214,15 +296,21 @@ static PyMethodDef m_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
+	{
+		"CGBitmapContextCreate",
+		(PyCFunction)m_CGBitmapContextCreate,
+		METH_VARARGS,
+		NULL
+	},
 
 
 	{ 0, 0, 0, }
 };
 
-void init_cgwindow(void);
-void init_cgwindow(void)
+void init_coregraphics(void);
+void init_coregraphics(void)
 {
-	PyObject* m = Py_InitModule4("_cgwindow", m_methods,
+	PyObject* m = Py_InitModule4("_coregraphics", m_methods,
 		NULL, NULL, PYTHON_API_VERSION);
 
         if (PyObjC_ImportAPI(m) < 0) { return; }
