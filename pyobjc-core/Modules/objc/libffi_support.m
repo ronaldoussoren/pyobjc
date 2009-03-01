@@ -3262,7 +3262,7 @@ PyObjCFFI_BuildResult(
 
 							} else {
 								v = PyObjC_VarList_New(methinfo->rettype.type, pRetval);
-								goto error_cleanup;
+								if (!v) goto error_cleanup;
 							}
 							
 							break;
