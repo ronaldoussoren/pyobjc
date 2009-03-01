@@ -3,6 +3,9 @@
 <signatures version='1.0'>
   <cftype gettypeid_func='CGImageDestinationGetTypeID' name='CGImageDestinationRef' />
   <cftype gettypeid_func='CGImageSourceGetTypeID' name='CGImageSourceRef' />
+  <function name='CGImageDestinationAddImage'>
+    <arg index='1' type='^{CGImage=}' type64='^{CGImage=}' />
+  </function>
   <function name='CGImageDestinationCopyTypeIdentifiers'>
     <retval already_cfretained='true' />
   </function>
@@ -11,6 +14,7 @@
   </function>
   <function name='CGImageDestinationCreateWithDataConsumer'>
     <retval already_cfretained='true' />
+    <arg index='0' type='^{CGDataConsumer=}' type64='^{CGDataConsumer=}' />
   </function>
   <function name='CGImageDestinationCreateWithURL'>
     <retval already_cfretained='true' />
@@ -25,21 +29,25 @@
     <retval already_cfretained='true' />
   </function>
   <function name='CGImageSourceCreateImageAtIndex'>
-    <retval already_cfretained='true' />
+    <retval already_cfretained='true' type='^{CGImage=}' type64='^{CGImage=}' />
   </function>
   <function name='CGImageSourceCreateIncremental'>
     <retval already_cfretained='true' />
   </function>
   <function name='CGImageSourceCreateThumbnailAtIndex'>
-    <retval already_cfretained='true' />
+    <retval already_cfretained='true' type='^{CGImage=}' type64='^{CGImage=}' />
   </function>
   <function name='CGImageSourceCreateWithData'>
     <retval already_cfretained='true' />
   </function>
   <function name='CGImageSourceCreateWithDataProvider'>
     <retval already_cfretained='true' />
+    <arg index='0' type='^{CGDataProvider=}' type64='^{CGDataProvider=}' />
   </function>
   <function name='CGImageSourceCreateWithURL'>
     <retval already_cfretained='true' />
+  </function>
+  <function name='CGImageSourceUpdateDataProvider'>
+    <arg index='1' type='^{CGDataProvider=}' type64='^{CGDataProvider=}' />
   </function>
 </signatures>

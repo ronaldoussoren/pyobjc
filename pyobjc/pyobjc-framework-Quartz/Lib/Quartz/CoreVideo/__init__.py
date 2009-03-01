@@ -13,6 +13,7 @@ __bundle__ = _objc.initFrameworkWrapper("CoreVideo",
     frameworkPath=_objc.pathForFramework(
         "/System/Library/Frameworks/CoreVideo.framework"),
     globals=globals(),
+    frameworkResourceName="Quartz.CoreVideo",
     scan_classes=False) 
 
 from Quartz.CoreVideo._CVPixelBuffer import *

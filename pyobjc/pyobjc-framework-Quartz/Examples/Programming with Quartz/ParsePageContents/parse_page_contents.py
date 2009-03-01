@@ -7,6 +7,9 @@ Usage:
 from Quartz import *
 import objc
 import sys
+import array
+
+import Quartz
 
 class MyDataScan (object):
     def __init__(self):
@@ -111,10 +114,12 @@ def myOperator_Do(s, info):
 
     # An XObject must be a stream so obtain the value from the xobject
     # as if it were a stream. If this fails, the PDF is malformed.
-    res, stream = CGPDFObjectGetValue(xobject, kCGPDFObjectTypeSTream, None)
+    res, stream = CGPDFObjectGetValue(xobject, kCGPDFObjectTypeStream, None)
     if not res:
         print >>sys.stderr, "XObject '%s' is not a stream"%(name,)
         return 
+
+    print stream
 
     # Streams consist of a dictionary and the data associated
     # with the stream. This code only cares about the dictionary.
@@ -144,6 +149,7 @@ def myOperator_Do(s, info):
 # "EI" operator.
 @objc.callbackFor(CGPDFOperatorTableSetCallback)
 def myOperator_EI(s, info):
+    print "EI"
     # When the scanner encounters the EI operator, it has a
     # stream corresponding to the image on the operand stack.
     # This code pops the stream off the stack in order to
@@ -201,14 +207,15 @@ def dumpPageStreams(url, outFile):
                     print >>sys.stderr, "Couldn't create content stream for page #%d"%(i,)
                     return
 
+		# Initialize the counters of images for this page.
+                myData = MyDataScan()
+
 		# Create a scanner for this PDF document page.
-		scanner = CGPDFScannerCreate(cs, table, myData);
+		scanner = CGPDFScannerCreate(cs, table, 0);
                 if scanner is None:
 			print >>sys.stderr, "Couldn't create scanner for page #%d!"%(i,)
 			return
 
-		# Initialize the counters of images for this page.
-                myData = MyDataScan()
 	
 		# CGPDFScannerScan causes Quartz to scan the content stream,
 		# calling the callbacks in the table when the corresponding
@@ -249,6 +256,7 @@ def main(args = None):
     for inputFileName in args[1:]:
         print "Beginning Document %r"%(inputFileName,)
 
+        print CFURLCreateFromFileSystemRepresentation.__metadata__()
         inURL = CFURLCreateFromFileSystemRepresentation(None, inputFileName, 
 				len(inputFileName), False)
         if inURL is None:
@@ -256,7 +264,7 @@ def main(args = None):
             return 1
     
         dumpPageStreams(inURL, sys.stdout)
-        CFRelease(inURL)
+        #CFRelease(inURL)
     
     return 0
 

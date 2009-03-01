@@ -41,7 +41,7 @@
   <cftype gettypeid_func='CGGradientGetTypeID' name='CGGradientRef' />
   <cftype gettypeid_func='CGImageGetTypeID' name='CGImageRef' />
   <cftype gettypeid_func='CGLayerGetTypeID' name='CGLayerRef' />
-  <cftype gettypeid_func='CGMutablePathGetTypeID' name='CGMutablePathRef' />
+  <cftype name='CGMutablePathRef' ignore='true' />
   <cftype gettypeid_func='CGPDFDocumentGetTypeID' name='CGPDFDocumentRef' />
   <cftype gettypeid_func='CGPDFPageGetTypeID' name='CGPDFPageRef' />
   <cftype gettypeid_func='CGPSConverterGetTypeID' name='CGPSConverterRef' />
@@ -293,7 +293,7 @@
     <arg c_array_length_in_arg='1,2' comment='and 2 on output' index='3' type_modifier='o' />
   </function>
   <function name='CGEventKeyboardSetUnicodeString'>
-    <arg c_array_length_in_arg='1' index='2' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='1' index='2' type_modifier='n' />
   </function>
   <function name='CGEventPostToPSN'>
     <arg index='0' type='^{ProcessSerialNumber=II}' type64='^{ProcessSerialNumber=II}' type_modifier='n' />
@@ -639,7 +639,7 @@
   </function>
   <function name='CGPathAddLines'>
     <arg index='1' null_accepted='true' type_modifier='n' />
-    <arg c_array_length_in_arg='3' index='2' />
+    <arg c_array_length_in_arg='3' index='2' type_modifier='n' />
   </function>
   <function name='CGPathAddPath'>
     <arg index='1' null_accepted='true' type_modifier='n' />
@@ -652,7 +652,7 @@
   </function>
   <function name='CGPathAddRects'>
     <arg index='1' null_accepted='true' type_modifier='n' />
-    <arg c_array_length_in_arg='3' index='2' />
+    <arg c_array_length_in_arg='3' index='2' type_modifier='n' />
   </function>
   <function comment='manual wrapper' name='CGPathApply'>
     <arg comment='context' index='1' type='^v' type64='^v' />
@@ -685,7 +685,7 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGPointMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+    <arg index='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' />
   </function>
   <function name='CGPostMouseEvent' variadic='true' />
   <function name='CGPostScrollWheelEvent' variadic='true' />
@@ -693,11 +693,11 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGRectDivide'>
-    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg index='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg index='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
   </function>
   <function name='CGRectMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGRegisterScreenRefreshCallback'>
     <arg index='0' type='^?' type64='^?' />
@@ -740,7 +740,7 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGSizeMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGSize=ff}' type64='^{CGSize=dd}' />
+    <arg index='1' type='^{CGSize=ff}' type64='^{CGSize=dd}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGUnregisterScreenRefreshCallback'>
     <arg index='0' type='^?' type64='^?' />

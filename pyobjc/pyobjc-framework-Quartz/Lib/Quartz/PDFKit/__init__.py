@@ -12,4 +12,5 @@ __bundle__ = _objc.initFrameworkWrapper("PDFKit",
     frameworkIdentifier="com.apple.PDFKit",
     frameworkPath=_objc.pathForFramework(
         "/System/Library/Frameworks/Quartz.framework/Frameworks/PDFKit.framework"),
+    frameworkResourceName="Quartz.PDFKit",
     globals=globals())

@@ -1,12 +1,25 @@
 =======================================
-API Notes for the CoreGraphics bindings
+API Notes for the Quartz bindings
 =======================================
 
 Introduction
 ------------
 
-This document describes special considerations for the PyObjC based CoreGraphics
+This document describes special considerations for the PyObjC based Quartz
 bindings.
+
+Quartz vs. CoreGraphics
+-----------------------
+
+The PyObjC bindings for the Quartz related frameworks, including CoreGraphics
+and QuartzComposer are in the Python package "Quartz". When you use the
+system version of Python there's also a package named "CoreGraphics".  This
+is Apple's closed-source binding of CoreGraphics, which is not a direct
+mapping of the Quartz API's but includes some convenience APIs that are not 
+present in the C API. 
+
+The PyObjC bindings for Quartz are not compatible with the CoreGraphics 
+Python package by Apple.
 
 Callbacks
 ---------
@@ -31,4 +44,55 @@ are called. This is needed to avoid memory management problems. It is therefore
 advisable not to call these functions, are at least call them a small number
 of times.
 
+``CGPatternCreate``: the callback argument is a single function: the ``drawPattern`` callback.
+
+``CGDataProviderCreateWithData``: the release callback can be ``None``. If it is not ``None`` it 
+must be a function with 1 argument: the ``info`` object.
+
 ``CGPDFOperatorTableSetCallback`` is not supported at the moment.
+
+
+
+``CGColorSpaceCreateWithPlatformColorSpace``
+--------------------------------------------
+
+This function is not supported because the lowlevel "CMProfileRef" type is
+not wrappped by PyObjC.
+
+``kCGDirectMainDisplay``
+------------------------
+
+This value isn't actually a constant and can therefore not be wrapped by
+PyObjC. Use ``CGMainDisplayID()`` instead.
+
+``CGWindowListCreate``, ``CGWindowListCreateDescriptionFromArray``, ``CGWindowListCreateImageFromArray``
+--------------------------------------------------------------------------------------------------------
+
+
+
+This function is documented to return a "CFArray of CGWindowID". This specific type cannot be represented by
+PyObjC, therefore the (manually wrapped) function returns a tuple of CGWindowID values instead.
+
+For the same reason ``CGWindowListCreateDescriptionFromArray``, ``CGWindowListCreateImageFromArray`` are
+manually wrapped and take a tuple of WindowID values as an argument.
+
+``CGBitmapCreate``
+------------------
+
+The easiest way to use this function is to pass ``None`` as the buffer argument, that way Quartz will create the
+buffer for you. If you do want direct access to the buffer you'll have to create a writable buffer, for example
+like so::
+
+    bytes = array.array('B', (0 for i in xrange(100*80*4)))
+    ctx = CGBitmapContextCreate(bytes, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
+
+This creates a context for a 100 pixels by 80 pixels image with a RGBA colorspace.
+
+Note that there limitations on the kinds of context's you can create, see the Apple documentation about supported
+pixel formats for the details on that.
+
+``CGColorSpaceGetColorTable``
+-----------------------------
+
+This function has an output buffer of indetermined size. You cannot pass ``None`` as the value of that buffer but have
+to explicitly specify a writable output buffer (such an ``array.array`` or the right type and size).
