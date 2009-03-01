@@ -678,10 +678,14 @@ PyObjC_PythonToCArray(
 		if (have_buffer != -1) {
 			if (size == NULL) {
 				*array = buf;
+				*bufobj = pythonList;
+				Py_INCREF(pythonList);
 
 			} else if (*size == -1) {
 				*array = buf;
 				*size = bufsize;
+				*bufobj = pythonList;
+				Py_INCREF(pythonList);
 
 			} else {
 				if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
