@@ -73,5 +73,7 @@ setup(
             [ 'Modules/_doubleindirect.m' ]),
         Extension('Quartz.CoreGraphics._sortandmap',
             [ 'Modules/_sortandmap.m' ]),
+        Extension('Quartz.CoreGraphics._cgwindow',
+            [ 'Modules/_cgwindow.m' ]),
     ],
 )
