@@ -27,12 +27,9 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "SearchKit" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-        'bdist_mpkg>=0.4.2',
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
+        'pyobjc-core>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b1',
     ],
     dependency_links = [],
     package_data = { 
