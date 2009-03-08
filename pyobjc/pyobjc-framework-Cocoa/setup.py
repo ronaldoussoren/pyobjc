@@ -38,9 +38,6 @@ setup(
     namespace_packages = ['PyObjCTools'],
 
     package_dir = { '': 'Lib' },
-    setup_requires = [
-        'bdist_mpkg>=0.4.2',
-    ],
     install_requires = [ 
         'pyobjc-core>=2.2b1',
     ],
