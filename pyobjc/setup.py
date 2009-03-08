@@ -5,11 +5,13 @@ ez_setup.use_setuptools()
 
 import os
 
-VERSION='2.1a0'
+VERSION='2.2b1'
 REQUIRES=[
-        'py2app==dev',
+# The line below won't install py2app for some reason and I have no
+# idea why that's so.
+#        'py2app==dev,>=0.4',
         'pyobjc-core=='+VERSION,
-        'pyobjc-metadata',
+#       'pyobjc-metadata',
         'pyobjc-framework-AddressBook=='+VERSION,
         'pyobjc-framework-AppleScriptKit=='+VERSION,
         'pyobjc-framework-Automator=='+VERSION,
@@ -26,7 +28,7 @@ REQUIRES=[
         'pyobjc-framework-InstantMessage=='+VERSION,
         'pyobjc-framework-InterfaceBuilderKit=='+VERSION,
         'pyobjc-framework-LatentSemanticMapping=='+VERSION,
-        'pyobjc-framework-LaunchServices=='+VERSION,
+#        'pyobjc-framework-LaunchServices=='+VERSION,
         'pyobjc-framework-Message=='+VERSION,
         'pyobjc-framework-PreferencePanes=='+VERSION,
         'pyobjc-framework-PubSub=='+VERSION,
@@ -37,7 +39,7 @@ REQUIRES=[
         'pyobjc-framework-SearchKit=='+VERSION,
         'pyobjc-framework-SyncServices=='+VERSION,
         'pyobjc-framework-SystemConfiguration=='+VERSION,
-        'pyobjc-framework-WebKit=='+VERSION,
+#        'pyobjc-framework-WebKit=='+VERSION,
         'pyobjc-framework-XgridFoundation=='+VERSION,
 ]
 
@@ -87,7 +89,6 @@ dist = setup(
     extra_path = "PyObjC",
     classifiers = CLASSIFIERS,
     license = 'MIT License',
-    download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     zip_safe = True,
     # workaround for setuptools 0.6b4 bug
     dependency_links = [],
