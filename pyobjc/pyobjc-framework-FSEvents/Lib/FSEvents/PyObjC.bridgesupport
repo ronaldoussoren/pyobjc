@@ -2,7 +2,6 @@
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='0.9'>
   <struct name='FSEventStreamContext' type='{FSEventStreamContext="version"i"info"^v"retain"^?"release"^?"copyDescription"^?}' />
-  <opaque name='ConstFSEventStreamRef' type='^{__FSEventStream=}' />
   <opaque name='FSEventStreamRef' type='^{__FSEventStream=}' />
   <enum name='kFSEventStreamCreateFlagNoDefer' value='2' />
   <enum name='kFSEventStreamCreateFlagNone' value='0' />
@@ -16,6 +15,8 @@
   <enum name='kFSEventStreamEventFlagUserDropped' value='2' />
   <enum name='kFSEventStreamEventIdSinceNow' value='-1' />
   <enum name='kFSEventStreamEventFlagRootChanged' value='32' />
+  <enum name='kFSEventStreamEventFlagMount' value='64' />
+  <enum name='kFSEventStreamEventFlagUnmount' value='128' />
   <function name='FSEventStreamCopyDescription'>
     <retval already_retained='true' type='^{__CFString=}' />
     <arg type='^{__FSEventStream=}' />

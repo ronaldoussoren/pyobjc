@@ -1,11 +1,11 @@
 '''
 Some simple tests to check that the framework is properly wrapped.
 '''
-import objc
-import unittest
 import FSEvents
+from FSEvents import *
+from PyObjCTools.TestSupport import *
 
-class TestFSEvents (unittest.TestCase):
+class TestFSEvents (TestCase):
 
     def testValues(self):
         for k, v in (('kFSEventStreamCreateFlagNone', 0x00000000),
@@ -18,7 +18,9 @@ class TestFSEvents (unittest.TestCase):
             ('kFSEventStreamEventFlagKernelDropped', 0x00000004),
             ('kFSEventStreamEventFlagEventIdsWrapped', 0x00000008),
             ('kFSEventStreamEventFlagHistoryDone', 0x00000010),
-            ('kFSEventStreamEventFlagRootChanged', 0x00000020)
+            ('kFSEventStreamEventFlagRootChanged', 0x00000020),
+            ('kFSEventStreamEventFlagMount', 0x00000040),
+            ('kFSEventStreamEventFlagUnmount', 0x00000080),
             ):
 
             self.assert_( hasattr(FSEvents, k) , k)
@@ -32,6 +34,7 @@ class TestFSEvents (unittest.TestCase):
 
 
     def testFunctions(self):
+
         self.assert_( hasattr(FSEvents, 'FSEventStreamCreateRelativeToDevice') )
         self.assert_( hasattr(FSEvents, 'FSEventStreamCreateRelativeToDevice') )
         self.assert_( hasattr(FSEvents, 'FSEventStreamGetLatestEventId') )
@@ -55,9 +58,12 @@ class TestFSEvents (unittest.TestCase):
 
     def testOpaque(self):
         self.assert_( hasattr(FSEvents, 'FSEventStreamRef') )
+        self.failUnlessIsOpaquePointer(FSEventStreamRef)
 
+    def testIncomplete(self):
+        self.fail("Add proper tests for FSEvents functions")
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 

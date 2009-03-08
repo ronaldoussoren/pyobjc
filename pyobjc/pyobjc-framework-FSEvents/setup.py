@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-FSEvents',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the framework FSEvents on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
