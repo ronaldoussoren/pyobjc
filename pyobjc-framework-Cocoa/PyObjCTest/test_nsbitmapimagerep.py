@@ -3,7 +3,7 @@ import objc
 import array
 
 from objc import YES, NO
-from AppKit import NSBitmapImageRep, NSDeviceRGBColorSpace, NSCalibratedWhiteColorSpace
+from AppKit import *
 
 class TestNSBitmapImageRep(TestCase):
     def testInstantiation(self):
@@ -105,6 +105,55 @@ class TestBadCreation(TestCase):
             height = 256
             dataPlanes = (None, None, None, None, None)
             y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+
+    def testConstants(self):
+        self.failUnlessEqual(NSTIFFCompressionNone, 1)
+        self.failUnlessEqual(NSTIFFCompressionCCITTFAX3, 3)
+        self.failUnlessEqual(NSTIFFCompressionCCITTFAX4, 4)
+        self.failUnlessEqual(NSTIFFCompressionLZW, 5)
+        self.failUnlessEqual(NSTIFFCompressionJPEG, 6)
+        self.failUnlessEqual(NSTIFFCompressionNEXT, 32766)
+        self.failUnlessEqual(NSTIFFCompressionPackBits, 32773)
+        self.failUnlessEqual(NSTIFFCompressionOldJPEG, 32865)
+        self.failUnlessEqual(NSTIFFFileType, 0)
+        self.failUnlessEqual(NSBMPFileType, 1)
+        self.failUnlessEqual(NSGIFFileType, 2)
+        self.failUnlessEqual(NSJPEGFileType, 3)
+        self.failUnlessEqual(NSPNGFileType, 4)
+        self.failUnlessEqual(NSJPEG2000FileType, 5)
+        self.failUnlessEqual(NSImageRepLoadStatusUnknownType, -1)
+        self.failUnlessEqual(NSImageRepLoadStatusReadingHeader, -2)
+        self.failUnlessEqual(NSImageRepLoadStatusWillNeedAllData, -3)
+        self.failUnlessEqual(NSImageRepLoadStatusInvalidData, -4)
+        self.failUnlessEqual(NSImageRepLoadStatusUnexpectedEOF, -5)
+        self.failUnlessEqual(NSImageRepLoadStatusCompleted, -6)
+        self.failUnlessEqual(NSAlphaFirstBitmapFormat, 1 << 0)
+        self.failUnlessEqual(NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
+        self.failUnlessEqual(NSFloatingPointSamplesBitmapFormat, 1 << 2)
+
+        self.failUnlessIsInstance(NSImageCompressionMethod, unicode)
+        self.failUnlessIsInstance(NSImageCompressionFactor, unicode)
+        self.failUnlessIsInstance(NSImageDitherTransparency, unicode)
+        self.failUnlessIsInstance(NSImageRGBColorTable, unicode)
+        self.failUnlessIsInstance(NSImageInterlaced, unicode)
+        self.failUnlessIsInstance(NSImageColorSyncProfileData, unicode)
+        self.failUnlessIsInstance(NSImageFrameCount, unicode)
+        self.failUnlessIsInstance(NSImageCurrentFrame, unicode)
+        self.failUnlessIsInstance(NSImageCurrentFrameDuration, unicode)
+        self.failUnlessIsInstance(NSImageLoopCount, unicode)
+        self.failUnlessIsInstance(NSImageGamma, unicode)
+        self.failUnlessIsInstance(NSImageProgressive, unicode)
+        self.failUnlessIsInstance(NSImageEXIFData, unicode)
+        self.failUnlessIsInstance(NSImageFallbackBackgroundColor, unicode)
+
+    def testMethods(self):
+        self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName  bitmapFormat:(NSBitmapFormat)bitmapFormat bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;")
+        self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;") #XXX See above
+        self.fail("- (void)getCompression:(NSTIFFCompression *)compression factor:(float *)factor;")
+        self.fail("- (void)setCompression:(NSTIFFCompression)compression factor:(float)factor;")
+        self.fail("+ (void)getTIFFCompressionTypes:(const NSTIFFCompression **)list count:(NSInteger *)numTypes;")
+
+
 
 if __name__ == '__main__':
     main( )

@@ -1,6 +1,14 @@
 <?xml version='1.0'?>
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='1.0'>
+  <constant name='NSDebugEnabled' ignore='true' comment='useless from python' />
+  <constant name='NSZombieEnabled' ignore='true' comment='useless from python' />
+  <constant name='NSDeallocateZombies' ignore='true' comment='useless from python' />
+  <constant name='NSHangOnUncaughtException' ignore='true' comment='useless from python' />
+  <constant name='NSKeepAllocationStatistics' ignore='true' comment='useless from python' />
+  <function name='NSCountFrames' ignore='true' comment='useless fromo python' />
+  <enum name='NSDecimalNoScale' value='32767' />
+
   <struct comment='Encodings are hardcoded because they do not contain a struct tag on Leopard. The value here is compatible with the encoding on Tiger.' name='NSAffineTransformStruct' type='{_NSAffineTransformStruct="m11"f"m12"f"m21"f"m22"f"tX"f"tY"f}' type64='{_NSAffineTransformStruct="m11"d"m12"d"m21"d"m22"d"tX"d"tY"d}' />
   <struct name='NSDecimal' />
   <struct ignore='true' name='NSFastEnumerationState' />
@@ -361,6 +369,7 @@
   <class name='NSDateFormatter'>
     <method selector='getObjectValue:forString:range:error:'>
       <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='N' />
       <arg index='3' null_accepted='true' type_modifier='o' />
     </method>
   </class>
@@ -682,12 +691,18 @@
     </method>
   </class>
   <class name='NSPointerArray'>
-    <method ignore='true' selector='addPointer:' suggestion='use NSMutableArray' />
-    <method ignore='true' selector='insertPointer:atIndex:' suggestion='use NSMutableArray' />
-    <method ignore='true' selector='pointerAtIndex:' suggestion='use NSMutableArray'>
-      <retval type='^v' />
+    <method selector='addPointer:'>
+	<arg index='0' type='@' type64='@' />
     </method>
-    <method ignore='true' selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray' />
+    <method selector='insertPointer:atIndex:' >
+	<arg index='0' type='@' type64='@' />
+    </method>
+    <method selector='pointerAtIndex:' >
+      <retval type='@' />
+    </method>
+    <method selector='replacePointerAtIndex:withPointer:' >
+	<arg index='1' type='@' type64='@' />
+    </method>
   </class>
   <class name='NSPointerFunctions'>
     <method selector='acquireFunction'>

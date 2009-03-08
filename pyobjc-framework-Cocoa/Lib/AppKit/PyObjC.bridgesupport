@@ -885,6 +885,24 @@
   <constant name='NSWorkspaceWillPowerOffNotification' type='@' />
   <constant name='NSWorkspaceWillSleepNotification' type='@' />
   <constant name='NSWorkspaceWillUnmountNotification' type='@' />
+  <enum name='NSLayoutNotDone' value='0' />
+  <enum name='NSLayoutDone' value='1' />
+  <enum name='NSLayoutCantFit' value='2' />
+  <enum name='NSLayoutOutOfGlyphs' value='3' />
+  <enum name='NSGlyphLayoutAtAPoint' value='0' />
+  <enum name='NSGlyphLayoutAgainstAPoint' value='1' />
+  <enum name='NSGlyphLayoutWithPrevious' value='2' />
+  <enum name='NSLayoutLeftToRight' value='0' />
+  <enum name='NSLayoutRightToLeft' value='1' />
+  <enum name='NSBaselineNotSet' value='-1.0' />
+  <enum name='NumGlyphsToGetEachTime' value='20' />
+  <enum name='NSOneByteGlyphPacking' value='0'/>
+  <enum name='NSJapaneseEUCGlyphPacking' value='1'/>
+  <enum name='NSAsciiWithDoubleByteEUCGlyphPacking' value='2'/>
+  <enum name='NSTwoByteGlyphPacking' value='3'/>
+  <enum name='NSFourByteGlyphPacking' value='4'/>
+  <enum name='NSGlyphBelow' value='1'/>
+  <enum name='NSGlyphAbove' value='2'/>
   <enum name='NSAWTEventType' value='16' />
   <enum name='NSAboveBottom' value='4' />
   <enum name='NSAboveTop' value='1' />
@@ -946,7 +964,7 @@
   <enum name='NSAscendingPageOrder' value='1' />
   <enum name='NSAtBottom' value='5' />
   <enum name='NSAtTop' value='2' />
-  <enum name='NSAttachmentCharacter' value='65532' />
+  <string_constant name='NSAttachmentCharacter' nsstring='true' value='&#65532;' />
   <enum name='NSAutoPagination' value='0' />
   <enum name='NSAutosaveOperation' value='3' />
   <enum name='NSBMPFileType' value='1' />
@@ -12512,7 +12530,7 @@
     <method selector='instantiateNibWithOwner:topLevelObjects:'>
       <retval type='B' />
       <arg index='0' type='@' />
-      <arg index='1' type_modifier='N' />
+      <arg index='1' type_modifier='o' />
     </method>
   </class>
   <class name='NSNibConnector'>

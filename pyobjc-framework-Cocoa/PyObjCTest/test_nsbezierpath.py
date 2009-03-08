@@ -3,9 +3,7 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-from AppKit import NSBezierPath,  NSMoveToBezierPathElement
-from AppKit import NSLineToBezierPathElement, NSCurveToBezierPathElement
-from AppKit import NSClosePathBezierPathElement
+from AppKit import *
 
 class TestNSBezierPath(TestCase):
     if not hasattr(TestCase, 'assertAlmostEquals'):
@@ -114,6 +112,25 @@ class TestNSBezierPath(TestCase):
         self.assertPointEquals(points[1], (2, 3)) # control point 2
         self.assertPointEquals(points[2], (3, 4)) # end point
 
+
+    def testConstants(self):
+        self.failUnlessEqual(NSButtLineCapStyle, 0)
+        self.failUnlessEqual(NSRoundLineCapStyle, 1)
+        self.failUnlessEqual(NSSquareLineCapStyle, 2)
+        self.failUnlessEqual(NSMiterLineJoinStyle, 0)
+        self.failUnlessEqual(NSRoundLineJoinStyle, 1)
+        self.failUnlessEqual(NSBevelLineJoinStyle, 2)
+        self.failUnlessEqual(NSNonZeroWindingRule, 0)
+        self.failUnlessEqual(NSEvenOddWindingRule, 1)
+        self.failUnlessEqual(NSMoveToBezierPathElement, 0)
+        self.failUnlessEqual(NSLineToBezierPathElement, 1)
+        self.failUnlessEqual(NSCurveToBezierPathElement, 2)
+        self.failUnlessEqual(NSClosePathBezierPathElement, 3)
+
+
+    def testMethods(self):
+        self.fail("+ (void)drawPackedGlyphs:(const char *)packedGlyphs atPoint:(NSPoint)point;")
+        self.fail("- (void)appendBezierPathWithPackedGlyphs:(const char *)packedGlyphs;")
 
 if __name__ == '__main__':
     main( )
