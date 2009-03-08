@@ -19,4 +19,8 @@ The short story:
 Unstable releases
 -----------------
 
-There are no unstable releases at the moment.
+The current beta release is PyObjC 2.2b1. This release can be installed using ``easy_install``::
+
+  $ easy_install pyobjc=2.2b1
+
+This will *not* install Py2app, you'll have to install that manually.
