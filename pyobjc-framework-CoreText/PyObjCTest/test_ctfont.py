@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from CoreText import *
+from Quartz.CoreGraphics import *
 
 class TestCTFont (TestCase):
     def testTypes(self):
