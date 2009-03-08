@@ -1920,6 +1920,7 @@ init_objc(void)
 	PyModule_AddStringConstant(m, "_C_NSInteger", @encode(NSInteger));
 	PyModule_AddStringConstant(m, "_C_NSUInteger", @encode(NSUInteger));
 	PyModule_AddStringConstant(m, "_C_CFIndex", @encode(CFIndex));
+	PyModule_AddStringConstant(m, "_C_CGFloat", @encode(CGFloat));
 
 
 	PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in));
