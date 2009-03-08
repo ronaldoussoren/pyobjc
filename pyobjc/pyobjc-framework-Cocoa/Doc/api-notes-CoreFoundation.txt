@@ -29,8 +29,8 @@ CFArrayRef
 ----------
 
 This type is only supported when the ``callbacks`` are 
-``kCFTypeArrayCallBacks``, accessing other ``CFArray``s from Python is not
-supported.
+``kCFTypeArrayCallBacks``, accessing other ``CFArray`` values from Python is 
+not supported and will crash your interpreter.
 
 Note that all ``CFArrayRef`` instances are instances of ``NSArray`` or
 ``NSMutableArray`` as well.  
@@ -50,7 +50,7 @@ CFBagRef
 --------
 
 This type is only supported when the ``callbacks`` are 
-``kCFTypeBagCallBacks``, accessing other ``CFBag``s from Python is not
+``kCFTypeBagCallBacks``, accessing other ``CFBag`` values from Python is not
 supported.
 
 * ``CFBagCreate``, ``CFBagCreateMutable``
@@ -131,7 +131,7 @@ there doesn't seem to be a proper binding of the low-level API's.
 
 * The ``context`` argument for ``CFMachPortCreate``  and 
   ``CFMachPortCreateWithPort`` is a python object, the 
-   ``CFMachPortContext`` is automaticly added by the bridge.
+  ``CFMachPortContext`` is automaticly added by the bridge.
 
 * The ``CFMachPortGetContext`` results the python object that was
   used in ``CFMachPortContext``, not a ``CFMachPortContext``
@@ -233,10 +233,10 @@ CFString
 * The 'Pascal String' API's are not supported (that is,
   ``CFStringAppendPascalString``, ``CFStringCreateWithPascalString``,
   ``CFStringCreateWithPascalStringNoCopy``, ``CFStringGetPascalString``, and
-   ``CFStringGetPascalStringPtr``). 
-   Use the regular Python string API's instead (or access the string 
-   contents using the ``CString`` functions, use as 
-   ``CFStringCreateWithCString``).
+  ``CFStringGetPascalStringPtr``). 
+  Use the regular Python string API's instead (or access the string 
+  contents using the ``CString`` functions, use as 
+  ``CFStringCreateWithCString``).
 
 
 CFTree

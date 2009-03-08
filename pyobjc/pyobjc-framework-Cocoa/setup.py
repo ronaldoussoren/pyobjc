@@ -42,7 +42,7 @@ setup(
         'bdist_mpkg>=0.4.2',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
+        'pyobjc-core>=2.2b1',
     ],
     dependency_links = [],
     package_data = { 

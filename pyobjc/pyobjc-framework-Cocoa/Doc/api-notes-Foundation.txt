@@ -17,7 +17,7 @@ machinery is not tested at all and probably doens't work.
 Use the ScriptingBridge and/or the `appscript library`_ instead of this
 class.
 
-.. _`appscript libary`: http://appscript.sourceforge.net/
+.. _`appscript library`: http://appscript.sourceforge.net/
 
 NSCoder
 -------
