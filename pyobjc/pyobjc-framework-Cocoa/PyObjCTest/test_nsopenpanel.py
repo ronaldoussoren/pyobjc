@@ -16,5 +16,11 @@ class TestOpenPanel (TestCase):
             sig,
             'v@:@@@@@:i')
 
+    def testMethods(self):
+        self.fail("- (void)beginSheetForDirectory:(NSString *)path file:(NSString *)name types:(NSArray *)fileTypes modalForWindow:(NSWindow *)docWindow modalDelegate:(id)delegate didEndSelector:(SEL)didEndSelector contextInfo:(void *)contextInfo;")
+
+        self.fail("- (void)beginForDirectory:(NSString *)path file:(NSString *)name types:(NSArray *)fileTypes modelessDelegate:(id)delegate didEndSelector:(SEL)didEndSelector contextInfo:(void *)contextInfo;")
+
+
 if __name__ == "__main__":
     main()

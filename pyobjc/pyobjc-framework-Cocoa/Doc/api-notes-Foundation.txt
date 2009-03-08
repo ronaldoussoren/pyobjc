@@ -1,0 +1,120 @@
+============================
+API Notes for Foundation
+============================
+
+Introduction
+------------
+
+This document describes where the wrappers for Foundation API are different
+from the default straightforward translation of method/function interfaces.
+
+NSAppleEventDescriptor, NSAppleEventManager
+-------------------------------------------
+
+These classes are barely supported, interaction with the lowlevel AppleEvent
+machinery is not tested at all and probably doens't work.
+
+Use the ScriptingBridge and/or the `appscript library`_ instead of this
+class.
+
+.. _`appscript libary`: http://appscript.sourceforge.net/
+
+NSCoder
+-------
+
+* ``-encodeValuesOfObjCTypes:``: Use the basic encoding methods instead
+
+* ``-decodeValuesOfObjCTypes:``: Use the basic decodeing methods instead
+
+NSData, NSMutableData
+---------------------
+
+* ``-getBytes:``: Use ``-bytes`` instead.
+
+* ``+dataWithBytesNoCopy:length:``, ``-initWithBytesNoCopy:length``: Don't use these, Cocoa
+   will try to use the C function ``free()`` on the buffer when the data object is released and
+   that won't work.
+
+* ``+dataWithBytesNoCopy:length:freeWhenDone:``, ``-initWithBytesNoCopy:length:freeWhenDone:``: 
+  Using these is fairly dangerous, your program can crash when the data buffer is cleaned up by 
+  the Python garbage collector before the ``NSData`` object is deallocated. 
+
+  The ``freeWhenDone`` argument must be ``False``.
+
+  Use ``buffer(value)`` instead, those will automaticly be bridged to an instance of a 
+  ``NSData`` subclass.
+
+NSDebug
+-------
+
+* ``NSDebugEnabled``, ``NSZombieEnabled``, ``NSDeallocateZombies``,
+  ``NSHangOnUncaughtException``, ``NSKeepAllocationStatistics``: These values are not available 
+  from Python.
+
+* ``NSIsFreedObject``, ``NSFrameAddress``, ``NSReturnAddress``, ``NSCountFrames``:
+   These functions are not available from Python.
+
+NSGarbageCollector
+------------------
+
+PyObjC does not fully support running with the garbage collector enabled at the moment. 
+
+* ``disableCollectorForPointer:``, ``enableCollectorForPointer:``: These API's are not
+  supported at all.
+
+NSGeometry
+-----------
+
+* ``NSZeroPoint``, ``NSZeroSize``, ``NSZeroRect``: these are mutable. Do not use them
+  to initialize a variable that you'll modify later on, use the default contructor instead.
+
+  This is, instead of::
+
+     point = NSZeroPoint
+     # ...
+     point.x = 4
+
+  Use::
+
+     point = NPoint()
+     # ...
+     point.x = 4
+
+  (or even: ``point = NSPoint(x=4)``).
+
+* The CoreGraphics types ``CGPoint``, ``CGSize`` and ``CGRect`` are interchangeable with
+  their Foundation counterparts, there is no need to explicitly convert between them.
+
+NSInvocation
+------------
+
+* Struct ``NSObjCValue`` and related constants (such as ``NSObjCNoType``) are not available in
+  Python.
+
+NSMapTable
+----------
+
+* Using ``NSMapTableObjectPointerPersonality`` is not supported. Trying to access values in
+  a maptable with this personality for the keys or values will crash your program.
+
+Generic Macros
+--------------
+
+* The function/macros ``MIN``, ``MAX`` and ``ABS`` are not available in Python. Use the
+  regular python functions ``min``, ``max`` and ``abs`` instead.
+
+NSPointerArray
+--------------
+
+This class is only useable when the array is configured for Object use.
+
+NSPointerFunctions
+------------------
+
+Accessing the actual function properties (such as ``hashFunction``) is not supported.
+
+NSMachPort delegate
+-------------------
+
+Implementing or calling ``handleMachMessage:`` is not supported. The argument is mapped on
+a plain python integer, accessing the actual Mach message buffer is not possible.

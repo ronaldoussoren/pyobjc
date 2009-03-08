@@ -1,6 +1,8 @@
 <?xml version='1.0'?>
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='1.0'>
+	<string_constant name='NSAttachmentCharacter' nsstring='true' />
+
   <struct comment='Struct with nested bitfields. Furthermore SNTypeSetterGlyphInfo is only used to peek/poke into a buffer' ignore='true' name='NSTypesetterGlyphInfo' />
   <opaque name='NSModalSession' />
   <opaque ignore='true' name='NSOpenGLContextAuxiliary*' />

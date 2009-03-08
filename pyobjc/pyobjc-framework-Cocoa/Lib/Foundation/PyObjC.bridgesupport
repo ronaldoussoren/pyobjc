@@ -38,8 +38,6 @@
   <constant name='NSCurrentLocaleDidChangeNotification' type='@' />
   <constant name='NSDateFormatString' type='@' />
   <constant name='NSDateTimeOrdering' type='@' />
-  <constant name='NSDeallocateZombies' type='B' />
-  <constant name='NSDebugEnabled' type='B' />
   <constant name='NSDecimalDigits' type='@' />
   <constant name='NSDecimalNumberDivideByZeroException' type='@' />
   <constant name='NSDecimalNumberExactnessException' type='@' />
@@ -127,7 +125,6 @@
   <constant name='NSHTTPPropertyServerHTTPVersionKey' type='@' />
   <constant name='NSHTTPPropertyStatusCodeKey' type='@' />
   <constant name='NSHTTPPropertyStatusReasonKey' type='@' />
-  <constant name='NSHangOnUncaughtException' type='B' />
   <constant name='NSHebrewCalendar' type='@' />
   <constant name='NSHourNameDesignations' type='@' />
   <constant name='NSInconsistentArchiveException' type='@' />
@@ -162,7 +159,6 @@
   <constant name='NSJavaUserPath' type='@' />
   <constant name='NSJavaWillCreateVirtualMachineNotification' type='@' />
   <constant name='NSJavaWillSetupVirtualMachineNotification' type='@' />
-  <constant name='NSKeepAllocationStatistics' type='B' />
   <constant name='NSKeyValueChangeIndexesKey' type='@' />
   <constant name='NSKeyValueChangeKindKey' type='@' />
   <constant name='NSKeyValueChangeNewKey' type='@' />
@@ -305,7 +301,6 @@
   <constant name='NSZeroPoint' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
   <constant name='NSZeroRect' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   <constant name='NSZeroSize' type='{_NSSize=ff}' type64='{CGSize=dd}' />
-  <constant name='NSZombieEnabled' type='B' />
   <enum name='NSASCIIStringEncoding' value='1' />
   <enum name='NSAdminApplicationDirectory' value='4' />
   <enum name='NSAggregateExpressionType' value='14' />
@@ -582,6 +577,7 @@
   <enum name='NSObjCStructType' value='123' />
   <enum name='NSObjCUnionType' value='40' />
   <enum name='NSObjCVoidType' value='118' />
+  <enum name='NSDecimalNoScale' value='32767' />
   <enum name='NSObjectAutoreleasedEvent' value='3' />
   <enum name='NSObjectExtraRefDecrementedEvent' value='5' />
   <enum name='NSObjectExtraRefIncrementedEvent' value='4' />
@@ -968,9 +964,6 @@
     <arg type='@' type64='@' />
     <arg type='I' type64='Q' />
     <arg type='^{_NSZone=}' />
-  </function>
-  <function name='NSCountFrames'>
-    <retval type='I' type64='Q' />
   </function>
   <function name='NSCountHashTable'>
     <retval type='I' type64='Q' />
@@ -7271,7 +7264,9 @@
     </method>
     <method selector='getObjectValue:forString:range:error:'>
       <retval type='B' />
-      <arg index='1' type='@' />
+      <arg index='0' type_modifier='o' />
+      <arg index='2' type_modifier='N' />
+      <arg index='3' type_modifier='o' null_accepted='true' />
     </method>
     <method selector='groupingSeparator'>
       <retval type='@' />
@@ -9047,52 +9042,19 @@
     </method>
   </class>
   <class name='NSPointerArray'>
-    <method selector='addPointer:' suggestion='use NSMutableArray' />
-    <method selector='allObjects'>
-      <retval type='@' />
+	  <method selector='addPointer:'>
+		  <arg index='0' type='@' type64='@' />
+	  </method>
+    <method selector='insertPointer:atIndex:' >
+		  <arg index='0' type='@' type64='@' />
+	  </method>
+
+    <method selector='pointerAtIndex:' >
+	    <retval type='@' type64='@' />
     </method>
-    <method selector='compact'>
-      <retval type='v' />
-    </method>
-    <method selector='count'>
-      <retval type='I' type64='Q' />
-    </method>
-    <method selector='initWithOptions:'>
-      <retval type='@' />
-      <arg index='0' type='I' />
-    </method>
-    <method selector='initWithPointerFunctions:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
-    <method selector='insertPointer:atIndex:' suggestion='use NSMutableArray' />
-    <method class_method='true' selector='pointerArrayWithOptions:'>
-      <retval type='@' />
-      <arg index='0' type='I' />
-    </method>
-    <method class_method='true' selector='pointerArrayWithPointerFunctions:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
-    <method class_method='true' selector='pointerArrayWithStrongObjects'>
-      <retval type='@' />
-    </method>
-    <method class_method='true' selector='pointerArrayWithWeakObjects'>
-      <retval type='@' />
-    </method>
-    <method selector='pointerAtIndex:' suggestion='use NSMutableArray' />
-    <method selector='pointerFunctions'>
-      <retval type='@' />
-    </method>
-    <method selector='removePointerAtIndex:'>
-      <retval type='v' />
-      <arg index='0' type='I' type64='Q' />
-    </method>
-    <method selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray' />
-    <method selector='setCount:'>
-      <retval type='v' />
-      <arg index='0' type='I' type64='Q' />
-    </method>
+    <method selector='replacePointerAtIndex:withPointer:' suggestion='use NSMutableArray' >
+		  <arg index='1' type='@' type64='@' />
+	  </method>
   </class>
   <class name='NSPointerFunctions'>
     <method selector='BOOL'>

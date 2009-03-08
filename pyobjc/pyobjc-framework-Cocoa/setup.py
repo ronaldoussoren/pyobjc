@@ -27,7 +27,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
