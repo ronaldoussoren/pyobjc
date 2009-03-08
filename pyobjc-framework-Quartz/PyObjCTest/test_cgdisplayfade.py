@@ -33,8 +33,5 @@ class TestCGDisplayFade (TestCase):
         self.failUnlessIsInstance(v, (int, long))
 
 
-
-
-
 if __name__ == "__main__":
     main()

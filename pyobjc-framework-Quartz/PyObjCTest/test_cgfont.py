@@ -91,20 +91,73 @@ class TestCGFont (TestCase):
         self.failUnlessIsInstance(v, bool)
         
 
+        # PyObjC doesn't wrap ATSUI, therefore we cannot actually call
+        # the function.
+        #self.fail('CGFontCreateWithPlatformFont')
+        self.failUnlessArgHasType(CGFontCreateWithPlatformFont, 0,
+                objc._C_UINT)
+        self.failUnlessResultIsCFRetained(CGFontCreateWithPlatformFont)
 
 
+        data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
+        self.failUnlessResultIsCFRetained(CGFontCreateWithDataProvider)
+        font = CGFontCreateWithDataProvider(
+                CGDataProviderCreateWithCFData(buffer(data))
+        )
+        self.failUnlessIsInstance(font, CGFontRef)
 
-    def testMissing(self):
-        self.fail('GFontCreateWithPlatformFont')
-        self.fail('CGFontCreateWithDataProvider')
-        self.fail('CGFontGetGlyphAdvances')
-        self.fail('CGFontGetGlyphBBoxes')
-        self.fail('CGFontGetGlyphWithGlyphName')
-        self.fail('CGFontCopyGlyphNameForGlyph')
-        self.fail('CGFontCreatePostScriptSubset')
-        self.fail('CGFontCreatePostScriptEncoding')
-        self.fail('CGFontCopyTableTags')
-        self.fail('CGFontCopyTableForTag')
+        tags = CGFontCopyTableTags(font)
+        self.failUnlessIsInstance(tags, tuple)
+        self.failIfEqual(len(tags), 0)
+        self.failUnlessIsInstance(tags[0], (int, long))
+
+        self.failUnlessResultIsCFRetained(CGFontCopyTableForTag)
+        for tg in tags:
+            data = CGFontCopyTableForTag(font, 0)
+            if data is None:
+                continue
+            self.failUnlessIsInstance(data, CFDataRef)
+
+        v = CGFontCopyGlyphNameForGlyph(font, ord('A'))
+        self.failUnlessIsInstance(v, unicode)
+
+        glyphnames = ['chat', 'conference', 'woman' ]
+
+        v = CGFontGetGlyphWithGlyphName(font, glyphnames[0])
+        self.failUnlessIsInstance(v, (int, long))
+
+        glyphs = [ CGFontGetGlyphWithGlyphName(font, nm)
+                    for nm in glyphnames ]
+
+        self.failUnlessResultHasType(CGFontGetGlyphAdvances, objc._C_BOOL)
+        v, advances = CGFontGetGlyphAdvances(
+                font, glyphs, len(glyphs), None)
+        self.failUnlessIsInstance(v, bool)
+        self.failUnlessEqual(len(advances), 3)
+        for v in advances:
+            self.failUnlessIsInstance(v, (int, long))
+
+        self.failUnlessResultHasType(CGFontGetGlyphBBoxes, objc._C_BOOL)
+        v, bboxes = CGFontGetGlyphBBoxes(
+                font, glyphs, len(glyphs), None)
+        self.failUnlessIsInstance(v, bool)
+        self.failUnlessEqual(len(bboxes), 3)
+        for v in bboxes:
+            self.failUnlessIsInstance(v, CGRect)
+
+        self.failUnlessResultIsCFRetained(CGFontCreatePostScriptSubset)
+        psfont = CGFontCreatePostScriptSubset(
+                font, "pybobjc-characters",
+                kCGFontPostScriptFormatType42,
+                glyphs, len(glyphs), None)
+        self.failUnlessIsInstance(psfont, CFDataRef)
+
+
+        self.failUnlessResultIsCFRetained(CGFontCreatePostScriptEncoding)
+        map = glyphs + [0]*(256-len(glyphs))
+        psfont = CGFontCreatePostScriptEncoding(
+                font, map)
+        self.failUnlessIsInstance(psfont, CFDataRef)
     
 
 

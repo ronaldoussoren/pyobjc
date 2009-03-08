@@ -7,6 +7,61 @@
 #import <ApplicationServices/ApplicationServices.h>
 
 static PyObject*
+m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), 
+		PyObject* args)
+{
+	PyObject* py_font;
+	CGFontRef font;
+	CFArrayRef tags;
+
+	if (!PyArg_ParseTuple(args, "O", &py_font)) {
+		return NULL;
+	}
+
+	if (PyObjC_PythonToObjC(@encode(CGFontRef), py_font, &font) == -1) {
+		return NULL;
+	}
+
+	tags = NULL;
+	PyObjC_DURING
+		tags = CGFontCopyTableTags(font);
+
+	PyObjC_HANDLER
+		tags = NULL;
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (tags == NULL && PyErr_Occurred()) {
+		return NULL;
+	}
+
+	if (tags == NULL)  {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	Py_ssize_t len = CFArrayGetCount(tags);
+	Py_ssize_t i;
+	PyObject* result = PyTuple_New(len);
+	if (result == NULL) {
+		CFRelease(tags);
+		return NULL;
+	}
+
+	for (i = 0; i < len; i++) {
+		uint32_t cur = (uint32_t)(uintptr_t)CFArrayGetValueAtIndex(tags, i);
+		PyObject* v = PyObjC_ObjCToPython(@encode(uint32_t), &cur);
+		if (v == NULL) {
+			CFRelease(tags);
+			return NULL;
+		}
+		PyTuple_SET_ITEM(result, i, v);
+	}
+	CFRelease(tags);
+	return result;
+}
+
+static PyObject*
 m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), 
 		PyObject* args)
 {
@@ -278,6 +333,12 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
 
 
 static PyMethodDef m_methods[] = {
+	{
+		"CGFontCopyTableTags",
+		(PyCFunction)m_CGFontCopyTableTags,
+		METH_VARARGS,
+		NULL
+	},
 	{
 		"CGWindowListCreate",
 		(PyCFunction)m_CGWindowListCreate,
