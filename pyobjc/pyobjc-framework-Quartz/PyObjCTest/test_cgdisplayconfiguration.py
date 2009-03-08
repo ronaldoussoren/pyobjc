@@ -141,10 +141,5 @@ class TestCGDisplayConfiguration (TestCase):
         self.failUnlessEqual(kCGDisplayUnMirrorFlag, (1 << 11))
         self.failUnlessEqual(kCGDisplayDesktopShapeChangedFlag, (1 << 12))
 
-        
-
-
-
-
 if __name__ == "__main__":
     main()

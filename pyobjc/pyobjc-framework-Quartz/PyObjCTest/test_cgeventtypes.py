@@ -126,7 +126,5 @@ class TestCGEventTypes (TestCase):
         self.failUnless(hasattr(v, 'maxUsecLatency'))
 
 
-
-
 if __name__ == "__main__":
     main()

@@ -342,6 +342,7 @@
   <function name='CGFontCreatePostScriptSubset'>
     <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
     <arg c_array_length_in_arg='4' index='3' type_modifier='n' />
+    <arg index='4' type_modifier='n' />
   </function>
   <function name='CGFontCreateWithDataProvider'>
     <retval already_cfretained='true' />
@@ -351,15 +352,15 @@
   </function>
   <function name='CGFontCreateWithPlatformFont'>
     <retval already_cfretained='true' />
-    <arg comment='ATSFontRef' index='0' type='L' type64='L' />
+    <arg comment='ATSFontRef' index='0' type='I' type64='I' />
   </function>
   <function name='CGFontGetGlyphAdvances'>
-    <arg c_array_length_in_arg='2' index='1' />
-    <arg c_array_length_in_arg='2' index='3' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='2' index='3' type_modifier='o' />
   </function>
   <function name='CGFontGetGlyphBBoxes'>
-    <arg c_array_length_in_arg='2' index='1' />
-    <arg c_array_length_in_arg='2' index='3' />
+    <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
+    <arg c_array_length_in_arg='2' index='3' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGFunctionCreate'>
     <retval already_cfretained='true' />

@@ -461,11 +461,6 @@
   <string_constant name='kCGNotifyEventTapRemoved' value='com.apple.coregraphics.eventTapRemoved' />
   <string_constant name='kCGNotifyGUIConsoleSessionChanged' value='com.apple.coregraphics.GUIConsoleSessionChanged' />
   <string_constant name='kCGNotifyGUISessionUserChanged' value='com.apple.coregraphics.GUISessionUserChanged' />
-  <string_constant name='kCGPDFContextAuthor' nsstring='true' value='kCGPDFContextAuthor' />
-  <string_constant name='kCGPDFContextCreator' nsstring='true' value='kCGPDFContextCreator' />
-  <string_constant name='kCGPDFContextOutputIntent' nsstring='true' value='kCGPDFContextOutputIntent' />
-  <string_constant name='kCGPDFContextOutputIntents' nsstring='true' value='kCGPDFContextOutputIntents' />
-  <string_constant name='kCGPDFContextTitle' nsstring='true' value='kCGPDFContextTitle' />
   <string_constant name='kCGSessionConsoleSetKey' nsstring='true' value='kCGSSessionConsoleSetKey' />
   <string_constant name='kCGSessionLoginDoneKey' nsstring='true' value='kCGSessionLoginDoneKey' />
   <string_constant name='kCGSessionOnConsoleKey' nsstring='true' value='kCGSSessionOnConsoleKey' />
@@ -1955,7 +1950,7 @@
   <function name='CGFontCreatePostScriptEncoding'>
     <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
     <arg type='^{CGFont=}' />
-    <arg type='[256S]' />
+    <arg c_array_of_fixed_length='256' type='^S' type_modifier='n' />
   </function>
   <function name='CGFontCreatePostScriptSubset'>
     <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
@@ -1964,7 +1959,7 @@
     <arg type='i' />
     <arg c_array_length_in_arg='4' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
-    <arg type='[256S]' />
+    <arg c_array_of_fixed_length='256' type='^S' type_modifier='n' />
   </function>
   <function name='CGFontCreateWithDataProvider'>
     <retval already_cfretained='true' type='^{CGFont=}' />
@@ -1976,7 +1971,7 @@
   </function>
   <function name='CGFontCreateWithPlatformFont'>
     <retval already_cfretained='true' type='^{CGFont=}' />
-    <arg type='L' type64='L' />
+    <arg type='I' type64='I' />
   </function>
   <function name='CGFontGetAscent'>
     <retval type='i' />
@@ -1997,16 +1992,16 @@
   <function name='CGFontGetGlyphAdvances'>
     <retval type='Z' />
     <arg type='^{CGFont=}' />
-    <arg c_array_length_in_arg='2' type='^S' />
+    <arg c_array_length_in_arg='2' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
-    <arg c_array_length_in_arg='2' type='^i' />
+    <arg c_array_length_in_arg='2' type='^i' type_modifier='o' />
   </function>
   <function name='CGFontGetGlyphBBoxes'>
     <retval type='Z' />
     <arg type='^{CGFont=}' />
-    <arg c_array_length_in_arg='2' type='^S' />
+    <arg c_array_length_in_arg='2' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
-    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
   </function>
   <function name='CGFontGetGlyphWithGlyphName'>
     <retval type='S' />

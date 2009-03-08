@@ -96,3 +96,19 @@ pixel formats for the details on that.
 
 This function has an output buffer of indetermined size. You cannot pass ``None`` as the value of that buffer but have
 to explicitly specify a writable output buffer (such an ``array.array`` or the right type and size).
+
+Low-level PDF support
+---------------------
+
+Low-level PDF support in the CoreGraphics framework (such as the ``PDFArrayRef``
+type) are barely supported by PyObjC and these API's are currently not covered 
+by PyObjC's testsuite.
+
+Adding support for these API's is on the todo-list, but adding proper support
+requires work because the ``PDFArrayRef`` type (and simular types) is not
+a CoreFoundation based type.
+
+``CGPSConverter``
+------------------
+
+The API's related to CGPSConverter are not supported at the moment.
