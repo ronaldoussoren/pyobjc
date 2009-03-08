@@ -21,17 +21,15 @@ setup(
     version="2.2b1",
     description = "Wrappers for the framework PreferencePanes on Mac OS X",
     long_description = __doc__,
-    #author = ,
-    #author_email=
-    # url=
+    author = 'Ronald Oussoren',
+    author_email = 'pyobjc-dev@lists.sourceforge.net',
+    url= 'http://pyobjc.sourceforge.net/',
     platforms = [ "MacOS X" ],
     packages = [ "PreferencePanes" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
+        'pyobjc-core>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b1',
     ],
     dependency_links = [],
     package_data = { 
