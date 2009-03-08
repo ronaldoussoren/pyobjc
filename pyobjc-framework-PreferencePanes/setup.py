@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-PreferencePanes',
-    version="2.0",
+    version="2.2b1",
     description = "Wrappers for the framework PreferencePanes on Mac OS X",
     long_description = __doc__,
     #author = ,
