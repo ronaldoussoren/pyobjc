@@ -28,8 +28,8 @@ setup(
     packages = [ "InputMethodKit" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0' 
+        'pyobjc-core>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b1' 
     ],
     dependency_links = [],
     package_data = { 
