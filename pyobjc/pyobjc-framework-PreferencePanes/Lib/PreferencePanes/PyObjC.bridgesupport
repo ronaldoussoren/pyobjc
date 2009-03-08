@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Cocoa.framework/Cocoa' />
+  <constant name='NSPreferencePaneCancelUnselectNotification' type='@' />
+  <constant name='NSPreferencePaneDoUnselectNotification' type='@' />
+  <enum name='NSUnselectCancel' value='0' />
+  <enum name='NSUnselectLater' value='2' />
+  <enum name='NSUnselectNow' value='1' />
+  <string_constant name='kNSPrefPaneHelpMenuAnchorKey' nsstring='true' value='anchor' />
+  <string_constant name='kNSPrefPaneHelpMenuInfoPListKey' nsstring='true' value='NSPrefPaneHelpAnchors' />
+  <string_constant name='kNSPrefPaneHelpMenuTitleKey' nsstring='true' value='title' />
+  <class name='NSPreferencePane'>
+    <method selector='autoSaveTextFields'>
+      <retval type='B' />
+    </method>
+    <method selector='isSelected'>
+      <retval type='B' />
+    </method>
+    <method selector='replyToShouldUnselect:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+</signatures>
+
