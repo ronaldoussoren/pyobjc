@@ -36,8 +36,8 @@ struct _PyObjC_ArgDescr {
 	PyObjCMethodSignature* callable;
 
 	enum _PyObjC_PointerType        ptrType;
-	int8_t          arrayArg;
-	int8_t          arrayArgOut;
+	int16_t         arrayArg;
+	int16_t         arrayArgOut;
 	const char*	sel_type;
 	BOOL            allowNULL:1;
 	BOOL            typeOverride:1;
