@@ -7,12 +7,28 @@ from CGraphView import *
 from fieldMath import *
 
 
-NibClassBuilder.extractClasses("MainMenu")
-
-
 #____________________________________________________________
-class CGraphController(NibClassBuilder.AutoBaseClass):
-
+class CGraphController(NSObject):
+    graphModel = IBOutlet()
+    graphView = IBOutlet()
+    fieldNormalizeCheck = IBOutlet()
+    settingDrawer = IBOutlet()
+    fieldSlider0 = IBOutlet()
+    fieldSlider1 = IBOutlet()
+    fieldSlider2 = IBOutlet()
+    phaseSlider0 = IBOutlet()
+    phaseSlider1 = IBOutlet()
+    phaseSlider2 = IBOutlet()
+    spacingSlider = IBOutlet()
+    fieldDisplay0 = IBOutlet()
+    fieldDisplay1 = IBOutlet()
+    fieldDisplay2 = IBOutlet()
+    phaseDisplay0 = IBOutlet()
+    phaseDisplay1 = IBOutlet()
+    phaseDisplay2 = IBOutlet()
+    RMSGainDisplay = IBOutlet()
+    spacingDisplay = IBOutlet()
+    
 #____________________________________________________________
 # Update GUI display and control values
 
@@ -49,27 +65,33 @@ class CGraphController(NibClassBuilder.AutoBaseClass):
 
 #____________________________________________________________
 # Handle GUI values
-
+    
+    @IBAction
     def fieldDisplay0_(self, sender):
         self.setNormalizedField(0, sender.floatValue())
         self.drawGraph()
 
+    @IBAction
     def fieldDisplay1_(self, sender):
         self.setNormalizedField(1, sender.floatValue())
         self.drawGraph()
 
+    @IBAction
     def fieldDisplay2_(self, sender):
         self.setNormalizedField(2, sender.floatValue())
         self.drawGraph()
 
+    @IBAction
     def fieldSlider0_(self, sender):
         self.setNormalizedField(0, sender.floatValue())
         self.drawGraph()
 
+    @IBAction
     def fieldSlider1_(self, sender):
         self.setNormalizedField(1, sender.floatValue())
         self.drawGraph()
 
+    @IBAction
     def fieldSlider2_(self, sender):
         self.setNormalizedField(2, sender.floatValue())
         self.drawGraph()
@@ -101,38 +123,46 @@ class CGraphController(NibClassBuilder.AutoBaseClass):
             self.graphModel.setField(t, v)
 
 
-
+    @IBAction
     def phaseDisplay0_(self, sender):
         self.graphModel.setPhase(0, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def phaseDisplay1_(self, sender):
         self.graphModel.setPhase(1, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def phaseDisplay2_(self, sender):
         self.graphModel.setPhase(2, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def phaseSlider0_(self, sender):
         self.graphModel.setPhase(0, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def phaseSlider1_(self, sender):
         self.graphModel.setPhase(1, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def phaseSlider2_(self, sender):
         self.graphModel.setPhase(2, degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def spacingDisplay_(self, sender):
         self.graphModel.setSpacing(degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def spacingSlider_(self, sender):
         self.graphModel.setSpacing(degToRad(sender.floatValue()))
         self.drawGraph()
 
+    @IBAction
     def settingDrawerButton_(self, sender):
         self.settingDrawer.toggle_(self)

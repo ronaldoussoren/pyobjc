@@ -1,4 +1,4 @@
-from PyObjCTools import NibClassBuilder
+import objc
 from Foundation import *
 from AppKit import *
 from math import pi, sin, cos
@@ -9,8 +9,18 @@ x, y = 0, 1
 llc, sze = 0, 1 # Left Lower Corner, Size
 
 #____________________________________________________________
-class CGraphView(NibClassBuilder.AutoBaseClass):
-
+class CGraphView(NSView):
+    
+    azmuthSlider = objc.IBOutlet()
+    mapOffsetEWSlider = objc.IBOutlet()
+    mapOffsetNSSlider = objc.IBOutlet()
+    mapScaleSlider = objc.IBOutlet()
+    mapVisibleSlider = objc.IBOutlet()
+    azmuthDisplay = objc.IBOutlet()
+    mapOffsetEWDisplay = objc.IBOutlet()
+    mapOffsetNSDisplay = objc.IBOutlet()
+    mapScaleDisplay = objc.IBOutlet()
+    
     def initWithFrame_(self, frame):
         super(CGraphView, self).initWithFrame_(frame)
         self.setGridColor()
@@ -154,14 +164,16 @@ class CGraphView(NibClassBuilder.AutoBaseClass):
 
 #____________________________________________________________
 # Handle GUI values
-
+    @objc.IBAction
     def mapVisibleSlider_(self, sender):
         self.mapVisible = (sender.floatValue())
         self.setNeedsDisplay_(1)
 
+    @objc.IBAction
     def azmuthDisplay_(self, sender):
         self.setAzmuth(sender.floatValue())
 
+    @objc.IBAction
     def azmuthSlider_(self, sender):
         self.setAzmuth(sender.floatValue())
 
@@ -171,26 +183,32 @@ class CGraphView(NibClassBuilder.AutoBaseClass):
         self.azmuthDisplay.setFloatValue_(value)
         self.setNeedsDisplay_(1)
 
+    @objc.IBAction
     def mapScaleDisplay_(self, sender):
         self.mapScale = sender.floatValue()
         self.setMapRect()
 
+    @objc.IBAction
     def mapScaleSlider_(self, sender):
         self.mapScale = sender.floatValue()
         self.setMapRect()
 
+    @objc.IBAction
     def mapOffsetNSDisplay_(self, sender):
         self.mapOffsetNS = sender.floatValue()
         self.setMapRect()
 
+    @objc.IBAction
     def mapOffsetNSSlider_(self, sender):
         self.mapOffsetNS = sender.floatValue()
         self.setMapRect()
 
+    @objc.IBAction
     def mapOffsetEWDisplay_(self, sender):
         self.mapOffsetEW = sender.floatValue()
         self.setMapRect()
 
+    @objc.IBAction
     def mapOffsetEWSlider_(self, sender):
         self.mapOffsetEW = sender.floatValue()
         self.setMapRect()

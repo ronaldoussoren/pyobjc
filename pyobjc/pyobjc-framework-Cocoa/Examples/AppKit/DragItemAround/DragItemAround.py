@@ -1,15 +1,20 @@
-from PyObjCTools import AppHelper, NibClassBuilder
+# Updated by mvl on 2009-02-22 for PyObjC 2 
+
+import objc
+from PyObjCTools import AppHelper
 from AppKit import *
 from Foundation import *
 
-NibClassBuilder.extractClasses("MainMenu")
 
-class DraggableItemView(NibClassBuilder.AutoBaseClass):
+class DraggableItemView(NSView):
     """."""
     _locationDefault = NSMakePoint(0.0, 0.0)
     _itemColorDefault = NSColor.redColor()
     _backgroundColorDefault = NSColor.whiteColor()
-            
+    
+    def awakeFromNib(self):
+        self.dragging = None
+    
     def initWithFrame_(self, frame):
         """."""
         result = super(DraggableItemView, self).initWithFrame_(frame)
@@ -54,13 +59,14 @@ class DraggableItemView(NibClassBuilder.AutoBaseClass):
     def mouseDragged_(self, event):
         """."""
         if self.dragging:
-            newDragLocation = \
-                self.convertPoint_fromView_(event.locationInWindow(),
-                                            None)
-            self.offsetLocationByX_andY_(newDragLocation.x - \
-                                         self.lastDragLocation.x,
-                                         newDragLocation.y - \
-                                         self.lastDragLocation.y)
+            newDragLocation = self.convertPoint_fromView_(
+                event.locationInWindow(), 
+                None
+            )
+            self.offsetLocationByX_andY_(
+                newDragLocation.x - self.lastDragLocation.x,
+                newDragLocation.y - self.lastDragLocation.y
+            )
             self.lastDragLocation = newDragLocation
             self.autoscroll_(event)
 
@@ -85,6 +91,7 @@ class DraggableItemView(NibClassBuilder.AutoBaseClass):
         if handled is False:
             super(DraggableItemView, self).keyDown_(event)
 
+    @objc.IBAction
     def changeColor_(self, sender):
         """."""
         self.setItemColor_(sender.color())
@@ -94,27 +101,32 @@ class DraggableItemView(NibClassBuilder.AutoBaseClass):
         self.discardCursorRects()
         self.addCursorRect_cursor_(self.calculatedItemBounds(),
                                    NSCursor.openHandCursor())
-
+        
+    @objc.IBAction
     def moveUp_(self, sender):
         """."""
         self.offsetLocationByX_andY_(0.0, 10.0)
         self.window().invalidateCursorRectsForView_(self)
-
+    
+    @objc.IBAction
     def moveDown_(self, sender):
         """."""
         self.offsetLocationByX_andY_(0.0, -10.0)
         self.window().invalidateCursorRectsForView_(self)
-
+    
+    @objc.IBAction
     def moveLeft_(self, sender):
         """."""
         self.offsetLocationByX_andY_(-10.0, 0.0)
         self.window().invalidateCursorRectsForView_(self)
-
+    
+    @objc.IBAction
     def moveRight_(self, sender):
         """."""
         self.offsetLocationByX_andY_(10.0, 0.0)
         self.window().invalidateCursorRectsForView_(self)
-
+        
+    @objc.IBAction
     def setItemPropertiesToDefault_(self, sender):
         """."""
         self.setLocation_(self._locationDefault)
