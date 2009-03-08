@@ -2,6 +2,7 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 from Foundation import NSDictionary
+from Quartz.CoreGraphics import *
 
 class TestCTRun (TestCase):
     def testTypes(self):
