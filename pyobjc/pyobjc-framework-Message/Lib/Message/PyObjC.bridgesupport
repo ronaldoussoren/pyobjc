@@ -7,7 +7,7 @@
   <constant name='NSSMTPDeliveryProtocol' type='@' />
   <constant name='NSSendmailDeliveryProtocol' type='@' />
   <class name='NSMailDelivery'>
-    <method class_method='true' selector=''>
+    <method class_method='true' selector='hasDeliveryClassBeenConfigured'>
       <retval type='B' />
     </method>
     <method class_method='true' selector='deliverMessage:headers:format:protocol:'>
