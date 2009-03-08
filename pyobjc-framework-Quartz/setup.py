@@ -35,7 +35,7 @@ else:
 
 setup(
     name='pyobjc-framework-Quartz',
-    version='2.0',
+    version='2.2b1',
     description = "Wrappers for the Quartz frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -47,8 +47,8 @@ setup(
     setup_requires = [ 
     ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
+        'pyobjc-core>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b1',
     ],
     dependency_links = [],
     package_data = { 
