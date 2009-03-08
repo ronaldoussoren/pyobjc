@@ -1,7 +1,4 @@
-from PyObjCTools import NibClassBuilder, AppHelper
-
-NibClassBuilder.extractClasses('MainMenu.nib')
-
+from PyObjCTools import AppHelper
 import CGraphController
 
 AppHelper.runEventLoop()

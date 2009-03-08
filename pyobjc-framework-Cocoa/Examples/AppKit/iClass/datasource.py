@@ -1,6 +1,5 @@
 from Foundation import NSObject, NSBundle
-from PyObjCTools import NibClassBuilder
-from objc import selector, getClassList, objc_object, IBOutlet
+from objc import selector, getClassList, objc_object, IBOutlet, IBAction
 
 import objc
 import AppKit
@@ -72,8 +71,15 @@ def classBundle(cls):
             framework = framework[:-len('.framework')]
     return framework
 
-class ClassesDataSource (NibClassBuilder.AutoBaseClass):
+class ClassesDataSource (NSObject):
     __slots__ = ('_classList', '_classTree', '_methodInfo', '_classInfo')
+
+    classLabel = IBOutlet()
+    classTable = IBOutlet()
+    frameworkLabel = IBOutlet()
+    methodTable = IBOutlet()
+    searchBox = IBOutlet()
+    window = IBOutlet()
 
     def clearClassInfo(self):
         self._methodInfo = []
@@ -119,7 +125,6 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
         rowNr = self.classTable.rowForItem_(item)
         self.classTable.expandItem_(item)
 
-
     def selectClass(self, cls):
         self.showClass(cls)
 
@@ -129,7 +134,7 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
         self.classTable.scrollRowToVisible_(rowNr)
         self.classTable.selectRow_byExtendingSelection_(rowNr, False)
 
-
+    @IBAction
     def searchClass_(self, event):
         val = self.searchBox.stringValue()
         if not val:
@@ -148,6 +153,9 @@ class ClassesDataSource (NibClassBuilder.AutoBaseClass):
                 elif len(cls.__name__) > len(found.__name__):
                     found = cls
 
+        # mvl 2009-03-02: fix case where no match is found caused exception:
+        if (found is None): return  
+        
         self.setClassInfo(found)
         self.selectClass(found)
 

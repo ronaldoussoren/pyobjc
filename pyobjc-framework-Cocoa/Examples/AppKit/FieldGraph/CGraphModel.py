@@ -1,12 +1,11 @@
 from Foundation import NSObject
-from PyObjCTools import NibClassBuilder
 from objc import *
 from AppKit import NSBezierPath
 
 from fieldMath import *
 
 #____________________________________________________________
-class CGraphModel(NibClassBuilder.AutoBaseClass):
+class CGraphModel(NSObject):
 
     def init(self):
         self.field = [1.0, 1.12, 0.567]

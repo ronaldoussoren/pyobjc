@@ -5,12 +5,11 @@ import keyword
 import time
 from code import InteractiveConsole, softspace
 from StringIO import StringIO
-from objc import YES, NO, selector
+from objc import YES, NO, selector, IBAction, IBOutlet
 from Foundation import *
 from AppKit import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
-NibClassBuilder.extractClasses("PyInterpreter.nib")
 
 try:
     sys.ps1
@@ -179,12 +178,12 @@ PASSTHROUGH = (
    'moveLeft:',
 )
 
-class PyInterpreter(NibClassBuilder.AutoBaseClass):
+class PyInterpreter(NSObject):
     """
     PyInterpreter is a delegate/controller for a NSTextView,
     turning it into a full featured interactive Python interpreter.
     """
-
+    textView = IBOutlet()
     #
     #  Outlets - for documentation only
     #
@@ -248,7 +247,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
         })
         while True:
             event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
-                NSAnyEventMask,
+                NSUIntegerMax,
                 NSDate.distantFuture(),
                 NSDefaultRunLoopMode,
                 True)
@@ -365,7 +364,7 @@ class PyInterpreter(NibClassBuilder.AutoBaseClass):
 
         while app.isRunning() and now() - st < 0.01:
             event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
-                NSAnyEventMask,
+                NSUIntegerMax,
                 NSDate.dateWithTimeIntervalSinceNow_(0.01),
                 NSDefaultRunLoopMode,
                 True)

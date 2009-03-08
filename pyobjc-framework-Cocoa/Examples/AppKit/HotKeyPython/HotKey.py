@@ -13,15 +13,11 @@ of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 """
 
-
 from AppKit import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 from Carbon.CarbonEvt import RegisterEventHotKey, GetApplicationEventTarget
 from Carbon.Events import cmdKey, controlKey
 import struct
-
-# create ObjC classes as defined in MainMenu.nib
-NibClassBuilder.extractClasses("MainMenu")
 
 kEventHotKeyPressedSubtype = 6
 kEventHotKeyReleasedSubtype = 9
