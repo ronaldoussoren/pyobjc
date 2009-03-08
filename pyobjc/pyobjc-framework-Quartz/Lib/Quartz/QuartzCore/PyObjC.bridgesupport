@@ -1,0 +1,541 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
+  <struct name='CATransform3D' type='{CATransform3D="m11"f"m12"f"m13"f"m14"f"m21"f"m22"f"m23"f"m24"f"m31"f"m32"f"m33"f"m34"f"m41"f"m42"f"m43"f"m44"f}' type64='{CATransform3D="m11"d"m12"d"m13"d"m14"d"m21"d"m22"d"m23"d"m24"d"m31"d"m32"d"m33"d"m34"d"m41"d"m42"d"m43"d"m44"d}' />
+  <constant name='CATransform3DIdentity' type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+  <constant name='kCAAlignmentCenter' type='@' />
+  <constant name='kCAAlignmentJustified' type='@' />
+  <constant name='kCAAlignmentLeft' type='@' />
+  <constant name='kCAAlignmentNatural' type='@' />
+  <constant name='kCAAlignmentRight' type='@' />
+  <constant name='kCAAnimationDiscrete' type='@' />
+  <constant name='kCAAnimationLinear' type='@' />
+  <constant name='kCAAnimationPaced' type='@' />
+  <constant name='kCAAnimationRotateAuto' type='@' />
+  <constant name='kCAAnimationRotateAutoReverse' type='@' />
+  <constant name='kCAFillModeBackwards' type='@' />
+  <constant name='kCAFillModeBoth' type='@' />
+  <constant name='kCAFillModeForwards' type='@' />
+  <constant name='kCAFillModeFrozen' type='@' />
+  <constant name='kCAFillModeRemoved' type='@' />
+  <constant name='kCAFilterLinear' type='@' />
+  <constant name='kCAFilterNearest' type='@' />
+  <constant name='kCAGravityBottom' type='@' />
+  <constant name='kCAGravityBottomLeft' type='@' />
+  <constant name='kCAGravityBottomRight' type='@' />
+  <constant name='kCAGravityCenter' type='@' />
+  <constant name='kCAGravityLeft' type='@' />
+  <constant name='kCAGravityResize' type='@' />
+  <constant name='kCAGravityResizeAspect' type='@' />
+  <constant name='kCAGravityResizeAspectFill' type='@' />
+  <constant name='kCAGravityRight' type='@' />
+  <constant name='kCAGravityTop' type='@' />
+  <constant name='kCAGravityTopLeft' type='@' />
+  <constant name='kCAGravityTopRight' type='@' />
+  <constant name='kCAMediaTimingFunctionEaseIn' type='@' />
+  <constant name='kCAMediaTimingFunctionEaseInEaseOut' type='@' />
+  <constant name='kCAMediaTimingFunctionEaseOut' type='@' />
+  <constant name='kCAMediaTimingFunctionLinear' type='@' />
+  <constant name='kCAOnOrderIn' type='@' />
+  <constant name='kCAOnOrderOut' type='@' />
+  <constant name='kCAScrollBoth' type='@' />
+  <constant name='kCAScrollHorizontally' type='@' />
+  <constant name='kCAScrollNone' type='@' />
+  <constant name='kCAScrollVertically' type='@' />
+  <constant name='kCATransactionAnimationDuration' type='@' />
+  <constant name='kCATransactionDisableActions' type='@' />
+  <constant name='kCATransition' type='@' />
+  <constant name='kCATransitionFade' type='@' />
+  <constant name='kCATransitionFromBottom' type='@' />
+  <constant name='kCATransitionFromLeft' type='@' />
+  <constant name='kCATransitionFromRight' type='@' />
+  <constant name='kCATransitionFromTop' type='@' />
+  <constant name='kCATransitionMoveIn' type='@' />
+  <constant name='kCATransitionPush' type='@' />
+  <constant name='kCATransitionReveal' type='@' />
+  <constant name='kCATruncationEnd' type='@' />
+  <constant name='kCATruncationMiddle' type='@' />
+  <constant name='kCATruncationNone' type='@' />
+  <constant name='kCATruncationStart' type='@' />
+  <constant name='kCIApplyOptionDefinition' type='@' />
+  <constant name='kCIApplyOptionExtent' type='@' />
+  <constant name='kCIApplyOptionUserInfo' type='@' />
+  <constant name='kCIAttributeClass' type='@' />
+  <constant name='kCIAttributeDefault' type='@' />
+  <constant name='kCIAttributeDescription' type='@' />
+  <constant name='kCIAttributeDisplayName' type='@' />
+  <constant name='kCIAttributeFilterCategories' type='@' />
+  <constant name='kCIAttributeFilterDisplayName' type='@' />
+  <constant name='kCIAttributeFilterName' type='@' />
+  <constant name='kCIAttributeIdentity' type='@' />
+  <constant name='kCIAttributeMax' type='@' />
+  <constant name='kCIAttributeMin' type='@' />
+  <constant name='kCIAttributeName' type='@' />
+  <constant name='kCIAttributeReferenceDocumentation' type='@' />
+  <constant name='kCIAttributeSliderMax' type='@' />
+  <constant name='kCIAttributeSliderMin' type='@' />
+  <constant name='kCIAttributeType' type='@' />
+  <constant name='kCIAttributeTypeAngle' type='@' />
+  <constant name='kCIAttributeTypeBoolean' type='@' />
+  <constant name='kCIAttributeTypeCount' type='@' />
+  <constant name='kCIAttributeTypeDistance' type='@' />
+  <constant name='kCIAttributeTypeGradient' type='@' />
+  <constant name='kCIAttributeTypeInteger' type='@' />
+  <constant name='kCIAttributeTypeOffset' type='@' />
+  <constant name='kCIAttributeTypeOpaqueColor' type='@' />
+  <constant name='kCIAttributeTypePosition' type='@' />
+  <constant name='kCIAttributeTypePosition3' type='@' />
+  <constant name='kCIAttributeTypeRectangle' type='@' />
+  <constant name='kCIAttributeTypeScalar' type='@' />
+  <constant name='kCIAttributeTypeTime' type='@' />
+  <constant name='kCICategoryBlur' type='@' />
+  <constant name='kCICategoryBuiltIn' type='@' />
+  <constant name='kCICategoryColorAdjustment' type='@' />
+  <constant name='kCICategoryColorEffect' type='@' />
+  <constant name='kCICategoryCompositeOperation' type='@' />
+  <constant name='kCICategoryDistortionEffect' type='@' />
+  <constant name='kCICategoryFilterGenerator' type='@' />
+  <constant name='kCICategoryGenerator' type='@' />
+  <constant name='kCICategoryGeometryAdjustment' type='@' />
+  <constant name='kCICategoryGradient' type='@' />
+  <constant name='kCICategoryHalftoneEffect' type='@' />
+  <constant name='kCICategoryHighDynamicRange' type='@' />
+  <constant name='kCICategoryInterlaced' type='@' />
+  <constant name='kCICategoryNonSquarePixels' type='@' />
+  <constant name='kCICategoryReduction' type='@' />
+  <constant name='kCICategorySharpen' type='@' />
+  <constant name='kCICategoryStillImage' type='@' />
+  <constant name='kCICategoryStylize' type='@' />
+  <constant name='kCICategoryTileEffect' type='@' />
+  <constant name='kCICategoryTransition' type='@' />
+  <constant name='kCICategoryVideo' type='@' />
+  <constant name='kCIContextOutputColorSpace' type='@' />
+  <constant name='kCIContextUseSoftwareRenderer' type='@' />
+  <constant name='kCIContextWorkingColorSpace' type='@' />
+  <constant name='kCIFilterGeneratorExportedKey' type='@' />
+  <constant name='kCIFilterGeneratorExportedKeyName' type='@' />
+  <constant name='kCIFilterGeneratorExportedKeyTargetObject' type='@' />
+  <constant name='kCIFormatARGB8' type='i' />
+  <constant name='kCIFormatRGBA16' type='i' />
+  <constant name='kCIFormatRGBAf' type='i' />
+  <constant name='kCIImageColorSpace' type='@' />
+  <constant name='kCIImageProviderTileSize' type='@' />
+  <constant name='kCIImageProviderUserInfo' type='@' />
+  <constant name='kCIInputAllowDraftModeKey' type='@' />
+  <constant name='kCIInputAngleKey' type='@' />
+  <constant name='kCIInputAspectRatioKey' type='@' />
+  <constant name='kCIInputBackgroundImageKey' type='@' />
+  <constant name='kCIInputBiasKey' type='@' />
+  <constant name='kCIInputBoostKey' type='@' />
+  <constant name='kCIInputBoostShadowAmountKey' type='@' />
+  <constant name='kCIInputBrightnessKey' type='@' />
+  <constant name='kCIInputCenterKey' type='@' />
+  <constant name='kCIInputColorKey' type='@' />
+  <constant name='kCIInputContrastKey' type='@' />
+  <constant name='kCIInputDecoderVersionKey' type='@' />
+  <constant name='kCIInputEVKey' type='@' />
+  <constant name='kCIInputEnableChromaticNoiseTrackingKey' type='@' />
+  <constant name='kCIInputEnableSharpeningKey' type='@' />
+  <constant name='kCIInputExtentKey' type='@' />
+  <constant name='kCIInputGradientImageKey' type='@' />
+  <constant name='kCIInputIgnoreImageOrientationKey' type='@' />
+  <constant name='kCIInputImageKey' type='@' />
+  <constant name='kCIInputImageOrientationKey' type='@' />
+  <constant name='kCIInputIntensityKey' type='@' />
+  <constant name='kCIInputMaskImageKey' type='@' />
+  <constant name='kCIInputNeutralChromaticityXKey' type='@' />
+  <constant name='kCIInputNeutralChromaticityYKey' type='@' />
+  <constant name='kCIInputNeutralLocationKey' type='@' />
+  <constant name='kCIInputNeutralTemperatureKey' type='@' />
+  <constant name='kCIInputNeutralTintKey' type='@' />
+  <constant name='kCIInputRadiusKey' type='@' />
+  <constant name='kCIInputRefractionKey' type='@' />
+  <constant name='kCIInputSaturationKey' type='@' />
+  <constant name='kCIInputScaleFactorKey' type='@' />
+  <constant name='kCIInputScaleKey' type='@' />
+  <constant name='kCIInputShadingImageKey' type='@' />
+  <constant name='kCIInputSharpnessKey' type='@' />
+  <constant name='kCIInputTargetImageKey' type='@' />
+  <constant name='kCIInputTimeKey' type='@' />
+  <constant name='kCIInputTransformKey' type='@' />
+  <constant name='kCIInputWidthKey' type='@' />
+  <constant name='kCIOutputImageKey' type='@' />
+  <constant name='kCISamplerAffineMatrix' type='@' />
+  <constant name='kCISamplerFilterLinear' type='@' />
+  <constant name='kCISamplerFilterMode' type='@' />
+  <constant name='kCISamplerFilterNearest' type='@' />
+  <constant name='kCISamplerWrapBlack' type='@' />
+  <constant name='kCISamplerWrapClamp' type='@' />
+  <constant name='kCISamplerWrapMode' type='@' />
+  <constant name='kCISupportedDecoderVersionsKey' type='@' />
+  <constant name='kCIUIParameterSet' type='@' />
+  <constant name='kCIUISetAdvanced' type='@' />
+  <constant name='kCIUISetBasic' type='@' />
+  <constant name='kCIUISetDevelopment' type='@' />
+  <constant name='kCIUISetIntermediate' type='@' />
+  <enum name='CA_WARN_DEPRECATED' value='1' />
+  <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
+  <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
+  <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
+  <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
+  <enum name='kCAConstraintHeight' value='7' />
+  <enum name='kCAConstraintMaxX' value='2' />
+  <enum name='kCAConstraintMaxY' value='6' />
+  <enum name='kCAConstraintMidX' value='1' />
+  <enum name='kCAConstraintMidY' value='5' />
+  <enum name='kCAConstraintMinX' value='0' />
+  <enum name='kCAConstraintMinY' value='4' />
+  <enum name='kCAConstraintWidth' value='3' />
+  <enum name='kCALayerBottomEdge' value='4' />
+  <enum name='kCALayerHeightSizable' value='16' />
+  <enum name='kCALayerLeftEdge' value='1' />
+  <enum name='kCALayerMaxXMargin' value='4' />
+  <enum name='kCALayerMaxYMargin' value='32' />
+  <enum name='kCALayerMinXMargin' value='1' />
+  <enum name='kCALayerMinYMargin' value='8' />
+  <enum name='kCALayerNotSizable' value='0' />
+  <enum name='kCALayerRightEdge' value='2' />
+  <enum name='kCALayerTopEdge' value='8' />
+  <enum name='kCALayerWidthSizable' value='2' />
+  <function name='CACurrentMediaTime'>
+    <retval type='d' />
+  </function>
+  <function name='CATransform3DConcat'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DEqualToTransform'>
+    <retval type='B' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DGetAffineTransform'>
+    <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DInvert'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DIsAffine'>
+    <retval type='B' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DIsIdentity'>
+    <retval type='B' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+  </function>
+  <function name='CATransform3DMakeAffineTransform'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+  </function>
+  <function name='CATransform3DMakeRotation'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CATransform3DMakeScale'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CATransform3DMakeTranslation'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CATransform3DRotate'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CATransform3DScale'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <function name='CATransform3DTranslate'>
+    <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+    <arg type='f' type64='f' />
+  </function>
+  <informal_protocol name='CAAnimationDelegate'>
+    <method selector='animationDidStart:' type='v@:@' />
+    <method selector='animationDidStop:finished:' type='v@:@B' />
+  </informal_protocol>
+  <informal_protocol name='CALayerDelegate'>
+    <method selector='actionForLayer:forKey:' type='@@:@@' />
+    <method selector='displayLayer:' type='v@:@' />
+    <method selector='drawLayer:inContext:' type='v@:@^{CGContext=}' />
+  </informal_protocol>
+  <informal_protocol name='CALayoutManager'>
+    <method selector='invalidateLayoutOfLayer:' type='v@:@' />
+    <method selector='layoutSublayersOfLayer:' type='v@:@' />
+    <method selector='preferredSizeOfLayer:' type='{CGSize=ff}@:@' type64='{CGSize=dd}@:@' />
+  </informal_protocol>
+  <informal_protocol name='CIImageProvider'>
+    <method selector='provideImageData:bytesPerRow:origin:size:userInfo:' type='v@:^vLLL@' type64='v@:^vQQQ@' />
+  </informal_protocol>
+  <class name='CAAnimation'>
+    <method selector='shouldArchiveValueForKey:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='CAKeyframeAnimation'>
+    <method selector='path'>
+      <retval type='^{CGPath=}' />
+    </method>
+    <method selector='setPath:'>
+      <arg index='0' type='^{CGPath=}' />
+    </method>
+  </class>
+  <class name='CALayer'>
+    <method selector='backgroundColor'>
+      <retval type='^{CGColor=}' />
+    </method>
+    <method selector='borderColor'>
+      <retval type='^{CGColor=}' />
+    </method>
+    <method selector='containsPoint:'>
+      <retval type='B' />
+    </method>
+    <method selector='drawInContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method selector='masksToBounds'>
+      <retval type='B' />
+    </method>
+    <method selector='needsDisplayOnBoundsChange'>
+      <retval type='B' />
+    </method>
+    <method selector='renderInContext:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method selector='setBackgroundColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+    <method selector='setBorderColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+    <method selector='setMasksToBounds:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setNeedsDisplayOnBoundsChange:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShadowColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+    <method selector='shadowColor'>
+      <retval type='^{CGColor=}' />
+    </method>
+    <method selector='shouldArchiveValueForKey:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='CAOpenGLLayer'>
+    <method selector='canDrawInCGLContext:pixelFormat:forLayerTime:displayTime:'>
+      <retval type='B' />
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='3' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+    </method>
+    <method selector='copyCGLContextForPixelFormat:'>
+      <retval type='^{_CGLContextObject=}' />
+      <arg index='0' type='^{_CGLPixelFormatObject=}' />
+    </method>
+    <method selector='copyCGLPixelFormatForDisplayMask:'>
+      <retval type='^{_CGLPixelFormatObject=}' />
+    </method>
+    <method selector='drawInCGLContext:pixelFormat:forLayerTime:displayTime:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+      <arg index='3' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+    </method>
+    <method selector='releaseCGLContext:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+    </method>
+    <method selector='releaseCGLPixelFormat:'>
+      <arg index='0' type='^{_CGLPixelFormatObject=}' />
+    </method>
+  </class>
+  <class name='CARenderer'>
+    <method selector='beginFrameAtTime:timeStamp:'>
+      <arg index='1' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+    </method>
+    <method class_method='true' selector='rendererWithCGLContext:options:'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+  <class name='CATextLayer'>
+    <method selector='foregroundColor'>
+      <retval type='^{CGColor=}' />
+    </method>
+    <method selector='setForegroundColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+  </class>
+  <class name='CIColor'>
+    <method selector='colorSpace'>
+      <retval type='^{CGColorSpace=}' />
+    </method>
+    <method class_method='true' selector='colorWithCGColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+    <method selector='components'>
+      <retval c_array_of_variable_length='true' type='r^f' type64='r^d' />
+    </method>
+    <method selector='initWithCGColor:'>
+      <arg index='0' type='^{CGColor=}' />
+    </method>
+  </class>
+  <class name='CIContext'>
+    <method class_method='true' selector='contextWithCGContext:options:'>
+      <arg index='0' type='^{CGContext=}' />
+    </method>
+    <method class_method='true' selector='contextWithCGLContext:pixelFormat:options:'>
+      <arg index='0' type='^{_CGLContextObject=}' />
+      <arg index='1' type='^{_CGLPixelFormatObject=}' />
+    </method>
+    <method selector='createCGImage:fromRect:'>
+      <retval type='^{CGImage=}' />
+    </method>
+    <method selector='createCGImage:fromRect:format:colorSpace:'>
+      <retval type='^{CGImage=}' />
+      <arg index='3' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='createCGLayerWithSize:info:'>
+      <retval type='^{CGLayer=}' />
+      <arg index='1' type='^{__CFDictionary=}' />
+    </method>
+    <method selector='render:toBitmap:rowBytes:bounds:format:colorSpace:'>
+      <arg index='1' type='^v' />
+      <arg index='5' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+  <class name='CIFilter'>
+    <method selector='apply:' variadic='true' />
+    <method c_array_delimited_by_null='true' class_method='true' selector='filterWithName:keysAndValues:' variadic='true' />
+  </class>
+  <class name='CIFilterGenerator'>
+    <method selector='writeToURL:atomically:'>
+      <retval type='B' />
+      <arg index='1' type='B' />
+    </method>
+  </class>
+  <class name='CIFilterShape'>
+    <method selector='transformBy:interior:'>
+      <arg index='1' type='B' />
+    </method>
+  </class>
+  <class name='CIImage'>
+    <method class_method='true' selector='imageWithBitmapData:bytesPerRow:size:format:colorSpace:'>
+      <arg index='4' type='^{CGColorSpace=}' />
+    </method>
+    <method class_method='true' selector='imageWithCGImage:'>
+      <arg index='0' type='^{CGImage=}' />
+    </method>
+    <method class_method='true' selector='imageWithCGImage:options:'>
+      <arg index='0' type='^{CGImage=}' />
+    </method>
+    <method class_method='true' selector='imageWithCGLayer:'>
+      <arg index='0' type='^{CGLayer=}' />
+    </method>
+    <method class_method='true' selector='imageWithCGLayer:options:'>
+      <arg index='0' type='^{CGLayer=}' />
+    </method>
+    <method class_method='true' selector='imageWithCVImageBuffer:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method class_method='true' selector='imageWithCVImageBuffer:options:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method class_method='true' selector='imageWithImageProvider:size:format:colorSpace:options:'>
+      <arg index='3' type='^{CGColorSpace=}' />
+    </method>
+    <method class_method='true' selector='imageWithTexture:size:flipped:colorSpace:'>
+      <arg index='2' type='B' />
+      <arg index='3' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithBitmapData:bytesPerRow:size:format:colorSpace:'>
+      <arg index='4' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithCGImage:'>
+      <arg index='0' type='^{CGImage=}' />
+    </method>
+    <method selector='initWithCGImage:options:'>
+      <arg index='0' type='^{CGImage=}' />
+    </method>
+    <method selector='initWithCGLayer:'>
+      <arg index='0' type='^{CGLayer=}' />
+    </method>
+    <method selector='initWithCGLayer:options:'>
+      <arg index='0' type='^{CGLayer=}' />
+    </method>
+    <method selector='initWithCVImageBuffer:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='initWithCVImageBuffer:options:'>
+      <arg index='0' type='^{__CVBuffer=}' />
+    </method>
+    <method selector='initWithImageProvider:size:format:colorSpace:options:'>
+      <arg index='3' type='^{CGColorSpace=}' />
+    </method>
+    <method selector='initWithTexture:size:flipped:colorSpace:'>
+      <arg index='2' type='B' />
+      <arg index='3' type='^{CGColorSpace=}' />
+    </method>
+  </class>
+  <class name='CIKernel'>
+    <method selector='setROISelector:'>
+      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' />
+    </method>
+  </class>
+  <class name='CIPlugIn'>
+    <method class_method='true' selector='loadPlugIn:allowNonExecutable:'>
+      <arg index='1' type='B' />
+    </method>
+  </class>
+  <class name='CISampler'>
+    <method c_array_delimited_by_null='true' selector='initWithImage:keysAndValues:' variadic='true' />
+    <method c_array_delimited_by_null='true' class_method='true' selector='samplerWithImage:keysAndValues:' variadic='true' />
+  </class>
+  <class name='CIVector'>
+    <method selector='initWithValues:count:'>
+      <arg c_array_length_in_arg='1' index='0' type='r^f' type64='r^d' type_modifier='n' />
+    </method>
+    <method class_method='true' selector='vectorWithValues:count:'>
+      <arg c_array_length_in_arg='1' index='0' type='r^f' type64='r^d' type_modifier='n' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='animationDidStop:finished:'>
+      <arg index='1' type='B' />
+    </method>
+    <method selector='drawLayer:inContext:'>
+      <arg index='1' type='^{CGContext=}' />
+    </method>
+    <method selector='load:'>
+      <retval type='B' />
+      <arg index='0' type='^v' />
+    </method>
+    <method selector='provideImageData:bytesPerRow:origin:size:userInfo:'>
+      <arg index='0' type='^v' />
+    </method>
+  </class>
+</signatures>
+
