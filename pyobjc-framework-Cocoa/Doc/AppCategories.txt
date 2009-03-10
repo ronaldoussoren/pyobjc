@@ -1,0 +1,39 @@
+=================================================
+API Description for ``PyObjCTools.AppCategories``
+=================================================
+
+Introduction
+------------
+
+The module ``PyObjCTools.AppCategories`` defines a number of categories on
+classes from the ``AppKit`` framework. These categories introduce
+new methods that aren't present in that framework.
+
+To use these new methods use the following code somewhere in your program::
+
+	import PyObjCTools.AppCategories
+
+
+Additional methods on ``NSGraphicsContext``
+-------------------------------------------
+
+This module defines a method for ``NSGraphicsContext``:
+
+* ``savedGraphicsState``
+
+  This is a Python context-manager for use with the ``with`` statement.
+
+  Usage::
+
+      with NSGraphicsContext.savedGraphicsState():
+          pass
+
+  This is equivalent to:
+
+      NSGraphicsContext.saveGraphicsState()
+      try:
+      	  pass
+      finally:
+	  NSGraphicsContext.restoreGraphicsState()
+
+
