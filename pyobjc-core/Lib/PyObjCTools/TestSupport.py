@@ -137,6 +137,18 @@ class TestCase (_unittest.TestCase):
         if value is None:
             sel.fail(message, "%r is not %r"%(value, test))
 
+    def failUnlessArgIsPrintf(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info.get('variadic'):
+            self.fail(message or "%r is not a variadic function"%(method,))
+
+        if not info['arguments'][argno+offset].get('printf_format'):
+            self.fail(message or "%r argument %d is not a printf format string"%(method, argno))
+
     def failUnlessArgIsCFRetained(self, method, argno, message = None):
         if isinstance(method, objc.selector):
             offset = 2

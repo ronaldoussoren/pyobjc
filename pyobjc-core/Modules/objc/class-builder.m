@@ -1523,17 +1523,17 @@ object_method_methodSignatureForSelector(
 	
 	PyObjC_END_WITH_GIL
 
-	PyObjC_DURING
+	NS_DURING
 		*presult =  [NSMethodSignature signatureWithObjCTypes:(
 				(PyObjCSelector*)pymeth)->sel_python_signature];
-	PyObjC_HANDLER
+	NS_HANDLER
 		PyObjC_BEGIN_WITH_GIL
 			Py_DECREF(pymeth);
 			Py_DECREF(pyself);
 
 		PyObjC_END_WITH_GIL
 		[localException raise];
-	PyObjC_ENDHANDLER
+	NS_ENDHANDLER
 
 	PyObjC_BEGIN_WITH_GIL
 		Py_DECREF(pymeth);
