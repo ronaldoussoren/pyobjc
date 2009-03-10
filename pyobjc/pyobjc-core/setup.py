@@ -44,10 +44,8 @@ easily creating new Cocoa-Python projects.
 PyObjC also supports full introspection of Objective-C classes and
 direct invocation of Objective-C APIs from the interactive interpreter.
 
-PyObjC requires MacOS X 10.2 or later.  PyObjC works both with the Apple
-provided Python installation in MacOS X 10.2 (and later) and with
-MacPython 2.3.  Users of MacPython 2.3 can install PyObjC though the
-PackageManager application.
+PyObjC requires MacOS X 10.4 or later.  This beta release requires
+MacOS X 10.5.
 """
 
 from setuptools import setup, Extension, find_packages
@@ -302,7 +300,7 @@ dist = setup(
     version = package_version(),
     description = "Python<->ObjC Interoperability Module",
     long_description = LONG_DESCRIPTION,
-    author = "bbum, RonaldO, SteveM, LeleG, many others stretching back through the reaches of time...",
+    author = "Ronald Oussoren, bbum, SteveM, LeleG, many others stretching back through the reaches of time...",
     author_email = "pyobjc-dev@lists.sourceforge.net",
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
