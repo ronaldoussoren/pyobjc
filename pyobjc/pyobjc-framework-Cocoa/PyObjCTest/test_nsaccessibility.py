@@ -1,7 +1,26 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSAccessibilityHelper (NSObject):
+    def accessibilityIsAttributeSettable_(self, arg):
+        return 1
+
+    def accessibilityIsIgnored(self):
+        return 1
+
+    def accessibilityHitTest_(self, pt):
+        pass
+
+    def accessibilitySetOverrideValue_forAttribute_(self, v, a):
+        return 1
+
 class TestNSAccessibility (TestCase):
+    def testInformal(self):
+        self.failUnlessResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsAttributeSettable_)
+        self.failUnlessResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
+        self.failUnlessArgHasType(TestNSAccessibilityHelper.accessibilityHitTest_, 0, NSPoint.__typestr__)
+        self.failUnlessResultIsBOOL(TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_)
+
     def testFunction(self):
         v = NSAccessibilityRoleDescription(NSAccessibilityButtonRole, None)
         self.failUnlessIsInstance(v, unicode)

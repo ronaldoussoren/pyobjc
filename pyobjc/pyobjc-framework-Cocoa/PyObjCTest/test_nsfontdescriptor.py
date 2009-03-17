@@ -10,6 +10,7 @@ class TestNSFontDescriptor (TestCase):
         self.failUnlessEqual(NSFontSlabSerifsClass, cast_int(5 << 28))
         self.failUnlessEqual(NSFontSansSerifClass, cast_int(8 << 28))
         self.failUnlessEqual(NSFontScriptsClass, cast_int(10 << 28))
+        self.failUnlessEqual(NSFontSymbolicClass, cast_int(12 << 28))
 
         self.failUnlessEqual(NSFontFamilyClassMask, cast_int(0xF0000000))
 

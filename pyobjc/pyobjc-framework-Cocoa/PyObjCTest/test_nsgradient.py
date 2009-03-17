@@ -7,11 +7,13 @@ class TestNSGradient (TestCase):
         self.failUnlessEqual(NSGradientDrawsBeforeStartingLocation, (1 << 0))
         self.failUnlessEqual(NSGradientDrawsAfterEndingLocation, (1 << 1))
 
-    def testMethods(self):
-        self.fail("- (id)initWithColorsAndLocations:(NSColor *)firstColor, ...;")
-        self.fail("- (id)initWithColors:(NSArray *)colorArray atLocations:(const CGFloat *)locations colorSpace:(NSColorSpace *)colorSpace;")
-        self.fail("- (void)getColor:(NSColor **)color location:(CGFloat *)location atIndex:(NSInteger)index;")
 
+    def testMethods(self):
+        self.failUnlessArgSizeInArg(NSGradient.initWithColors_atLocations_colorSpace_, 1, 0)
+        self.failUnlessArgIsIn(NSGradient.initWithColors_atLocations_colorSpace_, 1)
+        
+        self.failUnlessArgIsOut(NSGradient.getColor_location_atIndex_, 0)
+        self.failUnlessArgIsOut(NSGradient.getColor_location_atIndex_, 1)
 
 
 if __name__ == "__main__":

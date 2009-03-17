@@ -1,4 +1,3 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
@@ -161,12 +160,20 @@ class TestNSEvent (TestCase):
         v = NSEventMaskFromType(NSOtherMouseDown)
         self.assertEquals(v, NSOtherMouseDownMask)
 
-    def testMethods(self):
-        self.fail("- (void *)userData;")
-        self.fail("- (const void * /* EventRef */)eventRef;")
-        self.fail("+ (NSEvent *)eventWithEventRef:(const void * /* EventRef */)eventRef;")
-        self.fail("+ (NSEvent *)enterExitEventWithType:(NSEventType)type location:(NSPoint)location modifierFlags:(NSUInteger)flags timestamp:(NSTimeInterval)time windowNumber:(NSInteger)wNum context:(NSGraphicsContext*)context eventNumber:(NSInteger)eNum trackingNumber:(NSInteger)tNum userData:(void *)data;")
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.failUnlessResultIsBOOL(NSEvent.isMouseCoalescingEnabled)
+        self.failUnlessArgIsBOOL(NSEvent.setMouseCoalescingEnabled_, 0)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSEvent.isARepeat)
+        self.failUnlessResultIsBOOL(NSEvent.isEnteringProximity)
+
+        self.failUnlessArgIsBOOL(NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_, 8)
+        self.failUnlessArgHasType(NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_, 8, '^v')
+
+
+        self.failUnlessResultHasType(NSEvent.userData, '^v')
 
 if __name__ == "__main__":
     main()

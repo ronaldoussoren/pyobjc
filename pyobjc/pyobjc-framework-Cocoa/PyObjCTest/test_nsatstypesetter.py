@@ -11,8 +11,8 @@ class TestNSATSTypesetterHelper (NSATSTypesetter):
         def shouldBreakLineByWordBeforeCharacterAtIndex_(self, v):
             return None
 
-        def shouldBreakLineByHyphenatingBeforeCharacterAtIndex(self, v):
-            return None
+        def shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, v):
+            return True
 
         def hyphenationFactorForGlyphAtIndex_(self, v):
             return None
@@ -62,20 +62,10 @@ class TestNSATSTypesetter (TestCase):
         self.fail("Add header tests for <AppKit/NSATSTypesetter.h>")
 
     def testByRefArguments(self):
-        o = NSATSTypesetter.alloc().init()
-        m = o.lineFragmentRectForProposedRect_remainingRect_.__metadata__()
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
-
-        m = o.layoutParagraphAtPoint_.__metadata__()
-        self.failUnless(m['arguments'][2]['type'].startswith('N^'))
-
-        m = o.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_.__metadata__()
-        self.failUnless(m['arguments'][2]['type'].startswith('o^'))
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
-
-
-
-
+        self.failUnlessArgIsOut(NSATSTypesetter.lineFragmentRectForProposedRect_remainingRect_, 1)
+        self.failUnlessArgIsInOut(NSATSTypesetter.layoutParagraphAtPoint_, 0)
+        self.failUnlessArgIsOut(NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_, 0)
+        self.failUnlessArgIsOut(NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_, 1)
 
         o = TestNSATSTypesetterHelper.alloc().init()
         m = o.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
@@ -87,20 +77,20 @@ class TestNSATSTypesetter (TestCase):
         self.failUnlessEqual(m['retval']['type'], objc._C_NSBOOL)
         self.failUnlessEqual(m['arguments'][2]['type'], objc._C_UINT)
 
-        m = o.shouldBreakLineByHyphenatingBeforeCharacterAtIndex.__metadata__()
-        self.failUnlessEqual(m['retval']['type'], objc._C_NSUInteger)
+        m = o.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_.__metadata__()
+        self.failUnlessEqual(m['retval']['type'], objc._C_NSBOOL)
         self.failUnlessEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
 
         m = o.hyphenationFactorForGlyphAtIndex_.__metadata__()
-        self.failUnlessEqual(m['retval']['type'], objc._C_FLOAT)
+        self.failUnlessEqual(m['retval']['type'], objc._C_FLT)
         self.failUnlessEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
 
         m = o.hyphenCharacterForGlyphAtIndex_.__metadata__()
-        self.failUnlessEqual(m['retval']['type'], objc._C_INT)
+        self.failUnlessEqual(m['retval']['type'], objc._C_UINT)
         self.failUnlessEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
 
         m = o.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_.__metadata__()
-        self.failUnlessEqual(m['retval']['type'], objc._C_INT)
+        self.failUnlessEqual(m['retval']['type'], NSRect.__typestr__)
         self.failUnlessEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
         self.failUnlessEqual(m['arguments'][3]['type'], objc._C_ID)
         self.failUnlessStartswith(m['arguments'][4]['type'], '{')
@@ -119,8 +109,15 @@ class TestNSATSTypesetter (TestCase):
         self.failUnlessStartswith(m['arguments'][2]['type'], '{')
         self.failUnlessStartswith(m['arguments'][3]['type'], 'o^{')
 
-        self.fail("lookup interface")
+        self.fail("redo")
+
         m = o.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_.__metadata__()
+        self.failUnlessEqual(m['retval']['type'], objc._C_NSUInteger)
+        self.failUnlessEqual(m['arguments'][2]['type'], NSRange.__typestr__)
+        self.failUnlessEqual(m['arguments'][3]['type'], 'o^S')
+        self.failUnlessEqual(m['arguments'][3]['c_array_length_in_arg'], 2)
+        self.failUnlessEqual(m['arguments'][4]['type'], objc._C_OUT + objc._C_PTR + objc._C_NSUInteger)
+        self.failUnlessEqual(m['arguments'][4]['c_array_length_in_arg'], 2)
         m = o.setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
         m = o.substituteGlyphsInRange_withGlyphs_.__metadata__()
         m = o.insertGlyph_atGlyphIndex_characterIndex_.__metadata__()

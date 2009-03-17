@@ -129,6 +129,11 @@ class TestNSBezierPath(TestCase):
 
 
     def testMethods(self):
+        self.failUnlessResultIsBOOL(NSBezierPath.isEmpty)
+        self.failUnlessResultIsBOOL(NSBezierPath.containsPoint_)
+        self.failUnlessResultIsBOOL(NSBezierPath.cachesBezierPath)
+        self.failUnlessArgIsBOOL(NSBezierPath.setCachesBezierPath_, 0)
+
         self.fail("+ (void)drawPackedGlyphs:(const char *)packedGlyphs atPoint:(NSPoint)point;")
         self.fail("- (void)appendBezierPathWithPackedGlyphs:(const char *)packedGlyphs;")
 

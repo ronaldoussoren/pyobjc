@@ -17,6 +17,10 @@ class TestNSBox (TestCase):
         self.failUnlessEqual(NSBoxOldStyle, 3)
         self.failUnlessEqual(NSBoxCustom, 4)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSBox.isTransparent)
+        self.failUnlessArgIsBOOL(NSBox.setTransparent_, 0)
+
 
 if __name__ == "__main__":
     main()

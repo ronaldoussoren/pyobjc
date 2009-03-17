@@ -5,7 +5,6 @@ import AppKit
 from AppKit import *
 
 import os
-ON_JAGUAR=((os.uname()[0] == 'Darwin') and (int(os.uname()[2][0]) <= '6'))
 
 class TestNSFont(TestCase):
     def matrixEquals(self, value1, value2):
@@ -23,17 +22,15 @@ class TestNSFont(TestCase):
 
         nm = o.fontName()
 
-        if not ON_JAGUAR:
-            # Don't test this on Jaguar, see Radar #3421569.
-            o = AppKit.NSFont.fontWithName_matrix_(
-                    nm, AppKit.NSFontIdentityMatrix)
-            self.assert_(o is not None)
+        o = AppKit.NSFont.fontWithName_matrix_(
+                nm, AppKit.NSFontIdentityMatrix)
+        self.assert_(o is not None)
 
-            m = o.matrix()
-            self.assert_(isinstance(m, tuple))
-            self.assertEquals(len(m), 6)
+        m = o.matrix()
+        self.assert_(isinstance(m, tuple))
+        self.assertEquals(len(m), 6)
 
-            self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+        self.matrixEquals(m, (1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
 
         # For some reason Tiger transforms this matrix to the one below. The
         # same thing happens in pure ObjC code.
@@ -102,24 +99,47 @@ class TestNSFont(TestCase):
 
 
     def testMethods(self):
-        self.fail("- (void)getBoundingRects:(NSRectArray)bounds forGlyphs:(const NSGlyph *)glyphs count:(NSUInteger)glyphCount;")
-        self.fail("- (void)getAdvancements:(NSSizeArray)advancements forGlyphs:(const NSGlyph *)glyphs count:(NSUInteger)glyphCount;")
-        self.fail("- (void)getAdvancements:(NSSizeArray)advancements forPackedGlyphs:(const void *)packedGlyphs length:(NSUInteger)length;")
+        self.failUnlessResultIsBOOL(NSFont.isFixedPitch)
+        self.failUnlessArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, 'n^I')
+        self.failUnlessArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 0, 2)
+        self.failUnlessArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 1, 2)
+        self.failUnlessArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, 'n^I')
+        self.failUnlessArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 0, 2)
+        self.failUnlessArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 1, 2)
+        self.failUnlessArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 0, 2)
+        self.failUnlessArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2)
 
     @onlyOn32Bit
     def testMethods32(self):
-        self.fail("- (NSPoint)positionOfGlyph:(NSGlyph)curGlyph precededByGlyph:(NSGlyph)prevGlyph isNominal:(BOOL *)nominal")
-        self.fail("- (NSInteger)positionsForCompositeSequence:(NSGlyph *)someGlyphs numberOfGlyphs:(NSInteger)numGlyphs pointArray:(NSPointArray)points")
-        self.fail("- (NSPoint)positionOfGlyph:(NSGlyph)curGlyph struckOverGlyph:(NSGlyph)prevGlyph metricsExist:(BOOL *)exist")
-        self.fail("- (NSPoint)positionOfGlyph:(NSGlyph)aGlyph struckOverRect:(NSRect)aRect metricsExist:(BOOL *)exist")
-        self.fail("- (NSPoint)positionOfGlyph:(NSGlyph)thisGlyph withRelation:(NSGlyphRelation)rel toBaseGlyph:(NSGlyph)baseGlyph totalAdvancement:(NSSizePointer)adv metricsExist:(BOOL *)exist")
+        self.failUnlessResultIsBOOL(NSFont.isBaseFont)
+        self.failUnlessResultIsBOOL(NSFont.glyphIsEncoded_)
+        self.failUnlessArgHasType(NSFont.glyphIsEncoded_, 0, 'I')
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, 'I')
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, 'I')
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, 'o^'+objc._C_NSBOOL)
+        
+        self.failUnlessArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 'n^I')
+        self.failUnlessArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1)
+        self.failUnlessArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 'o^'+NSPoint.__typestr__)
+        self.failUnlessArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 1)
 
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, 'o^' + objc._C_NSBOOL)
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, 'o^' + objc._C_NSBOOL)
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, 'o^' + NSSize.__typestr__)
+        self.failUnlessArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, 'o^' + objc._C_NSBOOL)
 
 
     def testFunctions(self):
-        self.fail("NSConvertGlyphsToPackedGlyphs")
+        glyphs = [ ord('A'), ord('B'), ord('9'), ord('a') ]
 
+        rv, packed = NSConvertGlyphsToPackedGlyphs(glyphs, len(glyphs), NSNativeShortGlyphPacking, None)
+        self.failUnlessIsInstance(rv, (int, long))
+        self.failUnlessIsInstance(packed, str)
+        if rv == 0:
+            self.failUnlessEqual(len(packed), 0)
 
+        else:
+            self.failUnlessEqual(len(packed), rv)
 
 if __name__ == '__main__':
     main( )

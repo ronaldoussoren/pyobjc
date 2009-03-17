@@ -285,7 +285,6 @@
   <constant name='NSAnimationTriggerOrderIn' type='@' />
   <constant name='NSAnimationTriggerOrderOut' type='@' />
   <constant name='NSAntialiasThresholdChangedNotification' type='@' />
-  <constant name='NSApp' type='@' />
   <constant name='NSAppKitIgnoredException' type='@' />
   <constant name='NSAppKitVersionNumber' type='d' />
   <constant name='NSAppKitVirtualMemoryException' type='@' />
@@ -2336,7 +2335,7 @@
     <retval type='v' type64='v' />
     <arg type='i' type64='q' />
     <arg type='i' type64='q' />
-    <arg c_array_length_in_arg='0' type='^i' type64='^i' type_modifier='o' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='o' />
   </function>
   <function inline='true' name='NSEventMaskFromType'>
     <retval type='I' type64='Q' />
@@ -2865,8 +2864,8 @@
     <method selector='getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:'>
       <retval type='I' type64='Q' />
       <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
-      <arg c_array_length_in_arg='0' index='1' type_modifier='o' />
-      <arg c_array_length_in_arg='0' index='2' type_modifier='o' />
+      <arg c_array_length_in_arg='0' index='1' type_modifier='o' type='o^S'/>
+      <arg c_array_length_in_arg='0' index='2' type_modifier='o' type='o^I' type64='o^Q' />
       <arg c_array_length_in_arg='0' index='3' type_modifier='o' />
       <arg index='4' type='^B' />
     </method>
@@ -2883,7 +2882,7 @@
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='hyphenCharacterForGlyphAtIndex:'>
-      <retval type='L' type64='I' />
+      <retval type='I' type64='I' />
       <arg index='0' type='I' type64='Q' />
     </method>
     <method selector='hyphenationFactor'>
@@ -3036,10 +3035,10 @@
     </method>
     <method selector='willSetLineFragmentRect:forGlyphRange:usedRect:baselineOffset:'>
       <retval type='v' />
-      <arg index='0' type_modifier='N' />
+      <arg index='0' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
       <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
-      <arg index='2' type_modifier='N' />
-      <arg index='3' type_modifier='N' />
+      <arg index='2' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='3' type_modifier='N' type='^f'/>
     </method>
   </class>
   <class name='NSActionCell'>
@@ -3160,7 +3159,7 @@
       <retval type='v' />
       <arg index='0' type='@' />
       <arg index='1' type='@' />
-      <arg index='2' sel_of_type='v@:@^v' />
+      <arg index='2' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='3' type='^v' />
     </method>
     <method selector='buttons'>
@@ -3391,7 +3390,7 @@
       <arg index='0' type='@' />
       <arg index='1' type='@' />
       <arg index='2' type='@' />
-      <arg index='3' sel_of_type='v@:@^v' />
+      <arg index='3' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v'/>
       <arg index='4' type='^v' />
     </method>
     <method selector='cancelUserAttentionRequest:'>
@@ -4096,7 +4095,7 @@
     </method>
     <method selector='appendBezierPathWithPoints:count:'>
       <retval type='v' />
-      <arg index='0' type_modifier='n' />
+      <arg index='0' type_modifier='n' c_array_length_in_arg='1'/>
       <arg index='1' type='i' type64='q' />
     </method>
     <method selector='appendBezierPathWithRect:'>
@@ -5446,7 +5445,7 @@
     </method>
   </class>
   <class name='NSCell'>
-    <method selector=''>
+    <method selector='truncatesLastVisibleLine'>
       <retval type='B' />
     </method>
     <method selector='acceptsFirstResponder'>
@@ -6350,7 +6349,7 @@
     </method>
     <method selector='getComponents:'>
       <retval type='v' />
-      <arg index='0' type='^f' type64='^d' />
+      <arg index='0' type='^f' type64='^d' type_modifier='o' c_array_of_variable_length='true' />
     </method>
     <method selector='getCyan:magenta:yellow:black:alpha:'>
       <retval type='v' />
@@ -8346,7 +8345,7 @@
       <arg index='0' type='@' />
       <arg index='1' type='@' />
       <arg index='2' type='@' />
-      <arg index='3' sel_of_type='v@:@B^v' />
+      <arg index='3' sel_of_type='v@:B^v' />
       <arg index='4' type='^v' />
     </method>
     <method selector='recentDocumentURLs'>
@@ -8843,10 +8842,10 @@
     </method>
   </class>
   <class name='NSFont'>
-    <method selector=''>
-      <retval type='B' />
+    <method selector='matrix'>
+      <retval c_array_of_fixed_length='6' />
     </method>
-    <method selector=''>
+    <method selector='isBaseFont'>
       <retval type='B' />
     </method>
     <method selector=''>
@@ -8996,35 +8995,25 @@
     </method>
     <method selector='positionOfGlyph:forCharacter:struckOverRect:'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='0' type='I' />
-      <arg index='1' type='rT' />
       <arg index='2' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method selector='positionOfGlyph:precededByGlyph:isNominal:'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='0' type='I' />
-      <arg index='1' type='I' />
-      <arg index='2' type='^B' />
+      <arg index='2' type='^B' type_modifier='o' />
     </method>
     <method selector='positionOfGlyph:struckOverGlyph:metricsExist:'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='0' type='I' />
-      <arg index='1' type='I' />
-      <arg index='2' type='^B' />
+      <arg index='2' type='^B' type_modifier='o' />
     </method>
     <method selector='positionOfGlyph:struckOverRect:metricsExist:'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='0' type='I' />
       <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-      <arg index='2' type='^B' />
+      <arg index='2' type='^B' type_modifier='o' />
     </method>
     <method selector='positionOfGlyph:withRelation:toBaseGlyph:totalAdvancement:metricsExist:'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='0' type='I' />
-      <arg index='1' type='I' />
-      <arg index='2' type='I' />
       <arg index='3' type_modifier='o' />
-      <arg index='4' type='^B' />
+      <arg index='4' type='^B' type_modifier='o'/>
     </method>
     <method selector='positionsForCompositeSequence:numberOfGlyphs:pointArray:'>
       <retval type='i' type64='q' />
@@ -9586,11 +9575,8 @@
   </class>
   <class name='NSGlyphGenerator'>
     <method selector='generateGlyphsForGlyphStorage:desiredNumberOfCharacters:glyphIndex:characterIndex:'>
-      <retval type='v' />
-      <arg index='0' type='@' />
-      <arg index='1' type='I' type64='Q' />
       <arg index='2' type_modifier='o' />
-      <arg index='3' type_modifier='N' />
+      <arg index='3' type_modifier='o' />
     </method>
     <method class_method='true' selector='sharedGlyphGenerator'>
       <retval type='@' />
@@ -9730,6 +9716,9 @@
       <retval type='@' />
       <arg index='0' type='^{CGContext=}' />
       <arg index='1' type='B' />
+    </method>
+    <method selector='graphicsPort'>
+	    <retval type='^{CGContext=}' />
     </method>
     <method class_method='true' selector='graphicsContextWithWindow:'>
       <retval type='@' />
@@ -10622,7 +10611,7 @@
     </method>
     <method selector='insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:'>
       <retval type='v' />
-      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' type='^I' type64='^I' />
       <arg index='1' type='I' type64='Q' />
       <arg index='2' type='I' type64='Q' />
       <arg index='3' type='I' type64='Q' />
@@ -11497,6 +11486,15 @@
     </method>
     <method selector='sizeToCells'>
       <retval type='v' />
+    </method>
+    <method selector='sortUsingFunction:context:'>
+	    <arg index='0' function_pointer='true' function_pointer_retained='false'>
+		    <retval type='i'/>
+		    <arg type='@' />
+		    <arg type='@' />
+		    <arg type='@' />
+	    </arg>
+	    <arg index='1' type='@' />
     </method>
     <method selector='sortUsingSelector:'>
       <retval type='v' />
@@ -13158,15 +13156,15 @@
     </method>
     <method selector='doCommandBySelector:'>
       <retval type='v' />
-      <arg index='0' type=':' />
+      <arg index='0' type=':' sel_of_type='v@:@'/>
     </method>
     <method selector='doCommandBySelector:'>
       <retval type='v' />
-      <arg index='0' type=':' />
+      <arg index='0' type=':' sel_of_type='v@:@'/>
     </method>
     <method selector='doCommandBySelector:client:'>
       <retval type='v' />
-      <arg index='0' type=':' />
+      <arg index='0' type=':' sel_of_type='v@:@'/>
       <arg index='1' type='@' />
     </method>
     <method selector='draggedImage'>
@@ -13380,7 +13378,7 @@
     </method>
     <method selector='insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:'>
       <retval type='v' />
-      <arg c_array_length_in_arg='1' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type_modifier='n' type='^I' type64='^I' />
       <arg index='1' type='I' type64='Q' />
       <arg index='2' type='I' type64='Q' />
       <arg index='3' type='I' type64='Q' />

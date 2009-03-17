@@ -38,7 +38,16 @@ class TestNSButtonCell (TestCase):
 
 
     def testMethods(self):
-        self.fail("- (void)getPeriodicDelay:(float *)delay interval:(float *)interval;")
+        self.failUnlessResultIsBOOL(NSButtonCell.isOpaque)
+        self.failUnlessResultIsBOOL(NSButtonCell.isTransparent)
+        self.failUnlessArgIsBOOL(NSButtonCell.setTransparent_, 0)
 
+        self.failUnlessArgIsOut(NSButtonCell.getPeriodicDelay_interval_, 0)
+        self.failUnlessArgIsOut(NSButtonCell.getPeriodicDelay_interval_, 1)
+
+        self.failUnlessResultIsBOOL(NSButtonCell.imageDimsWhenDisabled)
+        self.failUnlessArgIsBOOL(NSButtonCell.setImageDimsWhenDisabled_, 0)
+        self.failUnlessResultIsBOOL(NSButtonCell.showsBorderOnlyWhileMouseInside)
+        self.failUnlessArgIsBOOL(NSButtonCell.setShowsBorderOnlyWhileMouseInside_, 0)
 if __name__ == "__main__":
     main()
