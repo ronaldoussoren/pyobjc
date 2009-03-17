@@ -6,6 +6,8 @@ class TestNSKeyValueBindingHelper (NSObject):
     def commitEditingWithDelegate_didCommitSelector_contextInfo_(self, d, s, i):
         return None
 
+    def commitEditing(self): return 1
+
 
 class TestNSKeyValueBinding (TestCase):
     def testConstants(self):
@@ -136,6 +138,8 @@ class TestNSKeyValueBinding (TestCase):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
         self.failUnlessEqual(m['arguments'][3]['sel_of_type'], 'v@:@Z^v')
+
+        self.failUnlessResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
 
 
 

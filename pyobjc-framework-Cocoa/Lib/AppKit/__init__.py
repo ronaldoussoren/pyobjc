@@ -25,9 +25,9 @@ from AppKit._nsapp import NSApp
 # Import some manually maintained helper code:
 from AppKit._appmain import *
 from AppKit._nsbezierpath import *
+from AppKit._nsfont import *
 from AppKit._nsquickdrawview import *
 from AppKit._nsbezierpath import *
-from AppKit._nsmatrix import *
 from AppKit._nsview import *
 from AppKit._nsbitmap import *
 #from AppKit._nsopengl import *

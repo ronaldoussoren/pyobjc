@@ -57,54 +57,147 @@ class TestNSGraphics (TestCase):
 
 
     def testFunctions(self):
-        self.fail("APPKIT_EXTERN NSWindowDepth NSBestDepth (NSString *colorSpace, NSInteger bps, NSInteger bpp, BOOL planar, BOOL *exactMatch);")
-        self.fail("APPKIT_EXTERN BOOL NSPlanarFromDepth (NSWindowDepth depth);")
-        self.fail("APPKIT_EXTERN NSString *NSColorSpaceFromDepth (NSWindowDepth depth);")
-        self.fail("APPKIT_EXTERN NSInteger NSBitsPerSampleFromDepth(NSWindowDepth depth);")
-        self.fail("APPKIT_EXTERN NSInteger NSBitsPerPixelFromDepth(NSWindowDepth depth);")
-        self.fail("APPKIT_EXTERN NSInteger NSNumberOfColorComponents(NSString *colorSpaceName);")
-        self.fail("APPKIT_EXTERN const NSWindowDepth *NSAvailableWindowDepths (void); /* 0 terminated */")
+        self.failUnlessArgHasType(NSBestDepth, 4, 'o^' + objc._C_NSBOOL)
+        self.failUnlessArgIsBOOL(NSBestDepth, 3)
+        d, e = NSBestDepth(NSDeviceRGBColorSpace, 8, 32, False, None)
+        self.failUnlessIsInstance(d, (int, long))
+        self.failUnlessIsInstance(e, bool)
 
-        self.fail("APPKIT_EXTERN void NSRectFill(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSRectFillList(const NSRect *rects, NSInteger count);")
-        self.fail("APPKIT_EXTERN void NSRectFillListWithGrays(const NSRect *rects, const CGFloat *grays, NSInteger num);")
-        self.fail("APPKIT_EXTERN void NSRectFillListWithColors(const NSRect *rects, NSColor **colors, NSInteger num);")
-        self.fail("APPKIT_EXTERN void NSRectFillUsingOperation(NSRect aRect, NSCompositingOperation op);")
-        self.fail("APPKIT_EXTERN void NSRectFillListUsingOperation(const NSRect *rects, NSInteger count, NSCompositingOperation op);")
-        self.fail("APPKIT_EXTERN void NSRectFillListWithColorsUsingOperation(const NSRect *rects, NSColor **colors, NSInteger num, NSCompositingOperation op);")
-        self.fail("APPKIT_EXTERN void NSFrameRect(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSFrameRectWithWidth(NSRect aRect, CGFloat frameWidth);")
-        self.fail("APPKIT_EXTERN void NSFrameRectWithWidthUsingOperation(NSRect aRect, CGFloat frameWidth, NSCompositingOperation op);")
-        self.fail("APPKIT_EXTERN void NSRectClip(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSRectClipList(const NSRect *rects, NSInteger count);")
-        self.fail("APPKIT_EXTERN NSRect NSDrawTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge *sides, const CGFloat *grays, NSInteger count);")
-        self.fail("APPKIT_EXTERN void NSDrawGrayBezel(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSDrawGroove(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSDrawWhiteBezel(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSDrawButton(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSEraseRect(NSRect aRect);")
-        self.fail("APPKIT_EXTERN NSColor *NSReadPixel(NSPoint passedPoint);")
-        self.fail("APPKIT_EXTERN void NSDrawBitmap(NSRect rect, NSInteger width, NSInteger height, NSInteger bps, NSInteger spp, NSInteger bpp, NSInteger bpr, BOOL isPlanar, BOOL hasAlpha, NSString *colorSpaceName, const unsigned char *const data[5]);")
-        self.fail("APPKIT_EXTERN void NSCopyBits(NSInteger srcGState, NSRect srcRect, NSPoint destPoint);")
-        self.fail("APPKIT_EXTERN void NSHighlightRect(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSBeep(void);")
-        self.fail("APPKIT_EXTERN void NSCountWindows(NSInteger *count);")
-        self.fail("APPKIT_EXTERN void NSWindowList(NSInteger size, NSInteger list[]);")
-        self.fail("APPKIT_EXTERN void NSCountWindowsForContext(NSInteger context, NSInteger *count);")
-        self.fail("APPKIT_EXTERN void NSWindowListForContext(NSInteger context, NSInteger size, NSInteger list[]);")
+        self.failUnlessResultIsBOOL(NSPlanarFromDepth)
+        self.failUnlessIsInstance(NSPlanarFromDepth(0), bool)
 
-        self.fail("APPKIT_EXTERN NSInteger NSGetWindowServerMemory(NSInteger context, NSInteger *virtualMemory, NSInteger *windowBackingMemory, NSString **windowDumpString);")
+        self.failUnlessIsInstance(NSColorSpaceFromDepth(0), unicode)
+        self.failUnlessIsInstance(NSBitsPerSampleFromDepth(0), (int, long))
+        self.failUnlessIsInstance(NSBitsPerPixelFromDepth(0), (int, long))
+        self.failUnlessIsInstance(NSNumberOfColorComponents(NSDeviceRGBColorSpace), (int, long))
 
-        self.fail("APPKIT_EXTERN NSRect NSDrawColorTiledRects(NSRect boundsRect, NSRect clipRect, const NSRectEdge *sides, NSColor **colors, NSInteger count);")
-        self.fail("APPKIT_EXTERN void NSDrawDarkBezel(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSDrawLightBezel(NSRect aRect, NSRect clipRect);")
-        self.fail("APPKIT_EXTERN void NSDottedFrameRect(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSDrawWindowBackground(NSRect aRect);")
-        self.fail("APPKIT_EXTERN void NSSetFocusRingStyle(NSFocusRingPlacement placement);")
+        v = NSAvailableWindowDepths()
+        self.failUnlessIsInstance(v, tuple)
+        self.failIfEqual(len(v), 0)
+        self.failUnlessIsInstance(v[0], int)
 
-        self.fail("APPKIT_EXTERN void NSDisableScreenUpdates(void)	AVAILABLE_MAC_OS_X_VERSION_10_3_AND_LATER;")
-        self.fail("APPKIT_EXTERN void NSEnableScreenUpdates(void)	AVAILABLE_MAC_OS_X_VERSION_10_3_AND_LATER;")
-        self.fail("APPKIT_EXTERN void NSShowAnimationEffect(NSAnimationEffect animationEffect, NSPoint centerLocation, NSSize size, id animationDelegate, SEL didEndSelector, void *contextInfo) AVAILABLE_MAC_OS_X_VERSION_10_3_AND_LATER;")
+        img = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
+                None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0)
+        context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
+        current = NSGraphicsContext.currentContext()
+        try:
+            NSGraphicsContext.setCurrentContext_(context)
+            NSRectFill(((0, 0), (1, 2)))
+
+            self.failUnlessArgSizeInArg(NSRectFillList, 0, 1)
+            NSRectFillList([((0, 0), (1, 2)), ((10, 50), (9, 9))], 2)
+
+            self.failUnlessArgSizeInArg(NSRectFillListWithGrays, 0, 2)
+            self.failUnlessArgSizeInArg(NSRectFillListWithGrays, 1, 2)
+            NSRectFillListWithGrays([((0, 0), (1, 2)), ((10, 50), (9, 9))], (0.5, 0.6), 2)
+
+            self.failUnlessArgSizeInArg(NSRectFillListWithColors, 0, 2)
+            self.failUnlessArgSizeInArg(NSRectFillListWithColors, 1, 2)
+            NSRectFillListWithColors([((0, 0), (1, 2)), ((10, 50), (9, 9))], (NSColor.blueColor(), NSColor.redColor()), 2)
+
+            NSRectFillUsingOperation(((0, 0), (1, 2)), NSCompositeSourceOver)
+
+            self.failUnlessArgSizeInArg(NSRectFillListUsingOperation, 0, 1)
+            NSRectFillListUsingOperation([((0, 0), (1, 2)), ((10, 50), (9, 9))], 2, NSCompositeSourceOver)
+
+            self.failUnlessArgSizeInArg(NSRectFillListWithColorsUsingOperation, 0, 2)
+            self.failUnlessArgSizeInArg(NSRectFillListWithColorsUsingOperation, 1, 2)
+            NSRectFillListWithColorsUsingOperation([((0, 0), (1, 2)), ((10, 50), (9, 9))], (NSColor.blueColor(), NSColor.redColor()), 2, NSCompositeSourceOver)
+
+            NSFrameRect(((5, 5), (20, 30)))
+            NSFrameRectWithWidth(((5, 5), (20, 30)), 4)
+            NSFrameRectWithWidthUsingOperation(((5, 5), (20, 30)), 4, NSCompositeSourceOver)
+
+            NSRectClip(((5, 5), (200, 200)))
+            self.failUnlessArgSizeInArg(NSRectClipList, 0, 1)
+            NSRectClipList([((5, 5), (200, 200)), ((50, 50), (90, 100))], 2)
+
+            color = NSReadPixel((5, 5))
+            self.failUnlessIsInstance(color, NSColor)
+
+            self.failUnlessArgSizeInArg(NSDrawTiledRects, 2, 4)
+            self.failUnlessArgSizeInArg(NSDrawTiledRects, 3, 4)
+            self.failUnlessArgIsIn(NSDrawTiledRects, 2)
+            self.failUnlessArgIsIn(NSDrawTiledRects, 3)
+            NSDrawTiledRects(((10, 10), (50, 50)), ((15, 15), (10, 10)),  [NSMinXEdge, NSMaxXEdge], [0.8, 0.9], 2)
+
+            NSDrawGrayBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSDrawGroove(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSDrawWhiteBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSDrawButton(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSEraseRect(((0, 0), (10, 10)))
+            NSCopyBits(0, ((10, 10), (50, 50)), (50, 50))
+            NSHighlightRect(((10, 10), (50, 50)))
+            NSDrawDarkBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSDrawLightBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            NSDottedFrameRect(((10, 10), (50, 50)))
+            NSDrawWindowBackground(((10, 10), (50, 50)))
+
+        finally:
+            NSGraphicsContext.setCurrentContext_(current)
+
+            NSSetFocusRingStyle(NSFocusRingAbove)
+
+            self.failUnlessArgIsOut(NSGetWindowServerMemory, 1)
+            self.failUnlessArgIsOut(NSGetWindowServerMemory, 2)
+            self.failUnlessArgIsOut(NSGetWindowServerMemory, 3)
+            r = NSGetWindowServerMemory(0, None, None, None)
+            self.failUnlessIsInstance(r[0], (int, long))
+            self.failUnlessIsInstance(r[1], (int, long))
+            self.failUnlessIsInstance(r[2], (int, long))
+
+            self.failUnlessArgSizeInArg(NSDrawColorTiledRects, 2, 4)
+            self.failUnlessArgSizeInArg(NSDrawColorTiledRects, 3, 4)
+            self.failUnlessArgIsIn(NSDrawColorTiledRects, 2)
+            self.failUnlessArgIsIn(NSDrawColorTiledRects, 3)
+            NSDrawColorTiledRects(((10, 10), (50, 50)), ((15, 15), (10, 10)),  [NSMinXEdge, NSMaxXEdge], [NSColor.redColor(), NSColor.blueColor()], 2)
+
+            #self.failUnlessArgIsBOOL(NSDrawBitmap, 7)
+            #self.failUnlessArgIsBOOL(NSDrawBitmap, 8)
+            #NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True, 
+            #        NSDeviceRGBColorSpace, [' '*4*10*20, '', '', '', ''])
+
+            self.failUnlessArgSizeInArg(NSWindowList, 1, 0)
+            self.failUnlessArgIsOut(NSWindowList, 1)
+            v = NSWindowList(5, None)
+            self.failUnlessIsInstance(v, tuple)
+            self.failUnlessEqual(len(v), 5)
+            self.failUnlessIsInstance(v[0], (int, long))
+
+            self.failUnlessArgIsOut(NSCountWindowsForContext, 1)
+            v = NSCountWindowsForContext(1, None)
+            self.failUnlessIsInstance(v, (int, long))
+
+            self.failUnlessArgIsOut(NSWindowListForContext, 2)
+            self.failUnlessArgSizeInArg(NSWindowListForContext, 2, 1)
+            v = NSWindowListForContext(0, 5, None)
+            self.failUnlessIsInstance(v, tuple)
+            self.failUnlessEqual(len(v), 5)
+            self.failUnlessIsInstance(v[0], (int, long))
+
+
+
+
+        NSBeep()
+        count = NSCountWindows(None)
+        self.failUnlessIsInstance(count, (int, long))
+
+        try:
+            NSDisableScreenUpdates()
+        except objc.error:
+            pass
+
+        try:
+            NSEnableScreenUpdates()
+        except objc.error:
+            pass
+
+        self.failUnlessArgIsSEL(NSShowAnimationEffect, 4, 'v@:^v')
+        self.failUnlessArgHasType(NSShowAnimationEffect, 5, '^v')
+        try:
+            NSShowAnimationEffect(NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None)
+        except objc.error:
+            pass
 
 
 if __name__ == "__main__":

@@ -37,3 +37,19 @@ This module defines a method for ``NSGraphicsContext``:
 	  NSGraphicsContext.restoreGraphicsState()
 
 
+Context-manager for ``NSAnimationContext``
+------------------------------------------
+
+Class ``NSAnimationContext`` can be used as the context for a ``with`` 
+statement::
+
+	with NSAnimationContext:
+		pass
+
+This is equivalent to::
+
+	NSAnimationContext.beginGrouping()
+	try:
+		pass
+	finally:
+		NSAnimationContext.endGrouping()

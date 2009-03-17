@@ -1,0 +1,37 @@
+==================================
+API Notes for the AppKit framework
+==================================
+
+``NSColorSpace``
+----------------
+
+* ``-initWithColorSyncProfile:`` and ``colorSyncProfile``
+
+  These methods are not supported.
+
+``NSEvent``
+----------
+
+* ``-initWithEventRef:`` and ``-eventRef``
+
+  These methods are not supported
+
+``NSGradient``
+--------------
+
+* ``-initWithColorsAndLocations:``
+
+  This method is not supported, use ``-initWithColors:atLocations:colorSpace:`` instead.
+
+
+``NSDrawBitmap``
+----------------
+
+This function is deprecated and is not supported by PyObjC. Use an ``NSBitmapImageRep`` instead.
+
+``NSImage``
+-----------
+
+* ``initWithIconRef:``
+
+  This method is not yet supported.

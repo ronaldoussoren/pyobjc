@@ -2,6 +2,10 @@ from PyObjCTools.TestSupport import *
 import AppKit
 from AppKit import *
 
+class TestNSImageHelper (NSObject):
+    def image_didLoadRepresentation_withStatus_(self, i, r, s): pass
+    def image_didLoadPartOfRepresentation_withValidRows_(self, i, r, c): pass
+
 class TestNSImage (TestCase):
     def test_compositePoint(self):
         # comes straight from ReSTedit.  Works on PPC, not on Intel (as of r1791)
@@ -78,7 +82,34 @@ class TestNSImage (TestCase):
         self.failUnlessIsInstance( NSImageNameEveryone, unicode)
 
     def testMethods(self):
-        self.fail("- (id)initWithIconRef:(IconRef)iconRef;")
+        self.failUnlessResultIsBOOL(NSImage.setName_)
+        self.failUnlessArgIsBOOL(NSImage.setScalesWhenResized_, 0)
+        self.failUnlessResultIsBOOL(NSImage.scalesWhenResized)
+        self.failUnlessArgIsBOOL(NSImage.setDataRetained_, 0)
+        self.failUnlessResultIsBOOL(NSImage.isDataRetained)
+        self.failUnlessArgIsBOOL(NSImage.setCachedSeparately_, 0)
+        self.failUnlessResultIsBOOL(NSImage.isCachedSeparately)
+        self.failUnlessArgIsBOOL(NSImage.setCacheDepthMatchesImageDepth_, 0)
+        self.failUnlessResultIsBOOL(NSImage.cacheDepthMatchesImageDepth)
+        self.failUnlessArgIsBOOL(NSImage.setUsesEPSOnResolutionMismatch_, 0)
+        self.failUnlessResultIsBOOL(NSImage.usesEPSOnResolutionMismatch)
+        self.failUnlessArgIsBOOL(NSImage.setPrefersColorMatch_, 0)
+        self.failUnlessResultIsBOOL(NSImage.prefersColorMatch)
+        self.failUnlessArgIsBOOL(NSImage.setMatchesOnMultipleResolution_, 0)
+        self.failUnlessResultIsBOOL(NSImage.matchesOnMultipleResolution)
+        self.failUnlessResultIsBOOL(NSImage.drawRepresentation_inRect_)
+        self.failUnlessResultIsBOOL(NSImage.isValid)
+        self.failUnlessResultIsBOOL(NSImage.canInitWithPasteboard_)
+        self.failUnlessResultIsBOOL(NSImage.isFlipped)
+        self.failUnlessArgIsBOOL(NSImage.setFlipped_, 0)
+        self.failUnlessResultIsBOOL(NSImage.isTemplate)
+        self.failUnlessArgIsBOOL(NSImage.setTemplate_, 0)
+
+        #self.fail("- (id)initWithIconRef:(IconRef)iconRef;")
+
+    def testProtocols(self):
+        self.failUnlessArgHasType(TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_, 2, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSImageHelper.image_didLoadRepresentation_withStatus_, 2, objc._C_NSUInteger)
 
 
 if __name__ == "__main__":

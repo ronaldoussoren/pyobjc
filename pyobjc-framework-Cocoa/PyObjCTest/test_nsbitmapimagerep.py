@@ -147,6 +147,9 @@ class TestBadCreation(TestCase):
         self.failUnlessIsInstance(NSImageFallbackBackgroundColor, unicode)
 
     def testMethods(self):
+        self.failUnlessResultIsBOOL(NSBitmapImageRep.isPlanar)
+        self.failUnlessResultIsBOOL(NSBitmapImageRep.canBeCompressedUsing_)
+        self.failUnlessArgIsBOOL(NSBitmapImageRep.incrementalLoadFromData_complete_, 1)
         self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName  bitmapFormat:(NSBitmapFormat)bitmapFormat bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;")
         self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;") #XXX See above
         self.fail("- (void)getCompression:(NSTIFFCompression *)compression factor:(float *)factor;")

@@ -2,6 +2,9 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSFontPanelHelper (NSObject):
+    def validModesForFontPanel_(self, p): return 1
+
 class TestNSFontPanel (TestCase):
     def testConstants(self):
         self.failUnlessEqual(NSFPPreviewButton, 131)
@@ -22,6 +25,16 @@ class TestNSFontPanel (TestCase):
         self.failUnlessEqual(NSFontPanelAllEffectsModeMask, cast_int(0XFFF00))
         self.failUnlessEqual(NSFontPanelStandardModesMask, cast_int(0xFFFF))
         self.failUnlessEqual(NSFontPanelAllModesMask, cast_int(0xFFFFFFFF))
+
+    def testProtocols(self):
+        self.failUnlessResultHasType(TestNSFontPanelHelper.validModesForFontPanel_, objc._C_NSUInteger)
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSFontPanel.sharedFontPanelExists)
+        self.failUnlessResultIsBOOL(NSFontPanel.worksWhenModal)
+        self.failUnlessResultIsBOOL(NSFontPanel.isEnabled)
+        self.failUnlessArgIsBOOL(NSFontPanel.setEnabled_, 0)
+        self.failUnlessArgIsBOOL(NSFontPanel.setPanelFont_isMultiple_, 1)
 
 if __name__ == "__main__":
     main()

@@ -27,5 +27,8 @@ class TestNSDatePickerCell (TestCase):
         self.failUnlessEqual(m['arguments'][3]['type'], 'N^@')
         self.failUnlessStartswith(m['arguments'][4]['type'], 'N^')
 
+        self.failUnlessResultIsBOOL(NSDatePickerCell.drawsBackground)
+        self.failUnlessArgIsBOOL(NSDatePickerCell.setDrawsBackground_, 0)
+
 if __name__ == "__main__":
     main()

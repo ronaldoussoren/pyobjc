@@ -2,6 +2,10 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSAnimationHelper (NSObject):
+    def animationShouldStart_(self, animation):
+        return 1
+
 class TestNSAnimation (TestCase):
     def testConstants(self):
         self.failUnlessEqual(NSAnimationEaseInOut, 0)
@@ -26,7 +30,8 @@ class TestNSAnimation (TestCase):
         self.failUnlessIsInstance(NSAnimationTriggerOrderIn, unicode)
         self.failUnlessIsInstance(NSAnimationTriggerOrderOut, unicode)
 
-
+    def testProtocol(self):
+        self.failUnlessResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
 if __name__ == "__main__":
     main()
