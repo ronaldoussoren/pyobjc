@@ -24,19 +24,13 @@ of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 """
 
-from Foundation import NSObject
-from PyObjCTools import NibClassBuilder
+from Cocoa import *
 import sys
 
 
-NibClassBuilder.extractClasses("PythonBrowser")
-
-
 # class defined in PythonBrowser.nib
-class PythonBrowserWindowController(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSWindowController
-    # The following outlets are added to the class:
-    # outlineView
+class PythonBrowserWindowController(NSWindowController):
+    outlineView = objc.IBOutlet()
 
     def __new__(cls, obj):
         # "Pythonic" constructor
@@ -76,6 +70,7 @@ class PythonBrowserWindowController(NibClassBuilder.AutoBaseClass):
         self.model.setObject_(obj)
         self.outlineView.reloadData()
 
+    @objc.IBAction
     def doubleClick_(self, sender):
         # Open a new browser window for each selected expandable item
         for row in self.outlineView.selectedRowEnumerator():
@@ -83,6 +78,7 @@ class PythonBrowserWindowController(NibClassBuilder.AutoBaseClass):
             if item.isExpandable():
                 PythonBrowserWindowController(item.object)
 
+    @objc.IBAction
     def pickRandomModule_(self, sender):
         """Test method, hooked up from the "Pick Random Module" menu in
         MainMenu.nib, to test changing the browsed object after the window
@@ -99,6 +95,7 @@ class PythonBrowserAppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, notification):
         self.newBrowser_(self)
 
+    @objc.IBAction
     def newBrowser_(self, sender):
         # The PythonBrowserWindowController instance will retain itself,
         # so we don't (have to) keep track of all instances here.
