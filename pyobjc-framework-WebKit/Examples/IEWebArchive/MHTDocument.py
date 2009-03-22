@@ -1,14 +1,14 @@
-from PyObjCTools import NibClassBuilder
-
+from Cocoa import *
 from loader import MHTLoader # XXX: integrate?
 
-NibClassBuilder.extractClasses("MHTDocument")
-
-class MHTDocument (NibClassBuilder.AutoBaseClass):
+class MHTDocument (NSObject):
+    locationbox = objc.IBOutlet()
+    webview = objc.IBOutlet()
 
     path = None
     statusText = None
 
+    @objc.IBAction
     def navigateHistory_(self, sender):
         if sender.selectedSegment() == 0:
             self.webview.goBack_(sender)
