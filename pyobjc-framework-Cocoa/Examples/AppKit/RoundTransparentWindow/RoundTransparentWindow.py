@@ -1,23 +1,23 @@
-from PyObjCTools import AppHelper, NibClassBuilder
-from AppKit import *
-from Foundation import NSZeroPoint
+from PyObjCTools import AppHelper
+from Cocoa import *
 
 from math import floor
 import sys
 
-NibClassBuilder.extractClasses("MainMenu")
+class Controller(NSObject):
+    itsWindow = objc.IBOutlet()
 
-class Controller(NibClassBuilder.AutoBaseClass):
-    """."""
+    @objc.IBAction
     def changeTransparency_(self, sender):
         """."""
         self.itsWindow.setAlphaValue_(sender.floatValue())
         self.itsWindow.display()
 
-class CustomView(NibClassBuilder.AutoBaseClass):
-    """."""
+class CustomView(NSView):
+    circleImage = objc.ivar()
+    pentaImage = objc.ivar()
+
     def awakeFromNib(self):
-        """."""
         self.circleImage = NSImage.imageNamed_("circle")
         if self.circleImage is None:
             sys.stderr.write('failed to access circle image\n')
@@ -29,7 +29,6 @@ class CustomView(NibClassBuilder.AutoBaseClass):
         self.setNeedsDisplay_(True)
     
     def drawRect_(self, rect):
-        """."""
         NSColor.clearColor().set()
         NSRectFill(self.frame())
         if self.window().alphaValue() > 0.7:
@@ -43,13 +42,11 @@ class CustomView(NibClassBuilder.AutoBaseClass):
         else:
             self.window().invalidateShadow()
 
-class CustomWindow(NibClassBuilder.AutoBaseClass):
-    """."""
+class CustomWindow(NSWindow):
+
     def initWithContentRect_styleMask_backing_defer_(self, contentRect, aStyle,
                                                      bufferingType, flag):
-        """."""
-        result = \
-            super(CustomWindow, self).initWithContentRect_styleMask_backing_defer_(
+        result = super(CustomWindow, self).initWithContentRect_styleMask_backing_defer_(
                 contentRect, NSBorderlessWindowMask, NSBackingStoreBuffered, False)
         if result is None:
             sys.stderr.write('superclass call failed\n')
@@ -62,11 +59,9 @@ class CustomWindow(NibClassBuilder.AutoBaseClass):
         return result
     
     def canBecomeKeyWindow(self):
-        """."""
         return True
     
     def mouseDragged_(self, theEvent):
-        """."""
         screenFrame = NSScreen.mainScreen().frame()
         if screenFrame is None:
             sys.stderr.write('failed to obtain screen\n')
@@ -85,7 +80,6 @@ class CustomWindow(NibClassBuilder.AutoBaseClass):
         self.setFrameOrigin_(newOrigin)
     
     def mouseDown_(self, theEvent):
-        """."""
         windowFrame = self.frame()
         if windowFrame is None:
             sys.stderr.write('failed to obtain frame\n')
