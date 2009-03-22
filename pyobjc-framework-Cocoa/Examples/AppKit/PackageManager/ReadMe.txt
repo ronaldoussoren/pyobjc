@@ -24,21 +24,6 @@ Features w.r.t. the official Package Manager:
 Building
 --------
 
-This version requires the latest version of PyObjC (1.1b1) and Mac OS X 10.3.
-Please let me know if it also works on OSX 10.2.
-
 Run ``python setup.py py2app`` to create the application.
-
-TODO
-----
-
-- Auto-update the status, this mostly works at the moment.
-- Testing!
-- Implement help menu
-- A --semi-standalone version cannot detect if the system contains PyObjC,
-  should run detection code in a seperate process. 
-
-In the further future the pimp should be replaced by something better, see
-the `MacPython wiki`_ for more information.
 
 .. _`MacPython wiki`: http://pythonmac.org/wiki

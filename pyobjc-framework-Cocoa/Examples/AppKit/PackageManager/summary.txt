@@ -1,1 +1,4 @@
 An implementation of the MacPython PackageManager application using Cocoa.
+
+WARNING: This example doesn't work properly anymore due to the demise of 
+the MacPython PackageManager project.

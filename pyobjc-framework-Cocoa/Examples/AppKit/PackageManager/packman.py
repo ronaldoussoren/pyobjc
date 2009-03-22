@@ -21,12 +21,10 @@ XXX:
 
 import objc; objc.setVerbose(1); del objc # XXX: Debugging only
 
-from Foundation import *
-from AppKit import *
+from Cocoa import *
 import objc
 import threading
 
-from PyObjCTools import NibClassBuilder
 from PyObjCTools import AppHelper
 
 import sys
@@ -40,9 +38,6 @@ DB_FILE_TYPE="Python Package Database"
 # - MainMenu: Global application stuff
 # - OpenPanel: The 'Open URL...' window
 # - PackageDatabase: Document window
-NibClassBuilder.extractClasses('MainMenu')
-NibClassBuilder.extractClasses('PackageDatabase')
-NibClassBuilder.extractClasses('OpenPanel')
 
 def setString(field, value):
     """
@@ -76,10 +71,29 @@ def PKG_HIDDEN(package):
 
 
 
-class PackageDatabase (NibClassBuilder.AutoBaseClass):
+class PackageDatabase (NSDocument):
     """
     The document class for a package database
     """
+    databaseMaintainer = objc.IBOutlet()
+    databaseName = objc.IBOutlet()
+    installButton = objc.IBOutlet()
+    installDependencies = objc.IBOutlet()
+    installationLocation = objc.IBOutlet()
+    installationLog = objc.IBOutlet()
+    installationPanel = objc.IBOutlet()
+    installationProgress = objc.IBOutlet()
+    installationTitle = objc.IBOutlet()
+    itemDescription = objc.IBOutlet()
+    itemHome = objc.IBOutlet()
+    itemInstalled = objc.IBOutlet()
+    itemStatus = objc.IBOutlet()
+    overwrite = objc.IBOutlet()
+    packageTable = objc.IBOutlet()
+    prerequisitesTable = objc.IBOutlet()
+    progressOK = objc.IBOutlet()
+    showHidden = objc.IBOutlet()
+    verbose = objc.IBOutlet()
 
 
     def init(self):
@@ -220,6 +234,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         defaults.setBool_forKey_(field.state() == NSOnState, name)
         defaults.synchronize()
 
+    @objc.IBAction
     def savePreferences_(self, sender):
         self.saveBoolToDefaults(self.verbose, 'verbose')
         self.saveBoolToDefaults(self.installDependencies, 'installDependencies')
@@ -277,6 +292,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
 
             self.prerequisitesTable.reloadData()
 
+    @objc.IBAction
     def addToFavorites_(self, sender):
         appdel = NSApplication.sharedApplication().delegate()
         appdel.addFavorite(self.pimp._description, self.pimp._urllist[0])
@@ -369,6 +385,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         self._packages.sort(cmpBySortInfo)
         self.packageTable.reloadData()
 
+    @objc.IBAction
     def filterPackages_(self, sender):
         """
         GUI action that is triggered when one of the view options
@@ -376,6 +393,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         """
         self.sortPackages()
 
+    @objc.IBAction
     def visitHome_(self, sender):
         """
         Open the homepage of the currently selected package in the
@@ -398,7 +416,8 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
                     0, 'Could not open homepage: %s'%(msg,))
 
 
-    def installPackage_(self):
+    @objc.IBAction
+    def installPackage_(self, sender):
         """
         Install the currently selected package
         """
@@ -446,6 +465,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
 
         self.runner.start()
 
+    @objc.IBAction
     def closeProgress_(self, sender):
         """
         Close the installation progress sheet
@@ -453,6 +473,7 @@ class PackageDatabase (NibClassBuilder.AutoBaseClass):
         self.installationPanel.close()
         NSApplication.sharedApplication().endSheet_(self.installationPanel)
 
+    @objc.IBAction
     def installationDone_(self, sender):
         """
         The installer thread is ready, close the sheet.
@@ -571,10 +592,12 @@ class InstallerThread (threading.Thread):
 
         del pool
 
-class URLOpener (NibClassBuilder.AutoBaseClass):
+class URLOpener (NSObject):
     """
     Model/controller for the 'File/Open URL...' panel
     """
+    okButton = objc.IBOutlet
+    urlField = objc.IBOutlet()
 
     def __del__(self):
         # XXX: I'm doing something wrong, this function is never called!
@@ -584,6 +607,7 @@ class URLOpener (NibClassBuilder.AutoBaseClass):
     def awakeFromNib(self):
         self.urlField.window().makeKeyAndOrderFront_(None)
 
+    @objc.IBAction
     def doOpenURL_(self, sender):
         url = self.urlField.stringValue()
         if not url:
@@ -592,6 +616,7 @@ class URLOpener (NibClassBuilder.AutoBaseClass):
         # Ask the application delegate to open the selected database
         NSApplication.sharedApplication().delegate().openDatabase(url)
 
+    @objc.IBAction
     def controlTextDidChange_(self, sender):
         """
         The value of the URL input field changed, enable the OK button
@@ -604,13 +629,14 @@ class URLOpener (NibClassBuilder.AutoBaseClass):
 
 
 
-class PackageManager (NibClassBuilder.AutoBaseClass):
+class PackageManager (NSObject):
     """
     Application controller: application-level callbacks and actions
     """
-
-    # XXX: Move favorite management to a seperate class.
-
+    favoritesPanel = objc.IBOutlet()
+    favoritesTable = objc.IBOutlet()
+    favoritesTitle = objc.IBOutlet()
+    favoritesURL   = objc.IBOutlet()
 
     #
     # Standard actions
@@ -717,6 +743,7 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
         """
         return self.favorites[row]['title']
 
+    @objc.IBAction
     def changeFavoritesTitle_(self, sender):
         """
         Update the title of the currently selected favorite item
@@ -731,6 +758,7 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
         self.favoritesTable.reloadData()
 
 
+    @objc.IBAction
     def changeFavoritesUrl_(self, sender):
         """
         Update the URL of the currently selected favorite item
@@ -744,6 +772,7 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
 
         self.favoritesTable.reloadData()
 
+    @objc.IBAction
     def openFavorite_(self, sender):
         """
         Open a favorite database (action for entries in the Favorites menu)
@@ -781,12 +810,14 @@ class PackageManager (NibClassBuilder.AutoBaseClass):
 
 
 
+    @objc.IBAction
     def openURL_(self, sender):
         """
         The user wants to open a package URL, show the user-interface.
         """
         res = NSBundle.loadNibNamed_owner_('OpenPanel', self)
 
+    @objc.IBAction
     def openStandardDatabase_(self, sender):
         """
         Open the standard database.
