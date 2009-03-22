@@ -15,20 +15,16 @@ sources or nibs.)
 # in the nib, both as the delegate and the data source.  The table view will
 # ask our object for data; it controls us, not the other way around.
 
-from PyObjCTools import NibClassBuilder, AppHelper
-import AppKit
+from PyObjCTools import AppHelper
+from Cocoa import *
 import pkg_resources
-
-NibClassBuilder.extractClasses("MainMenu")
 
 ROWCOUNT = 200
 
 # class defined in MainMenu.nib
-class TableModel(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSObject
-    # The following outlets are added to the class:
-    # label
-    # tableView
+class TableModel(NSObject):
+    label = objc.IBOutlet()
+    tableView = objc.IBOutlet()
 
     # An instance of this class is connected to the 'datasource' and
     # the 'delegate' outlet of the table view in the nib.
@@ -42,13 +38,12 @@ class TableModel(NibClassBuilder.AutoBaseClass):
         self.tableView.setTarget_(self)
         self.tableView.setDoubleAction_("doubleClick:")
         self.tableView.window().setDelegate_(self)
-        # this also works, but you still need to set the target:
-        #self.tableView.setDoubleAction_(self.doubleClick_)
 
     def init(self):
         self.rowcount = ROWCOUNT
         return self
 
+    @objc.IBAction
     def doubleClick_(self, sender):
         # double-clicking a column header causes clickedRow() to return -1
         print "doubleClick!", sender.clickedColumn(), sender.clickedRow()
@@ -93,6 +88,7 @@ class TableModel(NibClassBuilder.AutoBaseClass):
         label = "%s%s: %s" % (word, ("s", "")[len(items) == 1], ", ".join([str(x) for x in items]))
         self.label.setStringValue_(label)
 
+    @objc.IBAction
     def windowShouldClose_(self, sender):
         print "Should Close?"
         return 0
