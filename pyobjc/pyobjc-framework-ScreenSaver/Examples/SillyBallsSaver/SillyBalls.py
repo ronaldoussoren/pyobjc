@@ -6,7 +6,7 @@ Based on "Silly Balls.saver" by Eric Peyton <epeyton@epicware.com>
 """
 import objc
 
-from AppKit import NSBezierPath, NSColor
+from AppKit import *
 from ScreenSaver import *
 from random import random, randrange
 
