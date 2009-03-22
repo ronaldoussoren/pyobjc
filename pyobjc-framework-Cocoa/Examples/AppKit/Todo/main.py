@@ -1,13 +1,6 @@
-import sys
-import os
-import objc
 from AppKit import *
-from PyObjCTools.NibClassBuilder import extractClasses
 from PyObjCTools import AppHelper
-
-extractClasses('MainMenu')
-extractClasses('ToDoDocument')
-extractClasses('ToDoInfoWindow')
+objc.setVerbose(1)
 
 # Import all submodules,  to make sure all
 # classes are known to the runtime

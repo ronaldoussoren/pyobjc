@@ -1,14 +1,16 @@
-from AppKit import *
 from Foundation import *
-from objc import IBOutlet, NO
 from ToDoCell import *
 from ToDoItem import *
 from SelectionNotifyMatrix import *
-from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 
-class  ToDoDocument (AutoBaseClass):
+class  ToDoDocument (NSDocument):
+    calendar = objc.IBOutlet()
+    dayLabel = objc.IBOutlet()
+    itemList = objc.IBOutlet()
+    statusList = objc.IBOutlet()
+
 
     __slots__ = ('_dataFromFile', '_activeDays', '_currentItems', '_selectedItem', '_selectedItemEdited')
 
@@ -131,7 +133,7 @@ class  ToDoDocument (AutoBaseClass):
         if newItems:
             self._currentItems = newItems.mutableCopy()
         else:
-            numRows, numCols = self.itemList.getNumberOfRows_columns_()
+            numRows, numCols = self.itemList.getNumberOfRows_columns_(None, None)
             self._currentItems = NSMutableArray.alloc().initWithCapacity_(numRows)
 
             for d in range(numRows):
@@ -243,6 +245,7 @@ class  ToDoDocument (AutoBaseClass):
 
         return 1
 
+    @objc.IBAction
     def itemStatusClicked_(self, sender):
         row  = sender.selectedRow()
         cell = sender.cellAtRow_column_(row, 0)
@@ -268,7 +271,7 @@ class  ToDoDocument (AutoBaseClass):
                     self,
                     'itemTimerFired:',
                     anItem,
-                    NO)
+                    False)
             anItem.setTimer_(aTimer)
         else:
             anItem.setTimer_(None)

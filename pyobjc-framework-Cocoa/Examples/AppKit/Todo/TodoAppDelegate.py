@@ -1,7 +1,8 @@
-from Foundation import NSObject
+from Foundation import *
 from InfoWindowController import InfoWindowController
-from PyObjCTools.NibClassBuilder import AutoBaseClass
 
-class ToDoAppDelegate (AutoBaseClass):
+class ToDoAppDelegate (NSObject):
+
+    @objc.IBAction
     def showInfo_(self, sender):
         InfoWindowController.sharedInfoWindowController().showWindow_(sender)

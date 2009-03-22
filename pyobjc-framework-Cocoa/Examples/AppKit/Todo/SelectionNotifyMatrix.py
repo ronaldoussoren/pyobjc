@@ -1,10 +1,8 @@
-from AppKit import *
-from Foundation import *
-from PyObjCTools.NibClassBuilder import AutoBaseClass
+from Cocoa import *
 
 RowSelectedNotification = "RowSelectedNotification"
 
-class  SelectionNotifyMatrix (AutoBaseClass):
+class  SelectionNotifyMatrix (NSMatrix):
     def mouseDown_(self, theEvent):
         super(SelectionNotifyMatrix, self).mouseDown_(theEvent)
 

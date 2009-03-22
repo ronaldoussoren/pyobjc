@@ -1,7 +1,5 @@
-from AppKit import *
-from objc import selector, IBOutlet, NO
+from Cocoa import *
 from ToDoDocument import *
-from PyObjCTools.NibClassBuilder import AutoBaseClass
 
 NOTIFY_TAG     = 0
 RESCHEDULE_TAG = 1
@@ -15,10 +13,29 @@ NotifyLengthOther   = 4
 
 _sharedInfoWindowController = None
 
-class InfoWindowController (AutoBaseClass):
+class InfoWindowController (NSWindowController):
+    dummyView = objc.IBOutlet()
+    infoDate = objc.IBOutlet()
+    infoItem = objc.IBOutlet()
+    infoNotes = objc.IBOutlet()
+    infoNotifyAMPM = objc.IBOutlet()
+    infoNotifyHour = objc.IBOutlet()
+    infoNotifyMinute = objc.IBOutlet()
+    infoNotifyOtherHours = objc.IBOutlet()
+    infoNotifySwitchMatrix = objc.IBOutlet()
+    infoPopUp = objc.IBOutlet()
+    infoSchedComplete = objc.IBOutlet()
+    infoSchedDate = objc.IBOutlet()
+    infoSchedMatrix = objc.IBOutlet()
+    infoWindowViews = objc.IBOutlet()
+    notesView = objc.IBOutlet()
+    notifyView = objc.IBOutlet()
+    reschedView = objc.IBOutlet()
+
 
     __slots__ = ('_inspectingDocument', )
 
+    @objc.IBAction
     def switchClicked_(self, sender):
         dueSecs = 0
         idx = 0
@@ -103,6 +120,7 @@ class InfoWindowController (AutoBaseClass):
         self._inspectingDocument.selectedItemModified()
 
 
+    @classmethod
     def sharedInfoWindowController(self):
         global _sharedInfoWindowController
 
@@ -110,9 +128,6 @@ class InfoWindowController (AutoBaseClass):
             _sharedInfoWindowController = InfoWindowController.alloc().init()
 
         return _sharedInfoWindowController
-
-    sharedInfoWindowController = selector(
-        sharedInfoWindowController, isClassMethod=1)
 
 
     def init(self):
@@ -258,6 +273,7 @@ class InfoWindowController (AutoBaseClass):
     def mainWindowResigned_(self, notification):
         self.setMainWindow_(None)
 
+    @objc.IBAction
     def swapInfoWindowView_(self, sender):
         selected = self.infoPopUp.selectedItem().tag()
 
@@ -280,4 +296,4 @@ def clearButtonMatrix(matrix):
 
     for i in range(rows):
         cell = matrix.cellAtRow_column_(i, 0)
-        if cell: cell.setState_(NO)
+        if cell: cell.setState_(False)
