@@ -13,9 +13,6 @@ class TestNSColorSpace (TestCase):
         self.failUnlessEqual(NSIndexedColorSpaceModel, 5)
         self.failUnlessEqual(NSPatternColorSpaceModel, 6)
 
-    def testMethods(self):
-        self.fail("- (id)initWithColorSyncProfile:(void * /* CMProfileRef */)prof;")
-        self.fail("- (void * /* CMProfileRef */)colorSyncProfile;")
 
 
 if __name__ == "__main__":

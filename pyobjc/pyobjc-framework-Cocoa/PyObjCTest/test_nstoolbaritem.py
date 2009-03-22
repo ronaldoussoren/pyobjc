@@ -2,6 +2,9 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSToolbarItemHelper (NSObject):
+    def validateToolbarItem_(self, a): return 
+
 class TestNSToolbarItem (TestCase):
     def testConstants(self):
         self.failUnlessEqual(NSToolbarItemVisibilityPriorityStandard, 0)
@@ -16,6 +19,16 @@ class TestNSToolbarItem (TestCase):
         self.failUnlessIsInstance(NSToolbarShowFontsItemIdentifier, unicode)
         self.failUnlessIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)
         self.failUnlessIsInstance(NSToolbarPrintItemIdentifier, unicode)
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSToolbarItem.isEnabled)
+        self.failUnlessArgIsBOOL(NSToolbarItem.setEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSToolbarItem.autovalidates)
+        self.failUnlessArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
+        self.failUnlessResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar_)
+
+    def testProtocols(self):
+        self.failUnlessResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
 
 if __name__ == "__main__":

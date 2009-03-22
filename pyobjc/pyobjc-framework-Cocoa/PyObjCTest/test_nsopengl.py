@@ -63,14 +63,30 @@ class TestNSOpenGL (TestCase):
         self.failUnlessIsInstance(major, (int, long))
         self.failUnlessIsInstance(minor, (int, long))
 
-        self.fail("NSOpenGLSetOption")
-        self.fail("NSOpenGLGetOption")
+        self.failUnlessArgIsOut(NSOpenGLGetOption, 1)
+        v = NSOpenGLGetOption(NSOpenGLGOFormatCacheSize, None)
+        self.failUnlessIsInstance(v, (int, long))
+
+        NSOpenGLSetOption(NSOpenGLGOFormatCacheSize, v)
 
     def testMethods(self):
-        self.fail("- (id)initWithAttributes:(const NSOpenGLPixelFormatAttribute *)attribs;")
+        self.failUnlessArgIsNullTerminated(NSOpenGLPixelFormat.initWithAttributes_, 0)
+        self.failUnlessArgIsIn(NSOpenGLPixelFormat.initWithAttributes_, 0)
 
-        self.fail("- (void *)CGLPixelFormatObj;")
+        o = NSOpenGLPixelFormat.alloc().initWithAttributes_([NSOpenGLPFANoRecovery, NSOpenGLPFAAuxBuffers, 2])
+        self.failUnlessIsInstance(o, NSOpenGLPixelFormat)
 
+        #FIXME: I'm not entirely sure this test is correct.
+        self.failUnlessArgIsOut(NSOpenGLPixelFormat.getValues_forAttribute_forVirtualScreen_, 0)
+        v = o.getValues_forAttribute_forVirtualScreen_(
+                None, NSOpenGLPFANoRecovery, 0)
+        self.failUnlessIsInstance(v, (int, long))
+
+        self.failUnlessResultHasType(NSOpenGLPixelFormat.CGLPixelFormatObj, 
+                '^{_CGLPixelFormatObject}')
+
+        self.failUnlessResultHasType(NSOpenGLContext.CGLContextObj, 
+                '^{_CGLContextObj}')
 
 
 if __name__ == "__main__":

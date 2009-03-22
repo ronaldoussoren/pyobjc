@@ -35,3 +35,49 @@ This function is deprecated and is not supported by PyObjC. Use an ``NSBitmapIma
 * ``initWithIconRef:``
 
   This method is not yet supported.
+
+``NSMovie``
+-----------
+
+NOTE: This class is deprecated by Apple, use ``QTMovie`` instead.
+
+* ``-QTMovie``, ``-initWithMovie:``
+
+  These methods are not supported.
+
+``NSMovieView``
+---------------
+
+* ``-movieController``
+
+  This method is not supported.
+
+``NSPrintInfo``
+---------------
+
+* ``-PMPrintSession``, ``-PMPageFormat``, ``-PMPrintSettings``
+
+  These methods are not yet supported.
+
+``NSQuickDrawView``
+-------------------
+
+* ``-qdPort``
+
+  This method is not supported.
+
+``NSGlyphInfoAtIndex``
+----------------------
+
+This function is not supported.
+
+``NSTypesetterGlyphInfo``
+-------------------------
+
+This structure is not supported, and therefore the method ``-baseOfTypesetterGlyphInfo`` and 
+``-typesetterLaidOneGlyph`` of ``NSSimpleHorizontalTypesetter`` are not supported as well.
+
+``NSWindow``
+------------
+
+Methods ``-initWithWindowRef:`` and ``-windowRef`` are not supported.

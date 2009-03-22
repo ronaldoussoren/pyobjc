@@ -32,3 +32,16 @@ from AppKit._nsview import *
 from AppKit._nsbitmap import *
 #from AppKit._nsopengl import *
 from AppKit._nswindow import *
+
+# Fix types for a number of character constants
+NSEnterCharacter = unichr(NSEnterCharacter)
+NSBackspaceCharacter = unichr(NSBackspaceCharacter)
+NSTabCharacter = unichr(NSTabCharacter)
+NSNewlineCharacter = unichr(NSNewlineCharacter)
+NSFormFeedCharacter = unichr(NSFormFeedCharacter)
+NSCarriageReturnCharacter = unichr(NSCarriageReturnCharacter)
+NSBackTabCharacter = unichr(NSBackTabCharacter)
+NSDeleteCharacter = unichr(NSDeleteCharacter)
+NSLineSeparatorCharacter = unichr(NSLineSeparatorCharacter)
+NSParagraphSeparatorCharacter = unichr(NSParagraphSeparatorCharacter)
+

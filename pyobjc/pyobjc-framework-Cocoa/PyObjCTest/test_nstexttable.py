@@ -22,6 +22,12 @@ class TestNSTextTable (TestCase):
         self.failUnlessEqual(NSTextTableAutomaticLayoutAlgorithm, 0)
         self.failUnlessEqual(NSTextTableFixedLayoutAlgorithm, 1)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSTextTable.collapsesBorders)
+        self.failUnlessArgIsBOOL(NSTextTable.setCollapsesBorders_, 0)
+        self.failUnlessResultIsBOOL(NSTextTable.hidesEmptyCells)
+        self.failUnlessArgIsBOOL(NSTextTable.setHidesEmptyCells_, 0)
+
 
 if __name__ == "__main__":
     main()

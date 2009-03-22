@@ -15,9 +15,12 @@ class TestNSTextContainer (TestCase):
         self.failUnlessEqual(NSLineMovesUp, 4)
 
     def testMethods(self):
-        self.fail("- (NSRect)lineFragmentRectForProposedRect:(NSRect)proposedRect sweepDirection:(NSLineSweepDirection)sweepDirection movementDirection:(NSLineMovementDirection)movementDirection remainingRect:(NSRectPointer)remainingRect;")
-
-
+        self.failUnlessResultIsBOOL(NSTextContainer.widthTracksTextView)
+        self.failUnlessArgIsBOOL(NSTextContainer.setWidthTracksTextView_, 0)
+        self.failUnlessResultIsBOOL(NSTextContainer.heightTracksTextView)
+        self.failUnlessArgIsBOOL(NSTextContainer.setHeightTracksTextView_, 0)
+        self.failUnlessResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
+        self.failUnlessResultIsBOOL(NSTextContainer.containsPoint_)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 

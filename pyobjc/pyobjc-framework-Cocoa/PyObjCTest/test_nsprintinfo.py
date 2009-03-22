@@ -62,9 +62,10 @@ class TestNSPrintInfo (TestCase):
 
 
     def testMethods(self):
-        self.fail("- (void *)PMPrintSession; // the result should be cast to PMPrintSession")
-        self.fail("- (void *)PMPageFormat; // the result should be cast to PMPageFormat")
-        self.fail("- (void *)PMPrintSettings; // the result should be cast to PMPrintSettings")
+        self.failUnlessResultIsBOOL(NSPrintInfo.isHorizontallyCentered)
+        self.failUnlessResultIsBOOL(NSPrintInfo.isVerticallyCentered)
+        self.failUnlessArgIsBOOL(NSPrintInfo.setHorizontallyCentered_, 0)
+        self.failUnlessArgIsBOOL(NSPrintInfo.setVerticallyCentered_, 0)
 
 
 if __name__ == "__main__":

@@ -11,5 +11,12 @@ class TestNSSliderCell (TestCase):
         self.failUnlessEqual(NSLinearSlider, 0)
         self.failUnlessEqual(NSCircularSlider, 1)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSSliderCell.prefersTrackingUntilMouseUp)
+        self.failUnlessArgIsBOOL(NSSliderCell.knobRectFlipped_, 0)
+        self.failUnlessArgIsBOOL(NSSliderCell.drawBarInside_flipped_, 1)
+        self.failUnlessResultIsBOOL(NSSliderCell.allowsTickMarkValuesOnly)
+        self.failUnlessArgIsBOOL(NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
+
 if __name__ == "__main__":
     main()

@@ -22,12 +22,15 @@ class TestNSPasteboard (TestCase):
         self.failUnlessIsInstance(NSVCardPboardType, unicode)
         self.failUnlessIsInstance(NSFilesPromisePboardType, unicode)
         self.failUnlessIsInstance(NSInkTextPboardType, unicode)
-        self.failUnlessIsInstance(NSMultipleTextSelectionPboardType, unicode)
         self.failUnlessIsInstance(NSGeneralPboard, unicode)
         self.failUnlessIsInstance(NSFontPboard, unicode)
         self.failUnlessIsInstance(NSRulerPboard, unicode)
         self.failUnlessIsInstance(NSFindPboard, unicode)
         self.failUnlessIsInstance(NSDragPboard, unicode)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(NSMultipleTextSelectionPboardType, unicode)
 
     def testFunctions(self):
         tp = v = NSCreateFilenamePboardType("test/jpeg")
@@ -41,6 +44,13 @@ class TestNSPasteboard (TestCase):
 
         v = NSGetFileTypes([tp])
         self.failUnlessIsInstance(v, NSArray)
+    
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSPasteboard.setData_forType_)
+        self.failUnlessResultIsBOOL(NSPasteboard.setPropertyList_forType_)
+        self.failUnlessResultIsBOOL(NSPasteboard.setString_forType_)
+        self.failUnlessResultIsBOOL(NSPasteboard.writeFileContents_)
+        self.failUnlessResultIsBOOL(NSPasteboard.writeFileWrapper_)
 
 if __name__ == "__main__":
     main()

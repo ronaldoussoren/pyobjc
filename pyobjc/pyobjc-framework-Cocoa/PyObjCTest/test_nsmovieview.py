@@ -11,7 +11,17 @@ class TestNSMovieView (TestCase):
 
     @onlyOn32Bit
     def testMethods(self):
-        self.fail("- (void* /*MovieController*/) movieController;")
+        self.failUnlessResultIsBOOL(NSMovieView.isPlaying)
+        self.failUnlessResultIsBOOL(NSMovieView.isMuted)
+        self.failUnlessArgIsBOOL(NSMovieView.setMuted_, 0)
+        self.failUnlessResultIsBOOL(NSMovieView.playsSelectionOnly)
+        self.failUnlessArgIsBOOL(NSMovieView.setPlaysSelectionOnly_, 0)
+        self.failUnlessResultIsBOOL(NSMovieView.playsEveryFrame)
+        self.failUnlessResultIsBOOL(NSMovieView.isControllerVisible)
+        self.failUnlessArgIsBOOL(NSMovieView.showController_adjustingSize_, 0)
+        self.failUnlessArgIsBOOL(NSMovieView.showController_adjustingSize_, 1)
+        self.failUnlessArgIsBOOL(NSMovieView.setEditable_, 0)
+        self.failUnlessResultIsBOOL(NSMovieView.isEditable)
 
 
 

@@ -6,8 +6,8 @@ class TestNSMovie (TestCase):
 
     @onlyOn32Bit
     def testMethods(self):
-        self.fail("- (id) initWithMovie:(void* /*Movie*/)movie; ")
-        self.fail("- (void*/*Movie*/)QTMovie;")
+        self.failUnlessArgIsBOOL(NSMovie.initWithURL_byReference_, 1)
+        self.failUnlessResultIsBOOL(NSMovie.canInitWithPasteboard_)
 
 if __name__ == "__main__":
     main()

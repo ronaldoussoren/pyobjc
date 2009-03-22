@@ -4,20 +4,34 @@ from AppKit import *
 
 class TestNSPanel (TestCase):
 
-    def testMethods(self):
-        self.fail("APPKIT_EXTERN NSInteger NSRunAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN NSInteger NSRunInformationalAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN NSInteger NSRunCriticalAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN NSInteger NSRunAlertPanelRelativeToWindow(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);")
-        self.fail("APPKIT_EXTERN NSInteger NSRunInformationalAlertPanelRelativeToWindow(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);")
-        self.fail("APPKIT_EXTERN NSInteger NSRunCriticalAlertPanelRelativeToWindow(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, ...);")
-        self.fail("APPKIT_EXTERN void NSBeginAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msgFormat, ...);")
-        self.fail("APPKIT_EXTERN void NSBeginInformationalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msgFormat, ...);")
-        self.fail("APPKIT_EXTERN void NSBeginCriticalAlertSheet(NSString *title, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, NSWindow *docWindow, id modalDelegate, SEL didEndSelector, SEL didDismissSelector, void *contextInfo, NSString *msgFormat, ...);")
-        self.fail("APPKIT_EXTERN id NSGetAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN id NSGetInformationalAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN id NSGetCriticalAlertPanel(NSString *title, NSString *msgFormat, NSString *defaultButton, NSString *alternateButton, NSString *otherButton, ...);")
-        self.fail("APPKIT_EXTERN void NSReleaseAlertPanel(id panel);")
+    def testFunctions(self):
+        self.failUnlessArgIsPrintf(NSRunAlertPanel, 1)
+        self.failUnlessArgIsPrintf(NSRunInformationalAlertPanel, 1)
+        self.failUnlessArgIsPrintf(NSRunCriticalAlertPanel, 1)
+        self.failUnlessArgIsPrintf(NSRunAlertPanelRelativeToWindow, 1)
+        self.failUnlessArgIsPrintf(NSRunInformationalAlertPanelRelativeToWindow, 1)
+        self.failUnlessArgIsPrintf(NSRunCriticalAlertPanelRelativeToWindow, 1)
+        self.failUnlessArgIsPrintf(NSBeginAlertSheet, 9)
+        self.failUnlessArgIsSEL(NSBeginAlertSheet, 6, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgIsSEL(NSBeginAlertSheet, 7, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgHasType(NSBeginAlertSheet, 8, '^v')
+        self.failUnlessArgIsPrintf(NSBeginInformationalAlertSheet, 9)
+        self.failUnlessArgIsSEL(NSBeginInformationalAlertSheet, 6, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgIsSEL(NSBeginInformationalAlertSheet, 7, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgHasType(NSBeginInformationalAlertSheet, 8, '^v')
+        self.failUnlessArgIsPrintf(NSBeginCriticalAlertSheet, 9)
+        self.failUnlessArgIsSEL(NSBeginCriticalAlertSheet, 6, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgIsSEL(NSBeginCriticalAlertSheet, 7, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgHasType(NSBeginCriticalAlertSheet, 8, '^v')
+        self.failUnlessArgIsPrintf(NSGetAlertPanel, 1)
+        self.failUnlessArgIsPrintf(NSGetInformationalAlertPanel, 1)
+        self.failUnlessArgIsPrintf(NSGetCriticalAlertPanel, 1)
+
+        panel = NSGetInformationalAlertPanel("title", "fmt %d", "ok", "cancel", "help", 10)
+        self.failUnlessIsInstance(panel, NSPanel)
+
+        NSReleaseAlertPanel(panel)
+
 
     def testConstants(self):
         self.failUnlessEqual(NSAlertDefaultReturn, 1)
@@ -33,6 +47,14 @@ class TestNSPanel (TestCase):
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.failUnlessEqual(NSHUDWindowMask, 1 << 13)
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSPanel.isFloatingPanel)
+        self.failUnlessArgIsBOOL(NSPanel.setFloatingPanel_, 0)
+        self.failUnlessResultIsBOOL(NSPanel.becomesKeyOnlyIfNeeded)
+        self.failUnlessArgIsBOOL(NSPanel.setBecomesKeyOnlyIfNeeded_, 0)
+        self.failUnlessResultIsBOOL(NSPanel.worksWhenModal)
+        self.failUnlessArgIsBOOL(NSPanel.setWorksWhenModal_, 0)
 
 if __name__ == "__main__":
     main()

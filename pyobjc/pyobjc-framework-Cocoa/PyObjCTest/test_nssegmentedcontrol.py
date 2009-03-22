@@ -12,6 +12,12 @@ class TestNSSegmentedControl (TestCase):
         self.failUnlessEqual(NSSegmentStyleCapsule, 5)
         self.failUnlessEqual(NSSegmentStyleSmallSquare, 6)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSSegmentedControl.selectSegmentWithTag_)
+        self.failUnlessArgIsBOOL(NSSegmentedControl.setSelected_forSegment_, 0)
+        self.failUnlessResultIsBOOL(NSSegmentedControl.isSelectedForSegment_)
+        self.failUnlessArgIsBOOL(NSSegmentedControl.setEnabled_forSegment_, 0)
+        self.failUnlessResultIsBOOL(NSSegmentedControl.isEnabledForSegment_)
 
 if __name__ == "__main__":
     main()

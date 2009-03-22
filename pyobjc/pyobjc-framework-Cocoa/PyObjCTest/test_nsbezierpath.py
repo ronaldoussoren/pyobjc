@@ -134,8 +134,6 @@ class TestNSBezierPath(TestCase):
         self.failUnlessResultIsBOOL(NSBezierPath.cachesBezierPath)
         self.failUnlessArgIsBOOL(NSBezierPath.setCachesBezierPath_, 0)
 
-        self.fail("+ (void)drawPackedGlyphs:(const char *)packedGlyphs atPoint:(NSPoint)point;")
-        self.fail("- (void)appendBezierPathWithPackedGlyphs:(const char *)packedGlyphs;")
 
 if __name__ == '__main__':
     main( )
