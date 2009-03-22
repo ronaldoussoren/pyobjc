@@ -3,6 +3,15 @@
 """NibClassBuilder.py -- Tools for working with class definitions in
 "Next Interface Builder" files ("nibs").
 
+NOTE: This module is deprecated and is not supported with modern versions
+of Interface Builder because those uses a NIB format that is not compatibility
+with NibClassBuilder. We have no intention whatsoever to fix the compatibility
+issues, use explicit definitions instead. On a more possitive note: IB 3.0
+fully supports reading class definitions from Python files, which removes
+the reason why we wrote this module in the first place.
+
+
+
 
 Extracting class definitions from nibs.
 
@@ -59,6 +68,9 @@ arguments. It also contains a simple test program.
 import sys
 import os
 import objc
+
+import warnings
+warnings.warn("PyObjCTools.NibClassBuilder is deprecated, use explicit definitions instead", DeprecationWarning)
 
 
 __all__ = ["AutoBaseClass", "NibInfo", "extractClasses"]
