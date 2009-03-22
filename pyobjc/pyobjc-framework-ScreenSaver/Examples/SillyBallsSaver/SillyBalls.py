@@ -9,11 +9,8 @@ import objc
 from AppKit import NSBezierPath, NSColor
 from ScreenSaver import *
 from random import random, randrange
-from PyObjCTools import NibClassBuilder
 
-NibClassBuilder.extractClasses("SillyBalls")
-
-class SillyBalls (NibClassBuilder.AutoBaseClass):
+class SillyBalls (ScreenSaverView):
 
     def animateOneFrame(self):
         # choose a random point.
@@ -32,4 +29,4 @@ class SillyBalls (NibClassBuilder.AutoBaseClass):
         # draw a new ball.
         path.fill()
 
-#objc.removeAutoreleasePool()
+objc.removeAutoreleasePool()
