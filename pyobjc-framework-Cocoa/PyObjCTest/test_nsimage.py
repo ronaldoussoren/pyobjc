@@ -105,8 +105,6 @@ class TestNSImage (TestCase):
         self.failUnlessResultIsBOOL(NSImage.isTemplate)
         self.failUnlessArgIsBOOL(NSImage.setTemplate_, 0)
 
-        #self.fail("- (id)initWithIconRef:(IconRef)iconRef;")
-
     def testProtocols(self):
         self.failUnlessArgHasType(TestNSImageHelper.image_didLoadPartOfRepresentation_withValidRows_, 2, objc._C_NSInteger)
         self.failUnlessArgHasType(TestNSImageHelper.image_didLoadRepresentation_withStatus_, 2, objc._C_NSUInteger)

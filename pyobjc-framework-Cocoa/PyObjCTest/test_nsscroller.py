@@ -21,6 +21,11 @@ class TestNSScroller (TestCase):
         self.failUnlessEqual(NSScrollerIncrementArrow, 0)
         self.failUnlessEqual(NSScrollerDecrementArrow, 1)
 
+    def testMethods(self):
+        self.failUnlessArgIsBOOL(NSScroller.drawArrow_highlight_, 1)
+        self.failUnlessArgIsBOOL(NSScroller.drawKnobSlotInRect_highlight_, 1)
+        self.failUnlessArgIsBOOL(NSScroller.highlight_, 0)
+
 
 if __name__ == "__main__":
     main()

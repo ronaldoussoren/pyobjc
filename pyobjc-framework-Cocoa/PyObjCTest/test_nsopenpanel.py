@@ -1,14 +1,13 @@
+from AppKit import *
 from PyObjCTools.TestSupport import *
-import objc
 
 class TestOpenPanel (TestCase):
     def dont_testOpenPanelSignature(self):
         """
         This test failed sometime after the 1.0b1 release (on Panther).
         """
-        import AppKit
 
-        o = AppKit.NSOpenPanel.openPanel()
+        o = NSOpenPanel.openPanel()
         sig = o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature
         dclass= o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.definingClass
         sig = ''.join(objc.splitSignature(sig))
@@ -17,9 +16,22 @@ class TestOpenPanel (TestCase):
             'v@:@@@@@:i')
 
     def testMethods(self):
-        self.fail("- (void)beginSheetForDirectory:(NSString *)path file:(NSString *)name types:(NSArray *)fileTypes modalForWindow:(NSWindow *)docWindow modalDelegate:(id)delegate didEndSelector:(SEL)didEndSelector contextInfo:(void *)contextInfo;")
+        self.failUnlessResultIsBOOL(NSOpenPanel.resolvesAliases)
+        self.failUnlessArgIsBOOL(NSOpenPanel.setResolvesAliases_, 0)
+        self.failUnlessResultIsBOOL(NSOpenPanel.canChooseDirectories)
+        self.failUnlessArgIsBOOL(NSOpenPanel.setCanChooseDirectories_, 0)
+        self.failUnlessResultIsBOOL(NSOpenPanel.allowsMultipleSelection)
+        self.failUnlessArgIsBOOL(NSOpenPanel.setAllowsMultipleSelection_, 0)
+        self.failUnlessResultIsBOOL(NSOpenPanel.canChooseFiles)
+        self.failUnlessArgIsBOOL(NSOpenPanel.setCanChooseFiles_, 0)
 
-        self.fail("- (void)beginForDirectory:(NSString *)path file:(NSString *)name types:(NSArray *)fileTypes modelessDelegate:(id)delegate didEndSelector:(SEL)didEndSelector contextInfo:(void *)contextInfo;")
+        panel = NSOpenPanel.openPanel()
+        self.failUnlessArgIsSEL(NSOpenPanel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, 'v@:@i^v')
+        self.failUnlessArgHasType(NSOpenPanel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, '^v')
+
+        self.failUnlessArgIsSEL(NSOpenPanel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, 'v@:@i^v')
+        self.failUnlessArgHasType(NSOpenPanel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, '^v')
+
 
 
 if __name__ == "__main__":

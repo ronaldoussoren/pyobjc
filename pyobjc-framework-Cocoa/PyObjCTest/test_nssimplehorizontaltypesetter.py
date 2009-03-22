@@ -1,6 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
+
+class TestNSSimpleHorizontalTypesetterHelper (NSSimpleHorizontalTypesetter):
+    def willSetLineFragmentRect_forGlyphRange_usedRect_(self, a, b, c): return 1
 
 class TestNSSimpleHorizontalTypesetter (TestCase):
     def testConstants(self):
@@ -19,17 +21,13 @@ class TestNSSimpleHorizontalTypesetter (TestCase):
         self.failUnlessEqual(NSBaselineNotSet, -1.0)
         self.failUnlessEqual(NumGlyphsToGetEachTime, 20)
 
-    def testStruct(self):
-        self.fail("NSTypesetterGlyphInfo")
-
-    def testFunctions(self):
-        self.fail("NSGlyphInfoAtIndex")
-
     def testMethods(self):
-        self.fail("- (void)layoutGlyphsInLayoutManager:(NSLayoutManager *)layoutManager startingAtGlyphIndex:(NSUInteger)startGlyphIndex maxNumberOfLineFragments:(NSUInteger)maxNumLines nextGlyphIndex:(NSUInteger *)nextGlyph;")
-        self.fail("- (NSLayoutStatus)layoutGlyphsInHorizontalLineFragment:(NSRect *)lineFragmentRect baseline:(float *)baseline;")
-        self.fail("- (void) willSetLineFragmentRect:(NSRect *)aRect forGlyphRange:(NSRange)aRange usedRect:(NSRect *)bRect;")
-
+        self.failUnlessArgIsOut(NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_, 3)
+        self.failUnlessArgIsInOut(NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1)
+        self.failUnlessArgIsInOut(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2)
+        self.failUnlessArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 2, 'N^' + NSRect.__typestr__)
+        self.failUnlessArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 1, NSRange.__typestr__)
+        self.failUnlessArgHasType(TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_, 0, 'N^'+NSRect.__typestr__)
 
 if __name__ == "__main__":
     main()

@@ -8,8 +8,8 @@ class TestNSNib (TestCase):
         self.failUnlessIsInstance(NSNibTopLevelObjects, unicode)
 
     def testMethods(self):
-        m = NSNib.instantiateNibWithOwner_topLevelObjects_.__metadata__()
-        self.failUnlessEqual(m['arguments'][3]['type'], 'o^@')
+        self.failUnlessResultIsBOOL(NSNib.instantiateNibWithOwner_topLevelObjects_)
+        self.failUnlessArgIsOut(NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
 
 
 if __name__ == "__main__":

@@ -4,7 +4,8 @@ from AppKit import *
 
 class TestNSPageLayout (TestCase):
     def testMethods(self):
-        self.fail("- (void)beginSheetWithPrintInfo:(NSPrintInfo *)printInfo modalForWindow:(NSWindow *)docWindow delegate:(id)delegate didEndSelector:(SEL)didEndSelector contextInfo:(void *)contextInfo;")
+        self.failUnlessArgIsSEL(NSPageLayout.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 3, 'v@:@'+objc._C_NSInteger+'^v')
+        self.failUnlessArgHasType(NSPageLayout.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 4, '^v')
 
 
 if __name__ == "__main__":

@@ -2,6 +2,12 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+class TestNSSpeechSynthesizerHelper (NSObject):
+    def speechSynthesizer_didFinishSpeaking_(self, ss, b): pass
+    def speechSynthesizer_willSpeakWord_ofString_(self, ss, w, s): pass
+    def speechSynthesizer_willSpeakPhoneme_(self, ss, i): pass
+    def speechSynthesizer_didEncounterErrorAtIndex_ofString_message_(self, ss, i, s, m): pass
+
 class TestNSSpeechSynthesizer (TestCase):
     def testConstants(self):
         self.failUnlessIsInstance(NSVoiceName, unicode)
@@ -80,6 +86,26 @@ class TestNSSpeechSynthesizer (TestCase):
         self.failUnlessIsInstance( NSSpeechDictionaryEntrySpelling, unicode)
         self.failUnlessIsInstance( NSSpeechDictionaryEntryPhonemes, unicode)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.startSpeakingString_)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.startSpeakingString_toURL_)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.isSpeaking)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.setVoice_)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.usesFeedbackWindow)
+        self.failUnlessArgIsBOOL(NSSpeechSynthesizer.setUsesFeedbackWindow_, 0)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.setObject_forProperty_error_)
+        self.failUnlessArgIsOut(NSSpeechSynthesizer.setObject_forProperty_error_, 2)
+        self.failUnlessArgIsOut(NSSpeechSynthesizer.objectForProperty_error_, 1)
+        self.failUnlessResultIsBOOL(NSSpeechSynthesizer.isAnyApplicationSpeaking)
+
+    def testProtocol(self):
+        self.failUnlessArgIsBOOL(TestNSSpeechSynthesizerHelper.speechSynthesizer_didFinishSpeaking_, 1)
+        self.failUnlessArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakWord_ofString_, 1, NSRange.__typestr__)
+        self.failUnlessArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakPhoneme_, 1, objc._C_SHT)
+
+    @min_os_level('10.5')
+    def testProtocol10_5(self):
+        self.failUnlessArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_, 1, objc._C_NSUInteger)
 
 
 if __name__ == "__main__":

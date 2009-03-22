@@ -10,6 +10,9 @@ class TestNSTextStorage (TestCase):
         self.failUnlessIsInstance(NSTextStorageWillProcessEditingNotification, unicode)
         self.failUnlessIsInstance(NSTextStorageDidProcessEditingNotification, unicode)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSTextStorage.fixesAttributesLazily)
+
 
 if __name__ == "__main__":
     main()

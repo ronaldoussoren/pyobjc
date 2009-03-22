@@ -12,8 +12,21 @@ class TestNSPrintOperation (TestCase):
         self.failUnlessIsInstance(NSPrintOperationExistsException, unicode)
 
     def testMethods(self):
-        self.fail("- (void)runOperationModalForWindow:(NSWindow *)docWindow delegate:(id)delegate didRunSelector:(SEL)didRunSelector contextInfo:(void *)contextInfo;")
+        self.failUnlessResultIsBOOL(NSPrintOperation.isCopyingOperation)
+        self.failUnlessResultIsBOOL(NSPrintOperation.showsPrintPanel)
+        self.failUnlessArgIsBOOL(NSPrintOperation.setShowsPrintPanel_, 0)
+        self.failUnlessResultIsBOOL(NSPrintOperation.showsProgressPanel)
+        self.failUnlessArgIsBOOL(NSPrintOperation.setShowsProgressPanel_, 0)
+        self.failUnlessResultIsBOOL(NSPrintOperation.canSpawnSeparateThread)
+        self.failUnlessArgIsBOOL(NSPrintOperation.setCanSpawnSeparateThread_, 0)
 
+        self.failUnlessArgIsSEL(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 2, 'v@:@' + objc._C_NSBOOL + '^v')
+        self.failUnlessArgHasType(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 3, '^v')
+
+        self.failUnlessResultIsBOOL(NSPrintOperation.runOperation)
+        self.failUnlessResultIsBOOL(NSPrintOperation.deliverResult)
+        self.failUnlessResultIsBOOL(NSPrintOperation.showPanels)
+        self.failUnlessArgIsBOOL(NSPrintOperation.setShowPanels_, 0)
 
 
 if __name__ == "__main__":
