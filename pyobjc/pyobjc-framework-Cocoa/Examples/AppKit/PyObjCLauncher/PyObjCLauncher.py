@@ -1,12 +1,10 @@
+import objc; objc.setVerbose(1)
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder, AppHelper
-NibClassBuilder.extractClasses('MainMenu.nib')
-NibClassBuilder.extractClasses('PreferenceWindow.nib')
-NibClassBuilder.extractClasses('MyDocument.nib')
-from PreferencesWindowController import *
+from PyObjCTools import AppHelper
 from MyDocument import *
 from LaunchServices import *
+from PreferencesWindowController import *
 
 PYTHON_EXTENSIONS = [u'py', 'pyw', u'pyc']
 
@@ -16,13 +14,14 @@ FILE_TYPE_BINDING_MESSAGE = u"""
 See "Changing the application that opens a file" in Mac Help for details.
 """.strip()
 
-class MyAppDelegate(NibClassBuilder.AutoBaseClass):
+class MyAppDelegate(NSObject):
     def init(self):
         self = super(MyAppDelegate, self).init()
         self.initial_action_done = False
         self.should_terminate = False
         return self
 
+    @objc.IBAction
     def showPreferences_(self, sender):
         PreferencesWindowController.getPreferencesWindow()
 
@@ -53,7 +52,7 @@ class MyAppDelegate(NibClassBuilder.AutoBaseClass):
         myURL = NSURL.fileURLWithPath_(bndl.bundlePath())
         myName = bndl.infoDictionary()[u'CFBundleName']
         for ext in PYTHON_EXTENSIONS:
-            err, outRef, outURL = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, u'txt', kLSRolesViewer)
+            err, outRef, outURL = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, u'txt', kLSRolesViewer, None, None)
             if (err or myURL != outURL):
                 res = NSRunAlertPanel(
                     u'File type binding',

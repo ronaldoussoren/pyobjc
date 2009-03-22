@@ -3,7 +3,19 @@ from AppKit import *
 from PyObjCTools import NibClassBuilder
 from FileSettings import *
 
-class PreferencesWindowController(NibClassBuilder.AutoBaseClass):
+class PreferencesWindowController(NSWindowController):
+    commandline = objc.IBOutlet()
+    debug = objc.IBOutlet()
+    filetype = objc.IBOutlet()
+    honourhashbang = objc.IBOutlet()
+    inspect = objc.IBOutlet()
+    interpreter = objc.IBOutlet()
+    nosite = objc.IBOutlet()
+    optimize = objc.IBOutlet()
+    others = objc.IBOutlet()
+    tabs = objc.IBOutlet()
+    verbose = objc.IBOutlet()
+    with_terminal = objc.IBOutlet()
     _singleton = None
     settings = None
 
@@ -21,7 +33,7 @@ class PreferencesWindowController(NibClassBuilder.AutoBaseClass):
         title = self.filetype.titleOfSelectedItem()
         self.settings = FileSettings.getDefaultsForFileType_(title)
 
-    def update_display(self):
+    def updateDisplay(self):
         if self.settings is None:
             return
         dct = self.settings.fileSettingsAsDict()
@@ -42,27 +54,30 @@ class PreferencesWindowController(NibClassBuilder.AutoBaseClass):
         super(PreferencesWindowController, self).windowDidLoad()
         try:
             self.load_defaults()
-            self.update_display()
+            self.updateDisplay()
         except:
             import traceback
             traceback.print_exc()
             import pdb, sys
             pdb.post_mortem(sys.exc_info()[2])
 
-    def update_settings(self):
+    def updateSettings(self):
         self.settings.updateFromSource_(self)
 
+    @objc.IBAction
     def doFiletype_(self, sender):
         self.load_defaults()
-        self.update_display()
+        self.updateDisplay()
 
+    @objc.IBAction
     def doReset_(self, sender):
         self.settings.reset()
-        self.update_display()
+        self.updateDisplay()
 
+    @objc.IBAction
     def doApply_(self, sender):
-        self.update_settings()
-        self.update_display()
+        self.updateSettings()
+        self.updateDisplay()
 
     def fileSettingsAsDict(self):
         return dict(
@@ -80,8 +95,8 @@ class PreferencesWindowController(NibClassBuilder.AutoBaseClass):
         )
 
     def controlTextDidChange_(self, aNotification):
-        self.update_settings()
-        self.update_display()
+        self.updateSettings()
+        self.updateDisplay()
 
     def comboBox_indexOfItemWithStringValue_(self, aComboBox, aString):
         if self.settings is None:
