@@ -1,5 +1,4 @@
 from Foundation import *
-import objc
 
 # enum ToDoItemStatus
 INCOMPLETE=0

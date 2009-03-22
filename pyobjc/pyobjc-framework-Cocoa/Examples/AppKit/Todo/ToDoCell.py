@@ -1,6 +1,4 @@
-from AppKit import *
-from Foundation import *
-from objc import selector
+from Cocoa import *
 
 NOT_DONE=0
 DONE=1
@@ -28,6 +26,7 @@ class ToDoCell (NSButtonCell):
         self._deferredImage = NSImage.imageNamed_("DeferredMark")
         return self
 
+    @objc.typedAccessor('i')
     def setTriState_(self, newState):
         if newState > DEFERRED:
             self._triState = NOT_DONE
@@ -35,11 +34,10 @@ class ToDoCell (NSButtonCell):
             self._triState = newState
 
         self.updateImage()
-    setTriState_ = selector(setTriState_, signature="v@:i")
 
+    @objc.typedAccessor('i')
     def triState(self):
         return self._triState
-    triState = selector(triState, signature="i@:")
 
 
     def setState_(self, val):
@@ -68,16 +66,11 @@ class ToDoCell (NSButtonCell):
     def startTrackingAt_inView_(self, startPoint, controlView):
         #print "startTracking:", startPoint, controlView
         return 1
-    startTrackingAt_inView_ = selector(
-        startTrackingAt_inView_, signature="c@:{NSPoint=ff}@")
 
     def stopTracking_at_inView_mouseIsUp_(self, lastPoint, stopPoint, controlView, flag):
         #print "stopTracking:", lastPoint, stopPoint, controlView, flag, self.triState()
         if flag:
             self.setTriState_(self.triState() + 1)
-    stopTracking_at_inView_mouseIsUp_ = selector(
-        stopTracking_at_inView_mouseIsUp_,
-        signature="v@:{NSPoint=ff}{NSPoint=ff}@c")
 
     def setTimeDue_(self, newTime):
         if newTime:
