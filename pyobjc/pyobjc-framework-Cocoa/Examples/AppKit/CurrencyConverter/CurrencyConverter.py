@@ -1,29 +1,29 @@
 import time
 import sys
-from Foundation import NSObject
-from AppKit import NSApplicationMain
-from PyObjCTools import NibClassBuilder
-from AppKit import NSRunAlertPanel
-from objc import *
+from AppKit import *
 
-NibClassBuilder.extractClasses('MainMenu.nib')
 
-class Converter (NibClassBuilder.AutoBaseClass):
+class Converter (NSObject):
     def convertAmount(self, amt, rate):
         return amt*rate
 
 
-class ConverterController (NibClassBuilder.AutoBaseClass):
+class ConverterController (NSObject):
 
     # First define the IB Outlets, the 'ivar' calls below define new
     # instance variables in the objective-C class (e.g. visible
     # for introspection in objective-C)
+    converter = objc.IBOutlet()
+    dollarField = objc.IBOutlet()
+    rateField = objc.IBOutlet() 
+    totalField = objc.IBOutlet()
 
     def awakeFromNib(self):
         # Provide some defaults for the user...
         self.dollarField.setFloatValue_(2.0)
         self.rateField.setFloatValue_(3.0)
 
+    @objc.IBAction
     def convert_(self, sender):
         rate = self.rateField.floatValue()
         amt = self.dollarField.floatValue()
@@ -32,8 +32,8 @@ class ConverterController (NibClassBuilder.AutoBaseClass):
         self.totalField.setFloatValue_(total)
         self.rateField.selectText_(self)
 
-        x = NSRunAlertPanel("Calculation Result",
-            "The result is %s"%(total), "OK", None, None)
+        #x = NSRunAlertPanel("Calculation Result",
+        #    "The result is %s"%(total), "OK", None, None)
 
 
 sys.exit(NSApplicationMain(sys.argv))
