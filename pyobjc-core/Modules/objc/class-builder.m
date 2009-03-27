@@ -1165,7 +1165,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			if (sel->sel_class == NULL) {
 				sel->sel_class = new_class;
 			}
-		} /* XXX: else if (PyObjCIMP_Check(value)) { */
+		} /* XXX: else if (PyObjCIMP_Check(value)) */
 	}
 	Py_DECREF(key_list);
 	key_list = NULL;

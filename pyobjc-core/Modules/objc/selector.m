@@ -1887,7 +1887,13 @@ PyObjCSelector_FromFunction(
 		meth = class_getClassMethod(oc_class, selector);
 	} else {
 		meth = class_getInstanceMethod(oc_class, selector);
-		if (!meth) {
+		
+		if (!meth && !sel_isEqual(selector, @selector(copyWithZone:))) {
+		        /* Look for a classmethod, but don't do that for copyWithZone:
+			 * because that method is commonly defined in Python, and
+			 * overriding "NSObject +copyWithZone:" is almost certainly
+			 * not the intended behaviour.
+			 */
 			meth = class_getClassMethod(oc_class, selector);
 			if (meth) {
 				is_class_method = 1;
