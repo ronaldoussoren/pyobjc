@@ -88,7 +88,16 @@ class OC_TestCopy4 (OC_CopyBase):
         other.z = "hello"
         return other
 
+class TestNSCopyingHelper (NSObject):
+    def copyWithZone_(self, zone):
+        return 42
+
 class TestNSCopying (TestCase):
+    def testCopyingRegr20090327(self):
+        o = TestNSCopyingHelper.alloc().init()
+        v = o.copyWithZone_(None)
+        self.failUnlessEqual(v, 42)
+
     def testCopyingWithoutSuperFromObjC(self):
         v = OC_TestCopy1.alloc().init()
         self.assert_(not v.copyWithZone_.isClassMethod)

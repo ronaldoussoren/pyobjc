@@ -83,6 +83,10 @@ if sys.platform != 'darwin':
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
 CFLAGS=[
+    "-nostdinc",
+    "-isystem/usr/include",
+    "-isystem/usr/lib/gcc/i686-apple-darwin9/4.0.1/include",
+    "-iframework/System/Library/Frameworks",
     "-DPyObjC_STRICT_DEBUGGING",
     "-DMACOSX",
     "-no-cpp-precomp",

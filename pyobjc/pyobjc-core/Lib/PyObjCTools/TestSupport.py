@@ -137,6 +137,15 @@ class TestCase (_unittest.TestCase):
         if value is None:
             sel.fail(message, "%r is not %r"%(value, test))
 
+    def failUnlessArgIsNullTerminated(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info['arguments'][argno+offset].get('c_array_delimited_by_null'):
+            self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+
     def failUnlessArgIsPrintf(self, method, argno, message = None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -205,6 +214,36 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "arg %d of %s is not of type %r, but %r"%(
                 argno, method, tp, type))
 
+    def failUnlessArgIsFunction(self, method, argno, sel_type, retained, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if type != '^?':
+            self.fail(message or "arg %d of %s is not of type function_pointer"%(
+                argno, method))
+
+        st = info['arguments'][argno+offset].get('callable')
+        if st is None:
+            self.fail(message or "arg %d of %s is not of type function_pointer"%(
+                argno, method))
+
+        iface = st['retval']['type']
+        for a in st['arguments']:
+            iface += a['type']
+
+        if iface != sel_type:
+            self.fail(message or "arg %d of %s is not a function_pointer with type %r, but %r"%(argno, method, sel_type, iface))
+
+
+        st = info['arguments'][argno+offset]['callable_retained']
+        if bool(st) != bool(retained):
+            self.fail(message or "arg %d of %s; retained: %r, expected: %r"%(
+                argno, method, st, retained))
+
+
     def failUnlessArgIsSEL(self, method, argno, sel_type, message=None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -216,10 +255,10 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "arg %d of %s is not of type SEL"%(
                 argno, method))
 
-        st = info['arguments'][argno+offset]['sel_of_type']
+        st = info['arguments'][argno+offset].get('sel_of_type')
         if st != sel_type:
             self.fail(message or "arg %d of %s doesn't have sel_type %r but %r"%(
-                argno, method, sel_type, info['arguments'][argno+offset]['sel_of_type']))
+                argno, method, sel_type, st))
 
     def failUnlessResultIsBOOL(self, method, message=None):
         info = method.__metadata__()
@@ -238,6 +277,29 @@ class TestCase (_unittest.TestCase):
         if type != objc._C_NSBOOL:
             self.fail(message or "arg %d of %s is not of type BOOL"%(
                 argno, method))
+
+    def failUnlessArgIsFixedSize(self, method, argno, count, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        cnt = info['arguments'][argno+offset]['c_array_of_fixed_length']
+        if cnt != count:
+            self.fail(message or "arg %d of %s is not a C-array of length %d"%(
+                argno, method, count))
+
+    def failUnlessArgSizeInArg(self, method, argno, count, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        cnt = info['arguments'][argno+offset]['c_array_length_in_arg']
+        if cnt != count + offset:
+            self.fail(message or "arg %d of %s is not a C-array of with length in arg %d"%(
+                argno, method, count))
+
 
     def failUnlessArgIsOut(self, method, argno, message=None):
         if isinstance(method, objc.selector):
