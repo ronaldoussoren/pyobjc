@@ -98,26 +98,35 @@ class TestNSAttributedString (TestCase):
         self.failUnlessIsInstance(NSUnderlineStrikethroughMask, (int, long))
 
     def testMethods(self):
-        self.fail("- (id)initWithURL:(NSURL *)url options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict error:(NSError **)error;")
-        self.fail("- (id)initWithData:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict error:(NSError **)error;")
-        self.fail("- (id)initWithPath:(NSString *)path documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithURL:(NSURL *)url documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithRTF:(NSData *)data documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithRTFD:(NSData *)data documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithHTML:(NSData *)data documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithHTML:(NSData *)data baseURL:(NSURL *)base documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithDocFormat:(NSData *)data documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithHTML:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (id)initWithRTFDFileWrapper:(NSFileWrapper *)wrapper documentAttributes:(NSDictionary **)dict;")
+        self.failUnlessArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)
+        self.failUnlessArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 3)
+        self.failUnlessArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 2)
+        self.failUnlessArgIsOut(NSAttributedString.initWithData_options_documentAttributes_error_, 3)
+        self.failUnlessArgIsOut(NSAttributedString.initWithPath_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithURL_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithRTF_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithRTFD_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithHTML_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2)
+        self.failUnlessArgIsOut(NSAttributedString.initWithDocFormat_documentAttributes_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.initWithHTML_options_documentAttributes_, 2)
+        self.failUnlessArgIsOut(NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1)
 
 
+        self.failUnlessResultIsBOOL(NSMutableAttributedString.readFromURL_options_documentAttributes_error_)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 2)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 3)
 
-        self.fail("- (BOOL)readFromURL:(NSURL *)url options:(NSDictionary *)opts documentAttributes:(NSDictionary **)dict error:(NSError **)error;")
-        self.fail("- (BOOL)readFromData:(NSData *)data options:(NSDictionary *)opts documentAttributes:(NSDictionary **)dict error:(NSError **)error;")
-        self.fail("- (BOOL)readFromURL:(NSURL *)url options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict;")
-        self.fail("- (BOOL)readFromData:(NSData *)data options:(NSDictionary *)options documentAttributes:(NSDictionary **)dict;")
+        self.failUnlessResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_error_)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_error_, 2)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_error_, 3)
 
-        self.fail("- (NSURL *)URLAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)effectiveRange;")
+        self.failUnlessResultIsBOOL(NSMutableAttributedString.readFromURL_options_documentAttributes_)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_, 2)
+        self.failUnlessResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_)
+        self.failUnlessArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_, 2)
+
+        self.failUnlessArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, 'o^' + NSRange.__typestr__)
 
 
 

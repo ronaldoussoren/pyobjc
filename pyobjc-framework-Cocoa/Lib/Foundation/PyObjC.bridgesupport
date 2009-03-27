@@ -13161,8 +13161,11 @@
     </method>
     <method selector='objectsForXQuery:error:'>
       <retval type='@' />
-      <arg index='0' type='@' />
       <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='objectsForXQuery:constants:error:'>
+      <retval type='@' />
+      <arg index='2' type_modifier='o' />
     </method>
     <method selector='parent'>
       <retval type='@' />

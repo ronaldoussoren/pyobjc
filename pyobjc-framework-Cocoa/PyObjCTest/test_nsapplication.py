@@ -4,7 +4,6 @@ from AppKit import *
 
 class TestNSApplicationHelper (NSObject):
     def copyWithZone_(self, zone):
-        print "copyWithZone:"
         return self
 
     def writeSelectionToPasteboard_types_(self, pb, tp):
