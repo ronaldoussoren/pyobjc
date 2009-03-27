@@ -2,6 +2,7 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+
 class TestNSATSTypesetterHelper (NSATSTypesetter):
         def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
                 self, lineRect, glyphRange, usedRect, offset):
@@ -58,9 +59,6 @@ class TestNSATSTypesetterHelper (NSATSTypesetter):
 
 
 class TestNSATSTypesetter (TestCase):
-    def testIncomplete(self):
-        self.fail("Add header tests for <AppKit/NSATSTypesetter.h>")
-
     def testByRefArguments(self):
         self.failUnlessArgIsOut(NSATSTypesetter.lineFragmentRectForProposedRect_remainingRect_, 1)
         self.failUnlessArgIsInOut(NSATSTypesetter.layoutParagraphAtPoint_, 0)
@@ -109,8 +107,6 @@ class TestNSATSTypesetter (TestCase):
         self.failUnlessStartswith(m['arguments'][2]['type'], '{')
         self.failUnlessStartswith(m['arguments'][3]['type'], 'o^{')
 
-        self.fail("redo")
-
         m = o.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_.__metadata__()
         self.failUnlessEqual(m['retval']['type'], objc._C_NSUInteger)
         self.failUnlessEqual(m['arguments'][2]['type'], NSRange.__typestr__)
@@ -128,8 +124,23 @@ class TestNSATSTypesetter (TestCase):
         m = o.setBidiLevels_forGlyphRange_.__metadata__()
 
 
+        self.failUnlessResultIsBOOL(NSATSTypesetter.usesFontLeading)
+        self.failUnlessArgIsBOOL(NSATSTypesetter.setUsesFontLeading_, 0)
+        self.failUnlessResultIsBOOL(NSATSTypesetter.bidiProcessingEnabled)
+        self.failUnlessArgIsBOOL(NSATSTypesetter.setBidiProcessingEnabled_, 0)
+        self.failUnlessArgIsBOOL(NSATSTypesetter.setHardInvalidation_forGlyphRange_, 0)
+        self.failUnlessArgIsBOOL(NSATSTypesetter.setNotShownAttribute_forGlyphRange_, 0)
+        self.failUnlessArgIsBOOL(NSATSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0)
 
 
+        self.failUnlessArgIsIn(NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1)
+        self.failUnlessArgSizeInArg(NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2)
+        self.failUnlessArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
+        self.failUnlessArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
+
+    def testSubclassProtocols(self):
+        self.failUnlessResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_)
+        self.failUnlessResultIsBOOL(TestNSATSTypesetterHelper.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_)
 
 
 

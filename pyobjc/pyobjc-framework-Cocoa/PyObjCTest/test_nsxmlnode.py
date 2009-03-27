@@ -23,13 +23,7 @@ class TestXMLNode (TestCase):
             n.nodesForXPath_error_.__metadata__()['arguments'][3]['type'],
             'o^@')
 
-        print n.objectsForXQuery_constants_error_.__metadata__()
-        self.assertEquals(
-            n.objectsForXQuery_constants_error_.__metadata__()['arguments'][4]['type'],
-            'o^@')
-        self.assertEquals(
-            n.objectsForXQuery_error_.__metadata__()['arguments'][3]['type'],
-            'o^@')
+        self.failUnlessArgIsOut(NSXMLNode.objectsForXQuery_constants_error_, 2)
 
 
 if __name__ == "__main__":

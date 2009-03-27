@@ -111,19 +111,19 @@ class TestNSData(TestCase):
         self.failUnless(isinstance(b, NSData))
         self.failUnless(err is None)
 
-        b = NSData.alloc().initWithContentsOfFile_options_error_(
+        b2, err = NSData.alloc().initWithContentsOfFile_options_error_(
                 "/etc/hosts.nosuchfile", 0, None)
         self.failUnless(b2 is None)
         self.failUnless(isinstance(err, NSError))
 
         url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts', False)
-        b = NSData.alloc().initWithContentsOfURL_options_error_(
+        b, err = NSData.alloc().initWithContentsOfURL_options_error_(
                 url, 0, None)
         self.failUnless(isinstance(b, NSData))
         self.failUnless(err is None)
 
         url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts.nosuchfile', False)
-        b = NSData.alloc().initWithContentsOfURL_options_error_(
+        b2, err = NSData.alloc().initWithContentsOfURL_options_error_(
                 url, 0, None)
         self.failUnless(b2 is None)
         self.failUnless(isinstance(err, NSError))

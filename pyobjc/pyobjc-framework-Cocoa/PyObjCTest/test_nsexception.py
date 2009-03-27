@@ -66,7 +66,7 @@ class TestNSException (TestCase):
         self.failUnless(m['variadic'])
         self.failUnless(m['arguments'][6]['printf_format'])
 
-        m = o.handleFailureInFunction.__metadata__()
+        m = o.handleFailureInFunction_.__metadata__()
         self.failUnless(m['variadic'])
         self.failUnless(m['arguments'][5]['printf_format'])
 
