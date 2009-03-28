@@ -137,6 +137,11 @@ class TestCase (_unittest.TestCase):
         if value is None:
             sel.fail(message, "%r is not %r"%(value, test))
 
+    def failUnlessResultIsNullTerminated(self, method, message = None):
+        info = method.__metadata__()
+        if not info['retval'].get('c_array_delimited_by_null'):
+            self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+
     def failUnlessArgIsNullTerminated(self, method, argno, message = None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -145,6 +150,24 @@ class TestCase (_unittest.TestCase):
         info = method.__metadata__()
         if not info['arguments'][argno+offset].get('c_array_delimited_by_null'):
             self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+
+    def failUnlessArgIsVariableSize(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info['arguments'][argno+offset].get('c_array_of_variable_length'):
+            self.fail(message or "argument %d of %r is not a variable sized array"%(argno, method))
+
+    def failUnlessArgSizeInResult(self, method, argno, message = None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        if not info['arguments'][argno+offset].get('c_array_length_in_result'):
+            self.fail(message or "argument %d of %r does not have size in result"%(argno, method))
 
     def failUnlessArgIsPrintf(self, method, argno, message = None):
         if isinstance(method, objc.selector):
@@ -298,6 +321,17 @@ class TestCase (_unittest.TestCase):
         cnt = info['arguments'][argno+offset]['c_array_length_in_arg']
         if cnt != count + offset:
             self.fail(message or "arg %d of %s is not a C-array of with length in arg %d"%(
+                argno, method, count))
+
+    def failUnlessResultSizeInArg(self, method, count, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        cnt = info['retval']['c_array_length_in_arg']
+        if cnt != count + offset:
+            self.fail(message or "result %s is not a C-array of with length in arg %d"%(
                 argno, method, count))
 
 

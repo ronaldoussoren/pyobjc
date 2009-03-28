@@ -32,7 +32,7 @@ def addConvenienceForSelector(selector, methods):
     Add the list with methods to every class that has a selector with the
     given name.
     """
-    CONVENICENCE_METHODS[selector] = methods
+    CONVENIENCE_METHODS[selector] = methods
 
 def addConvenienceForClass(classname, methods):
     """
