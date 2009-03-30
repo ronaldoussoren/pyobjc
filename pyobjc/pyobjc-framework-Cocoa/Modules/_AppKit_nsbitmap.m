@@ -6,12 +6,23 @@ static PyObject*
 call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 	PyObject* method, PyObject* self, PyObject* arguments)
 {
+	PyObject* a1;
+	PyObject* a2;
 	PyObject* result;
 	struct objc_super super;
 	NSTIFFCompression* list;
 	int numTypes;
 
-	if  (!PyArg_ParseTuple(arguments, "")) {
+	if  (!PyArg_ParseTuple(arguments, "OO", &a1, &a2)) {
+		return NULL;
+	}
+
+	if (a1 != Py_None) {
+		PyErr_SetString(PyExc_ValueError, "buffer must be None");
+		return NULL;
+	}
+	if (a2 != Py_None) {
+		PyErr_SetString(PyExc_ValueError, "length must be None");
 		return NULL;
 	}
 
@@ -59,6 +70,81 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 
 	return result;
 }
+
+#if 0
+static PyObject*
+call_NSBitmapImageRep_initWithBitmapDataPlanes_bitmapFormat(
+		PyObject* method, PyObject* self, PyObject* arguments)
+{
+	PyObject* py_planes;
+	unsigned char** planes;
+	Py_ssize_t  nr_planes;
+	PyObject* py_width;
+	NSInteger width;
+	PyObject* py_height;
+	NSInteger height;
+	long	  bitsPerSample;
+	long	  samplesPerPixel;
+	PyObject* py_hasAlpha;
+	BOOL	  hasAlpha;
+	PyObject* py_isPlanar;
+	BOOL	  isPlanar;
+	PyObject* py_colorSpaceName;
+	NSString* colorSpaceName;
+	long	  bitmapFormat;
+	PyObject* py_bytesPerRow;
+	NSInteger bytesPerRow;
+	PyObject* py_bitsPerPixel;
+	NSInteger bitsPerPixel;
+
+	if (!PyArg_Parse(args, "OOOiiOOOiOO", 
+		&py_planes, &py_width, &py_height, &bitsPerSample,
+		&samplesPerPixel, &py_hasAlpha, &py_isPlanar,
+		&bitmapFormat, &py_bytesPerRow, &py_bitsPerPixel)) {
+
+		return NULL;
+	}
+
+	if (PyObjC_PythonToObjC(@encode(NSInteger), py_width, &width) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(NSInteger), py_height, &height) == -1) {
+		return NULL;
+	}
+	hasAlpha = PyObject_IsTrue(py_hasAlpha);
+	isPlanar = PyObject_IsTrue(py_isPlanar);
+	if (PyObjC_PythonToObjC(@encode(NSInteger), py_bytesPerRow, &bytesPerRow) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(NSInteger), py_bitsPerPixel, &bitsPerPixel) == -1) {
+		return NULL;
+	}
+
+	if (py_planes == Py_None) {
+		planes = NULL;
+		nr_planes = -1;
+	} else {
+		PyObject* seq = PySequence_Fast(py_planes,
+				"Planes must be sequence");
+		if (seq == NULL) {
+			return NULL;
+		}
+		nr_planes = PySequence_Fast_GET_SIZE(seq);
+
+		planes = malloc(sizeof(unsigned char*) * nr_planes);
+		if (planes == NULL) {
+			PyErr_NoMemory();
+			Py_DECREF(seq);
+			return NULL;
+		}
+
+		Py_ssize_t i;
+		for (i = 0; i < nr_planes; i++) {
+
+		}
+	}
+}
+#endif
 
 
 /* XXX: Needs looking into, argument parsing seems awfully complex */

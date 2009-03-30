@@ -147,8 +147,8 @@ class TestNSArrayInteraction(TestCase):
         self.assertRaises( IndexError, x.__getitem__, -100)
 
     def test_varargConstruction(self):
-        w = NSArray.arrayWithObjects_(1,2,3,4, None)
-        x = NSArray.alloc().initWithObjects_(1,2,3,4, None)
+        w = NSArray.arrayWithObjects_(1,2,3,4)
+        x = NSArray.alloc().initWithObjects_(1,2,3,4)
 
         y = NSArray.arrayWithObjects_count_([1,2,3,4,5,6], 4)
         z = NSArray.alloc().initWithObjects_count_([1,2,3,4,5,6], 4)
@@ -411,6 +411,35 @@ class TestVariadic (TestCase):
         a = NSMutableArray.alloc().initWithObjects_(u"foo", u"bar", None)
         self.assertEquals(a, [u"foo", u"bar"])
         self.assert_(isinstance(a, NSMutableArray))
+
+class TestNSArray (TestCase):
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSArray.containsObject_)
+        self.failUnlessResultIsBOOL(NSArray.writeToFile_atomically_)
+        self.failUnlessArgIsBOOL(NSArray.writeToFile_atomically_, 1)
+        self.failUnlessResultIsBOOL(NSArray.writeToURL_atomically_)
+        self.failUnlessArgIsBOOL(NSArray.writeToURL_atomically_, 1)
+
+        self.failUnlessArgIsBOOL(NSArray.initWithArray_copyItems_, 1)
+
+        self.failUnlessArgIsIn(NSArray.arrayWithObjects_count_, 0)
+        self.failUnlessArgSizeInArg(NSArray.arrayWithObjects_count_, 0, 1)
+        self.failUnlessArgIsIn(NSArray.initWithObjects_count_, 0)
+        self.failUnlessArgSizeInArg(NSArray.initWithObjects_count_, 0, 1)
+
+        self.failUnlessArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
+        self.failUnlessArgSizeInArg(NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1)
+
+        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'I@@@', False)
+        self.failUnlessArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, '@')
+        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'I@@@', False)
+        self.failUnlessArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, '@')
+
+        self.failUnlessArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'I@@@', False)
+        self.failUnlessArgHasType(NSMutableArray.sortUsingFunction_context_, 1, '@')
+
+        self.fail("-arrayWithObjects:")
+        self.fail("-initWithObjects:")
 
 if __name__ == '__main__':
     main()

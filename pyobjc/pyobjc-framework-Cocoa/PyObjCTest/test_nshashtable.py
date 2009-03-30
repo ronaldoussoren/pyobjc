@@ -13,5 +13,12 @@ class TestNSHashTable (TestCase):
     def testFunctions(self):
         self.fail("NSHasTable functions")
 
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSHashTable.containsObject_)
+        self.failUnlessResultIsBOOL(NSHashTable.intersectsHashTable_)
+        self.failUnlessResultIsBOOL(NSHashTable.isEqualToHashTable_)
+        self.failUnlessResultIsBOOL(NSHashTable.isSubsetOfHashTable_)
+
 if __name__ == "__main__":
     main()

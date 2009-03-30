@@ -11,6 +11,9 @@ class TestNSInvocation (TestCase):
         self.fail("getReturnValue:")
         self.fail("setReturnValue:")
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSInvocation.argumentsRetained)
+
     def testNoUnsupported(self):
         self.failIf(hasattr(Foundation, 'NSObjCValue'))
         self.failIf(hasattr(Foundation, 'NSObjCNoType'))

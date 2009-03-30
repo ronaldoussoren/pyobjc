@@ -32,6 +32,13 @@ class TestNSMethodSignature (TestCase):
         self.assertEquals(v, 'o^i')
         self.failUnless(isinstance(v, str))
 
+    def testMethods(self):
+        self.failUnlessResultHasType(NSMethodSignature.getArgumentTypeAtIndex_, '^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessResultIsNullTerminated(NSMethodSignature.getArgumentTypeAtIndex_)
+        self.failUnlessResultHasType(NSMethodSignature.methodReturnType, '^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessResultIsNullTerminated(NSMethodSignature.methodReturnType)
+        self.failUnlessResultIsBOOL(NSMethodSignature.isOneway)
+
             
 if __name__ == "__main__":
     main()

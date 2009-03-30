@@ -20,8 +20,6 @@ class TestNSExceptionInteraction(TestCase):
             self.assertEquals(e._pyobjc_info_['name'], 'ExceptionName')
             self.assertEquals(e._pyobjc_info_['reason'], 'Format: hello 42')
 
-        self.assertRaises(TypeError, NSException.raise_format_arguments_, "FooError", "foo", [])
-
 
 class TestNSException (TestCase):
     def testConstants(self):
@@ -60,15 +58,11 @@ class TestNSException (TestCase):
         self.failIf(hasattr(Foundation, 'NSCAssert'))
         self.failIf(hasattr(Foundation, 'NSCParameterAssert'))
     
-    def testAssertionHandler(self):
-        o = NSAssertionHandler.currentHandler()
-        m = o.handleFailureInMethod_object_file_lineNumber_description_.__metadata__()
-        self.failUnless(m['variadic'])
-        self.failUnless(m['arguments'][6]['printf_format'])
+    def testMethods(self):
+        self.failUnlessArgIsPrintf(NSException.raise_format_, 1)
 
-        m = o.handleFailureInFunction_.__metadata__()
-        self.failUnless(m['variadic'])
-        self.failUnless(m['arguments'][5]['printf_format'])
+        self.failUnlessArgIsPrintf(NSAssertionHandler.handleFailureInMethod_object_file_lineNumber_description_, 4)
+        self.failUnlessArgIsPrintf(NSAssertionHandler.handleFailureInFunction_file_lineNumber_description_, 3)
 
 
 if __name__ == '__main__':

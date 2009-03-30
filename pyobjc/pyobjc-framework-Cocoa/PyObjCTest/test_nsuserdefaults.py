@@ -9,6 +9,13 @@ class PythonListAsValue (TestCase):
 
         self.assertEquals(defaults.arrayForKey_(u'randomKey'), [u'a', u'b', u'c'])
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSUserDefaults.boolForKey_)
+        self.failUnlessArgIsBOOL(NSUserDefaults.setBool_forKey_, 0)
+        self.failUnlessResultIsBOOL(NSUserDefaults.synchronize)
+        self.failUnlessResultIsBOOL(NSUserDefaults.objectIsForcedForKey_)
+        self.failUnlessResultIsBOOL(NSUserDefaults.objectIsForcedForKey_inDomain_)
+
 
     def testConstants(self):
         self.failUnless(isinstance(NSGlobalDomain, unicode))

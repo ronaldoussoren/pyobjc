@@ -1,0 +1,134 @@
+API Notes for the Foundation framework
+======================================
+
+``NSFastEnumeration``
+---------------------
+
+* PyObjC doesn't use or implement this protocol yet.
+
+``NSAppleEventDescriptor``
+--------------------------
+
+* ``-initWithAEDescNoCopy:``, ``-aeDesc``
+
+  These methods are not supported.
+
+``NSArray``
+-----------
+
+* ``-getObjects:``
+
+  This method is not supported. Either use
+  the ``NSArray`` like a normal python sequence
+  or use ``-getObjects:inRange:``.
+
+``NSException``
+---------------
+
+* ``raise:format:arguments:``
+
+  This method is not supported.
+
+* ``NSGetUncaughtExceptionHandler``, ``NSSetUncaughtExceptionHandler``
+
+  These functions are not yet supported.
+
+
+``NSGarbageCollector``
+----------------------
+
+PyObjC doesn't really support the GC yet. I've tried to code
+defensively, but have never tested a GC-enabled Python build
+and PyObjC relies on the usage of ``-dealloc`` in a number of
+cases.
+
+* ``-disableCollectorForPointer:``, ``-enableCollectorForPointer:``
+
+  These methods are not yet supported.
+
+``NSHashTable``
+---------------
+
+PyObjC only supports ``NSHashTable`` instances that have been
+configured to store objects (as opposed to arbitrary pointers).
+
+``NSIndexPath``
+---------------
+
+* ``-getIndexes:``
+
+  Use the indexPath as a python sequence instead.
+
+* ``NSIndexPath`` supports a number of convenience methods::
+
+    path[idx] <==> path.indexAtPosition_(idx)
+    len(path) <==> path.length()
+    path + 4 <==> path.indexPathByAddingIndex_(4)
+
+  
+``NSMapTable``
+--------------
+
+PyObjC only supports ``NSMapTable`` instances that have been
+configured to store objects (as opposed to arbitrary pointers).
+
+
+``NSPointerArray``
+--------------
+
+PyObjC only supports ``NSPointerArray`` instances that have been
+configured to store objects (as opposed to arbitrary pointers).
+
+``NSPointerFunctions``
+----------------------
+
+Accessing properties of this class is not supported.
+
+``NSMachPort``
+--------------
+
+The delegate protocol of ``NSMachPort`` is not supported at 
+the moment.
+
+
+``NSPredicate``
+---------------
+
+* ``-predicateWithFormat:arguments:`` 
+
+  This method is not supported.
+
+``NSSet``
+---------
+
+* ``+setWithObects:``, ``-initWithObject:``
+
+  These methods are not supported, use other constructors instead.
+
+
+``NSOutputStream``
+------------------
+
+* ``-initToBuffer:capacity:``, ``outputStreamToBuffer:capacity:``
+
+  This method is barely supported. The method only works when you pass
+  a writable buffer argument as the buffer, and manually ensure that the
+  buffer stays alive.
+
+
+``NSString``
+------------
+
+* ``-getCharacters:``
+
+  This method is not supported.
+
+
+``NSValue``
+-----------
+
+* ``-getValue:``
+
+  This method is not supported
+
+  

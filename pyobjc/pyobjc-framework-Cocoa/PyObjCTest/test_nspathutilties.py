@@ -9,6 +9,8 @@ class TestNSPathUtilities(TestCase):
                 NSSearchPathForDirectoriesInDomains( NSAllLibrariesDirectory, NSAllDomainsMask, NO ),
                       "NSSearchPathForDirectoriesInDomains() failed to return anything." )
 
+        self.failUnlessArgIsBOOL(NSSearchPathForDirectoriesInDomains, 2)
+
     def testTrue(self):
         for boolVal in (1, 1==1, YES, -1):
             self.assert_(
@@ -62,6 +64,14 @@ class TestNSPathUtilities(TestCase):
         self.assertEquals(NSSystemDomainMask, 8)
         self.assertEquals(NSAllDomainsMask, 0x0ffff)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSString.isAbsolutePath)
+        self.failUnlessArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)
+        self.failUnlessArgIsBOOL(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1)
+        self.failUnlessArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2)
+        self.failUnlessResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
+        self.failUnlessArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, 'o^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
 
 if __name__ == '__main__':
     main( )

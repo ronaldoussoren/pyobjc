@@ -22,6 +22,26 @@ class TestNSKeyedArchiver (TestCase):
         m = o.encodeBytes_length_forKey_.__metadata__()
         self.assertEquals(m['arguments'][2]['type'], 'n^v')
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSKeyedArchiver.archiveRootObject_toFile_)
+        self.failUnlessArgIsBOOL(NSKeyedArchiver.encodeBool_forKey_, 0)
+        self.failUnlessArgHasType(NSKeyedArchiver.encodeBytes_length_forKey_, 0, 'n^v')
+        self.failUnlessArgSizeInArg(NSKeyedArchiver.encodeBytes_length_forKey_, 0, 1)
+
+        self.failUnlessResultIsBOOL(NSKeyedUnarchiver.containsValueForKey_)
+        self.failUnlessResultIsBOOL(NSKeyedUnarchiver.decodeBoolForKey_)
+
+        self.failUnlessResultHasType(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, '^v')
+        self.failUnlessResultSizeInArg(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
+        self.failUnlessArgIsOut(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
+
+        self.failUnlessArgHasType(NSCoder.encodePoint_forKey_, 0, NSPoint.__typestr__)
+        self.failUnlessArgHasType(NSCoder.encodeSize_forKey_, 0, NSSize.__typestr__)
+        self.failUnlessArgHasType(NSCoder.encodeRect_forKey_, 0, NSRect.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodePointForKey_, NSPoint.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodeSizeForKey_, NSSize.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
+
 
 if __name__ == "__main__":
     main()

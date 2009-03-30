@@ -2867,7 +2867,7 @@
       <arg c_array_length_in_arg='0' index='1' type_modifier='o' type='o^S'/>
       <arg c_array_length_in_arg='0' index='2' type_modifier='o' type='o^I' type64='o^Q' />
       <arg c_array_length_in_arg='0' index='3' type_modifier='o' />
-      <arg index='4' type='^B' />
+      <arg index='4' type='^B' c_array_length_in_arg='0' type_modifier='o' />
     </method>
     <method selector='getLineFragmentRect:usedRect:forParagraphSeparatorGlyphRange:atProposedOrigin:'>
       <retval type='v' />
@@ -4398,7 +4398,7 @@
     </method>
     <method selector='getPixel:atX:y:'>
       <retval type='v' />
-      <arg index='0' type_modifier='o' />
+      <arg index='0' type_modifier='o' c_array_of_variable_length='true' />
       <arg index='1' type='i' type64='q' />
       <arg index='2' type='i' type64='q' />
     </method>
@@ -10529,7 +10529,7 @@
       <arg c_array_length_in_arg='0' index='1' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='2' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='3' type_modifier='o' />
-      <arg index='4' type='^B' />
+      <arg index='4' type='^B' c_array_length_in_arg='0' type_modifier='o' />
     </method>
     <method selector='getGlyphsInRange:glyphs:characterIndexes:glyphInscriptions:elasticBits:bidiLevels:'>
       <retval type='I' type64='Q' />
@@ -10537,8 +10537,8 @@
       <arg c_array_length_in_arg='0' index='1' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='2' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='3' type_modifier='o' />
-      <arg index='4' type='^B' />
-      <arg c_array_length_in_arg='0' index='5' type='^z' type_modifier='o' />
+      <arg index='4' type='^B' type_modifier='o' c_array_length_in_arg='0' />
+      <arg c_array_length_in_arg='0' index='5' type='^C' type_modifier='o' />
     </method>
     <method selector='getLineFragmentInsertionPointsForCharacterAtIndex:alternatePositions:inDisplayOrder:positions:characterIndexes:'>
       <retval type='I' type64='Q' />
@@ -10555,7 +10555,7 @@
     <method selector='glyphAtIndex:isValidIndex:'>
       <retval type='I' />
       <arg index='0' type='I' type64='Q' />
-      <arg index='1' type='^B' />
+      <arg index='1' type='^B' type_modifier='o' />
     </method>
     <method selector='glyphGenerator'>
       <retval type='@' />
@@ -22149,8 +22149,8 @@
       <arg c_array_length_in_arg='0' index='1' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='2' type_modifier='o' />
       <arg c_array_length_in_arg='0' index='3' type_modifier='o' />
-      <arg index='4' type='^B' />
-      <arg c_array_length_in_arg='0' index='5' type='^z' type_modifier='o' />
+      <arg index='4' type='^B' type_modifier='o' c_array_length_in_arg='0' />
+      <arg c_array_length_in_arg='0' index='5' type='^C' type_modifier='o' />
     </method>
     <method selector='getLineFragmentRect:usedRect:forParagraphSeparatorGlyphRange:atProposedOrigin:'>
       <retval type='v' />
@@ -22161,9 +22161,9 @@
     </method>
     <method selector='getLineFragmentRect:usedRect:remainingRect:forStartingGlyphAtIndex:proposedRect:lineSpacing:paragraphSpacingBefore:paragraphSpacingAfter:'>
       <retval type='v' />
-      <arg index='0' type_modifier='N' />
-      <arg index='1' type_modifier='N' />
-      <arg index='2' type_modifier='N' />
+      <arg index='0' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='1' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
+      <arg index='2' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'/>
       <arg index='3' type='I' type64='Q' />
       <arg index='4' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
       <arg index='5' type='f' type64='d' />
@@ -22357,10 +22357,10 @@
     </method>
     <method selector='willSetLineFragmentRect:forGlyphRange:usedRect:baselineOffset:'>
       <retval type='v' />
-      <arg index='0' type_modifier='N' />
+      <arg index='0' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'  />
       <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
-      <arg index='2' type_modifier='N' />
-      <arg index='3' type_modifier='N' />
+      <arg index='2' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}'  />
+      <arg index='3' type_modifier='N' type='^f' type64='^d'  />
     </method>
   </class>
   <class name='NSURL'>

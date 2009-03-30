@@ -2,6 +2,20 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+class TestNSFileManagerHelper (NSObject):
+    def fileManager_shouldProceedAfterError_(self, a, b): return 1
+    def fileManager_willProcessPath_(self, a, b): pass
+    def fileManager_shouldCopyItemAtPath_toPath_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_(self, a, b, c, d): return 1
+    def fileManager_shouldMoveItemAtPath_toPath_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_movingItemAtPath_toPath_(self, a, b, c, d): return 1
+    def fileManager_shouldLinkItemAtPath_toPath_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_(self, a, b, c, d): return 1
+    def fileManager_shouldRemoveItemAtPath_(self, a, b): return 1
+    def fileManager_shouldProceedAfterError_removingItemAtPath_(self, a, b, c): return 1
+
+
+
 class TestNSFileManager (TestCase):
     def testConstants(self):
         self.assertEquals(NSFoundationVersionWithFileManagerResourceForkSupport, 412)
@@ -132,8 +146,72 @@ class TestNSFileManager (TestCase):
         self.failUnless(m['retval']['type'] == 'Z')
 
 
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.failUnlessResultIsBOOL(NSFileManager.setAttributes_ofItemAtPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.setAttributes_ofItemAtPath_error_, 2)
 
+        self.failUnlessResultIsBOOL(NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_)
+        self.failUnlessArgIsBOOL(NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_, 1)
+        self.failUnlessArgIsOut(NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_, 3)
 
+        self.failUnlessArgIsOut(NSFileManager.contentsOfDirectoryAtPath_error_, 1)
+        self.failUnlessArgIsOut(NSFileManager.subpathsOfDirectoryAtPath_error_, 1)
+        self.failUnlessArgIsOut(NSFileManager.attributesOfItemAtPath_error_, 1)
+        self.failUnlessArgIsOut(NSFileManager.attributesOfFileSystemForPath_error_, 1)
+
+        self.failUnlessResultIsBOOL(NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_, 2)
+
+        self.failUnlessArgIsOut(NSFileManager.destinationOfSymbolicLinkAtPath_error_, 1)
+
+        self.failUnlessResultIsBOOL(NSFileManager.copyItemAtPath_toPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.copyItemAtPath_toPath_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.moveItemAtPath_toPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.moveItemAtPath_toPath_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.linkItemAtPath_toPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.linkItemAtPath_toPath_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.removeItemAtPath_error_)
+        self.failUnlessArgIsOut(NSFileManager.removeItemAtPath_error_, 1)
+
+    def testMethods(self):
+        self.failUnlessArgIsBOOL(NSFileManager.fileAttributesAtPath_traverseLink_, 1)
+        self.failUnlessResultIsBOOL(NSFileManager.changeFileAttributes_atPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.createSymbolicLinkAtPath_pathContent_)
+        self.failUnlessResultIsBOOL(NSFileManager.createDirectoryAtPath_attributes_)
+        self.failUnlessResultIsBOOL(NSFileManager.linkPath_toPath_handler_)
+        self.failUnlessResultIsBOOL(NSFileManager.copyPath_toPath_handler_)
+        self.failUnlessResultIsBOOL(NSFileManager.movePath_toPath_handler_)
+        self.failUnlessResultIsBOOL(NSFileManager.removeFileAtPath_handler_)
+        self.failUnlessResultIsBOOL(NSFileManager.changeCurrentDirectoryPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.fileExistsAtPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.fileExistsAtPath_isDirectory_)
+        self.failUnlessArgHasType(NSFileManager.fileExistsAtPath_isDirectory_, 1, 'o^' + objc._C_NSBOOL)
+        self.failUnlessResultIsBOOL(NSFileManager.isReadableFileAtPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.isWritableFileAtPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.isExecutableFileAtPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.isDeletableFileAtPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.contentsEqualAtPath_andPath_)
+        self.failUnlessResultIsBOOL(NSFileManager.createFileAtPath_contents_attributes_)
+        self.failUnlessResultHasType(NSFileManager.fileSystemRepresentationWithPath_, '^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessResultIsNullTerminated(NSFileManager.fileSystemRepresentationWithPath_)
+        self.failUnlessArgHasType(NSFileManager.stringWithFileSystemRepresentation_length_, 0, '^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessArgSizeInArg(NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1)
+
+        self.failUnlessResultIsBOOL(NSDictionary.fileIsImmutable)
+        self.failUnlessResultIsBOOL(NSDictionary.fileIsAppendOnly)
+        self.failUnlessResultIsBOOL(NSDictionary.fileExtensionHidden)
+
+    def testProtocols(self):
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldCopyItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldMoveItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_movingItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldLinkItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldRemoveItemAtPath_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtPath_)
 
 if __name__ == '__main__':
     main()

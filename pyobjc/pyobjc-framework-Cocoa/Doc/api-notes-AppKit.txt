@@ -81,3 +81,10 @@ This structure is not supported, and therefore the method ``-baseOfTypesetterGly
 ------------
 
 Methods ``-initWithWindowRef:`` and ``-windowRef`` are not supported.
+
+``NSInputStream``
+------------------
+
+* ``getBuffer:length:``
+
+   This method is not supported

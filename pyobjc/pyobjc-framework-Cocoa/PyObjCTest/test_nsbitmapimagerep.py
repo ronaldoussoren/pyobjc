@@ -77,6 +77,12 @@ class TestNSBitmapImageRep(TestCase):
         bitmapData = i2.bitmapData()
         self.assertEquals(len(bitmapData), len(singlePlane))
         self.assertEquals(bitmapData, singlePlane)
+        
+        a = array.array('I', [255]*4)
+        self.failUnlessArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
+        d = i2.getPixel_atX_y_(a, 1, 1)
+        self.failUnless(a is d)
+
 
 class TestBadCreation(TestCase):
 
@@ -146,15 +152,23 @@ class TestBadCreation(TestCase):
         self.failUnlessIsInstance(NSImageEXIFData, unicode)
         self.failUnlessIsInstance(NSImageFallbackBackgroundColor, unicode)
 
+    def testTiffCompression(self):
+        lst, nr = NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
+        self.failUnlessIsInstance(lst, tuple)
+        self.failUnlessIsInstance(nr, (int, long))
+        self.failUnlessEqual(len(lst), nr)
+        self.failIfEqual(len(lst), 0)
+        self.failUnlessIsInstance(lst[0], (int, long))
+
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSBitmapImageRep.isPlanar)
         self.failUnlessResultIsBOOL(NSBitmapImageRep.canBeCompressedUsing_)
         self.failUnlessArgIsBOOL(NSBitmapImageRep.incrementalLoadFromData_complete_, 1)
+
+        self.failUnlessArgIsOut(NSBitmapImageRep.getCompression_factor_, 0)
+        self.failUnlessArgIsOut(NSBitmapImageRep.getCompression_factor_, 1)
+
         self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName  bitmapFormat:(NSBitmapFormat)bitmapFormat bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;")
-        self.fail("- (id)initWithBitmapDataPlanes:(unsigned char **)planes pixelsWide:(NSInteger)width pixelsHigh:(NSInteger)height bitsPerSample:(NSInteger)bps samplesPerPixel:(NSInteger)spp hasAlpha:(BOOL)alpha isPlanar:(BOOL)isPlanar colorSpaceName:(NSString *)colorSpaceName bytesPerRow:(NSInteger)rBytes bitsPerPixel:(NSInteger)pBits;") #XXX See above
-        self.fail("- (void)getCompression:(NSTIFFCompression *)compression factor:(float *)factor;")
-        self.fail("- (void)setCompression:(NSTIFFCompression)compression factor:(float)factor;")
-        self.fail("+ (void)getTIFFCompressionTypes:(const NSTIFFCompression **)list count:(NSInteger *)numTypes;")
 
 
 

@@ -301,6 +301,7 @@
   <constant name='NSZeroPoint' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
   <constant name='NSZeroRect' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   <constant name='NSZeroSize' type='{_NSSize=ff}' type64='{CGSize=dd}' />
+  <enum name='NSProprietaryStringEncoding' value='65536' />
   <enum name='NSASCIIStringEncoding' value='1' />
   <enum name='NSAdminApplicationDirectory' value='4' />
   <enum name='NSAggregateExpressionType' value='14' />
@@ -5486,7 +5487,9 @@
       <retval type='i' />
       <arg index='0' type='@' />
     </method>
-    <method selector='getIndexes:' suggestion='use -indexAtPosition:' />
+    <method selector='getIndexes:' >
+      <arg index='0' c_array_of_variable_length='true' type_modifier='o'  />
+    </method>
     <method selector='indexAtPosition:'>
       <retval type='I' type64='Q' />
       <arg index='0' type='I' type64='Q' />
@@ -5545,7 +5548,7 @@
     </method>
     <method selector='getIndexes:maxCount:inIndexRange:'>
       <retval type='I' type64='Q' />
-      <arg c_array_length_in_arg='2' index='0' null_accepted='false' type_modifier='o' />
+      <arg c_array_length_in_arg='1' index='0' null_accepted='false' type_modifier='o' c_array_length_in_result='true' />
       <arg index='1' type='I' type64='Q' />
       <arg index='2' null_accepted='false' type_modifier='N' />
     </method>
@@ -7277,6 +7280,15 @@
     <method selector='hasThousandSeparators'>
       <retval type='B' />
     </method>
+    <method selector='isLenient'>
+      <retval type='B' />
+    </method>
+    <method selector='usesSignificantDigits'>
+      <retval type='B' />
+    </method>
+    <method selector='isPartialStringValidationEnabled'>
+      <retval type='B' />
+    </method>
     <method selector='init'>
       <retval type='@' />
     </method>
@@ -7972,6 +7984,7 @@
     </method>
     <method selector='copyWithZone:'>
       <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
     </method>
     <method class_method='true' selector='copyWithZone:'>
       <retval type='@' />
@@ -9010,7 +9023,7 @@
     </method>
     <method class_method='true' selector='outputStreamToBuffer:capacity:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='1' index='0' type_modifier='o' />
+      <arg c_array_length_in_arg='1' index='0' type_modifier='o' type='^v'/>
       <arg index='1' type='I' type64='Q' />
     </method>
     <method class_method='true' selector='outputStreamToFileAtPath:append:'>
@@ -10716,7 +10729,7 @@
       <retval type='B' />
     </method>
     <method selector='cStringUsingEncoding:'>
-      <retval c_array_delimited_by_null='true' type='^t' />
+      <retval c_array_delimited_by_null='true' type='^v' />
       <arg index='0' type='I' />
     </method>
     <method selector='canBeConvertedToEncoding:'>
@@ -10809,6 +10822,9 @@
     <method selector='floatValue'>
       <retval type='f' />
     </method>
+    <method selector='availableStringEncodings'>
+	    <retval c_array_delimited_by_null='true' />
+    </method>
     <method selector='getBytes:maxLength:usedLength:encoding:options:range:remainingRange:'>
       <retval type='B' />
       <arg c_array_length_in_arg='1,2' index='0' type_modifier='o' />
@@ -10819,20 +10835,39 @@
       <arg index='5' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
       <arg index='6' type_modifier='o' />
     </method>
+    <method selector='cString'>
+	    <retval type='^t' c_array_delimited_by_null='true' />
+    </method>
+    <method selector='lossyCString'>
+	    <retval type='^t' c_array_delimited_by_null='true' />
+    </method>
     <method selector='getCString:' suggestion='use -cString' />
-    <method selector='getCString:maxLength:' suggestion='use -cString' />
-    <method selector='getCString:maxLength:encoding:' suggestion='use -cStringUsingEncoding:' />
-    <method selector='getCString:maxLength:range:remainingRange:' suggestion='use -cStringUsingEncoding:' />
+    <method selector='getCString:maxLength:' >
+	    <retval type='B' />
+	    <arg index='0' type='^v' type_modifier='o' c_array_length_in_arg='1' />
+    </method>
+    <method selector='getCString:maxLength:encoding:' >
+	    <retval type='B' />
+	    <arg index='0' type='^v' type_modifier='o' c_array_length_in_arg='1' />
+    </method>
+    <method selector='getCString:maxLength:range:remainingRange:' >
+	    <retval type='B' />
+	    <arg index='0' type='^v' type_modifier='o' c_array_length_in_arg='1' />
+	    <arg index='3' type_modifier='o' />
+    </method>
     <method selector='getCharacters:'>
       <retval type='v' />
-      <arg c_array_of_variable_length='true' index='0' type='r^T' />
+      <arg c_array_of_variable_length='true' index='0' type='^T' type_modifier='o' />
     </method>
     <method selector='getCharacters:range:'>
       <retval type='v' />
-      <arg c_array_length_in_arg='1' index='0' type='r^T' />
+      <arg c_array_length_in_arg='1' index='0' type='^T' type_modifier='o' />
       <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
     </method>
-    <method selector='getFileSystemRepresentation:maxLength:' suggestion='use -fileSystemRepresentation' />
+    <method selector='getFileSystemRepresentation:maxLength:' >
+	    <retval type='B' />
+	    <arg index='0' c_array_length_in_arg='1' type_modifier='o' type='^t' />
+    </method>
     <method selector='getLineStart:end:contentsEnd:forRange:'>
       <retval type='v' />
       <arg index='0' type_modifier='o' />
@@ -10876,7 +10911,7 @@
     </method>
     <method selector='initWithCString:'>
       <retval type='@' />
-      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='n' />
+      <arg c_array_delimited_by_null='true' index='0' type='^v' type_modifier='n' />
     </method>
     <method selector='initWithCString:encoding:'>
       <retval type='@' />
@@ -10885,23 +10920,23 @@
     </method>
     <method selector='initWithCString:length:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='1' index='0' type='^t' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type='^v' type_modifier='n' />
       <arg index='1' type='I' type64='Q' />
     </method>
     <method selector='initWithCStringNoCopy:length:freeWhenDone:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='1' index='0' type='^t' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type='^v' type_modifier='n' />
       <arg index='1' type='I' type64='Q' />
       <arg index='2' type='B' />
     </method>
     <method selector='initWithCharacters:length:'>
       <retval type='@' />
-      <arg index='0' type='r^T' />
+      <arg index='0' type='^T' type_modifier='n' c_array_length_in_arg='1'  />
       <arg index='1' type='I' type64='Q' />
     </method>
     <method selector='initWithCharactersNoCopy:length:freeWhenDone:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='1' index='0' type='r^T' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type='^T' type_modifier='n' />
       <arg index='1' type='I' type64='Q' />
       <arg index='2' type='B' />
     </method>
@@ -10959,7 +10994,7 @@
     </method>
     <method selector='initWithUTF8String:'>
       <retval type='@' />
-      <arg c_array_delimited_by_null='true' index='0' type='^t' />
+      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='n' />
     </method>
     <method selector='intValue'>
       <retval type='i' />
@@ -11167,7 +11202,7 @@
     </method>
     <method class_method='true' selector='stringWithCString:'>
       <retval type='@' />
-      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='n' />
+      <arg c_array_delimited_by_null='true' index='0' type='^v' type_modifier='n' />
     </method>
     <method class_method='true' selector='stringWithCString:encoding:'>
       <retval type='@' />
@@ -11176,7 +11211,7 @@
     </method>
     <method class_method='true' selector='stringWithCString:length:'>
       <retval type='@' />
-      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='n' />
+      <arg c_array_length_in_arg='1' index='0' type='^v' type_modifier='n' />
       <arg index='1' type='I' type64='Q' />
     </method>
     <method class_method='true' selector='stringWithCharacters:length:'>
@@ -11218,7 +11253,7 @@
     </method>
     <method class_method='true' selector='stringWithFormat:' variadic='true'>
       <retval type='@' />
-      <arg index='0' type='@' />
+      <arg index='0' type='@' printf_format='true' />
     </method>
     <method class_method='true' selector='stringWithString:'>
       <retval type='@' />
@@ -11226,7 +11261,7 @@
     </method>
     <method class_method='true' selector='stringWithUTF8String:'>
       <retval type='@' />
-      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='o' />
+      <arg c_array_delimited_by_null='true' index='0' type='^t' type_modifier='n' />
     </method>
     <method selector='stringsByAppendingPaths:'>
       <retval type='@' />
@@ -12536,7 +12571,7 @@
     <method selector='getValue:' suggestion='use another method' />
     <method selector='initWithBytes:objCType:'>
       <retval type='@' />
-      <arg c_array_of_variable_length='true' index='0' />
+      <arg c_array_of_variable_length='true' index='0' type_modifier='n' />
       <arg c_array_delimited_by_null='true' index='1' type='^t' type_modifier='n' />
     </method>
     <method selector='isEqualToValue:'>
@@ -12563,12 +12598,12 @@
     </method>
     <method class_method='true' selector='value:withObjCType:'>
       <retval type='@' />
-      <arg index='0' type='^v' />
+      <arg index='0' type='^v' type_modifier='n' c_array_of_variable_length='true' />
       <arg c_array_delimited_by_null='true' index='1' type='^t' type_modifier='n' />
     </method>
     <method class_method='true' selector='valueWithBytes:objCType:'>
       <retval type='@' />
-      <arg index='0' type='^v' />
+      <arg index='0' type='^v' type_modifier='n' c_array_of_variable_length='true' />
       <arg c_array_delimited_by_null='true' index='1' type='^t' type_modifier='n' />
     </method>
     <method class_method='true' selector='valueWithNonretainedObject:'>

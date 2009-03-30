@@ -13,6 +13,10 @@ class TestNSFileHandle (TestCase):
         self.failUnless( isinstance(NSFileHandleNotificationFileHandleItem, unicode) )
         self.failUnless( isinstance(NSFileHandleNotificationMonitorModes, unicode) )
 
+    def testMethods(self):
+        f = NSFileHandle.alloc().initWithFileDescriptor_closeOnDealloc_(0, False)
+        self.failUnlessArgIsBOOL(f.initWithFileDescriptor_closeOnDealloc_, 1)
+
 
 if __name__ == "__main__":
     main()

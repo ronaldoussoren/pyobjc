@@ -119,15 +119,21 @@ class TestNSGeometry (TestCase):
         self.failUnless(isinstance(w, NSRect))
         self.assertEquals(w, ((9,10),(11,12)))
 
+        self.failUnlessArgHasType(NSValue.valueWithPoint_, 0, NSPoint.__typestr__)
+        self.failUnlessResultHasType(NSValue.pointValue, NSPoint.__typestr__)
+        self.failUnlessArgHasType(NSValue.valueWithSize_, 0, NSSize.__typestr__)
+        self.failUnlessResultHasType(NSValue.sizeValue, NSSize.__typestr__)
+        self.failUnlessArgHasType(NSValue.valueWithRect_, 0, NSRect.__typestr__)
+        self.failUnlessResultHasType(NSValue.rectValue, NSRect.__typestr__)
+
 
     def testCoderMethods(self):
-        # Use NSArchiver, NSUnArchiver
-        self.fail('encodePoint:')
-        self.fail('encodeSize:')
-        self.fail('encodeRect:')
-        self.fail('decodePoint')
-        self.fail('decodeSize')
-        self.fail('decodeRect')
+        self.failUnlessArgHasType(NSCoder.encodePoint_, 0, NSPoint.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodePoint, NSPoint.__typestr__)
+        self.failUnlessArgHasType(NSCoder.encodeSize_, 0, NSSize.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodeSize, NSSize.__typestr__)
+        self.failUnlessArgHasType(NSCoder.encodeRect_, 0, NSRect.__typestr__)
+        self.failUnlessResultHasType(NSCoder.decodeRect, NSRect.__typestr__)
 
 
 if __name__ == "__main__":
