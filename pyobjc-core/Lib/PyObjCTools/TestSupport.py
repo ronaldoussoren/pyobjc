@@ -319,7 +319,11 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         cnt = info['arguments'][argno+offset]['c_array_length_in_arg']
-        if cnt != count + offset:
+        if isinstance(count, (list, tuple)):
+            count2 = tuple(x + offset for x in count)
+        else:
+            count2 = count + offset
+        if cnt != count2:
             self.fail(message or "arg %d of %s is not a C-array of with length in arg %d"%(
                 argno, method, count))
 
