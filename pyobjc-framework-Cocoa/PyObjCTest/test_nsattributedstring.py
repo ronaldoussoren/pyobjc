@@ -6,13 +6,12 @@ import Foundation
 
 class TestNSAttributedString (TestCase):
     def testOutput(self):
-        obj = NSAttributedString.alloc().init()
-        m = obj.attributesAtIndex_longestEffectiveRange_inRange_.__metadata__()
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
+        self.failUnlessArgIsOut(NSAttributedString.attributesAtIndex_effectiveRange_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.attribute_atIndex_effectiveRange_, 2)
+        self.failUnlessArgIsOut(NSAttributedString.attributesAtIndex_longestEffectiveRange_inRange_, 1)
+        self.failUnlessArgIsOut(NSAttributedString.attribute_atIndex_longestEffectiveRange_inRange_, 2)
 
-        m = obj.attribute_atIndex_longestEffectiveRange_inRange_.__metadata__()
-        self.failUnless(m['arguments'][4]['type'].startswith('o^'))
-
+        self.failUnlessResultIsBOOL(NSAttributedString.isEqualToAttributedString_)
 
     def testConstantsAppKit(self):
         self.failUnlessIsInstance(NSFontAttributeName, unicode)

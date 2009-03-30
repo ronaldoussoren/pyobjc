@@ -18,5 +18,9 @@ class TestNSHTTPCookie (TestCase):
         self.failUnless( isinstance(NSHTTPCookieMaximumAge, unicode) )
         self.failUnless( isinstance(NSHTTPCookiePort, unicode) )
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSHTTPCookie.isSessionOnly)
+        self.failUnlessResultIsBOOL(NSHTTPCookie.isSecure)
+
 if __name__ == "__main__":
     main()

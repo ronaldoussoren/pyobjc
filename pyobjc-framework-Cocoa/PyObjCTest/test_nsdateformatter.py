@@ -14,6 +14,10 @@ class TestNSDateFormatter (TestCase):
         self.failUnless(range == NSRange(0, 10))
         self.failUnless(err is None)
 
+        self.failUnlessResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
+        self.failUnlessArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
+        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
+
     def testConstants(self):
         self.assertEquals(NSDateFormatterNoStyle, kCFDateFormatterNoStyle)
         self.assertEquals(NSDateFormatterShortStyle, kCFDateFormatterShortStyle)
@@ -24,6 +28,15 @@ class TestNSDateFormatter (TestCase):
         self.assertEquals(NSDateFormatterBehaviorDefault, 0)
         self.assertEquals(NSDateFormatterBehavior10_0, 1000)
         self.assertEquals(NSDateFormatterBehavior10_4, 1040)
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSDateFormatter.generatesCalendarDates)
+        self.failUnlessArgIsBOOL(NSDateFormatter.setGeneratesCalendarDates_, 0)
+        self.failUnlessResultIsBOOL(NSDateFormatter.isLenient)
+        self.failUnlessArgIsBOOL(NSDateFormatter.setLenient_, 0)
+        self.failUnlessResultIsBOOL(NSDateFormatter.isLenient)
+        self.failUnlessArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
+        self.failUnlessResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
 
 
 if __name__ == "__main__":

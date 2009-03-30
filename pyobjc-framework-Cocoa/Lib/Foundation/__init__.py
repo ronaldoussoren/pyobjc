@@ -29,6 +29,7 @@ from Foundation._netservice import *
 from Foundation._string import *
 
 import Foundation._nsobject
+import Foundation._nsindexset
 
 YES = objc.YES
 NO = objc.NO
@@ -47,3 +48,6 @@ def MAX(a, b):
 
 ABS = abs
 
+import sys
+NSMaximumStringLength = sys.maxint - 1
+del sys

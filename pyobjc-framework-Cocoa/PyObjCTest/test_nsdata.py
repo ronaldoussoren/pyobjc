@@ -10,6 +10,20 @@ otherBytes = array.array('c')
 otherBytes.fromstring('12345678901234567890' * 5)
 
 class TestNSData(TestCase):
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSData.writeToFile_atomically_)
+        self.failUnlessArgIsBOOL(NSData.writeToFile_atomically_, 1)
+        self.failUnlessResultIsBOOL(NSData.writeToURL_atomically_)
+        self.failUnlessArgIsBOOL(NSData.writeToURL_atomically_, 1)
+        self.failUnlessResultIsBOOL(NSData.writeToFile_options_error_)
+        self.failUnlessArgIsOut(NSData.writeToFile_options_error_, 2)
+        self.failUnlessResultIsBOOL(NSData.writeToURL_options_error_)
+        self.failUnlessArgIsOut(NSData.writeToURL_options_error_, 2)
+        self.failUnlessArgIsOut(NSData.dataWithContentsOfFile_options_error_, 2)
+        self.failUnlessArgIsOut(NSData.dataWithContentsOfURL_options_error_, 2)
+        self.failUnlessArgIsOut(NSData.initWithContentsOfFile_options_error_, 2)
+        self.failUnlessArgIsOut(NSData.initWithContentsOfURL_options_error_, 2)
+
     def testConstants(self):
         self.assertEquals(NSMappedRead, 1)
         self.assertEquals(NSUncachedRead, 2)
@@ -29,13 +43,16 @@ class TestNSData(TestCase):
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testAppendBytes_length_(self):
-        self.fail("NSMutableData.appendBytes_length_")
+        self.failUnlessArgIsIn(NSMutableData.appendBytes_length_, 0)
+        self.failUnlessArgSizeInArg(NSMutableData.appendBytes_length_, 0, 1)
 
     def testreplaceBytesInRange_withBytes_(self):
-        self.fail("NSMutableData.replaceBytesInRange_withBytes_")
+        self.failUnlessArgIsIn(NSMutableData.replaceBytesInRange_withBytes_, 1)
+        self.failUnlessArgSizeInArg(NSMutableData.replaceBytesInRange_withBytes_, 1, 0)
 
-    def testreplaceBytesInRange_withBytes_replacementLength_(self):
-        self.fail("NSMutableData.replaceBytesInRange_withBytes_replacementLength_")
+    def testreplaceBytesInRange_withBytes_length_(self):
+        self.failUnlessArgIsIn(NSMutableData.replaceBytesInRange_withBytes_length_, 1)
+        self.failUnlessArgSizeInArg(NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2)
 
     def testDataWithBytesNoCopy_length_freeWhenDone_(self):
         data = NSData.dataWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)

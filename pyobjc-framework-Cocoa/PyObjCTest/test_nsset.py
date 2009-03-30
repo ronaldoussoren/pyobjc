@@ -151,5 +151,18 @@ class TestVariadic (TestCase):
         self.assertEquals(len(o), 0)
         self.assert_(isinstance(o, NSMutableSet))
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSSet.containsObject_)
+        self.failUnlessResultIsBOOL(NSSet.intersectsSet_)
+        self.failUnlessResultIsBOOL(NSSet.isEqualToSet_)
+        self.failUnlessResultIsBOOL(NSSet.isSubsetOfSet_)
+
+        self.failUnlessArgIsIn(NSSet.setWithObjects_count_, 0)
+        self.failUnlessArgSizeInArg(NSSet.setWithObjects_count_, 0, 1)
+        self.failUnlessArgIsIn(NSSet.initWithObjects_count_, 0)
+        self.failUnlessArgSizeInArg(NSSet.initWithObjects_count_, 0, 1)
+
+        self.failUnlessArgIsBOOL(NSSet.initWithSet_copyItems_, 1)
+
 if __name__ == '__main__':
-    main( )
+    main()

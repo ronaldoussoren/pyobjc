@@ -1,7 +1,5 @@
-from PyObjCTools.TestSupport import *
-import objc
-
 from Foundation import *
+from PyObjCTools.TestSupport import *
 import Foundation
 
 class TestHelper (NSObject):
@@ -9,9 +7,6 @@ class TestHelper (NSObject):
         foo[0] += 1
 
 class TestNSUndoManager(TestCase):
-    def testFail(self):
-        self.fail("Add tests that check undo calling methods with odd signatures")
-
     def testUndoManager(self):
         x = TestHelper.new()
         m = NSUndoManager.new()
@@ -82,6 +77,17 @@ class TestSubclassingUndo(TestCase):
         self.failUnless(isinstance(NSUndoManagerDidOpenUndoGroupNotification, unicode))
         self.failUnless(isinstance(NSUndoManagerWillCloseUndoGroupNotification, unicode))
 
+        self.failUnlessEqual(NSUndoCloseGroupingRunLoopOrdering, 350000)
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSUndoManager.isUndoRegistrationEnabled)
+        self.failUnlessResultIsBOOL(NSUndoManager.groupsByEvent)
+        self.failUnlessArgIsBOOL(NSUndoManager.setGroupsByEvent_, 0)
+        self.failUnlessResultIsBOOL(NSUndoManager.canUndo)
+        self.failUnlessResultIsBOOL(NSUndoManager.canRedo)
+        self.failUnlessResultIsBOOL(NSUndoManager.isUndoing)
+        self.failUnlessResultIsBOOL(NSUndoManager.isRedoing)
+        self.failUnlessArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, 'v@:@')
 
 if __name__ == '__main__':
     main( )

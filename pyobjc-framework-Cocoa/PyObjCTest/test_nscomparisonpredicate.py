@@ -26,6 +26,10 @@ class TestNSComparisonPredicate (TestCase):
         self.assertEquals(NSContainsPredicateOperatorType, 99)
         self.assertEquals(NSBetweenPredicateOperatorType, 100)
 
+    def testMethods(self):
+        self.failUnlessArgIsSEL(NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
+        self.failUnlessArgIsSEL(NSComparisonPredicate.initWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
+
 if __name__ == "__main__":
     main()
 

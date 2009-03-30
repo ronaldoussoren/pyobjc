@@ -7,20 +7,15 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-import objc
-from PyObjCTools import NibClassBuilder
-from Foundation import *
+from AppKit import *
 
 from Category import Category
 from PriorityToColourTransformer import PriorityToColourTransformer
 from OverdueTransformer import OverdueTransformer
 
-NibClassBuilder.extractClasses("ToDosDocument")
-
-class ToDosDocument(NibClassBuilder.AutoBaseClass):
-    # the actual base class is NSDocument
-    # The following outlets are added to the class: nix
-    toDos = objc.ivar('toDos')
+class ToDosDocument(NSDocument):
+    nix = objc.IBOutlet()
+    toDos = objc.ivar()
 
     def init(self):
         self = super(ToDosDocument, self).init()

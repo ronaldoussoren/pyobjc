@@ -110,5 +110,16 @@ class TestPythonCoder(TestCase):
         d = o.fetchArray_(coder)
         self.assertEquals(tuple(range(10)), tuple(d))
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSCoder.allowsKeyedCoding)
+        self.failUnlessArgIsBOOL(NSCoder.encodeBool_forKey_, 0)
+        self.failUnlessResultIsBOOL(NSCoder.containsValueForKey_)
+        self.failUnlessResultIsBOOL(NSCoder.decodeBoolForKey_)
+
+        self.failUnlessResultHasType(NSCoder.decodeBytesForKey_returnedLength_, '^v')
+        self.failUnlessResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
+        self.failUnlessArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
+
+
 if __name__ == '__main__':
     main( )

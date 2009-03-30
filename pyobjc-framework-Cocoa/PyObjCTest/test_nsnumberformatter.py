@@ -30,12 +30,29 @@ class TestNSNumberFormatter (TestCase):
 
 
     def testOutput(self):
-        o = NSNumberFormatter.alloc().init()
-        m = o.getObjectValue_forString_range_error_.__metadata__()
-        self.assertEquals(m['arguments'][2]['type'], 'o^@')
-        self.failUnless(m['arguments'][4]['type'].startswith('N^'))
-        self.failUnless(m['arguments'][5]['type'].startswith('o^'))
+        self.failUnlessResultIsBOOL(NSNumberFormatter.getObjectValue_forString_range_error_)
+        self.failUnlessArgIsOut(NSNumberFormatter.getObjectValue_forString_range_error_, 0)
+        self.failUnlessArgIsInOut(NSNumberFormatter.getObjectValue_forString_range_error_, 2)
+        self.failUnlessArgIsOut(NSNumberFormatter.getObjectValue_forString_range_error_, 3)
 
+        self.failUnlessResultIsBOOL(NSNumberFormatter.generatesDecimalNumbers)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setGeneratesDecimalNumbers_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.allowsFloats)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setAllowsFloats_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.alwaysShowsDecimalSeparator)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setAlwaysShowsDecimalSeparator_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.usesGroupingSeparator)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setUsesGroupingSeparator_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.isLenient)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setLenient_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.usesSignificantDigits)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setUsesSignificantDigits_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.isPartialStringValidationEnabled)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setPartialStringValidationEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.hasThousandSeparators)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setHasThousandSeparators_, 0)
+        self.failUnlessResultIsBOOL(NSNumberFormatter.localizesFormat)
+        self.failUnlessArgIsBOOL(NSNumberFormatter.setLocalizesFormat_, 0)
 
 
 

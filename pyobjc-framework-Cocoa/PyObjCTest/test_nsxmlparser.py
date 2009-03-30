@@ -97,6 +97,16 @@ class TestNSXMLParser (TestCase):
         self.assertEquals(NSXMLParserNoDTDError, 94)
         self.assertEquals(NSXMLParserDelegateAbortedParseError, 512)
 
+        self.failUnlessIsInstance(NSXMLParserErrorDomain, unicode)
+
+    def testMethods(self):
+        self.failUnlessArgIsBOOL(NSXMLParser.setShouldProcessNamespaces_, 0)
+        self.failUnlessArgIsBOOL(NSXMLParser.setShouldReportNamespacePrefixes_, 0)
+        self.failUnlessArgIsBOOL(NSXMLParser.setShouldResolveExternalEntities_, 0)
+        self.failUnlessResultIsBOOL(NSXMLParser.shouldProcessNamespaces)
+        self.failUnlessResultIsBOOL(NSXMLParser.shouldReportNamespacePrefixes)
+        self.failUnlessResultIsBOOL(NSXMLParser.shouldResolveExternalEntities)
+        self.failUnlessResultIsBOOL(NSXMLParser.parse)
 
 if __name__ == "__main__":
     main()

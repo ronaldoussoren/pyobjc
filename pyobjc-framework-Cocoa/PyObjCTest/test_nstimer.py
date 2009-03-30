@@ -47,5 +47,18 @@ class TestNSTimer(TestCase):
 
         self.assertEquals(after, before)
 
+    def testMethods(self):
+        self.failUnlessArgIsBOOL(NSTimer.timerWithTimeInterval_invocation_repeats_, 2)
+        self.failUnlessArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2)
+        self.failUnlessArgIsBOOL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4)
+        self.failUnlessArgIsSEL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, 'v@:@')
+        self.failUnlessArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 4)
+        self.failUnlessArgIsSEL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 2, 'v@:@')
+
+        self.failUnlessArgIsBOOL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 5)
+        self.failUnlessArgIsSEL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 3, 'v@:@')
+
+        self.failUnlessResultIsBOOL(NSTimer.isValid)
+
 if __name__ == '__main__':
     main( )

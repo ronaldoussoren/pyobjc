@@ -21,12 +21,13 @@ class TestNSCalendar (TestCase):
 
         self.assertEquals( NSUndefinedDateComponent, NSIntegerMax)
 
-    def testOutput(self):
+    @min_os_level('10.5')
+    def testMethods10_5(self):
         obj = NSCalendar.currentCalendar()
 
-        m = obj.rangeOfUnit_startDate_interval_forDate_.__metadata__()
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
-        self.failUnless(m['arguments'][4]['type'].startswith('o^'))
+        self.failUnlessResultIsBOOL(NSCalendar.rangeOfUnit_startDate_interval_forDate_)
+        self.failUnlessArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1)
+        self.failUnlessArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2)
 
 
 if __name__ == "__main__":

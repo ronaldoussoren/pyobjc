@@ -16,20 +16,14 @@ class TestAE (TestCase):
         self.failUnless(ok is False)
         self.failUnless(isinstance(error, NSDictionary))
 
-        obj = NSAppleScript.alloc().initWithSource_(
-                'tell application "Terminal" to do script "ls -l"')
-        m = obj.compileAndReturnError_.__metadata__()
-        self.failUnless(m['arguments'][2]['type'].startswith('o^'))
 
-        m = obj.executeAndReturnError_.__metadata__()
-        self.failUnless(m['arguments'][2]['type'].startswith('o^'))
-
-        m = obj.executeAppleEvent_error_.__metadata__()
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
-
-        m = obj.initWithContentsOfURL_error_.__metadata__()
-        self.failUnless(m['arguments'][3]['type'].startswith('o^'))
-
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSAppleScript.isCompiled)
+        self.failUnlessResultIsBOOL(NSAppleScript.compileAndReturnError_)
+        self.failUnlessArgIsOut(NSAppleScript.compileAndReturnError_, 0)
+        self.failUnlessArgIsOut(NSAppleScript.executeAndReturnError_, 0)
+        self.failUnlessArgIsOut(NSAppleScript.executeAppleEvent_error_, 1)
+        self.failUnlessArgIsOut(NSAppleScript.initWithContentsOfURL_error_, 1)
 
 if __name__ == "__main__":
     main()

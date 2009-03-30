@@ -2,6 +2,10 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+class TestNSObjectHelper (NSObject):
+    def copyWithZone_(self, zn): return None
+    def mutableCopyWithZone_(self, zn): return None
+
 class TestNSObjectFunctions (TestCase):
     def testAllocation(self):
         o = NSAllocateObject(NSObject, 0, None)
@@ -81,6 +85,33 @@ class TestNSObjectInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
             a = NSObject.alloc().init()
+
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSObject.isEqual_)
+        self.failUnlessResultIsBOOL(NSObject.isProxy)
+        self.failUnlessResultIsBOOL(NSObject.isKindOfClass_)
+        self.failUnlessResultIsBOOL(NSObject.isMemberOfClass_)
+        self.failUnlessResultIsBOOL(NSObject.conformsToProtocol_)
+        self.failUnlessResultIsBOOL(NSObject.respondsToSelector_)
+        self.failUnlessResultIsBOOL(NSObject.instancesRespondToSelector_)
+        self.failUnlessResultIsBOOL(NSObject.isSubclassOfClass_)
+        self.failUnlessResultIsBOOL(NSObject.resolveClassMethod_)
+        self.failUnlessResultIsBOOL(NSObject.resolveInstanceMethod_)
+
+        o = NSObject.alloc().init()
+        self.failUnlessResultIsBOOL(o.isEqual_)
+        self.failUnlessResultIsBOOL(o.isProxy)
+        self.failUnlessResultIsBOOL(o.isKindOfClass_)
+        self.failUnlessResultIsBOOL(o.isMemberOfClass_)
+        self.failUnlessResultIsBOOL(o.conformsToProtocol_)
+        self.failUnlessResultIsBOOL(o.respondsToSelector_)
+
+
+        a = TestNSObjectHelper.alloc().init()
+        self.failUnlessArgHasType(a.copyWithZone_, 0, '^{_NSZone=}')
+        self.failUnlessArgHasType(a.mutableCopyWithZone_, 0, '^{_NSZone=}')
+
+
 
 if __name__ == '__main__':
     main( )

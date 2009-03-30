@@ -9,5 +9,8 @@ class TestValueTrans (TestCase):
         self.failUnless(isinstance(NSUnarchiveFromDataTransformerName, unicode))
         self.failUnless(isinstance(NSKeyedUnarchiveFromDataTransformerName, unicode))
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
+
 if __name__ == "__main__":
     main()

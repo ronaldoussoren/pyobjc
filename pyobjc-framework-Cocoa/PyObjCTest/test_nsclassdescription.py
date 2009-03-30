@@ -7,5 +7,6 @@ class TestNSClassDescription (TestCase):
         self.failUnless(isinstance(NSClassDescriptionNeededForClassNotification, unicode))
 
 
+
 if __name__ == "__main__":
     main()

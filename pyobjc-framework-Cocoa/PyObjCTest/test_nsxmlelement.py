@@ -3,10 +3,8 @@ from PyObjCTools.TestSupport import *
 
 class TestXMLElement (TestCase):
     def testOutputArgs(self):
-        n =  NSXMLElement.alloc().init()
-        self.assertEquals(
-            n.initWithXMLString_error_.__metadata__()['arguments'][3]['type'],
-            'o^@')
+        self.failUnlessArgIsOut(NSXMLElement.initWithXMLString_error_, 1)
+        self.failUnlessArgIsBOOL(NSXMLElement.normalizeAdjacentTextNodesPreservingCDATA_, 0)
 
 if __name__ == "__main__":
     main()

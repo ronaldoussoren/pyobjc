@@ -18,12 +18,11 @@ class TestXMLNode (TestCase):
         self.assertEquals(NSXMLNotationDeclarationKind, 12)
 
     def testOutputArgs(self):
-        n =  NSXMLNode.alloc().init()
-        self.assertEquals(
-            n.nodesForXPath_error_.__metadata__()['arguments'][3]['type'],
-            'o^@')
-
+        self.failUnlessArgIsOut(NSXMLNode.nodesForXPath_error_, 1)
         self.failUnlessArgIsOut(NSXMLNode.objectsForXQuery_constants_error_, 2)
+        self.failUnlessArgIsOut(NSXMLNode.objectsForXQuery_error_, 1)
+        self.failUnlessArgIsBOOL(NSXMLNode.setStringValue_resolvingEntities_, 1)
+        self.failUnlessArgIsBOOL(NSXMLNode.canonicalXMLStringPreservingComments_, 0)
 
 
 if __name__ == "__main__":

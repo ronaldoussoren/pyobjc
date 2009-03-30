@@ -24,5 +24,9 @@ class TestXMLDTDNode (TestCase):
         self.assertEquals(NSXMLElementDeclarationMixedKind, 19)
         self.assertEquals(NSXMLElementDeclarationElementKind, 20)
 
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSXMLDTDNode.isExternal)
+
+
 if __name__ == "__main__":
     main()

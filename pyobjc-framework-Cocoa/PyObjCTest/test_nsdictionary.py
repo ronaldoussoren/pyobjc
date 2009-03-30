@@ -254,6 +254,30 @@ class TestVariadic (TestCase):
     def testGetObjectsAndKeys(self):
         self.fail("getObjects:andKeys:")
 
+class TestNSDictionary (TestCase):
+    def testMethods(self):
+        self.failUnlessResultIsBOOL(NSDictionary.isEqualToDictionary_)
+        self.failUnlessResultIsBOOL(NSDictionary.writeToFile_atomically_)
+        self.failUnlessArgIsBOOL(NSDictionary.writeToFile_atomically_, 1)
+        self.failUnlessResultIsBOOL(NSDictionary.writeToURL_atomically_)
+        self.failUnlessArgIsBOOL(NSDictionary.writeToURL_atomically_, 1)
+
+        self.failUnlessArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, 'i@:@')
+
+        self.failUnlessArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 0)
+        self.failUnlessArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2)
+        self.failUnlessArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 1)
+        self.failUnlessArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 1, 2)
+
+        self.failUnlessArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 0)
+        self.failUnlessArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 0, 2)
+        self.failUnlessArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 1)
+        self.failUnlessArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 1, 2)
+
+        self.failUnlessArgIsBOOL(NSDictionary.initWithDictionary_copyItems_, 1)
+
+        self.fail("-initWithObjectsAndKeys:")
+        self.fail("-dictionaryWithObjectsAndKeys:")
 
 if __name__ == '__main__':
     main( )
