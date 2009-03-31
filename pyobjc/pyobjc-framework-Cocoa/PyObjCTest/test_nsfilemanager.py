@@ -195,7 +195,7 @@ class TestNSFileManager (TestCase):
         self.failUnlessResultIsBOOL(NSFileManager.createFileAtPath_contents_attributes_)
         self.failUnlessResultHasType(NSFileManager.fileSystemRepresentationWithPath_, '^' + objc._C_CHAR_AS_TEXT)
         self.failUnlessResultIsNullTerminated(NSFileManager.fileSystemRepresentationWithPath_)
-        self.failUnlessArgHasType(NSFileManager.stringWithFileSystemRepresentation_length_, 0, '^' + objc._C_CHAR_AS_TEXT)
+        self.failUnlessArgHasType(NSFileManager.stringWithFileSystemRepresentation_length_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
         self.failUnlessArgSizeInArg(NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1)
 
         self.failUnlessResultIsBOOL(NSDictionary.fileIsImmutable)

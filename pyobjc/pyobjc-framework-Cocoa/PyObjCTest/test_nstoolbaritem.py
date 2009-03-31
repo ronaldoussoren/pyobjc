@@ -25,7 +25,7 @@ class TestNSToolbarItem (TestCase):
         self.failUnlessArgIsBOOL(NSToolbarItem.setEnabled_, 0)
         self.failUnlessResultIsBOOL(NSToolbarItem.autovalidates)
         self.failUnlessArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
-        self.failUnlessResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar_)
+        self.failUnlessResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar)
 
     def testProtocols(self):
         self.failUnlessResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)

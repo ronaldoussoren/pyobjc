@@ -26,6 +26,7 @@ NSCoder
 
 * ``-decodeValuesOfObjCTypes:``: Use the basic decodeing methods instead
 
+
 NSData, NSMutableData
 ---------------------
 
@@ -43,6 +44,13 @@ NSData, NSMutableData
 
   Use ``buffer(value)`` instead, those will automaticly be bridged to an instance of a 
   ``NSData`` subclass.
+
+``NSDictionary``
+----------------
+
+* ``-getObjects:andKeys:``
+
+   This method is not supported.
 
 NSDebug
 -------

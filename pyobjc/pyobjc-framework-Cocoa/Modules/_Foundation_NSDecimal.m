@@ -1132,6 +1132,7 @@ void init_NSDecimal(void)
 
 
 	Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
+	Class classNSNumber = objc_lookUpClass("NSNumber");
   
 	if (PyObjC_RegisterMethodMapping(
 			classNSDecimalNumber,
@@ -1162,7 +1163,7 @@ void init_NSDecimal(void)
 	}
 
 	if (PyObjC_RegisterMethodMapping(
-			classNSDecimalNumber,
+			classNSNumber,
 			@selector(decimalValue),
 			call_NSDecimalNumber_decimalValue,
 			imp_NSDecimalNumber_decimalValue) < 0) {

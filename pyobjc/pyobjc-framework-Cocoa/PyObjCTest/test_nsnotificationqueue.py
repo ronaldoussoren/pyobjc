@@ -5,7 +5,7 @@ from Foundation import *
 
 class TestNSNotificationQueue (TestCase):
     def testConstants(self):
-        self.assertEquals(NSPostWhenIdle, -1)
+        self.assertEquals(NSPostWhenIdle, 1)
         self.assertEquals(NSPostASAP, 2)
         self.assertEquals(NSPostNow, 3)
 
@@ -15,4 +15,4 @@ class TestNSNotificationQueue (TestCase):
 
 
 if __name__ == "__main__":
-    unitest.main()
+    main()

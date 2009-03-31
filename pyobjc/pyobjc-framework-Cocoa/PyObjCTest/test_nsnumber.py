@@ -31,9 +31,6 @@ def stripDocType(val):
 
 
 class TestNSNumber( TestCase ):
-    def testFixme(self):
-        self.fail("need attention")
-
     def testSimple(self):
         self.assertEquals(NSNumber.numberWithFloat_(1.0), 1,0)
         self.assertEquals(NSNumber.numberWithInt_(1), 1)
@@ -201,25 +198,30 @@ if objc.platform == 'MACOSX':
 
             self.assertEquals(stripDocType(data), stripDocType(PLIST))
 
-if isinstance(NSDecimalNumber.decimalNumberWithString_(u'1.00'), NSDecimalNumber):
-    class TestDecimalNumber (TestCase):
-        # NSDecimalNumber is treated specially
+class TestDecimalNumber (TestCase):
+    def testProxy (self):
+        one = NSDecimalNumber.decimalNumberWithString_(u"1.00")
+        self.assert_(isinstance(one, NSDecimalNumber))
 
-        # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
+        two = NSDecimalNumber.decimalNumberWithString_(u"2.00")
+        self.assert_(isinstance(two, NSDecimalNumber))
 
-        def testProxy (self):
-            o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
-            self.assert_(isinstance(o, NSDecimalNumber))
+        three = NSDecimalNumber.decimalNumberWithString_(u"3.00")
+        self.assert_(isinstance(three, NSDecimalNumber))
 
-else:
-    class TestDecimalNumber (TestCase):
-        # NSDecimalNumber is treated specially
+        six = NSDecimalNumber.decimalNumberWithString_(u"6.00")
+        self.assert_(isinstance(six, NSDecimalNumber))
 
-        # TODO: Add tests for using decimal numbers (addition, multiplication, ...)
+        one_half = NSDecimalNumber.decimalNumberWithString_(u"0.50")
+        self.assert_(isinstance(one_half, NSDecimalNumber))
 
-        def testProxy (self):
-            o = NSDecimalNumber.decimalNumberWithString_(u"1.00")
-            self.assert_(isinstance(o, NSDecimal))
+        
+        self.failUnlessEqual(one + two, three)
+        self.failUnlessEqual(three - one, two)
+        self.failUnlessEqual(three * two, six)
+        self.failUnlessEqual(one / two, one_half)
+
+
 
 if __name__ == '__main__':
     main( )

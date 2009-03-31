@@ -132,3 +132,7 @@ the moment.
   This method is not supported
 
   
+``NSGetUncaughtExceptionHandler``
+---------------------------------
+
+This function is not yet supported.

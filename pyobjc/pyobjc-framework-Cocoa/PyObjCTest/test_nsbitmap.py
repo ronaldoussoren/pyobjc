@@ -4,7 +4,7 @@ import AppKit
 class TestNSBitmapImageRep (TestCase):
 
     def test_getTIFFCompressionTypes(self):
-        r = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_()
+        r = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
 
         self.assert_(isinstance(r, tuple))
         self.assertEquals(len(r), 2)

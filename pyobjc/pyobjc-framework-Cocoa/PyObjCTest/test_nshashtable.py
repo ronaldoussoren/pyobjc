@@ -10,6 +10,7 @@ class TestNSHashTable (TestCase):
         self.assertEquals(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEquals(NSHashTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
+    @expectedFailure
     def testFunctions(self):
         self.fail("NSHasTable functions")
 
