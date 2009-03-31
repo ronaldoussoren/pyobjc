@@ -273,9 +273,14 @@ class TestNSMutableArrayInteraction(TestCase):
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
 
-        self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
-        self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
-        self.assertRaises(TypeError, a.sortUsingFunction_context_, cmp, u'a')
+        t = objc.getVerbose()
+        objc.setVerbose(0)
+        try:
+            self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
+            self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
+            self.assertRaises(TypeError, a.sortUsingFunction_context_, cmp, u'a')
+        finally:
+            objc.setVerbose(t)
 
     def testSort2(self):
         a = NSMutableArray.arrayWithArray_(range(10))
@@ -430,16 +435,16 @@ class TestNSArray (TestCase):
         self.failUnlessArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
         self.failUnlessArgSizeInArg(NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1)
 
-        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'I@@@', False)
+        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'i@@@', False)
         self.failUnlessArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, '@')
-        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'I@@@', False)
+        self.failUnlessArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'i@@@', False)
         self.failUnlessArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, '@')
 
-        self.failUnlessArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'I@@@', False)
+        self.failUnlessArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'i@@@', False)
         self.failUnlessArgHasType(NSMutableArray.sortUsingFunction_context_, 1, '@')
 
-        self.fail("-arrayWithObjects:")
-        self.fail("-initWithObjects:")
+        self.failUnlessIsNullTerminated(NSArray.arrayWithObjects_)
+        self.failUnlessIsNullTerminated(NSArray.initWithObjects_)
 
 if __name__ == '__main__':
     main()

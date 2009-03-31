@@ -76,17 +76,29 @@ class TestNSDecimal (TestCase):
         v = NSDecimalIsNotANumber(o)
         self.failUnless(v is False)
 
-        self.fail('NSDecimalCopy')
-        self.fail('NSDecimalCompact')
-        self.fail('NSDecimalCompare')
-        self.fail('NSDecimalRound')
-        self.fail('NSDecimalNormalize')
-        self.fail('NSDecimalAdd')
-        self.fail('NSDecimalSubtract')
-        self.fail('NSDecimalMultiply')
-        self.fail('NSDecimalDivide')
-        self.fail('NSDecimalPower')
-        self.fail('NSDecimalString')
+        v = NSDecimal()
+        NSDecimalCopy(v, o)
+        self.failUnlessEqual(str(v), str(o))
+
+        NSDecimalCompact(v)
+
+        i = NSDecimalCompare(o, p)
+        self.failUnlessIsInstance(i, (int, long))
+
+        NSDecimalRound(v, o, 0, NSRoundBankers)
+        self.failUnlessEqual(str(v), '2')
+
+        t = NSDecimalNormalize(v, o, NSRoundBankers)
+        self.failUnlessEqual(t, NSCalculationNoError)
+        self.failUnlessEqual(str(v), '2.0')
+
+        t = NSDecimalPower(v, o, 3, NSRoundBankers)
+        self.failUnlessEqual(t, NSCalculationNoError)
+        self.failUnlessEqual(str(v), '3.375')
+
+        t = NSDecimalString(v, None)
+        self.failUnlessEqual(t, u'3.375')
+
 
     def testCompare(self):
         small = NSDecimal(u"1")

@@ -15084,7 +15084,7 @@
       <arg index='2' type='@' />
       <arg index='3' type='@' />
       <arg index='4' type='@' />
-      <arg index='5' sel_of_type='v@:@i^v' type=':' />
+      <arg index='5' sel_of_type='v@:@i^v' />
       <arg index='6' type='^v' />
     </method>
     <method selector='canChooseDirectories'>
@@ -17517,6 +17517,25 @@
     </method>
     <method selector='allowsOtherFileTypes'>
       <retval type='B' />
+    </method>
+    <method selector='beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
+      <retval type='v' />
+      <arg index='0' type='@' />
+      <arg index='1' type='@' />
+      <arg index='2' type='@' />
+      <arg index='3' type='@' />
+      <arg index='4' type='@' />
+      <arg index='5' sel_of_type='v@:@i^v' />
+      <arg index='6' type='^v' />
+    </method>
+    <method selector='beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:'>
+      <retval type='v' />
+      <arg index='0' type='@' />
+      <arg index='1' type='@' />
+      <arg index='2' type='@' />
+      <arg index='3' type='@' />
+      <arg index='4' sel_of_type='v@:@i^v' type=':' />
+      <arg index='5' type='^v' />
     </method>
     <method selector='beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
       <retval type='v' />

@@ -251,8 +251,6 @@ class TestVariadic (TestCase):
         self.assertEquals(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSMutableDictionary))
 
-    def testGetObjectsAndKeys(self):
-        self.fail("getObjects:andKeys:")
 
 class TestNSDictionary (TestCase):
     def testMethods(self):
@@ -276,8 +274,8 @@ class TestNSDictionary (TestCase):
 
         self.failUnlessArgIsBOOL(NSDictionary.initWithDictionary_copyItems_, 1)
 
-        self.fail("-initWithObjectsAndKeys:")
-        self.fail("-dictionaryWithObjectsAndKeys:")
+        self.failUnlessIsNullTerminated(NSDictionary.initWithObjectsAndKeys_)
+        self.failUnlessIsNullTerminated(NSDictionary.dictionaryWithObjectsAndKeys_)
 
 if __name__ == '__main__':
     main( )

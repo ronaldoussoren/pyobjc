@@ -38,8 +38,8 @@ class TestNSException (TestCase):
         self.failUnless( isinstance(NSPortReceiveException, unicode) )
         self.failUnless( isinstance(NSOldStyleException, unicode) )
 
+    @expectedFailure
     def testUncaughtExceptionHandler(self):
-        self.fail("NSGetUncaughtExceptionHandler")
         self.fail("NSSetUncaughtExceptionHandler")
 
     def testNoAssert(self):

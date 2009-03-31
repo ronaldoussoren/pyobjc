@@ -561,23 +561,6 @@
   <enum name='NSNumberFormatterSpellOutStyle' value='5' />
   <enum name='NSNumericSearch' value='64' />
   <enum name='NSOSF1OperatingSystem' value='7' />
-  <enum name='NSObjCArrayType' value='91' />
-  <enum name='NSObjCBitfield' value='98' />
-  <enum name='NSObjCBoolType' value='66' />
-  <enum name='NSObjCCharType' value='99' />
-  <enum name='NSObjCDoubleType' value='100' />
-  <enum name='NSObjCFloatType' value='102' />
-  <enum name='NSObjCLongType' value='108' />
-  <enum name='NSObjCLonglongType' value='113' />
-  <enum name='NSObjCNoType' value='0' />
-  <enum name='NSObjCObjectType' value='64' />
-  <enum name='NSObjCPointerType' value='94' />
-  <enum name='NSObjCSelectorType' value='58' />
-  <enum name='NSObjCShortType' value='115' />
-  <enum name='NSObjCStringType' value='42' />
-  <enum name='NSObjCStructType' value='123' />
-  <enum name='NSObjCUnionType' value='40' />
-  <enum name='NSObjCVoidType' value='118' />
   <enum name='NSDecimalNoScale' value='32767' />
   <enum name='NSObjectAutoreleasedEvent' value='3' />
   <enum name='NSObjectExtraRefDecrementedEvent' value='5' />
@@ -913,6 +896,77 @@
   <enum name='NS_LittleEndian' value='1' />
   <enum name='NS_UNICHAR_IS_EIGHT_BIT' value='0' />
   <enum name='NS_UnknownByteOrder' value='0' />
+  <function name='NSDecimalAdd' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalDivide' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalMultiply' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalSubtract' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalCopy' >
+    <retval type='v' type64='v' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+  </function>
+  <function name='NSDecimalCompare' >
+    <retval type='i' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+  </function>
+  <function name='NSDecimalRound' >
+    <retval type='v' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalNormalize' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalPower' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalString' >
+    <retval type='@' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='@' />
+  </function>
+  <function name='NSDecimalCompact' >
+    <retval type='v' type64='v' />
+    <arg type='^{_NSDecimal=}' />
+  </function>
+  <function name='NSDecimalIsNotANumber' >
+    <retval type='B' type64='B' />
+    <arg type='^{_NSDecimal=}' />
+  </function>
   <function name='NSAllHashTableObjects'>
     <retval type='@' type64='@' />
     <arg type='@' type64='@' />
@@ -2219,6 +2273,24 @@
     </method>
   </class>
   <class name='NSArray'>
+	  <method selector='sortedArrayUsingFunction:context:' >
+		  <arg index='0' function_pointer='true' function_pointer_retained='false'>
+			  <retval type='i'/>
+			  <arg type='@' />
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+		  <arg index='1' type='@' />
+	  </method>
+	  <method selector='sortedArrayUsingFunction:context:hint:' >
+		  <arg index='0' function_pointer='true' function_pointer_retained='false'>
+			  <retval type='i'/>
+			  <arg type='@' />
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+		  <arg index='1' type='@' />
+	  </method>
     <method selector='addObserver:forKeyPath:options:context:'>
       <retval type='v' />
       <arg index='0' type='@' />
@@ -4306,9 +4378,6 @@
       <arg index='0' type='@' />
       <arg index='1' type='@' />
     </method>
-    <method selector='decimalValue'>
-      <retval type='{NSDecimal=b8b4b1b1b18[8S]}' />
-    </method>
     <method class_method='true' selector='defaultBehavior'>
       <retval type='@' />
     </method>
@@ -4453,7 +4522,7 @@
       <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
       <arg index='2' type='I' type64='Q' />
     </method>
-    <method class_method='true' selector='dictionaryWithObjectsAndKeys:' variadic='true'>
+    <method class_method='true' selector='dictionaryWithObjectsAndKeys:' variadic='true' c_array_delimited_by_null='true'>
       <retval type='@' />
       <arg index='0' type='@' />
     </method>
@@ -4530,8 +4599,8 @@
     </method>
     <method selector='initWithObjects:forKeys:count:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='2' index='0' />
-      <arg c_array_length_in_arg='2' index='1' />
+      <arg c_array_length_in_arg='2' index='0' type_modifier='n' />
+      <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
       <arg index='2' type='I' type64='Q' />
     </method>
     <method c_array_delimited_by_null='true' selector='initWithObjectsAndKeys:' variadic='true'>
@@ -5184,7 +5253,7 @@
     </method>
     <method selector='stringWithFileSystemRepresentation:length:'>
       <retval type='@' />
-      <arg c_array_length_in_arg='1' index='0' type='^t' />
+      <arg c_array_length_in_arg='1' index='0' type='^t' type_modifier='n' />
       <arg index='1' type='I' type64='Q' />
     </method>
     <method selector='subpathsAtPath:'>
@@ -6298,6 +6367,16 @@
     </method>
   </class>
   <class name='NSMutableArray'>
+	  <method selector='sortUsingFunction:context:' >
+		  <arg index='0' function_pointer='true' function_pointer_retained='false' >
+			  <retval type='i' />
+			  <arg type='@' />
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+		  <arg index='1' type='@' />
+	  </method>
+
     <method selector='addObject:'>
       <retval type='v' />
       <arg index='0' type='@' />
@@ -7699,6 +7778,14 @@
     </method>
   </class>
   <class name='NSObject'>
+    <method selector='mutableCopyWithZone:'>
+      <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
+    </method>
+    <method class_method='true' selector='mutableCopyWithZone:'>
+      <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
+    </method>
     <method selector=''>
       <retval type='v' />
     </method>
@@ -7988,6 +8075,7 @@
     </method>
     <method class_method='true' selector='copyWithZone:'>
       <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
     </method>
     <method selector='countByEnumeratingWithState:objects:count:' suggestion='use python iteration' />
     <method selector='createConversationForConnection:'>
@@ -8317,9 +8405,11 @@
     </method>
     <method selector='mutableCopyWithZone:'>
       <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
     </method>
     <method class_method='true' selector='mutableCopyWithZone:'>
       <retval type='@' />
+      <arg index='0' type='^{_NSZone=}' />
     </method>
     <method selector='mutableSetValueForKey:'>
       <retval type='@' />
@@ -9876,7 +9966,7 @@
     </method>
     <method selector='scanDecimal:'>
       <retval type='B' />
-      <arg index='0' null_accepted='false' type_modifier='o' />
+      <arg index='0' null_accepted='false' />
     </method>
     <method selector='scanDouble:'>
       <retval type='B' />

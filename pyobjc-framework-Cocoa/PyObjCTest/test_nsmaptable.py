@@ -10,6 +10,7 @@ class TestNSMapTable (TestCase):
         self.assertEquals(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEquals(NSMapTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
+    @expectedFailure
     def testFunctions(self):
         self.fail("NSMapTable C-API is untested")
 

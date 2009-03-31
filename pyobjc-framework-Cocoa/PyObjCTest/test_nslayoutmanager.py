@@ -99,6 +99,10 @@ class TestNSLayoutManager (TestCase):
         self.failUnlessArgIsBOOL(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 2)
         self.failUnlessArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 3)
         self.failUnlessArgIsOut(NSLayoutManager.getLineFragmentInsertionPointsForCharacterAtIndex_alternatePositions_inDisplayOrder_positions_characterIndexes_, 4)
+
+    @min_os_level('10.5')
+    @expectedFailure
+    def testMethods10_5_fail(self):
         self.fail("Buffer size is non-trivial: - (NSUInteger)getLineFragmentInsertionPointsForCharacterAtIndex:(NSUInteger)charIndex alternatePositions:(BOOL)aFlag inDisplayOrder:(BOOL)dFlag positions:(CGFloat *)positions characterIndexes:(NSUInteger *)charIndexes;")
 
 

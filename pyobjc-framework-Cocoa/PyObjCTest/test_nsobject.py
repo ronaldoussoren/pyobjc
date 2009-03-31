@@ -5,6 +5,8 @@ from Foundation import *
 class TestNSObjectHelper (NSObject):
     def copyWithZone_(self, zn): return None
     def mutableCopyWithZone_(self, zn): return None
+    def isContentDiscarded(self): return 1
+    def beginContentAccess(self): return 1
 
 class TestNSObjectFunctions (TestCase):
     def testAllocation(self):
@@ -111,6 +113,10 @@ class TestNSObjectInteraction(TestCase):
         self.failUnlessArgHasType(a.copyWithZone_, 0, '^{_NSZone=}')
         self.failUnlessArgHasType(a.mutableCopyWithZone_, 0, '^{_NSZone=}')
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(TestNSObjectHelper.beginContentAccess)
+        self.failUnlessResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
 
 
 if __name__ == '__main__':
