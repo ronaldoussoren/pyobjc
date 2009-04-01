@@ -763,6 +763,30 @@ PyObjC_PythonToCArray(
 
 	/* A more complex array */
 
+#if PY_VERSION_HEX >= 0x02060000
+	if (PyObject_CheckBuffer(obj)) {
+		/* An object that implements the new-style buffer interface.
+		 * Use the buffer interface description to check if the buffer
+		 * type is compatible with what we expect.
+		 * 
+		 * Specifically:
+		 * - If the C code expects an array of basic types:
+		 *   the buffer must be a single-dimensional array of 
+		 *   a compatible type. 
+		 * - If the C code expects and array of structures:
+		 *   The python array must be two dimensional, one row
+		 *   in the python array corresponds to one struct "instance"
+		 * - If the C code expects a multi-dimensional array: 
+		 *   the python buffer must have a compatible dimension.
+		 *
+		 * The array must be large enough and  mustn't contain holes
+		 * in the fragment that gets used by us.
+		 */
+
+	}
+
+#endif
+
 	if (array_check(pythonList)) {
 		/* An array.array. Only convert if the typestr describes an
 		 * simple type of the same type as the array, or a struct/array
@@ -832,9 +856,9 @@ PyObjC_PythonToCArray(
 				return -1;
 			}
 			*array = buf;
-			*bufobj = pythonList;
-			Py_INCREF(pythonList);
 		}
+		*bufobj = pythonList;
+		Py_INCREF(pythonList);
 		return SHOULD_IGNORE;
 
 #ifdef PyObjC_ENABLE_NUMARRAY
