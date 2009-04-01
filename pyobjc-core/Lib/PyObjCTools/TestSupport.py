@@ -16,8 +16,7 @@ import struct as _struct
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
 _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
-_useleaks = False
-_leaksVerbose = False
+_leaksVerbose = True
 
 def fourcc(v):
     """
@@ -141,6 +140,11 @@ class TestCase (_unittest.TestCase):
         info = method.__metadata__()
         if not info['retval'].get('c_array_delimited_by_null'):
             self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+
+    def failUnlessIsNullTerminated(self, method, message = None):
+        info = method.__metadata__()
+        if not info.get('c_array_delimited_by_null') or not info.get('variadic'):
+            self.fail(message or "%s is not a variadic function with a null-terminated list of arguments"%(method,))
 
     def failUnlessArgIsNullTerminated(self, method, argno, message = None):
         if isinstance(method, objc.selector):
@@ -419,3 +423,20 @@ class TestCase (_unittest.TestCase):
                             print ln
 
 main = _unittest.main
+
+if hasattr(_unittest, 'expectedFailure'):
+    expectedFailure = _unittest.expectedFailure
+else:
+    def expectedFailure(func):
+        def test(self):
+            try:
+                func(self)
+            
+            except AssertionError:
+                return
+
+            self.fail("test unexpectedly passed")
+        test.__name__ == func.__name__
+
+        return test
+
