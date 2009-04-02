@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude" >
+  <xi:include href="layout.html" />
+  <head>
+    <title>PyObjC Examples</title>
+  </head>
+
+  <body>
+    <div id="ctxtnav" class="nav"></div>
+
+    <div id="content" >
+
+      <h1>PyObjC Examples</h1>
+
+      <p>PyObjC has a large number of sample projects, please use the navigation menu on the left, or below, to skip to 
+      the examples for a specific framework.</p>
+
+      <ul>
+        <li py:for="framework, link in bottommenu"><a href="${link}">${framework}</a></li>
+      </ul>
+
+      <p><em>Note:</em> a number of examples still use <code>NibClassBuilder.AutoBaseClass</code>. This is deprecated
+      behaviour, but we haven't updated all sample code yet.</p>
+
+    </div>
+  </body>
+</html>
