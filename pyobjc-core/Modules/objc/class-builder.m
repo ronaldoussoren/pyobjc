@@ -307,6 +307,21 @@ build_intermediate_class(Class base_class, char* name)
 			(IMP)closure,
 			copyWithZone_signature);
 	}
+	if ([base_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
+		methinfo = PyObjCMethodSignature_FromSignature(
+				copyWithZone_signature);
+		if (methinfo == NULL) goto error_cleanup; 
+		closure = PyObjCFFI_MakeClosure(methinfo, 
+				object_method_copyWithZone_, base_class);
+		Py_DECREF(methinfo); methinfo = NULL;
+		if (closure == NULL) goto error_cleanup;
+
+		preclass_addMethod(
+			intermediate_class,
+			@selector(mutableCopyWithZone:),
+			(IMP)closure,
+			copyWithZone_signature);
+	}
 
 	methinfo = PyObjCMethodSignature_FromSignature("v@:");
 	if (methinfo == NULL) goto error_cleanup; 
@@ -336,12 +351,12 @@ build_intermediate_class(Class base_class, char* name)
 		base_class);
 	Py_DECREF(methinfo); methinfo = NULL;
 	if (closure == NULL) goto error_cleanup;
-	preclass_addMethod(intermediate_class, @selector(setValue:forKey:),
-		(IMP)closure, "v@:@@");
+	preclass_addMethod(intermediate_class, 
+		@selector(setValue:forKey:),        (IMP)closure, "v@:@@");
 	preclass_addMethod(intermediate_class, 
 		@selector(takeStoredValue:forKey:), (IMP)closure, "v@:@@");
 	preclass_addMethod(intermediate_class, 
-		@selector(takeValue:forKey:), (IMP)closure, "v@:@@");
+		@selector(takeValue:forKey:),       (IMP)closure, "v@:@@");
 
 
 	methinfo = PyObjCMethodSignature_FromSignature("c@::");
@@ -643,6 +658,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			need_intermediate = 1;
 		}
 	}
+	if (PyDict_GetItemString(class_dict, "mutableCopyWithZone_") == NULL) {
+		PyErr_Clear();
+	} else {
+		if ([super_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
+			need_intermediate = 1;
+		}
+	}
 
 	if (PyDict_GetItemString(class_dict, "dealloc") == NULL) {
 		PyErr_Clear();
@@ -659,17 +681,17 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	} else {
 		need_intermediate = 1;
 	}
-	if (PyDict_GetItemString(class_dict, "setValueForKey_") == NULL) {
+	if (PyDict_GetItemString(class_dict, "setValue_forKey_") == NULL) {
 		PyErr_Clear();
 	} else {
 		need_intermediate = 1;
 	}
-	if (PyDict_GetItemString(class_dict, "takeValueForKey_") == NULL) {
+	if (PyDict_GetItemString(class_dict, "takeValue_forKey_") == NULL) {
 		PyErr_Clear();
 	} else {
 		need_intermediate = 1;
 	}
-	if (PyDict_GetItemString(class_dict, "takeStoredValueForKey_") == NULL) {
+	if (PyDict_GetItemString(class_dict, "takeStoredValue_forKey_") == NULL) {
 		PyErr_Clear();
 	} else {
 		need_intermediate = 1;
@@ -1007,6 +1029,19 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 			METH(
 				"copyWithZone_",
+				@selector(copyWithZone:),
+				copyWithZone_signature,
+				object_method_copyWithZone_);
+		}
+		if (!have_intermediate && [super_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
+			if (copyWithZone_signature[0] == '\0') {
+				snprintf(copyWithZone_signature,
+					sizeof(copyWithZone_signature),
+					"@@:%s", @encode(NSZone*));
+			}
+
+			METH(
+				"mutableCopyWithZone_",
 				@selector(copyWithZone:),
 				copyWithZone_signature,
 				object_method_copyWithZone_);
