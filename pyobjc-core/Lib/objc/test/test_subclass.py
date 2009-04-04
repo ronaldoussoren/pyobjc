@@ -416,6 +416,17 @@ class TestOverridingSpecials(TestCase):
         self.assert_(not b)
         self.assertEquals(lst, ['init', 'alloc'])
 
+    def testImplementingSetValueForKey(self):
+        values = {}
+        class CrashTest(NSObject):
+            def setValue_forKey_(self, v, k):
+                values[k] = v
+
+        o = CrashTest.alloc().init()
+        o.setValue_forKey_(42,"key")
+
+        self.failUnlessEqual(values, {"key":42})
+
 
 if __name__ == '__main__':
     main()
