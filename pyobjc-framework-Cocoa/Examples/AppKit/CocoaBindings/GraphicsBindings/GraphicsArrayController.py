@@ -18,8 +18,9 @@ class GraphicsArrayController (NSArrayController):
     """Allow filtering by color, just for the fun of it"""
 
     filterColor = objc.IBOutlet()
-    newCircle = objc.IBOuetlet()
+    newCircle = objc.IBOutlet()
     shouldFilter = objc.ivar.BOOL()
+    graphicsView = objc.IBOutlet()
 
     def arrangeObjects_(self, objects):
         "Filtering is not yet connected in IB!"

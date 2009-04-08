@@ -8,10 +8,7 @@
 #  Based on Apples FahrenheitToCelsiusTransformer Example
 #  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/ValueTransformers/index.html
 
-from Foundation import *
-from AppKit import *
-from PyObjCTools import NibClassBuilder
-import objc
+from Cocoa import *
 
 
 class FahrenheitToCelsiusTransformer(NSValueTransformer):
@@ -48,8 +45,7 @@ class FahrenheitToCelsiusTransformer(NSValueTransformer):
         return fahrenheitOutputValue
 
 
-NibClassBuilder.extractClasses("MainMenu")
-class TransformerAppDelegate(NibClassBuilder.AutoBaseClass):
+class TransformerAppDelegate (NSObject):
     fahrenheit = objc.ivar('fahrenheit', objc._C_DBL)
         
 trans = FahrenheitToCelsiusTransformer.alloc().init()

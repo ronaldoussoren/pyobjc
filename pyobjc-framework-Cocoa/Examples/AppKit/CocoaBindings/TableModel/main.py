@@ -7,7 +7,6 @@
 #
 
 from PyObjCTools import AppHelper
-from Foundation import NSProcessInfo
 
 # import classes required to start application
 import TableModelAppDelegate

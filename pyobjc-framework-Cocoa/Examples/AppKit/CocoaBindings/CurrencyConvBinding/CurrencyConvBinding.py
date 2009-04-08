@@ -5,5 +5,4 @@ import Converter
 import CurrencyConvBindingDocument
 
 if __name__ == '__main__':
-    # start the event loop
     AppHelper.runEventLoop()

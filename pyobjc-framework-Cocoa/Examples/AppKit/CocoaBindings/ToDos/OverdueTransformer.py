@@ -12,13 +12,13 @@ from AppKit import *
 
 class OverdueTransformer(NSValueTransformer):
 
+    @classmethod
     def transformedValueClass(cls):
         return NSColor
-    transformedValueClass = classmethod(transformedValueClass)
 
+    @classmethod
     def allowsReverseTransformation(cls):
         return False
-    allowsReverseTransformation = classmethod(allowsReverseTransformation)
 
     def transformedValue_(self, aDate):
         if aDate is None:

@@ -8,6 +8,7 @@ from distutils.core import setup
 import py2app
 
 setup(
+    name="PyObjC Launcher",
     app=["PyObjCLauncher.py"],
     data_files=["English.lproj"],
     options=dict(py2app=dict(

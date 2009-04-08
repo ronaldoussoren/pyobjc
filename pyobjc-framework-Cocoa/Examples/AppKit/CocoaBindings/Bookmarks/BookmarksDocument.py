@@ -8,7 +8,7 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
-from Foundation import *
+from Cocoa import *
 
 # BookmarksDocument defines this as it may be used for copy and paste
 # in addition to just drag and drop

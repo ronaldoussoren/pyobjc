@@ -7,7 +7,7 @@ class MyFormatter(NSFormatter):
                 return product
         return str(product)
 
-    def getObjectValue_forString_errorDescription_(self, upc):
+    def getObjectValue_forString_errorDescription_(self, value, upc, error):
         print self, upc
 
         if not upc:

@@ -12,13 +12,13 @@ from AppKit import NSColor
 
 class PriorityToColourTransformer(NSValueTransformer):
 
+    @classmethod
     def transformedValueClass(cls):
         return NSColor
-    transformedValueClass = classmethod(transformedValueClass)
 
+    @classmethod
     def allowsReverseTransformation(cls):
         return False
-    allowsReverseTransformation = classmethod(allowsReverseTransformation)
 
     def transformedValue_(self, priority):
         if priority > 4:

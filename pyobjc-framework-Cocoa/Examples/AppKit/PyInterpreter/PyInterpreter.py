@@ -200,7 +200,7 @@ class PyInterpreter(NSObject):
         self.textView.setFont_(self.font())
         self.textView.setContinuousSpellCheckingEnabled_(False)
         self.textView.setRichText_(False)
-        self._executeWithRedirectedIO(self._interp)
+        self._executeWithRedirectedIO_args_kwds_(self._interp, (), {})
 
     #
     #  NIB loading protocol
@@ -265,7 +265,7 @@ class PyInterpreter(NSObject):
     #  Interpreter functions
     #
 
-    def _executeWithRedirectedIO(self, fn, *args, **kwargs):
+    def _executeWithRedirectedIO_args_kwds_(self, fn, args, kwargs):
         old = sys.stdin, sys.stdout, sys.stderr
         if self._stdin is not None:
             sys.stdin = self._stdin
@@ -279,7 +279,7 @@ class PyInterpreter(NSObject):
 
     def executeLine_(self, line):
         self.addHistoryLine_(line)
-        self._executeWithRedirectedIO(self._executeLine_, line)
+        self._executeWithRedirectedIO_args_kwds_(self._executeLine_, (line,), {})
         self._history = filter(None, self._history)
         self._history.append(u'')
         self._historyView = len(self._history) - 1

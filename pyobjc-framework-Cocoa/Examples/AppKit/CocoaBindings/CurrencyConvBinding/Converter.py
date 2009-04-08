@@ -1,6 +1,4 @@
 from Foundation import *
-from AppKit import *
-from objc import ivar
 
 class Converter (NSObject):
     exchangeRate = objc.ivar.double()

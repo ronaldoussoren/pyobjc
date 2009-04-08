@@ -12,7 +12,9 @@ def ERROR(s):
     return s
 
 class ServiceTest(NSObject):
-    def doOpenFileService_userData_error_(self, pboard, data):
+
+    @serviceSelector
+    def doOpenFileService_userData_error_(self, pboard, data, error):
         #NSLog(u"doOpenFileService_userData_error_(%r, %r)" % (pboard, data,))
         try:
             types = pboard.types()
@@ -38,11 +40,8 @@ class ServiceTest(NSObject):
             return ERROR(u'Exception, see traceback')
 
 
-    doOpenFileService_userData_error_ = serviceSelector(
-        doOpenFileService_userData_error_
-    )
-
-    def doCapitalizeService_userData_error_(self, pboard, data):
+    @serviceSelector
+    def doCapitalizeService_userData_error_(self, pboard, data, err):
         #NSLog(u"doCapitalizeService_userData_error_(%r, %r)" % (pboard, data,))
         try:
             types = pboard.types()
@@ -71,7 +70,3 @@ class ServiceTest(NSObject):
             import traceback
             traceback.print_exc()
             return ERROR(u'Exception, see traceback')
-
-    doCapitalizeService_userData_error_ = serviceSelector(
-       doCapitalizeService_userData_error_
-    )

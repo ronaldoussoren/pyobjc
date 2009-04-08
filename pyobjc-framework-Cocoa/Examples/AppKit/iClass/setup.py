@@ -7,10 +7,8 @@ Usage:
 from setuptools import setup
 
 setup(
+    name="iClass",
     app=["main.py"],
     data_files=["English.lproj"],
     setup_requires=["py2app"],
-    options=dict(py2app=dict(plist=dict(
-        CFBundleName='iClass',
-    ))),
 )

@@ -19,6 +19,7 @@ plist = dict(
 )
 
 setup(
+    name='ToDos',
     app=["ToDos.py"],
     data_files=["English.lproj"],
     options=dict(py2app=dict(

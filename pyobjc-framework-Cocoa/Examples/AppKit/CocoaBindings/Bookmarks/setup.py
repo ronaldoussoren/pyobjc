@@ -19,6 +19,7 @@ plist = dict(
 )
 
 setup(
+    name="Bookmarks",
     app=["Bookmarks.py"],
     data_files=["English.lproj"],
     options=dict(py2app=dict(
