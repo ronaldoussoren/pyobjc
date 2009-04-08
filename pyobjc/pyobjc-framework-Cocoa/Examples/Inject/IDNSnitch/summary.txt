@@ -1,9 +1,0 @@
-A proof of concept `IDN spoofing defense`__ for Safari (tested with v1.2.4 on 
-Mac OS X 10.3.8). Demonstrates how to write an application that detects the 
-launch of another application by bundle identifier, how to use ``objc.inject`` 
-to load code into another application, how to override the implementation of 
-an existing class but still call back into the original implementation, and 
-how to reduce the size of such an application/plugin combination by using 
-symlinks to share object files (the PyObjC extensions in this case).
-
-.. __: http://bob.pythonmac.org/archives/2005/02/07/idn-spoofing-defense-for-safari/

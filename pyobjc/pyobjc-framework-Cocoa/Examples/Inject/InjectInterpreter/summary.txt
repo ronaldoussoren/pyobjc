@@ -1,1 +1,0 @@
-Shows how to inject an in-process Python interpreter into another process. Based on the AppKit PyInterpreter example.
