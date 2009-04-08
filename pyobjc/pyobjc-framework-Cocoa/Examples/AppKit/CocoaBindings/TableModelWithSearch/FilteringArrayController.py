@@ -6,13 +6,8 @@
 #  Copyright (c) 2004 __MyCompanyName__. All rights reserved.
 #
 
-from objc import YES, NO
-from Foundation import *
-from AppKit import *
-from PyObjCTools import NibClassBuilder
+from Cocoa import *
 import re
-
-NibClassBuilder.extractClasses("MainMenu")
 
 kLiteralSearch = u'Literal Search'
 kRegularExpressionSearch = u'Regular Expression Search'
@@ -29,11 +24,12 @@ def regexForSearchString(searchString, searchType):
 def dictValueFilter(dicts, regex):
     for dct in dicts:
         for value in dct.itervalues():
+            print value
             if regex.search(value):
                 yield dct
                 break
 
-class FilteringArrayController(NibClassBuilder.AutoBaseClass):
+class FilteringArrayController (NSArrayController):
     searchString = None
     lastRegex = None
     searchType = kLiteralSearch
@@ -49,10 +45,12 @@ class FilteringArrayController(NibClassBuilder.AutoBaseClass):
             return supermethod(objects)
         return supermethod(list(dictValueFilter(objects, regex)))
 
+    @objc.IBAction
     def performSearch_(self, sender):
         self.searchString = sender.stringValue()
         self.rearrangeObjects()
 
+    @objc.IBAction
     def changeSearchType_(self, searchType):
         self.lastRegex = None
         self.searchString = None

@@ -43,6 +43,8 @@ class CustomView(NSView):
             self.window().invalidateShadow()
 
 class CustomWindow(NSWindow):
+    def awakeFromNib(self):
+        self.initialLocation = NSPoint()
 
     def initWithContentRect_styleMask_backing_defer_(self, contentRect, aStyle,
                                                      bufferingType, flag):

@@ -22,6 +22,7 @@ plist = dict(
 )
 
 setup(
+    name="CurrencyConvBinding",
     app=["CurrencyConvBinding.py"],
     data_files=["English.lproj"],
     options=dict(py2app=dict(

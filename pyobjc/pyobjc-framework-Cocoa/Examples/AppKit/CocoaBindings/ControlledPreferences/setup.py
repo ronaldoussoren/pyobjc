@@ -8,6 +8,7 @@ from distutils.core import setup
 import py2app
 
 setup(
+    name="ControlledPreferences",
     app=["ControlledPreferences.py"],
     data_files=["English.lproj"],
 )

@@ -1,6 +1,5 @@
-from Foundation import *
-from AppKit import *
+from Cocoa import *
 
-class CurrencyConvBindingDocument (NSObject):
+class CurrencyConvBindingDocument (NSDocument):
     def windowNibName(self):
         return "CurrencyConvBindingDocument"

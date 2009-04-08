@@ -9,6 +9,6 @@ import py2app
 
 setup(
     name="TableModel",
-    app=["__main__.py"],
+    app=["main.py"],
     data_files=["English.lproj"],
 )

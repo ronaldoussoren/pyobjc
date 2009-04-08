@@ -6,28 +6,26 @@
 #  Copyright (c) 2004 __MyCompanyName__. All rights reserved.
 #
 
-from objc import YES, NO
-from Foundation import *
-from AppKit import *
-
-from PyObjCTools import NibClassBuilder
-
-NibClassBuilder.extractClasses("MainMenu")
+from Cocoa import *
 
 kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"
 
 from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
 
-class ToolbarCreator(NibClassBuilder.AutoBaseClass):
+class ToolbarCreator (NSObject):
+    filteringArrayController = objc.IBOutlet()
+    searchField = objc.IBOutlet()
+    window = objc.IBOutlet()
+
     def awakeFromNib(self):
         self.toolbarItemCache = {}
 
         # create toolbar containing search field
         toolbar = NSToolbar.alloc().initWithIdentifier_(kToolbarIdentifier)
         toolbar.setDelegate_(self)
-        toolbar.setAllowsUserCustomization_(YES)
-        toolbar.setAutosavesConfiguration_(YES)
+        toolbar.setAllowsUserCustomization_(True)
+        toolbar.setAutosavesConfiguration_(True)
 
         searchFieldItem = NSToolbarItem.alloc().initWithItemIdentifier_(kSearchFieldItemIdentifier)
         self.searchFieldItem = searchFieldItem
@@ -55,6 +53,7 @@ class ToolbarCreator(NibClassBuilder.AutoBaseClass):
         # this better be the kLiteralSearch menu item
         self.changeSearchType_(item)
 
+    @objc.IBAction
     def changeSearchType_(self, sender):
         obj = sender.representedObject()
         self.searchField.cell().setPlaceholderString_(obj)

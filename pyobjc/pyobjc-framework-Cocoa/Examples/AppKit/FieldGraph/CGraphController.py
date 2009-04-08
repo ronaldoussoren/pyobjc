@@ -1,6 +1,5 @@
-from Foundation import NSObject
-from PyObjCTools import NibClassBuilder, AppHelper
-from objc import *
+from Foundation import *
+from PyObjCTools import AppHelper
 
 from CGraphModel import *
 from CGraphView import *
@@ -9,25 +8,25 @@ from fieldMath import *
 
 #____________________________________________________________
 class CGraphController(NSObject):
-    graphModel = IBOutlet()
-    graphView = IBOutlet()
-    fieldNormalizeCheck = IBOutlet()
-    settingDrawer = IBOutlet()
-    fieldSlider0 = IBOutlet()
-    fieldSlider1 = IBOutlet()
-    fieldSlider2 = IBOutlet()
-    phaseSlider0 = IBOutlet()
-    phaseSlider1 = IBOutlet()
-    phaseSlider2 = IBOutlet()
-    spacingSlider = IBOutlet()
-    fieldDisplay0 = IBOutlet()
-    fieldDisplay1 = IBOutlet()
-    fieldDisplay2 = IBOutlet()
-    phaseDisplay0 = IBOutlet()
-    phaseDisplay1 = IBOutlet()
-    phaseDisplay2 = IBOutlet()
-    RMSGainDisplay = IBOutlet()
-    spacingDisplay = IBOutlet()
+    graphModel = objc.IBOutlet()
+    graphView = objc.IBOutlet()
+    fieldNormalizeCheck = objc.IBOutlet()
+    settingDrawer = objc.IBOutlet()
+    fieldSlider0 = objc.IBOutlet()
+    fieldSlider1 = objc.IBOutlet()
+    fieldSlider2 = objc.IBOutlet()
+    phaseSlider0 = objc.IBOutlet()
+    phaseSlider1 = objc.IBOutlet()
+    phaseSlider2 = objc.IBOutlet()
+    spacingSlider = objc.IBOutlet()
+    fieldDisplay0 = objc.IBOutlet()
+    fieldDisplay1 = objc.IBOutlet()
+    fieldDisplay2 = objc.IBOutlet()
+    phaseDisplay0 = objc.IBOutlet()
+    phaseDisplay1 = objc.IBOutlet()
+    phaseDisplay2 = objc.IBOutlet()
+    RMSGainDisplay = objc.IBOutlet()
+    spacingDisplay = objc.IBOutlet()
     
 #____________________________________________________________
 # Update GUI display and control values
@@ -66,32 +65,32 @@ class CGraphController(NSObject):
 #____________________________________________________________
 # Handle GUI values
     
-    @IBAction
+    @objc.IBAction
     def fieldDisplay0_(self, sender):
         self.setNormalizedField(0, sender.floatValue())
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def fieldDisplay1_(self, sender):
         self.setNormalizedField(1, sender.floatValue())
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def fieldDisplay2_(self, sender):
         self.setNormalizedField(2, sender.floatValue())
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def fieldSlider0_(self, sender):
         self.setNormalizedField(0, sender.floatValue())
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def fieldSlider1_(self, sender):
         self.setNormalizedField(1, sender.floatValue())
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def fieldSlider2_(self, sender):
         self.setNormalizedField(2, sender.floatValue())
         self.drawGraph()
@@ -123,46 +122,46 @@ class CGraphController(NSObject):
             self.graphModel.setField(t, v)
 
 
-    @IBAction
+    @objc.IBAction
     def phaseDisplay0_(self, sender):
         self.graphModel.setPhase(0, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def phaseDisplay1_(self, sender):
         self.graphModel.setPhase(1, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def phaseDisplay2_(self, sender):
         self.graphModel.setPhase(2, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def phaseSlider0_(self, sender):
         self.graphModel.setPhase(0, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def phaseSlider1_(self, sender):
         self.graphModel.setPhase(1, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def phaseSlider2_(self, sender):
         self.graphModel.setPhase(2, degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def spacingDisplay_(self, sender):
         self.graphModel.setSpacing(degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def spacingSlider_(self, sender):
         self.graphModel.setSpacing(degToRad(sender.floatValue()))
         self.drawGraph()
 
-    @IBAction
+    @objc.IBAction
     def settingDrawerButton_(self, sender):
         self.settingDrawer.toggle_(self)

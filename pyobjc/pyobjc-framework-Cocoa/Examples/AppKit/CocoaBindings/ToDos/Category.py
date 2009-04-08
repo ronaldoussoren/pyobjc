@@ -15,25 +15,25 @@ class Category(NSObject):
     title = objc.ivar('title')
     priority = objc.ivar('priority', 'i')
 
+    @classmethod
     def allCategories(cls):
         """Predefined global list of categories"""
         return categories
-    allCategories = classmethod(allCategories)
         
+    @classmethod
     def categoryForPriority_(cls, thePriority):
         for category in categories:
             if thePriority >= category.priority:
                 return category
         return None
-    categoryForPriority_ = classmethod(categoryForPriority_)
         
+    @classmethod
     def categoryWithTitle_andPriority_(cls, aTitle, aValue):
         """Convenience constructor"""
         newCategory = Category.alloc().init()
         newCategory.title = aTitle
         newCategory.priority = aValue
         return newCategory
-    categoryWithTitle_andPriority_ = classmethod(categoryWithTitle_andPriority_)
 
 
     # NSCoding methods

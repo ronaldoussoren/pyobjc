@@ -2,11 +2,14 @@
 #  AppController.py
 #  ManualBindings
 #
-import objc
-
 from Cocoa import *
 
 class AppController (NSObject):
+    arrayController = objc.IBOutlet()
+    selectedNameField = objc.IBOutlet()
+    selectedPriceField = objc.IBOutlet()
+    tableView = objc.IBOutlet()
+    totalCountField = objc.IBOutlet()
 
     def awakeFromNib(self):
         self.totalCountField.bind_toObject_withKeyPath_options_(u"value", self.arrayController, u"arrangedObjects.@sum.price", None)
@@ -36,27 +39,22 @@ class AppController (NSObject):
         
     @objc.accessor
     def countOfItemsArray(self):
-        print "countOfItemsArray"
         return len(self._k_itemsArray)
         
     @objc.accessor
     def objectInItemsArrayAtIndex_(self, index):
-        print "objectInItemsArrayAtIndex_", index
         return self._k_itemsArray[index]
         
     @objc.accessor
     def insertObject_inItemsArrayAtIndex_(self, obj, idx):
-        print "insertObject_inItemsArrayAtIndex_", idx
         self._k_itemsArray.insert(idx, obj)
         
     @objc.accessor
     def removeObjectFromItemsArrayAtIndex_(self, idx):
-        print "removeObjectFromItemsArrayAtIndex_", idx
         del self._k_itemsArray[idx]
         
     @objc.accessor
     def replaceObjectInItemsArrayAtIndex_withObject_(self, idx, obj):
-        print "!!! replaceObjectInItemsArrayAtIndex_withObject_", idx
         self._k_itemsArray[idx] = obj
         
 ITEM_ERROR_DOMAIN = u'ITEM_ERROR_DOMAIN'
@@ -75,8 +73,8 @@ class Item(NSObject):
     def setName_(self, aName):
         self._k_name = aName
     
-    def validatePrice_error_(self, value):
-        print ">>>> validatePrice_error_", value #.price
+    @objc.accessor
+    def validatePrice_error_(self, value, error):
         if value >= 0:
             return True, value, None
 
@@ -88,5 +86,3 @@ class Item(NSObject):
             userInfoDict)
 
         return False, value, error
-
-    validatePrice_error_ = objc.accessor(validatePrice_error_)

@@ -43,6 +43,7 @@ plist = dict(
 
 
 setup(
+    name='Simple Service',
     app=["SimpleService_main.py"],
     options=dict(py2app=dict(plist=plist)),
 )

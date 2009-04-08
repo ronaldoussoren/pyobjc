@@ -1,17 +1,23 @@
-from Foundation import NSLog
-from PyObjCTools import NibClassBuilder
-import os
+from Foundation import *
+import os, pwd
 
 FIELDS = "name password uid gid class change expire gecos home_dir shell".split()
 def getPasswords():
-    return [
-        dict(zip(FIELDS, line.rstrip().split(':')))
-        for line in os.popen('/usr/bin/nidump passwd .')
-        if not line.startswith('#')
-    ]
+    a = NSMutableArray.array()
+    for pw in pwd.getpwall():
+        a.append({
+            'name': pw.pw_name,
+            'password': pw.pw_passwd,
+            'uid': pw.pw_uid,
+            'gid': pw.pw_gid,
+            'gecos': pw.pw_gecos,
+            'home_dir': pw.pw_dir,
+            'shell': pw.pw_shell,
+        })
 
-NibClassBuilder.extractClasses("MainMenu")
-class TableModelAppDelegate(NibClassBuilder.AutoBaseClass):
+    return a
+
+class TableModelAppDelegate(NSObject):
     def passwords(self):
         if not hasattr(self, '_cachedpasswords'):
             self._cachedpasswords = getPasswords()

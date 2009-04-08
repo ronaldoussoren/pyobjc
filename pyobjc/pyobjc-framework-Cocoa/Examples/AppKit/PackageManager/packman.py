@@ -19,8 +19,6 @@ XXX:
 - save preferences in the favorites db (for databases that are in in there)?
 """
 
-import objc; objc.setVerbose(1); del objc # XXX: Debugging only
-
 from Cocoa import *
 import objc
 import threading

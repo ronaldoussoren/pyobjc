@@ -21,7 +21,9 @@ def getTinyURL(url):
     return urllib2.urlopen(TINYURL_API, data).read().decode('utf-8')
 
 class TinyURLService(NSObject):
-    def doTinyURLService_userData_error_(self, pboard, data):
+
+    @serviceSelector
+    def doTinyURLService_userData_error_(self, pboard, data, error):
         # Mail.app in 10.4.1 doesn't do NSURLPboardType correctly!
         # Probably elsewhere too, so we just use strings.
         try:
@@ -70,9 +72,6 @@ class TinyURLService(NSObject):
             traceback.print_exc()
             return ERROR(u'Exception, see traceback')
 
-    doTinyURLService_userData_error_ = serviceSelector(
-       doTinyURLService_userData_error_
-    )
 
 def main():
     serviceProvider = TinyURLService.alloc().init()
