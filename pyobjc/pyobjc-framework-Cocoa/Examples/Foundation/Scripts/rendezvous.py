@@ -16,7 +16,7 @@ class PrintingResolverDelegate(NSObject):
             print "   %s"%(address,)
         print ""
 
-    def netService_didNotResolve_(self, didNotResolve):
+    def netService_didNotResolve_(self, service, didNotResolve):
         print "didNotResolve",didNotResolve
 
 class PrintingBrowserDelegate(NSObject):
