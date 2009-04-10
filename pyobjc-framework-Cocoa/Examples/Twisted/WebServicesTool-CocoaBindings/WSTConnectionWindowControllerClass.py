@@ -6,9 +6,6 @@ Implements a standard toolbar.
 """
 
 from AppKit import *
-from Foundation import *
-from PyObjCTools import NibClassBuilder
-import objc
 
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
@@ -67,22 +64,19 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
 
     aController.k_toolbarItems[anIdentifier] = toolbarItem
 
-NibClassBuilder.extractClasses( "WSTConnection" )
+class WSTConnectionWindowController (NSWindowController):
+    methodDescriptionTextView = objc.IBOutlet()
+    methodsTable = objc.IBOutlet()
+    progressIndicator = objc.IBOutlet()
+    statusTextField = objc.IBOutlet()
+    urlTextField = objc.IBOutlet()
 
-class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
-    """
-    As per the definition in the NIB file,
-    WSTConnectionWindowController is a subclass of
-    NSWindowController.
-    """
-
+    @classmethod
     def connectionWindowController(self):
         """
         Create and return a default connection window instance.
         """
         return WSTConnectionWindowController.alloc().init()
-
-    connectionWindowController = classmethod(connectionWindowController)
 
     def init(self):
         """
@@ -237,6 +231,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """Signal the UI that the work is done."""
         self.progressIndicator.stopAnimation_(self)
 
+    @objc.IBAction
     def reloadVisibleData_(self, sender):
         """
         Reloads the list of methods and their signatures from the
@@ -359,28 +354,28 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
     def methodArray(self):
         return self.k_methodArray
 
+    @objc.accessor
     def countOfMethodArray(self):
         if self.k_methodArray is None:
             return 0
         return self.k_methodArray
-    countOfMethodArray = objc.accessor(countOfMethodArray)
 
+    @objc.accessor
     def objectInMethodArrayAtIndex_(self, anIndex):
         return self.k_methodArray[anIndex]
-    objectInMethodArrayAtIndex_ = objc.accessor(objectInMethodArrayAtIndex_)
 
+    @objc.accessor
     def insertObject_inMethodArrayAtIndex_(self, anObject, anIndex):
         self.k_methodArray.insert(anIndex, anObject)
-    insertObject_inMethodArrayAtIndex_ = objc.accessor(insertObject_inMethodArrayAtIndex_)
 
+    @objc.accessor
     def removeObjectFromMethodArrayAtIndex_(self, anIndex):
         del self.k_methodArray[anIndex]
-    removeObjectFromMethodArrayAtIndex_ = objc.accessor(removeObjectFromMethodArrayAtIndex_)
 
+    @objc.accessor
     def replaceObjectInMethodArrayAtIndex_withObject_(self, anIndex, anObject):
         self.k_methodArray[anIndex] = anObject
-    replaceObjectInMethodArrayAtIndex_withObject_ = objc.accessor(replaceObjectInMethodArrayAtIndex_withObject_)
 
+    @objc.accessor
     def setMethodArray_(self, anArray):
         self.k_methodArray = anArray
-    setMethodArray_ = objc.accessor(setMethodArray_)

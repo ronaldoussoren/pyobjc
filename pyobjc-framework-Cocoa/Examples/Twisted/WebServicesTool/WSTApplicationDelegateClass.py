@@ -2,25 +2,15 @@
 WSTApplicationDelegateClass
 
 An instance of this class is instantiated in the MainMenu.nib default NIB file.
-All outlets and the base class are automatically derived at runtime by the
-AutoBaseClass mechanism provided by the NibClassBuilder.
 """
 
-from Foundation import *
-from AppKit import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from Cocoa import *
+from PyObjCTools import AppHelper
 from twisted.internet import reactor
 
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
-# Make NibClassBuilder aware of the classes in the main NIB file.
-NibClassBuilder.extractClasses( "MainMenu" )
-
-# WSTApplicationDelegate will automatically inherit from the
-# appropriate ObjC class [NSObject, in this case] and will have the
-# appropriate IBOutlets already defined based on the data found in the
-# NIB file(s) that define the class.
-class WSTApplicationDelegate(NibClassBuilder.AutoBaseClass):
+class WSTApplicationDelegate (NSObject):
 
     def newConnectionAction_(self, sender):
         """Action method fired when the user selects the 'new connection'
