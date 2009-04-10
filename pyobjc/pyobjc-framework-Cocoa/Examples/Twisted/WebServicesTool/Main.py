@@ -1,7 +1,7 @@
 import sys
 from PyObjCTools import AppHelper
 
-from twisted.internet.threadedselectreactor import install
+from twisted.internet._threadedselect import install
 reactor = install()
 
 # import classes required to start application

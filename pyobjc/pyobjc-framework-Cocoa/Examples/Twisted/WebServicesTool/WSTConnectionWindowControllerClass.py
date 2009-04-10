@@ -15,13 +15,7 @@ Implements a standard toolbar.
 # Python would not grant time to other threads while blocking inside
 # getaddrinfo(). This has been fixed *after* 2.3b1 was released. (jvr)
 
-from AppKit import *
-from Foundation import *
-from PyObjCTools import NibClassBuilder
-
-from objc import IBOutlet
-from objc import selector
-from objc import YES, NO
+from Cocoa import *
 
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
@@ -78,15 +72,19 @@ def addToolbarItem(aController, anIdentifier, aLabel, aPaletteLabel,
 
     aController._toolbarItems[anIdentifier] = toolbarItem
 
-NibClassBuilder.extractClasses( "WSTConnection" )
-
-class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
+class WSTConnectionWindowController (NSWindowController):
     """
     As per the definition in the NIB file,
     WSTConnectionWindowController is a subclass of
     NSWindowController.  It acts as a NSTableView data source and
     implements a standard toolbar.
     """
+    methodDescriptionTextView = objc.IBOutlet()
+    methodsTable = objc.IBOutlet()
+    progressIndicator = objc.IBOutlet()
+    statusTextField = objc.IBOutlet()
+    urlTextField = objc.IBOutlet()
+
     __slots__ = ('_toolbarItems',
         '_toolbarDefaultItemIdentifiers',
         '_toolbarAllowedItemIdentifiers',
@@ -96,13 +94,12 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         '_server',
         '_methodPrefix',)
 
+    @classmethod
     def connectionWindowController(self):
         """
         Create and return a default connection window instance.
         """
         return WSTConnectionWindowController.alloc().init()
-
-    connectionWindowController = classmethod(connectionWindowController)
 
     def init(self):
         """
@@ -129,7 +126,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
 
         self.statusTextField.setStringValue_("No host specified.")
         self.progressIndicator.setStyle_(NSProgressIndicatorSpinningStyle)
-        self.progressIndicator.setDisplayedWhenStopped_(NO)
+        self.progressIndicator.setDisplayedWhenStopped_(False)
 
         self.createToolbar()
 
@@ -145,8 +142,8 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """
         toolbar = NSToolbar.alloc().initWithIdentifier_("WST Connection Window")
         toolbar.setDelegate_(self)
-        toolbar.setAllowsUserCustomization_(YES)
-        toolbar.setAutosavesConfiguration_(YES)
+        toolbar.setAllowsUserCustomization_(True)
+        toolbar.setAutosavesConfiguration_(True)
 
         self.createToolbarItems()
 
@@ -256,6 +253,7 @@ class WSTConnectionWindowController(NibClassBuilder.AutoBaseClass):
         """Signal the UI that the work is done."""
         self.progressIndicator.stopAnimation_(self)
 
+    @objc.IBAction
     def reloadVisibleData_(self, sender):
         """
         Reloads the list of methods and their signatures from the
