@@ -12,19 +12,15 @@ sources or nibs.)
 This example requires PyOpenGL
 """
 
-from PyObjCTools import NibClassBuilder, AppHelper
-from objc import getClassList, objc_object
-from AppKit import *
-from Foundation import *
+from Cocoa import *
 from OpenGL.GL import *
-
-
-NibClassBuilder.extractClasses("OpenGLDemo")
+from PyObjCTools import AppHelper
 
 
 ClearColors = redIndex, greenIndex, blueIndex, alphaIndex = range(4)
 
-class OpenGLDemoView(NibClassBuilder.AutoBaseClass):
+class OpenGLDemoView(NSOpenGLView):
+
     def awakeFromNib(self):
         self.color_index = alphaIndex
 
@@ -44,6 +40,7 @@ class OpenGLDemoView(NibClassBuilder.AutoBaseClass):
         self = super(OpenGLDemoView, self).initWithFrame_pixelFormat_(frame, fmt)
         return self
 
+    @objc.IBAction
     def setClearColor_(self, sender):
         self.color_index = sender.tag()
         self.setNeedsDisplay_(True)
