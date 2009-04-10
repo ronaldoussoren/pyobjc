@@ -14,6 +14,7 @@ import py2app
 
 plist = dict(NSMainNibFile='OpenGLDemo')
 setup(
+    name="OpenGLDemo",
     app=['OpenGLDemo.py'],
     data_files=["OpenGLDemo.nib"],
     options=dict(py2app=dict(plist=plist)),

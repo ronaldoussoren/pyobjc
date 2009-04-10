@@ -1,1 +1,4 @@
 A simple program that shows how to use OpenGL in a Cocoa program. It is a port of Apple's "CocoaGL" example.
+
+The actual OpenGL drawing is done using the PyOpenGL bindings to OpenGL and not using wrappers provided
+by PyObjC.
