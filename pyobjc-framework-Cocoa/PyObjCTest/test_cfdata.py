@@ -1,17 +1,25 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+from Foundation import NSCFData
 
 
 class TestData (TestCase):
+    def testTypes(self):
+        self.failUnless(CFDataRef is NSCFData)
+
     def testTypeID(self):
         v = CFDataGetTypeID()
         self.failUnless(v, (int, long))
 
     def testCreation(self):
+        self.failUnlessArgHasType(CFDataCreate, 1,  'n^v')
+        self.failUnlessArgSizeInArg(CFDataCreate, 1, 2)
         data = CFDataCreate(None, "hello", 5)
         self.failUnless(isinstance(data, CFDataRef))
 
         bytes = buffer("hello world")
+        self.failUnlessArgHasType(CFDataCreateWithBytesNoCopy, 1, 'n^v')
+        self.failUnlessArgSizeInArg(CFDataCreateWithBytesNoCopy, 1, 2)
         data = CFDataCreateWithBytesNoCopy(None, bytes, 5, kCFAllocatorNull)
         self.failUnless(isinstance(data, CFDataRef))
         del data
@@ -46,6 +54,8 @@ class TestData (TestCase):
         v = CFDataGetBytePtr(mutableData)
         self.failUnless(v[0] == 'p')
 
+        self.failUnlessArgHasType(CFDataGetBytes, 2, 'o^v')
+        self.failUnlessArgSizeInArg(CFDataGetBytes, 2, 1)
         bytes = CFDataGetBytes(data, (1,3), None)
         self.assertEquals(bytes, 'hello'[1:4])
 
@@ -56,10 +66,14 @@ class TestData (TestCase):
         self.failUnless(CFDataGetLength(mutableData) == 20)
         CFDataSetLength(mutableData, 3)
 
+        self.failUnlessArgHasType(CFDataAppendBytes, 1, 'n^v')
+        self.failUnlessArgSizeInArg(CFDataAppendBytes, 1, 2)
         CFDataAppendBytes(mutableData, " world", 6)
         self.failUnless(CFDataGetLength(mutableData) == 9)
         self.assertEquals(CFDataGetBytes(mutableData, (0, 9), None), 'pel world')
 
+        self.failUnlessArgHasType(CFDataReplaceBytes, 2, 'n^v')
+        self.failUnlessArgSizeInArg(CFDataReplaceBytes, 2, 3)
         CFDataReplaceBytes(mutableData, (0, 3), "hello", 5)
         self.assertEquals(CFDataGetBytes(mutableData, (0, 9), None), 'hello world'[:9])
 

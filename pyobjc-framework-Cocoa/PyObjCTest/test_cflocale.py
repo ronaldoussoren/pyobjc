@@ -3,6 +3,8 @@ from CoreFoundation import *
 
 
 class TestLocale (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFLocaleRef)
 
     def testGetTypeID(self):
         self.failUnless(isinstance(CFLocaleGetTypeID(), (int, long)))
@@ -27,11 +29,7 @@ class TestLocale (TestCase):
         codes = CFLocaleCopyISOCurrencyCodes()
         self.failUnless(isinstance(codes, CFArrayRef))
 
-        codes = CFLocaleCopyCommonISOCurrencyCodes()
-        self.failUnless(isinstance(codes, CFArrayRef))
 
-        codes = CFLocaleCopyPreferredLanguages()
-        self.failUnless(isinstance(codes, CFArrayRef))
 
         val = CFLocaleCreateCanonicalLanguageIdentifierFromString(None, "de_DE")
         self.failUnless(isinstance(val, unicode))
@@ -71,7 +69,6 @@ class TestLocale (TestCase):
 
     def testConstants(self):
 
-        self.failUnless(isinstance( kCFLocaleCurrentLocaleDidChangeNotification, unicode))
         self.failUnless(isinstance( kCFLocaleIdentifier, unicode))
         self.failUnless(isinstance( kCFLocaleLanguageCode, unicode))
         self.failUnless(isinstance( kCFLocaleCountryCode, unicode))
@@ -95,6 +92,17 @@ class TestLocale (TestCase):
         self.failUnless(isinstance( kCFIslamicCivilCalendar, unicode))
         self.failUnless(isinstance( kCFJapaneseCalendar, unicode))
 
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        codes = CFLocaleCopyCommonISOCurrencyCodes()
+        self.failUnless(isinstance(codes, CFArrayRef))
+
+        codes = CFLocaleCopyPreferredLanguages()
+        self.failUnless(isinstance(codes, CFArrayRef))
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnless(isinstance( kCFLocaleCurrentLocaleDidChangeNotification, unicode))
 
 if __name__ == "__main__":
     main()

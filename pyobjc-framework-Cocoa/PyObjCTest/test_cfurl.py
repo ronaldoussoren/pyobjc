@@ -2,9 +2,13 @@ from PyObjCTools.TestSupport import *
 import array
 from CoreFoundation import *
 import os
+from Foundation import NSURL
 
 
 class TestURL (TestCase):
+    def testTypes(self):
+        self.failUnless(CFURLRef is NSURL)
+
     def testTypeID(self):
         val = CFURLGetTypeID()
         self.failUnless( isinstance(val, (int, long)) )
@@ -60,6 +64,8 @@ class TestURL (TestCase):
         url = u"http://www.omroep.nl/sport/"
         baseref = CFURLCreateWithString(None, url, None)
 
+        self.failUnlessArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, 'n^v')
+        self.failUnlessArgSizeInArg(CFURLCreateAbsoluteURLWithBytes, 1, 2)
         ref = CFURLCreateAbsoluteURLWithBytes(None, "socker", len("socker"), kCFStringEncodingUTF8, baseref, True)
         self.failUnless( isinstance(ref, CFURLRef) )
 
@@ -105,6 +111,8 @@ class TestURL (TestCase):
         self.failIf(CFURLHasDirectoryPath(url))
 
         p = os.path.expanduser('~')
+        self.failUnlessArgHasType(CFURLCreateFromFileSystemRepresentation, 1, 'n^t')
+        self.failUnlessArgIsNullTerminated(CFURLCreateFromFileSystemRepresentation, 1)
         url = CFURLCreateFromFileSystemRepresentation(None,
                 p, len(p), True)
         self.failUnless( isinstance(url, CFURLRef))
@@ -116,6 +124,7 @@ class TestURL (TestCase):
                 u"/tmp", kCFURLPOSIXPathStyle, True)
         self.failUnless( isinstance(base, CFURLRef) )
 
+        self.failUnlessArgIsBOOL(CFURLCreateWithFileSystemPathRelativeToBase, 3)
         url = CFURLCreateWithFileSystemPathRelativeToBase(None,
                 u"filename", kCFURLPOSIXPathStyle, True, base)
         self.failUnless( isinstance(url, CFURLRef) )
@@ -124,6 +133,7 @@ class TestURL (TestCase):
         self.assertEquals(strval, u"filename/")
 
 
+        self.failUnlessArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
         url = CFURLCreateFromFileSystemRepresentationRelativeToBase(None,
                 "filename2", 9, False, base)
         self.failUnless( isinstance(url, CFURLRef) )

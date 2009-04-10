@@ -2,6 +2,9 @@ from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
 class TestCFTree (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFTreeRef)
+
     def testCreation(self):
         context = object()
         tree = CFTreeCreate(None, context)

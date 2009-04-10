@@ -4,11 +4,16 @@ from CoreFoundation import *
 
 
 class TestCFUUIDAPI (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFUUIDRef)
+
     def testTypeID(self):
         v = CFUUIDGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
 
     def testCreate(self):
+
+        self.failUnlessResultIsCFRetained(CFUUIDCreate)
         uuid = CFUUIDCreate(None)
         self.failIf(uuid is None)
         self.failUnless(isinstance(uuid, CFUUIDRef))
@@ -19,10 +24,12 @@ class TestCFUUIDAPI (TestCase):
         self.failIf( m is None )
 
     def testCreateWithBytes(self):
+        self.failUnlessResultIsCFRetained(CFUUIDCreateWithBytes)
         uuid = CFUUIDCreateWithBytes(None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
         self.failIf(uuid is None)
         self.failUnless(isinstance(uuid, CFUUIDRef))
 
+        self.failUnlessResultIsCFRetained(CFUUIDCreateString)
         text = CFUUIDCreateString(None, uuid)
         self.failUnless(text == u'01020304-0506-0708-090A-0B0C0D0E0F10')
 
@@ -30,6 +37,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertRaises(ValueError, CFUUIDCreateWithBytes, None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 300, 16)
 
     def testCreateFromString(self):
+        self.failUnlessResultIsCFRetained(CFUUIDCreateFromString)
         uuid1 = CFUUIDCreateFromString(None, u'01020304-0506-0708-090A-0B0C0D0E0F10')
         self.failIf(uuid1 is None)
         self.failUnless(isinstance(uuid1, CFUUIDRef))
@@ -73,6 +81,7 @@ class TestCFUUIDAPI (TestCase):
         # CFUUIDGetConstantUUIDWithBytes should not be released.
 
         uuid = CFUUIDGetConstantUUIDWithBytes(None, *range(16))
+        CFRetain(CFUUIDGetConstantUUIDWithBytes) # Ensure the value won't be released.
         self.failIf(uuid is None)
         self.failUnless(isinstance(uuid, CFUUIDRef))
 

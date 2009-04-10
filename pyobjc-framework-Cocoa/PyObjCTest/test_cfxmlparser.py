@@ -5,6 +5,9 @@ from CoreFoundation import *
 class TestXMLParser (TestCase):
     # Note: This doesn't actually test the API
 
+    def testTypes(self):
+        self.failUnlessIsCFType(CFXMLParserRef)
+
     def testTypeID(self):
         self.failUnless(isinstance(CFXMLParserGetTypeID(), (int, long)))
 

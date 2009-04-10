@@ -1,8 +1,11 @@
 from CoreFoundation import *
-from Foundation import NSDictionary, NSMutableDictionary
+from Foundation import NSDictionary, NSMutableDictionary, NSCFDictionary
 from PyObjCTools.TestSupport import *
 
 class TestCFDictionary (TestCase):
+
+    def testTypes(self):
+        self.failUnless(CFDictionaryRef is NSCFDictionary)
 
     def testCreation(self):
         dictionary = CFDictionaryCreate(None,
@@ -32,6 +35,8 @@ class TestCFDictionary (TestCase):
         def function(key, value, context):
             context.append((key, value))
 
+        self.failUnlessArgIsFunction(CFDictionaryApplyFunction, 1, 'v@@@', False)
+        self.failUnlessArgHasType(CFDictionaryApplyFunction, 2, '@')
         CFDictionaryApplyFunction(dictionary, function, context)
 
         context.sort()
@@ -71,15 +76,19 @@ class TestCFDictionary (TestCase):
         self.failUnless(CFDictionaryGetCountOfValue(dct, 42) == 2)
         self.failUnless(CFDictionaryGetCountOfValue(dct, 44) == 0)
 
+        self.failUnlessResultHasType(CFDictionaryContainsKey, objc._C_NSBOOL)
         self.failUnless(CFDictionaryContainsKey(dct, u"key1"))
         self.failIf(CFDictionaryContainsKey(dct, u"key3"))
 
+        self.failUnlessResultHasType(CFDictionaryContainsValue, objc._C_NSBOOL)
         self.failUnless(CFDictionaryContainsValue(dct, 42))
         self.failIf(CFDictionaryContainsValue(dct, u"key3"))
 
         self.failUnless(CFDictionaryGetValue(dct, "key2") == 42)
         self.failUnless(CFDictionaryGetValue(dct, "key3") is None)
 
+        self.failUnlessResultHasType(CFDictionaryGetValueIfPresent, objc._C_NSBOOL)
+        self.failUnlessArgIsOut(CFDictionaryGetValueIfPresent, 2)
         ok, value = CFDictionaryGetValueIfPresent(dct, "key2", None)
         self.failUnless(ok)
         self.failUnless(value == 42)

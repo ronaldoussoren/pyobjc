@@ -7,6 +7,9 @@ from CoreFoundation import *
 
 
 class TestFileDescriptor (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFFileDescriptorRef)
+
     def testTypeID(self):
         self.failUnless(isinstance(CFFileDescriptorGetTypeID(), (int, long)))
 
@@ -38,6 +41,8 @@ class TestFileDescriptor (TestCase):
         self.failUnless(CFFileDescriptorIsValid(fd))
         CFFileDescriptorInvalidate(fd)
         self.failIf(CFFileDescriptorIsValid(fd))
+
+        self.failUnlessResultIsBOOL(CFFileDescriptorIsValid)
 
 
 if __name__ == "__main__":

@@ -42,10 +42,17 @@ class TestDateFormatter (TestCase):
         self.failUnless( isinstance( kCFDateFormatterShortStandaloneQuarterSymbols, unicode))
         self.failUnless( isinstance( kCFDateFormatterGregorianStartDate, unicode))
 
+    def testTypes(self):
+        self.failUnlessIsCFType(CFDateFormatterRef)
+
     def testInspection(self):
         locale = CFLocaleCopyCurrent()
-        date = CFDateCreate(None, CFAbsoluteTimeGetCurrent())
+        self.failUnlessIsInstance(locale, CFLocaleRef)
 
+        date = CFDateCreate(None, CFAbsoluteTimeGetCurrent())
+        self.failUnlessIsInstance(date, CFDateRef)
+
+        self.failUnlessResultIsCFRetained(CFDateFormatterCreate)
         fmt = CFDateFormatterCreate(None, locale, kCFDateFormatterShortStyle, kCFDateFormatterLongStyle) 
         self.failUnless(isinstance(fmt, CFDateFormatterRef))
 
@@ -80,6 +87,7 @@ class TestDateFormatter (TestCase):
         self.failUnless(isinstance(rng, CFRange))
         self.failUnless(isinstance(abstime, float))
 
+        self.failUnlessResultIsCFRetained(CFDateFormatterCopyProperty)
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterCalendarName)
         self.failUnless(isinstance(v, unicode))
 

@@ -2,9 +2,13 @@ from PyObjCTools.TestSupport import *
 import array
 from CoreFoundation import *
 import CoreFoundation
+from Foundation import NSCFString
 
 
 class TestString (TestCase):
+    def testType(self):
+        self.failUnless(CFStringRef is NSCFString)
+
     def testTypeID(self):
         v = CFStringGetTypeID()
         self.failUnless(isinstance(v, (int, long)))

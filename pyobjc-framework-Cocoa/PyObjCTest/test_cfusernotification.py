@@ -2,6 +2,9 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 class TestUserNotification (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFUserNotificationRef)
+
     def testTypeID(self):
         id = CFUserNotificationGetTypeID()
         self.failUnless( isinstance(id, (int, long)) )
@@ -15,22 +18,32 @@ class TestUserNotification (TestCase):
                 kCFUserNotificationDefaultButtonTitleKey: "Cancel"
         }
 
+        self.failUnlessArgIsOut(CFUserNotificationCreate, 3)
         ref, error = CFUserNotificationCreate(None,
-                5.0, 0, None, infoDict)
+                1.0, 0, None, infoDict)
         self.failUnless( error == 0 )
         self.failUnless( isinstance(ref, CFUserNotificationRef) )
 
-        #FIXME: need to ensure that this function is called during
-        # the test
+        values = []
         @objc.callbackFor(CFUserNotificationCreateRunLoopSource)
         def callout(notification, flags):
-            print notification, flags
+            values.append((notification, flags))
+
+        self.failUnlessArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, 'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
         rls = CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.failUnless(isinstance(rls, CFRunLoopSourceRef))
 
         CFRunLoopAddSource(rl, rls, kCFRunLoopDefaultMode)
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+
+        CFUserNotificationCancel(ref)
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
 
+        self.failUnlessEqual(len(values), 1)
+        self.failUnless(values[0][0] is ref)
+        self.failUnlessIsInstance(values[0][1], (int, long))
+
+        self.failUnlessArgIsOut(CFUserNotificationReceiveResponse, 2)
         error, flags = CFUserNotificationReceiveResponse(ref, 1.0, None)
         self.failUnless(isinstance(error, (int, long)))
         self.failUnless(isinstance(flags, (int, long)))

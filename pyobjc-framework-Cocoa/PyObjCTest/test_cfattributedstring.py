@@ -1,8 +1,12 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+from Foundation import NSCFAttributedString
 
 
 class TestAttributedString (TestCase):
+    def testTypes(self):
+        self.failUnless( CFAttributedStringRef is NSCFAttributedString )
+        self.failUnless( CFMutableAttributedStringRef is NSCFAttributedString )
 
     def testTypeID(self):
         v = CFAttributedStringGetTypeID()
@@ -116,14 +120,6 @@ class TestAttributedString (TestCase):
 
         CFAttributedStringBeginEditing(val)
         CFAttributedStringEndEditing(val)
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()
