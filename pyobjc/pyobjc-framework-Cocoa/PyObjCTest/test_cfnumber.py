@@ -85,8 +85,8 @@ class TestCFNumber (TestCase):
     def testBoolean(self):
         self.failUnless(isinstance(CFBooleanGetTypeID(), (int, long)))
 
-        self.failUnless(CFBooleanGetValue(kCFBooleanTrue))
-        self.failIf(CFBooleanGetValue(kCFBooleanFalse))
+        self.failUnless(CFBooleanGetValue(kCFBooleanTrue) is True)
+        self.failUnless(CFBooleanGetValue(kCFBooleanFalse) is False)
         self.failUnless(CFBooleanGetValue(True))
         self.failIf(CFBooleanGetValue(False))
 
@@ -204,8 +204,6 @@ class TestCFNumber (TestCase):
         self.failUnless(r < 0)
 
 
-
-
     def testConstants(self):
         self.failUnless(kCFBooleanTrue is True)
         self.failUnless(kCFBooleanFalse is False)
@@ -231,10 +229,6 @@ class TestCFNumber (TestCase):
         self.failUnless(isinstance(kCFNumberPositiveInfinity, float))
         self.failUnless(isinstance(kCFNumberNegativeInfinity, float))
         self.failUnless(isinstance(kCFNumberNaN, float))
-
-
-
-
 
 
 if __name__ == "__main__":

@@ -6,6 +6,9 @@ from CoreFoundation import *
 
 
 class TestMachPort (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFMachPortRef)
+
     def testTypeID(self):
         self.failUnless(isinstance(CFMachPortGetTypeID(), (int, long)))
 

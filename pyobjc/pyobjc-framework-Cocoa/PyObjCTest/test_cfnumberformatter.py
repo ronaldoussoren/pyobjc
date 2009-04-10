@@ -3,6 +3,9 @@ from CoreFoundation import *
 
 
 class TestNumberFormatter (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFNumberFormatterRef)
+
     def testTypeID(self):
         self.failUnless(isinstance(CFNumberFormatterGetTypeID(), (int, long)))
 
@@ -40,9 +43,13 @@ class TestNumberFormatter (TestCase):
         self.failUnless(isinstance(v, unicode))
 
         CFNumberFormatterSetProperty(fmt, kCFNumberFormatterCurrencyCode, u"HFL")
+
+        self.failUnlessResultIsCFRetained(CFNumberFormatterCopyProperty)
         v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
         self.failUnless(v == u"HFL")
 
+        self.failUnlessArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 1)
+        self.failUnlessArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 2)
         ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode("EUR", None, None)
         self.assertEquals(ok, True)
         self.assertEquals(frac, 2)
@@ -103,6 +110,9 @@ class TestNumberFormatter (TestCase):
         self.failUnless(isinstance(kCFNumberFormatterNegativeSuffix, unicode))
         self.failUnless(isinstance(kCFNumberFormatterPerMillSymbol, unicode))
         self.failUnless(isinstance(kCFNumberFormatterInternationalCurrencySymbol, unicode))
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnless(isinstance(kCFNumberFormatterCurrencyGroupingSeparator, unicode))
         self.failUnless(isinstance(kCFNumberFormatterIsLenient, unicode))
         self.failUnless(isinstance(kCFNumberFormatterUseSignificantDigits, unicode))

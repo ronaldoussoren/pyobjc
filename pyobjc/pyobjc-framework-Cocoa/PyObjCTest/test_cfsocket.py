@@ -5,6 +5,9 @@ import CoreFoundation
 
 
 class TestSocket (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFSocketRef)
+
     def testTypeID(self):
         self.failUnless(isinstance(CFSocketGetTypeID(), (int, long)))
 
@@ -108,9 +111,11 @@ class TestSocket (TestCase):
         self.assertEquals(e, kCFSocketSuccess)
 
 
+        self.failUnlessResultIsCFRetained(CFSocketCopyPeerAddress)
         addr = CFSocketCopyPeerAddress(sock)
         self.failUnless( isinstance(addr, CFDataRef))
 
+        self.failUnlessResultIsCFRetained(CFSocketCopyAddress)
         addr = CFSocketCopyAddress(sock)
         self.failUnless( isinstance(addr, CFDataRef))
 
@@ -127,6 +132,7 @@ class TestSocket (TestCase):
         self.failUnless(ok is True)
 
         CFSocketInvalidate(sock)
+        self.failUnlessResultIsBOOL(CFSocketIsValid)
         ok = CFSocketIsValid(sock)
         self.failUnless(ok is False)
 
@@ -153,6 +159,7 @@ class TestSocket (TestCase):
                 callback, data, 1.0)
         self.failUnless(isinstance(sock, CFSocketRef))
 
+        self.failUnlessResultIsCFRetained(CFSocketCreateRunLoopSource)
         src = CFSocketCreateRunLoopSource(None, sock, 0)
         self.failUnless(isinstance(src, CFRunLoopSourceRef))
 

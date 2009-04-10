@@ -4,6 +4,10 @@ from CoreFoundation import *
 
 
 class TestDate (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFDateRef)
+        self.failUnlessIsCFType(CFTimeZoneRef)
+
     def testTypeID(self):
         v = CFDateGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -63,9 +67,9 @@ class TestDate (TestCase):
 
         dt = CFGregorianDate()
         dt.month = 12
-        self.failUnless(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths))
+        self.failUnless(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths) is True)
         dt.month = 99
-        self.failIf(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths))
+        self.failUnless(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths) is False)
 
         tz = CFTimeZoneCopyDefault()
         dt.year = 2008

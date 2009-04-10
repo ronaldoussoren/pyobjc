@@ -27,7 +27,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -47,10 +47,10 @@ setup(
     },
     zip_safe = False,
 
-    entry_points = {
-        'console_scripts': [
-            "nibclassbuilder = PyObjCTools.NibClassBuilder.commandline"
-        ],
+#    entry_points = {
+#        'console_scripts': [
+#            "nibclassbuilder = PyObjCTools.NibClassBuilder.commandline"
+#        ],
     },
     test_suite='PyObjCTest',
 

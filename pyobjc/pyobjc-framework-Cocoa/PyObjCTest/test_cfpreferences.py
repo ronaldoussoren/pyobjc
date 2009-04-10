@@ -8,10 +8,13 @@ class TestPreferences (TestCase):
         v = CFPreferencesCopyAppValue("WindowCloseAction", "com.apple.Terminal")
         self.failUnless(isinstance(v, unicode))
 
+        self.failUnlessResultIsBOOL(CFPreferencesGetAppBooleanValue)
+        self.failUnlessArgHasType(CFPreferencesGetAppBooleanValue, 2, 'o^Z')
         v, valid = CFPreferencesGetAppBooleanValue("AutoFocus", "com.apple.Terminal", None)
         self.failUnless(valid)
         self.failUnless(isinstance(v, bool))
 
+        self.failUnlessArgHasType(CFPreferencesGetAppIntegerValue, 2, 'o^Z')
         v, valid = CFPreferencesGetAppIntegerValue("WindowCloseAction", "com.apple.Terminal", None)
         self.failUnless(valid)
         self.failUnless(isinstance(v, (int, long)))
@@ -19,8 +22,6 @@ class TestPreferences (TestCase):
         v = CFPreferencesCopyValue("WindowCloseAction", "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.failUnless(isinstance(v, unicode))
 
-        #self.assertRaises((ValueError, TypeError), CFPreferencesCopyValue, "WindowCloseAction", "com.apple.Terminal", None, kCFPreferencesCurrentHost)
-        #self.assertRaises((ValueError, TypeError), CFPreferencesCopyValue, "WindowCloseAction", "com.apple.Terminal", kCFPreferencesCurrentUser, None)
 
         v = CFPreferencesCopyMultiple(None, "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.failUnless(isinstance(v, CFDictionaryRef))
@@ -28,6 +29,7 @@ class TestPreferences (TestCase):
         v = CFPreferencesCopyMultiple([u"AutoFocus", u"WindowCloseAction"], "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.failUnless(isinstance(v, CFDictionaryRef))
 
+        self.failUnlessResultIsBOOL(CFPreferencesAppValueIsForced)
         v = CFPreferencesAppValueIsForced("AutoFocus", "com.apple.Terminal")
         self.failUnless(v is True or v is False)
 
@@ -77,10 +79,12 @@ class TestPreferences (TestCase):
         self.failUnless(os.path.exists(prefsFn))
         os.unlink(prefsFn)
 
+        self.failUnlessResultIsCFRetained(CFPreferencesCopyApplicationList)
         apps = CFPreferencesCopyApplicationList(kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.failUnless(isinstance(apps, CFArrayRef))
         self.failUnless(u"com.apple.AddressBook" in apps)
 
+        self.failUnlessResultIsCFRetained(CFPreferencesCopyKeyList)
         keys = CFPreferencesCopyKeyList(u"com.apple.AddressBook", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.failUnless(isinstance(keys, CFArrayRef))
         self.failUnless(u"ABNameSorting" in keys)

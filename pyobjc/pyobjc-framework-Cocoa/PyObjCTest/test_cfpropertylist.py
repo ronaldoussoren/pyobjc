@@ -7,6 +7,7 @@ class TestPropertyList (TestCase):
         dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
         self.failUnless(isinstance(dta, CFDataRef))
 
+        self.failUnlessArgIsOut(CFPropertyListCreateFromXMLData, 3)
         v, err = CFPropertyListCreateFromXMLData(None, dta, 0, None)
         self.failUnless(err is None)
         self.failUnless(isinstance(v, CFDictionaryRef))
@@ -33,6 +34,7 @@ class TestPropertyList (TestCase):
 
         value = {u'key1': 42, u'key2': 1}
 
+        self.failUnlessArgIsOut(CFPropertyListWriteToStream, 3)
         rval, errorString = CFPropertyListWriteToStream(value, stream, 
                 kCFPropertyListXMLFormat_v1_0, None)
         self.failUnless(isinstance(rval, (int, long)))
@@ -53,6 +55,8 @@ class TestPropertyList (TestCase):
         r = CFReadStreamOpen(stream)
         self.failUnless(r)
 
+        self.failUnlessArgIsOut(CFPropertyListCreateFromStream, 4)
+        self.failUnlessArgIsOut(CFPropertyListCreateFromStream, 5)
         res, format, errorString = CFPropertyListCreateFromStream(None, stream, 0, 0, None, None)
         self.assertEquals(format, kCFPropertyListXMLFormat_v1_0)
         self.failUnless(errorString is None)

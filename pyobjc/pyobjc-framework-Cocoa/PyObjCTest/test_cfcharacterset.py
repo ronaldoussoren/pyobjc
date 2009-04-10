@@ -3,6 +3,10 @@ from CoreFoundation import *
 
 
 class TestCharacterSet (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFCharacterSetRef)
+        self.failUnlessIsCFType(CFMutableCharacterSetRef)
+
     def testTypeId(self):
         v = CFCharacterSetGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
@@ -55,9 +59,6 @@ class TestCharacterSet (TestCase):
 
 
     def testInspectLongUnicode(self):
-        # FIXME: These results aren't quite what I want to have, metadata doesn't
-        # allow a better interface at the moment :-(
-
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
         self.failUnless(CFCharacterSetIsLongCharacterMember(letters, ord(u'A')))    
@@ -94,25 +95,25 @@ class TestCharacterSet (TestCase):
         self.failIf(CFCharacterSetIsCharacterMember(set, u"e"))
 
 
-
-
     def testConstants(self):
-        self.failUnless(kCFCharacterSetControl == 1)
-        self.failUnless(kCFCharacterSetWhitespace == 2)
-        self.failUnless(kCFCharacterSetWhitespaceAndNewline == 3)
-        self.failUnless(kCFCharacterSetDecimalDigit == 4)
-        self.failUnless(kCFCharacterSetLetter == 5)
-        self.failUnless(kCFCharacterSetLowercaseLetter == 6)
-        self.failUnless(kCFCharacterSetUppercaseLetter == 7)
-        self.failUnless(kCFCharacterSetNonBase == 8)
-        self.failUnless(kCFCharacterSetDecomposable == 9)
-        self.failUnless(kCFCharacterSetAlphaNumeric == 10)
-        self.failUnless(kCFCharacterSetPunctuation == 11)
-        self.failUnless(kCFCharacterSetCapitalizedLetter == 13)
-        self.failUnless(kCFCharacterSetSymbol == 14)
-        self.failUnless(kCFCharacterSetNewline == 15)
-        self.failUnless(kCFCharacterSetIllegal == 12)
+        self.failUnlessEqual(kCFCharacterSetControl, 1)
+        self.failUnlessEqual(kCFCharacterSetWhitespace, 2)
+        self.failUnlessEqual(kCFCharacterSetWhitespaceAndNewline, 3)
+        self.failUnlessEqual(kCFCharacterSetDecimalDigit, 4)
+        self.failUnlessEqual(kCFCharacterSetLetter, 5)
+        self.failUnlessEqual(kCFCharacterSetLowercaseLetter, 6)
+        self.failUnlessEqual(kCFCharacterSetUppercaseLetter, 7)
+        self.failUnlessEqual(kCFCharacterSetNonBase, 8)
+        self.failUnlessEqual(kCFCharacterSetDecomposable, 9)
+        self.failUnlessEqual(kCFCharacterSetAlphaNumeric, 10)
+        self.failUnlessEqual(kCFCharacterSetPunctuation, 11)
+        self.failUnlessEqual(kCFCharacterSetCapitalizedLetter, 13)
+        self.failUnlessEqual(kCFCharacterSetSymbol, 14)
+        self.failUnlessEqual(kCFCharacterSetIllegal, 12)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessEqual(kCFCharacterSetNewline, 15)
 
 
 if __name__ == "__main__":

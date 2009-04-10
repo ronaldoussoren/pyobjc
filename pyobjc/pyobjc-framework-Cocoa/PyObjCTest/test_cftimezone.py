@@ -5,6 +5,9 @@ from Foundation import NSDictionary, NSString, NSMutableDictionary
 
 
 class TestTimeZone (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFTimeZoneRef)
+
     def testTypeID(self):
         id = CFTimeZoneGetTypeID()
         self.failUnless(isinstance(id, (int, long)))
@@ -22,6 +25,7 @@ class TestTimeZone (TestCase):
         self.failUnless( isinstance(zone, CFTimeZoneRef) )
 
     def testNames(self):
+        self.failUnlessResultIsCFRetained(CFTimeZoneCopyKnownNames)
         array = CFTimeZoneCopyKnownNames()
         self.failUnless( isinstance(array, CFArrayRef) )
 
@@ -37,13 +41,15 @@ class TestTimeZone (TestCase):
             self.failUnless( isinstance(key, unicode) )
             self.failUnless( isinstance(value, unicode) )
 
-        #newmap = NSDictionary.dictionaryWithDictionary_({
-                #NSString.stringWithString_('AAA'):
-                    #NSString.stringWithString_('Europe/Amsterdam')})
 
-        newmap = NSMutableDictionary.dictionaryWithDictionary_(map)
+    @min_os_level('10.6')
+    def testAbbrievationDictSetting(self):
+        # Setting the dictionary is technically also possible
+        # on 10.5, but the code below causes a crash, even when
+        # rewritten als plan Objective-C.
+        map = CFTimeZoneCopyAbbreviationDictionary()
+        newmap = map.mutableCopy()
         newmap[u'AAA'] = u'Europe/Amsterdam'
-        newmap = newmap.copy()
 
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
         self.failUnless(v is None)
@@ -62,6 +68,7 @@ class TestTimeZone (TestCase):
         zone = CFTimeZoneCreate(None, u"Europe/Amsterdam", data)
         self.failUnless(isinstance(zone, CFTimeZoneRef))
 
+        self.failUnlessResultIsCFRetained(CFTimeZoneCreateWithTimeIntervalFromGMT)
         zone = CFTimeZoneCreateWithTimeIntervalFromGMT(None, 3600)
         self.failUnless(isinstance(zone, CFTimeZoneRef))
 
@@ -102,7 +109,7 @@ class TestTimeZone (TestCase):
 
         r = CFTimeZoneIsDaylightSavingTime(zone, 
                 CFGregorianDateGetAbsoluteTime(dt, zone))
-        self.failUnless(r is False)
+        self.failUnless(r in (False, True))
 
         offset = CFTimeZoneGetDaylightSavingTimeOffset(zone, 
                 CFGregorianDateGetAbsoluteTime(dt, zone))
@@ -125,9 +132,6 @@ class TestTimeZone (TestCase):
         self.failUnless( kCFTimeZoneNameStyleShortDaylightSaving == 3 )
 
         self.failUnless( isinstance(kCFTimeZoneSystemTimeZoneDidChangeNotification, unicode) )
-
-
-
 
 
 if __name__ == "__main__":

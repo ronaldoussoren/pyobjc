@@ -46,7 +46,7 @@
   <cftype gettypeid_func='CFMachPortGetTypeID' name='CFMachPortRef' tollfree='NSMachPort' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
   <cftype gettypeid_func='CFMessagePortGetTypeID' name='CFMessagePortRef' type='^{__CFMessagePort=}' type64='^{__CFMessagePort=}' />
   <cftype gettypeid_func='CFArrayGetTypeID' name='CFMutableArrayRef' tollfree='NSMutableArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
-  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFMutableAttributedStringRef' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' />
+  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFMutableAttributedStringRef' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' tollfree='NSCFAttributedString' />
   <cftype gettypeid_func='CFBagGetTypeID' name='CFMutableBagRef' type='^{__CFBag=}' type64='^{__CFBag=}' />
   <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFMutableBitVectorRef' type='^{__CFBitVector=}' type64='^{__CFBitVector=}' />
   <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFMutableCharacterSetRef' type='^{__CFCharacterSet=}' type64='^{__CFCharacterSet=}' />
@@ -778,6 +778,7 @@
     <arg type='^{__CFArray=}' />
     <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
+      <retval type='v' />
       <arg type='@' />
       <arg type='@' />
     </arg>
@@ -998,6 +999,7 @@
   <function name='CFBagApplyFunction'>
     <arg type='^{__CFBag=}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
+	    <retval type='v' />
       <arg type='@' />
       <arg type='@' />
     </arg>
@@ -1064,6 +1066,7 @@
   <function name='CFBinaryHeapApplyFunction'>
     <arg type='^{__CFBinaryHeap=}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
+	    <retval type='v' />
       <arg type='@' />
       <arg type='@' />
     </arg>
@@ -1769,6 +1772,7 @@
   <function name='CFDictionaryApplyFunction'>
     <arg type='^{__CFDictionary=}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
+	    <retval type='v' />
       <arg type='@' />
       <arg type='@' />
       <arg type='@' />
@@ -2107,6 +2111,7 @@
     <arg type='^{__CFNotificationCenter=}' />
     <arg type='@' type64='@' />
     <arg function_pointer='true' type='^?' type64='^?'>
+      <retval type='v' />
       <arg type='@' />
       <arg type='@' />
       <arg type='@' />
@@ -2627,6 +2632,7 @@
   <function name='CFSetApplyFunction'>
     <arg type='^{__CFSet=}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
+	    <retval type='v' />
       <arg type='@' />
       <arg type='@' />
     </arg>
@@ -3710,6 +3716,7 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFUserNotification=}' />
     <arg function_pointer='true' type='^?' type64='^?'>
+	    <retval type='v' />
       <arg type='^{__CFUserNotification=}' />
       <arg type='i' />
     </arg>

@@ -5,6 +5,9 @@ from CoreFoundation import *
 class TestXMLNode (TestCase):
     # NOTE: This doesn't actually test the API
 
+    def testTypes(self):
+        self.failUnlessIsCFType(CFXMLNodeRef)
+
 
     def testConstants(self):
         self.failUnless( kCFXMLNodeCurrentVersion == 1 )
@@ -32,6 +35,8 @@ class TestXMLNode (TestCase):
         self.failUnless( kCFXMLEntityTypeCharacter == 4 )
 
     def testStructs(self):
+        return 
+
         o = CFXMLElementInfo()
         self.failUnless( hasattr(o, 'attributes') )
         self.failUnless( hasattr(o, 'attributeOrder') )
@@ -75,6 +80,17 @@ class TestXMLNode (TestCase):
 
         o = CFXMLEntityReferenceInfo()
         self.failUnless( hasattr(o, 'entityType') )
+
+    def testFunctions(self):
+        self.failUnlessIsInstance(CFXMLNodeGetTypeID(), (int, long))
+
+        # CFXMLNodeCreate: requires manual binding
+        # CFXMLNodeGetInfoPtr: likewise
+        # Add tests that create all valid types of nodes with there additional info and
+        # try to extract the information.
+
+        self.failUnlessResultIsCFRetained(CFXMLNodeCreateCopy)
+        self.failUnlessResultIsCFRetained(CFXMLTreeCreateWithNode)
 
 if __name__ == "__main__":
     main()

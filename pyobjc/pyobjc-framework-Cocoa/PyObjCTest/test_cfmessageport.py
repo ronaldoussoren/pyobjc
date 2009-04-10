@@ -3,6 +3,9 @@ from CoreFoundation import *
 
 
 class TestMessagePort (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFMessagePortRef)
+
     def testConstants(self):
         self.failUnless(kCFMessagePortSuccess == 0)
         self.failUnless(kCFMessagePortSendTimeout == -1)
@@ -32,6 +35,7 @@ class TestMessagePort (TestCase):
         port = CFMessagePortCreateRemote(None, u"name")
         self.failUnless(isinstance(port, CFMessagePortRef))
 
+        self.failUnlessResultIsBOOL(CFMessagePortIsRemote)
         self.failUnless(CFMessagePortIsRemote(port))
         self.failUnless(CFMessagePortGetName(port), u"name")
 
@@ -62,24 +66,27 @@ class TestMessagePort (TestCase):
         rls = CFMessagePortCreateRunLoopSource(None, port, 0)
         self.failUnless(isinstance(rls, CFRunLoopSourceRef))
 
+        self.failUnlessResultIsBOOL(CFMessagePortIsValid)
         self.failUnless(CFMessagePortIsValid(port))
         CFMessagePortInvalidate(port)
         self.failIf(CFMessagePortIsValid(port))
         self.failUnless(didInvalidate)
 
-    def dont_testSending(self):
+    def testSending(self):
         context = []
         def callout(port, messageid, data, info):
             print "callout"
             info.append((port, messageid, data))
             return buffer("hello world")
 
-        port, shouldFree = CFMessagePortCreateLocal(None, u"name", callout, context, None)
+        port, shouldFree = CFMessagePortCreateLocal(None, u"pyobjc.test", callout, context, None)
+        self.failUnlessIsInstance(port, CFMessagePortRef)
 
-        err, data = CFMessagePortSendRequest(port, 42, buffer("hello moon"), 1.0, 1.0, kCFRunLoopDefaultMode, None)
-        print err, data
-
-
+        self.failUnlessArgIsOut(CFMessagePortSendRequest, 6)
+        rls = CFMessagePortCreateRunLoopSource(None, port, 0)
+        err, data = CFMessagePortSendRequest(port, 99, None, 1.0, 1.0, None, None)
+        self.failUnlessEqual(err, 0)
+        self.failUnlessEqual(data, None)
 
 
 if __name__ == "__main__":

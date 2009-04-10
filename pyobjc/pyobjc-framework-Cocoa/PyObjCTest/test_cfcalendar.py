@@ -2,10 +2,13 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 class TestCFCalendarVariadic (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFCalendarRef)
+
     def testCFCalendarComposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
-        self.assert_(calendar is not None)
+        self.failUnlessIsInstance(calendar, CFCalendarRef)
 
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, '')
@@ -20,7 +23,7 @@ class TestCFCalendarVariadic (TestCase):
     def testCFCalendarAddComponents(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
-        self.assert_(calendar is not None)
+        self.failUnlessIsInstance(calendar, CFCalendarRef)
 
         success, at = CFCalendarComposeAbsoluteTime(
                 calendar, None, "yMdHms", 1965, 1, 6, 14, 10, 0)

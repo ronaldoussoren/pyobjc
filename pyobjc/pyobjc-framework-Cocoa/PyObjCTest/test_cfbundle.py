@@ -4,6 +4,9 @@ from PyObjCTools.TestSupport import *
 
 class TestCFBundle (TestCase):
 
+    def testTypes(self):
+        self.failUnlessIsCFType(CFBundleRef)
+
     def testMainBundle(self):
         bundle = CFBundleGetMainBundle()
         self.failUnless( isinstance(bundle, CFBundleRef) )
@@ -120,10 +123,10 @@ class TestCFBundle (TestCase):
         self.failUnless(isinstance(val, unicode))
         self.failIf(val == "value")
 
-
-        # TODO CFCopyLocalizedStringFromTable
-        # TODO CFCopyLocalizedStringFromTableInBundle
-        # TODO CFCopyLocalizedStringWithDefaultValue
+        CFCopyLocalizedString("python", "error")
+        CFCopyLocalizedStringFromTable("pyobjc", "python", "error")
+        CFCopyLocalizedStringFromTableInBundle("pyobjc", "python", bundle, "comment")
+        CFCopyLocalizedStringWithDefaultValue("pyobjc", "python", bundle, "default", "comment")
 
         array = CFBundleCopyBundleLocalizations(bundle)
         self.failIf(array is None)
@@ -151,6 +154,7 @@ class TestCFBundle (TestCase):
         self.failIf(array is None)
         self.failUnless(isinstance(array, CFArrayRef))
 
+        self.failUnlessArgIsOut(CFBundlePreflightExecutable, 1)
         ok, error = CFBundlePreflightExecutable(bundle, None)
         self.failUnless((ok is True) or (ok is False))
         if ok:
@@ -158,6 +162,7 @@ class TestCFBundle (TestCase):
         else:
             self.failUnless(isinstance(error, CFErrorRef))
 
+        self.failUnlessArgIsOut(CFBundleLoadExecutableAndReturnError, 1)
         ok, error = CFBundleLoadExecutableAndReturnError(bundle, None)
         self.failUnless((ok is True) or (ok is False))
         if ok:

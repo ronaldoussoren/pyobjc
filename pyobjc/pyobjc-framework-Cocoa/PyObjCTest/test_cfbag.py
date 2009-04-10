@@ -109,6 +109,20 @@ class TestCFBag (TestCase):
         CFBagRemoveAllValues(bag)
         self.failUnless( CFBagGetCount(bag) == 0)
 
+    def testFunctions(self):
+        self.failUnlessArgHasType(CFBagGetCountOfValue, 1, '@')
+        self.failUnlessArgHasType(CFBagContainsValue, 1, '@')
+        self.failUnlessArgHasType(CFBagGetValue, 1, '@')
+        self.failUnlessResultHasType(CFBagGetValue, '@')
+        self.failUnlessArgHasType(CFBagGetValueIfPresent, 1, '@')
+        self.failUnlessArgHasType(CFBagGetValueIfPresent, 2, 'o^@')
+        self.failUnlessResultHasType(CFBagGetValueIfPresent, objc._C_NSBOOL)
+        self.failUnlessArgIsFunction(CFBagApplyFunction, 1, 'v@@', False)
+        self.failUnlessArgHasType(CFBagApplyFunction, 2, '@')
+        self.failUnlessArgHasType(CFBagAddValue, 1, '@')
+        self.failUnlessArgHasType(CFBagReplaceValue, 1, '@')
+        self.failUnlessArgHasType(CFBagSetValue, 1, '@')
+        self.failUnlessArgHasType(CFBagRemoveValue, 1, '@')
 
 
 if __name__ == "__main__":

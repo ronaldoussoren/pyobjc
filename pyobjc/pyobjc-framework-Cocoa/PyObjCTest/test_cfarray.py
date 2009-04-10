@@ -21,6 +21,9 @@ class TestCFArray (TestCase):
 
     def testCFArrayApplyFunction(self):
         array = CFArrayCreate(None, [1,2,3,4], 4, kCFTypeArrayCallBacks)
+
+        self.failUnlessArgIsFunction(CFArrayApplyFunction, 2, 'v@@', False)
+        self.failUnlessArgHasType(CFArrayApplyFunction, 3, '@')
         
         items = []
         infos = []
@@ -43,6 +46,10 @@ class TestCFArray (TestCase):
         # This method causes a hard crash, reason unclear.
         array = CFArrayCreate(None, range(20), 20, kCFTypeArrayCallBacks)
 
+        self.failUnlessArgHasType(CFArrayBSearchValues, 2, '@')
+        self.failUnlessArgIsFunction(CFArrayBSearchValues, 3, 'l@@@', False)
+        self.failUnlessArgHasType(CFArrayBSearchValues, 4, '@')
+
         def compare(l, r, context):
             return cmp(l, r)
 
@@ -60,6 +67,9 @@ class TestCFArray (TestCase):
 
     def testSortValues(self):
         array = NSMutableArray.arrayWithArray_([4,2,1,3,0,5])
+
+        self.failUnlessArgIsFunction(CFArraySortValues, 2, 'l@@@', False)
+        self.failUnlessArgHasType(CFArraySortValues, 3, '@')
 
         def compare(l, r, context):
             return cmp(l, r)
@@ -113,6 +123,9 @@ class TestCFArray (TestCase):
         self.failUnless( CFArrayGetLastIndexOfValue(array, (0, 6), 2) == 5 )
         self.failUnless( CFArrayGetLastIndexOfValue(array, (0, 6), u"hello") == kCFNotFound )
 
+        self.failUnlessArgHasType(CFArrayGetFirstIndexOfValue, 2, '@')
+        self.failUnlessArgHasType(CFArrayGetLastIndexOfValue, 2, '@')
+
 
     def testGetting(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
@@ -121,6 +134,10 @@ class TestCFArray (TestCase):
 
         self.failUnless(   CFArrayGetValueAtIndex(array, 0) == u"a"  )
         self.failUnless(   CFArrayGetValueAtIndex(array, 1) == 2  )
+
+
+        self.failUnlessArgHasType(CFArrayGetValues, 2, 'o^@')
+        self.failUnlessArgSizeInArg(CFArrayGetValues, 2, 1)
 
         vals = CFArrayGetValues(array, (0, 3), None)
         self.failUnless( isinstance(vals, tuple) )
@@ -133,6 +150,10 @@ class TestCFArray (TestCase):
         self.assert_(isinstance(array, CFArrayRef))
         array = CFArrayCreateMutableCopy(None, 0, array)
 
+
+        self.failUnlessArgHasType(CFArrayAppendValue, 1, '@')
+        self.failUnlessArgHasType(CFArrayInsertValueAtIndex, 2, '@')
+        self.failUnlessArgHasType(CFArraySetValueAtIndex, 2, '@')
 
         CFArrayAppendValue(array, u"foo")
         self.assertEquals(array, [u"a",2,3,4,4,2,u"foo"])
@@ -150,6 +171,8 @@ class TestCFArray (TestCase):
         CFArrayExchangeValuesAtIndices(array, 1,2)
         self.assertEquals(array, [u"a",u"two",4,4,4,2,u"foo"])
 
+        self.failUnlessArgHasType(CFArrayReplaceValues, 2, 'n^@')
+        self.failUnlessArgSizeInArg(CFArrayReplaceValues, 2, 3)
         CFArrayReplaceValues(array, (2,3), (u'a', u'b', u'c', u'd', u'e', u'f'), 6)
         self.assertEquals(array, [u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo'])
 

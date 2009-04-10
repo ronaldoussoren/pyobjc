@@ -3,6 +3,8 @@ from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
 class TestCFBinaryHeap (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFBinaryHeapRef)
 
     def testCreation(self):
         heap = CFBinaryHeapCreate(
@@ -100,6 +102,15 @@ class TestCFBinaryHeap (TestCase):
         values = CFBinaryHeapGetValues(heap)
         self.failUnless(values == ())
 
+    def testFunctions(self):
+        self.failUnlessArgHasType(CFBinaryHeapGetCountOfValue, 1, '@')
+        self.failUnlessArgHasType(CFBinaryHeapContainsValue, 1, '@')
+        self.failUnlessResultHasType(CFBinaryHeapGetMinimum, '@')
+        self.failUnlessResultHasType(CFBinaryHeapGetMinimumIfPresent, objc._C_NSBOOL)
+        self.failUnlessArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, 'o^@')
+        self.failUnlessArgIsFunction(CFBinaryHeapApplyFunction, 1, 'v@@', False)
+        self.failUnlessArgHasType(CFBinaryHeapApplyFunction, 2, '@')
+        self.failUnlessArgHasType(CFBinaryHeapAddValue, 1, '@')
 
 if __name__ == "__main__":
     main()

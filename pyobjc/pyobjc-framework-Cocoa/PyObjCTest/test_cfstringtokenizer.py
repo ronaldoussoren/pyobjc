@@ -3,6 +3,9 @@ from CoreFoundation import *
 
 
 class TestStringTokenizer (TestCase):
+    def testTypes(self):
+        self.failUnlessIsCFType(CFStringTokenizerRef)
+
     def testFunctions(self):
         s = u"Spring eens over een boom"
         v = CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
@@ -11,6 +14,7 @@ class TestStringTokenizer (TestCase):
         v = CFStringTokenizerGetTypeID()
         self.failUnless(isinstance(v, (int, long)))
 
+        self.failUnlessResultIsCFRetained(CFStringTokenizerCreate)
         tok = CFStringTokenizerCreate(
                 None, s, (0, len(s)), kCFStringTokenizerUnitWord, 
                 CFLocaleCopyCurrent())
@@ -28,6 +32,7 @@ class TestStringTokenizer (TestCase):
         v = CFStringTokenizerGetCurrentTokenRange(tok)
         self.assertEquals(v, CFRange(7, 4))
 
+        self.failUnlessResultIsCFRetained(CFStringTokenizerCopyCurrentTokenAttribute)
         v = CFStringTokenizerCopyCurrentTokenAttribute(tok, kCFStringTokenizerAttributeLanguage)
         self.failUnless(v is None)
 

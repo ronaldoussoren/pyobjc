@@ -73,8 +73,11 @@ class TestBase (TestCase):
         self.failUnless(isinstance(CFNullGetTypeID(), (int, long)))
 
         self.failUnless(isinstance(kCFNull, CFNullRef))
+        self.failUnlessIsCFType(CFNullRef)
 
     def testCFAllocator(self):
+        self.failUnlessIsCFType(CFAllocatorRef)
+
         self.failUnless(isinstance(CFAllocatorGetTypeID(), (int, long)))
 
         self.failUnless(isinstance(kCFAllocatorDefault, (CFAllocatorRef, type(None))))
