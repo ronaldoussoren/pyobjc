@@ -19,7 +19,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-AddressBook',
-    version="2.2b1",
+    version="2.2b2",
     description = "Wrappers for the framework AddressBook on Mac OS X",
     long_description = __doc__,
     author = 'Ronald Oussoren',
@@ -30,7 +30,7 @@ setup(
     package_dir = { '': 'Lib' },
     install_requires = [ 
         'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
     dependency_links = [],
     package_data = { 
