@@ -32,7 +32,7 @@ setup(
     ],
     install_requires = [ 
         'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
     dependency_links = [],
     package_data = { 
