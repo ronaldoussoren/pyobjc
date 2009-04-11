@@ -70,6 +70,7 @@ class TestSubclass (TestCase):
     def setUp(self):
 	self.entity = CoreData.NSEntityDescription.new()
 	self.entity.setName_('TestObject')
+        self.entity.setManagedObjectClassName_('CoreDataTestObject')
 
 	self.attribute = CoreData.NSAttributeDescription.new()
 	self.attribute.setName_('testAttribute')
@@ -95,21 +96,21 @@ class TestSubclass (TestCase):
 	managedObject.setValue_forKey_(testValue, u'testAttribute')
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
 	testValue = u'BobFred'
 	managedObject.setValue_forKey_(testValue, u'testAttribute')
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
         self.assert_('testAttribute' not in managedObject.__dict__)
 
 	testValue = u'Zebras have long legs.'
-	managedObject.testAttribute = testValue
+	managedObject._.testAttribute = testValue
 
 	self.assertEquals(testValue, managedObject.valueForKey_(u'testAttribute'))
-	self.assertEquals(testValue, managedObject.testAttribute)
+	self.assertEquals(testValue, managedObject._.testAttribute)
 
     def testPythonicAttribute(self):
 	managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
