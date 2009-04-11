@@ -51,7 +51,7 @@ setup(
 #        'console_scripts': [
 #            "nibclassbuilder = PyObjCTools.NibClassBuilder.commandline"
 #        ],
-    },
+#    },
     test_suite='PyObjCTest',
 
     cmdclass = extra_cmdclass,
