@@ -4,10 +4,11 @@ from CoreData import *
 
 class TestNSManagedObject (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSManagedObject.isInserted)
-        self.failUnlessResultIsBOOL(NSManagedObject.isUpdated)
-        self.failUnlessResultIsBOOL(NSManagedObject.isDeleted)
-        self.failUnlessResultIsBOOL(NSManagedObject.isFault)
+        o = NSManagedObject.alloc().init()
+        self.failUnlessResultIsBOOL(o.isInserted)
+        self.failUnlessResultIsBOOL(o.isUpdated)
+        self.failUnlessResultIsBOOL(o.isDeleted)
+        self.failUnlessResultIsBOOL(o.isFault)
 
         self.failUnlessResultIsBOOL(NSManagedObject.validateValue_forKey_error_)
         self.failUnlessArgIsOut(NSManagedObject.validateValue_forKey_error_, 2)

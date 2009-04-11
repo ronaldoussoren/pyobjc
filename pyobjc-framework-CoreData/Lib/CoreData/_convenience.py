@@ -1,5 +1,10 @@
 """
 This adds some usefull conveniences to NSManagedObject and subclasses thereof
+
+These conveniences try to enable KVO by default on NSManagedObject instances,
+this no longer works on Leopard due to the way NSManagedObject is implemented
+there (it generates accessor methods at runtime, which interferes with the
+implementation in this file).
 """
 __all__ = ()
 from objc import addConvenienceForClass
