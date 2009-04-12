@@ -1,4 +1,4 @@
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 import objc; objc.setVerbose(True)
 
 import AppController
