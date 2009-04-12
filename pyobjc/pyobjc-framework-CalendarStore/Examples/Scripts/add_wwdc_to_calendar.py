@@ -9,7 +9,7 @@ for cal in store.calendars():
     if cal._.title == u"Work":
         event = CalEvent.event()
         event._.calendar = cal
-        event._.title = "WWDC 2007"
+        event._.title = "WWDC 2009"
         event._.notes = textwrap.dedent('''\
                 This June, the center of the Mac universe will be at Moscone 
                 West in downtown San Francisco, as developers and IT 
@@ -21,11 +21,11 @@ for cal in store.calendars():
                 week getting the kind of inspiration you won't find anywhere 
                 else.
                 ''')
-        event._.url = NSURL.URLWithString_('http://developer.apple.com/wwdc/')
+        event._.url = NSURL.URLWithString_('http://www.apple.com/wwdc/')
         event._.location = "Moscone West, San Francisco, CA, USA"
         event._.isAllDay = True
-        start = NSDate.dateWithString_("2007-06-11 00:00:00 +0600")
-        stop = NSDate.dateWithString_("2007-06-15 23:59:59 +0600")
+        start = NSDate.dateWithString_("2009-06-8 00:00:00 +0600")
+        stop = NSDate.dateWithString_("2009-06-12 23:59:59 +0600")
         event._.startDate = start
         event._.endDate = stop
         res, err = store.saveEvent_span_error_(event, 0, None)
