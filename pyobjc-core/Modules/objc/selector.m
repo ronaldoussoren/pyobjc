@@ -589,8 +589,8 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 	if (pyres && PyObjCObject_Check(pyres)) {
 		if (self->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 			((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-		} else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
-			((PyObjCObject*)pyres)->flags &= 
+		} else if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+			((PyObjCObject*)pyself)->flags &= 
 				~PyObjCObject_kUNINITIALIZED;
 			if (self->sel_self && self->sel_self != pyres && !PyErr_Occurred()) {
 				PyObjCObject_ClearObject(self->sel_self);
@@ -1199,6 +1199,7 @@ pysel_default_signature(PyObject* callable)
 			"Objective-C callable methods must take at least one argument");
 		return NULL;
 	}
+
 	
 	/* arguments + return-type + selector */
 	result = PyMem_Malloc(arg_count+3);
@@ -1239,8 +1240,6 @@ pysel_default_signature(PyObject* callable)
 			i += 2;
 		}
 	}
-	
-
 	return result;
 }
 
@@ -1888,7 +1887,7 @@ PyObjCSelector_FromFunction(
 	} else {
 		meth = class_getInstanceMethod(oc_class, selector);
 		
-		if (!meth && !sel_isEqual(selector, @selector(copyWithZone:))) {
+		if (!meth && !sel_isEqual(selector, @selector(copyWithZone:)) && !sel_isEqual(selector, @selector(mutableCopyWithZone:))) {
 		        /* Look for a classmethod, but don't do that for copyWithZone:
 			 * because that method is commonly defined in Python, and
 			 * overriding "NSObject +copyWithZone:" is almost certainly

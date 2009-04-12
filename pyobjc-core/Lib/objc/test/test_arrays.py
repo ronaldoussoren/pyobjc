@@ -133,11 +133,26 @@ StructArrayDelegate = objc.informal_protocol(
     ]
 )
 
+class OC_TestArrayInt_In (NSObject):
+    def arrayOf4Ints_(self, array):
+        return array
+
+class OC_TestArrayInt_Out (NSObject):
+    def arrayOf4IntsOut_(self, array):
+        if array is None:
+            return [ 99, 100, 98, 101 ]
+
+class OC_TestArrayStruct_Out (NSObject):
+    def arrayOf4StructsOut_(self, array):
+        if array is None:
+            return [ (44, 45), (46, 47), (48, 49), (50, 51) ]
+
+class OC_TestArrayStruct_In (NSObject):
+    def arrayOf4Structs_(self, array):
+        return array
+
 class TestArrayCallbacks (TestCase):
     def testCallArrayInt(self):
-        class OC_TestArrayInt_In (NSObject):
-            def arrayOf4Ints_(self, array):
-                return array
 
         obj = OC_TestArrayInt_In.alloc().init()
 
@@ -145,10 +160,6 @@ class TestArrayCallbacks (TestCase):
         self.assertEquals(v, (1, 2, 3, 4))
 
     def testCallArrayIntsOut(self):
-        class OC_TestArrayInt_Out (NSObject):
-            def arrayOf4IntsOut_(self, array):
-                if array is None:
-                    return [ 99, 100, 98, 101 ]
 
         obj = OC_TestArrayInt_Out.alloc().init()
 
@@ -156,9 +167,6 @@ class TestArrayCallbacks (TestCase):
         self.assertEquals(v, [99, 100, 98, 101])
 
     def testCallArrayStruct(self):
-        class OC_TestArrayStruct_In (NSObject):
-            def arrayOf4Structs_(self, array):
-                return array
 
         obj = OC_TestArrayStruct_In.alloc().init()
 
@@ -166,10 +174,6 @@ class TestArrayCallbacks (TestCase):
         self.assertEquals(v, ((1,2), (3,4), (5,6), (7,8)))
 
     def testCallArrayStructsOut(self):
-        class OC_TestArrayStruct_Out (NSObject):
-            def arrayOf4StructsOut_(self, array):
-                if array is None:
-                    return [ (44, 45), (46, 47), (48, 49), (50, 51) ]
 
         obj = OC_TestArrayStruct_Out.alloc().init()
 

@@ -8,6 +8,11 @@ import os
 import glob
 import site
 
+if 'MallocStackLogging' in os.environ:
+    del os.environ['MallocStackLogging']
+if 'MallocStackLoggingNoCompact' in os.environ:
+    del os.environ['MallocStackLoggingNoCompact']
+
 # See the news file:
 #os.environ['MACOSX_DEPLOYMENT_TARGET']='10.5'
 
