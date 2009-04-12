@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Cocoa.framework/Cocoa' />
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='InstallerState_Choice_CustomLocation' type='@' />
+  <constant name='InstallerState_Choice_Identifier' type='@' />
+  <constant name='InstallerState_Choice_Installed' type='@' />
+  <enum name='InstallerDirectionBackward' value='1' />
+  <enum name='InstallerDirectionForward' value='0' />
+  <enum name='InstallerDirectionUndefined' value='2' />
+  <class name='InstallerPane'>
+    <method selector='gotoNextPane'>
+      <retval type='B' />
+    </method>
+    <method selector='gotoPreviousPane'>
+      <retval type='B' />
+    </method>
+    <method selector='nextEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='previousEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='setNextEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setPreviousEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='shouldExitPane:'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='InstallerSection'>
+    <method selector='gotoPane:'>
+      <retval type='B' />
+    </method>
+    <method selector='shouldLoad'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='InstallerState'>
+    <method selector='installStarted'>
+      <retval type='B' />
+    </method>
+    <method selector='installSucceeded'>
+      <retval type='B' />
+    </method>
+    <method selector='licenseAgreed'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+
