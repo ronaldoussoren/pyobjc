@@ -1,0 +1,116 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <opaque name='CFHTTPAuthenticationRef' />
+  <cftype gettypeid_func='CFHTTPMessageGetTypeID' name='CFHTTPMessageRef' />
+  <cftype gettypeid_func='CFHostGetTypeID' name='CFHostRef' />
+  <cftype name='CFNetDiagnosticRef' />
+  <cftype gettypeid_func='CFNetServiceBrowserGetTypeID' name='CFNetServiceBrowserRef' />
+  <cftype gettypeid_func='CFNetServiceMonitorGetTypeID' name='CFNetServiceMonitorRef' />
+  <cftype gettypeid_func='CFNetServiceGetTypeID' name='CFNetServiceRef' />
+  <function name='CFFTPCreateParsedResourceListing'>
+    <arg index='1' type='*' type64='*' />
+  </function>
+  <function name='CFHTTPAuthenticationCopyDomains'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPAuthenticationCopyMethod'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPAuthenticationCopyRealm'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageAppendBytes'>
+    <arg index='1' type='*' type64='*' />
+  </function>
+  <function name='CFHTTPMessageCopyAllHeaderFields'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyBody'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyHeaderFieldValue'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyRequestMethod'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyRequestURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyResponseStatusLine'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopySerializedMessage'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCopyVersion'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCreateEmpty'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCreateRequest'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHTTPMessageCreateResponse'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHostCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHostCreateWithAddress'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFHostCreateWithName'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetDiagnosticCreateWithStreams'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetDiagnosticCreateWithURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceBrowserCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceCreateCopy'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceCreateDictionaryWithTXTData'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceCreateTXTDataWithDictionary'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetServiceMonitorCreate'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetworkCopyProxiesForAutoConfigurationScript'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetworkCopyProxiesForURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFNetworkCopySystemProxySettings'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFReadStreamCreateForHTTPRequest'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFReadStreamCreateForStreamedHTTPRequest'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFReadStreamCreateWithFTPURL'>
+    <retval already_cfretained='true' />
+  </function>
+  <function name='CFWriteStreamCreateWithFTPURL'>
+    <retval already_cfretained='true' />
+  </function>
+</signatures>
