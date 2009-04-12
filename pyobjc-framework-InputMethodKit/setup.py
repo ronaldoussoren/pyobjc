@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-InputMethodKit',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the framework InputMethodKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
