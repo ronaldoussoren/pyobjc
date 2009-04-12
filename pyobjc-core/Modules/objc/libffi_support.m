@@ -384,8 +384,8 @@ signature_to_ffi_type(const char* argtype)
 	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST: 
 #if 0	/* 'O' is used by remote objects ??? */
 	  case 'O':
-		return signature_to_ffi_type(argtype+1);
 #endif
+		return signature_to_ffi_type(argtype+1);
 	case _C_STRUCT_B: 
 		return struct_to_ffi_type(argtype);
 	case _C_UNDEF:
