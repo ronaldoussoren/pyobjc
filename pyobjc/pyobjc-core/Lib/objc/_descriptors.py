@@ -50,13 +50,16 @@ def accessor(func, typeSignature='@'):
 
     if not (minArgs <= selArgs <= maxArgs):
         if selArgs == 3 and (minArgs <= 2 <= maxArgs) and funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature='c@:N^@o^@')
+            return selector(func, signature='Z@:N^@o^@')
         elif minArgs == maxArgs:
             raise TypeError('%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, maxArgs, selArgs))
         else:
             raise TypeError('%s expected to take between %d and %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, minArgs, maxArgs, selArgs))
     
     if selArgs == 3:
+        if funcName.startswith('validate') and funcName.endswith('_error_'):
+            return selector(func, signature='Z@:N^@o^@')
+
         if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
             return selector(func, signature='v@:@i')
         elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):

@@ -333,7 +333,8 @@ PyObjCRT_SkipTypeQualifiers (const char* type)
 			*type == _C_INOUT ||
 			*type == _C_OUT ||
 			*type == _C_BYCOPY ||
-			*type == _C_ONEWAY) {
+			*type == _C_ONEWAY ||
+			*type == 'O') {
 		type++;
 	}
 	while (*type && isdigit(*type)) type++;

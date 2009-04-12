@@ -418,7 +418,7 @@ class TestOverridingSpecials(TestCase):
 
     def testImplementingSetValueForKey(self):
         values = {}
-        class CrashTest(NSObject):
+        class CrashTest (NSObject):
             def setValue_forKey_(self, v, k):
                 values[k] = v
 

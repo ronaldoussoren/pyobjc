@@ -381,8 +381,11 @@ signature_to_ffi_type(const char* argtype)
 	case _C_PTR: return &ffi_type_pointer;
 	case _C_ARY_B: 
 		return array_to_ffi_type(argtype);
-	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST:
+	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST: 
+#if 0	/* 'O' is used by remote objects ??? */
+	  case 'O':
 		return signature_to_ffi_type(argtype+1);
+#endif
 	case _C_STRUCT_B: 
 		return struct_to_ffi_type(argtype);
 	case _C_UNDEF:
@@ -1022,6 +1025,12 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	for (i = startArg; i < methinfo->ob_size; i++) {
 
 		const char* argtype = methinfo->argtype[i].type;
+
+#if 0
+		if (argtype[0] == 'O') {
+			argtype ++;
+		}
+#endif
 
 		switch (*argtype) {
 		case _C_INOUT: 
@@ -2026,6 +2035,11 @@ int PyObjCFFI_CountArguments(
 	
 	for (i = argOffset; i < methinfo->ob_size; i++) {
 		const char *argtype = methinfo->argtype[i].type;
+#if 0
+		if (argtype[0] == 'O') {
+			argtype++;
+		}
+#endif
 
 		switch (*argtype) {
 		case _C_INOUT:
@@ -2357,6 +2371,9 @@ int PyObjCFFI_ParseArguments(
 			/* Encode argument, maybe after allocating space */
 
 			if (argtype[0] == _C_OUT) argtype ++; /* XXX: is this correct ???? */
+#if 0
+			if (argtype[0] == 'O') argtype ++; 
+#endif
 
 			argument = PyTuple_GET_ITEM (args, py_arg);
 			switch (*argtype) {
@@ -2841,6 +2858,9 @@ int PyObjCFFI_ParseArguments(
 			} else {
 				/* Encode argument, maybe after allocating space */
 				if (argtype[0] == _C_OUT) argtype ++;
+#if 0
+				if (argtype[0] == 'O') argtype ++;
+#endif
 
 				argument = PyTuple_GET_ITEM (args, py_arg);
 				py_arg ++; 
@@ -3237,7 +3257,7 @@ PyObjCFFI_BuildResult(
 								count = methinfo->argtype[i].arrayArg;
 							}
 
-							if (*resttype == *@encode(UniChar)) {
+							if (*resttype == _C_UNICHAR) {
 								v = PyUnicode_FromUnicode(NULL, count);
 								if (!v) goto error_cleanup;
 
@@ -3291,7 +3311,7 @@ PyObjCFFI_BuildResult(
 							}
 							if (count == -1 && PyErr_Occurred()) goto error_cleanup;
 
-							if (*resttype == *@encode(UniChar)) {
+							if (*resttype == _C_UNICHAR) {
 								v = PyUnicode_FromUnicode(NULL, count);
 								if (!v) goto error_cleanup;
 
@@ -3668,10 +3688,11 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
-
+#if 1
 	if (isUninitialized && PyObjCObject_Check(self)) {
 		((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;
 	}
+#endif
 
 	if (PyErr_Occurred()) goto error_cleanup;
 
