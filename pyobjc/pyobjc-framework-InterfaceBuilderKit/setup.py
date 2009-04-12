@@ -8,7 +8,7 @@ and (Objective-)C frameworks
 
 NOTE: To run the unittests for this framework use::
 
-    $ env DYLD_FRAMEWORK_PATH='/Developer/Library/PrivateFrameworks/' python setup.py test
+    $ env DYLD_FRAMEWORK_PATH="$(xcode-select -print-path)/Library/PrivateFrameworks/" python setup.py test
 
 This is needed because the InterfaceBuilderKit framework won't load otherwise.
 '''
@@ -24,7 +24,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-InterfaceBuilderKit',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
