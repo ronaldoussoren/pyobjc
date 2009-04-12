@@ -8,7 +8,7 @@ from distutils.core import setup
 import py2app
 
 setup(
-    name='PyABPresense',
+    name='PyABPresence',
     app=["main.py"],
     data_files=["English.lproj"],
 )
