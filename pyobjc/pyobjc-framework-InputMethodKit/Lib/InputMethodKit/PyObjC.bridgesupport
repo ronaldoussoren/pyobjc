@@ -1,0 +1,86 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <depends_on path='/System/Library/Frameworks/Carbon.framework/Carbon' />
+  <constant name='IMKCandidatesOpacityAttributeName' type='@' />
+  <constant name='IMKControllerClass' type='@' />
+  <constant name='IMKDelegateClass' type='@' />
+  <constant name='IMKModeDictionary' type='@' />
+  <constant name='kIMKCommandClientName' type='@' />
+  <constant name='kIMKCommandMenuItemName' type='@' />
+  <enum name='kIMKLocateCandidatesAboveHint' value='1' />
+  <enum name='kIMKLocateCandidatesBelowHint' value='2' />
+  <enum name='kIMKLocateCandidatesLeftHint' value='3' />
+  <enum name='kIMKLocateCandidatesRightHint' value='4' />
+  <enum name='kIMKScrollingGridCandidatePanel' value='2' />
+  <enum name='kIMKSingleColumnScrollingCandidatePanel' value='1' />
+  <enum name='kIMKSingleRowSteppingCandidatePanel' value='3' />
+  <informal_protocol name='IMKServerInput'>
+    <method selector='candidates:' type='@@:@' />
+    <method selector='commitComposition:' type='v@:@' />
+    <method selector='composedString:' type='@@:@' />
+    <method selector='didCommandBySelector:client:' type='B@::@' />
+    <method selector='handleEvent:client:' type='B@:@@' />
+    <method selector='inputText:client:' type='B@:@@' />
+    <method selector='inputText:key:modifiers:client:' type='B@:@iI@' type64='B@:@qQ@' />
+    <method selector='originalString:' type='@@:@' />
+  </informal_protocol>
+  <class name='IMKCandidates'>
+    <method selector='dismissesAutomatically'>
+      <retval type='B' />
+    </method>
+    <method selector='isVisible'>
+      <retval type='B' />
+    </method>
+    <method selector='selectionKeysKeylayout'>
+      <retval type='^{__TISInputSource=}' />
+    </method>
+    <method selector='setDismissesAutomatically:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setSelectionKeysKeylayout:'>
+      <arg index='0' type='^{__TISInputSource=}' />
+    </method>
+  </class>
+  <class name='IMKInputController'>
+    <method selector='doCommandBySelector:commandDictionary:'>
+      <arg index='0' type=':' />
+    </method>
+  </class>
+  <class name='NSObject'>
+    <method selector='didCommandBySelector:client:'>
+      <retval type='B' />
+      <arg index='0' type=':' />
+    </method>
+    <method selector='handleEvent:client:'>
+      <retval type='B' />
+    </method>
+    <method selector='inputText:client:'>
+      <retval type='B' />
+    </method>
+    <method selector='inputText:key:modifiers:client:'>
+      <retval type='B' />
+    </method>
+    <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
+      <retval type='B' />
+      <arg index='0' type='I' type64='Q' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='2' type='I' type64='Q' />
+      <arg index='3' type='^B' type_modifier='o' />
+    </method>
+    <method selector='mouseMovedOnCharacterIndex:coordinate:withModifier:client:'>
+      <retval type='B' />
+      <arg index='0' type='I' type64='Q' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='2' type='I' type64='Q' />
+    </method>
+    <method selector='mouseUpOnCharacterIndex:coordinate:withModifier:client:'>
+      <retval type='B' />
+      <arg index='0' type='I' type64='Q' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='2' type='I' type64='Q' />
+    </method>
+  </class>
+</signatures>
+
