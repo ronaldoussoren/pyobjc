@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Message',
-    version="2.2b1",
+    version="2.2b2",
     description = "Wrappers for the framework Message on Mac OS X",
     long_description = __doc__,
     author = 'Ronald Oussoren',
