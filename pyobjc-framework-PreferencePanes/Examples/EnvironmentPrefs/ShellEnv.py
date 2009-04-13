@@ -12,17 +12,14 @@ TODO:
 - Undo
 """
 import objc
-from AppKit import *
-from Foundation import *
+from Cocoa import *
 from PreferencePanes import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 import os
 
 # Uncomment this during development, you'll get exception tracebacks when
 # the Python code fails.
 #objc.setVerbose(1)
-
-NibClassBuilder.extractClasses("EnvironmentPane")
 
 # Location of the environment.plist
 ENVPLIST="~/.MacOSX/environment.plist"
@@ -30,10 +27,12 @@ ENVPLIST="~/.MacOSX/environment.plist"
 # Template for new keys
 NEWTMPL=NSLocalizedString("New_Variable_%d", "")
 
-class EnvironmentPane (NibClassBuilder.AutoBaseClass):
+class EnvironmentPane (NSPreferencePane):
     """
     The 'model/controller' for the "Shell Environment" preference pane
     """
+    deleteButton = objc.IBOutlet()
+    mainTable = objc.IBOutlet()
 
     #__slots__ = (
     #    'environ',  # The actual environment, as a NSMutableDictionary
@@ -89,6 +88,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
             return NSUnselectLater
         return NSUnselectNow
 
+    @AppHelper.endSheetMethod
     def sheetDidDismiss_returnCode_contextInfo_(self, sheet, code, info):
         # Sheet handler for saving unsaved changes.
 
@@ -113,9 +113,6 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         self.changed = False
         self.replyToShouldUnselect_(NSUnselectNow)
 
-    sheetDidDismiss_returnCode_contextInfo_ = AppHelper.endSheetMethod(
-        sheetDidDismiss_returnCode_contextInfo_)
-
     def saveEnvironment(self):
         """
         Save the data to environment.plist
@@ -133,6 +130,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
 
         return True
 
+    @objc.IBAction
     def deleteVariable_(self, sender):
         """
         Delete the selected variable
@@ -145,6 +143,7 @@ class EnvironmentPane (NibClassBuilder.AutoBaseClass):
         self.mainTable.reloadData()
         self.changed = True
 
+    @objc.IBAction
     def newVariable_(self, sender):
         """
         Add a new variable
