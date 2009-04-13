@@ -13,7 +13,6 @@ class TestQTCaptureFileOutput (TestCase):
         self.failUnlessEqual(QTCaptureFileOutputBufferDestinationOldFile, 2)
 
     def testProtocols(self):
-        self.failUnlessIsInstance(QTCaptureFileOutputDelegate, objc.informal_protocol)
         self.failUnlessResultIsBOOL(TestQTCaptureFileOutputHelper.captureOutput_shouldChangeOutputFileAtURL_forConnections_dueToError_)
 
 if __name__ == "__main__":
