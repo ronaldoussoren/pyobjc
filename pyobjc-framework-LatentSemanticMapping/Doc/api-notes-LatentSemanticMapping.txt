@@ -1,0 +1,11 @@
+=============================================
+API Notes for framework LatentSemanticMapping
+=============================================
+
+All functions in this framework are mapped, however the unittests
+for this framework wrapper cause crashes in the Python interpreter.
+
+I'm pretty sure that is due to misuse of the API, sadly enough
+I haven't found good documentation or examples for the problematic
+functions yet. For this reason a large subset of the framework 
+interface is not tested at the moment.
