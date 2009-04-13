@@ -20,6 +20,7 @@ infoPlist = dict(
 )
 
 setup(
+    name="Shell Environment",
     plugin=['ShellEnv.py'],
     data_files=["English.lproj", "Dutch.lproj", "ShellEnv.icns"],
     options=dict(py2app=dict(
