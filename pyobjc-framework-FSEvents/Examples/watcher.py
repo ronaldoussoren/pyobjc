@@ -3,6 +3,7 @@ import objc
 import sys
 import os
 import stat
+import errno
 
 def T_or_F(x):
     if x:
@@ -131,7 +132,7 @@ def timer_callback(timer, streamRef):
     settings.debug("FSEventStreamFlushAsync(streamRef = %s)", streamRef)
     FSEventStreamFlushAsync(streamRef)
 
-def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMarsks, eventIDs):
+def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMasks, eventIDs):
     settings.debug("fsevents_callback(streamRef = %s, clientInfo = %s, numEvents = %s)", streamRef, clientInfo, numEvents)
     settings.debug("fsevents_callback: FSEventStreamGetLatestEventId(streamRef) => %s", FSEventStreamGetLatestEventId(streamRef))
     full_path = clientInfo
@@ -164,7 +165,7 @@ def fsevents_callback(streamRef, clientInfo, numEvents, eventPaths, eventMarsks,
             print "Could not update size on %s"%(path,)
 
         else:
-            print "New total size: %d (change made to %s) for path: %s"(
+            print "New total size: %d (change made to %s) for path: %s"%(
                     get_total_size(), path, full_path)
 
 
@@ -265,7 +266,8 @@ def iterate_subdirs(dirname, recursive):
     try:
         names = os.listdir(dirname)
     except os.error, msg:
-        if msg.errno == errno.ENOENT:
+        print msg.errno, errno.EPERM
+        if msg.errno in (errno.ENOENT, errno.EPERM, errno.EACCES):
             del dir_items[dirname] 
             return 0
 

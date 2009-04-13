@@ -268,7 +268,7 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
 	PyObject* py_flags;
 	PyObject* py_deviceToWatch;
 
-	if (!PyArg_ParseTuple(args, "OOOOOOO",
+	if (!PyArg_ParseTuple(args, "OOOOOOOO",
 		&py_allocator, &py_callback, &py_callback_info, 
 		&py_deviceToWatch, &py_pathsToWatch, &py_sinceWhen, 
 		&py_latency, &py_flags)) {

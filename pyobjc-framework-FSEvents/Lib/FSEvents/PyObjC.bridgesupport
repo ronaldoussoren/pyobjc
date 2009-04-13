@@ -22,7 +22,7 @@
     <arg type='^{__FSEventStream=}' />
   </function>
   <function name='FSEventStreamCopyPathsBeingWatched'>
-    <retval type='^{__CFArray=}' />
+    <retval type='^{__CFArray=}' already_cfretained='true' />
     <arg type='^{__FSEventStream=}' />
   </function>
   <function name='FSEventStreamCreate'>
@@ -47,7 +47,7 @@
     <arg type='L' />
   </function>
   <function name='FSEventStreamFlushAsync'>
-    <retval type='v' />
+    <retval type='q' />
     <arg type='^{__FSEventStream=}' />
   </function>
   <function name='FSEventStreamFlushSync'>
