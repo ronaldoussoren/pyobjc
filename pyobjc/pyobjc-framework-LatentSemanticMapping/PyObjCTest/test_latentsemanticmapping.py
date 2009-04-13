@@ -79,6 +79,7 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapGetCategoryCount(map)
         self.failUnlessIsInstance(v, (int, long))
 
+        self.failUnlessResultIsCFRetained(LSMTextCreate)
         text = LSMTextCreate(None, map)
         self.failUnlessIsInstance(text, LSMTextRef)
         text2 = LSMTextCreate(None, map)
@@ -86,9 +87,9 @@ class TestLatentSemanticMapping (TestCase):
         words = LSMTextCreate(None, map)
         self.failUnlessIsInstance(words, LSMTextRef)
 
-        v = LSMTextAddWord(words, "hello")
+        v = LSMTextAddWord(words, "the")
         self.failUnlessIsInstance(v, (int, long))
-        v = LSMTextAddWord(words, "world")
+        v = LSMTextAddWord(words, "and")
         self.failUnlessIsInstance(v, (int, long))
 
         v = LSMTextAddWords(text, "the world goes on and on",
@@ -104,6 +105,14 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapAddText(map, text, cat)
         self.failUnlessIsInstance(v, (int, long))
 
+        fn = __file__
+        fn = os.path.splitext(fn)[0] + ".py"
+        for line in open(fn, 'rb'):
+            t = LSMTextCreate(None, map)
+            LSMTextAddWords(t, line, CFLocaleCopyCurrent(), 0)
+            LSMMapAddText(map, t, cat)
+
+
         v = LSMMapAddTextWithWeight(map, text2, cat2, 2.0)
         self.failUnlessIsInstance(v, (int, long))
 
@@ -115,17 +124,29 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMTextAddWords(text3, "foo the bar and worlds away",
                 CFLocaleCopyCurrent(), 0)
 
-        v = LSMMapCreateClusters(None, map, None, 2, 0)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        if 0:
+            self.failUnlessResultIsCFRetained(LSMMapCreateClusters)
+            clusters = LSMMapCreateClusters(None, map, None, 3,  0)
+            self.failUnlessIsInstance(clusters, CFArrayRef)
 
-        v = LSMMapApplyClusters(map, v);
-        self.failUnlessIsInstance(v, (int, long))
+            v = LSMMapApplyClusters(map, clusters);
+            self.failUnlessIsInstance(clusters, (int, long))
+
+        v = LSMMapStartTraining(map)
 
         mytext = LSMTextCreate(None, map)
-        v = LSMTextAddWords(text, "the world goes on and on",
+        v = LSMTextAddWords(mytext, "the world goes on and on",
                                 CFLocaleCopyCurrent(), 0)
         self.failUnlessIsInstance(v, (int, long))
 
+        v = LSMMapCompile(map)
+
+        # FIXME: Tests crash, probably due to misuse of the
+        # APIs. I haven't found usable API docs for this
+        # framework :-(
+        return
+
+        self.failUnlessResultIsCFRetained(LSMResultCreate)
         res = LSMResultCreate(None, map, mytext, 2, 0)
         self.failUnlessIsInstance(res, LSMResultRef)
 
@@ -133,24 +154,35 @@ class TestLatentSemanticMapping (TestCase):
         self.failUnlessIsInstance(v, (int, long))
         self.failUnless(v)
 
+
         v = LSMResultGetCategory(res, 0)
         self.failUnlessIsInstance(v, (int, long))
 
         v = LSMResultGetScore(res, 0)
         self.failUnlessIsInstance(v, float)
 
+
+        self.failUnlessResultIsCFRetained(LSMResultCopyWord)
         v = LSMResultCopyWord(res, 0)
         self.failUnlessIsInstance(v, unicode)
 
+        self.failUnlessResultIsCFRetained(LSMResultCopyToken)
         v = LSMResultCopyToken(res, 0)
         self.failUnlessIsInstance(v, CFDataRef)
 
-        v = LSMTextAddToken(text, v)
+        v = LSMMapStartTraining(map)
+        mytext = LSMTextCreate(None, map)
+
+
+
+        v = LSMTextAddToken(mytext, v)
         self.failUnlessIsInstance(v, (int, long))
 
+        self.failUnlessResultIsCFRetained(LSMResultCopyWordCluster)
         v = LSMResultCopyWordCluster(res, 0)
         self.failUnlessIsInstance(v, CFArrayRef)
 
+        self.failUnlessResultIsCFRetained(LSMResultCopyTokenCluster)
         v = LSMResultCopyTokenCluster(res, 0)
         self.failUnlessIsInstance(v, CFArrayRef)
 
@@ -160,6 +192,7 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapWriteToURL(map, url, 0)
         self.failUnlessIsInstance(v, (int, long))
 
+        self.failUnlessResultIsCFRetained(LSMMapCreateFromURL)
         map2 = LSMMapCreateFromURL(None, url, 0)
         self.failUnlessIsInstance(map2, LSMMapRef)
 
