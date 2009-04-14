@@ -164,6 +164,11 @@ class TestCase (_unittest.TestCase):
         if not info['arguments'][argno+offset].get('c_array_of_variable_length'):
             self.fail(message or "argument %d of %r is not a variable sized array"%(argno, method))
 
+    def failUnlessResultIsVariableSize(self, method, message = None):
+        info = method.__metadata__()
+        if not info['retval'].get('c_array_of_variable_length'):
+            self.fail(message or "result of %r is not a variable sized array"%(argno, method))
+
     def failUnlessArgSizeInResult(self, method, argno, message = None):
         if isinstance(method, objc.selector):
             offset = 2

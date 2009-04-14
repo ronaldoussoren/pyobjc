@@ -857,13 +857,22 @@ PyObjCSelector_NewNative(Class class,
 	return (PyObject*)result;
 }
 
+
+static char gSheetMethodSignature[] = { _C_VOID, _C_ID, _C_SEL, _C_ID, _C_INT, _C_PTR , _C_VOID, 0 };
+
 PyObject*
 PyObjCSelector_New(PyObject* callable, 
 	SEL selector, char* signature, int class_method, Class cls)
 {
 	PyObjCPythonSelector* result;
 	if (signature == NULL) {
-		signature = pysel_default_signature(callable);
+		const char* selname = sel_getName(selector);
+		size_t len = strlen(selname);
+		if (len > 30 && strcmp(selname+len-30, "DidEnd:returnCode:contextInfo:") == 0) {
+			signature = PyObjCUtil_Strdup(gSheetMethodSignature);
+		} else {
+			signature = pysel_default_signature(callable);
+		}
 	} else {
 		signature = PyObjCUtil_Strdup(signature);
 	}
