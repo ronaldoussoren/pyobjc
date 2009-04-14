@@ -4,8 +4,16 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.1 (...)
+Version 2.2 (...)
 -----------------
+
+- Added more magic signature heuristics: the delegate selector for
+  sheets is now automaticly recognized, removing the need for
+  the decorator ``AppHelper.didEndSelector`` (which will stay present
+  for backward compatibility).
+
+  FIXME: Do the same thing for ``objc.accessor``. Both are a frequent
+  source for errors.
 
 - Added ``PyObjC.TestSupport``. This is an unsupported module containing
   useful functionality for testing PyObjC itself.
