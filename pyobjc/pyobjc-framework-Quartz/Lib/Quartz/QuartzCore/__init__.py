@@ -6,7 +6,7 @@ documentation for details on how to use these functions and classes.
 '''
 
 import objc as _objc
-from Quartz.CoreVideo import *
+#from Quartz.CoreVideo import *
 from Foundation import *
 
 __bundle__ = _objc.initFrameworkWrapper("QuartzCore",
