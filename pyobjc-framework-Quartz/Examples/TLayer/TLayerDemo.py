@@ -6,7 +6,13 @@ import objc
 import ShadowOffsetView
 
 
-class TLayerDemo (NibClassBuilder.AutoBaseClass):
+class TLayerDemo (NSObject:
+    colorWell = objc.IBOutlet()
+    shadowOffsetView = objc.IBOutlet()
+    shadowRadiusSlider = objc.IBOutlet()
+    tlayerView = objc.IBOutlet()
+    transparencyLayerButton = objc.IBOutlet()
+
 
     @classmethod
     def initialize(self):

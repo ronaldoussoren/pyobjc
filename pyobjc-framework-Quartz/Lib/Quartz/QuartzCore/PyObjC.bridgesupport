@@ -208,7 +208,7 @@
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
   </function>
   <function name='CATransform3DEqualToTransform'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
   </function>
@@ -221,11 +221,11 @@
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
   </function>
   <function name='CATransform3DIsAffine'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
   </function>
   <function name='CATransform3DIsIdentity'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
   </function>
   <function name='CATransform3DMakeAffineTransform'>
@@ -294,6 +294,26 @@
     <method selector='shouldArchiveValueForKey:'>
       <retval type='B' />
     </method>
+    <method selector='isRemovedOnCompletion' >
+	    <retval type='B' />
+    </method>
+    <method selector='setRemovedOnCompletion:' >
+	    <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='CAPropertyAnimation'>
+    <method selector='isAdditive' >
+	    <retval type='B' />
+    </method>
+    <method selector='setAdditive:' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='isCumulative' >
+	    <retval type='B' />
+    </method>
+    <method selector='setCumulative:' >
+	    <arg index='0' type='B' />
+    </method>
   </class>
   <class name='CAKeyframeAnimation'>
     <method selector='path'>
@@ -304,6 +324,36 @@
     </method>
   </class>
   <class name='CALayer'>
+    <method selector='isHidden' >
+	    <retval type='B' />
+    </method>
+    <method selector='setHidden:' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='isDoubleSided' >
+	    <retval type='B' />
+    </method>
+    <method selector='setDoubleSided:' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='masksToBounds' >
+	    <retval type='B' />
+    </method>
+    <method selector='setMasksToBounds::' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='isOpaque' >
+	    <retval type='B' />
+    </method>
+    <method selector='setOpaque:' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='needsDisplayOnBoundsChange' >
+	    <retval type='B' />
+    </method>
+    <method selector='setNeedsDisplayOnBoundsChange:' >
+	    <arg index='0' type='B' />
+    </method>
     <method selector='backgroundColor'>
       <retval type='^{CGColor=}' />
     </method>
@@ -348,40 +398,35 @@
     </method>
   </class>
   <class name='CAOpenGLLayer'>
+	  <method selector='isAsynchronous'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setAsynchronous:'>
+		  <arg index='0' type='B' />
+	  </method>
     <method selector='canDrawInCGLContext:pixelFormat:forLayerTime:displayTime:'>
       <retval type='B' />
-      <arg index='0' type='^{_CGLContextObject=}' />
-      <arg index='1' type='^{_CGLPixelFormatObject=}' />
-      <arg index='3' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
-    </method>
-    <method selector='copyCGLContextForPixelFormat:'>
-      <retval type='^{_CGLContextObject=}' />
-      <arg index='0' type='^{_CGLPixelFormatObject=}' />
-    </method>
-    <method selector='copyCGLPixelFormatForDisplayMask:'>
-      <retval type='^{_CGLPixelFormatObject=}' />
+      <arg index='3' type_modifier='n' />
     </method>
     <method selector='drawInCGLContext:pixelFormat:forLayerTime:displayTime:'>
-      <arg index='0' type='^{_CGLContextObject=}' />
-      <arg index='1' type='^{_CGLPixelFormatObject=}' />
-      <arg index='3' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
-    </method>
-    <method selector='releaseCGLContext:'>
-      <arg index='0' type='^{_CGLContextObject=}' />
-    </method>
-    <method selector='releaseCGLPixelFormat:'>
-      <arg index='0' type='^{_CGLPixelFormatObject=}' />
+      <arg index='3' type_modifier='n' />
     </method>
   </class>
   <class name='CARenderer'>
     <method selector='beginFrameAtTime:timeStamp:'>
-      <arg index='1' type='r^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' />
+	    <arg index='1' type_modifier='n' />
     </method>
     <method class_method='true' selector='rendererWithCGLContext:options:'>
-      <arg index='0' type='^v' />
+       <arg index='0' type='^{_CGLContextObject=}' />
     </method>
   </class>
   <class name='CATextLayer'>
+	  <method selector='isWrapped'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setWrapped:'>
+		  <arg index='0' type='B' />
+	  </method>
     <method selector='foregroundColor'>
       <retval type='^{CGColor=}' />
     </method>
@@ -423,13 +468,19 @@
       <arg index='1' type='^{__CFDictionary=}' />
     </method>
     <method selector='render:toBitmap:rowBytes:bounds:format:colorSpace:'>
-      <arg index='1' type='^v' />
+      <arg index='1' type='^v' type_modifier='o' c_array_of_variable_length='true' />
       <arg index='5' type='^{CGColorSpace=}' />
     </method>
   </class>
   <class name='CIFilter'>
-    <method selector='apply:' variadic='true' />
+    <method selector='apply:' variadic='true' c_array_delimited_by_null='true' />
     <method c_array_delimited_by_null='true' class_method='true' selector='filterWithName:keysAndValues:' variadic='true' />
+    <method selector='isEnabled' >
+	    <retval type='B' />
+    </method>
+    <method selector='setEnabled:' >
+	    <arg index='0' type='B' />
+    </method>
   </class>
   <class name='CIFilterGenerator'>
     <method selector='writeToURL:atomically:'>
@@ -523,6 +574,22 @@
     </method>
   </class>
   <class name='NSObject'>
+	  <method selector='provideImageData:bytesPerRow:origin::size::userInfo:'>
+		  <retval type='v' />
+		  <arg index='0' type='^v' type_modifier='o' c_array_of_variable_length='true' />
+		  <arg index='1' type='L' />
+		  <arg index='2' type='L' />
+		  <arg index='3' type='L' />
+		  <arg index='4' type='L' />
+		  <arg index='5' type='L' />
+		  <arg index='6' type='@' />
+	  </method>
+	  <method selector='autoreverses'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setAutoreverses:'>
+		  <arg index='0' type='B' />
+	  </method>
     <method selector='animationDidStop:finished:'>
       <arg index='1' type='B' />
     </method>

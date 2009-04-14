@@ -21,6 +21,19 @@ present in the C API.
 The PyObjC bindings for Quartz are not compatible with the CoreGraphics 
 Python package by Apple.
 
+Importing
+---------
+
+The prefered way to import from packages in these bindings is::
+
+   from Quartz import *
+
+It is also possible to import directly from subwrappers (such
+as ``Quartz.CoreGraphics``), but it better to import from the toplevel
+to ensure you'll get all relevant definitions.
+
+
+
 Callbacks
 ---------
 
@@ -112,3 +125,12 @@ a CoreFoundation based type.
 ------------------
 
 The API's related to CGPSConverter are not supported at the moment.
+
+
+``CIContext``
+-------------
+
+* ``-render:toBitmap:rowBytes:bounds:format:colorSpace``
+
+  You must pass a writable buffer of the right size to this method (such as 
+  a properly sized instance of ``array.array``.
