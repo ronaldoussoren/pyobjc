@@ -418,6 +418,7 @@ static int set_defaults(PyObject* self, const char* typestr)
 		case _C_SHT: case _C_USHT:
 		case _C_INT: case _C_UINT:
 		case _C_LNG: case _C_ULNG:
+		case _C_LNG_LNG: case _C_ULNG_LNG:
 			v = PyInt_FromLong(0);
 			break;
 
