@@ -29,7 +29,7 @@ from Foundation._netservice import *
 from Foundation._string import *
 
 import Foundation._nsobject
-import Foundation._nsindexset
+#import Foundation._nsindexset
 
 YES = objc.YES
 NO = objc.NO
