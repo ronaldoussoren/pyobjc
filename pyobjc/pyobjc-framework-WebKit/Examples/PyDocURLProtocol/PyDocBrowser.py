@@ -1,4 +1,4 @@
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 
 import Foundation, AppKit, WebKit
 from Foundation import *
@@ -9,8 +9,6 @@ import PyDocURLProtocol
 import PyDocEvents
 
 PyDocURLProtocol.setup()
-
-NibClassBuilder.extractClasses('PyDocBrowser')
 
 # the web browser doesn't have or need any code really
 

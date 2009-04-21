@@ -76,7 +76,7 @@
     <retval type='^S' type64='^S' />
   </function>
   <function name='JSStringGetUTF8CString'>
-    <arg index='1' numeric='false' type='*' type64='*' />
+    <arg index='1' type='t' type64='t' c_array_length_in_arg='2' c_array_length_in_retval='true' type_modifier='o' />
   </function>
   <function name='JSStringIsEqualToUTF8CString'>
     <arg index='1' numeric='false' type='*' type64='*' />

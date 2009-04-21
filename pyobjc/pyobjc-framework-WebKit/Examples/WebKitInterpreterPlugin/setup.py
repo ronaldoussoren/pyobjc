@@ -22,6 +22,7 @@ plist = dict(
 )
         
 setup(
+    name="WebKitInterpreter",
     plugin = ["WebKitInterpreter.py"],
     options = dict(py2app=dict(plist=plist)),
 )
