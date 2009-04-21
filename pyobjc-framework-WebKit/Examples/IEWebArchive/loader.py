@@ -35,7 +35,7 @@ class MHTLoader (object):
                 continue
 
             filename = part.get('Content-Location')
-            contentType = part.get_type()
+            contentType = part.get_content_type()
             data = part.get_payload(decode=True)
 
             self.parts[filename] = (contentType, data)

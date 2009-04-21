@@ -6,6 +6,7 @@ documentation for details on how to use these functions and classes.
 '''
 
 import objc as _objc
+from CoreFoundation import *
 
 
 __bundle__ = _objc.initFrameworkWrapper("JavaScriptCore",

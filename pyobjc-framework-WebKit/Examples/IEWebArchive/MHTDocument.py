@@ -1,7 +1,7 @@
 from Cocoa import *
 from loader import MHTLoader # XXX: integrate?
 
-class MHTDocument (NSObject):
+class MHTDocument (NSDocument):
     locationbox = objc.IBOutlet()
     webview = objc.IBOutlet()
 

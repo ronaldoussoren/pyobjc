@@ -1,0 +1,11 @@
+API Notes for framework WebKit
+==============================
+
+* Carbon integration functions are not supported.
+
+  The relevant functions are: ``HIWebViewCreate``, ``HIWebViewCreateWithClass``
+  and ``HIWebViewGetWebView``.
+
+* Java plugins (informal protocol ``WebJavaPlugIn``) are not supported. 
+
+* The NPAPI interface of WebKit is not supported

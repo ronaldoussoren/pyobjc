@@ -1,0 +1,7 @@
+API Notes for framework JavaScript
+==================================
+
+This framework is provided as is, the wrapping is
+not tested at all at the moment and due to it's low-level
+nature there it is expected that there issues with
+these bindings.
