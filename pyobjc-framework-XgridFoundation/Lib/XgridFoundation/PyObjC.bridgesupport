@@ -1,0 +1,138 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Cocoa.framework/Cocoa' />
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <constant name='XGActionMonitorResultsOutputFilesKey' type='@' />
+  <constant name='XGActionMonitorResultsOutputStreamsKey' type='@' />
+  <constant name='XGConnectionKeyIsClosed' type='@' />
+  <constant name='XGConnectionKeyIsOpened' type='@' />
+  <constant name='XGConnectionKeyState' type='@' />
+  <constant name='XGControllerWillDeallocNotification' type='@' />
+  <constant name='XGFileStandardErrorPath' type='@' />
+  <constant name='XGFileStandardOutputPath' type='@' />
+  <constant name='XGJobSpecificationARTConditionsKey' type='@' />
+  <constant name='XGJobSpecificationARTDataKey' type='@' />
+  <constant name='XGJobSpecificationARTEqualKey' type='@' />
+  <constant name='XGJobSpecificationARTMaximumKey' type='@' />
+  <constant name='XGJobSpecificationARTMinimumKey' type='@' />
+  <constant name='XGJobSpecificationARTSpecificationsKey' type='@' />
+  <constant name='XGJobSpecificationApplicationIdentifierKey' type='@' />
+  <constant name='XGJobSpecificationArgumentTypeKey' type='@' />
+  <constant name='XGJobSpecificationArgumentsKey' type='@' />
+  <constant name='XGJobSpecificationCommandKey' type='@' />
+  <constant name='XGJobSpecificationDependsOnJobsKey' type='@' />
+  <constant name='XGJobSpecificationDependsOnTasksKey' type='@' />
+  <constant name='XGJobSpecificationEnvironmentKey' type='@' />
+  <constant name='XGJobSpecificationFileDataKey' type='@' />
+  <constant name='XGJobSpecificationGridIdentifierKey' type='@' />
+  <constant name='XGJobSpecificationInputFileMapKey' type='@' />
+  <constant name='XGJobSpecificationInputFilesKey' type='@' />
+  <constant name='XGJobSpecificationInputStreamKey' type='@' />
+  <constant name='XGJobSpecificationIsExecutableKey' type='@' />
+  <constant name='XGJobSpecificationNameKey' type='@' />
+  <constant name='XGJobSpecificationNotificationEmailKey' type='@' />
+  <constant name='XGJobSpecificationPathIdentifierKey' type='@' />
+  <constant name='XGJobSpecificationSchedulerHintsKey' type='@' />
+  <constant name='XGJobSpecificationSchedulerParametersKey' type='@' />
+  <constant name='XGJobSpecificationSubmissionIdentifierKey' type='@' />
+  <constant name='XGJobSpecificationTaskPrototypeIdentifierKey' type='@' />
+  <constant name='XGJobSpecificationTaskPrototypesKey' type='@' />
+  <constant name='XGJobSpecificationTaskSpecificationsKey' type='@' />
+  <constant name='XGJobSpecificationTypeKey' type='@' />
+  <constant name='XGJobSpecificationTypeTaskListValue' type='@' />
+  <enum name='XGActionMonitorOutcomeFailure' value='2' />
+  <enum name='XGActionMonitorOutcomeNone' value='0' />
+  <enum name='XGActionMonitorOutcomeSuccess' value='1' />
+  <enum name='XGAuthenticatorStateAuthenticated' value='2' />
+  <enum name='XGAuthenticatorStateAuthenticating' value='1' />
+  <enum name='XGAuthenticatorStateFailed' value='3' />
+  <enum name='XGAuthenticatorStateUnauthenticated' value='0' />
+  <enum name='XGConnectionStateClosed' value='0' />
+  <enum name='XGConnectionStateClosing' value='3' />
+  <enum name='XGConnectionStateOpen' value='2' />
+  <enum name='XGConnectionStateOpening' value='1' />
+  <enum name='XGFileTypeNone' value='0' />
+  <enum name='XGFileTypeRegular' value='1' />
+  <enum name='XGFileTypeStream' value='2' />
+  <enum name='XGResourceActionDelete' value='5' />
+  <enum name='XGResourceActionGetOutputFiles' value='10' />
+  <enum name='XGResourceActionGetOutputStreams' value='9' />
+  <enum name='XGResourceActionGetSpecification' value='11' />
+  <enum name='XGResourceActionMakeDefault' value='7' />
+  <enum name='XGResourceActionNone' value='0' />
+  <enum name='XGResourceActionRename' value='6' />
+  <enum name='XGResourceActionRestart' value='2' />
+  <enum name='XGResourceActionResume' value='4' />
+  <enum name='XGResourceActionStop' value='1' />
+  <enum name='XGResourceActionSubmitJob' value='8' />
+  <enum name='XGResourceActionSuspend' value='3' />
+  <enum name='XGResourceStateAvailable' value='4' />
+  <enum name='XGResourceStateCanceled' value='12' />
+  <enum name='XGResourceStateConnecting' value='2' />
+  <enum name='XGResourceStateFailed' value='13' />
+  <enum name='XGResourceStateFinished' value='14' />
+  <enum name='XGResourceStateOffline' value='1' />
+  <enum name='XGResourceStatePending' value='6' />
+  <enum name='XGResourceStateRunning' value='9' />
+  <enum name='XGResourceStateStagingIn' value='8' />
+  <enum name='XGResourceStateStagingOut' value='11' />
+  <enum name='XGResourceStateStarting' value='7' />
+  <enum name='XGResourceStateSuspended' value='10' />
+  <enum name='XGResourceStateUnavailable' value='3' />
+  <enum name='XGResourceStateUninitialized' value='0' />
+  <enum name='XGResourceStateWorking' value='5' />
+  <informal_protocol name='XGAuthenticatorDelegate'>
+    <method selector='authenticatorDidAuthenticate:' type='v@:@' />
+    <method selector='authenticatorDidNotAuthenticate:' type='v@:@' />
+  </informal_protocol>
+  <informal_protocol name='XGConnectionDelegate'>
+    <method selector='connectionDidClose:' type='v@:@' />
+    <method selector='connectionDidNotOpen:withError:' type='v@:@@' />
+    <method selector='connectionDidOpen:' type='v@:@' />
+  </informal_protocol>
+  <informal_protocol name='XGFileDownloadDelegate'>
+    <method selector='fileDownload:decideDestinationWithSuggestedPath:' type='v@:@@' />
+    <method selector='fileDownload:didCreateDestination:' type='v@:@@' />
+    <method selector='fileDownload:didFailWithError:' type='v@:@@' />
+    <method selector='fileDownload:didReceiveAttributes:' type='v@:@@' />
+    <method selector='fileDownload:didReceiveData:' type='v@:@@' />
+    <method selector='fileDownloadDidBegin:' type='v@:@' />
+    <method selector='fileDownloadDidFinish:' type='v@:@' />
+  </informal_protocol>
+  <class name='XGActionMonitor'>
+    <method selector='actionDidFail'>
+      <retval type='B' />
+    </method>
+    <method selector='actionDidSucceed'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='XGConnection'>
+    <method selector='isClosed'>
+      <retval type='B' />
+    </method>
+    <method selector='isOpened'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='XGFileDownload'>
+    <method selector='setDestination:allowOverwrite:'>
+      <arg index='1' type='B' />
+    </method>
+  </class>
+  <class name='XGGrid'>
+    <method selector='isDefault'>
+      <retval type='B' />
+    </method>
+  </class>
+  <class name='XGResource'>
+    <method selector='isUpdated'>
+      <retval type='B' />
+    </method>
+    <method selector='isUpdating'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+
