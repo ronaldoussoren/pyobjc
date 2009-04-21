@@ -18,7 +18,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-SearchKit',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the framework SearchKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
