@@ -2,10 +2,10 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import LaunchServices
 
-class TestLaunchServices (unittest.TestCase):
+class TestLaunchServices (TestCase):
     def testValues(self):
         # Use this to test for a number of enum and #define values
         self.assert_( hasattr(LaunchServices, 'kLSRequestAllInfo') )
@@ -60,5 +60,5 @@ class TestLaunchServices (unittest.TestCase):
         self.assertEquals( fn(10, 'hello.text', None), (0, 6) )
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 

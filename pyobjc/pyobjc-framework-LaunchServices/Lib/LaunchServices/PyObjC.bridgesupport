@@ -10,8 +10,8 @@
   <struct name='LSLaunchFSRefSpec' type='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"I"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"Q"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
   <struct name='LSLaunchURLSpec' type='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
   <opaque name='IconRef' type='^{OpaqueIconRef=}' type64='^{OpaqueIconRef=}' />
-  <opaque name='LSSharedFileListItemRef' type='^{OpaqueLSSharedFileListItemRef=}' type64='^{OpaqueLSSharedFileListItemRef=}' />
-  <opaque name='LSSharedFileListRef' type='^{OpaqueLSSharedFileListRef=}' type64='^{OpaqueLSSharedFileListRef=}' />
+  <cftype name='LSSharedFileListItemRef' type='^{OpaqueLSSharedFileListItemRef=}' gettypeid_func='LSSharedFileListItemGetTypeID'/>
+  <cftype name='LSSharedFileListRef' type='^{OpaqueLSSharedFileListRef=}' gettypeid_func='LSSharedFileListGetTypeID'/>
   <constant name='kLSItemContentType' type='^{__CFString=}' />
   <constant name='kLSItemDisplayKind' type='^{__CFString=}' />
   <constant name='kLSItemDisplayName' type='^{__CFString=}' />
@@ -37,9 +37,11 @@
   <constant name='kLSSharedFileListFavoriteItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListFavoriteVolumes' type='^{__CFString=}' />
   <constant name='kLSSharedFileListGlobalLoginItems' type='^{__CFString=}' />
-  <constant name='kLSSharedFileListItemBeforeFirst' type='^{OpaqueLSSharedFileListItemRef=}' />
+  <!--
+  <constant name='kLSSharedFileListItemBeforeFirst' type='^{OpaqueLSSharedFileListItemRef=}' magic_cookie='true' />
   <constant name='kLSSharedFileListItemHidden' type='^{__CFString=}' />
-  <constant name='kLSSharedFileListItemLast' type='^{OpaqueLSSharedFileListItemRef=}' />
+  <constant name='kLSSharedFileListItemLast' type='^{OpaqueLSSharedFileListItemRef=}' magic_cookie='true' />
+  -->
   <constant name='kLSSharedFileListRecentApplicationItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListRecentDocumentItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListRecentItemsMaxAmount' type='^{__CFString=}' />
@@ -129,6 +131,8 @@
   <constant name='kUTTypeVolume' type='^{__CFString=}' />
   <constant name='kUTTypeWebArchive' type='^{__CFString=}' />
   <constant name='kUTTypeXML' type='^{__CFString=}' />
+  <enum name='kLSAcceptDefault' value='1' />
+  <enum name='kLSAcceptAllowLoginUI' value='2' />
   <enum name='appleMenuFolderIconResource' value='-3982' />
   <enum name='controlPanelFolderIconResource' value='-3976' />
   <enum name='desktopIconResource' value='-3992' />
@@ -452,7 +456,7 @@
     <retval type='s' />
     <arg type='^{OpaqueIconRef=}' />
     <arg type='^{OpaqueIconRef=}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='FlushIconRefs'>
     <retval type='s' />
@@ -466,36 +470,36 @@
   <function name='GetCustomIconsEnabled'>
     <retval type='s' />
     <arg type='s' />
-    <arg type='^B' type64='^B' />
+    <arg type='^B' type64='^B' type_modifier='o' />
   </function>
   <function name='GetIconRef'>
     <retval type='s' />
     <arg type='s' />
     <arg type='L' type64='L' />
     <arg type='L' type64='L' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o'/>
   </function>
   <function name='GetIconRefFromComponent'>
     <retval type='l' type64='i' />
     <arg type='^{ComponentRecord=[1l]}' type64='^{ComponentRecord=[1q]}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='GetIconRefFromFile'>
     <retval type='s' />
     <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
-    <arg type='^s' type64='^s' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
+    <arg type='^s' type64='^s' type_modifier='o' />
   </function>
   <function name='GetIconRefFromFileInfo'>
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
     <arg type='L' type64='L' />
-    <arg type='^S' type64='^S' />
+    <arg type='^T' type64='^T' type_modifier='n' c_array_length_in_arg='1' />
     <arg type='L' type64='L' />
-    <arg type='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}' type64='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{FSPermissionInfo=IICCS^{__FSFileSecurity}}[16C][16C]QQQQII}' />
+    <arg type='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}[4I][16C][16C]QQQQII}' type64='^{FSCatalogInfo=SsIICCCC{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{UTCDateTime=SIS}{FSPermissionInfo=IICCS^{__FSFileSecurity}}[16C][16C]QQQQII}' type_modifier='n' null_accepted='true' />
     <arg type='L' type64='L' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
-    <arg type='^s' type64='^s' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
+    <arg type='^s' type64='^s' type_modifier='o' />
   </function>
   <function name='GetIconRefFromFolder'>
     <retval type='s' />
@@ -504,13 +508,13 @@
     <arg type='l' type64='l' />
     <arg type='c' />
     <arg type='c' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='GetIconRefFromIconFamilyPtr'>
     <retval type='l' type64='i' />
-    <arg type='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' type64='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' />
+    <arg type='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' type64='^{IconFamilyResource=Ii[1{IconFamilyElement=Ii[1C]}]}' type_modifier='n' />
     <arg type='l' type64='l' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='GetIconRefFromTypeInfo'>
     <retval type='s' />
@@ -519,12 +523,12 @@
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
     <arg type='L' type64='L' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='GetIconRefOwners'>
     <retval type='s' />
     <arg type='^{OpaqueIconRef=}' />
-    <arg type='^S' type64='^S' />
+    <arg type='^S' type64='^S' type_modifier='o' />
   </function>
   <function name='IsDataAvailableInIconRef'>
     <retval type='B' />
@@ -534,8 +538,8 @@
   <function name='IsIconRefComposite'>
     <retval type='s' />
     <arg type='^{OpaqueIconRef=}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='IsValidIconRef'>
     <retval type='B' />
@@ -678,7 +682,7 @@
   <function name='LSGetExtensionInfo'>
     <retval type='l' type64='i' />
     <arg type='L' type64='L' />
-    <arg c_array_length_in_arg='0' type='^S' type_modifier='n' unicode_string='true' />
+    <arg c_array_length_in_arg='0' type='^S' type_modifier='n' />
     <arg type='^I' type64='^I' type_modifier='o' />
   </function>
   <function name='LSGetHandlerOptionsForContentType'>
@@ -935,7 +939,7 @@
     <arg type='L' type64='L' />
     <arg type='L' type64='L' />
     <arg type='^{FSSpec=si[64C]}' type64='^{FSSpec=[70C]}' />
-    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' />
+    <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
   <function name='RegisterIconRefFromResource'>
     <retval type='s' />
