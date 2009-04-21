@@ -8,6 +8,13 @@ Introduction
 This document describes where the wrappers for CoreFoundation API are different
 from the default straightforward translation of method/function interfaces.
 
+WARNING
+-------
+
+Incorrect usage of CoreFoundation API's will often cause crashes of the Python interpreter. This is
+caused by the way CoreFoundation is implemented and it is not possible work create nice Python exceptions
+when this happens. The same crashes also happen when for incorrect usage in C programs.
+
 Containers
 ----------
 
