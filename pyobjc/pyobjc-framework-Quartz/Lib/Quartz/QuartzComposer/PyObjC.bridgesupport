@@ -125,7 +125,9 @@
       <retval type='B' />
       <arg index='0' type='^{CGColorSpace=}' />
     </method>
-    <method selector='logMessage:' variadic='true' />
+    <method selector='logMessage:' variadic='true' >
+	    <arg index='0' printf_format='true' />
+    </method>
     <method selector='outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:'>
       <arg index='3' type='^v' />
       <arg index='5' type='^?' />

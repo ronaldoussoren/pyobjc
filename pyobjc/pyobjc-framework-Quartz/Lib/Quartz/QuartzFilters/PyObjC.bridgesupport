@@ -29,5 +29,10 @@
       <retval type='B' />
     </method>
   </class>
+  <class name='QuartzFilterManager' >
+	  <method selector='selectFilter:'>
+		  <retval type='B' />
+	  </method>
+  </class>
 </signatures>
 

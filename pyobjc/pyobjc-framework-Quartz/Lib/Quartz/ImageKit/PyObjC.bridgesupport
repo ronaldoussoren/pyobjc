@@ -264,6 +264,7 @@
   <class name='NSObject'>
     <method selector='canExportSlideshowItemAtIndex:toApplication:'>
       <retval type='B' />
+	    <arg index='0'  type='I' />
     </method>
     <method selector='image'>
       <retval type='^{CGImage=}' />
@@ -282,6 +283,16 @@
     </method>
     <method selector='thumbnailWithMaximumSize:'>
       <retval type='^{CGImage=}' />
+      <arg index='0' type='{_NSSize=ff}' />
+    </method>
+    <method selector='slideshowItemAtIndex:'>
+	    <arg index='0'  type='I' />
+    </method>
+    <method selector='nameOfSlideshowItemAtIndex:'>
+	    <arg index='0'  type='I' />
+    </method>
+    <method selector='slideshowDidChangeCurrentIndex:'>
+	    <arg index='0'  type='I' />
     </method>
   </class>
 </signatures>
