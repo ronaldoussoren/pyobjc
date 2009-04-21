@@ -1,0 +1,16 @@
+======================================
+API Notes for framework LaunchServices
+======================================
+
+* ``LSSharedFileListSetAuthorization``
+
+  Not supported at the moment because the Authorization framweork isn't properly 
+  wrapped yet.
+
+* ``LSSharedFileListItemRef``
+
+  Not tested at the moment, uses ``LSSharedFileListInsertItemURL`` instead.
+
+* The tests for this framework are incomplete, although
+  most functions should work just fine.
+
