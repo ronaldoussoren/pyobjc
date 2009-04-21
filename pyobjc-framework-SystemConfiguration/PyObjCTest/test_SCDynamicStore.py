@@ -101,7 +101,7 @@ class TestSCDynamicStore (TestCase):
         CFRunLoopAddSource(CFRunLoopGetCurrent(), src, kCFRunLoopCommonModes)
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, False)
 
-        self.failUnlessEqual(len(l), 1)
+        self.failUnless(len(l) > 1)
         self.failUnless(l[0][0] is st)
         self.failUnlessIsInstance(l[0][1], CFArrayRef)
         self.failUnless(l[0][2] is info)
