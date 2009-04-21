@@ -10,11 +10,13 @@
   <struct name='CVSMPTETime' type='{CVSMPTETime="subframes"s"subframeDivisor"s"counter"I"type"I"flags"I"hours"s"minutes"s"seconds"s"frames"s}' type64='{CVSMPTETime="subframes"s"subframeDivisor"s"counter"I"type"I"flags"I"hours"s"minutes"s"seconds"s"frames"s}' />
   <struct name='CVTime' type='{_CVTime="timeValue"q"timeScale"i"flags"i}' type64='{_CVTime="timeValue"q"timeScale"i"flags"i}' />
   <struct name='CVTimeStamp' type='{_CVTimeStamp="version"I"videoTimeScale"i"videoTime"q"hostTime"Q"rateScalar"d"videoRefreshPeriod"q"smpteTime"{CVSMPTETime="subframes"s"subframeDivisor"s"counter"I"type"I"flags"I"hours"s"minutes"s"seconds"s"frames"s}"flags"Q"reserved"Q}' type64='{_CVTimeStamp="version"I"videoTimeScale"i"videoTime"q"hostTime"Q"rateScalar"d"videoRefreshPeriod"q"smpteTime"{CVSMPTETime="subframes"s"subframeDivisor"s"counter"I"type"I"flags"I"hours"s"minutes"s"seconds"s"frames"s}"flags"Q"reserved"Q}' />
-  <cftype name='CVBufferRef' type='^{__CVBuffer=}' type64='^{__CVBuffer=}' />
+  <cftype gettypeid_func='CVOpenGLTextureGetTypeID' name='CVOpenGLTextureRef' type='^{__CVOpenGLTexture=}' type64='^{__CVOpenGLTexture=}' />
   <cftype gettypeid_func='CVDisplayLinkGetTypeID' name='CVDisplayLinkRef' type='^{__CVDisplayLink=}' type64='^{__CVDisplayLink=}' />
   <cftype gettypeid_func='CVOpenGLBufferPoolGetTypeID' name='CVOpenGLBufferPoolRef' type='^{__CVOpenGLBufferPool=}' type64='^{__CVOpenGLBufferPool=}' />
   <cftype gettypeid_func='CVOpenGLTextureCacheGetTypeID' name='CVOpenGLTextureCacheRef' type='^{__CVOpenGLTextureCache=}' type64='^{__CVOpenGLTextureCache=}' />
   <cftype gettypeid_func='CVPixelBufferPoolGetTypeID' name='CVPixelBufferPoolRef' type='^{__CVPixelBufferPool=}' type64='^{__CVPixelBufferPool=}' />
+  <cftype gettypeid_func='CVOpenGLBufferGetTypeID' name='CVOpenGLBufferRef' type='^{__CVOpenGLBuffer=}' type64='^{__CVOpenGLBuffer=}'/>
+  <cftype gettypeid_func='CVPixelBufferGetTypeID' name='CVPixelBufferRef' type='^{__CVPixelBuffer=}' type64='^{__CVPixelBuffer=}'/>
   <constant name='kCVBufferMovieTimeKey' type='^{__CFString=}' />
   <constant name='kCVBufferNonPropagatedAttachmentsKey' type='^{__CFString=}' />
   <constant name='kCVBufferPropagatedAttachmentsKey' type='^{__CFString=}' />
@@ -65,7 +67,7 @@
   <constant name='kCVImageBufferYCbCrMatrix_ITU_R_601_4' type='^{__CFString=}' />
   <constant name='kCVImageBufferYCbCrMatrix_ITU_R_709_2' type='^{__CFString=}' />
   <constant name='kCVImageBufferYCbCrMatrix_SMPTE_240M_1995' type='^{__CFString=}' />
-  <constant name='kCVIndefiniteTime' type='{CVTime=qii}' />
+  <constant name='kCVIndefiniteTime' type='{_CVTime=qii}' />
   <constant name='kCVOpenGLBufferHeight' type='^{__CFString=}' />
   <constant name='kCVOpenGLBufferInternalFormat' type='^{__CFString=}' />
   <constant name='kCVOpenGLBufferMaximumMipmapLevel' type='^{__CFString=}' />
@@ -112,7 +114,7 @@
   <constant name='kCVPixelFormatPlanes' type='^{__CFString=}' />
   <constant name='kCVPixelFormatQDCompatibility' type='^{__CFString=}' />
   <constant name='kCVPixelFormatVerticalSubsampling' type='^{__CFString=}' />
-  <constant name='kCVZeroTime' type='{CVTime=qii}' />
+  <constant name='kCVZeroTime' type='{_CVTime=qii}' />
   <enum name='kCVAttachmentMode_ShouldNotPropagate' value='0' />
   <enum name='kCVAttachmentMode_ShouldPropagate' value='1' />
   <enum name='kCVPixelFormatType_16BE555' value='16' />
@@ -184,63 +186,63 @@
   <enum name='kCVTimeStampVideoTimeValid' value='1' />
   <function name='CVBufferGetAttachment'>
     <retval type='@' type64='@' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{__CFString=}' />
     <arg type='^I' type_modifier='o' />
   </function>
   <function name='CVBufferGetAttachments'>
     <retval type='^{__CFDictionary=}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='I' />
   </function>
   <function name='CVBufferPropagateAttachments'>
-    <arg type='^{__CVBuffer=}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
+    <arg type='@' />
   </function>
   <function name='CVBufferRelease'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVBufferRemoveAllAttachments'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVBufferRemoveAttachment'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CVBufferRetain'>
-    <retval type='^{__CVBuffer=}' />
-    <arg type='^{__CVBuffer=}' />
+    <retval type='@' />
+    <arg type='@' />
   </function>
   <function name='CVBufferSetAttachment'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{__CFString=}' />
     <arg type='@' />
     <arg type='I' />
   </function>
   <function name='CVBufferSetAttachments'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{__CFDictionary=}' />
     <arg type='I' />
   </function>
   <function name='CVDisplayLinkCreateWithActiveCGDisplays'>
     <retval type='i' />
-    <arg already_retained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
   </function>
   <function name='CVDisplayLinkCreateWithCGDisplay'>
     <retval type='i' />
     <arg type='I' />
-    <arg already_retained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
   </function>
   <function name='CVDisplayLinkCreateWithCGDisplays'>
     <retval type='i' />
-    <arg c_array_length_in_arg='2' type='^I' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^I' type_modifier='n' />
     <arg type='l' type64='l' />
-    <arg already_retained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
   </function>
   <function name='CVDisplayLinkCreateWithOpenGLDisplayMask'>
     <retval type='i' />
     <arg type='I' />
-    <arg already_retained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVDisplayLink}' type_modifier='o' />
   </function>
   <function name='CVDisplayLinkGetActualOutputVideoRefreshPeriod'>
     <retval type='d' />
@@ -253,14 +255,14 @@
   <function name='CVDisplayLinkGetCurrentTime'>
     <retval type='i' />
     <arg type='^{__CVDisplayLink=}' />
-    <arg type='^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='o' />
+    <arg type='^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='o' />
   </function>
   <function name='CVDisplayLinkGetNominalOutputVideoRefreshPeriod'>
-    <retval type='{CVTime=qii}' />
+    <retval type='{_CVTime=qii}' />
     <arg type='^{__CVDisplayLink=}' />
   </function>
   <function name='CVDisplayLinkGetOutputVideoLatency'>
-    <retval type='{CVTime=qii}' />
+    <retval type='{_CVTime=qii}' />
     <arg type='^{__CVDisplayLink=}' />
   </function>
   <function name='CVDisplayLinkGetTypeID'>
@@ -294,8 +296,8 @@
     <arg function_pointer='true' type='^?' type64='^?'>
       <retval type='i' />
       <arg type='@' />
-      <arg type='@encode(CVTimeStamp*)' type_modifier='n' />
-      <arg type='@encode(CVTimeStamp*)' type_modifier='N' />
+      <arg type='^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='n' />
+      <arg type='^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='N' />
       <arg type='Q' />
       <arg type='^Q' type_modifier='o' />
       <arg type='^v' />
@@ -313,8 +315,8 @@
   <function name='CVDisplayLinkTranslateTime'>
     <retval type='i' />
     <arg type='^{__CVDisplayLink=}' />
-    <arg type='^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='n' />
-    <arg type='^{?=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='o' />
+    <arg type='^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='n' />
+    <arg type='^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}' type_modifier='o' />
   </function>
   <function name='CVGetCurrentHostTime'>
     <retval type='Q' />
@@ -327,23 +329,23 @@
   </function>
   <function name='CVImageBufferGetCleanRect'>
     <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVImageBufferGetColorSpace'>
     <retval type='^{CGColorSpace=}' type64='^{CGColorSpace=}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVImageBufferGetDisplaySize'>
     <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVImageBufferGetEncodedSize'>
     <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLBufferAttach'>
     <retval type='i' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{_CGLContextObject=}' type64='^{_CGLContextObject=}' />
     <arg type='I' />
     <arg type='i' />
@@ -355,11 +357,11 @@
     <arg type='L' type64='L' />
     <arg type='L' type64='L' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVOpenGLBufferGetAttributes'>
     <retval type='^{__CFDictionary=}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLBufferGetTypeID'>
     <retval type='L' type64='Q' />
@@ -369,13 +371,13 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFDictionary=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVOpenGLBufferPool}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVOpenGLBufferPool}' type_modifier='o' />
   </function>
   <function name='CVOpenGLBufferPoolCreateOpenGLBuffer'>
     <retval type='i' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CVOpenGLBufferPool=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVOpenGLBufferPoolGetAttributes'>
     <retval type='^{__CFDictionary=}' />
@@ -396,11 +398,11 @@
     <arg type='^{__CVOpenGLBufferPool=}' />
   </function>
   <function name='CVOpenGLBufferRelease'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLBufferRetain'>
-    <retval type='^{__CVBuffer=}' />
-    <arg type='^{__CVBuffer=}' />
+    <retval type='@' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLTextureCacheCreate'>
     <retval type='i' />
@@ -409,15 +411,15 @@
     <arg type='^{_CGLContextObject=}' type64='^{_CGLContextObject=}' />
     <arg type='^{_CGLPixelFormatObject=}' type64='^{_CGLPixelFormatObject=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVOpenGLTextureCache}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVOpenGLTextureCache}' type_modifier='o' />
   </function>
   <function name='CVOpenGLTextureCacheCreateTextureFromImage'>
     <retval type='i' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CVOpenGLTextureCache=}' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVOpenGLTextureCacheFlush'>
     <arg type='^{__CVOpenGLTextureCache=}' />
@@ -434,7 +436,7 @@
     <arg type='^{__CVOpenGLTextureCache=}' />
   </function>
   <function name='CVOpenGLTextureGetCleanTexCoords'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='[2f]' />
     <arg type='[2f]' />
     <arg type='[2f]' />
@@ -442,25 +444,25 @@
   </function>
   <function name='CVOpenGLTextureGetName'>
     <retval type='I' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLTextureGetTarget'>
     <retval type='I' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLTextureGetTypeID'>
     <retval type='L' type64='Q' />
   </function>
   <function name='CVOpenGLTextureIsFlipped'>
     <retval type='B' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLTextureRelease'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVOpenGLTextureRetain'>
-    <retval type='^{__CVBuffer=}' />
-    <arg type='^{__CVBuffer=}' />
+    <retval type='@' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferCreate'>
     <retval type='i' />
@@ -469,13 +471,13 @@
     <arg type='L' type64='L' />
     <arg type='L' type64='L' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVPixelBufferCreateResolvedAttributesDictionary'>
     <retval type='i' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFArray=}' />
-    <arg already_retained='true' type='^^{__CFDictionary}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFDictionary}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CVPixelBufferCreateWithBytes'>
     <retval type='i' />
@@ -488,36 +490,36 @@
     <arg type='^?' type64='^?' />
     <arg type='^v' type64='^v' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVPixelBufferFillExtendedPixels'>
     <retval type='i' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function comment='fixme' name='CVPixelBufferGetBaseAddress'>
     <retval c_array_of_variable_length='true' type='^v' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function comment='fixme' name='CVPixelBufferGetBaseAddressOfPlane'>
     <retval c_array_of_variable_length='true' type='^v' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='L' type64='L' />
   </function>
   <function name='CVPixelBufferGetBytesPerRow'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetBytesPerRowOfPlane'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='L' type64='L' />
   </function>
   <function name='CVPixelBufferGetDataSize'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetExtendedPixels'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='^I' type64='^I' type_modifier='o' />
     <arg type='^I' type64='^I' type_modifier='o' />
     <arg type='^I' type64='^I' type_modifier='o' />
@@ -525,40 +527,40 @@
   </function>
   <function name='CVPixelBufferGetHeight'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetHeightOfPlane'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='L' type64='L' />
   </function>
   <function name='CVPixelBufferGetPixelFormatType'>
     <retval type='L' type64='I' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetPlaneCount'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetTypeID'>
     <retval type='L' type64='Q' />
   </function>
   <function name='CVPixelBufferGetWidth'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferGetWidthOfPlane'>
     <retval type='L' type64='Q' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='L' type64='L' />
   </function>
   <function name='CVPixelBufferIsPlanar'>
     <retval type='B' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferLockBaseAddress'>
     <retval type='i' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='Q' />
   </function>
   <function name='CVPixelBufferPoolCreate'>
@@ -566,13 +568,13 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFDictionary=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CVPixelBufferPool}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CVPixelBufferPool}' type_modifier='o' />
   </function>
   <function name='CVPixelBufferPoolCreatePixelBuffer'>
     <retval type='i' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CVPixelBufferPool=}' />
-    <arg already_retained='true' type='^^{__CVBuffer}' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='CVPixelBufferPoolGetAttributes'>
     <retval type='^{__CFDictionary=}' />
@@ -593,15 +595,15 @@
     <arg type='^{__CVPixelBufferPool=}' />
   </function>
   <function name='CVPixelBufferRelease'>
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferRetain'>
-    <retval type='^{__CVBuffer=}' />
-    <arg type='^{__CVBuffer=}' />
+    <retval type='@' />
+    <arg type='@' />
   </function>
   <function name='CVPixelBufferUnlockBaseAddress'>
     <retval type='i' />
-    <arg type='^{__CVBuffer=}' />
+    <arg type='@' />
     <arg type='Q' />
   </function>
   <function name='CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes'>

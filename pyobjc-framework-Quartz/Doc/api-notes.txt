@@ -134,3 +134,24 @@ The API's related to CGPSConverter are not supported at the moment.
 
   You must pass a writable buffer of the right size to this method (such as 
   a properly sized instance of ``array.array``.
+
+``CVPixelBufferCreate``
+-----------------------
+
+This function requires a manual wrapper and is not supported yet.
+
+``CVPixelBufferCreateWithBytes``
+--------------------------------
+
+This function requires a manual wrapper and is not supported yet.
+
+``CVPixelBufferCreateWithPlanarBytes``
+--------------------------------------
+
+This function requires a manual wrapper and is not supported yet.
+
+``CVFillExtendedPixelsCallBack``
+--------------------------------
+
+Pixel format attributes of this type are not supported.
+

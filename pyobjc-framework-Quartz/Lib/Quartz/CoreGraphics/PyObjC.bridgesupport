@@ -2788,7 +2788,7 @@
     <arg type='^{_CGDirectPaletteRef=}' />
   </function>
   <function name='CGPaletteCreateDefaultColorPalette'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
   </function>
   <function name='CGPaletteCreateFromPaletteBlendedWithColor'>
     <retval type='^{_CGDirectPaletteRef=}' />
