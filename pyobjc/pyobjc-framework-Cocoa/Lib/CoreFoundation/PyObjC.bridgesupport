@@ -9,7 +9,7 @@
   <struct name='CFGregorianUnits' type='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' type64='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' />
   <struct name='CFRange' type='{_CFRange="location"i"length"i}' type64='{_CFRange="location"q"length"q}' />
   <struct name='CFSetCallBacks' type='{_CFSetCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' type64='{_CFSetCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' />
-  <struct name='CFSocketSignature' type='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' type64='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"}' />
+  <struct name='CFSocketSignature' type='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' type64='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' />
   <struct name='CFStreamError' type='{_CFStreamError="domain"i"error"i}' type64='{_CFStreamError="domain"q"error"i}' />
   <struct name='CFSwappedFloat32' type='{_CFSwappedFloat32="v"I}' type64='{_CFSwappedFloat32="v"I}' />
   <struct name='CFSwappedFloat64' type='{_CFSwappedFloat64="v"Q}' type64='{_CFSwappedFloat64="v"Q}' />
@@ -17,13 +17,13 @@
   <struct name='CFUUIDBytes' type='{_CFUUIDBytes="byte0"C"byte1"C"byte2"C"byte3"C"byte4"C"byte5"C"byte6"C"byte7"C"byte8"C"byte9"C"byte10"C"byte11"C"byte12"C"byte13"C"byte14"C"byte15"C}' type64='{_CFUUIDBytes="byte0"C"byte1"C"byte2"C"byte3"C"byte4"C"byte5"C"byte6"C"byte7"C"byte8"C"byte9"C"byte10"C"byte11"C"byte12"C"byte13"C"byte14"C"byte15"C}' />
   <struct name='CFXMLAttributeDeclarationInfo' type='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString=}"typeString"^{__CFString=}"defaultString"^{__CFString=}}' type64='{_CFXMLAttributeDeclarationInfo="attributeName"^{__CFString=}"typeString"^{__CFString=}"defaultString"^{__CFString=}}' />
   <struct name='CFXMLAttributeListDeclarationInfo' type='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"i"attributes"^{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}' type64='{_CFXMLAttributeListDeclarationInfo="numberOfAttributes"q"attributes"^{_CFXMLAttributeDeclarationInfo=^{__CFString=}^{__CFString=}^{__CFString=}}}' />
-  <struct name='CFXMLDocumentInfo' type='{_CFXMLDocumentInfo="sourceURL"^{__CFURL=}"encoding"I}' type64='{_CFXMLDocumentInfo="sourceURL""encoding"I}' />
+  <struct name='CFXMLDocumentInfo' type='{_CFXMLDocumentInfo="sourceURL"^{__CFURL=}"encoding"I}' type64='{_CFXMLDocumentInfo="sourceURL"^{__CFURL=}"encoding"I}' />
   <struct name='CFXMLDocumentTypeInfo' type='{_CFXMLDocumentTypeInfo="externalID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}' type64='{_CFXMLDocumentTypeInfo="externalID"{_CFXMLExternalID=^{__CFString=}}}' />
-  <struct name='CFXMLElementInfo' type='{_CFXMLElementInfo="attributes"^{__CFDictionary=}"attributeOrder"^{__CFArray=}"isEmpty"B}' type64='{_CFXMLElementInfo="attributes""attributeOrder""isEmpty"B}' />
+  <struct name='CFXMLElementInfo' type='{_CFXMLElementInfo="attributes"^{__CFDictionary=}"attributeOrder"^{__CFArray=}"isEmpty"B}' type64='{_CFXMLElementInfo="attributes"^{__CFDictionary=}"attributeOrder"^{__CFArray=}"isEmpty"B}' />
   <struct name='CFXMLElementTypeDeclarationInfo' type='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString=}}' type64='{_CFXMLElementTypeDeclarationInfo="contentDescription"^{__CFString=}}' />
-  <struct name='CFXMLEntityInfo' type='{_CFXMLEntityInfo="entityType"i"replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}"notationName"^{__CFString=}}' type64='{_CFXMLEntityInfo="entityType""replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFString=}}"notationName"^{__CFString=}}' />
-  <struct name='CFXMLEntityReferenceInfo' type='{_CFXMLEntityReferenceInfo="entityType"i}' type64='{_CFXMLEntityReferenceInfo="entityType"}' />
-  <struct name='CFXMLExternalID' type='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' type64='{_CFXMLExternalID="systemID""publicID"^{__CFString=}}' />
+  <struct name='CFXMLEntityInfo' type='{_CFXMLEntityInfo="entityType"i"replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}"notationName"^{__CFString=}}' type64='{_CFXMLEntityInfo="entityType"q"replacementText"^{__CFString=}"entityID"{_CFXMLExternalID=^{__CFString=}}"notationName"^{__CFString=}}' />
+  <struct name='CFXMLEntityReferenceInfo' type='{_CFXMLEntityReferenceInfo="entityType"i}' type64='{_CFXMLEntityReferenceInfo="entityType"q}' />
+  <struct name='CFXMLExternalID' type='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' type64='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' />
   <struct name='CFXMLNotationInfo' type='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}' type64='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFString=}}}' />
   <struct name='CFXMLProcessingInstructionInfo' type='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' type64='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' />
   <cftype gettypeid_func='CFAllocatorGetTypeID' name='CFAllocatorRef' type='^{__CFAllocator=}' type64='^{__CFAllocator=}' />
