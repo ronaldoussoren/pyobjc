@@ -99,9 +99,9 @@ exit:
 		break;
 
 	case _C_STRUCT_B:
-		while (*buf != _C_STRUCT_E && *buf && *buf++ != '=') {
+		while (buf && *buf != _C_STRUCT_E && *buf && *buf++ != '=') {
 		}
-		while (*buf && *buf != _C_STRUCT_E) {
+		while (buf && *buf && *buf != _C_STRUCT_E) {
 			if (*buf == '"') {
 				/* embedded field name */
 				buf = strchr(buf+1, '"');
@@ -116,9 +116,9 @@ exit:
 		break;
 
 	case _C_UNION_B:
-		while (*buf != _C_UNION_E && *buf && *buf++ != '=') {
+		while (buf && *buf != _C_UNION_E && *buf && *buf++ != '=') {
 		}
-		while (*buf && *buf != _C_UNION_E) {
+		while (buf && *buf && *buf != _C_UNION_E) {
 			if (*buf == '"') {
 				/* embedded field name */
 				buf = strchr(buf+1, '"');
@@ -144,7 +144,14 @@ static void typestr2typestr(char* buf)
 {
 	while (buf && *buf) {
 		typecode2typecode(buf);
-		buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		if (buf && *buf == '\"') {
+			PyErr_Format(PyObjCExc_InternalError,
+				"typecode2typecode: invalid typecode '%c' at \"%s\"", 
+				*buf, buf);
+			*buf = '\0';
+		} else {
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
 	}
 }
 

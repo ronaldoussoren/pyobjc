@@ -54,8 +54,11 @@ for method in ('alloc', 'copy', 'copyWithZone:', 'mutableCopy', 'mutableCopyWith
 
 def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):
     try:
-        objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
-
+        try:
+            objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
+        except objc.internal_error, e:
+            import warnings
+            warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
     finally:
         # Add formal protocols to the protocols submodule, for backward
         # compatibility with earlier versions of PyObjC
