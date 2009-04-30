@@ -1853,6 +1853,8 @@ init_objc(void)
 	PyType_Ready(&PyObjCMethodAccessor_Type);
 	PyType_Ready(&PyObjCMethodSignature_Type);
 	PyType_Ready(&PyObjC_VarList_Type);
+	PyType_Ready(&PyObjC_FSRefType);
+	PyType_Ready(&PyObjC_FSSpecType);
 
 	PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
 	PyObjCSuper_Type.tp_init = PySuper_Type.tp_init;
@@ -1880,6 +1882,8 @@ init_objc(void)
 	PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type);
 	PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type);
 	PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type);
+	PyDict_SetItemString(d, "FSRef", (PyObject*)&PyObjC_FSRefType);
+	PyDict_SetItemString(d, "FSSpec", (PyObject*)&PyObjC_FSSpecType);
 	PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type);
 	PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type);
 	PyDict_SetItemString(d, "formal_protocol", (PyObject*)&PyObjCFormalProtocol_Type);

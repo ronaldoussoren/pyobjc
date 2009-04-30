@@ -88,10 +88,14 @@ if sys.platform != 'darwin':
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
 CFLAGS=[
-    "-nostdinc",
-    "-isystem/usr/include",
-    "-isystem/usr/lib/gcc/i686-apple-darwin9/4.0.1/include",
-    "-iframework/System/Library/Frameworks",
+
+# The following flags are an attempt at getting rid of /usr/local
+# in the compiler search path.
+#    "-nostdinc",
+#    "-isystem/usr/include",
+#    "-isystem/usr/lib/gcc/i686-apple-darwin9/4.0.1/include",
+#    "-iframework/System/Library/Frameworks",
+
     "-DPyObjC_STRICT_DEBUGGING",
     "-DMACOSX",
     "-no-cpp-precomp",

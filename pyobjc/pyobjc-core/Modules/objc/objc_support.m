@@ -1089,6 +1089,14 @@ pythonify_c_struct (const char *type, void *datum)
 		return PyObjC_SockAddrToPython(datum);
 	}
 
+	if (IS_FSREF(type)) {
+		return PyObjC_decode_fsref(datum);
+	}
+
+	if (IS_FSSPEC(type)) {
+		return PyObjC_decode_fsspec(datum);
+	}
+
 	/* Skip back over digits at end of type in function prototypes */
 	while (type_real_length > 0 && isdigit(type_start[type_real_length-1])) {
 		type_real_length --;
@@ -1447,6 +1455,19 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 	/* Hacked in support for sockaddr structs */
 	if (strncmp(types, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)-1)) == 0) {
 		return PyObjC_SockAddrFromPython(arg, datum);
+	}
+
+	if (IS_FSREF(types)) {
+		if (PyObjC_encode_fsref(arg, datum) == 0) {
+			return 0;
+		}
+		PyErr_Clear();
+	}
+	if (IS_FSSPEC(types)) {
+		if (PyObjC_encode_fsspec(arg, datum) == 0) {
+			return 0;
+		}
+		PyErr_Clear();
 	}
 
 	while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
