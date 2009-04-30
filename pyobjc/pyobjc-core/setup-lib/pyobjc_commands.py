@@ -1,11 +1,4 @@
-import build_html
-import di_sdist
 import di_test
-try:
-    import pyobjc_mpkg
-    import bdist_dmg
-except ImportError:
-    pass
 
 extra_options = {}
 extra_cmdclass = {}
