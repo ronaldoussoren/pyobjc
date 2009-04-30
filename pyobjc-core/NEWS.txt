@@ -7,6 +7,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- Fixed support for ``FSRef`` and ``FSSpec`` structures. 
+
+  * Transparently convert ``Carbon.File.FSRef`` and ``Carbon.File.FSSpec``
+    instances to C.
+
+  * The types ``objc.FSRef`` and ``objc.FSSpec`` are the native
+    PyObjC representation for ``FSRef`` and ``FSSpec`` structures.
+
 - Added more magic signature heuristics: the delegate selector for
   sheets is now automaticly recognized, removing the need for
   the decorator ``AppHelper.didEndSelector`` (which will stay present
