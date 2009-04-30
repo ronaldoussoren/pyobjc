@@ -48,11 +48,6 @@ class TestCFHost (TestCase):
 
         CFHostUnscheduleFromRunLoop(v, rl, kCFRunLoopDefaultMode)
 
-        # XXX: This fails and I don't have time to debug right now
-        #self.failUnlessArgHasType(CFHostGetAddressing, 1, 'o^' + objc._C_NSBOOL)
-        #lst, ok = CFHostGetAddressing(t, None)
-        #self.failUnlessIsInstance(lst, CFArrayRef)
-        #self.failUnlessIsInstance(ok, bool)
 
         self.failUnlessArgHasType(CFHostGetNames, 1, 'o^' + objc._C_NSBOOL)
         lst, ok = CFHostGetNames(v, None)
@@ -61,8 +56,37 @@ class TestCFHost (TestCase):
 
         
     def testCallbacks(self):
-        self.fail("CFHostSetClient")
+        lst = []
+        ctx = object()
+        def callback(host, typeinfo, error, ctx):
+            lst.append([host, typeinfo, error, ctx])
 
+        host = CFHostCreateWithName(None, u"www.python.org")
+        CFHostSetClient(host, callback, ctx)
+
+        rl = CFRunLoopGetCurrent()
+        CFHostScheduleWithRunLoop(host, rl, kCFRunLoopDefaultMode)
+
+        ok, err = CFHostStartInfoResolution(host, kCFHostAddresses, None)
+        self.failUnless(ok)
+        self.failUnlessIsInstance(ok, bool)
+        self.failUnlessIsInstance(err, CFStreamError)
+
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+
+        CFHostUnscheduleFromRunLoop(host, rl, kCFRunLoopDefaultMode)
+        self.failUnlessEqual(len(lst), 1)
+        self.failUnlessIsInstance(lst[0][0], CFHostRef)
+        self.failUnlessIsInstance(lst[0][1], (int, long))
+        self.failUnlessIsInstance(lst[0][2], CFStreamError)
+        self.failUnless(lst[0][3] is ctx)
+
+        self.failIfResultIsCFRetained(CFHostGetAddressing)
+        self.failUnlessArgHasType(CFHostGetAddressing, 1, 'o^Z')
+        lst, ok = CFHostGetAddressing(host, None)
+        self.failUnlessIsInstance(lst, CFArrayRef)
+        self.failUnlessIsInstance(lst[0], CFDataRef)
+        self.failUnlessIsInstance(ok, bool)
 
 
 

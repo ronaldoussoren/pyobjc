@@ -52,10 +52,13 @@ class TestCFNetServices (TestCase):
 
         self.failUnlessResultIsBOOL(CFNetServiceRegisterWithOptions)
         self.failUnlessArgIsOut(CFNetServiceRegisterWithOptions, 2)
-        self.fall("CFNetServiceRegisterWithOptions")
 
-
-
+        ok, err = CFNetServiceRegisterWithOptions(serv, kCFNetServiceFlagNoAutoRename, None)
+        self.failUnlessIsInstance(ok, bool)
+        if ok:
+            self.failUnlessEqual(err, None)
+        else:
+            self.failUnlessIsInstance(err, CFStreamError)
 
 
 if __name__ == "__main__":

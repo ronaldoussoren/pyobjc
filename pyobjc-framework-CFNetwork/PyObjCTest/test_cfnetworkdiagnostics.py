@@ -3,9 +3,10 @@ from PyObjCTools.TestSupport import *
 
 class TestCFNetwork (TestCase):
     def testTypes(self):
-        # Test fails because the type seems to be registered when the 
-        # first instance is created ...
-        self.failUnlessIsCFType(CFNetDiagnosticRef)
+        # XXX: CFNetDiagnosticsRef is not actually a proper type
+        # in Leopard, the result turns out to be a CFDictionaryRef...
+        #self.failUnlessIsCFType(CFNetDiagnosticRef)
+        pass
 
     def testConstants(self):
         self.failUnlessEqual(kCFNetDiagnosticNoErr, 0)
@@ -23,21 +24,21 @@ class TestCFNetwork (TestCase):
         self.failUnlessIsInstance(rd, CFReadStreamRef)
         self.failUnlessIsInstance(wr, CFWriteStreamRef)
 
-        ref = CFNetDiagnosticCreateWithStreams(None, rs, ws)
-        self.failUnlessIsInstance(ref, CFNetDiagnosticRef)
+        ref = CFNetDiagnosticCreateWithStreams(None, rd, wr)
+        self.failUnlessIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
 
         self.failUnlessResultIsCFRetained(CFNetDiagnosticCreateWithURL)
-        ref = CFNetDiagnosticCreateWithURL(None, ref)
-        self.failUnlessIsInstance(ref, CFNetDiagnosticRef)
+        ref = CFNetDiagnosticCreateWithURL(None, CFURLCreateWithString(None, u"http://www.apple.com/", None))
+        self.failUnlessIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
 
         CFNetDiagnosticSetName(ref, u"hello world")
 
         sts = CFNetDiagnosticDiagnoseProblemInteractively(ref)
-        self.failUnlesssIsInstance(sts, (int, long))
+        self.failUnlessIsInstance(sts, (int, long))
 
         self.failUnlessArgIsOut(CFNetDiagnosticCopyNetworkStatusPassively, 1)
         sts, descr = CFNetDiagnosticCopyNetworkStatusPassively(ref, None)
-        self.failUnlesssIsInstance(sts, (int, long))
+        self.failUnlessIsInstance(sts, (int, long))
         self.failUnlessIsInstance(descr, unicode)
 
 if __name__ == "__main__":
