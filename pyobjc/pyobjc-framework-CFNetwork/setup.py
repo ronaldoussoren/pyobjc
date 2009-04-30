@@ -1,5 +1,11 @@
 ''' 
-Wrappers for framework 'CFNetwork'. 
+PyObjC wrappers for the framework "CFNetwork", part of "CoreServices" on 
+MacOSX.
+
+The CFNetwork framework provides a library of abstractions for networking
+protocols. The most interesting bits for Python programmers are the
+API's for working with proxy autoconfiguration and the API's for networking
+diagnotics.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -9,7 +15,7 @@ and (Objective-)C frameworks
 import ez_setup
 ez_setup.use_setuptools()
 
-from setuptools import setup
+from setuptools import setup, Extension
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
 except ImportError:
@@ -35,8 +41,14 @@ setup(
     ],
     dependency_links = [],
     package_data = { 
-        '': ['*.xml'] 
+        '': ['*.bridgesupport'] 
     },
+    ext_modules = [
+        Extension("CFNetwork._manual",
+            ["Modules/_manual.m"],
+            extra_link_args=['-framework', 'CoreServices'],
+        ),
+    ],
     test_suite='PyObjCTest',
     cmdclass = extra_cmdclass,
     options = extra_options('CFNetwork'),

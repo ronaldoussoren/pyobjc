@@ -9,12 +9,14 @@
   <cftype name='CFNetServiceBrowserRef' type='^{__CFNetServiceBrowser=}' type64='^{__CFNetServiceBrowser=}' gettypeid_func='CFNetServiceBrowserGetTypeID'/>
   <cftype name='CFNetServiceMonitorRef' type='^{__CFNetServiceMonitor=}' type64='^{__CFNetServiceMonitor=}' gettypeid_func='CFNetServiceMonitorGetTypeID'/>
   <cftype name='CFNetServiceRef' type='^{__CFNetService=}' type64='^{__CFNetService=}' gettypeid_func='CFNetServiceGetTypeID'/>
+  <constant name='kCFStreamErrorDomainMach' type='i' />
   <constant name='kCFStreamErrorDomainFTP' type='i' />
   <constant name='kCFStreamErrorDomainSOCKS' type='i' />
   <constant name='kCFStreamErrorDomainSSL' type='i' />
   <constant name='kCFStreamErrorDomainHTTP' type='i' />
   <constant name='kCFStreamErrorDomainNetDB' type='i' />
   <constant name='kCFStreamErrorDomainSystemConfiguration' type='i' />
+  <constant name='kCFStreamErrorDomainNetServices' type='i' />
   <constant name='kCFProxyTypeKey' type='^{__CFString=}' />
   <constant name='kCFProxyHostNameKey' type='^{__CFString=}' />
   <constant name='kCFProxyPortNumberKey' type='^{__CFString=}' />
@@ -391,7 +393,7 @@
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFHostGetAddressing'>
-    <retval type='^{__CFArray=}' already_cfretained='true' />
+    <retval type='^{__CFArray=}' />
     <arg type='^{__CFHost=}' />
     <arg type='o^B' />
   </function>
@@ -433,16 +435,16 @@
   <function name='CFNetDiagnosticCopyNetworkStatusPassively'>
     <retval type='l' />
     <arg type='^{__CFNetDiagnostic=}' />
-    <arg type='^^{__CFString}' />
+    <arg type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='CFNetDiagnosticCreateWithStreams'>
-    <retval type='^{__CFNetDiagnostic=}' />
+    <retval type='^{__CFNetDiagnostic=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFReadStream=}' />
     <arg type='^{__CFWriteStream=}' />
   </function>
   <function name='CFNetDiagnosticCreateWithURL'>
-    <retval type='^{__CFNetDiagnostic=}' />
+    <retval type='^{__CFNetDiagnostic=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFURL=}' />
   </function>
@@ -647,20 +649,6 @@
   </function>
   <function name='CFNetworkCopySystemProxySettings'>
     <retval type='^{__CFDictionary=}' already_cfretained='true' />
-  </function>
-  <function name='CFNetworkExecuteProxyAutoConfigurationScript'>
-    <retval type='^{__CFRunLoopSource=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFURL=}' />
-    <arg type='^?' />
-    <arg type='^{?=i^v^?^?^?}' type64='^{?=i^v^?^?^?}' />
-  </function>
-  <function name='CFNetworkExecuteProxyAutoConfigurationURL'>
-    <retval type='^{__CFRunLoopSource=}' />
-    <arg type='^{__CFURL=}' />
-    <arg type='^{__CFURL=}' />
-    <arg type='^?' />
-    <arg type='^{?=i^v^?^?^?}' type64='^{?=i^v^?^?^?}' />
   </function>
   <function name='CFReadStreamCreateForHTTPRequest'>
     <retval type='^{__CFReadStream=}' already_cfretained='true' />

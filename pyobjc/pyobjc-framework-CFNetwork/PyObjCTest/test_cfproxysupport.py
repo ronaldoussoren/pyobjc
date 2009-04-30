@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CFNetwork import *
+import os
 
 SCRIPT="""
 function FindProxyForURL(url, host) {
@@ -36,9 +37,60 @@ class TestCFProxySupport (TestCase):
 
 
     @min_os_level('10.5')
-    def testUnsupported(self):
-        self.fail("CFNetworkExecuteProxyAutoConfigurationScript") # Manual wrapper needed
-        self.fail("CFNetworkExecuteProxyAutoConfigurationURL") # Manual wrapper needed
+    def testManual(self):
+        lst = []
+        ctx = object()
+        def callback(ctx, proxies, error):
+            lst.append([ctx, proxies, error])
+
+        url = CFURLCreateWithString(None, "http://www.apple.com/", None)
+        
+        rls = CFNetworkExecuteProxyAutoConfigurationScript(
+                SCRIPT, url, callback, ctx)
+        self.failUnlessIsInstance(rls, CFRunLoopSourceRef)
+
+        rl = CFRunLoopGetCurrent()
+        CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
+
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+
+        CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
+
+        self.failIfEqual(len(lst), 0)
+        self.failUnless(lst[0][0] is ctx)
+        self.failUnlessIsInstance(lst[0][1], CFArrayRef)
+        self.failUnlessEqual(lst[0][2],  None)
+
+        lst[:] = []
+        scriptURL = CFURLCreateWithFileSystemPath(
+                None,
+                os.path.join(os.path.dirname(__file__), "proxy.pac"),
+                kCFURLPOSIXPathStyle,
+                False)
+
+        rls = CFNetworkExecuteProxyAutoConfigurationURL(
+                scriptURL, url, callback, ctx)
+        self.failUnlessIsInstance(rls, CFRunLoopSourceRef)
+
+        CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
+
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+
+        CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
+
+        #print lst
+
+        self.failIfEqual(len(lst), 0)
+        self.failUnless(lst[0][0] is ctx)
+        if lst[0][2] is None:
+            self.failUnlessIsInstance(lst[0][1], CFArrayRef)
+            self.failUnlessEqual(lst[0][2],  None)
+
+        else:
+            self.failUnlessEqual(lst[0][1],  None)
+            self.failUnlessIsInstance(lst[0][2], CFErrorRef)
+
+
         
 
     @min_os_level('10.5')

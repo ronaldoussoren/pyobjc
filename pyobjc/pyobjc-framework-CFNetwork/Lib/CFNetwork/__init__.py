@@ -18,3 +18,5 @@ def CFSocketStreamSOCKSGetError(err):
 
 def CFSocketStreamSOCKSGetErrorSubdomain(err):
     return (err.error >> 16) & 0xFFFF
+
+from CFNetwork._manual import *

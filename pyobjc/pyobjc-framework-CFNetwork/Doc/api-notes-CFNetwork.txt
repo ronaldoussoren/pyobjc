@@ -4,15 +4,10 @@ API Notes for the framework CFNetwork
 
 * ``CFNetworkExecuteProxyAutoConfigurationScript`` and ``CFNetworkExecuteProxyAutoConfigurationURL``
 
-  These functions are not yet supported because they require a manually written proxy function.
-
-* ``CFHostGetAddressing``
-
-   This proxy crashes python in the unittests, I haven't debugged the issue yet and it may be 
-   caused by bad use of this function in the tests.
+  The ``context`` argument can be an arbitrary Python object.
 
 * ``CFHostSetClient``
 
-  This API is not yet supported from Python because they require a manually written proxy function.
+  The ``context`` argument can be an arbitrary Python object.
 
 
