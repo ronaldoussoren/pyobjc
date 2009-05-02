@@ -1,5 +1,7 @@
 ''' 
-Wrappers for framework 'Collaboration'. 
+Wrappers for the "Collaboration" framework in MacOSX 10.5 or later. The
+Collaboration framework provides access to identities, and manages
+user interface elements for selecting identities.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,13 +29,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "Collaboration" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b2',
         'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
