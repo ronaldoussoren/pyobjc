@@ -28,13 +28,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "AppleScriptKit" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b2',
         'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
