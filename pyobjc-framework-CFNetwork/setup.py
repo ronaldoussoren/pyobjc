@@ -32,14 +32,11 @@ setup(
     url='http://pyobjc.sourceforge.net',
     platforms = [ "MacOS X" ],
     packages = [ "CFNetwork" ],
-    package_dir = { 
-        '': 'Lib/' 
-    },
+    package_dir = { '': 'Lib/' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b2',
         'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
@@ -52,7 +49,5 @@ setup(
     test_suite='PyObjCTest',
     cmdclass = extra_cmdclass,
     options = extra_options('CFNetwork'),
-
-    # The package is actually zip-safe, but py2app isn't zip-aware yet.
-    zip_safe = False,
+    zip_safe = True,
 )

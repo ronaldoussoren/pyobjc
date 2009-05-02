@@ -62,9 +62,13 @@ class TestCFProxySupport (TestCase):
         self.failUnlessEqual(lst[0][2],  None)
 
         lst[:] = []
+        path = os.path.join(os.path.dirname(__file__), "proxy.pac")
+        cwd = os.getcwd()
+        if path.startswith(cwd):
+            path = path[len(cwd)+1:]
         scriptURL = CFURLCreateWithFileSystemPath(
                 None,
-                os.path.join(os.path.dirname(__file__), "proxy.pac"),
+                path,
                 kCFURLPOSIXPathStyle,
                 False)
 
