@@ -35,7 +35,7 @@ else:
 
 setup(
     name='pyobjc-framework-Quartz',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the Quartz frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
