@@ -29,26 +29,20 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "FSEvents" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
         'pyobjc-core>=2.2b1',
         'pyobjc-framework-Cocoa>=2.2b1',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
     test_suite='PyObjCTest',
     cmdclass = extra_cmdclass,
     options = extra_options('FSEvents'),
-
-    # The package is actually zip-safe, but py2app isn't zip-aware yet.
-    zip_safe = False,
-
     ext_modules = [
         Extension("FSEvents._callbacks",
             [ "Modules/_callbacks.m" ],
             extra_compile_args=['-O0']),
     ],
+    zip_safe = True,
 )
