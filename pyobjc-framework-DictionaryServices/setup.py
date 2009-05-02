@@ -1,5 +1,10 @@
 ''' 
-Wrappers for framework 'DictionaryServices'. 
+Wrappers for the "DictionaryServices" framework on MacOSX 10.5 or later. 
+
+Dictionary Services lets you create your own custom dictionaries that users 
+can access through the Dictionary application. You also use these services to 
+access dictionaries programatically and to support user access to dictionary 
+look-up through a contextual menu.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,13 +32,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "DictionaryServices" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
