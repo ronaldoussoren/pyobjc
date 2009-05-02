@@ -1,5 +1,7 @@
 ''' 
-Wrappers for framework 'CoreData'. 
+Wrappers for the "CoreData" framework on MacOSX. The Core Data framework 
+provides generalized and automated solutions to common tasks associated 
+with object life-cycle and object graph management, including persistence.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,13 +29,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "CoreData" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b2',
         'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
