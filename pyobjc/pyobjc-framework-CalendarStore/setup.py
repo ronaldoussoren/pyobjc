@@ -1,5 +1,8 @@
 ''' 
-Wrappers for framework 'CalendarStore'. 
+Wrappers for the "CalendarStore" on MacOSX 10.5 and later. The CalendarStore
+frameworks provides access to the iCal data. It's possible to fetch iCal
+records, such as calendars and tasks, as well as modify them and get 
+notifications when records change in iCal.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,13 +30,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "CalendarStore" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [
-    ],
     install_requires = [ 
         'pyobjc-core>=2.2b1',
         'pyobjc-framework-Cocoa>=2.2b1',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
