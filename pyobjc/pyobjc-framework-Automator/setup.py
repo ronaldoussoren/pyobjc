@@ -1,5 +1,8 @@
 ''' 
-Wrappers for framework 'Automator'. 
+Wrappers for the "Automator" framework on MacOSX. The Automator framework
+supports the development of actions for the Automator application, as well 
+as the ability to run a workflow in developer applications. An action is 
+a bundle that, when loaded and run, performs a specific task.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -18,7 +21,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Automator',
-    version='2.2b1',
+    version='2.2b2',
     description = "Wrappers for the framework Automator on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -27,13 +30,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "Automator" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
