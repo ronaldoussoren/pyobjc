@@ -1,4 +1,3 @@
-=========================
 API notes for AddressBook
 =========================
 
@@ -10,5 +9,5 @@ The C API for creating plugin bundles is not supported. Use the Objective-C API 
 ABPeoplePicker C API
 --------------------
 
-``ABPickerSetDelegate`` and ``ABPickerGetDelegate`` use an API that isn't wrapped by 
-PyObjC.
+``ABPickerSetDelegate`` and ``ABPickerGetDelegate`` use an API that isn't 
+wrapped by PyObjC.

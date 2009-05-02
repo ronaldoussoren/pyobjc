@@ -1,5 +1,7 @@
 ''' 
-Wrappers for framework 'AddressBook'. 
+Wrappers for the "AddressBook" framework on MacOS X. The Address Book is
+a centralized database for contact and other information for people. Appliations
+that make use of the AddressBook framework all use the same database.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -9,7 +11,7 @@ and (Objective-)C frameworks
 import ez_setup
 ez_setup.use_setuptools()
 
-from setuptools import setup, Extension
+from setuptools import setup
 
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
@@ -29,10 +31,9 @@ setup(
     packages = [ "AddressBook" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b2',
         'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
