@@ -1,5 +1,7 @@
 ''' 
-Wrappers for frameworks 'WebKit' and 'JavaScriptCore'
+Wrappers for the "WebKit" and "JavaScriptCore" frameworks on MacOSX. The
+WebKit framework contains the views and support classes for creating a
+browser. The JavaScriptCore framework implements a JavaScript interpreter.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use these frameworks and PyObjC's documentation
@@ -27,13 +29,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "WebKit", "JavaScriptCore" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
