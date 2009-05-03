@@ -33,8 +33,8 @@ setup(
     packages = [ "LatentSemanticMapping" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 
