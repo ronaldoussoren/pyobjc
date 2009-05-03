@@ -1,5 +1,13 @@
 ''' 
-Wrappers for framework 'InterfaceBuilderKit'. 
+Wrappers for the framework "InterfaceBuilderKit" on MacOSX. This framework
+is only available when you've installed Xcode 3.0 or later. 
+
+The Interface Builder Kit is a framework containing the classes you use to 
+implement custom plug-ins for Interface Builder. A plug-in injects one or 
+more custom objects into Interface Builder's library window. From the library 
+window, users can access your custom objects and drag them into their nib 
+files just as they would the standard system controls. You can also use this 
+framework to implement inspectors for manipulating your objects at runtime.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -33,13 +41,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "InterfaceBuilderKit" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1', 
-        'pyobjc-framework-Cocoa>=2.2b1', 
+        'pyobjc-core>=2.2b2', 
+        'pyobjc-framework-Cocoa>=2.2b2', 
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },

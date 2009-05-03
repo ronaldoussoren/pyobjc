@@ -1,0 +1,8 @@
+API Notes for the InterfaceBuilderKit framework
+===============================================
+
+All API's in this framework have been wrapped by PyObjC. 
+
+NOTE: This framework is only available when you have Xcode 3.0 or later
+installed, and furthermore the framework can only be used for writing plugins
+and not as part of standalone applications.
