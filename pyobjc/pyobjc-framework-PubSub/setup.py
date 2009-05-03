@@ -1,5 +1,7 @@
 ''' 
-Wrappers for framework 'PubSub'. 
+Wrappers for the "PubSub" framework on MacOSX 10.5 or later.  This framework
+offers developers a way to subscribe to web feeds (RSS, Atom) from their 
+applications.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,13 +29,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "PubSub" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
