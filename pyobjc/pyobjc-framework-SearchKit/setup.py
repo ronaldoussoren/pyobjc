@@ -1,5 +1,6 @@
 ''' 
-Wrappers for framework 'SearchKit'. 
+Wrappers for the "SearchKit" framework on MacOSX. SearchKit is a content
+indexing and search solution.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -28,17 +29,14 @@ setup(
     packages = [ "SearchKit" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
-        '': ['*.xml'] 
+        '': ['*.bridgesupport'] 
     },
     test_suite='PyObjCTest',
     cmdclass = extra_cmdclass,
     options = extra_options('SearchKit'),
-
-    # The package is actually zip-safe, but py2app isn't zip-aware yet.
-    zip_safe = False,
+    zip_safe = True,
 )
