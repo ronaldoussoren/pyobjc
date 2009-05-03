@@ -2,7 +2,9 @@
 API Notes for the QTKit framework
 =================================
 
-* Functions ``QTMakeTimeWithTimeRecord`` and ``QTGetTimeRecord`` are not supported.
+* Functions ``QTMakeTimeWithTimeRecord`` and ``QTGetTimeRecord`` are not 
+  supported.
 
-* The integration with classical Quicktime API is not properly tested at the moment.
-  (And note that that API is deprecated by Apple, use the QTKit API where possible).
+* The integration with classical Quicktime API is not properly tested at the 
+  moment.  Furthermore that API is deprecated by Apple, and not available
+  in 64-bit code. Use the QTKit API where possible.
