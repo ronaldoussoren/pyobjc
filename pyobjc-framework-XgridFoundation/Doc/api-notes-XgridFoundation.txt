@@ -1,0 +1,4 @@
+API Notes for the XgridFoundation framework
+===========================================
+
+PyObjC's bindings for the XgridFoundation framwork are complete.
