@@ -1,5 +1,8 @@
 ''' 
-Wrappers for framework 'QTKit'. 
+Wrappers for the "QTKit" framework on MacOSX.  QTKit is an modern, 
+object-oriented framework for working with QuickTime movies in Cocoa 
+applications, and is a replacement for the older Carbon-based Quicktime
+framework.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,14 +30,11 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "QTKit" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
-        'pyobjc-framework-Quartz>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
+        'pyobjc-framework-Quartz>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
