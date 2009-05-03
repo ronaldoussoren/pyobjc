@@ -1,3 +1,5 @@
+API Notes for the SystemConfiguration framework
+===============================================
 
 callbacks
 ---------

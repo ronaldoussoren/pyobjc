@@ -31,18 +31,16 @@ setup(
         'pyobjc-core>=2.2b1',
         'pyobjc-framework-Cocoa>=2.2b1',
     ],
-    dependency_links = [],
     package_data = { 
-        '': ['*.xml'] 
+        '': ['*.bridgesupport'] 
     },
     ext_modules = [
         Extension('SystemConfiguration._manual',
                  [ 'Modules/_manual.m' ],
         ),
     ],
-
     test_suite='PyObjCTest',
     cmdclass = extra_cmdclass,
     options = extra_options('SystemConfiguration'),
-    zip_safe = False,
+    zip_safe = True,
 )
