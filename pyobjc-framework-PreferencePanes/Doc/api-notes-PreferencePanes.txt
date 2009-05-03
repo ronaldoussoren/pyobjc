@@ -1,0 +1,4 @@
+API Notes for the PreferencePanes framework
+===========================================
+
+The PyObjC bindings for the PreferencePanes framework is complete.
