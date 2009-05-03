@@ -1,5 +1,11 @@
 ''' 
-Wrappers for framework 'ScriptingBridge'. 
+Wrappers for the "ScriptingBrige" framework on MacOSX 10.5 or later. This 
+framework provides an easy way to use the scripting functionality of 
+applications ("AppleScript") from Cocoa applications.
+
+The functionality of this framework is comparable to that off "appscript",
+although the latter is better tuned for use in Python applications and is
+available on MacOSX 10.4 as well.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -28,10 +34,9 @@ setup(
     packages = [ "ScriptingBridge" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },

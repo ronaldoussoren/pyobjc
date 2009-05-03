@@ -1,0 +1,21 @@
+API Notes for the ScriptingBridge framework
+===========================================
+
+The PyObjC bindings for the ScriptingBridge framework are
+complete.
+
+Basic usage
+-----------
+
+The Objective-C documentation for the scripting bridge frameworks
+focusses on static tools for creating proxy classes for scriptable
+applications. This is in general not needed when you're programming
+in Python.
+
+In Python you can just as easy create a dynamic proxy object::
+
+	iTunes = SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
+
+This can then be used to call "AppleScript" methods, like this::
+
+	print iTunes.currentTrack().name()
