@@ -1,0 +1,4 @@
+API Notes for the InstallerPlugins framework
+============================================
+
+All API's in the InstallerPlugins framework are wrapped by PyObjC.
