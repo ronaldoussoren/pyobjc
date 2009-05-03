@@ -1,5 +1,6 @@
 ''' 
-Wrappers for framework 'InputMethodKit'. 
+Wrappers for the "InputMethodKit" framework on MacOSX 10.5 or later. The
+interfaces in this framework allow you to develop input methods.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -28,10 +29,9 @@ setup(
     packages = [ "InputMethodKit" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1' 
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2' 
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },
