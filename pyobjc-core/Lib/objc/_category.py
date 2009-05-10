@@ -1,6 +1,8 @@
 __all__ = ['classAddMethod', 'Category']
 
-from _objc import selector, classAddMethods, objc_class
+from _objc import selector, classAddMethods, objc_class, ivar
+
+from types import FunctionType, MethodType
 
 def classAddMethod(cls, name, method):
     """
@@ -26,22 +28,30 @@ class _CategoryMeta(type):
     Meta class for categories.
     """
     __slots__ = ()
-    _IGNORENAMES = ('__module__', '__name__')
+    _IGNORENAMES = ('__module__', '__name__', '__doc__')
     def _newSubclass(cls, name, bases, methods):
         return type.__new__(cls, name, bases, methods)
     _newSubclass = classmethod(_newSubclass)
 
     def __new__(cls, name, bases, methods):
         if len(bases) != 1:
-            raise TypeError, "Cannot have multiple inheritance with Categories"
+            raise TypeError("Cannot have multiple inheritance with Categories")
 
         c = bases[0].real_class
 
         if c.__name__ != name:
-            raise TypeError, "Category name must be same as class name"
+            raise TypeError("Category name must be same as class name")
 
-        m = [ x[1] for x in methods.iteritems() if x[0] not in cls._IGNORENAMES ]
+
+        m = [ x[1] for x in methods.iteritems() if x[0] not in cls._IGNORENAMES  and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
+        vars = [ x for x in methods.iteritems() if x[0] not in cls._IGNORENAMES  and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
+        for k, v in vars:
+            if isinstance(v, ivar):
+                raise TypeError("Cannot add instance variables in a Category")
+
         classAddMethods(c, m)
+        for k, v in vars:
+            setattr(c, k, v)
         return c
 
 def Category(cls):

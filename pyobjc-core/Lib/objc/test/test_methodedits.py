@@ -312,6 +312,48 @@ class TestCategory (TestCase):
         BaseClassRedef.foo = foo
 
         self.assertEquals(obj.foo(), 3)
+
+    def testCategeryWithDocString (self):
+        class NSObjectCat (NSObject):
+            pass
+
+        class NSObjectCat (objc.Category(NSObjectCat)):
+            """
+            This is a docstring
+            """
+
+            def withDocStringMethod(self):
+                return 42
+
+        o = NSObjectCat.alloc().init()
+        self.failUnlessEqual(o.withDocStringMethod(), 42)
+
+    def testCategoryWithClassMethod(self):
+        class NSObjectCat2 (NSObject):
+            pass
+
+        class NSObjectCat2 (objc.Category(NSObjectCat2)):
+            @classmethod
+            def aClassMethod(cls):
+                return 1
+
+        self.failUnlessEqual(NSObjectCat2.aClassMethod(), 1)
+
+    def testCategoryWithVariables(self):
+        class NSObjectCat3 (NSObject):
+            pass
+
+        class NSObjectCat3 (objc.Category(NSObjectCat3)):
+            classValue = "aap"
+
+            def getClassValue(self):
+                return self.classValue
+
+
+        self.failUnless(hasattr(NSObjectCat3, "classValue"))
+        o = NSObjectCat3.alloc().init()
+        self.failUnlessEqual(o.getClassValue(), "aap")
+
                 
 
 
