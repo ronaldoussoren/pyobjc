@@ -7,6 +7,24 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- Improve handling of non-methods in objc.Category:
+
+  * The docstring of a category is now ignored
+
+  * You'll get an explict error exception when trying to add ``ivar``s to
+    a class
+
+  * It's now possible to add class attributes in a category::
+
+       class NSObject (objc.Category(NSObject)):
+           aClassDefault = [ 1, 2, 3 ]
+
+	   @classmethod
+	   def getDefault(cls):
+	       return cls.aClassDefault
+
+
+
 - Fixed support for ``FSRef`` and ``FSSpec`` structures. 
 
   * Transparently convert ``Carbon.File.FSRef`` and ``Carbon.File.FSSpec``
