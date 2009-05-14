@@ -319,10 +319,7 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 	if (state) {
 		PyGILState_Release(*state);
 	}
-	@throw exc;
-#if 0
 	[exc raise];
-#endif
 }
 
 
@@ -764,7 +761,7 @@ PyObjC_PythonToCArray(
 	/* A more complex array */
 
 #if PY_VERSION_HEX >= 0x02060000
-	if (PyObject_CheckBuffer(obj)) {
+	if (PyObject_CheckBuffer(pythonList)) {
 		/* An object that implements the new-style buffer interface.
 		 * Use the buffer interface description to check if the buffer
 		 * type is compatible with what we expect.

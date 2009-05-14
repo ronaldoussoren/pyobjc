@@ -756,6 +756,12 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 	if (tollfree != NULL) {
 		Class cls = objc_lookUpClass(tollfree);
 		if (cls == NULL) {
+			if (tollfree[0] == '_' && tollfree[1] == '_') {
+				cls = objc_lookUpClass(tollfree+2);
+			}
+		}
+
+		if (cls == NULL) {
 			retval = 0;
 			goto end;
 		}
