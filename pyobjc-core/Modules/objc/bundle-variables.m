@@ -220,9 +220,13 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 	
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
-		NS_VALUERETURN(NULL, PyObject*);
+		cfBundle = NULL;
 
 	PyObjC_ENDHANDLER
+
+	if  (cfBundle == NULL && PyErr_Occurred()) {
+		return NULL;
+	}
 
 	if (cfBundle == NULL) {
 		PyErr_Format(PyObjCExc_Error, 
