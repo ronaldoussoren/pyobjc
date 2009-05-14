@@ -23,7 +23,7 @@ except ImportError:
     extra_options = lambda name: {}
 
 import os
-if os.uname()[2] >= '8.':
+if os.uname()[2] >= '9.':
     CFLAGS=["-isysroot", "/"]
 else:
     CFLAGS=[]
