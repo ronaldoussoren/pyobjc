@@ -46,6 +46,11 @@ static PyBufferProcs nsdata_as_buffer = {
 	NULL,
 	nsdata_getsegcount,
 	NULL
+#if PY_VERSION_HEX >= 0x02060000
+	, NULL                                     
+	, NULL                                     
+#endif
+
 };
 
 static PyBufferProcs nsmutabledata_as_buffer = {
@@ -53,6 +58,10 @@ static PyBufferProcs nsmutabledata_as_buffer = {
 	nsmutabledata_getwritebuffer,
 	nsdata_getsegcount,
 	NULL
+#if PY_VERSION_HEX >= 0x02060000
+	, NULL                                     
+	, NULL                                     
+#endif
 };
 
 
@@ -1159,6 +1168,10 @@ PyTypeObject PyObjCClass_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 char*

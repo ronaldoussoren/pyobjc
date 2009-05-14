@@ -154,5 +154,9 @@ PyTypeObject PyObjCSuper_Type = {
 	0,					/* tp_cache */
 	0,					/* tp_mro */
 	0,					/* tp_weaklist */
-	0,					/* tp_del */
+	0					/* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };

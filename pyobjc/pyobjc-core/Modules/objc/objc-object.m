@@ -705,6 +705,10 @@ PyObjCClassObject PyObjCObject_Type = {
 	0, 					/* tp_subclasses */
 	0,					/* tp_weaklist */
 	(destructor)object_del			/* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
      },
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
@@ -714,7 +718,11 @@ PyObjCClassObject PyObjCObject_Type = {
      }, /* as_number */
      { 0, 0, 0 },			/* as_mapping */
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },	/* as_sequence */
-     { 0, 0, 0, 0 },			/* as_buffer */
+     { 0, 0, 0, 0 
+#if PY_VERSION_HEX >= 0x02060000
+	 , 0, 0
+#endif
+     },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
    }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

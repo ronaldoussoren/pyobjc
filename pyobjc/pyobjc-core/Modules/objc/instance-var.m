@@ -165,8 +165,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 		var = self->ivar;
 	}
 	
-	NSString* ocName = [NSString stringWithUTF8String:self->name];
-
+	//NSString* ocName = [NSString stringWithUTF8String:self->name];
 	// [objc willChangeValueForKey:ocName];
 
 	if (self->isSlot) {
@@ -323,6 +322,10 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 /* Set the name of an ivar if it doesn't already have one 
