@@ -199,6 +199,10 @@ PyTypeObject PyObjCUnicode_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 PyObject* 
@@ -227,8 +231,16 @@ PyObjCUnicode_New(NSString* value)
 // XXX - I don't know how to get gcc to let me use sizeof(unichar)
 #ifdef PyObjC_UNICODE_FAST_PATH
 	Py_ssize_t length = [value length];
+
+	if (length < 0) {
+		PyErr_SetString(PyExc_SystemError, "string with negative length");
+		return NULL;
+	}
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
-	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
+	Py_UNICODE* tptr = PyMem_NEW(Py_UNICODE, length);
+	PyUnicode_AS_UNICODE(result) = tptr;
+	tptr = NULL;
+
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
 		Py_DECREF((PyObject*)result);
 		PyErr_NoMemory();

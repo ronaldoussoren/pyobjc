@@ -457,6 +457,10 @@ PyTypeObject PyObjCSelector_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 
@@ -712,6 +716,10 @@ PyTypeObject PyObjCNativeSelector_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 
@@ -1667,6 +1675,10 @@ PyTypeObject PyObjCPythonSelector_Type = {
 	0,                                      /* tp_subclasses */
 	0,                                      /* tp_weaklist */
 	0                                       /* tp_del */
+#if PY_VERSION_HEX >= 0x02060000
+	, 0                                     /* tp_version_tag */
+#endif
+
 };
 
 char* PyObjCSelector_Signature(PyObject* obj)
