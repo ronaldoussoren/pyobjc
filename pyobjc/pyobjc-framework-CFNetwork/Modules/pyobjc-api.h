@@ -19,6 +19,41 @@
 #include "Python.h"
 #include <objc/objc.h>
 
+#import <Foundation/NSObjCRuntime.h>
+
+#ifndef CGFLOAT_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no CFFloat available???"
+#endif
+
+typedef float CGFloat;
+#define CGFLOAT_MIN FLT_MIN
+#define CGFLOAT_MAX FLT_MAX
+#define CGFLOAT_IS_DOUBLE 0
+#define CGFLOAT_DEFINED
+
+#endif /* CGFLOAT_DEFINED */
+
+
+#ifndef NSINTEGER_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no NSINTEGER available???"
+#endif
+
+typedef int NSInteger;
+typedef unsigned int NSUInteger;
+
+#define NSIntegerMax    LONG_MAX
+#define NSIntegerMin    LONG_MIN
+#define NSUIntegerMax   ULONG_MAX
+
+#define NSINTEGER_DEFINED
+
+#endif
+
+
 #ifndef PyObjC_COMPAT_H
 #if (PY_VERSION_HEX < 0x02050000)
 typedef int Py_ssize_t;

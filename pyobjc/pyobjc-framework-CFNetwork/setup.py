@@ -22,6 +22,12 @@ except ImportError:
     extra_cmdclass = {}
     extra_options = lambda name: {}
 
+import os
+if os.uname()[2] >= '8.':
+    CFLAGS=["-isysroot", "/"]
+else:
+    CFLAGS=[]
+
 setup(
     name='pyobjc-framework-CFNetwork',
     version='2.2b2',
@@ -44,6 +50,7 @@ setup(
         Extension("CFNetwork._manual",
             ["Modules/_manual.m"],
             extra_link_args=['-framework', 'CoreServices'],
+            extra_compile_args=CFLAGS,
         ),
     ],
     test_suite='PyObjCTest',
