@@ -9,7 +9,7 @@ class _ctxHelper(object):
     def __enter__(self):
         NSGraphicsContext.saveGraphicsState()
 
-    def __exit__(self, exc_type, exc_value, exc_tp):
+    def __exit__(self, exc_type, exc_value, exc_tb):
         NSGraphicsContext.restoreGraphicsState()
         return False
 
@@ -28,7 +28,7 @@ try:
             cls.beginGrouping()
 
         @classmethod
-        def __exit__(cls, exc_type, exc_value, exc_type):
+        def __exit__(cls, exc_type, exc_value, exc_tb):
             cls.endGrouping()
             return False
 
