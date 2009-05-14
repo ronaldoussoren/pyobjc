@@ -16,7 +16,7 @@ import os
 if int(os.uname()[2].split('.')[0]) <= 8:
     CFLAGS=["-DNO_OBJC2_RUNTIME"]
 else:
-    CFLAGS=[]
+    CFLAGS=["-isysroot", "/"]
 
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
