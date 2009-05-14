@@ -7,7 +7,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
-@interface NSObject () 
+@interface NSObject (OC_Comparison)
 -(NSComparisonResult)compare:(NSObject*)other;
 @end
 

@@ -14,7 +14,7 @@ from setuptools import setup, Extension
 
 import os
 if int(os.uname()[2].split('.')[0]) <= 8:
-    CFLAGS=["-DBUILD_TIGER"]
+    CFLAGS=["-DNO_OBJC2_RUNTIME"]
 else:
     CFLAGS=[]
 
