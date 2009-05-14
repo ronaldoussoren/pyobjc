@@ -2,7 +2,7 @@
 Check if we manage retainCounts correctly.
 """
 from PyObjCTools.TestSupport import *
-import objc
+import objc, gc
 from objc.test.fnd import *
 
 LeaksDel = 0
@@ -102,6 +102,7 @@ class TestRetains(TestCase):
         self.assertEquals(LeaksDel, 0)
         del o
         del pool
+        gc.collect()
         self.assertEquals(LeaksDel, 1)
 
 

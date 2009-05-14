@@ -1,6 +1,42 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
+#import <Foundation/NSObjCRuntime.h>
+
+
+#ifndef CGFLOAT_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no CFFloat available???"
+#endif
+
+typedef float CGFloat;
+#define CGFLOAT_MIN FLT_MIN
+#define CGFLOAT_MAX FLT_MAX
+#define CGFLOAT_IS_DOUBLE 0
+#define CGFLOAT_DEFINED
+
+#endif /* CGFLOAT_DEFINED */
+
+
+#ifndef NSINTEGER_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no NSINTEGER available???"
+#endif
+
+typedef int NSInteger;
+typedef unsigned int NSUInteger;
+
+#define NSIntegerMax    LONG_MAX
+#define NSIntegerMin    LONG_MIN
+#define NSUIntegerMax   ULONG_MAX
+
+#define NSINTEGER_DEFINED
+
+#endif
+
+
 /* 
  * Compatibilty definitions 
  */
@@ -63,31 +99,6 @@ typedef int Py_ssize_t;
 #ifndef Py_ARG_SIZE_T
 #define Py_ARG_SIZE_T "n"
 #endif
-
-#endif
-
-
-/* NSInteger and friends are available on Leopard and later, define them here
- * for compatibility with earlier versions.
- *
- * Note that the guard definition is the same as used by Leopard itself.
- */
-#import <Foundation/NSObjCRuntime.h>
-
-#ifndef NSINTEGER_DEFINED
-
-#ifdef __LP64__
-# error "Huh? 64-bit but no NSINTEGER available???"
-#endif
-
-typedef int NSInteger;
-typedef unsigned int NSUInteger;
-
-#define NSIntegerMax    LONG_MAX
-#define NSIntegerMin    LONG_MIN
-#define NSUIntegerMax   ULONG_MAX
-
-#define NSINTEGER_DEFINED
 
 #endif
 
