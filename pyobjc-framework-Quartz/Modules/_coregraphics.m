@@ -6,6 +6,7 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
+#ifndef OS_TIGER
 static PyObject*
 m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), 
 		PyObject* args)
@@ -121,6 +122,7 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)),
 	CFRelease(windowList);
 	return result;
 }
+
 
 
 static CFArrayRef
@@ -248,6 +250,7 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
 	CFRelease(image);
 	return rv;
 }
+#endif /* !OS_TIGER */
 
 static PyObject*
 m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), 
@@ -333,6 +336,7 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
 
 
 static PyMethodDef m_methods[] = {
+#ifndef OS_TIGER
 	{
 		"CGFontCopyTableTags",
 		(PyCFunction)m_CGFontCopyTableTags,
@@ -357,6 +361,7 @@ static PyMethodDef m_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
+#endif /* !OS_TIGER */
 	{
 		"CGBitmapContextCreate",
 		(PyCFunction)m_CGBitmapContextCreate,
