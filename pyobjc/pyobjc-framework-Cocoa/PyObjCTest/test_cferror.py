@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
-from Foundation import NSString, NSCFError
+from Foundation import *
 
 
 class TestError (TestCase):

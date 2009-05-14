@@ -68,7 +68,7 @@ struct function_map {
 	{"NSSwapShort", (FUNCTION)&NSSwapShort },
 	{"NSWidth", (FUNCTION)&NSWidth },
 
-#ifndef BUILD_TIGER
+#ifndef NO_OBJC2_RUNTIME
 	{"NSMakeCollectable", (FUNCTION)&NSMakeCollectable },
 	{"NSPointFromCGPoint", (FUNCTION)&NSPointFromCGPoint },
 	{"NSPointToCGPoint", (FUNCTION)&NSPointToCGPoint },
