@@ -798,7 +798,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 PyObject* 
 PyObjCObject_New(id objc_object, int flags, int retain)
 {
-	Class cls = [objc_object class];
+	Class cls = object_getClass(objc_object);
 	PyTypeObject* cls_type;
 	PyObject*     res;
 
