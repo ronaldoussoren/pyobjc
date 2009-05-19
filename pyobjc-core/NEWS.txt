@@ -7,6 +7,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- Fix crash when using the animotor proxy feature of CoreAnimation. That is,
+  the following code now works::
+
+	app = NSApplication.sharedApplication()
+	window = NSWindow.alloc().init()
+	anim = window.animator()
+	anim.setAlphaValue_(1.0)
+
+
 - Improve handling of non-methods in objc.Category:
 
   * The docstring of a category is now ignored
