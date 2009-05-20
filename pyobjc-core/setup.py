@@ -84,18 +84,54 @@ if sys.platform != 'darwin':
     print ""
     raise SystemExit("ObjC runtime not found")
 
+from distutils.sysconfig import get_config_var
+cc = get_config_var('CC')
+
+CFLAGS=[]
+
+if cc == 'XXXgcc':
+    # This is experimental code that tries to avoid refering to files in 
+    # /Library/Frameworks or /usr/local.
+    # 
+    # NOTE: This is not enabled by default because the linker will still look
+    # in /usr/local/lib and /Library/Frameworks...
+
+    fp = os.popen('cpp -v </dev/null 2>&1', 'r')
+    dirs = []
+    started = False
+    for ln in fp:
+        if not started:
+            if ln.startswith('#include <...> search starts here:'):
+                started=True
+            continue
+
+        else:
+            ln = ln.strip()
+            if not ln.startswith('/'):
+                break
+
+            if ln == '/usr/local/include':
+                continue
+
+            elif ln == '/Library/Frameworks':
+                continue
+
+            if ln.endswith('(framework directory)'):
+                dirs.append(('framework', ln.split()[0]))
+            else:
+                dirs.append(('system', ln))
+
+    if dirs:
+        CFLAGS.append('-nostdinc')
+        for k, d in dirs:
+            CFLAGS.append('-i%s%s'%(k,d))
 
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
-CFLAGS=[
+CFLAGS.extend([
 
 # The following flags are an attempt at getting rid of /usr/local
 # in the compiler search path.
-#    "-nostdinc",
-#    "-isystem/usr/include",
-#    "-isystem/usr/lib/gcc/i686-apple-darwin9/4.0.1/include",
-#    "-iframework/System/Library/Frameworks",
-
     "-DPyObjC_STRICT_DEBUGGING",
     "-DMACOSX",
     "-no-cpp-precomp",
@@ -143,9 +179,10 @@ CFLAGS=[
 
     # g5 optimized
     #"-fast", "-fPIC",
-    ]
+    ])
 
 
+BASE_LDFLAGS = []
 
 if not os.path.exists('/usr/include/objc/runtime.h'):
     CFLAGS.append('-DNO_OBJC2_RUNTIME')
@@ -154,6 +191,8 @@ else:
     # Force compilation with the local SDK, compilation of PyObC will result in
     # a binary that runs on other releases of the OS without using a particular SDK.
     CFLAGS.extend(['-isysroot', '/'])
+    BASE_LDFLAGS.extend(['-isysroot', '/'])
+
 
 
 
@@ -173,7 +212,6 @@ CFLAGS.extend(xml2config('--cflags'))
 OBJC_LDFLAGS.extend(xml2config('--libs'))
 
 
-BASE_LDFLAGS = []
 
 CFLAGS.append('-Ibuild/codegen/')
 

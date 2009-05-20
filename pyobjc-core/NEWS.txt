@@ -7,8 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
-- Fix crash when using the animotor proxy feature of CoreAnimation. That is,
-  the following code now works::
+- BUGFIX: Enable building from source with the Python.org binary distribution.
+
+- BUGFIX: Fix crash when using the animotor proxy feature of CoreAnimation. 
+  That is, the following code now works::
 
 	app = NSApplication.sharedApplication()
 	window = NSWindow.alloc().init()
