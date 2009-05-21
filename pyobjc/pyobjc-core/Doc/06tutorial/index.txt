@@ -2,6 +2,8 @@
 Creating your first PyObjC application.
 =======================================
 
+WARNING: This tutorial is not valid for the current edition of PyObjC.
+
 In this tutorial you will learn how to create your first Python Cocoa
 application: a simple dialog that allows you to convert amounts of money from
 one currency to another.  Definitely easier to do with a calculator, but in the
@@ -50,12 +52,16 @@ Getting Started
    
 4. Create the skeleton Python script by running the ``nibclassbuilder`` script.
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for
-   you.  Invoke it as follows (from the ``src`` directory)::
+   you.  Invoke it as follows (from the ``src`` directory):
+
+   .. sourcecode:: sh
    
        $ python -c "import PyObjCScripts.nibclassbuilder" MainMenu.nib > CurrencyConverter.py
                
    Depending on your installation, the ``nibclassbuilder`` script may be on your ``$PATH``.
-   If so, it can be invoked as such::
+   If so, it can be invoked as such:
+
+   .. sourcecode:: sh
 
        $ nibclassbuilder MainMenu.nib > CurrencyConverter.py
    
@@ -67,7 +73,10 @@ Testing the user interface
 --------------------------
 
 5. Now we need to create an build script for CurrencyConverter.  To do this,
-   create a file named ``setup.py`` with the following contents::
+   create a file named ``setup.py`` with the following contents:
+
+   .. sourcecode:: python
+      :linenos:
    
         from distutils.core import setup
         import py2app
@@ -82,7 +91,9 @@ Testing the user interface
 .. _step5-setup.py: step5-setup.py.html
    
 6. Run the setup script to create a temporary application bundle for
-   development::
+   development:
+
+   .. sourcecode:: sh
 
         $ python setup.py py2app -A
       
@@ -100,13 +111,17 @@ Testing the user interface
    - double-click ``dist/CurrencyConverter`` from the Finder
      (you won't see the .app extension)
 
-   - open it from the terminal with::
+   - open it from the terminal with:
+
+     .. sourcecode:: sh
    
-       $ open dist/CurrencyConverter.app
+        $ open dist/CurrencyConverter.app
        
    - run it directly from the Terminal, as::
+
+     .. sourcecode:: sh
    
-       $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
+        $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
        
    The last method is typically the best to use for development: it leaves
    stdout and stderr connected to your terminal session so you can see what
@@ -131,13 +146,17 @@ Writing the code
     section "Implementing Currency Converter's Classes".  To translate this
     Objective C code to Python syntax, we will need to do some name mangling of
     the selectors.  See *An introduction to PyObjC* for the details, but the
-    short is that::
+    short is that:
+
+    .. sourcecode:: objective-c
 
         [anObject modifyArg: arg1 andAnother: arg2]
 
    translates into the following Python code, by replacing the colons in the
    selector with underscores, and passing the arguments as you would with a
-   normal Python method call::
+   normal Python method call:
+
+   .. sourcecode:: python
 
         anObject.modifyArg_andAnother_(arg1, arg2)
    
@@ -192,7 +211,9 @@ Extending the functionality
     what sort of spectacular crash we get.  Alas, nothing spectacular about it:
     when the NIB is loaded the Cocoa runtime system tries to make the
     connection, notices that we have no ``invertRate_()`` method in our
-    ``ConverterController`` class and it gives an error message::
+    ``ConverterController`` class and it gives an error message:
+
+    .. sourcecode:: sh
        
        $ ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter 
        2004-12-09 03:29:09.957 CurrencyConverter[4454] Could not connect the action 
@@ -214,7 +235,9 @@ Debugging
     offering the choice of continuing or quitting. 
     
     To debug this application with pdb, start the application with the
-    following command line::
+    following command line:
+
+    .. sourcecode:: sh
 
         $ env USE_PDB=1 ./dist/CurrencyConverter.app/Contents/MacOS/CurrencyConverter
 
@@ -234,7 +257,9 @@ Your application is finished, and you want to run it on other computers, or
 simply just move it to the ``Applications`` folder (or anywhere else) and
 insulate it from the original source code.
 
-This can be done with the following steps from the ``src`` directory::
+This can be done with the following steps from the ``src`` directory:
+
+ .. sourcecode: sh
 
     $ rm -rf dist
     $ python setup.py py2app

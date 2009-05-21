@@ -1,1 +1,0 @@
-from bdist_mpkg.cmd_bdist_mpkg import bdist_mpkg

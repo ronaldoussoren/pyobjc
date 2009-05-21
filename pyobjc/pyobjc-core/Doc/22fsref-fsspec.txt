@@ -9,7 +9,9 @@ Type ``objc.FSRef``
 
 This type represents an opaque ``FSRef`` structure.
 
-New instances are created using the ``from_pathname`` method::
+New instances are created using the ``from_pathname`` method:
+
+ .. sourcecode: pycon
 
    >>> ref = objc.FSRef.from_pathname("/Libray")
    >>> isinstance(ref, objc.FSRef)
@@ -39,7 +41,7 @@ of functions that have an ``FSRef`` structure as one of their
 arguments.
 
 Type ``objc.FSSpec``
--------------------
+--------------------
 
 This type represents an opaque ``FSSpec`` structure. It is not possible
 to create ``FSSpec`` instances in Python code.

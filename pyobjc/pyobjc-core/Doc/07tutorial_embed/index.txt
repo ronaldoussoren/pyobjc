@@ -34,9 +34,11 @@ and fill in the fields for you.
 Follow these steps:
 
 1. Make a copy of ``/Developer/Examples/AppKit/SimpleComboBox`` to work on.
-   Let's call this ``SimpleComboBoxPlus``::
+   Let's call this ``SimpleComboBoxPlus``:
+
+   .. sourcecode: sh
    
-    $ cp -R /Developer/Examples/AppKit/SimpleComboBox SimpleComboBoxPlus
+      $ cp -R /Developer/Examples/AppKit/SimpleComboBox SimpleComboBoxPlus
 
   From this point on, all shell commands take place from this
   ``SimpleComboBoxPlus`` folder.
@@ -61,7 +63,10 @@ Follow these steps:
     simply copy ``ITunesCommunication_1.py`` to ``ITunesCommunication.py``.
 
 8. Now we need to create the build script for our plugin, create a file named
-   ``setup.py`` with the following contents::
+   ``setup.py`` with the following contents:
+
+
+   .. sourcecode:: python
 
         from distutils.core import setup
         import py2app
@@ -72,7 +77,9 @@ Follow these steps:
 
    You may also copy this file from ``setup.py``. 
 
-9. Run the setup script to create a temporary plugin bundle for development::
+9. Run the setup script to create a temporary plugin bundle for development:
+
+   .. sourcecode: sh
 
         $ python setup.py py2app -A
 
@@ -91,6 +98,8 @@ Follow these steps:
 
 11. Open ``main.m``, it is in the "Other Sources" folder in your Xcode
     project, and change the main(...) function to the following::
+
+    .. sourcecode:: objective-c
 
         int main(int argc, const char *argv[]) {
             NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -120,7 +129,9 @@ Follow these steps:
     standard way to generate this package (start the application, ask it for
     its terminology) does not work, so we have to actually look into the
     bowels of ``iTunes.app``.  This leads to the following hefty command line
-    which you should run in the ``SimpleComboBoxPlus`` directory::
+    which you should run in the ``SimpleComboBoxPlus`` directory:
+
+    .. sourcecode:: sh
     
         $ cd SimpleComboBoxPlus
         $ pythonw -c "from gensuitemodule import main;main()" \
@@ -136,7 +147,9 @@ Follow these steps:
     active.  All that is left as an exercise to the reader.
 
 16. To make this application redistributable, perform the following commands
-    to make the plugin redistributable::
+    to make the plugin redistributable:
+
+    .. sourcecode:: sh
 
         $ rm -rf dist
         $ python setup.py py2app

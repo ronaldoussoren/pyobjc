@@ -26,30 +26,36 @@ Version 2.2 (...)
 - BUGFIX: Enable building from source with the Python.org binary distribution.
 
 - BUGFIX: Fix crash when using the animotor proxy feature of CoreAnimation. 
-  That is, the following code now works::
+  That is, the following code now works:
 
-	app = NSApplication.sharedApplication()
-	window = NSWindow.alloc().init()
-	anim = window.animator()
-	anim.setAlphaValue_(1.0)
+  .. sourcecode:: python
+     :linenos:
+
+      app = NSApplication.sharedApplication()
+      window = NSWindow.alloc().init()
+      anim = window.animator()
+      anim.setAlphaValue_(1.0)
 
 
 - Improve handling of non-methods in objc.Category:
 
   * The docstring of a category is now ignored
 
-  * You'll get an explict error exception when trying to add ``ivar``s to
+  * You'll get an explict error exception when trying to add and ``ivar`` to
     a class
 
-  * It's now possible to add class attributes in a category::
+  * It's now possible to add class attributes in a category:
 
-       class NSObject (objc.Category(NSObject)):
-           aClassDefault = [ 1, 2, 3 ]
+    .. sourcecode:: python
+       :linenos:
 
-	   @classmethod
-	   def getDefault(cls):
-	       return cls.aClassDefault
-
+          class NSObject (objc.Category(NSObject)):
+              aClassDefault = [ 1, 2, 3 ]
+           
+              @classmethod
+              def getDefault(cls):
+                  return cls.aClassDefault
+	
 
 
 - Fixed support for ``FSRef`` and ``FSSpec`` structures. 
@@ -87,17 +93,23 @@ Version 2.2 (...)
   instead. The ``objc.context`` registry allows you to get a context 
   integer for an arbitrary Python object, and retrieve that later on.
 
-  To get the context integer for a Python object::
-      
-      ctx = objc.context.register(myValue)
+  To get the context integer for a Python object:
+     
+  .. sourcecode:: python
 
-  To unregister the object when you no longer need the context integer::
+        ctx = objc.context.register(myValue)
 
-      objc.context.unregister(myValue)
+  To unregister the object when you no longer need the context integer:
 
-  To retrieve the Python object given a context integer::
+  .. sourcecode:: python
 
-      myValue = objc.context.get(ctx)
+        objc.context.unregister(myValue)
+
+  To retrieve the Python object given a context integer:
+
+  .. sourcecode:: python
+
+        myValue = objc.context.get(ctx)
 
 
   NOTE: This API is particularly handy when using Key-Value Observing, where
@@ -127,8 +139,6 @@ Version 2.2 (...)
   instances before using them from Objective-C (such as using an 
   ``NSDateFormatter``)
 
-  using an ``NSKeyedArchiver``. 
-
 - Objective-C classes that support the ``NSCopying`` protocol can now be
   copied using ``copy.copy`` as well.
 
@@ -144,13 +154,16 @@ Version 2.2 (...)
 - Pure Python objects now support the ``NSCopying`` protocol.
 
 - A new decorator: ``objc.namedselector`` for overriding the Objective-C
-  selector. Usage::
+  selector. Usage:
 
-  	class MyObject (NSObject):
+  .. sourcecode:: python
+     :linenos:
 
-	    @objc.namedselector("foo:bar:")
-	    def foobar(self, foo, bar):
-	       pass
+     class MyObject (NSObject):
+     
+         @objc.namedselector("foo:bar:")
+         def foobar(self, foo, bar):
+             pass
 
 - A number of new type signature values were added. These are not present
   in the Objective-C runtime, but are used to more precisely describe the
@@ -158,19 +171,19 @@ Version 2.2 (...)
 
   The new values are:
 
-  * _C_UNICHAR:   A "UniChar" value in Objective-C
+  * ``_C_UNICHAR``:   A "UniChar" value in Objective-C
 
-  * _C_NSBOOL:    A "BOOL" value in Objective-C
+  * ``_C_NSBOOL``:    A "BOOL" value in Objective-C
 
-  * _C_CHAR_AS_INT: A "char" in Objective-C that is used as a number
+  * ``_C_CHAR_AS_INT``: A "char" in Objective-C that is used as a number
 
-  * _C_CHAR_AS_TEXT: A "char" in Objective-C that is used as a character
+  * ``_C_CHAR_AS_TEXT``: A "char" in Objective-C that is used as a character
 
   PyObjC will automaticly translate these values into the correct Objective-C
   type encoding when communicating with the Objective-C runtime, making this
   change transparent to anyone but Python users.
 
-  NOTE: _C_CHR is of course still supported, with the same semi-schizofrenic
+  NOTE: ``_C_CHR`` is of course still supported, with the same semi-schizofrenic
   behaviour as always.
 
   NOTE2: The non-standard metadata extensions we used before to indicate
@@ -216,7 +229,10 @@ Version 2.2 (...)
   unwanted side-effect of how CoreFoundation types are wrapped.
 
 - BUGFIX: The docstring for newly defined methods is no longer hidden
-  by PyObjC. That is, given this code::
+  by PyObjC. That is, given this code:
+
+  .. sourcecode:: python
+     :linenos:
 
   	class MyObject (NSObject):
 	    def doit(self):
@@ -227,7 +243,9 @@ Version 2.2 (...)
   versions of PyObjC the docstring was ``None``.
 
 - BUGFIX: Fixed calling and implementation methods where one or more 
-  of the arguments are defined as arrays, like this::
+  of the arguments are defined as arrays, like this:
+
+  .. sourcecode:: objective-c
 
   	-(void)fooCallback:(NSRect[4])rects;
 
@@ -258,16 +276,23 @@ Version 2.0.1 (included with OSX 10.5.2)
   releases the '@synchronized' mutex for an object, and can also be used
   manually.
 
-  That is (as context manager)::
+  That is (as context manager):
+
+  .. sourcecode:: python
+     :linenos:
+
   	from __future__ import with_statement
-
+        
 	obj = NSObject.new()
-
+        
 	with objc.object_lock(obj):
-	    # Perform work while owning the @synchronize lock
-	    pass
+	   # Perform work while owning the @synchronize lock
+	   pass
 
-   or (manually)::
+  or (manually):
+
+  .. sourcecode:: python
+     :linenos:
 
    	obj = NSObject.new()
 	mutex = objc.object_lock(obj)
@@ -278,8 +303,8 @@ Version 2.0.1 (included with OSX 10.5.2)
 	finally:
 	    mutex.unlock()
 
-   Note that the first version is slightly saver (see the documentation
-   for with-statements for the details).
+  Note that the first version is slightly saver (see the documentation
+  for with-statements for the details).
 
 Version 2.0 (MacOS X 10.5.0)
 ----------------------------
@@ -318,18 +343,24 @@ Version 2.0 (MacOS X 10.5.0)
 
 - It is now conveniently possible to create instance variables with
   a specific type (e.g. without manually making up a encoded type
-  string)::
+  string):
 
-  	class MyObject (NSObject):
-	    bounds = objc.ivar.NSRect()
-	    done = objc.ivar.bool()
+  .. sourcecode:: python
+     :linenos:
+
+      class MyObject (NSObject):
+          bounds = objc.ivar.NSRect()
+          done = objc.ivar.bool()
 	
 - Objective-C metaclasses are modelled as Python metaclasses.  This brings
-  a major improvement: class methods "just work"(TM)::
+  a major improvement: class methods "just work"(TM):
+
+  .. sourcecode:: python
+     :linenos:
 
      o = NSObject.alloc().init()
      o.description()
-
+     
      NSObject.description()
 
   In earlier versions of PyObjC the second call would fail because 
@@ -362,13 +393,16 @@ Version 2.0 (MacOS X 10.5.0)
    for supercalls for Objective-C class methods.
 
 - It is now easily possible to tell PyObjC that a Python type should be
-  treated like a builtin sequence type::
+  treated like a builtin sequence type:
+
+  .. sourcecode:: python
+     :linenos:
 
   	import UserList, objc
-
+	
 	class MyClass (UserList.UserList):
-		pass
-
+	    pass
+	
 	objc.registerListType(MyClass)
 
 - And likewise for mapping types using ``objc.registerMappingType``.
@@ -380,8 +414,10 @@ Version 2.0 (MacOS X 10.5.0)
 - The unittests can now use the leaks(1) command to check for memory leaks. This
   slows testing down significantly and is therefore off by default. Enable by
   setting ``PYOBJC_WITH_LEAKS`` to a value in the shell environment before running
-  the tests::
-  
+  the tests:
+ 
+  .. sourcecode:: sh
+
        $ PYOBJC_WITH_LEAKS=1 python setup.py test
 
    NOTE: the actual value is ignored, as long as there is a value.
@@ -389,11 +425,14 @@ Version 2.0 (MacOS X 10.5.0)
 - (BUGFIX): PyObjC was leaking memory when doing scans of the Objective-C method tables
 
 - (BUGFIX): The code below now raises an error, as it should have done in previous versions but never 
-  did::
+  did:
+
+  .. sourcecode:: python
+     :linenos:
 
        class MyObject (object):
-          def updateDescription(self):
-	     self.description = 42
+           def updateDescription(self):
+               self.description = 42
 
 
 - PyObjC has been split into several smaller packages: ``pyobjc-core`` contains
@@ -402,14 +441,20 @@ Version 2.0 (MacOS X 10.5.0)
 - Objective-C objects now have an implicit attribute named ``_`` which can
   be used a shortcut for Key-Value-Coding.
 
-  The code fragment below::
+  The code fragment below:
+
+  .. sourcecode:: python
+     :linenos:
 
   	o = <Some Objective-C Object>
 	print o._.myKey
 	o._.myKey = 44
 
-  is equivalent to::
+  is equivalent to:
         
+  .. sourcecode:: python
+     :linenos:
+
 	print o.valueForKey_('myKey')
 	o.setValue_forKey_(44, 'myKey')
 
@@ -445,7 +490,9 @@ Version 2.0 (MacOS X 10.5.0)
   will still convert MacPython CF-wrappers to the right native type.
 
   Another backward compatible change: ``registerCFSignature`` has a different
-  signature::
+  signature:
+
+  .. sourcecode:: python
 
       registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type
 
@@ -454,7 +501,10 @@ Version 2.0 (MacOS X 10.5.0)
 - This version introduces generic support for callback functions. The metadata
   metioned before contains information about the signature for callback 
   functions, the decorator ``callbackFor`` converts a plain function to 
-  one that can be used as a callback::
+  one that can be used as a callback:
+
+  .. sourcecode:: python
+     :linenos:
 
   	@objc.callbackFor(NSArray.sortedArrayUsingFunction_andContext_)
 	def compare(left, right, context):
@@ -472,7 +522,9 @@ Version 2.0 (MacOS X 10.5.0)
 - The decorator ``selectorFor`` can be used to ensure that a method has the 
   right signature to be used as the callback method for a specific method.
 
-  Usage::
+  Usage:
+
+  .. sourcecode:: python
 
  	@objc.selectorFor(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_)
 	def sheetDidEnd_returnCode_contextInfo_(self, sheet, returnCode, info):
@@ -552,14 +604,18 @@ Version 2.0 (MacOS X 10.5.0)
   There are two functions for adding new convenience methods: 
 
   * ``addConvenienceForSelector`` adds a list of methods to a class when that
-    class has the specified selector::
+    class has the specified selector:
+
+  .. sourcecode:: python
 
        addConvenienceForSelector('hash', [
        		('__hash__', lambda self: self.hash()),
 	])
 
   * ``addConvenienceForClass`` adds a list of methods to the class with the
-     specified name::
+     specified name:
+
+  .. sourcecode:: python
 
        addConvenienceForSelector('NSObject', [
        		('dummy', lambda self: 42 ),
@@ -750,11 +806,13 @@ Version 1.3.5 (2005-05-18)
   object, among other things.
   
 - New objc.signature decorator that allows easier specification of
-  objc.selector wrappers for functions when using Python 2.4::
+  objc.selector wrappers for functions when using Python 2.4:
 
-    @objc.signature('i@:if')
-    def methodWithX_andY_(self, x, y):
-        return 0
+  .. sourcecode:: python
+
+     @objc.signature('i@:if')
+     def methodWithX_andY_(self, x, y):
+         return 0
 
 - ``PyObjCTools.KeyValueCoding.getKeyPath`` now supports all of the
   Array Operators supported by Mac OS X 10.4.
@@ -901,17 +959,21 @@ Version 1.3 (2005-03-31)
   that the class directly claims to conform to.
 
 - PyObjC classes can now declare that they implement formal protocols,
-  for example::
+  for example:
 
-    class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
-        # implementation
-        pass
+  .. sourcecode:: python
 
-  It is also possible to define new protocols::
+     class MyLockingClass(NSObject, objc.protocolNamed('NSLocking')):
+         # implementation
+         pass
 
-     MyProtocol = objc.formal_protocol("MyProtocol", None, [
-     	selector(None, selector='mymethod', signature='v@:'),
-     ])
+  It is also possible to define new protocols:
+
+  .. sourcecode:: python
+
+       MyProtocol = objc.formal_protocol("MyProtocol", None, [
+       	selector(None, selector='mymethod', signature='v@:'),
+       ])
 
   All formal protocols are instances of ``objc.formal_protocol``.
         
@@ -1123,7 +1185,9 @@ Version 1.2 (2004-12-29)
 - objc.runtime will now raise AttributeError instead of objc.nosuchclass_error
   when a class is not found.
 
-- objc.Category can be used to define categories on existing classes::
+- objc.Category can be used to define categories on existing classes:
+
+  .. sourcecode:: python
 
     class NSObject (objc.Category(NSObject)):
         def myMethod(self):
@@ -1230,19 +1294,20 @@ Version 1.1b1 (2004-02-20)
 - Fix installer for Panther: the 1.1a0 version didn't behave correctly
 
 - There is now an easier way to define methods that conform to the expectations
-  of Cocoa bindings::
+  of Cocoa bindings:
 
-    class MyClass (NSObject):
+  .. sourcecode:: python
 
+     class MyClass (NSObject):
+
+	@objc.accessor
         def setSomething_(self, value):
             pass
 
-        setSomething_ = objc.accessor(setSomething_)
-
+	@objc.accessor
         def something(self):
             return "something!"
 
-        something = objc.accessor(something)
 
   It is not necessary to use ``objc.accessor`` when overriding an existing 
   accessor method.
