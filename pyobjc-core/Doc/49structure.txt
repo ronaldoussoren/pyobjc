@@ -51,37 +51,14 @@ Examples/
   Example scripts and applets.
 
 Lib/
-  The pure Python parts of the packages that comprise PyObjC.  Currently
-  contains the packages 'objc', 'PyObjCScripts', 'PyObjCTools' and the
-  semi-automatically generated wrappers for the 'AddressBook',
-  'AppKit', 'ExceptionHandling', 'Foundation', 'InterfaceBuilder', 'Message',
-  'PreferencePanes', 'ScreenSaver', 'SecurityInterface' and 'WebKit'
-  frameworks.
+  The pure Python parts of the packages that comprise PyObjC.  
 
 Modules/
   Extension modules related to the packages in 'Lib'.
 
-Scripts/
-  Scripts used during building and/or development of PyObjC.
-
-Installer Package/
-  Resources used for building the Apple Installer packages.
-
-Xcode/
-  Xcode templates for PyObjC development.
-
 libffi-src/
   A local copy of libffi, the Foreign Function Interface library used by
   PyObjC.
-
-setup-lib/
-  Modules used by setup.py for building and distributing PyObjC.
-
-source-deps/
-  Local copies of Python packages and modules used by PyObjC that are not
-  expected to be found in the minimum supported version of Python.  These
-  are not automatically installed by setup.py, but some may be included in
-  a bdist_mpkg installer (currently, just py2app).
 
 Reference counts
 ----------------
@@ -123,12 +100,17 @@ of ``NSString``, so its results might be surprising if you are using non-ASCII
 text.  It is recommended that you use ``unicode`` whenever possible.  In order
 to help you determine where you are not using ``unicode``, it is possible
 to trigger an ``objc.PyObjCStrBridgeWarning`` warning whenever a ``str``
-instance crosses the bridge::
+instance crosses the bridge:
+
+
+ .. sourcecode:: python
 
       import objc
       objc.setStrBridgeEnabled(False)
 
-To promote these to an exception, do the following::
+To promote these to an exception, do the following:
+
+ .. sourcecode:: python
 
       import objc
       import warnings

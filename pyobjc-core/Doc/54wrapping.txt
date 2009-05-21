@@ -17,12 +17,14 @@ C code for specific methods.
 The basics
 ----------
 
-The code for loading a framework and exporting its classes is pretty simple::
+The code for loading a framework and exporting its classes is pretty simple:
 
-   import objc
-   objc.loadBundle("MyFramework", globals(), 
-      bundle_path=objc.pathForFramework(u'/path/to/MyFramework.framework'))
-   del objc
+ .. sourcecode: python
+
+    import objc
+    objc.loadBundle("MyFramework", globals(), 
+       bundle_path=objc.pathForFramework(u'/path/to/MyFramework.framework'))
+    del objc
 
 In general you should not load frameworks this way, but you should write a
 package or module to do this for you (e.g. place this code in
@@ -72,7 +74,9 @@ Pass-by-reference arguments can be 'in' (data passed into the function),
 'out' (data is returned from the function) or 'inout' (data is passed into 
 and then returned from  the function). 
 
-Given the following class interface::
+Given the following class interface:
+
+ .. sourcecode: objective-c
 
    @interface ClassName {}
 
@@ -91,7 +95,9 @@ for the list of valid encoding characters for the Apple Objective-C runtime.
 Let's say the first argument is an output parameter.  Output parameters are 
 denoted in the signature string using the character 'o' before the actual
 argument signature.  The 'correct' signature for method is therefore 'v@:o^@@'.
-The following code tells the bridge about this better method signature::
+The following code tells the bridge about this better method signature:
+
+ .. sourcecode: python
 
    import objc
    objc.setSignatureForSelector("ClassName", "selector:withArguments:",
@@ -105,6 +111,9 @@ To annotate method signatures you'll have to add a single character before all
 - input parameter: n
 
 - input-output parameter: N
+
+***NOTE:*** The bridge currently supports two other ways to describe metadata,
+which aren't properly documented at the moment.
 
 special wrappers
 ................
@@ -131,5 +140,3 @@ If the framework defines any (informal) protocols you should add
 ``objc.informal_protocol`` objects for those protocols to your module.  These
 can be defined in a submodule, as long as you arrange for that module to be
 loaded whenever someone imports your package.
-
-See ``Lib/Foundation/protocols.py`` for examples of protocol definitions.

@@ -47,13 +47,17 @@ keyword arguments.  Specificlaly, Objective-C message dispatch uses
 positional arguments, but parts of the message name (called "selector"
 in Objective-C terminology) are interleaved with the arguments.
 
-An Objective-C message looks like this::
+An Objective-C message looks like this:
 
-    [someObject doSomething:arg1 withSomethingElse:arg2];
+  .. sourcecode:: objective-c
 
-The selector (message name) for the above snippet is this (note the colons)::
+      [someObject doSomething:arg1 withSomethingElse:arg2];
 
-    doSomething:withSomethingElse:
+The selector (message name) for the above snippet is this (note the colons):
+
+  .. sourcecode:: objective-c
+
+      doSomething:withSomethingElse:
 
 In order to have a lossless and unambiguous translation between Objective-C
 messages and Python methods, the Python method name equivalent is simply
@@ -62,22 +66,28 @@ Objective-C selector is a placeholder for an argument, the number of
 underscores in the PyObjC-ified method name is the number of arguments
 that should be given.
 
-The PyObjC translation of the above selector is (note the underscores)::
+The PyObjC translation of the above selector is (note the underscores):
 
-    doSomething_withSomethingElse_
+  .. sourcecode:: python
 
-The message dispatch, translated to PyObjC, looks like this::
+      doSomething_withSomethingElse_
 
-    someObject.doSomething_withSomethingElse_(arg1, arg2)
+The message dispatch, translated to PyObjC, looks like this:
+
+  .. sourcecode:: python
+
+      someObject.doSomething_withSomethingElse_(arg1, arg2)
 
 *Methods that take one argument will have a trailing underscore*.
 
 It may take a little while to get used to, but PyObjC does not ever
 rename selectors.  The trailing underscore will seem strange at first,
-especially for cases like this::
+especially for cases like this:
 
-    # note the trailing underscore
-    someObject.setValue_(aValue)
+  .. sourcecode:: python
+
+      # note the trailing underscore
+      someObject.setValue_(aValue)
 
 There are a few additional rules regarding message dispatch, see the 
 `Overview of the bridge`_ for the complete rundown.
@@ -99,13 +109,17 @@ initialization:
 In Objective-C, the convention is for allocation to be performed by a class
 method called ``alloc``, and initialization is done with method
 *beginning with* the word ``init``.  For example, here is the syntax for
-instantiating an ``NSObject``::
+instantiating an ``NSObject``:
 
-    myObject = NSObject.alloc().init()
+  .. sourcecode:: python
 
-And here is an example for creating an ``NSData`` instance given a few bytes::
+     myObject = NSObject.alloc().init()
 
-    myData = NSData.alloc().initWithBytes_length_('the bytes', 9)
+And here is an example for creating an ``NSData`` instance given a few bytes:
+
+  .. sourcecode:: python
+
+     myData = NSData.alloc().initWithBytes_length_('the bytes', 9)
 
 You must also follow this convention when subclassing Objective-C classes.
 When initializing, an object must always (directly or indirectly) call the
@@ -114,9 +128,12 @@ designated initializer of its ``super``.  The designated initializer is the
 The designated initializer for ``NSObject`` is ``init``.  To find the
 designated initializer for other classes, consult the documentation for that
 class.  Here is an example of an ``NSObject`` subclass with a customized
-initialization phase::
+initialization phase:
 
-    class MyClass(NSObject):
+  .. sourcecode:: python
+     :linenos:
+
+     class MyClass(NSObject):
 
         def init(self):
             """
@@ -134,7 +151,8 @@ initialization phase::
             # because they are allowed to return any object!
             return self
 
-    class MyOtherClass(MyClass):
+
+     class MyOtherClass(MyClass):
 
         def initWithOtherVariable_(self, otherVariable):
             """
@@ -146,11 +164,14 @@ initialization phase::
             self.otherVariable = otherVariable
             return self
 
-    myInstance = MyClass.alloc().init()
-    myOtherInstance = MyOtherClass.alloc().initWithOtherVariable_(20)
+     myInstance = MyClass.alloc().init()
+     myOtherInstance = MyOtherClass.alloc().initWithOtherVariable_(20)
 
 Many Objective-C classes provide class methods that perform two-phase
-instantiation for you in one step.  Several examples of this are::
+instantiation for you in one step.  Several examples of this are:
+
+ .. sourcecode:: python
+    :linenos:
 
     # This is equivalent to:
     #
@@ -176,7 +197,10 @@ Objective-C uses accessors everywhere
 Unlike Python, Objective-C convention says to use accessors rather than
 directly accessing instance variables of other objects.  This means
 that in order to access an instance variable ``value`` of an object
-``valueContainer`` you will have to use the following syntax::
+``valueContainer`` you will have to use the following syntax:
+
+ .. sourcecode:: python
+    :linenos:
 
     # Getting
     #
@@ -193,7 +217,10 @@ that in order to access an instance variable ``value`` of an object
 When writing your own classes from Python, this is a bit harder since
 Python only has one namespace for all attributes, even methods.  If you
 choose to implement accessors from Python, then you will have to name
-the instance variable something else::
+the instance variable something else:
+
+ .. sourcecode:: python
+    :linenos:
 
     class MyValueHolder(NSObject):
 
@@ -248,11 +275,15 @@ recognized as blocks of code between ``@interface`` and ``@end``, and similarly
 the implementation is between ``@implementation`` and ``@end``.  An expression
 enclosed in brackets in Objective-C is called a message, and is the equivalent
 to an instance method invocation in Python.  For example, this Objective-C
-code::
+code:
+
+ .. sourcecode:: objective-c
 
     [aMutableArray addObject:@"constant string"];
 
-Is equivalent in intent to the following in Python::
+Is equivalent in intent to the following in Python:
+
+ .. sourcecode:: python
 
     aList.append(u"constant string")
 
@@ -266,7 +297,9 @@ deceptively similar to keyword arguments in Python, but they are actually
 quite different.  Objective-C messages can not have default arguments, and all
 arguments are passed in a specific order.  The components of a selector may not
 be reordered.  Syntactically, one argument must be interleaved at every colon in
-the selector.  The message::
+the selector.  The message:
+
+ .. sourcecode:: objective-c
 
     [anArray indexOfObject:someObject inRange:someRange]
     
@@ -280,14 +313,19 @@ Arguments:
     ``someObject``, ``someRange``
 
 As documented later, the straightforward translation of such a message to
-Python is::
+Python is:
+
+ .. sourcecode:: python
 
     anArray.indexOfObject_inRange_(someObject, someRange)
     
 This may be awkward and "unpythonic" at first, however this syntax is necessary
 to preserve the semantics of Objective-C message dispatch.
 
-A class declaration::
+A class declaration:
+
+ .. sourcecode:: objective-c
+    :linenos:
 
     @interface MyClass : MySuperClass
     {
@@ -309,7 +347,10 @@ A class declaration::
     -(int)anotherInstanceVariable;
     @end
 
-A class implementation::
+A class implementation:
+
+ .. sourcecode:: objective-c
+    :linenos:
 
     @implementation MyClass
 
@@ -476,9 +517,17 @@ simple translations must take place.  The rules for these translations are:
    in the method name; exceptions to this rule and the behavior of "result"
    are mentioned below.
 
-    - ``result = [someObject someMethod:firstArg withFoo:foo andBar:bar];``
-      translates to
-      ``result = someObject.someMethod_withFoo_andBar_(firstArg, foo, bar)``
+   .. sourcecode:: objective-c
+      :linenos:
+
+      result = [someObject someMethod:firstArg withFoo:foo andBar:bar];
+
+   translates to
+
+   .. sourcecode:: python
+      :linenos:
+
+      result = someObject.someMethod_withFoo_andBar_(firstArg, foo, bar)
 
 Note that it is currently not possible to support methods with a variable
 number of arguments from Python.  These selectors must be wrapped by
@@ -546,11 +595,16 @@ The rules for pass by reference arguments may look quite complicated, but
 it turns out this is very straightforward when working with them.
 
 As an example of a method with two output arguments, ``NSMatrix`` implements a
-selector named ``getNumberOfRows:columns:`` with the following signature::
+selector named ``getNumberOfRows:columns:`` with the following signature:
 
-   (void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
 
-This method is used from Python like this::
+ .. sourcecode:: objective-c
+
+   -(void)getNumberOfRows:(int *)rowCount columns:(int *)columnCount
+
+This method is used from Python like this:
+
+ .. sourcecode:: python
 
    rowCount, columnCount = matrix.getNumberOfRows_columns_(None, None)
 
@@ -588,7 +642,10 @@ we have provided convenience decorators (used like ``staticmethod`` or
 For complete control of the mapping to Objective-C you can use the function
 ``objc.selector`` to create custom descriptors.  See the documentation of the
 ``objc`` module for the arguments you can use with this function.  It is
-normally used like this::
+normally used like this:
+
+ .. sourcecode:: python
+    :linenos:
 
 	class MyObject(NSObject):
 
@@ -598,7 +655,10 @@ normally used like this::
 
 		someMethod_ = objc.selector(someMethod_, signature='v@:f')
 
-From Python 2.4, there is a decorator for this purpose::
+In Python 2.4 or later there is a decorator for this purpose:
+
+ .. sourcecode:: python
+    :linenos:
 
 	class MyObject(NSObject):
 
@@ -703,7 +763,10 @@ a separate library.  This mechanism is named categories and is used to enhance
 existing classes, for splitting classes in several parts and to document
 informal protocols.
 
-An example of a category definition::
+An example of a category definition:
+
+ .. sourcecode:: objective-c
+    :linenos:
 
 	@interface NSObject (MyCategory)
 	- (NSSize)objectFootprint;
@@ -713,7 +776,10 @@ This declares an additional category on ``NSObject``.  This category contains
 a single method.
 
 The function ``objc.classAddMethods`` can be used to get the same effect in
-Python::
+Python:
+
+ .. sourcecode:: python
+    :linenos:
 
 	def objectFootprint(self):
 		pass
@@ -721,7 +787,10 @@ Python::
 	objc.classAddMethods(NSObject, [objectFootprint])
 
 This is not very clear, PyObjC therefore also provides the following 
-mechanism, implemented on top of ``objc.classAddMethods``::
+mechanism, implemented on top of ``objc.classAddMethods``:
+
+ .. sourcecode:: python
+    :linenos:
 
 	class NSObject(objc.Category(NSObject)):
 		def objectFootprint(self):
@@ -832,7 +901,10 @@ Working with threads
 Most of Cocoa, and thus PyObjC, requires an ``NSAutoreleasePool`` in order to function
 properly.  PyObjC does this automatically on the first thread it is imported from,
 but other threads will require explicit ``NSAutoreleasePool`` management.  The following
-practice for working with ``NSAutoreleasePool`` is recommended::
+practice for working with ``NSAutoreleasePool`` is recommended:
+
+ .. sourcecode:: python
+    :linenos:
 
 	pool = NSAutoreleasePool.alloc().init()
 	...
@@ -909,7 +981,10 @@ The PyObjC installer includes a copy of the ``py2app`` package.  This package
 offers a way to build distutils scripts for building (standalone)
 applications and plugin bundles.
 
-An example ``setup.py`` script::
+An example ``setup.py`` script:
+
+ .. sourcecode:: python
+    :linenos:
 
     from distutils.core import setup
     import py2app
@@ -919,9 +994,11 @@ An example ``setup.py`` script::
         data_files = ["English.lproj"],
     )
 	
-During development you typically invoke it from the command line like this::
+During development you typically invoke it from the command line like this:
 
-	python setup.py py2app -A
+ .. sourcecode:: sh
+
+     $ python setup.py py2app -A
 
 This will build an application bundle in a folder named ``dist`` in the
 current folder. The ``-A`` option tells ``py2app`` to add symbolic
@@ -937,9 +1014,11 @@ you ran setup.py with.
 For more information about ``py2app`` usage, read through some of the
 ``setup.py`` scripts used by the examples in the `Examples`__ folder.
 On any ``setup.py`` script that imports ``py2app``, you can use the
-following command to see the list of options::
+following command to see the list of options:
 
-    python setup.py py2app --help
+ .. sourcecode:: sh
+
+    $ python setup.py py2app --help
 
 .. __: ../Examples/00ReadMe.txt
 

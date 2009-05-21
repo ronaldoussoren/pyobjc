@@ -7,7 +7,9 @@ Introduction
 
 Apple makes use of both formal and informal protocols in the Cocoa framework.
 Formal protocols are those protocols that are implemented using Objective-C
-protocols::
+protocols:
+
+ .. sourcecode:: objective-c
 
 	@protocol NSFoo <NSSomeProtocol>
 	-(int)doesIt;
@@ -17,7 +19,9 @@ Conforming to a formal protocol requires the interface of a class to explicitly
 declare that it implements that protocol, and the implementation must implement
 all methods of the protocol.
 
-Informal protocols are defined as categories on NSObject with no implementation::
+Informal protocols are defined as categories on NSObject with no implementation:
+
+ .. sourcecode:: objective-c
 
 	@interface NSObject(FooDelegate)
 	-(void)optionalFooDelegateMethod;
@@ -56,7 +60,10 @@ XXX: is this necessary? we could also use the same strategy as for informal
 protocols, and drop the informal_protocol wrappers for formal protocols.
 
 Declaring conformance to a formal protocol is done by using the formal protocol
-as a mix-in, and by implementing its methods::
+as a mix-in, and by implementing its methods:
+
+ .. sourcecode:: python
+    :linenos:
 
 	NSLocking = objc.protocolNamed('NSLocking')
 
@@ -70,7 +77,9 @@ as a mix-in, and by implementing its methods::
 XXX: Change this example when the pyobjc_classMethods hack is no longer necessary.
 
 The class now formally implements the ``NSLocking`` protocol, this can be
-verified using the Objective-C introspection methods::
+verified using the Objective-C introspection methods:
+
+  .. sourcecode:: pycon
 
 	>>> MyLockingObject.pyobjc_classMethods.conformsToProtocol_(NSLocking)
 	1
