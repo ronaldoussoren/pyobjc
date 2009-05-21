@@ -23,9 +23,6 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
-# Add our dependencies to the path.
-site.addsitedir(os.path.abspath('source-deps'))
-
 # Add our utility library to the path
 sys.path.insert(1, os.path.abspath('setup-lib'))
 
@@ -182,7 +179,7 @@ CFLAGS.extend([
     ])
 
 
-BASE_LDFLAGS = []
+OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
 if not os.path.exists('/usr/include/objc/runtime.h'):
     CFLAGS.append('-DNO_OBJC2_RUNTIME')
@@ -191,14 +188,8 @@ else:
     # Force compilation with the local SDK, compilation of PyObC will result in
     # a binary that runs on other releases of the OS without using a particular SDK.
     CFLAGS.extend(['-isysroot', '/'])
-    BASE_LDFLAGS.extend(['-isysroot', '/'])
+    OBJC_LDFLAGS.extend(['-isysroot', '/'])
 
-
-
-
-OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
-FND_LDFLAGS = frameworks('CoreFoundation', 'Foundation')
-APPKIT_LDFLAGS = frameworks('CoreFoundation', 'AppKit')
 
 # We're using xml2, check for the flags to use:
 def xml2config(arg):
@@ -220,7 +211,10 @@ from distutils.unixccompiler import UnixCCompiler
 UnixCCompiler.src_extensions.append('.S')
 del UnixCCompiler
 
-# XXX: the second -I shouldn't be necessary, but somehow is.
+
+# 
+# Support for an embedded copy of libffi
+#
 FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
 
 # The list below includes the source files for all CPU types that we run on
@@ -238,78 +232,27 @@ FFI_SOURCE=[
     "libffi-src/x86/x86-ffi_darwin.c",
 ]
 
-EXTRA_SOURCE = FFI_SOURCE
-EXTRA_CFLAGS = FFI_CFLAGS
 
-CorePackages = [ 'objc' ]
-objcExtension = Extension("objc._objc",
-    EXTRA_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-    extra_compile_args=CFLAGS + EXTRA_CFLAGS,
-    extra_link_args=OBJC_LDFLAGS + BASE_LDFLAGS,
-)
 
-CoreExtensions =  [ objcExtension ]
+#
+# Calculate the list of extensions: objc._objc + extensions for the unittests
+#
+
+ExtensionList =  [ 
+    Extension("objc._objc",
+        FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+        extra_compile_args=CFLAGS + FFI_CFLAGS,
+        extra_link_args=OBJC_LDFLAGS,
+    )
+]
 
 for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
     name, ext = os.path.splitext(os.path.basename(test_source))
 
-    if name != 'ctests':
-        ext = Extension('objc.test.' + name,
-            [test_source],
-            extra_compile_args=['-IModules/objc'] + CFLAGS,
-            extra_link_args=OBJC_LDFLAGS)
-    else:
-        ext = Extension('objc.test.' + name,
-            [test_source],
-            extra_compile_args=['-IModules/objc'] + CFLAGS,
-            extra_link_args=OBJC_LDFLAGS + BASE_LDFLAGS)
-
-    CoreExtensions.append(ext)
-
-
-FoundationDepends = dict(
-    depends=(
-          glob.glob('build/codegen/_Fnd_*.inc')
-        + glob.glob('Modules/Foundation/*.m')
-    ),
-)
-
-AppKitDepends = dict(
-    depends=(
-          glob.glob('build/codegen/_App_*.inc')
-        + glob.glob('Modules/AppKit/*.m')
-    ),
-)
-
-INCFILES = glob.glob('build/codegen/*.inc')
-
-FoundationPackages, FoundationExtensions = \
-        IfFrameWork('Foundation.framework', [ 'Foundation' ], [
-          Extension("Foundation._Foundation",
-                    [
-                        "Modules/Foundation/_Foundation.m",
-                    ],
-                    extra_compile_args=[
-                        "-IModules/objc",
-                    ] + CFLAGS,
-                    extra_link_args=[
-                    ] + FND_LDFLAGS + BASE_LDFLAGS,
-                    **FoundationDepends
-                    ),
-        ])
-
-AppKitPackages, AppKitExtensions = \
-        IfFrameWork('AppKit.framework', [ 'AppKit' ], [
-          Extension("AppKit._AppKit",
-                    ["Modules/AppKit/_AppKit.m"],
-                    extra_compile_args=[
-                        "-IModules/objc",
-                    ] + CFLAGS,
-                    extra_link_args=[
-                    ] + APPKIT_LDFLAGS + BASE_LDFLAGS,
-                    **AppKitDepends
-                    ),
-      ])
+    ExtensionList.append(Extension('objc.test.' + name,
+        [test_source],
+        extra_compile_args=['-IModules/objc'] + CFLAGS,
+        extra_link_args=OBJC_LDFLAGS))
 
 def package_version():
     fp = open('Modules/objc/pyobjc.h', 'r')
@@ -319,20 +262,6 @@ def package_version():
             return ln.split()[-1][1:-1]
 
     raise ValueError, "Version not found"
-
-
-#packages = (
-#    CorePackages +
-#    AppKitPackages +
-#    FoundationPackages +
-#
-#    [
-#        'PyObjCTools',
-#        'PyObjCTools.XcodeSupport',
-#    ]
-#)
-
-
 
 CLASSIFIERS = filter(None,
 """
@@ -349,8 +278,6 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
-install_requires = setup_requires = [] # ['py2app>=0.4.0', 'bdist_mpkg>=0.4.2']
-
 dist = setup(
     name = "pyobjc-core", 
     version = package_version(),
@@ -360,46 +287,16 @@ dist = setup(
     author_email = "pyobjc-dev@lists.sourceforge.net",
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
-    ext_modules = (
-         CoreExtensions
-    ),
-    packages = [ 'objc', 'objc.test', 'PyObjCTools' ], # 'ExceptionHandling'
+    ext_modules = ExtensionList,
+    packages = [ 'objc', 'objc.test', 'PyObjCTools' ], 
     namespace_packages = ['PyObjCTools'],
     package_dir = { '': 'Lib' },
-    install_requires = install_requires,
-    setup_requires = setup_requires,
     extra_path = "PyObjC",
     cmdclass = extra_cmdclass,
     options = OPTIONS,
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
-    zip_safe = False,
-    # workaround for setuptools 0.6b4 bug
-    dependency_links = [],
-    package_data = {
-        # Include embedded BridgeSuport.xml fallback metadata.
-        '': ['*.bridgesupport'],
-    }
+    #test_suite='objc.test',
+    zip_safe = True,
 )
-
-if 0 and 'install' in sys.argv:
-    import textwrap
-    print textwrap.dedent(
-    """
-    **NOTE**
-
-    Installing PyObjC with "setup.py install" *does not* install the following:
-    
-    - py2app (bdist_mpkg, modulegraph, altgraph, ...) and its tools
-    - Xcode templates
-    - Documentation
-    - Example code
-
-    The recommended method for installing PyObjC is to do:
-        
-        $ python setup.py bdist_mpkg --open
-
-    This will create and open an Installer metapackage that contains PyObjC,
-    py2app, and all the goodies!
-    """)
