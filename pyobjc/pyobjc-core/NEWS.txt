@@ -7,6 +7,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- Move the testsuite from ``objc.test`` to ``PyObjCTest`` and no longer
+  install the tests.
+
+  The tests are no longer installed because they aren't needed for 
+  day-to-day usage of PyObjC. Furthermore this change will make it possible
+  to copy all of the pyobjc-core "egg" into an application bundle without
+  adding unnecessary files to that bundle.
+
 - BUGFIX: Storing pure python objects in a ``NSKeydArchiver`` archive didn't 
   work 100% reliably for Python floats. I've changed the implementation on 
   for encoding floats a little and now floats do get rounddtripped properly.

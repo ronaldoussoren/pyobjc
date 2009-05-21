@@ -1,7 +1,6 @@
 include *.txt MANIFEST.in setup.py
 graft Doc
 graft Examples
-graft Installer?Package
 graft Lib
 graft Modules
 graft Scripts
@@ -9,6 +8,5 @@ graft libffi-src
 graft setup-lib
 graft source-deps
 global-exclude .DS_Store
-global-exclude *.pbxuser
 global-exclude *.pyc
 global-exclude *.so
