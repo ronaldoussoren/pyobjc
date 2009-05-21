@@ -7,6 +7,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- BUGFIX: Storing pure python objects in a ``NSKeydArchiver`` archive didn't 
+  work 100% reliably for Python floats. I've changed the implementation on 
+  for encoding floats a little and now floats do get rounddtripped properly.
+
+  The side effect of this is that archives written by PyObjC 2.2b2 or later
+  cannot always be read by earlier versions (but PyObjC 2.2b2 can read archives
+  created with earlier versions).
+
 - BUGFIX: Enable building from source with the Python.org binary distribution.
 
 - BUGFIX: Fix crash when using the animotor proxy feature of CoreAnimation. 

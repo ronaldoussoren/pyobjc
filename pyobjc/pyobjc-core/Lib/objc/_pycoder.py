@@ -41,6 +41,7 @@ def setupPythonObject():
     kOP_LIST=11
     kOP_DICT=12
     kOP_GLOBAL_EXT=13
+    kOP_FLOAT_STR=14
 
     kKIND = NSString.stringWithString_(u"kind")
     kFUNC = NSString.stringWithString_(u"func")
@@ -133,8 +134,11 @@ def setupPythonObject():
     encode_dispatch[long] = save_long
 
     def save_float(coder, obj):
-        coder.encodeInt_forKey_(kOP_FLOAT, kKIND)
-        coder.encodeDouble_forKey_(obj, kVALUE)
+        # Encode floats as strings, this seems to be needed to get
+        # 100% reliable round-trips.
+        coder.encodeInt_forKey_(kOP_FLOAT_STR, kKIND)
+        coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
+        #coder.encodeDouble_forKey_(obj, kVALUE)
     encode_dispatch[float] = save_float
 
     def save_string(coder, obj):
@@ -155,7 +159,6 @@ def setupPythonObject():
 
     def save_dict(coder, obj):
         coder.encodeInt_forKey_(kOP_DICT, kKIND)
-
         v = NSDictionary.dictionaryWithDictionary_(obj)
         coder.encodeObject_forKey_(v, kVALUE)
     encode_dispatch[dict] = save_dict
@@ -221,6 +224,10 @@ def setupPythonObject():
     def load_float(coder, setValue):
         return coder.decodeFloatForKey_(kVALUE)
     decode_dispatch[kOP_FLOAT] = load_float
+
+    def load_float_str(coder, setValue):
+        return float(coder.decodeObjectForKey_(kVALUE))
+    decode_dispatch[kOP_FLOAT_STR] = load_float_str
 
     def load_tuple(coder, setValue):
         return tuple(coder.decodeObjectForKey_(kVALUE))

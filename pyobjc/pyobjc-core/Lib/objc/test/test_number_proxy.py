@@ -129,18 +129,19 @@ class TestNSNumber (TestCase):
         else:
             self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551488)
 
-        # XXX: the next one is actually incorrect (as can be seen by the following C code,
-        # but is what NSNumber returns).
+        # The first entry in the tuple below is incorrect, that happens to be what
+        # is returned by NSNumber on some platforms (in particular, any Python where
+        # the python framework itself is linked against the 10.4 SDK)
         #
         #   double v = -127.6;
         #   unsigned long long lv = v;
         #   printf("%llu\n", lv);
+        # 
 
-        if int(os.uname()[2].split('.')[0]) == 8:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+        self.failUnless(
+                OC_TestNumber.numberAsUnsignedLongLong_(v) in 
+                    (18446744073709551489, 18446744073709551488))
 
-        else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551488)
         self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
 
         # Overflow
