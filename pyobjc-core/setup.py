@@ -23,12 +23,6 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
-# Add our utility library to the path
-sys.path.insert(1, os.path.abspath('setup-lib'))
-
-OPTIONS = {'egg_info': {'egg_base': 'Lib'}}
-from pyobjc_commands import extra_cmdclass, extra_options
-OPTIONS.update(extra_options)
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -51,8 +45,18 @@ MacOS X 10.5.
 """
 
 from setuptools import setup, Extension, find_packages
+from setuptools.command import build_ext
 import os
 
+
+class pyobjc_build_ext (build_ext.build_ext):
+    def run(self):
+        build_ext.build_ext.run(self)
+        extensions = self.extensions
+        self.extensions = [
+                e for e in extensions if e.name.startswith('PyObjCTest') ]
+        self.copy_extensions_to_source()
+        self.extensions = extensions
 
 def frameworks(*args):
     lst = []
@@ -249,7 +253,7 @@ ExtensionList =  [
 for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
     name, ext = os.path.splitext(os.path.basename(test_source))
 
-    ExtensionList.append(Extension('objc.test.' + name,
+    ExtensionList.append(Extension('PyObjCTest.' + name,
         [test_source],
         extra_compile_args=['-IModules/objc'] + CFLAGS,
         extra_link_args=OBJC_LDFLAGS))
@@ -288,15 +292,15 @@ dist = setup(
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
     ext_modules = ExtensionList,
-    packages = [ 'objc', 'objc.test', 'PyObjCTools' ], 
+    packages = [ 'objc', 'PyObjCTools' ], 
     namespace_packages = ['PyObjCTools'],
-    package_dir = { '': 'Lib' },
+    package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     extra_path = "PyObjC",
-    cmdclass = extra_cmdclass,
-    options = OPTIONS,
+    cmdclass = {'build_ext': pyobjc_build_ext },
+    options = {'egg_info': {'egg_base': 'Lib'}},
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
-    #test_suite='objc.test',
+    test_suite='PyObjCTest.loader.makeTestSuite',
     zip_safe = False,
 )
