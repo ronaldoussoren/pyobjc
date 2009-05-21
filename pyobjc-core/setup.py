@@ -298,5 +298,5 @@ dist = setup(
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     #test_suite='objc.test',
-    zip_safe = True,
+    zip_safe = False,
 )

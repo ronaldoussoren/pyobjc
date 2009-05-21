@@ -5,6 +5,13 @@ from objc.test import testbndl
 import objc, sys
 from objc.test.fnd import NSObject
 
+rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
+
+class ReturnAStruct (NSObject):
+    def someRectWithRect_(self, ((x, y), (h, w))):
+        return ((x,y),(h,w))
+    someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + '@:' + rct)
+
 
 class TestRegressions(TestCase):
     def testNSObjectRespondsToCommonMethods(self):
@@ -84,9 +91,8 @@ class TestRegressions(TestCase):
         # Like AppKit.test.test_nsimage.TestNSImage.test_compositePoint
         # unlike that this one doesn't crash on darwin/x86, makeing it less
         # likely that libffi is at fault
-        from objc.test.structargs import StructArgClass
 
-        o = StructArgClass.alloc().init()
+        o = structargs.StructArgClass.alloc().init()
         v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
         self.assertEquals(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
@@ -114,6 +120,20 @@ class TestRegressions(TestCase):
 
         sel = testbndl.PyObjC_TestClass4._privateMethodWithArg_
         self.assertEquals(sel.signature, 'i@:f')
+
+    def testStructReturnPy(self):
+        o = ReturnAStruct.alloc().init()
+        p = structargs.StructArgClass.alloc().init()
+
+        v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
+        #self.assert_(isinstance(v, Foundation.NSRect))
+        self.assertEquals(v, ((1,2),(3,4)))
+
+    def testStructReturn(self):
+        o = structargs.StructArgClass.alloc().init()
+        v = o.someRect()
+        self.assertEquals(v, ((1,2),(3,4)))
+
 
 
 if sys.byteorder == 'little':
