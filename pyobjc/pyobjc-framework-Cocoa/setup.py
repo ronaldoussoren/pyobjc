@@ -142,6 +142,10 @@ setup(
                 extra_link_args=CFLAGS + ['-framework', 'CoreFoundation']),
 
         # Foundation
+        Extension('Foundation._nsinvocation', 
+                [ 'Modules/_Foundation_NSInvocation.m' ],
+                extra_compile_args=CFLAGS,
+                extra_link_args=CFLAGS + ['-framework', 'Foundation']),
         Extension('Foundation._NSDecimal', 
                 [ 'Modules/_Foundation_NSDecimal.m' ],
                 extra_compile_args=CFLAGS,
@@ -212,6 +216,11 @@ setup(
             [ "Modules/_AppKit_carbon.m"],
             extra_compile_args=CFLAGS,
             extra_link_args=CFLAGS + ["-framework", "AppKit"]),
+
+
+        #
+        # Test support
+        #
         Extension("PyObjCTest.testhelper",
             [ "Modules/testhelper.m"],
             extra_compile_args=CFLAGS,
