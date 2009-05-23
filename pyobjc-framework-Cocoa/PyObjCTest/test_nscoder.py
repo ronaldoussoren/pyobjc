@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
-from objc.test.testbndl import PyObjC_TestClass4
+from PyObjCTest.testhelper import PyObjC_TestClass4
 
 class TestNSCoderUsage(TestCase):
     if not hasattr(TestCase, 'assertAlmostEquals'):

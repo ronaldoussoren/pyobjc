@@ -81,7 +81,7 @@ mod_CFCalendarAddComponents(
 	result = FALSE;
 	PyObjC_DURING
 		result = CFCalendarAddComponents(
-			calendar, &at, flags, (unsigned char*)componentDesc,
+			calendar, &at, flags, componentDesc,
 			params[0], params[1], params[2], params[3],
 			params[4], params[5], params[6], params[7],
 			params[8], params[9]);
@@ -172,7 +172,7 @@ mod_CFCalendarComposeAbsoluteTime(
 	result = FALSE;
 	PyObjC_DURING
 		result = CFCalendarComposeAbsoluteTime(
-			calendar, &at, (unsigned char*)componentDesc,
+			calendar, &at, componentDesc,
 			params[0], params[1], params[2], params[3],
 			params[4], params[5], params[6], params[7],
 			params[8], params[9]);
@@ -266,7 +266,7 @@ mod_CFCalendarDecomposeAbsoluteTime(
 	result = FALSE;
 	PyObjC_DURING
 		result = CFCalendarDecomposeAbsoluteTime(
-			calendar, at, (unsigned char*)componentDesc,
+			calendar, at, componentDesc,
 			&params[0], &params[1], &params[2], &params[3],
 			&params[4], &params[5], &params[6], &params[7],
 			&params[8], &params[9]);
@@ -387,7 +387,7 @@ mod_CFCalendarGetComponentDifference(
 	PyObjC_DURING
 		result = CFCalendarGetComponentDifference(
 			calendar, startingAt, resultAt, options, 
-			(unsigned char*)componentDesc,
+			componentDesc,
 			&params[0], &params[1], &params[2], &params[3],
 			&params[4], &params[5], &params[6], &params[7],
 			&params[8], &params[9]);

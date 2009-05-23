@@ -10,7 +10,7 @@ API Notes for the AppKit framework
   These methods are not supported.
 
 ``NSEvent``
-----------
+-----------
 
 * ``-initWithEventRef:`` and ``-eventRef``
 

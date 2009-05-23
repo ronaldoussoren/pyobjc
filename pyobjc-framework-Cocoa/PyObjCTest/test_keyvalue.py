@@ -12,7 +12,7 @@ TODO:
 import objc
 from PyObjCTools.TestSupport import *
 import sys
-from objc.test.testbndl import PyObjC_TestClass3 as STUB
+from PyObjCTest.testhelper import PyObjC_TestClass3 as STUB
 from Foundation import *
 
 class KeyValueClass1 (NSObject):

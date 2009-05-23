@@ -28,7 +28,7 @@ This module defines a method for ``NSGraphicsContext``:
       with NSGraphicsContext.savedGraphicsState():
           pass
 
-  This is equivalent to:
+  This is equivalent to::
 
       NSGraphicsContext.saveGraphicsState()
       try:

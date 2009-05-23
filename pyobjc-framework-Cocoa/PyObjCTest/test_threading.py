@@ -3,7 +3,7 @@ import objc
 import sys
 import time
 
-from objc.test import testbndl
+from PyObjCTest.testhelper import PyObjC_TestClass4
 
 from Foundation import *
 
@@ -99,7 +99,7 @@ class ThreadingTest (TestCase):
             def call(self):
                 return Dummy()
 
-        my = testbndl.PyObjC_TestClass4.alloc().init()
+        my = PyObjC_TestClass4.alloc().init()
         cb = PyObjCTestCalling.alloc().init()
 
         NSThread.detachNewThreadSelector_toTarget_withObject_(
