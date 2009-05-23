@@ -122,8 +122,8 @@ class TestCFCalendarVariadic (TestCase):
 
         rng = CFCalendarGetRangeOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
         self.failUnless(isinstance(rng, CFRange))
-        self.failUnless(rng.location == 1)
-        self.failUnless(rng.length == 31)
+        self.failUnlessEqual(rng.location, 1)
+        self.failUnlessEqual(rng.length, 365)
 
 
         v = CFCalendarGetOrdinalityOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
