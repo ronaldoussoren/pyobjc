@@ -12,11 +12,35 @@ import gc as _gc
 import subprocess as _subprocess
 import sys as _sys
 import struct as _struct
+from distutils.sysconfig import get_config_var as _get_config_var
+import re as _re
 
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
 _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
 _leaksVerbose = True
+
+def sdkForPython(_cache=[]):
+    """
+    Return the SDK version used to compile Python itself,
+    or None if no framework was used
+    """
+    if not _cache:
+
+        cflags = _get_config_var('CFLAGS')
+        m = _re.search('-isysroot ([^ ]*) ', cflags)
+        if m is None:
+            return None
+
+        path = m.group(1)
+        bn = _os.path.basename(path)
+        version = bn[6:-4]
+        if version.endswith('u'):
+            version = version[:-1]
+
+        return map(int, version.split('.'))
+
+    return _cache[0]
 
 def fourcc(v):
     """
