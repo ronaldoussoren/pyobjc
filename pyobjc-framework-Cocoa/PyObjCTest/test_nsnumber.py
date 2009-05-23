@@ -62,7 +62,7 @@ class TestNSNumber( TestCase ):
     def testUnsignedIssues(self):
         # NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
-	if os.uname()[2] < '9.':
+        if sdkForPython() < (10, 5):
 		self.assertEquals(NSNumber.numberWithUnsignedInt_(sys.maxint+1),
 			    -sys.maxint-1)
 	else:

@@ -275,22 +275,16 @@ class TestURL (TestCase):
         self.assertEquals(strval, u"http://www.omroep.nl/%73port en %73pel")
 
     def testFSRef(self):
-        try:
-            from  Carbon.File import FSRef
-        except ImportError:
-            # Ignore this test when Carbon.File is not present
-            return
-
         ref = CFURLCreateWithFileSystemPath(None, os.getcwd(), kCFURLPOSIXPathStyle, True)
         self.failUnless( isinstance(ref, CFURLRef) )
 
         ok, fsref = CFURLGetFSRef(ref, None)
         self.failUnless(ok)
-        self.failUnless(isinstance(fsref, FSRef))
-        self.failUnless( fsref.FSRefMakePath() ==  os.getcwd())
+        self.failUnless(isinstance(fsref, objc.FSRef))
+        self.failUnless( fsref.as_pathname() ==  os.getcwd())
 
         ref2 = CFURLCreateFromFSRef(None, fsref)
-        self.failUnless(ref is ref2) 
+        self.failUnlessEqual(ref, ref2) 
 
     def testConstants(self):
         self.failUnless( kCFURLPOSIXPathStyle == 0 )

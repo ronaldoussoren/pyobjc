@@ -45,9 +45,9 @@ class TestBitVector (TestCase):
     def testInspection(self):
         bitset = CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 30)
 
-        self.failUnless( CFBitVectorGetCount(bitset) == 30 )
-        self.failUnless( CFBitVectorGetCountOfBit(bitset, (0, 30), 1) == 13 )
-        self.failUnless( CFBitVectorGetCountOfBit(bitset, (0, 30), 0) == 17 )
+        self.failUnlessEqual( CFBitVectorGetCount(bitset), 30 )
+        self.failUnlessEqual( CFBitVectorGetCountOfBit(bitset, (0, 30), 1), 10 )
+        self.failUnlessEqual( CFBitVectorGetCountOfBit(bitset, (0, 30), 0), 20 )
 
         self.failUnless(  CFBitVectorContainsBit(bitset, (0, 30), 1) )
         self.failIf(  CFBitVectorContainsBit(bitset, (0, 3), 1) )
