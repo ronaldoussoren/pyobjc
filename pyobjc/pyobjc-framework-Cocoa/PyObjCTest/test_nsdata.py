@@ -3,7 +3,7 @@ import objc
 import array
 
 from Foundation import *
-from objc.test.testbndl import PyObjC_TestClass3
+from PyObjCTest.testhelper import PyObjC_TestClass3
 
 rawBytes = "a\x13b\x00cd\xFFef\xEFgh"
 otherBytes = array.array('c')

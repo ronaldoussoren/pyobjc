@@ -3,7 +3,7 @@ import objc
 import types
 import sys
 
-from objc.test.testbndl import PyObjC_TestClass3
+from PyObjCTest.testhelper import PyObjC_TestClass3
 
 from Foundation import *
 

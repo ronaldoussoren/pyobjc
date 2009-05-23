@@ -5,35 +5,11 @@ from threading import Thread
 import os
 from PyObjCTools.TestSupport import *
 
-class ReturnAStruct (NSObject):
-    def someRectWithRect_(self, ((x, y), (h, w))):
-        return ((x,y),(h,w))
-    someRectWithRect_ = objc.selector(someRectWithRect_,
-        signature='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:{_NSRect={_NSPoint=ff}{_NSSize=ff}}')
-
-
 class TestRegr (TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
         self.assertEquals(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
-
-    def testStructReturnPy(self):
-        # XXX: remove dependency on objc.test!
-        from objc.test.structargs import StructArgClass
-        o = ReturnAStruct.alloc().init()
-        p = StructArgClass.alloc().init()
-
-        v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
-        self.assert_(isinstance(v, Foundation.NSRect))
-        self.assertEquals(v, ((1,2),(3,4)))
-
-    def testStructReturn(self):
-        from objc.test.structargs import StructArgClass        
-        o = StructArgClass.alloc().init()
-        v = o.someRect()
-        self.assertEquals(v, ((1,2),(3,4)))
-
 
     def testThreadHang(self):
 

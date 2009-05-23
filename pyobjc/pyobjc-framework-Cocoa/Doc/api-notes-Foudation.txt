@@ -74,7 +74,7 @@ configured to store objects (as opposed to arbitrary pointers).
 
 
 ``NSPointerArray``
---------------
+------------------
 
 PyObjC only supports ``NSPointerArray`` instances that have been
 configured to store objects (as opposed to arbitrary pointers).

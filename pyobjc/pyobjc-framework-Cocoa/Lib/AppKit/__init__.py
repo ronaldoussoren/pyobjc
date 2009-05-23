@@ -6,7 +6,6 @@ documentation for details on how to use these functions and classes.
 '''
 
 import objc as _objc
-#import ApplicationServices
 from Foundation import *
 
 from AppKit._inlines import _inline_list_
@@ -30,8 +29,8 @@ from AppKit._nsquickdrawview import *
 from AppKit._nsbezierpath import *
 from AppKit._nsview import *
 from AppKit._nsbitmap import *
-#from AppKit._nsopengl import *
 from AppKit._nswindow import *
+
 
 # Fix types for a number of character constants
 NSEnterCharacter = unichr(NSEnterCharacter)
