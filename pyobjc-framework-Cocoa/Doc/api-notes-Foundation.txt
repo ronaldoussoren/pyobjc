@@ -99,6 +99,22 @@ NSInvocation
 * Struct ``NSObjCValue`` and related constants (such as ``NSObjCNoType``) are not available in
   Python.
 
+* It is possible to get and set argument values and the return value of an invocation, but only
+  for the simple cases, that is when the value is a single value and not a pointer to value or
+  an array of values.
+
+  That is, the following methods cannot be accessed through an ``NSInvocation`` at the moment:
+
+  * `NSArray.arrayWithObjects_count_`: The first argument is a C-array of values
+
+  * `NSFormatter.getObjectValue_forString_range_error_`: The first and last arguments are a by-reference arguments.
+
+  It is possible to get/set values whose type is a basic C type, that is the return value ``NSArray.count`` can
+  be extracted from an ``NSInvocation`` object.
+
+  This limitation should be fine for most usecases of ``NSInvocation``, please let us know if you
+  run into cases where this limitation is a problem.
+
 NSMapTable
 ----------
 

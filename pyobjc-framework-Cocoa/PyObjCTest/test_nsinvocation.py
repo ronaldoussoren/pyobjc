@@ -5,11 +5,28 @@ import Foundation
 
 class TestNSInvocation (TestCase):
     def test_dummy(self):
-        self.fail("NSInvocation tests")
-        self.fail("getArgument:atIndex:")
-        self.fail("setArgument:atIndex:")
-        self.fail("getReturnValue:")
-        self.fail("setReturnValue:")
+        value = NSMutableArray.arrayWithArray_([1, 2, 3])
+
+        invocation = NSInvocation.invocationWithMethodSignature_(value.methodSignatureForSelector_('count'))
+        invocation.setSelector_('count')
+        invocation.setTarget_(value)
+        invocation.invoke()
+
+        v = invocation.getReturnValue_(None)
+        self.failUnlessIsInstance(v, (int, long))
+        self.failUnlessEqual(v, 3)
+
+        invocation = NSInvocation.invocationWithMethodSignature_(value.methodSignatureForSelector_('addObject:'))
+        invocation.setSelector_('addObject:')
+        invocation.setTarget_(value)
+        invocation.setArgument_atIndex_(u"hello", 2)
+        v = invocation.getArgument_atIndex_(None, 2)
+        self.failUnlessEqual(v, u"hello")
+        invocation.invoke()
+
+        self.failUnlessEqual(value.count(), 4)
+
+
 
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSInvocation.argumentsRetained)
