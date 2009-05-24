@@ -17,10 +17,6 @@
 #import <Foundation/NSProcessInfo.h>
 #import <Foundation/NSString.h>
 
-#if defined(__i386__) || defined(__ppc__)
-#include "objc_inject.h"
-#endif
-
 #import <mach-o/dyld.h>
 #import <mach-o/getsect.h>
 #import <mach-o/loader.h>
@@ -1011,37 +1007,6 @@ static char* keywords[] = { "value", 0 };
 	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
 }
 
-#if defined(__i386__) || defined(__ppc__)
-#if defined(MAC_OS_X_VERSION_10_3) 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-
-PyDoc_STRVAR(inject_doc,
-"_inject(pid, use_main_thread, bundlePath, systemPath, carbonPath)\n"
-"\n"
-"Loads the given MH_BUNDLE in the target process identified by pid\n");
-
-static PyObject*
-pyject_inject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds) {
-	static char *keywords[] = { "pid", "use_main_thread", "bundlePath", "systemPath", "carbonPath", NULL };
-	int pid;
-	int use_main_thread;
-	int err;
-	char *bundlePath;
-	char *systemPath;
-	char *carbonPath;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "iisss:_inject", keywords, &pid, &use_main_thread, &bundlePath, &systemPath, &carbonPath)) {
-		return NULL;
-	}
-	
-	err = objc_inject(pid, use_main_thread, bundlePath, systemPath, carbonPath);
-	return PyBool_FromLong((err == 0));
-}
-
-#endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
-#endif /* MAC_OS_X_VERSION_10_3 */
-#endif /* defined(__i386__) || defined(__ppc__) */
-
 
 PyDoc_STRVAR(protocolsForProcess_doc,
 	"protocolsForProcess() -> [Protocols]\n"
@@ -1712,11 +1677,6 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
 	{ "_loadFunctionList", (PyCFunction)PyObjC_loadFunctionList,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadFunctionList_doc },
-#if defined(__i386__) || defined(__ppc__)
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3) // && defined(__ppc__)
-	{ "_inject", (PyCFunction)pyject_inject, METH_VARARGS|METH_KEYWORDS, inject_doc },
-#endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3 */
-#endif /*  defined(__i386__) || defined(__ppc__) */
 	{ "listInstanceVariables", (PyCFunction)PyObjCIvar_Info, 
 		METH_O, PyObjCIvar_Info_doc },
 	{ "getInstanceVariable", (PyCFunction)PyObjCIvar_Get,

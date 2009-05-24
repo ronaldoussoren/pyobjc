@@ -46,7 +46,7 @@ static PyObject* fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__u
 			sizeof(FSSpec));
 }
 
-#if USE_TOOLBOX_OBJECT_GLUE
+#if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
 static PyObject* fsspec_as_carbon(PyObject* ref)
 {
 	if (!PyObjC_FSSpecCheck(ref)) {
@@ -70,7 +70,7 @@ static PyGetSetDef fsspec_getset[] = {
 
 
 static PyMethodDef fsspec_methods[] = {
-#if USE_TOOLBOX_OBJECT_GLUE
+#if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
 	{
 		"as_carbon",
 		(PyCFunction)fsspec_as_carbon,
@@ -141,7 +141,7 @@ PyTypeObject PyObjC_FSSpecType = {
 
 int PyObjC_encode_fsspec(PyObject* value, void* buffer)
 {
-#if USE_TOOLBOX_OBJECT_GLUE
+#if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
 	/* We cannot test if 'arg' is an instance of Carbon.File.FSSpec... */
 	if (PyMac_GetFSSpec(value, (FSSpec*)buffer) == 1) {
 		return 0;

@@ -1,6 +1,7 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
+#import <Cocoa/Cocoa.h>
 #import <Foundation/NSObjCRuntime.h>
 
 
