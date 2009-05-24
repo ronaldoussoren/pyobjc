@@ -97,7 +97,7 @@ Follow these steps:
     "Create Folder References for any added folders".
 
 11. Open ``main.m``, it is in the "Other Sources" folder in your Xcode
-    project, and change the main(...) function to the following::
+    project, and change the main(...) function to the following:
 
     .. sourcecode:: objective-c
 
