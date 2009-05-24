@@ -392,7 +392,7 @@ static CGDataProviderDirectAccessCallbacks m_CGDataProviderDirectAccessCallbacks
 
 
 
-#ifdef AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER /* XXX */        
+#ifndef OS_TIGER
 
 static off_t
 m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
@@ -2016,7 +2016,7 @@ static PyMethodDef m_methods[] = {
 		doc_CGDataProviderCreateDirectAccess
 	},
 
-#ifdef AVAILABLE_MAC_OS_X_VERSION_10_5_AND_LATER /* XXX */
+#ifndef OS_TIGER
 
 	{
 		"CGDataProviderCreateSequential",
@@ -2108,6 +2108,15 @@ void init_callbacks(void)
 {
 	PyObject* m = Py_InitModule4("_callbacks", m_methods,
 		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* md = PyModule_GetDict(m);
 
         if (PyObjC_ImportAPI(m) < 0) { return; }
+
+#ifndef OS_TIGER
+	if (CGDataProviderCreateSequential == NULL) {
+		PyDict_DelItemString(md, "CGDataProviderCreateSequential");
+	}
+#endif
+	
+
 }
