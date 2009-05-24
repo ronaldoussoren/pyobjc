@@ -72,7 +72,9 @@ class TestMessagePort (TestCase):
         self.failIf(CFMessagePortIsValid(port))
         self.failUnless(didInvalidate)
 
+    @min_os_level('10.5')
     def testSending(self):
+        # FIXME: Crash on Tiger
         context = []
         def callout(port, messageid, data, info):
             print "callout"
