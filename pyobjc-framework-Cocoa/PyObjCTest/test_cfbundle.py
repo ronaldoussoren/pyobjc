@@ -107,6 +107,9 @@ class TestCFBundle (TestCase):
         bundle = CFBundleCreate(None, url)
         self.failUnless( isinstance(bundle, CFBundleRef) )
 
+        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Tcl.framework", kCFURLPOSIXPathStyle, True)
+        bundle2 = CFBundleCreate(None, url)
+        self.failUnless( isinstance(bundle2, CFBundleRef) )
 
 
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", None)
@@ -163,23 +166,23 @@ class TestCFBundle (TestCase):
             self.failUnless(isinstance(error, CFErrorRef))
 
         self.failUnlessArgIsOut(CFBundleLoadExecutableAndReturnError, 1)
-        ok, error = CFBundleLoadExecutableAndReturnError(bundle, None)
+        ok, error = CFBundleLoadExecutableAndReturnError(bundle2, None)
         self.failUnless((ok is True) or (ok is False))
         if ok:
             self.failUnless(error is None)
         else:
             self.failUnless(isinstance(error, CFErrorRef))
 
-        ok = CFBundleLoadExecutable(bundle)
+        ok = CFBundleLoadExecutable(bundle2)
         self.failUnless(ok)
 
-        ok = CFBundleIsExecutableLoaded(bundle)
+        ok = CFBundleIsExecutableLoaded(bundle2)
         self.failUnless(ok)
 
-        CFBundleUnloadExecutable(bundle)
-        ok = CFBundleIsExecutableLoaded(bundle)
-        self.failIf(ok)
-        ok = CFBundleLoadExecutable(bundle)
+        CFBundleUnloadExecutable(bundle2)
+        ok = CFBundleIsExecutableLoaded(bundle2)
+        #self.failIf(ok)
+        ok = CFBundleLoadExecutable(bundle2)
         self.failUnless(ok)
 
         try:
