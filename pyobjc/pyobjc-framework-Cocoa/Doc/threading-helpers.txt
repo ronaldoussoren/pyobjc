@@ -78,7 +78,10 @@ will be reraised in the current thread.
 Note: these methods are synchronous, that is, they block the current thread
 until the call on the "other" thread is done. 
 
-As an example::
+As an example:
+
+  .. sourcecode:: python
+      :linenos:
 
 	class MyClass (NSObject):
 

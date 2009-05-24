@@ -11,7 +11,9 @@ new methods that aren't present in that framework.
 
 To use these new methods use the following code somewhere in your program::
 
-	import PyObjCTools.FndCategories
+  .. sourcecode:: python
+
+       import PyObjCTools.FndCategories
 
 
 Additional methods on ``NSAffineTransform``
