@@ -2,7 +2,8 @@
 Creating your first PyObjC application.
 =======================================
 
-WARNING: This tutorial is not valid for the current edition of PyObjC.
+WARNING: This tutorial assumes you're using Xcode 2.5 and is therefore not 
+entirely valid with Xcode 3 (that is MacOS 10.5).
 
 In this tutorial you will learn how to create your first Python Cocoa
 application: a simple dialog that allows you to convert amounts of money from
