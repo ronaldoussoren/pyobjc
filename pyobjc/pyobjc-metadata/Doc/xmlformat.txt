@@ -9,19 +9,38 @@ A short description
 Introduction
 ============
 
-This project implements a generator for the XML metadata format introduced in
-Leopard and shared between PyObjC and RubyCocoa. Hopefully other bridges will
-start using this format as well.
+This file describes the metadata files used by PyObjC. The metadata files
+started out as a shared project used by PyObjC and RubyCocoa, but the format
+used by PyObjC has diverged a little from that shared format.
 
-At the time I'm writing this the XML format is in flux is desperately missing
-some documentation. This document tries to fill the gap but is not reference
-documentation for the medatadata format.
+FIXME: verify if the description in this file still matches reality, and if
+the definition is clear enough. 
+
+Changes from the shared format
+------------------------------
+
+* PyObjC uses a number of additional format characters in type descriptors:
+
+  - 'T': a character of type ``UniChar``
+  - 't': a character of type ``char``
+  - 'z': a small integer of type ``char``
+  - 'Z': a value of type 'bool'
+
+* PyObjC adds the attribute "block_pointer" to the "arg" and "retval" elements.
+
+* PyObjC adds the attribute "c_array_delimited_by_null" to the "function" and
+  "method" elements.
+
+FIXME: There are other little differences in the semantics of the metadata
+file (such as when to add in/out/inout annotations to "void*" arguments). These
+need to be described better (including the rationale for PyObjC's behaviour).
+
 
 Document structure
 ==================
 
 The document is an ``signatures`` element with an optional ``version`` 
-attribute. This document describes version ``1.0``.
+attribute. This document describes version ``pyobjc-2.2``.
 
 The child elements of the ``signatures`` describe the various objects that
 can be wrapped. Classes are special: instead of describing all classes in the
@@ -323,24 +342,6 @@ Attributes
    the array and have to raise an error when a method/function with this
    attribute is called. Defaults to ``false``.
 
- * ``unicode_string`` (BOOLEAN): the value is a unicode string instead of 
-   an array of short integers.
-
-   Needed because the encoded type for a unicode string and an array of short
-   integers is the same. 
-   
-   Also used on for values of type ``UniChar` (that is: single unicode 
-   characters).
-
-   Defaults to false.
-
- * ``bool_is_BOOL`` (BOOLEAN): the type encoding says that the type is ``bool``,
-   but it actually a ``BOOL``. Defaults to ``true`` (for backward compatiblity
-   reasons).
-
-   NOTE: this attribute is only present for functions, bridges can reconstruct
-   this value from the objc runtime + metadata for plain methods.
-
 ``arg``
 ...........
 
@@ -399,19 +400,9 @@ Attributes
    object when it is no longer needed. Only valid when the return type is an
    object (either a ``NSObject*`` or a ``CFTypeRef``). Defaults to ``false``.
 
- * ``unicode_string`` (BOOLEAN): the value is a unicode string instead of 
-   an array of short integers.
-
-   Needed because the encoded type for a unicode string and an array of short
-   integers is the same.
-
-   Also used on for values of type ``UniChar` (that is: single unicode 
-   characters).
-
-   Defaults to false.
-
- * ``function_poiner`` (BOOLEAN): if true the argument is a callback function. 
+ * ``function_pointer`` (BOOLEAN): if true the argument is a callback function. 
    The signature of the callback is described by subelements of this element.
+
 
  * ``function_pointer_lifetime``: the livetime of a callback argument. 
    Defaults to ``undetermined``: Valid values are:
@@ -431,6 +422,10 @@ Attributes
    can contain the encoded signature for the selector. This can be used by
    bridges for additional type-checking.
 
+ * ``block_pointer`` (BOOLEAN): if true the argument is a block. 
+
+   The signature of the block is described by subelements of this element and
+   does not include the implement first argument.
 
 Exceptions file
 ===============
