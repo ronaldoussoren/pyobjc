@@ -23,6 +23,9 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
+if int(os.uname()[2].split('.')[0]) >= 10:
+	USE_SYSTEM_FFI = True
+
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
@@ -88,7 +91,7 @@ if sys.platform != 'darwin':
 from distutils.sysconfig import get_config_var
 cc = get_config_var('CC')
 
-CFLAGS=[]
+CFLAGS=[ ]
 
 if cc == 'XXXgcc':
     # This is experimental code that tries to avoid refering to files in 
@@ -136,7 +139,7 @@ CFLAGS.extend([
     "-DPyObjC_STRICT_DEBUGGING",
     "-DMACOSX",
     "-no-cpp-precomp",
-    "-Wno-long-double",
+    #"-Wno-long-double",
     #"-Wselector",
     #"-Wstrict-overflow",
     "-g",
@@ -242,13 +245,23 @@ FFI_SOURCE=[
 # Calculate the list of extensions: objc._objc + extensions for the unittests
 #
 
-ExtensionList =  [ 
-    Extension("objc._objc",
-        FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-        extra_compile_args=CFLAGS + FFI_CFLAGS,
-        extra_link_args=OBJC_LDFLAGS,
-    )
-]
+if USE_SYSTEM_FFI:
+	ExtensionList =  [ 
+	    Extension("objc._objc",
+		list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+		extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
+		extra_link_args=OBJC_LDFLAGS + ["-lffi"],
+	    )
+	]
+
+else:
+	ExtensionList =  [ 
+	    Extension("objc._objc",
+		FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+		extra_compile_args=CFLAGS + FFI_CFLAGS,
+		extra_link_args=OBJC_LDFLAGS,
+	    )
+	]
 
 for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
     name, ext = os.path.splitext(os.path.basename(test_source))

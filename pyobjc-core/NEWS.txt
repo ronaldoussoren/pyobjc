@@ -7,6 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- ``objc.inject`` is no longer support. This was code that had no real relation
+  to the rest of PyObjC and was only working in 32-bit mode with little reason
+  to expect that it would ever be ported to 64-bit mode.
+
 - Move the testsuite from ``objc.test`` to ``PyObjCTest`` and no longer
   install the tests.
 
