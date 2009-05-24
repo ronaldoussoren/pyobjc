@@ -57,6 +57,8 @@ class TestNSGraphics (TestCase):
 
 
     def testFunctions(self):
+        app = NSApplication.sharedApplication()
+
         self.failUnlessArgHasType(NSBestDepth, 4, 'o^' + objc._C_NSBOOL)
         self.failUnlessArgIsBOOL(NSBestDepth, 3)
         d, e = NSBestDepth(NSDeviceRGBColorSpace, 8, 32, False, None)
