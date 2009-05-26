@@ -6,14 +6,23 @@
   <xi:include href="layout.html" />
   <head>
     <title py:content="title">Sample name</title>
+    <style>
+      .sampledescr {
+        margin-left: 20px;
+      }
+    </style>
+
   </head>
 
   <body>
     <h1 py:content="title">Sample name</h1>
 
     <div py:for="path, name, summary in samples">
-      <a href="${path}/index.html"><h2>${name}</h2></a>
-      <p py:if="summary">${Markup(summary)}</p>
+      <h2 py:if="summary == -1">${name}</h2>
+      <div py:if="summary != -1" class="sampledescr">
+        <a href="${path}/index.html"><h3>${name}</h3></a>
+        <p py:if="summary">${Markup(summary)}</p>
+      </div>
     </div>
   </body>
 </html>

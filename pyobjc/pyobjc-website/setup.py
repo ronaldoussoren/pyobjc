@@ -94,8 +94,8 @@ class buildsite (Command):
 
         log.info("Emitting homepage")
         generator.emitHTML("/index.html", "site-index.html",  
-                pyobjc_version='2.2b1',
-                pyobjc_release_date='October 24th 2007',
+                pyobjc_version='2.2b2',
+                pyobjc_release_date='May 26th 2009',
                 news=news.newsSelection(newsItems),
                 bottommenu=root_menu)
 
