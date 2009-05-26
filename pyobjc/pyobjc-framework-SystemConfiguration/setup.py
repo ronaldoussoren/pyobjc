@@ -16,6 +16,12 @@ except ImportError:
     extra_cmdclass = {}
     extra_options = lambda name: {}
 
+import os
+if os.uname()[2] >= '9.':
+    CFLAGS=['-isysroot','/']
+else:
+    CFLAGS=[]
+
 setup(
     name='pyobjc-framework-SystemConfiguration',
     version='2.2b2',
@@ -37,6 +43,7 @@ setup(
     ext_modules = [
         Extension('SystemConfiguration._manual',
                  [ 'Modules/_manual.m' ],
+                 extra_compile_args=CFLAGS,
         ),
     ],
     test_suite='PyObjCTest',
