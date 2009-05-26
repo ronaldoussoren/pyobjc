@@ -333,6 +333,7 @@ PyObjCRT_SkipTypeQualifiers (const char* type)
 			*type == _C_INOUT ||
 			*type == _C_OUT ||
 			*type == _C_BYCOPY ||
+			*type == _C_BYREF ||
 			*type == _C_ONEWAY ||
 			*type == 'O') {
 		type++;
@@ -446,6 +447,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	case _C_INOUT:
 	case _C_OUT:
 	case _C_BYCOPY:
+	case _C_BYREF:
 	case _C_ONEWAY:
 
 		/* Just skip the following typespec */
@@ -562,6 +564,7 @@ PyObjCRT_NextField(const char *type)
 	case _C_INOUT:
 	case _C_OUT:
 	case _C_BYCOPY:
+	case _C_BYREF:
 	case _C_ONEWAY:
 
 		/* Just skip the following typespec */
@@ -723,6 +726,7 @@ PyObjCRT_AlignOfType (const char *type)
 	case _C_INOUT:
 	case _C_OUT:
 	case _C_BYCOPY:
+	case _C_BYREF:
 	case _C_ONEWAY:
 		return PyObjCRT_AlignOfType(type+1);
 	
@@ -880,6 +884,7 @@ PyObjCRT_SizeOfType (const char *type)
 	case _C_INOUT:
 	case _C_OUT:
 	case _C_BYCOPY:
+	case _C_BYREF:
 	case _C_ONEWAY:
 		return PyObjCRT_SizeOfType(type+1);
 

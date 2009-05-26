@@ -337,6 +337,7 @@ static const char ulong_type[] = { _C_ULNG, 0 };
 static ffi_type*
 signature_to_ffi_type(const char* argtype)
 {
+	argtype = PyObjCRT_SkipTypeQualifiers(argtype);
 	switch (*argtype) {
 	case _C_VOID: return &ffi_type_void;
 	case _C_ID: return &ffi_type_pointer;

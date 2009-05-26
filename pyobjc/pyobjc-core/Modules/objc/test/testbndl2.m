@@ -19584,6 +19584,16 @@ static id arg2id(const char* argtype, void* argptr)
 	return res;
 }
 
++(bycopy id)returnByCopy
+{
+	return nil;
+}
+
++(byref id)returnByRef
+{
+	return nil;
+}
+
 
 @end // implementation PyObjC_TestClass2
 

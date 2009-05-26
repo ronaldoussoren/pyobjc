@@ -30,6 +30,7 @@
 #define _C_INOUT    'N'
 #define _C_OUT      'o'
 #define _C_BYCOPY   'O'
+#define _C_BYREF   'R'
 #define _C_ONEWAY   'V'
 #define _C_LNG_LNG   'q'
 #define _C_ULNG_LNG  'Q'
