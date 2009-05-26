@@ -1,5 +1,22 @@
 ''' 
-Wrappers for framework 'LaunchServices'. 
+Wrappers for the "LaunchServices" framework on MacOSX. The API's in this 
+framework enable applications to open other applictions or their document
+files, simularly to how the Dock or Finder do that. 
+
+A number of tasks that can be implemented using this framework:
+
+ * Launch or activate applications
+
+ * Open documents in other applications
+
+ * Identify the preferred application for opening a document
+
+ * Register information about the kinds of documents an application
+   can open (UTI's)
+
+ * Obtain information for showing a document (display name, icon, ...)
+
+ * Maintain and update the contents of the Recent Items menu.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -27,16 +44,10 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "LaunchServices" ],
     package_dir = { '': 'Lib' },
-    setup_requires = [ 
-        'bdist_mpkg>=0.4.2',
-    ],
     install_requires = [ 
-        'pyobjc-core>=2.0',
-        'pyobjc-framework-Cocoa>=2.0',
-        #'pyobjc-framework-AE>=2.0',
-        #'pyobjc-framework-CoreServices>=2.0',
+        'pyobjc-core>=2.2b2',
+        'pyobjc-framework-Cocoa>=2.2b2',
     ],
-    dependency_links = [],
     package_data = { 
         '': ['*.bridgesupport'] 
     },

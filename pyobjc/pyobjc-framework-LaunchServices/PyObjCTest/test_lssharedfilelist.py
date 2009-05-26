@@ -42,7 +42,7 @@ class TestLSSharedFileList (TestCase):
         rl = CFRunLoopGetCurrent()
 
 
-        self.failUnlessArgIsFunction(LSSharedFileListAddObserver, 3, 'v^{OpaqueLSSharedFileListItemRef=}^v', True)
+        self.failUnlessArgIsFunction(LSSharedFileListAddObserver, 3, 'v^{OpaqueLSSharedFileListRef=}^v', True)
         self.failUnlessArgHasType(LSSharedFileListAddObserver, 4, '^v')
 
         @objc.callbackFor(LSSharedFileListAddObserver)
