@@ -682,7 +682,7 @@
   <function name='LSGetExtensionInfo'>
     <retval type='l' type64='i' />
     <arg type='L' type64='L' />
-    <arg c_array_length_in_arg='0' type='^S' type_modifier='n' />
+    <arg c_array_length_in_arg='0' type='^T' type_modifier='n' />
     <arg type='^I' type64='^I' type_modifier='o' />
   </function>
   <function name='LSGetHandlerOptionsForContentType'>
@@ -784,7 +784,11 @@
     <arg type='^{OpaqueLSSharedFileListRef=}' />
     <arg type='^{__CFRunLoop=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^?' type64='^?' />
+    <arg type='^?' type64='^?' function_pointer='true' function_pointer_retained='true' >
+	    <retval type='v'/>
+	    <arg type='^{OpaqueLSSharedFileListRef=}' />
+	    <arg type='^v' />
+    </arg>
     <arg type='^v' type64='^v' />
   </function>
   <function name='LSSharedFileListCopyProperty'>
@@ -798,7 +802,7 @@
     <arg type='^I' type64='^I' />
   </function>
   <function name='LSSharedFileListCreate'>
-    <retval type='^{OpaqueLSSharedFileListRef=}' />
+    <retval type='^{OpaqueLSSharedFileListRef=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFString=}' />
     <arg type='@' />
@@ -882,7 +886,11 @@
     <arg type='^{OpaqueLSSharedFileListRef=}' />
     <arg type='^{__CFRunLoop=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^?' type64='^?' />
+    <arg type='^?' type64='^?' function_pointer='true' function_pointer_retained='true' >
+	    <retval type='v'/>
+	    <arg type='^{OpaqueLSSharedFileListRef=}' />
+	    <arg type='^v' />
+    </arg>
     <arg type='^v' type64='^v' />
   </function>
   <function name='LSSharedFileListSetAuthorization'>
