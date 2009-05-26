@@ -18,9 +18,15 @@ except ImportError:
     extra_cmdclass = {}
     extra_options = lambda name: {}
 
+import os
+if os.uname()[2] >= '9.':
+    CFLAGS=['-isysroot', '/']
+else:
+    CFLAGS=[]
+
 setup(
     name='pyobjc-framework-FSEvents',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework FSEvents on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -42,7 +48,7 @@ setup(
     ext_modules = [
         Extension("FSEvents._callbacks",
             [ "Modules/_callbacks.m" ],
-            extra_compile_args=['-O0']),
+            extra_compile_args=CFLAGS),
     ],
     zip_safe = True,
 )

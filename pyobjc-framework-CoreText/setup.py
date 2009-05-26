@@ -18,9 +18,15 @@ except ImportError:
     extra_cmdclass = {}
     extra_options = lambda name: {}
 
+import os
+if os.uname()[2] > '9.':
+    CFLAGS=["-isysroot", "/"]
+else:
+    CFLAGS=[]
+
 setup(
     name='pyobjc-framework-CoreText',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework CoreText on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -32,12 +38,13 @@ setup(
     ext_modules = [
             Extension('CoreText._manual',
                 [ 'Modules/_manual.m' ],
-                extra_link_args=['-framework', 'CoreServices']),
+                extra_link_args=['-framework', 'CoreServices'],
+                extra_compile_args=CFLAGS),
     ],
     install_requires = [ 
-        'pyobjc-core>=2.2b2',
-        'pyobjc-framework-Cocoa>=2.2b2',
-        'pyobjc-framework-Quartz>=2.2b2',
+        'pyobjc-core>=2.2b3',
+        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-framework-Quartz>=2.2b3',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 

@@ -20,7 +20,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-InstantMessage',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework InstantMessage on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -30,9 +30,9 @@ setup(
     packages = [ "InstantMessage" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b2',
-        'pyobjc-framework-Cocoa>=2.2b2',
-        'pyobjc-framework-Quartz>=2.2b2',
+        'pyobjc-core>=2.2b3',
+        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-framework-Quartz>=2.2b3',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 
