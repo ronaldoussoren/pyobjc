@@ -96,7 +96,7 @@ def colorizeSources(inputdir, outputdir):
 
             fullpath = os.path.join(dirpath, fn)
             lexer = get_lexer_for_filename(fullpath)
-            formatter = HtmlFormatter(linenos = False, cssclass='source')
+            formatter = HtmlFormatter(cssclass='source', linenos='inline')
             result = highlight(open(fullpath, 'r').read(), lexer, formatter)
             style=formatter.get_style_defs()
             coloredFiles.append((path, colorFn, style, result))
@@ -206,6 +206,12 @@ def samplesForProject(generator, outputdir, framework, package, inputdir, allPro
                 bottommenu.append((title, subdir))
 
     for dirpath, dirnames, filenames in os.walk(inputdir):
+        if '.svn' in dirnames:
+            dirnames.remove('.svn')
+
+        toremove=[]
+
+        l = len(samples)
         for dn in dirnames:
             if os.path.exists(os.path.join(dirpath, dn, 'setup.py')):
                 # Found a sample
@@ -214,6 +220,20 @@ def samplesForProject(generator, outputdir, framework, package, inputdir, allPro
                         os.path.join(outputdir, relpath),
                         dn, os.path.join(dirpath, dn), allProjects)
                 samples.append((relpath, dn, summary))
+                toremove.append(dn)
+
+        for dn in toremove:
+            # Don't peek inside examples for subexamples.
+            dirnames.remove(dn)
+
+
+        if len(samples) != l and dirpath != inputdir:
+            # We added some samples from a subdirectory, add subheader.
+            relpath = dirpath[len(inputdir)+1:]
+            samples.append((relpath, relpath, -1))
+
+
+    samples.sort()
 
     if samples:
 

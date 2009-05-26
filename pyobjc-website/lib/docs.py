@@ -22,9 +22,12 @@ from pygments import highlight
 from pygments.lexers import get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 
+from genshi.core import Markup
+
 from docutils.core import publish_parts
 
 from distutils import log
+import source_directive
 
 def nameForProject(project):
     if project == 'pyobjc-core':
@@ -81,7 +84,7 @@ def generateProjectDocumentation(generator, projhtml, projroot, newsfile, name, 
             'documentation-doc.html',
 
             name=name,
-            title=title,
+            title=Markup(title),
             body=parts['body'],
             bottommenu=allProjects,
         )
@@ -114,14 +117,14 @@ def generateProjectDocumentation(generator, projhtml, projroot, newsfile, name, 
             title=parts['title']
             if not title:
                 title = os.path.splitext(fn)[0]
-            doclist.append((title, docurl))
+            doclist.append((Markup(title), docurl))
 
             generator.emitHTML(
                 docurl,
                 'documentation-doc.html',
 
                 name=name,
-                title=title,
+                title=Markup(title),
                 body=parts['body'],
                 bottommenu=allProjects,
             )
@@ -181,14 +184,14 @@ def generateProjectDocumentation(generator, projhtml, projroot, newsfile, name, 
                         title = os.path.splitext(fn)[0]
 
                     if fn == 'index.txt':
-                        doclist.append((title, tuturl))
+                        doclist.append((Markup(title), tuturl))
 
                     generator.emitHTML(
                         tuturl,
                         'documentation-doc.html',
 
                         name=name,
-                        title=title,
+                        title=Markup(title),
                         body=parts['body'],
                         bottommenu=allProjects,
                     )
