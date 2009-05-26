@@ -20,7 +20,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Collaboration',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework Collaboration on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -30,8 +30,8 @@ setup(
     packages = [ "Collaboration" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b2',
-        'pyobjc-framework-Cocoa>=2.2b2',
+        'pyobjc-core>=2.2b3',
+        'pyobjc-framework-Cocoa>=2.2b3',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 

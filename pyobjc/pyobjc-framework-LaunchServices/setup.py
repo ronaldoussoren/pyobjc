@@ -35,7 +35,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-LaunchServices',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework LaunchServices on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -45,8 +45,8 @@ setup(
     packages = [ "LaunchServices" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b2',
-        'pyobjc-framework-Cocoa>=2.2b2',
+        'pyobjc-core>=2.2b3',
+        'pyobjc-framework-Cocoa>=2.2b3',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 

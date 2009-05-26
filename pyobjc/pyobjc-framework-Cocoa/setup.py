@@ -42,7 +42,7 @@ extra_cmdclass['build_ext'] = pyobjc_build_ext
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',

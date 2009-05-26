@@ -30,7 +30,7 @@ else:
 
 setup(
     name='pyobjc-framework-CFNetwork',
-    version='2.2b2',
+    version='2.2b3',
     description = "Wrappers for the framework CFNetwork on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -40,8 +40,8 @@ setup(
     packages = [ "CFNetwork" ],
     package_dir = { '': 'Lib/' },
     install_requires = [ 
-        'pyobjc-core>=2.2b2',
-        'pyobjc-framework-Cocoa>=2.2b2',
+        'pyobjc-core>=2.2b3',
+        'pyobjc-framework-Cocoa>=2.2b3',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 
