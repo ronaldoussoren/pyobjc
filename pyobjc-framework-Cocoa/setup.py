@@ -12,7 +12,7 @@ ez_setup.use_setuptools()
 
 from setuptools import setup, Extension
 
-from setuptools.command import build_ext
+from setuptools.command import build_ext, install_lib
 
 import os
 if int(os.uname()[2].split('.')[0]) <= 8:
@@ -29,6 +29,18 @@ except ImportError:
     extra_options = lambda name: {}
 
 
+from setuptools.command import build_ext, install_lib
+import os
+
+class pyobjc_install_lib (install_lib.install_lib):
+    def get_exclusions(self):
+        result = install_lib.install_lib.get_exclusions(self)
+        for fn in install_lib._install_lib.get_outputs(self):
+            if 'PyObjCTest' in fn:
+                result[fn] = 1
+
+        return result
+
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
         build_ext.build_ext.run(self)
@@ -39,6 +51,7 @@ class pyobjc_build_ext (build_ext.build_ext):
         self.extensions = extensions
 
 extra_cmdclass['build_ext'] = pyobjc_build_ext
+extra_cmdclass['install_lib'] = pyobjc_install_lib
 
 setup(
     name='pyobjc-framework-Cocoa',
