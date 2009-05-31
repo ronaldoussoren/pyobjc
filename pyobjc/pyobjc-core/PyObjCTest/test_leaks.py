@@ -21,14 +21,14 @@ class SlottedClass (NSObject):
     __slots__ = ('slot1',)
 
     def init(self):
-        self = NSObject.init(self)
+        NSObject.pyobjc_instanceMethods.init(self)
         self.slot1 = LeaksClass.alloc().init()
         return self
 
 class MemberClass (NSObject):
 
     def init(self):
-        self = NSObject.init(self)
+        self = NSObject.pyobjc_instanceMethods.init(self)
         self.slot1 = LeaksClass.alloc().init()
         return self
 

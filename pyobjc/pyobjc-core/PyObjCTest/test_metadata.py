@@ -963,7 +963,7 @@ class TestMetaDataAccess (TestCase):
         meta = OC_MetaDataTest.alloc.__metadata__()
         self.assertEquals(meta['classmethod'], True)
 
-        meta = OC_MetaDataTest.init.__metadata__()
+        meta = OC_MetaDataTest.pyobjc_instanceMethods.init.__metadata__()
         self.assertEquals(meta['classmethod'], False)
 
 
