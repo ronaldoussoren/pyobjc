@@ -48,9 +48,17 @@ MacOS X 10.5.
 """
 
 from setuptools import setup, Extension, find_packages
-from setuptools.command import build_ext
+from setuptools.command import build_ext, install_lib
 import os
 
+class pyobjc_install_lib (install_lib.install_lib):
+    def get_exclusions(self):
+        result = install_lib.install_lib.get_exclusions(self)
+        for fn in install_lib._install_lib.get_outputs(self):
+	    if 'PyObjCTest' in fn:
+                result[fn] = 1
+
+	return result
 
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
@@ -309,7 +317,7 @@ dist = setup(
     namespace_packages = ['PyObjCTools'],
     package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     extra_path = "PyObjC",
-    cmdclass = {'build_ext': pyobjc_build_ext },
+    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib },
     options = {'egg_info': {'egg_base': 'Lib'}},
     classifiers = CLASSIFIERS,
     license = 'MIT License',
