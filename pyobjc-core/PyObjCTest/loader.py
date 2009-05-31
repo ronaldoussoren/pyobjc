@@ -64,4 +64,9 @@ def makeTestSuite():
         
     suite = unittest.TestSuite((plain_suite, deja_suite))
 
+    # the libffi tests don't work unless we use our own
+    # copy of libffi.
+    import __main__
+    if __main__.USE_SYSTEM_FFI:
+        return plain_suite
     return suite

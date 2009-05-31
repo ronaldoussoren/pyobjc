@@ -154,7 +154,7 @@ class TestCopying (TestCase):
 
         class MITestClass1 (NSObject, MixinClass1):
             def init(self):
-                return NSObject.init(self)
+                return NSObject.pyobjc_instanceMethods.init(self)
 
         self.assert_(hasattr(MITestClass1, 'mixinMethod'))
 
@@ -169,7 +169,7 @@ class TestCopying (TestCase):
 
         class MITestClass2 (NSObject, MixinClass2):
             def init(self):
-                return NSObject.init(self)
+                return NSObject.pyobjc_instanceMethods.init(self)
 
         self.assert_(hasattr(MITestClass2, 'mixinMethod'))
 

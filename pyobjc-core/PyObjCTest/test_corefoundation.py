@@ -45,6 +45,7 @@ class TestCoreFoundation (TestCase):
     def testBridged(self):
 
         obj = OC_TestCoreFoundation.newUUID()
+        print obj, type(obj)
 
         self.assert_( isinstance(obj, CFUUIDRef) )
         self.assert_( isinstance(obj, objc.lookUpClass("NSCFType")) )

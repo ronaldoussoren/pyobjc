@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
 import objc
-from PyObjCTools.opaque import *
+from PyObjCTest.opaque import *
 
 class TestFromPython (TestCase):
     def testBasic (self):
