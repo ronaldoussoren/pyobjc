@@ -89,6 +89,11 @@ _UseKVO(NSObject *self, NSString *key, BOOL isSet)
 #endif
 
 /* Special methods for Python subclasses of Objective-C objects */
+static void object_method_finalize(
+		ffi_cif* cif,
+		void* retval,
+		void** args,
+		void* userarg);
 static void object_method_dealloc(
 		ffi_cif* cif,
 		void* retval,
@@ -331,6 +336,16 @@ build_intermediate_class(Class base_class, char* name)
 	if (closure == NULL) goto error_cleanup;
 
 	preclass_addMethod( intermediate_class, @selector(dealloc),
+			(IMP)closure, "v@:");
+
+	methinfo = PyObjCMethodSignature_FromSignature("v@:");
+	if (methinfo == NULL) goto error_cleanup; 
+	closure = PyObjCFFI_MakeClosure(methinfo, object_method_finalize,
+		base_class);
+	Py_DECREF(methinfo); methinfo = NULL;
+	if (closure == NULL) goto error_cleanup;
+
+	preclass_addMethod( intermediate_class, @selector(finalize),
 			(IMP)closure, "v@:");
 
 	methinfo = PyObjCMethodSignature_FromSignature("@@:@");
@@ -671,6 +686,11 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	} else {
 		need_intermediate = 1;
 	}
+	if (PyDict_GetItemString(class_dict, "finalize") == NULL) {
+		PyErr_Clear();
+	} else {
+		need_intermediate = 1;
+	}
 	if (PyDict_GetItemString(class_dict, "valueForKey_") == NULL) {
 		PyErr_Clear();
 	} else {
@@ -961,6 +981,11 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				@selector(dealloc), 
 				"v@:", 
 				object_method_dealloc);
+			METH(
+				"finalize", 
+				@selector(finalize), 
+				"v@:", 
+				object_method_finalize);
 			METH(
 				"storedValueForKey_",
 				@selector(storedValueForKey:),
@@ -1340,6 +1365,54 @@ free_ivars(id self, PyObject* volatile cls )
 			Py_DECREF(o);
 		}
 	}
+}
+
+/* -finalize */
+static void 
+object_method_finalize(
+		ffi_cif* cif __attribute__((__unused__)),
+		void* retval __attribute__((__unused__)),
+		void** args,
+		void* userdata)
+{
+	id self = *(id*)(args[0]);
+	SEL _meth = *(SEL*)(args[1]);
+
+	struct objc_super spr;
+	PyObject* obj;
+	PyObject* delmethod;
+	PyObject* cls;
+	PyObject* ptype, *pvalue, *ptraceback;
+
+	PyObjC_BEGIN_WITH_GIL
+
+		PyErr_Fetch(&ptype, &pvalue, &ptraceback);
+
+		cls = PyObjCClass_New(object_getClass(self));
+
+		delmethod = PyObjCClass_GetDelMethod(cls);
+		if (delmethod != NULL) {
+			PyObject* s = _PyObjCObject_NewDeallocHelper(self);
+			obj = PyObject_CallFunction(delmethod, "O", s);
+			_PyObjCObject_FreeDeallocHelper(s);
+			if (obj == NULL) {
+				PyErr_WriteUnraisable(delmethod);
+			} else {
+				Py_DECREF(obj);
+			}
+			Py_DECREF(delmethod);
+		}
+
+		free_ivars(self, cls);
+
+		PyErr_Restore(ptype, pvalue, ptraceback);
+
+	PyObjC_END_WITH_GIL
+
+	objc_superSetClass(spr, (Class)userdata);
+	objc_superSetReceiver(spr, self);
+
+	objc_msgSendSuper(&spr, _meth);
 }
 
 /* -dealloc */

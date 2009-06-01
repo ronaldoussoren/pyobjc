@@ -7,6 +7,7 @@ import sys
 import os
 import glob
 import site
+import platform
 
 if 'MallocStackLogging' in os.environ:
     del os.environ['MallocStackLogging']
@@ -145,7 +146,7 @@ CFLAGS.extend([
 # The following flags are an attempt at getting rid of /usr/local
 # in the compiler search path.
     "-DPyObjC_STRICT_DEBUGGING",
-    "-DMACOSX",
+    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
     "-no-cpp-precomp",
     #"-Wno-long-double",
     #"-Wselector",

@@ -17,6 +17,7 @@
 #include "pyobjc.h"
 
 extern PyTypeObject PyObjCMethodSignature_Type;
+#define PyObjCMethodSignature_Check(obj) PyObject_TypeCheck(obj, &PyObjCMethodSignature_Type)
 
 enum _PyObjC_PointerType {
 	PyObjC_kPointerPlain = 0,

@@ -7,6 +7,24 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- There is initial support for Objective-C blocks, based on the implementation
+  description in the `clang repository`__. Blocks are represented in Python
+  as callable objects. This means you can pass an arbitrary callable when 
+  an Objective-C argument is a block, and that when your method accepts a block
+  it will get passed a callable object.
+
+  There are some limitations on the usage of blocks due to lack of introspection
+  in the current implementation of blocks. This has two side-effects:
+
+  * There must be metadata to describe the signature of blocks in PyObjC's
+    metadata XML files.
+
+  * Block metadata is not retained when a block is stored in an ObjC datastructure,
+    such as an ``NSArray``, and there are no direct references to the block from
+    Python.
+
+.. __: http://llvm.org/svn/llvm-project/cfe/trunk/docs/BlockImplementation.txt
+
 - ``objc.inject`` is no longer support. This was code that had no real relation
   to the rest of PyObjC and was only working in 32-bit mode with little reason
   to expect that it would ever be ported to 64-bit mode.

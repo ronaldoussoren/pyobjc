@@ -8,11 +8,21 @@
 #define PyObjCObject_kSHOULD_NOT_RELEASE      0x08
 #define PyObjCObject_kMAGIC_COOKIE      0x10
 #define PyObjCObject_kCFOBJECT      0x20
+#define PyObjCObject_kBLOCK      0x40
+
 typedef struct {
 	PyObject_HEAD
 	__strong id objc_object;
 	int 	    flags;
 } PyObjCObject;
+
+typedef struct {
+	PyObject_HEAD
+	__strong id objc_object;
+	int 	    flags;
+	PyObjCMethodSignature* signature;
+} PyObjCBlockObject;
+
 
 extern PyObjCClassObject PyObjCObject_Type;
 #define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)&PyObjCObject_Type)
@@ -26,6 +36,9 @@ void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_IsClassic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
+#define PyObjCObject_IsBlock(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kBLOCK)
+#define PyObjCObject_GetBlock(object) (((PyObjCBlockObject*)(object))->signature)
+#define PyObjCObject_SET_BLOCK(object, value) (((PyObjCBlockObject*)(object))->signature = (value))
 
 PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie);
 void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie);

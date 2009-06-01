@@ -146,6 +146,13 @@ object_dealloc(PyObject* obj)
 	PyObject* ptype, *pvalue, *ptraceback;
 	PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
+	if (PyObjCObject_IsBlock(obj)) {
+		PyObjCMethodSignature* v = PyObjCObject_GetBlock(obj);
+		Py_XDECREF(v);
+		PyObjCObject_SET_BLOCK(obj, NULL);	
+	}
+			
+
 	if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER 
 			&& PyObjCObject_GetObject(obj) != nil) {
 		/* Release the proxied object, we don't have to do this when
@@ -491,7 +498,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	obj_name = nil;
 	if (((PyObjCClassObject*)tp)->useKVO) {
 		if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
-			obj_name = [NSString stringWithCString:PyString_AS_STRING(name)];
+			obj_name = [NSString stringWithUTF8String:PyString_AS_STRING(name)];
 			_UseKVO((NSObject *)obj_inst, obj_name, YES);
 		}
 	}
@@ -588,6 +595,47 @@ obj_get_instanceMethods(PyObject* _self, void* closure __attribute__((__unused__
 	return PyObjCMethodAccessor_New((PyObject*)self, 0);
 }
 
+static PyObject*
+obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__)))
+{
+	if (PyObjCObject_IsBlock(self)) {
+		PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
+		if (v != NULL) {
+			Py_INCREF(v);
+			return v;
+		}
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+static int
+obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
+{
+	if (!PyObjCObject_IsBlock(self)) {
+		PyErr_SetString(PyExc_TypeError, "You can only change this value on blocks");
+		return  -1;
+	}
+
+	if (newVal != NULL) {
+		if (!PyObjCMethodSignature_Check(newVal)) {
+			PyErr_SetString(PyExc_TypeError, "New value must be a method signature");
+			return -1;
+		}
+	}
+
+	PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
+	if (v != NULL) {
+		Py_DECREF(v);
+	}
+
+
+	Py_XINCREF(newVal);
+	PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
+	return 0;
+}
+
+
 static PyGetSetDef obj_getset[] = {
 	{
 		"pyobjc_ISA",
@@ -601,6 +649,13 @@ static PyGetSetDef obj_getset[] = {
 		obj_get_instanceMethods,
 		NULL,
 		obj_get_instanceMethods_doc,
+		0
+	},
+	{
+		"__block_signature__",
+		obj_get_blocksignature,
+		obj_set_blocksignature,
+		"Call signature for a block, or None",
 		0
 	},
 	{ 0, 0, 0, 0, 0 }
@@ -818,6 +873,10 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 		return NULL;
 	}
 
+	if (cls_type->tp_basicsize == sizeof(PyObjCBlockObject)) {
+		flags |= PyObjCObject_kBLOCK;
+	}
+
 	/* This should be in the tp_alloc for the new class, but 
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
 	 */
@@ -825,6 +884,10 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 	
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = flags;
+
+	if (flags & PyObjCObject_kBLOCK) {
+		((PyObjCBlockObject*)res)->signature = NULL;
+        }
 
 	if (retain) {
 		if (strcmp(object_getClassName(objc_object), 

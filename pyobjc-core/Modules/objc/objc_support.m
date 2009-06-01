@@ -387,6 +387,10 @@ PyObjCRT_SkipTypeSpec (const char *type)
 
 	case _C_ID:
 		++type;
+		if (*type == '?') {
+			/* Block pointer */
+			type++;
+                }
 		if (*type == '"') {
 			/* embedded field name in an ivar_type */
 			type=strchr(type+1, '"');
