@@ -45,10 +45,8 @@ class TestCoreFoundation (TestCase):
     def testBridged(self):
 
         obj = OC_TestCoreFoundation.newUUID()
-        print obj, type(obj)
 
         self.assert_( isinstance(obj, CFUUIDRef) )
-        self.assert_( isinstance(obj, objc.lookUpClass("NSCFType")) )
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
@@ -65,7 +63,6 @@ class TestCoreFoundation (TestCase):
         obj = OC_TestCoreFoundation.anotherUUID()
 
         self.assert_( isinstance(obj, CFUUIDRef) )
-        self.assert_( isinstance(obj, objc.lookUpClass("NSCFType")) )
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
