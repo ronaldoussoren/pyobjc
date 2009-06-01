@@ -25,6 +25,10 @@ IMP PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector);
 PyObject *PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args);
 void PyObjCFFI_FreeIMP(IMP imp);
 
+typedef void (*PyObjCBlockFunction)(void*, ...);
+PyObjCBlockFunction PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* sig, PyObject* callable);
+void PyObjCFFI_FreeBlockFunction(PyObjCBlockFunction value);
+
 
 int PyObjCFFI_CountArguments(
 	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset, 

@@ -415,8 +415,8 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	}
 	if (s) xmlFree(s);
 
-	if (attribute_bool(node, "function_pointer", NULL, NO)) {
-		/* Function argument is a function pointer, there are
+	if (attribute_bool(node, "function_pointer", NULL, NO) || attribute_bool(node, "block", NULL, NO)) {
+		/* Function argument is a function pointer or a block, there are
 		 * subelements describing the full type
 		 */
 		v = PyBool_FromLong(
@@ -457,6 +457,39 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 		
 		xmlNode* al;
 		int idx = 0;
+		if (attribute_bool(node, "block", NULL, NO)) {
+			/* Blocks have an implict first argument, include that in the 
+			 * argument list.
+			 */
+			PyObject* a = PyDict_New();
+			if (a == NULL) {
+				Py_DECREF(result);
+				return NULL;
+			}
+			PyObject* av = PyString_FromString("^v");
+			if (av == NULL) {
+				Py_DECREF(a);
+				Py_DECREF(result);
+				return NULL;
+			}
+			PyDict_SetItemString(a, "type", av);
+			Py_DECREF(av);
+
+			av = PyInt_FromLong(idx++);
+			if (av == NULL) {
+				Py_DECREF(a);
+				Py_DECREF(av);
+				Py_DECREF(result);
+				return NULL;
+			}
+			r = PyDict_SetItem(arguments, av, a);
+			Py_DECREF(av); Py_DECREF(a);
+			if (r == -1) {
+				Py_DECREF(result);
+				return NULL;
+			}
+
+		}
 		for (al = node->children; al != NULL; al = al->next) {
 			if (al->type != XML_ELEMENT_NODE)  {
 				continue;

@@ -1718,6 +1718,9 @@ static PyMethodDef mod_methods[] = {
 	{ "_objc_sync_notifyAll", (PyCFunction)PyObjC_objc_sync_notifyAll,
 		METH_VARARGS, 
 		"notify a all threads waiting for mutex for an object" },
+	{ "_block_call", (PyCFunction)PyObjCBlock_Call,
+		METH_VARARGS,
+		"_block_call(block, signature, args, kwds) -> retval" },
 
 
 	{ 0, 0, 0, 0 } /* sentinel */
@@ -1800,6 +1803,11 @@ init_objc(void)
 		return;
 	}
 
+	if (PyObjCBlock_Setup() == -1) {
+		return;
+	}
+
+
 	PyType_Ready(&PyObjCClass_Type); 
 	PyType_Ready((PyTypeObject*)&PyObjCObject_Type);
 	PyType_Ready(&PyObjCSelector_Type); 
@@ -1834,6 +1842,7 @@ init_objc(void)
 
 	m = Py_InitModule4("_objc", mod_methods, NULL,
 			NULL, PYTHON_API_VERSION);
+
 
 	d = PyModule_GetDict(m);
 	/* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */

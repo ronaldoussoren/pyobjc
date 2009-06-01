@@ -17,7 +17,7 @@ TODO:
     set(['__cmp__'])
 
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature
+from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
 from itertools import imap
 import sys
 
@@ -625,4 +625,12 @@ def NSMutableData__setitem__(self, item, value):
 CLASS_METHODS['NSMutableData'] = (
     ('__setslice__', NSMutableData__setslice__),
     ('__setitem__', NSMutableData__setitem__),
+)
+
+
+def __call__(self, *args, **kwds):
+    return _block_call(self, self.__block_signature__, args, kwds)
+
+CLASS_METHODS['NSBlock'] = (
+    ('__call__', __call__),
 )

@@ -1405,6 +1405,13 @@ PyObjCClass_New(Class objc_class)
 	} else if (strcmp(className, "NSMutableData") == 0) {
 		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
 	}
+	if (strcmp(className, "NSBlock") == 0) {
+		((PyTypeObject *)result)->tp_basicsize = sizeof(PyObjCBlockObject);
+		((PyTypeObject *)result)->tp_call = PyObjCBlock_Call;
+		PyType_Modified((PyTypeObject*)result);
+		PyType_Ready((PyTypeObject *)result);
+	}
+
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {

@@ -285,13 +285,13 @@
 	return self;
 }
 
--(NSObject*)replacementObjectForCoder:(NSKeyedArchiver*)archiver
+-(NSObject*)replacementObjectForCoder:(NSCoder*)archiver
 {
 	(void)(archiver);
 	return self;
 }
 
--(NSObject*)replacementObjectForPortCoder:(NSKeyedArchiver*)archiver
+-(NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
 {
 	(void)(archiver);
 	return self;

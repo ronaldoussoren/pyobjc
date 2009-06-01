@@ -450,25 +450,25 @@
 
 #if 1
 
--(NSObject*)replacementObjectForArchiver:(NSObject*)archiver
+-(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
 {
 	(void)archiver;
 	return (NSObject*)self;
 }
 
--(NSObject*)replacementObjectForKeyedArchiver:(NSObject*)archiver
+-(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
 {
 	(void)archiver;
 	return (NSObject*)self;
 }
 
--(NSObject*)replacementObjectForCoder:(NSObject*)archiver
+-(NSObject*)replacementObjectForCoder:(NSCoder*)archiver
 {
 	(void)archiver;
 	return (NSObject*)self;
 }
 
--(NSObject*)replacementObjectForPortCoder:(NSObject*)archiver
+-(NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
 {
 	(void)archiver;
 	return (NSObject*)self;
