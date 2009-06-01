@@ -41,6 +41,7 @@ objc.parseBridgeSupport('''\
 
 
 class TestBlocks (TestCase):
+    @min_os_level('10.6')
     def testBlockToObjC(self):
         obj = OCTestBlock.alloc().init()
 	
@@ -55,6 +56,7 @@ class TestBlocks (TestCase):
 
 	self.failUnlessEqual(lst, [42, 43])
 
+    @min_os_level('10.6')
     def testBlockToObjC2(self):
         obj = OCTestBlock.alloc().init()
 	
@@ -66,6 +68,7 @@ class TestBlocks (TestCase):
 	self.failUnlessEqual(obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0)
 
 
+    @min_os_level('10.6')
     def testBlockFromObjC(self):
         obj = OCTestBlock.alloc().init()
 
@@ -76,6 +79,7 @@ class TestBlocks (TestCase):
         value = block()
         self.failUnlessEqual(value, 42)
 
+    @min_os_level('10.6')
     def testBlockFromObjC2(self):
         obj = OCTestBlock.alloc().init()
 

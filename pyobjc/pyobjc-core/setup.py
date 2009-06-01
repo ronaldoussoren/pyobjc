@@ -24,6 +24,7 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
+USE_SYSTEM_FFI = False
 if int(os.uname()[2].split('.')[0]) >= 10:
 	USE_SYSTEM_FFI = True
 
@@ -146,6 +147,7 @@ CFLAGS.extend([
 # The following flags are an attempt at getting rid of /usr/local
 # in the compiler search path.
     "-DPyObjC_STRICT_DEBUGGING",
+    "-DMACOSX", # For libffi
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
     "-no-cpp-precomp",
     #"-Wno-long-double",
