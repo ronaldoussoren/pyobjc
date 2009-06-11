@@ -3261,18 +3261,35 @@ PyObjCFFI_BuildResult(
 
 		/* default behaviour: */
 		if (objc_result == NULL) {
-			objc_result = pythonify_c_return_value (tp, pRetval);
-			if (objc_result == NULL) {
-				return NULL;
-			}
-
 			if (tp[0] == _C_ID && tp[1] == '?') {
+				/* The value is a block, those values are
+				 * treated slightly differently than normal:
+				 * - always use -copy on them to ensure we
+				 *   can safely store them.
+				 * - try to attach the calling signature to the
+				 *   block.
+				 */
+				id v = [*(id*)pRetval copy];
+				objc_result = pythonify_c_return_value (tp, &v);
+				[v release];
+				if (objc_result == NULL) {
+					return NULL;
+				}
+
 				if (methinfo->rettype.callable != NULL) {
 					if (PyObjCObject_IsBlock(objc_result) && PyObjCObject_GetBlock(objc_result) == NULL) {
 						PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype.callable);
 						Py_INCREF(methinfo->rettype.callable);
 					}
 				}
+
+			} else {
+
+				objc_result = pythonify_c_return_value (tp, pRetval);
+				if (objc_result == NULL) {
+					return NULL;
+				}
+
 			}
 
 			if (methinfo->rettype.alreadyRetained) {
@@ -3359,14 +3376,20 @@ PyObjCFFI_BuildResult(
 					} else {
 						switch (methinfo->argtype[i].ptrType) {
 						case PyObjC_kPointerPlain:
-							v = pythonify_c_value(resttype, arg);
+
 							if (resttype[0] == _C_ID && resttype[1] == '?') {
+								id tmp = [*(id*)arg copy];
+								v = pythonify_c_value(resttype, &tmp);
+								[tmp release];
+
 								if (methinfo->argtype[i].callable != NULL) {
 									if (PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL) {
 										PyObjCObject_SET_BLOCK(v, methinfo->argtype[i].callable);
 										Py_INCREF(methinfo->argtype[i].callable);
 									}
 								}
+							} else {
+								v = pythonify_c_value(resttype, arg);
 							}
 							if (methinfo->argtype[i].alreadyRetained && PyObjCObject_Check(v)) {
 								[PyObjCObject_GetObject(v) release];
