@@ -1,9 +1,10 @@
 from PyObjCTools.TestSupport import *
 from PyObjCTest import structargs
 from PyObjCTest import testbndl
+from PyObjCTest import copying
 
 import objc, sys
-from PyObjCTest.fnd import NSObject
+from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
 
@@ -149,6 +150,69 @@ if sys.byteorder == 'little':
 
         p = self.AlignmentTestClass.alloc().init()
         self.assertEquals(p.testWithObject_(o) % 16, o.stackPtr() % 16)
+
+
+
+#
+# Regression in retainCount management when a Python object
+# is created from Objective-C. This only happened when the
+# Python class has an implementation of the designated initializer.
+#
+# Mentioned by Dirk Stoop on the Pyobjc-dev mailing-list.
+#
+
+gDeallocCounter = 0
+class OC_LeakTest_20090704_init (NSObject):
+    def init(self):
+        #self = super(OC_LeakTest_20090704_init, self).init()
+        return self
+
+    def dealloc(self):
+        global gDeallocCounter
+        gDeallocCounter += 1
+
+class OC_LeakTest_20090704_noinit (NSObject):
+    def dealloc(self):
+        global gDeallocCounter 
+        gDeallocCounter += 1
+
+
+class TestInitMemoryLeak (TestCase):
+    def testNoPythonInit(self):
+        # This test is basicly a self-test of the test-case, the
+        # test even passed before the regression was fixed.
+
+        global gDeallocCounter
+
+        pool = NSAutoreleasePool.alloc().init()
+        try:
+            v = copying.OC_CopyHelper.newObjectOfClass_(OC_LeakTest_20090704_noinit)
+            self.failUnlessIsInstance(v, OC_LeakTest_20090704_noinit)
+
+            gDeallocCounter = 0
+            del v
+
+        finally:
+            del pool
+
+        self.failIfEqual(gDeallocCounter, 0)
+
+    def testWithPythonInit(self):
+        global gDeallocCounter
+
+        pool = NSAutoreleasePool.alloc().init()
+        try:
+            v = copying.OC_CopyHelper.newObjectOfClass_(OC_LeakTest_20090704_init)
+            self.failUnlessIsInstance(v, OC_LeakTest_20090704_init)
+
+            gDeallocCounter = 0
+            del v
+
+        finally:
+            del pool
+
+        self.failIfEqual(gDeallocCounter, 0)
+
 
 if __name__ == '__main__':
     main()
