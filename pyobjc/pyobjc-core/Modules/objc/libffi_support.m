@@ -1221,11 +1221,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	}
 
 	res = PyObject_Call(callable, arglist, NULL);
-
 	Py_DECREF(arglist);
-	if (pyself) {
-		PyObjCObject_ReleaseTransient(pyself, cookie);
-	}
+
 	if (res == NULL) {
 		goto error;
 	}
@@ -1756,9 +1753,16 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			}
 		}
 
+	}
+	Py_DECREF(res);
 
-		Py_DECREF(res);
-
+	/* Do this at the end to ensure we work correctly when
+	 * 'res' is 'pyself' and 'pyself' those are the only
+	 * references from Python (that is, 'pyself' is a 
+	 * "transient" reference.
+	 */
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie);
 	}
 
 	PyGILState_Release(state);
@@ -1766,6 +1770,9 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	return;
 
 error:
+	if (pyself) {
+		PyObjCObject_ReleaseTransient(pyself, cookie);
+	}
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
@@ -2018,6 +2025,7 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 		PyObjCPythonSelector *pythonSelector = (PyObjCPythonSelector *) aSelector;
 		PyObjCMethodSignature* methinfo = PyObjCMethodSignature_ForSelector(
 				pythonSelector->sel_class, 
+//				(pythonSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 				pythonSelector->sel_selector,
 				pythonSelector->sel_python_signature);
 

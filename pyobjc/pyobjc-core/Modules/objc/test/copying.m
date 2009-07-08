@@ -13,6 +13,7 @@
 @interface OC_CopyHelper : NSObject
 { }
 +(NSObject*)doCopySetup:(Class)aClass;
++(NSObject*)newObjectOfClass:(Class)aClass;
 @end
 
 @implementation OC_CopyHelper
@@ -27,6 +28,10 @@
 	retval = [tmp copyWithZone:nil];
 	[tmp release];
 	return retval;
+}
++(NSObject*)newObjectOfClass:(Class)aClass
+{
+	return [[aClass alloc] init];
 }
 @end
 
