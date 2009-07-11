@@ -38,7 +38,7 @@ setup(
     url='http://pyobjc.sourceforge.net',
     platforms = [ "MacOS X" ],
     packages = [ "CFNetwork" ],
-    package_dir = { '': 'Lib/' },
+    package_dir = { '': 'Lib' },
     install_requires = [ 
         'pyobjc-core>=2.2b3',
         'pyobjc-framework-Cocoa>=2.2b3',
