@@ -272,6 +272,7 @@ static PyObject** _get_dictptr(PyObject* obj)
 }
 
 
+
 static PyObject *
 object_getattro(PyObject *obj, PyObject * volatile name)
 {
@@ -946,4 +947,20 @@ PyObjCObject_ClearObject(PyObject* object)
 	PyObjC_UnregisterPythonProxy(
 			((PyObjCObject*)object)->objc_object, object);
 	((PyObjCObject*)object)->objc_object = nil;
+}
+
+PyObject* PyObjCObject_GetAttr(PyObject* obj, PyObject* name)
+{
+	return object_getattro(obj, name);
+}
+
+
+PyObject* PyObjCObject_GetAttrString(PyObject* obj, char* name)
+{
+	PyObject* pyname = PyString_FromString(name);
+	if (pyname == NULL) return NULL;
+
+	PyObject* rv = object_getattro(obj, pyname);
+	Py_DECREF(pyname);
+	return rv;
 }

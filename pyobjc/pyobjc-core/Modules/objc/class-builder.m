@@ -2093,8 +2093,16 @@ object_method_valueForKey_(
 		objc_superSetReceiver(spr, self);
 		*((id *)retval) = (id)objc_msgSendSuper(&spr, _meth, key);
 	NS_HANDLER
+
 		/* Parent doesn't know the key, try to create in the 
 		 * python side, just like for plain python objects.
+		 *
+		 * NOTE: We have to be extermely careful in here, some classes,
+		 * like NSManagedContext convert __getattr__ into a -valueForKey:,
+		 * and that can cause infinite loops.
+		 *
+		 * This is why attribute access is hardcoded using PyObjCObject_GetAttrString
+		 * rather than PyObject_GetAttrString.
 		 */
 		if (([[localException name] isEqual:@"NSUnknownKeyException"]
 			) && [[self class] accessInstanceVariablesDirectly]) {
@@ -2104,10 +2112,10 @@ object_method_valueForKey_(
 			PyObject *res = NULL;
 			r = -1;
 			do {
-				res = PyObject_GetAttrString(selfObj, (char *)[key UTF8String]);
+				res = PyObjCObject_GetAttrString(selfObj, (char *)[key UTF8String]);
 				if (res == NULL) {
 					PyErr_Clear();
-					res = PyObject_GetAttrString(selfObj, (char *)[[@"_" stringByAppendingString:key] UTF8String]);
+					res = PyObjCObject_GetAttrString(selfObj, (char *)[[@"_" stringByAppendingString:key] UTF8String]);
 					if (res == NULL) {
 						break;
 					}
