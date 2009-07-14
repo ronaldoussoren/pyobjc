@@ -196,22 +196,27 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
             objc.synthesize('someTitle', copy=True)
 
     """
+    if not name:
+        raise ValueError("Empty property name")
+
     if ivarName is None:
         ivarName = '_' + name
 
     classDict = sys._getframe(1).f_locals
 
+    setterName = 'set%s%s_'%(name[0].upper(), name[1:])
+
     if copy:
         setter = textwrap.dedent('''
-            def set%(name)s_(self, value):
+            def %(name)s(self, value):
                 self.%(ivar)s = value.copy()
-            ''' % dict(name=name.capitalize(), ivar=ivarName))
+            ''' % dict(name=setterName, ivar=ivarName))
 
     else:
         setter = textwrap.dedent('''
-            def set%(name)s_(self, value):
+            def %(name)s(self, value):
                 self.%(ivar)s = value
-            ''' % dict(name=name.capitalize(), ivar=ivarName))
+            ''' % dict(name=setterName, ivar=ivarName))
 
     getter = textwrap.dedent('''
             def %(name)s(self):
@@ -224,5 +229,3 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
     exec getter in classDict
 
     classDict[ivarName] = ivar(type=type)
-
-
