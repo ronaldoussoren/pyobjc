@@ -1514,7 +1514,7 @@ m_CGEventTapCreate(
 	CGEventMask eventsOfInterest;
 	CFMachPortRef result = NULL;
 
-	if (!PyArg_ParseTuple(args, "OOOOO",
+	if (!PyArg_ParseTuple(args, "OOOOOO",
 		&py_tap, &py_place, &py_options, &py_eventsOfInterest,
 		&callback, &info)) {
 
@@ -1557,7 +1557,9 @@ m_CGEventTapCreate(
 	}
 
 	PyObject* retval = PyObjC_ObjCToPython(@encode(CFMachPortRef), &result);
-	CFRelease(retval); /* Compensate for donated ref */
+	if (result != NULL) {
+		CFRelease(result); /* Compensate for donated ref */
+	}
 	return retval;
 }
 
