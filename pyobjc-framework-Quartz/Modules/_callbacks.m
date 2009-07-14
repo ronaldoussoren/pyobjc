@@ -1580,7 +1580,7 @@ m_CGEventTapCreateForPSN(
 	CGEventMask eventsOfInterest;
 	CFMachPortRef result = NULL;
 
-	if (!PyArg_ParseTuple(args, "OOOOO",
+	if (!PyArg_ParseTuple(args, "OOOOOO",
 		&py_psn, &py_place, &py_options, &py_eventsOfInterest,
 		&callback, &info)) {
 
@@ -1623,7 +1623,9 @@ m_CGEventTapCreateForPSN(
 	}
 
 	PyObject* retval = PyObjC_ObjCToPython(@encode(CFMachPortRef), &result);
-	CFRelease(retval); /* Compensate for donated ref */
+	if (result) {
+		CFRelease(result); /* Compensate for donated ref */
+	}
 	return retval;
 }
 
