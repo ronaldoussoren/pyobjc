@@ -88,7 +88,6 @@ class TableModel(NSObject):
         label = "%s%s: %s" % (word, ("s", "")[len(items) == 1], ", ".join([str(x) for x in items]))
         self.label.setStringValue_(label)
 
-    @objc.IBAction
     def windowShouldClose_(self, sender):
         print "Should Close?"
         return 0
