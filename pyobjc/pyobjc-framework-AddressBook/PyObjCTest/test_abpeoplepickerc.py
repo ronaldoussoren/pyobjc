@@ -24,7 +24,11 @@ class TestABPeoplePickerC (TestCase):
     def testFunctions(self):
         self.failUnlessResultIsCFRetained(ABPickerCreate)
         ref = ABPickerCreate()
-        self.failUnlessIsInstance(ref, ABPickerRef)
+        try:
+            self.failUnlessIsInstance(ref, (ABPickerRef, objc.lookUpClass('ABPeoplePickerCAdapter')))
+
+        except objc.error:
+            self.failUnlessIsInstance(ref, ABPickerRef)
 
         ABPickerSetFrame(ref, ((90, 100), (200, 400)))
         r = ABPickerGetFrame(ref, None)

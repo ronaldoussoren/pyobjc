@@ -81,8 +81,9 @@
   <constant name='kABPersonRecordType' type='^{__CFString=}' />
   <constant name='kABPhoneHomeFAXLabel' type='@' />
   <constant name='kABPhoneHomeLabel' type='@' />
-  <constant name='kABPhoneMainLabel' type='@' />
+  <constant name='kABPhoneiPhoneLabel' type='@' />
   <constant name='kABPhoneMobileLabel' type='@' />
+  <constant name='kABPhoneMainLabel' type='@' />
   <constant name='kABPhonePagerLabel' type='@' />
   <constant name='kABPhoneProperty' type='@' />
   <constant name='kABPhoneWorkFAXLabel' type='@' />
@@ -100,6 +101,8 @@
   <constant name='kABYahooInstantProperty' type='@' />
   <constant name='kABYahooWorkLabel' type='@' />
   <enum name='ABMultipleValueSelection' value='2' />
+  <enum name='kABShowAsResource' value='2' />
+  <enum name='kABShowAsRoom' value='3' />
   <enum name='ABNoValueSelection' value='0' />
   <enum name='ABSingleValueSelection' value='1' />
   <enum name='kABArrayProperty' value='5' />
