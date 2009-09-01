@@ -7,8 +7,7 @@ from DictionaryServices import *
 
 class TestDictionaryServices (TestCase):
     def testClasses(self):
-        self.failUnless( issubclass(DCSDictionaryRef, objc.lookUpClass('NSCFType')) )
-        self.failUnless( DCSDictionaryRef is not objc.lookUpClass('NSCFType') )
+        self.failUnlessIsCFType(DCSDictionaryRef)
 
     
     def testFunctions(self):
@@ -18,6 +17,9 @@ class TestDictionaryServices (TestCase):
 
         r = DCSCopyTextDefinition(None, u"the hello world program", r)
         self.failUnlessIsInstance(r, unicode)
+
+        v = DCSDictionaryGetTypeID()
+        self.failUnlessIsInstance(v, (int, long))
 
 
 if __name__ == "__main__":

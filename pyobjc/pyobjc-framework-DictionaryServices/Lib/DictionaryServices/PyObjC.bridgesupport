@@ -15,5 +15,8 @@
     <arg type='^{__CFString=}' />
     <arg type='l' type64='l' />
   </function>
+  <function name='DCSDictionaryGetTypeID'>
+	  <retval type='i' type64='q' />
+  </function>
 </signatures>
 
