@@ -28,5 +28,10 @@ class TestISyncClient (TestCase):
         self.failUnlessResultIsBOOL(ISyncClient.shouldSynchronizeWithClientsOfType_)
         self.failUnlessArgIsBOOL(ISyncClient.setShouldSynchronize_withClientsOfType_, 0)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(ISyncClient.formatsRelationships)
+        self.failUnlessArgIsBOOL(ISyncClient.setFormatsRelationships_, 0)
+
 if __name__ == "__main__":
     main()

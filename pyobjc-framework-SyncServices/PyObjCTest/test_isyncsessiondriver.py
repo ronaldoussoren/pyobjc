@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import *
 from SyncServices import *
 
 class TestISyncSessionDriverHelper (NSObject):
+    def sessionDriver_didNegotiateAndReturnError_(self, d, e): return 1
+    def sessionDriver_willNegotiateAndReturnError_(self, d, e): return 1
+    def sessionDriver_didReceiveSyncAlertAndReturnError_(self, d, e): return 1
+
     def recordsForEntityName_moreComing_error_(self, e, m, o):
         return (None, True, None)
     def applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_(self, c, e, i, r, err):
@@ -61,7 +65,7 @@ class TestISyncSessionDriver (TestCase):
     def testProtocols(self):
         self.failUnlessIsInstance(protocols.ISyncSessionDriverDataSourceOptionalMethods, objc.informal_protocol)
         self.failUnlessArgHasType(TestISyncSessionDriverHelper.recordsForEntityName_moreComing_error_, 1, objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
-        self.failUnlessArgHasType(TestISyncSessionDriverHelper.recordsForEntityName_moreComing_error_, 2, objc._C_OUT + objc._C_ID)
+        self.failUnlessArgHasType(TestISyncSessionDriverHelper.recordsForEntityName_moreComing_error_, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
 
         self.failUnlessResultHasType(TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_, objc._C_INT)
         self.failUnlessArgIsOut(TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_, 2)
@@ -94,6 +98,13 @@ class TestISyncSessionDriver (TestCase):
         self.failUnlessArgIsOut(TestISyncSessionDriverHelper.sessionDriver_didPullAndReturnError_, 1)
         self.failUnlessResultIsBOOL(TestISyncSessionDriverHelper.sessionDriver_willFinishSessionAndReturnError_)
         self.failUnlessArgIsOut(TestISyncSessionDriverHelper.sessionDriver_willFinishSessionAndReturnError_, 1)
+
+        self.failUnlessResultIsBOOL(TestISyncSessionDriverHelper.sessionDriver_didNegotiateAndReturnError_)
+        self.failUnlessArgIsOut(TestISyncSessionDriverHelper.sessionDriver_didNegotiateAndReturnError_, 1)
+        self.failUnlessResultIsBOOL(TestISyncSessionDriverHelper.sessionDriver_willNegotiateAndReturnError_)
+        self.failUnlessArgIsOut(TestISyncSessionDriverHelper.sessionDriver_willNegotiateAndReturnError_, 1)
+        self.failUnlessResultIsBOOL(TestISyncSessionDriverHelper.sessionDriver_didReceiveSyncAlertAndReturnError_)
+        self.failUnlessArgIsOut(TestISyncSessionDriverHelper.sessionDriver_didReceiveSyncAlertAndReturnError_, 1)
 
 
 if __name__ == "__main__":

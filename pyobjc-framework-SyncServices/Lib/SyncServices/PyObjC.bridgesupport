@@ -24,6 +24,15 @@
   <constant name='ISyncSessionCancelledException' type='@' />
   <constant name='ISyncSessionUnavailableException' type='@' />
   <constant name='ISyncUnsupportedEntityException' type='@' />
+  <constant name='ISyncChangePropertyValueIsDefaultKey' type='@' />
+  <constant name='ISyncInvalidSchemaException' type='@' />
+  <constant name='ISyncInvalidArgumentsException' type='@' />
+  <enum name='ISyncServerDisabledReasonNone' value='1000' />
+  <enum name='ISyncServerDisabledReasonByPreference' value='1001' />
+  <enum name='ISyncServerDisabledReasonSharedNetworkHome' value='1002' />
+  <enum name='ISyncServerDisabledReasonUnresponsive' value='1003' />
+  <enum name='ISyncServerDisabledReasonUnknown' value='1004' />
+  <enum name='ISyncChangeTypeNone' value='0' />
   <enum name='ISyncChangeTypeAdd' value='1' />
   <enum name='ISyncChangeTypeDelete' value='3' />
   <enum name='ISyncChangeTypeModify' value='2' />
@@ -73,6 +82,12 @@
     <method selector='attributedStringForPropertiesWithNames:inRecord:comparisonRecords:defaultAttributes:' type='@@:@@@@' />
   </informal_protocol>
   <class name='ISyncClient'>
+    <method selector='formatsRelationships'>
+      <retval type='B' />
+    </method>
+    <method selector='setFormatsRelationships:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='canPullChangesForEntityName:'>
       <retval type='B' />
     </method>
@@ -102,6 +117,9 @@
     </method>
   </class>
   <class name='ISyncManager'>
+    <method selector='clientWithIdentifier:needsSyncing:'>
+      <arg index='1' type='B' />
+    </method>
     <method selector='isEnabled'>
       <retval type='B' />
     </method>
@@ -195,19 +213,31 @@
     </method>
     <method selector='recordsForEntityName:moreComing:error:'>
       <arg index='1' type='^B' type_modifier='o' />
-      <arg index='2' type_modifier='o' />
+      <arg index='2' type_modifier='o' type='^@'/>
+    </method>
+    <method selector='sessionDriver:willNegotiateAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' type='^@'/>
+    </method>
+    <method selector='sessionDriver:didReceiveSyncAlertAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' type='^@'/>
+    </method>
+    <method selector='sessionDriver:didNegotiateAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' type='^@'/>
     </method>
     <method selector='sessionDriver:didPullAndReturnError:'>
       <retval type='B' />
-      <arg index='1' type_modifier='o' />
+      <arg index='1' type_modifier='o' type='^@'/>
     </method>
     <method selector='sessionDriver:didPushAndReturnError:'>
       <retval type='B' />
-      <arg index='1' type_modifier='o' />
+      <arg index='1' type_modifier='o' type='^@'/>
     </method>
     <method selector='sessionDriver:didRegisterClientAndReturnError:'>
       <retval type='B' />
-      <arg index='1' type_modifier='o' />
+      <arg index='1' type_modifier='o' type='^@'/>
     </method>
     <method selector='sessionDriver:willFinishSessionAndReturnError:'>
       <retval type='B' />
