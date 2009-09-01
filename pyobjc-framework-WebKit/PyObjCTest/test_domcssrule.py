@@ -12,6 +12,13 @@ class TestDOMCSSRule (TestCase):
         self.failUnlessEqual(DOM_FONT_FACE_RULE, 5)
         self.failUnlessEqual(DOM_PAGE_RULE, 6)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(DOM_VARIABLES_RULE, 7)
+        self.failUnlessEqual(DOM_WEBKIT_KEYFRAMES_RULE, 8)
+        self.failUnlessEqual(DOM_WEBKIT_KEYFRAME_RULE, 9)
+
+
 
 if __name__ == "__main__":
     main()

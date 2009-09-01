@@ -17,6 +17,16 @@ class TestDOMNode (TestCase):
         self.failUnlessEqual(DOM_DOCUMENT_FRAGMENT_NODE, 11)
         self.failUnlessEqual(DOM_NOTATION_NODE, 12)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_DISCONNECTED, 1)
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_PRECEDING, 2)
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_FOLLOWING, 4)
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_CONTAINS, 8)
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_CONTAINED_BY, 16)
+        self.failUnlessEqual(DOM_DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC, 32)
+
+
     def testMethods(self):
         self.failUnlessResultIsBOOL(DOMNode.hasChildNodes)
         self.failUnlessArgIsBOOL(DOMNode.cloneNode_, 0)
@@ -25,6 +35,8 @@ class TestDOMNode (TestCase):
         self.failUnlessResultIsBOOL(DOMNode.hasAttributes)
         self.failUnlessResultIsBOOL(DOMNode.isSameNode_)
         self.failUnlessResultIsBOOL(DOMNode.isEqualNode_)
+
+        self.failUnlessResultIsBOOL(DOMNode.isContentEditable)
 
 if __name__ == "__main__":
     main()

@@ -16,5 +16,8 @@ class TestDOMRange (TestCase):
         self.failUnlessResultIsBOOL(DOMRange.collapsed)
         self.failUnlessArgIsBOOL(DOMRange.collapse_, 0)
 
+        self.failUnlessResultIsBOOL(DOMRange.intersectsNode_)
+        self.failUnlessResultIsBOOL(DOMRange.isPointInRange_offset_)
+
 if __name__ == "__main__":
     main()
