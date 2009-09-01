@@ -215,7 +215,10 @@ PyObjCCFType_Setup(void)
 		return -1;
 	}
 
-	cls = objc_lookUpClass("NSCFType");
+	cls = objc_lookUpClass("__NSCFType");
+	if (cls == nil) {
+		cls = objc_lookUpClass("NSCFType");
+	}
 	if (cls == nil) {
 		PyErr_SetString(PyExc_RuntimeError,
 			"Cannot locate NSCFType");
@@ -250,7 +253,7 @@ PyObject* PyObjCCF_NewSpecial(char* typestr, void* datum)
 	PyObject* rval = NULL;
 	PyObject* v = PyDict_GetItemString(PyObjC_TypeStr2CFTypeID, typestr);
 	if (v == NULL) {
-		PyErr_SetString(PyExc_ValueError, "Unknown typestr");
+		PyErr_Format(PyExc_ValueError, "Don't know CF type for typestr '%s', cannot create special wrapper", typestr);
 		return NULL;
 	}
 	CFTypeID typeid;

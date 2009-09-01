@@ -24,6 +24,7 @@
 
 int PyObjC_VerboseLevel = 0;
 int PyObjC_HideProtected = 1;
+BOOL PyObjC_useKVO = YES;
 
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
@@ -36,6 +37,12 @@ PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 static NSAutoreleasePool* global_release_pool = nil;
 
 @interface OC_NSAutoreleasePoolCollector: NSObject
+  /* 
+   * This class is used to automaticly reset the
+   * global pool when an outer autorelease pool is
+   * recycled. This avoids problems when a python
+   * plugin is loaded in an Objective-C program.
+   */
 {}
 +(void)newAutoreleasePool;
 +(void)targetForBecomingMultiThreaded:(id)sender;
@@ -406,14 +413,17 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
 		return NULL;
 	}
 
-	PyObjC_DURING
-		[global_release_pool release];
-		[OC_NSAutoreleasePoolCollector newAutoreleasePool];
-	PyObjC_HANDLER
-		PyObjCErr_FromObjC(localException);
-	PyObjC_ENDHANDLER
+	if (global_release_pool != NULL) {
 
-	if (PyErr_Occurred()) return NULL;
+		PyObjC_DURING
+			[global_release_pool release];
+			[OC_NSAutoreleasePoolCollector newAutoreleasePool];
+		PyObjC_HANDLER
+			PyObjCErr_FromObjC(localException);
+		PyObjC_ENDHANDLER
+
+		if (PyErr_Occurred()) return NULL;
+	}
 
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -568,7 +578,7 @@ setHideProtected(PyObject* self __attribute__((__unused__)), PyObject* args, PyO
 static 	char* keywords[] = { "flag", NULL };
 	PyObject* o;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setVerbose",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
 			keywords, &o)) {
 		return NULL;
 	}
@@ -600,6 +610,28 @@ static 	char* keywords[] = { "level", NULL };
 
 	Py_INCREF(Py_None);
 	return Py_None;
+}
+
+PyDoc_STRVAR(setUseKVOForSetattr_doc,
+	"setUseKVOForSetattr(bool) -> bool\n"
+	"\n"
+	"Specify the default value for __useKVO__ on classes defined "
+	"after this call. Returns the previous value."
+);
+static PyObject* 
+setUseKVOForSetattr(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "value", NULL };
+	PyObject* o;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &o)) {
+		return NULL;
+	}
+
+	PyObject* result = PyBool_FromLong(PyObjC_useKVO);
+	PyObjC_useKVO = PyObject_IsTrue(o);
+
+	return result;
 }
 
 PyDoc_STRVAR(getVerbose_doc,
@@ -1392,84 +1424,6 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 	return NULL;
 }
 
-static PyObject*
-PyObjC_objc_sync_notify(PyObject* self __attribute__((__unused__)), PyObject* args)
-{
-	NSObject* object;
-	int rv;
-
-	if (!PyArg_ParseTuple(args, "O&", 
-			PyObjCObject_Convert, &object)) {
-		return NULL;
-	}
-
-	Py_BEGIN_ALLOW_THREADS
-		rv = objc_sync_notify(object);
-
-	Py_END_ALLOW_THREADS
-
-	if (rv == OBJC_SYNC_SUCCESS) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
-
-	PyErr_Format(PyObjCExc_LockError, "objc_sync_notify failed: %d", rv);
-	return NULL;
-}
-
-static PyObject*
-PyObjC_objc_sync_notifyAll(PyObject* self __attribute__((__unused__)), PyObject* args)
-{
-	NSObject* object;
-	int rv;
-
-	if (!PyArg_ParseTuple(args, "O&", 
-			PyObjCObject_Convert, &object)) {
-		return NULL;
-	}
-
-	Py_BEGIN_ALLOW_THREADS
-		rv = objc_sync_notifyAll(object);
-		
-	Py_END_ALLOW_THREADS
-
-	if (rv == OBJC_SYNC_SUCCESS) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
-
-	PyErr_Format(PyObjCExc_LockError, "objc_sync_notifyAll failed: %d", rv);
-	return NULL;
-}
-
-
-static PyObject*
-PyObjC_objc_sync_wait(PyObject* self __attribute__((__unused__)), PyObject* args)
-{
-	NSObject* object;
-	long long timeout;
-	int rv;
-
-	if (!PyArg_ParseTuple(args, "O&L", 
-			PyObjCObject_Convert, &object, &timeout)) {
-		return NULL;
-	}
-
-	Py_BEGIN_ALLOW_THREADS
-		rv = objc_sync_wait(object, timeout);
-	
-	Py_END_ALLOW_THREADS
-
-	if (rv == OBJC_SYNC_SUCCESS) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
-
-	PyErr_Format(PyObjCExc_LockError, "objc_sync_wait failed: %d", rv);
-	return NULL;
-}
-
-
 PyDoc_STRVAR(parseBridgeSupport_doc,
  "parseBridgeSupport(xmldata, globals, framework [, dylib_path] [, inlineTab]) -> None\n"
  "\n"
@@ -1656,6 +1610,7 @@ static PyMethodDef mod_methods[] = {
 	{ "_setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
 	{ "_getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
+	{ "setUseKVOForSetattr", (PyCFunction)setUseKVOForSetattr, METH_VARARGS|METH_KEYWORDS, setUseKVOForSetattr_doc },
 	{ "setHideProtected", (PyCFunction)setHideProtected, METH_VARARGS|METH_KEYWORDS, setHideProtected_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
@@ -1710,14 +1665,6 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS, "acquire mutex for an object" },
 	{ "_objc_sync_exit", (PyCFunction)PyObjC_objc_sync_exit,
 		METH_VARARGS, "release mutex for an object" },
-	{ "_objc_sync_wait", (PyCFunction)PyObjC_objc_sync_wait,
-		METH_VARARGS, "wait for mutex for an object" },
-	{ "_objc_sync_notify", (PyCFunction)PyObjC_objc_sync_notify,
-		METH_VARARGS, 
-		"notify a thread waiting for mutex for an object" },
-	{ "_objc_sync_notifyAll", (PyCFunction)PyObjC_objc_sync_notifyAll,
-		METH_VARARGS, 
-		"notify a all threads waiting for mutex for an object" },
 	{ "_block_call", (PyCFunction)PyObjCBlock_Call,
 		METH_VARARGS,
 		"_block_call(block, signature, args, kwds) -> retval" },
@@ -1946,5 +1893,6 @@ init_objc(void)
 	/* Allocate an auto-release pool for our own use, this avoids numerous
 	 * warnings during startup of a python script.
 	 */
+	global_release_pool = [[NSAutoreleasePool alloc] init];
 	[OC_NSAutoreleasePoolCollector newAutoreleasePool];
 }

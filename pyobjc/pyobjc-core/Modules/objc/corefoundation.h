@@ -9,4 +9,4 @@ extern PyObject* PyObjCCF_NewSpecial(char* encoding, void* datum);
 extern PyObject* PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum);
 
 
-#endif PyObjC_COREFOUNDATION_H
+#endif /* PyObjC_COREFOUNDATION_H */

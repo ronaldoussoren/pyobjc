@@ -35,14 +35,14 @@
 
 
 /*!
- * @method newWithPythonObject:
+ * @method arrayWithPythonObject:
  * @abstract Create a new OC_PythonArray for a specific Python sequence
  * @param value A python sequence
  * @result Returns an autoreleased instance representing value
  *
  * Caller must own the GIL.
  */
-+ newWithPythonObject:(PyObject*)value;
++ arrayWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:

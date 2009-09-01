@@ -28,7 +28,7 @@
  *
  * Caller must own the GIL.
  */
-+ newWithPythonObject:(PyObject*)value;
++ stringWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:

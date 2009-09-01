@@ -16,8 +16,6 @@ called.
 Blocks are only suppored when PyObjC is compiled using an Objective-C compiler
 that also supports blocks. 
 
-WARNING: This feature is still in development.
-
 Calling blocks from Python
 --------------------------
 

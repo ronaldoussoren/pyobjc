@@ -44,7 +44,7 @@ class TestCoreFoundation (TestCase):
 
     def testBridged(self):
 
-        obj = OC_TestCoreFoundation.newUUID()
+        obj = OC_TestCoreFoundation.createUUID()
 
         self.assert_( isinstance(obj, CFUUIDRef) )
 

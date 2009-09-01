@@ -83,6 +83,7 @@
 @end /* interface NSMethodSignature */
 
 
+extern BOOL PyObjC_useKVO;
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_HideProtected;
 extern int PyObjC_StrBridgeEnabled;

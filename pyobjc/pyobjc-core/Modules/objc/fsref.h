@@ -14,4 +14,4 @@ extern PyTypeObject PyObjC_FSRefType;
 #define PyObjC_FSRefCheck(value) \
 	PyObject_TypeCheck(value, &PyObjC_FSRefType)
 
-#endif PyObjC_FSREF_H
+#endif /* PyObjC_FSREF_H */

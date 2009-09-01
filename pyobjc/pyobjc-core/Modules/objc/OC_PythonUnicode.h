@@ -30,7 +30,7 @@
  *
  * Caller must own the GIL.
  */
-+ newWithPythonObject:(PyObject*)value;
++ unicodeWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:

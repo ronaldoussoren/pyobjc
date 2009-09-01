@@ -48,7 +48,7 @@ static PyObject* datetime_types = NULL;
 	return nil;
 }
 
-+ newWithPythonObject:(PyObject*)v;
++ dateWithPythonObject:(PyObject*)v;
 {
 	OC_PythonArray* res;
 

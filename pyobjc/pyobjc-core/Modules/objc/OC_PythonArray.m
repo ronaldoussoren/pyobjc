@@ -23,7 +23,7 @@ static PyObject* mapTypes = NULL;
 		if (!r) continue;
 
 		/* Instance of this type should be pythonifyed as a sequence */
-		return [OC_PythonArray newWithPythonObject:object];
+		return [[[OC_PythonArray alloc] initWithPythonObject:object] autorelease];
 	}
 
 	return NULL;
@@ -51,7 +51,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ newWithPythonObject:(PyObject*)v;
++ arrayWithPythonObject:(PyObject*)v;
 {
 	OC_PythonArray* res;
 
@@ -139,9 +139,8 @@ static PyObject* mapTypes = NULL;
 		err = depythonify_c_value(@encode(id), v, &result);
 		if (unlikely(err == -1)) {
 			PyObjC_GIL_FORWARD_EXC();
-		} else {
-			Py_DECREF(v);
-		}
+		} 
+		Py_CLEAR(v);
 	
 	PyObjC_END_WITH_GIL
 
@@ -305,10 +304,21 @@ static PyObject* mapTypes = NULL;
 	 * for other sequences use the generic pickle support code.
 	 */
 	if (PyTuple_CheckExact(value)) {
+		/* Encode tuples as type 4 with an explicit length, this allows
+		 * us to create the tuple during decoding instead of having to
+		 * create a temporary list. This is needed to get full support
+		 * for encoding all datastructures, and is needed to pass the
+		 * unittests for pickle in python2.7.
+		 *
+		 * NOTE: older versions used type 1 and no length.
+		 */
 		if ([coder allowsKeyedCoding]) {
-			[coder encodeInt32:1 forKey:@"pytype"];
+			[coder encodeInt32:4 forKey:@"pytype"];
+			[coder encodeInt32:PyTuple_Size(value) forKey:@"pylength"];
 		} else {
-			int v = 1;
+			int v = 4;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+			v = (int)PyTuple_Size(value);
 			[coder encodeValueOfObjCType:@encode(int) at:&v];
 		}
 		[super encodeWithCoder:coder];
@@ -345,16 +355,31 @@ static PyObject* mapTypes = NULL;
 {
 	NSUInteger i;
 	PyObjC_BEGIN_WITH_GIL
-		for  (i = 0; i < count; i++) {
-			PyObject* v = PyObjC_IdToPython(objects[i]);
-			if (v == NULL) {
-				PyObjC_GIL_FORWARD_EXC();
+		if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
+			for  (i = 0; i < count; i++) {
+				PyObject* v = PyObjC_IdToPython(objects[i]);
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+				if (PyTuple_GET_ITEM(value, i) != NULL) {
+					abort();
+				}
+				PyTuple_SET_ITEM(value, i, v);
+				/* Don't DECREF v; SetItem stole a reference */
 			}
-			int r = PyList_Append(value,  v);
-			if (r == -1) {
-				PyObjC_GIL_FORWARD_EXC();
+		} else {
+
+			for  (i = 0; i < count; i++) {
+				PyObject* v = PyObjC_IdToPython(objects[i]);
+				if (v == NULL) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+				int r = PyList_Append(value,  v);
+				if (r == -1) {
+					PyObjC_GIL_FORWARD_EXC();
+				}
+				Py_DECREF(v);
 			}
-			Py_DECREF(v);
 		}
 
 	PyObjC_END_WITH_GIL
@@ -376,21 +401,43 @@ static PyObject* mapTypes = NULL;
 {
 	PyObject* t;
 	int code;
+        int size;
 	if ([coder allowsKeyedCoding]) {
 		code = [coder decodeInt32ForKey:@"pytype"];
 	} else {
 		[coder decodeValueOfObjCType:@encode(int) at:&code];
 	}
 
-	PyObjC_BEGIN_WITH_GIL
-		value = PyList_New(0);
-		if (value == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
-		}
-	PyObjC_END_WITH_GIL
 
 	switch (code) {
+	case 4: 
+	      if ([coder allowsKeyedCoding]) {
+		      size = [coder decodeInt32ForKey:@"pylength"];
+	      } else {
+		      [coder decodeValueOfObjCType:@encode(int) at:&size];
+	      }
+
+	      PyObjC_BEGIN_WITH_GIL
+	          value = PyTuple_New(size);
+		  if (value == NULL){
+			PyObjC_GIL_FORWARD_EXC();
+		  }
+	      PyObjC_END_WITH_GIL
+	      [super initWithCoder:coder];
+	      return self;
+
+
 	case 1:
+	      /* This code was created by some previous versions of PyObjC
+	       * (before 2.2) and is kept around for backward compatibilty.
+	       */
+	      PyObjC_BEGIN_WITH_GIL
+	          value = PyList_New(0);
+		  if (value == NULL){
+			PyObjC_GIL_FORWARD_EXC();
+		  }
+	      PyObjC_END_WITH_GIL
+	      
 	      [super initWithCoder:coder];
 	      PyObjC_BEGIN_WITH_GIL
 		      t = value;
@@ -403,10 +450,22 @@ static PyObject* mapTypes = NULL;
 	      return self;
 
 	case 2:
+	      PyObjC_BEGIN_WITH_GIL
+	          value = PyList_New(0);
+		  if (value == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		   }
+	      PyObjC_END_WITH_GIL
 	      [super initWithCoder:coder];
 	      return self;
 
 	case 3:
+		PyObjC_BEGIN_WITH_GIL
+			value = PyList_New(0);
+			if (value == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+		PyObjC_END_WITH_GIL
 
 		if (PyObjC_Decoder != NULL) {
 			PyObjC_BEGIN_WITH_GIL

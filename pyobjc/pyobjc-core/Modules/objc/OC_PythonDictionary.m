@@ -19,7 +19,7 @@ static PyObject* mapTypes = NULL;
 	BOOL valid;
 	Py_ssize_t pos;
 }
-+ newWithWrappedDictionary:(OC_PythonDictionary*)value;
++ enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
 - initWithWrappedDictionary:(OC_PythonDictionary*)value;
 -(void)dealloc;
 
@@ -31,7 +31,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonDictionaryEnumerator
 
-+newWithWrappedDictionary:(OC_PythonDictionary*)v;
++enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v;
 {
 	return [[[self alloc] initWithWrappedDictionary:v] autorelease];
 }
@@ -86,7 +86,7 @@ static PyObject* mapTypes = NULL;
 		if (!r) continue;
 
 		/* Instance of this type should be pythonifyed as a sequence */
-		return [OC_PythonArray newWithPythonObject:object];
+		return [OC_PythonArray arrayWithPythonObject:object];
 	}
 
 	return NULL;
@@ -114,7 +114,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+newWithPythonObject:(PyObject*)v;
++dictionaryWithPythonObject:(PyObject*)v;
 {
 	OC_PythonDictionary* res = 
 		[[OC_PythonDictionary alloc] initWithPythonObject:v];
@@ -350,7 +350,7 @@ static PyObject* mapTypes = NULL;
 -(NSEnumerator *)keyEnumerator
 {
 	if (PyDict_CheckExact(value)) {
-		return [OC_PythonDictionaryEnumerator newWithWrappedDictionary:self];
+		return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 	} else {
 		PyObjC_BEGIN_WITH_GIL
 			PyObject* keys = PyObject_CallMethod(value, "keys", NULL);
@@ -364,7 +364,7 @@ static PyObject* mapTypes = NULL;
 				PyObjC_GIL_FORWARD_EXC();
 			}
 
-			NSEnumerator* result = [OC_PythonEnumerator newWithPythonObject:iter];
+			NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:iter];
 			PyObjC_GIL_RETURN(result);
 
 		PyObjC_END_WITH_GIL

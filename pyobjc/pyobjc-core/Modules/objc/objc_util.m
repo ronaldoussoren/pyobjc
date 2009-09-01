@@ -91,7 +91,7 @@ PyObjCErr_FromObjC(NSException* localException)
 		} else {
 			PyObject_SetAttrString(exc_value, "_pyobjc_exc_", exc);
 		}
-		Py_DECREF(exc); exc = NULL;
+		Py_CLEAR(exc); 
 		PyErr_Restore(exc_type, exc_value, exc_traceback);
 		PyGILState_Release(state);
 		return;
@@ -280,15 +280,15 @@ PyObjCErr_AsExc(void)
 	typerepr = PyObject_Str(exc_type);
 	userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
 	[userInfo setObject:
-		[OC_PythonObject newWithObject:exc_type]
+		[[[OC_PythonObject alloc] initWithObject:exc_type] autorelease]
 		forKey:@"__pyobjc_exc_type__"];
 	if (exc_value != NULL)
 		[userInfo setObject:
-			[OC_PythonObject newWithObject:exc_value]
+			[[[OC_PythonObject alloc] initWithObject:exc_value] autorelease]
 			forKey:@"__pyobjc_exc_value__"];
 	if (exc_traceback != NULL)
 		[userInfo setObject:
-			[OC_PythonObject newWithObject:exc_traceback]
+			[[[OC_PythonObject alloc] initWithObject:exc_traceback] autorelease]
 			forKey:@"__pyobjc_exc_traceback__"];
 
 	val = [NSException 
@@ -829,6 +829,8 @@ PyObjC_PythonToCArray(
 		if (buffer_get(writable, pythonList, (void**)&buf, &bufsize) == -1) {
 			return -1;
 		}
+
+		assert(eltsize != 0);
 		if ((bufsize % eltsize) != 0) {
 			PyErr_SetString(PyExc_ValueError, 
 					"Badly shaped array.array");

@@ -24,7 +24,7 @@ static PyObject* mapTypes = NULL;
 		if (!r) continue;
 
 		/* Instance of this type should be pythonifyed as a sequence */
-		return [OC_PythonSet newWithPythonObject:object];
+		return [OC_PythonSet setWithPythonObject:object];
 	}
 
 	return NULL;
@@ -52,7 +52,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ newWithPythonObject:(PyObject*)v;
++ setWithPythonObject:(PyObject*)v;
 {
 	OC_PythonSet* res;
 
@@ -322,7 +322,7 @@ static PyObject* mapTypes = NULL;
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		NSEnumerator* result = [OC_PythonEnumerator newWithPythonObject:tmp];
+		NSEnumerator* result = [OC_PythonEnumerator enumeratorWithPythonObject:tmp];
 		Py_DECREF(tmp);
 
 		PyObjC_GIL_RETURN(result);

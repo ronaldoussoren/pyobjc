@@ -58,6 +58,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 	sublist = PyDict_GetItemString(registry, (char*)sel_getName(selector));
 	if (sublist == NULL) return NULL;
 
+
 	len = PyList_Size(sublist);
 	for (i = 0; i < len; i++) {
 		Class cur_class;

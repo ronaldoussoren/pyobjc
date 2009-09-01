@@ -2,7 +2,7 @@
 
 @implementation OC_PythonNumber
 
-+ newWithPythonObject:(PyObject*)v;
++ numberWithPythonObject:(PyObject*)v;
 {
 	OC_PythonNumber* res;
 

@@ -32,13 +32,18 @@ def sdkForPython(_cache=[]):
         if m is None:
             return None
 
+
         path = m.group(1)
+        if path == '/':
+            return tuple(map(int, os_release().split('.')))
+
         bn = _os.path.basename(path)
         version = bn[6:-4]
         if version.endswith('u'):
             version = version[:-1]
 
-        return map(int, version.split('.'))
+
+        return tuple(map(int, version.split('.')))
 
     return _cache[0]
 
@@ -93,6 +98,8 @@ def onlyOn32Bit(function):
     The test runs only on 32-bit systems
     """
     if _sys.maxint > 2 ** 32:
+        if _sys.version_info[:2] >= (2, 7):
+            return _unittest.skip("only on 32-bit")(function)
         return None
     else:
         return function
@@ -113,7 +120,31 @@ def min_os_level(release):
             return function
 
     else:
+        if _sys.version_info[:2] >= (2, 7):
+            return _unittest.skip("min_os_level(%s)"%(release,))
+        else:
+            return None
+
+    return decorator
+
+def max_os_level(release):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @max_os_level('10.5')
+            def testUntilLeopard(self):
+                pass
+    """
+    if os_release() <= release:
         def decorator(function):
+            return function
+
+    else:
+        if _sys.version_info[:2] >= (2, 7):
+            return _unittest.skip("max_os_level(%s)"%(release,))
+        else:
             return None
 
     return decorator
@@ -299,6 +330,51 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "arg %d of %s; retained: %r, expected: %r"%(
                 argno, method, st, retained))
 
+    def failUnlessArgIsBlock(self, method, argno, sel_type, message=None):
+        if isinstance(method, objc.selector):
+            offset = 2
+        else:
+            offset = 0
+        info = method.__metadata__()
+        type = info['arguments'][argno+offset]['type']
+        if type != '@?':
+            self.fail(message or "arg %d of %s is not of type block: %s"%(
+                argno, method, type))
+
+        st = info['arguments'][argno+offset].get('callable')
+        if st is None:
+            self.fail(message or "arg %d of %s is not of type block: no callable"%(
+                argno, method))
+
+        iface = st['retval']['type']
+        if st['arguments'][0]['type'] != '^v':
+            self.fail(message or "arg %d of %s has an invalid block signature"%(argno, method))
+        for a in st['arguments'][1:]:
+            iface += a['type']
+
+        if iface != sel_type:
+            self.fail(message or "arg %d of %s is not a block with type %r, but %r"%(argno, method, sel_type, iface))
+
+    def failUnlessResultIsBlock(self, method, sel_type, message=None):
+        info = method.__metadata__()
+        type = info['retval']['type']
+        if type != '@?':
+            self.fail(message or "result of %s is not of type block"%(
+                method))
+
+        st = info['retval'].get('callable')
+        if st is None:
+            self.fail(message or "result of %s is not of type block"%(
+                method))
+
+        iface = st['retval']['type']
+        if st['arguments'][0]['type'] != '^v':
+            self.fail(message or "result %s has an invalid block signature"%(method))
+        for a in st['arguments'][1:]:
+            iface += a['type']
+
+        if iface != sel_type:
+            self.fail(message or "result of %s is not a block with type %r, but %r"%(method, sel_type, iface))
 
     def failUnlessArgIsSEL(self, method, argno, sel_type, message=None):
         if isinstance(method, objc.selector):
@@ -331,8 +407,8 @@ class TestCase (_unittest.TestCase):
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
         if type != objc._C_NSBOOL:
-            self.fail(message or "arg %d of %s is not of type BOOL"%(
-                argno, method))
+            self.fail(message or "arg %d of %s is not of type BOOL, but %r"%(
+                argno, method, type))
 
     def failUnlessArgIsFixedSize(self, method, argno, count, message=None):
         if isinstance(method, objc.selector):
@@ -419,6 +495,22 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "%s is an instance of %r"%(value, types))
 
     assertIsInstance = failUnlessIsInstance
+
+    def failUnlessIsIn(self, value, seq, message=None):
+        if value not in seq:
+            self.fail(message or "%r is not in %r"%(value, seq))
+
+    def failIfIsNotIn(self, value, seq, message=None):
+        if value not in seq:
+            self.fail(message or "%r is not in %r"%(value, seq))
+
+    def failUnlessIsNotIn(self, value, seq, message=None):
+        if value in seq:
+            self.fail(message or "%r is in %r"%(value, seq))
+
+    def failIfIsIn(self, value, seq, message=None):
+        if value in seq:
+            self.fail(message or "%r is in %r"%(value, seq))
 
     if not hasattr(_unittest.TestCase, "assertAlmostEquals"):
         def assertAlmostEquals(self, val1, val2, message=None):

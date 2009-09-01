@@ -66,7 +66,7 @@ struct _PyObjCMethodSignature {
 extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata);
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
-		                Class cls, SEL sel, const char* signature);
+		                Class cls, BOOL isClassMethod, SEL sel, const char* signature);
 
 
 

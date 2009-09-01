@@ -494,6 +494,7 @@ if PyObjCTest_KeyValueObserver is not None:
         # Check for using KVO in python.
 
         def testAutomaticObserving(self):
+            outer_pool = NSAutoreleasePool.alloc().init()
             observer = PyObjCTestObserver.alloc().init()
             o = PyObjCTestObserved2.alloc().init()
             pool = NSAutoreleasePool.alloc().init()
@@ -535,9 +536,11 @@ if PyObjCTest_KeyValueObserver is not None:
 
             before = DEALLOCS
             del o
+            del outer_pool
             self.assertEquals(DEALLOCS, before+1, u"Leaking an observed object")
 
         def testObserving(self):
+            outer_pool = NSAutoreleasePool.alloc().init()
             observer = PyObjCTestObserver.alloc().init()
 
             o = PyObjCTestObserved1.alloc().init()
@@ -598,6 +601,7 @@ if PyObjCTest_KeyValueObserver is not None:
 
             before = DEALLOCS
             del o
+            del outer_pool
             self.assertEquals(DEALLOCS, before+1, u"Leaking an observed object")
 
         def testObserving2(self):

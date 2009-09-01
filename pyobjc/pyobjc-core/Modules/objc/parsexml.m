@@ -37,7 +37,6 @@ static const char* gBooleanAttributes[] = {
 	"already_cfretained",
 	"c_array_length_in_result",
 	"c_array_delimited_by_null",
-	"null_accepted', ",
 	"c_array_of_variable_length",
 	"printf_format",
 	"free_result",
@@ -341,6 +340,17 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 			return NULL;
 		}
 	}
+
+	if (attribute_bool(node, "null_accepted", NULL, YES)) {
+		r = PyDict_SetItemString(result, "null_accepted", Py_True);
+	} else {
+		r = PyDict_SetItemString(result, "null_accepted", Py_False);
+	}
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
 
 	s = attribute_string(node, "c_array_length_in_arg", NULL);
 	if (s && *s) {

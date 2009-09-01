@@ -17,7 +17,7 @@
 // not toll-free bridged. 
 +(char*)signatureForCFUUIDRef;
 +(CFTypeID)typeidForCFUUIDRef;
-+(CFUUIDRef)newUUID;
++(CFUUIDRef)createUUID;
 +(NSString*)formatUUID:(CFUUIDRef)uuid;
 +(NSObject*)anotherUUID;
 
@@ -42,11 +42,13 @@
 	return CFUUIDGetTypeID();
 }
 
-+(CFUUIDRef)newUUID
++(CFUUIDRef)createUUID
 {
 	CFUUIDRef result =  CFUUIDCreate(NULL);
 
 	/* We own a reference, but want to released a borrowed ref. */
+	[(NSObject*)result retain];
+	CFRelease(result);
 	[(NSObject*)result autorelease];
 
 	return result;
