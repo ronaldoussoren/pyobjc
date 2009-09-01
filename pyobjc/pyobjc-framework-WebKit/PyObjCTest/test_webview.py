@@ -55,6 +55,9 @@ class TestWebView (TestCase):
         self.failUnlessResultIsBOOL(WebView.isContinuousSpellCheckingEnabled)
         self.failUnlessArgIsBOOL(WebView.setContinuousSpellCheckingEnabled_, 0)
 
+        self.failUnlessArgIsBOOL(WebView.setShouldUpdateWhileOffscreen_, 0)
+        self.failUnlessResultIsBOOL(WebView.shouldUpdateWhileOffscreen)
+
 
 
 if __name__ == "__main__":

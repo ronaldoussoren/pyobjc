@@ -7,5 +7,7 @@ class TestDOMHTMLImageElement (TestCase):
         self.failUnlessResultIsBOOL(DOMHTMLImageElement.isMap)
         self.failUnlessArgIsBOOL(DOMHTMLImageElement.setIsMap_, 0)
 
+        self.failUnlessResultIsBOOL(DOMHTMLImageElement.complete)
+
 if __name__ == "__main__":
     main()

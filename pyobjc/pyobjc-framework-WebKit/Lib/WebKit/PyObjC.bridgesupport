@@ -69,6 +69,12 @@
   <constant name='WebViewProgressEstimateChangedNotification' type='@' />
   <constant name='WebViewProgressFinishedNotification' type='@' />
   <constant name='WebViewProgressStartedNotification' type='@' />
+  <enum name='DOM_DOCUMENT_POSITION_DISCONNECTED' value='1' />
+  <enum name='DOM_DOCUMENT_POSITION_PRECEDING' value='2' />
+  <enum name='DOM_DOCUMENT_POSITION_FOLLOWING' value='4' />
+  <enum name='DOM_DOCUMENT_POSITION_CONTAINS' value='8' />
+  <enum name='DOM_DOCUMENT_POSITION_CONTAINED_BY' value='16' />
+  <enum name='DOM_DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC' value='32' />
   <enum name='DOM_ADDITION' value='2' />
   <enum name='DOM_ANY_TYPE' value='0' />
   <enum name='DOM_ANY_UNORDERED_NODE_TYPE' value='8' />
@@ -157,6 +163,9 @@
   <enum name='DOM_ORDERED_NODE_ITERATOR_TYPE' value='5' />
   <enum name='DOM_ORDERED_NODE_SNAPSHOT_TYPE' value='7' />
   <enum name='DOM_PAGE_RULE' value='6' />
+  <enum name='DOM_VARIABLES_RULE' value='7' />
+  <enum name='DOM_WEBKIT_KEYFRAMES_RULE' value='8' />
+  <enum name='DOM_WEBKIT_KEYFRAME_RULE' value='9' />
   <enum name='DOM_PROCESSING_INSTRUCTION_NODE' value='7' />
   <enum name='DOM_REMOVAL' value='3' />
   <enum name='DOM_SHOW_ALL' value='-1' />
@@ -815,6 +824,46 @@
     </method>
   </class>
   <class name='DOMDocument'>
+	  <method selector='xmlStandalone'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setXmlStandalone:'>
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='importNode:deep:'>
+		  <arg index='1' type='B' />
+	  </method>
+	  <method selector='createNodeIterator:whatToShow:filter:expandEntityReferences:'>
+		  <arg index='3' type='B' />
+	  </method>
+	  <method selector='createTreeWalker:whatToShow:filter:expandEntityReferences:'>
+		  <arg index='3' type='B' />
+	  </method>
+	  <method selector='execCommand:userInterface:value:' >
+		  <retval type='B' />
+		  <arg index='1'  type='B' />
+	  </method>
+	  <method selector='execCommand:userInterface:' >
+		  <retval type='B' />
+		  <arg index='1'  type='B' />
+	  </method>
+	  <method selector='execCommand:' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='queryCommandEnabled:' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='queryCommandIndeterm:' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='queryCommandState:' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='queryCommandSupported:' >
+		  <retval type='B' />
+	  </method>
+
+
     <method selector='createNodeIterator:whatToShow:filter:expandEntityReferences:'>
       <arg index='3' type='B' />
     </method>
@@ -835,6 +884,9 @@
     </method>
   </class>
   <class name='DOMElement'>
+    <method selector='contains:'>
+      <retval type='B' />
+    </method>
     <method selector='hasAttribute:'>
       <retval type='B' />
     </method>
@@ -860,6 +912,18 @@
       <arg index='1' type='B' />
       <arg index='2' type='B' />
     </method>
+    <method selector='returnValue'>
+	    <retval type='B' />
+    </method>
+    <method selector='setReturnValue:'>
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='cancelBubble'>
+	    <retval type='B' />
+    </method>
+    <method selector='setCancelBubble:'>
+	    <arg index='0' type='B' />
+    </method>
     <method selector='bubbles'>
 	    <retval type='B' />
     </method>
@@ -881,6 +945,18 @@
     </method>
   </class>
   <class name='DOMHTMLButtonElement'>
+    <method selector='setWillValidate:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='willValidate'>
+      <retval type='B' />
+    </method>
+    <method selector='autofocus'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutofocus:'>
+      <arg index='0'  type='B' />
+    </method>
     <method selector='disabled'>
       <retval type='B' />
     </method>
@@ -921,6 +997,12 @@
     </method>
   </class>
   <class name='DOMHTMLImageElement'>
+    <method selector='complete'>
+      <retval type='B' />
+    </method>
+    <method selector='setComplete:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='isMap'>
       <retval type='B' />
     </method>
@@ -929,6 +1011,27 @@
     </method>
   </class>
   <class name='DOMHTMLInputElement'>
+    <method selector='multiple'>
+      <retval type='B' />
+    </method>
+    <method selector='setMultiple:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='willValidate'>
+      <retval type='B' />
+    </method>
+    <method selector='autofocus'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutofocus:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='indeterminate'>
+      <retval type='B' />
+    </method>
+    <method selector='setIndeterminate:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='checked'>
       <retval type='B' />
     </method>
@@ -951,6 +1054,14 @@
       <arg index='0' type='B' />
     </method>
     <method selector='setReadOnly:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='DOMHTMLPreElement'>
+    <method selector='wrap'>
+      <retval type='B' />
+    </method>
+    <method selector='setWrap:'>
       <arg index='0' type='B' />
     </method>
   </class>
@@ -1023,6 +1134,15 @@
     </method>
   </class>
   <class name='DOMHTMLSelectElement'>
+    <method selector='willValidate'>
+      <retval type='B' />
+    </method>
+    <method selector='autofocus'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutofocus:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='disabled'>
       <retval type='B' />
     </method>
@@ -1053,6 +1173,9 @@
     </method>
   </class>
   <class name='DOMHTMLTextAreaElement'>
+    <method selector='willValidate'>
+      <retval type='B' />
+    </method>
     <method selector='disabled'>
       <retval type='B' />
     </method>
@@ -1095,9 +1218,30 @@
     <method selector='altKey'>
       <retval type='B' />
     </method>
+    <method selector='altGraphKey'>
+      <retval type='B' />
+    </method>
     <method selector='metaKey'>
       <retval type='B' />
     </method>
+    <method selector='initKeyboardEvent:canBubble:cancelable:view:keyIdentifier:keyLocation:ctrlKey:altKey:shiftKey:metaKey:altGraphKey:'>
+	    <arg index='1' type='B' />
+	    <arg index='2' type='B' />
+	    <arg index='6' type='B' />
+	    <arg index='7' type='B' />
+	    <arg index='8' type='B' />
+	    <arg index='9' type='B' />
+	    <arg index='10' type='B' />
+    </method>
+    <method selector='initKeyboardEvent:canBubble:cancelable:view:keyIdentifier:keyLocation:ctrlKey:altKey:shiftKey:metaKey:'>
+	    <arg index='1' type='B' />
+	    <arg index='2' type='B' />
+	    <arg index='6' type='B' />
+	    <arg index='7' type='B' />
+	    <arg index='8' type='B' />
+	    <arg index='9' type='B' />
+    </method>
+
   </class>
   <class name='DOMMouseEvent'>
     <method selector='initMouseEvent:canBubble:cancelable:view:detail:screenX:screenY:clientX:clientY:ctrlKey:altKey:shiftKey:metaKey:button:relatedTarget:'>
@@ -1133,6 +1277,12 @@
   </class>
   <class name='DOMNode'>
     <method selector='cloneNode:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='isContentEditable'>
+      <retval type='B' />
+    </method>
+    <method selector='setIsContentEditable:'>
       <arg index='0' type='B' />
     </method>
     <method selector='hasAttributes'>
@@ -1171,6 +1321,12 @@
       <arg index='0' type='B' />
     </method>
     <method selector='collapsed'>
+      <retval type='B' />
+    </method>
+    <method selector='isPointInRange:offset:'>
+      <retval type='B' />
+    </method>
+    <method selector='intersectsNode:'>
       <retval type='B' />
     </method>
   </class>
@@ -1252,6 +1408,12 @@
     </method>
     <method class_method='true' selector='webScriptNameForSelector:'>
       <arg index='0' type=':' />
+    </method>
+    <method selector='webView:runOpenPanelForFileButtonWithResultListener:allowMultipleFiles:'>
+      <arg index='2' type='B' />
+    </method>
+    <method selector='webView:runJavaScriptConfirmPanelWithMessage:'>
+      <retval type='B' />
     </method>
     <method selector='webView:doCommandBySelector:'>
       <retval type='B' />
@@ -1491,11 +1653,17 @@
     <method selector='maintainsInactiveSelection'>
       <retval type='B' />
     </method>
+    <method selector='shouldUpdateWhileOffscreen'>
+      <retval type='B' />
+    </method>
     <method selector='searchFor:direction:caseSensitive:wrap:'>
       <retval type='B' />
       <arg index='1' type='B' />
       <arg index='2' type='B' />
       <arg index='3' type='B' />
+    </method>
+    <method selector='setShouldUpdateWhileOffscreen:'>
+      <arg index='0' type='B' />
     </method>
     <method selector='setContinuousSpellCheckingEnabled:'>
       <arg index='0' type='B' />
@@ -1532,6 +1700,9 @@
   </class>
   <class name='DOMNodeIterator' >
 	  <method selector='expandEntityReferences'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='pointerBeforeReferenceNode'>
 		  <retval type='B' />
 	  </method>
   </class>

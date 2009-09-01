@@ -5,6 +5,7 @@
   <struct name='JSClassDefinition' type='{_JSClassDefinition="version"i"attributes"I"className"*"parentClass"^{OpaqueJSClass}"staticValues"^{?}"staticFunctions"^{?}"initialize"^?"finalize"^?"hasProperty"^?"getProperty"^?"setProperty"^?"deleteProperty"^?"getPropertyNames"^?"callAsFunction"^?"callAsConstructor"^?"hasInstance"^?"convertToType"^?}' type64='{_JSClassDefinition="version"i"attributes"I"className"*"parentClass"^{OpaqueJSClass}"staticValues"^{?}"staticFunctions"^{?}"initialize"^?"finalize"^?"hasProperty"^?"getProperty"^?"setProperty"^?"deleteProperty"^?"getPropertyNames"^?"callAsFunction"^?"callAsConstructor"^?"hasInstance"^?"convertToType"^?}' />
   <struct name='JSStaticFunction' type='{_JSStaticFunction="name"*"callAsFunction"^?"attributes"I}' type64='{_JSStaticFunction="name"*"callAsFunction"^?"attributes"I}' />
   <struct name='JSStaticValue' type='{_JSStaticValue="name"*"getProperty"^?"setProperty"^?"attributes"I}' type64='{_JSStaticValue="name"*"getProperty"^?"setProperty"^?"attributes"I}' />
+  <opaque name='JSContextGroupRef' type='^{OpaqueJSContextGroup=}' type64='^{OpaqueJSContextGroup=}' />
   <opaque name='JSClassRef' type='^{OpaqueJSClass=}' type64='^{OpaqueJSClass=}' />
   <opaque name='JSContextRef' type='^{OpaqueJSContext=}' type64='^{OpaqueJSContext=}' />
   <opaque name='JSGlobalContextRef' type='^{OpaqueJSContext=}' type64='^{OpaqueJSContext=}' />
@@ -26,6 +27,17 @@
   <enum name='kJSTypeObject' value='5' />
   <enum name='kJSTypeString' value='4' />
   <enum name='kJSTypeUndefined' value='0' />
+  <function name='JSContextGroupCreate'>
+	  <retval type='^{OpaqueJSContextGroup=}' />
+  </function>
+  <function name='JSContextGroupRetain'>
+	  <retval type='^{OpaqueJSContextGroup=}' />
+	  <arg  type='^{OpaqueJSContextGroup=}' />
+  </function>
+  <function name='JSContextGroupRelease'>
+	  <retval type='v' />
+	  <arg  type='^{OpaqueJSContextGroup=}' />
+  </function>
   <function name='JSCheckScriptSyntax'>
     <retval type='B' />
     <arg type='^{OpaqueJSContext=}' />
@@ -44,6 +56,34 @@
   <function name='JSClassRetain'>
     <retval type='^{OpaqueJSClass=}' />
     <arg type='^{OpaqueJSClass=}' />
+  </function>
+  <function name='JSObjectMakeArray'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='l' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='n' c_array_length_in_arg='1' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='o' />
+  </function>
+  <function name='JSObjectMakeDate'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='l' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='n' c_array_length_in_arg='1' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='o' />
+  </function>
+  <function name='JSObjectMakeError'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='l' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='n' c_array_length_in_arg='1' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='o' />
+  </function>
+  <function name='JSObjectMakeRegExp'>
+    <retval type='^{OpaqueJSValue=}' />
+    <arg type='^{OpaqueJSContext=}' />
+    <arg type='l' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='n' c_array_length_in_arg='1' />
+    <arg type='^^{OpaqueJSValue=}' type_modifier='o' />
   </function>
   <function name='JSContextGetGlobalObject'>
     <retval type='^{OpaqueJSValue=}' />
@@ -64,6 +104,15 @@
   <function name='JSGlobalContextCreate'>
     <retval type='^{OpaqueJSContext=}' />
     <arg type='^{OpaqueJSClass=}' />
+  </function>
+  <function name='JSGlobalContextCreateInGroup'>
+    <retval type='^{OpaqueJSContext=}' />
+    <arg type='^{OpaqueJSContextGroup=}' />
+    <arg type='^{OpaqueJSClass=}' />
+  </function>
+  <function name='JSContextGetGroup'>
+    <retval type='^{OpaqueJSContextGroup=}' />
+    <arg type='^{OpaqueJSContext=}' />
   </function>
   <function name='JSGlobalContextRelease'>
     <arg type='^{OpaqueJSContext=}' />

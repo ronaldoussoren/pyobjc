@@ -29,6 +29,10 @@ class TestWebUIDelegateHelper (NSObject):
     def webView_setContentRect_(self, a, b): pass
     def webViewContentRect_(self, a): return 1
 
+    def webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_(self, a, b, c): pass
+    def webView_runJavaScriptConfirmPanelWithMessage_(self, a, b): return 1
+
+
 class TestWebUIDelegate (TestCase):
     def testConstants(self):
         self.failUnlessEqual(WebMenuItemTagOpenLinkInNewWindow, 1)
@@ -103,6 +107,9 @@ class TestWebUIDelegate (TestCase):
         self.failUnlessArgHasType(TestWebUIDelegateHelper.webView_setContentRect_, 1, NSRect.__typestr__)
         self.failUnlessResultHasType(TestWebUIDelegateHelper.webViewContentRect_, NSRect.__typestr__)
 
-
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBOOL(TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_, 2)
+        self.failUnlessResultIsBOOL(TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_)
 if __name__ == "__main__":
     main()
