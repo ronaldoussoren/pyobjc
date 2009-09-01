@@ -9,6 +9,7 @@
   <constant name='IMKModeDictionary' type='@' />
   <constant name='kIMKCommandClientName' type='@' />
   <constant name='kIMKCommandMenuItemName' type='@' />
+  <constant name='IMKCandidatesSendServerKeyEventFirst' type='@' />
   <enum name='kIMKLocateCandidatesAboveHint' value='1' />
   <enum name='kIMKLocateCandidatesBelowHint' value='2' />
   <enum name='kIMKLocateCandidatesLeftHint' value='3' />

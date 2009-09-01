@@ -15,6 +15,10 @@ class TestIMKCandidates (TestCase):
 
         self.failUnlessIsInstance(IMKCandidatesOpacityAttributeName, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(IMKCandidatesSendServerKeyEventFirst, unicode)
+
     def testMethods(self):
         self.failUnlessResultIsBOOL(IMKCandidates.isVisible)
         self.failUnlessResultIsBOOL(IMKCandidates.dismissesAutomatically)

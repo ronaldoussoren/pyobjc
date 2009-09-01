@@ -4,6 +4,7 @@ from InputMethodKit import *
 
 class TestIMKServer (TestCase):
     @min_os_level('10.6')
+    @expectedFailure
     def testConstants(self):
         # The definitions below are defined on 10.5, but not actually
         # exported by the framework. That's why this test is only
