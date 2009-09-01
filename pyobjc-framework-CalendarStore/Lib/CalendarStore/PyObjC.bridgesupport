@@ -15,6 +15,7 @@
   <constant name='CalCalendarTypeIMAP' type='@' />
   <constant name='CalCalendarTypeLocal' type='@' />
   <constant name='CalCalendarTypeSubscription' type='@' />
+  <constant name='CalCalendarTypeExchange' type='@' />
   <constant name='CalCalendarsChangedExternallyNotification' type='@' />
   <constant name='CalCalendarsChangedNotification' type='@' />
   <constant name='CalDefaultRecurrenceInterval' type='I' type64='Q' />

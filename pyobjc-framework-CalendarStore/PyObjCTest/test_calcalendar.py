@@ -11,5 +11,11 @@ class TestCalCalendar (TestCase):
         self.failUnlessIsInstance(CalCalendarTypeIMAP, unicode)
 
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(CalCalendarTypeExchange, unicode)
+
+
+
 if __name__ == "__main__":
     main()
