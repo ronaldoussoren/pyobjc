@@ -238,5 +238,9 @@ class TestRunLoop (TestCase):
         self.failUnless(state[0][2] is rl)
         self.failUnless(state[0][3] == kCFRunLoopDefaultMode)
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.failUnlessArgIsBlock(CFRunLoopPerformBlock, 2, 'v')
+
 if __name__ == "__main__":
     main()

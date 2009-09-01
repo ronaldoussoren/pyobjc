@@ -110,5 +110,39 @@ class TestNSImage (TestCase):
         self.failUnlessArgHasType(TestNSImageHelper.image_didLoadRepresentation_withStatus_, 2, objc._C_NSUInteger)
 
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgHasType(NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+                0, NSRect.__typestr__)
+        self.failUnlessArgIsBOOL(NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4)
+        self.failUnlessArgIsBOOL(NSImage.lockFocusFlipped_, 0)
+        self.failUnlessArgHasType(NSImage.initWithCGImage_size_, 1, NSSize.__typestr__)
+        self.failUnlessArgHasType(NSImage.CGImageForProposedRect_context_hints_, 0, 'o^' + NSRect.__typestr__)
+        self.failUnlessArgHasType(NSImage.bestRepresentationForRect_context_hints_, 0, NSRect.__typestr__)
+
+        self.failUnlessResultIsBOOL(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_)
+        self.failUnlessArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 0, NSRect.__typestr__)
+        self.failUnlessArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 1, NSRect.__typestr__)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSImageHintCTM, unicode)
+        self.failUnlessIsInstance(NSImageHintInterpolation, unicode)
+        self.failUnlessIsInstance(NSImageNameFolder, unicode)
+        self.failUnlessIsInstance(NSImageNameMobileMe, unicode)
+        self.failUnlessIsInstance(NSImageNameUserGuest, unicode)
+        self.failUnlessIsInstance(NSImageNameMenuOnStateTemplate, unicode)
+        self.failUnlessIsInstance(NSImageNameMenuMixedStateTemplate, unicode)
+        self.failUnlessIsInstance(NSImageNameApplicationIcon, unicode)
+        self.failUnlessIsInstance(NSImageNameTrashEmpty, unicode)
+        self.failUnlessIsInstance(NSImageNameTrashFull, unicode)
+        self.failUnlessIsInstance(NSImageNameHomeTemplate, unicode)
+        self.failUnlessIsInstance(NSImageNameBookmarksTemplate, unicode)
+        self.failUnlessIsInstance(NSImageNameCaution, unicode)
+        self.failUnlessIsInstance(NSImageNameStatusAvailable, unicode)
+        self.failUnlessIsInstance(NSImageNameStatusPartiallyAvailable, unicode)
+        self.failUnlessIsInstance(NSImageNameStatusUnavailable, unicode)
+        self.failUnlessIsInstance(NSImageNameStatusNone, unicode)
+
 if __name__ == "__main__":
     main()

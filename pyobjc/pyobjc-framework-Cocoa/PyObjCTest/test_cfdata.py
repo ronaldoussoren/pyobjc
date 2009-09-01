@@ -80,6 +80,25 @@ class TestData (TestCase):
         CFDataDeleteBytes(mutableData, (0, 6))
         self.assertEquals(CFDataGetBytes(mutableData, (0, 5), None), 'world')
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFDataSearchBackwards, 1<<0)
+        self.failUnlessEqual(kCFDataSearchAnchored, 1<<1)
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        data = CFDataCreate(None, "hello world", 11)
+        self.failUnless(isinstance(data, CFDataRef))
+
+        src = CFDataCreate(None, "wor", 3)
+        self.failUnless(isinstance(src, CFDataRef))
+
+        self.failUnlessResultHasType(CFDataFind, CFRange.__typestr__)
+        self.failUnlessArgHasType(CFDataFind, 2, CFRange.__typestr__)
+        v = CFDataFind(data, src, (0, 11), 0)
+        self.failUnlessIsInstance(v, CFRange)
+        self.failUnlessEqual(v, (6, 3))
+
 
 if __name__ == "__main__":
     main()

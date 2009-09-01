@@ -69,6 +69,22 @@ class TestNSWindow (TestCase):
         self.failUnlessIsInstance(NSWindowDidEndSheetNotification, unicode)
         self.failUnlessIsInstance(NSWindowDidChangeScreenProfileNotification, unicode)
 
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSAppKitVersionNumberWithDeferredWindowDisplaySupport, 1019.0)
+
+        self.failUnlessEqual(NSWindowCollectionBehaviorManaged, 1<<2)
+        self.failUnlessEqual(NSWindowCollectionBehaviorTransient, 1<<3)
+        self.failUnlessEqual(NSWindowCollectionBehaviorStationary, 1<<4)
+        self.failUnlessEqual(NSWindowCollectionBehaviorParticipatesInCycle, 1<<5)
+        self.failUnlessEqual(NSWindowCollectionBehaviorIgnoresCycle, 1<<6)
+        self.failUnlessEqual(NSWindowNumberListAllApplications, 1<<0)
+        self.failUnlessEqual(NSWindowNumberListAllSpaces, 1<<4)
+
+        self.failUnlessIsInstance(NSWindowWillStartLiveResizeNotification, unicode)
+        self.failUnlessIsInstance(NSWindowDidEndLiveResizeNotification, unicode)
+
     def testMagicConstants(self):
         self.failUnlessEqual(NSNormalWindowLevel, kCGNormalWindowLevel)
         self.failUnlessEqual(NSFloatingWindowLevel, kCGFloatingWindowLevel)
@@ -158,6 +174,19 @@ class TestNSWindow (TestCase):
         self.failUnlessResultIsBOOL(NSWindow.canBecomeVisibleWithoutLogin)
         self.failUnlessResultIsBOOL(NSWindow.canBeVisibleOnAllSpaces)
         self.failUnlessArgIsBOOL(NSWindow.setCanBeVisibleOnAllSpaces_, 0)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSWindow.inLiveResize)
+        self.failUnlessResultIsBOOL(NSWindow.isOnActiveSpace)
+        self.failUnlessResultIsBOOL(NSWindow.isMovable)
+        self.failUnlessArgIsBOOL(NSWindow.setMovable_, 0)
+        self.failUnlessResultIsBOOL(NSWindow.preventsApplicationTerminationWhenModal)
+        self.failUnlessArgIsBOOL(NSWindow.setPreventsApplicationTerminationWhenModal_, 0)
+        self.failUnlessResultIsBOOL(NSWindow.allowsConcurrentViewDrawing)
+        self.failUnlessArgIsBOOL(NSWindow.setAllowsConcurrentViewDrawing_, 0)
+
+        self.failUnlessArgHasType(NSWindow.windowNumberAtPoint_belowWindowWithWindowNumber_, 0, NSPoint.__typestr__)
 
     def testProtocols(self):
         self.failUnlessResultIsBOOL(TestNSWindowHelper.windowShouldClose_)

@@ -86,5 +86,10 @@ class TestNSDocument (TestCase):
         self.failUnlessArgIsSEL(NSDocument.saveToFile_saveOperation_delegate_didSaveSelector_contextInfo_, 3, 'v@:@'+objc._C_NSBOOL+'^v')
         self.failUnlessArgHasType(NSDocument.saveToFile_saveOperation_delegate_didSaveSelector_contextInfo_, 4, '^v')
 
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSDocument.canConcurrentlyReadDocumentsOfType_)
+
 if __name__ == "__main__":
     main()

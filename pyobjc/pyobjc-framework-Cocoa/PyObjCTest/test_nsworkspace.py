@@ -63,6 +63,31 @@ class TestNSWorkspace(TestCase):
         self.failUnless(isinstance(NSWorkspaceRecycleOperation, unicode))
         self.failUnless(isinstance(NSWorkspaceDuplicateOperation, unicode))
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSWorkspaceDesktopImageScalingKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDesktopImageAllowClippingKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDesktopImageFillColorKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceApplicationKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidHideApplicationNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidUnhideApplicationNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidActivateApplicationNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidDeactivateApplicationNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceVolumeLocalizedNameKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceVolumeURLKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceVolumeOldLocalizedNameKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceVolumeOldURLKey, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidRenameVolumeNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceScreensDidSleepNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceScreensDidWakeNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceDidChangeFileLabelsNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceActiveSpaceDidChangeNotification, unicode)
+        self.failUnlessIsInstance(NSWorkspaceLaunchConfigurationAppleEvent, unicode)
+        self.failUnlessIsInstance(NSWorkspaceLaunchConfigurationArguments, unicode)
+        self.failUnlessIsInstance(NSWorkspaceLaunchConfigurationEnvironment, unicode)
+        self.failUnlessIsInstance(NSWorkspaceLaunchConfigurationArchitecture, unicode)
+
+
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSWorkspace.openFile_)
         self.failUnlessResultIsBOOL(NSWorkspace.openFile_withApplication_)
@@ -99,6 +124,24 @@ class TestNSWorkspace(TestCase):
         self.failUnlessArgIsOut(NSWorkspace.typeOfFile_error_, 1)
         self.failUnlessResultIsBOOL(NSWorkspace.filenameExtension_isValidForType_)
         self.failUnlessResultIsBOOL(NSWorkspace.type_conformsToType_)
+
+        self.failUnlessResultIsBOOL(NSWorkspace.selectFile_inFileViewerRootedAtPath_)
+        self.failUnlessArgHasType(NSWorkspace.slideImage_from_to_, 1, NSPoint.__typestr__)
+        self.failUnlessArgHasType(NSWorkspace.slideImage_from_to_, 2, NSPoint.__typestr__)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsOut(NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3)
+        self.failUnlessResultIsBOOL(NSWorkspace.showSearchResultsForQueryString_)
+
+        self.failUnlessArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, 'v@@')
+        self.failUnlessArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, 'v@@')
+
+        self.failUnlessResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtURL_error_)
+        self.failUnlessArgIsOut(NSWorkspace.unmountAndEjectDeviceAtURL_error_, 1)
+
+        self.failUnlessResultIsBOOL(NSWorkspace.setDesktopImageURL_forScreen_options_error_)
+        self.failUnlessArgIsOut(NSWorkspace.setDesktopImageURL_forScreen_options_error_, 3)
 
 
 if __name__ == '__main__':

@@ -145,6 +145,11 @@ class TestNSCell(TestCase):
         self.failUnlessEqual(NSBackgroundStyleDark, 1)
         self.failUnlessEqual(NSBackgroundStyleRaised, 2)
         self.failUnlessEqual(NSBackgroundStyleLowered, 3)
+    
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSCell.usesSingleLineMode)
+        self.failUnlessArgIsBOOL(NSCell.setUsesSingleLineMode_, 0)
 
 
 if __name__ == '__main__':

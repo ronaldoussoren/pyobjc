@@ -106,6 +106,20 @@ class TestNSLayoutManager (TestCase):
         self.fail("Buffer size is non-trivial: - (NSUInteger)getLineFragmentInsertionPointsForCharacterAtIndex:(NSUInteger)charIndex alternatePositions:(BOOL)aFlag inDisplayOrder:(BOOL)dFlag positions:(CGFloat *)positions characterIndexes:(NSUInteger *)charIndexes;")
 
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgHasType(NSLayoutManager.characterIndexForPoint_inTextContainer_fractionOfDistanceBetweenInsertionPoints_, 0, NSPoint.__typestr__)
+        self.failUnlessArgIsOut(NSLayoutManager.characterIndexForPoint_inTextContainer_fractionOfDistanceBetweenInsertionPoints_, 2)
+
+        self.failUnlessArgHasType(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_,
+                0, 'N^' + NSRect.__typestr__)
+        self.failUnlessArgSizeInArg(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_, 0, 1)
+        self.failUnlessArgHasType(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_,
+                2, NSRange.__typestr__)
+
+
+
+
 
 if __name__ == "__main__":
     main()

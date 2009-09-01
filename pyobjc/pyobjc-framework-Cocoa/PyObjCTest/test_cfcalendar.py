@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+import datetime
 
 class TestCFCalendarVariadic (TestCase):
     def testTypes(self):
@@ -95,11 +96,11 @@ class TestCFCalendarVariadic (TestCase):
 
 
     def testInspection(self):
-        cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
+        cal = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
         self.failUnless( isinstance(cal, CFCalendarRef) )
 
         name = CFCalendarGetIdentifier(cal)
-        self.failUnless(name == kCFBuddhistCalendar)
+        self.failUnless(name == kCFGregorianCalendar)
 
         locale = CFCalendarCopyLocale(cal)
         self.failUnless( isinstance(locale, CFLocaleRef) )
@@ -120,10 +121,22 @@ class TestCFCalendarVariadic (TestCase):
         rng = CFCalendarGetMaximumRangeOfUnit(cal, kCFCalendarUnitEra)
         self.failUnless(isinstance(rng, CFRange))
 
-        rng = CFCalendarGetRangeOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
+        m = datetime.date.today()
+        if m.month in (1,3,5,7,8,10,12):
+            monthLength=31
+        elif m.month in (4, 6, 9, 11):
+            monthLength=30
+        else:
+            if m.year % 4 == 0:
+                # Yes this is wrong, but the next time this fails in
+                # in 2100. 
+                monthLength = 29
+            else:
+                monthLength = 28
+        rng = CFCalendarGetRangeOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitMonth, CFAbsoluteTimeGetCurrent())
         self.failUnless(isinstance(rng, CFRange))
         self.failUnlessEqual(rng.location, 1)
-        self.failUnlessEqual(rng.length, 365)
+        self.failUnlessEqual(rng.length, monthLength)
 
 
         v = CFCalendarGetOrdinalityOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
@@ -196,6 +209,10 @@ class TestCFCalendarVariadic (TestCase):
         self.failUnless( kCFCalendarUnitWeekdayOrdinal == (1 << 10) )
 
         self.failUnless( kCFCalendarComponentsWrap == (1 << 0) )
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFCalendarUnitQuarter, 1<<11)
 
 
 if __name__ == "__main__":

@@ -21,6 +21,8 @@ class TestNSTextViewHelper (NSObject):
     def textView_draggedCell_inRect_event_(self, tv, a, b, c): return 1
     def textView_shouldSetSpellingState_range_(self, tv, a, b): return 1
     def textView_menu_forEvent_atIndex_(self, tv, a, b, c): return 1
+    def textView_willCheckTextInRange_options_types_(self, tv, a, b, c): return 1
+    def textView_didCheckTextInRange_types_options_results_orthography_wordCount_(self, tv, r, t, o, rs, ort, wc): return 1
 
 class TestNSTextView (TestCase):
     def testConstants(self):
@@ -157,6 +159,31 @@ class TestNSTextView (TestCase):
         self.failUnlessArgHasType(TestNSTextViewHelper.textView_shouldSetSpellingState_range_, 1, objc._C_NSInteger)
         self.failUnlessArgHasType(TestNSTextViewHelper.textView_shouldSetSpellingState_range_, 2, NSRange.__typestr__)
         self.failUnlessArgHasType(TestNSTextViewHelper.textView_menu_forEvent_atIndex_, 3, objc._C_NSUInteger)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSTextView.isCoalescingUndo)
+
+        self.failUnlessArgIsBOOL(NSTextView.setAutomaticDataDetectionEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSTextView.isAutomaticDataDetectionEnabled)
+        self.failUnlessArgIsBOOL(NSTextView.setAutomaticDashSubstitutionEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSTextView.isAutomaticDashSubstitutionEnabled)
+        self.failUnlessArgIsBOOL(NSTextView.setAutomaticTextReplacementEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSTextView.isAutomaticTextReplacementEnabled)
+        self.failUnlessArgIsBOOL(NSTextView.setAutomaticSpellingCorrectionEnabled_, 0)
+        self.failUnlessResultIsBOOL(NSTextView.isAutomaticSpellingCorrectionEnabled)
+
+        self.failUnlessArgHasType(NSTextView.checkTextInRange_types_options_, 0, NSRange.__typestr__)
+        self.failUnlessArgHasType(NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_, 1, NSRange.__typestr__)
+
+    @min_os_level('10.6')
+    def testProtocols10_6(self):
+        self.failUnlessArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 1, NSRange.__typestr__)
+        self.failUnlessArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 3, 'N^' + objc._C_NSInteger)
+
+        self.failUnlessArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 1, NSRange.__typestr__)
+        self.failUnlessArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 2, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 6, objc._C_NSInteger)
 
 
 

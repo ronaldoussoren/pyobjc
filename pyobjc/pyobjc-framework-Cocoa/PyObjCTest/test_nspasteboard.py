@@ -52,5 +52,42 @@ class TestNSPasteboard (TestCase):
         self.failUnlessResultIsBOOL(NSPasteboard.writeFileContents_)
         self.failUnlessResultIsBOOL(NSPasteboard.writeFileWrapper_)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSPasteboardTypeString, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypePDF, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeTIFF, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypePNG, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeRTF, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeRTFD, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeHTML, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeTabularText, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeFont, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeRuler, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeColor, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeSound, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeMultipleTextSelection, unicode)
+        self.failUnlessIsInstance(NSPasteboardTypeFindPanelSearchOptions, unicode)
+
+        self.failUnlessIsInstance(NSPasteboardURLReadingFileURLsOnlyKey, unicode)
+        self.failUnlessIsInstance(NSPasteboardURLReadingContentsConformToTypesKey, unicode)
+
+        self.failUnlessEqual(NSPasteboardWritingPromised, 1<<9)
+
+        self.failUnlessEqual(NSPasteboardReadingAsData, 0)
+        self.failUnlessEqual(NSPasteboardReadingAsString, 1<<0)
+        self.failUnlessEqual(NSPasteboardReadingAsPropertyList, 1<<1)
+        self.failUnlessEqual(NSPasteboardReadingAsKeyedArchive, 1<<2)
+
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSPasteboard.writeObjects_)
+        self.failUnlessResultIsBOOL(NSPasteboard.canReadItemWithDataConformingToTypes_)
+        self.failUnlessResultIsBOOL(NSPasteboard.canReadObjectForClasses_options_)
+
+        self.failUnlessResultIsBOOL(NSPasteboard.setPropertyList_forType_)
+        self.failUnlessResultIsBOOL(NSPasteboard.setString_forType_)
+
 if __name__ == "__main__":
     main()

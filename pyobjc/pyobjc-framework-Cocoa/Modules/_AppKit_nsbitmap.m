@@ -211,7 +211,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 		}
 	}
 
-	colorSpaceNameString = [NSString stringWithCString: colorSpaceName];
+	colorSpaceNameString = [NSString stringWithUTF8String: colorSpaceName];
 
 	PyObjC_DURING
 		PyObjC_InitSuper(&super,

@@ -50,7 +50,29 @@ class TestHeader (TestCase):
         self.failUnlessIsInstance(NSFullScreenModeWindowLevel, unicode)
         self.failUnlessIsInstance(NSViewDidUpdateTrackingAreasNotification, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSViewLayerContentsRedrawNever, 0)
+        self.failUnlessEqual(NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
+        self.failUnlessEqual(NSViewLayerContentsRedrawDuringViewResize, 2)
+        self.failUnlessEqual(NSViewLayerContentsRedrawBeforeViewResize, 3)
 
+        self.failUnlessEqual(NSViewLayerContentsPlacementScaleAxesIndependently, 0)
+        self.failUnlessEqual(NSViewLayerContentsPlacementScaleProportionallyToFit, 1)
+        self.failUnlessEqual(NSViewLayerContentsPlacementScaleProportionallyToFill, 2)
+        self.failUnlessEqual(NSViewLayerContentsPlacementCenter, 3)
+        self.failUnlessEqual(NSViewLayerContentsPlacementTop, 4)
+        self.failUnlessEqual(NSViewLayerContentsPlacementTopRight, 5)
+        self.failUnlessEqual(NSViewLayerContentsPlacementRight, 6)
+        self.failUnlessEqual(NSViewLayerContentsPlacementBottomRight, 7)
+        self.failUnlessEqual(NSViewLayerContentsPlacementBottom, 8)
+        self.failUnlessEqual(NSViewLayerContentsPlacementBottomLeft, 9)
+        self.failUnlessEqual(NSViewLayerContentsPlacementLeft, 10)
+        self.failUnlessEqual(NSViewLayerContentsPlacementTopLeft, 11)
+
+        self.failUnlessIsInstance(NSDefinitionPresentationTypeKey, unicode)
+        self.failUnlessIsInstance(NSDefinitionPresentationTypeOverlay, unicode)
+        self.failUnlessIsInstance(NSDefinitionPresentationTypeDictionaryApplication, unicode)
 
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSView.isDescendantOf_)
@@ -115,6 +137,21 @@ class TestHeader (TestCase):
         self.failUnlessResultIsBOOL(NSView.wantsLayer)
         self.failUnlessResultIsBOOL(NSView.enterFullScreenMode_withOptions_)
         self.failUnlessResultIsBOOL(NSView.isInFullScreenMode)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSView.canDrawConcurrently)
+        self.failUnlessArgIsBOOL(NSView.setCanDrawConcurrently_, 0)
+        self.failUnlessResultIsBOOL(NSView.acceptsTouchEvents)
+        self.failUnlessArgIsBOOL(NSView.setAcceptsTouchEvents_, 0)
+        self.failUnlessResultIsBOOL(NSView.wantsRestingTouches)
+        self.failUnlessArgIsBOOL(NSView.setWantsRestingTouches_, 0)
+
+        self.failUnlessArgHasType(NSView.showDefinitionForAttributedString_atPoint_, 1, NSPoint.__typestr__)
+
+        self.failUnlessArgHasType(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 1, NSRange.__typestr__)
+        self.failUnlessArgIsBlock(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 3, 
+                NSPoint.__typestr__ + NSRange.__typestr__)
 
 
     def testProtocol(self):

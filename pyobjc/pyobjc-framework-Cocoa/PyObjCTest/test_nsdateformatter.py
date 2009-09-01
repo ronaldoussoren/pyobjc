@@ -7,6 +7,9 @@ class TestNSDateFormatter (TestCase):
         formatter = NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
 
+        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 0)
+        self.failUnlessArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
+        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
         ok, val, range, err = formatter.getObjectValue_forString_range_error_(
                 None, "2008/10/12", NSRange(0, 10), None)
         self.failUnless(ok)
@@ -37,6 +40,12 @@ class TestNSDateFormatter (TestCase):
         self.failUnlessResultIsBOOL(NSDateFormatter.isLenient)
         self.failUnlessArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
         self.failUnlessResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSDateFormatter.doesRelativeDateFormatting)
+        self.failUnlessArgIsBOOL(NSDateFormatter.setDoesRelativeDateFormatting_, 0)
+
 
 
 if __name__ == "__main__":

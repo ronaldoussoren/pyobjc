@@ -110,6 +110,9 @@ void init_nsquickdrawview(void)
 {
 	PyObject* m = Py_InitModule4("_nsquickdrawview", mod_methods, "", NULL,
 			PYTHON_API_VERSION);
+	if (!m) {
+		return;
+	}
 
 #ifndef __LP64__
 	PyObjC_ImportAPI(m);

@@ -143,6 +143,16 @@ class TestBase (TestCase):
         v = CFGetAllocator(kCFAllocatorMalloc)
         self.failUnless((v is None) or (isinstance(v, CFAllocatorRef)))
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5, 476.00)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_1, 476.00)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_2, 476.10)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_3, 476.13)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_4, 476.14)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_5, 476.15)
+        self.failUnlessEqual(kCFCoreFoundationVersionNumber10_5_6, 476.17)
+
 
 if __name__ == "__main__":
     main()

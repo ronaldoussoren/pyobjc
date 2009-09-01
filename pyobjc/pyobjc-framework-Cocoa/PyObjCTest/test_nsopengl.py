@@ -88,6 +88,17 @@ class TestNSOpenGL (TestCase):
         self.failUnlessResultHasType(NSOpenGLContext.CGLContextObj, 
                 '^{_CGLContextObj}')
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgHasType(NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, '^{_CGLPixelFormatObject}')
+        self.failUnlessArgHasType(NSOpenGLPixelFormat.initWithCGLBufferObj, 0, '^{_CGLBufferObject}')
+        self.failUnlessResultHasType(NSOpenGLPixelFormat.CGLBufferObj, '^{_CGLBufferObject}')
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessEqual(NSOpenGLPFARemotePixelBuffer, 91)
+        self.failUnlessEqual(NSOpenGLPFAAcceleratedCompute, 97)
+
 
 if __name__ == "__main__":
     main()

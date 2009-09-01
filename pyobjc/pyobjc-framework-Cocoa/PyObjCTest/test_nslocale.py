@@ -28,6 +28,27 @@ class TestNSLocale (TestCase):
         self.failUnless(isinstance(NSIslamicCivilCalendar, unicode))
         self.failUnless(isinstance(NSJapaneseCalendar, unicode))
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSLocaleCollatorIdentifier, unicode)
+        self.failUnlessIsInstance(NSLocaleQuotationBeginDelimiterKey, unicode)
+        self.failUnlessIsInstance(NSLocaleQuotationEndDelimiterKey, unicode)
+        self.failUnlessIsInstance(NSLocaleAlternateQuotationBeginDelimiterKey, unicode)
+        self.failUnlessIsInstance(NSLocaleAlternateQuotationEndDelimiterKey, unicode)
+        self.failUnlessIsInstance(NSRepublicOfChinaCalendar, unicode)
+        self.failUnlessIsInstance(NSPersianCalendar, unicode)
+        self.failUnlessIsInstance(NSIndianCalendar, unicode)
+        self.failUnlessIsInstance(NSISO8601Calendar, unicode)
+
+        self.failUnlessEqual(NSLocaleLanguageDirectionUnknown, kCFLocaleLanguageDirectionUnknown)
+        self.failUnlessEqual(NSLocaleLanguageDirectionLeftToRight, kCFLocaleLanguageDirectionLeftToRight)
+        self.failUnlessEqual(NSLocaleLanguageDirectionRightToLeft, kCFLocaleLanguageDirectionRightToLeft)
+        self.failUnlessEqual(NSLocaleLanguageDirectionTopToBottom, kCFLocaleLanguageDirectionTopToBottom)
+        self.failUnlessEqual(NSLocaleLanguageDirectionBottomToTop, kCFLocaleLanguageDirectionBottomToTop)
+
+
+
+
 
 if __name__ == "__main__":
     main()

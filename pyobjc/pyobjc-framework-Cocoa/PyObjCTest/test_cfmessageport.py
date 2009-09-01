@@ -7,11 +7,20 @@ class TestMessagePort (TestCase):
         self.failUnlessIsCFType(CFMessagePortRef)
 
     def testConstants(self):
-        self.failUnless(kCFMessagePortSuccess == 0)
-        self.failUnless(kCFMessagePortSendTimeout == -1)
-        self.failUnless(kCFMessagePortReceiveTimeout == -2)
-        self.failUnless(kCFMessagePortIsInvalid == -3)
-        self.failUnless(kCFMessagePortTransportError == -4)
+        self.failUnlessEqual(kCFMessagePortSuccess, 0)
+        self.failUnlessEqual(kCFMessagePortSendTimeout, -1)
+        self.failUnlessEqual(kCFMessagePortReceiveTimeout, -2)
+        self.failUnlessEqual(kCFMessagePortIsInvalid, -3)
+        self.failUnlessEqual(kCFMessagePortTransportError, -4)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFMessagePortBecameInvalidError, -5)
+
+    @min_os_level('10.6')
+    @expectedFailure
+    def testFunctions10_6(self):
+        self.fail('CFMessagePortSetDispatchQueue: dispatch_queue_t not wrapped yet')
 
     def testTypeID(self):
         self.failUnless(isinstance(CFMessagePortGetTypeID(), (int, long)))

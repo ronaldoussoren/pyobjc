@@ -3,6 +3,9 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 class TestNSOutlineViewHelper (NSObject):
+    def outlineView_sizeToFitWidthOfColumn_(self, v, c): return 1
+    def outlineView_shouldReorderColumn_toColumn_(self, v, c1, c2): return 1
+    def outlineView_shouldShowOutlineCellForItem_(self, v, i): return 1
     def outlineView_child_ofItem_(self, ov, nr, item): return 1
     def outlineView_isItemExpandable_(self, ov, item): return 1
     def outlineView_numberOfChildrenOfItem_(self, ov, item): return 1
@@ -89,6 +92,17 @@ class TestNSOutlineView (TestCase):
         self.failUnlessResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldShowCellExpansionForTableColumn_item_)
         self.failUnlessResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldTrackCell_forTableColumn_item_)
         self.failUnlessResultIsBOOL(TestNSOutlineViewHelper.outlineView_isGroupItem_)
+
+
+    @min_os_level('10.6')
+    def testProtocols10_6(self):
+        self.failUnlessResultHasType(TestNSOutlineViewHelper.outlineView_sizeToFitWidthOfColumn_, objc._C_CGFloat)
+        self.failUnlessArgHasType(TestNSOutlineViewHelper.outlineView_sizeToFitWidthOfColumn_, 1, objc._C_NSInteger)
+        self.failUnlessResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldReorderColumn_toColumn_)
+        self.failUnlessArgHasType(TestNSOutlineViewHelper.outlineView_shouldReorderColumn_toColumn_, 1, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSOutlineViewHelper.outlineView_shouldReorderColumn_toColumn_, 2, objc._C_NSInteger)
+
+        self.failUnlessResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldShowOutlineCellForItem_)
 
 
 if __name__ == "__main__":

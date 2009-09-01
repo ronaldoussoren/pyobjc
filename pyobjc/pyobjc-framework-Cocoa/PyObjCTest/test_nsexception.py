@@ -23,20 +23,24 @@ class TestNSExceptionInteraction(TestCase):
 
 class TestNSException (TestCase):
     def testConstants(self):
-        self.failUnless( isinstance(NSGenericException, unicode) )
-        self.failUnless( isinstance(NSRangeException, unicode) )
-        self.failUnless( isinstance(NSInvalidArgumentException, unicode) )
-        self.failUnless( isinstance(NSInternalInconsistencyException, unicode) )
-        self.failUnless( isinstance(NSMallocException, unicode) )
-        self.failUnless( isinstance(NSObjectInaccessibleException, unicode) )
-        self.failUnless( isinstance(NSObjectNotAvailableException, unicode) )
-        self.failUnless( isinstance(NSDestinationInvalidException, unicode) )
-        self.failUnless( isinstance(NSPortTimeoutException, unicode) )
-        self.failUnless( isinstance(NSInvalidSendPortException, unicode) )
-        self.failUnless( isinstance(NSInvalidReceivePortException, unicode) )
-        self.failUnless( isinstance(NSPortSendException, unicode) )
-        self.failUnless( isinstance(NSPortReceiveException, unicode) )
-        self.failUnless( isinstance(NSOldStyleException, unicode) )
+        self.failUnlessIsInstance(NSGenericException, unicode)
+        self.failUnlessIsInstance(NSRangeException, unicode)
+        self.failUnlessIsInstance(NSInvalidArgumentException, unicode)
+        self.failUnlessIsInstance(NSInternalInconsistencyException, unicode)
+        self.failUnlessIsInstance(NSMallocException, unicode)
+        self.failUnlessIsInstance(NSObjectInaccessibleException, unicode)
+        self.failUnlessIsInstance(NSObjectNotAvailableException, unicode)
+        self.failUnlessIsInstance(NSDestinationInvalidException, unicode)
+        self.failUnlessIsInstance(NSPortTimeoutException, unicode)
+        self.failUnlessIsInstance(NSInvalidSendPortException, unicode)
+        self.failUnlessIsInstance(NSInvalidReceivePortException, unicode)
+        self.failUnlessIsInstance(NSPortSendException, unicode)
+        self.failUnlessIsInstance(NSPortReceiveException, unicode)
+        self.failUnlessIsInstance(NSOldStyleException, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSAssertionHandlerKey, unicode)
 
     @expectedFailure
     def testUncaughtExceptionHandler(self):

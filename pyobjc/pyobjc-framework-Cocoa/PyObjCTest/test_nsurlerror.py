@@ -50,5 +50,12 @@ class TestNSURLError (TestCase):
     def testConstants10_5(self):
         self.failUnlessEqual(NSURLErrorDataLengthExceedsMaximum, -1103)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSURLErrorFailingURLErrorKey, unicode)
+        self.failUnlessIsInstance(NSURLErrorFailingURLStringErrorKey, unicode)
+
+        self.failUnlessEqual(NSURLErrorClientCertificateRequired, -1206)
+
 if __name__ == "__main__":
     main()

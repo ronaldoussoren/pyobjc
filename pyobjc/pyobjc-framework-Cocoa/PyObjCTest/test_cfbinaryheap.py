@@ -65,42 +65,53 @@ class TestCFBinaryHeap (TestCase):
         self.assert_(isinstance(heap2, CFBinaryHeapRef))
 
     def testInspect(self):
+        from Foundation import NSString, NSLog
         heap = CFBinaryHeapCreate(
                 None, 0)
         self.assert_(isinstance(heap, CFBinaryHeapRef))
+
 
         CFBinaryHeapAddValue(heap, "hello")
         CFBinaryHeapAddValue(heap, "world")
         CFBinaryHeapAddValue(heap, "aapjes")
 
+        #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
+        #self.failUnless(ok)
+        #self.failUnlessEqual(min, "aapjes")
+        #self.fail()
+
         count = CFBinaryHeapGetCount(heap)
-        self.failUnless(count == 3)
+        self.failUnlessEqual(count, 3)
 
         count = CFBinaryHeapGetCountOfValue(heap, "hello")
-        self.failUnless(count == 1)
+        self.failUnlessEqual(count, 1)
         count = CFBinaryHeapGetCountOfValue(heap, "fobar")
-        self.failUnless(count == 0)
+        self.failUnlessEqual(count, 0)
 
         self.failUnless(CFBinaryHeapContainsValue(heap, "hello"))
         self.failIf(CFBinaryHeapContainsValue(heap, "foobar"))
 
         min = CFBinaryHeapGetMinimum(heap)
-        self.failUnless(min == "aapjes")
+        self.failUnlessEqual(min, "aapjes")
 
-        ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
-        self.failUnless(ok)
-        self.failUnless(min == "aapjes")
+        count = CFBinaryHeapGetCount(heap)
+        self.failUnlessEqual(count, 3)
+
+        #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
+        #self.failUnless(ok)
+        #self.failUnlessEqual(min, "aapjes")
+        #self.fail()
 
         values = CFBinaryHeapGetValues(heap)
-        self.failUnless(values == ("aapjes", "hello", "world"))
+        self.failUnlessEqual(values, ("aapjes", "hello", "world"))
 
         CFBinaryHeapRemoveMinimumValue(heap)
         values = CFBinaryHeapGetValues(heap)
-        self.failUnless(values == ("hello", "world"))
+        self.failUnlessEqual(values, ("hello", "world"))
 
         CFBinaryHeapRemoveAllValues(heap)
         values = CFBinaryHeapGetValues(heap)
-        self.failUnless(values == ())
+        self.failUnlessEqual(values, ())
 
     def testFunctions(self):
         self.failUnlessArgHasType(CFBinaryHeapGetCountOfValue, 1, '@')

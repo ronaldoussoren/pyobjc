@@ -21,6 +21,7 @@ class TestNSHTTPCookie (TestCase):
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSHTTPCookie.isSessionOnly)
         self.failUnlessResultIsBOOL(NSHTTPCookie.isSecure)
+        self.failUnlessResultIsBOOL(NSHTTPCookie.isHTTPOnly)
 
 if __name__ == "__main__":
     main()

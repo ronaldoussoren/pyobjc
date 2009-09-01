@@ -64,6 +64,19 @@ class TestNSPathUtilities(TestCase):
         self.assertEquals(NSSystemDomainMask, 8)
         self.assertEquals(NSAllDomainsMask, 0x0ffff)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSAutosavedInformationDirectory, 11)
+
+        self.failUnlessEqual(NSInputMethodsDirectory, 16)
+        self.failUnlessEqual(NSMoviesDirectory, 17)
+        self.failUnlessEqual(NSMusicDirectory, 18)
+        self.failUnlessEqual(NSPicturesDirectory, 19)
+        self.failUnlessEqual(NSPrinterDescriptionDirectory, 20)
+        self.failUnlessEqual(NSSharedPublicDirectory, 21)
+        self.failUnlessEqual(NSPreferencePanesDirectory, 22)
+        self.failUnlessEqual(NSItemReplacementDirectory, 99)
+
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSString.isAbsolutePath)
         self.failUnlessArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)

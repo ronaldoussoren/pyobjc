@@ -21,6 +21,10 @@ class TestNSCalendar (TestCase):
 
         self.assertEquals( NSUndefinedDateComponent, NSIntegerMax)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertEquals( NSQuarterCalendarUnit, kCFCalendarUnitQuarter)
+
     @min_os_level('10.5')
     def testMethods10_5(self):
         obj = NSCalendar.currentCalendar()

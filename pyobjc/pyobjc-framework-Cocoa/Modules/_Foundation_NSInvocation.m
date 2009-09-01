@@ -27,6 +27,7 @@ call_NSInvocation_setArgument_atIndex_(
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		signature = NULL;
+		tp = NULL;
 
 	PyObjC_ENDHANDLER
 
@@ -103,6 +104,7 @@ call_NSInvocation_setReturnValue_(
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		signature = NULL;
+		tp = NULL;
 
 	PyObjC_ENDHANDLER
 
@@ -185,6 +187,7 @@ call_NSInvocation_getArgument_atIndex_(
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		signature = NULL;
+		tp = NULL;
 
 	PyObjC_ENDHANDLER
 
@@ -268,6 +271,7 @@ call_NSInvocation_getReturnValue_(
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		signature = NULL;
+		tp = NULL;
 
 	PyObjC_ENDHANDLER
 

@@ -339,6 +339,25 @@ class TestPickle(TestCase):
         self.failUnlessArgSizeInArg(NSString.stringWithCString_length_, 0, 1)
         self.failUnlessArgHasType(NSString.stringWithCString_, 0, 'n^v')
         self.failUnlessArgIsNullTerminated(NSString.stringWithCString_, 0)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSStringEnumerationByLines, 0)
+        self.failUnlessEqual(NSStringEnumerationByParagraphs, 1)
+        self.failUnlessEqual(NSStringEnumerationByComposedCharacterSequences, 2)
+        self.failUnlessEqual(NSStringEnumerationByWords, 3)
+        self.failUnlessEqual(NSStringEnumerationBySentences, 4)
+        self.failUnlessEqual(NSStringEnumerationReverse, 1 << 8)
+        self.failUnlessEqual(NSStringEnumerationSubstringNotRequired, 1 << 9)
+        self.failUnlessEqual(NSStringEnumerationLocalized, 1 << 10)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgHasType(NSString.enumerateSubstringsInRange_options_usingBlock_, 0, 
+                NSRange.__typestr__)
+        self.failUnlessArgIsBlock(NSString.enumerateSubstringsInRange_options_usingBlock_, 2, 'v@'+NSRange.__typestr__+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSString.enumerateLinesUsingBlock_, 0, 'v@o^'+objc._C_NSBOOL)
+
     
 
 if __name__ == '__main__':

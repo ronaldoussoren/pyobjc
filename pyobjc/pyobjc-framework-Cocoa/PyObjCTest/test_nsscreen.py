@@ -7,5 +7,9 @@ class TestNSScreen (TestCase):
         m = NSScreen.supportedWindowDepths.__metadata__()
         self.failUnless(m['retval']['c_array_delimited_by_null'])
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSScreenColorSpaceDidChangeNotification, unicode)
+
 if __name__ == "__main__":
     main()

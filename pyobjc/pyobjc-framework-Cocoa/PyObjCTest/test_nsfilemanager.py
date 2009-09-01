@@ -14,6 +14,15 @@ class TestNSFileManagerHelper (NSObject):
     def fileManager_shouldRemoveItemAtPath_(self, a, b): return 1
     def fileManager_shouldProceedAfterError_removingItemAtPath_(self, a, b, c): return 1
 
+    def fileManager_shouldCopyItemAtURL_toURL_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_copyingItemAtURL_toURL_(self, a, b, c, d): return 1
+    def fileManager_shouldMoveItemAtURL_toURL_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_movingItemAtURL_toURL_(self, a, b, c, d): return 1
+    def fileManager_shouldLinkItemAtURL_toURL_(self, a, b, c): return 1
+    def fileManager_shouldProceedAfterError_linkingItemAtURL_toURL_(self, a, b, c, d): return 1
+    def fileManager_shouldRemoveItemAtURL_(self, a, b): return 1
+    def fileManager_shouldProceedAfterError_removingItemAtURL_(self, a, b, c): return 1
+
 
 
 class TestNSFileManager (TestCase):
@@ -50,6 +59,33 @@ class TestNSFileManager (TestCase):
         self.failUnless( isinstance(NSFileSystemFreeSize, unicode) )
         self.failUnless( isinstance(NSFileSystemNodes, unicode) )
         self.failUnless( isinstance(NSFileSystemFreeNodes, unicode) )
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSVolumeEnumerationSkipHiddenVolumes, 1<<1)
+        self.failUnlessEqual(NSVolumeEnumerationProduceFileReferenceURLs, 1<<2)
+
+        self.failUnlessEqual(NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1<<0)
+        self.failUnlessEqual(NSDirectoryEnumerationSkipsPackageDescendants, 1<<1)
+        self.failUnlessEqual(NSDirectoryEnumerationSkipsHiddenFiles, 1<<2)
+
+        self.failUnlessEqual(NSFileManagerItemReplacementUsingNewMetadataOnly, 1<<0)
+        self.failUnlessEqual(NSFileManagerItemReplacementWithoutDeletingBackupItem, 1<<1)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsOut(NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_, 3)
+        self.failUnlessArgIsBOOL(NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_, 3)
+        self.failUnlessArgIsOut(NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_, 4)
+
+        self.failUnlessResultIsBOOL(NSFileManager.copyItemAtURL_toURL_error_)
+        self.failUnlessArgIsOut(NSFileManager.copyItemAtURL_toURL_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.moveItemAtURL_toURL_error_)
+        self.failUnlessArgIsOut(NSFileManager.moveItemAtURL_toURL_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.linkItemAtURL_toURL_error_)
+        self.failUnlessArgIsOut(NSFileManager.linkItemAtURL_toURL_error_, 2)
+        self.failUnlessResultIsBOOL(NSFileManager.removeItemAtURL_error_)
+        self.failUnlessArgIsOut(NSFileManager.removeItemAtURL_error_, 1)
 
     def testOutput(self):
         obj = NSFileManager.defaultManager()
@@ -174,6 +210,12 @@ class TestNSFileManager (TestCase):
         self.failUnlessResultIsBOOL(NSFileManager.removeItemAtPath_error_)
         self.failUnlessArgIsOut(NSFileManager.removeItemAtPath_error_, 1)
 
+        self.failUnlessArgIsBlock(NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_, 3, objc._C_NSBOOL + '@@')
+
+        self.failUnlessResultIsBOOL(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_)
+        self.failUnlessArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 4)
+        self.failUnlessArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 5)
+
     def testMethods(self):
         self.failUnlessArgIsBOOL(NSFileManager.fileAttributesAtPath_traverseLink_, 1)
         self.failUnlessResultIsBOOL(NSFileManager.changeFileAttributes_atPath_)
@@ -212,6 +254,18 @@ class TestNSFileManager (TestCase):
         self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_)
         self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldRemoveItemAtPath_)
         self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtPath_)
+
+    @min_os_level('10.6')
+    def testProtocols10_6(self):
+
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldCopyItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_copyingItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldMoveItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_movingItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldLinkItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtURL_toURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldRemoveItemAtURL_)
+        self.failUnlessResultIsBOOL(TestNSFileManagerHelper.fileManager_shouldProceedAfterError_removingItemAtURL_)
 
 if __name__ == '__main__':
     main()

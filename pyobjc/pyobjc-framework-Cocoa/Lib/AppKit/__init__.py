@@ -44,3 +44,7 @@ NSDeleteCharacter = unichr(NSDeleteCharacter)
 NSLineSeparatorCharacter = unichr(NSLineSeparatorCharacter)
 NSParagraphSeparatorCharacter = unichr(NSParagraphSeparatorCharacter)
 
+try:
+    NSImageNameApplicationIcon
+except NameError:
+    NSImageNameApplicationIcon = u"NSApplicationIcon"

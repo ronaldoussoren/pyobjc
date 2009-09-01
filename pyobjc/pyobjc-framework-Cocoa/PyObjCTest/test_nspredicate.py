@@ -18,5 +18,10 @@ class TestNSPredicate (TestCase):
         self.failUnlessResultIsBOOL(NSPredicate.evaluateWithObject_)
         self.failUnlessResultIsBOOL(NSPredicate.evaluateWithObject_substitutionVariables_)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + '@@')
+
+
 if __name__ == "__main__":
     main()

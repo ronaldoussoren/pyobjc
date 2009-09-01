@@ -30,6 +30,19 @@ class TestNSData(TestCase):
 
         self.assertEquals(NSAtomicWrite, 1)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSDataReadingMapped, 1<<0)
+        self.failUnlessEqual(NSDataReadingUncached, 1<<1)
+        self.failUnlessEqual(NSDataWritingAtomic, 1<<0)
+        self.failUnlessEqual(NSDataSearchBackwards, 1<<0)
+        self.failUnlessEqual(NSDataSearchAnchored, 1<<1)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultHasType(NSData.rangeOfData_options_range_, NSRange.__typestr__)
+        self.failUnlessArgHasType(NSData.rangeOfData_options_range_, 2, NSRange.__typestr__)
+
     def assertDataContents(self, d1, d2, rawData):
         self.assertEquals(len(d1), d1.length(), "d1: len() and -length didn't match.")
         self.assertEquals(len(d1), len(rawData), "d1: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d1), len(rawData)))
@@ -37,7 +50,7 @@ class TestNSData(TestCase):
         self.assertEquals(len(d2), len(rawData), "d2: len(<data>) and len(<input>) didn't match. %d vs %d"%(len(d2), len(rawData)))
 
     def testDataWithBytes_length_(self):
-        """Test +dataWithBytes:length:"""
+        # Test +dataWithBytes:length
         data = NSData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         self.assertDataContents(data, mutableData, rawBytes)
@@ -60,19 +73,19 @@ class TestNSData(TestCase):
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testInitWithBytes_length_(self):
-        """Test -initWithBytes:length:"""
+        # Test -initWithBytes:length:
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         mutableData = NSMutableData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testInitWithBytesNoCopy_length_freeWhenDone_(self):
-        """Test -initWithBytesNoCopy:length:"""
+        # Test -initWithBytesNoCopy:length:
         data = NSData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
         mutableData = NSMutableData.alloc().initWithBytesNoCopy_length_freeWhenDone_(rawBytes, len(rawBytes), False)
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testBytes(self):
-        """Test -bytes"""
+        # Test -bytes
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
         bytes = data.bytes()
         self.assertEquals(len(bytes), len(rawBytes), "bytes() and rawBytes not equal length.")
@@ -86,7 +99,7 @@ class TestNSData(TestCase):
                 raise
 
     def testMutableBytes(self):
-        """Test -mutableBytes"""
+        # Test -mutableBytes
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
@@ -100,10 +113,9 @@ class TestNSData(TestCase):
                 raise
 
     def testVariousDataLengths(self):
-        """Test data of different lengths.
-
-        Data of different lengths may be stored in different subclasses within the class cluster.
-        """
+        # Test data of different lengths.
+        #
+        # Data of different lengths may be stored in different subclasses within the class cluster.
         testFactor = range(1, 64) + [ 1000, 10000, 1000000]
         for aFactor in testFactor:
             bigRawBytes = "1234567890" * aFactor

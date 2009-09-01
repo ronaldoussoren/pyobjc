@@ -11,23 +11,23 @@ class TestURL (TestCase):
 
     def testTypeID(self):
         val = CFURLGetTypeID()
-        self.failUnless( isinstance(val, (int, long)) )
+        self.failUnlessIsInstance(val, (int, long))
 
     def testCreateWithBytes(self):
         url = "http://www.omroep.nl/"
 
         ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         strval =  CFURLGetString(ref)
         self.failUnlessEqual(strval, unicode(url, "utf-8"))
 
         ref2 = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, ref)
-        self.failUnless( isinstance(ref2, CFURLRef) )
+        self.failUnlessIsInstance(ref2, CFURLRef)
 
         a = array.array('c', 'http://www.nu.nl/')
         ref3 = CFURLCreateWithBytes(None, a, len(a), kCFStringEncodingUTF8, None)
-        self.failUnless( isinstance(ref3, CFURLRef) )
+        self.failUnlessIsInstance(ref3, CFURLRef)
 
         # Explictely test for unicode's buffer madness.
         self.failUnlessRaises((ValueError, TypeError), CFURLCreateWithBytes, None, unicode(url), len(url), kCFStringEncodingUTF8, None)
@@ -36,15 +36,15 @@ class TestURL (TestCase):
         url = "http://www.omroep.nl/ blank"
 
         ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, False)
-        self.failUnless( isinstance(data, CFDataRef) )
+        self.failUnlessIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
         self.assertEquals(val, url.replace(' ', '%20'))
 
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, True)
-        self.failUnless( isinstance(data, CFDataRef) )
+        self.failUnlessIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
         self.assertEquals(val, url.replace(' ', '%20'))
 
@@ -52,13 +52,13 @@ class TestURL (TestCase):
         url = u"http://www.omroep.nl/"
 
         ref = CFURLCreateWithString(None, url, None)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         strval =  CFURLGetString(ref)
         self.failUnlessEqual(strval, url)
 
         ref2 = CFURLCreateWithString(None, url, ref)
-        self.failUnless( isinstance(ref2, CFURLRef) )
+        self.failUnlessIsInstance(ref2, CFURLRef)
 
     def testCreateAbsolute(self):
         url = u"http://www.omroep.nl/sport/"
@@ -67,20 +67,20 @@ class TestURL (TestCase):
         self.failUnlessArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, 'n^v')
         self.failUnlessArgSizeInArg(CFURLCreateAbsoluteURLWithBytes, 1, 2)
         ref = CFURLCreateAbsoluteURLWithBytes(None, "socker", len("socker"), kCFStringEncodingUTF8, baseref, True)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         strval =  CFURLGetString(ref)
         self.failUnlessEqual(strval, u"http://www.omroep.nl/sport/socker")
 
         relpath = "../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
         self.failUnlessEqual(strval, u"http://www.omroep.nl/dummy")
 
         relpath = "../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
         self.failUnlessEqual(strval, u"http://www.omroep.nl/../../dummy")
 
@@ -88,26 +88,26 @@ class TestURL (TestCase):
     def testCopyAbs(self):
         # CFURLCopyAbsoluteURL
         base = CFURLCreateWithString(None, u"http://www.omroep.nl/", None)
-        self.failUnless( isinstance(base, CFURLRef) )
+        self.failUnlessIsInstance(base, CFURLRef)
 
         ref = CFURLCreateWithString(None, u"/sport", base)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         self.failUnless( CFURLGetString(ref) == u"/sport" )
 
         abs = CFURLCopyAbsoluteURL(ref)
-        self.failUnless( isinstance(abs, CFURLRef) )
+        self.failUnlessIsInstance(abs, CFURLRef)
         self.failUnless( CFURLGetString(abs) == u"http://www.omroep.nl/sport" )
 
     def testPaths(self):
         url = CFURLCreateWithFileSystemPath(None,
                 u"/tmp/", kCFURLPOSIXPathStyle, True)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
         self.failUnless(CFURLHasDirectoryPath(url))
 
         url = CFURLCreateWithFileSystemPath(None,
                 u"/etc/hosts", kCFURLPOSIXPathStyle, False)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
         self.failIf(CFURLHasDirectoryPath(url))
 
         p = os.path.expanduser('~')
@@ -115,19 +115,19 @@ class TestURL (TestCase):
         self.failUnlessArgIsNullTerminated(CFURLCreateFromFileSystemRepresentation, 1)
         url = CFURLCreateFromFileSystemRepresentation(None,
                 p, len(p), True)
-        self.failUnless( isinstance(url, CFURLRef))
+        self.failUnlessIsInstance(url, CFURLRef)
         self.assertRaises((ValueError, TypeError),
             CFURLCreateFromFileSystemRepresentation, None,
                 u"/tmp/", 4, True)
 
         base = CFURLCreateWithFileSystemPath(None,
                 u"/tmp", kCFURLPOSIXPathStyle, True)
-        self.failUnless( isinstance(base, CFURLRef) )
+        self.failUnlessIsInstance(base, CFURLRef)
 
         self.failUnlessArgIsBOOL(CFURLCreateWithFileSystemPathRelativeToBase, 3)
         url = CFURLCreateWithFileSystemPathRelativeToBase(None,
                 u"filename", kCFURLPOSIXPathStyle, True, base)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
 
         strval =  CFURLGetString(url)
         self.assertEquals(strval, u"filename/")
@@ -136,7 +136,7 @@ class TestURL (TestCase):
         self.failUnlessArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
         url = CFURLCreateFromFileSystemRepresentationRelativeToBase(None,
                 "filename2", 9, False, base)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
         strval =  CFURLGetString(url)
         self.assertEquals(strval, u"filename2")
 
@@ -150,10 +150,10 @@ class TestURL (TestCase):
 
     def testParts(self):
         base = CFURLCreateWithString(None, u"http://www.omroep.nl/", None)
-        self.failUnless( isinstance(base, CFURLRef) )
+        self.failUnlessIsInstance(base, CFURLRef)
 
         ref = CFURLCreateWithString(None, u"/sport", base)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         self.assertEquals(CFURLGetBaseURL(base), None)
         self.assertEquals(CFURLGetBaseURL(ref), base)
@@ -221,32 +221,32 @@ class TestURL (TestCase):
         self.assertEquals(bytes, objc.NULL)
 
         rng1, rng2 = CFURLGetByteRangeForComponent(ref, kCFURLComponentHost, None)
-        self.assert_(isinstance(rng1, CFRange))
-        self.assert_(isinstance(rng2, CFRange))
+        self.failUnlessIsInstance(rng1, CFRange)
+        self.failUnlessIsInstance(rng2, CFRange)
         
 
     def testUpdating(self):
         base = CFURLCreateWithString(None, u"http://www.omroep.nl/sport", None)
-        self.failUnless( isinstance(base, CFURLRef) )
+        self.failUnlessIsInstance(base, CFURLRef)
 
         url = CFURLCreateCopyAppendingPathComponent(None, base, "soccer", True)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
 
         strval =  CFURLGetString(url)
         self.assertEquals(strval, "http://www.omroep.nl/sport/soccer/")
 
         url = CFURLCreateCopyDeletingLastPathComponent(None, base)
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
         strval =  CFURLGetString(url)
         self.assertEquals(strval, "http://www.omroep.nl/")
 
         url = CFURLCreateCopyAppendingPathExtension(None, base, "cgi")
-        self.failUnless( isinstance(url, CFURLRef) )
+        self.failUnlessIsInstance(url, CFURLRef)
         strval =  CFURLGetString(url)
         self.assertEquals(strval, "http://www.omroep.nl/sport.cgi")
 
         url2 = CFURLCreateCopyDeletingPathExtension(None, base)
-        self.failUnless( isinstance(url2, CFURLRef) )
+        self.failUnlessIsInstance(url2, CFURLRef)
         strval =  CFURLGetString(url2)
         self.assertEquals(strval, "http://www.omroep.nl/sport")
 
@@ -276,33 +276,197 @@ class TestURL (TestCase):
 
     def testFSRef(self):
         ref = CFURLCreateWithFileSystemPath(None, os.getcwd(), kCFURLPOSIXPathStyle, True)
-        self.failUnless( isinstance(ref, CFURLRef) )
+        self.failUnlessIsInstance(ref, CFURLRef)
 
         ok, fsref = CFURLGetFSRef(ref, None)
         self.failUnless(ok)
-        self.failUnless(isinstance(fsref, objc.FSRef))
-        self.failUnless( fsref.as_pathname() ==  os.getcwd())
+        self.failUnlessIsInstance(fsref, objc.FSRef)
+        self.failUnlessEqual(fsref.as_pathname(), os.getcwd())
 
         ref2 = CFURLCreateFromFSRef(None, fsref)
         self.failUnlessEqual(ref, ref2) 
 
     def testConstants(self):
-        self.failUnless( kCFURLPOSIXPathStyle == 0 )
-        self.failUnless( kCFURLHFSPathStyle == 1 )
-        self.failUnless( kCFURLWindowsPathStyle == 2 )
+        self.failUnlessEqual(kCFURLPOSIXPathStyle, 0)
+        self.failUnlessEqual(kCFURLHFSPathStyle, 1)
+        self.failUnlessEqual(kCFURLWindowsPathStyle, 2)
 
-        self.failUnless( kCFURLComponentScheme == 1 )
-        self.failUnless( kCFURLComponentNetLocation == 2 )
-        self.failUnless( kCFURLComponentPath == 3 )
-        self.failUnless( kCFURLComponentResourceSpecifier == 4 )
-        self.failUnless( kCFURLComponentUser == 5 )
-        self.failUnless( kCFURLComponentPassword == 6 )
-        self.failUnless( kCFURLComponentUserInfo == 7 )
-        self.failUnless( kCFURLComponentHost == 8 )
-        self.failUnless( kCFURLComponentPort == 9 )
-        self.failUnless( kCFURLComponentParameterString == 10 )
-        self.failUnless( kCFURLComponentQuery == 11 )
-        self.failUnless( kCFURLComponentFragment == 12 )
+        self.failUnlessEqual(kCFURLComponentScheme, 1)
+        self.failUnlessEqual(kCFURLComponentNetLocation, 2)
+        self.failUnlessEqual(kCFURLComponentPath, 3)
+        self.failUnlessEqual(kCFURLComponentResourceSpecifier, 4)
+        self.failUnlessEqual(kCFURLComponentUser, 5)
+        self.failUnlessEqual(kCFURLComponentPassword, 6)
+        self.failUnlessEqual(kCFURLComponentUserInfo, 7)
+        self.failUnlessEqual(kCFURLComponentHost, 8)
+        self.failUnlessEqual(kCFURLComponentPort, 9)
+        self.failUnlessEqual(kCFURLComponentParameterString, 10)
+        self.failUnlessEqual(kCFURLComponentQuery, 11)
+        self.failUnlessEqual(kCFURLComponentFragment, 12)
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        fp = open("/tmp/pyobjc.test", "w")
+        fp.close()
+        try:
+            baseURL = CFURLCreateWithFileSystemPath(None,
+                u"/tmp/pyobjc.test", kCFURLPOSIXPathStyle, False)
+            self.failUnlessIsInstance(baseURL, CFURLRef)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateFileReferenceURL)
+            url, err = CFURLCreateFileReferenceURL(None, baseURL, None)
+            self.failUnlessIsInstance(url, CFURLRef)
+            self.failUnlessEqual(err, None)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateFilePathURL)
+            url, err = CFURLCreateFilePathURL(None, baseURL, None)
+            self.failUnlessIsInstance(url, CFURLRef)
+            self.failUnlessEqual(err, None)
+
+            self.failUnlessResultIsBOOL(CFURLCopyResourcePropertyForKey)
+            self.failUnlessArgIsCFRetained(CFURLCopyResourcePropertyForKey, 2)
+            self.failUnlessArgIsOut(CFURLCopyResourcePropertyForKey, 2)
+            self.failUnlessArgIsOut(CFURLCopyResourcePropertyForKey, 3)
+            ok, value, error = CFURLCopyResourcePropertyForKey(url, kCFURLNameKey, None, None)
+            self.failUnless(ok)
+            self.failUnlessIsInstance(value, unicode)
+            self.failUnlessEqual(error, None)
+
+            ok, value, error = CFURLCopyResourcePropertyForKey(url, kCFURLIsRegularFileKey, None, None)
+            self.failUnless(ok)
+            self.failUnlessIsInstance(value, bool)
+            self.failUnlessEqual(error, None)
+
+
+            self.failUnlessResultIsCFRetained(CFURLCreateFilePathURL)
+            self.failUnlessArgIsOut(CFURLCopyResourcePropertyForKey, 2)
+            values, error = CFURLCopyResourcePropertiesForKeys(url, [kCFURLNameKey, kCFURLIsRegularFileKey], None)
+            self.failUnlessIsInstance(values, CFDictionaryRef)
+            self.failUnlessEqual(error, None)
+
+            CFURLClearResourcePropertyCacheForKey(url, kCFURLIsRegularFileKey)
+            CFURLClearResourcePropertyCache(url)
+            self.failUnlessResultIsBOOL(CFURLResourceIsReachable)
+            v, err= CFURLResourceIsReachable(url, None)
+            self.failUnlessIsInstance(v, bool)
+            self.failUnlessEqual(err, None)
+
+            CFURLSetTemporaryResourcePropertyForKey(url, "pyobjc.test", u"hello")
+            ok, v, err = CFURLCopyResourcePropertyForKey(url, "pyobjc.test", None, None)
+            self.failUnless(ok)
+            self.failUnlessEqual(v, u"hello")
+
+            ok, cur, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            self.failUnless(ok)
+
+            ok, err = CFURLSetResourcePropertyForKey(url, kCFURLIsHiddenKey, not cur, None)
+            self.failUnless(ok)
+
+            ok, new, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            self.failUnless(ok)
+            self.failUnlessEqual(new, not cur)
+            self.failUnlessEqual(err, None)
+
+            ok, err = CFURLSetResourcePropertiesForKeys(url, {kCFURLIsHiddenKey:cur}, None)
+            self.failUnless(ok)
+            self.failUnlessEqual(err, None)
+
+            ok, new, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            self.failUnless(ok)
+            self.failUnlessEqual(new, cur)
+            self.failUnlessEqual(err, None)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateBookmarkData)
+            data, err = CFURLCreateBookmarkData(None, url, kCFURLBookmarkCreationSuitableForBookmarkFile, [kCFURLNameKey, kCFURLIsHiddenKey], None, None)
+            self.failUnless(err is None)
+            self.failUnlessIsInstance(data, CFDataRef)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateByResolvingBookmarkData)
+            u, stale, err = CFURLCreateByResolvingBookmarkData(None, data, 0, None, None, None, None)
+            self.failUnlessEqual(u, url)
+            self.failUnlessIsInstance(stale, bool)
+            self.failIf(stale)
+            self.failUnless(err is None)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateResourcePropertiesForKeysFromBookmarkData)
+            v = CFURLCreateResourcePropertiesForKeysFromBookmarkData(None, [kCFURLNameKey], data)
+            self.failUnlessIsInstance(v, CFDictionaryRef)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateResourcePropertyForKeyFromBookmarkData)
+            v = CFURLCreateResourcePropertyForKeyFromBookmarkData(None, kCFURLNameKey, data)
+            self.failUnlessIsInstance(v, unicode)
+
+            refURL = CFURLCreateWithFileSystemPath(None,
+                u"/tmp/pyobjc.test.2", kCFURLPOSIXPathStyle, False)
+            ok, err = CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
+            self.failUnless(ok)
+            self.failUnless(err is None)
+            self.failUnless(os.path.exists('/tmp/pyobjc.test.2'))
+
+            self.failUnlessResultIsCFRetained(CFURLCreateBookmarkDataFromFile)
+            n, err = CFURLCreateBookmarkDataFromFile(None, refURL, None)
+            self.failUnlessIsInstance(n, CFDataRef)
+            self.failUnless(err is None)
+
+            self.failUnlessResultIsCFRetained(CFURLCreateBookmarkDataFromAliasRecord)
+            self.failUnlessArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 0, '^{__CFAllocator=}')
+            self.failUnlessArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 1, '^{__CFData=}')
+
+        finally:
+            os.unlink('/tmp/pyobjc.test')
+            if os.path.exists('/tmp/pyobjc.test.2'):
+                os.unlink('/tmp/pyobjc.test.2')
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCFURLNameKey, unicode)
+        self.failUnlessIsInstance(kCFURLLocalizedNameKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsRegularFileKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsDirectoryKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsSymbolicLinkKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsVolumeKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsPackageKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsSystemImmutableKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsUserImmutableKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsHiddenKey, unicode)
+        self.failUnlessIsInstance(kCFURLHasHiddenExtensionKey, unicode)
+        self.failUnlessIsInstance(kCFURLCreationDateKey, unicode)
+        self.failUnlessIsInstance(kCFURLContentAccessDateKey, unicode)
+        self.failUnlessIsInstance(kCFURLContentModificationDateKey, unicode)
+        self.failUnlessIsInstance(kCFURLAttributeModificationDateKey, unicode)
+        self.failUnlessIsInstance(kCFURLLinkCountKey, unicode)
+        self.failUnlessIsInstance(kCFURLParentDirectoryURLKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeURLKey, unicode)
+        self.failUnlessIsInstance(kCFURLTypeIdentifierKey, unicode)
+        self.failUnlessIsInstance(kCFURLLocalizedTypeDescriptionKey, unicode)
+        self.failUnlessIsInstance(kCFURLLabelNumberKey, unicode)
+        self.failUnlessIsInstance(kCFURLLabelColorKey, unicode)
+        self.failUnlessIsInstance(kCFURLLocalizedLabelKey, unicode)
+        self.failUnlessIsInstance(kCFURLEffectiveIconKey, unicode)
+        self.failUnlessIsInstance(kCFURLCustomIconKey, unicode)
+        self.failUnlessIsInstance(kCFURLFileSizeKey, unicode)
+        self.failUnlessIsInstance(kCFURLFileAllocatedSizeKey, unicode)
+        self.failUnlessIsInstance(kCFURLIsAliasFileKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeLocalizedFormatDescriptionKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeTotalCapacityKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeAvailableCapacityKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeResourceCountKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsPersistentIDsKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsSymbolicLinksKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsHardLinksKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsJournalingKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeIsJournalingKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsSparseFilesKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsZeroRunsKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsCaseSensitiveNamesKey, unicode)
+        self.failUnlessIsInstance(kCFURLVolumeSupportsCasePreservedNamesKey, unicode)
+
+        self.failUnlessEqual(kCFURLBookmarkCreationPreferFileIDResolutionMask, 1<<8)
+        self.failUnlessEqual(kCFURLBookmarkCreationMinimalBookmarkMask, 1<<9)
+        self.failUnlessEqual(kCFURLBookmarkCreationSuitableForBookmarkFile, 1<<10)
+        self.failUnlessEqual(kCFBookmarkResolutionWithoutUIMask, 1<<8)
+        self.failUnlessEqual(kCFBookmarkResolutionWithoutMountingMask, 1<<9)
+
 
 
 if __name__ == "__main__":

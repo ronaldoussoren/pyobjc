@@ -128,6 +128,17 @@ class TestNSAttributedString (TestCase):
 
         self.failUnlessArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, 'o^' + NSRange.__typestr__)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(NSManagerDocumentAttribute, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSWritingDirectionAttributeName, unicode)
+        self.failUnlessIsInstance(NSFileTypeDocumentAttribute, unicode)
+        self.failUnlessIsInstance(NSCategoryDocumentAttribute, unicode)
+        self.failUnlessIsInstance(NSFileTypeDocumentOption, unicode)
+
 
 
 if __name__ == "__main__":

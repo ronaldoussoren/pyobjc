@@ -67,6 +67,17 @@ class TestNSPrintInfo (TestCase):
         self.failUnlessArgIsBOOL(NSPrintInfo.setHorizontallyCentered_, 0)
         self.failUnlessArgIsBOOL(NSPrintInfo.setVerticallyCentered_, 0)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSPrintSelectionOnly, unicode)
+        self.failUnlessIsInstance(NSPrintJobSavingURL, unicode)
+        self.failUnlessIsInstance(NSPrintJobSavingFileNameExtensionHidden, unicode)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSPrintInfo.isSelectionOnly)
+        self.failUnlessArgIsBOOL(NSPrintInfo.setSelectionOnly_, 0)
+
 
 if __name__ == "__main__":
     main()

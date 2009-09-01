@@ -7,6 +7,7 @@ class TestNSMenuHelper (NSObject):
     def numberOfItemsInMenu_(self, menu): return 1
     def menu_updateItem_atIndex_shouldCancel_(self, m, i, d, s): return 1
     def menuHasKeyEquivalent_forEvent_target_action_(self, m, e, t, a): return 1
+    def confinementRectForMenu_onScreen_(self, m, s): return 1
 
 
 class TestNSMenu (TestCase):
@@ -33,6 +34,9 @@ class TestNSMenu (TestCase):
         self.failUnlessResultIsBOOL(NSMenu.showsStateColumn)
         self.failUnlessArgIsBOOL(NSMenu.setShowsStateColumn_, 0)
 
+        self.failUnlessResultIsBOOL(NSMenu.menuChangedMessagesEnabled)
+        self.failUnlessArgIsBOOL(NSMenu.setMenuChangedMessagesEnabled_, 0)
+        self.failUnlessResultHasType(NSMenu.locationForSubmenu_, NSPoint.__typestr__)
 
     def testConstants(self):
         self.failUnlessIsInstance(NSMenuWillSendActionNotification, unicode)
@@ -42,6 +46,25 @@ class TestNSMenu (TestCase):
         self.failUnlessIsInstance(NSMenuDidChangeItemNotification, unicode)
         self.failUnlessIsInstance(NSMenuDidBeginTrackingNotification, unicode)
         self.failUnlessIsInstance(NSMenuDidEndTrackingNotification, unicode)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSMenu.popUpMenuPositioningItem_atLocation_inView_)
+        self.failUnlessArgHasType(NSMenu.popUpMenuPositioningItem_atLocation_inView_, 1, NSPoint.__typestr__)
+        self.failUnlessResultHasType(NSMenu.size, NSSize.__typestr__)
+        self.failUnlessResultIsBOOL(NSMenu.allowsContextMenuPlugIns)
+        self.failUnlessArgIsBOOL(NSMenu.setAllowsContextMenuPlugIns_, 0)
+
+        self.failUnlessResultHasType(TestNSMenuHelper.confinementRectForMenu_onScreen_, NSRect.__typestr__)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSMenuPropertyItemTitle, 1 << 0)
+        self.failUnlessEqual(NSMenuPropertyItemAttributedTitle, 1 << 1)
+        self.failUnlessEqual(NSMenuPropertyItemKeyEquivalent, 1 << 2)
+        self.failUnlessEqual(NSMenuPropertyItemImage, 1 << 3)
+        self.failUnlessEqual(NSMenuPropertyItemEnabled, 1 << 4)
+        self.failUnlessEqual(NSMenuPropertyItemAccessibilityDescription, 1 << 5)
 
 
 

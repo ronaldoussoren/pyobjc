@@ -43,8 +43,15 @@ class TestLocale (TestCase):
         self.failUnless(isinstance(val, unicode))
 
         dct = CFLocaleCreateComponentsFromLocaleIdentifier(None, "nl_NL")
-        self.failUnless(dct["locale:country code"] == 'NL')
-        self.failUnless(dct["locale:language code"] == 'nl')
+        try:
+            # 10.6
+            self.failUnless(dct[kCFLocaleCountryCodeKey] == 'NL')
+            self.failUnless(dct[kCFLocaleLanguageCodeKey] == 'nl')
+
+        except NameError:
+            # 10.5 and earlier
+            self.failUnless(dct["locale:country code"] == 'NL')
+            self.failUnless(dct["locale:language code"] == 'nl')
 
         val = CFLocaleCreateLocaleIdentifierFromComponents(None, dct)
         self.failUnless(isinstance(val, unicode))
@@ -103,6 +110,41 @@ class TestLocale (TestCase):
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.failUnless(isinstance( kCFLocaleCurrentLocaleDidChangeNotification, unicode))
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFLocaleLanguageDirectionUnknown, 0)
+        self.failUnlessEqual(kCFLocaleLanguageDirectionLeftToRight, 1)
+        self.failUnlessEqual(kCFLocaleLanguageDirectionRightToLeft, 2)
+        self.failUnlessEqual(kCFLocaleLanguageDirectionTopToBottom, 3)
+        self.failUnlessEqual(kCFLocaleLanguageDirectionBottomToTop, 4)
+
+        self.failUnlessIsInstance(kCFLocaleCollatorIdentifier, unicode)
+        self.failUnlessIsInstance(kCFLocaleQuotationBeginDelimiterKey, unicode)
+        self.failUnlessIsInstance(kCFLocaleQuotationEndDelimiterKey, unicode)
+        self.failUnlessIsInstance(kCFLocaleAlternateQuotationBeginDelimiterKey, unicode)
+        self.failUnlessIsInstance(kCFLocaleAlternateQuotationEndDelimiterKey, unicode)
+        self.failUnlessIsInstance(kCFRepublicOfChinaCalendar, unicode)
+        self.failUnlessIsInstance(kCFPersianCalendar, unicode)
+        self.failUnlessIsInstance(kCFIndianCalendar, unicode)
+        self.failUnlessIsInstance(kCFISO8601Calendar, unicode)
+
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        v = CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier('nl_NL')
+        self.failUnlessIsInstance(v, (int, long))
+
+        self.failUnlessResultIsCFRetained(CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode)
+        v = CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(None, 1043)
+        self.failUnlessIsInstance(v, unicode)
+
+        v = CFLocaleGetLanguageCharacterDirection('NL')
+        self.failUnlessEqual(v, kCFLocaleLanguageDirectionLeftToRight)
+
+        v = CFLocaleGetLanguageLineDirection('NL')
+        self.failUnlessEqual(v, kCFLocaleLanguageDirectionTopToBottom)
+
 
 if __name__ == "__main__":
     main()

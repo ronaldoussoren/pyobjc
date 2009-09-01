@@ -16,5 +16,10 @@ class TestNSTimeZone (TestCase):
 
         self.failUnlessIsInstance(NSSystemTimeZoneDidChangeNotification, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSTimeZoneNameStyleGeneric, 4)
+        self.failUnlessEqual(NSTimeZoneNameStyleShortGeneric, 5)
+
 if __name__ == "__main__":
     main()

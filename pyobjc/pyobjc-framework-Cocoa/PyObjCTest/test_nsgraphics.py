@@ -201,6 +201,28 @@ class TestNSGraphics (TestCase):
         except objc.error:
             pass
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessEqual(NSColorRenderingIntentDefault, 0)
+        self.failUnlessEqual(NSColorRenderingIntentAbsoluteColorimetric, 1)
+        self.failUnlessEqual(NSColorRenderingIntentRelativeColorimetric, 2)
+        self.failUnlessEqual(NSColorRenderingIntentPerceptual, 3)
+        self.failUnlessEqual(NSColorRenderingIntentSaturation, 4)
+
+        self.failUnlessEqual(NSImageInterpolationDefault, 0)
+        self.failUnlessEqual(NSImageInterpolationNone, 1)
+        self.failUnlessEqual(NSImageInterpolationLow, 2)
+        self.failUnlessEqual(NSImageInterpolationHigh, 3)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSWindowDepthTwentyfourBitRGB, 0x208)
+        self.failUnlessEqual(NSWindowDepthSixtyfourBitRGB, 0x210)
+        self.failUnlessEqual(NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
+
+        self.failUnlessEqual(NSImageInterpolationMedium, 4)
+
 
 if __name__ == "__main__":
+    NSApplication.sharedApplication()
     main()
