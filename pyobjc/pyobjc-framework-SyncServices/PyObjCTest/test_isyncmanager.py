@@ -11,6 +11,9 @@ class TestISyncManager (TestCase):
         self.failUnlessIsInstance(ISyncAvailabilityChangedNotification, unicode)
         self.failUnlessIsInstance(ISyncServerUnavailableException, unicode)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBOOL(ISyncManager.clientWithIdentifier_needsSyncing_, 1)
 
 if __name__ == "__main__":
     main()
