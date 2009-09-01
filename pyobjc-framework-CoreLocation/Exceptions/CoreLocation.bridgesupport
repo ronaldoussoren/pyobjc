@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <struct name='CLLocationCoordinate2D' type='{_CLLocationCoordinate2D="latitude"d"longitude"d}' type64='{_CLLocationCoordinate2D="latitude"d"longitude"d}' />
+</signatures>

@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <struct name='CLLocationCoordinate2D' type='{_CLLocationCoordinate2D="latitude"d"longitude"d}' type64='{_CLLocationCoordinate2D="latitude"d"longitude"d}' />
+  <constant name='kCLDistanceFilterNone' type='d' />
+  <constant name='kCLErrorDomain' type='@' />
+  <constant name='kCLLocationAccuracyBest' type='d' />
+  <constant name='kCLLocationAccuracyHundredMeters' type='d' />
+  <constant name='kCLLocationAccuracyKilometer' type='d' />
+  <constant name='kCLLocationAccuracyNearestTenMeters' type='d' />
+  <constant name='kCLLocationAccuracyThreeKilometers' type='d' />
+  <enum name='kCLErrorDenied' value='1' />
+  <enum name='kCLErrorLocationUnknown' value='0' />
+  <class name='CLLocation' >
+    <method selector='initWithCoordinate:altitude:horizontalAccuracy:verticalAccuracy:timestamp:'>
+      <arg index='0' type='{_CLLocationCoordinate2D=dd}' />
+    </method>
+    <method selector='coordinate'> 
+      <retval type='{_CLLocationCoordinate2D=dd}' />
+    </method>
+  </class>
+  <class name='CLLocationManager'>
+    <method class_method='true' selector='locationServicesEnabled'>
+      <retval type='B' />
+    </method>
+  </class>
+</signatures>
+
