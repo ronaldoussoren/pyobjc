@@ -180,9 +180,7 @@ class TestNSArrayInteraction(TestCase):
         self.assert_(z[3] == 4)
 
 class TestNSArraySpecialMethods(TestCase):
-    """
-    Test calling 'difficult' methods from Python
-    """
+    #Test calling 'difficult' methods from Python
 
     def test_initWithObjects_count_(self):
         a = NSArray.alloc().initWithObjects_count_((u'a',u'b',u'c',u'd'), 3)
@@ -266,9 +264,7 @@ class TestNSMutableArrayInteraction(TestCase):
             self.assertEquals(a, (0, u"a", u"b", u"c", 3))
 
     def testSortInvalid(self):
-        """
-        Invalid calls to sortUsingFunction:context:
-        """
+        # Invalid calls to sortUsingFunction:context:
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
@@ -282,7 +278,8 @@ class TestNSMutableArrayInteraction(TestCase):
         finally:
             objc.setVerbose(t)
 
-    def testSort2(self):
+    def dont_testSort2(self):
+        # sortUsingFunction:context:range: isn't documented an hence shouldn't be tested
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
@@ -295,7 +292,7 @@ class TestNSMutableArrayInteraction(TestCase):
             self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
     def testSort3(self):
-        """ check the sort method, list interface compatibility """
+        # check the sort method, list interface compatibility
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
@@ -321,7 +318,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
         self.assertEquals(a, (3, 2, 1, 0))
 
-    def testSort2(self):
+    def dont_testSort2(self):
         a = NSMutableArray.arrayWithArray_(range(10))
         self.assertEquals(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
@@ -334,7 +331,7 @@ class TestNSMutableArrayInteraction(TestCase):
             self.assertEquals(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
     def testSort3(self):
-        """ check the sort method, list interface compatibility """
+        # check the sort method, list interface compatibility
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEquals(a, (0, 1, 2, 3))
@@ -382,8 +379,10 @@ class TestNSMutableArrayInteraction(TestCase):
         # NOTE: Some of these don't even exist on GNUstep
         o = NSArray.arrayWithArray_(range(4))
         self.assertRaises(TypeError, o.getObjects_)
-        if objc.platform == 'MACOSX' or hasattr(o, 'apply_context_'):
-            self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
+
+        #
+        #if objc.platform == 'MACOSX' or hasattr(o, 'apply_context_'):
+        #    self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
 
     def testInsert(self):
@@ -445,6 +444,52 @@ class TestNSArray (TestCase):
 
         self.failUnlessIsNullTerminated(NSArray.arrayWithObjects_)
         self.failUnlessIsNullTerminated(NSArray.initWithObjects_)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSArray.enumerateObjectsUsingBlock_, 0,
+                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.enumerateObjectsWithOptions_usingBlock_, 1,
+                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.enumerateObjectsAtIndexes_options_usingBlock_, 2,
+                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+
+        self.failUnlessArgIsBlock(NSArray.indexOfObjectPassingTest_, 0,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.indexOfObjectWithOptions_passingTest_, 1,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.indexOfObjectAtIndexes_options_passingTest_, 2,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+
+        self.failUnlessArgIsBlock(NSArray.indexesOfObjectsPassingTest_, 0,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.indexesOfObjectsWithOptions_passingTest_, 1,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSArray.indexesOfObjectsAtIndexes_options_passingTest_, 2,
+                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+
+        self.failUnlessArgIsBlock(NSArray.sortedArrayUsingComparator_,
+                0, 'i@@')
+        self.failUnlessArgIsBlock(NSArray.sortedArrayWithOptions_usingComparator_,
+                1, 'i@@')
+        self.failUnlessArgIsBlock(NSArray.indexOfObject_inSortedRange_options_usingComparator_,
+                3, 'i@@')
+        self.failUnlessArgHasType(NSArray.indexOfObject_inSortedRange_options_usingComparator_, 1, NSRange.__typestr__)
+
+
+
+        self.failUnlessArgIsBlock(NSMutableArray.sortUsingComparator_,
+                0, 'i@@')
+        self.failUnlessArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
+                1, 'i@@')
+
+
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSBinarySearchingFirstEqual, 1 << 8)
+        self.failUnlessEqual(NSBinarySearchingLastEqual, 1 << 9)
+        self.failUnlessEqual(NSBinarySearchingInsertionIndex, 1 << 10)
 
 if __name__ == '__main__':
     main()

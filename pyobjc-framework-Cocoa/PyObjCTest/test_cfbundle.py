@@ -144,7 +144,9 @@ class TestCFBundle (TestCase):
         self.failUnless(isinstance(arr2, CFArrayRef))
 
         url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "Dutch");
-        self.failUnless( isinstance(url, CFURLRef) )
+        if url is None:
+            url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "nl");
+        self.failUnlessIsInstance(url, CFURLRef)
 
         array = CFBundleCopyResourceURLsOfTypeForLocalization(bundle, "strings", None, "Dutch")
         self.failIf(array is None)

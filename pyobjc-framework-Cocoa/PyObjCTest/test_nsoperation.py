@@ -24,5 +24,16 @@ class TestNSOperation (TestCase):
         self.failUnlessResultIsBOOL(NSOperationQueue.isSuspended)
         self.failUnlessArgIsBOOL(NSOperationQueue.setSuspended_, 0)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBlock(NSOperation.completionBlock, 'v')
+        self.failUnlessArgIsBlock(NSOperation.setCompletionBlock_, 0, 'v')
+
+        self.failUnlessArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, 'v')
+        self.failUnlessArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, 'v')
+
+        self.failUnlessArgIsBOOL(NSOperationQueue.addOperations_waitUntilFinished_, 1)
+        self.failUnlessArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, 'v')
+
 if __name__ == "__main__":
     main()

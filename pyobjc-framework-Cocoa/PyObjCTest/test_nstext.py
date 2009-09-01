@@ -43,6 +43,11 @@ class TestNSText (TestCase):
         self.failUnlessIsInstance(NSTextDidEndEditingNotification, unicode)
         self.failUnlessIsInstance(NSTextDidChangeNotification, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSTextWritingDirectionEmbedding, 0<<1)
+        self.failUnlessEqual(NSTextWritingDirectionOverride,  1<<1)
+
     def testMehods(self):
         self.failUnlessResultIsBOOL(NSText.writeRTFDToFile_atomically_)
         self.failUnlessArgIsBOOL(NSText.writeRTFDToFile_atomically_, 1)

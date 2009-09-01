@@ -16,7 +16,7 @@ class TestNSTimer(TestCase):
 
     def _testHelp(self):
         obj = PythonClass()
-        pool = NSAutoreleasePool.new()
+        pool = NSAutoreleasePool.alloc().init()
         self.failUnlessArgIsBOOL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4)
         timer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
                 0.1, obj, 'fire:', None, False)

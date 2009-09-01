@@ -210,6 +210,7 @@ mod_CFTreeGetChildren(
 		}
 
 	PyObjC_HANDLER
+		count = -1; children = NULL;
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER

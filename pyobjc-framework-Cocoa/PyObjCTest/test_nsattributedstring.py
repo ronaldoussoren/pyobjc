@@ -140,5 +140,18 @@ class TestNSAttributedString (TestCase):
         self.failUnlessResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_)
         self.failUnlessArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_, 2)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSAttributedStringEnumerationReverse, 1<<1)
+        self.failUnlessEqual(NSAttributedStringEnumerationLongestEffectiveRangeNotRequired, 1<<20)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgHasType(NSAttributedString.enumerateAttributesInRange_options_usingBlock_, 0, NSRange.__typestr__)
+        self.failUnlessArgIsBlock(NSAttributedString.enumerateAttributesInRange_options_usingBlock_, 2, 'v@'+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
+
+        self.failUnlessArgHasType(NSAttributedString.enumerateAttribute_inRange_options_usingBlock_, 1, NSRange.__typestr__)
+        self.failUnlessArgIsBlock(NSAttributedString.enumerateAttribute_inRange_options_usingBlock_, 3, 'v@'+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
+
 if __name__ == '__main__':
     main()

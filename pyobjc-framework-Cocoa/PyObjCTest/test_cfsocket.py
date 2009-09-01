@@ -37,6 +37,8 @@ class TestSocket (TestCase):
         self.failUnless(isinstance(kCFSocketRegisterCommand, unicode))
         self.failUnless(isinstance(kCFSocketRetrieveCommand, unicode))
 
+        self.failUnlessEqual(kCFSocketLeaveErrors, 64)
+
 
     def testStructs(self):
         o = CFSocketSignature()

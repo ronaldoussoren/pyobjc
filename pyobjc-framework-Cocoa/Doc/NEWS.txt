@@ -1,0 +1,19 @@
+NEWS file for pyobjc-framework-Cocoa
+====================================
+
+Version 2.2
+-----------
+
+* Introduce bindings for SnowLeopard (MacOSX 10.6)
+
+* Introduce ``Foundation.NSDisabledSuddenTermination``, 
+  a context object for use with python's ``with`` statement::
+
+     with NSDisabledSuddenTermination:
+     	# Sudden termination is disabled here
+	pass
+
+* Introduce unittests that check that API bindings actually
+  work, in particular all bindings that require custom 
+  metadata
+

@@ -84,5 +84,14 @@ class TestNSStreamUsage(TestCase):
     def testDelegate(self):
         self.failUnlessArgHasType(TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        b = NSOutputStream.alloc()
+        try:
+            self.failUnlessArgIsBOOL(b.initWithURL_append_, 1)
+        finally:
+            b = b.initToMemory()
+        self.failUnlessArgIsBOOL(NSOutputStream.outputStreamWithURL_append_, 1)
+
 if __name__ == '__main__':
     main()

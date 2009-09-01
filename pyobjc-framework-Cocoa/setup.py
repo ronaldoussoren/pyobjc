@@ -22,6 +22,12 @@ else:
     CFLAGS=["-isysroot", "/"]
     LDFLAGS=CFLAGS
 
+import platform
+CFLAGS.append(
+    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2])))
+)
+
+
 try:
     from PyObjCMetaData.commands import extra_cmdclass, extra_options
 except ImportError:
@@ -161,10 +167,6 @@ setup(
                 extra_link_args=CFLAGS + ['-framework', 'Foundation']),
         Extension('Foundation._NSDecimal', 
                 [ 'Modules/_Foundation_NSDecimal.m' ],
-                extra_compile_args=CFLAGS,
-                extra_link_args=CFLAGS + ['-framework', 'Foundation']),
-        Extension('Foundation._functioncallbacks', 
-                [ 'Modules/_Foundation_functioncallbacks.m' ],
                 extra_compile_args=CFLAGS,
                 extra_link_args=CFLAGS + ['-framework', 'Foundation']),
         Extension('Foundation._nscoder', 

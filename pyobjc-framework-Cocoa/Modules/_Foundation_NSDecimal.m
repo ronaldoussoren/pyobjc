@@ -1036,7 +1036,7 @@ imp_NSDecimalNumber_decimalValue(
 	id self = *(id*)args[0];
 	//SEL _meth = *(SEL*)args[1];
 	NSDecimal* pretval = (NSDecimal*)resp;
-	NSDecimal* res;
+	NSDecimal* res = NULL;
 
 	PyObject* result = NULL;
 	PyObject* arglist = NULL;

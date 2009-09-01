@@ -1,10 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='1.0'>
-  <struct name='CFArrayCallBacks' type='{_CFArrayCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?}' type64='{_CFArrayCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?}' />
-  <struct name='CFBagCallBacks' type='{_CFBagCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' type64='{_CFBagCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' />
-  <struct name='CFDictionaryKeyCallBacks' type='{_CFDictionaryKeyCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' type64='{_CFDictionaryKeyCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' />
-  <struct name='CFDictionaryValueCallBacks' type='{_CFDictionaryValueCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?}' type64='{_CFDictionaryValueCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?}' />
   <struct name='CFGregorianDate' type='{_CFGregorianDate="year"i"month"c"day"c"hour"c"minute"c"second"d}' type64='{_CFGregorianDate="year"i"month"c"day"c"hour"c"minute"c"second"d}' />
   <struct name='CFGregorianUnits' type='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' type64='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' />
   <struct name='CFRange' type='{_CFRange="location"i"length"i}' type64='{_CFRange="location"q"length"q}' />
@@ -26,6 +22,7 @@
   <struct name='CFXMLExternalID' type='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' type64='{_CFXMLExternalID="systemID"^{__CFURL=}"publicID"^{__CFString=}}' />
   <struct name='CFXMLNotationInfo' type='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFURL=}^{__CFString=}}}' type64='{_CFXMLNotationInfo="externalID"{_CFXMLExternalID=^{__CFString=}}}' />
   <struct name='CFXMLProcessingInstructionInfo' type='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' type64='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' />
+  <cftype gettypeid_func='CFURLEnumeratorGetTypeID' name='CFURLEnumeratorRef' type='^{__CFURLEnumerator=}' type64='^{__CFURLEnumerator=}' />
   <cftype gettypeid_func='CFAllocatorGetTypeID' name='CFAllocatorRef' type='^{__CFAllocator=}' type64='^{__CFAllocator=}' />
   <cftype gettypeid_func='CFArrayGetTypeID' name='CFArrayRef' tollfree='NSCFArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
   <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFAttributedStringRef' tollfree='NSCFAttributedString' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' />
@@ -34,7 +31,7 @@
   <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFBitVectorRef' type='^{__CFBitVector=}' type64='^{__CFBitVector=}' />
   <cftype gettypeid_func='CFBooleanGetTypeID' name='CFBooleanRef' tollfree='NSCFBoolean' type='^{__CFBoolean=}' type64='^{__CFBoolean=}' />
   <cftype gettypeid_func='CFBundleGetTypeID' name='CFBundleRef' type='^{__CFBundle=}' type64='^{__CFBundle=}' />
-  <cftype gettypeid_func='CFCalendarGetTypeID' name='CFCalendarRef' tollfree='NSCFCalendar' type='^{__CFCalendar=}' type64='^{__CFCalendar=}' />
+  <cftype gettypeid_func='CFCalendarGetTypeID' name='CFCalendarRef' tollfree='__NSCFCalendar' type='^{__CFCalendar=}' type64='^{__CFCalendar=}' />
   <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFCharacterSetRef' tollfree='NSCFCharacterSet' type='^{__CFCharacterSet=}' type64='^{__CFCharacterSet=}' />
   <cftype gettypeid_func='CFDataGetTypeID' name='CFDataRef' tollfree='NSCFData' type='^{__CFData=}' type64='^{__CFData=}' />
   <cftype gettypeid_func='CFDateFormatterGetTypeID' name='CFDateFormatterRef' type='^{__CFDateFormatter=}' type64='^{__CFDateFormatter=}' />
@@ -68,7 +65,7 @@
   <cftype gettypeid_func='CFSocketGetTypeID' name='CFSocketRef' type='^{__CFSocket=}' type64='^{__CFSocket=}' />
   <cftype gettypeid_func='CFStringGetTypeID' name='CFStringRef' tollfree='NSCFString' type='^{__CFString=}' type64='^{__CFString=}' />
   <cftype gettypeid_func='CFStringTokenizerGetTypeID' name='CFStringTokenizerRef' type='^{__CFStringTokenizer=}' type64='^{__CFStringTokenizer=}' />
-  <cftype gettypeid_func='CFTimeZoneGetTypeID' name='CFTimeZoneRef' tollfree='NSCFTimeZone' type='^{__CFTimeZone=}' type64='^{__CFTimeZone=}' />
+  <cftype gettypeid_func='CFTimeZoneGetTypeID' name='CFTimeZoneRef' tollfree='__NSCFTimeZone' type='^{__CFTimeZone=}' type64='^{__CFTimeZone=}' />
   <cftype gettypeid_func='CFTreeGetTypeID' name='CFTreeRef' type='^{__CFTree=}' type64='^{__CFTree=}' />
   <cftype gettypeid_func='CFURLGetTypeID' name='CFURLRef' tollfree='NSURL' type='^{__CFURL=}' type64='^{__CFURL=}' />
   <cftype gettypeid_func='CFUUIDGetTypeID' name='CFUUIDRef' type='^{__CFUUID=}' type64='^{__CFUUID=}' />
@@ -76,6 +73,59 @@
   <cftype gettypeid_func='CFWriteStreamGetTypeID' name='CFWriteStreamRef' tollfree='NSCFOutputStream' type='^{__CFWriteStream=}' type64='^{__CFWriteStream=}' />
   <cftype gettypeid_func='CFXMLNodeGetTypeID' name='CFXMLNodeRef' type='^{__CFXMLNode=}' type64='^{__CFXMLNode=}' />
   <cftype gettypeid_func='CFXMLParserGetTypeID' name='CFXMLParserRef' type='^{__CFXMLParser=}' type64='^{__CFXMLParser=}' />
+  <constant name='kCFURLNameKey' type='^{__CFString}' />
+  <constant name='kCFURLLocalizedNameKey' type='^{__CFString}' />
+  <constant name='kCFURLIsRegularFileKey' type='^{__CFString}' />
+  <constant name='kCFURLIsDirectoryKey' type='^{__CFString}' />
+  <constant name='kCFURLIsSymbolicLinkKey' type='^{__CFString}' />
+  <constant name='kCFURLIsVolumeKey' type='^{__CFString}' />
+  <constant name='kCFURLIsPackageKey' type='^{__CFString}' />
+  <constant name='kCFURLIsSystemImmutableKey' type='^{__CFString}' />
+  <constant name='kCFURLIsUserImmutableKey' type='^{__CFString}' />
+  <constant name='kCFURLIsHiddenKey' type='^{__CFString}' />
+  <constant name='kCFURLHasHiddenExtensionKey' type='^{__CFString}' />
+  <constant name='kCFURLCreationDateKey' type='^{__CFString}' />
+  <constant name='kCFURLContentAccessDateKey' type='^{__CFString}' />
+  <constant name='kCFURLContentModificationDateKey' type='^{__CFString}' />
+  <constant name='kCFURLAttributeModificationDateKey' type='^{__CFString}' />
+  <constant name='kCFURLLinkCountKey' type='^{__CFString}' />
+  <constant name='kCFURLParentDirectoryURLKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeURLKey' type='^{__CFString}' />
+  <constant name='kCFURLTypeIdentifierKey' type='^{__CFString}' />
+  <constant name='kCFURLLocalizedTypeDescriptionKey' type='^{__CFString}' />
+  <constant name='kCFURLLabelNumberKey' type='^{__CFString}' />
+  <constant name='kCFURLLabelColorKey' type='^{__CFString}' />
+  <constant name='kCFURLLocalizedLabelKey' type='^{__CFString}' />
+  <constant name='kCFURLEffectiveIconKey' type='^{__CFString}' />
+  <constant name='kCFURLCustomIconKey' type='^{__CFString}' />
+  <constant name='kCFURLFileSizeKey' type='^{__CFString}' />
+  <constant name='kCFURLFileAllocatedSizeKey' type='^{__CFString}' />
+  <constant name='kCFURLIsAliasFileKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeLocalizedFormatDescriptionKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeTotalCapacityKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeAvailableCapacityKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeResourceCountKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsPersistentIDsKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsSymbolicLinksKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsHardLinksKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsJournalingKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeIsJournalingKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsSparseFilesKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsZeroRunsKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsCaseSensitiveNamesKey' type='^{__CFString}' />
+  <constant name='kCFURLVolumeSupportsCasePreservedNamesKey' type='^{__CFString}' />
+  <constant name='kCFLocaleCollatorIdentifier' type='^{__CFString}' />
+  <constant name='kCFLocaleQuotationBeginDelimiterKey' type='^{__CFString}' />
+  <constant name='kCFLocaleQuotationEndDelimiterKey' type='^{__CFString}' />
+  <constant name='kCFLocaleAlternateQuotationBeginDelimiterKey' type='^{__CFString}' />
+  <constant name='kCFLocaleAlternateQuotationEndDelimiterKey' type='^{__CFString}' />
+  <constant name='kCFRepublicOfChinaCalendar' type='^{__CFString}' />
+  <constant name='kCFPersianCalendar' type='^{__CFString}' />
+  <constant name='kCFIndianCalendar' type='^{__CFString}' />
+  <constant name='kCFISO8601Calendar' type='^{__CFString}' />
+  <constant name='kCFDateFormatterDoesRelativeDateFormattingKey' type='^{__CFString}' />
+  <constant name='kCFLocaleLanguageCodeKey' type='^{__CFString}' />
+  <constant name='kCFLocaleCountryCodeKey' type='^{__CFString}' />
   <constant name='kCFAbsoluteTimeIntervalSince1904' type='d' />
   <constant name='kCFAbsoluteTimeIntervalSince1970' type='d' />
   <constant name='kCFAllocatorDefault' type='^{__CFAllocator=}' />
@@ -269,6 +319,39 @@
   <constant name='kCFXMLTreeErrorLineNumber' type='^{__CFString=}' />
   <constant name='kCFXMLTreeErrorLocation' type='^{__CFString=}' />
   <constant name='kCFXMLTreeErrorStatusCode' type='^{__CFString=}' />
+  <enum name='kCFURLBookmarkCreationPreferFileIDResolutionMask' value='256' />
+  <enum name='kCFURLBookmarkCreationMinimalBookmarkMask' value='512' />
+  <enum name='kCFURLBookmarkCreationSuitableForBookmarkFile' value='1024' />
+  <enum name='kCFBookmarkResolutionWithoutUIMask' value='256' />
+  <enum name='kCFBookmarkResolutionWithoutMountingMask' value='512' />
+  <enum name='kCFSocketLeaveErrors' value='64' />
+  <enum name='kCFPropertyListReadCorruptError' value='3840' />
+  <enum name='kCFPropertyListReadUnknownVersionError' value='3841' />
+  <enum name='kCFPropertyListReadStreamError' value='3842' />
+  <enum name='kCFPropertyListWriteStreamError' value='3851' />
+  <enum name='kCFMessagePortBecameInvalidError' value='-5' />
+  <enum name='kCFLocaleLanguageDirectionUnknown' value='0' />
+  <enum name='kCFLocaleLanguageDirectionLeftToRight' value='1' />
+  <enum name='kCFLocaleLanguageDirectionRightToLeft' value='2' />
+  <enum name='kCFLocaleLanguageDirectionTopToBottom' value='3' />
+  <enum name='kCFLocaleLanguageDirectionBottomToTop' value='4' />
+  <enum name='kCFCoreFoundationVersionNumber10_5' value='476.00' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_1' value='476.00' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_2' value='476.10' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_3' value='476.13' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_4' value='476.14' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_5' value='476.15' />
+  <enum name='kCFCoreFoundationVersionNumber10_5_6' value='476.17' />
+  <enum name='kCFDataSearchBackwards' value='1' />
+  <enum name='kCFDataSearchAnchored' value='2' />
+  <enum name='kCFCalendarUnitQuarter' value='2048' />
+  <enum name='kCFURLEnumeratorSuccess' value='1' />
+  <enum name='kCFURLEnumeratorEnd' value='2' />
+  <enum name='kCFURLEnumeratorError' value='3' />
+  <enum name='kCFURLEnumeratorDescendRecursively' value='1' />
+  <enum name='kCFURLEnumeratorSkipInvisibles' value='2' />
+  <enum name='kCFURLEnumeratorGenerateFileReferenceURLs' value='4' />
+  <enum name='kCFURLEnumeratorSkipPackageContents' value='8' />
   <enum name='CFByteOrderBigEndian' value='2' />
   <enum name='CFByteOrderLittleEndian' value='1' />
   <enum name='CFByteOrderUnknown' value='0' />
@@ -592,6 +675,10 @@
   <enum name='kCFStringEncodingShiftJIS_X0213' value='1576' />
   <enum name='kCFStringEncodingShiftJIS_X0213_00' value='1576' />
   <enum name='kCFStringEncodingShiftJIS_X0213_MenKuTen' value='1577' />
+  <enum name='kCFStringEncodingUTF7' value='67109120' />
+  <enum name='kCFStringEncodingUTF7_IMAP' value='2576' />
+  <enum name='kCFTimeZoneNameStyleGeneric' value='4' />
+  <enum name='kCFTimeZoneNameStyleShortGeneric' value='5' />
   <enum name='kCFStringEncodingUTF16' value='256' />
   <enum name='kCFStringEncodingUTF16BE' value='268435712' />
   <enum name='kCFStringEncodingUTF16LE' value='335544576' />
@@ -714,6 +801,115 @@
   <enum name='kCFXMLStatusParseInProgress' value='-1' />
   <enum name='kCFXMLStatusParseNotBegun' value='-2' />
   <enum name='kCFXMLStatusParseSuccessful' value='0' />
+  <function name='CFStringIsSurrogateHighCharacter' >
+    <retval type='B' />
+    <arg type='T' />
+  </function>
+  <function name='CFStringIsSurrogateLowCharacter' >
+    <retval type='B' />
+    <arg type='T' />
+  </function>
+  <function name='CFStringGetLongCharacterForSurrogatePair' >
+    <retval type='I' />
+    <arg type='T' />
+    <arg type='T' />
+  </function>
+  <function name='CFStringGetSurrogatePairForLongCharacter' >
+    <retval type='B' />
+    <arg type='I' />
+    <arg type='^T' type_modifier='o' c_array_of_fixed_length='2' />
+  </function>
+  <function name='CFPropertyListCreateWithData' >
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFData=}' />
+    <arg type='i' type64='q' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListCreateWithStream' >
+    <retval already_cfretained='true' type='@' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFReadStream=}' />
+    <arg type='i' type64='q' />
+    <arg type='i' type64='q' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListWrite' >
+    <retval type='i' type64='q' />
+    <arg type='@' />
+    <arg type='^{__CFWriteStream=}' />
+    <arg type='i' type64='q' />
+    <arg type='i' type64='q' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFPropertyListCreateData' >
+    <retval type='^{__CFData=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='@' />
+    <arg type='i' type64='q' />
+    <arg type='i' type64='q' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode'>
+    <retval type='^{__CFString=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='I' />
+  </function>
+  <function name='CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier'>
+    <retval type='I' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CFLocaleGetLanguageCharacterDirection' >
+    <retval type='i' type64='q' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CFLocaleGetLanguageLineDirection' >
+    <retval type='i' type64='q' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CFDateFormatterCreateDateFormatFromTemplate'>
+    <retval type='^{__CFString=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='i' type64='q' />
+    <arg type='^{__CFLocale=}' />
+  </function>
+  <function name='CFURLEnumeratorGetNextURL'>
+    <retval type='i' type64='q' />
+    <arg type='^{__CFURLEnumerator=}' />
+    <arg type='^^{__CFURL=}' type_modifier='o' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLEnumeratorSkipDescendents'>
+    <retval type='v' />
+    <arg type='^{__CFURLEnumerator=}' />
+  </function>
+  <function name='CFURLEnumeratorGetDescendentLevel'>
+    <retval type='i' type64='q' />
+    <arg type='^{__CFURLEnumerator=}' />
+  </function>
+  <function name='CFURLEnumeratorGetTypeID'>
+     <retval type='i' type64='q' />
+  </function>
+  <function name='CFURLEnumeratorGetSourceDidChange'>
+    <retval type='B' />
+    <arg type='^{__CFURLEnumerator=}' />
+  </function>
+  <function name='CFURLEnumeratorCreateForDirectoryURL'>
+     <retval type='^{__CFURLEnumerator=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='i' type64='q' />
+    <arg type='^{__CFArray=}' />
+  </function>
+  <function name='CFURLEnumeratorCreateForMountedVolumes'>
+     <retval type='^{__CFURLEnumerator=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='i' type64='q' />
+    <arg type='^{__CFArray=}' />
+  </function>
   <function name='CFAbsoluteTimeAddGregorianUnits'>
     <retval type='d' />
     <arg type='d' />
@@ -1603,6 +1799,13 @@
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='L' type64='L' />
   </function>
+  <function name='CFDataFind'>
+    <retval type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='^{__CFData=}' />
+    <arg type='^{__CFData=}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='i' type64='q' />
+  </function>
   <function name='CFDataAppendBytes'>
     <arg type='^{__CFData=}' />
     <arg c_array_length_in_arg='2' type='^v' type64='^v' type_modifier='n' />
@@ -2464,6 +2667,14 @@
   <function name='CFRetain'>
     <retval type='@' />
     <arg type='@' />
+  </function>
+  <function name='CFRunLoopPerformBlock'>
+    <retval type='v' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='@' />
+    <arg type='@?' block='true'>
+      <retval type='v' />
+    </arg>
   </function>
   <function name='CFRunLoopAddCommonMode'>
     <arg type='^{__CFRunLoop=}' />
@@ -3452,6 +3663,113 @@
   <function name='CFURLCopyUserName'>
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='^{__CFURL=}' />
+  </function>
+  <function name='CFURLCopyResourcePropertyForKey'>
+    <retval type='B' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^@' type_modifier='o' already_cfretained='true' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCopyResourcePropertiesForKeys'>
+    <retval type='@' already_cfretained='true' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLSetResourcePropertyForKey'>
+    <retval type='B' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLSetResourcePropertiesForKeys'>
+    <retval type='B' />
+    <arg type='^{__CFURL=}' />
+    <arg type='@' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLClearResourcePropertyCacheForKey'>
+    <retval type='v' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='CFURLClearResourcePropertyCache'>
+    <retval type='v' />
+    <arg type='^{__CFURL=}' />
+  </function>
+  <function name='CFURLSetTemporaryResourcePropertyForKey'>
+    <retval type='v' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+  </function>
+  <function name='CFURLResourceIsReachable'>
+    <retval type='B' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateBookmarkData'>
+    <retval already_cfretained='true' type='^{__CFData=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='I' type64='L' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateByResolvingBookmarkData'>
+    <retval already_cfretained='true' type='^{__CFURL=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFData=}' />
+    <arg type='I' type64='L' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^B' type_modifier='o'/>
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateResourcePropertiesForKeysFromBookmarkData'>
+    <retval type='^{__CFDictionary=}' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function name='CFURLCreateResourcePropertyForKeyFromBookmarkData'>
+    <retval type='@' already_cfretained='true' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFData=}' />
+  </function>
+  <function name='CFURLCreateBookmarkDataFromFile'>
+    <retval already_cfretained='true' type='^{__CFData=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLWriteBookmarkDataToFile'>
+    <retval type='B' />
+    <arg type='^{__CFData=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='I' type64='L' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateFileReferenceURL'>
+    <retval already_cfretained='true' type='^{__CFURL=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateFilePathURL'>
+    <retval already_cfretained='true' type='^{__CFURL=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFURL=}' />
+    <arg type='^^{__CFError}' type_modifier='o' />
+  </function>
+  <function name='CFURLCreateBookmarkDataFromAliasRecord'>
+    <retval already_cfretained='true' type='^{__CFData=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFData=}' />
   </function>
   <function name='CFURLCreateAbsoluteURLWithBytes'>
     <retval already_cfretained='true' type='^{__CFURL=}' />

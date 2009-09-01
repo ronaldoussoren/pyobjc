@@ -59,7 +59,9 @@ class TestError (TestCase):
 
         self.failUnlessResultIsCFRetained(CFErrorCopyDescription)
         v = CFErrorCopyDescription(err)
-        self.assertEquals(v, u'Operation could not be completed. failure reason')
+        self.failUnlessIsIn(v, (
+            u'Operation could not be completed. failure reason',
+            u'The operation couldn\u2019t be completed. failure reason'))
 
         self.failUnlessResultIsCFRetained(CFErrorCopyFailureReason)
         v = CFErrorCopyFailureReason(err)

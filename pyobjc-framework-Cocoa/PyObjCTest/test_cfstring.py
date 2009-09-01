@@ -379,7 +379,7 @@ class TestString (TestCase):
 
         v = CFStringConvertEncodingToIANACharSetName(kCFStringEncodingUTF8)
         self.failUnless(isinstance(v, unicode))
-        self.assertEquals(v, 'UTF-8')
+        self.failUnlessIsIn(v, ('UTF-8', 'utf-8'))
 
         t = CFStringConvertIANACharSetNameToEncoding(v)
         self.assertEquals(t, kCFStringEncodingUTF8)
@@ -465,6 +465,11 @@ class TestString (TestCase):
 
 
 class TestStringEncodingExt (TestCase):
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFStringEncodingUTF7, 0x04000100)
+        self.failUnlessEqual(kCFStringEncodingUTF7_IMAP, 0x0A10)
+
     def testConstants(self):
         self.failUnless( kCFStringEncodingMacJapanese == 1 )
         self.failUnless( kCFStringEncodingMacChineseTrad == 2 )
@@ -593,6 +598,25 @@ class TestStringEncodingExt (TestCase):
         self.failUnless( kCFStringEncodingEBCDIC_US == 0x0C01 )
         self.failUnless( kCFStringEncodingEBCDIC_CP037 == 0x0C02 )
         self.failUnless( kCFStringEncodingShiftJIS_X0213_00 == 0x0628 )
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.failUnlessResultIsBOOL(CFStringIsSurrogateHighCharacter)
+        self.failUnless(CFStringIsSurrogateHighCharacter(u'\uD800'))
+        self.failIf(CFStringIsSurrogateHighCharacter(u'\u0600'))
+        self.failUnless(CFStringIsSurrogateLowCharacter(u'\uDC00'))
+        self.failIf(CFStringIsSurrogateLowCharacter(u'\u0600'))
+        v = CFStringGetLongCharacterForSurrogatePair(u'\uD801', u'\uDC01')
+        self.failUnlessEqual(v, ((1 << 10) | 1) + 0x0010000)
+
+        self.failUnlessResultIsBOOL(CFStringGetSurrogatePairForLongCharacter)
+        ok, chars = CFStringGetSurrogatePairForLongCharacter(v, None)
+        self.failUnless(ok)
+        self.failUnlessEqual(len(chars), 2)
+        self.failUnlessEqual(chars[0], u'\uD801')
+        self.failUnlessEqual(chars[1], u'\uDC01')
+
+
 
 if __name__ == "__main__":
     main()

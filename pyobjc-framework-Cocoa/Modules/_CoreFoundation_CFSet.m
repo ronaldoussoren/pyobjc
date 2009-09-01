@@ -25,6 +25,7 @@ mod_CFSetGetValues(
 
 	if (pyValues == PyObjC_NULL) {
 		values = NULL;
+		count = 0;
 	} else if (pyValues == Py_None){
 		count = CFSetGetCount(set);
 		values = malloc(sizeof(void*) * count);

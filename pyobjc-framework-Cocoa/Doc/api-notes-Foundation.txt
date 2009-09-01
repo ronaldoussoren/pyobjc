@@ -62,6 +62,16 @@ NSDebug
 * ``NSIsFreedObject``, ``NSFrameAddress``, ``NSReturnAddress``, ``NSCountFrames``:
    These functions are not available from Python.
 
+NSException
+-----------
+
+* ``NSSetUncaughtExceptionHandler`` is not supported 
+
+* ``NSAssert5``, ``NSAssert4``, ``NSAssert3``, ``NSAssert2``, ``NSAssert1``, ``NSAssert``,
+  ``NSParameterAssert``, ``NSCAssert5``, ``NSCAssert4``, ``NSCAssert3``, ``NSCAssert2``,
+  ``NSCAssert1``, ``NSCAssert`` and ``NSCParameterAssert`` are not supported.
+
+
 NSGarbageCollector
 ------------------
 

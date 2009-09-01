@@ -34,6 +34,17 @@ class FoundationErrorsTest (TestCase):
         self.assertEquals(NSFormattingErrorMinimum, 2048)
         self.assertEquals(NSFormattingErrorMaximum, 2559)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSFileWriteVolumeReadOnlyError, 642)
+
+        self.failUnlessEqual(NSPropertyListReadCorruptError, 3840)
+        self.failUnlessEqual(NSPropertyListReadUnknownVersionError, 3841)
+        self.failUnlessEqual(NSPropertyListReadStreamError, 3842)
+        self.failUnlessEqual(NSPropertyListWriteStreamError, 3851)
+        self.failUnlessEqual(NSPropertyListErrorMinimum, 3840)
+        self.failUnlessEqual(NSPropertyListErrorMaximum, 4095)
+
 
 if __name__ == "__main__":
     main()

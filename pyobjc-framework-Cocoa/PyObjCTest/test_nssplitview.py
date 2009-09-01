@@ -14,6 +14,7 @@ class TestNSSplitViewHelper (NSObject):
     def splitView_additionalEffectiveRectOfDividerAtIndex_(self, sv, i): return 1
     def splitViewWillResizeSubviews_(self, nt): pass
     def splitViewDidResizeSubviews_(self, nt): pass
+    def splitView_shouldAdjustSizeOfSubview_(self, s, sv): return 1
 
 class TestNSSplitView (TestCase):
     def testConstants(self):
@@ -22,6 +23,11 @@ class TestNSSplitView (TestCase):
 
         self.failUnlessIsInstance(NSSplitViewWillResizeSubviewsNotification, unicode)
         self.failUnlessIsInstance(NSSplitViewDidResizeSubviewsNotification, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSSplitViewDividerStylePaneSplitter, 3)
+
 
     def testMethods(self):
         self.failUnlessResultIsBOOL(NSSplitView.isVertical)
@@ -57,6 +63,10 @@ class TestNSSplitView (TestCase):
 
         self.failUnlessResultHasType(TestNSSplitViewHelper.splitView_additionalEffectiveRectOfDividerAtIndex_, NSRect.__typestr__)
         self.failUnlessArgHasType(TestNSSplitViewHelper.splitView_additionalEffectiveRectOfDividerAtIndex_, 1, objc._C_NSInteger)
+
+    @min_os_level('10.6')
+    def testProtocol10_6(self):
+        self.failUnlessResultIsBOOL(TestNSSplitViewHelper.splitView_shouldAdjustSizeOfSubview_)
 
 if __name__ == "__main__":
     main()

@@ -12,6 +12,11 @@ class TestNSBrowserHelper (NSObject):
     def browser_canDragRowsWithIndexes_inColumn_withEvent_(self, b, i, c, e): return 1
     def browser_acceptDrop_atRow_column_dropOperation_(self, b, a, r, c, o): return 1
     def browser_shouldTypeSelectForEvent_withCurrentSearchString_(self, b, e, s): return 1
+    def browser_isLeafItem_(self, b, s): return 1
+    def browser_heightOfRow_inColumn_(self, b, r, c): return 1
+    def browser_shouldEditItem_(self, b, i): return 1
+    def browser_numberOfRowsInColumn_(self, b, c): return 1
+    def browser_createRowsForColumn_inMatrix_(self, b, c, m): return 1
 
 class TestNSBrowser (TestCase):
     def testConstants(self):
@@ -68,6 +73,27 @@ class TestNSBrowser (TestCase):
         self.failUnlessResultIsBOOL(TestNSBrowserHelper.browser_acceptDrop_atRow_column_dropOperation_)
 
         self.failUnlessResultIsBOOL(TestNSBrowserHelper.browser_shouldTypeSelectForEvent_withCurrentSearchString_)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBOOL(NSBrowser.setAutohidesScroller_, 0)
+        self.failUnlessResultIsBOOL(NSBrowser.autohidesScroller)
+        self.failUnlessResultIsBOOL(NSBrowser.isLeafItem_)
+        self.failUnlessResultIsBOOL(NSBrowser.getRow_column_forPoint_)
+        self.failUnlessArgIsOut(NSBrowser.getRow_column_forPoint_, 0)
+        self.failUnlessArgIsOut(NSBrowser.getRow_column_forPoint_, 1)
+        self.failUnlessArgIsBOOL(NSBrowser.editItemAtIndexPath_withEvent_select_, 2)
+
+    @min_os_level('10.6')
+    def testDelegate10_6(self):
+        self.failUnlessResultIsBOOL(TestNSBrowserHelper.browser_isLeafItem_)
+        self.failUnlessResultHasType(TestNSBrowserHelper.browser_heightOfRow_inColumn_, objc._C_CGFloat)
+        self.failUnlessArgHasType(TestNSBrowserHelper.browser_heightOfRow_inColumn_, 1, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSBrowserHelper.browser_heightOfRow_inColumn_, 2, objc._C_NSInteger)
+        self.failUnlessResultIsBOOL(TestNSBrowserHelper.browser_shouldEditItem_)
+        self.failUnlessResultHasType(TestNSBrowserHelper.browser_numberOfRowsInColumn_, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSBrowserHelper.browser_numberOfRowsInColumn_, 1, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSBrowserHelper.browser_createRowsForColumn_inMatrix_, 1, objc._C_NSInteger)
 
 
 

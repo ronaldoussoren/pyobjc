@@ -29,13 +29,15 @@ static void mod_release (CFAllocatorRef allocator __attribute__((__unused__)), c
 
 static CFStringRef mod_copydescription(const void* ptr)
 {
-	return CFCopyDescription(ptr);	
+	CFStringRef r =  CFCopyDescription(ptr);	
+	return r;
 }
 
 CFComparisonResult mod_compare(const void *ptr1, const void *ptr2, void *info __attribute__((__unused__)))
 {
 	NSObject* o1 = (NSObject*)ptr1;
 	NSObject* o2 = (NSObject*)ptr2;
+
 
 	NSComparisonResult result = [o1 compare:o2];
 	return (CFComparisonResult)result;
@@ -56,7 +58,7 @@ mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
 	PyObject* py_allocator;
-	Py_ssize_t count;
+	Py_ssize_t count = -1;
 	CFAllocatorRef allocator;
 	CFBinaryHeapRef heap;
 
@@ -109,7 +111,6 @@ mod_CFBinaryHeapGetValues(
 	free(members);
 	return result;
 }
-
 
 static PyMethodDef mod_methods[] = {
         {

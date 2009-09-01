@@ -68,6 +68,22 @@ class TestNSObjCRuntime (TestCase):
 
         self.assertEquals(NSNotFound, NSIntegerMax)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSFoundationVersionNumber10_5, 677.00)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_1, 677.10)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_2, 677.15)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_3, 677.19)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_4, 677.19)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_5, 677.21)
+        self.failUnlessEqual(NSFoundationVersionNumber10_5_6, 677.22)
+
+        self.failUnlessEqual(NSEnumerationConcurrent, 1<<0)
+        self.failUnlessEqual(NSEnumerationReverse, 1<<1)
+        self.failUnlessEqual(NSSortConcurrent, 1<<0)
+        self.failUnlessEqual(NSSortStable, 1<<4)
+
+
 
     def testSelectorAccess(self):
         v = NSStringFromSelector('description')

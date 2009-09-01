@@ -14,6 +14,9 @@ class TestNSPrintPanel (TestCase):
         self.failUnlessEqual(NSPrintPanelShowsPreview, 0x20000)
 
         self.failUnlessIsInstance(NSPrintPhotoJobStyleHint, unicode)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(NSPrintPanelAccessorySummaryItemNameKey, unicode)
         self.failUnlessIsInstance(NSPrintPanelAccessorySummaryItemDescriptionKey, unicode)
 
@@ -21,6 +24,12 @@ class TestNSPrintPanel (TestCase):
         self.failUnlessArgIsSEL(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 3, 'v@:@' + objc._C_NSInteger + '^v')
         self.failUnlessArgHasType(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 4, '^v')
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSPrintPanelShowsPrintSelection, 1 << 5)
+
+        self.failUnlessIsInstance(NSPrintAllPresetsJobStyleHint, unicode)
+        self.failUnlessIsInstance(NSPrintNoPresetsJobStyleHint, unicode)
 
 
 if __name__ == "__main__":

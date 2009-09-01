@@ -157,5 +157,36 @@ class TestNSApplication (TestCase):
         self.failUnlessResultIsBOOL(TestNSApplicationHelper.readSelectionFromPasteboard_)
 
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSAppKitVersionNumber10_4_1, 824.1)
+        self.failUnlessEqual(NSAppKitVersionNumber10_4_3, 824.23)
+        self.failUnlessEqual(NSAppKitVersionNumber10_4_4, 824.33)
+        self.failUnlessEqual(NSAppKitVersionNumber10_4_7, 824.41)
+        self.failUnlessEqual(NSAppKitVersionNumber10_5, 949)
+        self.failUnlessEqual(NSAppKitVersionNumber10_5_2, 949.27)
+        self.failUnlessEqual(NSAppKitVersionNumber10_5_3, 949.33)
+
+        self.failUnlessEqual(NSApplicationPresentationDefault, 0)
+        self.failUnlessEqual(NSApplicationPresentationAutoHideDock, (1 <<  0))
+        self.failUnlessEqual(NSApplicationPresentationHideDock, (1 <<  1))
+        self.failUnlessEqual(NSApplicationPresentationAutoHideMenuBar, (1 <<  2))
+        self.failUnlessEqual(NSApplicationPresentationHideMenuBar, (1 <<  3))
+        self.failUnlessEqual(NSApplicationPresentationDisableAppleMenu, (1 <<  4))
+        self.failUnlessEqual(NSApplicationPresentationDisableProcessSwitching, (1 <<  5))
+        self.failUnlessEqual(NSApplicationPresentationDisableForceQuit, (1 <<  6))
+        self.failUnlessEqual(NSApplicationPresentationDisableSessionTermination, (1 <<  7))
+        self.failUnlessEqual(NSApplicationPresentationDisableHideApplication, (1 <<  8))
+
+        self.failUnlessEqual(NSUserInterfaceLayoutDirectionLeftToRight, 0)
+        self.failUnlessEqual(NSUserInterfaceLayoutDirectionRightToLeft, 1)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSApplication.setActivationPolicy_)
+        self.failUnlessResultIsBOOL(NSApplication.isFullKeyboardAccessEnabled)
+
+
+
 if __name__ == "__main__":
     main()

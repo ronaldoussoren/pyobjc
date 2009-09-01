@@ -25,6 +25,9 @@ class TestNSTableViewHelper (NSObject):
     def tableView_dataCellForTableColumn_row_(self, tv, tc, r): return 1
     def tableView_isGroupRow_(self, tv, r): return 1
 
+    def tableView_sizeToFitWidthOfColumn_(self, tv, c): return 1
+    def tableView_shouldReorderColumn_toColumn_(self, tv, c1, c2): return 1
+
 
 
 
@@ -53,6 +56,12 @@ class TestNSTableView (TestCase):
         self.failUnlessIsInstance(NSTableViewColumnDidResizeNotification, unicode)
         self.failUnlessIsInstance(NSTableViewSelectionIsChangingNotification, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSTableViewSelectionHighlightStyleNone, -1)
+        self.failUnlessEqual(NSTableViewDraggingDestinationFeedbackStyleNone, -1)
+        self.failUnlessEqual(NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
+        self.failUnlessEqual(NSTableViewDraggingDestinationFeedbackStyleSourceList, 1)
 
     def testMethods(self):
         self.failUnlessArgIsBOOL(NSTableView.setAllowsColumnReordering_, 0)
@@ -77,13 +86,14 @@ class TestNSTableView (TestCase):
         self.failUnlessArgIsBOOL(NSTableView.selectRowIndexes_byExtendingSelection_, 1)
         self.failUnlessResultIsBOOL(NSTableView.isColumnSelected_)
         self.failUnlessResultIsBOOL(NSTableView.isRowSelected_)
-        self.failUnlessArgIsBOOL(NSTableView.setAllowsTypeSelect_, 0)
-        self.failUnlessResultIsBOOL(NSTableView.allowsTypeSelect)
         self.failUnlessResultIsBOOL(NSTableView.textShouldBeginEditing_)
         self.failUnlessResultIsBOOL(NSTableView.textShouldEndEditing_)
         self.failUnlessArgIsBOOL(NSTableView.setAutosaveTableColumns_, 0)
         self.failUnlessResultIsBOOL(NSTableView.autosaveTableColumns)
         self.failUnlessArgIsBOOL(NSTableView.editColumn_row_withEvent_select_, 3)
+
+        self.failUnlessArgHasType(NSTableView.drawBackgroundInClipRect_, 0, NSRect.__typestr__)
+
 
 
         self.failUnlessArgIsBOOL(NSTableView.setDrawsGrid_, 0)
@@ -93,6 +103,17 @@ class TestNSTableView (TestCase):
         self.failUnlessArgIsInOut(NSTableView.dragImageForRows_event_dragImageOffset_, 2)
         self.failUnlessArgIsBOOL(NSTableView.setAutoresizesAllColumnsToFit_, 0)
         self.failUnlessResultIsBOOL(NSTableView.autoresizesAllColumnsToFit)
+
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.failUnlessArgIsBOOL(NSTableView.setAllowsTypeSelect_, 0)
+        self.failUnlessResultIsBOOL(NSTableView.allowsTypeSelect)
+
+        self.failUnlessArgHasType(NSTableView.columnIndexesInRect_, 0, NSRect.__typestr__)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSTableView.shouldFocusCell_atColumn_row_)
 
 
     def testProtocols(self):
@@ -132,7 +153,14 @@ class TestNSTableView (TestCase):
         self.failUnlessResultIsBOOL(TestNSTableViewHelper.tableView_isGroupRow_)
         self.failUnlessArgHasType(TestNSTableViewHelper.tableView_isGroupRow_, 1, objc._C_NSInteger)
 
+    @min_os_level('10.6')
+    def testProtococols10_6(self):
+        self.failUnlessResultHasType(TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, objc._C_CGFloat)
+        self.failUnlessArgHasType(TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, 1, objc._C_NSInteger)
 
+        self.failUnlessResultIsBOOL(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_)
+        self.failUnlessArgHasType(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_, 1, objc._C_NSInteger)
+        self.failUnlessArgHasType(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_, 2, objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

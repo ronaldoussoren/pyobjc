@@ -10,6 +10,8 @@ class TestNSSavePanelHelper (NSObject):
     def panel_willExpand_(self, s, e): return 1
     def panel_directoryDidChange_(self, s, p): pass
     def panelSelectionDidChange_(self, s): pass
+    def panel_shouldEnableURL_(self, p, u): return 1
+    def panel_validateURL_error_(self, p, u, e): return 1
 
 class TestNSSavePanel (TestCase):
     def testConstants(self):
@@ -17,6 +19,8 @@ class TestNSSavePanel (TestCase):
         self.failUnlessEqual(NSFileHandlingPanelOKButton, NSOKButton)
 
     def testMethods(self):
+        self.failUnlessResultIsBOOL(NSSavePanel.showsHiddenFiles)
+        self.failUnlessArgIsBOOL(NSSavePanel.setShowsHiddenFiles_, 0)
         self.failUnlessResultIsBOOL(NSSavePanel.allowsOtherFileTypes)
         self.failUnlessArgIsBOOL(NSSavePanel.setAllowsOtherFileTypes_, 0)
         self.failUnlessResultIsBOOL(NSSavePanel.isExpanded)
@@ -39,6 +43,17 @@ class TestNSSavePanel (TestCase):
         self.failUnlessResultIsBOOL(TestNSSavePanelHelper.panel_isValidFilename_)
         self.failUnlessArgIsBOOL(TestNSSavePanelHelper.panel_userEnteredFilename_confirmed_, 2)
         self.failUnlessArgIsBOOL(TestNSSavePanelHelper.panel_willExpand_, 1)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, 'v' + objc._C_NSInteger)
+
+        self.failUnlessResultIsBOOL(TestNSSavePanelHelper.panel_shouldEnableURL_)
+        self.failUnlessResultIsBOOL(TestNSSavePanelHelper.panel_validateURL_error_)
+        self.failUnlessArgHasType(TestNSSavePanelHelper.panel_validateURL_error_, 2, 'o^@')
+
+        self.failUnlessArgIsBlock(NSSavePanel.beginSheetModalForWindow_completionHandler_, 1, 'v'+objc._C_NSInteger)
+        self.failUnlessArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, 'v'+objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

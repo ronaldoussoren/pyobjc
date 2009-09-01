@@ -17,6 +17,12 @@ class TestNSFileHandle (TestCase):
         f = NSFileHandle.alloc().initWithFileDescriptor_closeOnDealloc_(0, False)
         self.failUnlessArgIsBOOL(f.initWithFileDescriptor_closeOnDealloc_, 1)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsOut(NSFileHandle.fileHandleForReadingFromURL_error_, 1)
+        self.failUnlessArgIsOut(NSFileHandle.fileHandleForWritingToURL_error_, 1)
+        self.failUnlessArgIsOut(NSFileHandle.fileHandleForUpdatingURL_error_, 1)
+
 
 if __name__ == "__main__":
     main()

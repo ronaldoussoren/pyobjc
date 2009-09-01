@@ -206,6 +206,7 @@ class PyKeyValueCoding (TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, u"multiple.level2.nokey")
 
+    @max_os_level('10.5')
     def testValuesForKeys(self):
         o = KeyValueClass1.alloc().init()
 
@@ -213,6 +214,7 @@ class PyKeyValueCoding (TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 3, o, [u"key1", u"key3", u"nosuchkey"])
 
+    @max_os_level('10.5')
     def testTakeValueForKey(self):
         o = KeyValueClass1.alloc().init()
 
@@ -234,6 +236,7 @@ class PyKeyValueCoding (TestCase):
         self.assert_(hasattr(o, u'key9'))
         self.assertEquals(o.key9, u'IX')
 
+    @max_os_level('10.5')
     def testTakeValueForKey2(self):
         o = KeyValueClass4.alloc().init()
 
@@ -274,6 +277,7 @@ class PyKeyValueCoding (TestCase):
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, u'key9', u'IX')
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, u'roprop', u'IX')
 
+    @max_os_level('10.5')
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass1.alloc().init()
 
@@ -296,6 +300,7 @@ class PyKeyValueCoding (TestCase):
         self.assert_(hasattr(o, u'key9'))
         self.assertEquals(o.key9, u'IX')
 
+    @max_os_level('10.5')
     def testTakeValuesFromDictionary2(self):
         o = KeyValueClass4.alloc().init()
 
@@ -306,6 +311,7 @@ class PyKeyValueCoding (TestCase):
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { u'key9':  u'IX' })
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { u'roprop':  u'IX' })
 
+    @max_os_level('10.5')
     def testTakeValueForKeyPath(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
@@ -422,6 +428,7 @@ class PyKeyValueCodingExplicit (TestCase):
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, u"multiple.level2.nokey")
 
+    @max_os_level('10.5')
     def testValuesForKeys(self):
         o = KeyValueClass1Explicit.alloc().init()
 
@@ -472,6 +479,7 @@ class PyKeyValueCodingExplicit (TestCase):
         self.assert_('key9' in o._values)
         self.assertEquals(o._values['key9'], u'IX')
 
+    @max_os_level('10.5')
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass1Explicit.alloc().init()
 
@@ -493,6 +501,7 @@ class PyKeyValueCodingExplicit (TestCase):
         self.assertEquals(o._values['key5'], u"VVVVV")
         self.assertEquals(o._values['key9'], u'IX')
 
+    @max_os_level('10.5')
     def testTakeValueForKeyPath(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()

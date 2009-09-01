@@ -84,8 +84,8 @@ types or Objective-C classes.
 
 * ``CFBinaryHeapGetMinimumIfPresent``
 
-  This function is useless in Python, the bridge assumes that the ``value``
-  is always a valid pointer.
+  This function crashes the interpreter, the reason for that is unclear.
+
 
 CFBundle
 --------
@@ -146,6 +146,12 @@ there doesn't seem to be a proper binding of the low-level API's.
   
   NOTE: This means it is unsafe to call ``CFMachPortContext`` on
   objects that weren't created in Python code.
+
+CFMessagePort
+-------------
+
+* ``CFMessagePortSetDispatchQueue``: not supported yet because there
+  are no wrappers for dispatch_queue_t yet.
 
 CFNumber
 --------

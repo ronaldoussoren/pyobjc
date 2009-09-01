@@ -15,6 +15,7 @@ class TestNSTextInputClientHelper (NSObject):
     def fractionOfDistanceThroughGlyphForPoint_(self, pt): return 1
     def baselineDeltaForCharacterAtIndex_(self, idx): return 1
     def windowLevel(self): return 1
+    def drawsVerticallyForCharacterAtIndex_(self, i): return 1
 
 
 class TestNSTextInputClient (TestCase):
@@ -40,6 +41,11 @@ class TestNSTextInputClient (TestCase):
         self.failUnlessResultHasType(TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_, objc._C_CGFloat)
         self.failUnlessArgHasType(TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_, 0, objc._C_NSUInteger)
         self.failUnlessResultHasType(TestNSTextInputClientHelper.windowLevel, objc._C_NSInteger)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(TestNSTextInputClientHelper.drawsVerticallyForCharacterAtIndex_)
+        self.failUnlessArgHasType(TestNSTextInputClientHelper.drawsVerticallyForCharacterAtIndex_, 0, objc._C_NSInteger)
 
 
 if __name__ == "__main__":

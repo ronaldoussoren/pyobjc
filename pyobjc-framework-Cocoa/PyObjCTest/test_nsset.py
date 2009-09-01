@@ -164,5 +164,15 @@ class TestVariadic (TestCase):
 
         self.failUnlessArgIsBOOL(NSSet.initWithSet_copyItems_, 1)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSSet.enumerateObjectsUsingBlock_, 0, 'v@o^' + objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSSet.enumerateObjectsWithOptions_usingBlock_, 1, 'v@o^' + objc._C_NSBOOL)
+
+        self.failUnlessArgIsBlock(NSSet.objectsPassingTest_, 0, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSSet.objectsWithOptions_passingTest_, 1, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
+
+
+
 if __name__ == '__main__':
     main()

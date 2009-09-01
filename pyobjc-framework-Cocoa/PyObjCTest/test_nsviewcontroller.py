@@ -10,5 +10,6 @@ class TestNSViewController (TestCase):
 
         self.failUnlessResultIsBOOL(NSViewController.commitEditing)
 
+
 if __name__ == "__main__":
     main()

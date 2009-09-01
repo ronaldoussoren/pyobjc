@@ -98,6 +98,20 @@ the moment.
 
   This method is not supported.
 
+``NSProcessInfo``
+-----------------
+
+PyObjC defines a context named ``NSDisabledSuddenTermination``. This can be used to 
+disable sudden termination for a block of code. The context works on all versions of
+OSX, but only has a real side effect on OSX 10.6 or later.
+
+Usage::
+
+	with NSDisabledSuddenTermination:
+	    # sudden termination is disabled here
+	    pass
+	
+
 ``NSSet``
 ---------
 

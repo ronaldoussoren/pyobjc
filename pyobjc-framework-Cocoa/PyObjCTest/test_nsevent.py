@@ -152,6 +152,23 @@ class TestNSEvent (TestCase):
         self.failUnlessEqual(NSHelpFunctionKey, unichr(0xF746))
         self.failUnlessEqual(NSModeSwitchFunctionKey, unichr(0xF747))
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessEqual(NSEventTypeGesture, 29)
+        self.failUnlessEqual(NSEventTypeMagnify, 30)
+        self.failUnlessEqual(NSEventTypeSwipe, 31)
+        self.failUnlessEqual(NSEventTypeRotate, 18)
+        self.failUnlessEqual(NSEventTypeBeginGesture, 19)
+        self.failUnlessEqual(NSEventTypeEndGesture, 20)
+
+        self.failUnlessEqual(NSEventMaskGesture, 1 << 29)
+        self.failUnlessEqual(NSEventMaskMagnify, 1 << 30)
+        self.failUnlessEqual(NSEventMaskSwipe, 1 << 31)
+        self.failUnlessEqual(NSEventMaskRotate, 1 << 18)
+        self.failUnlessEqual(NSEventMaskBeginGesture, 1 << 19)
+        self.failUnlessEqual(NSEventMaskEndGesture, 1 << 20)
+
+
 
     def testFunctions(self):
         v = NSEventMaskFromType(NSLeftMouseDown)
@@ -174,6 +191,11 @@ class TestNSEvent (TestCase):
 
 
         self.failUnlessResultHasType(NSEvent.userData, '^v')
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, 'v@')
+        self.failUnlessArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, 'v@')
 
 if __name__ == "__main__":
     main()

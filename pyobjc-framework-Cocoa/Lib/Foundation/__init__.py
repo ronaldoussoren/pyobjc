@@ -22,7 +22,6 @@ __bundle__ = _objc.initFrameworkWrapper("Foundation",
 from Foundation._functiondefines import *
 from Foundation._NSDecimal import *
 from Foundation._nsinvocation import *
-from Foundation._functioncallbacks import *
 from Foundation._typecode import *
 from Foundation._nscoder import *
 from Foundation._data import *
@@ -52,3 +51,33 @@ ABS = abs
 import sys
 NSMaximumStringLength = sys.maxint - 1
 del sys
+
+class _OC_DisabledSuddenTermination (object):
+    """
+    Helper class to implement NSDisabledSuddenTermination
+
+    Usage::
+
+        with NSDisabledSuddenTermination:
+            pass
+
+    Inside the with block sudden termination is disabled.
+
+    This only has an effect on OSX 10.6 or later.
+    """
+    if hasattr(NSProcessInfo, 'disableSuddenTermination'):
+        def __enter__(self):
+            NSProcessInfo.processInfo().disableSuddenTermination()
+
+        def __exit__(self, type, value, tb):
+            NSProcessInfo.processInfo().enableSuddenTermination()
+
+    else:
+        def __enter__(self):
+            pass
+
+        def __exit__(self, type, value, tb):
+            pass
+
+
+NSDisabledSuddenTermination = _OC_DisabledSuddenTermination()

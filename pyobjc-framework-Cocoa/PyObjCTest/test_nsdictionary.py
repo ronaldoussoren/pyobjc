@@ -277,5 +277,15 @@ class TestNSDictionary (TestCase):
         self.failUnlessIsNullTerminated(NSDictionary.initWithObjectsAndKeys_)
         self.failUnlessIsNullTerminated(NSDictionary.dictionaryWithObjectsAndKeys_)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, 'v@@o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, 'v@@o^'+objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, 'i@@')
+        self.failUnlessArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, 'i@@')
+
+        self.failUnlessArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
+        self.failUnlessArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
+
 if __name__ == '__main__':
     main( )

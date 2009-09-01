@@ -8,6 +8,7 @@ class TestNSObjectHelper (NSObject):
     def isContentDiscarded(self): return 1
     def beginContentAccess(self): return 1
 
+
 class TestNSObjectFunctions (TestCase):
     def testAllocation(self):
         o = NSAllocateObject(NSObject, 0, None)

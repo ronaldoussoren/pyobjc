@@ -4,6 +4,119 @@
   <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
   <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
   <opaque name='NSModalSession' type='^{_NSModalSession=}' type64='^{_NSModalSession=}' />
+  <constant name='NSTextInputContextKeyboardSelectionDidChangeNotification' type='@' />
+  <constant name='NSWorkspaceDesktopImageScalingKey' type='@' />
+  <constant name='NSWorkspaceDesktopImageAllowClippingKey' type='@' />
+  <constant name='NSWorkspaceDesktopImageFillColorKey' type='@' />
+  <constant name='NSWorkspaceDidHideApplicationNotification' type='@' />
+  <constant name='NSWorkspaceDidUnhideApplicationNotification' type='@' />
+  <constant name='NSWorkspaceDidActivateApplicationNotification' type='@' />
+  <constant name='NSWorkspaceDidDeactivateApplicationNotification' type='@' />
+  <constant name='NSWorkspaceApplicationKey' type='@' />
+  <constant name='NSWorkspaceVolumeLocalizedNameKey' type='@' />
+  <constant name='NSWorkspaceVolumeURLKey' type='@' />
+  <constant name='NSWorkspaceVolumeOldLocalizedNameKey' type='@' />
+  <constant name='NSWorkspaceVolumeOldURLKey' type='@' />
+  <constant name='NSWorkspaceDidRenameVolumeNotification' type='@' />
+  <constant name='NSWorkspaceScreensDidSleepNotification' type='@' />
+  <constant name='NSWorkspaceScreensDidWakeNotification' type='@' />
+  <constant name='NSWorkspaceDidChangeFileLabelsNotification' type='@' />
+  <constant name='NSWorkspaceActiveSpaceDidChangeNotification' type='@' />
+  <constant name='NSWorkspaceLaunchConfigurationAppleEvent' type='@' />
+  <constant name='NSWorkspaceLaunchConfigurationArguments' type='@' />
+  <constant name='NSWorkspaceLaunchConfigurationEnvironment' type='@' />
+  <constant name='NSWorkspaceLaunchConfigurationArchitecture' type='@' />
+  <constant name='NSWindowWillStartLiveResizeNotification' type='@' />
+  <constant name='NSWindowDidEndLiveResizeNotification' type='@' />
+  <constant name='NSDefinitionPresentationTypeKey' type='@' />
+  <constant name='NSDefinitionPresentationTypeOverlay' type='@' />
+  <constant name='NSDefinitionPresentationTypeDictionaryApplication' type='@' />
+  <constant name='NSTextCheckingOrthographyKey' type='@' />
+  <constant name='NSTextCheckingQuotesKey' type='@' />
+  <constant name='NSTextCheckingReplacementsKey' type='@' />
+  <constant name='NSTextCheckingReferenceDateKey' type='@' />
+  <constant name='NSTextCheckingReferenceTimeZoneKey' type='@' />
+  <constant name='NSTextCheckingDocumentURLKey' type='@' />
+  <constant name='NSTextCheckingDocumentTitleKey' type='@' />
+  <constant name='NSTextCheckingDocumentAuthorKey' type='@' />
+  <constant name='NSScreenColorSpaceDidChangeNotification' type='@' />
+  <constant name='NSPrintSelectionOnly' type='@' />
+  <constant name='NSPrintJobSavingURL' type='@' />
+  <constant name='NSPrintJobSavingFileNameExtensionHidden' type='@' />
+  <constant name='NSPasteboardURLReadingFileURLsOnlyKey' type='@' />
+  <constant name='NSPasteboardURLReadingContentsConformToTypesKey' type='@' />
+  <constant name='NSPasteboardTypeString' type='@' />
+  <constant name='NSPasteboardTypePDF' type='@' />
+  <constant name='NSPasteboardTypeTIFF' type='@' />
+  <constant name='NSPasteboardTypePNG' type='@' />
+  <constant name='NSPasteboardTypeRTF' type='@' />
+  <constant name='NSPasteboardTypeRTFD' type='@' />
+  <constant name='NSPasteboardTypeHTML' type='@' />
+  <constant name='NSPasteboardTypeTabularText' type='@' />
+  <constant name='NSPasteboardTypeFont' type='@' />
+  <constant name='NSPasteboardTypeRuler' type='@' />
+  <constant name='NSPasteboardTypeColor' type='@' />
+  <constant name='NSPasteboardTypeSound' type='@' />
+  <constant name='NSPasteboardTypeMultipleTextSelection' type='@' />
+  <constant name='NSPasteboardTypeFindPanelSearchOptions' type='@' />
+  <constant name='NSImageHintCTM' type='@' />
+  <constant name='NSImageHintInterpolation' type='@' />
+  <constant name='NSImageNameFolder' type='@' />
+  <constant name='NSImageNameMobileMe' type='@' />
+  <constant name='NSImageNameUserGuest' type='@' />
+  <constant name='NSImageNameMenuOnStateTemplate' type='@' />
+  <constant name='NSImageNameMenuMixedStateTemplate' type='@' />
+  <constant name='NSImageNameApplicationIcon' type='@' />
+  <constant name='NSImageNameTrashEmpty' type='@' />
+  <constant name='NSImageNameTrashFull' type='@' />
+  <constant name='NSImageNameHomeTemplate' type='@' />
+  <constant name='NSImageNameBookmarksTemplate' type='@' />
+  <constant name='NSImageNameCaution' type='@' />
+  <constant name='NSImageNameStatusAvailable' type='@' />
+  <constant name='NSImageNameStatusPartiallyAvailable' type='@' />
+  <constant name='NSImageNameStatusUnavailable' type='@' />
+  <constant name='NSImageNameStatusNone' type='@' />
+  <constant name='NSManagerDocumentAttribute' type='@' />
+  <constant name='NSWritingDirectionAttributeName' type='@' />
+  <constant name='NSFileTypeDocumentAttribute' type='@' />
+  <constant name='NSCategoryDocumentAttribute' type='@' />
+  <constant name='NSFileTypeDocumentOption' type='@' />
+  <constant name='NSAccessibilityRelevanceIndicatorRole' type='@' />
+  <constant name='NSAccessibilityWarningValueAttribute' type='@' />
+  <constant name='NSAccessibilityCriticalValueAttribute' type='@' />
+  <constant name='NSAccessibilityPlaceholderValueAttribute' type='@' />
+  <constant name='NSAccessibilityUnknownOrientationValue' type='@' />
+  <constant name='NSAccessibilitySelectedCellsAttribute' type='@' />
+  <constant name='NSAccessibilityVisibleCellsAttribute' type='@' />
+  <constant name='NSAccessibilityRowHeaderUIElementsAttribute' type='@' />
+  <constant name='NSAccessibilityColumnHeaderUIElementsAttribute' type='@' />
+  <constant name='NSAccessibilityCellForColumnAndRowParameterizedAttribute' type='@' />
+  <constant name='NSAccessibilityRowIndexRangeAttribute' type='@' />
+  <constant name='NSAccessibilityColumnIndexRangeAttribute' type='@' />
+  <constant name='NSAccessibilityHorizontalUnitsAttribute' type='@' />
+  <constant name='NSAccessibilityVerticalUnitsAttribute' type='@' />
+  <constant name='NSAccessibilityHorizontalUnitDescriptionAttribute' type='@' />
+  <constant name='NSAccessibilityVerticalUnitDescriptionAttribute' type='@' />
+  <constant name='NSAccessibilityLayoutPointForScreenPointParameterizedAttribute' type='@' />
+  <constant name='NSAccessibilityLayoutSizeForScreenSizeParameterizedAttribute' type='@' />
+  <constant name='NSAccessibilityScreenPointForLayoutPointParameterizedAttribute' type='@' />
+  <constant name='NSAccessibilityScreenSizeForLayoutSizeParameterizedAttribute' type='@' />
+  <constant name='NSAccessibilityHandlesAttribute' type='@' />
+  <constant name='NSAccessibilityRowExpandedNotification' type='@' />
+  <constant name='NSAccessibilityRowCollapsedNotification' type='@' />
+  <constant name='NSAccessibilitySelectedCellsChangedNotification' type='@' />
+  <constant name='NSAccessibilityUnitsChangedNotification' type='@' />
+  <constant name='NSAccessibilitySelectedChildrenMovedNotification' type='@' />
+  <constant name='NSAccessibilitySortButtonRole' type='@' />
+  <constant name='NSAccessibilityLevelIndicatorRole' type='@' />
+  <constant name='NSAccessibilityCellRole' type='@' />
+  <constant name='NSAccessibilityLayoutAreaRole' type='@' />
+  <constant name='NSAccessibilityLayoutItemRole' type='@' />
+  <constant name='NSAccessibilityHandleRole' type='@' />
+  <constant name='NSAccessibilitySortButtonSubrole' type='@' />
+  <constant name='NSAccessibilityRatingIndicatorSubrole' type='@' />
+  <constant name='NSAccessibilityContentListSubrole' type='@' />
+  <constant name='NSAccessibilityDefinitionListSubrole' type='@' />
   <constant name='NSAFMAscender' type='@' />
   <constant name='NSAFMCapHeight' type='@' />
   <constant name='NSAFMCharacterSet' type='@' />
@@ -884,6 +997,107 @@
   <constant name='NSWorkspaceWillPowerOffNotification' type='@' />
   <constant name='NSWorkspaceWillSleepNotification' type='@' />
   <constant name='NSWorkspaceWillUnmountNotification' type='@' />
+  <constant name='NSPrintNoPresetsJobStyleHint' type='@' />
+  <constant name='NSPrintAllPresetsJobStyleHint' type='@' />
+  <enum name='NSTouchPhaseBegan' value='1' />
+  <enum name='NSTouchPhaseMoved' value='2' />
+  <enum name='NSTouchPhaseStationary' value='4' />
+  <enum name='NSTouchPhaseEnded' value='8' />
+  <enum name='NSTouchPhaseCancelled' value='16' />
+  <enum name='NSTouchPhaseTouching' value='7' />
+  <enum name='NSTouchPhaseAny' value='-1' />
+  <enum name='NSApplicationActivateAllWindows' value='1' />
+  <enum name='NSApplicationActivateIgnoringOtherApps' value='2' />
+  <enum name='NSApplicationActivationPolicyRegular' value='0' />
+  <enum name='NSApplicationActivationPolicyAccessory' value='1' />
+  <enum name='NSApplicationActivationPolicyProhibited' value='2' />
+  <enum name='NSAppKitVersionNumberWithDeferredWindowDisplaySupport' value='1019.0' />
+  <enum name='NSWindowCollectionBehaviorManaged' value='4' />
+  <enum name='NSWindowCollectionBehaviorTransient' value='8' />
+  <enum name='NSWindowCollectionBehaviorStationary' value='16' />
+  <enum name='NSWindowCollectionBehaviorParticipatesInCycle' value='32' />
+  <enum name='NSWindowCollectionBehaviorIgnoresCycle' value='64' />
+  <enum name='NSWindowNumberListAllApplications' value='1' />
+  <enum name='NSWindowNumberListAllSpaces' value='16' />
+  <enum name='NSViewLayerContentsRedrawNever' value='0' />
+  <enum name='NSViewLayerContentsRedrawOnSetNeedsDisplay' value='1' />
+  <enum name='NSViewLayerContentsRedrawDuringViewResize' value='2' />
+  <enum name='NSViewLayerContentsRedrawBeforeViewResize' value='3' />
+  <enum name='NSViewLayerContentsPlacementScaleAxesIndependently' value='0' />
+  <enum name='NSViewLayerContentsPlacementScaleProportionallyToFit' value='1' />
+  <enum name='NSViewLayerContentsPlacementScaleProportionallyToFill' value='2' />
+  <enum name='NSViewLayerContentsPlacementCenter' value='3' />
+  <enum name='NSViewLayerContentsPlacementTop' value='4' />
+  <enum name='NSViewLayerContentsPlacementTopRight' value='5' />
+  <enum name='NSViewLayerContentsPlacementRight' value='6' />
+  <enum name='NSViewLayerContentsPlacementBottomRight' value='7' />
+  <enum name='NSViewLayerContentsPlacementBottom' value='8' />
+  <enum name='NSViewLayerContentsPlacementBottomLeft' value='9' />
+  <enum name='NSViewLayerContentsPlacementLeft' value='10' />
+  <enum name='NSViewLayerContentsPlacementTopLeft' value='11' />
+  <enum name='NSTextWritingDirectionEmbedding' value='0' />
+  <enum name='NSTextWritingDirectionOverride' value='2' />
+  <enum name='NSSplitViewDividerStylePaneSplitter' value='3' />
+  <enum name='NSPrintPanelShowsPrintSelection' value='32' />
+  <enum name='NSPasteboardReadingAsData' value='0' />
+  <enum name='NSPasteboardReadingAsString' value='1' />
+  <enum name='NSPasteboardReadingAsPropertyList' value='2' />
+  <enum name='NSPasteboardReadingAsKeyedArchive' value='4' />
+  <enum name='NSPasteboardWritingPromised' value='512' />
+  <enum name='NSOpenGLPFARemotePixelBuffer' value='91' />
+  <enum name='NSOpenGLPFAAcceleratedCompute' value='97' />
+  <enum name='NSMenuPropertyItemTitle' value='1' />
+  <enum name='NSMenuPropertyItemAttributedTitle' value='2' />
+  <enum name='NSMenuPropertyItemKeyEquivalent' value='4' />
+  <enum name='NSMenuPropertyItemImage' value='8' />
+  <enum name='NSMenuPropertyItemEnabled' value='16' />
+  <enum name='NSMenuPropertyItemAccessibilityDescription' value='32' />
+  <enum name='NSColorRenderingIntentDefault' value='0' />
+  <enum name='NSColorRenderingIntentAbsoluteColorimetric' value='1' />
+  <enum name='NSColorRenderingIntentRelativeColorimetric' value='2' />
+  <enum name='NSColorRenderingIntentPerceptual' value='3' />
+  <enum name='NSColorRenderingIntentSaturation' value='4' />
+  <enum name='NSWindowDepthTwentyfourBitRGB' value='520' />
+  <enum name='NSWindowDepthSixtyfourBitRGB' value='528' />
+  <enum name='NSWindowDepthOnehundredtwentyeightBitRGB' value='544' />
+  <enum name='NSFileWrapperReadingImmediate' value='1'/>
+  <enum name='NSFileWrapperReadingWithoutMapping' value='2'/>
+  <enum name='NSFileWrapperWritingAtomic' value='1'/>
+  <enum name='NSFileWrapperWritingWithNameUpdating' value='2'/>
+  <enum name='NSEventTypeGesture' value='29' />
+  <enum name='NSEventTypeMagnify' value='30' />
+  <enum name='NSEventTypeSwipe' value='31' />
+  <enum name='NSEventTypeRotate' value='18' />
+  <enum name='NSEventTypeBeginGesture' value='19' />
+  <enum name='NSEventTypeEndGesture' value='20' />
+  <enum name='NSEventMaskGesture' value='536870912' />
+  <enum name='NSEventMaskMagnify' value='1073741824' />
+  <enum name='NSEventMaskSwipe' value='2147483648' />
+  <enum name='NSEventMaskRotate' value='262144' />
+  <enum name='NSEventMaskBeginGesture' value='524288' />
+  <enum name='NSEventMaskEndGesture' value='1048576' />
+  <enum name='NSAppKitVersionNumberWithDockTilePlugInSupport' value='1001.0' />
+  <enum name='NSCollectionViewDropOn' value='0' />
+  <enum name='NSCollectionViewDropBefore' value='1' />
+  <enum name='NSAppKitVersionNumber10_4_1' value='824.1' />
+  <enum name='NSAppKitVersionNumber10_4_3' value='824.23' />
+  <enum name='NSAppKitVersionNumber10_4_4' value='824.33' />
+  <enum name='NSAppKitVersionNumber10_4_7' value='824.41' />
+  <enum name='NSAppKitVersionNumber10_5' value='949' />
+  <enum name='NSAppKitVersionNumber10_5_2' value='949.27' />
+  <enum name='NSAppKitVersionNumber10_5_3' value='949.33' />
+  <enum name='NSApplicationPresentationDefault' value='0' />
+  <enum name='NSApplicationPresentationAutoHideDock' value='1' />
+  <enum name='NSApplicationPresentationHideDock' value='2' />
+  <enum name='NSApplicationPresentationAutoHideMenuBar' value='4' />
+  <enum name='NSApplicationPresentationHideMenuBar' value='8' />
+  <enum name='NSApplicationPresentationDisableAppleMenu' value='16' />
+  <enum name='NSApplicationPresentationDisableProcessSwitching' value='32' />
+  <enum name='NSApplicationPresentationDisableForceQuit' value='64' />
+  <enum name='NSApplicationPresentationDisableSessionTermination' value='128' />
+  <enum name='NSApplicationPresentationDisableHideApplication' value='256' />
+  <enum name='NSUserInterfaceLayoutDirectionLeftToRight' value='0' />
+  <enum name='NSUserInterfaceLayoutDirectionRightToLeft' value='1' />
   <enum name='NSLayoutNotDone' value='0' />
   <enum name='NSLayoutDone' value='1' />
   <enum name='NSLayoutCantFit' value='2' />
@@ -1249,6 +1463,7 @@
   <enum name='NSImageInterpolationHigh' value='3' />
   <enum name='NSImageInterpolationLow' value='2' />
   <enum name='NSImageInterpolationNone' value='1' />
+  <enum name='NSImageInterpolationMedium' value='4' />
   <enum name='NSImageLeft' value='2' />
   <enum name='NSImageLoadStatusCancelled' value='1' />
   <enum name='NSImageLoadStatusCompleted' value='0' />
@@ -1614,6 +1829,10 @@
   <enum name='NSTableViewLastColumnOnlyAutoresizingStyle' value='4' />
   <enum name='NSTableViewNoColumnAutoresizing' value='0' />
   <enum name='NSTableViewReverseSequentialColumnAutoresizingStyle' value='3' />
+  <enum name='NSTableViewDraggingDestinationFeedbackStyleNone' value='-1' />
+  <enum name='NSTableViewDraggingDestinationFeedbackStyleRegular' value='0' />
+  <enum name='NSTableViewDraggingDestinationFeedbackStyleSourceList' value='1' />
+  <enum name='NSTableViewSelectionHighlightStyleNone' value='-1' />
   <enum name='NSTableViewSelectionHighlightStyleRegular' value='0' />
   <enum name='NSTableViewSelectionHighlightStyleSourceList' value='1' />
   <enum name='NSTableViewSequentialColumnAutoresizingStyle' value='2' />
@@ -2647,6 +2866,7 @@
     <method selector='speechSynthesizer:willSpeakWord:ofString:' type='v@:@{_NSRange=II}@' type64='v@:@{_NSRange=QQ}@' />
   </informal_protocol>
   <informal_protocol name='NSSplitViewDelegate'>
+    <method selector='splitView:shouldAdjustSizeOfSubview:' type='B@:@@' type64='B@:@@' />
     <method selector='splitView:additionalEffectiveRectOfDividerAtIndex:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@i' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@q' />
     <method selector='splitView:canCollapseSubview:' type='B@:@@' />
     <method selector='splitView:effectiveRect:forDrawnRect:ofDividerAtIndex:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRect={_NSPoint=ff}{_NSSize=ff}}i' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@{CGRect={CGPoint=dd}{CGSize=dd}}{CGRect={CGPoint=dd}{CGSize=dd}}q' />
@@ -3354,6 +3574,17 @@
     </method>
   </class>
   <class name='NSApplication'>
+    <method selector='searchString:inUserInterfaceItemString:searchRange:foundRange:'>
+      <retval type='B' />
+      <arg index='2' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      <arg index='3' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+    </method>
+    <method selector='setActivationPolicy:' >
+      <retval type='B' />
+    </method>
+    <method selector='isFullKeyboardAccessEnabled'>
+      <retval type='B' />
+    </method>
     <method selector='abortModal'>
       <retval type='v' />
     </method>
@@ -4624,6 +4855,24 @@
     </method>
   </class>
   <class name='NSBrowser'>
+  <method selector='setAutohidesScroller:' >
+	  <arg index='0' type='B' />
+  </method>
+  <method selector='autohidesScroller' >
+	  <retval type='B' />
+  </method>
+  <method selector='isLeafItem:' >
+	  <retval type='B' />
+  </method>
+  <method selector='getRow:column:forPoint:' >
+	  <retval type='B' />
+	  <arg index='0' type_modifier='o' />
+	  <arg index='1' type_modifier='o' />
+	  <arg index='2' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+  </method>
+  <method selector='editItemAtIndexPath:withEvent:select:' >
+	  <arg index='2' type='B' />
+  </method>
     <method selector='acceptsArrowKeys'>
       <retval type='B' />
     </method>
@@ -5445,6 +5694,12 @@
     </method>
   </class>
   <class name='NSCell'>
+    <method selector='usesSingleLineMode' >
+      <retval type='B' />
+    </method>
+    <method selector='setUsesSingleLineMode:' >
+      <arg index='0' type='B' />
+    </method>
     <method selector='truncatesLastVisibleLine'>
       <retval type='B' />
     </method>
@@ -6062,6 +6317,15 @@
     </method>
   </class>
   <class name='NSCollectionView'>
+	  <method selector='setDraggingSourceOperationMask:forLocal:'>
+		  <arg index='1' type='B' />
+	  </method>
+	  <method selector='draggingImageForItemsAtIndexes:withEvent:offset:'>
+		  <arg index='2' type_modifier='N' />
+	  </method>
+    <method selector='frameForItemAtIndex:' >
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    </method>
     <method selector='allowsMultipleSelection'>
       <retval type='B' />
     </method>
@@ -7718,6 +7982,9 @@
     </method>
   </class>
   <class name='NSDocument'>
+	  <method selector='canConcurrentlyReadDocumentsOfType:'>
+		  <retval type='B' />
+	  </method>
     <method selector='addWindowController:'>
       <retval type='v' />
       <arg index='0' type='@' />
@@ -8528,6 +8795,18 @@
     </method>
   </class>
   <class name='NSEvent'>
+	  <method selector='addGlobalMonitorForEventsMatchingMask:handler:'>
+		  <arg index='1' block='true'>
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	  <method selector='addLocalMonitorForEventsMatchingMask:handler:'>
+		  <arg index='1' block='true'>
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
     <method selector='absoluteX'>
       <retval type='i' type64='q' />
     </method>
@@ -8731,6 +9010,20 @@
     </method>
   </class>
   <class name='NSFileWrapper'>
+	  <method selector='initWithURL:options:error:'>
+		  <arg index='2' type_modifier='o' />
+	  </method>
+	  <method selector='matchesContentsOfURL:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='readFromURL:options:error:'>
+		  <retval type='B' />
+		  <arg index='2' type_modifier='o' />
+	  </method>
+	  <method selector='writeToURL:options:originalContentsURL:error:'>
+		  <retval type='B' />
+		  <arg index='3' type_modifier='o' />
+	  </method>
     <method selector='addFileWithPath:'>
       <retval type='@' />
       <arg index='0' type='@' />
@@ -9825,6 +10118,35 @@
     </method>
   </class>
   <class name='NSImage'>
+    <method selector='hitTestRect:withImageDestinationRect:context:hints:flipped:'>
+      <retval type='B' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='4' type='B' />
+    </method>
+    <method selector='drawInRect:fromRect:operation:fraction:respectFlipped:hints:'>
+      <retval type='B' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='4' type='B' />
+    </method>
+      <method selector='lockFocusFlipped:'>
+	      <arg index='0' type='B' />
+      </method>
+      <method selector='initWithCGImage:size:'>
+	      <arg index='1' type='{_NSSize=ff}' type64='{CGSize=dd}' />
+      </method>
+      <method selector='CGImageForProposedRect:context:hints:'>
+	      <arg index='0' type_modifier='o' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      </method>
+      <method selector='bestRepresentationForRect:context:hints:'>
+	      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      </method>
+      <method selector='hitTestRect:withImageDestinationRect:context_hints:flipped:'>
+	      <retval type='B' />
+	      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+	      <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      </method>
     <method selector='TIFFRepresentation'>
       <retval type='@' />
     </method>
@@ -10138,6 +10460,15 @@
       <retval type='B' />
       <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
+    <method selector='drawInRect:fromRect:operation:fraction:respectFlipped:hints:'>
+      <retval type='B' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <arg index='4' type='B' />
+    </method>
+    <method selector='CGImageForProposedRect:context:hints:' >
+      <arg index='0' type_modifier='N' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    </method>
     <method selector='hasAlpha'>
       <retval type='B' />
     </method>
@@ -10362,6 +10693,14 @@
     </method>
   </class>
   <class name='NSLayoutManager'>
+	  <method selector='fillBackgroundRectArray:count:forCharacterRange:color:'>
+		  <arg index='0' type_modifier='N' c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+	          <arg index='2' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+	  </method>
+	  <method selector='characterIndexForPoint:inTextContainer:fractionOfDistanceBetweenInsertionPoints:'>
+             <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+	     <arg index='2' type_modifier='o' />
+	  </method>
     <method selector='addTemporaryAttribute:value:forCharacterRange:'>
       <retval type='v' />
       <arg index='0' type='@' />
@@ -11529,6 +11868,22 @@
     </method>
   </class>
   <class name='NSMenu'>
+	  <method selector='allowsContextMenuPlugIns' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='showsStateColumn' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='setAllowsContextMenuPlugIns:' >
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='setShowsStateColumn:' >
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='popUpMenuPositioningItem:atLocation:inView:'>
+		  <retval type='B' />
+		  <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+	  </method>
     <method selector='addItem:'>
       <retval type='v' />
       <arg index='0' type='@' />
@@ -12573,6 +12928,56 @@
     </method>
   </class>
   <class name='NSObject'>
+	  <method selector='searchForItemsWithSearchString:resultLimit:matchedItemHandler:'>
+		  <arg index='1' type='i' type64='q' />
+		  <arg index='2' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	  <method selector='confinementRectForMenu:onScreen:'>
+             <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+	  </method>
+	  <method selector='collectionView:canDragItemsAtIndexes:withEvent:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='collectionView:writeItemsAtIndexes:toPasteboard:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='collectionView:draggingImageForItemsAtIndexes:withEvent:offset:'>
+      		<arg index='3' type='^{_NSPoint=ff}' type64='^{CGPoint=dd}' type_modifier='N' />
+	  </method>
+	  <method selector='collectionView:validateDrop:proposedIndex:dropOperation:'>
+		  <retval type='i' type64='q' />
+		  <arg index='2' type_modifier='N' type='^i' type64='^q' />
+		  <arg index='3' type_modifier='N' type='^i' type64='^q' />
+	  </method>
+	  <method selector='collectionView:acceptDrop:index:dropOperation:'>
+		  <retval type='B' />
+		  <arg index='2' type='i' type64='q' />
+		  <arg index='3' type='i' type64='q' />
+	  </method>
+    <method selector='browser:isLeafItem:' >
+	    <retval type='B' />
+    </method>
+    <method selector='browser:heightOfRow:inColumn:' >'
+	    <retval type='f' type64='d' />
+	    <arg index='1' type='i' type64='q' />
+	    <arg index='2' type='i' type64='q' />
+    </method>
+    <method selector='browser:shouldEditItem:' >
+	    <retval type='B' />
+    </method>
+    <method selector='browser:numberOfRowsInColumn:' >
+	    <arg index='1' type='i' type64='q' />
+	    <retval type='i' type64='q' />
+    </method>
+    <method selector='browser:createRowsForColumn:inMatrix:' >
+	    <retval type='i' type64='q' />
+    </method>
+    <method selector='isContentDiscarded'>
+      <retval type='B' />
+    </method>
     <method selector='accessibilityActionDescription:'>
       <retval type='@' />
       <arg index='0' type='@' />
@@ -12828,6 +13233,10 @@
     </method>
     <method selector='awakeFromNib'>
       <retval type='v' />
+    </method>
+    <method selector='drawsVerticallyForCharacterAtIndex:'>
+      <retval type='B' />
+      <arg index='0' type='i' type64='q' />
     </method>
     <method selector='baselineDeltaForCharacterAtIndex:'>
       <retval type='f' type64='d' />
@@ -13544,6 +13953,18 @@
       <retval type='@' />
       <arg index='0' type='@' />
     </method>
+    <method selector='outlineView:sizeToFitWidthOfColumn:'>
+	    <retval type='f' type64='d' />
+	    <arg index='1' type='i' type64='q' />
+    </method>
+    <method selector='outlineView:shouldReorderColumn:toColumn:'>
+	    <retval type='B' />
+	    <arg index='1' type='i' type64='q' />
+	    <arg index='2' type='i' type64='q' />
+    </method>
+    <method selector='outlineView:shouldShowOutlineCellForItem:'>
+	    <retval type='B' />
+    </method>
     <method selector='outlineView:acceptDrop:item:childIndex:'>
       <retval type='B' />
       <arg index='0' type='@' />
@@ -13762,6 +14183,13 @@
     <method selector='outlineViewSelectionIsChanging:'>
       <retval type='v' />
       <arg index='0' type='@' />
+    </method>
+    <method selector='panel:shouldEnableURL:'>
+	    <retval type='B' />
+    </method>
+    <method selector='panel:validateURL:error:'>
+	    <retval type='B' />
+	    <arg index='2' type_modifier='o' type='^@' />
     </method>
     <method selector='panel:compareFilename:with:caseSensitive:'>
       <retval type='i' type64='q' />
@@ -14001,6 +14429,9 @@
       <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
       <arg index='2' type='@' />
     </method>
+    <method selector='splitView:shouldAdjustSizeOfSubview:'>
+	    <retval type='B' />
+    </method>
     <method selector='splitView:additionalEffectiveRectOfDividerAtIndex:'>
       <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
       <arg index='0' type='@' />
@@ -14082,6 +14513,15 @@
     <method selector='tabViewDidChangeNumberOfTabViewItems:'>
       <retval type='v' />
       <arg index='0' type='@' />
+    </method>
+    <method selector='tableView:sizeToFitWidthOfColumn:' >
+      <retval type='f' type64='d' />
+      <arg index='1' type='i' type64='q' />
+    </method>
+    <method selector='tableView:shouldReorderColumn:toColumn:' >
+      <retval type='B' />
+      <arg index='1' type='i' type64='q' />
+      <arg index='2' type='i' type64='q' />
     </method>
     <method selector='tableView:acceptDrop:row:dropOperation:'>
       <retval type='B' />
@@ -14284,11 +14724,20 @@
       <retval type='v' />
       <arg index='0' type='@' />
     </method>
+    <method selector='textView:willCheckTextInRange:options:types:'>
+      <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      <arg index='3' type_modifier='N' type='^i' type64='^q' />
+    </method>
     <method selector='textView:clickedOnCell:inRect:'>
       <retval type='v' />
       <arg index='0' type='@' />
       <arg index='1' type='@' />
       <arg index='2' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    </method>
+    <method selector='textView:didCheckTextInRange:types:options:results:orthography:wordCount:' >
+      <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      <arg index='2' type='i' type64='q' />
+      <arg index='6' type='i' type64='q' />
     </method>
     <method selector='textView:clickedOnCell:inRect:atIndex:'>
       <retval type='v' />
@@ -14880,6 +15329,11 @@
       <arg index='0' type='@' />
     </method>
   </class>
+  <class name='NSOpenGLLayer'>
+	  <method selector='canDrawInOpenGLContext:pixelFormat:forLayerTime:displayTime:'>
+		  <retval type='B' />
+	  </method>
+  </class>
   <class name='NSOpenGLContext'>
     <method class_method='true' selector='clearCurrentContext'>
       <retval type='v' />
@@ -15412,7 +15866,30 @@
       <retval type='f' />
     </method>
   </class>
+  <class name='NSPasteboardItem'>
+	  <method selector='setDataProvider:forTypes:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setData:forType:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setString:forType:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setPropertyList:forType:'>
+		  <retval type='B' />
+	  </method>
+  </class>
   <class name='NSPasteboard'>
+	  <method selector='writeObjects:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='canReadItemWithDataConformingToTypes:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='canReadObjectForClasses:options:'>
+		  <retval type='B' />
+	  </method>
     <method selector='addTypes:owner:'>
       <retval type='i' type64='q' />
       <arg index='0' type='@' />
@@ -16121,6 +16598,12 @@
     </method>
   </class>
   <class name='NSPrintInfo'>
+	  <method selector='setSelectionOnly:'>
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='isSelectionOnly' >
+		  <retval type='B' />
+	  </method>
     <method selector='bottomMargin'>
       <retval type='f' type64='d' />
     </method>
@@ -17505,7 +17988,48 @@
       <arg index='1' type='@' />
     </method>
   </class>
+  <class name='NSRunningApplication' >
+	  <method selector='forceTerminate' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='terminate' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='isTerminated' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='isFinishedLaunching' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='isHidden' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='isActive' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='hide' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='unhide' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='activateWithOptions:' >
+		  <retval type='B' />
+	  </method>
+  </class>
   <class name='NSSavePanel'>
+	  <method selector='beginSheetModalForWindow:completionHandler:'>
+		  <arg index='1' block='true' >
+			  <retval type='v' />
+			  <arg type='i' type64='q' />
+		  </arg>
+	  </method>
+	  <method selector='beginWithCompletionHandler:'>
+		  <arg index='0' block='true' >
+			  <retval type='v' />
+			  <arg type='i' type64='q' />
+		  </arg>
+	  </method>
     <method selector='URL'>
       <retval type='@' />
     </method>
@@ -17516,6 +18040,9 @@
       <retval type='@' />
     </method>
     <method selector='allowsOtherFileTypes'>
+      <retval type='B' />
+    </method>
+    <method selector='showsHiddenFiles'>
       <retval type='B' />
     </method>
     <method selector='beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
@@ -17611,6 +18138,10 @@
       <arg index='0' type='@' />
     </method>
     <method selector='setAllowsOtherFileTypes:'>
+      <retval type='v' />
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setShowsHiddenFiles:'>
       <retval type='v' />
       <arg index='0' type='B' />
     </method>
@@ -18929,6 +19460,27 @@
     <method selector='availableLanguages'>
       <retval type='@' />
     </method>
+    <method selector='automaticallyIdentifiesLanguages'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutomaticallyIdentifiesLanguages:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='requestCheckingOfString:range:types:options:inSpellDocumentWithTag:completionHandler:'>
+	    <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+	    <arg index='5' block='true'>
+		    <retval type='v' />
+	   	    <arg type='i' type64='q' />
+		    <arg type='@' />
+		    <arg type='@' />
+	   	    <arg type='i' type64='q' />
+	    </arg>
+    </method>
+    <method selector='checkString:range:types:options:inSpellDocumentWithTag:orthography:wordCount:'>
+	    <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+	    <arg index='5' type_modifier='o' />
+	    <arg index='6' type_modifier='o' />
+    </method>
     <method selector='checkGrammarOfString:startingAt:language:wrap:inSpellDocumentWithTag:details:'>
       <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
       <arg index='0' type='@' />
@@ -19663,9 +20215,8 @@
     </method>
   </class>
   <class name='NSTableView'>
-    <method selector='addTableColumn:'>
-      <retval type='v' />
-      <arg index='0' type='@' />
+    <method selector='shouldFocusCell:atColumn:row:' >
+      <retval type='B' />
     </method>
     <method selector='allowsColumnReordering'>
       <retval type='B' />
@@ -19688,28 +20239,14 @@
     <method selector='autoresizesAllColumnsToFit'>
       <retval type='B' />
     </method>
-    <method selector='autosaveName'>
-      <retval type='@' />
-    </method>
     <method selector='autosaveTableColumns'>
       <retval type='B' />
     </method>
-    <method selector='backgroundColor'>
-      <retval type='@' />
-    </method>
     <method selector='canDragRowsWithIndexes:atPoint:'>
       <retval type='B' />
-      <arg index='0' type='@' />
       <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
-    <method selector='clickedColumn'>
-      <retval type='i' type64='q' />
-    </method>
-    <method selector='clickedRow'>
-      <retval type='i' type64='q' />
-    </method>
     <method selector='columnAtPoint:'>
-      <retval type='i' type64='q' />
       <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='columnAutoresizingStyle'>
@@ -19718,10 +20255,6 @@
     <method selector='columnIndexesInRect:'>
       <retval type='@' />
       <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    </method>
-    <method selector='columnWithIdentifier:'>
-      <retval type='i' type64='q' />
-      <arg index='0' type='@' />
     </method>
     <method selector='columnsInRect:'>
       <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
@@ -20725,6 +21258,18 @@
       <retval type='@' />
     </method>
   </class>
+  <class name='NSTextInputContext'>
+	  <method selector='acceptsGlyphInfo' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='setAcceptsGlyphInfo:' >
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='handleEvent:' >
+		  <retval type='B' />
+	  </method>
+
+  </class>
   <class name='NSTextList'>
     <method selector='initWithMarkerFormat:options:'>
       <retval type='@' />
@@ -20940,6 +21485,33 @@
   <class name='NSTextView'>
     <method selector='acceptableDragTypes'>
       <retval type='@' />
+    </method>
+    <method selector='isCoalescingUndo'>
+      <retval type='B' />
+    </method>
+    <method selector='isAutomaticDataDetectionEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='isAutomaticDashSubstitutionEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='isAutomaticTextReplacementEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='isAutomaticSpellingCorrectionEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='setAutomaticDataDetectionEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setAutomaticDashSubstitutionEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setAutomaticTextReplacementEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setAutomaticSpellingCorrectionEnabled:'>
+      <arg index='0' type='B' />
     </method>
     <method selector='acceptsGlyphInfo'>
       <retval type='B' />
@@ -21877,6 +22449,15 @@
       <retval type='@' />
     </method>
   </class>
+  <class name='NSTouch'>
+	  <method selector='isResting'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='deviceSize'>
+		  <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+	  </method>
+  </class>
+
   <class name='NSTrackingArea'>
     <method selector='initWithRect:options:owner:userInfo:'>
       <retval type='@' />
@@ -22438,6 +23019,35 @@
     </method>
   </class>
   <class name='NSView'>
+    <method selector='showDefinitionForAttributedString:atPoint:' >
+      <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    </method>
+    <method selector='showDefinitionForAttributedString:range:options:baselineOriginProvider:' >
+      <arg index='1' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      <arg index='3' block='true' >
+         <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+         <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      </arg>
+    </method>
+    <method selector='canDrawConcurrently' >
+      <retval type='B' />
+    </method>
+    <method selector='setCanDrawConcurrently:' >
+      <arg index='0' type='B' />
+    </method>
+    <method selector='acceptsTouchEvents' >
+      <retval type='B' />
+    </method>
+    <method selector='setAcceptsTouchEvents:' >
+      <arg index='0' type='B' />
+    </method>
+    <method selector='wantsRestingTouches' >
+      <retval type='B' />
+    </method>
+    <method selector='setWantsRestingTouches:' >
+      <arg index='0' type='B' />
+    </method>
+	  
     <method selector='sortSubviewsUsingFunction:context:'>
 	    <arg index='0' type='^?' function_pointer='true' function_pointer_retained='false'>
 		    <retval type='i'/>
@@ -23313,6 +23923,33 @@
     </method>
   </class>
   <class name='NSWindow'>
+	  <method classmethod='true' selector='windowNumberAtPoint:belowWindowWithNumber:'>
+		  <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+	  </method>
+    <method selector='inLiveResize'>
+      <retval type='B' />
+    </method>
+    <method selector='isOnActiveSpace'>
+      <retval type='B' />
+    </method>
+    <method selector='isMovable'>
+      <retval type='B' />
+    </method>
+    <method selector='setMovable:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='allowsConcurrentViewDrawing'>
+      <retval type='B' />
+    </method>
+    <method selector='setAllowsConcurrentViewDrawing:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='preventsApplicationTerminationWhenModal'>
+      <retval type='B' />
+    </method>
+    <method selector='setPreventsApplicationTerminationWhenModal:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='canBeVisibleOnAllSpaces'>
       <retval type='B' />
     </method>
@@ -24308,42 +24945,47 @@
       <arg index='0' type='@' />
     </method>
     <method selector='windowWillLoad'>
-      <retval type='v' />
+<retval type='v' />
     </method>
   </class>
   <class name='NSWorkspace'>
-    <method selector='absolutePathForAppBundleWithIdentifier:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
+    <method selector='showSearchResultsForQueryString:' >
+      <retval type='B' />
     </method>
-    <method selector='activeApplication'>
-      <retval type='@' />
+    <method selector='recycleURLs:completionHandler:'>
+	    <arg index='1' block='true' >
+		    <retval type='v'/>
+		    <arg type='@' />
+		    <arg type='@' />
+	    </arg>
     </method>
-    <method selector='checkForRemovableMedia'>
-      <retval type='v' />
+    <method selector='unmountAndEjectDeviceAtURL:error:' >
+	    <retval type='B' />
+	    <arg index='1' type_modifier='o' />
     </method>
-    <method selector='extendPowerOffBy:'>
-      <retval type='i' type64='q' />
-      <arg index='0' type='i' type64='q' />
+
+    <method selector='duplicateURLs:completionHandler:'>
+	    <arg index='1' block='true' >
+		    <retval type='v'/>
+		    <arg type='@' />
+		    <arg type='@' />
+	    </arg>
     </method>
+	  <method selector='launchApplicationAtURL:options:configuration:error:'>
+		  <arg index='3' type_modifier='o' />
+	  </method>
+	  <method selector='setDesktopImageURL:forScreen:options:error:' >
+		  <retval type='B'/>
+		  <arg index='3' type_modifier='o' />
+	  </method>
     <method selector='fileSystemChanged'>
       <retval type='B' />
     </method>
     <method selector='filenameExtension:isValidForType:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
-    </method>
-    <method selector='findApplications'>
-      <retval type='v' />
-    </method>
-    <method selector='fullPathForApplication:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
     </method>
     <method selector='getFileSystemInfoForPath:isRemovable:isWritable:isUnmountable:description:type:'>
       <retval type='B' />
-      <arg index='0' type='@' />
       <arg index='1' type='^B' type_modifier='o' />
       <arg index='2' type='^B' type_modifier='o' />
       <arg index='3' type='^B' type_modifier='o' />
@@ -24352,138 +24994,57 @@
     </method>
     <method selector='getInfoForFile:application:type:'>
       <retval type='B' />
-      <arg index='0' type='@' />
       <arg index='1' type_modifier='o' />
       <arg index='2' type_modifier='o' />
     </method>
-    <method selector='hideOtherApplications'>
-      <retval type='v' />
-    </method>
-    <method selector='iconForFile:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
-    <method selector='iconForFileType:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
-    <method selector='iconForFiles:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
     <method selector='isFilePackageAtPath:'>
       <retval type='B' />
-      <arg index='0' type='@' />
     </method>
     <method selector='launchAppWithBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifier:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='I' />
-      <arg index='2' type='@' />
       <arg index='3' type_modifier='o' />
     </method>
     <method selector='launchApplication:'>
       <retval type='B' />
-      <arg index='0' type='@' />
     </method>
     <method selector='launchApplication:showIcon:autolaunch:'>
       <retval type='B' />
-      <arg index='0' type='@' />
       <arg index='1' type='B' />
       <arg index='2' type='B' />
     </method>
-    <method selector='launchedApplications'>
-      <retval type='@' />
-    </method>
-    <method selector='localizedDescriptionForType:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
-    </method>
-    <method selector='mountNewRemovableMedia'>
-      <retval type='@' />
-    </method>
-    <method selector='mountedLocalVolumePaths'>
-      <retval type='@' />
-    </method>
-    <method selector='mountedRemovableMedia'>
-      <retval type='@' />
-    </method>
-    <method selector='noteFileSystemChanged'>
-      <retval type='v' />
-    </method>
-    <method selector='noteFileSystemChanged:'>
-      <retval type='v' />
-      <arg index='0' type='@' />
-    </method>
-    <method selector='noteUserDefaultsChanged'>
-      <retval type='v' />
-    </method>
-    <method selector='notificationCenter'>
-      <retval type='@' />
-    </method>
     <method selector='openFile:'>
       <retval type='B' />
-      <arg index='0' type='@' />
     </method>
     <method selector='openFile:fromImage:at:inView:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
       <arg index='2' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='3' type='@' />
     </method>
     <method selector='openFile:withApplication:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
     </method>
     <method selector='openFile:withApplication:andDeactivate:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
       <arg index='2' type='B' />
     </method>
     <method selector='openTempFile:'>
       <retval type='B' />
-      <arg index='0' type='@' />
     </method>
     <method selector='openURL:'>
       <retval type='B' />
-      <arg index='0' type='@' />
     </method>
     <method selector='openURLs:withAppBundleIdentifier:options:additionalEventParamDescriptor:launchIdentifiers:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
-      <arg index='2' type='I' />
-      <arg index='3' type='@' />
       <arg index='4' type_modifier='o' />
     </method>
     <method selector='performFileOperation:source:destination:files:tag:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
-      <arg index='2' type='@' />
-      <arg index='3' type='@' />
       <arg index='4' type_modifier='o' />
-    </method>
-    <method selector='preferredFilenameExtensionForType:'>
-      <retval type='@' />
-      <arg index='0' type='@' />
     </method>
     <method selector='selectFile:inFileViewerRootedAtPath:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
     </method>
     <method selector='setIcon:forFile:options:'>
       <retval type='B' />
-      <arg index='0' type='@' />
-      <arg index='1' type='@' />
-      <arg index='2' type='I' />
-    </method>
-    <method class_method='true' selector='sharedWorkspace'>
-      <retval type='@' />
     </method>
     <method selector='slideImage:from:to:'>
       <retval type='v' />

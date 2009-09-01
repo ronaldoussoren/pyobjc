@@ -4,6 +4,7 @@ import os
 from Foundation import *
 
 class TestNSJavaSetup (TestCase):
+    @max_os_level('10.5')
     def testConstants(self):
         self.failUnless(isinstance(NSJavaClasses, unicode))
         self.failUnless(isinstance(NSJavaRoot, unicode))
@@ -19,6 +20,7 @@ class TestNSJavaSetup (TestCase):
         self.failUnless(isinstance(NSJavaWillCreateVirtualMachineNotification, unicode))
         self.failUnless(isinstance(NSJavaDidCreateVirtualMachineNotification, unicode))
 
+    @max_os_level('10.5')
     def testFunctions(self):
         v = NSJavaNeedsVirtualMachine({})
         self.failUnless(v is False)

@@ -133,6 +133,12 @@ class TestTimeZone (TestCase):
 
         self.failUnless( isinstance(kCFTimeZoneSystemTimeZoneDidChangeNotification, unicode) )
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCFTimeZoneNameStyleGeneric, 4)
+        self.failUnlessEqual(kCFTimeZoneNameStyleShortGeneric, 5)
+
+
 
 if __name__ == "__main__":
     main()
