@@ -8,6 +8,7 @@ class TestIBObjectIntegrationHelper (NSObject):
         return False
     def ibIsChildViewUserSizable_(self, v):
         return False
+    def ibRemoveChildren_(self, v): return True
 
 class TestIBObjectIntegration (TestCase):
     def testContants(self):
@@ -21,6 +22,7 @@ class TestIBObjectIntegration (TestCase):
     def testMethods(self):
         self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserMovable_)
         self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserSizable_)
+        self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibRemoveChildren_)
 
 
 if __name__ == "__main__":

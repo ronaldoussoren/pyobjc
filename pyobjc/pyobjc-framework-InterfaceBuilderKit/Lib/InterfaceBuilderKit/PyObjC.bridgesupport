@@ -24,6 +24,7 @@
     <method selector='ibDefaultChildren' type='@@:' />
     <method selector='ibDefaultImage' type='@@:' />
     <method selector='ibDefaultLabel' type='@@:' />
+    <method selector='ibRemoveChildren:' type='B@:@' />
     <method selector='ibDidAddToDesignableDocument:' type='v@:@' />
     <method selector='ibDidRemoveFromDesignableDocument:' type='v@:@' />
     <method selector='ibIsChildInitiallySelectable:' type='B@:@' />
@@ -190,6 +191,9 @@
     <method selector='ibIsChildInitiallySelectable:'>
       <retval type='B' />
       <arg index='0' type='@' />
+    </method>
+    <method selector='ibRemoveChildren:'>
+      <retval type='B' />
     </method>
     <method selector='ibIsChildViewUserMovable:'>
       <retval type='B' />
