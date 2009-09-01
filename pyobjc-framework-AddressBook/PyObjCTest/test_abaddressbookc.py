@@ -83,11 +83,11 @@ class TestABAddressBookC (TestCase):
 
         v = ABCopyArrayOfAllPeople(ref)
         self.failUnlessResultIsCFRetained(ABCopyArrayOfAllPeople)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.failUnlessIsInstance(v, NSArray)
 
         v = ABCopyArrayOfAllGroups(ref)
         self.failUnlessResultIsCFRetained(ABCopyArrayOfAllGroups)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.failUnlessIsInstance(v, NSArray)
 
         self.failUnlessResultHasType(ABRecordCreateCopy, objc._C_ID)
         self.failUnlessResultIsCFRetained(ABRecordCreateCopy)

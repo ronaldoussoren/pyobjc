@@ -7,6 +7,12 @@ class TestABGlobals (TestCase):
     def testConstants10_5(self):
           self.failUnlessIsInstance(kABCalendarURIsProperty, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+          self.failUnlessIsInstance(kABPhoneiPhoneLabel, unicode)
+          self.failUnlessEqual(kABShowAsResource, 2)
+          self.failUnlessEqual(kABShowAsRoom, 3)
+
     def testConstants(self):
         self.failUnlessEqual(kABShowAsMask, 07)
         self.failUnlessEqual(kABShowAsPerson, 00)
