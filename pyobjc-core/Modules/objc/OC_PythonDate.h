@@ -8,7 +8,7 @@
 }
 
 + depythonifyObject:(PyObject*)object;
-+ newWithPythonObject:(PyObject*)value;
++ dateWithPythonObject:(PyObject*)value;
 - initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
 -(PyObject*)__pyobjc_PythonObject__;

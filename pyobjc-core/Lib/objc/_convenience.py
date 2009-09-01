@@ -42,9 +42,6 @@ def addConvenienceForClass(classname, methods):
 
 NSObject = lookUpClass('NSObject')
 
-def isNative(sel):
-    return not hasattr(sel, 'callable')
-
 def add_convenience_methods(super_class, name, type_dict):
     try:
         return _add_convenience_methods(super_class, name, type_dict)
@@ -72,11 +69,6 @@ def _add_convenience_methods(super_class, name, type_dict):
             def bundleForClass(cls):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
-            if ('__useKVO__' not in type_dict and
-                    isNative(type_dict.get('willChangeValueForKey_')) and
-                    isNative(type_dict.get('didChangeValueForKey_'))):
-                useKVO = issubclass(super_class, NSObject)
-                type_dict['__useKVO__'] = useKVO
         if '__bundle_hack__' in type_dict:
             import warnings
             warnings.warn(

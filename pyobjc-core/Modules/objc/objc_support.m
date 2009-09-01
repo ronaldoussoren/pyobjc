@@ -1351,7 +1351,7 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict, PyOb
 		/* We're depythonifying a list of strings, make sure the originals stay 
 		 * around long enough.
 		 */
-		[OC_PythonObject newWithObject:seq];
+		[[[OC_PythonObject alloc] initWithObject:seq] autorelease];
 	}
 	Py_DECREF(seq);
 	return 0;
@@ -2574,7 +2574,7 @@ PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 		}
 
 		buf += strlen(buf);
-		type += end - type;
+		/*type += end - type;*/
 		buf[0] = _C_ARY_E;
 		buf[1] = '\0';
 		return end + 1;

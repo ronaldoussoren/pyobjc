@@ -50,7 +50,7 @@ static NSString* addSomeUnicode(NSString* input)
 {
 	[NSException 
 		raise:@"SimpleException" 
-		format:addSomeUnicode(@"hello world")];
+		format:@"%@", addSomeUnicode(@"hello world")];
 }
 
 -(void)raiseUnicodeWithInfo

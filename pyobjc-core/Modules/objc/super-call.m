@@ -316,7 +316,8 @@ PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 
 	if (func != NULL) {
 		methinfo = PyObjCMethodSignature_ForSelector(
-				class, PyObjCSelector_GetSelector(sel),
+				class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
+				PyObjCSelector_GetSelector(sel),
 				PyObjCSelector_Signature(sel));
 		if (methinfo == NULL) {
 			return NULL;
@@ -330,7 +331,8 @@ PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 	} else {
 		PyErr_Clear();
 		methinfo = PyObjCMethodSignature_ForSelector(
-				class, PyObjCSelector_GetSelector(sel),
+				class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
+				PyObjCSelector_GetSelector(sel),
 				PyObjCSelector_Signature(sel));
 		if (methinfo == NULL) {
 			return NULL;

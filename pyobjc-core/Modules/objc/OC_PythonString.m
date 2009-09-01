@@ -3,7 +3,7 @@
 
 @implementation OC_PythonString 
 
-+ newWithPythonObject:(PyObject*)v;
++ stringWithPythonObject:(PyObject*)v;
 {
 	OC_PythonString* res;
 
@@ -145,6 +145,8 @@
 		if (value == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
+
+		PyString_InternInPlace(&value);
 
 	PyObjC_END_WITH_GIL;
 	if (flag) {

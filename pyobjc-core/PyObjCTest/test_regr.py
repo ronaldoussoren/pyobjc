@@ -213,6 +213,23 @@ class TestInitMemoryLeak (TestCase):
 
         self.failIfEqual(gDeallocCounter, 0)
 
+    def testInitFailureLeaks(self):
+        NSData = objc.lookUpClass('NSData')
+        import warnings
+        warnings.filterwarnings('error',
+            category=objc.UninitializedDeallocWarning)
+
+        try:
+            try:
+                v = NSData.alloc().initWithContentsOfFile_("/etc/no-such-file.txt")
+            finally:
+                del warnings.filters[0]
+
+        except objc.UninitializedDeallocWarning:
+            self.fail("Unexpected raising of UninitializedDeallocWarning")
+
+        self.failIf(v is not None)
+
 
 if __name__ == '__main__':
     main()

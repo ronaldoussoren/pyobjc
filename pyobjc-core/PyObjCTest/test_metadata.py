@@ -633,6 +633,7 @@ class TestArrayReturns (TestCase):
     # - Add null-terminated arrays of various supported types:
     #   -> integers
     #   -> CF-types
+
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
 
@@ -904,6 +905,9 @@ class TestIgnore (TestCase):
         self.assertRaises(TypeError, o.ignoreMethod)
 
 class TestMetaDataAccess (TestCase):
+    def testNew(self):
+        self.failUnlessResultIsRetained(OC_MetaDataTest.new)
+
     def testSuggestions(self):
         meta = OC_MetaDataTest.varargsMethodWithObjects_.__metadata__()
         self.assert_(isinstance(meta, dict))

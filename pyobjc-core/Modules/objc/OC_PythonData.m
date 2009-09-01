@@ -3,7 +3,7 @@
 
 @implementation OC_PythonData 
 
-+ newWithPythonObject:(PyObject*)v;
++ dataWithPythonObject:(PyObject*)v;
 {
 	OC_PythonData* res;
 

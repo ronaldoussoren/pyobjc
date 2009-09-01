@@ -112,6 +112,7 @@ PyObjCSelector_GetMetadata(PyObject* _self)
 	if (self->sel_methinfo == NULL) {
 		self->sel_methinfo = PyObjCMethodSignature_ForSelector(
 			self->sel_class,
+			(self->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 			self->sel_selector,
 			self->sel_python_signature);
 		if (self->sel_methinfo == NULL) return NULL;
@@ -534,14 +535,14 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 		pyres = res = execute((PyObject*)self, self->sel_self, args);
 		if (pyres != NULL
 			&& PyTuple_Check(pyres)
-			&& PyTuple_GET_SIZE(pyres) > 1
+			&& PyTuple_GET_SIZE(pyres) >= 1
 			&& PyTuple_GET_ITEM(pyres, 0) == pyself) {
 			pyres = pyself;
 		}
 
-		if (PyObjCObject_Check(self) && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)) {
+		if (PyObjCObject_Check(self->sel_self) && (((PyObjCObject*)self->sel_self)->flags & PyObjCObject_kUNINITIALIZED)) {
 			if (self->sel_self != pyres && !PyErr_Occurred()) {
-				PyObjCObject_ClearObject(pyself);
+				PyObjCObject_ClearObject(self->sel_self);
 			}
 		}
 	} else {
@@ -585,6 +586,12 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 			&& PyTuple_GET_SIZE(pyres) > 1
 			&& PyTuple_GET_ITEM(pyres, 0) == pyself) {
 			pyres = pyself;
+		}
+
+		if (PyObjCObject_Check(pyself) && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
+			if (pyself != pyres && !PyErr_Occurred()) {
+				PyObjCObject_ClearObject(pyself);
+			}
 		}
 
 		Py_DECREF(arglist);

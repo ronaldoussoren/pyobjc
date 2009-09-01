@@ -46,7 +46,7 @@
  *
  * The caller must own the GIL.
  */
-+ newWithPythonObject:(PyObject*)value;
++ dictionaryWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:

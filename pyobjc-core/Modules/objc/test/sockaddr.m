@@ -26,7 +26,7 @@ addr2string(void* addr, int addrlen)
 	if (error) {
 		return NULL;
 	}
-	return [NSString stringWithCString:buf];
+	return [NSString stringWithUTF8String:buf];
 }
 
 

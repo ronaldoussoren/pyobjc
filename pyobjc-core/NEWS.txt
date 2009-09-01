@@ -7,6 +7,45 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- The default value for the ``__useKVO__`` attribute in class definitions
+  can now be controlled by ``objc.setUseKVOForSetattr(b)``. The default
+  is ``True``.
+
+  Note: in previous versions the default was ``False``.
+
+  Note2: the ``__useKVO__`` attribute is an implementation detail and should
+  not be used in normal code.
+
+  This change fixes an issue where KVO failed to detect some changes when
+  those changes were done in Python using attribute access syntax.
+
+- Wrappers for ``objc_sync_wait``, ``objc_sync_notify`` and 
+  ``objc_sync_notifyAll`` have been removed. These have never been part of
+  the public API and this should therefore not affect existing code.
+
+- BUGFIX: There was a refcount leak in the code that proxies native code to
+  Python. This causes refcount leaks in user code when a Python class is
+  instantiated from native code, when that class has an initializer written
+  in Python.
+
+  Thanks to Dirk Stoop of Made by Sofa for providing the bugreport that helped
+  fix this issue.
+
+- ``objc.recycleAutoreleasePool`` is now a no-op when a python bundle is loaded
+  in an Objective-C program and the PyObjC's global release pool gets drained
+  by an outer release pool. This should not affect user programs.
+
+- BUGFIX: Storing pure python objects in a ``NSKeyedArchiver`` archive didn't
+  full work for all tuples, especially self-recursive tuples. 
+
+  The current support for archiving Python objects passes all pickle unittests 
+  in Python 2.7.
+
+- BUGFIX: ``+new`` is supposed to return an already retained object (that is,
+  the caller owns a reference). Until now PyObjC has assumed that the return
+  value of ``+new`` is an autoreleased value. The same is true for all class 
+  methods whose name starts with ``new``.
+
 - There is initial support for Objective-C blocks, based on the implementation
   description in the `clang repository`__. Blocks are represented in Python
   as callable objects. This means you can pass an arbitrary callable when 

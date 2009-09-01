@@ -614,13 +614,19 @@ PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature,
 
 
 PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
-		Class cls, SEL sel, const char* signature)
+		Class cls, BOOL isClassMethod, SEL sel, const char* signature)
 {
 	PyObjCMethodSignature* methinfo;
 	PyObject* metadata;
 
 	metadata = PyObjC_FindInRegistry(registry, cls, sel);
 	methinfo =  PyObjCMethodSignature_WithMetaData(signature, metadata);
+	if (isClassMethod) {
+		const char* nm  = sel_getName(sel);
+		if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
+			methinfo->rettype.alreadyRetained = YES;
+		}
+	}
 	Py_XDECREF(metadata);
 	return methinfo;
 }
@@ -721,6 +727,8 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
 	case PyObjC_kVariableLengthArray:
 		r = PyDict_SetItemString(result, "c_array_of_variable_length",
 				Py_True);
+		if (r == -1) goto error;
+
 	}
 
 	if (descr->ptrType != PyObjC_kPointerPlain) {

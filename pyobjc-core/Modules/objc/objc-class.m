@@ -332,6 +332,8 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		 * -> a new proxy type for CoreFoundation classes
 		 */
 		isCFProxyClass = YES;
+
+
 	}
 
 	if (!PyObjCClass_Check(py_super_class)) {
@@ -666,9 +668,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	useKVOObj = PyDict_GetItemString(dict, "__useKVO__");
 	if (useKVOObj != NULL) {
 		info->useKVO = PyObject_IsTrue(useKVOObj);
+	} else {
+		info->useKVO = PyObjC_useKVO;
 	}
 
-
+	if (isCFProxyClass) {
+		/* Disable automatic KVO on pure CoreFoundation types */
+		info->useKVO = 0;
+	}
 	keys = PyDict_Keys(dict);
 	if (keys == NULL) {
 		Py_DECREF(old_dict);
@@ -1390,7 +1397,7 @@ PyObjCClass_New(Class objc_class)
 	info->sel_to_py = NULL;
 	info->method_magic = 0;
 	info->dictoffset = 0;
-	info->useKVO = 0;
+	info->useKVO = 1;
 	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
 	info->isCFWrapper = 0;
@@ -1404,10 +1411,8 @@ PyObjCClass_New(Class objc_class)
 		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
 	} else if (strcmp(className, "NSMutableData") == 0) {
 		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
-	}
-	if (strcmp(className, "NSBlock") == 0) {
+	} else if (strcmp(className, "NSBlock") == 0) {
 		((PyTypeObject *)result)->tp_basicsize = sizeof(PyObjCBlockObject);
-		((PyTypeObject *)result)->tp_call = PyObjCBlock_Call;
 		PyType_Modified((PyTypeObject*)result);
 		PyType_Ready((PyTypeObject *)result);
 	}

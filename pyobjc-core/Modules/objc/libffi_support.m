@@ -2025,7 +2025,7 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 		PyObjCPythonSelector *pythonSelector = (PyObjCPythonSelector *) aSelector;
 		PyObjCMethodSignature* methinfo = PyObjCMethodSignature_ForSelector(
 				pythonSelector->sel_class, 
-//				(pythonSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
+				(pythonSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 				pythonSelector->sel_selector,
 				pythonSelector->sel_python_signature);
 

@@ -5,7 +5,7 @@
 	PyObject* value;
 }
 
-+ newWithPythonObject:(PyObject*)value;
++ numberWithPythonObject:(PyObject*)value;
 - initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
 -(PyObject*)__pyobjc_PythonObject__;

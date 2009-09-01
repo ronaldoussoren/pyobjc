@@ -5,6 +5,7 @@ import sys
 from PyObjCTest.instanceVariables import ClassWithVariables
 
 NSObject = objc.lookUpClass('NSObject')
+NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
 
 class Base (object):
     def __init__(self, ondel):
@@ -72,33 +73,40 @@ class TestInstanceVariables(TestCase):
     def testLeak(self):
         # Check that plain python objects are correctly released when
         # they are no longer the value of an attribute
+        pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recycleAutoreleasePool()
+        del pool
         self.assertEquals(self.deleted, 1)
 
     def testLeak2(self):
+
         self.deleted = 0
+
+        pool = NSAutoreleasePool.alloc().init()
+
         self.object.idVar = Base(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recycleAutoreleasePool()
+        del pool
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak(self):
         # Check that Objective-C objects are correctly released when
         # they are no longer the value of an attribute
+        pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         self.object.idVar = None
-        objc.recycleAutoreleasePool()
+        del pool
         self.assertEquals(self.deleted, 1)
 
     def testOCLeak2(self):
+        pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
         self.object.idVar = OCBase.alloc().init_(lambda : setattr(self, 'deleted', 1))
         del self.object
-        objc.recycleAutoreleasePool()
+        del pool
         self.assertEquals(self.deleted, 1)
 
     def testDelete(self):

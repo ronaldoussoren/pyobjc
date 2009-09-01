@@ -103,7 +103,7 @@ PyObject* PyObjC_CopyFunc = NULL;
  
 	if (PyUnicode_Check(argument)) {
 		rval = [OC_PythonUnicode
-			newWithPythonObject:argument];
+			unicodeWithPythonObject:argument];
 		if (rval) {
 			PyObjC_RegisterObjCProxy(argument, rval);
 			r = 0;
@@ -124,28 +124,28 @@ PyObject* PyObjC_CopyFunc = NULL;
 		r = 0;
 
 	} else if (PyInt_Check (argument)) {
-		rval = [OC_PythonNumber newWithPythonObject:argument]; 
+		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
 	} else if (PyFloat_Check (argument)) {
-		rval = [OC_PythonNumber newWithPythonObject:argument]; 
+		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
 	} else if (PyLong_Check(argument)) {
-		rval = [OC_PythonNumber newWithPythonObject:argument]; 
+		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
 	} else if (PyList_Check(argument) || PyTuple_Check(argument)) {
 		rval = [OC_PythonArray 
-			newWithPythonObject:argument];
+			arrayWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 	} else if (PyDict_Check(argument)) {
 		rval = [OC_PythonDictionary 
-			newWithPythonObject:argument];
+			dictionaryWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 	} else if (PyString_Check(argument)) {
@@ -158,7 +158,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 		}
 		if (r == 0) {
 			rval = [OC_PythonString
-				newWithPythonObject:argument];
+				stringWithPythonObject:argument];
 			if (rval) {
 				PyObjC_RegisterObjCProxy(argument, rval);
 				r = 0;
@@ -168,7 +168,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 		}
 	} else if (PyObject_CheckReadBuffer(argument)) {
 		rval = [OC_PythonData
-			newWithPythonObject:argument];
+			dataWithPythonObject:argument];
 		if (rval) {
 			PyObjC_RegisterObjCProxy(argument, rval);
 			r = 0;
@@ -177,7 +177,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 		}
 
 	} else if (PyAnySet_Check(argument)) {
-		rval = [OC_PythonSet newWithPythonObject:argument];
+		rval = [OC_PythonSet setWithPythonObject:argument];
 		if (rval) {
 			PyObjC_RegisterObjCProxy(argument, rval);
 			r = 0;
@@ -191,7 +191,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 	} else {
 		PyObjC_DURING
 			rval = [OC_PythonObject 
-				newWithCoercedObject:argument];
+				objectWithCoercedObject:argument];
 
 			r = 0;
 
@@ -208,7 +208,7 @@ end:
 	return r;
 }
 
-+ newWithObject:(PyObject *) obj
++ objectWithPythonObject:(PyObject *) obj
 {
 	id instance;
 	if (likely(PyObjCObject_Check(obj))) {
@@ -220,7 +220,7 @@ end:
 	return instance;
 }
 
-+ newWithCoercedObject:(PyObject *)obj
++ objectWithCoercedObject:(PyObject *)obj
 {
 	id instance;
 	PyObjC_BEGIN_WITH_GIL

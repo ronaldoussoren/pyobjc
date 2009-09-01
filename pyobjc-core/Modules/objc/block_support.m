@@ -76,10 +76,6 @@ struct block_literal {
 	PyObject* invoke_cleanup;
 };
 
-/* 
- * FIXME: keep track of the refcount on the invoke function
- * as well, deconstruct it when it is no longer needed.
- */
 static void 
 oc_copy_helper(void* _dst, void* _src)
 {
@@ -132,6 +128,16 @@ static struct block_literal gLiteralTemplate = {
 	0
 };	
 
+
+/*
+ * PyObjCBlock_Call is exposed to python code as objc._block_call(block, signature, args, kwds),
+ * and is called from the __call__ method on blocks. 
+ *
+ * The tp_call of blocks isn't set directly because that's annoyingly hard to arrange for 
+ * in objc-class.m, just setting the tp_call slot isn't good enough: you somehow have to update
+ * the class dictionary as well (including those of subclasses). There is no public API for
+ * that.
+ */
 static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
 {
 	Py_ssize_t rest = offset % alignment;

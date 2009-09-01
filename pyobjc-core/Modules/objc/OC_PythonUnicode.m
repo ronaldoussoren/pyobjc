@@ -3,7 +3,7 @@
 
 @implementation OC_PythonUnicode 
 
-+ newWithPythonObject:(PyObject*)v;
++ unicodeWithPythonObject:(PyObject*)v;
 {
 	OC_PythonUnicode* res;
 

@@ -143,6 +143,9 @@ if cc == 'XXXgcc':
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
 CFLAGS.extend([
+    
+    # Use this to analyze with clang
+    #"--analyze",
 
 # The following flags are an attempt at getting rid of /usr/local
 # in the compiler search path.
@@ -150,6 +153,7 @@ CFLAGS.extend([
     "-DMACOSX", # For libffi
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
     "-no-cpp-precomp",
+    "-DMACOSX",
     #"-Wno-long-double",
     #"-Wselector",
     #"-Wstrict-overflow",
@@ -162,7 +166,7 @@ CFLAGS.extend([
     ## on i386 systems when a method returns a struct that isn't returned
     ## in registers. 
     #"-O0",
-    "-O1",
+    #"-O1",
     #"-O2",
     #"-O3",
     #'-arch', 'x86_64', '-arch', 'ppc64',

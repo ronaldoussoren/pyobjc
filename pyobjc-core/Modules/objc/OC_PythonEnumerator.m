@@ -2,7 +2,7 @@
 
 @implementation OC_PythonEnumerator
 
-+newWithPythonObject:(PyObject*)object
++enumeratorWithPythonObject:(PyObject*)object
 {
 	return [[self alloc] initWithPythonObject:object];
 }
