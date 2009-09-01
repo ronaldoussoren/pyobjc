@@ -47,7 +47,7 @@ class TestFSEvents (TestCase):
 
         ref = FSEventStreamCreateRelativeToDevice(
                 None, fsevents_callback, context,
-                os.stat('/').st_dev, ["/etc", "/tmp"], kFSEventStreamEventIdSinceNow, 2.0,  kFSEventStreamCreateFlagUseCFTypes|kFSEventStreamCreateFlagNoDefer)
+                os.stat('/').st_dev, [os.path.realpath("/etc"), os.path.realpath("/tmp")], kFSEventStreamEventIdSinceNow, 2.0,  kFSEventStreamCreateFlagUseCFTypes|kFSEventStreamCreateFlagNoDefer)
         self.failUnlessIsInstance(ref, FSEventStreamRef)
         try:
             v = FSEventStreamGetLatestEventId(ref)
@@ -60,7 +60,7 @@ class TestFSEvents (TestCase):
             v = FSEventStreamCopyPathsBeingWatched(ref)
             self.failUnlessIsInstance(v, CFArrayRef)
             self.failUnlessEqual(len(v), 2)
-            self.failUnlessEqual(v, ["/etc", "/tmp"])
+            self.failUnlessEqual(v, [os.path.realpath("/etc")[1:], os.path.realpath("/tmp")[1:]])
 
             v = FSEventsGetCurrentEventId()
             self.failUnlessIsInstance(v, (int, long))

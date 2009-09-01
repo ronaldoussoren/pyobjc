@@ -19,6 +19,41 @@
 #include "Python.h"
 #include <objc/objc.h>
 
+#import <Foundation/Foundation.h>
+
+#ifndef CGFLOAT_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no CFFloat available???"
+#endif
+
+typedef float CGFloat;
+#define CGFLOAT_MIN FLT_MIN
+#define CGFLOAT_MAX FLT_MAX
+#define CGFLOAT_IS_DOUBLE 0
+#define CGFLOAT_DEFINED
+
+#endif /* CGFLOAT_DEFINED */
+
+
+#ifndef NSINTEGER_DEFINED
+
+#ifdef __LP64__
+# error "Huh? 64-bit but no NSINTEGER available???"
+#endif
+
+typedef int NSInteger;
+typedef unsigned int NSUInteger;
+
+#define NSIntegerMax    LONG_MAX
+#define NSIntegerMin    LONG_MIN
+#define NSUIntegerMax   ULONG_MAX
+
+#define NSINTEGER_DEFINED
+
+#endif
+
+
 #ifndef PyObjC_COMPAT_H
 #if (PY_VERSION_HEX < 0x02050000)
 typedef int Py_ssize_t;
@@ -32,7 +67,6 @@ typedef int Py_ssize_t;
 #endif
 #endif
 
-
 #import <Foundation/NSException.h>
 
 struct PyObjC_WeakLink {
@@ -42,6 +76,7 @@ struct PyObjC_WeakLink {
 
 
 /* threading support */
+#ifdef NO_OBJC2_RUNTIME
 #define PyObjC_DURING \
 		Py_BEGIN_ALLOW_THREADS \
 		NS_DURING
@@ -51,6 +86,20 @@ struct PyObjC_WeakLink {
 #define PyObjC_ENDHANDLER \
 		NS_ENDHANDLER \
 		Py_END_ALLOW_THREADS
+#else
+
+#define	PyObjC_DURING \
+		Py_BEGIN_ALLOW_THREADS \
+		@try {
+
+#define PyObjC_HANDLER } @catch(volatile NSObject* _localException) { \
+		NSException* localException __attribute__((__unused__))= (NSException*)_localException;
+
+#define PyObjC_ENDHANDLER \
+		} \
+		Py_END_ALLOW_THREADS
+
+#endif
 
 #define PyObjC_BEGIN_WITH_GIL \
 	{ \
