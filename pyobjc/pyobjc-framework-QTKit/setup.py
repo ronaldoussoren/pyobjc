@@ -1,6 +1,6 @@
 ''' 
 Wrappers for the "QTKit" framework on MacOSX.  QTKit is an modern, 
-object-oriented framework for working with QuickTime movies in Cocoa 
+object-oriented framework for working with QuickTime media in Cocoa 
 applications, and is a replacement for the older Carbon-based Quicktime
 framework.
 
