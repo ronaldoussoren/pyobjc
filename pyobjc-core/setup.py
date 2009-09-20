@@ -24,9 +24,12 @@ if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
+# Set USE_SYSTEM_FFI to True to link to the system version
+# of libffi
 USE_SYSTEM_FFI = False
-if int(os.uname()[2].split('.')[0]) >= 10:
-	USE_SYSTEM_FFI = True
+
+#if int(os.uname()[2].split('.')[0]) >= 10:
+#        USE_SYSTEM_FFI = True
 
 
 # Some PiPy stuff
