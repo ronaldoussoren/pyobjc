@@ -85,6 +85,16 @@ def os_release():
     v = pl['ProductVersion']
     return '.'.join(v.split('.')[:2])
 
+
+def is32Bit():
+    """
+    Return True if we're running in 32-bit mode
+    """
+    if _sys.maxint > 2 ** 32:
+        return False
+    return True
+
+
 def onlyOn32Bit(function):
     """
     Usage::
@@ -97,7 +107,7 @@ def onlyOn32Bit(function):
 
     The test runs only on 32-bit systems
     """
-    if _sys.maxint > 2 ** 32:
+    if not is32Bit():
         if _sys.version_info[:2] >= (2, 7):
             return _unittest.skip("only on 32-bit")(function)
         return None
