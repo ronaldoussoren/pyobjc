@@ -28,9 +28,6 @@ class TestCGDirectDisplay (TestCase):
         self.failUnlessEqual(kCGCaptureNoOptions, 0)
         self.failUnlessEqual(kCGCaptureNoFill, 1)
 
-
-
-
         self.failIf(hasattr(CoreGraphics, 'kCGDirectMainDisplay'))
 
     def testFunctions(self):
@@ -263,6 +260,67 @@ class TestCGDirectDisplay (TestCase):
 
         err = CGDisplaySetPalette(CGMainDisplayID(), palette)
         self.failUnlessIsInstance(err, (int, long))
+
+        # Don't actually call CGSetDisplayTransferByByteTable, it might have
+        # permanent effects.
+        self.failUnlessResultHasType(CGSetDisplayTransferByByteTable, objc._C_INT)
+        self.failUnlessArgHasType(CGSetDisplayTransferByByteTable, 0, objc._C_UINT)
+        self.failUnlessArgHasType(CGSetDisplayTransferByByteTable, 1, objc._C_UINT)
+        self.failUnlessArgHasType(CGSetDisplayTransferByByteTable, 2, 'n^' + objc._C_CHAR_AS_INT)
+        self.failUnlessArgSizeInArg(CGSetDisplayTransferByByteTable, 2, 1)
+        self.failUnlessArgHasType(CGSetDisplayTransferByByteTable, 3, 'n^' + objc._C_CHAR_AS_INT)
+        self.failUnlessArgSizeInArg(CGSetDisplayTransferByByteTable, 3, 1)
+        self.failUnlessArgHasType(CGSetDisplayTransferByByteTable, 4, 'n^' + objc._C_CHAR_AS_INT)
+        self.failUnlessArgSizeInArg(CGSetDisplayTransferByByteTable, 4, 1)
+
+    @min_os_level('10.6')
+    def testTypes10_6(self):
+        self.failUnlessIsCFType(CGDisplayModeRef)
+
+    @min_os_level('10.6')
+    def testFunction10_6(self):
+        mainID = CGMainDisplayID()
+
+        self.failUnlessResultIsCFRetained(CGDisplayCopyAllDisplayModes)
+        v = CGDisplayCopyAllDisplayModes(mainID, None)
+        self.failUnlessIsInstance(v, CFArrayRef)
+
+        self.failUnlessResultIsCFRetained(CGDisplayCopyDisplayMode)
+        mode = CGDisplayCopyDisplayMode(mainID)
+        self.failUnlessIsInstance(mode, CGDisplayModeRef)
+
+        v = CGDisplaySetDisplayMode(mainID, mode, None)
+        self.failUnlessIsInstance(v, (int, long))
+
+        v = CGDisplayModeGetWidth(mode)
+        self.failUnlessIsInstance(v, (int, long))
+        v = CGDisplayModeGetHeight(mode)
+        self.failUnlessIsInstance(v, (int, long))
+        v = CGDisplayModeCopyPixelEncoding(mode)
+        self.failUnlessIsInstance(v, unicode)
+        v = CGDisplayModeGetRefreshRate(mode)
+        self.failUnlessIsInstance(v, float)
+        v = CGDisplayModeGetIOFlags(mode)
+        self.failUnlessIsInstance(v, (int, long))
+        v = CGDisplayModeGetIODisplayModeID(mode)
+        self.failUnlessIsInstance(v, (int, long))
+        v = CGDisplayModeIsUsableForDesktopGUI(mode)
+        self.failUnlessIsInstance(v, bool)
+        v = CGDisplayModeGetTypeID()
+        self.failUnlessIsInstance(v, (int, long))
+        v = CGDisplayModeRetain(mode)
+        self.failUnless(v is mode)
+        CGDisplayModeRelease(mode)
+
+        self.failUnlessResultIsCFRetained(CGDisplayCreateImage)
+        v = CGDisplayCreateImage(mainID)
+        self.failUnlessIsInstance(v, CGImageRef)
+        self.failUnlessResultIsCFRetained(CGDisplayCreateImageForRect)
+        v = CGDisplayCreateImageForRect(mainID, ((0, 0), (100, 100)))
+        self.failUnlessIsInstance(v, CGImageRef)
+
+
+
 
 if __name__ == "__main__":
     main()

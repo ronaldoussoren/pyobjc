@@ -34,5 +34,9 @@ class TestCGBitmapContext (TestCase):
         self.failUnlessIsInstance(img, CGImageRef)
 
 
+    def testFunctions106_(self):
+        self.fail("CGBitmapContextCreateWithData: manual wrapper")
+
+
 if __name__ == "__main__":
     main()

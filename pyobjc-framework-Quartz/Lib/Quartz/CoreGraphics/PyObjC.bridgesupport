@@ -31,6 +31,8 @@
   <opaque name='CGPDFScannerRef' type='^{CGPDFScanner=}' type64='^{CGPDFScanner=}' />
   <opaque name='CGPDFStreamRef' type='^{CGPDFStream=}' type64='^{CGPDFStream=}' />
   <opaque name='CGPDFStringRef' type='^{CGPDFString=}' type64='^{CGPDFString=}' />
+  <cftype gettypeid_func='CGDirectDisplayGetTypeID' name='CGDirectDisplay' type='^{CGDirectDisplay=}' type64='^{CGDirectDisplay=}' />
+  <cftype gettypeid_func='CGDisplayModeGetTypeID' name='CGDisplayModeRef' type='^{CGDisplayMode}' type64='^{CGDisplayMode}' />
   <cftype gettypeid_func='CGColorGetTypeID' name='CGColorRef' type='^{CGColor=}' type64='^{CGColor=}' />
   <cftype gettypeid_func='CGColorSpaceGetTypeID' name='CGColorSpaceRef' type='^{CGColorSpace=}' type64='^{CGColorSpace=}' />
   <cftype gettypeid_func='CGContextGetTypeID' name='CGContextRef' type='^{CGContext=}' type64='^{CGContext=}' />
@@ -57,6 +59,7 @@
   <constant name='CGSizeZero' type='{CGSize=ff}' type64='{CGSize=dd}' />
   <constant name='kCGColorBlack' type='^{__CFString=}' />
   <constant name='kCGColorClear' type='^{__CFString=}' />
+  <constant name='kCGColorSpaceGenericGrayGamma2_2' type='^{__CFString=}' />
   <constant name='kCGColorSpaceAdobeRGB1998' type='^{__CFString=}' />
   <constant name='kCGColorSpaceGenericCMYK' type='^{__CFString=}' />
   <constant name='kCGColorSpaceGenericGray' type='^{__CFString=}' />
@@ -108,10 +111,7 @@
   <enum name='CGEventNoErr' value='0' />
   <enum name='CGFLOAT_DEFINED' value='1' />
   <enum name='CGFLOAT_IS_DOUBLE' value='0' value64='1' />
-  <enum name='CGFLOAT_IS_DOUBLE' value='0' value64='1' />
   <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
-  <enum name='CGFLOAT_MAX' value='3.4028234663852886e+38' value64='1.7976931348623157e+308' />
-  <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
   <enum name='CGFLOAT_MIN' value='1.1754943508222875e-38' value64='2.2250738585072014e-308' />
   <enum name='CGGlyphMax' value='65534' />
   <enum name='CGGlyphMin' value='0' />
@@ -466,6 +466,66 @@
   <string_constant name='kCGSessionOnConsoleKey' nsstring='true' value='kCGSSessionOnConsoleKey' />
   <string_constant name='kCGSessionUserIDKey' nsstring='true' value='kCGSSessionUserIDKey' />
   <string_constant name='kCGSessionUserNameKey' nsstring='true' value='kCGSSessionUserNameKey' />
+  <function name='CGDisplayCopyAllDisplayModes'>
+    <retval type='^{__CFArray=}' already_cfretained='true' />
+    <arg type='I' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGDisplayCopyDisplayMode'>
+    <retval type='^{CGDisplayMode}' already_cfretained='true' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayModeRetain'>
+    <retval type='^{CGDisplayMode}' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayCreateImage'>
+    <retval already_cfretained='true' type='^{CGImage=}' />
+    <arg type='I' />
+  </function>
+  <function name='CGDisplayCreateImageForRect'>
+    <retval already_cfretained='true' type='^{CGImage=}' />
+    <arg type='I' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+  </function>
+  <function name='CGDisplayModeRelease'>
+	  <retval type='v' />
+	  <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplaySetDisplayMode'>
+    <retval type='i' />
+    <arg type='I' />
+    <arg type='^{CGDisplayMode}' />
+    <arg type='^{__CFDictionary=}' />
+  </function>
+  <function name='CGDisplayModeGetWidth'>
+    <retval type='l' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeGetHeight'>
+    <retval type='l' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeCopyPixelEncoding'>
+    <retval type='^{__CFString=}' already_cfretained='true' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeGetRefreshRate'>
+    <retval type='d' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeGetIOFlags'>
+    <retval type='I' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeGetIODisplayModeID'>
+    <retval type='I' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
+  <function name='CGDisplayModeIsUsableForDesktopGUI'>
+    <retval type='Z' />
+    <arg type='^{CGDisplayMode}' />
+  </function>
   <function name='CGAcquireDisplayFadeReservation'>
     <retval type='i' />
     <arg type='f' />
@@ -668,6 +728,9 @@
     <arg type='^{CGColor=}' />
   </function>
   <function name='CGColorGetTypeID'>
+    <retval type='L' type64='Q' />
+  </function>
+  <function name='CGDisplayModeGetTypeID'>
     <retval type='L' type64='Q' />
   </function>
   <function name='CGColorRelease'>
@@ -3185,9 +3248,9 @@
     <retval type='i' />
     <arg type='I' />
     <arg type='I' />
-    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
-    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
-    <arg c_array_length_in_arg='1' type='*' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^z' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^z' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^z' type_modifier='n' />
   </function>
   <function name='CGSetDisplayTransferByFormula'>
     <retval type='i' />
@@ -3348,4 +3411,3 @@
     <arg type='f' type64='f' />
   </function>
 </signatures>
-

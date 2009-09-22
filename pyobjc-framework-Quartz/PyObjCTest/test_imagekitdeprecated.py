@@ -38,6 +38,12 @@ class TestImageKitDeprecated (TestCase):
         self.failUnlessResultIsBOOL(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_)
         self.failUnlessArgHasType(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_, 2, objc._C_NSUInteger)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeBackground, unicode)
+        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeForeground, unicode)
+        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeSelection, unicode)
+        self.failUnlessIsInstance(IKImageBrowserCellLayerTypePlaceHolder, unicode)
 
 if __name__ == "__main__":
     main()

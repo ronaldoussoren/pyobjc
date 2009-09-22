@@ -44,6 +44,12 @@ class TestQCComposition (TestCase):
         self.failUnlessIsInstance(QCCompositionProtocolRSSVisualizer, unicode)
         self.failUnlessIsInstance(QCCompositionProtocolMusicVisualizer, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(QCCompositionInputMeshKey, unicode)
+        self.failUnlessIsInstance(QCCompositionOutputMeshKey, unicode)
+        self.failUnlessIsInstance(QCCompositionProtocolMeshFilter, unicode)
+
 
 if __name__ == "__main__":
     main()

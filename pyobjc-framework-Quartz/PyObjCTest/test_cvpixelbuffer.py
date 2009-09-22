@@ -167,8 +167,20 @@ class TestCVPixelBuffer (TestCase):
         self.failUnlessEqual(rv, 0)
         return image
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCVPixelBufferLock_ReadOnly, 1)
 
+        self.failUnlessIsInstance(kCVPixelBufferPlaneAlignmentKey, unicode)
+        self.failUnlessIsInstance(kCVPixelBufferIOSurfacePropertiesKey, unicode)
+        self.failUnlessIsInstance(kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey, unicode)
+        self.failUnlessIsInstance(kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey, unicode)
+        self.failUnlessIsInstance(kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey, unicode)
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.fail("CVPixelBufferGetIOSurface")
+        self.fail("CVPixelBufferCreateWithIOSurface")
 
 
 

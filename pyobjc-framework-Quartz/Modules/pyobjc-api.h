@@ -19,7 +19,7 @@
 #include "Python.h"
 #include <objc/objc.h>
 
-#import <Foundation/NSObjCRuntime.h>
+#import <Foundation/Foundation.h>
 
 #ifndef CGFLOAT_DEFINED
 
@@ -92,7 +92,7 @@ struct PyObjC_WeakLink {
 		Py_BEGIN_ALLOW_THREADS \
 		@try {
 
-#define PyObjC_HANDLER } @catch(NSObject* _localException) { \
+#define PyObjC_HANDLER } @catch(volatile NSObject* _localException) { \
 		NSException* localException __attribute__((__unused__))= (NSException*)_localException;
 
 #define PyObjC_ENDHANDLER \

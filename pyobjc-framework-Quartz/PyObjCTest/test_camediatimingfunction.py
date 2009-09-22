@@ -10,6 +10,9 @@ class TestCAMediaTimingFunction (TestCase):
         self.failUnlessIsInstance(kCAMediaTimingFunctionEaseOut, unicode)
         self.failUnlessIsInstance(kCAMediaTimingFunctionEaseInEaseOut, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCAMediaTimingFunctionDefault, unicode)
 
 if __name__ == "__main__":
     main()

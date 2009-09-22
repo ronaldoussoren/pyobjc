@@ -7,6 +7,17 @@
   <cftype gettypeid_func='CGImageSourceGetTypeID' name='CGImageSourceRef' type='^{CGImageSource=}' type64='^{CGImageSource=}' />
   <constant name='kCGImageDestinationBackgroundColor' type='^{__CFString=}' />
   <constant name='kCGImageDestinationLossyCompressionQuality' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCCreatorContactInfo' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCRightsUsageTerms' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCScene' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoCity' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoCountry' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoAddress' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoPostalCode' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoStateProvince' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoEmails' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoPhones' type='^{__CFString=}' />
+  <constant name='kCGImagePropertyIPTCContactInfoWebURLs' type='^{__CFString=}' />
   <constant name='kCGImageProperty8BIMDictionary' type='^{__CFString=}' />
   <constant name='kCGImageProperty8BIMLayerNames' type='^{__CFString=}' />
   <constant name='kCGImagePropertyCIFFCameraSerialNumber' type='^{__CFString=}' />

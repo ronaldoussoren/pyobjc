@@ -41,6 +41,7 @@ class TestCALayer (TestCase):
 
 
     def testMethods(self):
+        self.failUnlessResultIsBOOL(CALayer.needsDisplayForKey_)
         self.failUnlessResultIsBOOL(CALayer.shouldArchiveValueForKey_)
         self.failUnlessResultIsBOOL(CALayer.isHidden)
         self.failUnlessArgIsBOOL(CALayer.setHidden_, 0)
@@ -56,7 +57,20 @@ class TestCALayer (TestCase):
 
         self.failUnlessResultHasType(TestCALayerHelper.preferredSizeOfLayer_, CGSize.__typestr__)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(CALayer.isGeometryFlipped)
+        self.failUnlessArgIsBOOL(CALayer.setGeometryFlipped_, 0)
+        self.failUnlessResultIsBOOL(CALayer.contentsAreFlipped)
 
+        self.failUnlessResultHasType(CALayer.contentsCenter, CGRect.__typestr__)
+        self.failUnlessArgHasType(CALayer.setContentsCenter_, 0, CGRect.__typestr__)
+        self.failUnlessResultIsBOOL(CALayer.needsDisplay)
+        self.failUnlessResultIsBOOL(CALayer.needsLayout)
+    
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCAFilterTrilinear, unicode)
 
 
 if __name__ == "__main__":

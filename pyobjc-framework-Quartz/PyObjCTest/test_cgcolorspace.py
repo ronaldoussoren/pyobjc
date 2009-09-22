@@ -23,13 +23,22 @@ class TestCGColorSpace (TestCase):
         self.failUnlessIsInstance(kCGColorSpaceGenericGray, unicode)
         self.failUnlessIsInstance(kCGColorSpaceGenericRGB, unicode)
         self.failUnlessIsInstance(kCGColorSpaceGenericCMYK, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceGenericRGBLinear, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceSRGB, unicode)
 
         self.failUnlessIsInstance(kCGColorSpaceUserGray, basestring)
         self.failUnlessIsInstance(kCGColorSpaceUserRGB, basestring)
         self.failUnlessIsInstance(kCGColorSpaceUserCMYK, basestring)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCGColorSpaceGenericRGBLinear, unicode)
+        self.failUnlessIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
+        self.failUnlessIsInstance(kCGColorSpaceSRGB, unicode)
+
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCGColorSpaceGenericGrayGamma2_2, unicode)
+
 
     def testFunctions(self):
         self.failUnlessResultIsCFRetained(CGColorSpaceCreateDeviceGray)
@@ -110,6 +119,15 @@ class TestCGColorSpace (TestCase):
         self.failUnless(buf[3] == 0)
         self.failUnless(buf[4] == 1)
         self.failUnless(buf[5] == 2)
+
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        self.fail("CGColorSpaceCreateWithICCProfile")
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.fail('CGColorSpaceCopyName')
+        
 
 if __name__ == "__main__":
     main()

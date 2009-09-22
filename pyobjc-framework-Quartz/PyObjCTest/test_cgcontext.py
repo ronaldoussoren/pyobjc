@@ -70,6 +70,17 @@ class TestCGContext (TestCase):
         self.failUnlessEqual(kCGBlendModePlusDarker, 26)
         self.failUnlessEqual(kCGBlendModePlusLighter, 27)
 
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        self.fail("CGContextDrawRadialGradient")
+        self.fail("CGContextDrawShading")
+        self.fail("CGContextSetShouldSubpixelPositionFonts")
+        self.fail("CGContextGetShouldSubpixelPositionFonts")
+        self.fail("CGContextSetAllowsFontSubpixelPositioning")
+        self.fail("CGContextGetAllowsFontSubpixelPositioning")
+        self.fail("CGContextSetShouldSubpixelQuantizeFonts")
+        self.fail("CGContextGetShouldSubpixelQuantizeFonts")
+
     def testFunctions(self):
         self.failUnlessIsInstance(CGContextGetTypeID(), (int, long))
 
@@ -261,7 +272,7 @@ class TestCGContext (TestCase):
 
             CGContextSetFontSize(context, 11.5)
 
-            CGContextSelectFont(context, "Helvetica", 10.5, kCGEncodingMacRoman)
+            CGContextDrawShading(context, "Helvetica", 10.5, kCGEncodingMacRoman)
 
             CGContextShowText(context, "value", 5)
             CGContextShowTextAtPoint(context, 50, 60, "value", 5)
