@@ -6,14 +6,14 @@ class TestCGColor (TestCase):
     def testTypes(self):
         self.failUnlessIsCFType(CGColorRef)
 
-    def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CGColorCreate)
-        color = CGColorCreate(CGColorSpaceCreateDeviceRGB(),
-                [1.0, 0.5, 0.5])
-        self.failUnlessIsInstance(color, CGColorRef)
-
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
         self.failUnlessResultIsCFRetained(CGColorCreateGenericGray)
         color = CGColorCreateGenericGray(0.75, 0.8)
+        self.failUnlessIsInstance(color, CGColorRef)
+
+        self.failUnlessResultIsCFRetained(CGColorCreateGenericRGB)
+        color = CGColorCreateGenericRGB(0.75, 0.8, 1.0, 0.5)
         self.failUnlessIsInstance(color, CGColorRef)
 
         self.failUnlessResultIsCFRetained(CGColorCreateGenericCMYK)
@@ -23,8 +23,10 @@ class TestCGColor (TestCase):
         color = CGColorGetConstantColor(kCGColorWhite)
         self.failUnlessIsInstance(color, CGColorRef)
 
-        self.failUnlessResultIsCFRetained(CGColorCreateGenericRGB)
-        color = CGColorCreateGenericRGB(0.75, 0.8, 1.0, 0.5)
+    def testFunctions(self):
+        self.failUnlessResultIsCFRetained(CGColorCreate)
+        color = CGColorCreate(CGColorSpaceCreateDeviceRGB(),
+                [1.0, 0.5, 0.5])
         self.failUnlessIsInstance(color, CGColorRef)
 
         self.failUnlessResultIsCFRetained(CGColorCreateCopy)
@@ -60,6 +62,7 @@ class TestCGColor (TestCase):
 
         # CGColorCreateWithPattern, CGColorGetPattern: tested in test_cgpattern
 
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(kCGColorWhite, unicode)
         self.failUnlessIsInstance(kCGColorBlack, unicode)

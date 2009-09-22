@@ -1,0 +1,7 @@
+API Notes for the CoreGraphics framework
+========================================
+
+* ``CGColorSpaceCreateWithPlatformColorSpace``,
+  ``CGColorSpaceCreateWithPlatformColorSpace``.
+
+  These functions are not supported.

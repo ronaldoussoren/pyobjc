@@ -5,6 +5,46 @@
   <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
   <struct name='CATransform3D' type='{CATransform3D="m11"f"m12"f"m13"f"m14"f"m21"f"m22"f"m23"f"m24"f"m31"f"m32"f"m33"f"m34"f"m41"f"m42"f"m43"f"m44"f}' type64='{CATransform3D="m11"d"m12"d"m13"d"m14"d"m21"d"m22"d"m23"d"m24"d"m31"d"m32"d"m33"d"m34"d"m41"d"m42"d"m43"d"m44"d}' />
   <constant name='CATransform3DIdentity' type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+  <constant name='kCIOutputNativeSizeKey' type='@' />
+  <constant name='kCAValueFunctionRotateX' type='@' />
+  <constant name='kCAValueFunctionRotateY' type='@' />
+  <constant name='kCAValueFunctionRotateZ' type='@' />
+  <constant name='kCAValueFunctionScale' type='@' />
+  <constant name='kCAValueFunctionScaleX' type='@' />
+  <constant name='kCAValueFunctionScaleY' type='@' />
+  <constant name='kCAValueFunctionScaleZ' type='@' />
+  <constant name='kCAValueFunctionTranslate' type='@' />
+  <constant name='kCAValueFunctionTranslateX' type='@' />
+  <constant name='kCAValueFunctionTranslateY' type='@' />
+  <constant name='kCAValueFunctionTranslateZ' type='@' />
+  <constant name='kCATransactionAnimationTimingFunction' type='@' />
+  <constant name='kCATransactionCompletionBlock' type='@' />
+  <constant name='kCAMediaTimingFunctionDefault' type='@' />
+  <constant name='kCAFillRuleNonZero' type='@'/>
+  <constant name='kCAFillRuleEvenOdd' type='@'/>
+  <constant name='kCALineJoinMiter' type='@'/>
+  <constant name='kCALineJoinRound' type='@'/>
+  <constant name='kCALineJoinRound' type='@'/>
+  <constant name='kCALineCapButt' type='@'/>
+  <constant name='kCALineCapRound' type='@'/>
+  <constant name='kCALineCapSquare' type='@'/>
+  <constant name='kCAFilterTrilinear' type='@' />
+  <constant name='kCAGradientLayerAxial' type='@' />
+  <constant name='kCAEmitterLayerPoint' type='@' />
+  <constant name='kCAEmitterLayerLine' type='@' />
+  <constant name='kCAEmitterLayerRectangle' type='@' />
+  <constant name='kCAEmitterLayerCuboid' type='@' />
+  <constant name='kCAEmitterLayerCircle' type='@' />
+  <constant name='kCAEmitterLayerSphere' type='@' />
+  <constant name='kCAEmitterLayerPoints' type='@' />
+  <constant name='kCAEmitterLayerOutline' type='@' />
+  <constant name='kCAEmitterLayerSurface' type='@' />
+  <constant name='kCAEmitterLayerVolume' type='@' />
+  <constant name='kCAEmitterLayerUnordered' type='@' />
+  <constant name='kCAEmitterLayerOldestFirst' type='@' />
+  <constant name='kCAEmitterLayerOldestLast' type='@' />
+  <constant name='kCAEmitterLayerBackToFront' type='@' />
+  <constant name='kCAEmitterLayerAdditive' type='@' />
   <constant name='kCAAlignmentCenter' type='@' />
   <constant name='kCAAlignmentJustified' type='@' />
   <constant name='kCAAlignmentLeft' type='@' />
@@ -301,6 +341,14 @@
 	    <arg index='0' type='B' />
     </method>
   </class>
+  <class name='CAEmitterLayer' >
+	  <method selector='preservesDepth' >
+		  <retval type='B' />
+	  </method>
+	  <method selector='setPreservesDepth:' >
+		  <arg index='0' type='B' />
+	  </method>
+  </class>
   <class name='CAPropertyAnimation'>
     <method selector='isAdditive' >
 	    <retval type='B' />
@@ -324,6 +372,24 @@
     </method>
   </class>
   <class name='CALayer'>
+    <method selector='contentsAreFlipped' >
+	    <retval type='B' />
+    </method>
+    <method selector='needsDisplay' >
+	    <retval type='B' />
+    </method>
+    <method selector='needsLayout' >
+	    <retval type='B' />
+    </method>
+    <method selector='isGeometryFlipped' >
+	    <retval type='B' />
+    </method>
+    <method selector='setGeometryFlipped:' >
+	    <arg index='0' type='B' />
+    </method>
+    <method selector='needsDisplayForKey:' >
+	    <retval type='B' />
+    </method>
     <method selector='isHidden' >
 	    <retval type='B' />
     </method>
@@ -419,6 +485,24 @@
     <method class_method='true' selector='rendererWithCGLContext:options:'>
        <arg index='0' type='^{_CGLContextObject=}' />
     </method>
+  </class>
+  <class name='CATransaction'>
+	  <method selector='disableActions'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setDisableActions:'>
+		  <arg index='0' type='B' />
+	  </method>
+	  <method selector='completionBlock'>
+		  <retval block='true'>
+			  <retval type='v' />
+		  </retval>
+	  </method>
+	  <method selector='setCompletionBlock:'>
+		  <arg index='0' block='true'>
+			  <retval type='v' />
+		  </arg>
+	  </method>
   </class>
   <class name='CATextLayer'>
 	  <method selector='isWrapped'>

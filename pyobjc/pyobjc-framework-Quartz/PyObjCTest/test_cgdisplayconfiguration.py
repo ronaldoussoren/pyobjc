@@ -141,5 +141,10 @@ class TestCGDisplayConfiguration (TestCase):
         self.failUnlessEqual(kCGDisplayUnMirrorFlag, (1 << 11))
         self.failUnlessEqual(kCGDisplayDesktopShapeChangedFlag, (1 << 12))
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.fail("CGConfigureDisplayWithDisplayMode")
+
+
 if __name__ == "__main__":
     main()

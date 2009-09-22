@@ -7,6 +7,31 @@ class TestCGEvent (TestCase):
         self.failUnlessIsCFType(CGEventRef)
         self.failUnlessIsCFType(CGEventSourceRef)
 
+    def testMissing(self):
+        self.fail("CGEventGetUnflippedLocation")
+        self.fail("CGEventCreateSourceFromEvent")
+        self.fail("CGEventSetSource")
+        self.fail("CGEventGetType")
+        self.fail("CGEventSetType")
+        self.fail("CGEventGetTimestamp")
+        self.fail("CGEventSetTimestamp")
+        self.fail("CGEventGetLocation")
+        self.fail("CGEventSetLocation")
+        self.fail("CGEventGetFlags")
+        self.fail("CGEventSetFlags")
+        self.fail("CGEventGetIntegerValueField")
+        self.fail("CGEventSetIntegerValueField")
+        self.fail("CGEventGetDoubleValueField")
+        self.fail("CGEventSetDoubleValueField")
+        self.fail("CGEventTapCreateForPSN")
+        self.fail("CGEventTapEnable")
+        self.fail("CGEventTapIsEnabled")
+        self.fail("CGEventTapPostEvent")
+        self.fail("CGGetEventTapList")
+        self.fail("CGEventPost")
+        self.fail("CGEventPostToPSN")
+
+
     def testFunctions(self):
         self.failUnlessIsInstance(CGEventGetTypeID(), (int, long))
 

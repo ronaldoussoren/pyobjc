@@ -21,6 +21,7 @@ class TestCIImageProvider (TestCase):
     def testConstants(self):
         self.failUnlessIsInstance(kCIImageProviderTileSize, unicode)
         self.failUnlessIsInstance(kCIImageProviderUserInfo, unicode)
+        self.failUnlessIsInstance(kCIOutputNativeSizeKey, unicode)
 
 
 if __name__ == "__main__":

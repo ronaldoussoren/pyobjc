@@ -34,7 +34,6 @@ class TestCAAnimation (TestCase):
         self.failUnlessIsInstance(kCATransitionFromTop, unicode)
         self.failUnlessIsInstance(kCATransitionFromBottom, unicode)
 
-    def testConstants(self):
         self.failUnlessIsInstance(kCAAnimationRotateAuto, unicode)
         self.failUnlessIsInstance(kCAAnimationRotateAutoReverse, unicode)
 

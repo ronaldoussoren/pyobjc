@@ -35,6 +35,15 @@ class TestIKSlideshow (TestCase):
         self.failUnlessIsInstance(IKSlideshowPDFDisplaysAsBook, unicode)
         self.failUnlessIsInstance(IK_iPhotoBundleIdentifier, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(IKSlideshowScreen, unicode)
+        self.failUnlessIsInstance(IKSlideshowAudioFile, unicode)
+        self.failUnlessIsInstance(IKSlideshowPDFDisplayBox, unicode)
+        self.failUnlessIsInstance(IKSlideshowPDFDisplayMode, unicode)
+        self.failUnlessIsInstance(IKSlideshowPDFDisplaysAsBook, unicode)
+        self.failUnlessIsInstance(IK_ApertureBundleIdentifier, unicode)
+        self.failUnlessIsInstance(IK_MailBundleIdentifier, unicode)
 
 
 if __name__ == "__main__":
