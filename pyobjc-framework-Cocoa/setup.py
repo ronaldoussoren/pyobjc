@@ -61,7 +61,7 @@ extra_cmdclass['install_lib'] = pyobjc_install_lib
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version='2.2b3',
+    version='2.2b4',
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
