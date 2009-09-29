@@ -73,7 +73,7 @@ setup(
 
     package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
+        'pyobjc-core>=2.2b4',
     ],
     dependency_links = [],
     package_data = { 
