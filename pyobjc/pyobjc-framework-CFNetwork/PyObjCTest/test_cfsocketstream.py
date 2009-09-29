@@ -4,6 +4,9 @@ from CFNetwork import *
 
 class TestCFSocketStream (TestCase):
     def testConstants(self):
+        self.failUnlessIsInstance(kCFStreamPropertySSLPeerTrust, unicode)
+        self.failUnlessIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
+
         self.failUnlessIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
         self.failUnlessIsInstance(kCFStreamPropertySSLSettings, unicode)
         self.failUnlessIsInstance(kCFStreamSSLLevel, unicode)

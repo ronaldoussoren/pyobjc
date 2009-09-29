@@ -117,6 +117,38 @@ class TestCFProxySupport (TestCase):
         self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
         self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
 
+    @min_os_level('10.5')
+    @expectedFailure
+    def testConstants_fail(self):
+        self.failUnlessIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        r = CFNetworkCopySystemProxySettings()
+        self.failUnlessIsInstance(r, CFDictionaryRef)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCFNetworkProxiesExceptionsList, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesExcludeSimpleHostnames, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesFTPEnable, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesFTPPassive, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesFTPPort, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesFTPProxy, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesGopherEnable, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesGopherPort, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesGopherProxy, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSEnable, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSPort, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSProxy, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesRTSPEnable, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesRTSPPort, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesRTSPProxy, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSEnable, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSPort, unicode)
+        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSProxy, unicode)
+
+
 
 if __name__ == "__main__":
     main()
