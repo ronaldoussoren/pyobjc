@@ -22,6 +22,18 @@ class TestCTStringAttributes (TestCase):
         self.failUnlessEqual(kCTUnderlinePatternDashDot,  0x0300)
         self.failUnlessEqual(kCTUnderlinePatternDashDotDot,  0x0400)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCTForegroundColorFromContextAttributeName, unicode)
+        self.failUnlessIsInstance(kCTSuperscriptAttributeName, unicode)
+        self.failUnlessIsInstance(kCTUnderlineColorAttributeName, unicode)
+        self.failUnlessIsInstance(kCTCharacterShapeAttributeName, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCTStrokeWidthAttributeName, unicode)
+        self.failUnlessIsInstance(kCTStrokeColorAttributeName, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -6,8 +6,10 @@ class TestCTTypesetter (TestCase):
     def testTypes(self):
         self.failUnlessIsCFType(CTTypesetterRef)
 
-    def testConstants(self):
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(kCTTypesetterOptionDisableBidiProcessing, unicode)
+        self.failUnlessIsInstance(kCTTypesetterOptionForcedEmbeddingLevel, unicode)
 
     def testFunctions(self):
         self.failUnlessIsInstance(CTTypesetterGetTypeID(), (int, long))

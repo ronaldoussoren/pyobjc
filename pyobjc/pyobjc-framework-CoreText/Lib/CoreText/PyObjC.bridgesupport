@@ -17,6 +17,8 @@
   <cftype gettypeid_func='CTTextTabGetTypeID' name='CTTextTabRef' type='^{__CTTextTab=}' type64='^{__CTTextTab=}' />
   <cftype gettypeid_func='CTTypesetterGetTypeID' name='CTTypesetterRef' type='^{__CTTypesetter=}' type64='^{__CTTypesetter=}' />
   <constant name='kCTFontAttributeName' type='^{__CFString=}' />
+  <constant name='kCTFontURLAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontFormatAttribute' type='^{__CFString=}' />
   <constant name='kCTFontBaselineAdjustAttribute' type='^{__CFString=}' />
   <constant name='kCTFontCascadeListAttribute' type='^{__CFString=}' />
   <constant name='kCTFontCharacterSetAttribute' type='^{__CFString=}' />
@@ -80,6 +82,28 @@
   <constant name='kCTTypesetterOptionDisableBidiProcessing' type='^{__CFString=}' />
   <constant name='kCTUnderlineStyleAttributeName' type='^{__CFString=}' />
   <constant name='kCTVerticalFormsAttributeName' type='^{__CFString=}' />
+  <constant name='kCTFontRegistrationScopeAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontPriorityAttribute' type='^{__CFString=}' />
+  <constant name='kCTFontEnabledAttribute' type='^{__CFString=}' />
+  <enum name='kCTVersionNumber10_5_2' value='131073' />
+  <enum name='kCTVersionNumber10_5_3' value='131074' />
+  <enum name='kCTVersionNumber10_5_5' value='131075' />
+  <enum name='kCTVersionNumber10_6' value='196608' />
+  <enum name='kCTFontPrioritySystem' value='10000' />
+  <enum name='kCTFontPriorityNetwork' value='20000' />
+  <enum name='kCTFontPriorityComputer' value='30000' />
+  <enum name='kCTFontPriorityUser' value='40000' />
+  <enum name='kCTFontPriorityDynamic' value='50000' />
+  <enum name='kCTFontPriorityProcess' value='60000' />
+  <enum name='kCTFontOptionsDefault' value='0' />
+  <enum name='kCTFontFormatUnrecognized' value='0' />
+  <enum name='kCTFontFormatOpenTypePostScript' value='1' />
+  <enum name='kCTFontFormatOpenTypeTrueType' value='2' />
+  <enum name='kCTFontFormatTrueType' value='3' />
+  <enum name='kCTFontFormatPostScript' value='4' />
+  <enum name='kCTFontFormatBitmap' value='5' />
+  <enum name='kCTFontOptionsPreventAutoActivation' value='1' />
+  <enum name='kCTFontOptionsPreferSystemFont' value='4' />
   <enum name='kCTAdobeCNS1CharacterCollection' value='1' />
   <enum name='kCTAdobeGB1CharacterCollection' value='2' />
   <enum name='kCTAdobeJapan1CharacterCollection' value='3' />
@@ -385,7 +409,7 @@
     <retval type='^{CGPath=}' />
     <arg type='^{__CTFont=}' />
     <arg type='S' />
-    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=ffffff}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=ffffff}' type_modifier='n' />
   </function>
   <function name='CTFontCreateUIFontForLanguage'>
     <retval already_cfretained='true' type='^{__CTFont=}' />
@@ -393,30 +417,44 @@
     <arg type='f' type64='f' />
     <arg type='^{__CFString=}' />
   </function>
+  <function name='CTFontCreateWithNameAndOptions' >
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='f' type64='d' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='i' type64='q' />
+  </function>
+  <function name='CTFontCreateWithFontDescriptorAndOptions' >
+    <retval already_cfretained='true' type='^{__CTFont=}' />
+    <arg type='^{__CTFontDescriptor=}' />
+    <arg type='f' type64='d' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='i' type64='q' />
+  </function>
   <function name='CTFontCreateWithFontDescriptor'>
     <retval already_cfretained='true' type='^{__CTFont=}' />
     <arg type='^{__CTFontDescriptor=}' />
     <arg type='f' type64='f' />
-    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
   </function>
   <function name='CTFontCreateWithGraphicsFont'>
     <retval already_cfretained='true' type='^{__CTFont=}' />
     <arg type='^{CGFont=}' type64='^{CGFont=}' />
     <arg type='f' type64='f' />
-    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
     <arg type='^{__CTFontDescriptor=}' />
   </function>
   <function name='CTFontCreateWithName'>
     <retval already_cfretained='true' type='^{__CTFont=}' />
     <arg type='^{__CFString=}' />
     <arg type='f' type64='f' />
-    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
   </function>
   <function name='CTFontCreateWithPlatformFont'>
     <retval already_cfretained='true' type='^{__CTFont=}' />
     <arg type='L' type64='L' />
     <arg type='f' type64='f' />
-    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
     <arg type='^{__CTFontDescriptor=}' />
   </function>
   <function name='CTFontCreateWithQuickdrawInstance'>
