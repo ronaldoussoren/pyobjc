@@ -61,7 +61,7 @@ class TestCFHost (TestCase):
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
-        host = CFHostCreateWithName(None, u"www.python.org")
+        host = CFHostCreateWithName(None, u"localhost")
         CFHostSetClient(host, callback, ctx)
 
         rl = CFRunLoopGetCurrent()
@@ -72,7 +72,7 @@ class TestCFHost (TestCase):
         self.failUnlessIsInstance(ok, bool)
         self.failUnlessIsInstance(err, CFStreamError)
 
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 4.0, True)
 
         CFHostUnscheduleFromRunLoop(host, rl, kCFRunLoopDefaultMode)
         self.failUnlessEqual(len(lst), 1)

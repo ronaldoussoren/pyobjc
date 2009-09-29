@@ -9,6 +9,29 @@
   <cftype name='CFNetServiceBrowserRef' type='^{__CFNetServiceBrowser=}' type64='^{__CFNetServiceBrowser=}' gettypeid_func='CFNetServiceBrowserGetTypeID'/>
   <cftype name='CFNetServiceMonitorRef' type='^{__CFNetServiceMonitor=}' type64='^{__CFNetServiceMonitor=}' gettypeid_func='CFNetServiceMonitorGetTypeID'/>
   <cftype name='CFNetServiceRef' type='^{__CFNetService=}' type64='^{__CFNetService=}' gettypeid_func='CFNetServiceGetTypeID'/>
+  <constant name='kCFStreamPropertySSLPeerCertificates' type='@' />
+  <constant name='kCFStreamPropertySSLPeerTrust' type='@' />
+  <constant name='kCFNetworkProxiesSOCKSEnable' type='@' />
+  <constant name='kCFNetworkProxiesSOCKSPort' type='@' />
+  <constant name='kCFNetworkProxiesSOCKSProxy' type='@' />
+  <constant name='kCFNetworkProxiesHTTPSEnable' type='@' />
+  <constant name='kCFNetworkProxiesHTTPSPort' type='@' />
+  <constant name='kCFNetworkProxiesHTTPSProxy' type='@' />
+  <constant name='kCFNetworkProxiesRTSPEnable' type='@' />
+  <constant name='kCFNetworkProxiesRTSPPort' type='@' />
+  <constant name='kCFNetworkProxiesRTSPProxy' type='@' />
+  <constant name='kCFNetworkProxiesFTPProxy' type='@' />
+  <constant name='kCFNetworkProxiesFTPPort' type='@' />
+  <constant name='kCFNetworkProxiesFTPPassive' type='@' />
+  <constant name='kCFNetworkProxiesFTPEnable' type='@' />
+  <constant name='kCFNetworkProxiesExcludeSimpleHostnames' type='@' />
+  <constant name='kCFNetworkProxiesExceptionsList' type='@' />
+  <constant name='kCFNetworkProxiesGopherEnable' type='@' />
+  <constant name='kCFNetworkProxiesGopherPort' type='@' />
+  <constant name='kCFNetworkProxiesGopherProxy' type='@' />
+  <constant name='kCFProxyAutoConfigurationHTTPResponseKey' type='@' />
+  <constant name='kCFURLErrorFailingURLErrorKey' type='@' />
+  <constant name='kCFURLErrorFailingURLStringErrorKey' type='@' />
   <constant name='kCFStreamErrorDomainMach' type='i' />
   <constant name='kCFStreamErrorDomainFTP' type='i' />
   <constant name='kCFStreamErrorDomainSOCKS' type='i' />
@@ -134,6 +157,53 @@
   <enum name='kCFErrorHTTPProxyConnectionFailure' value='306' />
   <enum name='kCFErrorHTTPRedirectionLoopDetected' value='304' />
   <enum name='kCFErrorPACFileError' value='308' />
+  <enum name='kCFErrorPACFileAuth' value='309' />
+  <enum name='kCFErrorHTTPSProxyConnectionFailure' value='310' />
+  <enum name='kCFURLErrorUnknown' value='-998' />
+  <enum name='kCFURLErrorCancelled' value='-999' />
+  <enum name='kCFURLErrorBadURL' value='-1000' />
+  <enum name='kCFURLErrorTimedOut' value='-1001' />
+  <enum name='kCFURLErrorUnsupportedURL' value='-1002' />
+  <enum name='kCFURLErrorCannotFindHost' value='-1003' />
+  <enum name='kCFURLErrorCannotConnectToHost' value='-1004' />
+  <enum name='kCFURLErrorNetworkConnectionLost' value='-1005' />
+  <enum name='kCFURLErrorDNSLookupFailed' value='-1006' />
+  <enum name='kCFURLErrorHTTPTooManyRedirects' value='-1007' />
+  <enum name='kCFURLErrorResourceUnavailable' value='-1008' />
+  <enum name='kCFURLErrorNotConnectedToInternet' value='-1009' />
+  <enum name='kCFURLErrorRedirectToNonExistentLocation' value='-1010' />
+  <enum name='kCFURLErrorBadServerResponse' value='-1011' />
+  <enum name='kCFURLErrorUserCancelledAuthentication' value='-1012' />
+  <enum name='kCFURLErrorUserAuthenticationRequired' value='-1013' />
+  <enum name='kCFURLErrorZeroByteResource' value='-1014' />
+  <enum name='kCFURLErrorCannotDecodeRawData' value='-1015' />
+  <enum name='kCFURLErrorCannotDecodeContentData' value='-1016' />
+  <enum name='kCFURLErrorCannotParseResponse' value='-1017' />
+  <enum name='kCFURLErrorInternationalRoamingOff' value='-1018' />
+  <enum name='kCFURLErrorCallIsActive' value='-1019' />
+  <enum name='kCFURLErrorDataNotAllowed' value='-1020' />
+  <enum name='kCFURLErrorRequestBodyStreamExhausted' value='-1021' />
+  <enum name='kCFURLErrorFileDoesNotExist' value='-1100' />
+  <enum name='kCFURLErrorFileIsDirectory' value='-1101' />
+  <enum name='kCFURLErrorNoPermissionsToReadFile' value='-1102' />
+  <enum name='kCFURLErrorDataLengthExceedsMaximum' value='-1103' />
+  <enum name='kCFURLErrorSecureConnectionFailed' value='-1200' />
+  <enum name='kCFURLErrorServerCertificateHasBadDate' value='-1201' />
+  <enum name='kCFURLErrorServerCertificateUntrusted' value='-1202' />
+  <enum name='kCFURLErrorServerCertificateHasUnknownRoot' value='-1203' />
+  <enum name='kCFURLErrorServerCertificateNotYetValid' value='-1204' />
+  <enum name='kCFURLErrorClientCertificateRejected' value='-1205' />
+  <enum name='kCFURLErrorClientCertificateRequired' value='-1206' />
+  <enum name='kCFURLErrorCannotLoadFromNetwork' value='-2000' />
+  <enum name='kCFURLErrorCannotCreateFile' value='-3000' />
+  <enum name='kCFURLErrorCannotOpenFile' value='-3001' />
+  <enum name='kCFURLErrorCannotCloseFile' value='-3002' />
+  <enum name='kCFURLErrorCannotWriteToFile' value='-3003' />
+  <enum name='kCFURLErrorCannotRemoveFile' value='-3004' />
+  <enum name='kCFURLErrorCannotMoveFile' value='-3005' />
+  <enum name='kCFURLErrorDownloadDecodingFailedMidStream' value='-3006' />
+  <enum name='kCFURLErrorDownloadDecodingFailedToComplete' value='-3007' />
+  <enum name='kCFHTTPCookieCannotParseCookieFile' value='-4000' />
   <enum name='kCFFTPErrorUnexpectedStatusCode' value='200' />
   <enum name='kCFHostAddresses' value='0' />
   <enum name='kCFHostErrorHostNotFound' value='1' />
@@ -204,6 +274,9 @@
   <enum name='kCFStreamSocketSecuritySSLv3' value='2' />
   <enum name='kCFStreamSocketSecurityTLSv1' value='4' />
   <enum name='kSOCKS5NoAcceptableMethod' value='255' />
+  <function name='CFNetworkCopySystemProxySettings'> 
+	  <retval type='^{__CFDictionary}' already_cfretained='true' />
+  </function>
   <function name='CFFTPCreateParsedResourceListing'>
     <retval type='l' type64='q' />
     <arg type='^{__CFAllocator=}' />
