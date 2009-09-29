@@ -19,7 +19,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-AppleScriptKit',
-    version='2.2b3',
+    version='2.2b4',
     description = "Wrappers for the framework AppleScriptKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
