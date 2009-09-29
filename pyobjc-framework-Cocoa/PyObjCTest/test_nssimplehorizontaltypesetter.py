@@ -1,10 +1,12 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSimpleHorizontalTypesetterHelper (NSSimpleHorizontalTypesetter):
-    def willSetLineFragmentRect_forGlyphRange_usedRect_(self, a, b, c): return 1
+if is32Bit():
+    class TestNSSimpleHorizontalTypesetterHelper (NSSimpleHorizontalTypesetter):
+        def willSetLineFragmentRect_forGlyphRange_usedRect_(self, a, b, c): return 1
 
 class TestNSSimpleHorizontalTypesetter (TestCase):
+    @onlyOn32Bit
     def testConstants(self):
         self.failUnlessEqual(NSLayoutNotDone, 0)
         self.failUnlessEqual(NSLayoutDone, 1)
@@ -21,6 +23,7 @@ class TestNSSimpleHorizontalTypesetter (TestCase):
         self.failUnlessEqual(NSBaselineNotSet, -1.0)
         self.failUnlessEqual(NumGlyphsToGetEachTime, 20)
 
+    @onlyOn32Bit
     def testMethods(self):
         self.failUnlessArgIsOut(NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_, 3)
         self.failUnlessArgIsInOut(NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1)
