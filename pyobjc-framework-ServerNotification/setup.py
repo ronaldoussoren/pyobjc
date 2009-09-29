@@ -20,7 +20,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-ServerNotification',
-    version='2.2b3',
+    version='2.2b4',
     description = "Wrappers for the framework ServerNotification on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -32,8 +32,8 @@ setup(
         '': 'Lib' 
     },
     install_requires = [ 
-        'pyobjc-core>=2.2b3',
-        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-core>=2.2b4',
+        'pyobjc-framework-Cocoa>=2.2b4',
     ],
     dependency_links = [],
     package_data = { 
