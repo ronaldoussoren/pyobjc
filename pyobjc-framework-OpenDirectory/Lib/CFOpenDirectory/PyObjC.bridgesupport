@@ -1,0 +1,688 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <opaque name='ODContextRef' type='^{_ODContext=}' type64='^{_ODContext=}' />
+  <opaque name='ODNodeRef' type='^{_ODNode=}' type64='^{_ODNode=}' />
+  <opaque name='ODQueryRef' type='^{_ODQuery=}' type64='^{_ODQuery=}' />
+  <opaque name='ODRecordRef' type='^{_ODRecord=}' type64='^{_ODRecord=}' />
+  <opaque name='ODSessionRef' type='^{_ODSessionRef=}' type64='^{_ODSessionRef=}' />
+  <constant name='kODAttributeTypeAccessControlEntry' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAddressLine1' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAddressLine2' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAddressLine3' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAdminLimits' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAlias' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAllAttributes' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAllTypes' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAreaCode' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAttrListRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAttrListRefs' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAttrListValueRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAttrListValueRefs' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAuthCredential' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAuthMethod' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAuthenticationAuthority' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAuthenticationHint' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAuthorityRevocationList' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAutomaticSearchPath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeAutomountInformation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeBirthday' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeBootParams' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeBuildVersion' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeBuilding' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCACertificate' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCapacity' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCertificateRevocationList' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCity' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeComment' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCompany' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeComputers' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeConfigAvailable' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeConfigFile' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeContactGUID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeContactPerson' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCopyTimestamp' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCoreFWVersion' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCountry' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCreationTimestamp' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCrossCertificatePair' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeCustomSearchPath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDNSDomain' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDNSName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDNSNameServer' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDataStamp' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDateRecordCreated' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDepartment' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDirRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeDirRefs' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeEMailAddress' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeEMailContacts' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeENetAddress' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeExpire' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeFWVersion' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeFaxNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeFirstName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeFullName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeFunctionalState' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeGUID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeGroup' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeGroupMembers' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeGroupMembership' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeGroupServices' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHTML' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHomeDirectory' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHomeDirectoryQuota' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHomeDirectorySoftQuota' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHomeLocOwner' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeHomePhoneNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeIMHandle' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeIPAddress' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeIPAddressAndENetAddress' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeIPv6Address' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeInternetAlias' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeJPEGPhoto' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeJobTitle' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeKDCAuthKey' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeKDCConfigData' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeKerberosRealm' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeKeywords' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLDAPReadReplicas' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLDAPSearchBaseSuffix' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLDAPWriteReplicas' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLastName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLocalOnlySearchPath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeLocation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMCXFlags' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMCXSettings' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMIME' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMailAttribute' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMapCoordinates' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMapGUID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMapURI' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMetaAutomountMap' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMetaNodeLocation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMiddleName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeMobileNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeModificationTimestamp' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNFSHomeDirectory' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNTDomainComputerAccount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNamePrefix' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNameSuffix' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNativeOnly' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNestedGroups' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNetGroupTriplet' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNetGroups' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNetworkNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNickName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNodePath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNodeRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNodeRefs' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNote' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeNumTableList' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOrganizationInfo' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOrganizationName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOriginalHomeDirectory' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOriginalNFSHomeDirectory' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOriginalNodeName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOwner' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeOwnerGUID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePGPPublicKey' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePIDValue' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePagerNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePassword' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePasswordPlus' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePasswordPolicyOptions' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePasswordServerList' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePasswordServerLocation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePhoneContacts' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePhoneNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePicture' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePlugInInfo' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePluginIndex' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePort' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePostalAddress' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePostalAddressContacts' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePostalCode' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePresetUserIsAdmin' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrimaryComputerGUID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrimaryComputerList' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrimaryGroupID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrimaryNTDomain' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrintServiceInfoText' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrintServiceInfoXML' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrintServiceUserData' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinter1284DeviceID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterLPRHost' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterLPRQueue' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterMakeAndModel' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterType' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterURI' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePrinterXRISupported' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeProcessName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeProtocolNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeProtocols' type='^{__CFString=}' />
+  <constant name='kODAttributeTypePwdAgingPolicy' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRPCNumber' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeReadOnlyNode' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRealUserID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRecRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRecRefs' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRecordName' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRecordType' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRelationships' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeRelativeDNPrefix' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeResourceInfo' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeResourceType' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBAcctFlags' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBGroupRID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBHome' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBHomeDrive' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBKickoffTime' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBLogoffTime' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBLogonTime' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBPWDLastSet' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBPrimaryGroupSID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBProfilePath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBRID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBSID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBScriptPath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSMBUserWorkstations' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSchema' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSearchPath' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSearchPolicy' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeServiceType' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeServicesLocator' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSetupAdvertising' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSetupAutoRegister' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSetupLocation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSetupOccupation' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeStandardOnly' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeState' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeStreet' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeSubNodes' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeTimePackage' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeTimeToLive' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeTotalRefCount' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeTotalSize' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeURL' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeUniqueID' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeUserCertificate' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeUserPKCS12Data' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeUserSMIMECertificate' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeUserShell' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVFSDumpFreq' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVFSLinkDir' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVFSOpts' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVFSPassNo' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVFSType' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeVersion' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeWeblogURI' type='^{__CFString=}' />
+  <constant name='kODAttributeTypeXMLPlist' type='^{__CFString=}' />
+  <constant name='kODAuthenticationType2WayRandom' type='^{__CFString=}' />
+  <constant name='kODAuthenticationType2WayRandomChangePasswd' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeAPOP' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeCRAM_MD5' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeChangePasswd' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeClearText' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeCrypt' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeDIGEST_MD5' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeDeleteUser' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetEffectivePolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetGlobalPolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetKerberosPrincipal' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetPolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetUserData' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeGetUserName' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeKerberosTickets' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeMPPEMasterKeys' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeMSCHAP2' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNTLMv2' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNTLMv2WithSessionKey' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNewUser' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNewUserWithPolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNodeNativeClearTextOK' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeNodeNativeNoClearText' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeReadSecureHash' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMBNTv2UserSessionKey' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMBWorkstationCredentialSessionKey' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMB_LM_Key' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMB_NT_Key' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMB_NT_UserSessionKey' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSMB_NT_WithUserSessionKey' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSecureHash' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetGlobalPolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetLMHash' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetNTHash' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetPassword' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetPasswordAsCurrent' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetPolicy' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetPolicyAsCurrent' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetUserData' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetUserName' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeSetWorkstationPassword' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeWithAuthorizationRef' type='^{__CFString=}' />
+  <constant name='kODAuthenticationTypeWriteSecureHash' type='^{__CFString=}' />
+  <constant name='kODErrorDomainFramework' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAFPServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAliases' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAttributeTypes' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAugments' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAutoServerSetup' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAutomount' type='^{__CFString=}' />
+  <constant name='kODRecordTypeAutomountMap' type='^{__CFString=}' />
+  <constant name='kODRecordTypeBootp' type='^{__CFString=}' />
+  <constant name='kODRecordTypeCertificateAuthorities' type='^{__CFString=}' />
+  <constant name='kODRecordTypeComputerGroups' type='^{__CFString=}' />
+  <constant name='kODRecordTypeComputerLists' type='^{__CFString=}' />
+  <constant name='kODRecordTypeComputers' type='^{__CFString=}' />
+  <constant name='kODRecordTypeConfiguration' type='^{__CFString=}' />
+  <constant name='kODRecordTypeEthernets' type='^{__CFString=}' />
+  <constant name='kODRecordTypeFTPServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeFileMakerServers' type='^{__CFString=}' />
+  <constant name='kODRecordTypeGroups' type='^{__CFString=}' />
+  <constant name='kODRecordTypeHostServices' type='^{__CFString=}' />
+  <constant name='kODRecordTypeHosts' type='^{__CFString=}' />
+  <constant name='kODRecordTypeLDAPServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeLocations' type='^{__CFString=}' />
+  <constant name='kODRecordTypeMounts' type='^{__CFString=}' />
+  <constant name='kODRecordTypeNFS' type='^{__CFString=}' />
+  <constant name='kODRecordTypeNetDomains' type='^{__CFString=}' />
+  <constant name='kODRecordTypeNetGroups' type='^{__CFString=}' />
+  <constant name='kODRecordTypeNetworks' type='^{__CFString=}' />
+  <constant name='kODRecordTypePeople' type='^{__CFString=}' />
+  <constant name='kODRecordTypePresetComputerGroups' type='^{__CFString=}' />
+  <constant name='kODRecordTypePresetComputerLists' type='^{__CFString=}' />
+  <constant name='kODRecordTypePresetComputers' type='^{__CFString=}' />
+  <constant name='kODRecordTypePresetGroups' type='^{__CFString=}' />
+  <constant name='kODRecordTypePresetUsers' type='^{__CFString=}' />
+  <constant name='kODRecordTypePrintService' type='^{__CFString=}' />
+  <constant name='kODRecordTypePrintServiceUser' type='^{__CFString=}' />
+  <constant name='kODRecordTypePrinters' type='^{__CFString=}' />
+  <constant name='kODRecordTypeProtocols' type='^{__CFString=}' />
+  <constant name='kODRecordTypeQTSServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeRPC' type='^{__CFString=}' />
+  <constant name='kODRecordTypeRecordTypes' type='^{__CFString=}' />
+  <constant name='kODRecordTypeResources' type='^{__CFString=}' />
+  <constant name='kODRecordTypeSMBServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeServer' type='^{__CFString=}' />
+  <constant name='kODRecordTypeServices' type='^{__CFString=}' />
+  <constant name='kODRecordTypeSharePoints' type='^{__CFString=}' />
+  <constant name='kODRecordTypeUsers' type='^{__CFString=}' />
+  <constant name='kODRecordTypeWebServer' type='^{__CFString=}' />
+  <constant name='kODSessionDefault' type='^{_ODSessionRef=}' />
+  <constant name='kODSessionProxyAddress' type='^{__CFString=}' />
+  <constant name='kODSessionProxyPassword' type='^{__CFString=}' />
+  <constant name='kODSessionProxyPort' type='^{__CFString=}' />
+  <constant name='kODSessionProxyUsername' type='^{__CFString=}' />
+  <enum name='kODErrorCredentialsAccountDisabled' value='5301' />
+  <enum name='kODErrorCredentialsAccountExpired' value='5302' />
+  <enum name='kODErrorCredentialsAccountInactive' value='5303' />
+  <enum name='kODErrorCredentialsAccountNotFound' value='5300' />
+  <enum name='kODErrorCredentialsContactMaster' value='5204' />
+  <enum name='kODErrorCredentialsInvalid' value='5000' />
+  <enum name='kODErrorCredentialsInvalidComputer' value='5501' />
+  <enum name='kODErrorCredentialsInvalidLogonHours' value='5500' />
+  <enum name='kODErrorCredentialsMethodNotSupported' value='5100' />
+  <enum name='kODErrorCredentialsNotAuthorized' value='5101' />
+  <enum name='kODErrorCredentialsOperationFailed' value='5103' />
+  <enum name='kODErrorCredentialsParameterError' value='5102' />
+  <enum name='kODErrorCredentialsPasswordChangeRequired' value='5401' />
+  <enum name='kODErrorCredentialsPasswordChangeTooSoon' value='5407' />
+  <enum name='kODErrorCredentialsPasswordExpired' value='5400' />
+  <enum name='kODErrorCredentialsPasswordNeedsDigit' value='5406' />
+  <enum name='kODErrorCredentialsPasswordNeedsLetter' value='5405' />
+  <enum name='kODErrorCredentialsPasswordQualityFailed' value='5402' />
+  <enum name='kODErrorCredentialsPasswordTooLong' value='5404' />
+  <enum name='kODErrorCredentialsPasswordTooShort' value='5403' />
+  <enum name='kODErrorCredentialsPasswordUnrecoverable' value='5408' />
+  <enum name='kODErrorCredentialsServerCommunicationError' value='5205' />
+  <enum name='kODErrorCredentialsServerError' value='5202' />
+  <enum name='kODErrorCredentialsServerNotFound' value='5201' />
+  <enum name='kODErrorCredentialsServerTimeout' value='5203' />
+  <enum name='kODErrorCredentialsServerUnreachable' value='5200' />
+  <enum name='kODErrorDaemonError' value='10002' />
+  <enum name='kODErrorNodeConnectionFailed' value='2100' />
+  <enum name='kODErrorNodeUnknownHost' value='2200' />
+  <enum name='kODErrorNodeUnknownName' value='2000' />
+  <enum name='kODErrorNodeUnknownType' value='2001' />
+  <enum name='kODErrorPluginError' value='10001' />
+  <enum name='kODErrorPluginOperationNotSupported' value='10000' />
+  <enum name='kODErrorQueryInvalidMatchType' value='3100' />
+  <enum name='kODErrorQuerySynchronize' value='3000' />
+  <enum name='kODErrorQueryTimeout' value='3102' />
+  <enum name='kODErrorQueryUnsupportedMatchType' value='3101' />
+  <enum name='kODErrorRecordAlreadyExists' value='4102' />
+  <enum name='kODErrorRecordAttributeNotFound' value='4201' />
+  <enum name='kODErrorRecordAttributeUnknownType' value='4200' />
+  <enum name='kODErrorRecordAttributeValueNotFound' value='4203' />
+  <enum name='kODErrorRecordAttributeValueSchemaError' value='4202' />
+  <enum name='kODErrorRecordInvalidType' value='4101' />
+  <enum name='kODErrorRecordParameterError' value='4100' />
+  <enum name='kODErrorRecordPermissionError' value='4001' />
+  <enum name='kODErrorRecordReadOnlyNode' value='4000' />
+  <enum name='kODErrorRecordTypeDisabled' value='4103' />
+  <enum name='kODErrorSessionDaemonNotRunning' value='1002' />
+  <enum name='kODErrorSessionDaemonRefused' value='1003' />
+  <enum name='kODErrorSessionLocalOnlyDaemonInUse' value='1000' />
+  <enum name='kODErrorSessionNormalDaemonInUse' value='1001' />
+  <enum name='kODErrorSessionProxyCommunicationError' value='1100' />
+  <enum name='kODErrorSessionProxyIPUnreachable' value='1102' />
+  <enum name='kODErrorSessionProxyUnknownHost' value='1103' />
+  <enum name='kODErrorSessionProxyVersionMismatch' value='1101' />
+  <enum name='kODMatchAny' value='1' />
+  <enum name='kODMatchBeginsWith' value='8194' />
+  <enum name='kODMatchContains' value='8196' />
+  <enum name='kODMatchEndsWith' value='8195' />
+  <enum name='kODMatchEqualTo' value='8193' />
+  <enum name='kODMatchGreaterThan' value='8198' />
+  <enum name='kODMatchInsensitiveBeginsWith' value='8450' />
+  <enum name='kODMatchInsensitiveContains' value='8452' />
+  <enum name='kODMatchInsensitiveEndsWith' value='8451' />
+  <enum name='kODMatchInsensitiveEqualTo' value='8449' />
+  <enum name='kODMatchLessThan' value='8199' />
+  <enum name='kODNodeTypeAuthentication' value='8705' />
+  <enum name='kODNodeTypeConfigure' value='8706' />
+  <enum name='kODNodeTypeContacts' value='8708' />
+  <enum name='kODNodeTypeLocalNodes' value='8704' />
+  <enum name='kODNodeTypeNetwork' value='8709' />
+  <function name='ODContextGetTypeID'>
+    <retval type='Q' />
+  </function>
+  <function name='ODNodeCopyDetails'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCopyRecord'>
+    <retval type='^{_ODRecord=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCopySubnodeNames'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCopySupportedAttributes'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCopySupportedRecordTypes'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCopyUnreachableSubnodeNames'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCreateCopy'>
+    <retval type='^{_ODNode=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCreateRecord'>
+    <retval type='^{_ODRecord=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCreateWithName'>
+    <retval type='^{_ODNode=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODSessionRef=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCreateWithNodeType'>
+    <retval type='^{_ODNode=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODSessionRef=}' />
+    <arg type='I' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeCustomCall'>
+    <retval type='^{__CFData=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='q' />
+    <arg type='^{__CFData=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeGetName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{_ODNode=}' />
+  </function>
+  <function name='ODNodeGetTypeID'>
+    <retval type='Q' />
+  </function>
+  <function name='ODNodeSetCredentials'>
+    <retval type='B' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeSetCredentialsExtended'>
+    <retval type='B' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFArray}' />
+    <arg type='^^{_ODContext}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODNodeSetCredentialsUsingKerberosCache'>
+    <retval type='B' />
+    <arg type='^{_ODNode=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODQueryCopyResults'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODQuery=}' />
+    <arg type='B' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODQueryCreateWithNode'>
+    <retval type='^{_ODQuery=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODNode=}' />
+    <arg type='@' />
+    <arg type='^{__CFString=}' />
+    <arg type='I' />
+    <arg type='@' />
+    <arg type='@' />
+    <arg type='q' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODQueryCreateWithNodeType'>
+    <retval type='^{_ODQuery=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='I' />
+    <arg type='@' />
+    <arg type='^{__CFString=}' />
+    <arg type='I' />
+    <arg type='@' />
+    <arg type='@' />
+    <arg type='q' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODQueryGetTypeID'>
+    <retval type='Q' />
+  </function>
+  <function name='ODQueryScheduleWithRunLoop'>
+    <arg type='^{_ODQuery=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='ODQuerySetCallback'>
+    <arg type='^{_ODQuery=}' />
+    <arg type='^?' />
+    <arg type='^v' />
+  </function>
+  <function name='ODQuerySetDispatchQueue'>
+    <arg type='^{_ODQuery=}' />
+    <arg type='^{dispatch_queue_s=}' />
+  </function>
+  <function name='ODQuerySynchronize'>
+    <arg type='^{_ODQuery=}' />
+  </function>
+  <function name='ODQueryUnscheduleFromRunLoop'>
+    <arg type='^{_ODQuery=}' />
+    <arg type='^{__CFRunLoop=}' />
+    <arg type='^{__CFString=}' />
+  </function>
+  <function name='ODRecordAddMember'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordAddValue'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordChangePassword'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordContainsMember'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordCopyDetails'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordCopyPasswordPolicy'>
+    <retval type='^{__CFDictionary=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordCopyValues'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordDelete'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordGetRecordName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{_ODRecord=}' />
+  </function>
+  <function name='ODRecordGetRecordType'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{_ODRecord=}' />
+  </function>
+  <function name='ODRecordGetTypeID'>
+    <retval type='Q' />
+  </function>
+  <function name='ODRecordRemoveMember'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordRemoveValue'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordSetNodeCredentials'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordSetNodeCredentialsExtended'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFArray}' />
+    <arg type='^^{_ODContext}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordSetNodeCredentialsUsingKerberosCache'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordSetValue'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordSynchronize'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordVerifyPassword'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODRecordVerifyPasswordExtended'>
+    <retval type='B' />
+    <arg type='^{_ODRecord=}' />
+    <arg type='^{__CFString=}' />
+    <arg type='^{__CFArray=}' />
+    <arg type='^^{__CFArray}' />
+    <arg type='^^{_ODContext}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODSessionCopyNodeNames'>
+    <retval type='^{__CFArray=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{_ODSessionRef=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODSessionCreate'>
+    <retval type='^{_ODSessionRef=}' />
+    <arg type='^{__CFAllocator=}' />
+    <arg type='^{__CFDictionary=}' />
+    <arg type='^^{__CFError}' />
+  </function>
+  <function name='ODSessionGetTypeID'>
+    <retval type='Q' />
+  </function>
+</signatures>
+
