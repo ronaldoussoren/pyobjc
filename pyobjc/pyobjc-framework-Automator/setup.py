@@ -21,7 +21,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-Automator',
-    version='2.2b3',
+    version='2.2b4',
     description = "Wrappers for the framework Automator on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
