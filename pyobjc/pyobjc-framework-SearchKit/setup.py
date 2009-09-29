@@ -19,7 +19,7 @@ except ImportError:
 
 setup(
     name='pyobjc-framework-SearchKit',
-    version='2.2b3',
+    version='2.2b4',
     description = "Wrappers for the framework SearchKit on Mac OS X",
     long_description = __doc__,
     author='Ronald Oussoren',
@@ -29,8 +29,8 @@ setup(
     packages = [ "SearchKit" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b3',
-        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-core>=2.2b4',
+        'pyobjc-framework-Cocoa>=2.2b4',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 
