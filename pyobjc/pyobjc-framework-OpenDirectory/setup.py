@@ -28,7 +28,7 @@ setup(
     platforms = [ "MacOS X" ],
     packages = [ "OpenDirectory", "CFOpenDirectory" ],
     package_dir = { 
-        '': 'Lib/' 
+        '': 'Lib' 
     },
     install_requires = [ 
         'pyobjc-core>=2.2b3',
