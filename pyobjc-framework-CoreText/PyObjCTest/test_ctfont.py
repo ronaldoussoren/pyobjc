@@ -7,6 +7,13 @@ class TestCTFont (TestCase):
     def testTypes(self):
         self.failUnlessIsInstance(CTFontRef, objc.objc_class)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(kCTFontOptionsDefault, 0)
+        self.failUnlessEqual(kCTFontOptionsPreventAutoActivation, 1 << 0)
+        self.failUnlessEqual(kCTFontOptionsPreferSystemFont, 1 << 2)
+
+
     def testConstants(self):
         self.failUnlessIsInstance(kCTFontCopyrightNameKey, unicode)
         self.failUnlessIsInstance(kCTFontFamilyNameKey, unicode)
@@ -173,7 +180,7 @@ class TestCTFont (TestCase):
         self.failUnlessResultIsCFRetained(CTFontCreateCopyWithFamily)
 
         font2 = CTFontCreateForString(
-                font, u"hello world", CFRange(0, 4))
+                font, u"hello world", CFRange(1, 4))
         self.failUnless(isinstance(font2, CTFontRef))
         self.failUnlessResultIsCFRetained(CTFontCreateForString)
 
@@ -213,7 +220,7 @@ class TestCTFont (TestCase):
 
         v, l = CTFontCopyLocalizedName(font, kCTFontCopyrightNameKey, None)
         self.failUnlessIsInstance(v, unicode)
-        self.failUnlessIsInstance(l, unicode)
+        self.failUnlessIsInstance(l, (unicode, type(None)))
         self.failUnlessArgIsOut(CTFontCopyLocalizedName, 2)
 
         v = CTFontCopyCharacterSet(font)
@@ -346,6 +353,25 @@ class TestCTFont (TestCase):
 
         v = CTFontGetTypeID()
         self.failUnlessIsInstance(v, (int, long))
+
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        self.failUnlessResultIsCFRetained(CTFontCreateWithNameAndOptions)
+        v = CTFontCreateWithNameAndOptions(u"Times", 15, None, 0)
+        self.failUnlessIsInstance(v, CTFontRef)
+
+
+        descr = CTFontDescriptorCreateWithNameAndSize(
+                u"Courier", 14.0)
+        self.failIfEqual(descr, None)
+
+        # FIXME: this crashes the interpreter, without a clear reason
+        return
+
+        self.failUnlessResultIsCFRetained(CTFontCreateWithFontDescriptorAndOptions)
+        v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
+        self.failUnlessIsInstance(v, CTFontRef)
+
 
 if __name__ == "__main__":
     main()

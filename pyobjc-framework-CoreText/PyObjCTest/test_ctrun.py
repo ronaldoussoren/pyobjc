@@ -15,6 +15,7 @@ class TestCTRun (TestCase):
         self.failUnlessEqual(kCTRunStatusHasNonIdentityMatrix, (1 << 2))
 
     def testFunctions(self):
+        return
         self.failUnlessIsInstance(CTRunGetTypeID(), (int, long))
 
         line = CTLineCreateWithAttributedString(
@@ -85,6 +86,10 @@ class TestCTRun (TestCase):
         v = CTRunDraw(run, ctx, CFRange(0, 5))
         self.failUnless(v is None)
 
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        self.fail('CTRunGetAdvancesPtr')
+        self.fail('CTRunGetAdvances')
 
 
 if __name__ == "__main__":

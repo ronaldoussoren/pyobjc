@@ -20,6 +20,10 @@ class TestCTFramesetter (TestCase):
         v = CTFramesetterGetTypesetter(setter)
         self.failUnlessIsInstance(v, CTTypesetterRef)
 
+    @min_os_level('10.5')
+    def testMethods10_5(self):
+        self.fail('CTFramesetterSuggestFrameSizeWithConstraints')
+
 
 if __name__ == "__main__":
     main()

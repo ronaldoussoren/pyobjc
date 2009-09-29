@@ -100,7 +100,7 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
 		return Py_BuildValue("OO", Py_False, Py_None);
 	} 
 
-	result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython(output));
+	result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSObject*)output));
 	CFRelease(output);
 	return result;
 }

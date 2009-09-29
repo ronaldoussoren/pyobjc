@@ -29,6 +29,31 @@ class TestCTFontDescriptor (TestCase):
         self.failUnlessEqual(kCTFontHorizontalOrientation, 1)
         self.failUnlessEqual(kCTFontVerticalOrientation, 2)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(kCTFontURLAttribute, unicode)
+        self.failUnlessIsInstance(kCTFontFormatAttribute, unicode)
+        self.failUnlessIsInstance(kCTFontRegistrationScopeAttribute, unicode)
+        self.failUnlessIsInstance(kCTFontPriorityAttribute, unicode)
+        self.failUnlessIsInstance(kCTFontEnabledAttribute, unicode)
+        self.failUnlessIsInstance(kCTFontEnabledAttribute, unicode)
+
+        self.failUnlessEqual(kCTFontFormatUnrecognized, 0)
+        self.failUnlessEqual(kCTFontFormatOpenTypePostScript, 1)
+        self.failUnlessEqual(kCTFontFormatOpenTypeTrueType, 2)
+        self.failUnlessEqual(kCTFontFormatTrueType, 3)
+        self.failUnlessEqual(kCTFontFormatPostScript, 4)
+        self.failUnlessEqual(kCTFontFormatBitmap, 5)
+
+        self.failUnlessEqual(kCTFontPrioritySystem,  10000)
+        self.failUnlessEqual(kCTFontPriorityNetwork,  20000)
+        self.failUnlessEqual(kCTFontPriorityComputer,  30000)
+        self.failUnlessEqual(kCTFontPriorityUser,  40000)
+        self.failUnlessEqual(kCTFontPriorityDynamic,  50000)
+        self.failUnlessEqual(kCTFontPriorityProcess,  60000)
+
+
+
     def testFunctions(self):
 
         self.failUnlessResultIsCFRetained(CTFontDescriptorCreateWithAttributes)
@@ -78,7 +103,7 @@ class TestCTFontDescriptor (TestCase):
         self.failUnlessArgIsOut(CTFontDescriptorCopyLocalizedAttribute, 2)
         v, l = CTFontDescriptorCopyLocalizedAttribute(descriptor, kCTFontDisplayNameAttribute, None)
         self.failUnlessIsInstance(v, unicode)
-        self.failUnlessIsInstance(l, unicode)
+        self.failUnlessIsInstance(l, (unicode, type(None)))
 
         v = CTFontDescriptorGetTypeID()
         self.failUnlessIsInstance(v, (int, long))
