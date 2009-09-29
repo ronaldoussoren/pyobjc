@@ -31,8 +31,8 @@ setup(
     packages = [ "QTKit" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b3',
-        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-core>=2.2b4',
+        'pyobjc-framework-Cocoa>=2.2b4',
         'pyobjc-framework-Quartz>=2.2b3',
     ],
     package_data = { 

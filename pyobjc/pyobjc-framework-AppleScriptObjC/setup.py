@@ -32,8 +32,8 @@ setup(
         '': 'Lib' 
     },
     install_requires = [ 
-        'pyobjc-core>=2.2b3',
-        'pyobjc-framework-Cocoa>=2.2b3',
+        'pyobjc-core>=2.2b4',
+        'pyobjc-framework-Cocoa>=2.2b4',
     ],
     dependency_links = [],
     package_data = { 

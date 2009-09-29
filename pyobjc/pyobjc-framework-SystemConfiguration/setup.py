@@ -34,8 +34,8 @@ setup(
     packages = [ "SystemConfiguration" ],
     package_dir = { '': 'Lib' },
     install_requires = [ 
-        'pyobjc-core>=2.2b1',
-        'pyobjc-framework-Cocoa>=2.2b1',
+        'pyobjc-core>=2.2b4',
+        'pyobjc-framework-Cocoa>=2.2b4',
     ],
     package_data = { 
         '': ['*.bridgesupport'] 
