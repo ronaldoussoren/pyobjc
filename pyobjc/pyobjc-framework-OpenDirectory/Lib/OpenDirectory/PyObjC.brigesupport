@@ -1,0 +1,158 @@
+<?xml version='1.0'?>
+<!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
+<signatures version='1.0'>
+  <constant name='ODSessionProxyAddress' type='@' />
+  <constant name='ODSessionProxyPort' type='@' />
+  <constant name='ODSessionProxyUsername' type='@' />
+  <constant name='ODSessionProxyPassword' type='@' />
+  <constant name='ODFrameworkErrorDomain' type='@' />
+
+  <class name='ODQuery' >
+     <method class_methods='true' selector='queryWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:'>
+       <arg index='7' type_modifier='o' />
+     </method>
+     <method selector='initWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:'>
+       <arg index='7' type_modifier='o' />
+     </method>
+     <method selector='resultsAllowingPartial:'>
+      <arg index='0' type='B' />
+     </method>
+  </class>
+  <class name='ODSession' >
+    <method selector='sessionWithOptions:error:' class_method='true' >
+      <arg inde='1' type_modifier='o' />
+    </method>
+    <method selector='initWithOptions:error:' >
+      <arg inde='1' type_modifier='o' />
+    </method>
+    <method selector='nodeNamesAndReturnError:' >
+      <arg inde='0' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ODNode'>
+    <method class_method='true' selector='nodeWithSession:type:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method class_method='true' selector='nodeWithSession:name:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithSession:type:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='initWithSession:name:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='subnodeNamesAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='unreachableSubnodeNamesAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='nodeDetailsForKey:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='supportedRecordTypesAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='supportedAttributesForRecordType:error'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='setCredentialsWithRecordType:recordName:password:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='setCredentialsWithRecordType:authenticationType:authenticationItems:continueItems:context:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+    <method selector='setCredentialsUsingKerberosCache:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='createRecordWithRecordType:name:attributes:error:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='recordWithRecordType:name:attributes:error:'>
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='customCall:sendData:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
+  <class name='ODRecord'>
+    <method signature='setNodeCredentials:password:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method signature='setNodeCredentialWithRecordType:authenticationType:authenticationItems:continueItems:context:error:'>
+      <retval type='B' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+      <arg index='5' type_modifier='o' />
+    </method>
+    <method selector='setCredentialsUsingKerberosCache:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='passwordPolicyAndReturnError:'>
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='verifyPassword:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='verifyExtendedWithAuthenticationType:authenticationItems:continueItems:context:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+      <arg index='3' type_modifier='o' />
+      <arg index='4' type_modifier='o' />
+    </method>
+    <method selector='changePassword:toPassword:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='synchronizeAndReturnError:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='recordDetailsForAttributes:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='valuesForAttribute:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='setValue:forAttribute:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='removeValuesForAttribute:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='addValue:toAttribute:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='removeValue:fromAttribute:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
+    <method selector='deleteRecordAndReturnError:'>
+      <retval type='B' />
+      <arg index='0' type_modifier='o' />
+    </method>
+    <method selector='addMemberRecord:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='removeMemberRecord:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+    <method selector='isMemberRecord:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
+  </class>
+</signatures>
