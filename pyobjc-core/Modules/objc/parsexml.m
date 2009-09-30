@@ -163,12 +163,12 @@ PyObjCXML_Init(void)
 	 */
 	LIBXML_TEST_VERSION
 
-	empty = PyString_FromString("");
+	empty = PyString_InternFromString("");
 	if (empty == NULL) {
 		return -1;
 	}
 
-	default_suggestion = PyString_FromString("don't use this method");
+	default_suggestion = PyString_InternFromString("don't use this method");
 	if (default_suggestion == NULL) {
 		return -1;
 	}
@@ -232,8 +232,8 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 		*argIdx = strtol(v, &end, 10);
 		if (end && *end != '\0') {
 			PyErr_SetString(PyExc_ValueError, v);
-			xmlFree(v);
 		}
+		xmlFree(v);
 	}
 
 	PyObject* result = PyDict_New();
@@ -249,7 +249,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	typestr2typestr(s);
 
 	if (s && *s) {
-		v = PyString_FromString(s);
+		v = PyString_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -267,7 +267,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 
 	s = attribute_string(node, "type_modifier", NULL);
 	if (s && *s) {
-		v = PyString_FromString(s);
+		v = PyString_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -286,7 +286,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	s = attribute_string(node, "sel_of_type", "sel_of_type64");
 	typestr2typestr(s);
 	if (s && *s) {
-		v = PyString_FromString(s);
+		v = PyString_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -476,7 +476,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 				Py_DECREF(result);
 				return NULL;
 			}
-			PyObject* av = PyString_FromString("^v");
+			PyObject* av = PyString_InternFromString("^v");
 			if (av == NULL) {
 				Py_DECREF(a);
 				Py_DECREF(result);
@@ -651,6 +651,7 @@ handle_string_constant(xmlNode* cur_node, PyObject* globalDict)
 		}
 		if (v == NULL) {
 			v = PyString_FromStringAndSize(value, len);
+			PyString_InternInPlace(&v);
 		}
 		if (v == NULL) {
 			if (name) xmlFree(name);
@@ -692,7 +693,7 @@ handle_enum(xmlNode* cur_node, PyObject* globalDict)
 
 		if (strchr(value, '.') != NULL) {
 			/* floating point literal */
-			PyObject* s = PyString_FromString(value);
+			PyObject* s = PyString_InternFromString(value);
 			if (s == NULL) {
 				v = NULL;
 
@@ -927,7 +928,7 @@ handle_class(xmlNode* cur_node)
 				}
 
 			} else {
-				PyObject* v = PyString_FromString(suggestion);
+				PyObject* v = PyString_InternFromString(suggestion);
 				xmlFree(suggestion);
 
 				r = PyDict_SetItemString(metadata, "suggestion", v);
@@ -1080,7 +1081,7 @@ handle_class(xmlNode* cur_node)
 
 		/* Complete metadata for a method, register it */
 		if (pyClassname == NULL) {
-			pyClassname = PyString_FromString(classname);
+			pyClassname = PyString_InternFromString(classname);
 			if (pyClassname == NULL) {
 				Py_DECREF(metadata);
 				xmlFree(selname);
@@ -1089,11 +1090,11 @@ handle_class(xmlNode* cur_node)
 			}
 		}
 
-		PyObject* pySelector = PyString_FromString(selname);
+		PyObject* pySelector = PyString_InternFromString(selname);
+		xmlFree(selname);
 		if (pySelector == NULL) {
 			Py_DECREF(pyClassname);
 			Py_DECREF(metadata);
-			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
 		}
@@ -1103,7 +1104,7 @@ handle_class(xmlNode* cur_node)
 		Py_DECREF(metadata);
 
 		if (r < 0) {
-			xmlFree(selname);
+			Py_XDECREF(pyClassname);
 			xmlFree(classname);
 			return -1;
 		}
@@ -1220,6 +1221,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 				return -1;
 			}
 			Py_DECREF(v);
+			xmlFree(ch);
 		}
 	}
 
@@ -1232,7 +1234,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 	}
 
 	/* Set the default result type to 'v' */
-	v = PyString_FromString("v");
+	v = PyString_InternFromString("v");
 	if (v == NULL) goto error;
 
 	int r = PyList_Append(siglist, v);
@@ -1314,7 +1316,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 		goto error;
 	}
 
-	PyObject* nm = PyString_FromString(name);
+	PyObject* nm = PyString_InternFromString(name);
 	if (nm == NULL) {
 		goto error;
 	}
@@ -1417,7 +1419,7 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 		if (module == NULL) {
 			char buf[1024];
 			snprintf(buf, sizeof(buf), "%s.protocols", framework);
-			PyObject* mod_name = PyString_FromString(buf);
+			PyObject* mod_name = PyString_InternFromString(buf);
 			if (mod_name == NULL) {
 				Py_DECREF(proto);
 				Py_DECREF(methodList);
