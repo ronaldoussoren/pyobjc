@@ -5,3 +5,13 @@ API Notes for the CoreGraphics framework
   ``CGColorSpaceCreateWithPlatformColorSpace``.
 
   These functions are not supported.
+
+* The functions and data-types for parsing PDF documents (such 
+  as ``CGPDFStreamCreateWithStream``) are for the most part unsupported
+  at the moment. We have bindings for a subsection of the APIs, but haven't
+  those aren't complete nor fully tested.
+
+*  ``CGWaitForScreenUpdateRects``, ``CGWaitForScreenRefreshRects``
+
+   This functions are not yet supported.
+
