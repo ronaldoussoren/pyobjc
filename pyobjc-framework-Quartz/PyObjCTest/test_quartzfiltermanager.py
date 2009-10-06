@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.QuartzFilters import *
+from Quartz import *
 
 class TestQuartzFilterManager (TestCase):
     def testMethods(self):
@@ -14,6 +14,7 @@ class TestQuartzFilterManager (TestCase):
 
 
     @min_os_level('10.6')
+    @expectedFailure
     def testConstants10_6(self):
         # The following definitions are documented for 10.5, but aren't actually
         # exported from the framework:

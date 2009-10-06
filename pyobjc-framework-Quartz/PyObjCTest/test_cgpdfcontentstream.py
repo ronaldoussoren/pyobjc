@@ -23,10 +23,13 @@ class TestCGPDFContentStream (TestCase):
         v = CGPDFContentStreamRetain(stream)
         self.failUnlessEqual(v.__pointer__, stream.__pointer__)
 
+        CGPDFContentStreamRelease(v)
+
+        v = CGPDFContentStreamGetResource(stream, "ColorSpace", "Cs1");
+        self.failUnlessIsInstance(v, CGPDFObject)
+
 
     def testIncomplete(self):
-        self.fail("CGPDFContentStreamRelease")
-        self.fail("CGPDFContentStreamGetResource")
         self.fail("CGPDFContentStreamGetStreams") # Need manual wrapper
 
 

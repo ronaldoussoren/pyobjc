@@ -11,7 +11,8 @@ except ImportError:
 class TestQLPreviewItem (TestCase):
     @min_os_level('10.6')
     def testClasses(self):
-        self.failUnlessIsInstance(QLPreviewItem, objc.objc_class)
+        v = objc.protocolNamed('QLPreviewItem')
+        self.failUnlessIsInstance(v, objc.formal_protocol)
 
 if __name__ == "__main__":
     main()

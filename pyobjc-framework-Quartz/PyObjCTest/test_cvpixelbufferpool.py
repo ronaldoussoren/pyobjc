@@ -3,8 +3,6 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreVideo import *
 
 class TestCVPixelBufferPool (TestCase):
-    def testIncomplete(self):
-        self.fail("Add header tests for <CoreVideo/CVPixelBufferPool.h>")
 
     def testTypes(self):
         self.failUnlessIsCFType(CVPixelBufferPoolRef)

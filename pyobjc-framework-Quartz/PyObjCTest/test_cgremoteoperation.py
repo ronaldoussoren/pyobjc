@@ -100,7 +100,9 @@ class TestCGRemoteOperation (TestCase):
         self.failUnless(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
 
 
+    @expectedFailure
     def testMissing(self):
+
         self.fail("CGWaitForScreenUpdateRects")
         self.fail("CGWaitForScreenRefreshRects")
 

@@ -45,6 +45,7 @@ class TestQCComposition (TestCase):
         self.failUnlessIsInstance(QCCompositionProtocolMusicVisualizer, unicode)
 
     @min_os_level('10.6')
+    @expectedFailure
     def testConstants10_6(self):
         self.failUnlessIsInstance(QCCompositionInputMeshKey, unicode)
         self.failUnlessIsInstance(QCCompositionOutputMeshKey, unicode)

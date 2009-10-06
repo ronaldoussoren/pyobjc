@@ -179,8 +179,10 @@ class TestCVPixelBuffer (TestCase):
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.fail("CVPixelBufferGetIOSurface")
-        self.fail("CVPixelBufferCreateWithIOSurface")
+        self.failUnlessResultHasType(CVPixelBufferGetIOSurface, '^{__IOSurfaceRef=}')
+        self.failUnlessArgHasType(CVPixelBufferGetIOSurface, 0, '^{__CVPixelBuffer=}')
+        self.failUnlessArgHasType(CVPixelBufferCreateWithIOSurface, 1, '^{__IOSurfaceRef=}')
+        self.failUnlessArgIsOut(CVPixelBufferCreateWithIOSurface, 3)
 
 
 

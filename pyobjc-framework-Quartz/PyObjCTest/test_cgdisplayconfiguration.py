@@ -143,7 +143,15 @@ class TestCGDisplayConfiguration (TestCase):
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.fail("CGConfigureDisplayWithDisplayMode")
+        self.failUnlessResultHasType(CGConfigureDisplayWithDisplayMode, 'i')
+        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 0,
+                    '^{_CGDisplayConfigRef=}')
+        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 1,
+                        'I')
+        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 2,
+                            '^{CGDisplayMode}')
+        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 3,
+                                '^{__CFDictionary=}')
 
 
 if __name__ == "__main__":

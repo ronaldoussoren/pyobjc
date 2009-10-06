@@ -8,21 +8,63 @@ class TestCGEvent (TestCase):
         self.failUnlessIsCFType(CGEventSourceRef)
 
     def testMissing(self):
-        self.fail("CGEventGetUnflippedLocation")
-        self.fail("CGEventCreateSourceFromEvent")
-        self.fail("CGEventSetSource")
-        self.fail("CGEventGetType")
-        self.fail("CGEventSetType")
-        self.fail("CGEventGetTimestamp")
-        self.fail("CGEventSetTimestamp")
-        self.fail("CGEventGetLocation")
-        self.fail("CGEventSetLocation")
-        self.fail("CGEventGetFlags")
-        self.fail("CGEventSetFlags")
-        self.fail("CGEventGetIntegerValueField")
-        self.fail("CGEventSetIntegerValueField")
-        self.fail("CGEventGetDoubleValueField")
-        self.fail("CGEventSetDoubleValueField")
+        evt = CGEventCreateMouseEvent(None, kCGEventOtherMouseDown, (10, 20), 2)
+        self.failUnlessIsInstance(evt, CGEventRef)
+
+
+        v = CGEventGetUnflippedLocation(evt)
+        self.failUnlessIsInstance(v, CGPoint)
+
+        self.failUnlessResultIsCFRetained(CGEventCreateSourceFromEvent)
+        v = CGEventCreateSourceFromEvent(evt)
+        self.failUnlessIsInstance(v, CGEventSourceRef)
+
+        src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState)
+        self.failUnlessIsInstance(src, CGEventSourceRef)
+
+        CGEventSetSource(evt, src)
+
+        t = CGEventGetType(evt)
+        self.failUnlessIsInstance(t, (int, long))
+        self.failUnlessEqual(t, kCGEventOtherMouseDown)
+
+        CGEventSetType(evt, kCGEventOtherMouseUp)
+        t = CGEventGetType(evt)
+        self.failUnlessEqual(t, kCGEventOtherMouseUp)
+
+        v = CGEventGetTimestamp(evt)
+        self.failUnlessIsInstance(v, (int, long))
+
+        CGEventSetTimestamp(evt, 99)
+        v = CGEventGetTimestamp(evt)
+        self.failUnlessEqual(v, 99)
+
+        v = CGEventGetLocation(evt)
+        self.failUnlessIsInstance(v, CGPoint)
+
+        CGEventSetLocation(evt, (99, 99))
+        v = CGEventGetLocation(evt)
+        self.failUnlessEqual(v, (99, 99))
+
+        v = CGEventGetFlags(evt)
+        self.failUnlessIsInstance(v, (int, long))
+
+        CGEventSetFlags(evt, 99)
+        v = CGEventGetFlags(evt)
+        self.failUnlessEqual(v, 99)
+
+        v = CGEventGetIntegerValueField(evt, kCGMouseEventNumber)
+        self.failUnlessIsInstance(v, (int, long))
+
+        CGEventSetIntegerValueField(evt, kCGMouseEventNumber, 99)
+        v = CGEventGetIntegerValueField(evt, kCGMouseEventNumber)
+        self.failUnlessEqual(v, 99)
+
+        v = CGEventGetDoubleValueField(evt, kCGMouseEventPressure)
+        self.failUnlessIsInstance(v, float)
+
+        CGEventSetDoubleValueField(evt, kCGMouseEventPressure, 42.5)
+
         self.fail("CGEventTapCreateForPSN")
         self.fail("CGEventTapEnable")
         self.fail("CGEventTapIsEnabled")

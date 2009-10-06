@@ -15,7 +15,7 @@ class TestCGDirectPalette (TestCase):
         self.failUnless(hasattr(v, 'blue'))
 
     def testTypes(self):
-        self.failUnlessIsCFType(CGDirectPaletteRef)
+        self.failUnlessIsOpaquePointer(CGDirectPaletteRef)
 
     def testFunctions(self):
         self.failUnlessResultIsCFRetained(CGPaletteCreateDefaultColorPalette)
@@ -58,7 +58,7 @@ class TestCGDirectPalette (TestCase):
         v = CGPaletteCreateCopy(palette)
         self.failUnlessIsInstance(v, CGDirectPaletteRef)
 
-        self.failUnlessResultIsBOOL(CGPaletteIsEqualToPalette)
+        self.failUnlessResultHasType(CGPaletteIsEqualToPalette, objc._C_BOOL)
         v = CGPaletteIsEqualToPalette(palette, v)
         self.failUnless(v is True)
 

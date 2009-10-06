@@ -4,7 +4,7 @@ import objc
 from Foundation import NSObject
 
 try:
-    from Quartz.QuickLookUI import *
+    from Quartz import *
 except ImportError:
     pass
 

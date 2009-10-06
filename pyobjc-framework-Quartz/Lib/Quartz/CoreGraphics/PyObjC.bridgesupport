@@ -28,6 +28,7 @@
   <opaque name='CGPDFContentStreamRef' type='^{CGPDFContentStream=}' type64='^{CGPDFContentStream=}' />
   <opaque name='CGPDFDictionaryRef' type='^{CGPDFDictionary=}' type64='^{CGPDFDictionary=}' />
   <opaque name='CGPDFOperatorTableRef' type='^{CGPDFOperatorTable=}' type64='^{CGPDFOperatorTable=}' />
+  <opaque name='CGPDFObject' type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
   <opaque name='CGPDFScannerRef' type='^{CGPDFScanner=}' type64='^{CGPDFScanner=}' />
   <opaque name='CGPDFStreamRef' type='^{CGPDFStream=}' type64='^{CGPDFStream=}' />
   <opaque name='CGPDFStringRef' type='^{CGPDFString=}' type64='^{CGPDFString=}' />
@@ -740,6 +741,14 @@
     <retval type='^{CGColor=}' />
     <arg type='^{CGColor=}' />
   </function>
+  <function name='CGColorSpaceCreateWithICCProfile'>
+	  <retval type='^{CGColorSpace=}' already_cfretained='true' />
+	  <arg type='^{__CFData=}' />
+  </function>
+  <function name='CGColorSpaceCopyName'>
+    <retval type='^{__CFString=}' />
+    <arg type='^{CGColorSpace=}' />
+  </function>
   <function name='CGColorSpaceCopyICCProfile'>
     <retval already_cfretained='true' type='^{__CFData=}' type64='^{__CFData=}' />
     <arg type='^{CGColorSpace=}' />
@@ -831,6 +840,13 @@
     <retval type='i' />
     <arg type='^{_CGDisplayConfigRef=}' />
     <arg type='I' />
+  </function>
+  <function name='CGConfigureDisplayWithDisplayMode'>
+    <retval type='i' />
+    <arg type='^{_CGDisplayConfigRef=}' />
+    <arg type='I' />
+    <arg type='^{CGDisplayMode}' />
+    <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGConfigureDisplayFadeEffect'>
     <retval type='i' />
@@ -1045,6 +1061,18 @@
     <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
     <arg type='f' type64='f' />
     <arg type='I' />
+  </function>
+  <function name='CGContextSetShouldSubpixelPositionFonts'>
+    <arg type='^{CGContext=}' />
+    <arg type='Z' />
+  </function>
+  <function name='CGContextSetAllowsFontSubpixelPositioning'>
+    <arg type='^{CGContext=}' />
+    <arg type='Z' />
+  </function>
+  <function name='CGContextSetShouldSubpixelQuantizeFonts'>
+    <arg type='^{CGContext=}' />
+    <arg type='Z' />
   </function>
   <function name='CGContextDrawShading'>
     <arg type='^{CGContext=}' />
@@ -2458,8 +2486,8 @@
   <function name='CGPDFContentStreamGetResource'>
     <retval type='^(CGPDFObject=)' type64='^(CGPDFObject=)' />
     <arg type='^{CGPDFContentStream=}' />
-    <arg numeric='false' type='r*' type64='r*' />
-    <arg numeric='false' type='r*' type64='r*' />
+    <arg numeric='false' type='^t' c_array_delimited_by_null='true' type_modifier='n'  />
+    <arg numeric='false' type='^t' c_array_delimited_by_null='true' type_modifier='n' />
   </function>
   <function name='CGPDFContentStreamGetStreams'>
     <retval type='^{__CFArray=}' />
@@ -2847,33 +2875,33 @@
     <arg type='^{CGPSConverter=}' />
   </function>
   <function name='CGPaletteCreateCopy'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg type='^{_CGDirectPaletteRef=}' />
   </function>
   <function name='CGPaletteCreateDefaultColorPalette'>
     <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
   </function>
   <function name='CGPaletteCreateFromPaletteBlendedWithColor'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg type='^{_CGDirectPaletteRef=}' />
     <arg type='f' />
     <arg type='{_CGDeviceColor=fff}' />
   </function>
   <function name='CGPaletteCreateWithByteSamples'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg c_array_length_in_arg='1' type='^{_CGDeviceByteColor=CCC}' type_modifier='n' />
     <arg type='I' />
   </function>
   <function name='CGPaletteCreateWithCapacity'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg type='I' />
   </function>
   <function name='CGPaletteCreateWithDisplay'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg type='I' />
   </function>
   <function name='CGPaletteCreateWithSamples'>
-    <retval type='^{_CGDirectPaletteRef=}' />
+    <retval type='^{_CGDirectPaletteRef=}' already_cfretained='true' />
     <arg c_array_length_in_arg='1' type='^{_CGDeviceColor=fff}' type_modifier='n' />
     <arg type='I' />
   </function>

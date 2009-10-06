@@ -72,14 +72,44 @@ class TestCGContext (TestCase):
 
     @min_os_level('10.5')
     def testFunctions10_5(self):
-        self.fail("CGContextDrawRadialGradient")
-        self.fail("CGContextDrawShading")
-        self.fail("CGContextSetShouldSubpixelPositionFonts")
-        self.fail("CGContextGetShouldSubpixelPositionFonts")
-        self.fail("CGContextSetAllowsFontSubpixelPositioning")
-        self.fail("CGContextGetAllowsFontSubpixelPositioning")
-        self.fail("CGContextSetShouldSubpixelQuantizeFonts")
-        self.fail("CGContextGetShouldSubpixelQuantizeFonts")
+
+        url = CFURLCreateWithFileSystemPath(None,
+                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        self.failUnlessIsInstance(url, CFURLRef)
+        context = CGPDFContextCreateWithURL(url,
+                ((0, 0), (1000, 1000)), None)
+        self.failUnlessIsInstance(context, CGContextRef)
+        CGContextBeginPage(context, objc.NULL)
+        try:
+            gradient = CGGradientCreateWithColorComponents(
+                CGColorSpaceCreateDeviceGray(),
+                (0.25, 0.8), (0.95, 0.99), 2)
+            self.failUnlessIsInstance(gradient, CGGradientRef)
+
+            CGContextDrawRadialGradient(context, gradient, (10, 15),
+                    30, (50, 70), 99.5, kCGGradientDrawsAfterEndLocation)
+
+            def evaluate(info, input, output):
+                return input * 4
+
+            func = CGFunctionCreate(None, 1, (0, 1), 2, (0, 1, 0, 1), evaluate)
+            self.failUnlessIsInstance(func, CGFunctionRef)
+            shading = CGShadingCreateAxial(
+                    CGColorSpaceCreateDeviceGray(),
+                    (0, 0), (30,90), func, False, False)
+            self.failUnlessIsInstance(shading, CGShadingRef)
+
+            self.failUnlessArgHasType(CGContextSetShouldSubpixelPositionFonts, 1, objc._C_BOOL)
+            self.failUnlessArgHasType(CGContextSetAllowsFontSubpixelPositioning, 1, objc._C_BOOL)
+            self.failUnlessArgHasType(CGContextSetShouldSubpixelQuantizeFonts, 1, objc._C_BOOL)
+
+        finally:
+            CGContextEndPage(context)
+            CGPDFContextClose(context)
+            if os.path.exists("/tmp/pyobjc.test.pdf"):
+                os.unlink("/tmp/pyobjc.test.pdf")
+
+
 
     def testFunctions(self):
         self.failUnlessIsInstance(CGContextGetTypeID(), (int, long))
@@ -272,7 +302,7 @@ class TestCGContext (TestCase):
 
             CGContextSetFontSize(context, 11.5)
 
-            CGContextDrawShading(context, "Helvetica", 10.5, kCGEncodingMacRoman)
+            CGContextSelectFont(context, "Helvetica", 10.5, kCGEncodingMacRoman)
 
             CGContextShowText(context, "value", 5)
             CGContextShowTextAtPoint(context, 50, 60, "value", 5)

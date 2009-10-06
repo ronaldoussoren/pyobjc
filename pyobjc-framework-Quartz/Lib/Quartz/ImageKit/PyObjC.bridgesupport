@@ -50,6 +50,7 @@
   <constant name='IKPictureTakerShowAddressBookPictureKey' type='@' />
   <constant name='IKPictureTakerShowEffectsKey' type='@' />
   <constant name='IKPictureTakerShowEmptyPicture' type='@' />
+  <constant name='IKPictureTakerRemainOpenAfterValidateKey' type='@' />
   <constant name='IKPictureTakerShowEmptyPictureKey' type='@' />
   <constant name='IKPictureTakerShowRecentPictureKey' type='@' />
   <constant name='IKPictureTakerUpdateRecentPictureKey' type='@' />
@@ -60,6 +61,11 @@
   <constant name='IKSlideshowPDFDisplayMode' type='@' />
   <constant name='IKSlideshowPDFDisplaysAsBook' type='@' />
   <constant name='IKSlideshowStartIndex' type='@' />
+  <constant name='IKSlideshowScreen' type='@' />
+  <constant name='IKSlideshowAudioFile' type='@' />
+  <constant name='IKSlideshowPDFDisplayBox' type='@' />
+  <constant name='IKSlideshowPDFDisplayMode' type='@' />
+  <constant name='IKSlideshowPDFDisplaysAsBook' type='@' />
   <constant name='IKSlideshowStartPaused' type='@' />
   <constant name='IKSlideshowWrapAround' type='@' />
   <constant name='IKToolModeAnnotate' type='@' />
@@ -68,6 +74,12 @@
   <constant name='IKToolModeNone' type='@' />
   <constant name='IKToolModeRotate' type='@' />
   <constant name='IKToolModeSelect' type='@' />
+  <constant name='IKToolModeSelectRect' type='@' />
+  <constant name='IKToolModeSelectEllipse' type='@' />
+  <constant name='IKToolModeSelectLasso' type='@' />
+  <constant name='IKToolModeCrop' type='@' />
+  <constant name='IKToolModeRotate' type='@' />
+  <constant name='IKToolModeAnnotate' type='@' />
   <constant name='IKUIFlavorAllowFallback' type='@' />
   <constant name='IKUISizeFlavor' type='@' />
   <constant name='IKUISizeMini' type='@' />
@@ -75,6 +87,35 @@
   <constant name='IKUISizeSmall' type='@' />
   <constant name='IKUImaxSize' type='@' />
   <constant name='IK_iPhotoBundleIdentifier' type='@' />
+  <constant name='IK_ApertureBundleIdentifier' type='@' />
+  <constant name='IK_MailBundleIdentifier' type='@' />
+  <constant name='IKImageBrowserCellBackgroundLayer' type='@' />
+  <constant name='IKImageBrowserCellForegroundLayer' type='@' />
+  <constant name='IKImageBrowserCellSelectionLayer' type='@' />
+  <constant name='IKImageBrowserCellPlaceHolderLayer' type='@' />
+  <constant name='IKImageBrowserPDFPageRepresentationType' type='@' />
+  <constant name='IKImageBrowserGroupHeaderLayer' type='@' />
+  <constant name='IKImageBrowserGroupFooterLayer' type='@' />
+  <constant name='IKImageBrowserCellLayerTypeBackground' type='@' />
+  <constant name='IKImageBrowserCellLayerTypeForeground' type='@' />
+  <constant name='IKImageBrowserCellLayerTypeSelection' type='@' />
+  <constant name='IKImageBrowserCellLayerTypePlaceHolder' type='@' />
+  <enum name='IKDeviceBrowserViewDisplayModeTable' value='0' />
+  <enum name='IKDeviceBrowserViewDisplayModeOutline' value='1' />
+  <enum name='IKDeviceBrowserViewDisplayModeIcon' value='2' />
+  <enum name='IKScannerDeviceViewTransferModeFileBased' value='0' />
+  <enum name='IKScannerDeviceViewTransferModeMemoryBased' value='1' />
+  <enum name='IKScannerDeviceViewDisplayModeSimple' value='0' />
+  <enum name='IKScannerDeviceViewDisplayModeAdvanced' value='1' />
+  <enum name='IKImageBrowserDropOn' value='0' />
+  <enum name='IKImageBrowserDropBefore' value='1' />
+  <enum name='IKImageStateNoImage' value='0' />
+  <enum name='IKImageStateInvalid' value='1' />
+  <enum name='IKImageStateReady' value='2' />
+  <enum name='IKCameraDeviceViewDisplayModeTable' value='0' />
+  <enum name='IKCameraDeviceViewDisplayModeIcon' value='1' />
+  <enum name='IKCameraDeviceViewTransferModeFileBased' value='0' />
+  <enum name='IKCameraDeviceViewTransferModeMemoryBased' value='1' />
   <enum name='IKCellsStyleNone' value='0' />
   <enum name='IKCellsStyleOutlined' value='2' />
   <enum name='IKCellsStyleShadowed' value='1' />
@@ -123,6 +164,130 @@
     <method selector='imageVersion' type='I@:' type64='(&apos;Q@:&apos;,)' />
     <method selector='isSelectable' type='B@:' />
   </informal_protocol>
+  <class name='IKDeviceBrowserView'>
+	<method selector='hasDisplayModeSimple'>
+		<retval type='B' />
+	</method>
+	<method selector='setHasDisplayModeSimple:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysLocalCameras'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysLocalCameras:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysNetworkCameras'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysNetworkCameras:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysLocalScanners'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysLocalScanners:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysNetworkScanners'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysNetworkScanners:'>
+		<arg index='0' type='B' />
+	</method>
+  </class>
+  <class name='IKScannerDeviceView'>
+	<method selector='hasDisplayModeSimple'>
+		<retval type='B' />
+	</method>
+	<method selector='setHasDisplayModeSimple:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='hasDisplayModeAdvanced'>
+		<retval type='B' />
+	</method>
+	<method selector='setHasDisplayModeAdvanced:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysDownloadsDirectoryControl'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysDownloadsDirectoryControl:'>
+		<arg index='0' type='B' />
+	</method>
+	<method selector='displaysPostProcessApplicationControl'>
+		<retval type='B' />
+	</method>
+	<method selector='setDisplaysPostProcessApplicationControl:'>
+		<arg index='0' type='B' />
+	</method>
+  </class>
+  <class name='IKImageBrowserView'>
+	  <method selector='canControlQuickLookPanel' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setCanControlQuickLookPanel:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='allowsDroppingOnItems' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setAllowsDroppingOnItems:' >
+	    <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='IKImageBrowserCell'>
+	  <method selector='isSelected' >
+	    <retval type='B' />
+    </method>
+  </class>
+  <class name='IKCameraDeviceView'>
+	  <method selector='hasDisplayModeTable' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setHasDisplayModeTable:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='hasDisplayModeIcon' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setHasDisplayModeIcon:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='displaysDownloadsDirectoryControl' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setDisplaysDownloadsDirectoryControl:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='displaysPostProcessApplicationControl' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setDisplaysPostProcessApplicationControl:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='canRotateSelectedItemsLeft' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setCanRotateSelectedItemsLeft:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='canRotateSelectedItemsRight' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setCanRotateSelectedItemsRight:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='canDeleteSelectedItems' >
+	    <retval type='B' />
+    </method>
+	  <method selector='setCanDeleteSelectedItems:' >
+	    <arg index='0' type='B' />
+    </method>
+	  <method selector='selectIndexes:byExtendingSelection:' >
+	    <arg index='1' type='B' />
+    </method>
+    </class>
   <class name='IKFilterBrowserPanel'>
     <method selector='beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
       <arg index='3' type=':' sel_of_type='v@:@i^v' />
@@ -178,11 +343,11 @@
   </class>
   <class name='IKImagePicker'>
     <method selector='beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' />
+      <arg index='2' type=':' sel_of_type='v@:@I^v'/>
       <arg index='3' type='^v' />
     </method>
     <method selector='beginImagePickerWithDelegate:didEndSelector:contextInfo:'>
-      <arg index='1' type=':' />
+      <arg index='1' type=':' sel_of_type='v@:@I^v'/>
       <arg index='2' type='^v' />
     </method>
   </class>
@@ -238,18 +403,18 @@
   </class>
   <class name='IKPictureTaker'>
     <method selector='beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' />
+      <arg index='2' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@i^v'/>
       <arg index='3' type='^v' />
     </method>
     <method selector='beginPictureTakerWithDelegate:didEndSelector:contextInfo:'>
-      <arg index='1' type=':' />
+      <arg index='1' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@i^v' />
       <arg index='2' type='^v' />
     </method>
     <method selector='mirroring'>
       <retval type='B' />
     </method>
     <method selector='popUpRecentsMenuForView:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' />
+      <arg index='2' type=':' sel_of_type='v@:@i^v' />
       <arg index='3' type='^v' />
     </method>
     <method selector='setMirroring:'>
@@ -262,6 +427,18 @@
     </method>
   </class>
   <class name='NSObject'>
+	  <method selector='hasAdjustMode'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='hasEffectsMode'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='hasDetailsMode'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='saveOptions:shouldShowUTType:'>
+		  <retval type='B' />
+	  </method>
     <method selector='canExportSlideshowItemAtIndex:toApplication:'>
       <retval type='B' />
 	    <arg index='0'  type='I' />
