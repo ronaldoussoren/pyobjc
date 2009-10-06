@@ -330,6 +330,26 @@
   <informal_protocol name='CIImageProvider'>
     <method selector='provideImageData:bytesPerRow:origin:size:userInfo:' type='v@:^vLLL@' type64='v@:^vQQQ@' />
   </informal_protocol>
+
+  <class name='CAEmitterCell'>
+    <method selector='shouldArchiveValueForKey:'>
+      <retval type='B' />
+    </method>
+    <method selector='isEnabled'>
+      <retval type='B' />
+    </method>
+    <method selector='setEnabled:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
+  <class name='CAReplicatorLayer'>
+    <method selector='preservesDepth'>
+      <retval type='B' />
+    </method>
+    <method selector='setPreservesDepth:'>
+      <arg index='0' type='B' />
+    </method>
+  </class>
   <class name='CAAnimation'>
     <method selector='shouldArchiveValueForKey:'>
       <retval type='B' />

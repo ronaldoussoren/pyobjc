@@ -333,7 +333,7 @@
     <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGImageDestinationFinalize'>
-    <retval type='B' />
+    <retval type='Z' />
     <arg type='^{CGImageDestination=}' />
   </function>
   <function name='CGImageDestinationGetTypeID'>

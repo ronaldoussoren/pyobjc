@@ -125,8 +125,8 @@ class TestCGEventTypes (TestCase):
         self.failUnless(hasattr(v, 'avgUsecLatency'))
         self.failUnless(hasattr(v, 'maxUsecLatency'))
 
-    def testMissing(self):
-        self.fail("CGEventMaskBit")
+    def testInline(self):
+        self.failUnlessEqual(CGEventMaskBit(10), 1<<10)
 
 
 if __name__ == "__main__":

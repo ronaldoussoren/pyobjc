@@ -17,6 +17,7 @@
   <cftype gettypeid_func='CVPixelBufferPoolGetTypeID' name='CVPixelBufferPoolRef' type='^{__CVPixelBufferPool=}' type64='^{__CVPixelBufferPool=}' />
   <cftype gettypeid_func='CVOpenGLBufferGetTypeID' name='CVOpenGLBufferRef' type='^{__CVOpenGLBuffer=}' type64='^{__CVOpenGLBuffer=}'/>
   <cftype gettypeid_func='CVPixelBufferGetTypeID' name='CVPixelBufferRef' type='^{__CVPixelBuffer=}' type64='^{__CVPixelBuffer=}'/>
+  <constant name='kCVPixelFormatBlackBlock' type='^{__CFString=}' />
   <constant name='kCVBufferMovieTimeKey' type='^{__CFString=}' />
   <constant name='kCVBufferNonPropagatedAttachmentsKey' type='^{__CFString=}' />
   <constant name='kCVBufferPropagatedAttachmentsKey' type='^{__CFString=}' />
@@ -114,7 +115,13 @@
   <constant name='kCVPixelFormatPlanes' type='^{__CFString=}' />
   <constant name='kCVPixelFormatQDCompatibility' type='^{__CFString=}' />
   <constant name='kCVPixelFormatVerticalSubsampling' type='^{__CFString=}' />
+  <constant name='kCVPixelBufferPlaneAlignmentKey' type='^{__CFString=}' />
+  <constant name='kCVPixelBufferIOSurfacePropertiesKey' type='^{__CFString=}' />
+  <constant name='kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey' type='^{__CFString=}' />
+  <constant name='kCVPixelBufferIOSurfaceOpenGLFBOCompatibilityKey' type='^{__CFString=}' />
+  <constant name='kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey' type='^{__CFString=}' />
   <constant name='kCVZeroTime' type='{_CVTime=qii}' />
+  <enum name='kCVPixelBufferLock_ReadOnly' value='1' />
   <enum name='kCVAttachmentMode_ShouldNotPropagate' value='0' />
   <enum name='kCVAttachmentMode_ShouldPropagate' value='1' />
   <enum name='kCVPixelFormatType_16BE555' value='16' />
@@ -184,6 +191,17 @@
   <enum name='kCVTimeStampVideoHostTimeValid' value='3' />
   <enum name='kCVTimeStampVideoRefreshPeriodValid' value='8' />
   <enum name='kCVTimeStampVideoTimeValid' value='1' />
+  <function name='CVPixelBufferGetIOSurface'>
+	  <retval type='^{__IOSurfaceRef=}' />
+	  <arg type='^{__CVPixelBuffer=}' />
+  </function>
+  <function name='CVPixelBufferCreateWithIOSurface'>
+     <retval type='i' />
+     <arg type='^{__CFAllocator=}' />
+     <arg type='^{__IOSurfaceRef=}' />
+     <arg type='^{__CFDictionary=}' />
+     <arg already_cfretained='true' type='^@' type_modifier='o' />
+  </function>
   <function name='CVBufferGetAttachment'>
     <retval type='@' type64='@' />
     <arg type='@' />

@@ -3,6 +3,7 @@
 <signatures version='1.0'>
   <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
   <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
+  <constant name='QCCompositionInputMeshKey' type='@' />
   <constant name='QCCompositionAttributeBuiltInKey' type='@' />
   <constant name='QCCompositionAttributeCategoryKey' type='@' />
   <constant name='QCCompositionAttributeCopyrightKey' type='@' />

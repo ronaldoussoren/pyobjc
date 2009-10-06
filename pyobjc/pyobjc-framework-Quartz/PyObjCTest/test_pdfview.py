@@ -77,7 +77,7 @@ class TestPDFView (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.failUnlessResultIsBOOL(PDFView.enableDataDetectors)
-        self.failUnlessARgIsBOOL(PDFView.setEnableDataDetectors_, 0)
+        self.failUnlessArgIsBOOL(PDFView.setEnableDataDetectors_, 0)
 
     def testProtocols(self):
         self.failUnlessIsInstance(protocols.PDFViewDelegate, objc.informal_protocol)

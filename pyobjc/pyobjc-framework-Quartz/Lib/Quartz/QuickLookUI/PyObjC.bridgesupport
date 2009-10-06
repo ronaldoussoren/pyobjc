@@ -27,6 +27,9 @@
     <method class_method='true' selector='sharedPreviewPanelExists'>
       <retval type='B' />
     </method>
+    <method selector='sharedPreviewPanelExists'>
+      <retval type='B' />
+    </method>
   </class>
 </signatures>
 

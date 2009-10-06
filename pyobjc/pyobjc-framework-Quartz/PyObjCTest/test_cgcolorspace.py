@@ -122,11 +122,23 @@ class TestCGColorSpace (TestCase):
 
     @min_os_level('10.5')
     def testFunctions10_5(self):
-        self.fail("CGColorSpaceCreateWithICCProfile")
+        spc = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
+        self.failUnlessIsInstance(spc, CGColorSpaceRef)
+
+        dta= CGColorSpaceCopyICCProfile(spc)
+        self.failUnlessIsInstance(dta, CFDataRef)
+
+        self.failUnlessResultIsCFRetained(CGColorSpaceCreateWithICCProfile)
+        v = CGColorSpaceCreateWithICCProfile(dta)
+        self.failUnlessIsInstance(v, CGColorSpaceRef)
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.fail('CGColorSpaceCopyName')
+        csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
+        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+
+        v = CGColorSpaceCopyName(csp)
+        self.failUnlessIsInstance(v, unicode)
         
 
 if __name__ == "__main__":

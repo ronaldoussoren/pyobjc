@@ -29,25 +29,35 @@ class TestCGImageDestination (TestCase):
         url = CFURLCreateWithFileSystemPath(None,
                 "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
         self.failUnlessResultIsCFRetained(CGImageDestinationCreateWithURL)
-        dest = CGImageDestinationCreateWithURL(url, v[0], 2, None)
+        dest = CGImageDestinationCreateWithURL(url, "public.tiff", 2, None)
         self.failUnlessIsInstance(dest, CGImageDestinationRef)
 
         CGImageDestinationSetProperties(dest, {u'key': u'value'})
 
-        #img = ...
-        CGImageDestinationAddImage(dest, img)
+        provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
+        img = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), 
+                kCGImageAlphaPremultipliedLast, provider, None, False, kCGRenderingIntentDefault)
+        self.failUnlessIsInstance(img, CGImageRef)
 
-        #isrc = ...
+        CGImageDestinationAddImage(dest, img, None)
+
+        url = CFURLCreateWithFileSystemPath(None,
+            "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif", 
+            kCFURLPOSIXPathStyle, False)
+
+        isrc = CGImageSourceCreateWithURL(url, None)
         CGImageDestinationAddImageFromSource(dest,  isrc, 0, None)
 
         self.failUnlessResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
         v = CGImageDestinationFinalize(dest)
         self.failUnless(v is True)
 
-        self.fail("CGImageDestinationCreateWithDataConsumer")
+        dta = NSMutableData.alloc().init()
+        cons = CGDataConsumerCreateWithCFData(dta)
 
-    def testIncomplete(self):
-        self.fail("Add header tests for <ImageIO/CGImageDestination.h>")
+        self.failUnlessResultIsCFRetained(CGImageDestinationCreateWithDataConsumer)
+        c = CGImageDestinationCreateWithDataConsumer(cons, 'public.tiff', 1, None)
+        self.failUnlessIsInstance(c, CGImageDestinationRef)
 
 if __name__ == "__main__":
     main()

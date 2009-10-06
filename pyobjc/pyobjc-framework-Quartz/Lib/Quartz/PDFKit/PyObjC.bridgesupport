@@ -32,6 +32,9 @@
   <constant name='PDFViewPrintPermissionNotification' type='@' />
   <constant name='PDFViewScaleChangedNotification' type='@' />
   <constant name='PDFViewSelectionChangedNotification' type='@' />
+  <enum name='kPDFDocumentPermissionsNone' value='0' />
+  <enum name='kPDFDocumentPermissionsUser' value='1' />
+  <enum name='kPDFDocumentPermissionsOwner' value='2' />
   <enum name='kPDFActionNamedFind' value='8' />
   <enum name='kPDFActionNamedFirstPage' value='3' />
   <enum name='kPDFActionNamedGoBack' value='5' />
@@ -239,6 +242,12 @@
     </method>
   </class>
   <class name='PDFView'>
+    <method selector='enableDataDetectors'>
+      <retval type='B' />
+    </method>
+    <method selector='setEnableDataDetectors:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='allowsDragging'>
       <retval type='B' />
     </method>
