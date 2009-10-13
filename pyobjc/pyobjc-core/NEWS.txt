@@ -7,6 +7,19 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.2 (...)
 -----------------
 
+- BUGFIX: It is now possible to explicitly define ``__getitem__`` (and other
+  special methods) if your class implements ``objectForKey:``::
+
+      class MyObject (NSObject):
+          def objectForKey_(self, k):
+	     pass
+
+	  def __getitem__(self, k):
+	     pass
+
+  In previous version of PyObjC the implementation of ``__getitem__`` would
+  silently be replaced by a generic one.
+
 - The default value for the ``__useKVO__`` attribute in class definitions
   can now be controlled by ``objc.setUseKVOForSetattr(b)``. The default
   is ``True``.
