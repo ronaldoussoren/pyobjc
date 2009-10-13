@@ -24,6 +24,11 @@ def setupMetaData():
     #
     # Note2: the code below would normally be done using a metadata file 
     # instead of hardcoding.
+    objc.registerMetaDataForSelector("OC_MetaDataTest", "boolClassMethod",
+            dict(
+                retval=dict(type=objc._C_NSBOOL)
+            ))
+
     objc.registerMetaDataForSelector("OC_MetaDataTest", "unknownLengthArray",
             dict(
                 retval=dict(c_array_of_variable_length=True),
@@ -903,6 +908,9 @@ class TestIgnore (TestCase):
         o = OC_MetaDataTest.new()
 
         self.assertRaises(TypeError, o.ignoreMethod)
+
+    def testClassmethods(self):
+        self.failUnlessResultIsBOOL(OC_MetaDataTest.boolClassMethod)
 
 class TestMetaDataAccess (TestCase):
     def testNew(self):
