@@ -103,8 +103,13 @@ class DgTestCase (unittest.TestCase):
         return "dejagnu.%s.%s"%(dn, fn)
 
     def compileTestCase(self):
-        libdir = os.path.join('build', 'temp.%s-%d.%d'%(get_platform(), sys.version_info[0], sys.version_info[1]), 'libffi-src')
+        libdir = os.path.join('build', 'temp.%s-%d.%d'%(get_platform(), sys.version_info[0], sys.version_info[1]))
+        if hasattr(sys, 'gettotalrefcount'):
+            libdir += "-pydebug"
+        libdir = os.path.join(libdir, 'libffi-src')
+
         libffiobjects = self.object_files(libdir)
+
 
         if self.filename.endswith('.m'):
             extra_link = '-framework Foundation'
