@@ -7,14 +7,16 @@ documentation for details on how to use these functions and classes.
 
 import objc as _objc
 
-import  CoreFoundation._inlines
+from CoreFoundation._inlines import _inline_list_
+
 
 __bundle__ = _objc.initFrameworkWrapper("CoreFoundation",
     frameworkIdentifier="com.apple.CoreFoundation",
     frameworkPath=_objc.pathForFramework(
         "/System/Library/Frameworks/CoreFoundation.framework"),
     globals=globals(),
-    scan_classes=False)
+    scan_classes=False,
+    inlineTab=_inline_list_)
 
 #from CoreFoundation._CFArray import *
 from CoreFoundation._CFBag import *

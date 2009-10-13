@@ -39,6 +39,12 @@ struct function_map {
 	{"CFUserNotificationCheckBoxChecked", (FUNCTION)&CFUserNotificationCheckBoxChecked },
 	{"CFUserNotificationPopUpSelection", (FUNCTION)&CFUserNotificationPopUpSelection },
 	{"CFUserNotificationSecureTextField", (FUNCTION)&CFUserNotificationSecureTextField },
+#if  PyObjC_BUILD_RELEASE >= 1006
+	{"CFStringIsSurrogateHighCharacter", (FUNCTION)&CFStringIsSurrogateHighCharacter },
+	{"CFStringIsSurrogateLowCharacter", (FUNCTION)&CFStringIsSurrogateLowCharacter },
+	{"CFStringGetLongCharacterForSurrogatePair", (FUNCTION)&CFStringGetLongCharacterForSurrogatePair },
+	{"CFStringGetSurrogatePairForLongCharacter", (FUNCTION)&CFStringGetSurrogatePairForLongCharacter },
+#endif
     { 0, 0 }
 };
 
