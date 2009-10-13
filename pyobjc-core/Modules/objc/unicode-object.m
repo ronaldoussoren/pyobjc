@@ -237,7 +237,7 @@ PyObjCUnicode_New(NSString* value)
 		return NULL;
 	}
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
-	Py_UNICODE* tptr = PyMem_NEW(Py_UNICODE, length);
+	Py_UNICODE* tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
 	PyUnicode_AS_UNICODE(result) = tptr;
 	tptr = NULL;
 
@@ -275,7 +275,7 @@ PyObjCUnicode_New(NSString* value)
 	PyObjC_ENDHANDLER
 
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
-	PyUnicode_AS_UNICODE(result) = PyMem_NEW(Py_UNICODE, length);
+	PyUnicode_AS_UNICODE(result) = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
 		Py_DECREF((PyObject*)result);
 		PyMem_Free(characters); characters = NULL;
