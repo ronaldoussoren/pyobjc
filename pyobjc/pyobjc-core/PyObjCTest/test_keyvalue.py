@@ -148,9 +148,9 @@ class PyKeyValueCoding (TestCase):
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key5', u'V')
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, u'key9'))
+        self.failIfHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
+        self.failUnlessHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testTakeValueForKey2(self):
@@ -177,9 +177,9 @@ class PyKeyValueCoding (TestCase):
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key5', u'V')
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.assert_(not hasattr(o, u'key9'))
+        self.failIfHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
+        self.failUnlessHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testStoredTakeValueForKey2(self):
@@ -198,7 +198,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEquals(o.key3, 3)
         self.assertEquals(o._key4, u"4")
         o.key5 = 1
-        self.assert_(not hasattr(o, u'key9'))
+        self.failIfHasAttr(o, u'key9')
 
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUESFROMDICT, o, None,
             {
@@ -211,7 +211,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEquals(o.key3, u"drie")
         self.assertEquals(o._key4, u"viervierviervier")
         self.assertEquals(o.key5, u"VVVVV")
-        self.assert_(hasattr(o, u'key9'))
+        self.failUnlessHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testTakeValuesFromDictionary2(self):
@@ -359,9 +359,9 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key5', u'V')
             self.assertEquals(o.key5, u"VVVVV")
 
-            self.assert_(not hasattr(o, u'key9'))
+            self.failIfHasAttr(o, u'key9')
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key9', u'IX')
-            self.assert_(hasattr(o, u'key9'))
+            self.failUnlessHasAttr(o, u'key9')
             self.assertEquals(o.key9, u'IX')
 
         def testTakeValueForKey2(self):
@@ -379,7 +379,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.key3, 3)
             self.assertEquals(o._key4, u"4")
             o.key5 = 1
-            self.assert_(not hasattr(o, u'key9'))
+            self.failIfHasAttr(o, u'key9')
 
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUESFORKEYSFROMDICT, o, None,
                 {
@@ -392,7 +392,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.key3, u"drie")
             self.assertEquals(o._key4, u"viervierviervier")
             self.assertEquals(o.key5, u"VVVVV")
-            self.assert_(hasattr(o, u'key9'))
+            self.failUnlessHasAttr(o, u'key9')
             self.assertEquals(o.key9, u'IX')
 
         def testSetValuesForKeysFromDictionary2(self):
@@ -630,18 +630,22 @@ if PyObjCTest_KeyValueObserver is not None:
 
             self.assertEquals(len(observer.observed), 0)
 
+        @min_os_level('10.5')
         def testReceiveObserved(self):
             # Create an object in Objective-C, add an observer and then
             # pass the object to Python. Unless we take special care the
             # Python wrapper will have the wrong type (that of the
             # internal helper class).
+            #
+            # NOTE: This test is known to fail on OSX 10.5 due to the way
+            # KVO is implemented there.
 
             observer = PyObjCTestObserver.alloc().init()
             o = STUB.createObservedOfClass_observer_keyPath_(
                     NSObject, observer, u"observationInfo")
 
             try:
-                self.assert_(isinstance(o, NSObject))
+                self.failUnlessIsInstance(o, NSObject)
             finally:
                 o.removeObserver_forKeyPath_(observer, u"observationInfo")
 

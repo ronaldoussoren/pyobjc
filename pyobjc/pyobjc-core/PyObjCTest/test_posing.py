@@ -6,8 +6,8 @@ import sys
 #NSObject = objc.lookUpClass('NSObject')
 
 # Use a class that isn't used in the rest of the testsuite,
-# should write a native class for this! NSPortCoder
-BaseName = 'NSPortCoder'
+# should write a native class for this! 
+BaseName = 'NSAttributedString'
 BaseClass = objc.lookUpClass(BaseName)
 
 if sys.maxint >= 2 ** 32:
