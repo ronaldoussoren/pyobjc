@@ -16,6 +16,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 @interface OC_MetaDataTest : NSObject
 {
 }
++(BOOL)   boolClassMethod;
 /* Return value arrays: */
 -(int*)   makeIntArrayOf5;
 -(char**) makeStringArray;
@@ -124,6 +125,11 @@ static void use_id(id x __attribute__((__unused__))) { };
 @end
 
 @implementation OC_MetaDataTest
+
++(BOOL) boolClassMethod
+{
+	return YES;
+}
 
 
 -(int*)   makeIntArrayOf5
