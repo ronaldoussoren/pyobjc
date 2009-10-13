@@ -3,6 +3,10 @@ from PyObjCTools.TestSupport import *
 import os
 
 class TestCFHTTPStream (TestCase):
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
+
     def testConstants(self):
         self.failUnlessEqual(kCFStreamErrorHTTPParseFailure, -1)
         self.failUnlessEqual(kCFStreamErrorHTTPRedirectionLoop, -2)
@@ -10,7 +14,6 @@ class TestCFHTTPStream (TestCase):
 
         self.failUnlessIsInstance(kCFStreamPropertyHTTPResponseHeader, unicode)
         self.failUnlessIsInstance(kCFStreamPropertyHTTPFinalURL, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
         self.failUnlessIsInstance(kCFStreamPropertyHTTPProxy, unicode)
         self.failUnlessIsInstance(kCFStreamPropertyHTTPProxyHost, unicode)
         self.failUnlessIsInstance(kCFStreamPropertyHTTPProxyPort, unicode)

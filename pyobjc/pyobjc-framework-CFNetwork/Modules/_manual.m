@@ -37,6 +37,7 @@ static CFHostClientContext mod_CFHostClientContext = {
 	0
 };
 
+#if PyObjC_BUILD_RELEASE >= 1005
 static void
 m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList, CFErrorRef error)
 {
@@ -70,6 +71,7 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList, C
 
 	PyGILState_Release(state);
 }
+#endif
 
 static void
 m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamError* error, void* _context)
@@ -114,6 +116,7 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
 }
 
 
+#if PyObjC_BUILD_RELEASE >= 1005
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__unused__)),
 		PyObject* args)
@@ -229,6 +232,7 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
 
 	return rv;
 }
+#endif  /* OSX 10.5 */
 
 static PyObject*
 m_CFHostSetClient(PyObject* mod __attribute__((__unused__)),
@@ -294,7 +298,9 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)),
 }
 
 
+
 static PyMethodDef m_methods[] = {
+#if PyObjC_BUILD_RELEASE >= 1005
 	{
 		"CFNetworkExecuteProxyAutoConfigurationScript",
 		(PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript,
@@ -307,6 +313,8 @@ static PyMethodDef m_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
+#endif /* OSX >= 10.5 */
+
 	{
 		"CFHostSetClient",
 		(PyCFunction)m_CFHostSetClient,
@@ -324,4 +332,13 @@ void init_manual(void)
 		NULL, NULL, PYTHON_API_VERSION);
 
         if (PyObjC_ImportAPI(m) < 0) { return; }
+
+#if PyObjC_BUILD_RELEASE >= 1005
+	if (CFNetworkExecuteProxyAutoConfigurationScript == NULL) {
+		PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationScript");
+	}
+	if (CFNetworkExecuteProxyAutoConfigurationURL == NULL) {
+		PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationURL");
+	}
+#endif
 }

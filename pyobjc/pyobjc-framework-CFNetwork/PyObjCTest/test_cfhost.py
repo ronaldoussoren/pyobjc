@@ -89,6 +89,5 @@ class TestCFHost (TestCase):
         self.failUnlessIsInstance(ok, bool)
 
 
-
 if __name__ == "__main__":
     main()

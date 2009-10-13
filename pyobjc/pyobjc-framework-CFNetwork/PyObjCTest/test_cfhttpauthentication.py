@@ -16,6 +16,8 @@ class TestCFFTPStream (TestCase):
         self.failUnlessIsInstance(kCFHTTPAuthenticationPassword, unicode)
         self.failUnlessIsInstance(kCFHTTPAuthenticationAccountDomain, unicode)
 
+    @min_os_level('10.5')
+    #These functions should work on 10.4 as well, but caue a crash in CFNetwork on that platform
     def testFunctions(self):
         self.failUnlessIsInstance(CFHTTPAuthenticationGetTypeID(), (int, long))
 

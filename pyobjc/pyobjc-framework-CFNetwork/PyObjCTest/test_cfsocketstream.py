@@ -3,8 +3,12 @@ from CFNetwork import *
 
 
 class TestCFSocketStream (TestCase):
-    def testConstants(self):
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(kCFStreamPropertySSLPeerTrust, unicode)
+        self.failUnlessIsInstance(kCFStreamErrorDomainWinSock, (int, long))
+
+    def testConstants(self):
         self.failUnlessIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
 
         self.failUnlessIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
@@ -17,7 +21,6 @@ class TestCFSocketStream (TestCase):
         self.failUnlessIsInstance(kCFStreamSSLPeerName, unicode)
         self.failUnlessIsInstance(kCFStreamSSLCertificates, unicode)
         self.failUnlessIsInstance(kCFStreamSSLIsServer, unicode)
-        self.failUnlessIsInstance(kCFStreamErrorDomainWinSock, (int, long))
         self.failUnlessIsInstance(kCFStreamErrorDomainSOCKS, (int, long))
 
         self.failUnlessEqual(kCFStreamErrorSOCKSSubDomainNone, 0)
