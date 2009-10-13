@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+import CoreFoundation
 
 
 class TestRunLoop (TestCase):

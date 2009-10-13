@@ -801,20 +801,20 @@
   <enum name='kCFXMLStatusParseInProgress' value='-1' />
   <enum name='kCFXMLStatusParseNotBegun' value='-2' />
   <enum name='kCFXMLStatusParseSuccessful' value='0' />
-  <function name='CFStringIsSurrogateHighCharacter' >
+  <function name='CFStringIsSurrogateHighCharacter' inline='true' >
     <retval type='B' />
     <arg type='T' />
   </function>
-  <function name='CFStringIsSurrogateLowCharacter' >
+  <function name='CFStringIsSurrogateLowCharacter' inline='true' >
     <retval type='B' />
     <arg type='T' />
   </function>
-  <function name='CFStringGetLongCharacterForSurrogatePair' >
+  <function name='CFStringGetLongCharacterForSurrogatePair' inline='true' >
     <retval type='I' />
     <arg type='T' />
     <arg type='T' />
   </function>
-  <function name='CFStringGetSurrogatePairForLongCharacter' >
+  <function name='CFStringGetSurrogatePairForLongCharacter' inline='true' >
     <retval type='B' />
     <arg type='I' />
     <arg type='^T' type_modifier='o' c_array_of_fixed_length='2' />
