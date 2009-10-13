@@ -28,6 +28,12 @@ if os.uname()[2] >= '9.':
 else:
     CFLAGS=[]
 
+import platform
+CFLAGS.append(
+    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2])))
+)
+
+
 setup(
     name='pyobjc-framework-CFNetwork',
     version='2.2b4',

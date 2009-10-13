@@ -2,13 +2,17 @@ from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
 class TestCFHTTPMessage (TestCase):
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
+        self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
+
     def testConstants(self):
         self.failUnlessIsInstance(kCFHTTPVersion1_0, unicode)
         self.failUnlessIsInstance(kCFHTTPVersion1_1, unicode)
         self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeBasic, unicode)
         self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeDigest, unicode)
-        self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
-        self.failUnlessIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
 
     def testTypes(self):
         self.failUnlessIsCFType(CFHTTPMessageRef)
@@ -88,7 +92,7 @@ class TestCFHTTPMessage (TestCase):
 
         self.failUnlessResultIsBOOL(CFHTTPMessageAddAuthentication)
         self.failUnlessArgIsBOOL(CFHTTPMessageAddAuthentication, 5)
-        v = CFHTTPMessageAddAuthentication(req, resp, u"ronald", u"secret", kCFHTTPAuthenticationSchemeNTLM, False)
+        v = CFHTTPMessageAddAuthentication(req, resp, u"ronald", u"secret", kCFHTTPAuthenticationSchemeBasic, False)
         self.failUnlessIsInstance(v, bool)
 
         v = CFHTTPMessageGetResponseStatusCode(resp)
