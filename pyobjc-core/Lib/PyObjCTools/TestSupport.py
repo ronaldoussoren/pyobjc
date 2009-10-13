@@ -110,7 +110,7 @@ def onlyOn32Bit(function):
     if not is32Bit():
         if _sys.version_info[:2] >= (2, 7):
             return _unittest.skip("only on 32-bit")(function)
-        return None
+        return lambda self: None
     else:
         return function
 
@@ -133,7 +133,7 @@ def min_os_level(release):
         if _sys.version_info[:2] >= (2, 7):
             return _unittest.skip("min_os_level(%s)"%(release,))
         else:
-            return None
+            return lambda self: None
 
     return decorator
 
@@ -155,7 +155,7 @@ def max_os_level(release):
         if _sys.version_info[:2] >= (2, 7):
             return _unittest.skip("max_os_level(%s)"%(release,))
         else:
-            return None
+            return lambda self: None
 
     return decorator
 
@@ -495,6 +495,14 @@ class TestCase (_unittest.TestCase):
     def failUnlessStartswith(self, value, check, message=None):
         if not value.startswith(check):
             self.fail(message or "not %r.startswith(%r)"%(value, check))
+
+    def failUnlessHasAttr(self, value, key, message=None):
+        if not hasattr(value, key):
+            self.fail(message or "%s is not an attribute of %r"%(key, value))
+
+    def failIfHasAttr(self, value, key, message=None):
+        if hasattr(value, key):
+            self.fail(message or "%s is an attribute of %r"%(key, value))
 
     def failUnlessIsInstance(self, value, types, message=None):
         if not isinstance(value, types):
