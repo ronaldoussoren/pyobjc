@@ -97,7 +97,7 @@ def _add_convenience_methods(super_class, name, type_dict):
                         signature=t.signature, isClassMethod=t.isClassMethod)
 
                     type_dict[nm] = v
-                else:
+                elif nm not in type_dict:
                     type_dict[nm] = value
 
     if name in CLASS_METHODS:

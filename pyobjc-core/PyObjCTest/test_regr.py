@@ -8,6 +8,13 @@ from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
 
+class OCTestRegrWithGetItem (NSObject):
+    def objectForKey_(self, k):
+        return "ofk: %s"%(k,)
+
+    def __getitem__(self, k):
+        return "gi: %s"%(k,)
+
 class ReturnAStruct (NSObject):
     def someRectWithRect_(self, ((x, y), (h, w))):
         return ((x,y),(h,w))
@@ -229,6 +236,12 @@ class TestInitMemoryLeak (TestCase):
             self.fail("Unexpected raising of UninitializedDeallocWarning")
 
         self.failIf(v is not None)
+
+    def testExplicitGetItem(self):
+        v = OCTestRegrWithGetItem.alloc().init()
+
+        self.failUnlessEqual(v.objectForKey_("foo"), "ofk: foo")
+        self.failUnlessEqual(v["foo"], "gi: foo")
 
 
 if __name__ == '__main__':
