@@ -85,6 +85,7 @@ class SplitSignatureTest (TestCase):
 
             # dictionary methods
             'get',
+            "has_key",
         ]
 
         for cls in objc.getClassList():

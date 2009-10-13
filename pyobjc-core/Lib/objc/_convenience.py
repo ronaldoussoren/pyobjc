@@ -75,6 +75,8 @@ def _add_convenience_methods(super_class, name, type_dict):
                 "__bundle_hack__ is not necessary in PyObjC 1.3+ / py2app 0.1.8+",
                 DeprecationWarning)
 
+    look_at_super = (super_class is not None and super_class.__name__ != 'Object')
+
     for k, sel in type_dict.items():
         if not isinstance(sel, selector):
             continue
@@ -84,6 +86,7 @@ def _add_convenience_methods(super_class, name, type_dict):
         #
 
         sel = sel.selector
+
 
         if sel in CONVENIENCE_METHODS:
             v = CONVENIENCE_METHODS[sel]
@@ -97,6 +100,11 @@ def _add_convenience_methods(super_class, name, type_dict):
                         signature=t.signature, isClassMethod=t.isClassMethod)
 
                     type_dict[nm] = v
+
+                elif look_at_super and hasattr(super_class, nm):
+                    # Skip, inherit the implementation from a super_class
+                    pass
+
                 elif nm not in type_dict:
                     type_dict[nm] = value
 

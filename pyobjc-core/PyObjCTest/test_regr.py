@@ -15,6 +15,10 @@ class OCTestRegrWithGetItem (NSObject):
     def __getitem__(self, k):
         return "gi: %s"%(k,)
 
+class OCTestRegrWithGetItem2 (OCTestRegrWithGetItem):
+    def objectForKey_(self, k):
+        return "ofk2: %s"%(k,)
+
 class ReturnAStruct (NSObject):
     def someRectWithRect_(self, ((x, y), (h, w))):
         return ((x,y),(h,w))
@@ -241,6 +245,10 @@ class TestInitMemoryLeak (TestCase):
         v = OCTestRegrWithGetItem.alloc().init()
 
         self.failUnlessEqual(v.objectForKey_("foo"), "ofk: foo")
+        self.failUnlessEqual(v["foo"], "gi: foo")
+
+        v = OCTestRegrWithGetItem2.alloc().init()
+        self.failUnlessEqual(v.objectForKey_("foo"), "ofk2: foo")
         self.failUnlessEqual(v["foo"], "gi: foo")
 
 
