@@ -406,8 +406,8 @@ class TestCase (_unittest.TestCase):
         info = method.__metadata__()
         type = info['retval']['type']
         if type != objc._C_NSBOOL:
-            self.fail(message or "result of %s is not of type BOOL"%(
-                method))
+            self.fail(message or "result of %s is not of type BOOL, but %r"%(
+                method, type))
 
     def failUnlessArgIsBOOL(self, method, argno, message=None):
         if isinstance(method, objc.selector):
