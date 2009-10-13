@@ -11,3 +11,5 @@ ABPeoplePicker C API
 
 ``ABPickerSetDelegate`` and ``ABPickerGetDelegate`` use an API that isn't 
 wrapped by PyObjC.
+
+The C API has some problems on Snow Leopard, use the Object-Oriented API instead.
