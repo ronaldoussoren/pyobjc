@@ -11,36 +11,16 @@ and (Objective-)C frameworks.
 NOTE: Apple's documentation for this framework is very minimal at the moment,
 making it very hard to actually use the framework.
 '''
-import ez_setup
-ez_setup.use_setuptools()
-
-from setuptools import setup
-try:
-    from PyObjCMetaData.commands import extra_cmdclass, extra_options
-except ImportError:
-    extra_cmdclass = {}
-    extra_options = lambda name: {}
+from pyobjc_setup import setup
 
 setup(
+    min_os_level='10.5',
     name='pyobjc-framework-LatentSemanticMapping',
     version='2.2b4',
     description = "Wrappers for the framework LatentSemanticMapping on Mac OS X",
-    long_description = __doc__,
-    author='Ronald Oussoren',
-    author_email='pyobjc-dev@lists.sourceforge.net',
-    url='http://pyobjc.sourceforge.net',
-    platforms = [ "MacOS X" ],
     packages = [ "LatentSemanticMapping" ],
-    package_dir = { '': 'Lib' },
     install_requires = [ 
         'pyobjc-core>=2.2b4',
         'pyobjc-framework-Cocoa>=2.2b4',
     ],
-    package_data = { 
-        '': ['*.bridgesupport'] 
-    },
-    test_suite='PyObjCTest',
-    cmdclass = extra_cmdclass,
-    options = extra_options('LatentSemanticMapping'),
-    zip_safe = True,
 )

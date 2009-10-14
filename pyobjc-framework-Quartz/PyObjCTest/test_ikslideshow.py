@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 class TestIKSlideShowHelper (NSObject):
     def slideshowItemAtIndex_(self, idx): return None
@@ -10,9 +10,11 @@ class TestIKSlideShowHelper (NSObject):
 
 
 class TestIKSlideshow (TestCase):
+    @min_os_level('10.5')
     def no_testProtocols(self):
         self.failUnlessIsInstance(objc.protocolNamed("IKSlideshowDataSource"), objc.formal_protocol)
 
+    @min_os_level('10.5')
     def testProtocolMethods(self):
         self.failUnlessArgHasType(TestIKSlideShowHelper.slideshowItemAtIndex_, 0, objc._C_NSUInteger)
         self.failUnlessArgHasType(TestIKSlideShowHelper.nameOfSlideshowItemAtIndex_, 0, objc._C_NSUInteger)
@@ -20,9 +22,11 @@ class TestIKSlideshow (TestCase):
         self.failUnlessResultIsBOOL(TestIKSlideShowHelper.canExportSlideshowItemAtIndex_toApplication_)
         self.failUnlessArgHasType(TestIKSlideShowHelper.slideshowDidChangeCurrentIndex_, 0, objc._C_NSUInteger)
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(IKSlideshow.canExportToApplication_)
 
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(IKSlideshowModeImages, unicode)
         self.failUnlessIsInstance(IKSlideshowModePDF, unicode)

@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 class TestIKImageEditPanelHelper (NSObject):
     def thumbnailWithMaximumSize_(self, sz): return None
@@ -9,9 +9,11 @@ class TestIKImageEditPanelHelper (NSObject):
     def hasDetailsMode(self): return 1
 
 class TestIKImageEditPanel (TestCase):
+    @min_os_level('10.5')
     def no_testProtocols(self):
         self.failUnlessIsInstance(objc.protocolNamed('IKImageEditPanel'), objc.formal_protocol)
 
+    @min_os_level('10.5')
     def testProtocolMethods(self):
         self.failUnlessArgHasType(TestIKImageEditPanelHelper.thumbnailWithMaximumSize_, 0, NSSize.__typestr__)
 

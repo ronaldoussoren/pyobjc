@@ -8,7 +8,7 @@ class TestCarbonUtils (TestCase):
     def testFunctions(self):
         WebInitForCarbon()
 
-        img = NSImage.imageNamed_('NSAddTemplate')
+        img = NSImage.imageNamed_('NSHelpCursor')
         self.failUnlessIsInstance(img, NSImage)
 
         ref = WebConvertNSImageToCGImageRef(img)

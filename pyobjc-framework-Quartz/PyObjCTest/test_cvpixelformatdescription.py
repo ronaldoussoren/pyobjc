@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreVideo import *
+from Quartz import *
 
 class TestCVPixelFormatDescription (TestCase):
     def testConstants(self):

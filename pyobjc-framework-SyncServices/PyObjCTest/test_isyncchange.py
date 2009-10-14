@@ -14,6 +14,9 @@ class TestISyncChange (TestCase):
         self.failUnlessIsInstance(ISyncChangePropertyClear, unicode)
         self.failUnlessIsInstance(ISyncChangePropertyNameKey, unicode)
         self.failUnlessIsInstance(ISyncChangePropertyValueKey, unicode)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(ISyncChangePropertyValueIsDefaultKey, unicode)
 
 if __name__ == "__main__":

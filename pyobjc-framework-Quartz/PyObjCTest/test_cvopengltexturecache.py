@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreVideo import *
+from Quartz import *
 
 class TestCVOpenGLTextureCache (TestCase):
     def testTypes(self):

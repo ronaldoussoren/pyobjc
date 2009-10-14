@@ -4,7 +4,7 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
-#ifdef WITH_CORE_VIDEO
+#if PyObjC_BUILD_RELEASE >= 1005
 
 #import <CoreVideo/CoreVideo.h>
 

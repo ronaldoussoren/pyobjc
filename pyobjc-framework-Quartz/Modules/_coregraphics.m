@@ -6,7 +6,7 @@
 
 #import <ApplicationServices/ApplicationServices.h>
 
-#ifndef OS_TIGER
+#if PyObjC_BUILD_RELEASE >= 1005
 static PyObject*
 m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), 
 		PyObject* args)
@@ -250,7 +250,7 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
 	CFRelease(image);
 	return rv;
 }
-#endif /* !OS_TIGER */
+#endif 
 
 static PyObject*
 m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), 
@@ -336,7 +336,7 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
 
 
 static PyMethodDef m_methods[] = {
-#ifndef OS_TIGER
+#if PyObjC_BUILD_RELEASE >= 1005
 	{
 		"CGFontCopyTableTags",
 		(PyCFunction)m_CGFontCopyTableTags,
@@ -361,7 +361,7 @@ static PyMethodDef m_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
-#endif /* !OS_TIGER */
+#endif 
 	{
 		"CGBitmapContextCreate",
 		(PyCFunction)m_CGBitmapContextCreate,
@@ -378,6 +378,27 @@ void init_coregraphics(void)
 {
 	PyObject* m = Py_InitModule4("_coregraphics", m_methods,
 		NULL, NULL, PYTHON_API_VERSION);
+#if PyObjC_BUILD_RELEASE >= 1005
+	PyObject* d = PyModule_GetDict(m);
+#endif
 
         if (PyObjC_ImportAPI(m) < 0) { return; }
+
+#if PyObjC_BUILD_RELEASE >= 1005
+	if (CGFontCopyTableTags == NULL) {
+		PyDict_DelItemString(d, "CGFontCopyTableTags");
+	}
+
+	if (CGWindowListCreate == NULL) {
+		PyDict_DelItemString(d, "CGWindowListCreate");
+	}
+
+	if (CGWindowListCreateDescriptionFromArray == NULL) {
+		PyDict_DelItemString(d, "CGWindowListCreateDescriptionFromArray");
+	}
+
+	if (CGWindowListCreateImageFromArray == NULL) {
+		PyDict_DelItemString(d, "CGWindowListCreateImageFromArray");
+	}
+#endif 
 }

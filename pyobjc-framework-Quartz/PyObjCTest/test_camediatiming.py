@@ -2,23 +2,24 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCAMediaTimingHelper (NSObject, objc.protocolNamed('CAMediaTiming')):
-    def beginTime(self): return 1
-    def setBeginTime_(self, v): pass
-    def duration(self): return 1
-    def setDuration_(self, v): pass
-    def speed(self): return 1
-    def setSpeed_(self, v): pass
-    def timeOffset(self): return 1
-    def setTimeOffset_(self, v): pass
-    def repeatCount(self): return 1
-    def setRepeatCount_(self, v): pass
-    def repeatDuration(self): return 1
-    def setRepeatDuration_(self, v): pass
-    def autoreverses(self): return 1
-    def setAutoreverses_(self, v): return 1
-    def fillMode(self): return 1
-    def setFillMode_(self, v): pass
+if os_release() >= '10.5':
+    class TestCAMediaTimingHelper (NSObject, objc.protocolNamed('CAMediaTiming')):
+        def beginTime(self): return 1
+        def setBeginTime_(self, v): pass
+        def duration(self): return 1
+        def setDuration_(self, v): pass
+        def speed(self): return 1
+        def setSpeed_(self, v): pass
+        def timeOffset(self): return 1
+        def setTimeOffset_(self, v): pass
+        def repeatCount(self): return 1
+        def setRepeatCount_(self, v): pass
+        def repeatDuration(self): return 1
+        def setRepeatDuration_(self, v): pass
+        def autoreverses(self): return 1
+        def setAutoreverses_(self, v): return 1
+        def fillMode(self): return 1
+        def setFillMode_(self, v): pass
 
 class TestCAMediaTiming (TestCase):
     def testConstants(self):

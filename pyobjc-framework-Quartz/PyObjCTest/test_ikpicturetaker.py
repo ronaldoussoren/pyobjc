@@ -1,8 +1,9 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 class TestIKPictureTaker (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessArgIsSEL(IKPictureTaker.beginPictureTakerWithDelegate_didEndSelector_contextInfo_, 1, 'v@:@' + objc._C_NSInteger + '^v')
         self.failUnlessArgIsSEL(IKPictureTaker.beginPictureTakerSheetForWindow_withDelegate_didEndSelector_contextInfo_, 2, 'v@:@' + objc._C_NSInteger + '^v')
@@ -11,6 +12,7 @@ class TestIKPictureTaker (TestCase):
         self.failUnlessResultIsBOOL(IKPictureTaker.mirroring)
         self.failUnlessArgIsBOOL(IKPictureTaker.setMirroring_, 0)
 
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(IKPictureTakerAllowsVideoCaptureKey, unicode)
         self.failUnlessIsInstance(IKPictureTakerAllowsFileChoosingKey, unicode)

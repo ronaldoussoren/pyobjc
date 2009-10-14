@@ -1,5 +1,5 @@
 from PyObjCTools.TestSupport import *
-from Quartz.CoreVideo import *
+from Quartz import *
 
 class TestCVBase (TestCase):
     def testStructs(self):
