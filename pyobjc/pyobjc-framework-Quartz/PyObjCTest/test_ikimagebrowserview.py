@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 class TestIKImageBrowserViewHelper (NSObject):
     # IKImageBrowserDataSource
@@ -21,6 +21,7 @@ class TestIKImageBrowserViewHelper (NSObject):
 
 
 class TestIKImageBrowserView (TestCase):
+    @min_os_level('10.5')
     def testProtocols(self):
         self.failUnlessIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
 
@@ -40,6 +41,7 @@ class TestIKImageBrowserView (TestCase):
         self.failUnlessArgHasType(TestIKImageBrowserViewHelper.imageBrowser_cellWasDoubleClickedAtIndex_, 1, objc._C_NSUInteger)
         self.failUnlessArgHasType(TestIKImageBrowserViewHelper.imageBrowser_cellWasRightClickedAtIndex_withEvent_, 1, objc._C_NSUInteger)
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(IKImageBrowserView.constrainsToOriginalSize)
         self.failUnlessArgIsBOOL(IKImageBrowserView.setConstrainsToOriginalSize_, 0)
@@ -57,6 +59,7 @@ class TestIKImageBrowserView (TestCase):
         #view = IKImageBrowserView.alloc().init()
         #self.failUnlessResultIsBOOL(view.isGroupExpandedAtIndex_)
 
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessEqual(IKCellsStyleNone, 0)
         self.failUnlessEqual(IKCellsStyleShadowed, 1)

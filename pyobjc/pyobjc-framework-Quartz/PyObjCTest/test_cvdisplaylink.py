@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import *
-from Quartz.CoreVideo import *
 from Quartz import *
 
 class TestCVDisplayLink (TestCase):

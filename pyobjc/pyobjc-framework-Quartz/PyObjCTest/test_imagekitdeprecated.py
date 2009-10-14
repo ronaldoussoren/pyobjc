@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 
 class TestImageKitDeprecatedHelper (NSObject):
@@ -11,6 +11,7 @@ class TestImageKitDeprecatedHelper (NSObject):
 
 
 class TestImageKitDeprecated (TestCase):
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessEqual(IKImagePickerAllowsVideoCaptureKey, IKPictureTakerAllowsVideoCaptureKey)
         self.failUnlessEqual(IKImagePickerAllowsFileChoosingKey, IKPictureTakerAllowsFileChoosingKey)
@@ -26,10 +27,12 @@ class TestImageKitDeprecated (TestCase):
         self.failUnlessIsInstance(IKPictureTakerShowAddressBookPicture, unicode)
         self.failUnlessIsInstance(IKPictureTakerShowEmptyPicture, unicode)
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessArgIsSEL(IKImagePicker.beginImagePickerWithDelegate_didEndSelector_contextInfo_, 1, 'v@:@' + objc._C_NSUInteger + '^v')
         self.failUnlessArgIsSEL(IKImagePicker.beginImagePickerSheetForWindow_withDelegate_didEndSelector_contextInfo_, 2, 'v@:@' + objc._C_NSUInteger + '^v')
 
+    @min_os_level('10.5')
     def testProtocols(self):
         self.failUnlessIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 

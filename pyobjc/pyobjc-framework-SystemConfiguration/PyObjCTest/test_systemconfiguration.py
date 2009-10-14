@@ -26,11 +26,17 @@ class TestSystemConfiguration (TestCase):
         self.failUnlessEqual(kSCStatusMaxLink, 3006)
         self.failUnlessEqual(kSCStatusReachabilityUnknown, 4001)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(kCFErrorDomainSystemConfiguration, unicode)
 
-    def testFunctions(self):
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
         err = SCCopyLastError()
         self.failUnless(isinstance(err, CFErrorRef))
+
+
+    def testFunctions(self):
 
         err = SCError()
         self.failUnlessIsInstance(err, (int, long))

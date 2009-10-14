@@ -1,5 +1,5 @@
 from PyObjCTools.TestSupport import *
-from Quartz.CoreVideo import *
+from Quartz import *
 
 class TestCVHostTime (TestCase):
     def testFunctions(self):

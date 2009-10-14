@@ -1,6 +1,6 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.QuartzFilters import *
+from Quartz import *
 
 class TestQuartzFilter (TestCase):
     def testMethods(self):

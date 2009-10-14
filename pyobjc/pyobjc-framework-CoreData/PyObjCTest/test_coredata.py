@@ -7,8 +7,8 @@ import CoreData
 
 class TestCoreData (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(CoreData, 'NSAtomicStore') )
-        self.assert_( isinstance(CoreData.NSAtomicStore, objc.objc_class) )
+        self.assert_( hasattr(CoreData, 'NSAttributeDescription') )
+        self.assert_( isinstance(CoreData.NSAttributeDescription, objc.objc_class) )
 
     def testValues(self):
         self.assert_( hasattr(CoreData, 'NSCoreDataVersionNumber10_4_3') )

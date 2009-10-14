@@ -33,71 +33,41 @@ packages to avoid name clashes with Apple provided wrappers for CoreGraphics.
 WARNING: Running the unittests will change your display settings during the
 testrun, which will probably mess up your window layout.
 '''
-import ez_setup
-ez_setup.use_setuptools()
-
-from setuptools import setup, Extension
-try:
-    from PyObjCMetaData.commands import extra_cmdclass, extra_options
-except ImportError:
-    extra_cmdclass = {}
-    extra_options = lambda name: {}
-
-import os
-
-if int(os.uname()[2].split('.')[0]) > 8:
-    CV_CFLAGS=["-DWITH_CORE_VIDEO", "-isysroot", "/"]
-else:
-    CV_CFLAGS=[]
-
-if int(os.uname()[2].split('.')[0]) > 8:
-    CFLAGS = [ "-isysroot", "/" ]
-else:
-    CFLAGS=[ "-DNO_OBJC2_RUNTIME", "-DOS_TIGER" ]
+from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-Quartz',
     version='2.2b4',
     description = "Wrappers for the Quartz frameworks on Mac OS X",
-    long_description = __doc__,
-    author='Ronald Oussoren',
-    author_email='pyobjc-dev@lists.sourceforge.net',
-    url='http://pyobjc.sourceforge.net',
-    platforms = [ "MacOS X" ],
-    packages = [ "Quartz", "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", "Quartz.PDFKit", "Quartz.QuartzFilters" ],
-    package_dir = { '': 'Lib' },
+    packages = [ "Quartz", 
+        "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", 
+        "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", 
+        "Quartz.PDFKit", "Quartz.QuartzFilters" ],
     install_requires = [ 
         'pyobjc-core>=2.2b4',
         'pyobjc-framework-Cocoa>=2.2b4',
     ],
-    package_data = { 
-        '': ['*.bridgesupport'] 
-    },
-    test_suite='PyObjCTest',
-    cmdclass = extra_cmdclass,
-    options = extra_options('Quartz'),
-    zip_safe = True,
     ext_modules = [
         # CoreVideo
         Extension('Quartz.CoreVideo._CVPixelBuffer',
             [ 'Modules/_CVPixelBuffer.m' ],
-            extra_compile_args=CV_CFLAGS + CFLAGS),
+        ),
 
         # CoreGraphics
         Extension('Quartz.CoreGraphics._inlines',
             [ 'Modules/_CoreGraphics_inlines.m' ],
-            extra_compile_args=CFLAGS),
+        ),
         Extension('Quartz.CoreGraphics._callbacks',
             [ 'Modules/_callbacks.m' ],
-            extra_compile_args=CFLAGS),
+        ),
         Extension('Quartz.CoreGraphics._doubleindirect',
             [ 'Modules/_doubleindirect.m' ],
-            extra_compile_args=CFLAGS),
+        ),
         Extension('Quartz.CoreGraphics._sortandmap',
             [ 'Modules/_sortandmap.m' ],
-            extra_compile_args=CFLAGS),
+        ),
         Extension('Quartz.CoreGraphics._coregraphics',
             [ 'Modules/_coregraphics.m' ],
-            extra_compile_args=CFLAGS),
+        ),
     ],
 )

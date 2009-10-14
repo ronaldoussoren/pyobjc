@@ -1,8 +1,9 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.ImageKit import *
+from Quartz import *
 
 class TestIKImageView (TestCase):
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(IKToolModeNone, unicode)
         self.failUnlessIsInstance(IKToolModeMove, unicode)

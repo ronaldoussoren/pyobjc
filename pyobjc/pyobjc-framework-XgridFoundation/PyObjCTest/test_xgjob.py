@@ -26,6 +26,9 @@ class TestXGJob (TestCase):
         self.failUnlessIsInstance(XGJobSpecificationDependsOnTasksKey,  unicode)
         self.failUnlessIsInstance(XGJobSpecificationNotificationEmailKey,  unicode)
         self.failUnlessIsInstance(XGJobSpecificationApplicationIdentifierKey,  unicode)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
         self.failUnlessIsInstance(XGJobSpecificationSchedulerHintsKey,  unicode)
         self.failUnlessIsInstance(XGJobSpecificationARTSpecificationsKey,  unicode)
         self.failUnlessIsInstance(XGJobSpecificationARTConditionsKey,  unicode)

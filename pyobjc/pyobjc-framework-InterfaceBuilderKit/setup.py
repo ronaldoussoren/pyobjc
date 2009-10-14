@@ -20,36 +20,15 @@ NOTE: To run the unittests for this framework use::
 
 This is needed because the InterfaceBuilderKit framework won't load otherwise.
 '''
-import ez_setup
-ez_setup.use_setuptools()
-
-from setuptools import setup
-try:
-    from PyObjCMetaData.commands import extra_cmdclass, extra_options
-except ImportError:
-    extra_cmdclass = {}
-    extra_options = lambda name: {}
-
+from pyobjc_setup import setup
 setup(
+    min_os_level='10.5',
     name='pyobjc-framework-InterfaceBuilderKit',
     version='2.2b4',
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
-    long_description = __doc__,
-    author='Ronald Oussoren',
-    author_email='pyobjc-dev@lists.sourceforge.net',
-    url='http://pyobjc.sourceforge.net',
-    platforms = [ "MacOS X" ],
     packages = [ "InterfaceBuilderKit" ],
-    package_dir = { '': 'Lib' },
     install_requires = [ 
         'pyobjc-core>=2.2b4', 
         'pyobjc-framework-Cocoa>=2.2b4', 
     ],
-    package_data = { 
-        '': ['*.bridgesupport'] 
-    },
-    test_suite='PyObjCTest',
-    cmdclass = extra_cmdclass,
-    options = extra_options('InterfaceBuilderKit'),
-    zip_safe = True,
 )
