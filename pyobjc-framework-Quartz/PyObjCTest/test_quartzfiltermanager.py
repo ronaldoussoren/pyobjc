@@ -3,9 +3,11 @@ from PyObjCTools.TestSupport import *
 from Quartz import *
 
 class TestQuartzFilterManager (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(QuartzFilterManager.selectFilter_)
 
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(kQuartzFilterManagerDidAddFilterNotification, unicode)
         self.failUnlessIsInstance(kQuartzFilterManagerDidRemoveFilterNotification, unicode)

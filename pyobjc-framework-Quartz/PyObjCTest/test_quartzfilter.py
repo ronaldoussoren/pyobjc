@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz import *
 
 class TestQuartzFilter (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(QuartzFilter.applyToContext_)
 

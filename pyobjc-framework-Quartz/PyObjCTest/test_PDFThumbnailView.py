@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
 class TestPDFThumbnailView (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(PDFThumbnailView.allowsDragging)
         self.failUnlessArgIsBOOL(PDFThumbnailView.setAllowsDragging_, 0)

@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
+from Quartz import *
+import Quartz
 import os
 
 class TestCGPattern (TestCase):
@@ -50,7 +51,7 @@ class TestCGPattern (TestCase):
 
         finally:
             CGContextEndPage(context)
-            CGPDFContextClose(context)
+            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 

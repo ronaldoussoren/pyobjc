@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz import *
 
 class TestCGImageProperties (TestCase):
+
     def testConstants(self):
         self.failUnlessIsInstance(kCGImagePropertyTIFFDictionary, unicode)
         self.failUnlessIsInstance(kCGImagePropertyGIFDictionary, unicode)
@@ -13,10 +14,8 @@ class TestCGImageProperties (TestCase):
         self.failUnlessIsInstance(kCGImagePropertyGPSDictionary, unicode)
         self.failUnlessIsInstance(kCGImagePropertyRawDictionary, unicode)
         self.failUnlessIsInstance(kCGImagePropertyCIFFDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyMakerCanonDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyMakerNikonDictionary, unicode)
-        self.failUnlessIsInstance(kCGImageProperty8BIMDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyDNGDictionary, unicode)
+
+    
         self.failUnlessIsInstance(kCGImagePropertyFileSize, unicode)
         self.failUnlessIsInstance(kCGImagePropertyPixelHeight, unicode)
         self.failUnlessIsInstance(kCGImagePropertyPixelWidth, unicode)
@@ -202,6 +201,22 @@ class TestCGImageProperties (TestCase):
         self.failUnlessIsInstance(kCGImagePropertyIPTCImageOrientation, unicode)
         self.failUnlessIsInstance(kCGImagePropertyIPTCLanguageIdentifier, unicode)
         self.failUnlessIsInstance(kCGImagePropertyIPTCStarRating, unicode)
+
+
+    @min_os_level('10.5')
+    @expectedFailure
+    def testConstants10_5_missing(self):
+        self.failUnlessIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
+        self.failUnlessIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
+        self.failUnlessIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
+        self.failUnlessIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCGImagePropertyMakerCanonDictionary, unicode)
+        self.failUnlessIsInstance(kCGImagePropertyMakerNikonDictionary, unicode)
+        self.failUnlessIsInstance(kCGImageProperty8BIMDictionary, unicode)
+        self.failUnlessIsInstance(kCGImagePropertyDNGDictionary, unicode)
         self.failUnlessIsInstance(kCGImageProperty8BIMLayerNames, unicode)
         self.failUnlessIsInstance(kCGImagePropertyDNGVersion, unicode)
         self.failUnlessIsInstance(kCGImagePropertyDNGBackwardVersion, unicode)
@@ -254,17 +269,6 @@ class TestCGImageProperties (TestCase):
         self.failUnlessIsInstance(kCGImagePropertyMakerCanonFlashExposureComp, unicode)
         self.failUnlessIsInstance(kCGImagePropertyMakerCanonContinuousDrive, unicode)
         self.failUnlessIsInstance(kCGImagePropertyMakerCanonLensModel, unicode)
-
-
-    @min_os_level('10.5')
-    @expectedFailure
-    def testConstants10_5_missing(self):
-        self.failUnlessIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
-        self.failUnlessIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
-    @min_os_level('10.5')
-    def testConstants10_5(self):
         self.failUnlessIsInstance(kCGImagePropertyExifAuxDictionary, unicode)
         self.failUnlessIsInstance(kCGImagePropertyMakerCanonFirmware, unicode)
         self.failUnlessIsInstance(kCGImagePropertyMakerCanonAspectRatioInfo, unicode)
