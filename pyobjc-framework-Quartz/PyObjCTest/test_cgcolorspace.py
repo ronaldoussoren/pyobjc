@@ -76,6 +76,10 @@ class TestCGColorSpace (TestCase):
 
         self.failUnlessIsInstance(CGColorSpaceGetTypeID(), (int, long))
         self.failUnlessIsInstance(CGColorSpaceGetNumberOfComponents(csp), (int, long))
+
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
         self.failUnlessIsInstance(CGColorSpaceGetModel(csp), (int, long))
 
         v = CGColorSpaceGetBaseColorSpace(csp)
@@ -90,7 +94,6 @@ class TestCGColorSpace (TestCase):
 
         v = CGColorSpaceCopyICCProfile(csp)
         self.failUnlessIsInstance(v, CFDataRef)
-
 
         data = open('/Library/ColorSync/Profiles/WebSafeColors.icc', 'rb').read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
@@ -120,8 +123,6 @@ class TestCGColorSpace (TestCase):
         self.failUnless(buf[4] == 1)
         self.failUnless(buf[5] == 2)
 
-    @min_os_level('10.5')
-    def testFunctions10_5(self):
         spc = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
         self.failUnlessIsInstance(spc, CGColorSpaceRef)
 

@@ -27,6 +27,9 @@ class TestCGFont (TestCase):
 
 
 
+    @min_os_level('10.5')
+    # Most functions should work on 10.4 as well, except for the convenient 
+    # contruction functions
     def testFunctions(self):
         self.failUnlessIsInstance(CGFontGetTypeID(), (int, long))
 

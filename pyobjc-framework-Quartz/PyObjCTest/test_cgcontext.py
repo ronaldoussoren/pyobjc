@@ -1,7 +1,8 @@
 from __future__ import with_statement
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
+from Quartz import *
+import Quartz
 import os
 
 
@@ -81,6 +82,29 @@ class TestCGContext (TestCase):
         self.failUnlessIsInstance(context, CGContextRef)
         CGContextBeginPage(context, objc.NULL)
         try:
+            fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+            if not os.path.exists(fn):
+                fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
+
+            provider = CGDataProviderCreateWithCFData(buffer(open(fn, 'rb').read()))
+            image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
+            self.failUnlessIsInstance(image, CGImageRef)
+
+            CGContextDrawTiledImage(context, ((0, 0), (10, 10)), image)
+
+            font =  CGFontCreateWithFontName("Helvetica")
+            self.failUnlessIsInstance(font, CGFontRef)
+            CGContextSetFont(context, font)
+
+            CGContextBeginTransparencyLayerWithRect(context,
+                    ((10, 10), (500, 100)), None)
+            CGContextEndTransparencyLayer(context)
+
+            color = CGColorCreateGenericRGB(1.0, 0.5, 0.5, 1.0)
+            self.failUnlessIsInstance(color, CGColorRef)
+            CGContextSetFillColorWithColor(context, color)
+            CGContextSetStrokeColorWithColor(context, color)
+
             gradient = CGGradientCreateWithColorComponents(
                 CGColorSpaceCreateDeviceGray(),
                 (0.25, 0.8), (0.95, 0.99), 2)
@@ -103,9 +127,17 @@ class TestCGContext (TestCase):
             self.failUnlessArgHasType(CGContextSetAllowsFontSubpixelPositioning, 1, objc._C_BOOL)
             self.failUnlessArgHasType(CGContextSetShouldSubpixelQuantizeFonts, 1, objc._C_BOOL)
 
+            gradient = CGGradientCreateWithColorComponents(
+                    CGColorSpaceCreateDeviceGray(),
+                    (0.25, 0.8), (0.95, 0.99), 2)
+            self.failUnlessIsInstance(gradient, CGGradientRef)
+
+            CGContextDrawLinearGradient(context, gradient, (0, 10), (50, 60),
+                    kCGGradientDrawsAfterEndLocation)
+
         finally:
             CGContextEndPage(context)
-            CGPDFContextClose(context)
+            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
@@ -244,10 +276,6 @@ class TestCGContext (TestCase):
             self.assertRaises(ValueError, CGContextClipToRects, context,
                     [ ((0, 0), (40, 50)), ((60, 50), (90, 100))], 3)
 
-            color = CGColorCreateGenericRGB(1.0, 0.5, 0.5, 1.0)
-            self.failUnlessIsInstance(color, CGColorRef)
-            CGContextSetFillColorWithColor(context, color)
-            CGContextSetStrokeColorWithColor(context, color)
 
             CGContextSetFillColorSpace(context, CGColorSpaceCreateDeviceGray())
             CGContextSetStrokeColorSpace(context, CGColorSpaceCreateDeviceGray())
@@ -273,16 +301,11 @@ class TestCGContext (TestCase):
 
             CGContextSetInterpolationQuality(context, kCGInterpolationHigh)
 
+            color = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (1,1,1,1))
+
             CGContextSetShadowWithColor(context, (2, 3), 0.5, color)
             CGContextSetShadow(context, (5, 6), 0.6)
 
-            gradient = CGGradientCreateWithColorComponents(
-                    CGColorSpaceCreateDeviceGray(),
-                    (0.25, 0.8), (0.95, 0.99), 2)
-            self.failUnlessIsInstance(gradient, CGGradientRef)
-
-            CGContextDrawLinearGradient(context, gradient, (0, 10), (50, 60),
-                    kCGGradientDrawsAfterEndLocation)
 
             CGContextSetCharacterSpacing(context, 0.1)
             CGContextSetTextPosition(context, 10, 50)
@@ -296,9 +319,6 @@ class TestCGContext (TestCase):
 
             CGContextSetTextDrawingMode(context, kCGTextStroke)
 
-            font =  CGFontCreateWithFontName("Helvetica")
-            self.failUnlessIsInstance(font, CGFontRef)
-            CGContextSetFont(context, font)
 
             CGContextSetFontSize(context, 11.5)
 
@@ -328,9 +348,6 @@ class TestCGContext (TestCase):
             CGContextBeginTransparencyLayer(context, None)
             CGContextEndTransparencyLayer(context)
 
-            CGContextBeginTransparencyLayerWithRect(context,
-                    ((10, 10), (500, 100)), None)
-            CGContextEndTransparencyLayer(context)
 
             tf = CGContextGetUserSpaceToDeviceSpaceTransform(context)
             self.failUnlessIsInstance(tf, CGAffineTransform)
@@ -367,13 +384,15 @@ class TestCGContext (TestCase):
             CGContextSetFillPattern(context, pattern, (1.0,1.0,1.0,1.0))
             CGContextSetStrokePattern(context, pattern, (1.0,1.0,1.0,1.0))
 
-            provider = CGDataProviderCreateWithCFData(buffer(
-                            open('/System/Library/CoreServices/DefaultDesktop.jpg', 'rb').read()))
+            fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+            if not os.path.exists(fn):
+                fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
+
+            provider = CGDataProviderCreateWithCFData(buffer(open(fn, 'rb').read()))
             image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
             self.failUnlessIsInstance(image, CGImageRef)
 
             CGContextDrawImage(context, ((0, 0), (70, 50)), image)
-            CGContextDrawTiledImage(context, ((0, 0), (10, 10)), image)
 
             provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 20 * 10))
             mask = CGImageMaskCreate(20, 10, 8, 32, 80, provider, None, True)
@@ -383,7 +402,7 @@ class TestCGContext (TestCase):
 
         finally:
             CGContextEndPage(context)
-            CGPDFContextClose(context)
+            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
@@ -395,6 +414,31 @@ class TestCGContext (TestCase):
         self.fail("CGContextDrawPDFPage")
         self.fail("CGContextDrawPDFDocument")
 
+
+    @min_os_level('10.5')
+    def testContextManager10_5(self):
+        url = CFURLCreateWithFileSystemPath(None,
+                "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
+        self.failUnlessIsInstance(url, CFURLRef)
+        context = CGPDFContextCreateWithURL(url,
+                ((0, 0), (1000, 1000)), None)
+        self.failUnlessIsInstance(context, CGContextRef)
+        try:
+            CGContextBeginPage(context, objc.NULL)
+
+            # XXX: This need actual tests, this at least tests that
+            # the contextmanagers can be used
+            with CGTransparencyLayer(context, None):
+                pass
+
+            with CGTransparencyLayer(context, None, ((10, 10), (200, 200))):
+                pass
+
+        finally:
+            CGContextEndPage(context)
+            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
+            if os.path.exists("/tmp/pyobjc.test.pdf"):
+                os.unlink("/tmp/pyobjc.test.pdf")
 
     def testContextManager(self):
         """
@@ -421,13 +465,6 @@ class TestCGContext (TestCase):
             self.failUnlessEqual(tf, transform)
 
            
-            # XXX: This need actual tests, this at least tests that
-            # the contextmanagers can be used
-            with CGTransparencyLayer(context, None):
-                pass
-
-            with CGTransparencyLayer(context, None, ((10, 10), (200, 200))):
-                pass
 
 
             CGContextEndPage(context)
@@ -443,7 +480,7 @@ class TestCGContext (TestCase):
 
         finally:
             CGContextEndPage(context)
-            CGPDFContextClose(context)
+            if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 

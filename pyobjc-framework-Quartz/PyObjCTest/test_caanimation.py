@@ -6,6 +6,7 @@ class TestCAAnimationHelper (NSObject):
     def animationDidStop_finished_(self, a, f): pass
 
 class TestCAAnimation (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(CAAnimation.shouldArchiveValueForKey_)
         self.failUnlessResultIsBOOL(CAAnimation.isRemovedOnCompletion)
