@@ -1,9 +1,15 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
+from Quartz import *
+import Quartz
 from Foundation import NSMutableData
 
 class TestCGPDFContext (TestCase):
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
+        # Note actual test is in the function below this one.
+        CGPDFContextClose
+
     def testFunctions(self):
         data = NSMutableData.data()
         self.failUnlessIsInstance(data, CFMutableDataRef)
@@ -16,7 +22,7 @@ class TestCGPDFContext (TestCase):
         context = CGPDFContextCreate(consumer, None, None)
         self.failUnlessIsInstance(context, CGContextRef)
 
-        CGPDFContextClose(context)
+        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
 
         self.failUnlessResultIsCFRetained(CGPDFContextCreateWithURL)
         url = CFURLCreateWithFileSystemPath(None,
@@ -34,7 +40,11 @@ class TestCGPDFContext (TestCase):
 
         CGPDFContextEndPage(context)
 
-        CGPDFContextClose(context)
+        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(context)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.failUnlessIsInstance(kCGPDFContextSubject, unicode)
 
     def testConstants(self):
         self.failUnlessIsInstance(kCGPDFContextMediaBox, unicode)
@@ -44,7 +54,6 @@ class TestCGPDFContext (TestCase):
         self.failUnlessIsInstance(kCGPDFContextArtBox, unicode)
         self.failUnlessIsInstance(kCGPDFContextTitle, unicode)
         self.failUnlessIsInstance(kCGPDFContextAuthor, unicode)
-        self.failUnlessIsInstance(kCGPDFContextSubject, unicode)
         self.failUnlessIsInstance(kCGPDFContextKeywords, unicode)
         self.failUnlessIsInstance(kCGPDFContextCreator, unicode)
         self.failUnlessIsInstance(kCGPDFContextOwnerPassword, unicode)

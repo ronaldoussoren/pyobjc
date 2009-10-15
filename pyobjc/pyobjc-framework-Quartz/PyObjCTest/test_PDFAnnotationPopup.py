@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
 class TestPDFAnnotationPopup (TestCase):
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(PDFAnnotationPopup.isOpen)
         self.failUnlessArgIsBOOL(PDFAnnotationPopup.setIsOpen_, 0)

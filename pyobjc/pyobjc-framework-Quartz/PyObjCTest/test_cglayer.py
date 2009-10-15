@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
+from Quartz import *
+import Quartz
 import os
 
 class TestCGLayer (TestCase):
@@ -20,7 +21,7 @@ class TestCGLayer (TestCase):
 
     def tearDown(self):
         CGContextEndPage(self.context)
-        CGPDFContextClose(self.context)
+        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(self.context)
         self.context = None
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")

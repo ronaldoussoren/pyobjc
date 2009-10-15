@@ -44,6 +44,7 @@ class TestQCPlugIn (TestCase):
         self.failUnlessIsInstance(QCPortTypeStructure, unicode)
 
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(QCPlugIn.startExecution_)
         self.failUnlessResultIsBOOL(QCPlugIn.execute_atTime_withArguments_)
