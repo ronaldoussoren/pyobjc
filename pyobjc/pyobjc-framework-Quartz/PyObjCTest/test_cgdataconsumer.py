@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
+from Quartz import *
+import Quartz
 from Foundation import NSMutableData
 import os
 
@@ -54,7 +55,7 @@ class TestCGDataConsumer (TestCase):
         CGContextFillRect(ctx, ((10, 10), (50, 30)))
         CGContextEndPage(ctx)
         CGContextFlush(ctx)
-        CGPDFContextClose(ctx)
+        if hasattr(Quartz, 'CGPDFContextClose'): CGPDFContextClose(ctx)
 
         del ctx
         del consumer

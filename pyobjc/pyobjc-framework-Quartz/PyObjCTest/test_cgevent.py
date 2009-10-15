@@ -8,12 +8,8 @@ class TestCGEvent (TestCase):
         self.failUnlessIsCFType(CGEventSourceRef)
 
     def testMissing(self):
-        evt = CGEventCreateMouseEvent(None, kCGEventOtherMouseDown, (10, 20), 2)
+        evt = CGEventCreateMouseEvent(None, kCGEventLeftMouseDown, (80, 90), kCGMouseButtonLeft)
         self.failUnlessIsInstance(evt, CGEventRef)
-
-
-        v = CGEventGetUnflippedLocation(evt)
-        self.failUnlessIsInstance(v, CGPoint)
 
         self.failUnlessResultIsCFRetained(CGEventCreateSourceFromEvent)
         v = CGEventCreateSourceFromEvent(evt)
@@ -26,7 +22,7 @@ class TestCGEvent (TestCase):
 
         t = CGEventGetType(evt)
         self.failUnlessIsInstance(t, (int, long))
-        self.failUnlessEqual(t, kCGEventOtherMouseDown)
+        self.failUnlessEqual(t, kCGEventLeftMouseDown)
 
         CGEventSetType(evt, kCGEventOtherMouseUp)
         t = CGEventGetType(evt)
@@ -98,15 +94,20 @@ class TestCGEvent (TestCase):
         evt = CGEventCreateKeyboardEvent(None, 45, False)
         self.failUnlessIsInstance(evt, CGEventRef)
 
+
+        v = CGEventCreateCopy(evt)
+        self.failUnlessIsInstance(v, CGEventRef)
+
+    @min_os_level('10.5')
+    def testFunctions10_5(self):
         self.failUnlessResultIsCFRetained(CGEventCreateScrollWheelEvent)
         evt = CGEventCreateScrollWheelEvent(None, kCGScrollEventUnitPixel, 2, 99, 44)
         self.failUnlessIsInstance(evt, CGEventRef)
         self.assertRaises(ValueError, CGEventCreateScrollWheelEvent, kCGScrollEventUnitPixel, 40, 2, 99)
         self.assertRaises(ValueError, CGEventCreateScrollWheelEvent, kCGScrollEventUnitPixel, 40, 2, 99, 100, 101)
-
-        v = CGEventCreateCopy(evt)
-        self.failUnlessIsInstance(v, CGEventRef)
         
+        v = CGEventGetUnflippedLocation(evt)
+        self.failUnlessIsInstance(v, CGPoint)
 
 if __name__ == "__main__":
     main()

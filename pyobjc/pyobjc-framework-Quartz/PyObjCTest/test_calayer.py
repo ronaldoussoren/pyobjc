@@ -40,6 +40,7 @@ class TestCALayer (TestCase):
         self.failUnlessIsInstance(kCATransition, unicode)
 
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultIsBOOL(CALayer.needsDisplayForKey_)
         self.failUnlessResultIsBOOL(CALayer.shouldArchiveValueForKey_)

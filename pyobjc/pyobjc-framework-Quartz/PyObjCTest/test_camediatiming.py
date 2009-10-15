@@ -22,12 +22,14 @@ if os_release() >= '10.5':
         def setFillMode_(self, v): pass
 
 class TestCAMediaTiming (TestCase):
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessIsInstance(kCAFillModeForwards, unicode)
         self.failUnlessIsInstance(kCAFillModeBackwards, unicode)
         self.failUnlessIsInstance(kCAFillModeBoth, unicode)
         self.failUnlessIsInstance(kCAFillModeRemoved, unicode)
 
+    @min_os_level('10.5')
     def testMethods(self):
         self.failUnlessResultHasType(TestCAMediaTimingHelper.beginTime, objc._C_DBL)
         self.failUnlessArgHasType(TestCAMediaTimingHelper.setBeginTime_, 0, objc._C_DBL)

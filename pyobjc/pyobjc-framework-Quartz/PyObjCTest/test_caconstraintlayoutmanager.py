@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
 class TestCAConstraintLayoutManager (TestCase):
+    @min_os_level('10.5')
     def testConstants(self):
         self.failUnlessEqual(kCAConstraintMinX, 0)
         self.failUnlessEqual(kCAConstraintMidX, 1)
