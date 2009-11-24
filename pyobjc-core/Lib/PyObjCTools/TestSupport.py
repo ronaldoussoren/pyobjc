@@ -94,6 +94,26 @@ def is32Bit():
         return False
     return True
 
+def onlyIf(expr, message=None):
+    """
+    Usage::
+
+        class Tests (unittest.TestCase):
+
+            @onlyIf(1 == 2)
+            def testUnlikely(self):
+                pass
+
+    The test only runs when the argument expression is true
+    """
+    def callback(function):
+        if not expr:
+            if _sys.version_info[:2] >= (2, 7):
+                return _unittest.skip(message)(function)
+            return lambda self: None
+        else:
+            return function
+    return callback
 
 def onlyOn32Bit(function):
     """

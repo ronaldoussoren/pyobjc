@@ -4,8 +4,10 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.2 (...)
------------------
+Version 2.2 (2009-11-24)
+------------------------
+
+- BUGFIX: Ensure PyObjC compiles cleanly with Python 2.6.4.
 
 - BUGFIX: It is now possible to explicitly define ``__getitem__`` (and other
   special methods) if your class implements ``objectForKey:``::
