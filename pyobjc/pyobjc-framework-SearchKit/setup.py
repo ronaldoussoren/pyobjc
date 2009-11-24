@@ -12,11 +12,11 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-SearchKit',
-    version='2.2b4',
+    version='2.2',
     description = "Wrappers for the framework SearchKit on Mac OS X",
     packages = [ "SearchKit" ],
     install_requires = [ 
-        'pyobjc-core>=2.2b4',
-        'pyobjc-framework-Cocoa>=2.2b4',
+        'pyobjc-core>=2.2',
+        'pyobjc-framework-Cocoa>=2.2',
     ],
 )
