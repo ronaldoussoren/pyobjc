@@ -17,11 +17,11 @@ from pyobjc_setup import *
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-ScriptingBridge',
-    version='2.2b4',
+    version='2.2',
     description = "Wrappers for the framework ScriptingBridge on Mac OS X",
     packages = [ "ScriptingBridge" ],
     install_requires = [ 
-        'pyobjc-core>=2.2b4',
-        'pyobjc-framework-Cocoa>=2.2b4',
+        'pyobjc-core>=2.2',
+        'pyobjc-framework-Cocoa>=2.2',
     ],
 )
