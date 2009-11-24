@@ -117,8 +117,8 @@ class TestCFProxySupport (TestCase):
         self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
         self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
 
-    @min_os_level('10.5')
     @expectedFailure
+    @min_os_level('10.5')
     def testConstants_fail(self):
         self.failUnlessIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
 
