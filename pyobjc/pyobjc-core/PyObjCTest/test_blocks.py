@@ -39,9 +39,18 @@ objc.parseBridgeSupport('''\
 </signatures>
 ''', globals(), 'PyObjCTest')
 
+# The blocks tests can only run when PyObjC was compiled with
+# GCC 4.2 or later.
+v = OCTestBlock.alloc().init()
+if hasattr(v, 'getIntBlock'):
+    blocksEnabled = True
+else:
+    blocksEnabled = False
+del v
 
 class TestBlocks (TestCase):
     @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC(self):
         obj = OCTestBlock.alloc().init()
 	
@@ -57,6 +66,7 @@ class TestBlocks (TestCase):
 	self.failUnlessEqual(lst, [42, 43])
 
     @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC2(self):
         obj = OCTestBlock.alloc().init()
 	
@@ -69,6 +79,7 @@ class TestBlocks (TestCase):
 
 
     @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
     def testBlockFromObjC(self):
         obj = OCTestBlock.alloc().init()
 
@@ -80,6 +91,7 @@ class TestBlocks (TestCase):
         self.failUnlessEqual(value, 42)
 
     @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
     def testBlockFromObjC2(self):
         obj = OCTestBlock.alloc().init()
 

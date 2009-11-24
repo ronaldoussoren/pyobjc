@@ -5,7 +5,7 @@
 
 @interface OCTestBlock : NSObject {}
 
-#if PyObjC_BUILD_RELEASE >= 1006
+#if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
 -(int(^)(void))getIntBlock;
 -(double(^)(double,double))getFloatBlock;
@@ -17,7 +17,7 @@
 
 @implementation OCTestBlock
 
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1006 && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
 
 -(int(^)(void))getIntBlock
 {

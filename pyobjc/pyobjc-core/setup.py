@@ -209,11 +209,10 @@ OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 if not os.path.exists('/usr/include/objc/runtime.h'):
     CFLAGS.append('-DNO_OBJC2_RUNTIME')
 
-else:
-    # Force compilation with the local SDK, compilation of PyObC will result in
-    # a binary that runs on other releases of the OS without using a particular SDK.
-    CFLAGS.extend(['-isysroot', '/'])
-    OBJC_LDFLAGS.extend(['-isysroot', '/'])
+# Force compilation with the local SDK, compilation of PyObC will result in
+# a binary that runs on other releases of the OS without using a particular SDK.
+CFLAGS.extend(['-isysroot', '/'])
+OBJC_LDFLAGS.extend(['-isysroot', '/'])
 
 
 # We're using xml2, check for the flags to use:
