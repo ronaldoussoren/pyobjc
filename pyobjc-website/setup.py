@@ -138,6 +138,16 @@ class publishsite (Command):
                 mode = stat.S_IMODE(st.st_mode) | stat.S_IWGRP
                 os.chmod(os.path.join(dirpath, fn), mode)
 
+        # Ensure that sourceforge has a shell account for us
+        log.info("Creating sourceforge shell account")
+        p = subprocess.Popen([
+            'ssh', '-t', '%s,pyobjc@shell.sourceforge.net'%(self.username,), 
+            'create'])
+        status = p.wait()
+        if status != 0:
+            log.error("Creating a shell account failed")
+            raise DistutilsError("creating shell account failed")
+
         # Use rsync to push the new version of the website to SF.net
         log.info("Running rsync")
         p = subprocess.Popen(['rsync', 
