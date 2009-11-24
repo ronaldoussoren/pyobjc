@@ -30,7 +30,6 @@ class TestCGDataProvider (TestCase):
             info[-1] = True
         provider = CGDataProviderCreateWithData(info, info[0], len(info[0]), release)
         self.failUnlessIsInstance(provider, CGDataProviderRef)
-        print
         del provider
 
         self.failUnless(info[-1])
