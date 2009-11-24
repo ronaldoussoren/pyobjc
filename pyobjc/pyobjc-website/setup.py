@@ -60,6 +60,7 @@ class buildsite (Command):
                 ('About', '/about.html'),
                 ('History&People', '/people.html'),
                 ('Links', '/links.html'),
+                ('License', '/license.html'),
         ]
 
         generator = sitegen.SiteGenerator('templates', 'htdocs')
@@ -94,8 +95,8 @@ class buildsite (Command):
 
         log.info("Emitting homepage")
         generator.emitHTML("/index.html", "site-index.html",  
-                pyobjc_version='2.2b2',
-                pyobjc_release_date='May 26th 2009',
+                pyobjc_version='2.2',
+                pyobjc_release_date='November 24th 2009',
                 news=news.newsSelection(newsItems),
                 bottommenu=root_menu)
 
