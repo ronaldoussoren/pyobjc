@@ -5,17 +5,13 @@ ez_setup.use_setuptools()
 
 import os
 
-VERSION='2.2b3'
+VERSION='2.2'
 
 # NOTE: This list of requirements is split into sections for 10.4
 # and 10.5 to make it possible to install PyObjC from source on all
 # supported platforms.
 REQUIRES=[
-# The line below won't install py2app for some reason and I have no
-# idea why that's so.
-#        'py2app==dev,>=0.4',
         'pyobjc-core=='+VERSION,
-#       'pyobjc-metadata',
         'pyobjc-framework-AddressBook=='+VERSION,
         'pyobjc-framework-AppleScriptKit=='+VERSION,
         'pyobjc-framework-Automator=='+VERSION,
@@ -27,7 +23,7 @@ REQUIRES=[
         'pyobjc-framework-FSEvents=='+VERSION,
         'pyobjc-framework-InstallerPlugins=='+VERSION,
         'pyobjc-framework-LatentSemanticMapping=='+VERSION,
-#        'pyobjc-framework-LaunchServices=='+VERSION,
+        'pyobjc-framework-LaunchServices=='+VERSION,
         'pyobjc-framework-Message=='+VERSION,
         'pyobjc-framework-PreferencePanes=='+VERSION,
         'pyobjc-framework-Quartz=='+VERSION,
@@ -50,10 +46,19 @@ REQUIRES_10_5=[
         'pyobjc-framework-ScriptingBridge=='+VERSION,
 ]
 
+REQUIRES_10_6=[
+        'pyobjc-framework-AppleScriptObjC=='+VERSION,
+        'pyobjc-framework-CoreLocation=='+VERSION,
+        'pyobjc-framework-ServerNotification=='+VERSION,
+        'pyobjc-framework-ServiceManagement=='+VERSION,
+]
+
 import platform
 rel = map(int, platform.mac_ver()[0].split('.')[:2])
 if rel >= (10, 5):
     REQUIRES.extend(REQUIRES_10_5)
+if rel >= (10, 6):
+    REQUIRES.extend(REQUIRES_10_6)
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""
