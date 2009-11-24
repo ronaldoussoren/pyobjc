@@ -33,41 +33,35 @@ packages to avoid name clashes with Apple provided wrappers for CoreGraphics.
 WARNING: Running the unittests will change your display settings during the
 testrun, which will probably mess up your window layout.
 '''
+
 from pyobjc_setup import setup, Extension
+
+import os
 
 setup(
     name='pyobjc-framework-Quartz',
-    version='2.2b4',
+    version='2.2',
     description = "Wrappers for the Quartz frameworks on Mac OS X",
-    packages = [ "Quartz", 
-        "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", 
-        "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", 
-        "Quartz.PDFKit", "Quartz.QuartzFilters" ],
+    packages = [ "Quartz", "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", "Quartz.PDFKit", "Quartz.QuartzFilters" ],
     install_requires = [ 
-        'pyobjc-core>=2.2b4',
-        'pyobjc-framework-Cocoa>=2.2b4',
+        'pyobjc-core>=2.2',
+        'pyobjc-framework-Cocoa>=2.2',
     ],
     ext_modules = [
         # CoreVideo
         Extension('Quartz.CoreVideo._CVPixelBuffer',
-            [ 'Modules/_CVPixelBuffer.m' ],
-        ),
+            [ 'Modules/_CVPixelBuffer.m' ]),
 
         # CoreGraphics
         Extension('Quartz.CoreGraphics._inlines',
-            [ 'Modules/_CoreGraphics_inlines.m' ],
-        ),
+            [ 'Modules/_CoreGraphics_inlines.m' ]),
         Extension('Quartz.CoreGraphics._callbacks',
-            [ 'Modules/_callbacks.m' ],
-        ),
+            [ 'Modules/_callbacks.m' ]),
         Extension('Quartz.CoreGraphics._doubleindirect',
-            [ 'Modules/_doubleindirect.m' ],
-        ),
+            [ 'Modules/_doubleindirect.m' ]),
         Extension('Quartz.CoreGraphics._sortandmap',
-            [ 'Modules/_sortandmap.m' ],
-        ),
+            [ 'Modules/_sortandmap.m' ]),
         Extension('Quartz.CoreGraphics._coregraphics',
-            [ 'Modules/_coregraphics.m' ],
-        ),
+            [ 'Modules/_coregraphics.m' ]),
     ],
 )

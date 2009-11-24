@@ -250,7 +250,7 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
 	CFRelease(image);
 	return rv;
 }
-#endif 
+#endif /* PyObjC_BUILD_RELEASE >= 1005*/
 
 static PyObject*
 m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), 
@@ -361,7 +361,7 @@ static PyMethodDef m_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
-#endif 
+#endif /* PyObjC_BUILD_RELEASE >= 1005 */
 	{
 		"CGBitmapContextCreate",
 		(PyCFunction)m_CGBitmapContextCreate,
