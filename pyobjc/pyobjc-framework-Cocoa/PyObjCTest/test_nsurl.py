@@ -55,8 +55,7 @@ class TestNSURL (TestCase):
         self.failUnlessIsInstance(NSURLVolumeResourceCountKey, unicode)
 
     @min_os_level('10.6')
-    @expectedFailure
-    def testConstants10_6_notpresent(self):
+    def testConstants10_6_2(self):
         self.failUnlessIsInstance(NSURLVolumeSupportsPersistentIDsKey, unicode)
         self.failUnlessIsInstance(NSURLVolumeSupportsSymbolicLinksKey, unicode)
         self.failUnlessIsInstance(NSURLVolumeSupportsHardLinksKey, unicode)

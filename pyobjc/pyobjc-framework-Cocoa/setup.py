@@ -11,12 +11,12 @@ from pyobjc_setup import setup, Extension
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version='2.2b4',
+    version='2.2',
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     packages = [ "Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools" ],
     namespace_packages = ['PyObjCTools'],
     install_requires = [ 
-        'pyobjc-core>=2.2b4',
+        'pyobjc-core>=2.2',
     ],
     ext_modules = [
         # CoreFoundation

@@ -8457,7 +8457,10 @@
       <arg index='2' type='I' />
     </method>
   </class>
-  <class name='NSDocumentController'>
+  <class name='NSDocumentController'> 
+    <method selector='_documentController:shouldTerminate:context:'>
+      <arg index='2' type='^v' type64='^v' />
+    </method>
     <method selector='URLsFromRunningOpenPanel'>
       <retval type='@' />
     </method>
