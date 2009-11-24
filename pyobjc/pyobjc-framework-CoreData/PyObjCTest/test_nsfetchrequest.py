@@ -19,7 +19,16 @@ class TestNSFetchRequest (TestCase):
         self.failUnlessResultIsBOOL(NSFetchRequest.returnsObjectsAsFaults)
         self.failUnlessArgIsBOOL(NSFetchRequest.setReturnsObjectsAsFaults_, 0)
 
+    @min_os_level("10.6")
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSDictionaryResultType, 2)
 
+    @min_os_level("10.6")
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSFetchRequest.includesPendingChanges)
+        self.failUnlessArgIsBOOL(NSFetchRequest.setIncludesPendingChanges_, 0)
+        self.failUnlessResultIsBOOL(NSFetchRequest.returnsDistinctResults)
+        self.failUnlessArgIsBOOL(NSFetchRequest.setReturnsDistinctResults_, 0)
 
 if __name__ == "__main__":
     main()

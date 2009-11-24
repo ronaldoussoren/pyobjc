@@ -27,6 +27,28 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.failUnlessIsInstance(NSStoreModelVersionIdentifiersKey, unicode)
         self.failUnlessIsInstance(NSPersistentStoreOSCompatibility, unicode)
 
+        self.failUnlessIsInstance(NSPersistentStoreCoordinatorWillRemoveStoreNotification, unicode)
+        self.failUnlessIsInstance(NSSQLiteAnalyzeOption, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessIsInstance(NSSQLiteManualVacuumOption, unicode)
+        self.failUnlessIsInstance(NSInferMappingModelAutomaticallyOption, unicode)
+        self.failUnlessIsInstance(NSXMLExternalRecordType, unicode)
+        self.failUnlessIsInstance(NSBinaryExternalRecordType, unicode)
+        self.failUnlessIsInstance(NSExternalRecordsFileFormatOption, unicode)
+        self.failUnlessIsInstance(NSExternalRecordsDirectoryOption, unicode)
+        self.failUnlessIsInstance(NSExternalRecordExtensionOption, unicode)
+        self.failUnlessIsInstance(NSEntityNameInPathKey, unicode)
+        self.failUnlessIsInstance(NSStoreUUIDInPathKey, unicode)
+        self.failUnlessIsInstance(NSStorePathKey, unicode)
+        self.failUnlessIsInstance(NSModelPathKey, unicode)
+        self.failUnlessIsInstance(NSObjectURIKey, unicode)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsOut(NSPersistentStoreCoordinator.importStoreWithIdentifier_fromExternalRecordsDirectory_toURL_options_withType_error_, 5)
+
     @min_os_level('10.5')
     def testMethods10_5(self):
         self.failUnlessArgIsOut(NSPersistentStoreCoordinator.metadataForPersistentStoreOfType_URL_error_, 2)

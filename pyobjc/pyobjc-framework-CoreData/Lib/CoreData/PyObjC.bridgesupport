@@ -3,6 +3,22 @@
 <signatures version='1.0'>
   <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
   <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
+  <enum name='NSDictionaryResultType' value='2' />
+  <constant name='NSPersistentStoreCoordinatorWillRemoveStoreNotification' type='@' />
+  <constant name='NSManagedObjectContextWillSaveNotification' type='@' />
+  <constant name='NSSQLiteAnalyzeOption' type='@' />
+  <constant name='NSSQLiteManualVacuumOption' type='@' />
+  <constant name='NSInferMappingModelAutomaticallyOption' type='@' />
+  <constant name='NSXMLExternalRecordType' type='@' />
+  <constant name='NSBinaryExternalRecordType' type='@' />
+  <constant name='NSExternalRecordsFileFormatOption' type='@' />
+  <constant name='NSExternalRecordsDirectoryOption' type='@' />
+  <constant name='NSExternalRecordExtensionOption' type='@' />
+  <constant name='NSEntityNameInPathKey' type='@' />
+  <constant name='NSStoreUUIDInPathKey' type='@' />
+  <constant name='NSStorePathKey' type='@' />
+  <constant name='NSModelPathKey' type='@' />
+  <constant name='NSObjectURIKey' type='@' />
   <constant name='NSAddedPersistentStoresKey' type='@' />
   <constant name='NSAffectedObjectsErrorKey' type='@' />
   <constant name='NSAffectedStoresErrorKey' type='@' />
@@ -57,6 +73,10 @@
   <enum name='NSCoreDataError' value='134060' />
   <enum name='NSCoreDataVersionNumber10_4' value='46.0' />
   <enum name='NSCoreDataVersionNumber10_4_3' value='77.0' />
+  <enum name='NSCoreDataVersionNumber10_5' value='185.0' />
+  <enum name='NSCoreDataVersionNumber10_5_3' value='186.0' />
+  <enum name='NSInferredMappingModelError' value='134190' />
+  <enum name='NSExternalRecordImportError' value='134200' />
   <enum name='NSCustomEntityMappingType' value='1' />
   <enum name='NSDateAttributeType' value='900' />
   <enum name='NSDecimalAttributeType' value='400' />
@@ -98,6 +118,7 @@
   <enum name='NSStringAttributeType' value='700' />
   <enum name='NSTransformEntityMappingType' value='5' />
   <enum name='NSTransformableAttributeType' value='1800' />
+  <enum name='NSObjectIDAttributeType' value='2000' />
   <enum name='NSUndefinedAttributeType' value='0' />
   <enum name='NSUndefinedEntityMappingType' value='0' />
   <enum name='NSValidationDateTooLateError' value='1630' />
@@ -113,6 +134,12 @@
   <enum name='NSValidationStringPatternMatchingError' value='1680' />
   <enum name='NSValidationStringTooLongError' value='1660' />
   <enum name='NSValidationStringTooShortError' value='1670' />
+  <enum name='NSSnapshotEventUndoInsertion' value='2' />
+  <enum name='NSSnapshotEventUndoDeletion' value='4' />
+  <enum name='NSSnapshotEventUndoUpdate' value='8' />
+  <enum name='NSSnapshotEventRollback' value='16' />
+  <enum name='NSSnapshotEventRefresh' value='32' />
+  <enum name='NSSnapshotEventMergePolicy' value='64' />
   <class name='NSAtomicStore'>
     <method selector='load:'>
       <retval type='B' />
@@ -165,6 +192,18 @@
     </method>
   </class>
   <class name='NSFetchRequest'>
+    <method selector='includesPendingChanges'>
+      <retval type='B' />
+    </method>
+    <method selector='setIncludesPendingChanges:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='returnsDistinctResults'>
+      <retval type='B' />
+    </method>
+    <method selector='setReturnsDistinctResults:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='includesPropertyValues'>
       <retval type='B' />
     </method>
@@ -193,6 +232,9 @@
     </method>
   </class>
   <class name='NSManagedObject'>
+    <method class_method='true' selector='contextShouldIgnoreUnmodeledPropertyChanges'>
+      <retval type='B' />
+    </method>
     <method selector='hasFaultForRelationshipNamed:'>
       <retval type='B' />
     </method>
@@ -233,6 +275,9 @@
     </method>
   </class>
   <class name='NSManagedObjectContext'>
+    <method selector='existingObjectWithID:error:'>
+      <arg index='1' type_modifier='o' />
+    </method>
     <method selector='countForFetchRequest:error:'>
       <arg index='1' type_modifier='o' />
     </method>
@@ -289,6 +334,13 @@
     </method>
   </class>
   <class name='NSPersistentStore'>
+    <method selector='loadMetadata'>
+      <retval type='B'/>
+    </method>
+    <method selector='loadMetadata:'>
+      <retval type='B'/>
+      <arg index='0' type_modifier='o' />
+    </method>
     <method selector='isReadOnly'>
       <retval type='B' />
     </method>
@@ -330,6 +382,9 @@
     <method selector='tryLock'>
       <retval type='B' />
     </method>
+    <method selector='importStoreWithIdentifier:fromExternalRecordsDirectory:toURL:options:withType:error:'>
+	    <arg index='5' type_modifier='o' />
+    </method>
   </class>
   <class name='NSPropertyDescription'>
     <method selector='isIndexed'>
@@ -350,11 +405,27 @@
     <method selector='setTransient:'>
       <arg index='0' type='B' />
     </method>
+    <method selector='isIndexedBySpotlight'>
+      <retval type='B' />
+    </method>
+    <method selector='setIndexedBySpotlight:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='isStoredInExternalRecord'>
+      <retval type='B' />
+    </method>
+    <method selector='setStoredInExternalRecord:'>
+      <arg index='0' type='B' />
+    </method>
   </class>
   <class name='NSRelationshipDescription'>
     <method selector='isToMany'>
       <retval type='B' />
     </method>
   </class>
+  <class name='NSMappingModel'>
+    <method class_method='true' selector='inferredMappingModelForSourceModel:destinationModel:error:'>
+      <arg index='2' type_modifier='o' />
+    </method>
+  </class>
 </signatures>
-
