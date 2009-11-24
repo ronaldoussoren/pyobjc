@@ -5,6 +5,7 @@
 #include "pyobjc-api.h"
 
 #if PyObjC_BUILD_RELEASE >= 1005
+  /* WITH_COREVIDEO  */
 
 #import <CoreVideo/CoreVideo.h>
 
