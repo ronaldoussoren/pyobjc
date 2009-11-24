@@ -13,11 +13,11 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-AddressBook',
-    version="2.2b4",
+    version="2.2",
     description = "Wrappers for the framework AddressBook on Mac OS X",
     packages = [ "AddressBook" ],
     install_requires = [ 
-        'pyobjc-core>=2.2b4',
-        'pyobjc-framework-Cocoa>=2.2b4',
+        'pyobjc-core>=2.2',
+        'pyobjc-framework-Cocoa>=2.2',
     ],
 )
