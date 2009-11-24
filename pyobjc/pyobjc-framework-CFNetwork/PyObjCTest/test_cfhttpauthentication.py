@@ -25,7 +25,6 @@ class TestCFFTPStream (TestCase):
         self.failUnlessIsInstance(msg, CFHTTPMessageRef)
         CFHTTPMessageSetHeaderFieldValue(msg, NSString.stringWithString_('WWW-Authenticate'), NSString.stringWithString_('Basic realm="WallyWorld"'))
 
-
         self.failUnlessResultIsCFRetained(CFHTTPAuthenticationCreateFromResponse)
         ref = CFHTTPAuthenticationCreateFromResponse(None, msg)
         self.failUnlessIsInstance(ref, CFHTTPAuthenticationRef)
