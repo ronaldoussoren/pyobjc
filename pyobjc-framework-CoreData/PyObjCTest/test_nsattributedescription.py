@@ -20,6 +20,10 @@ class TestNSAttributeDescription (TestCase):
     def testConstants10_5(self):
         self.failUnlessEqual(NSTransformableAttributeType, 1800)
 
+    @min_os_level("10.6")
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSObjectIDAttributeType, 2000)
+
 
 if __name__ == "__main__":
     main()

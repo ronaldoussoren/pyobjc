@@ -26,5 +26,15 @@ class TestNSManagedObject (TestCase):
     def testMethods10_5(self):
         self.failUnlessResultIsBOOL(NSManagedObject.hasFaultForRelationshipNamed_)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSSnapshotEventUndoInsertion, 1 << 1)
+        self.failUnlessEqual(NSSnapshotEventUndoDeletion, 1 << 2)
+        self.failUnlessEqual(NSSnapshotEventUndoUpdate, 1 << 3)
+        self.failUnlessEqual(NSSnapshotEventRollback, 1 << 4)
+        self.failUnlessEqual(NSSnapshotEventRefresh, 1 << 5)
+        self.failUnlessEqual(NSSnapshotEventMergePolicy, 1 << 6)
+
+
 if __name__ == "__main__":
     main()

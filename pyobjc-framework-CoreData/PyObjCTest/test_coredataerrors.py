@@ -4,6 +4,12 @@ from CoreData import *
 
 class TestCoreDataErrors (TestCase):
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.failUnlessEqual(NSInferredMappingModelError, 134190)
+        self.failUnlessEqual(NSExternalRecordImportError, 134200)
+
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.failUnlessIsInstance(NSSQLiteErrorDomain, unicode)

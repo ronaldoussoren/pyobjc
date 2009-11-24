@@ -8,6 +8,7 @@ class TestNSManagedObjectContext (TestCase):
         self.failUnlessIsInstance(NSRefreshedObjectsKey, unicode)
         self.failUnlessIsInstance(NSInvalidatedObjectsKey, unicode)
         self.failUnlessIsInstance(NSInvalidatedAllObjectsKey, unicode)
+        self.failUnlessIsInstance(NSManagedObjectContextWillSaveNotification, unicode)
 
     def testConstants(self):
         self.failUnlessIsInstance(NSManagedObjectContextDidSaveNotification, unicode)
@@ -41,6 +42,10 @@ class TestNSManagedObjectContext (TestCase):
         self.failUnlessArgIsOut(NSManagedObjectContext.countForFetchRequest_error_, 1)
         self.failUnlessResultIsBOOL(NSManagedObjectContext.obtainPermanentIDsForObjects_error_)
         self.failUnlessArgIsOut(NSManagedObjectContext.obtainPermanentIDsForObjects_error_, 1)
+
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessArgIsOut(NSManagedObjectContext.existingObjectWithID_error_, 1)
 
 
 

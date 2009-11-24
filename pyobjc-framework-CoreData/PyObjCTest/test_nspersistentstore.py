@@ -11,6 +11,11 @@ class TestNSPersistentStore (TestCase):
         self.failUnlessResultIsBOOL(NSPersistentStore.isReadOnly)
         self.failUnlessArgIsBOOL(NSPersistentStore.setReadOnly_, 0)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.failUnlessResultIsBOOL(NSPersistentStore.loadMetadata_)
+        self.failUnlessArgIsOut(NSPersistentStore.loadMetadata_, 0)
+
 
 if __name__ == "__main__":
     main()
