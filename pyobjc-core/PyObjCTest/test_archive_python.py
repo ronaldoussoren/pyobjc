@@ -59,94 +59,94 @@ if int(os.uname()[2].split('.')[0]) >= 9:
     class TestKeyedArchiveSimple (TestCase):
         def testBasicObjects(self):
             buf = NSKeyedArchiver.archivedDataWithRootObject_(a_function)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(v is a_function)
+            self.assertIsObject(v, a_function)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(a_classic_class)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(v is a_classic_class)
+            self.assertIsObject(v, a_classic_class)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(a_newstyle_class)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(v is a_newstyle_class)
+            self.assertIsObject(v, a_newstyle_class)
 
             o = a_classic_class()
             o.x = 42
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, a_classic_class))
+            self.assertIsInstance(v, a_classic_class)
             self.assertEquals(o.x, 42)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(u"hello")
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, unicode))
+            self.assertIsInstance(v, unicode)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_("hello")
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, str))
+            self.assertIsInstance(v, str)
             self.assertEquals(v, "hello")
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(sys.maxint * 4)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, long))
+            self.assertIsInstance(v, long)
             self.assertEquals(v, sys.maxint * 4)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(sys.maxint ** 4)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, long))
+            self.assertIsInstance(v, long)
             self.assertEquals(v, sys.maxint ** 4)
 
         def testSimpleLists(self):
             o = []
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, list))
+            self.assertIsInstance(v, list)
             self.assertEquals(v, o)
 
             o = [u"hello", 42]
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, list))
+            self.assertIsInstance(v, list)
             self.assertEquals(v, o)
 
         def testSimpleTuples(self):
             o = ()
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, tuple))
+            self.assertIsInstance(v, tuple)
             self.assertEquals(v, o)
 
             o = (u"hello", 42)
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, tuple))
+            self.assertIsInstance(v, tuple)
             self.assertEquals(v, o)
 
         def testSimpleDicts(self):
             o = {}
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, dict))
+            self.assertIsInstance(v, dict)
             self.assertEquals(v, o)
 
             o = {u"hello": u"bar", 42: 1.5 }
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, dict))
+            self.assertIsInstance(v, dict)
             self.assertEquals(v, o)
 
         def testNestedDicts(self):
@@ -155,28 +155,28 @@ if int(os.uname()[2].split('.')[0]) >= 9:
                     u"world": u"foobar"
                 }
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, dict))
+            self.assertIsInstance(v, dict)
             self.assertEquals(v, o)
 
             o = {}
             o[u'self'] = o
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, dict))
-            self.assert_(v[u'self'] is v)
+            self.assertIsInstance(v, dict)
+            self.assertIsObject(v[u'self'], v)
 
         def testNestedSequences(self):
             o = [ 1, 2, 3, (5, (u'a', u'b'), 6), {1:2} ]
             o[-1] = o
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(isinstance(v, list))
-            self.assert_(v[-1] is v)
+            self.assertIsInstance(v, list)
+            self.assertIsObject(v[-1], v)
             self.assertEquals(v[:-1], o[:-1])
 
         def testNestedInstance(self):
@@ -184,11 +184,11 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             o.value = o
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
-            self.assert_(isinstance(v, a_classic_class))
-            self.assert_(v.value is v)
+            self.assertIsInstance(v, a_classic_class)
+            self.assertIsObject(v.value, v)
 
         def dont_testNestedInstanceWithReduce(self):
             # Test recursive instantation with a __reduce__ method
@@ -200,18 +200,18 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
             import pickle
             b = pickle.dumps(o)
-            o2 = picle.loads(b)
+            o2 = pickle.loads(b)
             print "+++", o2.value is o2
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(o)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
-            self.assert_(isinstance(v, a_reducing_class))
+            self.assertIsInstance(v, a_reducing_class)
             print type(v.value)
             print v.value
             print v
-            self.assert_(v.value is v)
+            self.assertIsObject(v.value, v)
 
         def testRecusiveNesting(self):
             l = []
@@ -221,18 +221,18 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             l.append(i)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(l)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
             self.assertEquals(len(v), 1)
             self.assertEquals(dir(v[0]), dir(i))
             self.assertEquals(v[0].attr.keys(), [1])
-            self.assert_(v[0].attr[1] is v)
+            self.assertIsObject(v[0].attr[1], v)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(d)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
-            self.assert_(v[1][0].attr is v)
+            self.assertIsObject(v[1][0].attr, v)
             
 
 
@@ -241,14 +241,14 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             t = (o, o, o)
 
             buf = NSKeyedArchiver.archivedDataWithRootObject_(t)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
             v = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 
-            self.assert_(isinstance(v, tuple))
-            self.assert_(len(v) == 3)
-            self.assert_(isinstance(v[0], a_classic_class))
-            self.assert_(v[0] is v[1])
-            self.assert_(v[0] is v[2])
+            self.assertIsInstance(v, tuple)
+            self.assertEquals(len(v), 3)
+            self.assertIsInstance(v[0], a_classic_class)
+            self.assertIsObject(v[0], v[1])
+            self.assertIsObject(v[0], v[2])
 
 
 
@@ -273,19 +273,63 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         # Disable a number of methods, these test things we're not interested in.
         # (Most of these look at the generated byte-stream, as we're not writing data in pickle's
         # format such tests are irrelevant to archiving support)
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_insecure_strings(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_load_from_canned_string(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_maxint64(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_dict_chunking(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_float_format(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_garyp(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_list_chunking(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_singletons(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_simple_newobj(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_short_tuples(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_proto(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_long1(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_long4(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_get(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_load_from_data0(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_load_from_data1(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_load_from_data2(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_unpickle_from_2x(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_pickle_to_2x(self): pass
 
 
         def test_long(self):
@@ -412,23 +456,23 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             l = NSArray.arrayWithArray_([o1, o2, [o1, o2]])
 
             buf = self.dumps(l)
-            self.assert_(isinstance(buf, NSData))
+            self.assertIsInstance(buf, NSData)
 
             out = self.loads(buf)
-            self.assert_(isinstance(out, NSArray))
+            self.assertIsInstance(out, NSArray)
             self.assertEquals(len(out), 3)
 
             p1 = out[0]
             p2 = out[1]
             p3 = out[2]
 
-            self.assert_(isinstance(p1, a_classic_class))
-            self.assert_(isinstance(p2, a_newstyle_class))
-            self.assert_(isinstance(p3, list))
-            self.assert_(p3[0] is p1)
-            self.assert_(p3[1] is p2)
-            self.assert_(isinstance(p2.lst , NSArray))
-            self.assert_(p2.lst[0] is p1)
+            self.assertIsInstance(p1, a_classic_class)
+            self.assertIsInstance(p2, a_newstyle_class)
+            self.assertIsInstance(p3, list)
+            self.assertIsObject(p3[0], p1)
+            self.assertIsObject(p3[1], p2)
+            self.assertIsInstance(p2.lst , NSArray)
+            self.assertIsObject(p2.lst[0], p1)
            
 
 

@@ -1,9 +1,63 @@
 #!/usr/bin/env python
 
-import ez_setup
-ez_setup.use_setuptools()
-
 import sys
+if sys.version_info[:2] < (3, 0):
+    import ez_setup
+    ez_setup.use_setuptools()
+
+    extra_args=dict()
+    from setuptools.command.build_py import build_py as oc_build_py
+    from setuptools.command.test import test as oc_test
+
+else:
+    import distribute_setup
+    distribute_setup.use_setuptools()
+
+
+    extra_args=dict(
+        use_2to3 = True,
+    )
+
+    from setuptools.command import build_py
+    from setuptools.command import test
+    from distutils import log
+    class oc_build_py (build_py.build_py):
+        def build_packages(self):
+            log.info("Overriding build_packages to copy PyObjCTest")        
+            p = self.packages
+            self.packages = list(self.packages) + ['PyObjCTest']
+            try:
+                build_py.build_py.build_packages(self)
+            finally:
+                self.packages = p
+
+    from pkg_resources import working_set, normalize_path, add_activation_listener, require
+
+    class oc_test (test.test):
+        def run_tests(self):
+            import sys, os
+            rootdir =  os.path.dirname(os.path.abspath(__file__))
+            print ("*"*5, rootdir)
+            if rootdir in sys.path:
+                sys.path.remove(rootdir)
+            from PyObjCTest.loader import makeTestSuite
+            import unittest
+            
+            unittest.main(None, None, [unittest.__file__]+self.test_args)
+
+
+if sys.version_info[0] == 3:
+    # FIXME: add custom test command that does the work.
+    # - Patch sys.path
+    # - Ensure PyObjCTest gets translated by 2to3
+    from distutils.util import get_platform
+    build_dir = 'build/lib.%s-%d.%d'%(
+        get_platform(), sys.version_info[0], sys.version_info[1])
+    if hasattr(sys, 'gettotalrefcount'):
+        build_dir += '-pydebug'
+    sys.path.insert(0,  build_dir)
+
+
 import os
 import glob
 import site
@@ -17,8 +71,8 @@ if 'MallocStackLoggingNoCompact' in os.environ:
 # See the news file:
 #os.environ['MACOSX_DEPLOYMENT_TARGET']='10.5'
 
-# We need at least Python 2.3
-MIN_PYTHON = (2, 3)
+# We need at least Python 2.5
+MIN_PYTHON = (2, 5)
 
 if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
@@ -26,7 +80,7 @@ if sys.version_info < MIN_PYTHON:
 
 # Set USE_SYSTEM_FFI to True to link to the system version
 # of libffi
-USE_SYSTEM_FFI = False
+USE_SYSTEM_FFI = True
 
 #if int(os.uname()[2].split('.')[0]) >= 10:
 #        USE_SYSTEM_FFI = True
@@ -60,10 +114,10 @@ class pyobjc_install_lib (install_lib.install_lib):
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
         for fn in install_lib._install_lib.get_outputs(self):
-	    if 'PyObjCTest' in fn:
+            if 'PyObjCTest' in fn:
                 result[fn] = 1
 
-	return result
+        return result
 
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
@@ -95,10 +149,10 @@ def IfFrameWork(name, packages, extensions, headername=None):
 
 # Double-check
 if sys.platform != 'darwin':
-    print "You're not running on MacOS X, and don't use GNUstep"
-    print "I don't know how to build PyObjC on such a platform."
-    print "Please read the ReadMe."
-    print ""
+    print("You're not running on MacOS X, and don't use GNUstep")
+    print("I don't know how to build PyObjC on such a platform.")
+    print("Please read the ReadMe.")
+    print("")
     raise SystemExit("ObjC runtime not found")
 
 from distutils.sysconfig import get_config_var
@@ -169,7 +223,7 @@ CFLAGS.extend([
     ## on i386 systems when a method returns a struct that isn't returned
     ## in registers. 
     #"-O0",
-    #"-O1",
+    "-O1",
     #"-O2",
     #"-O3",
     #'-arch', 'x86_64', '-arch', 'ppc64',
@@ -263,22 +317,22 @@ FFI_SOURCE=[
 #
 
 if USE_SYSTEM_FFI:
-	ExtensionList =  [ 
-	    Extension("objc._objc",
-		list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-		extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
-		extra_link_args=OBJC_LDFLAGS + ["-lffi"],
-	    )
-	]
+    ExtensionList =  [ 
+        Extension("objc._objc",
+            list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+            extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
+            extra_link_args=OBJC_LDFLAGS + ["-lffi"],
+        ),
+    ]
 
 else:
-	ExtensionList =  [ 
-	    Extension("objc._objc",
-		FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
-		extra_compile_args=CFLAGS + FFI_CFLAGS,
-		extra_link_args=OBJC_LDFLAGS,
-	    )
-	]
+    ExtensionList =  [ 
+        Extension("objc._objc",
+            FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
+            extra_compile_args=CFLAGS + FFI_CFLAGS,
+            extra_link_args=OBJC_LDFLAGS,
+        ),
+    ]
 
 for test_source in glob.glob(os.path.join('Modules', 'objc', 'test', '*.m')):
     name, ext = os.path.splitext(os.path.basename(test_source))
@@ -295,7 +349,7 @@ def package_version():
             fp.close()
             return ln.split()[-1][1:-1]
 
-    raise ValueError, "Version not found"
+    raise ValueError("Version not found")
 
 CLASSIFIERS = filter(None,
 """
@@ -322,15 +376,16 @@ dist = setup(
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
     ext_modules = ExtensionList,
-    packages = [ 'objc', 'PyObjCTools' ], 
+    packages = [ 'objc', 'PyObjCTools', ], 
     namespace_packages = ['PyObjCTools'],
     package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     extra_path = "PyObjC",
-    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib },
+    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib, 'build_py': oc_build_py, 'test': oc_test },
     options = {'egg_info': {'egg_base': 'Lib'}},
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     test_suite='PyObjCTest.loader.makeTestSuite',
     zip_safe = False,
+    **extra_args
 )

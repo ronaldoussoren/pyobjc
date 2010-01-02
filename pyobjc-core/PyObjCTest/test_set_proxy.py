@@ -50,21 +50,21 @@ class BasicSetTests:
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assert_(OC_TestSet.classOf_(self.setClass()) is OC_PythonSet)
+        self.assertIsObject(OC_TestSet.classOf_(self.setClass()), OC_PythonSet)
 
     def testMutableCopy(self):
 
         s = self.setClass(range(20))
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
-        self.assert_(isinstance(o, set))
+        self.assertIsNotObject(s, o)
+        self.assertIsInstance(o, set)
 
         s = self.setClass()
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
-        self.assert_(isinstance(o, set))
+        self.assertIsNotObject(s, o)
+        self.assertIsInstance(o, set)
 
 
     def testAllObject(self):
@@ -88,13 +88,13 @@ class BasicSetTests:
         self.assertEquals(OC_TestSet.anyObjectOfSet_(s), None)
 
         s = self.setClass([1,2,3,4])
-        self.assert_(OC_TestSet.anyObjectOfSet_(s) in s)
+        self.assertIsIn(OC_TestSet.anyObjectOfSet_(s), s)
 
     def testContainsObject_(self):
         s = self.setClass([1,2,3])
 
-        self.assert_(not OC_TestSet.set_containsObject_(s, 4))
-        self.assert_(OC_TestSet.set_containsObject_(s, 2))
+        self.assertFalse(OC_TestSet.set_containsObject_(s, 4))
+        self.assertTrue(OC_TestSet.set_containsObject_(s, 2))
 
     if onLeopard:
         def testFilteredSetUsingPredicate(self):
@@ -112,10 +112,10 @@ class BasicSetTests:
         s = self.setClass([o1, o2, o3])
        
         o = OC_TestSet.set_member_(s, OC_TestElem(4))
-        self.assert_(o is None)
+        self.assertIsNone(o)
 
         o = OC_TestSet.set_member_(s, OC_TestElem(2))
-        self.assert_(o is o2)
+        self.assertIsObject(o, o2)
 
     def testObjectEnumerator(self):
         s = self.setClass(range(10))
@@ -143,23 +143,23 @@ class BasicSetTests:
         s1 = self.setClass(range(10))
         s2 = self.setClass(range(5))
 
-        self.assert_(OC_TestSet.set_isSubsetOfSet_(s2, s1))
-        self.assert_(OC_TestSet.set_isSubsetOfSet_(s2, s2))
-        self.assert_(not OC_TestSet.set_isSubsetOfSet_(s1, s2))
+        self.assertTrue(OC_TestSet.set_isSubsetOfSet_(s2, s1))
+        self.assertTrue(OC_TestSet.set_isSubsetOfSet_(s2, s2))
+        self.assertFalse(OC_TestSet.set_isSubsetOfSet_(s1, s2))
 
     def testIntersects(self):
         s1 = self.setClass([1,2,3,4])
         s2 = self.setClass([3,4,5,6])
         s3 = self.setClass([5,6,7,8])
 
-        self.assert_(OC_TestSet.set_intersectsSet_(s1, s2))
-        self.assert_(OC_TestSet.set_intersectsSet_(s2, s3))
-        self.assert_(not OC_TestSet.set_intersectsSet_(s1, s3))
+        self.assertTrue(OC_TestSet.set_intersectsSet_(s1, s2))
+        self.assertTrue(OC_TestSet.set_intersectsSet_(s2, s3))
+        self.assertFalse(OC_TestSet.set_intersectsSet_(s1, s3))
 
     def testDescription(self):
         s = self.setClass([OC_TestElem(1), 2])
         o = OC_TestSet.descriptionOfSet_(s)
-        self.assert_(isinstance(o, unicode))
+        self.assertIsInstance(o, unicode)
 
 
 class TestImmutableSet (TestCase, BasicSetTests):
@@ -214,12 +214,12 @@ class TestMutableSet (TestCase, BasicSetTests):
         s = self.setClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
+        self.assertIsNotObject(s, o)
 
         s = self.setClass(range(20))
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
+        self.assertIsNotObject(s, o)
 
     def testUnionSet(self):
         s1 = self.setClass([1,2,3])

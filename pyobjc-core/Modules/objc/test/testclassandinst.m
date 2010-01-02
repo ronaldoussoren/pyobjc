@@ -44,24 +44,68 @@
 @end
 
 /* Python glue */
-void inittestclassandinst(void);
-static PyMethodDef no_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-void inittestclassandinst(void)
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"testclassandinst",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_testclassandinst(void);
+
+PyObject*
+PyInit_testclassandinst(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void inittestclassandinst(void);
+
+void
+inittestclassandinst(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("testclassandinst", no_methods, 
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("testclassandinst", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
-	if (!m) return;
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "PyObjC_TestClassAndInstance", 
-		PyObjCClass_New([PyObjC_TestClassAndInstance class]));
+	if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance", 
+		PyObjCClass_New([PyObjC_TestClassAndInstance class])) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "PyObjC_TestUnallocatable", 
-		PyObjCClass_New([PyObjC_TestUnallocatable class]));
+	if (PyModule_AddObject(m, "PyObjC_TestUnallocatable", 
+		PyObjCClass_New([PyObjC_TestUnallocatable class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 }

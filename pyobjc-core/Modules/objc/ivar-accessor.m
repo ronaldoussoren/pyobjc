@@ -42,7 +42,13 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 	}
 
 	/* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
-	v = Py_BuildValue("(ss)", "isa", @encode(Class));
+	v = Py_BuildValue(
+#if PY_VERSION_HEX < 0x03000000
+			"(ss)", 
+#else
+			"(sy)", 
+#endif
+			"isa", @encode(Class));
 	if (v == NULL) {
 		Py_DECREF(result);
 		return result;
@@ -80,7 +86,12 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 				continue;
 			}
 
-			v = Py_BuildValue("(ss)", 
+			v = Py_BuildValue(
+#if PY_VERSION_HEX < 0x03000000
+				"(ss)", 
+#else
+				"(sy)", 
+#endif
 				ivar_name,
 				ivar_getTypeEncoding(ivar));
 			if (v == NULL) {
@@ -124,7 +135,7 @@ static char* keywords[] = {"obj", "name", NULL };
 	if (!PyObjCObject_Check(anObject)) {
 		PyErr_Format(PyExc_TypeError,
 			"Expecting an Objective-C object, got instance of %s",
-			anObject->ob_type->tp_name);
+			Py_TYPE(anObject)->tp_name);
 		return NULL;
 	}
 
@@ -180,7 +191,7 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
 	if (!PyObjCObject_Check(anObject)) {
 		PyErr_Format(PyExc_TypeError,
 			"Expecting an Objective-C object, got instance of %s",
-			anObject->ob_type->tp_name);
+			Py_TYPE(anObject)->tp_name);
 		return NULL;
 	}
 
@@ -206,8 +217,8 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
 			return NULL;
 		}
 
-		Py_DECREF((PyObject*)(anObject->ob_type));
-		anObject->ob_type = (PyTypeObject*)pycls;
+		Py_DECREF((PyObject*)(Py_TYPE(anObject)));
+		Py_TYPE(anObject) = (PyTypeObject*)pycls;
 		Py_INCREF(Py_None);
 		return Py_None;
 	}

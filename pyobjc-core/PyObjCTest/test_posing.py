@@ -35,7 +35,7 @@ else:
 
             # XXX: next assertion fails because the runtime seems to copy the
             # original class.
-            #self.assert_(isinstance(obj, PoseClass))
+            #self.assertIsInstance(obj, PoseClass)
             self.assertNotEquals(BaseClass.__name__, BaseName)
             self.assertEquals(PoseClass.__name__, BaseName)
             del obj

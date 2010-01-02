@@ -151,8 +151,7 @@ class_new(
 }
 
 PyTypeObject PyObjCUnicode_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.pyobjc_unicode",			/* tp_name */
 	sizeof(PyObjCUnicodeObject),		/* tp_basicsize */
 	0,			 		/* tp_itemsize */
@@ -238,7 +237,8 @@ PyObjCUnicode_New(NSString* value)
 	}
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
 	Py_UNICODE* tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
-	PyUnicode_AS_UNICODE(result) = tptr;
+	result->base.str = tptr;
+	/*PyUnicode_AS_UNICODE(result) = tptr;*/
 	tptr = NULL;
 
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
@@ -247,7 +247,8 @@ PyObjCUnicode_New(NSString* value)
 		return NULL;
 	}
 	[value getCharacters:(unichar *)PyUnicode_AS_UNICODE(result)];
-	PyUnicode_GET_SIZE(result) = length;
+	/*PyUnicode_GET_SIZE(result) = length;*/
+	result->base.length = length;
 #else
 	int i, length;
 	unichar* volatile characters = NULL;
@@ -289,9 +290,12 @@ PyObjCUnicode_New(NSString* value)
 	PyMem_Free(characters); characters = NULL;
 #endif
 
-	result->base.defenc = NULL;
 
 	result->base.hash = -1;
+#if PY_VERSION_HEX >= 0x03000000
+	result->base.state = 0;
+#endif
+	result->base.defenc = NULL;
 
 	if (PyUnicode_GET_SIZE(result) == 0) {
 		result->base.hash = 0;

@@ -3,6 +3,8 @@
 from PyObjCTools.TestSupport import *
 import sys
 
+from PyObjCTools.TestSupport import onlyPython2
+
 import objc
 
 NSObject = objc.lookUpClass('NSObject')
@@ -48,7 +50,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
     def testDescriptionOverride(self):
         objc.classAddMethods(MEClass, [Methods.pyobjc_instanceMethods.description])
 
-        self.assert_(MEClass.instancesRespondToSelector_("description"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("description"))
 
         newInstance = MEClass.new()
 
@@ -58,7 +60,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
     def testNewMethod(self):
         objc.classAddMethods(MEClass, [Methods.pyobjc_instanceMethods.newMethod])
 
-        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))
 
         newInstance = MEClass.new()
 
@@ -68,7 +70,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
     def testSubDescriptionOverride(self):
         objc.classAddMethods(MEClass, [MethodsSub.pyobjc_instanceMethods.description])
 
-        self.assert_(MEClass.instancesRespondToSelector_("description"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("description"))
 
         newInstance = MEClass.new()
 
@@ -78,8 +80,8 @@ class TestFromObjCSuperToObjCClass(TestCase):
     def testSubNewMethod(self):
         objc.classAddMethods(MEClass, [MethodsSub.newMethod, MethodsSub.newSubMethod])
 
-        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
-        self.assert_(MEClass.instancesRespondToSelector_("newSubMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("newSubMethod"))
 
         newInstance = MEClass.new()
 
@@ -94,11 +96,11 @@ class TestFromObjCSuperToObjCClass(TestCase):
             return "Foo cls"
         aNewClassMethod = classmethod(aNewClassMethod)
 
-        self.assert_(not MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
+        self.assertTrue(not MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
         objc.classAddMethods(MEClass, [aNewClassMethod])
-        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
 
-        self.assert_(MEClass.aNewClassMethod.isClassMethod)
+        self.assertTrue(MEClass.aNewClassMethod.isClassMethod)
         self.assertEquals(MEClass.aNewClassMethod(), 'Foo cls')
 
     def testAddedMethodType(self):
@@ -111,12 +113,12 @@ class TestFromObjCSuperToObjCClass(TestCase):
             "INST DOC STRING"
             return "BAR SELF"
 
-        self.assert_(not MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
-        self.assert_(not MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
+        self.assertTrue(not MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
+        self.assertTrue(not MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
 
         objc.classAddMethods(MEClass, [anotherNewClassMethod, anotherNewMethod])
-        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
-        self.assert_(MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
+        self.assertTrue(MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
 
         self.assertEquals(MEClass.anotherNewClassMethod.__doc__, "CLS DOC STRING")
         self.assertEquals(MEClass.anotherNewMethod.__doc__, "INST DOC STRING")
@@ -126,6 +128,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
 class TestFromPythonClassToObjCClass(TestCase):
 
+    @onlyPython2
     def testPythonSourcedMethods(self):
         # 20031227, Ronald: Assigning the methods works alright, but actually
         # using them won't because the new methods are actually still methods
@@ -136,9 +139,9 @@ class TestFromPythonClassToObjCClass(TestCase):
                                                   PurePython.purePythonMethod])
 
 
-        self.assert_(MEClass.instancesRespondToSelector_("description"))
-        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
-        self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("description"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("purePythonMethod"))
 
         newInstance = MEClass.new()
 
@@ -163,15 +166,22 @@ class TestFromPythonClassToObjCClass(TestCase):
         # of method objects.
 
 
-        objc.classAddMethods(MEClass, [
-            PurePython.description.im_func,
-            PurePython.newMethod.im_func,
-            PurePython.purePythonMethod.im_func
-        ])
+        if sys.version_info[0] == 2:
+            objc.classAddMethods(MEClass, [
+                PurePython.description.im_func,
+                PurePython.newMethod.im_func,
+                PurePython.purePythonMethod.im_func,
+            ])
+        else:
+            objc.classAddMethods(MEClass, [
+                PurePython.description,
+                PurePython.newMethod,
+                PurePython.purePythonMethod,
+            ])
 
-        self.assert_(MEClass.instancesRespondToSelector_("description"))
-        self.assert_(MEClass.instancesRespondToSelector_("newMethod"))
-        self.assert_(MEClass.instancesRespondToSelector_("purePythonMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("description"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("purePythonMethod"))
 
         newInstance = MEClass.new()
 
@@ -190,8 +200,8 @@ class TestClassAsignments (TestCase):
         MEClass.doSomethingElse = lambda self: 2*2
         MEClass.doDuplicate_ = lambda self, x: 2*x
 
-        self.assert_(MEClass.instancesRespondToSelector_("doSomethingElse"))
-        self.assert_(MEClass.instancesRespondToSelector_("doDuplicate:"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("doSomethingElse"))
+        self.assertTrue(MEClass.instancesRespondToSelector_("doDuplicate:"))
 
         o = MEClass.alloc().init()
 
@@ -202,14 +212,14 @@ class TestClassAsignments (TestCase):
         MEClass.classSomethingElse = classmethod(lambda self: 2*2)
         MEClass.classDuplicate_ = classmethod(lambda self, x: 2*x)
 
-        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("classSomethingElse"))
-        self.assert_(MEClass.pyobjc_classMethods.respondsToSelector_("classDuplicate:"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("classSomethingElse"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("classDuplicate:"))
 
         self.assertEquals(4, MEClass.classSomethingElse())
         self.assertEquals(8, MEClass.classDuplicate_(4))
 
     def testAssignFuzzyMethod(self):
-        self.assertRaises(ValueError, setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector='fuzzy', signature='@@:'))
+        self.assertRaises(ValueError, setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector=b'fuzzy', signature=b'@@:'))
 
     def testRemovingMethods(self):
         theClass = NSObject
@@ -237,12 +247,11 @@ class TestCategory (TestCase):
                 return "hello"
             anotherClassMethod = classmethod(anotherClassMethod)
 
-        self.assert_(o.categoryMethod())
-        self.assert_(not o.categoryMethod2())
+        self.assertTrue(o.categoryMethod())
+        self.assertTrue(not o.categoryMethod2())
         self.assertEquals(Methods.anotherClassMethod(), "hello")
 
     def testObjCClassCategory(self):
-
         NSObject = objc.lookUpClass('NSObject')
 
         o = NSObject.alloc().init()
@@ -255,8 +264,8 @@ class TestCategory (TestCase):
             def myCategoryMethod2(self):
                 return False
 
-        self.assert_(o.myCategoryMethod())
-        self.assert_(not o.myCategoryMethod2())
+        self.assertTrue(o.myCategoryMethod())
+        self.assertTrue(not o.myCategoryMethod2())
 
     def testCategoryMultipleInheritance(self):
 
@@ -326,7 +335,7 @@ class TestCategory (TestCase):
                 return 42
 
         o = NSObjectCat.alloc().init()
-        self.failUnlessEqual(o.withDocStringMethod(), 42)
+        self.assertEqual(o.withDocStringMethod(), 42)
 
     def testCategoryWithClassMethod(self):
         class NSObjectCat2 (NSObject):
@@ -337,7 +346,7 @@ class TestCategory (TestCase):
             def aClassMethod(cls):
                 return 1
 
-        self.failUnlessEqual(NSObjectCat2.aClassMethod(), 1)
+        self.assertEqual(NSObjectCat2.aClassMethod(), 1)
 
     def testCategoryWithVariables(self):
         class NSObjectCat3 (NSObject):
@@ -350,9 +359,9 @@ class TestCategory (TestCase):
                 return self.classValue
 
 
-        self.failUnless(hasattr(NSObjectCat3, "classValue"))
+        self.assertHasAttr(NSObjectCat3, "classValue")
         o = NSObjectCat3.alloc().init()
-        self.failUnlessEqual(o.getClassValue(), "aap")
+        self.assertEqual(o.getClassValue(), "aap")
 
                 
 

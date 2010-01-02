@@ -50,7 +50,7 @@ struct_sq_length(PyObject* self)
 	/* The object contains the generic PyObject header followed by an
 	 * array of PyObject*-s.
 	 */
-	return (self->ob_type->tp_basicsize - sizeof(PyObject)) / sizeof(PyObject*);
+	return (Py_TYPE(self)->tp_basicsize - sizeof(PyObject)) / sizeof(PyObject*);
 }
 
 static PyObject*
@@ -63,11 +63,11 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
 	if (offset < 0 || offset >= len) {
 		PyErr_Format(PyExc_IndexError,  
 				"%s index out of range",
-				self->ob_type->tp_name);
+				Py_TYPE(self)->tp_name);
 		return NULL;
 	} 
 
-	member = self->ob_type->tp_members + offset;
+	member = Py_TYPE(self)->tp_members + offset;
 	res = GET_FIELD(self, member);
 
 	Py_INCREF(res);
@@ -90,7 +90,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 	}
 
 	for (i = ilow; i < ihigh; i++) {
-		PyMemberDef* member = self->ob_type->tp_members + i;
+		PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 		PyObject* v = GET_FIELD(self, member);
 		Py_INCREF(v);
 		PyTuple_SET_ITEM(result, i-ilow, v);
@@ -107,7 +107,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 	if (newVal == NULL) {
 		PyErr_Format(PyExc_TypeError, 
 			"Cannot delete item '%"PY_FORMAT_SIZE_T"d' in a %s instance",
-			offset, self->ob_type->tp_name);
+			offset, Py_TYPE(self)->tp_name);
 		return -1;
 	}
 
@@ -116,10 +116,10 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 	if ((offset < 0) || (offset >= len)) {
 		PyErr_Format(PyExc_IndexError,  
 				"%s index out of range",
-				self->ob_type->tp_name);
+				Py_TYPE(self)->tp_name);
 		return -1;
 	}
-	member = self->ob_type->tp_members + offset;
+	member = Py_TYPE(self)->tp_members + offset;
 	SET_FIELD(self, member, newVal);
 	return 0;
 }
@@ -133,7 +133,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 	if (v == NULL) {
 		PyErr_Format(PyExc_TypeError,
 			"Cannot delete items in an %s instance",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return -1;
 	}
 
@@ -158,13 +158,13 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 		Py_DECREF(seq);
 		PyErr_Format(PyExc_TypeError,
 			"slice assignment would change size of %s "
-			"instance", self->ob_type->tp_name);
+			"instance", Py_TYPE(self)->tp_name);
 		return -1;
 	}
 
 	for (i = ilow; i < ihigh; i++) {
 		PyObject* x;
-		PyMemberDef* member = self->ob_type->tp_members + i;
+		PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 
 		x = PySequence_Fast_GET_ITEM(seq, i-ilow);
 		if (x == NULL) {
@@ -180,7 +180,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 static int
 struct_sq_contains(PyObject* self, PyObject* value)
 {
-	PyMemberDef* member = self->ob_type->tp_members;
+	PyMemberDef* member = Py_TYPE(self)->tp_members;
 
 	while (member && member->name) {
 		int r;
@@ -208,12 +208,12 @@ struct_reduce(PyObject* self)
 	if (values == NULL) return NULL;
 
 	for (i = 0; i < len; i++) {
-		PyObject* v = GET_FIELD(self, self->ob_type->tp_members + i);
+		PyObject* v = GET_FIELD(self, Py_TYPE(self)->tp_members + i);
 		Py_INCREF(v);
 		PyTuple_SET_ITEM(values, i, v);
 	}
 
-	result = Py_BuildValue("(OO)", self->ob_type, values);
+	result = Py_BuildValue("(OO)", Py_TYPE(self), values);
 	Py_DECREF(values);
 	return result;
 }
@@ -222,9 +222,9 @@ static PyObject*
 struct_copy(PyObject* self)
 {
 	PyObject* result;
-	PyMemberDef* member = self->ob_type->tp_members;
+	PyMemberDef* member = Py_TYPE(self)->tp_members;
 	
-	result = PyObject_GC_New(PyObject, self->ob_type);
+	result = PyObject_GC_New(PyObject, Py_TYPE(self));
 	if (result == NULL) {
 		return NULL;
 	}
@@ -306,7 +306,7 @@ struct_setattro(PyObject* self, PyObject* name, PyObject* value)
 {
 	if (value == NULL) {
 		PyErr_Format(PyExc_TypeError, "Cannot delete attributes of %s",
-				self->ob_type->tp_name);
+				Py_TYPE(self)->tp_name);
 		return -1;
 	}
 	return PyObject_GenericSetAttr(self, name, value);
@@ -315,7 +315,7 @@ struct_setattro(PyObject* self, PyObject* name, PyObject* value)
 static void
 struct_dealloc(PyObject* self)
 {
-	PyMemberDef* member = self->ob_type->tp_members;
+	PyMemberDef* member = Py_TYPE(self)->tp_members;
 
 	PyObject_GC_UnTrack(self);
 
@@ -402,7 +402,7 @@ static int set_defaults(PyObject* self, const char* typestr)
 		case _C_CHAR_AS_TEXT:
 			{
 				char ch = 0;
-				v = PyString_FromStringAndSize(&ch, 1);
+				v = PyText_FromStringAndSize(&ch, 1);
 			}
 			break;
 
@@ -430,7 +430,7 @@ static int set_defaults(PyObject* self, const char* typestr)
 			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr, NULL);
 			if (v != NULL) {
 				/* call init */
-				r = v->ob_type->tp_init(v, NULL, NULL);
+				r = Py_TYPE(v)->tp_init(v, NULL, NULL);
 				if (r == -1) {
 					Py_DECREF(v);
 					return -1;
@@ -492,14 +492,14 @@ struct_init(
 	if (args != NULL && !PyTuple_Check(args)) {
 		PyErr_Format(PyExc_TypeError, 
 				"%s() argument tuple is not a tuple",
-				self->ob_type->tp_name);
+				Py_TYPE(self)->tp_name);
 		*(int*)retval = -1;
 		return;
 	}
 	if (kwds != NULL && !PyDict_Check(kwds)) {
 		PyErr_Format(PyExc_TypeError, 
 				"%s() keyword dict is not a dict",
-				self->ob_type->tp_name);
+				Py_TYPE(self)->tp_name);
 		*(int*)retval = -1;
 		return;
 	}
@@ -517,7 +517,7 @@ struct_init(
 		if (len > struct_sq_length(self)) {
 			PyErr_Format(PyExc_TypeError, 
 				"%s() takes at most %"PY_FORMAT_SIZE_T"d %sarguments (%"PY_FORMAT_SIZE_T"d given)",
-				self->ob_type->tp_name,
+				Py_TYPE(self)->tp_name,
 				struct_sq_length(self),
 				kwds?"non-keyword ":"", len);
 			*(int*)retval = -1;
@@ -526,7 +526,7 @@ struct_init(
 		for (i = 0; i < len; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
 
-			SET_FIELD(self, self->ob_type->tp_members+i, v);
+			SET_FIELD(self, Py_TYPE(self)->tp_members+i, v);
 		}
 		setUntil = len-1;
 	}
@@ -554,23 +554,36 @@ struct_init(
 			Py_ssize_t off;
 			PyObject* k;
 			PyObject* v;
+			PyObject* k_bytes = NULL;
 
 			k = PyList_GET_ITEM(keys, i);
-			if (!PyString_Check(k)) {
+			if (PyUnicode_Check(k)) {
+				k_bytes = PyUnicode_AsEncodedString(k, NULL, NULL);
+				if (k_bytes == NULL) {
+					*(int*)retval = -1;
+				}
+				return;
+#if PY_VERSION_HEX < 0x03000000
+			} else if (PyString_Check(k)) {
+				k_bytes = k; Py_INCREF(k_bytes);
+#endif
+			} else {
 				Py_DECREF(keys);
 				PyErr_Format(PyExc_TypeError,
 					"%s() keywords must be strings",
-					self->ob_type->tp_name);
+					Py_TYPE(self)->tp_name);
 				*(int*)retval = -1;
 				return;
 			}
 
-			off = LOCATE_MEMBER(self->ob_type, 
-					PyString_AS_STRING(k));
+
+			off = LOCATE_MEMBER(Py_TYPE(self),
+					PyBytes_AS_STRING(k_bytes));
 			if (off == -1) {
 				PyErr_Format(PyExc_TypeError,
 					"no keyword argument: %s",
-					PyString_AS_STRING(k));
+					PyBytes_AS_STRING(k_bytes));
+				Py_DECREF(k_bytes);
 				Py_DECREF(keys);
 				*(int*)retval = -1;
 				return;
@@ -580,14 +593,16 @@ struct_init(
 				PyErr_Format(PyExc_TypeError,
 					"%s() got multiple values for keyword "
 					"argument '%s'",
-					self->ob_type->tp_name,
-					PyString_AS_STRING(k));
+					Py_TYPE(self)->tp_name,
+					PyBytes_AS_STRING(k_bytes));
+				Py_DECREF(k_bytes);
 				Py_DECREF(keys);
 				*(int*)retval = -1;
 				return;
 			}
+			Py_DECREF(k_bytes);
 
-			member = self->ob_type->tp_members + off;
+			member = Py_TYPE(self)->tp_members + off;
 			v = PyDict_GetItem(kwds, k);
 			SET_FIELD(self, member, v);
 		}
@@ -637,7 +652,7 @@ static long
 struct_hash(PyObject* self)
 {
 	PyErr_Format(PyExc_TypeError, "%s objects are unhashable",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 	return -1;
 }
 
@@ -659,8 +674,8 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 		} else {
 			PyErr_Format(PyExc_TypeError,
 				"Cannot compare instances of %s and %s",
-				self->ob_type->tp_name,
-				other->ob_type->tp_name);
+				Py_TYPE(self)->tp_name,
+				Py_TYPE(other)->tp_name);
 			return NULL;
 		}
 	}
@@ -686,7 +701,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 	for (i = 0; i < len; i ++) {
 		int k;
 
-		self_cur = GET_FIELD(self, self->ob_type->tp_members+i);
+		self_cur = GET_FIELD(self, Py_TYPE(self)->tp_members+i);
 		other_cur = PySequence_GetItem(other, i);
 		if (other_cur == NULL) return NULL;
 
@@ -745,7 +760,7 @@ struct_traverse(PyObject* self, visitproc visit, void* arg)
 	PyObject* v;
 	int err;
 
-	for (member = self->ob_type->tp_members; 
+	for (member = Py_TYPE(self)->tp_members; 
 				member && member->name; member++) {
 		v = GET_FIELD(self, member);
 		if (v == NULL) continue;
@@ -760,7 +775,7 @@ struct_clear(PyObject* self)
 {
 	PyMemberDef* member;
 
-	for (member = self->ob_type->tp_members; 
+	for (member = Py_TYPE(self)->tp_members; 
 				member && member->name; member++) {
 		SET_FIELD(self, member, NULL);
 	}
@@ -778,8 +793,8 @@ struct_repr(PyObject* self)
 
 	len = struct_sq_length(self);
 	if (len == 0) {
-		return PyString_FromFormat("<%s>",
-				self->ob_type->tp_name);
+		return PyText_FromFormat("<%s>",
+				Py_TYPE(self)->tp_name);
 	}
 
 	i = Py_ReprEnter(self);
@@ -787,28 +802,28 @@ struct_repr(PyObject* self)
 		return NULL;
 	} else if (i != 0) {
 		/* Self-recursive struct */
-		return PyString_FromFormat("<%s ...>",
-				self->ob_type->tp_name);
+		return PyText_FromFormat("<%s ...>",
+				Py_TYPE(self)->tp_name);
 	}
 
-	cur = PyString_FromFormat("<%s", self->ob_type->tp_name);
+	cur = PyText_FromFormat("<%s", Py_TYPE(self)->tp_name);
 
-	member = self->ob_type->tp_members;
+	member = Py_TYPE(self)->tp_members;
 	while (member->name != NULL) {
 		PyObject* v;
 
-		PyString_ConcatAndDel(&cur, 
-			PyString_FromFormat(" %s=", member->name));
+		PyText_Append(&cur, 
+			PyText_FromFormat(" %s=", member->name));
 		if (cur == NULL) goto done;
 
 		v = GET_FIELD(self, member);
 
-		PyString_ConcatAndDel(&cur, PyObject_Repr(v));
+		PyText_Append(&cur, PyObject_Repr(v));
 		if (cur == NULL) goto done;
 		member++;
 	}
 
-	PyString_ConcatAndDel(&cur, PyString_FromString(">"));
+	PyText_Append(&cur, PyText_FromString(">"));
 
 done:
 	Py_ReprLeave(self);
@@ -820,8 +835,7 @@ done:
  * A template for the type object
  */
 static PyTypeObject StructTemplate_Type = {
-	PyObject_HEAD_INIT(NULL)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(NULL, 0)
 	"objc.StructTemplate",			/* tp_name */
 	sizeof (PyObject*),			/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -843,7 +857,9 @@ static PyTypeObject StructTemplate_Type = {
 	struct_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT 
+#if PY_VERSION_HEX < 0x03000000
 		| Py_TPFLAGS_HAVE_RICHCOMPARE 
+#endif
 		| Py_TPFLAGS_HAVE_GC, 		/* tp_flags */
 	0,					/* tp_doc */
 	struct_traverse,			/* tp_traverse */
@@ -920,7 +936,7 @@ PyObjC_MakeStructType(
 		PyMem_Free(result);
 		return NULL;
 	}
-	result->ob_refcnt = 1;
+	Py_REFCNT(result) = 1;
 	result->tp_members = members;
 	result->tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
 	if (tpinit) {
@@ -959,7 +975,7 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 
 	if (structRegistry == NULL) return NULL;
 
-	v = PyString_FromStringAndSize(signature, len);
+	v = PyText_FromStringAndSize(signature, len);
 	type = (PyTypeObject*)PyDict_GetItem(structRegistry, v);
 	Py_DECREF(v);
 	if (type == NULL) {
@@ -989,7 +1005,7 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 	if (objc_encoding) {
 		PyObject* typestr = PyDict_GetItemString(type->tp_dict, "__typestr__");
 		if (typestr != NULL) {
-			*objc_encoding = PyString_AsString(typestr);
+			*objc_encoding = PyBytes_AsString(typestr);
 		} else {
 			*objc_encoding = signature;
 		}
@@ -1115,7 +1131,7 @@ PyObjC_RegisterStructType(
 		return NULL;
 	}
 
-	v = PyString_FromString(signature);
+	v = PyBytes_FromString(signature);
 	if (v == NULL) {
 		Py_DECREF(structType);
 		return NULL;

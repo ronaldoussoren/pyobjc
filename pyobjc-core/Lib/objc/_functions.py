@@ -12,8 +12,8 @@ def _ensure_path(p):
 def inject(pid, bundle, useMainThread=True):
     """Loads the given MH_BUNDLE in the target process identified by pid"""
     try:
-        from _objc import _inject
-        from _dyld import dyld_find
+        from objc._objc import _inject
+        from objc._dyld import dyld_find
     except ImportError:
         raise NotImplementedError("objc.inject is only supported on Mac OS X 10.3 and later")
     bundlePath = bundle
@@ -37,7 +37,7 @@ def signature(signature, **kw):
         def methodWithX_andY_(self, x, y):
             return 0
     """
-    from _objc import selector
+    from objc._objc import selector
     kw['signature'] = signature
     def makeSignature(func):
         return selector(func, **kw)

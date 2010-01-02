@@ -49,7 +49,7 @@ class SplitSignatureTest (TestCase):
         for cls in objc.getClassList():
             for selName in cls.__dict__.keys():
                 try:
-                    sel = getattr(cls, selName)
+                    sel = getattr(cls, selName.decode('latin1'))
                 except AttributeError:
                     continue
 
@@ -58,12 +58,15 @@ class SplitSignatureTest (TestCase):
 
 
     def testSimple(self):
-        self.assertEquals(objc.splitSignature("@:@"), ('@',':','@'))
-        self.assertEquals(objc.splitSignature("@:10{NSRect=ff}"), ('@',':','{NSRect=ff}'))
-        self.assertEquals(objc.splitSignature("@:o^@"), ('@',':','o^@'))
+        self.assertEquals(objc.splitSignature(b"@:@"), (b'@',b':',b'@'))
+        self.assertEquals(objc.splitSignature(b"@:10{NSRect=ff}"), (b'@',b':',b'{NSRect=ff}'))
+        self.assertEquals(objc.splitSignature(b"@:o^@"), (b'@',b':',b'o^@'))
+
+        # Block pointer
+        self.assertEquals(objc.splitSignature(b"@:@?"), (b'@',b':',b'@?'))
 
         # struct definition in an struct objc_ivar
-        self.assertEquals(objc.splitSignature('{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'), ('{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',))
+        self.assertEquals(objc.splitSignature(b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'), (b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',))
 
     def testSignatureCount(self):
         EXCEPTIONS=[
@@ -84,13 +87,14 @@ class SplitSignatureTest (TestCase):
             "set_helper",
 
             # dictionary methods
-            'get',
+            "get",
             "has_key",
         ]
 
         for cls in objc.getClassList():
             if cls.__name__.startswith('OC_'): continue
             for selName in cls.__dict__.keys():
+                self.assertIsInstance(selName, str)
                 if selName in EXCEPTIONS: continue
                 if selName.startswith('__') and selName.endswith('__'): continue
 
@@ -103,10 +107,10 @@ class SplitSignatureTest (TestCase):
                 elems = objc.splitSignature(sel.signature)
 
                 argcount = len(elems) - 3 # retval, self, _sel
-                coloncount = sel.selector.count(':')
+                coloncount = sel.selector.count(b':')
 
                 self.assertEquals(argcount, coloncount, 
-                        '%s [%d:%d] %r %r'%(sel.selector, argcount, coloncount, elems, cls))
+                        '%s [%d:%d] %r %r'%(sel.selector.decode('latin1'), argcount, coloncount, elems, cls))
 
 
 if __name__ == "__main__":

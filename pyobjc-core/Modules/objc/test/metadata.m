@@ -260,7 +260,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	array = [NSMutableArray array];
 
 	while (*data != NULL) {
-		[array addObject: [NSString stringWithCString: *data]];
+		[array addObject: [NSString stringWithUTF8String: *data]];
 		data ++;
 	}
 	return array;
@@ -413,13 +413,13 @@ static void use_id(id x __attribute__((__unused__))) { };
 	NSMutableArray* result = [NSMutableArray array];
 
 	snprintf(buf, sizeof(buf), "%p", x);
-	[result addObject: [NSString stringWithCString:buf]];
+	[result addObject: [NSString stringWithUTF8String:buf]];
 
 	snprintf(buf, sizeof(buf), "%p", y);
-	[result addObject: [NSString stringWithCString:buf]];
+	[result addObject: [NSString stringWithUTF8String:buf]];
 
 	snprintf(buf, sizeof(buf), "%p", z);
-	[result addObject: [NSString stringWithCString:buf]];
+	[result addObject: [NSString stringWithUTF8String:buf]];
 
 	if (y) {
 		if (x) {
@@ -783,15 +783,62 @@ static PyMethodDef mod_methods[] = {
 	        { 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"metadata",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_metadata(void);
+
+PyObject*
+PyInit_metadata(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initmetadata(void);
-void initmetadata(void)
+
+void
+initmetadata(void)
+#endif
+
 {
 	PyObject* m;
 
-	m = Py_InitModule4("metadata", mod_methods, NULL, NULL, PYTHON_API_VERSION);
 
-	PyObjC_ImportAPI(m);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("metadata", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "OC_MetaDataTest", 
-		PyObjCClass_New([OC_MetaDataTest class]));
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
+
+	if (PyModule_AddObject(m, "OC_MetaDataTest", 
+		PyObjCClass_New([OC_MetaDataTest class])) < 0) {
+
+		INITERROR();
+	}
+
+	INITDONE();
 }

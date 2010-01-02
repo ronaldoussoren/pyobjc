@@ -12,6 +12,7 @@
  *
  */
 
+#if PY_VERSION_HEX < 0x03000000
 static
 Py_ssize_t nsdata_getreadbuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
 	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
@@ -40,8 +41,34 @@ Py_ssize_t nsdata_getsegcount(PyObject *pyself, Py_ssize_t *lenp) {
 	}
 	return 1;
 }
+#endif
+
+#if PY_VERSION_HEX >= 0x02060000
+
+
+static int
+nsdata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
+{
+	NSData *self = (NSData *)PyObjCObject_GetObject(obj);
+	return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+}
+
+static int
+nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
+{
+	NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(obj);
+	if (flags & PyBUF_WRITABLE) {
+		return PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0, flags);
+	} else {
+		return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+	}
+}
+
+#endif
+
 
 static PyBufferProcs nsdata_as_buffer = {
+#if PY_VERSION_HEX < 0x03000000
 	nsdata_getreadbuffer,
 	NULL,
 	nsdata_getsegcount,
@@ -51,9 +78,15 @@ static PyBufferProcs nsdata_as_buffer = {
 	, NULL                                     
 #endif
 
+#else	/* Py3K */
+	nsdata_getbuffer,
+	NULL,
+#endif
+
 };
 
 static PyBufferProcs nsmutabledata_as_buffer = {
+#if PY_VERSION_HEX < 0x03000000
 	nsdata_getreadbuffer,
 	nsmutabledata_getwritebuffer,
 	nsdata_getsegcount,
@@ -61,6 +94,11 @@ static PyBufferProcs nsmutabledata_as_buffer = {
 #if PY_VERSION_HEX >= 0x02060000
 	, NULL                                     
 	, NULL                                     
+#endif
+
+#else	/* Py3K */
+	nsmutabledata_getbuffer,
+	NULL,
 #endif
 };
 
@@ -247,7 +285,7 @@ PyObjCClass_NewMetaClass(Class objc_class)
 
 	PyObject* args = PyTuple_New(3);
 	PyTuple_SetItem(args, 0, 
-			PyString_FromString(class_getName(objc_class)));
+			PyText_FromString(class_getName(objc_class)));
 	PyTuple_SetItem(args, 1, bases);
 	PyTuple_SetItem(args, 2, dict);
 
@@ -598,7 +636,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			return NULL;
 		}
 	} else {
-		metatype = PyObjC_NSCFTypeClass->ob_type;
+		metatype = Py_TYPE(PyObjC_NSCFTypeClass);
 	}
 	Py_DECREF(metadict); metadict = NULL;
 
@@ -711,17 +749,17 @@ class_repr(PyObject* obj)
 	if (cls) {
 		const char* nm = class_getName(cls);
 		if (strcmp(nm, "NSCFType") == 0) {
-			return PyString_FromFormat(
+			return PyText_FromFormat(
 				"<core-foundation class %s at %p>", 
 				((PyTypeObject*)obj)->tp_name, (void*)cls);
 
 		} else {
-			return PyString_FromFormat(
+			return PyText_FromFormat(
 				"<objective-c class %s at %p>", 
 				nm, (void*)cls);
 		}
 	} else {
-		return PyString_FromFormat(
+		return PyText_FromFormat(
 			"%s", "<objective-c class NIL>");
 	}
 }
@@ -759,7 +797,7 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 				info->class,
 				((PyTypeObject*)cls)->tp_dict,
 				info->protectedMethods,
-				cls->ob_type->tp_dict);
+				Py_TYPE(cls)->tp_dict);
 			if (r < 0) {
 				PyErr_SetString(PyExc_RuntimeError,
 					"Cannot rescan method table");
@@ -808,7 +846,18 @@ class_getattro(PyObject* self, PyObject* name)
 	 *       class).
 	 *       
 	 */
-	if (PyString_Check(name) 
+	if (PyUnicode_Check(name)
+			&& PyObjC_is_ascii_prefix(name, "__", 2)
+			&& !PyObjC_is_ascii_string(name, "__dict__")) {
+		result = PyType_Type.tp_getattro(self, name);
+		if (result != NULL) {
+			return result;
+		}
+		PyErr_Clear();
+	}
+
+#if PY_VERSION_HEX < 0x03000000
+	else if (PyString_Check(name) 
 			&& strncmp(PyString_AS_STRING(name), "__", 2) == 0 
 			&& strcmp(PyString_AS_STRING(name), "__dict__") != 0) {
 		result = PyType_Type.tp_getattro(self, name);
@@ -817,6 +866,7 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 		PyErr_Clear();
 	}
+#endif
 
 	PyObjCClass_CheckMethodList(self, 1);
 	
@@ -827,7 +877,21 @@ class_getattro(PyObject* self, PyObject* name)
 
 	/* Try to find the method anyway */
 	PyErr_Clear();
-	result = PyObjCSelector_FindNative(self, PyString_AsString(name));
+	if (PyUnicode_Check(name)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		result = PyObjCSelector_FindNative(self, PyBytes_AsString(bytes));
+		Py_DECREF(bytes);
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(name)) {
+		result = PyObjCSelector_FindNative(self, PyString_AsString(name));
+#endif
+	} else {
+		PyErr_SetString(PyExc_TypeError, "Attribute name is not a string");
+		return NULL;
+	}
 
 	if (result != NULL) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
@@ -865,16 +929,12 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 
 		} else if (PyObjCSelector_Check(old_value)) {
 			Py_DECREF(old_value);
-			if (!PyString_Check(name)) {
-				PyErr_SetString(PyExc_AttributeError, 
-						"cannot delete selectors");
-			} else {
-				PyErr_Format(PyExc_AttributeError,
-					"Cannot remove selector '%s' in '%s'",
-					PyString_AS_STRING(name),
-					self->ob_type->tp_name
-				);
-			}
+			PyErr_Format(PyExc_AttributeError,
+				"Cannot remove selector %R in '%s'",
+				name,
+				Py_TYPE(self)->tp_name
+			);
+
 			return -1;
 		}
 	} else if (PyObjCNativeSelector_Check(value)) {
@@ -956,7 +1016,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		}
 
 		if (PyObjCSelector_IsClassMethod(newVal)) {
-			r = PyDict_SetItem(self->ob_type->tp_dict, name, newVal);
+			r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, newVal);
 
 		} else {
 			r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
@@ -973,6 +1033,74 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 	return res;
 }
 
+static PyObject* class_richcompare(PyObject* self, PyObject* other, int op)
+{
+	Class self_class;
+	Class other_class;
+	int   v;
+
+	if (!PyObjCClass_Check(other)) {
+		if (op == Py_EQ) {
+			Py_INCREF(Py_False);
+			return Py_False;
+		} else if (op == Py_NE) {
+			Py_INCREF(Py_True);
+			return Py_True;
+		} else {
+			Py_INCREF(Py_NotImplemented);
+			return Py_NotImplemented;
+		}
+	}
+
+	/* This is as arbitrary as the default tp_compare, but nicer for
+	 * the user
+	 */
+	self_class = PyObjCClass_GetClass(self);
+	other_class = PyObjCClass_GetClass(other);
+
+	if (self_class == other_class) {
+		v = 0;
+	} else if (!self_class) {
+		v = -1;
+	} else if (!other_class) {
+		v = 1;
+	} else {
+
+		v = strcmp(
+			class_getName(self_class), 
+			class_getName(other_class));
+	}
+
+	PyObject* result;
+	switch (op) {
+	case Py_EQ:
+		result = (v == 0) ? Py_True : Py_False;
+		break;
+	case Py_NE:
+		result = (v != 0) ? Py_True : Py_False;
+		break;
+	case Py_LE:
+		result = (v <= 0) ? Py_True : Py_False;
+		break;
+	case Py_LT:
+		result = (v < 0) ? Py_True : Py_False;
+		break;
+	case Py_GE:
+		result = (v >= 0) ? Py_True : Py_False;
+		break;
+	case Py_GT:
+		result = (v > 0) ? Py_True : Py_False;
+		break;
+	default:
+		PyErr_BadArgument();
+		return NULL;
+	}
+
+	Py_INCREF(result);
+	return result;
+}
+
+#if PY_VERSION_HEX < 0x03000000
 static int
 class_compare(PyObject* self, PyObject* other)
 {
@@ -1007,6 +1135,10 @@ class_compare(PyObject* self, PyObject* other)
 	return 1;
 }
 
+#else
+#define class_compare 0
+#endif
+
 static long
 class_hash(PyObject* self)
 {
@@ -1038,13 +1170,13 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	Class cls = PyObjCClass_GetClass(self);
 	if (cls == NULL) {
-		return PyString_FromString("objc.objc_class");
+		return PyText_FromString("objc.objc_class");
 	} else {
 		const char* nm = class_getName(cls);
 		if (strcmp(nm, "NSCFType") == 0) {
-			return PyString_FromString(((PyTypeObject*)self)->tp_name);
+			return PyText_FromString(((PyTypeObject*)self)->tp_name);
 		} else {
-			return PyString_FromString(nm);
+			return PyText_FromString(nm);
 		}
 	}
 }
@@ -1126,8 +1258,7 @@ static PyMemberDef class_members[] = {
 
 
 PyTypeObject PyObjCClass_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc_class",				/* tp_name */
 	sizeof (PyObjCClassObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -1152,7 +1283,7 @@ PyTypeObject PyObjCClass_Type = {
 	class_doc,				/* tp_doc */
 	0,					/* tp_traverse */
 	0,					/* tp_clear */
-	0,					/* tp_richcompare */
+	class_richcompare,			/* tp_richcompare */
 	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
@@ -1383,7 +1514,7 @@ PyObjCClass_New(Class objc_class)
 	} 
 	args = PyTuple_New(3);
 	className = class_getName(objc_class);
-	PyTuple_SetItem(args, 0, PyString_FromString(className));
+	PyTuple_SetItem(args, 0, PyText_FromString(className));
 	PyTuple_SetItem(args, 1, bases);
 	PyTuple_SetItem(args, 2, dict);
 	bases = NULL; dict = NULL;
@@ -1440,7 +1571,7 @@ PyObjCClass_GetClass(PyObject* cls)
 	if (!PyObjCClass_Check(cls)) {
 		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCClass_GetClass called for non-class (%s)",
-			cls->ob_type->tp_name);
+			Py_TYPE(cls)->tp_name);
 		return nil;
 	}
 	
@@ -1456,7 +1587,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 	if (!PyObjCClass_Check(cls)) {
 		PyErr_Format(PyObjCExc_InternalError,
 			"PyObjCClass_GetClass called for non-class (%s)",
-			cls->ob_type->tp_name);
+			Py_TYPE(cls)->tp_name);
 		return NULL;
 	}
 
@@ -1510,7 +1641,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 		PyObject* dict;
 		
 		if (class_method) {
-			dict = c->ob_type->tp_dict;
+			dict = Py_TYPE(c)->tp_dict;
 		} else {
 			dict = ((PyTypeObject*)c)->tp_dict;
 		}
@@ -1609,7 +1740,7 @@ add_convenience_methods(Class cls, PyObject* type_dict)
 		}
 	}
 
-	name = PyString_FromString(class_getName(cls));
+	name = PyText_FromString(class_getName(cls));
 	if (name == NULL) {
 		Py_DECREF(super_class);
 		return -1;
@@ -1685,7 +1816,7 @@ update_convenience_methods(PyObject* cls)
 		}
 	}
 
-	name = PyString_FromString(class_getName(objc_cls));
+	name = PyText_FromString(class_getName(objc_cls));
 	if (name == NULL) {
 		Py_DECREF(super_class);
 		return -1;
@@ -1733,28 +1864,43 @@ update_convenience_methods(PyObject* cls)
 	len = PySequence_Fast_GET_SIZE(keys);
 	for (i = 0; i < len; i++) {
 		PyObject* k = PySequence_Fast_GET_ITEM(keys, i);
-		char*     n;
-		
+
 		if (k == NULL) {
 			PyErr_Clear();
 			continue;
 		}
 
-		if (!PyString_Check(k)) {
-			continue;
-		}
-		n = PyString_AS_STRING(k);
-		if (n[0] != '_' || n[1] != '_') {
-			continue;
-		}
-		if (	   strcmp(n, "__dict__") == 0 
-			|| strcmp(n, "__bases__") == 0
-			|| strcmp(n, "__slots__") == 0
-			|| strcmp(n, "__mro__") == 0
-		   ) {
+		if (PyUnicode_Check(k)) {
+			if (!PyObjC_is_ascii_prefix(k, "__", 2)) {
+				continue;
+			} else if (
+					PyObjC_is_ascii_string(k, "__dict__")
+				    ||	PyObjC_is_ascii_string(k, "__bases__")
+				    ||	PyObjC_is_ascii_string(k, "__slots__")
+				    ||	PyObjC_is_ascii_string(k, "__mro__")
+			     ) {
+				
+				continue;
+			}
+#if PY_VERSION_HEX < 0x03000000
 
+		} else if (PyString_Check(k)) {
+			char* n = PyString_AS_STRING(k);
+			if (n[0] != '_' || n[1] != '_') {
+				continue;
+			}
+			if (	   strcmp(n, "__dict__") == 0 
+				|| strcmp(n, "__bases__") == 0
+				|| strcmp(n, "__slots__") == 0
+				|| strcmp(n, "__mro__") == 0
+			   ) {
+
+				continue;
+			}
+#endif
+		} else {
 			continue;
-		}
+		} 
 
 		v = PyDict_GetItem(dict, k);
 		if (v == NULL) {

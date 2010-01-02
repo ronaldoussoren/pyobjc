@@ -79,21 +79,66 @@
 @end
 
 
-static PyMethodDef copying_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"copying",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_copying(void);
+
+PyObject*
+PyInit_copying(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initcopying(void);
-void initcopying(void)
+
+void
+initcopying(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("copying", copying_methods, 
-			NULL, NULL, PYTHON_API_VERSION);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("copying", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyObjC_ImportAPI(m);
-	PyModule_AddObject(m, "OC_CopyHelper",
-		PyObjCClass_New([OC_CopyHelper class]));
-	PyModule_AddObject(m, "OC_CopyBase",
-		PyObjCClass_New([OC_CopyBase class]));
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
+	if (PyModule_AddObject(m, "OC_CopyHelper",
+		PyObjCClass_New([OC_CopyHelper class])) < 0) {
+		INITERROR();
+	}
+	if (PyModule_AddObject(m, "OC_CopyBase",
+		PyObjCClass_New([OC_CopyBase class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 }

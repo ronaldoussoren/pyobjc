@@ -77,6 +77,10 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_5 1050
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_6
+#define MAC_OS_X_VERSION_10_6 1060
+#endif
+
 
 /* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX,
  * compensate.
@@ -101,6 +105,69 @@ typedef int Py_ssize_t;
 #define Py_ARG_SIZE_T "n"
 #endif
 
+#endif
+
+#if PY_VERSION_HEX < 0x03000000
+#define Py_REFCNT(ob)           (((PyObject*)(ob))->ob_refcnt)
+#define Py_TYPE(ob)             (((PyObject*)(ob))->ob_type)
+#define Py_SIZE(ob)             (((PyVarObject*)(ob))->ob_size)
+
+/* Source-level backward compatibility: use PyCapsule API in sources, fall back to
+ * PyCObject when needed.
+ */
+#define PyCapsule_New(pointer, name, destructor) PyCObject_FromVoidPtr(pointer, destructor)
+#define PyCapsule_GetPointer(object, name) PyCObject_AsVoidPtr(object)
+#define PyCapsule_CheckExact(object)	PyCObject_Check(object)
+#endif
+
+#if PY_VERSION_HEX < 0x03000000
+
+#define PyErr_Format PyObjCErr_Format
+
+extern PyObject* PyObjCErr_Format(PyObject* exception, const char* format, ...);
+
+#define PyText_Check PyString_Check
+#define PyText_FromFormat PyString_FromFormat
+#define PyText_FromString PyString_FromString
+#define PyText_FromStringAndSize PyString_FromStringAndSize
+#define PyText_InternFromString PyString_InternFromString
+#define PyText_InternInPlace PyString_InternInPlace
+#define PyText_Append PyString_ConcatAndDel
+#define PyText_AsString	PyString_AsString
+
+#ifndef PyBytes_FromString
+#define PyBytes_AsString	PyString_AsString
+#define PyBytes_Size		PyString_Size
+#define PyBytes_FromString	PyString_FromString
+#define PyBytes_FromStringAndSize	PyString_FromStringAndSize
+#define PyBytes_AS_STRING	PyString_AS_STRING
+#endif
+
+#define PyBytes_InternFromString	PyString_InternFromString
+#define PyBytes_InternFromStringAndSize	PyObjCString_InternFromStringAndSize
+
+extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l);
+
+#else
+
+#define PyText_Check PyUnicode_Check
+#define PyText_FromFormat PyUnicode_FromFormat
+#define PyText_FromString PyUnicode_FromString
+#define PyText_FromStringAndSize PyUnicode_FromStringAndSize
+#define PyText_InternFromString PyUnicode_InternFromString
+#define PyText_InternInPlace PyUnicode_InternInPlace
+#define PyText_Append PyUnicode_Append
+#define PyText_AsString	_PyUnicode_AsString
+
+#endif
+
+#if PY_VERSION_HEX >= 0x03000000
+#define PyInt_FromLong		PyLong_FromLong
+#define PyInt_FromString	PyLong_FromString
+
+extern int PyObject_Cmp (PyObject *o1, PyObject *o2, int *result);
+extern PyObject* PyBytes_InternFromString(const char* v);
+extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 #endif
 
 

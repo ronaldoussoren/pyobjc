@@ -1,4 +1,6 @@
 #include "pyobjc.h"
+
+#if PY_VERSION_HEX < 0x03000000
 #import "OC_PythonString.h"
 
 @implementation OC_PythonString 
@@ -309,3 +311,5 @@
 #endif
 
 @end /* implementation OC_PythonString */
+
+#endif /* !Py3k */

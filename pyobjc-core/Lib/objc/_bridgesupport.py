@@ -7,10 +7,8 @@ __all__ = ('initFrameworkWrapper', )
 
 import objc
 import pkg_resources
-import new, sys, os, struct
+import sys, os, struct
 import textwrap
-
-import objc._bindglobals
 
 from objc import function, registerMetaDataForSelector
 
@@ -46,8 +44,8 @@ _gBridgeSupportDirectories = (
 #        os.path.expanduser('~/Library/BridgeSupport'),
     )
 
-for method in ('alloc', 'copy', 'copyWithZone:', 'mutableCopy', 'mutableCopyWithZone:'):
-    objc.registerMetaDataForSelector('NSObject', method,
+for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCopyWithZone:'):
+    objc.registerMetaDataForSelector(b'NSObject', method,
             dict(
                 retval=dict(already_retained=True),
             ))
@@ -345,6 +343,3 @@ del objc._setStructConvenience
 # load time of importing Quartz.
 #objc._setSetupCFClasses(_setupCFClasses)
 #del objc._setSetupCFClasses
-
-# Optimize usage of global variables
-objc._bindglobals.bind_all(sys.modules[__name__])

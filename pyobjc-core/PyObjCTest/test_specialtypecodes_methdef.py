@@ -20,23 +20,23 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLResult(self):
                 return True
-            myBOOLResult = objc.selector(myBOOLResult, signature=objc._C_NSBOOL + '@:')
+            myBOOLResult = objc.selector(myBOOLResult, signature=objc._C_NSBOOL + b'@:')
 
             def myInt8Result(self):
                 return True
-            myInt8Result = objc.selector(myInt8Result, signature=objc._C_CHAR_AS_INT + '@:')
+            myInt8Result = objc.selector(myInt8Result, signature=objc._C_CHAR_AS_INT + b'@:')
 
             def myByteResult(self):
                 return True
-            myByteResult = objc.selector(myByteResult, signature=objc._C_CHAR_AS_TEXT + '@:')
+            myByteResult = objc.selector(myByteResult, signature=objc._C_CHAR_AS_TEXT + b'@:')
 
             def myUniCharResult(self):
                 return True
-            myUniCharResult = objc.selector(myUniCharResult, signature=objc._C_UNICHAR + '@:')
+            myUniCharResult = objc.selector(myUniCharResult, signature=objc._C_UNICHAR + b'@:')
 
             def myUniStrResult(self):
                 return True
-            myUniStrResult = objc.selector(myUniStrResult, signature=objc._C_PTR + objc._C_UNICHAR + '@:')
+            myUniStrResult = objc.selector(myUniStrResult, signature=objc._C_PTR + objc._C_UNICHAR + b'@:')
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_Result.myBOOLResult.signature)
@@ -69,19 +69,19 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_IN + objc._C_PTR + objc._C_NSBOOL)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_IN + objc._C_PTR + objc._C_NSBOOL)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_INT)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_INT)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_IN + objc._C_PTR + objc._C_UNICHAR)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_IN + objc._C_PTR + objc._C_UNICHAR)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myBOOLArg_.signature)
@@ -109,19 +109,19 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_INOUT + objc._C_PTR + objc._C_NSBOOL)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_INOUT + objc._C_PTR + objc._C_NSBOOL)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_INOUT + objc._C_PTR + objc._C_CHAR_AS_INT)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_INOUT + objc._C_PTR + objc._C_CHAR_AS_INT)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_INOUT + objc._C_PTR + objc._C_CHAR_AS_TEXT)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_INOUT + objc._C_PTR + objc._C_CHAR_AS_TEXT)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_INOUT + objc._C_PTR + objc._C_UNICHAR)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_INOUT + objc._C_PTR + objc._C_UNICHAR)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefInOut.myBOOLArg_.signature)
@@ -149,19 +149,19 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_INT)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_INT)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_TEXT)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_OUT + objc._C_PTR + objc._C_CHAR_AS_TEXT)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_OUT + objc._C_PTR + objc._C_UNICHAR)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_OUT + objc._C_PTR + objc._C_UNICHAR)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefOut.myBOOLArg_.signature)
@@ -189,19 +189,19 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_CONST + objc._C_PTR + objc._C_NSBOOL)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_CONST + objc._C_PTR + objc._C_NSBOOL)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_INT)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_INT)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_TEXT)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_CONST + objc._C_PTR + objc._C_CHAR_AS_TEXT)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_CONST + objc._C_PTR + objc._C_UNICHAR)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_CONST + objc._C_PTR + objc._C_UNICHAR)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefConst.myBOOLArg_.signature)
@@ -229,80 +229,80 @@ class TestTypeCodeLeaks (TestCase):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_ARY_B + '4' + objc._C_NSBOOL + objc._C_ARY_E)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_ARY_B + b'4' + objc._C_NSBOOL + objc._C_ARY_E)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_ARY_B + '4' + objc._C_CHAR_AS_INT + objc._C_ARY_E)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_ARY_B + b'4' + objc._C_CHAR_AS_INT + objc._C_ARY_E)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_ARY_B + '4' + objc._C_CHAR_AS_TEXT + objc._C_ARY_E)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_ARY_B + b'4' + objc._C_CHAR_AS_TEXT + objc._C_ARY_E)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_ARY_B + '4' + objc._C_UNICHAR + objc._C_ARY_E)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_ARY_B + b'4' + objc._C_UNICHAR + objc._C_ARY_E)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myBOOLArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myBOOLArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_ARY_B + '4' + objc._C_NSBOOL + objc._C_ARY_E)
-        self.assertEquals(csig[3], objc._C_ARY_B + '4' + objc._C_CHR + objc._C_ARY_E)
+        self.assertEquals(pysig[3], objc._C_ARY_B + b'4' + objc._C_NSBOOL + objc._C_ARY_E)
+        self.assertEquals(csig[3], objc._C_ARY_B + b'4' + objc._C_CHR + objc._C_ARY_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myInt8Arg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myInt8Arg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_ARY_B + '4' + objc._C_CHAR_AS_INT + objc._C_ARY_E)
-        self.assertEquals(csig[3], objc._C_ARY_B + '4' + objc._C_CHR + objc._C_ARY_E)
+        self.assertEquals(pysig[3], objc._C_ARY_B + b'4' + objc._C_CHAR_AS_INT + objc._C_ARY_E)
+        self.assertEquals(csig[3], objc._C_ARY_B + b'4' + objc._C_CHR + objc._C_ARY_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myByteArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myByteArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_ARY_B + '4' + objc._C_CHAR_AS_TEXT + objc._C_ARY_E)
-        self.assertEquals(csig[3], objc._C_ARY_B + '4' + objc._C_CHR + objc._C_ARY_E)
+        self.assertEquals(pysig[3], objc._C_ARY_B + b'4' + objc._C_CHAR_AS_TEXT + objc._C_ARY_E)
+        self.assertEquals(csig[3], objc._C_ARY_B + b'4' + objc._C_CHR + objc._C_ARY_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myUniCharArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myUniCharArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_ARY_B + '4' + objc._C_UNICHAR + objc._C_ARY_E)
-        self.assertEquals(csig[3], objc._C_ARY_B + '4' + objc._C_SHT + objc._C_ARY_E)
+        self.assertEquals(pysig[3], objc._C_ARY_B + b'4' + objc._C_UNICHAR + objc._C_ARY_E)
+        self.assertEquals(csig[3], objc._C_ARY_B + b'4' + objc._C_SHT + objc._C_ARY_E)
 
     def testInStructDef(self):
         class OC_TestTypeCodeLeaks_StructDef (NSObject):
 
             def myBOOLArg_(self, arg):
                 pass
-            myBOOLArg_ = objc.selector(myBOOLArg_, signature='v@:' + objc._C_STRUCT_B + 'test=' + objc._C_NSBOOL + objc._C_STRUCT_E)
+            myBOOLArg_ = objc.selector(myBOOLArg_, signature=b'v@:' + objc._C_STRUCT_B + b'test=' + objc._C_NSBOOL + objc._C_STRUCT_E)
 
             def myInt8Arg_(self, arg):
                 pass
-            myInt8Arg_ = objc.selector(myInt8Arg_, signature='v@:' + objc._C_STRUCT_B + 'test=' + objc._C_CHAR_AS_INT + objc._C_STRUCT_E)
+            myInt8Arg_ = objc.selector(myInt8Arg_, signature=b'v@:' + objc._C_STRUCT_B + b'test=' + objc._C_CHAR_AS_INT + objc._C_STRUCT_E)
 
             def myByteArg_(self, arg):
                 pass
-            myByteArg_ = objc.selector(myByteArg_, signature='v@:' + objc._C_STRUCT_B + 'test=' + objc._C_CHAR_AS_TEXT + objc._C_STRUCT_E)
+            myByteArg_ = objc.selector(myByteArg_, signature=b'v@:' + objc._C_STRUCT_B + b'test=' + objc._C_CHAR_AS_TEXT + objc._C_STRUCT_E)
 
             def myUniCharArg_(self, arg):
                 pass
-            myUniCharArg_ = objc.selector(myUniCharArg_, signature='v@:' + objc._C_STRUCT_B + 'test=' + objc._C_UNICHAR + objc._C_STRUCT_E)
+            myUniCharArg_ = objc.selector(myUniCharArg_, signature=b'v@:' + objc._C_STRUCT_B + b'test=' + objc._C_UNICHAR + objc._C_STRUCT_E)
 
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myBOOLArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myBOOLArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_STRUCT_B + 'test=' + objc._C_NSBOOL + objc._C_STRUCT_E)
-        self.assertEquals(csig[3], objc._C_STRUCT_B + 'test=' + objc._C_CHR + objc._C_STRUCT_E)
+        self.assertEquals(pysig[3], objc._C_STRUCT_B + b'test=' + objc._C_NSBOOL + objc._C_STRUCT_E)
+        self.assertEquals(csig[3], objc._C_STRUCT_B + b'test=' + objc._C_CHR + objc._C_STRUCT_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myInt8Arg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myInt8Arg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_STRUCT_B + 'test=' + objc._C_CHAR_AS_INT + objc._C_STRUCT_E)
-        self.assertEquals(csig[3], objc._C_STRUCT_B + 'test=' + objc._C_CHR + objc._C_STRUCT_E)
+        self.assertEquals(pysig[3], objc._C_STRUCT_B + b'test=' + objc._C_CHAR_AS_INT + objc._C_STRUCT_E)
+        self.assertEquals(csig[3], objc._C_STRUCT_B + b'test=' + objc._C_CHR + objc._C_STRUCT_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myByteArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myByteArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_STRUCT_B + 'test=' + objc._C_CHAR_AS_TEXT + objc._C_STRUCT_E)
-        self.assertEquals(csig[3], objc._C_STRUCT_B + 'test=' + objc._C_CHR + objc._C_STRUCT_E)
+        self.assertEquals(pysig[3], objc._C_STRUCT_B + b'test=' + objc._C_CHAR_AS_TEXT + objc._C_STRUCT_E)
+        self.assertEquals(csig[3], objc._C_STRUCT_B + b'test=' + objc._C_CHR + objc._C_STRUCT_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myUniCharArg_.signature)
         csig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myUniCharArg_.native_signature)
-        self.assertEquals(pysig[3], objc._C_STRUCT_B + 'test=' + objc._C_UNICHAR + objc._C_STRUCT_E)
-        self.assertEquals(csig[3], objc._C_STRUCT_B + 'test=' + objc._C_SHT + objc._C_STRUCT_E)
+        self.assertEquals(pysig[3], objc._C_STRUCT_B + b'test=' + objc._C_UNICHAR + objc._C_STRUCT_E)
+        self.assertEquals(csig[3], objc._C_STRUCT_B + b'test=' + objc._C_SHT + objc._C_STRUCT_E)
 
 if __name__ == "__main__":
     main()

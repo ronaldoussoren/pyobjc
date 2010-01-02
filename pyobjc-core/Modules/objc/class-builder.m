@@ -235,7 +235,23 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 		PyObjCInstanceVariable* var;
 		slot_value = PySequence_Fast_GET_ITEM(slots, i);
 
-		if (!PyString_Check(slot_value)) {
+		if (PyUnicode_Check(slot_value)) {
+			PyObject* bytes = PyUnicode_AsEncodedString(slot_value, NULL, NULL);
+			if (bytes == NULL) {
+				return -1;
+			}
+			var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
+				PyBytes_AsString(bytes));
+			Py_DECREF(bytes);
+
+#if PY_VERSION_HEX < 0x03000000
+		}  else if (PyString_Check(slot_value)) {
+			var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
+				PyString_AS_STRING(slot_value));
+
+#endif
+		} else {
+
 			PyErr_Format(PyExc_TypeError, 
 				"__slots__ entry %" PY_FORMAT_SIZE_T 
 				"d is not a string", i);
@@ -243,8 +259,6 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 			return -1;
 		}
 
-		var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
-				PyString_AS_STRING(slot_value));
 		if (var == NULL) {
 			Py_DECREF(slots);
 			return -1;
@@ -614,13 +628,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(PyObjCExc_InternalError,  
 			"protocol list not a python 'list' but '%s'",
-			protocols->ob_type->tp_name);
+			Py_TYPE(protocols)->tp_name);
 		goto error_cleanup;
 	}
 	if (!PyDict_Check(class_dict)) {
 		PyErr_Format(PyObjCExc_InternalError, 
 			"class dict not a python 'dict', but '%s'",
-			class_dict->ob_type->tp_name);
+			Py_TYPE(class_dict)->tp_name);
 		goto error_cleanup;
 	}
 	if (super_class == NULL) {
@@ -917,14 +931,35 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			PyObject* pyname;
 			char*     ocname;
 			pyname = key;
+			PyObject* pyname_bytes = NULL;
 			if (pyname == NULL) continue;
 
-			ocname = PyString_AS_STRING(pyname);
+			if (PyUnicode_Check(pyname)) {
+				pyname_bytes = PyUnicode_AsEncodedString(pyname, NULL, NULL);
+				if (pyname_bytes == NULL) {
+					goto error_cleanup;
+				}
+				ocname = PyBytes_AsString(pyname_bytes);
+				if (ocname == NULL) {
+					PyErr_SetString(PyExc_ValueError, "empty name");
+					goto error_cleanup;
+				}
+#if PY_VERSION_HEX < 0x03000000
+			} else if (PyString_Check(pyname)) {
+				ocname = PyString_AS_STRING(pyname);
+#endif
+			} else {
+				PyErr_Format(PyExc_TypeError,
+					"method name is of type %s, not a string",
+					Py_TYPE(pyname)->tp_name);
+				goto error_cleanup;
+			}
 			
 			if (ocname[0] == '_' && ocname[1] == '_') {
 				/* Skip special methods (like __getattr__) to
 				 * avoid confusing type().
 				 */
+				Py_XDECREF(pyname_bytes);
 				continue;
 			}
 
@@ -933,9 +968,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					value,
 					py_superclass,
 					protocols);
-			if (value == NULL) goto error_cleanup;
+			if (value == NULL) {
+				Py_XDECREF(pyname_bytes);
+				goto error_cleanup;
+			}
 
 			if (!PyObjCSelector_Check(value)) {
+				Py_XDECREF(pyname_bytes);
 				Py_DECREF(value);
 				continue;
 			}
@@ -943,9 +982,11 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			((PyObjCSelector*)value)->sel_class = new_class;
 
 			if (PyDict_SetItem(class_dict, key, value) < 0) {
+				Py_XDECREF(pyname_bytes);
 				Py_DECREF(value); value = NULL;
 				goto error_cleanup;
 			}
+			Py_XDECREF(pyname_bytes);
 			Py_DECREF(value); value = NULL;
 		}
 	}
@@ -1134,7 +1175,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 			 * generation.
 			 */
 			char buf[1024];
-			PyObject* pyname = PyString_FromString(
+			PyObject* pyname = PyText_FromString(
 				PyObjC_SELToPythonName(sel->sel_selector, buf, sizeof(buf)));
 			if (pyname == NULL) goto error_cleanup;
 			int shouldCopy = PyObject_RichCompareBool(pyname, key, Py_EQ);
@@ -1149,13 +1190,10 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 					if (!same_signature(method_getTypeEncoding(meth), 
 						sel->sel_native_signature)) {
-						
-						PyObject* repr = PyObject_Repr((PyObject*)sel);
-						if (repr == NULL) goto error_cleanup;
+					
 						PyErr_Format(PyObjCExc_BadPrototypeError,
-							"%s has signature that is not compatible with super-class",
-							PyString_AsString(repr));
-						Py_DECREF(repr);
+							"%R has signature that is not compatible with super-class",
+							sel);
 						goto error_cleanup;
 					}
 				}
@@ -1188,12 +1226,9 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					if (!same_signature(method_getTypeEncoding(meth), 
 						sel->sel_native_signature)) {
 						
-						PyObject* repr = PyObject_Repr((PyObject*)sel);
-						if (repr == NULL) goto error_cleanup;
 						PyErr_Format(PyObjCExc_BadPrototypeError,
-							"%s has signature that is not compatible with super-class",
-							PyString_AsString(repr));
-						Py_DECREF(repr);
+							"%R has signature that is not compatible with super-class",
+							sel);
 						goto error_cleanup;
 					}
 				}
@@ -1722,7 +1757,7 @@ object_method_forwardInvocation(
 
 	signature = PyObjCMethodSignature_FromSignature(
 		PyObjCSelector_Signature(pymeth));
-	len = signature->ob_size;
+	len = Py_SIZE(signature);
 
 	Py_XDECREF(pymeth); pymeth = NULL;
 
@@ -1891,7 +1926,7 @@ object_method_forwardInvocation(
 					PyObjCErr_ToObjCWithGILState(&state);
 					return;
 				}
-				if (result->ob_refcnt == 1 && type[0] == _C_ID) {
+				if (Py_REFCNT(result) == 1 && type[0] == _C_ID) {
 					/* make sure return value doesn't die before
 					 * the caller can get its hands on it.
 					 */
@@ -1986,7 +2021,7 @@ object_method_forwardInvocation(
 				PyObjCErr_ToObjCWithGILState(&state);
 				return;
 			}
-			if (v->ob_refcnt == 1 && type[0] == _C_ID) {
+			if (Py_REFCNT(v) == 1 && type[0] == _C_ID) {
 				/* make sure return value doesn't die before
 				 * the caller can get its hands on it.
 			   	 */

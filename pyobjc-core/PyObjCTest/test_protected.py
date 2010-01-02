@@ -5,8 +5,8 @@ class TestProtected (TestCase):
     def testProtectedNotInDir(self):
 
         d = dir(PyObjCTest_Protected)
-        self.assert_( 'publicMethod' in d )
-        self.assert_( '_protectedMethod' not in d )
+        self.assertIsIn('publicMethod', d)
+        self.assertIsNotIn('_protectedMethod', d)
 
     def testProtectedCallable(self):
         o = PyObjCTest_Protected.new()

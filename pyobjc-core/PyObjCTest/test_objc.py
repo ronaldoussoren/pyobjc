@@ -7,12 +7,11 @@ from PyObjCTest.fnd import NSObject, NSArray, NSAttributedString
 
 class TestConstants(TestCase):
     def testBooleans(self):
-        self.assert_(objc.YES, "YES was not true.")
-        self.assert_(not objc.NO, "NO was true.")
+        self.assertTrue(objc.YES, "YES was not true.")
+        self.assertTrue(not objc.NO, "NO was true.")
 
     def testNil(self):
-        from types import NoneType
-        self.assert_(not objc.nil, "nil is not nil/None.")
+        self.assertIsNone(objc.nil, "nil is not nil/None.")
 
 
 class TestObjCRuntime (TestCase):
@@ -36,9 +35,8 @@ class TestObjCRuntime (TestCase):
             fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
 
     def testRuntimeConsistency(self):
-        self.assert_(objc.lookUpClass("NSObject"), "Failed to find NSObject class.")
-        self.assert_(objc.lookUpClass( "NSObject" ) is objc.runtime.NSObject,
-                          "objc.runtime.NSObject and objc.lookUpClass('NSObject') were different.")
+        self.assertIsNotNone(objc.lookUpClass("NSObject"))
+        self.assertIsObject(objc.lookUpClass( "NSObject" ), objc.runtime.NSObject)
 
 
 class TestClassLookup(TestCase):
@@ -56,9 +54,9 @@ class TestClassLookup(TestCase):
         NSException = objc.lookUpClass('NSException')
         NSMutableArray = objc.lookUpClass('NSMutableArray')
 
-        self.assert_(NSObject in objc.getClassList(), "getClassList() does not appear to contain NSObject class")
-        self.assert_(NSException in objc.getClassList(), "getClassList() does not appear to contain NSException class")
-        self.assert_(NSMutableArray in objc.getClassList(), "getClassList() does not appear to contain NSMutableArray class")
+        self.assertIsIn(NSObject, objc.getClassList())
+        self.assertIsIn(NSException, objc.getClassList())
+        self.assertIsIn(NSMutableArray, objc.getClassList())
 
 class TestMethodInvocation(TestCase):
     def setUp(self):
@@ -66,17 +64,17 @@ class TestMethodInvocation(TestCase):
 
 
     def testClassInvocation(self):
-        self.assert_(NSObject.pyobjc_classMethods.description(), "Failed to invoke the +description method.")
+        self.assertTrue(NSObject.pyobjc_classMethods.description())
 
     def testInstanceInvocation(self):
-        self.assert_(self.NSObjectInstance.description(), "Failed to invoke the -description method.")
-        self.assertEqual(self.NSObjectInstance.self(), self.NSObjectInstance, "-self did not return same self.")
+        self.assertTrue(self.NSObjectInstance.description())
+        self.assertEqual(self.NSObjectInstance.self(), self.NSObjectInstance)
         self.assertEqual(self.NSObjectInstance.pyobjc_instanceMethods.self(), self.NSObjectInstance.self())
         self.assertEqual(type(self.NSObjectInstance).pyobjc_instanceMethods.self(self.NSObjectInstance), self.NSObjectInstance.self())
 
 class TestClassDict(TestCase):
     def testDict(self):
-        self.assert_("attributesAtIndex_longestEffectiveRange_inRange_" in NSAttributedString.__dict__)
+        self.assertIsIn("attributesAtIndex_longestEffectiveRange_inRange_", NSAttributedString.__dict__)
 
 class TestPickle(TestCase):
     # We don't support pickling at the moment, make sure we enforce that.

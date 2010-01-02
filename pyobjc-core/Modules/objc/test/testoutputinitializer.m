@@ -37,21 +37,62 @@
 @end
 
 /* Python glue */
-void inittestoutputinitializer(void);
-static PyMethodDef no_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-void inittestoutputinitializer(void)
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"testoutputinitializer",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_testoutputinitializer(void);
+
+PyObject*
+PyInit_testoutputinitializer(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void inittestoutputinitializer(void);
+
+void
+inittestoutputinitializer(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("testoutputinitializer", no_methods, 
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("testoutputinitializer", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
-	if (!m) return;
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "PyObjC_TestOutputInitializer", 
-		PyObjCClass_New([PyObjC_TestOutputInitializer class]));
+	if (PyModule_AddObject(m, "PyObjC_TestOutputInitializer", 
+		PyObjCClass_New([PyObjC_TestOutputInitializer class])) < 0) {
+		INITERROR();
+	}
+	INITDONE();
 }

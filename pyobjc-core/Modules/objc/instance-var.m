@@ -21,7 +21,7 @@ ivar_dealloc(PyObject* _ivar)
 		PyMem_Free(ivar->name);
 	}
 	PyMem_Free(ivar->type);
-	ivar->ob_type->tp_free((PyObject*)ivar);
+	Py_TYPE(ivar)->tp_free((PyObject*)ivar);
 }
 
 static PyObject*
@@ -30,15 +30,15 @@ ivar_repr(PyObject* _self)
 	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 	if (self->isOutlet) {
 		if (self->name) {
-			return PyString_FromFormat("<IBOutlet %s>", self->name);
+			return PyText_FromFormat("<IBOutlet %s>", self->name);
 		} else {
-			return PyString_FromString("<IBOutlet>");
+			return PyText_FromString("<IBOutlet>");
 		}
 	} else {
 		if (self->name) {
-			return PyString_FromFormat("<instance-variable %s>", self->name);
+			return PyText_FromFormat("<instance-variable %s>", self->name);
 		} else {
-			return PyString_FromString("<instance-variable>");
+			return PyText_FromString("<instance-variable>");
 		}
 	}
 }
@@ -230,7 +230,12 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 	char* type = @encode(id);
 	PyObject* isOutletObj = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|ssO:objc_ivar",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+#if PY_VERSION_HEX < 0x03000000
+				"|ssO:objc_ivar",
+#else
+				"|syO:objc_ivar",
+#endif
 			keywords, &name, &type, &isOutletObj)) {
 		return -1;
 	}
@@ -275,8 +280,7 @@ PyDoc_STRVAR(ivar_doc,
 );
 
 PyTypeObject PyObjCInstanceVariable_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)             
-	0,                                           
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)             
 	"ivar",                             
 	sizeof(PyObjCInstanceVariable),                       
 	0,                                           
@@ -295,7 +299,7 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	PyObject_GenericGetAttr,                /* tp_getattro */
 	0,                                      /* tp_setattro */
 	0,                                      /* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_CLASS, /* tp_flags */
+	Py_TPFLAGS_DEFAULT, 			/* tp_flags */
 	ivar_doc,                               /* tp_doc */
 	0,                                      /* tp_traverse */
 	0,                                      /* tp_clear */
@@ -344,14 +348,32 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
 		return 0;
 	} 
 
-	if (PyString_Check(name)) {
-		self->name = PyObjCUtil_Strdup(PyString_AS_STRING(name));
-	} else {
-		char* v;
-		if (depythonify_c_value(@encode(char*), name, &v) == -1) {
+	if (PyUnicode_Check(name)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (bytes == NULL) {
 			return -1;
 		}
+
+		char* b = PyBytes_AsString(bytes);
+		if (b == NULL || *b == '\0') {
+			PyErr_SetString(PyExc_ValueError, "Empty name");
+			return -1;
+		}
+		self->name = PyObjCUtil_Strdup(b);
+		Py_DECREF(bytes);
+		if (self->name == NULL) {
+			PyErr_NoMemory();
+			return -1;
+		}
+
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(name)) {
 		self->name = PyObjCUtil_Strdup(PyString_AS_STRING(name));
+#endif
+	} else {
+		PyErr_SetString(PyExc_TypeError, 
+			"Implied instance variable name is not a string");
+		return -1;
 	}
 
 	return (self->name == NULL?-1:0);

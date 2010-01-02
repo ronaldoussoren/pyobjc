@@ -148,9 +148,9 @@ class PyKeyValueCoding (TestCase):
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key5', u'V')
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.failIfHasAttr(o, u'key9')
+        self.assertNotHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key9', u'IX')
-        self.failUnlessHasAttr(o, u'key9')
+        self.assertHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testTakeValueForKey2(self):
@@ -177,9 +177,9 @@ class PyKeyValueCoding (TestCase):
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key5', u'V')
         self.assertEquals(o.key5, u"VVVVV")
 
-        self.failIfHasAttr(o, u'key9')
+        self.assertNotHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key9', u'IX')
-        self.failUnlessHasAttr(o, u'key9')
+        self.assertHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testStoredTakeValueForKey2(self):
@@ -198,7 +198,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEquals(o.key3, 3)
         self.assertEquals(o._key4, u"4")
         o.key5 = 1
-        self.failIfHasAttr(o, u'key9')
+        self.assertNotHasAttr(o, u'key9')
 
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUESFROMDICT, o, None,
             {
@@ -211,7 +211,7 @@ class PyKeyValueCoding (TestCase):
         self.assertEquals(o.key3, u"drie")
         self.assertEquals(o._key4, u"viervierviervier")
         self.assertEquals(o.key5, u"VVVVV")
-        self.failUnlessHasAttr(o, u'key9')
+        self.assertHasAttr(o, u'key9')
         self.assertEquals(o.key9, u'IX')
 
     def testTakeValuesFromDictionary2(self):
@@ -359,9 +359,9 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key5', u'V')
             self.assertEquals(o.key5, u"VVVVV")
 
-            self.failIfHasAttr(o, u'key9')
+            self.assertNotHasAttr(o, u'key9')
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key9', u'IX')
-            self.failUnlessHasAttr(o, u'key9')
+            self.assertHasAttr(o, u'key9')
             self.assertEquals(o.key9, u'IX')
 
         def testTakeValueForKey2(self):
@@ -379,7 +379,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.key3, 3)
             self.assertEquals(o._key4, u"4")
             o.key5 = 1
-            self.failIfHasAttr(o, u'key9')
+            self.assertNotHasAttr(o, u'key9')
 
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUESFORKEYSFROMDICT, o, None,
                 {
@@ -392,7 +392,7 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             self.assertEquals(o.key3, u"drie")
             self.assertEquals(o._key4, u"viervierviervier")
             self.assertEquals(o.key5, u"VVVVV")
-            self.failUnlessHasAttr(o, u'key9')
+            self.assertHasAttr(o, u'key9')
             self.assertEquals(o.key9, u'IX')
 
         def testSetValuesForKeysFromDictionary2(self):
@@ -645,7 +645,7 @@ if PyObjCTest_KeyValueObserver is not None:
                     NSObject, observer, u"observationInfo")
 
             try:
-                self.failUnlessIsInstance(o, NSObject)
+                self.assertIsInstance(o, NSObject)
             finally:
                 o.removeObserver_forKeyPath_(observer, u"observationInfo")
 

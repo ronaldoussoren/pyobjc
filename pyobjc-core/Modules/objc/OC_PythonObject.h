@@ -70,7 +70,7 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (void) doesNotRecognizeSelector:(SEL) aSelector;
 
 /* NSObject protocol */
-- (unsigned)hash;
+- (NSUInteger)hash;
 - (BOOL)isEqual:(id)anObject;
 /* NSObject methods */
 - (NSComparisonResult)compare:(id)other;

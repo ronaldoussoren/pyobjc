@@ -350,6 +350,12 @@ PyObjCRT_SkipTypeSpec (const char *type)
 	type = PyObjCRT_SkipTypeQualifiers (type);
 
 	switch (*type) {
+	case '"':
+		/* Embedded name in ivar or compound type */
+		type++;
+		while (*type != '\0' && *type != '"') type++;
+		break;
+
 	/* The following are one character type codes */
 	case _C_UNDEF:
 	case _C_CLASS:
@@ -391,13 +397,6 @@ PyObjCRT_SkipTypeSpec (const char *type)
 			/* Block pointer */
 			type++;
                 }
-		if (*type == '"') {
-			/* embedded field name in an ivar_type */
-			type=strchr(type+1, '"');
-			if (type != NULL) {
-				type++;
-			}
-		}
 		break;
 
 	case _C_ARY_B:
@@ -951,8 +950,11 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 
 	case _C_VOID:
 	case _C_CHR:
+		return PyBytes_FromString((char*)curdatum);
+		break;
+
 	case _C_CHAR_AS_TEXT:
-		return PyString_FromString((char*)curdatum);
+		return PyBytes_FromString((char*)curdatum);
 		break;
 
 	case _C_USHT:
@@ -1027,6 +1029,9 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 			"Cannot deal with NULL-terminated array of %s",
 			type);
 		return NULL;
+	}
+	if (*type == _C_UNICHAR) {
+		return PyUnicode_FromUnicode((Py_UNICODE*)datum, count);
 	}
 
 	return  PyObjC_CArrayToPython2(type, datum, count, alreadyRetained, alreadyCFRetained);
@@ -1247,6 +1252,23 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
 	/* Use an NSMutableData object to store the bytes, that way we can autorelease the data because we
 	 * cannot free it otherwise.
 	 */
+	if (*rettype == _C_CHR || *rettype == _C_CHAR_AS_TEXT || *rettype == _C_VOID) {
+		if (PyBytes_Check(arg)) {
+			NSMutableData* data = [NSMutableData dataWithBytes: PyBytes_AsString(arg)
+						     length: PyBytes_Size(arg)];
+			*(void**)resp = [data mutableBytes];
+			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(arg)) {
+			NSMutableData* data = [NSMutableData dataWithBytes: PyByteArray_AsString(arg)
+						     length: PyByteArray_Size(arg)];
+			*(void**)resp = [data mutableBytes];
+			return 0;
+#endif
+		}
+	}
+
+
 	PyObject* seq = PySequence_Fast(arg, "Sequence required");
 	if (seq == NULL) {
 		return -1;
@@ -1281,25 +1303,26 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict, PyOb
 		return -1;
 	}
 
-	if (sizeofitem == 1 && PyString_Check(value)) {
+	if (sizeofitem == 1 && PyBytes_Check(value)) {
 		/* Special casing for strings */
 		if (strict) {
-			if (PyString_Size(value) != nitems) {
+			if (PyBytes_Size(value) != nitems) {
 				PyErr_Format(PyExc_ValueError,
 					"depythonifying array of %"PY_FORMAT_SIZE_T"d items, got one of %"PY_FORMAT_SIZE_T"d",
-					nitems, PyString_Size(value));
+					nitems, PyBytes_Size(value));
 				return -1;
 			}
 		} else {
-			if (PyString_Size(value) < nitems) {
+			if (PyBytes_Size(value) < nitems) {
 				PyErr_Format(PyExc_ValueError,
 					"depythonifying array of %"PY_FORMAT_SIZE_T"d items, got one of %"PY_FORMAT_SIZE_T"d",
-					nitems, PyString_Size(value));
+					nitems, PyBytes_Size(value));
 				return -1;
 			}
 		}
 
-		memcpy(datum, PyString_AS_STRING(value), nitems);
+		memcpy(datum, PyBytes_AS_STRING(value), nitems);
+		return 0;
 	}
 
 	seq = PySequence_Fast(value, "depythonifying array, got no sequence");
@@ -1562,7 +1585,7 @@ pythonify_c_value (const char *type, void *datum)
 		break;
 
 	case _C_CHAR_AS_TEXT:
-		retobject = PyString_FromStringAndSize((char*)datum, 1);
+		retobject = PyBytes_FromStringAndSize((char*)datum, 1);
 		break;
 
 	case _C_CHR:
@@ -1590,7 +1613,7 @@ pythonify_c_value (const char *type, void *datum)
 			Py_INCREF(Py_None);
 			retobject = Py_None;
 		} else {
-			retobject = (PyObject*)PyString_FromString(cp);
+			retobject = (PyObject*)PyBytes_FromString(cp);
 		}
 		break;
 	}
@@ -1652,6 +1675,7 @@ pythonify_c_value (const char *type, void *datum)
 #endif
 
 	case _C_ULNG:
+#if PY_VERSION_HEX < 0x03000000
 		if (*(unsigned long*)datum > LONG_MAX) {
 			retobject = (PyObject*)PyLong_FromUnsignedLongLong(
 				*(unsigned long*)datum);
@@ -1659,6 +1683,9 @@ pythonify_c_value (const char *type, void *datum)
 			retobject = (PyObject*)PyInt_FromLong (
 				*(unsigned long*) datum);
 		}
+#else
+		retobject = PyLong_FromUnsignedLong(*(unsigned long*)datum);
+#endif
 		break;
 
 
@@ -1700,7 +1727,7 @@ pythonify_c_value (const char *type, void *datum)
 			retobject = Py_None;
 			Py_INCREF(retobject);
 		} else {
-			retobject = PyString_FromString(sel_getName(*(SEL*)datum)); 
+			retobject = PyText_FromString(sel_getName(*(SEL*)datum)); 
 		}
 		break;
 
@@ -1740,7 +1767,7 @@ pythonify_c_value (const char *type, void *datum)
 	{
 		Py_ssize_t size = PyObjCRT_SizeOfType (type);
 		if (size == -1) return NULL;
-		retobject = PyString_FromStringAndSize ((void*)datum, size);
+		retobject = PyBytes_FromStringAndSize ((void*)datum, size);
 		break;
 	}
 
@@ -1805,50 +1832,67 @@ depythonify_unsigned_int_value(
 	PyObjC_Assert(descr != NULL, -1);
 	PyObjC_Assert(out != NULL, -1);
 
+#if PY_VERSION_HEX < 0x03000000
 	if (PyInt_Check (argument)) {
 		long temp = PyInt_AsLong(argument);
 		if (PyErr_Occurred()) {
 			return -1;
 		}
-#if 0
-		/* Strict checking is nice, but a lot of constants are used
-		 * as unsigned, but are actually negative numbers in the
-		 * metadata files.
-		 */
 		if (temp < 0) {
-			PyErr_Format(PyExc_ValueError,
-				"depythonifying '%s', got negative '%s'",
-					descr,
-					argument->ob_type->tp_name);
-			return -1;
+			if (PyErr_WarnEx(
+				PyExc_DeprecationWarning, 
+				"converting negative value to unsigned integer",
+				1) < 0) {
 
-		} else 
-#endif
+				return -1;
+			}
+		}
 		if ((unsigned long long)temp > max) {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
-				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
+				"wrong magnitude (max %llu, value %llu)", descr,
+					Py_TYPE(argument)->tp_name,
+					max, temp);
 			return -1;
 		}
 		*out = temp;
 		return 0;
 
-	} else if (PyLong_Check(argument)) {
+	} else 
+#endif
+	if (PyLong_Check(argument)) {
 		*out = PyLong_AsUnsignedLongLong(argument);
-		if (PyErr_Occurred()) {
-			PyErr_Format(PyExc_ValueError,
-				"depythonifying '%s', got '%s' of "
-				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
-			return -1;
+		if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
+			PyErr_Clear();
+			
+			*out = (unsigned long long)PyLong_AsLongLong(argument);
+			if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
+				PyErr_Format(PyExc_ValueError,
+					"depythonifying '%s', got '%s' of "
+					"wrong magnitude (max %llu, value %llu)", 
+					descr,
+					Py_TYPE(argument)->tp_name,
+					max, *out);
+				return -1;
+			}
+
+			if ((long long)*out < 0) {
+				if (PyErr_WarnEx(
+					PyExc_DeprecationWarning, 
+					"converting negative value to unsigned integer",
+					1) < 0) {
+
+					return -1;
+				}
+			}
 		}
 
 		if (*out > max) {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
-				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
+				"wrong magnitude (max %llu, value %llu)", descr,
+				Py_TYPE(argument)->tp_name,
+				max, *out);
 			return -1;
 		}
 		return 0;
@@ -1856,19 +1900,45 @@ depythonify_unsigned_int_value(
 	} else {
 		PyObject* tmp;
 
-		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+		if (
+#if PY_VERSION_HEX < 0x03000000
+			PyString_Check(argument) || 
+#else
+			PyBytes_Check(argument) || 
+#endif
+#ifdef PyByteArray_Check
+			PyByteArray_Check(argument) || 
+#endif
+			PyUnicode_Check(argument)) {
+
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s'",
 					descr,
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 
 		tmp = PyNumber_Long(argument);
 		if (tmp != NULL) {
 			*out = PyLong_AsUnsignedLongLong(tmp);
-			if (PyErr_Occurred()) {
-				return -1;
+			if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
+				PyErr_Clear();
+
+				*out = PyLong_AsLong(tmp);
+				if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
+					Py_DECREF(tmp);
+					return -1;
+				}
+				if ((long long)*out < 0) {
+					if (PyErr_WarnEx(
+						PyExc_DeprecationWarning, 
+						"converting negative value to unsigned integer",
+						1) < 0) {
+						Py_DECREF(tmp);
+
+						return -1;
+					}
+				}
 			}
 			Py_DECREF(tmp);
 
@@ -1880,7 +1950,7 @@ depythonify_unsigned_int_value(
 		PyErr_Format(PyExc_ValueError,
 			"depythonifying '%s', got '%s'",
 				descr,
-				argument->ob_type->tp_name);
+				Py_TYPE(argument)->tp_name);
 		return -1;
 	}
 }
@@ -1897,6 +1967,7 @@ depythonify_signed_int_value(
 	PyObjC_Assert(descr != NULL, -1);
 	PyObjC_Assert(out != NULL, -1);
 
+#if PY_VERSION_HEX < 0x03000000
 	if (PyInt_Check (argument)) {
 		*out = (long long)PyInt_AsLong(argument);
 		if (PyErr_Occurred()) {
@@ -1906,18 +1977,20 @@ depythonify_signed_int_value(
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		return 0;
 
-	} else if (PyLong_Check(argument)) {
+	} else 
+#endif
+	if (PyLong_Check(argument)) {
 		*out = PyLong_AsLongLong(argument);
 		if (PyErr_Occurred()) {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 
@@ -1925,7 +1998,7 @@ depythonify_signed_int_value(
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of "
 				"wrong magnitude", descr,
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		return 0;
@@ -1933,12 +2006,22 @@ depythonify_signed_int_value(
 	} else {
 		PyObject* tmp;
 
-		if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+		if (
+#if PY_VERSION_HEX < 0x03000000
+			PyString_Check(argument) || 
+#else
+			PyBytes_Check(argument) || 
+#endif
+#ifdef PyByteArray_Check
+			PyByteArray_Check(argument) || 
+#endif
+			PyUnicode_Check(argument)) {
+
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying '%s', got '%s' of %"PY_FORMAT_SIZE_T"d",
 					descr,
-					argument->ob_type->tp_name,
-					PyString_Size(argument));
+					Py_TYPE(argument)->tp_name,
+					PyObject_Size(argument));
 			return -1;
 		}
 
@@ -1960,7 +2043,7 @@ depythonify_signed_int_value(
 		PyErr_Format(PyExc_ValueError,
 			"depythonifying '%s', got '%s'",
 				descr,
-				argument->ob_type->tp_name);
+				Py_TYPE(argument)->tp_name);
 		return -1;
 	}
 }
@@ -1999,20 +2082,31 @@ const char* type, PyObject* argument, void* datum)
 		return r;
 	
 	case _C_CHAR_AS_TEXT:
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
-			*(int*) datum = PyString_AsString (argument)[0];
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
+			*(int*) datum = PyBytes_AsString (argument)[0];
 			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
+			*(int*) datum = PyByteArray_AsString (argument)[0];
+			return 0;
+#endif
 		} else {
 			PyErr_Format(PyExc_ValueError,
-				"Expecting string of length 1");
+				"Expecting byte string of length 1, got '%s'",
+				Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
 
 	case _C_CHR: 
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
-			*(int*) datum = PyString_AsString (argument)[0];
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
+			*(int*) datum = PyBytes_AsString (argument)[0];
 			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
+			*(int*) datum = PyByteArray_AsString (argument)[0];
+			return 0;
+#endif
 		}
 
 		r = depythonify_signed_int_value(argument, "char",
@@ -2027,6 +2121,7 @@ const char* type, PyObject* argument, void* datum)
 			*(int*)datum = (int)(*PyUnicode_AsUnicode(argument));
 			return 0;
 
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyString_Check(argument)) {
 			PyObject* u = PyUnicode_FromObject(argument);
 			if (u == NULL) {
@@ -2038,14 +2133,16 @@ const char* type, PyObject* argument, void* datum)
 				return 0;
 			} 
 			Py_DECREF(u);
+#endif
 		}
-		PyErr_SetString(PyExc_ValueError, "Expecting unicode string of length 1");
+		PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
+				Py_TYPE(argument)->tp_name);
 		return -1;
 
 	case _C_UCHR:
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
 			*(unsigned int*) datum = 
-				PyString_AsString (argument)[0];
+				PyBytes_AsString (argument)[0];
 			return 0;
 		}
 		r = depythonify_unsigned_int_value(argument, "unsigned char",
@@ -2109,7 +2206,7 @@ pythonify_c_return_value (const char *type, void *datum)
 	case _C_CHAR_AS_TEXT:
 		{
 			char ch = *(int*)datum;
-			return PyString_FromStringAndSize(&ch, 1);
+			return PyBytes_FromStringAndSize(&ch, 1);
 		}
 
 	case _C_UNICHAR:
@@ -2154,23 +2251,40 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_ATOM:
 #endif
 	case _C_CHARPTR:
-		if (!PyString_Check (argument) && argument != Py_None) {
+
+		if (PyBytes_Check(argument)) {
+			*(char**)datum = PyBytes_AsString(argument);
+			if (*(char**)datum == NULL) {
+				return -1;
+			}
+
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument)) {
+			*(char**)datum = PyByteArray_AsString(argument);
+			if (*(char**)datum == NULL) {
+				return -1;
+			}
+#endif
+		} else if (argument == Py_None) {
+			*(char**)datum = NULL;
+
+		} else {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'charptr', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
-		} else if (argument == Py_None) {
-			*(char **) datum = NULL;
-		} else {
-			*(char **) datum = PyString_AS_STRING(
-				(PyStringObject*)argument);
-		}
+		} 
 		break;
 
 	case _C_CHR:
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
-			*(char*) datum = PyString_AsString (argument)[0];
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
+			*(char*) datum = PyBytes_AsString (argument)[0];
 			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
+			*(char*) datum = PyByteArray_AsString (argument)[0];
+			return 0;
+#endif
 		}
 
 		r = depythonify_signed_int_value(argument, "char",
@@ -2189,20 +2303,32 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		return r;
 
 	case _C_CHAR_AS_TEXT:
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
-			*(char*) datum = PyString_AsString (argument)[0];
+
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
+			*(char*) datum = PyBytes_AsString (argument)[0];
 			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
+			*(char*) datum = PyByteArray_AsString (argument)[0];
+			return 0;
+#endif
 		} else {
-			PyErr_SetString(PyExc_ValueError,
-					"Expecting string of length 1");
+			PyErr_Format(PyExc_ValueError,
+					"Expecting byte string of length 1, got a '%s'",
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 
 	case _C_UCHR:
-		if (PyString_Check(argument) && PyString_Size(argument) == 1) {
+		if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
 			*(unsigned char*) datum = 
-				PyString_AsString (argument)[0];
+				PyBytes_AsString (argument)[0];
 			return 0;
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
+			*(unsigned char*) datum = PyByteArray_AsString (argument)[0];
+			return 0;
+#endif
 		}
 		r = depythonify_unsigned_int_value(argument, "unsigned char",
 			&utemp, UCHAR_MAX);
@@ -2241,7 +2367,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
 			*(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(argument));
 			return 0;
-
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyString_Check(argument)) {
 			PyObject* u = PyUnicode_FromObject(argument);
 			if (u == NULL) {
@@ -2253,8 +2379,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return 0;
 			} 
 			Py_DECREF(u);
+#endif
 		}
-		PyErr_SetString(PyExc_ValueError, "Expecting unicode string of length 1");
+		PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
+				Py_TYPE(argument)->tp_name);
 		return -1;
 
 	case _C_INT:
@@ -2341,7 +2469,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		} else {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'Class', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
@@ -2351,8 +2479,33 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			*(SEL*)datum = NULL;
 		} else if (PyObjCSelector_Check (argument)) {
 			*(SEL *) datum = PyObjCSelector_GetSelector(argument); 
-		} else if (PyString_Check(argument)) {
-			char *selname = PyString_AsString (argument);
+		} else if (PyUnicode_Check(argument)) {
+			PyObject* bytes = PyUnicode_AsEncodedString(argument, NULL, NULL);
+			if (bytes == NULL) {
+				return -1;
+			}
+			char *selname = PyBytes_AsString (bytes);
+			SEL sel;
+
+			if (*selname == '\0') {
+				*(SEL*)datum = NULL;
+				Py_DECREF(bytes);
+			} else {
+				sel = sel_getUid (selname);
+				Py_DECREF(bytes);
+
+				if (sel)  {
+					*(SEL*) datum = sel;
+				} else {
+					PyErr_Format(PyExc_ValueError,
+						"depythonifying 'SEL', cannot "
+						"register string with runtime");
+					return -1;
+				}
+			}
+
+		} else if (PyBytes_Check(argument)) {
+			char *selname = PyBytes_AsString (argument);
 			SEL sel;
 
 			if (*selname == '\0') {
@@ -2369,10 +2522,30 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 					return -1;
 				}
 			}
+#ifdef PyByteArray_Check
+		} else if (PyByteArray_Check(argument)) {
+			char *selname = PyByteArray_AsString (argument);
+			SEL sel;
+
+			if (*selname == '\0') {
+				*(SEL*)datum = NULL;
+			} else {
+				sel = sel_getUid (selname);
+
+				if (sel)  {
+					*(SEL*) datum = sel;
+				} else {
+					PyErr_Format(PyExc_ValueError,
+						"depythonifying 'SEL', cannot "
+						"register string with runtime");
+					return -1;
+				}
+			}
+#endif
 		} else {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'SEL', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
@@ -2402,7 +2575,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 			} else {
 				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'pointer', got '%s'",
-						argument->ob_type->tp_name);
+						Py_TYPE(argument)->tp_name);
 				return -1;
 			}
 		}
@@ -2411,12 +2584,28 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_FLT:
 		if (PyFloat_Check (argument)) {
 			*(float *) datum = (float)PyFloat_AsDouble (argument);
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyInt_Check (argument)) {
 			*(float *) datum = (float) PyInt_AsLong (argument);
-		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+#endif
+		} else if (PyLong_Check (argument)) {
+			*(float*) datum = (float) PyLong_AsDouble(argument);
+			if (*(float*)datum == -1 && PyErr_Occurred()) {
+				return -1;
+			}
+		} else if (
+#if PY_VERSION_HEX < 0x03000000
+				PyString_Check(argument) || 
+#else
+				PyBytes_Check(argument) || 
+#ifdef PyByteArray_Check
+				PyByteArray_Check(argument) || 
+#endif
+#endif
+				PyUnicode_Check(argument)) {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
@@ -2429,7 +2618,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
@@ -2437,12 +2626,28 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_DBL:
 		if (PyFloat_Check (argument)) {
 			*(double *) datum = PyFloat_AsDouble (argument);
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyInt_Check (argument)) {
 			*(double *) datum = (double) PyInt_AsLong (argument);
-		} else if (PyString_Check(argument) || PyUnicode_Check(argument)) {
+#endif
+		} else if (PyLong_Check (argument)) {
+			*(double *) datum = PyLong_AsDouble (argument);
+			if (*(double*)datum == -1 && PyErr_Occurred()) {
+				return -1;
+			}
+		} else if (
+#if PY_VERSION_HEX < 0x03000000
+				PyString_Check(argument) || 
+#else
+				PyBytes_Check(argument) || 
+#endif
+#ifdef PyByteArray_Check
+				PyByteArray_Check(argument) || 
+#endif
+				PyUnicode_Check(argument)) {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'float', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		} else {
 			PyObject* tmp = PyNumber_Float(argument);
@@ -2455,13 +2660,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'double', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
 
 	case _C_UNION_B:
-		if (PyString_Check (argument)) {
+		if (PyBytes_Check (argument)) {
 			Py_ssize_t expected_size = PyObjCRT_SizeOfType (type);
 
 			if (expected_size == -1) {
@@ -2469,22 +2674,22 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 					"depythonifying 'union' of "
 					"unknown size");
 				return -1;
-			} else if (expected_size != PyString_Size (argument)) {
+			} else if (expected_size != PyBytes_Size (argument)) {
 				PyErr_Format(PyExc_ValueError,
 					"depythonifying 'union' of size %"PY_FORMAT_SIZE_T"d, "
-					"got string of %"PY_FORMAT_SIZE_T"d",
+					"got byte string of %"PY_FORMAT_SIZE_T"d",
 						   expected_size, 
-						   PyString_Size (argument));
+						   PyBytes_Size (argument));
 				return -1;
 			} else {
 				memcpy ((void *) datum, 
-					PyString_AS_STRING (argument), 
+					PyBytes_AS_STRING (argument), 
 				expected_size);
 			}
 		} else {
 			PyErr_Format(PyExc_ValueError,
 				"depythonifying 'union', got '%s'",
-					argument->ob_type->tp_name);
+					Py_TYPE(argument)->tp_name);
 			return -1;
 		}
 		break;
@@ -2598,7 +2803,7 @@ PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie)
 
 void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 {
-	if (cookie && proxy->ob_refcnt != 1) {
+	if (cookie && Py_REFCNT(proxy) != 1) {
 		CFRetain(PyObjCObject_GetObject(proxy));
 		((PyObjCObject*)proxy)-> flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
 	}

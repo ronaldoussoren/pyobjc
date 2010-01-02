@@ -22,30 +22,30 @@ class TestMutableSequence (TestCase):
         s = self.mapClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
+        self.assertIsNotObject(s, o)
 
         s = self.mapClass({1:2, 'a':'c'})
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assert_(s is not o)
+        self.assertIsNotObject(s, o)
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assert_(OC_TestSet.classOf_(self.mapClass()) is OC_PythonDictionary)
+        self.assertIsObject(OC_TestSet.classOf_(self.mapClass()), OC_PythonDictionary)
 
     def testMutableCopy(self):
 
         s = self.mapClass({1:2, 'a':'c'})
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(dict(s), o)
-        self.assert_(s is not o)
-        self.assert_(isinstance(o, dict))
+        self.assertIsNotObject(s, o)
+        self.assertIsInstance(o, dict)
 
         s = self.mapClass()
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(dict(s), o)
-        self.assert_(s is not o)
-        self.assert_(isinstance(o, dict))
+        self.assertIsNotObject(s, o)
+        self.assertIsInstance(o, dict)
 
 
 

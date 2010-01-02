@@ -14,6 +14,11 @@
 /* 
  * NOTE: This is a minor tweak of Python 2.5's super_getattro and is a rather
  * crude hack.
+ *
+ * NOTE: updated for 3.2, and 2.7
+ *
+ * FIXME: This will require further work when I remove
+ * "PyObjCClass_CheckMethodList".
  */
 typedef struct {
         PyObject_HEAD
@@ -33,9 +38,18 @@ super_getattro(PyObject *self, PyObject *name)
 	if (!skip) {
 		/* We want __class__ to return the class of the super object
 		   (i.e. super, or a subclass), not the class of su->obj. */
-		skip = (PyString_Check(name) &&
-			PyString_GET_SIZE(name) == 9 &&
-			strcmp(PyString_AS_STRING(name), "__class__") == 0);
+		if (PyUnicode_Check(name)) {
+			skip = (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
+#if PY_VERSION_HEX < 0x03000000
+		} else if (PyString_Check(name)) {
+			skip = (
+				PyString_GET_SIZE(name) == 9 &&
+				strcmp(PyString_AS_STRING(name), "__class__") == 0);
+#endif
+		} else {
+			skip = 0;
+		}
+
 	}
 
 	if (!skip) {
@@ -71,19 +85,21 @@ super_getattro(PyObject *self, PyObject *name)
 			}
 
 			if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj))  {
-				dict = tmp->ob_type->tp_dict;
+				dict = Py_TYPE(tmp)->tp_dict;
 				
 			} else if (PyType_Check(tmp))
 				dict = ((PyTypeObject *)tmp)->tp_dict;
+#if PY_VERSION_HEX < 0x03000000
 			else if (PyClass_Check(tmp))
 				dict = ((PyClassObject *)tmp)->cl_dict;
+#endif
 			else
 				continue;
 
 			res = PyDict_GetItem(dict, name);
 			if (res != NULL) {
 				Py_INCREF(res);
-				f = res->ob_type->tp_descr_get;
+				f = Py_TYPE(res)->tp_descr_get;
 				if (f != NULL) {
 					tmp = f(res,
 						/* Only pass 'obj' param if
@@ -106,8 +122,7 @@ super_getattro(PyObject *self, PyObject *name)
 }
 
 PyTypeObject PyObjCSuper_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.super",
 	sizeof(superobject),
 	0,

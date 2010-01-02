@@ -27,14 +27,14 @@ def setupMetaData():
     # Note2: the code below would normally be done using a metadata file 
     # instead of hardcoding.
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "make4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"make4Tuple:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "null4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"null4Tuple:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=True),
@@ -42,35 +42,35 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeObjectArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeObjectArray:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeStringArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeStringArray:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullStringArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullStringArray:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=True),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArray:count:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArray:countPtr:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArray:countPtr:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
@@ -78,7 +78,7 @@ def setupMetaData():
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArray:count:on:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=True),
@@ -86,7 +86,7 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillArray:uptoCount:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillArray:uptoCount:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, c_array_length_in_result=True, null_accepted=False),
@@ -94,14 +94,14 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillArray:count:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfillArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfillArray:count:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=True),
@@ -109,35 +109,35 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "maybeFillArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"maybeFillArray:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fill4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fill4Tuple:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfill4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfill4Tuple:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=True),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillStringArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillStringArray:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfillStringArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfillStringArray:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=True),
@@ -145,21 +145,21 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseArray:uptoCount:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseArray:uptoCount:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, c_array_length_in_result=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseArray:count:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverseArray:count:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverseArray:count:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=True),
@@ -167,14 +167,14 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseStrings:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseStrings:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverseStrings:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverseStrings:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=True),
@@ -182,21 +182,21 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "maybeReverseArray:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"maybeReverseArray:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=True),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverse4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverse4Tuple:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverse4Tuple:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverse4Tuple:on:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=True),
@@ -207,58 +207,58 @@ def setupMetaData():
 
 
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArrayOf5On:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArrayOf5On:",
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeStringArrayOn:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeStringArrayOn:",
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArrayOf:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArrayOf:on:",
             dict(
                 retval=dict(c_array_length_in_arg=2+0)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArrayOf5On:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArrayOf5On:",
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullStringArrayOn:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullStringArrayOn:",
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArrayOf:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArrayOf:on:",
             dict(
                 retval=dict(c_array_length_in_arg=2+0)
             ),
         )
 
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "sumX:andY:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:on:", 
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_IN, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "divBy5:remainder:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:on:", 
             dict(arguments={
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "swapX:andY:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:on:", 
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "input:output:inputAndOutput:on:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"input:output:inputAndOutput:on:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=True),
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=True),
@@ -274,7 +274,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
         return [100, 200, 300, 400, 500]
 
     def makeStringArray(self):
-        return [ "jaap", "pieter", "hans" ]
+        return [ b"jaap", b"pieter", b"hans" ]
 
     def makeIntArrayOf_(self, count):
         return [ i + 20 for i in range(count) ]
@@ -292,7 +292,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
     def makeIntArray_count_(self, data, count): return [data, count]
     def makeIntArray_countPtr_(self, data, count): return [data, count]
     def nullIntArray_count_(self, data, count): return [data, count]
-    def makeStringArray_(self, data): return [data]
+    def makeStringArray_(self, data): return [[ x.decode('latin1') for x in data]]
     def makeObjectArray_(self, data): return [data]
     def nullStringArray_(self, data): return [data]
     def make4Tuple_(self, data): return [data]
@@ -331,9 +331,9 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
 
     def fillArray_uptoCount_(self, data, count):
         if data is None:
-            return count/2, range(10, 10 + (count/2))
+            return int(count/2), range(10, 10 + int(count/2))
         else:
-            return count/2, range(15, 15 + (count/2))
+            return int(count/2), range(15, 15 + int(count/2))
 
     def maybeFillArray_(self, data):
         if data is None:
@@ -407,7 +407,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
 
     def reverseArray_uptoCount_(self, data, count):
         data = list(data)
-        for i in range(len(data)/2):
+        for i in range(int(len(data)/2)):
             data[i] = data[i] * 10
 
         return count/2, data
@@ -467,7 +467,7 @@ class TestArraysOut (TestCase):
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(objc.NULL, o)
         self.assertEquals(n, 2)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
         
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -482,7 +482,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, OC_MetaDataTest.nullfillStringArray_on_, None, o)
         n, v = OC_MetaDataTest.nullfillStringArray_on_(objc.NULL, o)
         self.assertEquals(n, 9)
-        self.assert_( v is objc.NULL)
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -505,7 +505,7 @@ class TestArraysOut (TestCase):
 
         n, v = OC_MetaDataTest.nullfillArray_count_on_(objc.NULL, 3, o)
         self.assertEquals(n, 1)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -539,28 +539,28 @@ class TestArraysInOut (TestCase):
 
         n, v = OC_MetaDataTest.nullreverse4Tuple_on_(objc.NULL, o)
         self.assertEquals(n, -1)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        a = ('aap', 'boot', 'cello')
+        a = (b'aap', b'boot', b'cello')
         v = OC_MetaDataTest.reverseStrings_on_(a, o)
-        self.assertEquals(a, ('aap', 'boot', 'cello'))
-        self.assertEquals(v, ('paa', 'toob', 'ollec'))
+        self.assertEquals(a, (b'aap', b'boot', b'cello'))
+        self.assertEquals(v, (b'paa', b'toob', b'ollec'))
 
         self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, (1,2), o)
         self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, objc.NULL, o)
 
-        a = ('aap', 'boot', 'cello')
+        a = (b'aap', b'boot', b'cello')
         n, v = OC_MetaDataTest.nullreverseStrings_on_(a, o)
         self.assertEquals(n, 10)
-        self.assertEquals(a, ('aap', 'boot', 'cello'))
-        self.assertEquals(v, ('paa', 'toob', 'ollec'))
+        self.assertEquals(a, (b'aap', b'boot', b'cello'))
+        self.assertEquals(v, (b'paa', b'toob', b'ollec'))
 
         n, v = OC_MetaDataTest.nullreverseStrings_on_(objc.NULL, o)
         self.assertEquals(n, 9)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -593,7 +593,7 @@ class TestArraysInOut (TestCase):
 
         n, v = OC_MetaDataTest.nullreverseArray_count_on_(objc.NULL, 0, o)
         self.assertEquals(n, 2)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -625,12 +625,12 @@ class TestArraysIn (TestCase):
         self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, objc.NULL, o)
 
         v, = OC_MetaDataTest.null4Tuple_on_(objc.NULL, o)
-        self.assert_(v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        v, = OC_MetaDataTest.makeStringArray_on_(("hello", "world", "there"), o)
+        v, = OC_MetaDataTest.makeStringArray_on_((b"hello", b"world", b"there"), o)
         self.assertEquals(len(v), 3)
         self.assertEquals(list(v), ["hello", "world", "there"])
 
@@ -638,8 +638,8 @@ class TestArraysIn (TestCase):
         p, q = NSObject.new(), NSObject.new()
         v, = o.makeObjectArray_((p, q))
         self.assertEquals(len(v), 2)
-        self.assert_( v[0] is p )
-        self.assert_( v[1] is q )
+        self.assertIsObject(v[0], p)
+        self.assertIsObject(v[1], q)
 
         v, = OC_MetaDataTest.makeStringArray_on_((), o)
         self.assertEquals(len(v), 0)
@@ -713,7 +713,7 @@ class TestArrayReturns (TestCase):
 
         v = OC_MetaDataTest.makeStringArrayOn_(o)
         self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [ "jaap", "pieter", "hans" ])
+        self.assertEquals(list(v), [ b"jaap", b"pieter", b"hans" ])
 
         v = OC_MetaDataTest.nullStringArrayOn_(o)
         self.assertEquals(v, objc.NULL)
@@ -738,12 +738,12 @@ class TestByReference (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         div, rem = OC_MetaDataTest.divBy5_remainder_on_(55, None, o)
-        self.assertEquals(div, 55 / 7)
-        self.assertEquals(rem, 55 % 7)
+        self.assertEquals(div, int(55 / 7))
+        self.assertEquals(rem, int(55 % 7))
 
         div, rem = OC_MetaDataTest.divBy5_remainder_on_(13, None, o)
-        self.assertEquals(div, 13 / 7)
-        self.assertEquals(rem, 13 % 7)
+        self.assertEquals(div, int(13 / 7))
+        self.assertEquals(rem, int(13 % 7))
 
         self.assertRaises(ValueError, OC_MetaDataTest.divBy5_remainder_on_, 42, objc.NULL, o)
 

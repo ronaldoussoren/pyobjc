@@ -8,7 +8,7 @@ __all__ = [
 ]
 
 import os, sys
-from _framework import infoForFramework
+from objc._framework import infoForFramework
 
 
 # These are the defaults as per man dyld(1)

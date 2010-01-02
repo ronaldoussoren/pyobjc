@@ -2,9 +2,9 @@ from PyObjCTools.TestSupport import *
 import objc
 from PyObjCTest.testoutputinitializer import PyObjC_TestOutputInitializer
 
-objc.registerMetaDataForSelector("PyObjC_TestOutputInitializer", 
-        "initWithBooleanOutput:", dict(arguments={
-            2: dict(type_modifier='o')}))
+objc.registerMetaDataForSelector(b"PyObjC_TestOutputInitializer", 
+        b"initWithBooleanOutput:", dict(arguments={
+            2: dict(type_modifier=b'o')}))
 
 class TestOutputInitializer(TestCase):
     def testOutputInitializer(self):

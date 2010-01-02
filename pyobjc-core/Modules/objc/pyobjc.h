@@ -5,7 +5,7 @@
  * Central include file for PyObjC. 
  */
 
-#define OBJC_VERSION "2.2"
+#define OBJC_VERSION "2.3a0"
 
 // Loading in AppKit on Mac OS X 10.3 results in
 // a bit less than 1500 classes.
@@ -34,7 +34,11 @@
 #include "OC_PythonData.h"
 #include "OC_PythonDictionary.h"
 #include "OC_PythonUnicode.h"
+
+#if PY_VERSION_HEX < 0x03000000
 #include "OC_PythonString.h"
+#endif
+
 #include "OC_PythonEnumerator.h"
 #include "OC_PythonDate.h"
 #include "OC_PythonNumber.h"
@@ -86,7 +90,9 @@
 extern BOOL PyObjC_useKVO;
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_HideProtected;
+#if PY_VERSION_HEX < 0x03000000
 extern int PyObjC_StrBridgeEnabled;
+#endif
 extern PyObject *PyObjCStrBridgeWarning;
 extern PyObject *PyObjC_NSNumberWrapper;
 

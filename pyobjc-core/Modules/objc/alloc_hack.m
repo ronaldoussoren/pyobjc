@@ -18,7 +18,7 @@ call_NSObject_alloc(PyObject* method,
 	}
 
 	if (unlikely(!PyObjCClass_Check(self))) {
-		PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'", self->ob_type->tp_name);
+		PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'", Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -124,7 +124,7 @@ call_NSObject_dealloc(PyObject* method,
 	if (unlikely(!PyObjCObject_Check(self))) {
 		PyErr_Format(PyExc_TypeError, 
 			"[dealloc] Expecting Objective-C instance, got instance of '%s'",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -204,7 +204,7 @@ imp_NSObject_dealloc(
 		if (unlikely(result != Py_None)) {
 			PyErr_Format(PyExc_TypeError,
 				"dealloc should return None, returned instance"
-				" of %s", result->ob_type->tp_name);
+				" of %s", Py_TYPE(result)->tp_name);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
@@ -229,7 +229,7 @@ call_NSObject_release(PyObject* method,
 	if (unlikely(!PyObjCObject_Check(self))) {
 		PyErr_Format(PyExc_TypeError, 
 			"[release] Expecting Objective-C instance, got instance of '%s'",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -286,7 +286,7 @@ call_NSObject_retain(PyObject* method,
 	if (!PyObjCObject_Check(self)) {
 		PyErr_Format(PyExc_TypeError, 
 			"[retain] Expecting Objective-C instance, got instance of '%s'",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -365,7 +365,7 @@ imp_NSObject_release(
 		if (result != Py_None) {
 			PyErr_Format(PyExc_TypeError,
 				"release should return None, returned instance"
-				" of %s", result->ob_type->tp_name);
+				" of %s", Py_TYPE(result)->tp_name);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
@@ -452,13 +452,6 @@ PyObjC_InstallAllocHack(void)
 	r = PyObjC_RegisterMethodMapping(
 		objc_lookUpClass("NSObject"),
 		@selector(release),
-		call_NSObject_release,
-		imp_NSObject_release);
-	if (r != 0) return r;
-
-	r = PyObjC_RegisterMethodMapping(
-		objc_lookUpClass("NSObject"),
-		@selector(autorelease),
 		call_NSObject_release,
 		imp_NSObject_release);
 	if (r != 0) return r;

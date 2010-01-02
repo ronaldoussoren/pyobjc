@@ -19602,31 +19602,79 @@ static id arg2id(const char* argtype, void* argptr)
  * Some glue to make this a valid Python extension module
  */
 
-static PyMethodDef no_methods[] = {
+static PyMethodDef mod_methods[] = {
         { 0, 0, 0, 0 }
 };
 
-void inittestbndl2(void); // Remove GCC warning
-void inittestbndl2(void)
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"testbndl2",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_testbndl2(void);
+
+PyObject*
+PyInit_testbndl2(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void inittestbndl2(void);
+
+void
+inittestbndl2(void)
+#endif
 {
         PyObject* m;
 
-        m = Py_InitModule4("testbndl2", no_methods,
-                    NULL, NULL, PYTHON_API_VERSION);
-        if (!m) return;
-
-        if (PyObjC_ImportAPI(m) < 0) return;
-
-        PyModule_AddObject(m, "PyObjC_TestClass1",
-            PyObjCClass_New([PyObjC_TestClass1 class]));
-        PyModule_AddObject(m, "PyObjC_TestClass2",
-            PyObjCClass_New([PyObjC_TestClass2 class]));
-#ifdef HAVE_BOOL
-        PyModule_AddIntConstant(m, "HAVE_BOOL", 1);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
 #else
-        PyModule_AddIntConstant(m, "HAVE_BOOL", 0);
+	m = Py_InitModule4("testbndl2", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+        if (!m) {
+		INITERROR();
+	}
+
+        if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
+
+        if (PyModule_AddObject(m, "PyObjC_TestClass1",
+            PyObjCClass_New([PyObjC_TestClass1 class])) < 0) {
+		INITERROR();
+	}
+        if (PyModule_AddObject(m, "PyObjC_TestClass2",
+            PyObjCClass_New([PyObjC_TestClass2 class])) < 0) {
+		INITERROR();
+	}
+#ifdef HAVE_BOOL
+        if (PyModule_AddIntConstant(m, "HAVE_BOOL", 1) < 0) {
+		INITERROR();
+	}
+#else
+        if (PyModule_AddIntConstant(m, "HAVE_BOOL", 0) < 0) {
+		INITERROR();
+	}
 #endif
 
 	/* Initialize g_id_values */
 	g_id_values[0] = NSPriorDayDesignations;
+
+	INITDONE();
 }

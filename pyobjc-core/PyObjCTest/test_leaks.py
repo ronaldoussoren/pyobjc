@@ -41,7 +41,7 @@ class TestRetains(TestCase):
         self.assertEquals(LeaksDel, 0)
 
         o = LeaksClass.alloc().init()
-        self.assert_(o is not None)
+        self.assertIsNotNone(o)
         self.assertEquals(LeaksDel, 0)
         del o
         self.assertEquals(LeaksDel, 1)
@@ -56,7 +56,7 @@ class TestRetains(TestCase):
         del pool
 
         pool = NSAutoreleasePool.alloc().init()
-        self.assert_(c is not None)
+        self.assertIsNotNone(c)
         self.assertEquals(LeaksDel, 0)
         del c
         del pool
@@ -74,7 +74,7 @@ class TestRetains(TestCase):
         del pool
 
         pool = NSAutoreleasePool.alloc().init()
-        self.assert_(c is not None)
+        self.assertIsNotNone(c)
         self.assertEquals(LeaksDel, 0)
         del c
         del pool

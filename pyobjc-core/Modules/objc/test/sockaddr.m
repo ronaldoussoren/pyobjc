@@ -89,21 +89,64 @@ addr2string(void* addr, int addrlen)
 }
 @end
 
-static PyMethodDef NULL_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0}
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"sockaddr",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_sockaddr(void);
+
+PyObject*
+PyInit_sockaddr(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initsockaddr(void);
-void initsockaddr(void)
+
+void
+initsockaddr(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("sockaddr", NULL_methods,
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("sockaddr", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "PyObjCTestSockAddr",
-		PyObjCClass_New([PyObjCTestSockAddr class]));
+	if (PyModule_AddObject(m, "PyObjCTestSockAddr",
+		PyObjCClass_New([PyObjCTestSockAddr class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 
 }

@@ -96,11 +96,11 @@ class TestNSCopying (TestCase):
     def testCopyingRegr20090327(self):
         o = TestNSCopyingHelper.alloc().init()
         v = o.copyWithZone_(None)
-        self.failUnlessEqual(v, 42)
+        self.assertEqual(v, 42)
 
     def testCopyingWithoutSuperFromObjC(self):
         v = OC_TestCopy1.alloc().init()
-        self.assert_(not v.copyWithZone_.isClassMethod)
+        self.assertFalse(v.copyWithZone_.isClassMethod)
         self.assertEquals(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
         del v
 
@@ -114,15 +114,15 @@ class TestNSCopying (TestCase):
 
     def testCopyingWithSuperFromObjC(self):
         o = OC_CopyBase.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy2.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy3.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy4.alloc().init()
@@ -156,7 +156,7 @@ class TestNSCopying (TestCase):
 
     def testCopyingWithoutSuper(self):
         v = OC_TestCopy1.alloc().init()
-        self.assert_(not v.copyWithZone_.isClassMethod)
+        self.assertFalse(v.copyWithZone_.isClassMethod)
         self.assertEquals(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
         del v
 
@@ -175,15 +175,15 @@ class TestNSCopying (TestCase):
 
     def testCopyingWithSuper(self):
         o = OC_CopyBase.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy2.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy3.alloc().init()
-        self.assert_(not o.copyWithZone_.isClassMethod)
+        self.assertFalse(o.copyWithZone_.isClassMethod)
         del o
 
         o = OC_TestCopy4.alloc().init()
@@ -240,11 +240,11 @@ class TestPyCopyObjC (TestCase):
 
     def testCopyArray(self):
         a = NSMutableArray.arrayWithArray_(['a', 'b', 'c'])
-        self.assert_(isinstance(a, NSMutableArray))
+        self.assertIsInstance(a, NSMutableArray)
 
         b = copy.copy(a)
-        self.assert_(isinstance(b, NSMutableArray))
-        self.assert_(list(a) == list(b))
+        self.assertIsInstance(b, NSMutableArray)
+        self.assertEquals(list(a), list(b))
 
 
 if __name__ == "__main__":

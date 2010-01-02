@@ -26,6 +26,7 @@
 #undef ID
 
 static PyObject* empty = NULL;
+static PyObject* empty_bytes = NULL;
 static PyObject* default_suggestion = NULL;
 static PyObject* setupCFClasses = NULL;
 static PyObject* structConvenience = NULL;
@@ -163,12 +164,17 @@ PyObjCXML_Init(void)
 	 */
 	LIBXML_TEST_VERSION
 
-	empty = PyString_InternFromString("");
+	empty = PyText_InternFromString("");
 	if (empty == NULL) {
 		return -1;
 	}
 
-	default_suggestion = PyString_InternFromString("don't use this method");
+	empty_bytes = PyBytes_InternFromString("");
+	if (empty == NULL) {
+		return -1;
+	}
+
+	default_suggestion = PyText_InternFromString("don't use this method");
 	if (default_suggestion == NULL) {
 		return -1;
 	}
@@ -249,7 +255,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	typestr2typestr(s);
 
 	if (s && *s) {
-		v = PyString_InternFromString(s);
+		v = PyBytes_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -267,7 +273,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 
 	s = attribute_string(node, "type_modifier", NULL);
 	if (s && *s) {
-		v = PyString_InternFromString(s);
+		v = PyBytes_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -286,7 +292,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	s = attribute_string(node, "sel_of_type", "sel_of_type64");
 	typestr2typestr(s);
 	if (s && *s) {
-		v = PyString_InternFromString(s);
+		v = PyBytes_InternFromString(s);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -476,7 +482,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 				Py_DECREF(result);
 				return NULL;
 			}
-			PyObject* av = PyString_InternFromString("^v");
+			PyObject* av = PyBytes_InternFromString("^v");
 			if (av == NULL) {
 				Py_DECREF(a);
 				Py_DECREF(result);
@@ -650,8 +656,7 @@ handle_string_constant(xmlNode* cur_node, PyObject* globalDict)
 			}
 		}
 		if (v == NULL) {
-			v = PyString_FromStringAndSize(value, len);
-			PyString_InternInPlace(&v);
+			v = PyBytes_InternFromStringAndSize(value, len);
 		}
 		if (v == NULL) {
 			if (name) xmlFree(name);
@@ -693,12 +698,16 @@ handle_enum(xmlNode* cur_node, PyObject* globalDict)
 
 		if (strchr(value, '.') != NULL) {
 			/* floating point literal */
-			PyObject* s = PyString_InternFromString(value);
+			PyObject* s = PyText_InternFromString(value);
 			if (s == NULL) {
 				v = NULL;
 
 			} else {
+#if PY_VERSION_HEX < 0x03000000
 				v = PyFloat_FromString(s, &end);
+#else
+				v = PyFloat_FromString(s);
+#endif
 				Py_DECREF(s);
 			}
 		} else {
@@ -928,7 +937,7 @@ handle_class(xmlNode* cur_node)
 				}
 
 			} else {
-				PyObject* v = PyString_InternFromString(suggestion);
+				PyObject* v = PyText_InternFromString(suggestion);
 				xmlFree(suggestion);
 
 				r = PyDict_SetItemString(metadata, "suggestion", v);
@@ -1081,7 +1090,7 @@ handle_class(xmlNode* cur_node)
 
 		/* Complete metadata for a method, register it */
 		if (pyClassname == NULL) {
-			pyClassname = PyString_InternFromString(classname);
+			pyClassname = PyBytes_InternFromString(classname);
 			if (pyClassname == NULL) {
 				Py_DECREF(metadata);
 				xmlFree(selname);
@@ -1090,7 +1099,7 @@ handle_class(xmlNode* cur_node)
 			}
 		}
 
-		PyObject* pySelector = PyString_InternFromString(selname);
+		PyObject* pySelector = PyBytes_InternFromString(selname);
 		xmlFree(selname);
 		if (pySelector == NULL) {
 			Py_DECREF(pyClassname);
@@ -1234,7 +1243,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 	}
 
 	/* Set the default result type to 'v' */
-	v = PyString_InternFromString("v");
+	v = PyBytes_InternFromString("v");
 	if (v == NULL) goto error;
 
 	int r = PyList_Append(siglist, v);
@@ -1311,16 +1320,16 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 
 
 	/* We have the complete metadata, now build the proxy object for it */
-	PyObject* signature = PyObject_CallMethod(empty, "join", "O", siglist);
+	PyObject* signature = PyObject_CallMethod(empty_bytes, "join", "O", siglist);
 	if (signature == NULL) {
 		goto error;
 	}
 
-	PyObject* nm = PyString_InternFromString(name);
+	PyObject* nm = PyText_InternFromString(name);
 	if (nm == NULL) {
 		goto error;
 	}
-	v = PyObjCFunc_New(nm, function, PyString_AsString(signature), Py_None, metadata);
+	v = PyObjCFunc_New(nm, function, PyBytes_AsString(signature), Py_None, metadata);
 
 	Py_DECREF(nm);
 	Py_DECREF(metadata);
@@ -1419,7 +1428,7 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 		if (module == NULL) {
 			char buf[1024];
 			snprintf(buf, sizeof(buf), "%s.protocols", framework);
-			PyObject* mod_name = PyString_InternFromString(buf);
+			PyObject* mod_name = PyText_InternFromString(buf);
 			if (mod_name == NULL) {
 				Py_DECREF(proto);
 				Py_DECREF(methodList);
@@ -1594,8 +1603,8 @@ PyObjC_ProcessXML(char* data, int length, PyObject* globalDict, const char* dyli
 	}
 
 	struct functionlist* inlineTab = NULL;
-	if (_inlineTab != NULL && PyCObject_Check(_inlineTab)) {
-		inlineTab = PyCObject_AsVoidPtr(_inlineTab);
+	if (_inlineTab != NULL && PyCapsule_CheckExact(_inlineTab)) {
+		inlineTab = PyCapsule_GetPointer(_inlineTab, "objc.__inline__");
 		if (inlineTab == NULL) {
 			PyErr_Clear();
 		}

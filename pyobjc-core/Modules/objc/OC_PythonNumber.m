@@ -61,8 +61,10 @@
 			PyObjC_GIL_RETURN(@encode(BOOL));
 		} else if (PyFloat_Check(value)) {
 			PyObjC_GIL_RETURN(@encode(double));
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyInt_Check(value)) {
 			PyObjC_GIL_RETURN(@encode(long));
+#endif
 		} else if (PyLong_Check(value)) {
 			PyObjC_GIL_RETURN(@encode(long long));
 		} 
@@ -112,6 +114,7 @@
 	BOOL negative = NO;
 
 	PyObjC_BEGIN_WITH_GIL
+#if PY_VERSION_HEX < 0x03000000
 		if (PyInt_Check(value)) {
 			long lng = PyInt_AsLong(value);
 			if (lng < 0) {
@@ -124,7 +127,9 @@
 				negative = NO;
 			}
 
-		} else if (PyLong_Check(value)) {
+		} else 
+#endif
+		if (PyLong_Check(value)) {
 			mantissa = PyLong_AsUnsignedLongLong(value);
 			if (PyErr_Occurred()) {
 				long long lng;
@@ -172,7 +177,7 @@
 
 		} else {
 			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
-					value->ob_type->tp_name);
+					Py_TYPE(value)->tp_name);
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
@@ -252,10 +257,13 @@
 	long long result;
 
 	PyObjC_BEGIN_WITH_GIL
+#if PY_VERSION_HEX < 0x03000000
 		if (PyInt_Check(value)) {
 			result =  PyInt_AsLong(value);
 			PyObjC_GIL_RETURN(result);
-		} else if (PyFloat_Check(value)) {
+		} else 
+#endif
+		if (PyFloat_Check(value)) {
 			result =  (long long)PyFloat_AsDouble(value);
 			PyObjC_GIL_RETURN(result);
 		} else if (PyLong_Check(value)) {
@@ -277,9 +285,11 @@
 		if (PyLong_Check(value)) {
 			result =  PyLong_AsUnsignedLongLongMask(value);
 			PyObjC_GIL_RETURN(result);
+#if PY_VERSION_HEX < 0x03000000
 		} else if (PyInt_Check(value)) {
 			result =  (unsigned long long)PyInt_AsLong(value);
 			PyObjC_GIL_RETURN(result);
+#endif
 		} else if (PyFloat_Check(value)) {
 			double temp = PyFloat_AsDouble(value);
 			result =  (unsigned long long)temp;
@@ -316,6 +326,7 @@
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
+#if PY_VERSION_HEX < 0x03000000
 		PyObject* uniVal = PyUnicode_FromEncodedObject(repr, "ascii", "strict");
 		Py_DECREF(repr);
 		if (PyErr_Occurred()) {
@@ -327,6 +338,13 @@
 		if (PyErr_Occurred()) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
+#else
+		result = PyObjC_PythonToId(repr);
+		Py_DECREF(repr);
+		if (PyErr_Occurred()) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+#endif
 
 
 	PyObjC_END_WITH_GIL
@@ -407,9 +425,10 @@
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-		int r = PyObject_Compare(value, other);
+		int r;
+		int ok = PyObject_Cmp(value, other, &r);
 		Py_DECREF(other);
-		if (PyErr_Occurred()) {
+		if (ok == -1) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
 

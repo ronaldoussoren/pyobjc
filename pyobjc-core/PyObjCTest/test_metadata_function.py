@@ -10,7 +10,7 @@ import warnings
 from PyObjCTest.metadatafunction import *
 
 _FunctionTable = [
-    ("makeArrayWithFormat_", '@@', '',
+    (u"makeArrayWithFormat_", b'@@', '',
             dict(
                 variadic=True,
                 arguments={
@@ -18,7 +18,7 @@ _FunctionTable = [
                 }
             )),
 
-    ("makeArrayWithCFormat_", '@*', '',
+    (u"makeArrayWithCFormat_", b'@*', '',
             dict(
                 variadic=True,
                 arguments={
@@ -26,49 +26,49 @@ _FunctionTable = [
                 }
             )),
 
-    ("make4Tuple_", '@^d', '',
+    (u"make4Tuple_", b'@^d', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )),
 
-    ("null4Tuple_", '@^d', '',
+    (u"null4Tuple_", b'@^d', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=True),
                 }
             )),
 
-    ("makeObjectArray_", '@^@', '',
+    (u"makeObjectArray_", b'@^@', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )),
 
-    ("makeStringArray_", '@^*', '',
+    (u"makeStringArray_", b'@^*', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )),
 
-    ("nullStringArray_", '@^*', '',
+    (u"nullStringArray_", b'@^*', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=True),
                 }
             )),
 
-    ("makeIntArray_count_", '@^iI', '',
+    (u"makeIntArray_count_", b'@^iI', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=False),
                 }
             )),
 
-    ("makeIntArray_countPtr_", '@^i^I', '',
+    (u"makeIntArray_countPtr_", b'@^i^I', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=False),
@@ -76,174 +76,174 @@ _FunctionTable = [
                 }
             )),
 
-    ("nullIntArray_count_", '@^iI', '',
+    (u"nullIntArray_count_", b'@^iI', '',
             dict(
                 arguments={
                   0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=1, null_accepted=True),
                 }
             )),
 
-    ("fillArray_uptoCount_", 'i^ii', '',
+    (u"fillArray_uptoCount_", b'i^ii', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=1, c_array_length_in_result=True, null_accepted=False),
                 }
             )),
 
-    ("fillArray_count_", 'v^ii', '',
+    (u"fillArray_count_", b'v^ii', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=1, null_accepted=False),
                 }
             )),
 
-    ("nullfillArray_count_", 'i^ii', '',
+    (u"nullfillArray_count_", b'i^ii', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=1, null_accepted=True),
                 }
             )),
 
-    ("maybeFillArray_", 'i^i', '',
+    (u"maybeFillArray_", b'i^i', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=False),
                 }
             )),
 
-    ("fill4Tuple_", 'v^i', '',
+    (u"fill4Tuple_", b'v^i', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )),
 
-    ("nullfill4Tuple_", 'i^i', '',
+    (u"nullfill4Tuple_", b'i^i', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=True),
                 }
             )),
 
-    ("fillStringArray_", 'i^*', '',
+    (u"fillStringArray_", b'i^*', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )),
 
-    ("nullfillStringArray_", 'i^*', '',
+    (u"nullfillStringArray_", b'i^*', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=True),
                 }
             )),
 
-    ("reverseArray_uptoCount_", 'i^fi', '',
+    (u"reverseArray_uptoCount_", b'i^fi', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=1, c_array_length_in_result=True, null_accepted=False),
                 }
             )),
 
-    ("reverseArray_count_", 'v^fi', '',
+    (u"reverseArray_count_", b'v^fi', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=1, null_accepted=False),
                 }
             )),
 
-    ("nullreverseArray_count_", 'i^fi', '',
+    (u"nullreverseArray_count_", b'i^fi', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=1, null_accepted=True),
                 }
             )),
 
-    ("reverseStrings_", 'v^*', '',
+    (u"reverseStrings_", b'v^*', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )),
 
-    ("nullreverseStrings_", 'i^*', '',
+    (u"nullreverseStrings_", b'i^*', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=True),
                 }
             )),
 
-    ("maybeReverseArray_", 'i^s', '',
+    (u"maybeReverseArray_", b'i^s', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=False),
                 }
             )),
 
-    ("reverse4Tuple_", 'v^s', '',
+    (u"reverse4Tuple_", b'v^s', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )),
 
-    ("nullreverse4Tuple_", 'i^s', '',
+    (u"nullreverse4Tuple_", b'i^s', '',
             dict(
                 arguments={
                     0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=True),
                 }
             )),
 
-    ("makeIntArrayOf5", '^i', '',
+    (u"makeIntArrayOf5", b'^i', '',
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             )),
 
-    ("makeStringArray", '^*', '',
+    (u"makeStringArray", b'^*', '',
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             )),
 
-    ("makeIntArrayOf_", '^ii', '',
+    (u"makeIntArrayOf_", b'^ii', '',
             dict(
                 retval=dict(c_array_length_in_arg=0)
             )),
 
-    ("nullIntArrayOf5", '^i', '',
+    (u"nullIntArrayOf5", b'^i', '',
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             )),
 
-    ("nullStringArray", '^*', '',
+    (u"nullStringArray", b'^*', '',
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             )),
 
-    ("nullIntArrayOf_", '^ii',  '',
+    (u"nullIntArrayOf_", b'^ii',  '',
             dict(
                 retval=dict(c_array_length_in_arg=0)
             )),
 
 
-    ("sumX_andY_",  'i^i^i', '',
+    (u"sumX_andY_",  b'i^i^i', '',
             dict(arguments={
                     0: dict(type_modifier=objc._C_IN, null_accepted=False),
                     1: dict(type_modifier=objc._C_IN, null_accepted=False),
                 })),
 
-    ("divBy5_remainder_",  'ii^i', '',
+    (u"divBy5_remainder_",  b'ii^i', '',
             dict(arguments={
                     1: dict(type_modifier=objc._C_OUT, null_accepted=False),
                 })),
 
-    ("swapX_andY_", 'v^d^d', '',
+    (u"swapX_andY_", b'v^d^d', '',
             dict(arguments={
                     0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                     1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                 })),
 
-    ("input_output_inputAndOutput_", '@^i^i^i', '',
+    (u"input_output_inputAndOutput_", b'@^i^i^i', '',
             dict(arguments={
                     0: dict(type_modifier=objc._C_IN, null_accepted=True),
                     1: dict(type_modifier=objc._C_OUT, null_accepted=True),
@@ -256,7 +256,7 @@ objc._loadFunctionList(function_list, globals(),  _FunctionTable, False)
 class TestExists (TestCase):
     def testFunctionsExists(self):
         for item in _FunctionTable:
-            self.assert_( item[0] in globals() )
+            self.assertIsIn(item[0], globals())
 
 class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?
@@ -275,7 +275,7 @@ class TestArraysOut (TestCase):
 
         n, v = nullfill4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
         
     def testNullTerminated(self):
 
@@ -289,7 +289,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, nullfillStringArray_, None)
         n, v = nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL)
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
 
@@ -316,7 +316,7 @@ class TestArraysOut (TestCase):
 
         n, v = nullfillArray_count_(objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL )
 
     def testWithCountInResult(self):
 
@@ -349,27 +349,27 @@ class TestArraysInOut (TestCase):
 
         n, v = nullreverse4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testNullTerminated(self):
 
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         v = reverseStrings_(a)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         self.assertRaises(ValueError, reverseStrings_, (1,2))
         self.assertRaises(ValueError, reverseStrings_, objc.NULL)
 
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         n, v = nullreverseStrings_(a)
         self.assertEquals(n, 1)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         n, v = nullreverseStrings_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
 
@@ -401,7 +401,7 @@ class TestArraysInOut (TestCase):
 
         n, v = nullreverseArray_count_(objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCountInResult(self):
 
@@ -431,24 +431,23 @@ class TestArraysIn (TestCase):
         self.assertRaises(ValueError, make4Tuple_, objc.NULL)
 
         v = null4Tuple_(objc.NULL)
-        self.assert_( v is None )
+        self.assertIsObject(v, None)
 
     def testNullTerminated(self):
 
-        v = makeStringArray_(("hello", "world", "there"))
+        v = makeStringArray_((b"hello", b"world", b"there"))
         self.assertEquals(len(v), 3)
         self.assertEquals(list(v), [u"hello", u"world", u"there"])
-        self.assert_( isinstance(v, objc.lookUpClass("NSArray")) )
-        self.assert_( isinstance(v[0], unicode) )
+        self.assertIsInstance(v, objc.lookUpClass("NSArray"))
+        self.assertIsInstance(v[0], unicode)
 
         NSObject = objc.lookUpClass('NSObject')
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = makeObjectArray_((p, q, r))
         self.assertEquals(len(v), 3)
-        self.assert_( v[0] is p )
-        self.assert_( v[1] is q )
-        self.assert_( v[2] is r )
-
+        self.assertIsObject(v[0], p)
+        self.assertIsObject(v[1], q)
+        self.assertIsObject(v[2], r)
 
         v = makeStringArray_(())
         self.assertEquals(len(v), 0)
@@ -521,7 +520,7 @@ class TestArrayReturns (TestCase):
 
         v = makeStringArray()
         self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), ["hello", "world", "out", "there"])
+        self.assertEquals(list(v), [b"hello", b"world", b"out", b"there"])
 
         v = nullStringArray()
         self.assertEquals(v, objc.NULL)
@@ -611,15 +610,15 @@ class TestPrintfFormat (TestCase):
         v = makeArrayWithFormat_("%3d", 10)
         self.assertEquals(list(v), [ "%3d", " 10"])
 
-        v = makeArrayWithFormat_("hello %s", "world")
+        v = makeArrayWithFormat_("hello %s", b"world")
         self.assertEquals(list(v), [ "hello %s", "hello world"])
 
     def test_cformat(self):
 
-        v = makeArrayWithCFormat_("%3d", 10)
+        v = makeArrayWithCFormat_(b"%3d", 10)
         self.assertEquals(list(v), [ "%3d", " 10"])
 
-        v = makeArrayWithCFormat_("hello %s", "world")
+        v = makeArrayWithCFormat_(b"hello %s", b"world")
         self.assertEquals(list(v), [ "hello %s", "hello world"])
 
 if __name__ == "__main__":

@@ -26,38 +26,38 @@ class TestKVOPropHelper (NSObject):
 class TestKVOProp (TestCase):
     def testKVOProperty(self):
         o = TestKVOPropHelper.alloc().init()
-        self.failUnlessIsInstance(o, TestKVOPropHelper)
+        self.assertIsInstance(o, TestKVOPropHelper)
 
-        self.failUnlessEqual(len(o.accessing), 0)
+        self.assertEqual(len(o.accessing), 0)
         o.helper = 42
-        self.failUnlessEqual(len(o.accessing), 1)
-        self.failUnlessEqual(o.accessing[-1], ('set_helper', 42))
+        self.assertEqual(len(o.accessing), 1)
+        self.assertEqual(o.accessing[-1], ('set_helper', 42))
 
-        self.failUnlessEqual(o.helper, 42)
-        self.failUnlessEqual(len(o.accessing), 2)
-        self.failUnlessEqual(o.accessing[-1], ('get_helper',))
+        self.assertEqual(o.helper, 42)
+        self.assertEqual(len(o.accessing), 2)
+        self.assertEqual(o.accessing[-1], ('get_helper',))
         
         o.accessing[:] = []
 
-        self.failUnlessEqual(len(o.accessing), 0)
+        self.assertEqual(len(o.accessing), 0)
         o.setValue_forKey_(42, 'helper')
-        self.failUnlessEqual(len(o.accessing), 1)
-        self.failUnlessEqual(o.accessing[-1], ('set_helper', 42))
+        self.assertEqual(len(o.accessing), 1)
+        self.assertEqual(o.accessing[-1], ('set_helper', 42))
 
-        self.failUnlessEqual(o.valueForKey_('helper'), 42)
-        self.failUnlessEqual(len(o.accessing), 2)
-        self.failUnlessEqual(o.accessing[-1], ('get_helper',))
+        self.assertEqual(o.valueForKey_('helper'), 42)
+        self.assertEqual(len(o.accessing), 2)
+        self.assertEqual(o.accessing[-1], ('get_helper',))
 
     def testKVOWillChange(self):
         o = TestKVOPropHelper.alloc().init()
-        self.failUnlessIsInstance(o, TestKVOPropHelper)
+        self.assertIsInstance(o, TestKVOPropHelper)
 
-        self.failUnlessEqual(len(o.accessing), 0)
+        self.assertEqual(len(o.accessing), 0)
         o.willChangeValueForKey_('helper')
         o.helper = 42
         o.didChangeValueForKey_('helper')
-        self.failUnlessEqual(len(o.accessing), 1)
-        self.failUnlessEqual(o.accessing[-1], ('set_helper', 42))
+        self.assertEqual(len(o.accessing), 1)
+        self.assertEqual(o.accessing[-1], ('set_helper', 42))
 
 if __name__ == "__main__":
     main()

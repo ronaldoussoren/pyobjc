@@ -80,7 +80,7 @@ makeipaddr(struct sockaddr* addr, int addrlen)
 	if (r) {
 		return set_gaierror(r);
 	}
-	return PyString_FromString(buf);
+	return PyBytes_FromString(buf);
 }
 
 static int 

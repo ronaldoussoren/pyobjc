@@ -14,8 +14,8 @@ else:
     from PyObjCTest.protocol import OC_TestProtocol
 
 MyProto = objc.informal_protocol("MyProto", (
-    objc.selector(None, selector="testMethod", signature="I@:", isRequired=1),
-    objc.selector(None, selector="testMethod2:", signature="v@:i", isRequired=0)
+    objc.selector(None, selector=b"testMethod", signature=b"I@:", isRequired=1),
+    objc.selector(None, selector=b"testMethod2:", signature=b"v@:i", isRequired=0)
 ))
 
 class TestInformalProtocols(TestCase):
@@ -25,7 +25,7 @@ class TestInformalProtocols(TestCase):
         class ProtoClass1 (NSObject):
             def testMethod(self):
                 pass
-        self.assertEquals(ProtoClass1.testMethod.signature, "I@:")
+        self.assertEquals(ProtoClass1.testMethod.signature, b"I@:")
 
 
     def doIncompleteClass(self):
@@ -48,18 +48,18 @@ if sys.maxint < 2 ** 32:
     EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
 
     MyProtocol = objc.formal_protocol("MyProtocol", None, (
-        objc.selector(None, selector="protoMethod", signature="I@:"),
-        objc.selector(None, selector="anotherProto:with:", signature="v@:ii"),
+        objc.selector(None, selector=b"protoMethod", signature=b"I@:"),
+        objc.selector(None, selector=b"anotherProto:with:", signature=b"v@:ii"),
     ))
 
     MyOtherProtocol = objc.formal_protocol("MyOtherProtocol", 
             (MyProtocol,), [
-                objc.selector(None, selector="yetAnother:", signature="i@:I")
+                objc.selector(None, selector=b"yetAnother:", signature=b"i@:I")
             ])
 
     MyClassProtocol = objc.formal_protocol("MyClassProtocol", None, [
-        objc.selector(None, selector="anAnotherOne:", signature="i@:i"),
-        objc.selector(None, selector="aClassOne:", signature="@@:i", isClassMethod=1),
+        objc.selector(None, selector=b"anAnotherOne:", signature=b"i@:i"),
+        objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ])
 
     if OC_TestProtocol is not None:
@@ -71,7 +71,7 @@ if sys.maxint < 2 ** 32:
                 class MyClassNotImplementingProtocol(NSObject):
                     pass
 
-                self.assert_(not MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.assertFalse(MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
                 try:
                     class MyClassNotAlsoImplementingProtocol(NSObject, OC_TestProtocol):
@@ -85,7 +85,7 @@ if sys.maxint < 2 ** 32:
                     def method1(self): pass
                     def method2_(self, a): pass
 
-                self.assert_(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.assertTrue(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
 
@@ -96,14 +96,14 @@ if sys.maxint < 2 ** 32:
 
                 class MyClassImplementingHalfOfProtocol(NSObject):
                         def method1(self): pass
-                        method1 = objc.selector(method1, signature='i@:')
+                        method1 = objc.selector(method1, signature=b'i@:')
 
-                self.assert_(not MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
                 class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
                         def method2_(self, v): pass
 
-                self.assert_(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
 
@@ -140,7 +140,7 @@ if sys.maxint < 2 ** 32:
 
             # Pretty useless, but should work
 
-            self.assert_(MyOtherProtocol.conformsTo_(MyProtocol))
+            self.assertTrue(MyOtherProtocol.conformsTo_(MyProtocol))
 
 
             try:
@@ -160,20 +160,20 @@ if sys.maxint < 2 ** 32:
                 def anotherProto_with_(self, a1, a2):
                     pass
 
-            self.assertEquals(MyClassImplementingMyProtocol.protoMethod.signature, "I@:")
-            self.assertEquals(MyClassImplementingMyProtocol.anotherProto_with_.signature, "v@:ii")
-            self.assert_(MyClassImplementingMyProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
+            self.assertEquals(MyClassImplementingMyProtocol.protoMethod.signature, b"I@:")
+            self.assertEquals(MyClassImplementingMyProtocol.anotherProto_with_.signature, b"v@:ii")
+            self.assertTrue(MyClassImplementingMyProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
 
             class MyClassImplementingMyOtherProtocol(NSObject, MyOtherProtocol):
                 def protoMethod(self): pass
                 def anotherProto_with_(self, a1, a2): pass
                 def yetAnother_(self, a): pass
 
-            self.assertEquals(MyClassImplementingMyOtherProtocol.protoMethod.signature, "I@:")
-            self.assertEquals(MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, "v@:ii")
-            self.assertEquals(MyClassImplementingMyOtherProtocol.yetAnother_.signature, "i@:I")
-            self.assert_(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
-            self.assert_(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyOtherProtocol))
+            self.assertEquals(MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:")
+            self.assertEquals(MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii")
+            self.assertEquals(MyClassImplementingMyOtherProtocol.yetAnother_.signature, b"i@:I")
+            self.assertTrue(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
+            self.assertTrue(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyOtherProtocol))
 
             try:
                 class ImplementingMyClassProtocol(NSObject, MyClassProtocol):
@@ -192,9 +192,9 @@ if sys.maxint < 2 ** 32:
 
                     aClassOne_ = classmethod(aClassOne_)
 
-            self.assertEquals(ImplementingMyClassProtocol.anAnotherOne_.signature, 'i@:i')
+            self.assertEquals(ImplementingMyClassProtocol.anAnotherOne_.signature, b'i@:i')
             self.assertEquals(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
-            self.assertEquals(ImplementingMyClassProtocol.aClassOne_.signature,'@@:i')
+            self.assertEquals(ImplementingMyClassProtocol.aClassOne_.signature, b'@@:i')
 
             # TODO: protocol with class and instance method with different
             # signatures.
@@ -212,7 +212,7 @@ if sys.maxint < 2 ** 32:
                     "hello",
                 ], ())
             self.assertRaises(TypeError, objc.formal_protocol, 'supers', None, [
-                    objc.selector(None, selector='fooMethod:', signature='v@:i'),
+                    objc.selector(None, selector=b'fooMethod:', signature=b'v@:i'),
                     "hello",
                 ])
 

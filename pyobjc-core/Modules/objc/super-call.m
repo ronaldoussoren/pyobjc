@@ -46,6 +46,19 @@ init_registry(void)
 	return 0;
 }
 
+#if PY_VERSION_HEX < 0x03000000
+
+static void memblock_capsule_cleanup(void* ptr, void* closure __attribute__((__unused__)))
+{
+	PyMem_Free(ptr);
+}
+#else
+static void memblock_capsule_cleanup(PyObject* ptr)
+{
+	PyMem_Free(PyCapsule_GetPointer(ptr, "objc.__memblock__"));
+}
+#endif
+
 
 /*
  * Add a custom mapping for a method in a class
@@ -93,8 +106,8 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
 	if (entry == NULL) return -1;
 
 	PyTuple_SET_ITEM(entry, 0, pyclass);
-	PyTuple_SET_ITEM(entry, 1, PyString_InternFromString(selname));
-	PyTuple_SET_ITEM(entry, 2, PyCObject_FromVoidPtr(v, (PyMem_Free)));
+	PyTuple_SET_ITEM(entry, 1, PyBytes_InternFromString((char*)selname));
+	PyTuple_SET_ITEM(entry, 2, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
 
 	if (PyErr_Occurred()) {
 		Py_DECREF(entry);
@@ -148,16 +161,23 @@ int PyObjC_RegisterSignatureMapping(
 	v->call_to_objc  = call_to_objc;
 	v->call_to_python = call_to_python;
 
-	entry = PyCObject_FromVoidPtr(v, (PyMem_Free));
+	entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
 	if (entry == NULL) {
 		PyMem_Free(v);
 		return -1;
 	}
 
-	if (PyDict_SetItemString(signature_registry, signature_buf, entry) < 0){
+	PyObject* key = PyBytes_FromString(signature_buf);
+	if (key == NULL) {
+		return -1;
+	}
+
+	if (PyDict_SetItem(signature_registry, key, entry) < 0){
+		Py_DECREF(key);
 		Py_DECREF(entry);
 		return -1;
 	}
+	Py_DECREF(key);
 	Py_DECREF(entry); 
 	PyObjC_MappingCount += 1;
 
@@ -190,8 +210,14 @@ search_special(Class class, SEL sel)
 
 		if (pyclass == NULL || pysel == NULL) continue;
 		
-		if (strcmp(PyString_AsString(pysel), 
-					sel_getName(sel)) == 0) {
+		if (
+			(PyUnicode_Check(pysel) && PyObjC_is_ascii_string(pysel, sel_getName(sel)))
+#if PY_VERSION_HEX < 0x03000000
+		     || (PyString_Check(pysel) && strcmp(PyString_AsString(pysel), sel_getName(sel)) == 0)
+#else
+		     || (PyBytes_Check(pysel) && strcmp(PyBytes_AsString(pysel), sel_getName(sel)) == 0)
+#endif
+		     ) {
 
 			if (!special_class) {
 				special_class = pyclass;
@@ -218,7 +244,7 @@ search_special(Class class, SEL sel)
 	Py_XDECREF(special_class);
 	if (!result) goto error;
 
-	return PyCObject_AsVoidPtr(result);
+	return PyCapsule_GetPointer(result, "objc.__memblock__");
 
 error:
 	PyErr_Format(PyObjCExc_Error,
@@ -268,10 +294,16 @@ find_signature(char* signature)
 	}	
 
 	if (signature_registry == NULL) goto error;
-	o = PyDict_GetItemString(signature_registry, signature_buf);
+
+	PyObject* key = PyBytes_FromString(signature_buf);
+	if (key == NULL) {
+		return NULL;
+	}
+	o = PyDict_GetItem(signature_registry, key);
+	Py_DECREF(key);
 	if (o == NULL) goto error;
 
-	r = PyCObject_AsVoidPtr(o);
+	r = PyCapsule_GetPointer(o, "objc.__memblock__");
 	return r;
 
 error:
@@ -362,6 +394,7 @@ PyObjCUnsupportedMethod_Caller(
 	PyObject* self, 
 	PyObject* args __attribute__((__unused__)))
 {
+#if PY_VERSION_HEX < 0x03000000
 	PyObject* repr;
 
 	repr = PyObject_Repr(self);
@@ -370,7 +403,7 @@ PyObjCUnsupportedMethod_Caller(
 		PyErr_Format(PyExc_TypeError,
 			"Cannot call '%s' on instances of '%s' from Python",
 			sel_getName(PyObjCSelector_GetSelector(meth)),
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -380,4 +413,12 @@ PyObjCUnsupportedMethod_Caller(
 		PyString_AS_STRING(repr));
 	Py_DECREF(repr);
 	return NULL;
+#else
+	PyErr_Format(PyExc_TypeError,
+		"Cannot call '%s' on '%R' from Python",
+		sel_getName(PyObjCSelector_GetSelector(meth)),
+		self);
+	return NULL;
+#endif
+
 }

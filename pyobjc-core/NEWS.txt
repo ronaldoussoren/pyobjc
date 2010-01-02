@@ -4,6 +4,89 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.3a0
+-------------
+
+- The (undocument) module ``PyObjCTools.TestSupport`` is no longer
+  present.
+
+- Converting a negative value to an unsigned integer now causes
+  a deprecation warning, this will be a hard error once I update
+  all framework wrapper metadata. 
+
+- Initial port to Python 3.x
+
+  C-style 'char' characters and 'char*' strings are 
+  translated to/from byte strings ('str' in Python 2.x,
+  'bytes' in Python 3.x). There is no automatic translation
+  from Unicode strings.
+
+  Objective-C selector names and encoded type strings are
+  byte strings as well.
+
+  NOTE: Python 3 support is pre-alpha at this time: the code compiles
+  but does not pass tests yet. The code also needs to be reviewed to
+  check for python3<->objc integration (dict.keys now returns a view,
+  NSDictionary.keys still returns a basic iterator, ...)
+
+  TODO:
+
+  * Implement new style buffer support
+
+  * Documentation updates
+
+- The Python 3.x port does not support transparent proxies for 'FILE*'
+  "objects" because the ``file`` type in Python3 is not implemented on
+  top of the C library stdio.
+
+- The Python 2.x port has been enhanced to accept Unicode strings
+  in more locations.
+
+- Implement support for PEP-3118, for both Python 2.x and Python 3.x.
+
+  This means that proxying arrays of basic C types to ObjC can now
+  make use of the extended type information provided by the PEP-3118 
+  API. 
+  
+  Furthermore it is possible to use ``memoryview`` objects with
+  ``NSData`` instances, with the limitation that the memoryview *must*
+  be cleaned up before the currently active autorelease pool is cleared,
+  or the data instance is resized. That's a result of API restrictions
+  in Apple's frameworks.
+
+
+- The PyObjCTest testsuite now supports version-specific tests: for
+  Python 2.x it will load modules whose name starts with 'test2_' and for
+  Python 3.x those starting with 'test3_'. For both versions it will
+  load test modules whose name starts with 'test_' as well.
+
+- Renamed the assertion functions in ``PyObjCTools.TestSupport``, added
+  ``assertFoo`` methods and deprecated the ``failIfFoo`` and ``failUnlessFoo``
+  methods (simularly to what's happening in the stdlib).
+
+- TODO: ``objc.kvo_property`` support
+
+- TODO: compile bridgesupport files into something more efficient, drop
+  libxml support code (to because of libxml on 10.6 and 10.5 mess)
+
+  (At the very least least: the PyObjCMethodSignature objects can be shared more than
+  they are now).
+
+- TODO: Drop support for 2.5 and 
+
+  * implement '__dir__'
+
+  * avoid scanning the entire class
+
+  * drop 'addConvenienceForSelector', but instead of that add convenience methods
+    to classes.
+
+  This should improve performance and reduce memory usage (when proper caching
+  is used).
+
+- TODO: Rebuild documentation using sphynx (sp?)
+
+
 Version 2.2 (2009-11-24)
 ------------------------
 

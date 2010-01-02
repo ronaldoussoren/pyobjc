@@ -41,10 +41,10 @@ int     PyObjC_IsPythonKeyword(const char* word);
 
 extern int PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen);
 
-int PyObjCObject_Convert(PyObject* object, void* pvar);
-int PyObjCClass_Convert(PyObject* object, void* pvar);
-int PyObjCSelector_Convert(PyObject* object, void* pvar);
-int PyObjC_ConvertBOOL(PyObject* object, void* pvar);
-int PyObjC_ConvertChar(PyObject* object, void* pvar);
+extern int PyObjCObject_Convert(PyObject* object, void* pvar);
+extern int PyObjCClass_Convert(PyObject* object, void* pvar);
+
+extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string);
+extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n);
 
 #endif /* OBJC_UTIL */

@@ -1,5 +1,5 @@
-from _objc import *
-import _objc
+from objc._objc import *
+from objc import _objc
 import struct
 
 __all__ = [ 'registerListType', 'registerMappingType' ]

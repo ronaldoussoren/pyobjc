@@ -1,3 +1,7 @@
+"""
+Tests for dealing with 'FILE*' argument. Only suppored on Python 2 for now because
+the python 3 type 'file' is not implemented using C stdio.
+"""
 from PyObjCTest.filepointer import OC_TestFilePointer
 from PyObjCTools.TestSupport import *
 
@@ -17,7 +21,7 @@ class TestFilePointer (TestCase):
     def testOpenReadingInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/etc/passwd', 'r')
-        self.assert_(isinstance(fp, file))
+        self.assertIsInstance(fp, file)
         self.assertEquals(fp.mode, 'r')
 
         line = fp.readline()
@@ -28,7 +32,7 @@ class TestFilePointer (TestCase):
     def testOpenWritingInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'w')
-        self.assert_(isinstance(fp, file))
+        self.assertIsInstance(fp, file)
         self.assertEquals(fp.mode, 'w')
 
         fp.write('foobar\n')
@@ -43,19 +47,19 @@ class TestFilePointer (TestCase):
     def testOpenReadWriteInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'w+')
-        self.assert_(isinstance(fp, file))
+        self.assertIsInstance(fp, file)
         self.assertEquals(fp.mode, 'w+')
 
     def dont_testOpenAppendInObjC(self):
         # We can't reliably detect append mode, don't bother testing for it.
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'a')
-        self.assert_(isinstance(fp, file))
+        self.assertIsInstance(fp, file)
         self.assertEquals(fp.mode, 'a')
 
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'a+')
-        self.assert_(isinstance(fp, file))
+        self.assertIsInstance(fp, file)
         self.assertEquals(fp.mode, 'a+')
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 
 __all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector' ]
 
-from _objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
+from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
 import sys, textwrap
 
 #
@@ -27,12 +27,12 @@ def IBAction(func):
     Return an Objective-C method object that can be used as an action
     in Interface Builder.
     """
-    return selector(func, signature="v@:@")
+    return selector(func, signature=b"v@:@")
 
 def instancemethod(func):
     return selector(func, isClassMethod=False)
 
-def accessor(func, typeSignature='@'):
+def accessor(func, typeSignature=b'@'):
     """
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
@@ -50,7 +50,7 @@ def accessor(func, typeSignature='@'):
 
     if not (minArgs <= selArgs <= maxArgs):
         if selArgs == 3 and (minArgs <= 2 <= maxArgs) and funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature='Z@:N^@o^@')
+            return selector(func, signature=b'Z@:N^@o^@')
         elif minArgs == maxArgs:
             raise TypeError('%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, maxArgs, selArgs))
         else:
@@ -58,30 +58,30 @@ def accessor(func, typeSignature='@'):
     
     if selArgs == 3:
         if funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature='Z@:N^@o^@')
+            return selector(func, signature=b'Z@:N^@o^@')
 
         if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='v@:@i')
+            return selector(func, signature=b'v@:@i')
         elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
-            return selector(func, signature='v@:i@')
+            return selector(func, signature=b'v@:i@')
         
         # pass through to "too many arguments"
 
     elif selArgs == 2:
         if funcName.startswith('objectIn') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='@@:i')
+            return selector(func, signature=b'@@:i')
         elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
-            return selector(func, signature='v@:i')
+            return selector(func, signature=b'v@:i')
         elif funcName.startswith('get') and funcName.endswith('_range_'):
-            return selector(func, signature='@@:{_NSRange=ii}')
+            return selector(func, signature=b'@@:{_NSRange=ii}')
 
-        return selector(func, signature="v@:" + typeSignature)
+        return selector(func, signature=b"v@:" + typeSignature)
 
     elif selArgs == 1:
-        if typeSignature == '@' and func.func_name.startswith('countOf'):
+        if typeSignature == b'@' and func.func_name.startswith('countOf'):
             typeSignature = 'i'
 
-        return selector(func, signature=typeSignature + "@:")
+        return selector(func, signature=typeSignature + b"@:")
 
     raise TypeError("%s takes too many arguments to be an accessor" % (funcName,))
 

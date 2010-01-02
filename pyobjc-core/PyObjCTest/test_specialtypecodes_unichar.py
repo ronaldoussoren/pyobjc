@@ -15,66 +15,66 @@ from PyObjCTest.specialtypecodes import *
 import array
 
 def setupMetaData():
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharValue",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharValue",
         dict(
             retval=dict(type=objc._C_UNICHAR),
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArray",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArray",
         dict(
             retval=dict(type=objc._C_PTR+objc._C_UNICHAR, c_array_of_fixed_length=4),
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharString",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharString",
         dict(
             retval=dict(type=objc._C_PTR + objc._C_UNICHAR, c_array_delimited_by_null=True),
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharStringArg:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharStringArg:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR + objc._C_UNICHAR, c_array_delimited_by_null=True, type_modifier=objc._C_IN),
             }
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArg:andUniCharArg:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArg:andUniCharArg:",
         dict(
             arguments={
                 2: dict(type=objc._C_UNICHAR),
                 3: dict(type=objc._C_UNICHAR),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOf4In:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOf4In:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_IN, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOf4Out:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOf4Out:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_OUT, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOf4InOut:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOf4InOut:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_INOUT, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOfCount:In:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOfCount:In:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_IN, c_array_of_lenght_in_arg=2),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOfCount:Out:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOfCount:Out:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_OUT, c_array_of_lenght_in_arg=2),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "UniCharArrayOfCount:InOut:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharArrayOfCount:InOut:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_UNICHAR, type_modifier=objc._C_INOUT, c_array_of_lenght_in_arg=2),
@@ -106,7 +106,7 @@ class TestTypeCode_UniChar (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.UniCharString()
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"help");
 
     def testSimpleArg(self):
@@ -128,15 +128,15 @@ class TestTypeCode_UniChar (TestCase):
 
         v = o.UniCharStringArg_(u"hello world")
         self.assertEquals(v, u"hello world")
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
 
         v = o.UniCharStringArg_("hello world")
         self.assertEquals(v, u"hello world")
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
 
         v = o.UniCharStringArg_([u'a', u'b'])
         self.assertEquals(v, u"ab")
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
 
         self.assertRaises(ValueError,  o.UniCharStringArg_, [99, 100, 100, 0])
 
@@ -163,7 +163,7 @@ class TestTypeCode_UniChar (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('h', [0] * 4) 
         v = o.UniCharArrayOf4Out_(a)
-        self.assert_(v is a)
+        self.assertIsObject(v, a)
         self.assertEquals(v[0], ord('b'))
         self.assertEquals(v[1], ord('o'))
         self.assertEquals(v[2], ord('a'))

@@ -123,10 +123,12 @@ PyObject* PyObjC_CopyFunc = NULL;
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
+#if PY_VERSION_HEX < 0x03000000
 	} else if (PyInt_Check (argument)) {
 		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
+#endif
 
 	} else if (PyFloat_Check (argument)) {
 		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
@@ -148,6 +150,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 			dictionaryWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
+#if PY_VERSION_HEX < 0x03000000
 	} else if (PyString_Check(argument)) {
 		r = 0;
 		if (PyObjC_StrBridgeEnabled == 0) {
@@ -166,6 +169,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 				r = -1;
 			}
 		}
+#endif /* ! Python3 */
 	} else if (PyObject_CheckReadBuffer(argument)) {
 		rval = [OC_PythonData
 			dataWithPythonObject:argument];
@@ -347,7 +351,7 @@ end:
 		Py_INCREF(obj);
 		return obj;
 	}
-	PyObject *typeString = PyString_FromStringAndSize(type, length);
+	PyObject *typeString = PyText_FromStringAndSize(type, length);
 	if (type == NULL) {
 		return NULL;
 	}
@@ -444,6 +448,8 @@ end:
 	PyObjC_BEGIN_WITH_GIL
 
 		repr = PyObject_Repr (pyObject);
+
+#if PY_VERSION_HEX < 0x03000000
 		if (repr) {
 			int err;
 			NSString* result;
@@ -464,6 +470,22 @@ end:
 		} else {
 			PyObjC_GIL_FORWARD_EXC();
 		}
+#else
+		if (repr) {
+			int err;
+			NSString* result;
+
+			err = depythonify_c_value (@encode(id), repr, &result);
+			Py_DECREF(repr);
+			if (err == -1) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+			PyObjC_GIL_RETURN(result);
+		} else {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+#endif
 
 	PyObjC_END_WITH_GIL
 	
@@ -965,7 +987,7 @@ getModuleFunction(char* modname, char* funcname)
 	PyObject* name;
 	PyObject* mod;
 
-	name = PyString_FromString(modname);
+	name = PyText_FromString(modname);
 	if (name == NULL) {
 		return NULL;
 	}
@@ -1208,16 +1230,16 @@ static  PyObject* setKeyFunc = NULL;
 #endif
 
 /* NSObject protocol */
-- (unsigned)hash
+- (NSUInteger)hash
 {
     PyObjC_BEGIN_WITH_GIL
         int rval;
         rval = PyObject_Hash([self pyObject]);
         if (rval == -1) {
             PyErr_Clear();
-            rval = (unsigned)[self pyObject];
+            rval = (NSUInteger)[self pyObject];
         }
-        PyObjC_GIL_RETURN((unsigned)rval);
+        PyObjC_GIL_RETURN((NSUInteger)rval);
     PyObjC_END_WITH_GIL
 }
 

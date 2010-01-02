@@ -25,34 +25,42 @@ class TestNumbers (TestCase):
 
     def test_unsigned_char(self):
         self.assertEquals(0, pyObjCPy(objc._C_UCHR, 0))
-        self.assertEquals(0, pyObjCPy(objc._C_UCHR, '\0'))
+        self.assertEquals(0, pyObjCPy(objc._C_UCHR, b'\0'))
         self.assertEquals(0, pyObjCPy(objc._C_UCHR, long(0)))
         self.assertEquals(0, pyObjCPy(objc._C_UCHR, float(0)))
 
         self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, UCHAR_MAX))
-        self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, chr(UCHAR_MAX)))
+        if sys.version_info[0] == 2:
+            self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, chr(UCHAR_MAX)))
+        else:
+            self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytes([UCHAR_MAX])))
+            self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytearray([UCHAR_MAX])))
         self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, long(UCHAR_MAX)))
         self.assertEquals(UCHAR_MAX, pyObjCPy(objc._C_UCHR, float(UCHAR_MAX)))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UCHR, SCHAR_MIN)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1)
+        self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN)
+        self.assertRaises((IndexError, ValueError), pyObjCPy, objc._C_UCHR, SCHAR_MIN - 1)
 
     def test_char(self):
         self.assertEquals(0, pyObjCPy(objc._C_CHR, 0))
-        self.assertEquals(0, pyObjCPy(objc._C_CHR, chr(0)))
+        self.assertEquals(0, pyObjCPy(objc._C_CHR, b'\x00'))
         self.assertEquals(0, pyObjCPy(objc._C_CHR, long(0)))
 
         self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, CHAR_MAX))
-        self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, chr(CHAR_MAX)))
+        if sys.version_info[0] == 2:
+            self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, chr(CHAR_MAX)))
+        else:
+            self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, bytes([CHAR_MAX])))
+            self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, bytearray([CHAR_MAX])))
         self.assertEquals(CHAR_MIN, pyObjCPy(objc._C_CHR, CHAR_MIN))
         self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, long(CHAR_MAX)))
         self.assertEquals(CHAR_MIN, pyObjCPy(objc._C_CHR, long(CHAR_MIN)))
         self.assertEquals(CHAR_MAX, pyObjCPy(objc._C_CHR, float(CHAR_MAX)))
         self.assertEquals(CHAR_MIN, pyObjCPy(objc._C_CHR, float(CHAR_MIN)))
 
-        # XXX: Is the right, chr(-1) raises an exception, and is not
+        # XXX: Is this right, chr(-1) raises an exception, and is not
         # equivalent to '\xff'. Should (char)-1 be converted to '\xff'/255 ?
-        self.assertEquals(-1, pyObjCPy(objc._C_CHR, '\xff'))
+        self.assertEquals(-1, pyObjCPy(objc._C_CHR, b'\xff'))
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MAX + 1)
         self.assertRaises(ValueError, pyObjCPy, objc._C_CHR, CHAR_MIN - 1)
@@ -69,6 +77,7 @@ class TestNumbers (TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, SHRT_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_USHT, b"1")
 
     def test_short(self):
         self.assertEquals(0, pyObjCPy(objc._C_SHT, 0))
@@ -85,6 +94,7 @@ class TestNumbers (TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, SHRT_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_SHT, b"1")
 
     def test_unsigned_int(self):
         self.assertEquals(0, pyObjCPy(objc._C_UINT, 0))
@@ -98,6 +108,7 @@ class TestNumbers (TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, INT_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_UINT, b"1")
 
     def test_int(self):
         self.assertEquals(0, pyObjCPy(objc._C_INT, 0))
@@ -115,6 +126,7 @@ class TestNumbers (TestCase):
 
         # Check implicit conversion
         self.assertRaises(ValueError, pyObjCPy, objc._C_INT, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_INT, b"1")
 
     def test_unsigned_long(self):
         self.assertEquals(0, pyObjCPy(objc._C_ULNG, 0))
@@ -129,6 +141,7 @@ class TestNumbers (TestCase):
             self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, LONG_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG, b"1")
 
     def test_long(self):
         self.assertEquals(0, pyObjCPy(objc._C_LNG, 0))
@@ -146,6 +159,7 @@ class TestNumbers (TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, LONG_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG, b"1")
 
     def test_unsigned_long_long(self):
         self.assertEquals(0, pyObjCPy(objc._C_ULNG_LNG, 0))
@@ -153,11 +167,13 @@ class TestNumbers (TestCase):
         self.assertEquals(0, pyObjCPy(objc._C_ULNG_LNG, long(0)))
         self.assertEquals(ULLONG_MAX, pyObjCPy(objc._C_ULNG_LNG, long(ULLONG_MAX)))
         self.assertEquals(0, pyObjCPy(objc._C_ULNG_LNG, float(0)))
+        self.assertEquals(-LLONG_MIN+100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)
-        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN - 1)
+        #self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)
+        self.assertRaises((ValueError, IndexError), pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, b"1")
 
     def test_long_long(self):
         self.assertEquals(0, pyObjCPy(objc._C_LNG_LNG, 0))
@@ -171,6 +187,7 @@ class TestNumbers (TestCase):
         self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, LLONG_MIN - 1)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_LNG_LNG, b"1")
 
     def test_double(self):
         self.assertEquals(0, pyObjCPy(objc._C_DBL, 0))
@@ -182,9 +199,10 @@ class TestNumbers (TestCase):
         self.assertEquals(DBL_EPSILON, pyObjCPy(objc._C_DBL, DBL_EPSILON))
         self.assertEquals(-DBL_EPSILON, pyObjCPy(objc._C_DBL, -DBL_EPSILON))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, 1L << 10000)
+        self.assertRaises((OverflowError, ValueError), pyObjCPy, objc._C_DBL, 1L << 10000)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_DBL, b"1")
 
     def test_float(self):
         self.assertEquals(0, pyObjCPy(objc._C_FLT, 0))
@@ -200,9 +218,10 @@ class TestNumbers (TestCase):
         # of float
         self.assertNotEquals(DBL_MAX, pyObjCPy(objc._C_FLT, DBL_MAX))
 
-        self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, 1L << 10000)
+        self.assertRaises((ValueError, OverflowError), pyObjCPy, objc._C_FLT, 1L << 10000)
 
         self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, "1")
+        self.assertRaises(ValueError, pyObjCPy, objc._C_FLT, b"1")
 
 
 class TestStruct (TestCase):
@@ -216,7 +235,7 @@ class TestStruct (TestCase):
         #    int;
         #    int;
         # };
-        signature = "{Foo=ii}"
+        signature = b"{Foo=ii}"
 
         inval = (1, 2)
 
@@ -235,7 +254,7 @@ class TestStruct (TestCase):
         #   double;
         #   short;
         # };
-        signature = "{Foo=sisds}"
+        signature = b"{Foo=sisds}"
 
         inval = (1, 2, 3, 4.0, 5)
 
@@ -246,7 +265,7 @@ class TestStruct (TestCase):
 
 class TestArray (TestCase):
     def test_simple(self):
-        signature = '[10i]'
+        signature = b"[10i]"
         value = tuple(range(10))
 
         self.assertEquals(value, tuple(pyObjCPy(signature, value)))
@@ -349,15 +368,15 @@ class TestCArray (TestCase):
         arr = ((1.0, 1.5), (2.0, 2.5), (3.0, 3.5), (4.0, 4.5), (5.0, 5.5))
         arr2 = (1.5,2.5,3.5,4.5,5.5)
 
-        res = carrayMaker('{Point=ff}', arr, None)
+        res = carrayMaker(b'{Point=ff}', arr, None)
         self.assertEquals(res, arr)
 
-        res = carrayMaker('{Point=ff}', arr, 2)
+        res = carrayMaker(b'{Point=ff}', arr, 2)
         self.assertEquals(res, arr[:2])
 
-        self.assertRaises(ValueError, carrayMaker, '{Point=ff}', arr, 7)
-        self.assertRaises(ValueError, carrayMaker, '{Point=ff}', ["a", "b"], 1)
-        self.assertRaises(TypeError, carrayMaker, '{Point=ff}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', arr, 7)
+        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', ["a", "b"], 1)
+        self.assertRaises(TypeError, carrayMaker, b'{Point=ff}', arr2, None)
 
     def testPointArray(self):
         arr = array.array('f', [
@@ -375,13 +394,13 @@ class TestCArray (TestCase):
             4, 4,
             5, 5])
 
-        res = carrayMaker('{Point=ff}', arr, None)
+        res = carrayMaker(b'{Point=ff}', arr, None)
         self.assertEquals(res, lst)
 
-        res = carrayMaker('{Point=ff}', arr, 2)
+        res = carrayMaker(b'{Point=ff}', arr, 2)
         self.assertEquals(res, lst[:2])
 
-        self.assertRaises(ValueError, carrayMaker, '{Point=ff}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b'{Point=ff}', arr2, None)
 
     def testRectArray(self):
         arr = array.array('f', [
@@ -405,19 +424,19 @@ class TestCArray (TestCase):
             4, 4, 4, 4,
             5, 5, 5, 5])
 
-        res = carrayMaker('{Rect={P=ff}{S=ff}}', arr, None)
+        res = carrayMaker(b'{Rect={P=ff}{S=ff}}', arr, None)
         self.assertEquals(res, lst)
 
-        res = carrayMaker('{Rect={P=ff}{S=ff}}', arr, 2)
+        res = carrayMaker(b'{Rect={P=ff}{S=ff}}', arr, 2)
         self.assertEquals(res, lst[:2])
 
-        res = carrayMaker('{Rect=[2f][2f]}', arr, None)
+        res = carrayMaker(b'{Rect=[2f][2f]}', arr, None)
         self.assertEquals(res, lst)
 
-        res = carrayMaker('[2[2f]]}', arr, None)
+        res = carrayMaker(b'[2[2f]]}', arr, None)
         self.assertEquals(res, lst)
 
-        self.assertRaises(ValueError, carrayMaker, '{Rect={P=ff}{S=ff}}', arr2, None)
+        self.assertRaises(ValueError, carrayMaker, b'{Rect={P=ff}{S=ff}}', arr2, None)
 
     def testMixedArray(self):
         arr = array.array('f', [
@@ -427,9 +446,9 @@ class TestCArray (TestCase):
             4.0, 4.5, -4.0, -4.5,
             5.0, 5.5, -5.0, -5.5])
 
-        self.assertRaises(ValueError, carrayMaker, '{M={P=ff}{S=ii}}', arr, 4)
-        self.assertRaises(ValueError, carrayMaker, '{M=if{S=ii}}', arr, None)
-        self.assertRaises(ValueError, carrayMaker, '{M=fi{S=ff}}', arr, None)
+        self.assertRaises(ValueError, carrayMaker, b'{M={P=ff}{S=ii}}', arr, 4)
+        self.assertRaises(ValueError, carrayMaker, b'{M=if{S=ii}}', arr, None)
+        self.assertRaises(ValueError, carrayMaker, b'{M=fi{S=ff}}', arr, None)
 
 
 
@@ -440,36 +459,35 @@ class PyOCTestTypeStr(TestCase):
     # modules that set method signatures to 'better' values.
     #
     def testAll(self):
-        if hasattr(objc, '_C_BOOL'):
-            self.assertEquals(objc._C_BOOL, "B")
-        self.assertEquals(objc._C_ID, "@")
-        self.assertEquals(objc._C_CLASS, "#")
-        self.assertEquals(objc._C_SEL, ":")
-        self.assertEquals(objc._C_CHR, "c")
-        self.assertEquals(objc._C_UCHR, "C")
-        self.assertEquals(objc._C_SHT, "s")
-        self.assertEquals(objc._C_USHT, "S")
-        self.assertEquals(objc._C_INT, "i")
-        self.assertEquals(objc._C_UINT, "I")
-        self.assertEquals(objc._C_LNG, "l")
-        self.assertEquals(objc._C_ULNG, "L")
-        self.assertEquals(objc._C_LNG_LNG, "q")
-        self.assertEquals(objc._C_ULNG_LNG, "Q")
-        self.assertEquals(objc._C_FLT, "f")
-        self.assertEquals(objc._C_DBL, "d")
-        self.assertEquals(objc._C_VOID, "v")
-        self.assertEquals(objc._C_CHARPTR, "*")
-        self.assertEquals(objc._C_PTR, "^")
-        self.assertEquals(objc._C_UNDEF, "?")
-        self.assertEquals(objc._C_ARY_B, "[")
-        self.assertEquals(objc._C_ARY_E, "]")
-        self.assertEquals(objc._C_UNION_B, "(")
-        self.assertEquals(objc._C_UNION_E, ")")
-        self.assertEquals(objc._C_STRUCT_B, "{")
-        self.assertEquals(objc._C_STRUCT_E, "}")
-        self.assertEquals(objc._C_IN, "n")
-        self.assertEquals(objc._C_OUT, "o")
-        self.assertEquals(objc._C_INOUT, "N")
+        self.assertEquals(objc._C_BOOL, b"B")
+        self.assertEquals(objc._C_ID, b"@")
+        self.assertEquals(objc._C_CLASS, b"#")
+        self.assertEquals(objc._C_SEL, b":")
+        self.assertEquals(objc._C_CHR, b"c")
+        self.assertEquals(objc._C_UCHR, b"C")
+        self.assertEquals(objc._C_SHT, b"s")
+        self.assertEquals(objc._C_USHT, b"S")
+        self.assertEquals(objc._C_INT, b"i")
+        self.assertEquals(objc._C_UINT, b"I")
+        self.assertEquals(objc._C_LNG, b"l")
+        self.assertEquals(objc._C_ULNG, b"L")
+        self.assertEquals(objc._C_LNG_LNG, b"q")
+        self.assertEquals(objc._C_ULNG_LNG, b"Q")
+        self.assertEquals(objc._C_FLT, b"f")
+        self.assertEquals(objc._C_DBL, b"d")
+        self.assertEquals(objc._C_VOID, b"v")
+        self.assertEquals(objc._C_CHARPTR, b"*")
+        self.assertEquals(objc._C_PTR, b"^")
+        self.assertEquals(objc._C_UNDEF, b"?")
+        self.assertEquals(objc._C_ARY_B, b"[")
+        self.assertEquals(objc._C_ARY_E, b"]")
+        self.assertEquals(objc._C_UNION_B, b"(")
+        self.assertEquals(objc._C_UNION_E, b")")
+        self.assertEquals(objc._C_STRUCT_B, b"{")
+        self.assertEquals(objc._C_STRUCT_E, b"}")
+        self.assertEquals(objc._C_IN, b"n")
+        self.assertEquals(objc._C_OUT, b"o")
+        self.assertEquals(objc._C_INOUT, b"N")
 
 if __name__ == "__main__":
     main()

@@ -40,18 +40,18 @@ ObjC_SignatureForSelector(char* class_name, SEL selector, char* signature)
 		}
 	}
 
-	replacement = PyString_FromString(signature);
+	replacement = PyBytes_FromString(signature);
 	if (replacement == NULL)  {
 		return -1;
 	}
 
-	name_str = PyString_FromString(class_name);
+	name_str = PyText_FromString(class_name);
 	if (name_str == NULL)  {
 		Py_DECREF(replacement);
 		return -1;
 	}
 
-	selector_str = PyString_FromString(sel_getName(selector));
+	selector_str = PyText_FromString(sel_getName(selector));
 	if (name_str == NULL)  {
 		Py_DECREF(replacement);
 		Py_DECREF(name_str);
@@ -85,7 +85,7 @@ PyObjC_FindReplacementSignature(Class cls, SEL selector)
 		return NULL;
 	}
 
-	result = PyString_AsString(replacement);
+	result = PyBytes_AsString(replacement);
 	Py_DECREF(replacement);
 
 	return result;
@@ -121,7 +121,7 @@ PyObjCSelector_GetMetadata(PyObject* _self)
 			Py_ssize_t i;
 
 			((PyObjCPythonSelector*)_self)->numoutput = 0;
-			for (i = 0; i < ((PyObjCPythonSelector*)_self)->sel_methinfo->ob_size; i++) {
+			for (i = 0; i < Py_SIZE(((PyObjCPythonSelector*)_self)->sel_methinfo); i++) {
 				if (((PyObjCPythonSelector*)_self)->sel_methinfo->argtype[i].type[0] == _C_OUT) {
 					((PyObjCPythonSelector*)_self)->numoutput ++;
 				}
@@ -190,7 +190,7 @@ static PyObject*
 base_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
 	PyObjCSelector* self = (PyObjCSelector*)_self;
-	return PyString_FromString(self->sel_python_signature);
+	return PyBytes_FromString(self->sel_python_signature);
 }
 
 PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
@@ -203,7 +203,7 @@ base_native_signature(PyObject* _self, void* closure __attribute__((__unused__))
 		return Py_None;
 	}
 
-	return PyString_FromString(self->sel_native_signature);
+	return PyBytes_FromString(self->sel_native_signature);
 }
 
 static int
@@ -211,12 +211,12 @@ base_signature_setter(PyObject* _self, PyObject* newVal, void* closure __attribu
 {
 	PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
 	char* t;
-	if (!PyString_Check(newVal)) {
-		PyErr_SetString(PyExc_TypeError, "signature must be string");
+	if (!PyBytes_Check(newVal)) {
+		PyErr_SetString(PyExc_TypeError, "signature must be byte string");
 		return -1;
 	}
 
-	t = PyObjCUtil_Strdup(PyString_AsString(newVal));
+	t = PyObjCUtil_Strdup(PyBytes_AsString(newVal));
 	if (t == NULL) {
 		PyErr_NoMemory();
 		return -1;
@@ -232,7 +232,7 @@ static PyObject*
 base_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 {
 	PyObjCSelector* self = (PyObjCSelector*)_self;
-	return PyString_FromString(sel_getName(self->sel_selector));
+	return PyBytes_FromString(sel_getName(self->sel_selector));
 }
 
 PyDoc_STRVAR(base_class_doc, "Objective-C Class that defines the method");
@@ -347,7 +347,7 @@ sel_dealloc(PyObject* object)
 		Py_DECREF(self->sel_self); 
 		self->sel_self = NULL;
 	}
-	object->ob_type->tp_free(object);
+	Py_TYPE(object)->tp_free(object);
 }
 
 static int
@@ -410,8 +410,7 @@ PyDoc_STRVAR(base_selector_type_doc,
 "  when defining an 'informal_protocol' object.\n"
 );
 PyTypeObject PyObjCSelector_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.selector",			/* tp_name */
 	sizeof(PyObjCSelector),			/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -475,8 +474,9 @@ objcsel_repr(PyObject* _self)
 	PyObjCNativeSelector* sel = (PyObjCNativeSelector*)_self;
 	PyObject *rval;
 	if (sel->sel_self == NULL) {
-		rval = PyString_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->sel_selector), class_getName(sel->sel_class));
+		rval = PyText_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->sel_selector), class_getName(sel->sel_class));
 	} else {
+#if PY_VERSION_HEX < 0x03000000
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
 		if (selfrepr == NULL) {
 			return NULL;
@@ -485,8 +485,12 @@ objcsel_repr(PyObject* _self)
 			Py_DECREF(selfrepr);
 			return NULL;
 		}
-		rval = PyString_FromFormat("<native-selector %s of %s>", sel_getName(sel->sel_selector), PyString_AS_STRING(selfrepr));
+		rval = PyText_FromFormat("<native-selector %s of %s>", sel_getName(sel->sel_selector), PyString_AS_STRING(selfrepr));
 		Py_DECREF(selfrepr);
+#else
+		rval = PyUnicode_FromFormat("<native-selector %s of %R>", sel_getName(sel->sel_selector),
+					sel->sel_self);
+#endif
 	}
 	return rval;
 }
@@ -566,7 +570,9 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
 		myClass = PyObjCClass_New(self->sel_class);
 		if (!(PyObject_IsInstance(pyself, myClass)
+#if PY_VERSION_HEX < 0x03000000
 			|| (PyString_Check(pyself) && class_isSubclassOf(self->sel_class, [NSString class])) 
+#endif
 			|| (PyUnicode_Check(pyself) && class_isSubclassOf(self->sel_class, [NSString class])) 
 		)) {
 			Py_DECREF(arglist);
@@ -574,7 +580,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 			PyErr_Format(PyExc_TypeError,
 				"Expecting instance of %s as self, got one "
 				"of %s", class_getName(self->sel_class),
-				pyself->ob_type->tp_name);
+				Py_TYPE(pyself)->tp_name);
 			return NULL;
 		}
 		Py_DECREF(myClass);
@@ -675,8 +681,7 @@ objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
 
 
 PyTypeObject PyObjCNativeSelector_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.native_selector",			/* tp_name */
 	sizeof(PyObjCNativeSelector),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -960,11 +965,12 @@ pysel_repr(PyObject* _self)
 
 	if (sel->sel_self == NULL) {
 		if (sel->sel_class) {
-			rval = PyString_FromFormat("<unbound selector %s of %s at %p>", sel_getName(sel->sel_selector), class_getName(sel->sel_class), sel);
+			rval = PyText_FromFormat("<unbound selector %s of %s at %p>", sel_getName(sel->sel_selector), class_getName(sel->sel_class), sel);
 		} else {
-			rval = PyString_FromFormat("<unbound selector %s at %p>", sel_getName(sel->sel_selector), sel);
+			rval = PyText_FromFormat("<unbound selector %s at %p>", sel_getName(sel->sel_selector), sel);
 		}
 	} else {
+#if PY_VERSION_HEX < 0x03000000
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
 		if (selfrepr == NULL) {
 			return NULL;
@@ -973,8 +979,11 @@ pysel_repr(PyObject* _self)
 			Py_DECREF(selfrepr);
 			return NULL;
 		}
-		rval = PyString_FromFormat("<selector %s of %s>", sel_getName(sel->sel_selector), PyString_AS_STRING(selfrepr));
+		rval = PyText_FromFormat("<selector %s of %s>", sel_getName(sel->sel_selector), PyString_AS_STRING(selfrepr));
 		Py_DECREF(selfrepr);
+#else
+		rval = PyText_FromFormat("<selector %s of %R>", sel_getName(sel->sel_selector), sel->sel_self);
+#endif
 	}
 	return rval;
 }
@@ -1020,10 +1029,10 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
 
 	first_arg = self->sel_self ? 0 : 1;
 
-	if (self->argcount == self->sel_methinfo->ob_size-1) { /* the selector has an implicit '_sel' argument as well */
+	if (self->argcount == Py_SIZE(self->sel_methinfo)-1) { /* the selector has an implicit '_sel' argument as well */
 		/* All arguments are present, including output arguments */
 		if (argsmatch) {
-			for (i = 2; i < self->sel_methinfo->ob_size; i++) {
+			for (i = 2; i < Py_SIZE(self->sel_methinfo); i++) {
 				if (self->sel_methinfo->argtype[i].type[0] == _C_OUT) {
 					PyObject* a = PyTuple_GET_ITEM(args, first_arg + i - 2);
 					if (a != Py_None && a != PyObjC_NULL) {
@@ -1061,7 +1070,7 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
 			}
 
 			PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-			for (i = 2; i < methinfo->ob_size; i++) {
+			for (i = 2; i < Py_SIZE(methinfo); i++) {
 				if (methinfo->argtype[i].type[0] == _C_OUT) {
 					PyTuple_SET_ITEM(real_args, i-2+first_arg, Py_None);
 					Py_INCREF(Py_None); 
@@ -1105,7 +1114,7 @@ compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
 			}
 
 			PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-			for (i = 2; i < methinfo->ob_size; i++) {
+			for (i = 2; i < Py_SIZE(methinfo); i++) {
 				if (methinfo->argtype[i].type[0] != _C_OUT) {
 					PyTuple_SET_ITEM(real_args, pyarg, PyTuple_GET_ITEM(args, i-2+first_arg));
 					Py_INCREF(PyTuple_GET_ITEM(args, i-2+first_arg));
@@ -1150,7 +1159,7 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
 				PyErr_Format(PyExc_TypeError, 
 					"Expecting an Objective-C class or "
 					"instance as self, got a %s",
-					self_arg->ob_type->tp_name);
+					Py_TYPE(self_arg)->tp_name);
 				return NULL;
 			}
 		}
@@ -1276,11 +1285,23 @@ pysel_default_selector(PyObject* callable)
 
 	if (name == NULL) return NULL;
 
-	if (!PyString_Check(name)) {
+	if (PyUnicode_Check(name)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		strncpy(buf, PyBytes_AS_STRING(bytes), sizeof(buf)-1);
+		Py_DECREF(bytes);
+
+
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(name)) {
+		strncpy(buf, PyString_AS_STRING(name), sizeof(buf)-1);
+#endif
+	} else  {
 		return NULL;
 	}
 
-	strncpy(buf, PyString_AS_STRING(name), sizeof(buf)-1);
 
 	cur = strchr(buf, '_');
 	while (cur != NULL) {
@@ -1439,7 +1460,12 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	char      signature_buf[1024];
 	int       required = 1;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|ssissi:selector",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+#if PY_VERSION_HEX < 0x03000000
+				"O|ssissi:selector",
+#else
+				"O|yyissi:selector",
+#endif
 			keywords, &callable, &selector, &signature,
 			&class_method, &argtypes, &rettype, &required)) {
 		return NULL;
@@ -1496,7 +1522,11 @@ static	char*	keywords[] = { "function", "selector", "signature",
 			return NULL;
 		}
 		
+#if PY_VERSION_HEX < 0x03000000
 		callable = PyObject_GetAttrString(tmp, "im_func");
+#else
+		callable = PyObject_GetAttrString(tmp, "__funct__");
+#endif
 		Py_DECREF(tmp);
 		if (callable == NULL) {
 			return NULL;
@@ -1634,8 +1664,7 @@ static PyGetSetDef pysel_getset[] = {
 };
 
 PyTypeObject PyObjCPythonSelector_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.python_selector",			/* tp_name */
 	sizeof(PyObjCPythonSelector),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -1744,7 +1773,7 @@ find_protocol_signature(PyObject* protocols, SEL selector, int is_class_method)
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(PyObjCExc_InternalError,
 			"Protocol-list is not a 'list', but '%s'",
-			protocols->ob_type->tp_name);
+			Py_TYPE(protocols)->tp_name);
 		return NULL;
 	}
 
@@ -1800,7 +1829,6 @@ PyObjCSelector_FromFunction(
 	PyObject* template_class,
 	PyObject* protocols)
 {
-	char*     oc_name;
 	SEL	  selector;
 	Method    meth;
 	int       is_class_method = 0;
@@ -1843,7 +1871,7 @@ PyObjCSelector_FromFunction(
 	}
 
 	if (!PyFunction_Check(callable) && !PyMethod_Check(callable) &&
-		(callable->ob_type != &PyClassMethod_Type)) {
+		(Py_TYPE(callable) != &PyClassMethod_Type)) {
 	
 		PyErr_SetString(PyExc_TypeError, 
 				"expecting function, method or classmethod");
@@ -1851,7 +1879,7 @@ PyObjCSelector_FromFunction(
 	}
 
 
-	if (callable->ob_type == &PyClassMethod_Type) {
+	if (Py_TYPE(callable) == &PyClassMethod_Type) {
 		/*
 		 * This is a 'classmethod' or 'staticmethod'. 'classmethods'
 		 * will be converted to class 'selectors', 'staticmethods' are
@@ -1872,7 +1900,11 @@ PyObjCSelector_FromFunction(
 			return callable;
 		}
 
+#if PY_VERSION_HEX < 0x03000000
 		callable = PyObject_GetAttrString(tmp, "im_func");
+#else
+		callable = PyObject_GetAttrString(tmp, "__func__");
+#endif
 		Py_DECREF(tmp);
 		if (callable == NULL) {
 			return NULL;
@@ -1885,18 +1917,42 @@ PyObjCSelector_FromFunction(
 		if (pyname == NULL) {
 			return NULL;
 		}
-		oc_name = PyString_AS_STRING(pyname);
-		selector = PyObjCSelector_DefaultSelector(oc_name);
-		Py_DECREF(pyname);
-		oc_name = NULL;
+		if (PyUnicode_Check(pyname)) {
+			PyObject* bytes = PyUnicode_AsEncodedString(pyname, NULL, NULL);
+			if (bytes == NULL) {
+				return NULL;
+			}
+			selector = PyObjCSelector_DefaultSelector(
+					PyBytes_AsString(bytes));
+			Py_DECREF(bytes);
 
-	} else if (!PyString_Check(pyname)) {
+#if PY_VERSION_HEX < 0x03000000
+		} else if (PyString_Check(pyname)) {
+			selector = PyObjCSelector_DefaultSelector(
+					PyString_AsString(pyname));
+#endif
+		} else {
+			PyErr_SetString(PyExc_TypeError, "Function name is not a string");
+			return NULL;
+		}
+	} else if (PyUnicode_Check(pyname)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(pyname, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		selector = PyObjCSelector_DefaultSelector(
+				PyBytes_AsString(bytes));
+		Py_DECREF(bytes);
+
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(pyname)) {
+		selector = PyObjCSelector_DefaultSelector(
+			PyString_AS_STRING(pyname));
+#endif
+	} else {
 		PyErr_SetString(PyExc_TypeError, 
 			"method name must be a string");
 		return NULL;
-	} else {
-		oc_name = PyString_AS_STRING(pyname);
-		selector = PyObjCSelector_DefaultSelector(oc_name);
 	}
 
 	/* XXX: This seriously fails if a class method has a different signature
