@@ -22,16 +22,16 @@ from PyObjCTest.fsref import *
 
 class TestFSRef (TestCase):
     def testBasicInterface(self):
-        self.failUnlessArgIsIn(OC_TestFSRefHelper.pathForFSRef_, 0)
-        self.failUnlessArgIsOut(OC_TestFSRefHelper.getFSRef_forPath_, 0)
+        self.assertArgIsIn(OC_TestFSRefHelper.pathForFSRef_, 0)
+        self.assertArgIsOut(OC_TestFSRefHelper.getFSRef_forPath_, 0)
 
     def testResult(self):
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.fsrefForPath_(u"/Library")
-        self.failUnlessIsInstance(ref, objc.FSRef)
+        self.assertIsInstance(ref, objc.FSRef)
 
-        self.failUnlessIsInstance(ref.data, str)
-        self.failUnlessIsInstance(ref.as_pathname(), unicode)
+        self.assertIsInstance(ref.data, bytes)
+        self.assertIsInstance(ref.as_pathname(), unicode)
 
         try:
             from Carbon.File import FSRef
@@ -40,35 +40,35 @@ class TestFSRef (TestCase):
             pass
 
         else:
-            self.failUnlessIsInstance(ref.as_carbon(), FSRef)
+            self.assertIsInstance(ref.as_carbon(), FSRef)
 
     def testArg(self):
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.fsrefForPath_(u"/Library")
-        self.failUnlessIsInstance(ref, objc.FSRef)
+        self.assertIsInstance(ref, objc.FSRef)
 
         p = o.stringForFSRef_(ref)
-        self.failUnlessIsInstance(p, unicode)
-        self.failUnlessEqual(p, u"/Library")
+        self.assertIsInstance(p, unicode)
+        self.assertEqual(p, u"/Library")
 
     def testInput(self):
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.fsrefForPath_(u"/Library")
-        self.failUnlessIsInstance(ref, objc.FSRef)
+        self.assertIsInstance(ref, objc.FSRef)
 
         p = o.pathForFSRef_(ref)
-        self.failUnlessIsInstance(p, unicode)
-        self.failUnlessEqual(p, u"/Library")
+        self.assertIsInstance(p, unicode)
+        self.assertEqual(p, u"/Library")
 
     def testOutput(self):
         o = OC_TestFSRefHelper.alloc().init()
         ref = o.getFSRef_forPath_(None, u"/Library")
-        self.failUnlessIsInstance(ref, objc.FSRef)
+        self.assertIsInstance(ref, objc.FSRef)
 
         # Verify the fsref contents:
         p = o.stringForFSRef_(ref)
-        self.failUnlessIsInstance(p, unicode)
-        self.failUnlessEqual(p, u"/Library")
+        self.assertIsInstance(p, unicode)
+        self.assertEqual(p, u"/Library")
 
 
 if __name__ == "__main__":

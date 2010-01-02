@@ -20,9 +20,9 @@ static PyObject*
 cf_repr(PyObject* self)
 {
 	if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
-		return PyString_FromFormat(
+		return PyText_FromFormat(
 			"<%s CoreFoundation magic instance %p>",
-			self->ob_type->tp_name, PyObjCObject_GetObject(self));
+			Py_TYPE(self)->tp_name, PyObjCObject_GetObject(self));
 	}
 
 
@@ -35,10 +35,10 @@ cf_repr(PyObject* self)
 	} else {
 		char buf[128];
 		snprintf(buf, sizeof(buf), "<%s object at %p>",
-			self->ob_type->tp_name,
+			Py_TYPE(self)->tp_name,
 			PyObjCObject_GetObject(self));
 	
-		return PyString_FromString(buf);
+		return PyText_FromString(buf);
 	}
 }
 
@@ -154,7 +154,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	Py_INCREF(PyObjC_NSCFTypeClass);
 
 	args = PyTuple_New(3);
-	PyTuple_SetItem(args, 0, PyString_FromString(name));
+	PyTuple_SetItem(args, 0, PyText_FromString(name));
 	PyTuple_SetItem(args, 1, bases);
 	PyTuple_SetItem(args, 2, dict);
 
@@ -198,7 +198,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	 * XXX: This code is wrong, it hides the real problem, but I (ronald)
 	 * have no idea where that problem hides itself.
 	 */
-	Py_INCREF(result->ob_type);
+	Py_INCREF(Py_TYPE(result));
 
 	return result;
 }

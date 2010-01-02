@@ -77,25 +77,35 @@ static PyMemberDef func_members[] = {
 static PyObject* func_repr(PyObject* _self)
 {
 	func_object* self = (func_object*)_self;
-	char buf[128];
 
 	if (self->name == NULL) {
-		snprintf(buf, 128, "<objc.function object at %p>", self);
+		return PyText_FromFormat("<objc.function object at %p>", self);
+#if PY_VERSION_HEX < 0x03000000
 	} else if (PyString_Check(self->name)) {
-		snprintf(buf, 128, "<objc.function '%s' at %p>", PyString_AsString(self->name), self);
+		return PyString_FromFormat("<objc.function '%s' at %p>", PyString_AsString(self->name), self);
+#else
+	} else if (PyUnicode_Check(self->name)) {
+		return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
+#endif
 	} else {
+#if PY_VERSION_HEX < 0x03000000
+		PyObject* result;
 		PyObject* name_repr = PyObject_Repr(self->name);
 		if (name_repr == NULL) {
 			return NULL;
 		}
 		if (!PyString_Check(name_repr)) {
-			snprintf(buf, 128, "<objc.function object at %p>", self);
+			result = PyString_FromFormat("<objc.function object at %p>", self);
 		} else {
-			snprintf(buf, 128, "<objc.function '%s' at %p>", PyString_AsString(name_repr), self);
+			result = PyString_FromFormat("<objc.function '%s' at %p>", 
+					PyString_AsString(name_repr), self);
 		}
 		Py_DECREF(name_repr);
+		return result;
+#else
+		return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
+#endif
 	}
-	return PyString_FromString(buf);
 }
 
 
@@ -128,10 +138,10 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	}
 
 
-	if (self->methinfo->ob_size >= 63) {
+	if (Py_SIZE(self->methinfo) >= 63) {
 		PyErr_Format(PyObjCExc_Error,
 			"wrapping a function with %"PY_FORMAT_SIZE_T"d arguments, at most 64 "
-			"are supported", self->methinfo->ob_size);
+			"are supported", Py_SIZE(self->methinfo));
 		return NULL;
 	}
 
@@ -158,14 +168,14 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 			PyErr_Format(PyExc_TypeError, "Sorry, printf format with by-ref args not supported");
 			return NULL;
 		}
-		if (PyTuple_Size(args) < self->methinfo->ob_size) {
+		if (PyTuple_Size(args) < Py_SIZE(self->methinfo)) {
 			PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-			self->methinfo->ob_size - 2, PyTuple_Size(args));
+			Py_SIZE(self->methinfo) - 2, PyTuple_Size(args));
 			return NULL;
 		}
-	} else if (PyTuple_Size(args) != self->methinfo->ob_size) {
+	} else if (PyTuple_Size(args) != Py_SIZE(self->methinfo)) {
 		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-			self->methinfo->ob_size, PyTuple_Size(args));
+			Py_SIZE(self->methinfo), PyTuple_Size(args));
 		return NULL;
 	}
 
@@ -177,11 +187,11 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	}
 
 	if (variadicAllArgs) {
-		if (PyObjCFFI_AllocByRef(self->methinfo->ob_size+PyTuple_Size(args), &byref, &byref_attr) < 0) {
+		if (PyObjCFFI_AllocByRef(Py_SIZE(self->methinfo)+PyTuple_Size(args), &byref, &byref_attr) < 0) {
 			goto error;
 		}
 	} else {
-		if (PyObjCFFI_AllocByRef(self->methinfo->ob_size, &byref, &byref_attr) < 0) {
+		if (PyObjCFFI_AllocByRef(Py_SIZE(self->methinfo), &byref, &byref_attr) < 0) {
 			goto error;
 		}
 	}
@@ -222,12 +232,12 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 			byref_attr, byref_out_count, NULL, 0, values);
 
 	if (variadicAllArgs) {
-		if (PyObjCFFI_FreeByRef(self->methinfo->ob_size+PyTuple_Size(args), byref, byref_attr) < 0) {
+		if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo)+PyTuple_Size(args), byref, byref_attr) < 0) {
 			byref = NULL; byref_attr = NULL;
 			goto error;
 		}
 	} else {
-		if (PyObjCFFI_FreeByRef(self->methinfo->ob_size, byref, byref_attr) < 0) {
+		if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
 			byref = NULL; byref_attr = NULL;
 			goto error;
 		}
@@ -242,7 +252,7 @@ error:
 			goto error;
 		}
 	} else {
-		if (PyObjCFFI_FreeByRef(self->methinfo->ob_size, byref, byref_attr) < 0) {
+		if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
 			byref = NULL; byref_attr = NULL;
 			goto error;
 		}
@@ -270,8 +280,7 @@ func_dealloc(PyObject* s)
 
 PyTypeObject PyObjCFunc_Type =
 {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.function",			/* tp_name */
 	sizeof (func_object),			/* tp_basicsize */
 	0,					/* tp_itemsize */

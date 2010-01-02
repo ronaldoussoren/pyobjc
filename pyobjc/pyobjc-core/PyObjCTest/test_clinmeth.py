@@ -12,8 +12,8 @@ class TestClassMethods (TestCase):
 
     def testViaClass(self):
         m = PyObjC_ClsInst1.clsmeth
-        self.assert_( isinstance(m, objc.selector) )
-        self.assert_( m.isClassMethod )
+        self.assertIsInstance(m, objc.selector)
+        self.assertTrue(m.isClassMethod)
 
         self.assertEquals(m(), 4)
 
@@ -23,16 +23,16 @@ class TestClassMethods (TestCase):
 
     def testClassAndInstanceViaClass(self):
         m = PyObjC_ClsInst1.both
-        self.assert_( isinstance(m, objc.selector) )
-        self.assert_( m.__metadata__()['classmethod'] )
+        self.assertIsInstance(m, objc.selector)
+        self.assertTrue( m.__metadata__()['classmethod'] )
 
         self.assertEquals(m(), 3)
 
     def testClassAndInstanceViaInstance(self):
         o = PyObjC_ClsInst1.alloc().init()
         m = o.both
-        self.assert_( isinstance(m, objc.selector) )
-        self.assert_( not m.isClassMethod )
+        self.assertTrue( isinstance(m, objc.selector) )
+        self.assertTrue( not m.isClassMethod )
 
         self.assertEquals(m(), 2)
 
@@ -44,8 +44,8 @@ class TestInstanceMethods (TestCase):
 
     def testViaClass(self):
         m = PyObjC_ClsInst1.instance
-        self.assert_( isinstance(m, objc.selector) )
-        self.assert_( not m.isClassMethod )
+        self.assertTrue( isinstance(m, objc.selector) )
+        self.assertTrue( not m.isClassMethod )
 
         self.assertRaises(TypeError, m)
 
@@ -53,8 +53,8 @@ class TestInstanceMethods (TestCase):
         o = PyObjC_ClsInst1.alloc().init()
         m = o.instance
 
-        self.assert_( isinstance(m, objc.selector) )
-        self.assert_( not m.isClassMethod )
+        self.assertIsInstance(m, objc.selector)
+        self.assertFalse(m.isClassMethod)
 
         self.assertEquals(m(), 1)
 

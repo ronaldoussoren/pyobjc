@@ -89,7 +89,7 @@ class TestLockingBasic (TestCase):
         for i in range(5):
             time.sleep(0.1)
             lck.lock()
-            self.assert_(not obj.isLocked())
+            self.assertFalse(obj.isLocked())
             obj.setLocked_(True)
             obj.appendToList_("mainthread")
             obj.setLocked_(False)
@@ -97,12 +97,13 @@ class TestLockingBasic (TestCase):
 
         thr.join()
 
-        self.assert_("LOCK FOUND" not in lst)
+        self.assertIsNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
-                self.assert_(lst[idx+1].endswith(' b'))
+                self.assertTrue(lst[idx+1].endswith(' b'))
 
     def testObjectiveCLocking(self):
+        lst = []
         lst = []
 
         obj = BaseClass.alloc().initWithList_(lst)
@@ -113,7 +114,7 @@ class TestLockingBasic (TestCase):
         for i in range(5):
             time.sleep(0.1)
             lck.lock()
-            self.assert_(not obj.isLocked())
+            self.assertFalse(obj.isLocked())
             obj.setLocked_(True)
             obj.appendToList_("mainthread")
             time.sleep(0.5)
@@ -122,10 +123,10 @@ class TestLockingBasic (TestCase):
 
         thr.join()
 
-        self.assert_("LOCK FOUND" not in lst)
+        self.assertIsNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
-                self.assert_(lst[idx+1].endswith(' b'))
+                self.assertTrue(lst[idx+1].endswith(' b'))
 
 
 if sys.version_info[:2] >= (2, 5):
@@ -137,6 +138,7 @@ class TestLockingWithStatement (TestCase):
 
     def testBasicLocking(self):
         lst = []
+        lst = []
 
         obj = BaseClass.alloc().initWithList_(lst)
 
@@ -145,7 +147,7 @@ class TestLockingWithStatement (TestCase):
         for i in range(5):
             time.sleep(0.1)
             with objc.object_lock(obj):
-                self.assert_(not obj.isLocked())
+                self.assertFalse(obj.isLocked())
                 obj.setLocked_(True)
                 obj.appendToList_("mainthread")
                 time.sleep(0.5)
@@ -153,10 +155,10 @@ class TestLockingWithStatement (TestCase):
 
         thr.join()
 
-        self.assert_("LOCK FOUND" not in lst)
+        self.assertIsNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
-                self.assert_(lst[idx+1].endswith(' b'))
+                self.assertTrue(lst[idx+1].endswith(' b'))
 """
 
 

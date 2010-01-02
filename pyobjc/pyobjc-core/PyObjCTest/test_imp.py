@@ -11,47 +11,47 @@ class TestBasicIMP (TestCase):
     # instead of passing through the usual message sending machinery.
     #
     def testIMPType(self):
-        self.assert_(hasattr(objc, "IMP"))
+        self.assertHasAttr(objc, "IMP")
 
     def testAlloc(self):
         cls = NSObject
         m = cls.pyobjc_classMethods.methodForSelector_("alloc")
-        self.assert_(isinstance(m, objc.IMP))
-        self.assert_(m.__metadata__()['classmethod'])
+        self.assertIsInstance(m, objc.IMP)
+        self.assertTrue(m.__metadata__()['classmethod'])
         self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.alloc.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, 'alloc')
+        self.assertEquals(m.selector, b'alloc')
 
         o = m(cls).init()
-        self.assert_(isinstance(o, cls))
+        self.assertIsInstance(o, cls)
 
     def testInit1(self):
         cls = NSObject
         m = cls.instanceMethodForSelector_("init")
-        self.assert_(isinstance(m, objc.IMP))
-        self.assert_(not m.__metadata__()['classmethod'])
+        self.assertIsInstance(m, objc.IMP)
+        self.assertFalse(m.__metadata__()['classmethod'])
         self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, 'init')
+        self.assertEquals(m.selector, b'init')
 
         o = m(cls.alloc())
-        self.assert_(isinstance(o, cls))
+        self.assertIsInstance(o, cls)
 
     def testInit2(self):
         cls = NSObject
         o = cls.alloc().init()
 
         m = o.methodForSelector_("init")
-        self.assert_(isinstance(m, objc.IMP))
-        self.assert_(not m.__metadata__()['classmethod'])
+        self.assertIsInstance(m, objc.IMP)
+        self.assertFalse(m.__metadata__()['classmethod'])
         self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, 'init')
+        self.assertEquals(m.selector, b'init')
 
         o = m(cls.alloc())
-        self.assert_(isinstance(o, cls))
+        self.assertIsInstance(o, cls)
 
     def testDescription(self):
         o = NSObject.alloc().init()
 
-        self.assertEquals(o.description(), o.methodForSelector_('description')(o))
+        self.assertEquals(o.description(), o.methodForSelector_(b'description')(o))
 
 
 

@@ -155,6 +155,128 @@ static PySequenceMethods object_tp_as_list = {
 	NULL,			/* sq_inplace_repeat */
 };
 
+static Py_ssize_t sl_ind_get(PyObject* value)
+{
+
+	if (value == Py_None) {
+		return -1;
+	} else if (PyIndex_Check(value)) {
+		Py_ssize_t result;
+		result = PyNumber_AsSsize_t(value, PyExc_IndexError);
+		if (result == -1 && PyErr_Occurred()) {
+			result = -1;
+		}
+		return result;
+	} else {
+		PyErr_SetString(PyExc_ValueError,
+			"Slice index of unsupported type");
+		return -1;
+	}
+}
+
+
+static PyObject* 
+object_subscript(PyObject* self, PyObject* item)
+{
+	if (PyIndex_Check(item)) {
+		Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
+		if (i == -1 && PyErr_Occurred()) {
+			return NULL;
+		}
+		return object__getitem__(self, i);
+	} else if (PySlice_Check(item)) {
+		Py_ssize_t start, stop, step;
+		PySliceObject* sl = (PySliceObject*)item;
+
+		start = sl_ind_get(sl->start);
+		if (start == -1 && PyErr_Occurred()) {
+			return NULL;
+		}
+
+		stop = sl_ind_get(sl->stop);
+		if (stop == -1 && PyErr_Occurred()) {
+			return NULL;
+		}
+
+		if (sl->step == Py_None) {
+			step = 1;
+		} else {
+			step = sl_ind_get(sl->stop);
+			if (step == -1 && PyErr_Occurred()) {
+				return NULL;
+			}
+		}
+
+		if (step != 1) {
+			PyErr_Format(PyExc_ValueError,
+				"objc.varlist doesn't support slice steps other than 1");
+			return NULL;
+		}
+
+		return object__getslice__(self, start, stop);
+			
+	} else {
+		PyErr_Format(PyExc_TypeError, 
+			"objc.varlist indices must be integers, got %s",
+			Py_TYPE(item)->tp_name);
+		return NULL;
+	}
+}
+
+static int
+object_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
+{
+	if (PyIndex_Check(item)) {
+		Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
+		if (i == -1 && PyErr_Occurred()) {
+			return -1;
+		}
+		return object__setitem__(self, i, value);
+	} else if (PySlice_Check(item)) {
+		Py_ssize_t start, stop, step;
+		PySliceObject* sl = (PySliceObject*)item;
+
+		start = sl_ind_get(sl->start);
+		if (start == -1 && PyErr_Occurred()) {
+			return -1;
+		}
+
+		stop = sl_ind_get(sl->stop);
+		if (stop == -1 && PyErr_Occurred()) {
+			return -1;
+		}
+
+		if (sl->step == Py_None) {
+			step = 1;
+		} else {
+			step = sl_ind_get(sl->stop);
+			if (step == -1 && PyErr_Occurred()) {
+				return -1;
+			}
+		}
+
+		if (step != 1) {
+			PyErr_Format(PyExc_ValueError,
+				"objc.varlist doesn't support slice steps other than 1");
+			return -1;
+		}
+
+		return object__setslice__(self, start, stop, value);
+			
+	} else {
+		PyErr_Format(PyExc_TypeError, 
+			"objc.varlist indices must be integers, got %s",
+			Py_TYPE(item)->tp_name);
+		return -1;
+	}
+}
+
+
+static PyMappingMethods	object_tp_as_mapping = {
+	NULL,
+	object_subscript,
+	object_ass_subscript
+};
 
 static PyObject* 
 object_new(
@@ -195,8 +317,7 @@ static PyMethodDef object_methods[] = {
 };
 
 PyTypeObject PyObjC_VarList_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.varlist",				/* tp_name */
 	sizeof(PyObjC_VarList),			/* tp_basicsize */
 	0,			 		/* tp_itemsize */
@@ -209,7 +330,7 @@ PyTypeObject PyObjC_VarList_Type = {
 	0,					/* tp_repr */
 	0,					/* tp_as_number */
 	&object_tp_as_list,			/* tp_as_sequence */
-	0,		       			/* tp_as_mapping */
+	&object_tp_as_mapping,			/* tp_as_mapping */
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */

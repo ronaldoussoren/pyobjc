@@ -36,11 +36,11 @@ class TestUseKVO (TestCase):
 
         return len(observer.observations) > 0
 
-    def failUnlessChangesEmitted(self, object):
+    def assertChangesEmitted(self, object):
         if not self.areChangesEmitted(object):
             self.fail("Setting 'value' on %r doesn't emit KVO" % object)
 
-    def failIfChangesEmitted(self, object):
+    def assertNoChangesEmitted(self, object):
         if self.areChangesEmitted(object):
             self.fail("Setting 'value' on %r does emit KVO" % object)
 
@@ -50,10 +50,10 @@ class TestUseKVO (TestCase):
         class OCTestUseKVO1 (NSObject):
             pass
 
-        self.failUnless(OCTestUseKVO1.__useKVO__)
+        self.assertTrue(OCTestUseKVO1.__useKVO__)
 
         obj = OCTestUseKVO1.alloc().init()
-        self.failUnlessChangesEmitted(obj)
+        self.assertChangesEmitted(obj)
 
     def testObjCAttr_True(self):
         objc.setUseKVOForSetattr(True)
@@ -61,10 +61,10 @@ class TestUseKVO (TestCase):
         class OCTestUseKVO2 (NSObject):
             value = objc.ivar()
 
-        self.failUnless(OCTestUseKVO2.__useKVO__)
+        self.assertTrue(OCTestUseKVO2.__useKVO__)
 
         obj = OCTestUseKVO2.alloc().init()
-        self.failUnlessChangesEmitted(obj)
+        self.assertChangesEmitted(obj)
 
 
     def testPythonAttr_False(self):
@@ -73,9 +73,9 @@ class TestUseKVO (TestCase):
         class OCTestUseKVO3 (NSObject):
             pass
 
-        self.failIf(OCTestUseKVO3.__useKVO__)
+        self.assertFalse(OCTestUseKVO3.__useKVO__)
         obj = OCTestUseKVO3.alloc().init()
-        self.failIfChangesEmitted(obj)
+        self.assertNoChangesEmitted(obj)
 
     def testObjCAttr_False(self):
         objc.setUseKVOForSetattr(False)
@@ -83,9 +83,9 @@ class TestUseKVO (TestCase):
         class OCTestUseKVO4 (NSObject):
             value = objc.ivar()
 
-        self.failIf(OCTestUseKVO4.__useKVO__)
+        self.assertFalse(OCTestUseKVO4.__useKVO__)
         obj = OCTestUseKVO4.alloc().init()
-        self.failIfChangesEmitted(obj)
+        self.assertNoChangesEmitted(obj)
 
 
 if __name__ == "__main__":

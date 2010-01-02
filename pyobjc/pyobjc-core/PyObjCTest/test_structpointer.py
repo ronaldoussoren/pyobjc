@@ -15,7 +15,7 @@ class TestOpaqueStructPointer (TestCase):
 
         # And then check that the correct pointer wrapper is created
         v = OC_TestStructPointer.returnPointerToStruct()
-        self.assert_(isinstance(v, TestStructPointerStructPtr))
+        self.assertIsInstance(v, TestStructPointerStructPtr)
 
 if __name__ == "__main__":
     main()

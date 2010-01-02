@@ -1,5 +1,5 @@
 from PyObjCTools.TestSupport import *
-import objc
+import objc, sys
 from PyObjCTest.opaque import *
 
 class TestFromPython (TestCase):
@@ -7,10 +7,10 @@ class TestFromPython (TestCase):
         tp = objc.createOpaquePointerType(
                 "BarHandle", BarEncoded, "BarHandle doc")
 
-        self.assert_(isinstance(tp, type))
+        self.assertIsInstance(tp, type)
 
         f = OC_OpaqueTest.createBarWithFirst_andSecond_(1.0, 4.5)
-        self.assert_( isinstance(f, tp) )
+        self.assertIsInstance(f, tp)
         x = OC_OpaqueTest.getFirst_(f)
         self.assertEquals(x, 1.0)
         x = OC_OpaqueTest.getSecond_(f)
@@ -22,7 +22,7 @@ class TestFromPython (TestCase):
 
 class TestFromC (TestCase):
     def testMutable(self):
-        self.assert_( isinstance(FooHandle, type) )
+        self.assertIsInstance(FooHandle, type)
 
         def create(cls, value):
             return OC_OpaqueTest.createFoo_(value)
@@ -31,11 +31,11 @@ class TestFromC (TestCase):
         FooHandle.get = lambda self: OC_OpaqueTest.getValueOf_(self)
         FooHandle.set = lambda self, v: OC_OpaqueTest.setValue_forFoo_(v, self)
 
-        self.assert_( hasattr(FooHandle, 'create') )
-        self.assert_( hasattr(FooHandle, 'delete') )
+        self.assertHasAttr(FooHandle, 'create')
+        self.assertHasAttr(FooHandle, 'delete')
         
         f = FooHandle.create(42)
-        self.assert_( isinstance(f, FooHandle) )
+        self.assertIsInstance(f, FooHandle)
         self.assertEquals( f.get(), 42 )
 
         f.set(f.get() + 20)
@@ -49,18 +49,21 @@ class TestFromC (TestCase):
 
     def testBasic(self):
         f = OC_OpaqueTest.createFoo_(99)
-        self.assert_( isinstance(f, FooHandle) )
+        self.assertIsInstance(f, FooHandle)
         self.assertEquals( OC_OpaqueTest.getValueOf_(f), 99 )
 
-        self.assert_( hasattr(f, "__pointer__") )
-        self.assert_( isinstance(f.__pointer__, (int, long)) )
+        self.assertHasAttr(f, "__pointer__")
+        self.assertIsInstance(f.__pointer__, (int, long))
 
         # NULL pointer is converted to None
         self.assertEquals(OC_OpaqueTest.nullFoo(), None)
 
         # There is no exposed type object that for PyCObject, test the
         # type name instead
-        self.assertEquals( type(f.__cobject__()).__name__, 'PyCObject' )
+        if sys.version_info[0] == 2:
+            self.assertEquals( type(f.__cobject__()).__name__, 'PyCObject' )
+        else:
+            self.assertEquals( type(f.__cobject__()).__name__, 'PyCapsule' )
 
         # Check round tripping through a PyCObject.
         co = f.__cobject__()

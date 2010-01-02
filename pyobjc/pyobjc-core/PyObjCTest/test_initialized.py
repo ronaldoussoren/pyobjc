@@ -39,7 +39,7 @@ class TestInitializing (TestCase):
         self.assertEquals(start, 0)
 
         o = OC_TestInitialize.makeInstance()
-        self.assert_(isinstance(o, OC_TestInitialize))
+        self.assertIsInstance(o, OC_TestInitialize)
         v = OC_TestInitialize.numUninitialized()
         self.assertEquals(v, start)
 
@@ -53,7 +53,7 @@ class TestInitializing (TestCase):
         self.assertEquals(start, 0)
 
         o = OC_TestInitializePython.makeInstance()
-        self.assert_(isinstance(o, OC_TestInitializePython))
+        self.assertIsInstance(o, OC_TestInitializePython)
         v = OC_TestInitialize.numUninitialized()
         self.assertEquals(v, start)
 
@@ -67,8 +67,8 @@ class TestInitializing (TestCase):
         self.assertEquals(start, 0)
 
         o = OC_TestInitializePython2.makeInstance()
-        self.assert_(isinstance(o, OC_TestInitializePython2))
-        self.assert_(OBJECT_LIST[-1] is o)
+        self.assertIsInstance(o, OC_TestInitializePython2)
+        self.assertIsObject(OBJECT_LIST[-1], o)
         del OBJECT_LIST[-1]
 
         v = OC_TestInitialize.numUninitialized()

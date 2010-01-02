@@ -25,54 +25,54 @@ from PyObjCTest.specialtypecodes import *
 import array
 
 def setupMetaData():
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLValue",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLValue",
         dict(
             retval=dict(type=objc._C_NSBOOL),
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArray",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArray",
         dict(
             retval=dict(type=objc._C_PTR+objc._C_NSBOOL, c_array_of_fixed_length=4),
         ))
 
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArg:andBOOLArg:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArg:andBOOLArg:",
         dict(
             arguments={
                 2: dict(type=objc._C_NSBOOL),
                 3: dict(type=objc._C_NSBOOL),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOf4In:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4In:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_IN, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOf4Out:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4Out:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_OUT, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOf4InOut:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4InOut:",
         dict(
             arguments={
                 2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_INOUT, c_array_of_fixed_length=4),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOfCount:In:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:In:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_IN, c_array_of_lenght_in_arg=2),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOfCount:Out:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:Out:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_OUT, c_array_of_lenght_in_arg=2),
             }
         ))
-    objc.registerMetaDataForSelector("OC_TestSpecialTypeCode", "BOOLArrayOfCount:InOut:",
+    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:InOut:",
         dict(
             arguments={
                 3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_INOUT, c_array_of_lenght_in_arg=2),
@@ -86,18 +86,18 @@ class TestTypeCode_BOOL (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assert_(o.BOOLValue() is True)
-        self.assert_(o.BOOLValue() is False)
+        self.assertIsObject(o.BOOLValue(),True)
+        self.assertIsObject(o.BOOLValue(), False)
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArray()
         self.assertEquals(len(v), 4)
-        self.assert_(v[0] is True)
-        self.assert_(v[1] is False)
-        self.assert_(v[2] is True)
-        self.assert_(v[3] is False)
+        self.assertIsObject(v[0], True)
+        self.assertIsObject(v[1], False)
+        self.assertIsObject(v[2], True)
+        self.assertIsObject(v[3], False)
 
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -122,7 +122,7 @@ class TestTypeCode_BOOL (TestCase):
         self.assertEquals(v, (1, 0, 1, 0))
 
         # It should not be possible to use a string as an array of booleans
-        self.assertRaises(ValueError, o.BOOLArrayOf4In_, "\x00\x01\x00\x01")
+        self.assertRaises(ValueError, o.BOOLArrayOf4In_, b"\x00\x01\x00\x01")
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -142,7 +142,7 @@ class TestTypeCode_BOOL (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.BOOLArrayOf4Out_(a)
-        self.assert_(v is a)
+        self.assertIsObject(v, a)
         self.assertEquals(v[0], 1)
         self.assertEquals(v[1], 0)
         self.assertEquals(v[2], 1)
@@ -160,7 +160,7 @@ class TestTypeCode_BOOL (TestCase):
         self.assertEquals(w, (False, False, False, False))
 
         # It should not be possible to use a string as an array of booleans
-        self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, "\x00\x01\x00\x01")
+        self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, b"\x00\x01\x00\x01")
 
 if __name__ == "__main__":
     main()

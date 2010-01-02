@@ -46,16 +46,33 @@ proto_dealloc(PyObject* object)
 	}
 #endif
 
+	Py_XDECREF(self->name);
 	Py_XDECREF(self->selectors);
-	object->ob_type->tp_free(object);
+	Py_TYPE(object)->tp_free(object);
 }
 
 static PyObject*
 proto_repr(PyObject* object)
 {
 	PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;	
+	PyObject* b = NULL;
 
-	return PyString_FromFormat("<%s %s at %p>", self->ob_type->tp_name, PyString_AsString(self->name), (void*)self);
+	if (PyUnicode_Check(self->name)) {
+		b = PyUnicode_AsEncodedString(self->name, NULL, NULL);
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(self->name)) {
+		b = self->name; Py_INCREF(b);
+#endif
+	} else {
+		b = PyBytes_FromString("<null>");
+	}
+	if (b == NULL) {
+		return NULL;
+	}
+
+	PyObject* r = PyText_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, PyBytes_AsString(b), (void*)self);
+	Py_XDECREF(b);
+	return r;
 }
 
 static PyObject*
@@ -73,7 +90,13 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 		return NULL;
 	}
 
-	if (!PyString_Check(name)) {
+	if (PyUnicode_Check(name)) {
+		/* pass */
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(name)) {
+		/* pass */
+#endif
+	} else {
 		PyErr_SetString(PyExc_TypeError,
 			"Name must be a string");
 		return NULL;
@@ -88,6 +111,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 			PyObjCInformalProtocol, &PyObjCInformalProtocol_Type);
 
 	result->name = name;
+	Py_XINCREF(name);
 	result->selectors = selectors;
 
 	len = PyTuple_GET_SIZE(selectors);
@@ -118,7 +142,6 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 			(PyObject*)result);
 	}
 
-	Py_XINCREF(name);
 
 	return (PyObject*)result;
 }
@@ -156,8 +179,7 @@ static PyMemberDef proto_members[] = {
 };
 
 PyTypeObject PyObjCInformalProtocol_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.informal_protocol",		/* tp_name */
 	sizeof(PyObjCInformalProtocol),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -228,7 +250,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMeth
 	if (!PyObjCInformalProtocol_Check(obj)) {
 		PyErr_Format(PyExc_TypeError, 
 			"First argument is not an 'objc.informal_protocol' "
-			"but '%s'", obj->ob_type->tp_name);
+			"but '%s'", Py_TYPE(obj)->tp_name);
 		return 0;
 	}
 
@@ -336,19 +358,19 @@ PyObjCInformalProtocol_CheckClass(
 	if (!PyObjCInformalProtocol_Check(obj)) {
 		PyErr_Format(PyExc_TypeError, 
 			"First argument is not an 'objc.informal_protocol' "
-			"but '%s'", obj->ob_type->tp_name);
+			"but '%s'", Py_TYPE(obj)->tp_name);
 		return 0;
 	}
 	if (!PyObjCClass_Check(super_class)) {
 		PyErr_Format(PyExc_TypeError, 
 			"Third argument is not an 'objc.objc_class' but "
-			"'%s'", super_class->ob_type->tp_name);
+			"'%s'", Py_TYPE(super_class)->tp_name);
 		return 0;
 	}
 	if (!PyDict_Check(clsdict)) {
 		PyErr_Format(PyExc_TypeError, 
 			"Fourth argument is not a 'dict' but '%s'",
-			clsdict->ob_type->tp_name);
+			Py_TYPE(clsdict)->tp_name);
 		return 0;
 	}
 
@@ -383,11 +405,11 @@ PyObjCInformalProtocol_CheckClass(
 			if (PyObjCSelector_Required(cur)) {
 				PyErr_Format(PyExc_TypeError,
 					"class %s does not fully implement "
-					"protocol %s: no implementation for %s",
+					"protocol %S: no implementation for %s",
 					name,
-					PyString_AsString(self->name),
+					self->name,
 					sel_getName(sel));
-					Py_DECREF(seq);
+				Py_DECREF(seq);
 				return 0;
 			} else {
 				PyErr_Clear();
@@ -398,11 +420,11 @@ PyObjCInformalProtocol_CheckClass(
 
 				PyErr_Format(PyExc_TypeError,
 					"class %s does not correctly implement "
-					"protocol %s: "
+					"protocol %S: "
 					"the signature for method %s is "
 					"%s instead of %s",
 					name,
-					PyString_AsString(self->name),
+					self->name,
 					sel_getName(sel),
 					PyObjCSelector_Signature(m),
 					PyObjCSelector_Signature(cur)

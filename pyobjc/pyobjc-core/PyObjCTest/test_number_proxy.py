@@ -25,9 +25,9 @@ class TestNSNumber (TestCase):
     def testClass(self):
         for m in ('numberWithInt_', 'numberWithFloat_', 'numberWithDouble_', 'numberWithShort_'):
             v = getattr(NSNumber, m)(0)
-            self.assert_(isinstance(v, NSNumber))
-            self.assert_(not isinstance(v, OC_PythonNumber))
-            self.assert_(OC_TestNumber.numberClass_(v) is NSCFNumber)
+            self.assertIsInstance(v, NSNumber)
+            self.assertIsNotInstance(v, OC_PythonNumber)
+            self.assertIsObject(OC_TestNumber.numberClass_(v), NSCFNumber)
 
     def testShortConversions(self):
         v = NSNumber.numberWithShort_(42)
@@ -138,8 +138,8 @@ class TestNSNumber (TestCase):
         #   printf("%llu\n", lv);
         # 
 
-        self.failUnless(
-                OC_TestNumber.numberAsUnsignedLongLong_(v) in 
+        self.assertIsIn(
+                OC_TestNumber.numberAsUnsignedLongLong_(v),
                     (18446744073709551489, 18446744073709551488))
 
         self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
@@ -175,19 +175,19 @@ class TestNSNumber (TestCase):
 
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithInt_(0))
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"0")
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(2**60))
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, unicode(str(2**60)))
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(-2**60))
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, unicode(str(-2**60)))
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithDouble_(264.0))
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"264")
 
 
@@ -197,15 +197,15 @@ class TestPyNumber (TestCase):
     def testClasses(self):
         # Ensure that python numbers are proxied using the right proxy type
         for v in (0, 1, 2**32+1, 2**64+1, 42.5):
-            self.assert_(OC_TestNumber.numberClass_(v) is OC_PythonNumber)
+            self.assertIsObject(OC_TestNumber.numberClass_(v), OC_PythonNumber)
 
         # The booleans True and False must be proxied as the corresponding
         # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code
         # get's upset.
         boolClass = objc.lookUpClass('NSCFBoolean')
         for v in (True, False):
-            self.assert_(OC_TestNumber.numberClass_(v) is boolClass)
-            self.assert_(objc.repythonify(v) is v)
+            self.assertIsObject(OC_TestNumber.numberClass_(v), boolClass)
+            self.assertIsObject(objc.repythonify(v), v)
 
 
     def testPythonIntConversions(self):
@@ -263,7 +263,7 @@ class TestPyNumber (TestCase):
 
     def testPythonLongConversions(self):
         v = long(42)
-        self.assert_(isinstance(v, long))
+        self.assertIsInstance(v, long)
 
         self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEquals(OC_TestNumber.numberAsChar_(v), 42)
@@ -282,7 +282,7 @@ class TestPyNumber (TestCase):
 
         # Negative values
         v = long(-42)
-        self.assert_(isinstance(v, long))
+        self.assertIsInstance(v, long)
 
         self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEquals(OC_TestNumber.numberAsChar_(v), -42)
@@ -305,7 +305,7 @@ class TestPyNumber (TestCase):
 
         # Overflow
         v = long(892455)
-        self.assert_(isinstance(v, long))
+        self.assertIsInstance(v, long)
 
         self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEquals(OC_TestNumber.numberAsChar_(v), 39)
@@ -399,41 +399,41 @@ class TestPyNumber (TestCase):
         self.assertEquals(OC_TestNumber.compareA_andB_(0, long(0)), NSOrderedSame)
 
     def testNumberEqual(self):
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, 1))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, 2**64))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, 42.0))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 1))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 2**64))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 42.0))
 
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, -1))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, -2**64))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(0, -42.0))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -1))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -2**64))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -42.0))
 
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, 0))
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, 0.0))
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, long(0)))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, 0))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, 0.0))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, long(0)))
 
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(0)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"0")
 
         v = OC_TestNumber.numberDescription_(2**64)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, unicode(repr(2**64)))
 
         v = OC_TestNumber.numberDescription_(-2**64)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, unicode(repr(-2**64)))
 
         v = OC_TestNumber.numberDescription_(264.0)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"264.0")
 
         v = OC_TestNumber.numberDescription_(False)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"0")
 
         v = OC_TestNumber.numberDescription_(True)
-        self.assert_(isinstance(v, unicode))
+        self.assertIsInstance(v, unicode)
         self.assertEquals(v, u"1")
 
 class TestInteractions (TestCase):
@@ -466,19 +466,19 @@ class TestInteractions (TestCase):
         #   - python number to nsnumber
         #   - nsnumber to python number
         # For: (bool, int, long, float) vs (char, short, ...)
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithInt_(0)))
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithLong_(0)))
-        self.assert_(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithFloat_(0)))
-        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 0))
-        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 0))
-        self.assert_(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithInt_(0)))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithLong_(0)))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithFloat_(0)))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 0))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 0))
+        self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0))
 
-        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithInt_(0)))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithLong_(0)))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithFloat_(0)))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 42))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 42))
-        self.assert_(not OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithInt_(0)))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithLong_(0)))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithFloat_(0)))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 42))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 42))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42))
 
 
 class TestNumberFormatter (TestCase):

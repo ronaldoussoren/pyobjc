@@ -1,4 +1,5 @@
-import _objc
+from objc import _objc
+import sys
 
 __all__ = []
 
@@ -20,43 +21,67 @@ class OC_PythonFloat(float):
     def __reduce__(self):
         return (float, (float(self),))
 
-class OC_PythonLong(long):
+if sys.version_info[0] == 2:
+    class OC_PythonLong(long):
 
-    def __new__(cls, obj, value):
-        self = long.__new__(cls, value)
-        self.__pyobjc_object__ = obj
-        return self
+        def __new__(cls, obj, value):
+            self = long.__new__(cls, value)
+            self.__pyobjc_object__ = obj
+            return self
 
-    __class__ = property(lambda self: self.__pyobjc_object__.__class__)
+        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
 
-    def __getattr__(self, attr):
-        return getattr(self.__pyobjc_object__, attr)
+        def __getattr__(self, attr):
+            return getattr(self.__pyobjc_object__, attr)
 
-    # The long type doesn't support __slots__ on subclasses, fake
-    # one part of the effect of __slots__: don't allow setting of attributes.
-    def __setattr__(self, attr, value):
-        if attr != '__pyobjc_object__':
-            raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
-        self.__dict__['__pyobjc_object__'] = value
+        # The long type doesn't support __slots__ on subclasses, fake
+        # one part of the effect of __slots__: don't allow setting of attributes.
+        def __setattr__(self, attr, value):
+            if attr != '__pyobjc_object__':
+                raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
+            self.__dict__['__pyobjc_object__'] = value
 
-    def __reduce__(self):
-        return (long, (long(self),))
+        def __reduce__(self):
+            return (long, (long(self),))
 
-class OC_PythonInt(int):
-    __slots__=('__pyobjc_object__',)
+    class OC_PythonInt(int):
+        __slots__=('__pyobjc_object__',)
 
-    def __new__(cls, obj, value):
-        self = int.__new__(cls, value)
-        self.__pyobjc_object__ = obj
-        return self
+        def __new__(cls, obj, value):
+            self = int.__new__(cls, value)
+            self.__pyobjc_object__ = obj
+            return self
 
-    __class__ = property(lambda self: self.__pyobjc_object__.__class__)
+        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
 
-    def __getattr__(self, attr):
-        return getattr(self.__pyobjc_object__, attr)
+        def __getattr__(self, attr):
+            return getattr(self.__pyobjc_object__, attr)
 
-    def __reduce__(self):
-        return (int, (int(self),))
+        def __reduce__(self):
+            return (int, (int(self),))
+
+else:
+    class OC_PythonLong(int):
+
+        def __new__(cls, obj, value):
+            self = long.__new__(cls, value)
+            self.__pyobjc_object__ = obj
+            return self
+
+        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
+
+        def __getattr__(self, attr):
+            return getattr(self.__pyobjc_object__, attr)
+
+        # The long type doesn't support __slots__ on subclasses, fake
+        # one part of the effect of __slots__: don't allow setting of attributes.
+        def __setattr__(self, attr, value):
+            if attr != '__pyobjc_object__':
+                raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
+            self.__dict__['__pyobjc_object__'] = value
+
+        def __reduce__(self):
+            return (long, (long(self),))
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')
@@ -77,14 +102,16 @@ def numberWrapper(obj):
         import warnings
         warnings.warn(RuntimeWarning, "NSNumber instance doesn't implement objCType? %r" % (obj,))
         return obj
-    if tp in 'qQLfd':
-        if tp == 'q':
+    if tp in b'qQLfd':
+        if tp == b'q':
             return OC_PythonLong(obj, obj.longLongValue())
-        elif tp in 'QL':
+        elif tp in b'QL':
             return OC_PythonLong(obj, obj.unsignedLongLongValue())
         else:
             return OC_PythonFloat(obj, obj.doubleValue())
-    else:
+    elif sys.version_info[0] == 2:
         return OC_PythonInt(obj, obj.longValue())
+    else:
+        return OC_PythonLong(obj, obj.longValue())
 
 _objc._setNSNumberWrapper(numberWrapper)

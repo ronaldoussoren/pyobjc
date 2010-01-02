@@ -17,7 +17,7 @@ TODO:
     set(['__cmp__'])
 
 """
-from _objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
+from objc._objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
 from itertools import imap
 import sys
 
@@ -86,7 +86,6 @@ def _add_convenience_methods(super_class, name, type_dict):
         #
 
         sel = sel.selector
-
 
         if sel in CONVENIENCE_METHODS:
             v = CONVENIENCE_METHODS[sel]
@@ -177,7 +176,7 @@ def get_objectForKey_(self, key, dflt=None):
         res = dflt
     return res
 
-CONVENIENCE_METHODS['objectForKey:'] = (
+CONVENIENCE_METHODS[b'objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey_),
     ('has_key', has_key_objectForKey_),
     ('get', get_objectForKey_),
@@ -187,7 +186,7 @@ CONVENIENCE_METHODS['objectForKey:'] = (
 def __delitem__removeObjectForKey_(self, key):
     self.removeObjectForKey_(container_wrap(key))
 
-CONVENIENCE_METHODS['removeObjectForKey:'] = (
+CONVENIENCE_METHODS[b'removeObjectForKey:'] = (
     ('__delitem__', __delitem__removeObjectForKey_),
 )
 
@@ -223,7 +222,7 @@ def popitem_setObject_forKey_(self):
     else:
         return (k, self[k])
 
-CONVENIENCE_METHODS['setObject:forKey:'] = (
+CONVENIENCE_METHODS[b'setObject:forKey:'] = (
     ('__setitem__', __setitem__setObject_forKey_),
     ('update', update_setObject_forKey_),
     ('setdefault', setdefault_setObject_forKey_),
@@ -232,11 +231,11 @@ CONVENIENCE_METHODS['setObject:forKey:'] = (
 )
 
 
-CONVENIENCE_METHODS['count'] = (
+CONVENIENCE_METHODS[b'count'] = (
     ('__len__', lambda self: self.count()),
 )
 
-CONVENIENCE_METHODS['containsObject:'] = (
+CONVENIENCE_METHODS[b'containsObject:'] = (
     ('__contains__', lambda self, elem: bool(self.containsObject_(container_wrap(elem)))),
 )
 
@@ -252,43 +251,43 @@ def objc_hash(self, _max=sys.maxint, _const=((sys.maxint + 1L) * 2L)):
         if rval == -1:
             rval = -2
     return int(rval)
-CONVENIENCE_METHODS['hash'] = (
+CONVENIENCE_METHODS[b'hash'] = (
     ('__hash__', objc_hash),
 )
 
-CONVENIENCE_METHODS['isEqualTo:'] = (
+CONVENIENCE_METHODS[b'isEqualTo:'] = (
     ('__eq__', lambda self, other: bool(self.isEqualTo_(other))),
 )
 
-CONVENIENCE_METHODS['isEqual:'] = (
+CONVENIENCE_METHODS[b'isEqual:'] = (
     ('__eq__', lambda self, other: bool(self.isEqual_(other))),
 )
 
-CONVENIENCE_METHODS['isGreaterThan:'] = (
+CONVENIENCE_METHODS[b'isGreaterThan:'] = (
     ('__gt__', lambda self, other: bool(self.isGreaterThan_(other))),
 )
 
-CONVENIENCE_METHODS['isGreaterThanOrEqualTo:'] = (
+CONVENIENCE_METHODS[b'isGreaterThanOrEqualTo:'] = (
     ('__ge__', lambda self, other: bool(self.isGreaterThanOrEqualTo_(other))),
 )
 
-CONVENIENCE_METHODS['isLessThan:'] = (
+CONVENIENCE_METHODS[b'isLessThan:'] = (
     ('__lt__', lambda self, other: bool(self.isLessThan_(other))),
 )
 
-CONVENIENCE_METHODS['isLessThanOrEqualTo:'] = (
+CONVENIENCE_METHODS[b'isLessThanOrEqualTo:'] = (
     ('__le__', lambda self, other: bool(self.isLessThanOrEqualTo_(other))),
 )
 
-CONVENIENCE_METHODS['isNotEqualTo:'] = (
+CONVENIENCE_METHODS[b'isNotEqualTo:'] = (
     ('__ne__', lambda self, other: bool(self.isNotEqualTo_(other))),
 )
 
-CONVENIENCE_METHODS['length'] = (
+CONVENIENCE_METHODS[b'length'] = (
     ('__len__', lambda self: self.length()),
 )
 
-CONVENIENCE_METHODS['addObject:'] = (
+CONVENIENCE_METHODS[b'addObject:'] = (
     ('append', lambda self, item: self.addObject_(container_wrap(item))),
 )
 
@@ -300,7 +299,7 @@ def reverse_exchangeObjectAtIndex_withObjectAtIndex_(self):
         begin += 1
         end -= 1
 
-CONVENIENCE_METHODS['exchangeObjectAtIndex:withObjectAtIndex:'] = (
+CONVENIENCE_METHODS[b'exchangeObjectAtIndex:withObjectAtIndex:'] = (
     ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
 )
 
@@ -313,7 +312,7 @@ def ensureArray(anArray):
 def extend_addObjectsFromArray_(self, anArray):
     self.addObjectsFromArray_(ensureArray(anArray))
 
-CONVENIENCE_METHODS['addObjectsFromArray:'] = (
+CONVENIENCE_METHODS[b'addObjectsFromArray:'] = (
     ('extend', extend_addObjectsFromArray_),
 )
 
@@ -324,7 +323,7 @@ def index_indexOfObject_(self, item):
         raise ValueError, "%s.index(x): x not in list" % (type(self).__name__,)
     return res
 
-CONVENIENCE_METHODS['indexOfObject:'] = (
+CONVENIENCE_METHODS[b'indexOfObject:'] = (
     ('index', index_indexOfObject_),
 )
 
@@ -335,7 +334,7 @@ def insert_insertObject_atIndex_(self, idx, item):
             raise IndexError("list index out of range")
     self.insertObject_atIndex_(container_wrap(item), idx)
 
-CONVENIENCE_METHODS['insertObject:atIndex:'] = (
+CONVENIENCE_METHODS[b'insertObject:atIndex:'] = (
     ( 'insert', insert_insertObject_atIndex_),
 )
 
@@ -354,7 +353,7 @@ def __getitem__objectAtIndex_(self, idx):
 
     return container_unwrap(self.objectAtIndex_(idx), RuntimeError)
 
-CONVENIENCE_METHODS['objectAtIndex:'] = (
+CONVENIENCE_METHODS[b'objectAtIndex:'] = (
     ('__getitem__', __getitem__objectAtIndex_),
 )
 
@@ -399,7 +398,7 @@ def remove_removeObjectAtIndex_(self, obj):
     idx = self.index(obj)
     self.removeObjectAtIndex_(idx)
 
-CONVENIENCE_METHODS['removeObjectAtIndex:'] = (
+CONVENIENCE_METHODS[b'removeObjectAtIndex:'] = (
     ('remove', remove_removeObjectAtIndex_),
     ('pop', pop_removeObjectAtIndex_),
     ('__delitem__', __delitem__removeObjectAtIndex_),
@@ -422,7 +421,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
 
     self.replaceObjectAtIndex_withObject_(idx, anObject)
 
-CONVENIENCE_METHODS['replaceObjectAtIndex:withObject:'] = (
+CONVENIENCE_METHODS[b'replaceObjectAtIndex:withObject:'] = (
     ('__setitem__', __setitem__replaceObjectAtIndex_withObject_),
 )
 
@@ -437,12 +436,12 @@ def dictItems(aDict):
     keys = aDict.allKeys()
     return zip(keys, imap(aDict.__getitem__, keys))
 
-CONVENIENCE_METHODS['allKeys'] = (
+CONVENIENCE_METHODS[b'allKeys'] = (
     ('keys', lambda self: self.allKeys()),
     ('items', lambda self: dictItems(self)),
 )
 
-CONVENIENCE_METHODS['allValues'] = (
+CONVENIENCE_METHODS[b'allValues'] = (
     ('values', lambda self: self.allValues()),
 )
 
@@ -456,30 +455,30 @@ def __iter__objectEnumerator_keyEnumerator(self):
         meth = self.objectEnumerator
     return iter(meth())
 
-CONVENIENCE_METHODS['keyEnumerator'] = (
+CONVENIENCE_METHODS[b'keyEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
     ('iterkeys', lambda self: iter(self.keyEnumerator())),
     ('iteritems', lambda self: itemsGenerator(self)),
 )
 
-CONVENIENCE_METHODS['objectEnumerator'] = (
+CONVENIENCE_METHODS[b'objectEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
     ('itervalues', lambda self: iter(self.objectEnumerator())),
 )
 
-CONVENIENCE_METHODS['reverseObjectEnumerator'] = (
+CONVENIENCE_METHODS[b'reverseObjectEnumerator'] = (
     ('__reversed__', lambda self: iter(self.reverseObjectEnumerator())),
 )
 
-CONVENIENCE_METHODS['removeAllObjects'] = (
+CONVENIENCE_METHODS[b'removeAllObjects'] = (
     ('clear', lambda self: self.removeAllObjects()),
 )
 
-CONVENIENCE_METHODS['dictionaryWithDictionary:'] = (
+CONVENIENCE_METHODS[b'dictionaryWithDictionary:'] = (
     ('copy', lambda self: type(self).dictionaryWithDictionary_(self)),
 )
 
-CONVENIENCE_METHODS['nextObject'] = (
+CONVENIENCE_METHODS[b'nextObject'] = (
     ('__iter__', enumeratorGenerator),
 )
 
@@ -515,11 +514,19 @@ def fromkeys_dictionaryWithObjects_forKeys_(cls, keys, values=None):
         values = list(values)
     return cls.dictionaryWithObjects_forKeys_(values, keys)
 
-CONVENIENCE_METHODS['dictionaryWithObjects:forKeys:'] = (
+CONVENIENCE_METHODS[b'dictionaryWithObjects:forKeys:'] = (
     ('fromkeys',
         classmethod(fromkeys_dictionaryWithObjects_forKeys_)),
 )
 
+if sys.version_info[0] == 3:
+    def cmp(a, b):
+        if a == b:
+            return 0
+        elif a < b:
+            return -1
+        else:
+            return 1
 
 def sort(self, key=None, reverse=False, cmpfunc=cmp):
     # NOTE: cmpfunc argument is for backward compatibility.
@@ -544,20 +551,20 @@ def sort(self, key=None, reverse=False, cmpfunc=cmp):
 
 
 
-CONVENIENCE_METHODS['sortUsingFunction:context:'] = (
+CONVENIENCE_METHODS[b'sortUsingFunction:context:'] = (
     ('sort', sort),
 )
 
-CONVENIENCE_METHODS['hasPrefix:'] = (
+CONVENIENCE_METHODS[b'hasPrefix:'] = (
     ('startswith', lambda self, pfx: self.hasPrefix_(pfx)),
 )
 
-CONVENIENCE_METHODS['hasSuffix:'] = (
+CONVENIENCE_METHODS[b'hasSuffix:'] = (
     ('endswith', lambda self, pfx: self.hasSuffix_(pfx)),
 )
 
 
-CONVENIENCE_METHODS['copyWithZone:'] = (
+CONVENIENCE_METHODS[b'copyWithZone:'] = (
     ('__copy__', lambda self: self.copyWithZone_(None)),
 )
 

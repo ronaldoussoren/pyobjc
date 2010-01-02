@@ -46,7 +46,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	} else {
 		PyErr_Format(PyExc_TypeError,
 			"Need Objective-C class or instance, got "
-			"a %s", self->ob_type->tp_name);
+			"a %s", Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 
@@ -124,7 +124,7 @@ make_dict(PyObject* self, int class_method)
 
 		if (class_method) {
 			cls = object_getClass(obj);
-			bound_self = (PyObject*)self->ob_type;
+			bound_self = (PyObject*)Py_TYPE(self);
 			objc_class = object_getClass(cls); 
 		} else {
 			cls = object_getClass(obj);
@@ -229,8 +229,8 @@ obj_dealloc(PyObject* _self)
 	Py_XDECREF(self->base);
 	self->base = NULL;
 
-	if (self->ob_type->tp_free) {
-		self->ob_type->tp_free((PyObject*)self);
+	if (Py_TYPE(self)->tp_free) {
+		Py_TYPE(self)->tp_free((PyObject*)self);
 	} else {
 		PyObject_Del(self);
 	}
@@ -241,15 +241,26 @@ obj_getattro(PyObject* _self, PyObject* name)
 {
 	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* result = NULL;
+	PyObject* name_bytes;
 
-	if (!PyString_Check(name)) {
+	if (PyUnicode_Check(name)) {
+		name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (name_bytes == NULL) {
+			return NULL;
+		}
+#if PY_VERSION_HEX < 0x03000000
+	} else if (PyString_Check(name)) {
+		name_bytes = name; Py_INCREF(name_bytes);
+#endif 
+	} else {
 		PyErr_Format(PyExc_TypeError, 
 			"Expecting string, got %s",
-			name->ob_type->tp_name);
+			Py_TYPE(name)->tp_name);
 		return NULL;
 	}
 
-	if (strcmp(PyString_AS_STRING(name), "__dict__") == 0) {
+	if (strcmp(PyBytes_AsString(name_bytes), "__dict__") == 0) {
+		Py_DECREF(name_bytes); name_bytes = NULL;
 
 		PyObject* dict;
 		dict = make_dict(self->base, self->class_method);
@@ -267,13 +278,15 @@ obj_getattro(PyObject* _self, PyObject* name)
 		 */
 	}
 
-	if (strcmp(PyString_AS_STRING(name), "__methods__") == 0) {
+	if (strcmp(PyBytes_AsString(name_bytes), "__methods__") == 0) {
+		Py_DECREF(name_bytes); name_bytes = NULL;
 		PyErr_SetString(PyExc_AttributeError,
 			"No such attribute: __methods__");
 		return NULL;
 	}
 
-	if (strcmp(PyString_AS_STRING(name), "__members__") == 0) {
+	if (strcmp(PyBytes_AsString(name_bytes), "__members__") == 0) {
+		Py_DECREF(name_bytes); name_bytes = NULL;
 		PyErr_SetString(PyExc_AttributeError,
 			"No such attribute: __members__");
 		return NULL;
@@ -284,7 +297,7 @@ obj_getattro(PyObject* _self, PyObject* name)
 			result = PyObject_GetAttr(self->base, name);
 		} else {
 			/* Getting a class method of an instance? */
-			result = PyObject_GetAttr((PyObject*)(self->base->ob_type), name);
+			result = PyObject_GetAttr((PyObject*)(Py_TYPE(self->base)), name);
 		}
 
 	} else {
@@ -306,7 +319,7 @@ obj_getattro(PyObject* _self, PyObject* name)
 						 * descriptor mechanism to
 						 * fetch the actual result
 						 */
-						v = v->ob_type->tp_descr_get(v, NULL, (PyObject*)v->ob_type);
+						v = Py_TYPE(v)->tp_descr_get(v, NULL, (PyObject*)Py_TYPE(v));
 						result = v;
 						Py_INCREF(result);
 						break;
@@ -324,18 +337,22 @@ obj_getattro(PyObject* _self, PyObject* name)
 			Py_DECREF(result);
 			result = NULL;
 		} else {
+			Py_DECREF(name_bytes); name_bytes = NULL;
 			return result;
 		}
 	}
 
 	/* Didn't find the selector the first trip around, try harder. */
 	result = find_selector(self->base, 
-		PyString_AS_STRING(name), self->class_method);
-	if (result == NULL) return result;
+		PyBytes_AS_STRING(name_bytes), self->class_method);
+	if (result == NULL) {
+		Py_DECREF(name_bytes); name_bytes = NULL;
+		return result;
+	}
 
 	if (self->class_method && PyObjCObject_Check(self->base)) {
 		/* Class method */
-		((PyObjCSelector*)result)->sel_self = (PyObject*)(self->base->ob_type);
+		((PyObjCSelector*)result)->sel_self = (PyObject*)(Py_TYPE(self->base));
 	} else if (!self->class_method && PyObjCClass_Check(self->base)) {
 		/* Unbound instance method */
 		((PyObjCSelector*)result)->sel_self = NULL;
@@ -344,6 +361,7 @@ obj_getattro(PyObject* _self, PyObject* name)
 		((PyObjCSelector*)result)->sel_self = self->base;
 	}
 	Py_XINCREF(((PyObjCSelector*)result)->sel_self);
+	Py_DECREF(name_bytes);
 	return result;
 }
 
@@ -352,6 +370,7 @@ obj_repr(PyObject* _self)
 {
 	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* rval;
+#if PY_VERSION_HEX < 0x03000000
 	PyObject* repr;
 
 	repr = PyObject_Repr(self->base);
@@ -366,12 +385,17 @@ obj_repr(PyObject* _self)
 		self->class_method ? "class" : "instance",
 		PyString_AS_STRING(repr));
 	Py_DECREF(repr);
+#else
+	rval = PyUnicode_FromFormat("<%s method-accessor for %R>",
+		self->class_method ? "class" : "instance",
+		self->base);
+#endif
+
 	return rval;
 }
 
 PyTypeObject PyObjCMethodAccessor_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.method_acces",			/* tp_name */
 	sizeof(ObjCMethodAccessor),		/* tp_basicsize */
 	0,					/* tp_itemsize */

@@ -29,48 +29,48 @@ class PyObjC_TestClassAndInstanceInstanceOverride(PyObjC_TestClassAndInstance):
 
 class TestClassAndInstance(TestCase):
     def testClassAndInstanceInstanceOverrideWorkaround(self):
-        self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.pyobjc_classMethods.isInstance())
-        self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.alloc().init().pyobjc_instanceMethods.isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceInstanceOverride.pyobjc_classMethods.isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceInstanceOverride.alloc().init().pyobjc_instanceMethods.isInstance())
 
     def testClassAndInstanceClassOverrideWorkaround(self):
-        self.failUnless(PyObjC_TestClassAndInstanceClassOverride.pyobjc_classMethods.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstanceClassOverride.pyobjc_classMethods.isInstance())
 
     def testClassAndInstanceSubclassWorkaround(self):
-        self.failIf(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance())
-        self.failUnless(PyObjC_TestClassAndInstanceSubclass.alloc().init().pyobjc_instanceMethods.isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstanceSubclass.alloc().init().pyobjc_instanceMethods.isInstance())
 
     def testClassAndInstanceWorkaround(self):
         if PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance():
             self.fail()
 
-        self.failIf(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
-        self.failUnless(PyObjC_TestClassAndInstance.alloc().init().pyobjc_instanceMethods.isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstance.alloc().init().pyobjc_instanceMethods.isInstance())
 
     def testClassAndInstanceClassOverride(self):
-        self.failUnless(PyObjC_TestClassAndInstanceClassOverride.isInstance())
-        self.failUnless(PyObjC_TestClassAndInstanceClassOverride.alloc().init().isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstanceClassOverride.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstanceClassOverride.alloc().init().isInstance())
 
     def testClassAndInstanceInstanceOverride(self):
         # Having the next line true would be nice:
-        #self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.isInstance())
+        #self.assertFalse(PyObjC_TestClassAndInstanceInstanceOverride.isInstance())
         # But we'll have to settle for this one instead:
-        self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.pyobjc_classMethods.isInstance())
-        self.failIf(PyObjC_TestClassAndInstanceInstanceOverride.alloc().init().isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceInstanceOverride.pyobjc_classMethods.isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceInstanceOverride.alloc().init().isInstance())
 
     def testClassAndInstanceSubclass(self):
         # Having the next line true would be nice:
-        #self.failIf(PyObjC_TestClassAndInstanceSubclass.isInstance())
+        #self.assertFalse(PyObjC_TestClassAndInstanceSubclass.isInstance())
         # But we'll have to settle for this one instead:
-        self.failIf(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance())
-        self.failUnless(PyObjC_TestClassAndInstanceSubclass.alloc().init().isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstanceSubclass.pyobjc_classMethods.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstanceSubclass.alloc().init().isInstance())
 
     def testClassAndInstance(self):
 
         # Having the next line true would be nice:
         #self.assertEquals(PyObjC_TestClassAndInstance.isInstance(), objc.NO)
         # But we'll have to settle for this one instead:
-        self.failIf(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
-        self.failUnless(PyObjC_TestClassAndInstance.alloc().init().isInstance())
+        self.assertFalse(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
+        self.assertTrue(PyObjC_TestClassAndInstance.alloc().init().isInstance())
 
 #    @min_os_level('10.5')
 #    def testUnallocatable(self):

@@ -195,8 +195,9 @@ struct PyObjC_WeakLink {
  * - Version 16 adds PyObjC_PerformWeaklinking
  * - Version 17 introduces Py_ssize_t support
  * - Version 18 introduces several API incompatibilities
+ * - Version 19 removes some old junk
  */
-#define PYOBJC_API_VERSION 18
+#define PYOBJC_API_VERSION 19
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -321,21 +322,6 @@ struct pyobjc_api {
 	/* PyObjCObject_IsUninitialized */
 	int (*obj_is_uninitialized)(PyObject*);
 
-	/* PyObjCObject_Convert */
-	int (*pyobjcobject_convert)(PyObject*,void*);
-
-	/* PyObjCSelector_Convert */
-	int (*pyobjcselector_convert)(PyObject*,void*);
-
-	/* PyObjCClass_Convert */
-	int (*pyobjcclass_convert)(PyObject*,void*);
-
-	/* PyObjC_ConvertBOOL */
-	int (*pyobjc_convertbool)(PyObject*,void*);
-
-	/* PyObjC_ConvertChar */
-	int (*pyobjc_convertchar)(PyObject*,void*);
-
 	/* PyObjCObject_New */
 	PyObject* (*pyobjc_object_new)(id, int , int);
 
@@ -357,6 +343,10 @@ struct pyobjc_api {
 	int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum);
 
 	PyObject* (*varlistnew)(const char* tp, void* array);
+
+	int (*is_ascii_string)(PyObject* unicode_string, const char* ascii_string);
+	int (*is_ascii_prefix)(PyObject* unicode_string, const char* ascii_string, size_t n);
+
 };
 
 #ifndef PYOBJC_BUILD
@@ -364,6 +354,9 @@ struct pyobjc_api {
 #ifndef PYOBJC_METHOD_STUB_IMPL
 static struct pyobjc_api*	PyObjC_API;
 #endif /* PYOBJC_METHOD_STUB_IMPL */
+
+#define PyObjC_is_ascii_string (PyObjC_API->is_ascii_string)
+#define PyObjC_is_ascii_prefix (PyObjC_API->is_ascii_prefix)
 
 #define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, PyObjC_API->object_type)
 #define PyObjCClass_Check(obj)  PyObject_TypeCheck(obj, PyObjC_API->class_type)
@@ -404,11 +397,6 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjCIMP_GetIMP   (PyObjC_API->imp_get_imp)
 #define PyObjCIMP_GetSelector   (PyObjC_API->imp_get_sel)
 #define PyObjCObject_IsUninitialized (PyObjC_API->obj_is_uninitialized)
-#define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
-#define PyObjCSelector_Convert (PyObjC_API->pyobjcselector_convert)
-#define PyObjCClass_Convert (PyObjC_API->pyobjcselector_convert)
-#define PyObjC_ConvertBOOL (PyObjC_API->pyobjc_convertbool)
-#define PyObjC_ConvertChar (PyObjC_API->pyobjc_convertchar)
 #define PyObjCObject_New (PyObjC_API->pyobjc_object_new)
 #define PyObjCCreateOpaquePointerType (PyObjC_API->pointer_type_new)
 #define PyObjCObject_NewTransient (PyObjC_API->newtransient)
@@ -428,7 +416,11 @@ PyObjC_ImportAPI(PyObject* calling_module)
 	PyObject* m;
 	PyObject* d;
 	PyObject* api_obj;
+#if PY_VERSION_HEX < 0x03000000
 	PyObject* name = PyString_FromString("objc");
+#else
+	PyObject* name = PyUnicode_FromString("objc");
+#endif
 	
 	m = PyImport_Import(name);
 	Py_DECREF(name);
@@ -449,7 +441,11 @@ PyObjC_ImportAPI(PyObject* calling_module)
 			"No C_API in objc module");
 		return -1;
 	}
+#if PY_VERSION_HEX < 0x03000000
 	PyObjC_API = PyCObject_AsVoidPtr(api_obj);
+#else
+	PyObjC_API = PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);
+#endif
 	if (PyObjC_API == NULL) {
 		return 0;
 	}

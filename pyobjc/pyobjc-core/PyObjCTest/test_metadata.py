@@ -13,6 +13,7 @@ import objc
 from PyObjCTools.TestSupport import *
 import warnings
 import array
+import sys
 
 from PyObjCTest.metadata import *
 
@@ -24,44 +25,44 @@ def setupMetaData():
     #
     # Note2: the code below would normally be done using a metadata file 
     # instead of hardcoding.
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "boolClassMethod",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"boolClassMethod",
             dict(
                 retval=dict(type=objc._C_NSBOOL)
             ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "unknownLengthArray",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"unknownLengthArray",
             dict(
                 retval=dict(c_array_of_variable_length=True),
         ))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "unknownLengthMutable",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"unknownLengthMutable",
             dict(
                 retval=dict(c_array_of_variable_length=True),
         ))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeVariableLengthArray:halfCount:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeVariableLengthArray:halfCount:",
             dict(
                 arguments={
                     2+0: dict(c_array_of_variable_length=True, type_modifier=objc._C_IN),
                 }
         ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "varargsMethodWithObjects:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"varargsMethodWithObjects:",
             dict(
                 variadic=True,
             ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "ignoreMethod",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"ignoreMethod",
             dict(
                 suggestion='please ignore me',
             ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeArrayWithFormat:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeArrayWithFormat:",
             dict(
                 variadic=True,
                 arguments={
                     2+0: dict(printf_format=True),
                 }
             ))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeArrayWithCFormat:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeArrayWithCFormat:",
             dict(
                 variadic=True,
                 arguments={
@@ -69,20 +70,20 @@ def setupMetaData():
                 }
             ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeArrayWithArguments:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeArrayWithArguments:",
             dict(
                 variadic=True,
                 c_array_delimited_by_null=True
             ))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "make4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"make4Tuple:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "null4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"null4Tuple:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_of_fixed_length=4, null_accepted=True),
@@ -90,42 +91,42 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeObjectArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeObjectArray:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeStringArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeStringArray:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullStringArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullStringArray:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_delimited_by_null=True, null_accepted=True),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArray:count:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArray:halfCount:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArray:halfCount:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_of_variable_length=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArray:countPtr:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArray:countPtr:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
@@ -133,7 +134,7 @@ def setupMetaData():
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArray:count:",
             dict(
                 arguments={
                   2+0:  dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=True),
@@ -141,7 +142,7 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillArray:uptoCount:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillArray:uptoCount:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, c_array_length_in_result=True, null_accepted=False),
@@ -149,14 +150,14 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillArray:count:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfillArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfillArray:count:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=True),
@@ -164,35 +165,35 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "maybeFillArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"maybeFillArray:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fill4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fill4Tuple:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfill4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfill4Tuple:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_of_fixed_length=4, null_accepted=True),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillStringArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillStringArray:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullfillStringArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullfillStringArray:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_OUT, c_array_delimited_by_null=True, null_accepted=True),
@@ -200,21 +201,21 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseArray:uptoCount:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseArray:uptoCount:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, c_array_length_in_result=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseArray:count:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverseArray:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverseArray:count:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=True),
@@ -222,14 +223,14 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverseStrings:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverseStrings:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverseStrings:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverseStrings:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_delimited_by_null=True, null_accepted=True),
@@ -237,21 +238,21 @@ def setupMetaData():
             )
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "maybeReverseArray:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"maybeReverseArray:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, c_array_length_in_result=True, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "reverse4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"reverse4Tuple:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=False),
                 }
             )
         )
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullreverse4Tuple:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullreverse4Tuple:",
             dict(
                 arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, c_array_of_fixed_length=4, null_accepted=True),
@@ -262,85 +263,85 @@ def setupMetaData():
 
 
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArrayOf5",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArrayOf5",
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeStringArray",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeStringArray",
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeIntArrayOf:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeIntArrayOf:",
             dict(
                 retval=dict(c_array_length_in_arg=2+0)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArrayOf5",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArrayOf5",
             dict(
                 retval=dict(c_array_of_fixed_length=5)
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullStringArray",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullStringArray",
             dict(
                 retval=dict(c_array_delimited_by_null=True),
             ),
         )
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "nullIntArrayOf:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"nullIntArrayOf:",
             dict(
                 retval=dict(c_array_length_in_arg=2+0)
             ),
         )
 
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "sumX:andY:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:", 
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_IN, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "divBy5:remainder:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:", 
             dict(arguments={
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "swapX:andY:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:", 
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "input:output:inputAndOutput:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"input:output:inputAndOutput:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=True),
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=True),
                     2+2: dict(type_modifier=objc._C_INOUT, null_accepted=True),
             }))
 
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeDataForBytes:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeDataForBytes:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
             }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "makeDataForVoids:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"makeDataForVoids:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_IN, c_array_length_in_arg=2+1, null_accepted=False),
             }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "addOneToBytes:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"addOneToBytes:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=False),
             }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "addOneToVoids:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"addOneToVoids:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_INOUT, c_array_length_in_arg=2+1, null_accepted=False),
             }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillBuffer:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillBuffer:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=False),
             }))
-    objc.registerMetaDataForSelector("OC_MetaDataTest", "fillVoids:count:",
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"fillVoids:count:",
             dict(arguments={
                 2+0: dict(type_modifier=objc._C_OUT, c_array_length_in_arg=2+1, null_accepted=False),
             }))
@@ -367,12 +368,12 @@ class TestArraysOut (TestCase):
 
         n, v = o.nullfill4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
         a = array.array('i', [0]* 4)
         v = o.fill4Tuple_(a);
-        self.assert_(a is v)
-        self.assert_(list(a), [0, -1, -8, -27])
+        self.assertIsObject(a, v)
+        self.assertEquals(list(a), [0, -1, -8, -27])
 
         a = array.array('i', [0]* 5)
         self.assertRaises(ValueError, o.fill4Tuple_, a)
@@ -392,7 +393,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, o.nullfillStringArray_, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL)
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -420,12 +421,12 @@ class TestArraysOut (TestCase):
 
         n, v = o.nullfillArray_count_(objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
         a = array.array('i', [0]* 10)
         v = o.fillArray_count_(a, 10);
-        self.assert_(a is v)
-        self.assert_(list(a), [0, 1, 4, 9, 16, 25, 36, 59, 64, 81 ])
+        self.assertIsObject(a, v)
+        self.assertEquals(list(a), [0, 1, 4, 9, 16, 25, 36, 49, 64, 81 ])
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -460,11 +461,11 @@ class TestArraysInOut (TestCase):
 
         n, v = o.nullreverse4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
         a = array.array('h', [1, 2, 3, 4])
         v = o.reverse4Tuple_(a)
-        self.assert_(v is a)
+        self.assertIsObject(v, a)
         self.assertEquals(list(a), [4,3,2,1])
 
         a = array.array('h', [1, 2, 3, 4, 5])
@@ -475,23 +476,23 @@ class TestArraysInOut (TestCase):
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         v = o.reverseStrings_(a)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         self.assertRaises(ValueError, o.reverseStrings_, (1,2))
         self.assertRaises(ValueError, o.reverseStrings_, objc.NULL)
 
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         n, v = o.nullreverseStrings_(a)
         self.assertEquals(n, 1)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         n, v = o.nullreverseStrings_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -530,11 +531,11 @@ class TestArraysInOut (TestCase):
 
         n, v = o.nullreverseArray_count_(objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
         a = array.array('f', [5.0, 7.0, 9.0, 11.0, 13.0])
         v = o.reverseArray_count_(a, 5)
-        self.assert_(a is v)
+        self.assertIsObject(a, v)
         self.assertEquals(list(a), [13.0, 11.0, 9.0, 7.0, 5.0])
 
     def testWithCountInResult(self):
@@ -567,7 +568,7 @@ class TestArraysIn (TestCase):
         self.assertRaises(ValueError, o.make4Tuple_, objc.NULL)
 
         v = o.null4Tuple_(objc.NULL)
-        self.assert_( v is None )
+        self.assertIsNone(v)
 
         a = array.array('d', [2.5, 3.5, 4.5, 5.5])
         v = o.make4Tuple_(a)
@@ -576,19 +577,19 @@ class TestArraysIn (TestCase):
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
-        v = o.makeStringArray_(("hello", "world", "there"))
+        v = o.makeStringArray_((b"hello", b"world", b"there"))
         self.assertEquals(len(v), 3)
         self.assertEquals(list(v), [u"hello", u"world", u"there"])
-        self.assert_( isinstance(v, objc.lookUpClass("NSArray")) )
-        self.assert_( isinstance(v[0], unicode) )
+        self.assertIsInstance(v, objc.lookUpClass("NSArray"))
+        self.assertIsInstance(v[0], unicode)
 
         NSObject = objc.lookUpClass('NSObject')
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = o.makeObjectArray_((p, q, r))
         self.assertEquals(len(v), 3)
-        self.assert_( v[0] is p )
-        self.assert_( v[1] is q )
-        self.assert_( v[2] is r )
+        self.assertIsObject(v[0], p)
+        self.assertIsObject(v[1], q)
+        self.assertIsObject(v[2], r)
 
 
         v = o.makeStringArray_(())
@@ -674,7 +675,7 @@ class TestArrayReturns (TestCase):
 
         v = o.makeStringArray()
         self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), ["hello", "world", "out", "there"])
+        self.assertEquals(list(v), [b"hello", b"world", b"out", b"there"])
 
         v = o.nullStringArray()
         self.assertEquals(v, objc.NULL)
@@ -775,13 +776,13 @@ class TestPrintfFormat (TestCase):
         v = o.makeArrayWithFormat_("%3d", 10)
         self.assertEquals(list(v), [ "%3d", " 10"])
 
-        v = o.makeArrayWithFormat_("%s", "foo")
+        v = o.makeArrayWithFormat_("%s", b"foo")
         self.assertEquals(list(v), [ "%s", "foo"])
 
-        v = o.makeArrayWithFormat_("hello %s", "world")
+        v = o.makeArrayWithFormat_("hello %s", b"world")
         self.assertEquals(list(v), [ "hello %s", "hello world"])
 
-        v = o.makeArrayWithFormat_(u"hello %s", "world")
+        v = o.makeArrayWithFormat_(u"hello %s", b"world")
         self.assertEquals(list(v), [ "hello %s", u"hello world"])
 
         self.assertRaises(ValueError, o.makeArrayWithFormat_, "%s")
@@ -789,13 +790,13 @@ class TestPrintfFormat (TestCase):
     def test_cformat(self):
         o = OC_MetaDataTest.new()
 
-        v = o.makeArrayWithCFormat_("%3d", 10)
+        v = o.makeArrayWithCFormat_(b"%3d", 10)
         self.assertEquals(list(v), [ "%3d", " 10"])
 
-        v = o.makeArrayWithCFormat_("hello %s", "world")
+        v = o.makeArrayWithCFormat_(b"hello %s", b"world")
         self.assertEquals(list(v), [ "hello %s", "hello world"])
 
-        v = o.makeArrayWithCFormat_("hello %s x %d", "world", 42)
+        v = o.makeArrayWithCFormat_(b"hello %s x %d", b"world", 42)
         self.assertEquals(list(v), [ "hello %s x %d", "hello world x 42"])
 
         # As we implement a format string parser we'd better make sure that
@@ -803,89 +804,89 @@ class TestPrintfFormat (TestCase):
 
         # Generic table below doesn't work for these
         for fmt, args in [
-            ( '%#+x', (99,)),
-            ( '%+#x', (99,)),
-            ( '% #x', (99,)),
+            ( b'%#+x', (99,)),
+            ( b'%+#x', (99,)),
+            ( b'% #x', (99,)),
             ]:
 
                 v = o.makeArrayWithCFormat_(fmt, *args)
-                self.assertEquals(map(unicode, list(v)), map(unicode, [ fmt, (fmt%args)[1:] ]))
+                self.assertEquals(map(unicode, list(v)), [fmt.decode('latin'), (fmt.decode('latin')%args)[1:]] )
 
         # Insert thousands seperator, the one in the C locale is ''
-        v = o.makeArrayWithCFormat_("%'d", 20000)
+        v = o.makeArrayWithCFormat_(b"%'d", 20000)
         self.assertEquals(list(v), [ "%'d", '20000'])
-        v = o.makeArrayWithCFormat_("%hhd", 20)
+        v = o.makeArrayWithCFormat_(b"%hhd", 20)
         self.assertEquals(list(v), [ "%hhd", '20'])
-        v = o.makeArrayWithCFormat_("%lld", 20)
+        v = o.makeArrayWithCFormat_(b"%lld", 20)
         self.assertEquals(list(v), [ "%lld", '20'])
-        v = o.makeArrayWithCFormat_("%lld", -20)
+        v = o.makeArrayWithCFormat_(b"%lld", -20)
         self.assertEquals(list(v), [ "%lld", '-20'])
-        v = o.makeArrayWithCFormat_("%zd", 20)
+        v = o.makeArrayWithCFormat_(b"%zd", 20)
         self.assertEquals(list(v), [ "%zd", '20'])
-        v = o.makeArrayWithCFormat_("%td", 20)
+        v = o.makeArrayWithCFormat_(b"%td", 20)
         self.assertEquals(list(v), [ "%td", '20'])
-        v = o.makeArrayWithCFormat_("%qd", 20)
+        v = o.makeArrayWithCFormat_(b"%qd", 20)
         self.assertEquals(list(v), [ "%qd", '20'])
-        v = o.makeArrayWithCFormat_("%qd", -20)
+        v = o.makeArrayWithCFormat_(b"%qd", -20)
         self.assertEquals(list(v), [ "%qd", '-20'])
-        v = o.makeArrayWithCFormat_("%D", -20)
+        v = o.makeArrayWithCFormat_(b"%D", -20)
         self.assertEquals(list(v), [ "%D", '-20'])
-        v = o.makeArrayWithCFormat_("%O", 8)
+        v = o.makeArrayWithCFormat_(b"%O", 8)
         self.assertEquals(list(v), [ "%O", '10'])
-        v = o.makeArrayWithCFormat_("%U", 8)
+        v = o.makeArrayWithCFormat_(b"%U", 8)
         self.assertEquals(list(v), [ "%U", '8'])
 
         obj = object()
-        v = o.makeArrayWithCFormat_("%p", obj)
+        v = o.makeArrayWithCFormat_(b"%p", obj)
         self.assertEquals(list(v), [ "%p", '%#x'%(id(obj),)])
 
-        v = o.makeArrayWithCFormat_("%lc%lc", 'd', 'e')
+        v = o.makeArrayWithCFormat_(b"%lc%lc", 'd', 'e')
         self.assertEquals(list(v), [ "%lc%lc", 'de'])
 
-        v = o.makeArrayWithCFormat_("%C", 'A')
+        v = o.makeArrayWithCFormat_(b"%C", 'A')
         self.assertEquals(list(v), [ "%C", 'A'])
 
-        v = o.makeArrayWithCFormat_("%C%C%c", 'A', 90, 'b')
+        v = o.makeArrayWithCFormat_(b"%C%C%c", 'A', 90, 'b')
         self.assertEquals(list(v), [ "%C%C%c", 'A%cb'%(90,)])
 
-        v = o.makeArrayWithCFormat_("%S", 'hello world')
+        v = o.makeArrayWithCFormat_(b"%S", 'hello world')
         self.assertEquals(list(v), [ "%S", 'hello world'])
-        v = o.makeArrayWithCFormat_("%S", u'hello world')
+        v = o.makeArrayWithCFormat_(b"%S", u'hello world')
         self.assertEquals(list(v), [ "%S", 'hello world'])
 
-        v = o.makeArrayWithCFormat_("%ls", 'hello world')
+        v = o.makeArrayWithCFormat_(b"%ls", 'hello world')
         self.assertEquals(list(v), [ "%ls", 'hello world'])
-        v = o.makeArrayWithCFormat_("%ls", u'hello world')
+        v = o.makeArrayWithCFormat_(b"%ls", u'hello world')
         self.assertEquals(list(v), [ "%ls", 'hello world'])
 
         TEST_TAB = [
-            ( '% #d', (99,)),
-            ( '%0#4x', (99,)),
-            ( '%#+d', (99,)),
-            ( '%+#d', (99,)),
-            ( '%o', (20,) ),
-            ( '%10o', (9,) ),
-            ( '%d %.*o', (2, 5, 7,) ),
-            ( '%*o', (5, 7,) ),
-            ( '%.*o', (5, 7,) ),
-            ( '%.*f', (3, 0.23424)),
-            ( '%*.*f', (12, 3, 0.23424)),
-            ( '%F', (-4.6,)),
-            ( '%f', (2.7,)),
-            ( '%e', (2.7,)),
-            ( '%E', (-4.6,)),
-            ( '%g', (2.7,)),
-            ( '%G', (-4.6,)),
-            ( '%.9f', (0.249,)),
-            ( '%ld', (42,)),
-            ( '%c', (42,)),
-            ( '%hd', (42,)),
-            ( '%lx', (42,)),
-            ( '%%%d%%', (99,)),
-            ( '%c', ('a',) ),
-            ( '%c%c', ('c', 'd')),
-            ( '%c%c', (90, 'd')),
-            ( '%f %f %f %f %f %f %f %f', (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
+            ( b'% #d', (99,)),
+            ( b'%0#4x', (99,)),
+            ( b'%#+d', (99,)),
+            ( b'%+#d', (99,)),
+            ( b'%o', (20,) ),
+            ( b'%10o', (9,) ),
+            ( b'%d %.*o', (2, 5, 7,) ),
+            ( b'%*o', (5, 7,) ),
+            ( b'%.*o', (5, 7,) ),
+            ( b'%.*f', (3, 0.23424)),
+            ( b'%*.*f', (12, 3, 0.23424)),
+            ( b'%F', (-4.6,)),
+            ( b'%f', (2.7,)),
+            ( b'%e', (2.7,)),
+            ( b'%E', (-4.6,)),
+            ( b'%g', (2.7,)),
+            ( b'%G', (-4.6,)),
+            ( b'%.9f', (0.249,)),
+            ( b'%ld', (42,)),
+            ( b'%c', (42,)),
+            ( b'%hd', (42,)),
+            ( b'%lx', (42,)),
+            ( b'%%%d%%', (99,)),
+            ( b'%c', ('a',) ),
+            ( b'%c%c', ('c', 'd')),
+            ( b'%c%c', (90, 'd')),
+            ( b'%f %f %f %f %f %f %f %f', (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
 
             # We don't have long double support at all
             #( '%Lg', (42.0,)),
@@ -893,7 +894,7 @@ class TestPrintfFormat (TestCase):
 
         for fmt, args in TEST_TAB:
             v = o.makeArrayWithCFormat_(fmt, *args)
-            self.assertEquals(list(v), [ fmt, fmt%args ])
+            self.assertEquals(list(v), [ fmt.decode('latin1'), fmt.decode('latin1')%args ])
 
 
 class TestVariadic (TestCase):
@@ -910,27 +911,27 @@ class TestIgnore (TestCase):
         self.assertRaises(TypeError, o.ignoreMethod)
 
     def testClassmethods(self):
-        self.failUnlessResultIsBOOL(OC_MetaDataTest.boolClassMethod)
+        self.assertResultIsBOOL(OC_MetaDataTest.boolClassMethod)
 
 class TestMetaDataAccess (TestCase):
     def testNew(self):
-        self.failUnlessResultIsRetained(OC_MetaDataTest.new)
+        self.assertResultIsRetained(OC_MetaDataTest.new)
 
     def testSuggestions(self):
         meta = OC_MetaDataTest.varargsMethodWithObjects_.__metadata__()
-        self.assert_(isinstance(meta, dict))
-        self.assert_('suggestion' in meta)
+        self.assertIsInstance(meta, dict)
+        self.assertIsIn('suggestion', meta)
         self.assertEquals(meta['suggestion'], "Variadic functions/methods are not supported")
 
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
-        self.assert_(isinstance(meta, dict))
-        self.assert_('suggestion' in meta)
+        self.assertIsInstance(meta, dict)
+        self.assertIsIn('suggestion', meta)
         self.assertEquals(meta['suggestion'], "please ignore me")
 
     def testPrintfFormat(self): 
         meta = OC_MetaDataTest.makeArrayWithFormat_.__metadata__()
         self.assertEquals(meta['variadic'], True)
-        self.assert_('printf_format' not in meta['arguments'][0])
+        self.assertIsNotIn('printf_format', meta['arguments'][0])
         self.assertEquals(meta['arguments'][2]['printf_format'], True)
 
     def testVariadic(self):
@@ -955,8 +956,8 @@ class TestMetaDataAccess (TestCase):
 
     def testAllowNull(self):
         meta = OC_MetaDataTest.make4Tuple_.__metadata__()
-        self.assert_( 'null_accepted' not in meta['retval'] )
-        self.assert_( 'null_accepted' not in meta['arguments'][0] )
+        self.assertIsNotIn('null_accepted', meta['retval'])
+        self.assertIsNotIn( 'null_accepted', meta['arguments'][0])
 
         meta = OC_MetaDataTest.make4Tuple_.__metadata__()
         self.assertEquals(meta['arguments'][2]['null_accepted'], False)
@@ -978,6 +979,14 @@ class TestMetaDataAccess (TestCase):
         meta = OC_MetaDataTest.pyobjc_instanceMethods.init.__metadata__()
         self.assertEquals(meta['classmethod'], False)
 
+if sys.version_info[0] == 3:
+    def buffer_as_bytes(v):
+        if isinstance(v, bytes):
+            return v
+        return bytes(v)
+else:
+    def buffer_as_bytes(v):
+        return str(buffer(v))
 
 class TestBuffers (TestCase):
     # Some tests that check if buffer APIs get sane treatment
@@ -985,110 +994,135 @@ class TestBuffers (TestCase):
     def testInChars(self):
         o = OC_MetaDataTest.alloc().init()
 
-        v = o.makeDataForBytes_count_("hello world", len("hello world"))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        v = o.makeDataForBytes_count_(b"hello world", len(b"hello world"))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
-        self.assertEquals(v.length(), len("hello world"))
-        self.assertEquals(str(buffer(v)), "hello world")
+        self.assertEquals(v.length(), len(b"hello world"))
+        self.assertEquals(buffer_as_bytes(v), b"hello world")
 
-        v = o.makeDataForBytes_count_("hello\0world", len("hello\0world"))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        v = o.makeDataForBytes_count_(b"hello\0world", len(b"hello\0world"))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
-        self.assertEquals(v.length(), len("hello\0world"))
-        self.assertEquals(str(buffer(v)), "hello\0world")
+        self.assertEquals(v.length(), len(b"hello\0world"))
+        self.assertEquals(buffer_as_bytes(v), b"hello\0world")
 
-        a = array.array('c', 'foobar monday')
+        a = array.array('b', b'foobar monday')
         v = o.makeDataForBytes_count_(a, len(a))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
         self.assertEquals(v.length(), len(a))
-        self.assertEquals(str(buffer(v)), str(buffer(a)))
+        self.assertEquals(buffer_as_bytes(v), buffer_as_bytes(a))
 
     def testInVoids(self):
         o = OC_MetaDataTest.alloc().init()
 
-        v = o.makeDataForBytes_count_("hello world", len("hello world"))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        v = o.makeDataForBytes_count_(b"hello world", len(b"hello world"))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
-        self.assertEquals(v.length(), len("hello world"))
-        self.assertEquals(str(buffer(v)), "hello world")
+        self.assertEquals(v.length(), len(b"hello world"))
+        self.assertEquals(buffer_as_bytes(v), b"hello world")
 
-        v = o.makeDataForBytes_count_("hello\0world", len("hello\0world"))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        v = o.makeDataForBytes_count_(b"hello\0world", len(b"hello\0world"))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
-        self.assertEquals(v.length(), len("hello\0world"))
-        self.assertEquals(str(buffer(v)), "hello\0world")
+        self.assertEquals(v.length(), len(b"hello\0world"))
+        self.assertEquals(buffer_as_bytes(v), b"hello\0world")
 
-        a = array.array('c', 'foobar monday')
+        a = array.array('b', b'foobar monday')
         v = o.makeDataForBytes_count_(a, len(a))
-        self.assert_(isinstance(v, objc.lookUpClass("NSData")))
+        self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
         self.assertEquals(v.length(), len(a))
-        self.assertEquals(str(buffer(v)), str(buffer(a)))
+        self.assertEquals(buffer_as_bytes(v), buffer_as_bytes(a))
 
     def testInOutChars(self):
         o = OC_MetaDataTest.alloc().init()
         
-        input = "hello " + "world"
+        input = b"hello " + b"world"
         v = o.addOneToBytes_count_(input, len(input))
-        self.assert_(isinstance(v, str))
+        self.assertIsInstance(v, bytes)
 
-        self.assertEquals(input, "hello world")
-        self.assertEquals(input[0:5], "hello")
-        self.assertEquals(
+        self.assertEquals(input, b"hello world")
+        self.assertEquals(input[0:5], b"hello")
+        if sys.version_info[0] == 2:
+            self.assertEquals(
                 [ ord(x)+1 for x in input ],
                 [ ord(x) for x in v ])
+        else:
+            self.assertEquals(
+                [ x+1 for x in input ],
+                [ x for x in v ])
 
-        input = array.array('c', "hello\0world")
+        input = array.array('b', b"hello\0world")
         v = o.addOneToBytes_count_(input, len(input))
-        self.assert_(v is input)
-        self.assertNotEquals(input[0:5], "hello")
-        self.assertEquals(
+        self.assertIsObject(v, input)
+        self.assertNotEquals(input[0:5], b"hello")
+        if sys.version_info[0] == 2:
+            self.assertEquals(
                 [ ord(x)+1 for x in "hello\0world" ],
                 [ ord(x) for x in v ])
+        else:
+            self.assertEquals(
+                [ x+1 for x in b"hello\0world" ],
+                [ x for x in v ])
+
 
     def testInOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
         
-        input = "hello " + "world"
+        input = b"hello " + b"world"
         v = o.addOneToVoids_count_(input, len(input))
-        self.assert_(isinstance(v, str))
+        self.assertIsInstance(v, type(b""))
 
-        self.assertEquals(input, "hello world")
-        self.assertEquals(input[0:5], "hello")
-        self.assertEquals(
+        self.assertEquals(input, b"hello world")
+        self.assertEquals(input[0:5], b"hello")
+
+        if sys.version_info[0] == 2:
+            self.assertEquals(
                 [ ord(x)+2 for x in input ],
                 [ ord(x) for x in v ])
+        else:
+            self.assertEquals(
+                [ x+2 for x in input ],
+                [ x for x in v ])
 
-        input = array.array('c', "hello\0world")
+        input = array.array('b', b"hello\0world")
         v = o.addOneToVoids_count_(input, len(input))
-        self.assert_(v is input)
-        self.assertNotEquals(input[0:5], "hello")
-        self.assertEquals(
-                [ ord(x)+2 for x in "hello\0world" ],
+        self.assertIsObject(v, input)
+        self.assertNotEquals(input[0:5], b"hello")
+        if sys.version_info[0] == 2:
+            self.assertEquals(
+                [ ord(x)+2 for x in b"hello\0world" ],
                 [ ord(x) for x in v ])
+        else:
+            self.assertEquals(
+                [ x+2 for x in b"hello\0world" ],
+                [ x for x in v ])
 
     def testOutChars(self):
         o = OC_MetaDataTest.alloc().init()
 
         v = o.fillBuffer_count_(None, 44);
-        self.assertEquals(v, '\xfe'*44);
+        self.assertEquals(v, b'\xfe'*44);
 
-        a = array.array('c', '0' * 44)
+        a = array.array('b', b'0' * 44)
         v = o.fillBuffer_count_(a, 44);
-        self.assertEquals(str(buffer(v)), '\xfe'*44);
-        self.assert_(v is a)
+        self.assertEquals(buffer_as_bytes(v), b'\xfe'*44);
+        self.assertIsObject(v, a)
 
     def testOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
 
         v = o.fillVoids_count_(None, 44);
-        self.assertEquals(v, '\xab'*44);
+        self.assertEquals(v, b'\xab'*44);
 
-        a = array.array('c', '0' * 44)
+        if sys.version_info[0] == 2:
+            a = array.array('c', '0' * 44)
+        else:
+            a = array.array('b', (0,) * 44)
         v = o.fillVoids_count_(a, 44);
-        self.assertEquals(str(buffer(v)), '\xab'*44);
-        self.assert_(v is a)
+        self.assertEquals(buffer_as_bytes(v), b'\xab'*44);
+        self.assertIsObject(v, a)
 
 class TestVariableLengthValue (TestCase):
 
@@ -1096,12 +1130,14 @@ class TestVariableLengthValue (TestCase):
         o = OC_MetaDataTest.alloc().init()
 
         v = o.unknownLengthArray()
-        self.assert_(isinstance(v, objc.varlist))
+        self.assertIsInstance(v, objc.varlist)
 
         self.assertEquals(v[0], 1)
         self.assertEquals(v[1], 3)
         self.assertEquals(v[5], 13)
 
+        #self.fail((type(v), v))
+        #self.fail((v[0:2], type(v[0:2])))
         self.assertEquals(v[0:2], (1,3))
 
         self.assertEquals(v.as_tuple(5), (1, 3, 5, 7, 11))
@@ -1109,7 +1145,7 @@ class TestVariableLengthValue (TestCase):
         self.assertEquals(v.as_tuple(8), (1, 3, 5, 7, 11, 13, 17, 19))
 
         v = o.unknownLengthMutable()
-        self.assert_(isinstance(v, objc.varlist))
+        self.assertIsInstance(v, objc.varlist)
 
         v[1] = 42
         self.assertEquals(v[1], 42)

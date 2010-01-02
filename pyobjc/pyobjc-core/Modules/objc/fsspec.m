@@ -41,7 +41,7 @@ static PyObject* fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__u
 		PyErr_SetString(PyExc_TypeError, "self is not a FSSpec");
 	}
 
-	return PyString_FromStringAndSize(
+	return PyBytes_FromStringAndSize(
 			(char*)&((PyObjC_FSSpecObject*)ref)->ref,
 			sizeof(FSSpec));
 }
@@ -84,8 +84,7 @@ static PyMethodDef fsspec_methods[] = {
 
 
 PyTypeObject PyObjC_FSSpecType = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.FSSpec",				/* tp_name */
 	sizeof(PyObjC_FSSpecObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */

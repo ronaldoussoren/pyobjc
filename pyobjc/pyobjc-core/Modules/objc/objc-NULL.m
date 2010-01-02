@@ -8,12 +8,11 @@ PyObject* PyObjC_NULL = NULL;
 static PyObject*
 obj_repr(PyObject* self __attribute__((__unused__)))
 {
-	return PyString_FromString("objc.NULL");
+	return PyText_FromString("objc.NULL");
 }
 
 PyTypeObject PyObjC_NULL_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.NULL_type",			/* tp_name */
 	sizeof(PyObject),			/* tp_basicsize */
 	0,					/* tp_itemsize */

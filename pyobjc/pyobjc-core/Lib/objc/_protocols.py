@@ -1,4 +1,4 @@
-import _objc
+from objc import _objc
 
 __all__ = ['protocolNamed', 'ProtocolError']
 

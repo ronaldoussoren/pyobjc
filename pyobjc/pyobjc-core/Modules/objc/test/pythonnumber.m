@@ -138,20 +138,63 @@
 @end
 
 
-static PyMethodDef NULL_methods[] = {
+static PyMethodDef mod_methods[] = {
 	        { 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"pythonnumber",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_pythonnumber(void);
+
+PyObject*
+PyInit_pythonnumber(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initpythonnumber(void);
-void initpythonnumber(void)
+
+void
+initpythonnumber(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("pythonnumber", NULL_methods,
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("pythonnumber", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "OC_TestNumber",
-	    PyObjCClass_New([OC_TestNumber class]));
+	if (PyModule_AddObject(m, "OC_TestNumber",
+	    PyObjCClass_New([OC_TestNumber class])) < 0){
+		INITERROR();
+	}
+
+	INITDONE();
 }

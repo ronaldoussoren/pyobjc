@@ -41,7 +41,7 @@ static PyObject* fsref_as_bytes(PyObject* ref, void* closure __attribute__((__un
 		PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
 	}
 
-	return PyString_FromStringAndSize(
+	return PyBytes_FromStringAndSize(
 			(char*)&((PyObjC_FSRefObject*)ref)->ref,
 			sizeof(FSRef));
 }
@@ -69,7 +69,11 @@ static PyObject* fsref_as_path(PyObject* ref)
 	rc = FSRefMakePath( &((PyObjC_FSRefObject*)ref)->ref,
 			buffer, sizeof(buffer));
 	if (rc != 0) {
+#if PY_VERSION_HEX < 0x03000000
 		PyMac_Error(rc);
+#else
+		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
+#endif
 		return NULL;
 	}
 
@@ -85,20 +89,26 @@ static PyObject* fsref_from_path(PyObject* path)
 	OSStatus rc;
 
 	if (PyUnicode_Check(path)) {
-		value = PyUnicode_AsUTF8String(path);
+		value = PyUnicode_AsEncodedString(path, NULL, NULL);
+#if PY_VERSION_HEX < 0x03000000
 	} else if(PyString_Check(path)) {
 		value = path; Py_INCREF(path);
+#endif
 	} else {
-		PyErr_SetString(PyExc_TypeError, "Expecting str or unicode");
+		PyErr_SetString(PyExc_TypeError, "Expecting string");
 		return NULL;
 	}
 
 	if (value == NULL) return NULL;
 
-	rc = FSPathMakeRef((UInt8*)PyString_AsString(value), &result, &isDirectory);
+	rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
 	Py_DECREF(value);
 	if (rc != 0) {
+#if PY_VERSION_HEX < 0x03000000
 		PyMac_Error(rc);
+#else
+		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
+#endif
 		return NULL;
 	}
 
@@ -145,8 +155,7 @@ static PyMethodDef fsref_methods[] = {
 
 
 PyTypeObject PyObjC_FSRefType = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.FSRef",				/* tp_name */
 	sizeof(PyObjC_FSRefObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */

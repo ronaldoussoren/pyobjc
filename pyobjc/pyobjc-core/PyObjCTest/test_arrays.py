@@ -41,7 +41,7 @@ class TestArrayCalling (TestCase):
         a = array.array('i', [9, 10, 11, 12])
         v, r = o.arrayOf4IntsInOut_(a)
         self.assertEquals(v, [9, 10, 11, 12])
-        self.assert_(r is a)
+        self.assertIsObject(r, a)
         self.assertEquals(a[0], 9 + 42)
         self.assertEquals(a[1], 10 + 42)
         self.assertEquals(a[2], 11 + 42)
@@ -55,7 +55,7 @@ class TestArrayCalling (TestCase):
 
         a = array.array('i', [9, 10, 11, 12])
         v = o.arrayOf4IntsOut_(a)
-        self.assert_(a is v)
+        self.assertIsObject(a, v)
         self.assertEquals(a[0], 99)
         self.assertEquals(a[1], 100)
         self.assertEquals(a[2], 102)
@@ -91,7 +91,7 @@ class TestArrayCalling (TestCase):
         a = array.array('i', [9, 10, 11, 12, 14, 15, 16, 17])
         v, r = o.arrayOf4StructsInOut_(a)
         self.assertEquals(v, [(9, 10), (11, 12), (14, 15), (16, 17)])
-        self.assert_(r is a)
+        self.assertIsObject(r, a)
         self.assertEquals(a[0], 9 + 42)
         self.assertEquals(a[1], 10 - 42)
         self.assertEquals(a[2], 11 + 42)
@@ -109,7 +109,7 @@ class TestArrayCalling (TestCase):
 
         a = array.array('i', [0]*8)
         v = o.arrayOf4StructsOut_(a)
-        self.assert_(a is v)
+        self.assertIsObject(a, v)
         l = []
         for i in range(4):
             l.append(1 + i * i)
@@ -126,10 +126,10 @@ class TestArrayCalling (TestCase):
 StructArrayDelegate = objc.informal_protocol(
     "ArrayDelegate",
     [
-        objc.selector(None, "arrayOf4Ints:", signature="@@:[4i]", isRequired=False),
-        objc.selector(None, "arrayOf4IntsOut:", signature="v@:o[4i]", isRequired=False),
-        objc.selector(None, "arrayOf4Structs:", signature="@@:[4{FooStruct=ii}]", isRequired=False),
-        objc.selector(None, "arrayOf4StructsOut:", signature="v@:o[4{FooStruct=ii}]", isRequired=False),
+        objc.selector(None, b"arrayOf4Ints:", signature=b"@@:[4i]", isRequired=0),
+        objc.selector(None, b"arrayOf4IntsOut:", signature=b"v@:o[4i]", isRequired=False),
+        objc.selector(None, b"arrayOf4Structs:", signature=b"@@:[4{FooStruct=ii}]", isRequired=False),
+        objc.selector(None, b"arrayOf4StructsOut:", signature=b"v@:o[4{FooStruct=ii}]", isRequired=False),
     ]
 )
 

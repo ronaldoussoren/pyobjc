@@ -40,51 +40,51 @@ import struct
 
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
-        ( "passInOutChar:", { 2: dict(type_modifier='N')}),
-        ( "passOutChar:", { 2: dict(type_modifier='o')}),
-        ( "passInChar:", { 2: dict(type_modifier='n')}),
-        ( "passInOutUChar:", { 2: dict(type_modifier='N', type='^C')}),
-        ( "passOutUChar:", { 2: dict(type_modifier='o', type='^C')}),
-        ( "passInUChar:", { 2: dict(type_modifier='n', type='^C')}),
-        ( "passInOutShort:", { 2: dict(type_modifier='N')}),
-        ( "passOutShort:", { 2: dict(type_modifier='o')}),
-        ( "passInShort:", { 2: dict(type_modifier='n')}),
-        ( "passInOutUShort:", { 2: dict(type_modifier='N')}),
-        ( "passOutUShort:", { 2: dict(type_modifier='o')}),
-        ( "passInUShort:", { 2: dict(type_modifier='n')}),
-        ( "passInOutInt:", { 2: dict(type_modifier='N')}),
-        ( "passOutInt:", { 2: dict(type_modifier='o')}),
-        ( "passInInt:", { 2: dict(type_modifier='n')}),
-        ( "passInOutUInt:", { 2: dict(type_modifier='N')}),
-        ( "passOutUInt:", { 2: dict(type_modifier='o')}),
-        ( "passInUInt:", { 2: dict(type_modifier='n')}),
-        ( "passInOutLong:", { 2: dict(type_modifier='N')}),
-        ( "passOutLong:", { 2: dict(type_modifier='o')}),
-        ( "passInLong:", { 2: dict(type_modifier='n')}),
-        ( "passInOutULong:", { 2: dict(type_modifier='N')}),
-        ( "passOutULong:", { 2: dict(type_modifier='o')}),
-        ( "passInULong:", { 2: dict(type_modifier='n')}),
-        ( "passInOutLongLong:", { 2: dict(type_modifier='N')}),
-        ( "passOutLongLong:", { 2: dict(type_modifier='o')}),
-        ( "passInLongLong:", { 2: dict(type_modifier='n')}),
-        ( "passInOutULongLong:", { 2: dict(type_modifier='N')}),
-        ( "passOutULongLong:", { 2: dict(type_modifier='o')}),
-        ( "passInULongLong:", { 2: dict(type_modifier='n')}),
-        ( "passInOutFloat:", { 2: dict(type_modifier='N')}),
-        ( "passOutFloat:", { 2: dict(type_modifier='o')}),
-        ( "passInFloat:", { 2: dict(type_modifier='n')}),
-        ( "passInOutDouble:", { 2: dict(type_modifier='N')}),
-        ( "passOutDouble:", { 2: dict(type_modifier='o')}),
-        ( "passInDouble:", { 2: dict(type_modifier='n')}),
-        ( "passInOutCharp:", { 2: dict(type_modifier='N')}),
-        ( "passOutCharp:", { 2: dict(type_modifier='o')}),
-        ( "passInCharp:", { 2: dict(type_modifier='n')}),
-        ( "passInOutID:", { 2: dict(type_modifier='N')}),
-        ( "passOutID:", { 2: dict(type_modifier='o')}),
-        ( "passInID:", { 2: dict(type_modifier='n')}),
+        ( b"passInOutChar:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutChar:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInChar:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutUChar:", { 2: dict(type_modifier=b'N', type='^C')}),
+        ( b"passOutUChar:", { 2: dict(type_modifier=b'o', type='^C')}),
+        ( b"passInUChar:", { 2: dict(type_modifier=b'n', type='^C')}),
+        ( b"passInOutShort:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutShort:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInShort:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutUShort:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutUShort:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInUShort:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutInt:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutInt:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInInt:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutUInt:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutUInt:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInUInt:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutLong:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutLong:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInLong:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutULong:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutULong:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInULong:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutLongLong:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutLongLong:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInLongLong:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutULongLong:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutULongLong:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInULongLong:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutFloat:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutFloat:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInFloat:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutDouble:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutDouble:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInDouble:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutCharp:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutCharp:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInCharp:", { 2: dict(type_modifier=b'n')}),
+        ( b"passInOutID:", { 2: dict(type_modifier=b'N')}),
+        ( b"passOutID:", { 2: dict(type_modifier=b'o')}),
+        ( b"passInID:", { 2: dict(type_modifier=b'n')}),
     ]:
 
-    objc.registerMetaDataForSelector("OC_TestClass1", method,
+    objc.registerMetaDataForSelector(b"OC_TestClass1", method,
                     dict(arguments=argmeta))
 
 
@@ -188,15 +188,15 @@ class PyOCTestSimpleReturns(TestCase):
 
     def testClsCharp(self):
         OC_TestClass1.clsReset()
-        self.assertEquals(OC_TestClass1.charpClsFunc(), 'hello')
-        self.assertEquals(OC_TestClass1.charpClsFunc(), 'world')
-        self.assertEquals(OC_TestClass1.charpClsFunc(), 'foobar')
+        self.assertEquals(OC_TestClass1.charpClsFunc(), b'hello')
+        self.assertEquals(OC_TestClass1.charpClsFunc(), b'world')
+        self.assertEquals(OC_TestClass1.charpClsFunc(), b'foobar')
 
     def testClsID(self):
         OC_TestClass1.clsReset()
         self.assertEquals(len(OC_TestClass1.idClsFunc()), 0)
         self.assertEquals(type(OC_TestClass1.idClsFunc()).__name__, 'NSHost')
-        self.assert_(str(OC_TestClass1.idClsFunc()) in ('{}', '{\n}'))
+        self.assertIsIn(str(OC_TestClass1.idClsFunc()), ('{}', '{\n}'))
         self.assertEquals(OC_TestClass1.idClsFunc(), None)
 
     # testCls* ends here
@@ -300,16 +300,16 @@ class PyOCTestSimpleReturns(TestCase):
     def testCharp(self):
         obj = OC_TestClass1.new()
         obj.reset()
-        self.assertEquals(obj.charpFunc(), 'hello')
-        self.assertEquals(obj.charpFunc(), 'world')
-        self.assertEquals(obj.charpFunc(), 'foobar')
+        self.assertEquals(obj.charpFunc(), b'hello')
+        self.assertEquals(obj.charpFunc(), b'world')
+        self.assertEquals(obj.charpFunc(), b'foobar')
 
     def testID(self):
         obj = OC_TestClass1.new()
         obj.reset()
         self.assertEquals(len(obj.idFunc()), 0)
         self.assertEquals(type(obj.idFunc()).__name__, 'NSHost')
-        self.assert_(str(obj.idFunc()) in ('{}', '{\n}'))
+        self.assertIsIn(str(obj.idFunc()), ('{}', '{\n}'))
         self.assertEquals(obj.idFunc(), None)
 
     def testStruct1(self):
@@ -435,8 +435,8 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEquals(self.obj.charArg_(10), (5))
         self.assertEquals(self.obj.charArg_(10L), (5))
         self.assertEquals(self.obj.charArg_(1 << 6), (1 << 5))
-        self.assertEquals(self.obj.charArg_('\x00'), 0x00)
-        self.assertEquals(self.obj.charArg_('\x10'), ord('\x10')/2)
+        self.assertEquals(self.obj.charArg_(b'\x00'), 0x00)
+        self.assertEquals(self.obj.charArg_(b'\x10'), int(ord(b'\x10')/2))
 
         # TODO: Out of range arguments
 
@@ -445,8 +445,8 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEquals(self.obj.ucharArg_(10), 5)
         self.assertEquals(self.obj.ucharArg_(10L), 5)
         self.assertEquals(self.obj.ucharArg_(1 << 7), (1 << 6))
-        self.assertEquals(self.obj.ucharArg_('\x00'), 0)
-        self.assertEquals(self.obj.ucharArg_('\x10'), ord('\x10')/2)
+        self.assertEquals(self.obj.ucharArg_(b'\x00'), 0)
+        self.assertEquals(self.obj.ucharArg_(b'\x10'), int(ord(b'\x10')/2))
 
         self.assertEquals(self.obj.ucharArg_(10.0), 5)
 
@@ -459,7 +459,7 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertRaises(ValueError, self.obj.ucharArg_, 256L)
 
     def testCharp(self):
-        self.assertEquals(self.obj.charpArg_("hello world"), 'dlrow olleh')
+        self.assertEquals(self.obj.charpArg_(b"hello world"), b'dlrow olleh')
 
         self.assertRaises(ValueError, self.obj.charpArg_, 256L)
         self.assertRaises(ValueError, self.obj.charpArg_, u"hello world")
@@ -482,7 +482,7 @@ class PyOCTestSimpleArguments(TestCase):
         o = c.scannerWithString_(u"hello world")
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
-        self.assert_(s[0] is o)
+        self.assertIsObject(s[0], o)
 
     def testStruct1(self):
         self.assertEquals(self.obj.dummyArg_((-1, 1)), (-2, 2))
@@ -507,7 +507,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.obj = OC_TestClass1.new()
 
     def testCharIn(self):
-        self.assertEquals(self.obj.passInChar_('\x10'), 0x19)
+        self.assertEquals(self.obj.passInChar_(b'\x10'), 0x19)
 
     def testCharOut(self):
         self.obj.reset()
@@ -516,7 +516,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEquals(self.obj.passOutChar_(None), 127)
 
     def testCharInOut(self):
-        self.assertEquals(self.obj.passInOutChar_('\x10'), 0x3a)
+        self.assertEquals(self.obj.passInOutChar_(b'\x10'), 0x3a)
 
     def testUCharIn(self):
         self.assertEquals(self.obj.passInUChar_(10), 19)
@@ -683,18 +683,18 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEquals(self.obj.passInOutDouble_(0.01), 0.42)
 
     def testCharpIn(self):
-        self.assertEquals(self.obj.passInCharp_("hello"), "hheelllloo")
-        self.assertEquals(self.obj.passInCharp_("abcde"), "aabbccddee")
+        self.assertEquals(self.obj.passInCharp_(b"hello"), b"hheelllloo")
+        self.assertEquals(self.obj.passInCharp_(b"abcde"), b"aabbccddee")
 
     def testCharpOut(self):
         self.obj.reset()
-        self.assertEquals(self.obj.passOutCharp_(None), "hello")
-        self.assertEquals(self.obj.passOutCharp_(None), "world")
-        self.assertEquals(self.obj.passOutCharp_(None), "foobar")
+        self.assertEquals(self.obj.passOutCharp_(None), b"hello")
+        self.assertEquals(self.obj.passOutCharp_(None), b"world")
+        self.assertEquals(self.obj.passOutCharp_(None), b"foobar")
 
     def testCharpInOut(self):
-        self.assertEquals(self.obj.passInOutCharp_("hello"), "hheelllloo")
-        self.assertEquals(self.obj.passInOutCharp_("abcdef"), "aabbccddeeff")
+        self.assertEquals(self.obj.passInOutCharp_(b"hello"), b"hheelllloo")
+        self.assertEquals(self.obj.passInOutCharp_(b"abcdef"), b"aabbccddeeff")
 
     # TODO: structs (including Objective-C part)
 
@@ -720,8 +720,8 @@ class PyOCTestByReferenceArguments(TestCase):
 # - 64-bit long long
 # Values are: max-negative, -42, 0, 42, max-positive, out-of-range, bad-type, None
 #
-CHAR_NUMBERS=[ -128, -42, 0, 42, 127, 'a', 128, "hello", None ]
-UCHAR_NUMBERS=[ 0, 42, 255, 'a', 256, "hello", None ]
+CHAR_NUMBERS=[ -128, -42, 0, 42, 127, b'a', 128, "hello", None ]
+UCHAR_NUMBERS=[ 0, 42, 255, b'a', 256, "hello", None ]
 SHORT_NUMBERS=[ -32768, -42, 0, 32767, 32768, "hello", None ]
 USHORT_NUMBERS=[ 0, 42, 65535, 65536, "hello", None ]
 INT_NUMBERS=[ -2147483648, -42, 0, 2147483647, 2147483648, "hello", None ]
@@ -914,7 +914,7 @@ class OCPyTestSimpleCalls(TestCase):
         self.ocobj.reset()
 
         for o in CHAR_NUMBERS[:-3]:
-            if isinstance(o, str):
+            if isinstance(o, (bytes, str)):
                 o = ord(o)
             self.assertEquals(self.obj.callInstanceCharFuncOf_(self.ocobj), o)
 
@@ -927,7 +927,7 @@ class OCPyTestSimpleCalls(TestCase):
         self.ocobj.reset()
 
         for o in CHAR_NUMBERS[:-3]:
-            if isinstance(o, str):
+            if isinstance(o, (str, bytes)):
                 o = ord(o)
             self.assertEquals(self.obj.invokeInstanceCharFuncOf_(self.ocobj), o)
 
@@ -940,7 +940,7 @@ class OCPyTestSimpleCalls(TestCase):
         self.ocobj.reset()
 
         for o in UCHAR_NUMBERS[:-3]:
-            if isinstance(o, str):
+            if isinstance(o, (str, bytes)):
                 o = ord(o)
             self.assertEquals(self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj), o)
 
@@ -953,7 +953,7 @@ class OCPyTestSimpleCalls(TestCase):
         self.ocobj.reset()
 
         for o in UCHAR_NUMBERS[:-3]:
-            if isinstance(o, str):
+            if isinstance(o, (bytes, str)):
                 o = ord(o)
             self.assertEquals(self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj), o)
 

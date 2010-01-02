@@ -19,7 +19,7 @@ typedef struct
 
 extern PyTypeObject PyObjCPointer_Type;
 
-#define PyObjCPointer_Check(o) ((o)->ob_type == &PyObjCPointer_Type)
+#define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)
 
 extern PyObjCPointer *PyObjCPointer_New(void *ptr, const char *type);
 #define PyObjCPointer_Ptr(obj) (((PyObjCPointer*)(obj))->ptr)

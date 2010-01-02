@@ -163,7 +163,7 @@ static PyObject*
 imp_repr(PyObject* _self)
 {
 	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-	return PyString_FromFormat("<IMP %s at %p for %p>",
+	return PyText_FromFormat("<IMP %s at %p for %p>",
 		sel_getName(self->selector),
 		self, self->imp);
 }
@@ -182,7 +182,7 @@ imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
 	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
 	if (self->signature) {
-		return PyString_FromString(self->signature->signature);
+		return PyBytes_FromString(self->signature->signature);
 	} else {
 		Py_INCREF(Py_None);
 		return Py_None;
@@ -194,7 +194,7 @@ static PyObject*
 imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 {
 	PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-	return PyString_FromString(sel_getName(self->selector));
+	return PyBytes_FromString(sel_getName(self->selector));
 }
 
 PyDoc_STRVAR(imp_class_method_doc, 
@@ -298,8 +298,7 @@ static PyMethodDef imp_methods[] = {
 
 
 PyTypeObject PyObjCIMP_Type = {
-	PyObject_HEAD_INIT(NULL)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(NULL, 0)
 	"objc.IMP",				/* tp_name */
 	sizeof(PyObjCIMPObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -375,7 +374,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 	if (!PyObjCClass_Check(self)) {
 		PyErr_Format(PyExc_TypeError, 
 			"Expecting instance of 'objc.objc_class' as 'self', "
-			"got '%s'", self->ob_type->tp_name);
+			"got '%s'", Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 

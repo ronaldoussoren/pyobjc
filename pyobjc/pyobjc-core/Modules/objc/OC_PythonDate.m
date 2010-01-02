@@ -17,7 +17,7 @@ static PyObject* datetime_types = NULL;
 		if (datetime_types == NULL) {
 			return nil;
 		}
-		PyObject* name = PyString_FromString("datetime");
+		PyObject* name = PyText_FromString("datetime");
 		if (name == NULL) {
 			return nil;
 		}
@@ -42,7 +42,7 @@ static PyObject* datetime_types = NULL;
 	}
 
 
-	if (PySequence_Contains(datetime_types, (PyObject*)(object->ob_type))) {
+	if (PySequence_Contains(datetime_types, (PyObject*)(Py_TYPE(object)))) {
 		return [[OC_PythonDate alloc] initWithPythonObject:object];
 	}
 	return nil;
@@ -184,8 +184,7 @@ static PyObject* datetime_types = NULL;
 			}
 
 
-			oc_value = [NSDate dateWithString:
-			    [NSString stringWithCString: PyString_AsString(v)]];
+			oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
 			[oc_value retain];
 			Py_DECREF(v);
 
@@ -218,8 +217,7 @@ static PyObject* datetime_types = NULL;
 					/* Raise ObjC exception */
 				}
 
-				oc_value = [NSDate dateWithString:
-				    [NSString stringWithCString: PyString_AsString(v)]];
+				oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
 				[oc_value retain];
 				Py_DECREF(v);
 			}

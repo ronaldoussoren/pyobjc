@@ -26,11 +26,11 @@ class TestCoreFoundation (TestCase):
     def testTollFree(self):
         obj = OC_TestCoreFoundation.today()
 
-        self.assert_( CFDateRef, objc.lookUpClass("NSDate") ) 
-        self.assert_( isinstance(obj, CFDateRef) )
+        self.assertIsObject(CFDateRef, objc.lookUpClass("NSDate"))
+        self.assertIsInstance(obj, CFDateRef)
 
         v = OC_TestCoreFoundation.formatDate_(obj)
-        self.assert_( isinstance(v, unicode) )
+        self.assertIsInstance(v, unicode)
 
         formatter = objc.lookUpClass("NSDateFormatter").new()
         formatter.setDateStyle_(OC_TestCoreFoundation.shortStyle())
@@ -46,12 +46,12 @@ class TestCoreFoundation (TestCase):
 
         obj = OC_TestCoreFoundation.createUUID()
 
-        self.assert_( isinstance(obj, CFUUIDRef) )
+        self.assertIsInstance(obj, CFUUIDRef)
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
-        self.assert_( isinstance(formatted, unicode) )
-        self.assert_( re.match(
+        self.assertIsInstance(formatted, unicode)
+        self.assertTrue( re.match(
             r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}', 
             formatted) )
 
@@ -62,12 +62,12 @@ class TestCoreFoundation (TestCase):
         # we correctly return an object of the right type in that case as well.
         obj = OC_TestCoreFoundation.anotherUUID()
 
-        self.assert_( isinstance(obj, CFUUIDRef) )
+        self.assertIsInstance(obj, CFUUIDRef)
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
-        self.assert_( isinstance(formatted, unicode) )
-        self.assert_( re.match(
+        self.assertIsInstance(formatted, unicode)
+        self.assertTrue( re.match(
             r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}', 
             formatted) )
 
@@ -83,13 +83,13 @@ class TestCoreFoundation (TestCase):
         def myMethod(self, arg):
             return '%s %s'%(self.__class__.__name__, arg)
 
-        self.assert_( not hasattr( CFUUIDRef, 'myMethod') )
+        self.assertNotHasAttr(CFUUIDRef, 'myMethod')
 
         CFUUIDRef.myMethod = myMethod
 
-        self.assert_( hasattr( CFUUIDRef, 'myMethod') )
-        self.assert_( not hasattr( CFDateRef, 'myMethod'))
-        self.assert_( not hasattr( cftype, 'myMethod'))
+        self.assertHasAttr(CFUUIDRef, 'myMethod')
+        self.assertNotHasAttr(CFDateRef, 'myMethod')
+        self.assertNotHasAttr(cftype, 'myMethod')
 
 if __name__ == "__main__":
     main()

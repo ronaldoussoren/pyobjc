@@ -1,5 +1,5 @@
 import sys, os, string, glob
-from os.path import basename, dirname, splitext, join, expanduser, walk
+from os.path import basename, dirname, splitext, join, expanduser
 from fnmatch import fnmatch
 import unittest
 import dejagnu
@@ -15,12 +15,10 @@ def recursiveGlob(root, pathPattern):
     """
     result = []
 
-    def walker(data, dirname, files):
-        for fn in files:
-            if fnmatch(fn, data[0]):
-                data[1].append(join(dirname, fn))
-
-    walk(root, walker, (pathPattern, result))
+    for rootpath, dirnames, filenames in os.walk(root):
+        for fn in filenames:
+            if fnmatch(fn, pathPattern):
+                result.append(join(rootpath, fn))
     return result
         
 
@@ -56,17 +54,25 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
 
 def makeTestSuite():
     topdir = dirname(dirname(__file__))
-    deja_suite = dejagnu.testSuiteForDirectory(join(topdir,
+    if sys.version_info[0] == 3:
+        del sys.path[1]
+        deja_topdir = dirname(dirname(topdir))
+    else:
+        deja_topdir = topdir
+    deja_suite = dejagnu.testSuiteForDirectory(join(deja_topdir,
         'libffi-src/tests/testsuite/libffi.call'))
 
     plain_suite = importExternalTestCases("test_*.py",
         join(topdir, 'PyObjCTest'), package='PyObjCTest')
+
+    version_suite = importExternalTestCases("test%d_*.py"%(sys.version_info[0],),
+        join(topdir, 'PyObjCTest'), package='PyObjCTest')
         
-    suite = unittest.TestSuite((plain_suite, deja_suite))
+    suite = unittest.TestSuite((plain_suite, version_suite, deja_suite))
 
     # the libffi tests don't work unless we use our own
     # copy of libffi.
     import __main__
     if __main__.USE_SYSTEM_FFI:
-        return plain_suite
+        return unittest.TestSuite((plain_suite, version_suite))
     return suite

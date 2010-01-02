@@ -3,6 +3,7 @@ Python <-> Objective-C bridge (PyObjC)
 
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
+import sys
 
 # Aliases for some common Objective-C constants
 nil = None
@@ -14,29 +15,30 @@ def _update(g=globals()):
 
     # Dummy import of copy_reg, needed 
     # for py2app.
-    import copy_reg
+    if sys.version_info[0] == 2:
+        import copy_reg
 
-    import _objc
+    import objc._objc as _objc
     for k,v in _objc.__dict__.iteritems():
         g.setdefault(k,v)
 _update()
 del _update
 
-from _convenience import *
-from _bridgesupport import *
+from objc._convenience import *
+from objc._bridgesupport import *
 
-from _dyld import *
-from _protocols import *
-from _descriptors import *
-from _category import *
-from _bridges import *
-from _compat import *
-from _pythonify import *
-from _functions import *
-from _locking import *
-from _context import *
+from objc._dyld import *
+from objc._protocols import *
+from objc._descriptors import *
+from objc._category import *
+from objc._bridges import *
+from objc._compat import *
+from objc._pythonify import *
+from objc._functions import *
+from objc._locking import *
+from objc._context import *
 
-import _pycoder
+import objc._pycoder as _pycoder
 
 # Make sure our global autorelease pool is
 # recycled when the interpreter shuts down.

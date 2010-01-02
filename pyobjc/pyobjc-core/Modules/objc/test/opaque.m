@@ -34,21 +34,74 @@ static PyMethodDef mod_methods[] = {
 	        { 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"opaque",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_opaque(void);
+
+PyObject*
+PyInit_opaque(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initopaque(void);
-void initopaque(void)
+
+void
+initopaque(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("opaque", mod_methods, NULL, NULL, PYTHON_API_VERSION);
 
-	PyObjC_ImportAPI(m);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("opaque", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "OC_OpaqueTest", 
-		PyObjCClass_New([OC_OpaqueTest class]));
-	PyModule_AddObject(m, "FooHandle", 
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
+
+	if (PyModule_AddObject(m, "OC_OpaqueTest", 
+		PyObjCClass_New([OC_OpaqueTest class])) < 0) {
+		INITERROR();
+	}
+	if (PyModule_AddObject(m, "FooHandle", 
 		PyObjCCreateOpaquePointerType("FooHandle",
-			                @encode(FooHandle), "FooHandle doc"));
-	PyModule_AddObject(m, "BarEncoded",  PyString_FromString(@encode(BarHandle)));
+			                @encode(FooHandle), "FooHandle doc")) < 0) {
+		INITERROR();
+	}
+#if PY_VERSION_HEX >= 0x03000000
+	if (PyModule_AddObject(m, "BarEncoded",  PyBytes_FromString(@encode(BarHandle))) < 0) {
+#else
+	if (PyModule_AddObject(m, "BarEncoded",  PyString_FromString(@encode(BarHandle))) < 0) {
+#endif
+		INITERROR();
+	}
+
+	INITDONE();
 }
 
 /*

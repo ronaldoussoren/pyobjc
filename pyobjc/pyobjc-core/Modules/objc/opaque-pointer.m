@@ -26,7 +26,7 @@ as_cobject(PyObject* self)
 		Py_INCREF(Py_None);
 		return Py_None;
 	}
-	return PyCObject_FromVoidPtr(((OpaquePointerObject*)self)->pointer_value, NULL);
+	return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__", NULL);
 }
 
 static PyMethodDef opaque_methods[] = {
@@ -50,7 +50,7 @@ static  char* keywords[] = { "cobject", NULL };
 		return NULL;
 	}
 
-	if (arg == NULL || !PyCObject_Check(arg)) {
+	if (arg == NULL || !PyCapsule_CheckExact(arg)) {
 		PyErr_Format(PyExc_TypeError, "Cannot create %s objects",
 				type->tp_name);
 		return NULL;
@@ -61,7 +61,7 @@ static  char* keywords[] = { "cobject", NULL };
 		if (result == NULL) {
 			return NULL;
 		}
-		result->pointer_value = PyCObject_AsVoidPtr(arg);
+		result->pointer_value = PyCapsule_GetPointer(arg, "objc.__opaque__");
 		return (PyObject*)result;
 	}
 }
@@ -107,7 +107,7 @@ opaque_to_c(
 		*(void**)pObj = (void*)0xDEADBEEF; /* force errors */
 		PyErr_Format(PyExc_TypeError, 
 			"Need instance of %s, got instance of %s",
-			opaque_type->tp_name, obj->ob_type->tp_name);
+			opaque_type->tp_name, Py_TYPE(obj)->tp_name);
 		*(int*)retval = -1;
 		return;
 	}
@@ -195,20 +195,21 @@ static  ffi_cif* new_cif = NULL;
 	newType->ht_type.tp_flags |= Py_TPFLAGS_HEAPTYPE;
 	newType->ht_type.tp_flags &= ~Py_TPFLAGS_HAVE_GC;
 
-	newType->ht_name = PyString_FromString(name);
+	newType->ht_name = PyText_FromString(name);
 	if (newType->ht_name == NULL) {
 		PyMem_Free(newType);
 		PyErr_NoMemory();
 		return NULL;
 	}
-	newType->ht_type.tp_name = PyString_AsString(newType->ht_name);
+
+	newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
 
 	v = PyDict_New();
 	if (v == NULL) {
 		goto error_cleanup;
 	}
 
-	w = PyString_FromString(typestr);
+	w = PyText_FromString(typestr);
 	if (w ==  NULL) {
 		goto error_cleanup;
 	}
@@ -234,7 +235,7 @@ static  ffi_cif* new_cif = NULL;
 	}
 
 	newType->ht_type.tp_alloc = PyType_GenericAlloc;
-	Py_INCREF(newType->ht_type.ob_type);
+	Py_INCREF(Py_TYPE(&(newType->ht_type)));
 	PyType_Ready((PyTypeObject*)newType);
 	Py_INCREF((PyObject*)newType);
 	Py_INCREF((PyObject*)newType);

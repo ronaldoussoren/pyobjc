@@ -29,20 +29,63 @@
 }
 @end
 
-static PyMethodDef filepointer_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"filepointer",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_filepointer(void);
+
+PyObject*
+PyInit_filepointer(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initfilepointer(void);
-void initfilepointer(void)
+
+void
+initfilepointer(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("filepointer", filepointer_methods, 
-			NULL, NULL, PYTHON_API_VERSION);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("filepointer", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyObjC_ImportAPI(m);
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "OC_TestFilePointer", 
-			PyObjCClass_New([OC_TestFilePointer class]));
+	if (PyModule_AddObject(m, "OC_TestFilePointer", 
+			PyObjCClass_New([OC_TestFilePointer class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 }

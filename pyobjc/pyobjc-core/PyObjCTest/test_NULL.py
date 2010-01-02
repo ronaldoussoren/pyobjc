@@ -2,59 +2,59 @@ from PyObjCTools.TestSupport import *
 import objc
 
 setSignature = objc.setSignatureForSelector
-#setSignature("OCTestNULL", "callOut:", "i@:o^i")
-#setSignature("OCTestNULL", "callList:andInOut2:", "i@:@^i")
-#setSignature("OCTestNULL", "callList:andInOut:", "i@:@N^i")
-#setSignature("OCTestNULL", "callList:andIn:", "i@:@n^i")
-#setSignature("OCTestNULL", "callList:andOut:", "i@:@o^i")
-#setSignature("OCTestNULL", "on:callList:andInOut:", "i@:@@N^i")
-#setSignature("OCTestNULL", "on:callList:andIn:", "i@:@@n^i")
-#setSignature("OCTestNULL", "on:callList:andOut:", "i@:@@N^i") # 'N' is by design
-#setSignature("OCTestNULL", "on:callOut:", "v@:@N^i") # 'N' is by design
+#setSignature(b"OCTestNULL", "callOut:", "i@:o^i")
+#setSignature(b"OCTestNULL", "callList:andInOut2:", "i@:@^i")
+#setSignature(b"OCTestNULL", "callList:andInOut:", "i@:@N^i")
+#setSignature(b"OCTestNULL", "callList:andIn:", "i@:@n^i")
+#setSignature(b"OCTestNULL", "callList:andOut:", "i@:@o^i")
+#setSignature(b"OCTestNULL", "on:callList:andInOut:", "i@:@@N^i")
+#setSignature(b"OCTestNULL", "on:callList:andIn:", "i@:@@n^i")
+#setSignature(b"OCTestNULL", "on:callList:andOut:", "i@:@@N^i") # 'N' is by design
+#setSignature(b"OCTestNULL", "on:callOut:", "v@:@N^i") # 'N' is by design
 
-objc.registerMetaDataForSelector( "OCTestNULL", "callOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"callOut:", dict(
             arguments={
-                2: dict(type_modifier='o', null_accepted=True),
+                2: dict(type_modifier=b'o', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "callList:andInOut2:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andInOut2:", dict(
             arguments={
-                3: dict(type_modifier='o', null_accepted=True),
+                3: dict(type_modifier=b'o', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "callList:andInOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andInOut:", dict(
             arguments={
-                3: dict(type_modifier='N', null_accepted=True),
+                3: dict(type_modifier=b'N', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "callList:andIn:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andIn:", dict(
             arguments={
-                3: dict(type_modifier='n', null_accepted=True),
+                3: dict(type_modifier=b'n', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "callList:andOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andOut:", dict(
             arguments={
-                3: dict(type_modifier='o', null_accepted=True),
+                3: dict(type_modifier=b'o', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "on:callList:andInOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andInOut:", dict(
             arguments={
-                4: dict(type_modifier='N', null_accepted=True),
+                4: dict(type_modifier=b'N', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "on:callList:andIn:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andIn:", dict(
             arguments={
-                4: dict(type_modifier='n', null_accepted=True),
+                4: dict(type_modifier=b'n', null_accepted=True),
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "on:callList:andOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andOut:", dict(
             arguments={
-                4: dict(type_modifier='N', null_accepted=True), # N is by design
+                4: dict(type_modifier=b'N', null_accepted=True), # N is by design
             },
         ))
-objc.registerMetaDataForSelector("OCTestNULL", "on:callOut:", dict(
+objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callOut:", dict(
             arguments={
-                3: dict(type_modifier='N', null_accepted=True), # N is by design
+                3: dict(type_modifier=b'N', null_accepted=True), # N is by design
             },
         ))
 
@@ -62,7 +62,7 @@ from PyObjCTest.NULL import *
 
 class TestNULL (TestCase):
     def testNULL(self):
-        self.assert_(hasattr(objc, 'NULL'))
+        self.assertHasAttr(objc, 'NULL')
         self.assertEquals(repr(objc.NULL), 'objc.NULL')
         self.assertRaises(TypeError, type(objc.NULL))
 
@@ -77,7 +77,7 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
             return (13, value * 2)
 
     callList_andInOut_ = objc.selector(callList_andInOut_,
-            signature="i@:@N^i")
+            signature=b"i@:@N^i")
 
     def callList_andInOut2_(self, lst, value):
         lst.append(repr(value))
@@ -86,26 +86,26 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
         else:
             return 29
     callList_andInOut2_ = objc.selector(callList_andInOut2_,
-            signature="i@:@^i")
+            signature=b"i@:@^i")
 
     def callList_andIn_(self, lst, value):
         lst.append(repr(value))
         return 26
 
     callList_andIn_ = objc.selector(callList_andIn_,
-            signature="i@:@n^i")
+            signature=b"i@:@n^i")
 
     def callList_andOut_(self, lst, value):
         assert value is None or value is objc.NULL
         lst.append("Nothing here")
         return (27, 99)
     callList_andOut_ = objc.selector(callList_andOut_,
-            signature="i@:@o^i")
+            signature=b"i@:@o^i")
 
     def callOut_(self, value):
         assert value is None or value is objc.NULL
         return 441;
-    callOut_ = objc.selector(callOut_, signature='v@:o^i')    
+    callOut_ = objc.selector(callOut_, signature=b'v@:o^i')    
 
 class TestNULLArguments (TestCase):
     def testCallInOutNULL(self):

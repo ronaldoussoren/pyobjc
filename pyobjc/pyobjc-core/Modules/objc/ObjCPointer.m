@@ -31,7 +31,7 @@ PyObjCPointer_unpack (PyObject* _self)
 	PyObjCPointer* self = (PyObjCPointer*)_self;
 
 	if (self->ptr) {
-		const char *type = PyString_AS_STRING (self->type);
+		const char *type = PyBytes_AS_STRING (self->type);
 
 		if (*type == _C_VOID) {
 			PyErr_SetString (PyObjCExc_Error, 
@@ -77,8 +77,7 @@ static PyMemberDef PyObjCPointer_members[] = {
 
 PyTypeObject PyObjCPointer_Type =
 {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"PyObjCPointer",			/* tp_name */
 	sizeof (PyObjCPointer),			/* tp_basicsize */
 	sizeof (char),				/* tp_itemsize */
@@ -153,7 +152,7 @@ PyObjCPointer_New(void *p, const char *t)
 		return NULL;
 	}
 
-	self->type = PyString_FromStringAndSize ((char *) t, typeend-t);
+	self->type = PyBytes_FromStringAndSize ((char *) t, typeend-t);
 
 	if (size && p) {
 		memcpy ((self->ptr = self->contents), p, size);

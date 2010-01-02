@@ -59,22 +59,65 @@ static size_t ident(size_t v)
 }
 @end
 
-static PyMethodDef NULL_methods[] = {
+static PyMethodDef mod_methods[] = {
 	                { 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"structargs",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_structargs(void);
+
+PyObject*
+PyInit_structargs(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initstructargs(void);
-void initstructargs(void)
+
+void
+initstructargs(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("structargs", NULL_methods,
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("structargs", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "StructArgClass",
-		PyObjCClass_New([StructArgClass class]));
+	if (PyModule_AddObject(m, "StructArgClass",
+		PyObjCClass_New([StructArgClass class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 }
 
 

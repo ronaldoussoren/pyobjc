@@ -34,39 +34,35 @@ class MethodAccessTest (TestCase):
         o = NSObject.new()
 
         d = dir(o.pyobjc_instanceMethods)
-        self.assert_(len(d) > 10)
-        self.assert_("init" in d)
-
-        #d = dir(o.pyobjc_classMethods)
-        #self.assert_(len(d) > 10)
-        #self.assert_("alloc" in d)
+        self.assertGreaterThan(len(d), 10)
+        self.assertIsIn("init", d)
 
         d = dir(NSObject.pyobjc_classMethods)
-        self.assert_(len(d) > 10)
-        self.assert_("alloc" in d)
+        self.assertGreaterThan(len(d), 10)
+        self.assertIsIn("alloc", d)
 
     def testDict(self):
         o = NSObject.new()
 
         d = o.pyobjc_instanceMethods.__dict__.keys()
-        self.assert_(len(d) > 10)
-        self.assert_("init" in d)
+        self.assertGreaterThan(len(d), 10)
+        self.assertIsIn("init", d)
 
         d = NSObject.pyobjc_classMethods.__dict__.keys()
-        self.assert_(len(d) > 10)
-        self.assert_("alloc" in d)
+        self.assertGreaterThan(len(d), 10)
+        self.assertIsIn("alloc", d)
 
         #d = o.pyobjc_classMethods.__dict__.keys()
-        #self.assert_(len(d) > 10)
-        #self.assert_("alloc" in d)
+        #self.assertGreaterThan(len(d), 10)
+        #self.assertIsIn("alloc", d)
 
     def testAttributes(self):
         o = NSObject.new()
 
-        self.assert_(hasattr(o.pyobjc_instanceMethods, "init"))
-        #self.assert_(hasattr(o.pyobjc_classMethods, "alloc"))
+        self.assertHasAttr(o.pyobjc_instanceMethods, "init")
+        #self.assertHasAttr(o.pyobjc_classMethods, "alloc")
 
-        self.assert_(hasattr(NSObject.pyobjc_classMethods, "alloc"))
+        self.assertHasAttr(NSObject.pyobjc_classMethods, "alloc")
 
 class ClassAndInstanceMethods(TestCase):
     def testClassThroughInstance(self):

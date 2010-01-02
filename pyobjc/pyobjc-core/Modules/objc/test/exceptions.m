@@ -77,15 +77,57 @@ static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"exceptions",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_exceptions(void);
+
+PyObject*
+PyInit_exceptions(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initexceptions(void);
-void initexceptions(void)
+
+void
+initexceptions(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("exceptions", mod_methods, 
-			NULL, NULL, PYTHON_API_VERSION);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("exceptions", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyObjC_ImportAPI(m);
-	PyModule_AddObject(m, "PyObjCTestExceptions", 
-		PyObjCClass_New([PyObjCTestExceptions class]));
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
+	if (PyModule_AddObject(m, "PyObjCTestExceptions", 
+		PyObjCClass_New([PyObjCTestExceptions class])) < 0) {
+		INITERROR();
+	}
+	INITDONE();
 }

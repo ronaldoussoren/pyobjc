@@ -42,7 +42,7 @@ class TestArraysOut (TestCase):
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
         
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
@@ -60,7 +60,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, m, o, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL)
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -91,7 +91,7 @@ class TestArraysOut (TestCase):
 
         n, v = m(o, objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -131,30 +131,30 @@ class TestArraysInOut (TestCase):
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('reverseStrings:')
 
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         v = m(o, a)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         self.assertRaises(ValueError, m, o, (1,2))
         self.assertRaises(ValueError, m, o, objc.NULL)
 
         m = o.methodForSelector_('nullreverseStrings:')
-        a = ('a', 'b', 'c')
+        a = (b'a', b'b', b'c')
         n, v = m(o, a)
         self.assertEquals(n, 1)
-        self.assertEquals(a, ('a', 'b', 'c'))
-        self.assertEquals(v, ('c', 'b', 'a'))
+        self.assertEquals(a, (b'a', b'b', b'c'))
+        self.assertEquals(v, (b'c', b'b', b'a'))
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -189,7 +189,7 @@ class TestArraysInOut (TestCase):
 
         n, v = m(o, objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assert_( v is objc.NULL )
+        self.assertIsObject(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -225,18 +225,18 @@ class TestArraysIn (TestCase):
 
         m = o.methodForSelector_('null4Tuple:')
         v = m(o, objc.NULL)
-        self.assert_( v is None )
+        self.assertIsNone(v)
 
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
         m = o.methodForSelector_('makeStringArray:')
 
-        v = m(o, ("hello", "world", "there"))
+        v = m(o, (b"hello", b"world", b"there"))
         self.assertEquals(len(v), 3)
         self.assertEquals(list(v), [u"hello", u"world", u"there"])
-        self.assert_( isinstance(v, objc.lookUpClass("NSArray")) )
-        self.assert_( isinstance(v[0], unicode) )
+        self.assertIsInstance(v, objc.lookUpClass("NSArray"))
+        self.assertIsInstance(v[0], unicode)
 
         m = o.methodForSelector_('makeObjectArray:')
 
@@ -244,9 +244,9 @@ class TestArraysIn (TestCase):
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = m(o, (p, q, r))
         self.assertEquals(len(v), 3)
-        self.assert_( v[0] is p )
-        self.assert_( v[1] is q )
-        self.assert_( v[2] is r )
+        self.assertIsObject(v[0], p)
+        self.assertIsObject(v[1], q)
+        self.assertIsObject(v[2], r)
 
         m = o.methodForSelector_('makeStringArray:')
 
@@ -297,7 +297,7 @@ class TestArrayReturns (TestCase):
     #   -> CF-types
     def testFixedSize(self):
         o = OC_MetaDataTest.new()
-        m = o.methodForSelector_('makeIntArrayOf5')
+        m = o.methodForSelector_(b'makeIntArrayOf5')
 
         v = m(o)
         self.assertEquals( len(v), 5 )
@@ -307,13 +307,13 @@ class TestArrayReturns (TestCase):
         self.assertEquals( v[3], 9 )
         self.assertEquals( v[4], 16 )
 
-        m = o.methodForSelector_('nullIntArrayOf5')
+        m = o.methodForSelector_(b'nullIntArrayOf5')
         v = m(o)
         self.assertEquals(v, objc.NULL)
 
     def testSizeInArgument(self):
         o = OC_MetaDataTest.new()
-        m = o.methodForSelector_('makeIntArrayOf:')
+        m = o.methodForSelector_(b'makeIntArrayOf:')
 
         v = m(o, 3)
         self.assertEquals(len(v), 3)
@@ -326,19 +326,19 @@ class TestArrayReturns (TestCase):
         for i in range(10):
             self.assertEquals(v[i], i**3)
 
-        m = o.methodForSelector_('nullIntArrayOf:')
+        m = o.methodForSelector_(b'nullIntArrayOf:')
         v = m(o, 100)
         self.assertEquals(v, objc.NULL)
 
     def testNULLterminated(self):
         o  = OC_MetaDataTest.new()
-        m = o.methodForSelector_('makeStringArray')
+        m = o.methodForSelector_(b'makeStringArray')
 
         v = m(o)
         self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), ["hello", "world", "out", "there"])
+        self.assertEquals(list(v), [b"hello", b"world", b"out", b"there"])
 
-        m = o.methodForSelector_('nullStringArray')
+        m = o.methodForSelector_(b'nullStringArray')
         v = m(o)
         self.assertEquals(v, objc.NULL)
 

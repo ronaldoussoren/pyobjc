@@ -10,11 +10,11 @@ This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
 """
+import sys
 import objc
 from types import *
 import copy_reg
 import copy
-import sys
 
 from pickle import PicklingError, UnpicklingError, whichmodule
 
@@ -67,7 +67,7 @@ def setupPythonObject():
     def save_reduce(coder, func, args, 
             state=None, listitems=None, dictitems=None, obj=None):
 
-        if not isinstance(args, TupleType):
+        if not isinstance(args, tuple):
             raise PicklingError("args from reduce() should be a tuple")
 
         if not callable(func):
@@ -88,50 +88,58 @@ def setupPythonObject():
             coder.encodeObject_forKey_(dict(dictitems), kDICT)
         coder.encodeObject_forKey_(state, kSTATE)
 
-    def save_inst(coder, obj):
-        if hasattr(obj, '__getinitargs__'):
-            args = obj.__getinitargs__()
-            len(args) # Assert it's a sequence
-        else:
-            args = ()
+    if sys.version_info[0] == 2:
+        def save_inst(coder, obj):
+            if hasattr(obj, '__getinitargs__'):
+                args = obj.__getinitargs__()
+                len(args) # Assert it's a sequence
+            else:
+                args = ()
 
-        cls = obj.__class__
+            cls = obj.__class__
 
-        coder.encodeInt32_forKey_(kOP_INST, kKIND)
-        coder.encodeObject_forKey_(cls, kCLASS)
-        coder.encodeObject_forKey_(args, kARGS)
+            coder.encodeInt32_forKey_(kOP_INST, kKIND)
+            coder.encodeObject_forKey_(cls, kCLASS)
+            coder.encodeObject_forKey_(args, kARGS)
 
-        try:
-            getstate = obj.__getstate__
-        except AttributeError:
-            state = obj.__dict__
+            try:
+                getstate = obj.__getstate__
+            except AttributeError:
+                state = obj.__dict__
 
-        else:
-            state = getstate()
+            else:
+                state = getstate()
 
-        coder.encodeObject_forKey_(state, kSTATE)
+            coder.encodeObject_forKey_(state, kSTATE)
 
-    encode_dispatch[InstanceType] = save_inst
+        encode_dispatch[InstanceType] = save_inst
 
 
     def save_none(coder, obj):
         coder.encodeInt_forKey_(kOP_NONE, kKIND)
-    encode_dispatch[NoneType] = save_none
+    encode_dispatch[type(None)] = save_none
 
     def save_bool(coder, obj):
         coder.encodeInt_forKey_(kOP_BOOL, kKIND)
         coder.encodeBool_forKey_(bool(obj), kVALUE)
     encode_dispatch[bool] = save_bool
 
-    def save_int(coder, obj):
-        coder.encodeInt_forKey_(kOP_INT, kKIND)
-        coder.encodeInt64_forKey_(obj, kVALUE)
-    encode_dispatch[int] = save_int
+    if sys.version_info[0] == 2:
+        def save_int(coder, obj):
+            coder.encodeInt_forKey_(kOP_INT, kKIND)
+            coder.encodeInt64_forKey_(obj, kVALUE)
+        encode_dispatch[int] = save_int
 
-    def save_long(coder, obj):
-        coder.encodeInt_forKey_(kOP_LONG, kKIND)
-        coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
-    encode_dispatch[long] = save_long
+        def save_long(coder, obj):
+            coder.encodeInt_forKey_(kOP_LONG, kKIND)
+            coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
+        encode_dispatch[long] = save_long
+
+    else:
+        def save_int(coder, obj):
+            coder.encodeInt_forKey_(kOP_LONG, kKIND)
+            coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
+        encode_dispatch[int] = save_int
 
     def save_float(coder, obj):
         # Encode floats as strings, this seems to be needed to get
@@ -197,10 +205,11 @@ def setupPythonObject():
             coder.encodeObject_forKey_(unicode(module), kMODULE)
             coder.encodeObject_forKey_(unicode(name), kNAME)
 
-    encode_dispatch[ClassType] = save_global
-    encode_dispatch[FunctionType] = save_global
-    encode_dispatch[BuiltinFunctionType] = save_global
-    encode_dispatch[TypeType] = save_global
+    if sys.version_info[0] == 2:
+        encode_dispatch[ClassType] = save_global
+    encode_dispatch[type(save_global)] = save_global
+    encode_dispatch[type(dir)] = save_global
+    encode_dispatch[type] = save_global
 
 
     decode_dispatch = {}
@@ -274,7 +283,7 @@ def setupPythonObject():
         initargs = coder.decodeObjectForKey_(kARGS)
 
         instantiated = 0
-        if (not initargs and 
+        if (sys.version_info[0] == 2 and not initargs and 
                 type(cls) is ClassType and
                 not hasattr(cls, "__getinitargs__")):
             try:
@@ -383,7 +392,7 @@ def setupPythonObject():
 
         # Check for a class with a custom metaclass
         try:
-            issc = issubclass(t, TypeType)
+            issc = issubclass(t, type)
         except TypeError:
             issc = 0
 
@@ -410,11 +419,11 @@ def setupPythonObject():
                     raise PicklingError("Can't pickle %r object: %r" %
                             (t.__name__, self))
 
-        if type(rv) is StringType:
+        if type(rv) is str:
             save_global(coder, rv)
             return
 
-        if type(rv) is not TupleType:
+        if type(rv) is not tuple:
             raise PicklingError("%s must return string or tuple" % reduce)
 
         l = len(rv)

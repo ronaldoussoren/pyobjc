@@ -10,7 +10,7 @@
 
 #import <Foundation/NSURL.h>
 
-#ifndef __OBJC2__
+#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x02050000)
 #include "pymactoolbox.h"
 #endif
 
@@ -26,7 +26,7 @@ PyObjC_CFTypeToID(PyObject* argument)
 
 	}
 
-#ifndef __OBJC2__
+#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x03000000)
 	int r;
 
 	/* Fall back to MacPython CFType support: */
@@ -47,7 +47,8 @@ PyObjC_CFTypeToID(PyObject* argument)
 PyObject* 
 PyObjC_IDToCFType(id argument __attribute__((__unused__)))
 {
-#ifndef __OBJC2__
+
+#if 0 /*!defined(__OBJC2__) && (PY_VERSION_HEX < 0x03000000)*/
 	CFTypeRef typeRef = (CFTypeRef)argument;
 	CFTypeID typeID = CFGetTypeID(argument);
 
@@ -67,10 +68,7 @@ PyObjC_IDToCFType(id argument __attribute__((__unused__)))
 		return CFMutableDictionaryRefObj_New((CFMutableDictionaryRef)argument);
 	} else if (typeID == CFURLGetTypeID()) {
 		return CFURLRefObj_New((CFURLRef)argument);
-/*
- * TODO: This is in Python 2.5, Fix the #if at some point
- */
-#if 0
+#if PY_VERSION_HEX >= 0x02050000
 	} else if (typeID == CFDataGetTypeID()) {
 		return CFMutableDataRefObj_New((CFMutableDataRef)argument);
 #endif

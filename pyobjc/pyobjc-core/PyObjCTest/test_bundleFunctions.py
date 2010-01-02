@@ -6,7 +6,7 @@ import os
 NSObject = objc.lookUpClass('NSObject')
 
 def S(*args):
-    return ''.join(args)
+    return b''.join(args)
 
 FUNCTIONS=[
     ( u'NSHomeDirectory', S(objc._C_ID)),
@@ -23,15 +23,15 @@ class TestBundleFunctions (TestCase):
         d = {}
         objc.loadBundleFunctions(self.bundle, d, FUNCTIONS)
 
-        self.assert_('NSIsFreedObject' in d)
-        self.assert_('NSCountFrames' in d)
-        self.assert_('NSHomeDirectory' in d)
+        self.assertIsIn('NSIsFreedObject', d)
+        self.assertIsIn('NSCountFrames', d)
+        self.assertIsIn('NSHomeDirectory', d)
 
         # Don't use this API, it is unsupported and causes warnings.
         #fn = d[u'NSIsFreedObject']
         #obj = NSObject.alloc().init()
         #value = fn(obj)
-        #self.assert_(not value)
+        #self.assertTrue(not value)
 
         fn = d[u'NSHomeDirectory']
         value = fn()
@@ -39,7 +39,7 @@ class TestBundleFunctions (TestCase):
 
         fn = d[u'NSClassFromString']
         value = fn(u'NSObject')
-        self.assert_(value is NSObject)
+        self.assertIsObject(value, NSObject)
 
         # Need to look for a different example, NSCountFrames crashes
         # (that is the actual function, not the dynamic wrapper)
@@ -47,7 +47,7 @@ class TestBundleFunctions (TestCase):
         #import Foundation
         #fn = Foundation.NSCountFrames
         #value = fn()
-        #self.assert_(isistance(value, int))
+        #self.assertIsInstance(value, int)
 
 
 if __name__ == "__main__":

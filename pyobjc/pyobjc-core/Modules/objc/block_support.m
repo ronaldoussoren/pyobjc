@@ -54,6 +54,7 @@ enum {
 
 #endif
 
+
 /*
  * End of definitions.
  */
@@ -213,14 +214,14 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 			PyErr_Format(PyExc_TypeError, "Sorry, printf format with by-ref args not supported");
 			return NULL;
 		}
-		if (PyTuple_Size(args) < signature->ob_size - 1) {
+		if (PyTuple_Size(args) < Py_SIZE(signature) - 1) {
 			PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-			signature->ob_size - 2, PyTuple_Size(args));
+			Py_SIZE(signature) - 2, PyTuple_Size(args));
 			return NULL;
 		}
-	} else if (PyTuple_Size(args) != signature->ob_size - 1) {
+	} else if (PyTuple_Size(args) != Py_SIZE(signature) - 1) {
 		PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-		signature->ob_size, PyTuple_Size(args));
+		Py_SIZE(signature), PyTuple_Size(args));
 		return NULL;
 	}
 
@@ -230,11 +231,11 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 		return NULL;
 	}
 	if (variadicAllArgs) {
-		if (PyObjCFFI_AllocByRef(signature->ob_size + PyTuple_Size(args), &byref, &byref_attr) < 0) {
+		if (PyObjCFFI_AllocByRef(Py_SIZE(signature) + PyTuple_Size(args), &byref, &byref_attr) < 0) {
 			goto error;
 		}
 	} else {
-		if (PyObjCFFI_AllocByRef(signature->ob_size, &byref, &byref_attr) < 0) {
+		if (PyObjCFFI_AllocByRef(Py_SIZE(signature), &byref, &byref_attr) < 0) {
 			goto error;
 		}
 	}
@@ -271,12 +272,12 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 			byref_attr, byref_out_count, NULL, 0, values);
 
 	if (variadicAllArgs) {
-		if (PyObjCFFI_FreeByRef(signature->ob_size+PyTuple_Size(args), byref, byref_attr) < 0) {
+		if (PyObjCFFI_FreeByRef(Py_SIZE(signature)+PyTuple_Size(args), byref, byref_attr) < 0) {
 			byref = NULL; byref_attr = NULL;
 			goto error;
 		}
 	} else {
-		if (PyObjCFFI_FreeByRef(signature->ob_size, byref, byref_attr) < 0) {
+		if (PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr) < 0) {
 			byref = NULL; byref_attr = NULL;
 			goto error;
 		}
@@ -286,15 +287,27 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
 error:
 	if (variadicAllArgs) {
-		PyObjCFFI_FreeByRef(signature->ob_size+PyTuple_Size(args), byref, byref_attr);
+		PyObjCFFI_FreeByRef(Py_SIZE(signature)+PyTuple_Size(args), byref, byref_attr);
 	} else {
-		PyObjCFFI_FreeByRef(signature->ob_size, byref, byref_attr);
+		PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr);
 	}
 	if (argbuf) {
 		PyMem_Free(argbuf);
 	}
 	return NULL;
 }
+
+#if PY_VERSION_HEX < 0x03000000
+static void PyObjCBlock_CleanupCapsule(void* ptr, void* context __attribute__((__unused__)))
+{
+	PyObjCFFI_FreeBlockFunction(ptr);
+}
+#else
+static void PyObjCBlock_CleanupCapsule(PyObject* ptr)
+{
+	PyObjCFFI_FreeBlockFunction(PyCapsule_GetPointer(ptr, "objc.__block_release__"));
+}
+#endif
 
 
 void*
@@ -317,7 +330,8 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 		PyMem_Free(block);
 		return NULL;
 	}
-	block->invoke_cleanup = PyCObject_FromVoidPtr(block->invoke, (void(*)(void*))PyObjCFFI_FreeBlockFunction);
+	block->invoke_cleanup = PyCapsule_New(block->invoke, "objc.__block_release__", 
+			PyObjCBlock_CleanupCapsule);
 	if (block->invoke_cleanup == NULL) {
 		PyObjCFFI_FreeBlockFunction(block->invoke);
 		PyMem_Free(block);

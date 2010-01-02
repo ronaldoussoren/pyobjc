@@ -42,7 +42,7 @@ proto_dealloc(PyObject* object)
 {
 	PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;	
 	PyObjC_UnregisterPythonProxy(self->objc, object);
-	object->ob_type->tp_free(object);
+	Py_TYPE(object)->tp_free(object);
 }
 
 
@@ -57,7 +57,7 @@ proto_repr(PyObject* object)
 		name = "<nil>";
 	}
 
-	return PyString_FromFormat("<%s %s at %p>", self->ob_type->tp_name, name, (void*)self);
+	return PyText_FromFormat("<%s %s at %p>", Py_TYPE(self)->tp_name, name, (void*)self);
 }
 
 static PyObject*
@@ -77,7 +77,7 @@ proto_get__name__(PyObject* object, void* closure __attribute__((__unused__)))
 		return Py_None;
 	}
 
-	return PyString_FromString(name);
+	return PyText_FromString(name);
 }
 
 
@@ -310,7 +310,7 @@ proto_name(PyObject* object)
 		return Py_None;
 	}
 
-	return PyString_FromString(name);
+	return PyText_FromString(name);
 }
 
 static PyObject*
@@ -346,6 +346,22 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 
 	if (PyObjCSelector_Check(sel)) {
 		aSelector = PyObjCSelector_GetSelector(sel);
+	} else if (PyUnicode_Check(sel)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		char* s = PyBytes_AsString(bytes);
+		if (s == NULL || *s == '\0') {
+			PyErr_SetString(PyExc_ValueError, 
+					"empty selector name");
+			return NULL;
+		}
+
+		aSelector = sel_getUid(s);
+		Py_DECREF(bytes);
+
+#if PY_VERSION_HEX < 0x03000000
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {
@@ -355,9 +371,10 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		}
 
 		aSelector = sel_getUid(s);
+#endif
 	} else {
 		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of %s",
-				sel->ob_type->tp_name);
+				Py_TYPE(sel)->tp_name);
 		return NULL;
 	}
 
@@ -386,6 +403,22 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 
 	if (PyObjCSelector_Check(sel)) {
 		aSelector = PyObjCSelector_GetSelector(sel);
+	} else if (PyUnicode_Check(sel)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		char* s = PyBytes_AsString(bytes);
+		if (s == NULL || *s == '\0') {
+			PyErr_SetString(PyExc_ValueError, 
+					"empty selector name");
+			return NULL;
+		}
+
+		aSelector = sel_getUid(s);
+		Py_DECREF(bytes);
+
+#if PY_VERSION_HEX < 0x03000000
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {
@@ -395,6 +428,11 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		}
 
 		aSelector = sel_getUid(s);
+#endif
+	} else {
+		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of %s",
+				Py_TYPE(sel)->tp_name);
+		return NULL;
 	}
 
 	descr = protocol_getMethodDescription(self->objc, aSelector, YES, NO);
@@ -458,8 +496,7 @@ static PyGetSetDef proto_getset[] = {
 };
 
 PyTypeObject PyObjCFormalProtocol_Type = {
-	PyObject_HEAD_INIT(&PyType_Type)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"objc.formal_protocol",			/* tp_name */
 	sizeof(PyObjCFormalProtocol),		/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -700,19 +737,19 @@ PyObjCFormalProtocol_CheckClass(
 	if (!PyObjCFormalProtocol_Check(obj)) {
 		PyErr_Format(PyExc_TypeError,
 			"First argument is not an 'objc.formal_protocol' but "
-			"'%s'", obj->ob_type->tp_name);
+			"'%s'", Py_TYPE(obj)->tp_name);
 		return 0;
 	}
 	if (!PyObjCClass_Check(super_class)) {
 		PyErr_Format(PyExc_TypeError,
 			"Third argument is not an 'objc.objc_class' but "
-			"'%s'", super_class->ob_type->tp_name);
+			"'%s'", Py_TYPE(super_class)->tp_name);
 		return 0;
 	}
 	if (!PyDict_Check(clsdict)) {
 		PyErr_Format(PyExc_TypeError,
 			"Fourth argument is not a 'dict' but '%s'",
-			clsdict->ob_type->tp_name);
+			Py_TYPE(clsdict)->tp_name);
 		return 0;
 	}
 
@@ -741,7 +778,7 @@ Protocol* PyObjCFormalProtocol_GetProtocol(PyObject* object)
 	if (!PyObjCFormalProtocol_Check(self)) {
 		PyErr_Format(PyExc_TypeError, 
 			"Expecting objc.formal_protocol, got %s",
-			self->ob_type->tp_name);
+			Py_TYPE(self)->tp_name);
 		return NULL;
 	}
 

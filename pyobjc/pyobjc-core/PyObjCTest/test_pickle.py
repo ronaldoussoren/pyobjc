@@ -1,68 +1,72 @@
+import sys
 from PyObjCTest.fnd import NSNumber
 from PyObjCTools.TestSupport import *
-from objc._pythonify import OC_PythonInt, OC_PythonFloat, OC_PythonLong
+from objc._pythonify import OC_PythonLong, OC_PythonFloat
+if sys.version_info[0] == 2:
+    from objc._pythonify import OC_PythonInt
 import pickle
 import cPickle
-import sys
 
 class TestPickleNumber (TestCase):
 
     def testPickleInt(self):
+        if sys.version_info[0] == 2:
+            number_type = OC_PythonInt
+        else:
+            number_type = OC_PythonLong
         v = NSNumber.numberWithInt_(42)
-        self.assert_(isinstance(v, OC_PythonInt))
+        self.assertIsInstance(v, number_type)
 
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonInt))
-        self.assert_(isinstance(v2, int))
+        self.assertIsNotInstance(v2, number_type)
+        self.assertIsInstance(v2, int)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonInt))
-        self.assert_(isinstance(v2, int))
+        self.assertIsNotInstance(v2, number_type)
+        self.assertIsInstance(v2, int)
 
     def testPickleFloat(self):
         v = NSNumber.numberWithFloat_(42)
-        self.assert_(isinstance(v, OC_PythonFloat))
+        self.assertIsInstance(v, OC_PythonFloat)
 
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonFloat))
-        self.assert_(isinstance(v2, float))
+        self.assertIsNotInstance(v2, OC_PythonFloat)
+        self.assertIsInstance(v2, float)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonFloat))
-        self.assert_(isinstance(v2, float))
+        self.assertIsNotInstance(v2, OC_PythonFloat)
+        self.assertIsInstance(v2, float)
 
+    @onlyOn32Bit
     def testPickleLongLong(self):
-        if sys.maxint > 2 ** 32:
-            return
-
         v = NSNumber.numberWithLongLong_(sys.maxint + 3)
-        self.assert_(isinstance(v, OC_PythonLong))
+        self.assertIsInstance(v, OC_PythonLong)
 
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonLong))
-        self.assert_(isinstance(v2, long))
+        self.assertIsNotInstance(v2, OC_PythonLong)
+        self.assertIsInstance(v2, long)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
         self.assertEquals(v2, v)
-        self.assert_(not isinstance(v2, OC_PythonLong))
-        self.assert_(isinstance(v2, long))
+        self.assertIsNotInstance(v2, OC_PythonLong)
+        self.assertIsInstance(v2, long)
 
 
 

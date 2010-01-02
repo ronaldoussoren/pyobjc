@@ -17,14 +17,14 @@ class TestSynthesizeHelper (NSObject):
 
 class TestSynthesize (TestCase):
     def testNames(self):
-        self.failUnless(hasattr(TestSynthesizeHelper, 'someTitle'))
-        self.failUnless(hasattr(TestSynthesizeHelper, 'setSomeTitle_'))
+        self.assertHasAttr(TestSynthesizeHelper, 'someTitle')
+        self.assertHasAttr(TestSynthesizeHelper, 'setSomeTitle_')
 
-        self.failUnless(hasattr(TestSynthesizeHelper, 'stringValue'))
-        self.failUnless(hasattr(TestSynthesizeHelper, 'setStringValue_'))
+        self.assertHasAttr(TestSynthesizeHelper, 'stringValue')
+        self.assertHasAttr(TestSynthesizeHelper, 'setStringValue_')
 
-        self.failUnless(hasattr(TestSynthesizeHelper, 'read'))
-        self.failIf(hasattr(TestSynthesizeHelper, 'setRead_'))
+        self.assertHasAttr(TestSynthesizeHelper, 'read')
+        self.assertNotHasAttr(TestSynthesizeHelper, 'setRead_')
 
     def testCopying(self):
         obj = TestSynthesizeHelper.alloc().init()
@@ -32,10 +32,10 @@ class TestSynthesize (TestCase):
         v = TestSynthesizeCopier.alloc().init()
 
         obj.setStringValue_(v)
-        self.failUnless(obj.stringValue() is v)
+        self.assertIsObject(obj.stringValue(), v)
 
         obj.setSomeTitle_(v)
-        self.failUnlessEqual(obj.someTitle(), 42)
+        self.assertEqual(obj.someTitle(), 42)
 
 if __name__ == "__main__":
     main()

@@ -20,16 +20,17 @@ class OCTestRegrWithGetItem2 (OCTestRegrWithGetItem):
         return "ofk2: %s"%(k,)
 
 class ReturnAStruct (NSObject):
-    def someRectWithRect_(self, ((x, y), (h, w))):
+    def someRectWithRect_(self, aRect):
+        ((x, y), (h, w)) = aRect
         return ((x,y),(h,w))
-    someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + '@:' + rct)
+    someRectWithRect_ = objc.selector(someRectWithRect_, signature=rct + b'@:' + rct)
 
 
 class TestRegressions(TestCase):
     def testNSObjectRespondsToCommonMethods(self):
-        self.assert_(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
-        self.assert_(NSObject.instancesRespondToSelector_('init'))
-        self.assert_(not NSObject.instancesRespondToSelector_('frodel'))
+        self.assertTrue(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
+        self.assertTrue(NSObject.instancesRespondToSelector_('init'))
+        self.assertFalse(NSObject.instancesRespondToSelector_('frodel'))
 
 
     def testDeallocUninit(self):
@@ -128,17 +129,16 @@ class TestRegressions(TestCase):
         self.assertEquals(o._privateMethodWithArg_(-2.5), -2)
 
         imp = testbndl.PyObjC_TestClass4.instanceMethodForSelector_('_privateMethodWithArg:')
-        self.assertEquals(imp.signature, 'i@:f')
+        self.assertEquals(imp.signature, b'i@:f')
 
         sel = testbndl.PyObjC_TestClass4._privateMethodWithArg_
-        self.assertEquals(sel.signature, 'i@:f')
+        self.assertEquals(sel.signature, b'i@:f')
 
     def testStructReturnPy(self):
         o = ReturnAStruct.alloc().init()
         p = structargs.StructArgClass.alloc().init()
 
         v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
-        #self.assert_(isinstance(v, Foundation.NSRect))
         self.assertEquals(v, ((1,2),(3,4)))
 
     def testStructReturn(self):
@@ -198,7 +198,7 @@ class TestInitMemoryLeak (TestCase):
         pool = NSAutoreleasePool.alloc().init()
         try:
             v = copying.OC_CopyHelper.newObjectOfClass_(OC_LeakTest_20090704_noinit)
-            self.failUnlessIsInstance(v, OC_LeakTest_20090704_noinit)
+            self.assertIsInstance(v, OC_LeakTest_20090704_noinit)
 
             gDeallocCounter = 0
             del v
@@ -206,7 +206,7 @@ class TestInitMemoryLeak (TestCase):
         finally:
             del pool
 
-        self.failIfEqual(gDeallocCounter, 0)
+        self.assertNotEqual(gDeallocCounter, 0)
 
     def testWithPythonInit(self):
         global gDeallocCounter
@@ -214,7 +214,7 @@ class TestInitMemoryLeak (TestCase):
         pool = NSAutoreleasePool.alloc().init()
         try:
             v = copying.OC_CopyHelper.newObjectOfClass_(OC_LeakTest_20090704_init)
-            self.failUnlessIsInstance(v, OC_LeakTest_20090704_init)
+            self.assertIsInstance(v, OC_LeakTest_20090704_init)
 
             gDeallocCounter = 0
             del v
@@ -222,7 +222,7 @@ class TestInitMemoryLeak (TestCase):
         finally:
             del pool
 
-        self.failIfEqual(gDeallocCounter, 0)
+        self.assertNotEqual(gDeallocCounter, 0)
 
     def testInitFailureLeaks(self):
         NSData = objc.lookUpClass('NSData')
@@ -239,17 +239,17 @@ class TestInitMemoryLeak (TestCase):
         except objc.UninitializedDeallocWarning:
             self.fail("Unexpected raising of UninitializedDeallocWarning")
 
-        self.failIf(v is not None)
+        self.assertFalse(v is not None)
 
     def testExplicitGetItem(self):
         v = OCTestRegrWithGetItem.alloc().init()
 
-        self.failUnlessEqual(v.objectForKey_("foo"), "ofk: foo")
-        self.failUnlessEqual(v["foo"], "gi: foo")
+        self.assertEqual(v.objectForKey_("foo"), "ofk: foo")
+        self.assertEqual(v["foo"], "gi: foo")
 
         v = OCTestRegrWithGetItem2.alloc().init()
-        self.failUnlessEqual(v.objectForKey_("foo"), "ofk2: foo")
-        self.failUnlessEqual(v["foo"], "gi: foo")
+        self.assertEqual(v.objectForKey_("foo"), "ofk2: foo")
+        self.assertEqual(v["foo"], "gi: foo")
 
 
 if __name__ == '__main__':

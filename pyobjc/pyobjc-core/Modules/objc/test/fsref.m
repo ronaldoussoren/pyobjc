@@ -68,20 +68,63 @@
 
 @end
 
-static PyMethodDef methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"fsref",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_fsref(void);
+
+PyObject*
+PyInit_fsref(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void initfsref(void);
-void initfsref(void)
+
+void
+initfsref(void)
+#endif
 {
 	PyObject* m;
 
-	m = Py_InitModule4("fsref", methods, 
-			NULL, NULL, PYTHON_API_VERSION);
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("fsref", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	PyObjC_ImportAPI(m);
+	if (PyObjC_ImportAPI(m) < 0) {
+		INITERROR();
+	}
 
-	PyModule_AddObject(m, "OC_TestFSRefHelper", 
-			PyObjCClass_New([OC_TestFSRefHelper class]));
+	if (PyModule_AddObject(m, "OC_TestFSRefHelper", 
+			PyObjCClass_New([OC_TestFSRefHelper class])) < 0) {
+		INITERROR();
+	}
+
+	INITDONE();
 }

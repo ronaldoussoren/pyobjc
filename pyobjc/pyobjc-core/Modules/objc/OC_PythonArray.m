@@ -17,7 +17,7 @@ static PyObject* mapTypes = NULL;
 		PyObject* tp = PyList_GET_ITEM(mapTypes, i);
 		int r = PyObject_IsInstance(object, tp);
 		if (r == -1) {
-			return NULL;
+			return nil;
 		}
 
 		if (!r) continue;
@@ -26,7 +26,7 @@ static PyObject* mapTypes = NULL;
 		return [[[OC_PythonArray alloc] initWithPythonObject:object] autorelease];
 	}
 
-	return NULL;
+	return nil;
 }
 
 + depythonifyTable
