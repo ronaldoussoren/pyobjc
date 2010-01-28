@@ -266,6 +266,48 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 	return 0;
 }
 
+static PyObject*
+ivar_class_setup(PyObject* _self, PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "name", "class_dict", "instance_method_list", "class_method_list", NULL };
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+	char* name;
+	PyObject* class_dict;
+	PyObject* instance_method_list;
+	PyObject* class_method_list;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sO!O!O!", keywords,
+			&name,
+			&PyDict_Type, &class_dict, 
+			&PySet_Type, &instance_method_list,
+			&PySet_Type, &class_method_list
+		)){
+		return NULL;
+	}
+
+	if (self->name == NULL) {
+		self->name = PyObjCUtil_Strdup(name);
+	}
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+
+static PyMethodDef ivar_methods[] = {
+	{
+		"__pyobjc_class_setup__",
+		(PyCFunction)ivar_class_setup,
+		METH_VARARGS|METH_KEYWORDS,
+		NULL
+	},
+
+	{
+		NULL, NULL, 0, NULL
+	}
+};
+
+
 PyDoc_STRVAR(ivar_doc,
 "ivar(name, type='@', isOutlet=False) -> instance-variable\n"
 "\n"
@@ -307,7 +349,7 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	0,                                      /* tp_weaklistoffset */
 	0,                                      /* tp_iter */
 	0,                                      /* tp_iternext */
-	0,                                      /* tp_selectors */
+	ivar_methods,                           /* tp_methods */
 	0,                                      /* tp_members */
 	0,                                      /* tp_getset */
 	0,                                      /* tp_base */

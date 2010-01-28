@@ -91,11 +91,11 @@ def typedSelector(signature):
         return selector(func, signature=signature)
     return _typedSelector
 
-def namedselector(name, signature=None):
+def namedSelector(name, signature=None):
     """
     Python 2.4 decorator for overriding the Objective-C SEL for a method, usage:
 
-        @namedselector("foo:bar:")
+        @namedSelector("foo:bar:")
         def foobar(self, foo, bar):
             return foo + bar
     """
@@ -107,6 +107,11 @@ def namedselector(name, signature=None):
             return selector(func, selector=name)
 
     return _namedselector
+
+def namedselector(name, signature=None):
+    import warnings
+    warnings.warn("use objc.namedSelector instead of objc.namedselector")
+    return namedSelector(name, signature)
 
 def typedAccessor(typeSignature):
     """

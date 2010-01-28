@@ -106,6 +106,66 @@ Accessing classes and protocols
 
    TODO
 
+
+.. function:: propertiesForClass(objcClass)
+
+   :type objcClass: an Objective-C class or formal protocol
+   :return: a list of properties from the Objective-C runtime
+
+   The return value is a list with information about
+   properties on this class or protocol from the Objective-C runtime. This
+   does not include properties superclasses.
+
+   Every entry in the list is dictionary with the following keys:
+
+   =============== =============================================================
+   Key             Description
+   =============== =============================================================
+   ``name``        Name of the property (a string)
+   --------------- -------------------------------------------------------------
+   ``raw_attr``    Raw value of the attribute string (a byte string)
+   --------------- -------------------------------------------------------------
+   ``typestr``     The type string for this attribute (a byte string)
+   --------------- -------------------------------------------------------------
+   ``classname``   When the type string is ``objc._C_ID`` this is the
+                   name of the Objective-C class (a string).
+   --------------- -------------------------------------------------------------
+   ``readonly``    True iff the property is read-only (bool)
+   --------------- -------------------------------------------------------------
+   ``copy``        True iff the property is copying the value (bool)
+   --------------- -------------------------------------------------------------
+   ``retain``      True iff the property is retaining the value (bool)
+   --------------- -------------------------------------------------------------
+   ``nonatomic``   True iff the property is not atomic (bool)
+   --------------- -------------------------------------------------------------
+   ``dynamic``     True iff the property is dynamic (bool)
+   --------------- -------------------------------------------------------------
+   ``weak``        True iff the property is weak (bool)
+   --------------- -------------------------------------------------------------
+   ``collectable`` True iff the property is collectable (bool)
+   --------------- -------------------------------------------------------------
+   ``getter``      Non-standard selector for the getter method (a byte string)
+   --------------- -------------------------------------------------------------
+   ``setter``      Non-standard selector for the setter method (a byte string)
+   =============== =============================================================
+
+   All values but ``name`` and ``raw_attr`` are optional. The other attributes
+   contain a decoded version of the ``raw_attr`` value. The boolean attributes
+   should be interpreted as ``False`` when the aren't present.
+
+   The documentation for the Objective-C runtime contains more information about
+   property definitions.
+
+   This function only returns information about properties as they are defined
+   in the Objective-C runtime, that is using ``@property`` definitions in an
+   Objective-C interface. Not all properties as they are commonly used  in
+   Objective-C are defined using that syntax, especially properties in classes
+   that were introduced before MacOSX 10.5.
+
+   This function always returns an empty list on MacOS X 10.4.
+
+   .. versionadded:: 2.3
+
 .. function:: listInstanceVariables
 
    TODO
@@ -279,6 +339,29 @@ Framework wrappers
 .. function:: addConvenienceForClass
 
    TODO
+
+.. function:: _setClassSetUpHook
+
+   This is a private hook that is called during the creation of a subclass.
+
+   WARNING: This hook is not part of the stable API.
+
+   .. versionadded:: 2.3
+
+.. function:: _setClassExtender
+
+   This is a private hook that's called during the creation of the proxy for
+   an Objective-C class.
+
+   WARNING: This hook is not part of the stable API.
+   
+   .. versionadded:: 2.2
+
+   .. versionchanged:: 2.3
+      TODO: In version 2.2 the hook gets called any time the bridge rescans
+      a class, in 2.3 the hook only gets called during initial construction
+      and has less oportunity to change things.
+    
 
 Types
 -----
@@ -712,3 +795,82 @@ can be pickled in an Objective-C serialized data object.
 
 Due to technical details it is not possible to pickle an Objective-C object,
 unless someone explicitly implements the pickle protocol for such an object.
+
+Properties
+----------
+
+Introduction
+............
+
+Both Python and Objective-C have support for properties, which are object attributes
+that are accessed using attribute access syntax but which result in a method call.
+
+The Python built-in :class:`property <__builtin__.property__` is used to define new
+properties in plain Python code. These properties don't full interoperate with 
+Objective-C code though because they do not necessarily implement the Objective-C
+methods that mechanisms like Key-Value Coding use to interact with a class.
+
+PyObjC therefore has a number of property classes that allow you to define new
+properties that do interact fully with the Key-Value Coding and Observation
+frameworks.
+
+TODO: Implement method for enabling properties on existing classes and tell
+why that is off by default and when it will be turned on by default.
+
+TODO: The description is way to minimal, even the design document contained
+more information.
+
+.. class:: object_property(name=None, read_only=False, copy=False, dynamic=False, ivar=None, typestr=_C_ID, depends_on=None)
+
+
+   :param name: Name of the property, the default is to extract the name from the class dictionary
+   :param read_only: Is this a read-only property? The default is a read-write property.
+   :param copy: Should the default setter method copy values? The default retains the new value without copying.
+   :param dynamic: If this argument is ``True`` the property will not generate default accessor, 
+   but will rely on some external process to create them.
+   :param ivar: Name of the instance variable that's used to store the value. When this value is ``None``
+   the name will be calculated from the property name. If it is ``NULL`` there will be no instance variable.
+   :param typestr: The Objective-C type for this property, defaults to an arbitrary object.
+   :param depends_on: A sequence of names of properties the value of this property depends on.
+
+During the class definition you can add accessor methods by using the property as a decorator
+
+
+.. method:: object_property.getter
+
+   Decorator for defining the getter method for a property. The name of the method should be the
+   same as the property::
+
+       class MyObject (NSObject):
+
+           prop = objc.object_property()
+
+           @prop.getter
+           def prop(self):
+              return 42
+
+
+.. method:: object_property.setter
+
+   Decorator for defining the setter method for a property. The name of the method should be the
+   same as the property.
+
+
+.. method:: object_property.validate
+
+   Decorator for defining a Key-Value Coding validator for this property. 
+
+  
+It is possible to override property accessor in a subclass::
+
+   class MySubclass (MyObject):
+       @MyObject.prop.getter
+       def getter(self):
+           return "the world"
+
+This can also be used to convert a read-only property to a read-write one
+by adding a setter accessor.
+
+
+   
+   

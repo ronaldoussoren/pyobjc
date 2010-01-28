@@ -323,11 +323,11 @@ def setupPythonObject():
                 value.__dict__.update(state)
             except RuntimeError:
                 for k, v in state.items():
-                    setattr(value, k, v)
+                    setattr(value, intern(k), v)
 
         if slotstate:
             for k, v in slotstate.items():
-                setattr(value, k, v)
+                setattr(value, intern(k), v)
 
         return value
     decode_dispatch[kOP_INST] = load_inst
@@ -363,11 +363,11 @@ def setupPythonObject():
 
             except RuntimeError:
                 for k, v in state.items():
-                    setattr(value, k, v)
+                    setattr(value, intern(k), v)
 
         if slotstate:
             for k, v in slotstate.items():
-                setattr(value, k, v)
+                setattr(value, intern(k), v)
 
         if listitems:
             for a in listitems:

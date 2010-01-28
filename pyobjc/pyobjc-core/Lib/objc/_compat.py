@@ -1,4 +1,5 @@
 __all__ = ['runtime', 'pluginBundle', 'registerPlugin']
+import warnings
 
 class Runtime:
     """
@@ -8,7 +9,6 @@ class Runtime:
     older versions of PyObjC.
     """
     def __getattr__(self, name):
-        import warnings
         warnings.warn("Deprecated: use objc.lookUpClass",
             DeprecationWarning)
         import objc
@@ -37,6 +37,7 @@ def registerPlugin(pluginName):
 
     Register the current py2app plugin by name and return its bundle
     """
+    warnings.warn("Deprecated: use objc.currentBundle()", DeprecationWarning)
     import os
     import sys
     path = os.path.dirname(os.path.dirname(os.environ['RESOURCEPATH']))
@@ -52,7 +53,6 @@ def pluginBundle(pluginName):
     Return the main bundle for the named plugin. This should be used
     only after it has been registered with registerPlugin
     """
-    import warnings
     warnings.warn("Deprecated: use currentBundle()", DeprecationWarning)
     from Foundation import NSBundle
     return NSBundle.bundleWithPath_(_PLUGINS[pluginName])
