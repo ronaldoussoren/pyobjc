@@ -37,7 +37,6 @@ else:
         def run_tests(self):
             import sys, os
             rootdir =  os.path.dirname(os.path.abspath(__file__))
-            print ("*"*5, rootdir)
             if rootdir in sys.path:
                 sys.path.remove(rootdir)
             from PyObjCTest.loader import makeTestSuite

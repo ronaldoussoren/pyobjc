@@ -148,6 +148,16 @@ static PyObject* sel_metadata(PyObject* self)
 		return NULL;
 	}
 
+	if (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kHIDDEN) {
+		r = PyDict_SetItemString(result, "hidden", Py_True);
+	} else {
+		r = PyDict_SetItemString(result, "hidden", Py_False);
+	}
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
 	if (((PyObjCSelector*)self)->sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
 		r = PyDict_SetItemString(result, "return_uninitialized_object", Py_True);
 		if (r == -1) {
@@ -193,6 +203,7 @@ base_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 	return PyBytes_FromString(self->sel_python_signature);
 }
 
+
 PyDoc_STRVAR(base_native_signature_doc, "original Objective-C signature for the method");
 static PyObject*
 base_native_signature(PyObject* _self, void* closure __attribute__((__unused__)))
@@ -224,6 +235,23 @@ base_signature_setter(PyObject* _self, PyObject* newVal, void* closure __attribu
 
 	PyMem_Free(self->sel_python_signature);
 	self->sel_python_signature = t;
+	return 0;
+}
+
+PyDoc_STRVAR(base_hidden_doc, "If True the method is not directly accessible as an object attribute");
+static PyObject*
+base_hidden(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	return PyBool_FromLong(((PyObjCSelector*)_self)->sel_flags & PyObjCSelector_kHIDDEN);
+}
+static int
+base_hidden_setter(PyObject* _self, PyObject* newVal, void* closure __attribute__((__unused__)))
+{
+	if (PyObject_IsTrue(newVal)) {
+		((PyObjCSelector*)_self)->sel_flags |= PyObjCSelector_kHIDDEN;
+	} else {
+		((PyObjCSelector*)_self)->sel_flags &= ~PyObjCSelector_kHIDDEN;
+	}
 	return 0;
 }
 
@@ -269,6 +297,13 @@ base_required(PyObject* _self, void* closure __attribute__((__unused__)))
 
 
 static PyGetSetDef base_getset[] = {
+	{
+		"isHidden",
+		base_hidden,
+		base_hidden_setter,
+		base_hidden_doc,
+		0
+	},
 	{
 		"isRequired",
 		base_required,
@@ -931,9 +966,12 @@ PyObjCSelector_New(PyObject* callable,
 
 	} else {
 		/* Should not happen... */
-		result->argcount = -1;
-		abort();
-
+		result->argcount = 0;
+		char* s = sel_getName(selector);
+		while ((s = strchr(s, ':')) != NULL) {
+			result->argcount++;
+			s++;
+		}
 	}
 
 	if (class_method) {
@@ -1840,6 +1878,7 @@ PyObjCSelector_FromFunction(
 		return NULL;
 	}
 
+
 	if (PyObjCPythonSelector_Check(callable)) {
 		PyObjCPythonSelector* result;
 
@@ -2022,6 +2061,10 @@ PyObjCSelector_FromFunction(
 			is_class_method,
 			oc_class);
 	}
+	if (PyObjCClass_HiddenSelector(template_class, selector)) {
+		((PyObjCSelector*)value)->sel_flags |= PyObjCSelector_kHIDDEN;
+	}
+
 	return value;
 }
 

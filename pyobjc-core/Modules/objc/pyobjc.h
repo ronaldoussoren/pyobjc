@@ -88,6 +88,7 @@
 
 
 extern BOOL PyObjC_useKVO;
+extern BOOL PyObjC_nativeProperties;
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_HideProtected;
 #if PY_VERSION_HEX < 0x03000000

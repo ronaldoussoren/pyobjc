@@ -24,6 +24,8 @@ def _update(g=globals()):
 _update()
 del _update
 
+#import objc._setup
+
 from objc._convenience import *
 from objc._bridgesupport import *
 
@@ -37,6 +39,7 @@ from objc._pythonify import *
 from objc._functions import *
 from objc._locking import *
 from objc._context import *
+from objc._properties import *
 
 import objc._pycoder as _pycoder
 

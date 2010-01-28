@@ -6,6 +6,8 @@
 
 #import <Foundation/NSInvocation.h>
 
+PyObject* PyObjC_class_setup_hook = NULL;
+
 #if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 
 /* 
@@ -608,8 +610,10 @@ static BOOL same_signature(const char* sig1, const char* sig2)
 
 Class 
 PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
-		char* name, PyObject* class_dict, PyObject* meta_dict)
+		char* name, PyObject* class_dict, PyObject* meta_dict,
+		PyObject* hiddenSelectors)
 {
+	PyObject* seq;
 	PyObject*                key_list = NULL;
 	PyObject*                key = NULL;
 	PyObject*                value = NULL;
@@ -621,9 +625,11 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	Class		 	 new_meta_class = NULL;
 	Class                    cur_class;
 	PyObject*                py_superclass = NULL;
-	Py_ssize_t               item_size;
 	int			 have_intermediate = 0;
 	int			 need_intermediate = 0;
+	PyObject* 		 instance_variables = NULL;
+	PyObject* 		 instance_methods = NULL;
+	PyObject* 		 class_methods = NULL;
 
 	if (!PyList_Check(protocols)) {
 		PyErr_Format(PyObjCExc_InternalError,  
@@ -664,7 +670,26 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True);
 
 	py_superclass = PyObjCClass_New(super_class);
-	if (py_superclass == NULL) return NULL;
+	if (py_superclass == NULL) {
+		return NULL;
+	}
+
+	instance_variables = PySet_New(NULL);
+	if (instance_variables == NULL) {
+		return NULL;
+	}
+
+	instance_methods = PySet_New(NULL);
+	if (instance_methods == NULL) {
+		Py_DECREF(instance_variables);
+		return NULL;
+	}
+	class_methods = PySet_New(NULL);
+	if (class_methods == NULL) {
+		Py_DECREF(instance_variables);
+		Py_DECREF(instance_methods);
+		return NULL;
+	}
 
 	/* We must override copyWithZone: for python classes because the
 	 * refcounts of python slots might be off otherwise. Yet it should
@@ -847,19 +872,77 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		goto error_cleanup;
 	}
 
-	/* First round, count new instance-vars and check for overridden 
-	 * methods.
+	/* First step: call class setup hooks of entries in the class dict */
+	for (i = 0; i < key_count; i++) {
+		key = PyList_GET_ITEM(key_list, i);
+
+		value = PyDict_GetItem(class_dict, key);
+		if (value == NULL) {
+			PyErr_SetString(PyObjCExc_InternalError,
+				"PyObjCClass_BuildClass: "
+				"Cannot fetch item in keylist");
+			goto error_cleanup;
+		}
+
+		/*
+		 * Check if the value has a class-setup hook, and if it does
+		 * call said hook.
+		 */
+		PyObject* m = PyObject_GetAttrString(value, 
+				"__pyobjc_class_setup__");
+		if (m == NULL) {
+			PyErr_Clear();
+
+		} else {
+			PyObject* rv = PyObject_CallFunction(m, "OOOO", 
+					key, class_dict, 
+					instance_methods,
+					class_methods);
+			Py_DECREF(m);
+			if (rv == NULL) {
+				goto error_cleanup;
+			}
+			Py_DECREF(rv);
+		}
+	}
+
+	Py_DECREF(key_list);
+
+	/* Second step: call global class construction hook */
+	if (PyObjC_class_setup_hook != NULL) {
+		PyObject* rv = PyObject_CallFunction(
+			PyObjC_class_setup_hook,
+			"sOOOOO", name, py_superclass, 
+			class_dict, instance_variables, 
+			instance_methods, class_methods);
+		if (rv == NULL) {
+			goto error_cleanup;
+		}
+
+		/* Todo: do we need to do something with a result? */
+		Py_XDECREF(rv);
+	}
+
+
+	/* The class hooks can modify the class dict, recalculate the key list */
+	key_list = PyDict_Keys(class_dict);
+	if (key_list == NULL) {
+		goto error_cleanup;
+	}
+
+	key_count = PyList_Size(key_list);
+	if (PyErr_Occurred()) {
+		Py_DECREF(key_list);
+		goto error_cleanup;
+	}
+
+	/* Step 2b: Collect methods and instance variables in the class dict
+	 *          into the 3 sets.
+	 *
+	 * FIXME: This work should be done by the class setup hook instead.
 	 */
 	for (i = 0; i < key_count; i++) {
 		key = PyList_GET_ITEM(key_list, i);
-#if 0
-		if (PyErr_Occurred()) {
-			PyErr_SetString(PyObjCExc_InternalError,
-				"PyObjCClass_BuildClass: "
-				"Cannot fetch key in keylist");
-			goto error_cleanup;
-		}
-#endif
 
 		value = PyDict_GetItem(class_dict, key);
 		if (value == NULL) {
@@ -870,63 +953,88 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		}
 
 		if (PyObjCInstanceVariable_Check(value)) {
-			if (PyObjCInstanceVariable_SetName(value, key) == -1) {
+			if (PySet_Add(instance_variables, value) == -1) {
 				goto error_cleanup;
 			}
-			if (class_getInstanceVariable(super_class, 
-			    ((PyObjCInstanceVariable*)value)->name) != NULL) {
-				PyErr_Format(PyObjCExc_Error,
-					"a superclass already has an instance "
-					"variable with this name: %s",
-					((PyObjCInstanceVariable*)value)->name);
-				goto error_cleanup;
-			}
-
-			if (((PyObjCInstanceVariable*)value)->isSlot) {
-				item_size = sizeof(PyObject**);
-			} else {
-				item_size = PyObjCRT_SizeOfType(
-					((PyObjCInstanceVariable*)value)->type);
-			}
-			if (item_size == -1) goto error_cleanup;
-
-
-		} else if (PyObjCNativeSelector_Check(value)) {
-			char methType = '-';
-			if (PyObjCSelector_IsClassMethod(value)) {
-				methType = '+';
-			}
-			PyErr_Format(PyExc_TypeError,
-				"native selector %c%s of %s",
-				methType, 
-				sel_getName(PyObjCSelector_GetSelector(value)),
-				class_getName(PyObjCSelector_GetClass(value)));
-			goto error_cleanup;
 
 		} else if (PyObjCSelector_Check(value)) {
-			PyObjCSelector* sel = (PyObjCSelector*)value;
+			int r;
 
-			/* If it already has a sel_class, create a copy */
-#if 0
-			if (sel->sel_class != NULL) {
-				value = PyObjCSelector_Copy(value);
-				if (value == NULL) goto error_cleanup;
-				if (PyDict_SetItem(class_dict, key, value) == -1) {
-					Py_DECREF(value);
+			/* Check if the 'key' is the name as the python 
+			 * representation of our selector. If not: add the
+			 * python representation of our selector to the 
+			 * dict as well to ensure that the ObjC interface works
+			 * from Python as well.
+			 *
+			 * NOTE: This also allows one to add both a class
+			 * and instance method for the same selector in one
+			 * generation.
+			 */
+			char buf[1024];
+			PyObject* pyname = PyText_FromString(
+				PyObjC_SELToPythonName(
+					PyObjCSelector_GetSelector(value), 
+					buf, sizeof(buf)));
+			if (pyname == NULL) {
+				goto error_cleanup;
+			}
+			int shouldCopy = PyObject_RichCompareBool(pyname, key, Py_EQ);
+			if (shouldCopy == -1) {
+				goto error_cleanup;
+			} else if (!shouldCopy) {
+				Py_DECREF(pyname); pyname = NULL;
+			}
+
+			if (PyObjCSelector_GetClass(value) != NULL) {
+				PyObject* new_value;
+				new_value = PyObjCSelector_Copy(value);
+				if (new_value == NULL) {
 					goto error_cleanup;
 				}
-				Py_DECREF(value);
-				sel = (PyObjCSelector*)value;
+				if (PyDict_SetItem(class_dict, key, new_value) == -1) {
+					Py_DECREF(new_value);
+					goto error_cleanup;
+				}
+				value = new_value;
+				Py_DECREF(new_value); /* The value is still in the dict, and hence safe to use */
 			}
-#endif
 
-			/* Set sel_class */
-			sel->sel_class = new_class;
+			if (PyObjCSelector_IsClassMethod(value)) {
+				r = PySet_Add(class_methods, value);
+				if (r == -1) {
+					goto error_cleanup;
+				}
+
+				if (shouldCopy) {
+					r = PyDict_SetItem(meta_dict, pyname, value);
+					Py_DECREF(pyname);
+					if (r == -1)  {
+						goto error_cleanup;
+					}
+				}
+				if (PyDict_SetItem(meta_dict, key, value) == -1) {
+					goto error_cleanup;
+				}
+				if (PyDict_DelItem(class_dict, key) == -1) {
+					goto error_cleanup;
+				}
+			} else {
+				r = PySet_Add(instance_methods, value);
+				if (shouldCopy) {
+					r = PyDict_SetItem(class_dict, pyname, value);
+					Py_DECREF(pyname);
+					if (r == -1) {
+						goto error_cleanup;
+					}
+				}
+			}
+
 
 		} else if (
 				PyMethod_Check(value) 
 			     || PyFunction_Check(value) 
 			     || PyObject_TypeCheck(value, &PyClassMethod_Type)){
+
 
 			PyObject* pyname;
 			char*     ocname;
@@ -955,39 +1063,169 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				goto error_cleanup;
 			}
 			
-			if (ocname[0] == '_' && ocname[1] == '_') {
+			if (ocname[0] != '_' || ocname[1] != '_') {
 				/* Skip special methods (like __getattr__) to
 				 * avoid confusing type().
 				 */
-				Py_XDECREF(pyname_bytes);
-				continue;
-			}
+				PyObject* new_value;
 
-			value = PyObjCSelector_FromFunction(
+				new_value = PyObjCSelector_FromFunction(
 					pyname,
 					value,
 					py_superclass,
 					protocols);
-			if (value == NULL) {
-				Py_XDECREF(pyname_bytes);
-				goto error_cleanup;
-			}
+				if (new_value == NULL) {
+					Py_CLEAR(pyname_bytes);
+					goto error_cleanup;
+				}
+				value = new_value;
 
-			if (!PyObjCSelector_Check(value)) {
-				Py_XDECREF(pyname_bytes);
-				Py_DECREF(value);
-				continue;
-			}
+				Py_CLEAR(pyname_bytes);
 
-			((PyObjCSelector*)value)->sel_class = new_class;
+				if (PyObjCSelector_Check(value)) {
+					int r;
 
-			if (PyDict_SetItem(class_dict, key, value) < 0) {
-				Py_XDECREF(pyname_bytes);
-				Py_DECREF(value); value = NULL;
-				goto error_cleanup;
+
+					if (PyObjCSelector_IsClassMethod(value)) {
+						if (PyDict_SetItem(meta_dict, key, value) == -1) {
+							goto error_cleanup;
+						}
+						if (PyDict_DelItem(class_dict, key) == -1) {
+							goto error_cleanup;
+						}
+
+						r = PySet_Add(class_methods, value);
+
+					} else {
+						if (PyDict_SetItem(class_dict, key, value) < 0) {
+							Py_CLEAR(value);
+							goto error_cleanup;
+						}
+
+						r = PySet_Add(instance_methods, value);
+					}
+					if (r == -1) {
+						goto error_cleanup;
+					}
+				}
 			}
-			Py_XDECREF(pyname_bytes);
-			Py_DECREF(value); value = NULL;
+			Py_CLEAR(pyname_bytes);
+		}
+	}
+
+	/* Keylist is not needed anymore */
+	Py_DECREF(key_list); key_list = NULL;
+
+	/* Step 3: Check instance variables */
+
+	/*    convert to 'fast sequence' to ensure stable order when accessing */
+	seq = PySequence_Fast(instance_variables, "converting instance variable set to sequence");
+	if (seq == NULL) {
+		goto error_cleanup;
+	}
+	Py_DECREF(instance_variables);
+	instance_variables = seq;
+	for (i = 0; i < PySequence_Fast_GET_SIZE(instance_variables); i++) {
+		value = PySequence_Fast_GET_ITEM(instance_variables, i);
+
+		if (!PyObjCInstanceVariable_Check(value)) {
+			continue;
+		}
+
+		/* Our only check for now is that instance variable names must be unique */
+		/* XXX: Is this really necessary? */
+		if (class_getInstanceVariable(super_class, PyObjCInstanceVariable_GetName(value)) != NULL) {
+			PyErr_Format(PyObjCExc_Error,
+				"a superclass already has an instance "
+				"variable with this name: %s",
+				PyObjCInstanceVariable_GetName(value));
+			goto error_cleanup;
+		}
+	}
+
+	/* Step 4: Verify instance and class methods sets */
+
+	/*   first convert then to 'Fast' sequences for easier access */
+	seq = PySequence_Fast(instance_methods, "converting instance method set to sequence");
+	if (seq == NULL) {
+		goto error_cleanup;
+	}
+	Py_DECREF(instance_methods);
+	instance_methods = seq;
+
+	seq = PySequence_Fast(class_methods, "converting class method set to sequence");
+	if (seq == NULL) {
+		goto error_cleanup;
+	}
+	Py_DECREF(class_methods);
+	class_methods = seq;
+
+	for (i = 0; i < PySequence_Fast_GET_SIZE(instance_methods); i++) {
+		value = PySequence_Fast_GET_ITEM(instance_methods, i);
+
+		if (!PyObjCSelector_Check(value)) {
+			continue;
+		}
+
+		if (PyObjCSelector_IsClassMethod(value)) {
+			PyErr_Format(PyExc_TypeError,
+				"class method in instance method set: -%s",
+				sel_getName(PyObjCSelector_GetSelector(value)));
+			goto error_cleanup;
+		}
+
+		if (PyObjCNativeSelector_Check(value)) {
+			PyErr_Format(PyExc_TypeError,
+				"native selector -%s of %s",
+				sel_getName(PyObjCSelector_GetSelector(value)),
+				class_getName(PyObjCSelector_GetClass(value)));
+			goto error_cleanup;
+		} else if (PyObjCSelector_Check(value)) {
+			PyObjCSelector* sel = (PyObjCSelector*)value;
+
+			/* Set sel_class */
+			sel->sel_class = new_class;
+
+			if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
+				PyObject* v = PyBytes_InternFromString(
+					sel_getName(PyObjCSelector_GetSelector(value)));
+				if (v == NULL) {
+					goto error_cleanup;
+				}
+				int r = PySet_Add(hiddenSelectors, v);
+				Py_DECREF(v);
+				if (r == -1) {
+					goto error_cleanup;
+				}
+			}
+		}
+	}
+	for (i = 0; i < PySequence_Fast_GET_SIZE(class_methods); i++) {
+		value = PySequence_Fast_GET_ITEM(class_methods, i);
+
+		if (!PyObjCSelector_Check(value)) {
+			continue;
+		}
+
+		if (!PyObjCSelector_IsClassMethod(value)) {
+			PyErr_Format(PyExc_TypeError,
+				"instance method in class method set: -%s",
+				sel_getName(PyObjCSelector_GetSelector(value)));
+			goto error_cleanup;
+		}
+
+
+		if (PyObjCNativeSelector_Check(value)) {
+			PyErr_Format(PyExc_TypeError,
+				"native selector +%s of %s",
+				sel_getName(PyObjCSelector_GetSelector(value)),
+				class_getName(PyObjCSelector_GetClass(value)));
+			goto error_cleanup;
+		} else if (PyObjCSelector_Check(value)) {
+			PyObjCSelector* sel = (PyObjCSelector*)value;
+
+			/* Set sel_class */
+			sel->sel_class = new_class;
 		}
 	}
 
@@ -1115,161 +1353,136 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 #undef		METH
 	}
 
-	for (i = 0; i < key_count; i++) {
-		key = PyList_GetItem(key_list, i);
-		if (key == NULL) {
-			PyErr_SetString(PyObjCExc_InternalError,
-				"PyObjCClass_BuildClass: "
-				"Cannot fetch key in keylist");
+	/* add instance variables */
+	for (i = 0; i < PySequence_Fast_GET_SIZE(instance_variables); i++) {
+		value = PySequence_Fast_GET_ITEM(instance_variables, i);
+
+		if (!PyObjCInstanceVariable_Check(value)) {
+			continue;
+		}
+
+		char* type;
+		size_t size;
+		size_t align;
+
+
+		if (PyObjCInstanceVariable_IsSlot(value)) {
+			type = @encode(PyObject*);
+			size = sizeof(PyObject*);
+		} else {
+			type = PyObjCInstanceVariable_GetType(value);
+			size = PyObjCRT_SizeOfType(type);
+		}
+		align = PyObjCRT_AlignOfType(type);
+
+
+		if (PyObjCInstanceVariable_GetName(value) == NULL) {
+			PyErr_SetString(PyObjCExc_Error,
+				"instance variable without a name");
 			goto error_cleanup;
 		}
 
-		value = PyDict_GetItem(class_dict, key);
-		if (value == NULL)  {
-			PyErr_SetString(PyObjCExc_InternalError,
-				"PyObjCClass_BuildClass: "
-				"Cannot fetch item in keylist");
+		if (!preclass_addIvar(new_class, 
+			PyObjCInstanceVariable_GetName(value),
+			size,
+			align,
+			type
+			)) {
+
 			goto error_cleanup;
 		}
-
-		if (PyObjCInstanceVariable_Check(value)) {
-			char* type;
-			size_t size;
-			size_t align;
-
-
-			if (PyObjCInstanceVariable_IsSlot(value)) {
-				type = @encode(PyObject*);
-				size = sizeof(PyObject*);
-			} else {
-				type = PyObjCInstanceVariable_GetType(value);
-				size = PyObjCRT_SizeOfType(type);
-			}
-			align = PyObjCRT_AlignOfType(type);
-
-			if (!preclass_addIvar(new_class, 
-				PyObjCInstanceVariable_GetName(value),
-				size,
-				align,
-				type
-				)) {
-
-				goto error_cleanup;
-			}
-
-		} else if (PyObjCSelector_Check(value)) {
-			PyObjCSelector* sel = (PyObjCSelector*)value;
-			Method	      meth;
-			int           is_override = 0;
-			Class	      cls;
-			IMP	      imp;
-			
-			/* Check if the 'key' is the name as the python 
-			 * representation of our selector. If not: add the
-			 * python representation of our selector to the 
-			 * dict as well to ensure that the ObjC interface works
-			 * from Python as well.
-			 *
-			 * NOTE: This also allows one to add both a class
-			 * and instance method for the same selector in one
-			 * generation.
-			 */
-			char buf[1024];
-			PyObject* pyname = PyText_FromString(
-				PyObjC_SELToPythonName(sel->sel_selector, buf, sizeof(buf)));
-			if (pyname == NULL) goto error_cleanup;
-			int shouldCopy = PyObject_RichCompareBool(pyname, key, Py_EQ);
-			if (shouldCopy == -1) goto error_cleanup;
-
-
-			if (sel->sel_flags & PyObjCSelector_kCLASS_METHOD) {
-				meth = class_getClassMethod(super_class,
-					sel->sel_selector);
-				if (meth) {
-					is_override = 1;
-
-					if (!same_signature(method_getTypeEncoding(meth), 
-						sel->sel_native_signature)) {
-					
-						PyErr_Format(PyObjCExc_BadPrototypeError,
-							"%R has signature that is not compatible with super-class",
-							sel);
-						goto error_cleanup;
-					}
-				}
-				cls = new_meta_class;
-
-				/* Class method: the value should be in the
-				 * metadict instead of the regular dict. 
-				 * Make it so.
-				 */
-				if (shouldCopy) {
-					if (PyDict_SetItem(meta_dict, pyname, value) == -1) {
-						Py_DECREF(pyname);
-						goto error_cleanup;
-					}
-				}
-				Py_DECREF(pyname);
-
-				if (PyDict_SetItem(meta_dict, key, value) == -1)
-					goto error_cleanup;
-				if (PyDict_DelItem(class_dict, key) == -1)
-					goto error_cleanup;
-
-
-
-			} else {
-				meth = class_getInstanceMethod(super_class,
-					sel->sel_selector);
-				if (meth) {
-					is_override = 1;
-					if (!same_signature(method_getTypeEncoding(meth), 
-						sel->sel_native_signature)) {
-						
-						PyErr_Format(PyObjCExc_BadPrototypeError,
-							"%R has signature that is not compatible with super-class",
-							sel);
-						goto error_cleanup;
-					}
-				}
-				cls = new_class;
-
-				if (shouldCopy) {
-					if (PyDict_SetItem(class_dict, pyname, value) == -1) {
-						Py_DECREF(pyname);
-						goto error_cleanup;
-					}
-				}
-				Py_DECREF(pyname);
-			}
-		
-			if (is_override) {
-				imp = PyObjC_MakeIMP(cls, super_class, value, value);
-			} else  {
-				imp = PyObjC_MakeIMP(cls, nil, value, value);
-			}
-			if (imp == NULL) {
-				goto error_cleanup;
-			}
-
-			if (!preclass_addMethod(cls, sel->sel_selector, imp,
-						sel->sel_native_signature)) {
-				goto error_cleanup;
-			}
-
-			if (sel->sel_class == NULL) {
-				sel->sel_class = new_class;
-			}
-		} /* XXX: else if (PyObjCIMP_Check(value)) */
 	}
-	Py_DECREF(key_list);
-	key_list = NULL;
+
+	/* instance methods */
+	for (i = 0; i < PySequence_Fast_GET_SIZE(instance_methods); i++) {
+		value = PySequence_Fast_GET_ITEM(instance_methods, i);
+
+		if (!PyObjCSelector_Check(value)) {
+			continue;
+		}
+
+		Method	      meth;
+		int           is_override = 0;
+		IMP	      imp;
+
+		meth = class_getInstanceMethod(super_class,
+			PyObjCSelector_GetSelector(value));
+		if (meth) {
+			is_override = 1;
+			if (!same_signature(method_getTypeEncoding(meth), 
+				PyObjCSelector_GetNativeSignature(value))) {
+				
+				PyErr_Format(PyObjCExc_BadPrototypeError,
+					"%R has signature that is not compatible with super-class",
+					value);
+				goto error_cleanup;
+			}
+		}
+		if (is_override) {
+			imp = PyObjC_MakeIMP(new_class, super_class, value, value);
+		} else  {
+			imp = PyObjC_MakeIMP(new_class, nil, value, value);
+		}
+		if (imp == NULL) {
+			goto error_cleanup;
+		}
+
+		if (!preclass_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
+					PyObjCSelector_GetNativeSignature(value))) {
+			goto error_cleanup;
+		}
+	}
+
+	/* class methods */
+	for (i = 0; i < PySequence_Fast_GET_SIZE(class_methods); i++) {
+		value = PySequence_Fast_GET_ITEM(class_methods, i);
+
+		if (!PyObjCSelector_Check(value)) {
+			continue;
+		}
+
+		Method	      meth;
+		int           is_override = 0;
+		IMP	      imp;
+
+
+		meth = class_getClassMethod(super_class, PyObjCSelector_GetSelector(value));
+		if (meth) {
+			is_override = 1;
+
+			if (!same_signature(method_getTypeEncoding(meth), 
+					PyObjCSelector_GetNativeSignature(value))) {
+				
+				PyErr_Format(PyObjCExc_BadPrototypeError,
+					"%R has signature that is not compatible with super-class",
+					value);
+					goto error_cleanup;
+			}
+		}
+
+		if (is_override) {
+			imp = PyObjC_MakeIMP(new_meta_class, super_class, value, value);
+		} else  {
+			imp = PyObjC_MakeIMP(new_meta_class, nil, value, value);
+		}
+		if (imp == NULL) {
+			goto error_cleanup;
+		}
+
+		if (!preclass_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
+					PyObjCSelector_GetNativeSignature(value))) {
+			goto error_cleanup;
+		}
+	}
 
 	Py_XDECREF(py_superclass); py_superclass = NULL;
 
 	if (PyDict_DelItemString(class_dict, "__dict__") < 0) {
 		PyErr_Clear();
 	}
+	Py_XDECREF(instance_variables); instance_variables = NULL;
+	Py_XDECREF(instance_methods); instance_methods = NULL;
+	Py_XDECREF(class_methods); class_methods = NULL;
 
 	/* 
 	 * NOTE: Class is not registered yet, we do that as lately as possible
@@ -1279,6 +1492,9 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	return new_class;
 
 error_cleanup:
+	Py_XDECREF(instance_variables);
+	Py_XDECREF(instance_methods);
+	Py_XDECREF(class_methods);
 	Py_XDECREF(py_superclass);
 
 	if (key_list) {

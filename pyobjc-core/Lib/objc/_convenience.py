@@ -17,7 +17,7 @@ TODO:
     set(['__cmp__'])
 
 """
-from objc._objc import setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
+from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
 from itertools import imap
 import sys
 
@@ -153,7 +153,7 @@ def _add_convenience_methods(super_class, name, type_dict):
 
         type_dict['_'] = property(kvc)
 
-setClassExtender(add_convenience_methods)
+_setClassExtender(add_convenience_methods)
 
 
 #

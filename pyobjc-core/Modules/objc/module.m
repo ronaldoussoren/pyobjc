@@ -25,6 +25,7 @@
 int PyObjC_VerboseLevel = 0;
 int PyObjC_HideProtected = 1;
 BOOL PyObjC_useKVO = YES;
+BOOL PyObjC_nativeProperties = NO;
 
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
@@ -1527,7 +1528,7 @@ PyDoc_STRVAR(_makeClosure_doc,
   "C. This object has no useable interface from Python.\n"
  );
 #if PY_VERSION_HEX < 0x03000000
-static void _callback_cleanup(void* closure, void* unused __attribute__((__unused__)))
+static void _callback_cleanup(void* closure)
 {
 	PyObjCFFI_FreeIMP((IMP)closure);
 }
@@ -1645,8 +1646,38 @@ PyObjC_AdjustSelf(PyObject* object)
 	return object;
 }
 
+static PyObject*
+mod_propertiesForClass(PyObject* mod __attribute__((__unused__)), PyObject* object)
+{
+	return PyObjCClass_ListProperties(object);
+}
+
+static PyObject* 
+mod_setClassSetupHook(PyObject* mod __attribute__((__unused__)), PyObject* hook)
+{
+	PyObject* curval = PyObjC_class_setup_hook;
+
+	PyObjC_class_setup_hook = hook;
+	Py_INCREF(hook);
+
+	return curval;
+}
+
 
 static PyMethodDef mod_methods[] = {
+	{
+		"_setClassSetUpHook",
+		(PyCFunction)mod_setClassSetupHook,
+		METH_O,
+		"Private: set hook used during subclass creation",
+	},
+
+	{
+		"propertiesForClass",
+	  	(PyCFunction)mod_propertiesForClass,
+		METH_O,
+		"Return information about properties from the runtim",
+	},
 	{
 	  "splitSignature",
 	  (PyCFunction)objc_splitSignature,
@@ -1654,7 +1685,7 @@ static PyMethodDef mod_methods[] = {
 	  objc_splitSignature_doc
 	},
 	{
-	  "_splitStruct",
+	  "splitStruct",
 	  (PyCFunction)objc_splitStruct,
 	  METH_VARARGS|METH_KEYWORDS,
 	  objc_splitStruct_doc,
@@ -1673,7 +1704,7 @@ static PyMethodDef mod_methods[] = {
 	},
 	{ "currentBundle", (PyCFunction)currentBundle, METH_NOARGS, currentBundle_doc },
 	{ "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
-	{ "setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
+	{ "_setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
 	{ "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
 	{ "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
 	{ "removeAutoreleasePool", (PyCFunction)remove_autorelease_pool, METH_VARARGS|METH_KEYWORDS, remove_autorelease_pool_doc },

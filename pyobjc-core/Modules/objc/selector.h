@@ -7,6 +7,7 @@
  */
 
 #define PyObjCSelector_kCLASS_METHOD          0x000001
+#define PyObjCSelector_kHIDDEN                0x000002
 #define PyObjCSelector_kREQUIRED              0x000004
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
 
@@ -56,6 +57,7 @@ extern PyTypeObject PyObjCPythonSelector_Type;
 
 PyObject* PyObjCSelector_Copy(PyObject* obj);
 char* PyObjCSelector_Signature(PyObject* obj);
+#define PyObjCSelector_GetNativeSignature(obj) (((PyObjCSelector*)obj)->sel_native_signature)
 SEL   PyObjCSelector_GetSelector(PyObject* obj);
 int   PyObjCSelector_GetFlags(PyObject* obj);
 Class PyObjCSelector_GetClass(PyObject* obj);

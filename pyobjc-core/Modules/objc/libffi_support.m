@@ -156,6 +156,7 @@ static ffi_type* signature_to_ffi_type(const char* argtype);
 
 #if PY_VERSION_HEX < 0x03000000
 static void cleanup_ffitype_capsule(void* ptr, void* context __attribute__((__unused__)))
+
 {
 	free_type(ptr);
 }
