@@ -4,20 +4,20 @@ from AppKit import *
 
 class TestNSComboBox (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(NSComboBoxWillPopUpNotification, unicode)
-        self.failUnlessIsInstance(NSComboBoxWillDismissNotification, unicode)
-        self.failUnlessIsInstance(NSComboBoxSelectionDidChangeNotification, unicode)
-        self.failUnlessIsInstance(NSComboBoxSelectionIsChangingNotification, unicode)
+        self.assertIsInstance(NSComboBoxWillPopUpNotification, unicode)
+        self.assertIsInstance(NSComboBoxWillDismissNotification, unicode)
+        self.assertIsInstance(NSComboBoxSelectionDidChangeNotification, unicode)
+        self.assertIsInstance(NSComboBoxSelectionIsChangingNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSComboBox.hasVerticalScroller)
-        self.failUnlessArgIsBOOL(NSComboBox.setHasVerticalScroller_, 0)
-        self.failUnlessResultIsBOOL(NSComboBox.isButtonBordered)
-        self.failUnlessArgIsBOOL(NSComboBox.setButtonBordered_, 0)
-        self.failUnlessResultIsBOOL(NSComboBox.usesDataSource)
-        self.failUnlessArgIsBOOL(NSComboBox.setUsesDataSource_, 0)
-        self.failUnlessResultIsBOOL(NSComboBox.completes)
-        self.failUnlessArgIsBOOL(NSComboBox.setCompletes_, 0)
+        self.assertResultIsBOOL(NSComboBox.hasVerticalScroller)
+        self.assertArgIsBOOL(NSComboBox.setHasVerticalScroller_, 0)
+        self.assertResultIsBOOL(NSComboBox.isButtonBordered)
+        self.assertArgIsBOOL(NSComboBox.setButtonBordered_, 0)
+        self.assertResultIsBOOL(NSComboBox.usesDataSource)
+        self.assertArgIsBOOL(NSComboBox.setUsesDataSource_, 0)
+        self.assertResultIsBOOL(NSComboBox.completes)
+        self.assertArgIsBOOL(NSComboBox.setCompletes_, 0)
 
 if __name__ == "__main__":
     main()

@@ -4,31 +4,31 @@ from Foundation import *
 
 class TestNSComparisonPredicate (TestCase):
     def testConstants(self):
-        self.assertEquals(NSCaseInsensitivePredicateOption, 1)
-        self.assertEquals(NSDiacriticInsensitivePredicateOption, 2)
+        self.assertEqual(NSCaseInsensitivePredicateOption, 1)
+        self.assertEqual(NSDiacriticInsensitivePredicateOption, 2)
 
-        self.assertEquals(NSDirectPredicateModifier, 0)
-        self.assertEquals(NSAllPredicateModifier, 1)
-        self.assertEquals(NSAnyPredicateModifier, 2)
+        self.assertEqual(NSDirectPredicateModifier, 0)
+        self.assertEqual(NSAllPredicateModifier, 1)
+        self.assertEqual(NSAnyPredicateModifier, 2)
 
-        self.assertEquals(NSLessThanPredicateOperatorType, 0)
-        self.assertEquals(NSLessThanOrEqualToPredicateOperatorType, 1)
-        self.assertEquals(NSGreaterThanPredicateOperatorType, 2)
-        self.assertEquals(NSGreaterThanOrEqualToPredicateOperatorType, 3)
-        self.assertEquals(NSEqualToPredicateOperatorType, 4)
-        self.assertEquals(NSNotEqualToPredicateOperatorType, 5)
-        self.assertEquals(NSMatchesPredicateOperatorType, 6)
-        self.assertEquals(NSLikePredicateOperatorType, 7)
-        self.assertEquals(NSBeginsWithPredicateOperatorType, 8)
-        self.assertEquals(NSEndsWithPredicateOperatorType, 9)
-        self.assertEquals(NSInPredicateOperatorType, 10)
-        self.assertEquals(NSCustomSelectorPredicateOperatorType, 11)
-        self.assertEquals(NSContainsPredicateOperatorType, 99)
-        self.assertEquals(NSBetweenPredicateOperatorType, 100)
+        self.assertEqual(NSLessThanPredicateOperatorType, 0)
+        self.assertEqual(NSLessThanOrEqualToPredicateOperatorType, 1)
+        self.assertEqual(NSGreaterThanPredicateOperatorType, 2)
+        self.assertEqual(NSGreaterThanOrEqualToPredicateOperatorType, 3)
+        self.assertEqual(NSEqualToPredicateOperatorType, 4)
+        self.assertEqual(NSNotEqualToPredicateOperatorType, 5)
+        self.assertEqual(NSMatchesPredicateOperatorType, 6)
+        self.assertEqual(NSLikePredicateOperatorType, 7)
+        self.assertEqual(NSBeginsWithPredicateOperatorType, 8)
+        self.assertEqual(NSEndsWithPredicateOperatorType, 9)
+        self.assertEqual(NSInPredicateOperatorType, 10)
+        self.assertEqual(NSCustomSelectorPredicateOperatorType, 11)
+        self.assertEqual(NSContainsPredicateOperatorType, 99)
+        self.assertEqual(NSBetweenPredicateOperatorType, 100)
 
     def testMethods(self):
-        self.failUnlessArgIsSEL(NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
-        self.failUnlessArgIsSEL(NSComparisonPredicate.initWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
+        self.assertArgIsSEL(NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
+        self.assertArgIsSEL(NSComparisonPredicate.initWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + '@:@')
 
 if __name__ == "__main__":
     main()

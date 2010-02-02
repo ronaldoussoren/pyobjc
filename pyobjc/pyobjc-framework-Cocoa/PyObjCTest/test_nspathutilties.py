@@ -9,7 +9,7 @@ class TestNSPathUtilities(TestCase):
                 NSSearchPathForDirectoriesInDomains( NSAllLibrariesDirectory, NSAllDomainsMask, NO ),
                       "NSSearchPathForDirectoriesInDomains() failed to return anything." )
 
-        self.failUnlessArgIsBOOL(NSSearchPathForDirectoriesInDomains, 2)
+        self.assertArgIsBOOL(NSSearchPathForDirectoriesInDomains, 2)
 
     def testTrue(self):
         for boolVal in (1, 1==1, YES, -1):
@@ -23,68 +23,62 @@ class TestNSPathUtilities(TestCase):
 
     def testFunctions(self):
         s = NSUserName()
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
         s = NSFullUserName()
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
         s = NSHomeDirectory()
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
         s = NSHomeDirectoryForUser('root')
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
         s = NSTemporaryDirectory()
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
         s = NSOpenStepRootDirectory()
-        self.failUnless(isinstance(s, unicode))
-
+        self.assertIsInstance(s, unicode)
     def testConstants(self):
-        self.assertEquals(NSApplicationDirectory, 1)
-        self.assertEquals(NSDemoApplicationDirectory, 2)
-        self.assertEquals(NSDeveloperApplicationDirectory, 3)
-        self.assertEquals(NSAdminApplicationDirectory, 4)
-        self.assertEquals(NSLibraryDirectory, 5)
-        self.assertEquals(NSDeveloperDirectory, 6)
-        self.assertEquals(NSUserDirectory, 7)
-        self.assertEquals(NSDocumentationDirectory, 8)
-        self.assertEquals(NSDocumentDirectory, 9)
-        self.assertEquals(NSCoreServiceDirectory, 10)
-        self.assertEquals(NSDesktopDirectory, 12)
-        self.assertEquals(NSCachesDirectory, 13)
-        self.assertEquals(NSApplicationSupportDirectory, 14)
-        self.assertEquals(NSDownloadsDirectory, 15)
-        self.assertEquals(NSAllApplicationsDirectory, 100)
-        self.assertEquals(NSAllLibrariesDirectory, 101)
+        self.assertEqual(NSApplicationDirectory, 1)
+        self.assertEqual(NSDemoApplicationDirectory, 2)
+        self.assertEqual(NSDeveloperApplicationDirectory, 3)
+        self.assertEqual(NSAdminApplicationDirectory, 4)
+        self.assertEqual(NSLibraryDirectory, 5)
+        self.assertEqual(NSDeveloperDirectory, 6)
+        self.assertEqual(NSUserDirectory, 7)
+        self.assertEqual(NSDocumentationDirectory, 8)
+        self.assertEqual(NSDocumentDirectory, 9)
+        self.assertEqual(NSCoreServiceDirectory, 10)
+        self.assertEqual(NSDesktopDirectory, 12)
+        self.assertEqual(NSCachesDirectory, 13)
+        self.assertEqual(NSApplicationSupportDirectory, 14)
+        self.assertEqual(NSDownloadsDirectory, 15)
+        self.assertEqual(NSAllApplicationsDirectory, 100)
+        self.assertEqual(NSAllLibrariesDirectory, 101)
 
-        self.assertEquals(NSUserDomainMask, 1)
-        self.assertEquals(NSLocalDomainMask, 2)
-        self.assertEquals(NSNetworkDomainMask, 4)
-        self.assertEquals(NSSystemDomainMask, 8)
-        self.assertEquals(NSAllDomainsMask, 0x0ffff)
+        self.assertEqual(NSUserDomainMask, 1)
+        self.assertEqual(NSLocalDomainMask, 2)
+        self.assertEqual(NSNetworkDomainMask, 4)
+        self.assertEqual(NSSystemDomainMask, 8)
+        self.assertEqual(NSAllDomainsMask, 0x0ffff)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessEqual(NSAutosavedInformationDirectory, 11)
+        self.assertEqual(NSAutosavedInformationDirectory, 11)
 
-        self.failUnlessEqual(NSInputMethodsDirectory, 16)
-        self.failUnlessEqual(NSMoviesDirectory, 17)
-        self.failUnlessEqual(NSMusicDirectory, 18)
-        self.failUnlessEqual(NSPicturesDirectory, 19)
-        self.failUnlessEqual(NSPrinterDescriptionDirectory, 20)
-        self.failUnlessEqual(NSSharedPublicDirectory, 21)
-        self.failUnlessEqual(NSPreferencePanesDirectory, 22)
-        self.failUnlessEqual(NSItemReplacementDirectory, 99)
+        self.assertEqual(NSInputMethodsDirectory, 16)
+        self.assertEqual(NSMoviesDirectory, 17)
+        self.assertEqual(NSMusicDirectory, 18)
+        self.assertEqual(NSPicturesDirectory, 19)
+        self.assertEqual(NSPrinterDescriptionDirectory, 20)
+        self.assertEqual(NSSharedPublicDirectory, 21)
+        self.assertEqual(NSPreferencePanesDirectory, 22)
+        self.assertEqual(NSItemReplacementDirectory, 99)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSString.isAbsolutePath)
-        self.failUnlessArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)
-        self.failUnlessArgIsBOOL(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1)
-        self.failUnlessArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2)
-        self.failUnlessResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
-        self.failUnlessArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, 'o^' + objc._C_CHAR_AS_TEXT)
-        self.failUnlessArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
+        self.assertResultIsBOOL(NSString.isAbsolutePath)
+        self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)
+        self.assertArgIsBOOL(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1)
+        self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2)
+        self.assertResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
+        self.assertArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, 'o^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
 
 if __name__ == '__main__':
     main( )

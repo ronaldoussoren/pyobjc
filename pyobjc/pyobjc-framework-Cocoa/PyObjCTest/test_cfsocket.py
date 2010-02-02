@@ -6,55 +6,48 @@ import CoreFoundation
 
 class TestSocket (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFSocketRef)
+        self.assertIsCFType(CFSocketRef)
 
     def testTypeID(self):
-        self.failUnless(isinstance(CFSocketGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFSocketGetTypeID(), (int, long))
     def testConstants(self):
-        self.failUnless(kCFSocketSuccess == 0)
-        self.failUnless(kCFSocketError == -1)
-        self.failUnless(kCFSocketTimeout == -2)
-
-        self.failUnless(kCFSocketNoCallBack == 0)
-        self.failUnless(kCFSocketReadCallBack == 1)
-        self.failUnless(kCFSocketAcceptCallBack == 2)
-        self.failUnless(kCFSocketDataCallBack == 3)
-        self.failUnless(kCFSocketConnectCallBack == 4)
-        self.failUnless(kCFSocketWriteCallBack == 8)
-
-        self.failUnless(kCFSocketAutomaticallyReenableReadCallBack == 1)
-        self.failUnless(kCFSocketAutomaticallyReenableAcceptCallBack == 2)
-        self.failUnless(kCFSocketAutomaticallyReenableDataCallBack == 3)
-        self.failUnless(kCFSocketAutomaticallyReenableWriteCallBack == 8)
-        self.failUnless(kCFSocketCloseOnInvalidate == 128)
-
-        self.failUnless(isinstance(kCFSocketCommandKey, unicode))
-        self.failUnless(isinstance(kCFSocketNameKey, unicode))
-        self.failUnless(isinstance(kCFSocketValueKey, unicode))
-        self.failUnless(isinstance(kCFSocketResultKey, unicode))
-        self.failUnless(isinstance(kCFSocketErrorKey, unicode))
-        self.failUnless(isinstance(kCFSocketRegisterCommand, unicode))
-        self.failUnless(isinstance(kCFSocketRetrieveCommand, unicode))
-
-        self.failUnlessEqual(kCFSocketLeaveErrors, 64)
+        self.assertEqual(kCFSocketSuccess , 0)
+        self.assertEqual(kCFSocketError , -1)
+        self.assertEqual(kCFSocketTimeout , -2)
+        self.assertEqual(kCFSocketNoCallBack , 0)
+        self.assertEqual(kCFSocketReadCallBack , 1)
+        self.assertEqual(kCFSocketAcceptCallBack , 2)
+        self.assertEqual(kCFSocketDataCallBack , 3)
+        self.assertEqual(kCFSocketConnectCallBack , 4)
+        self.assertEqual(kCFSocketWriteCallBack , 8)
+        self.assertEqual(kCFSocketAutomaticallyReenableReadCallBack , 1)
+        self.assertEqual(kCFSocketAutomaticallyReenableAcceptCallBack , 2)
+        self.assertEqual(kCFSocketAutomaticallyReenableDataCallBack , 3)
+        self.assertEqual(kCFSocketAutomaticallyReenableWriteCallBack , 8)
+        self.assertEqual(kCFSocketCloseOnInvalidate , 128)
+        self.assertIsInstance(kCFSocketCommandKey, unicode)
+        self.assertIsInstance(kCFSocketNameKey, unicode)
+        self.assertIsInstance(kCFSocketValueKey, unicode)
+        self.assertIsInstance(kCFSocketResultKey, unicode)
+        self.assertIsInstance(kCFSocketErrorKey, unicode)
+        self.assertIsInstance(kCFSocketRegisterCommand, unicode)
+        self.assertIsInstance(kCFSocketRetrieveCommand, unicode)
+        self.assertEqual(kCFSocketLeaveErrors, 64)
 
 
     def testStructs(self):
         o = CFSocketSignature()
-        self.failUnless(hasattr(o, 'protocolFamily'))
-        self.failUnless(hasattr(o, 'socketType'))
-        self.failUnless(hasattr(o, 'protocol'))
-        self.failUnless(hasattr(o, 'address'))
-
+        self.assertHasAttr(o, 'protocolFamily')
+        self.assertHasAttr(o, 'socketType')
+        self.assertHasAttr(o, 'protocol')
+        self.assertHasAttr(o, 'address')
     def testNameRegistry(self):
         p1 = CFSocketGetDefaultNameRegistryPortNumber()
-        self.failUnless(isinstance(p1, (int, long)))
-
+        self.assertIsInstance(p1, (int, long))
         CFSocketSetDefaultNameRegistryPortNumber(p1+1)
         p2 = CFSocketGetDefaultNameRegistryPortNumber()
-        self.failUnless(isinstance(p2, (int, long)))
-        self.assertEquals(p2, p1+1)
+        self.assertIsInstance(p2, (int, long))
+        self.assertEqual(p2, p1+1)
 
         CFSocketSetDefaultNameRegistryPortNumber(p1)
 
@@ -68,36 +61,32 @@ class TestSocket (TestCase):
         sock = CFSocketCreate(None, socket.AF_INET, socket.SOCK_STREAM, 0,
                 kCFSocketReadCallBack|kCFSocketWriteCallBack,
                 callback, data)
-        self.failUnless(isinstance(sock, CFSocketRef))
-
+        self.assertIsInstance(sock, CFSocketRef)
         localaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 9425, 127, 0, 0, 1)
         localaddr += '\0' * 8
         err = CFSocketSetAddress(sock, buffer(localaddr))
-        self.assertEquals(err, kCFSocketSuccess)
+        self.assertEqual(err, kCFSocketSuccess)
 
 
         sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         sock = CFSocketCreateWithNative(None, sd.fileno(),
                 kCFSocketReadCallBack|kCFSocketWriteCallBack,
                 callback, data)
-        self.failUnless(isinstance(sock, CFSocketRef))
-
+        self.assertIsInstance(sock, CFSocketRef)
         n = CFSocketGetNative(sock)
-        self.failUnless(isinstance(n, (int, long)))
-        self.assertEquals(n, sd.fileno())
+        self.assertIsInstance(n, (int, long))
+        self.assertEqual(n, sd.fileno())
 
 
     
         ctx = CFSocketGetContext(sock, None)
-        self.failUnless(ctx is data)
-
+        self.assertIsObject(ctx, data)
         flags = CFSocketGetSocketFlags(sock)
-        self.failUnless(isinstance(flags, (int, long)))
-
+        self.assertIsInstance(flags, (int, long))
         CFSocketSetSocketFlags(sock, kCFSocketAutomaticallyReenableReadCallBack|kCFSocketAutomaticallyReenableAcceptCallBack)
         flags2 = CFSocketGetSocketFlags(sock)
-        self.failUnless(isinstance(flags2, (int, long)))
-        self.assertEquals(flags2, kCFSocketAutomaticallyReenableReadCallBack|kCFSocketAutomaticallyReenableAcceptCallBack)
+        self.assertIsInstance(flags2, (int, long))
+        self.assertEqual(flags2, kCFSocketAutomaticallyReenableReadCallBack|kCFSocketAutomaticallyReenableAcceptCallBack)
 
 
         # Note: I don't expect anyone to actually use this api, building
@@ -109,35 +98,30 @@ class TestSocket (TestCase):
         sockaddr += '\0' * 8
 
         e = CFSocketConnectToAddress(sock, buffer(sockaddr), 1.0)
-        self.failUnless(isinstance(e, (int, long)))
-        self.assertEquals(e, kCFSocketSuccess)
+        self.assertIsInstance(e, (int, long))
+        self.assertEqual(e, kCFSocketSuccess)
 
 
-        self.failUnlessResultIsCFRetained(CFSocketCopyPeerAddress)
+        self.assertResultIsCFRetained(CFSocketCopyPeerAddress)
         addr = CFSocketCopyPeerAddress(sock)
-        self.failUnless( isinstance(addr, CFDataRef))
-
-        self.failUnlessResultIsCFRetained(CFSocketCopyAddress)
+        self.assertIsInstance(addr, CFDataRef)
+        self.assertResultIsCFRetained(CFSocketCopyAddress)
         addr = CFSocketCopyAddress(sock)
-        self.failUnless( isinstance(addr, CFDataRef))
-
-
+        self.assertIsInstance(addr, CFDataRef)
         CFSocketDisableCallBacks(sock, kCFSocketReadCallBack|kCFSocketAcceptCallBack)
         CFSocketEnableCallBacks(sock, kCFSocketReadCallBack|kCFSocketAcceptCallBack)
 
         err = CFSocketSendData(sock, None, buffer("GET / HTTP/1.0"), 1.0)
-        self.assertEquals(err, kCFSocketSuccess)
+        self.assertEqual(err, kCFSocketSuccess)
 
 
 
         ok = CFSocketIsValid(sock)
-        self.failUnless(ok is True)
-
+        self.assertIsObject(ok, True)
         CFSocketInvalidate(sock)
-        self.failUnlessResultIsBOOL(CFSocketIsValid)
+        self.assertResultIsBOOL(CFSocketIsValid)
         ok = CFSocketIsValid(sock)
-        self.failUnless(ok is False)
-
+        self.assertIsObject(ok, False)
         localaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 9424, 127, 0, 0, 1)
         localaddr += '\0' * 8
         signature = CFSocketSignature(
@@ -149,8 +133,7 @@ class TestSocket (TestCase):
         sock = CFSocketCreateWithSocketSignature(None, signature,
                 kCFSocketReadCallBack|kCFSocketWriteCallBack,
                 callback, data)
-        self.failUnless(isinstance(sock, CFSocketRef))
-        
+        self.assertIsInstance(sock, CFSocketRef)
         signature = CFSocketSignature(
                 socket.AF_INET,
                 socket.SOCK_STREAM,
@@ -159,24 +142,19 @@ class TestSocket (TestCase):
         sock = CFSocketCreateConnectedToSocketSignature(None, signature,
                 kCFSocketReadCallBack|kCFSocketWriteCallBack,
                 callback, data, 1.0)
-        self.failUnless(isinstance(sock, CFSocketRef))
-
-        self.failUnlessResultIsCFRetained(CFSocketCreateRunLoopSource)
+        self.assertIsInstance(sock, CFSocketRef)
+        self.assertResultIsCFRetained(CFSocketCreateRunLoopSource)
         src = CFSocketCreateRunLoopSource(None, sock, 0)
-        self.failUnless(isinstance(src, CFRunLoopSourceRef))
-
-
+        self.assertIsInstance(src, CFRunLoopSourceRef)
     def testSocketNameServer(self):
         # The documentation says:
         #   Name server functionality is currently inoperable in Mac OS X.
         # 
         # Therefore these functions are not available from Python
-        self.failIf( hasattr(CoreFoundation, 'CFSocketCopyRegisteredSocketSignature') )
-        self.failIf( hasattr(CoreFoundation, 'CFSocketCopyRegisteredValue') )
-        self.failIf( hasattr(CoreFoundation, 'CFSocketRegisterSocketSignature') )
-        self.failIf( hasattr(CoreFoundation, 'CFSocketRegisterValue') )
-        self.failIf( hasattr(CoreFoundation, 'CFSocketUnregister') )
-
-
+        self.assertNotHasAttr(CoreFoundation, 'CFSocketCopyRegisteredSocketSignature')
+        self.assertNotHasAttr(CoreFoundation, 'CFSocketCopyRegisteredValue')
+        self.assertNotHasAttr(CoreFoundation, 'CFSocketRegisterSocketSignature')
+        self.assertNotHasAttr(CoreFoundation, 'CFSocketRegisterValue')
+        self.assertNotHasAttr(CoreFoundation, 'CFSocketUnregister')
 if __name__ == "__main__":
     main()

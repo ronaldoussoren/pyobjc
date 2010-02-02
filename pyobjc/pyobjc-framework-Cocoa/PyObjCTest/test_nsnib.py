@@ -4,12 +4,12 @@ from AppKit import *
 
 class TestNSNib (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(NSNibOwner, unicode)
-        self.failUnlessIsInstance(NSNibTopLevelObjects, unicode)
+        self.assertIsInstance(NSNibOwner, unicode)
+        self.assertIsInstance(NSNibTopLevelObjects, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSNib.instantiateNibWithOwner_topLevelObjects_)
-        self.failUnlessArgIsOut(NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
+        self.assertResultIsBOOL(NSNib.instantiateNibWithOwner_topLevelObjects_)
+        self.assertArgIsOut(NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
 
 
 if __name__ == "__main__":

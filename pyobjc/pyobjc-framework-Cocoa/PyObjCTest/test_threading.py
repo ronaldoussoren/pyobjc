@@ -37,7 +37,7 @@ class ThreadingTest (TestCase):
                 'run:', myObj, u"hello world")
 
         time.sleep(2)
-        self.assertEquals(myObj.storage[0], u"hello world")
+        self.assertEqual(myObj.storage[0], u"hello world")
 
     def testNSObject(self):
 
@@ -58,7 +58,7 @@ class ThreadingTest (TestCase):
             lst2.append(i*2)
 
         time.sleep(2)
-        self.assertEquals(lst, range(100))
+        self.assertEqual(lst, range(100))
 
     def testPyObject(self):
         import os
@@ -87,7 +87,7 @@ class ThreadingTest (TestCase):
                 lst2.append(i*2)
 
             time.sleep(2)
-            self.assertEquals(lst, range(100))
+            self.assertEqual(lst, range(100))
 
         finally:
             os.dup2(dupped, 2)

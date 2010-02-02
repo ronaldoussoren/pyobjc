@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import *
 class TestXMLDTD (TestCase):
 
     def testOutputArgs(self):
-        self.failUnlessArgIsOut(NSXMLDTD.initWithContentsOfURL_options_error_, 2)
-        self.failUnlessArgIsOut(NSXMLDTD.initWithData_options_error_, 2)
+        self.assertArgIsOut(NSXMLDTD.initWithContentsOfURL_options_error_, 2)
+        self.assertArgIsOut(NSXMLDTD.initWithData_options_error_, 2)
 
 
 

@@ -4,13 +4,13 @@ from AppKit import *
 
 class TestNSHelpManager (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(NSContextHelpModeDidActivateNotification, unicode)
-        self.failUnlessIsInstance(NSContextHelpModeDidDeactivateNotification, unicode)
+        self.assertIsInstance(NSContextHelpModeDidActivateNotification, unicode)
+        self.assertIsInstance(NSContextHelpModeDidDeactivateNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSHelpManager.isContextHelpModeActive)
-        self.failUnlessArgIsBOOL(NSHelpManager.setContextHelpModeActive_, 0)
-        self.failUnlessResultIsBOOL(NSHelpManager.showContextHelpForObject_locationHint_)
+        self.assertResultIsBOOL(NSHelpManager.isContextHelpModeActive)
+        self.assertArgIsBOOL(NSHelpManager.setContextHelpModeActive_, 0)
+        self.assertResultIsBOOL(NSHelpManager.showContextHelpForObject_locationHint_)
 
 
 if __name__ == "__main__":

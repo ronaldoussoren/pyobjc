@@ -4,14 +4,14 @@ from AppKit import *
 
 class TestNSTextStorage (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSTextStorageEditedAttributes, 1)
-        self.failUnlessEqual(NSTextStorageEditedCharacters, 2)
+        self.assertEqual(NSTextStorageEditedAttributes, 1)
+        self.assertEqual(NSTextStorageEditedCharacters, 2)
 
-        self.failUnlessIsInstance(NSTextStorageWillProcessEditingNotification, unicode)
-        self.failUnlessIsInstance(NSTextStorageDidProcessEditingNotification, unicode)
+        self.assertIsInstance(NSTextStorageWillProcessEditingNotification, unicode)
+        self.assertIsInstance(NSTextStorageDidProcessEditingNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSTextStorage.fixesAttributesLazily)
+        self.assertResultIsBOOL(NSTextStorage.fixesAttributesLazily)
 
 
 if __name__ == "__main__":

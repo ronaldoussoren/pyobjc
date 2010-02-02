@@ -3,14 +3,13 @@ from PyObjCTools.TestSupport import *
 
 class TestValueTrans (TestCase):
     def testConstants(self):
-        self.failUnless(isinstance(NSNegateBooleanTransformerName, unicode))
-        self.failUnless(isinstance(NSIsNilTransformerName, unicode))
-        self.failUnless(isinstance(NSIsNotNilTransformerName, unicode))
-        self.failUnless(isinstance(NSUnarchiveFromDataTransformerName, unicode))
-        self.failUnless(isinstance(NSKeyedUnarchiveFromDataTransformerName, unicode))
-
+        self.assertIsInstance(NSNegateBooleanTransformerName, unicode)
+        self.assertIsInstance(NSIsNilTransformerName, unicode)
+        self.assertIsInstance(NSIsNotNilTransformerName, unicode)
+        self.assertIsInstance(NSUnarchiveFromDataTransformerName, unicode)
+        self.assertIsInstance(NSKeyedUnarchiveFromDataTransformerName, unicode)
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
+        self.assertResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
 
 if __name__ == "__main__":
     main()

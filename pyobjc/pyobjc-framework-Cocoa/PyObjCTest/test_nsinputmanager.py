@@ -14,21 +14,21 @@ class TestNSInputManagerHelper (NSObject):
 
 class TestNSInputManager (TestCase):
     def testProtocols(self):
-        self.failUnlessArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, 'v@:@')
-        self.failUnlessArgHasType(TestNSInputManagerHelper.setMarkedText_selectedRange_, 1, NSRange.__typestr__)
-        self.failUnlessResultIsBOOL(TestNSInputManagerHelper.hasMarkedText)
-        self.failUnlessResultHasType(TestNSInputManagerHelper.markedRange, NSRange.__typestr__)
-        self.failUnlessResultHasType(TestNSInputManagerHelper.selectedRange, NSRange.__typestr__)
-        self.failUnlessResultHasType(TestNSInputManagerHelper.firstRectForCharacterRange_, NSRect.__typestr__)
-        self.failUnlessArgHasType(TestNSInputManagerHelper.firstRectForCharacterRange_, 0, NSRange.__typestr__)
-        self.failUnlessResultHasType(TestNSInputManagerHelper.characterIndexForPoint_, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSInputManagerHelper.characterIndexForPoint_, 0, NSPoint.__typestr__)
+        self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, 'v@:@')
+        self.assertArgHasType(TestNSInputManagerHelper.setMarkedText_selectedRange_, 1, NSRange.__typestr__)
+        self.assertResultIsBOOL(TestNSInputManagerHelper.hasMarkedText)
+        self.assertResultHasType(TestNSInputManagerHelper.markedRange, NSRange.__typestr__)
+        self.assertResultHasType(TestNSInputManagerHelper.selectedRange, NSRange.__typestr__)
+        self.assertResultHasType(TestNSInputManagerHelper.firstRectForCharacterRange_, NSRect.__typestr__)
+        self.assertArgHasType(TestNSInputManagerHelper.firstRectForCharacterRange_, 0, NSRange.__typestr__)
+        self.assertResultHasType(TestNSInputManagerHelper.characterIndexForPoint_, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSInputManagerHelper.characterIndexForPoint_, 0, NSPoint.__typestr__)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSInputManager.wantsToInterpretAllKeystrokes)
-        self.failUnlessResultIsBOOL(NSInputManager.wantsToHandleMouseEvents)
-        self.failUnlessResultIsBOOL(NSInputManager.handleMouseEvent_)
-        self.failUnlessResultIsBOOL(NSInputManager.wantsToDelayTextChangeNotifications)
+        self.assertResultIsBOOL(NSInputManager.wantsToInterpretAllKeystrokes)
+        self.assertResultIsBOOL(NSInputManager.wantsToHandleMouseEvents)
+        self.assertResultIsBOOL(NSInputManager.handleMouseEvent_)
+        self.assertResultIsBOOL(NSInputManager.wantsToDelayTextChangeNotifications)
 
 
 if __name__ == "__main__":

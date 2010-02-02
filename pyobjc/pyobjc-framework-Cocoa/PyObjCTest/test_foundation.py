@@ -23,7 +23,7 @@ class TestFoundation (TestCase):
     def testValues(self):
         self.assert_( hasattr(Foundation, 'NSTimeIntervalSince1970') )
         self.assert_( isinstance(Foundation.NSTimeIntervalSince1970, float) )
-        self.assertEquals(Foundation.NSTimeIntervalSince1970, 978307200.0)
+        self.assertEqual(Foundation.NSTimeIntervalSince1970, 978307200.0)
 
 	if os.uname()[2] < '9.':
 		self.assert_( hasattr(Foundation, 'NSMaximumStringLength') )

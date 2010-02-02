@@ -8,7 +8,7 @@ class TestNSDictionaryControllerHelper (NSObject):
 
 class TestNSDictionaryController (TestCase):
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestNSDictionaryControllerHelper.isExplicitlyIncluded)
+        self.assertResultIsBOOL(TestNSDictionaryControllerHelper.isExplicitlyIncluded)
     
 
 if __name__ == "__main__":

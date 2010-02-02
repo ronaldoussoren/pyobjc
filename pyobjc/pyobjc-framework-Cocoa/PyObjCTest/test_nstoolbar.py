@@ -7,31 +7,31 @@ class TestNSToolbarHelper (NSObject):
 
 class TestNSToolbar (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSToolbarDisplayModeDefault, 0)
-        self.failUnlessEqual(NSToolbarDisplayModeIconAndLabel, 1)
-        self.failUnlessEqual(NSToolbarDisplayModeIconOnly, 2)
-        self.failUnlessEqual(NSToolbarDisplayModeLabelOnly, 3)
+        self.assertEqual(NSToolbarDisplayModeDefault, 0)
+        self.assertEqual(NSToolbarDisplayModeIconAndLabel, 1)
+        self.assertEqual(NSToolbarDisplayModeIconOnly, 2)
+        self.assertEqual(NSToolbarDisplayModeLabelOnly, 3)
 
-        self.failUnlessEqual(NSToolbarSizeModeDefault, 0)
-        self.failUnlessEqual(NSToolbarSizeModeRegular, 1)
-        self.failUnlessEqual(NSToolbarSizeModeSmall, 2)
+        self.assertEqual(NSToolbarSizeModeDefault, 0)
+        self.assertEqual(NSToolbarSizeModeRegular, 1)
+        self.assertEqual(NSToolbarSizeModeSmall, 2)
 
-        self.failUnlessIsInstance(NSToolbarWillAddItemNotification, unicode)
-        self.failUnlessIsInstance(NSToolbarDidRemoveItemNotification, unicode)
+        self.assertIsInstance(NSToolbarWillAddItemNotification, unicode)
+        self.assertIsInstance(NSToolbarDidRemoveItemNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSToolbar.isVisible)
-        self.failUnlessArgIsBOOL(NSToolbar.setVisible_, 0)
-        self.failUnlessResultIsBOOL(NSToolbar.customizationPaletteIsRunning)
-        self.failUnlessResultIsBOOL(NSToolbar.showsBaselineSeparator)
-        self.failUnlessArgIsBOOL(NSToolbar.setShowsBaselineSeparator_, 0)
-        self.failUnlessResultIsBOOL(NSToolbar.allowsUserCustomization)
-        self.failUnlessArgIsBOOL(NSToolbar.setAllowsUserCustomization_, 0)
-        self.failUnlessResultIsBOOL(NSToolbar.autosavesConfiguration)
-        self.failUnlessArgIsBOOL(NSToolbar.setAutosavesConfiguration_, 0)
+        self.assertResultIsBOOL(NSToolbar.isVisible)
+        self.assertArgIsBOOL(NSToolbar.setVisible_, 0)
+        self.assertResultIsBOOL(NSToolbar.customizationPaletteIsRunning)
+        self.assertResultIsBOOL(NSToolbar.showsBaselineSeparator)
+        self.assertArgIsBOOL(NSToolbar.setShowsBaselineSeparator_, 0)
+        self.assertResultIsBOOL(NSToolbar.allowsUserCustomization)
+        self.assertArgIsBOOL(NSToolbar.setAllowsUserCustomization_, 0)
+        self.assertResultIsBOOL(NSToolbar.autosavesConfiguration)
+        self.assertArgIsBOOL(NSToolbar.setAutosavesConfiguration_, 0)
 
     def testProtocols(self):
-        self.failUnlessArgIsBOOL(TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, 2)
+        self.assertArgIsBOOL(TestNSToolbarHelper.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_, 2)
 
 if __name__ == "__main__":
     main()

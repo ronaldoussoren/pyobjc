@@ -24,8 +24,8 @@ class TestConveniences(TestCase):
             if expect == -1:
                 expect = -2
             o = OC_TestConveniences.alloc().initWithHashValue_(hashValue)
-            self.assertEquals(o.hash(), hashValue)
-            self.assertEquals(hash(o), expect, 'o.hash() == 0x%X | %r != %r' % (o.hash(), hash(o), expect))
+            self.assertEqual(o.hash(), hashValue)
+            self.assertEqual(hash(o), expect, 'o.hash() == 0x%X | %r != %r' % (o.hash(), hash(o), expect))
 
 if __name__ == '__main__':
     main()

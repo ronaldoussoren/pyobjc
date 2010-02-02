@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 
 class TestNSFormCell (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSFormCell.isOpaque)
+        self.assertResultIsBOOL(NSFormCell.isOpaque)
 
 if __name__ == "__main__":
     main()

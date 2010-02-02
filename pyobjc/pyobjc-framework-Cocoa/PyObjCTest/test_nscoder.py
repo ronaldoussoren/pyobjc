@@ -40,15 +40,15 @@ class TestNSCoderUsage(TestCase):
         archiver = NSUnarchiver.alloc().initForReadingWithData_(data)
         newObj = archiver.decodeObject()
 
-        self.assertEquals(newObj.intVal, 2)
+        self.assertEqual(newObj.intVal, 2)
         self.assertAlmostEquals(newObj.dblVal, 2.0)
-        self.assertEquals(len(newObj.dblArray), 4)
+        self.assertEqual(len(newObj.dblArray), 4)
         self.assertAlmostEquals(newObj.dblArray[0], 1.0)
         self.assertAlmostEquals(newObj.dblArray[1], 2.0)
         self.assertAlmostEquals(newObj.dblArray[2], 3.0)
         self.assertAlmostEquals(newObj.dblArray[3], 4.0)
-        self.assertEquals(newObj.decodedBytes[0], "hello")
-        self.assertEquals(newObj.decodedBytes[1], 5)
+        self.assertEqual(newObj.decodedBytes[0], "hello")
+        self.assertEqual(newObj.decodedBytes[1], 5)
 
 
 class MyCoder (NSCoder):
@@ -89,7 +89,7 @@ class TestPythonCoder(TestCase):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4.alloc().init()
         o.encodeWithCoder_(coder)
-        self.assertEquals(coder.coded,
+        self.assertEqual(coder.coded,
                 [
                     ("value", "d", 1.5),
                     ("array", "i", 4, (3,4,5,6)),
@@ -100,25 +100,25 @@ class TestPythonCoder(TestCase):
         coder = MyCoder.alloc().init()
         o = PyObjC_TestClass4
 
-        self.assertEquals(o.fetchInt_(coder), 42)
-        self.assertEquals(o.fetchDouble_(coder), 1.5)
+        self.assertEqual(o.fetchInt_(coder), 42)
+        self.assertEqual(o.fetchDouble_(coder), 1.5)
 
         d = o.fetchData_(coder)
-        self.assertEquals(d.length(), 10)
-        self.assertEquals(str(d.bytes()), "ABCDEabcde")
+        self.assertEqual(d.length(), 10)
+        self.assertEqual(str(d.bytes()), "ABCDEabcde")
 
         d = o.fetchArray_(coder)
-        self.assertEquals(tuple(range(10)), tuple(d))
+        self.assertEqual(tuple(range(10)), tuple(d))
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSCoder.allowsKeyedCoding)
-        self.failUnlessArgIsBOOL(NSCoder.encodeBool_forKey_, 0)
-        self.failUnlessResultIsBOOL(NSCoder.containsValueForKey_)
-        self.failUnlessResultIsBOOL(NSCoder.decodeBoolForKey_)
+        self.assertResultIsBOOL(NSCoder.allowsKeyedCoding)
+        self.assertArgIsBOOL(NSCoder.encodeBool_forKey_, 0)
+        self.assertResultIsBOOL(NSCoder.containsValueForKey_)
+        self.assertResultIsBOOL(NSCoder.decodeBoolForKey_)
 
-        self.failUnlessResultHasType(NSCoder.decodeBytesForKey_returnedLength_, '^v')
-        self.failUnlessResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
-        self.failUnlessArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
+        self.assertResultHasType(NSCoder.decodeBytesForKey_returnedLength_, '^v')
+        self.assertResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
+        self.assertArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
 
 
 if __name__ == '__main__':

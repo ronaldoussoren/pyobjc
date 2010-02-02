@@ -8,16 +8,13 @@ from CoreFoundation import *
 
 class TestFileDescriptor (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFFileDescriptorRef)
+        self.assertIsCFType(CFFileDescriptorRef)
 
     def testTypeID(self):
-        self.failUnless(isinstance(CFFileDescriptorGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFFileDescriptorGetTypeID(), (int, long))
     def testConstants(self):
-        self.failUnless(kCFFileDescriptorReadCallBack == 1 << 0)
-        self.failUnless(kCFFileDescriptorWriteCallBack == 1 << 1)
-
-
+        self.assertEqual(kCFFileDescriptorReadCallBack , 1 << 0)
+        self.assertEqual(kCFFileDescriptorWriteCallBack , 1 << 1)
     def testInspection(self):
         def callout(fd, types, context):
             pass
@@ -25,24 +22,20 @@ class TestFileDescriptor (TestCase):
             pass
         context = Context()
         fd = CFFileDescriptorCreate(None, 0, False, callout, context)
-        self.failUnless(isinstance(fd, CFFileDescriptorRef))
-
-        self.failUnless(CFFileDescriptorGetNativeDescriptor(fd) == 0)
-
+        self.assertIsInstance(fd, CFFileDescriptorRef)
+        self.assertEqual(CFFileDescriptorGetNativeDescriptor(fd) , 0)
         ctx = CFFileDescriptorGetContext(fd)
-        self.failUnless(ctx is context)
-
+        self.assertIsObject(ctx, context)
         CFFileDescriptorEnableCallBacks(fd, kCFFileDescriptorReadCallBack)
         CFFileDescriptorDisableCallBacks(fd, kCFFileDescriptorReadCallBack|kCFFileDescriptorWriteCallBack)
 
         rls = CFFileDescriptorCreateRunLoopSource(None, fd, 0)
-        self.failUnless(isinstance(rls, CFRunLoopSourceRef))
-
-        self.failUnless(CFFileDescriptorIsValid(fd))
+        self.assertIsInstance(rls, CFRunLoopSourceRef)
+        self.assertTrue(CFFileDescriptorIsValid(fd))
         CFFileDescriptorInvalidate(fd)
-        self.failIf(CFFileDescriptorIsValid(fd))
+        self.assertFalse(CFFileDescriptorIsValid(fd))
 
-        self.failUnlessResultIsBOOL(CFFileDescriptorIsValid)
+        self.assertResultIsBOOL(CFFileDescriptorIsValid)
 
 
 if __name__ == "__main__":

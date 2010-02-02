@@ -8,30 +8,30 @@ class TestNSAnimationHelper (NSObject):
 
 class TestNSAnimation (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSAnimationEaseInOut, 0)
-        self.failUnlessEqual(NSAnimationEaseIn, 1)
-        self.failUnlessEqual(NSAnimationEaseOut, 2)
-        self.failUnlessEqual(NSAnimationLinear, 3)
+        self.assertEqual(NSAnimationEaseInOut, 0)
+        self.assertEqual(NSAnimationEaseIn, 1)
+        self.assertEqual(NSAnimationEaseOut, 2)
+        self.assertEqual(NSAnimationLinear, 3)
 
-        self.failUnlessEqual(NSAnimationBlocking, 0)
-        self.failUnlessEqual(NSAnimationNonblocking, 1)
-        self.failUnlessEqual(NSAnimationNonblockingThreaded, 2)
+        self.assertEqual(NSAnimationBlocking, 0)
+        self.assertEqual(NSAnimationNonblocking, 1)
+        self.assertEqual(NSAnimationNonblockingThreaded, 2)
 
-        self.failUnlessIsInstance(NSAnimationProgressMarkNotification, unicode)
-        self.failUnlessIsInstance(NSAnimationProgressMark, unicode)
+        self.assertIsInstance(NSAnimationProgressMarkNotification, unicode)
+        self.assertIsInstance(NSAnimationProgressMark, unicode)
 
-        self.failUnlessIsInstance(NSViewAnimationTargetKey, unicode)
-        self.failUnlessIsInstance(NSViewAnimationStartFrameKey, unicode)
-        self.failUnlessIsInstance(NSViewAnimationEndFrameKey, unicode)
-        self.failUnlessIsInstance(NSViewAnimationEffectKey, unicode)
-        self.failUnlessIsInstance(NSViewAnimationFadeInEffect, unicode)
-        self.failUnlessIsInstance(NSViewAnimationFadeOutEffect, unicode)
+        self.assertIsInstance(NSViewAnimationTargetKey, unicode)
+        self.assertIsInstance(NSViewAnimationStartFrameKey, unicode)
+        self.assertIsInstance(NSViewAnimationEndFrameKey, unicode)
+        self.assertIsInstance(NSViewAnimationEffectKey, unicode)
+        self.assertIsInstance(NSViewAnimationFadeInEffect, unicode)
+        self.assertIsInstance(NSViewAnimationFadeOutEffect, unicode)
 
-        self.failUnlessIsInstance(NSAnimationTriggerOrderIn, unicode)
-        self.failUnlessIsInstance(NSAnimationTriggerOrderOut, unicode)
+        self.assertIsInstance(NSAnimationTriggerOrderIn, unicode)
+        self.assertIsInstance(NSAnimationTriggerOrderOut, unicode)
 
     def testProtocol(self):
-        self.failUnlessResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
+        self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
 if __name__ == "__main__":
     main()

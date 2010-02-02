@@ -59,22 +59,22 @@ class TestNSSetInteraction(TestCase):
 class TestVariadic (TestCase):
     def testSetWithObjects(self):
         o = NSSet.setWithObjects_()
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSSet))
 
         o = NSSet.setWithObjects_(1,2,3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
         self.assert_(3 in o)
 
         o = NSMutableSet.setWithObjects_()
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSMutableSet))
 
         o = NSMutableSet.setWithObjects_(1,2,3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSMutableSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
@@ -82,22 +82,22 @@ class TestVariadic (TestCase):
 
     def testInitWithObjects(self):
         o = NSSet.alloc().initWithObjects_()
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSSet))
 
         o = NSSet.alloc().initWithObjects_(1,2,3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
         self.assert_(3 in o)
 
         o = NSMutableSet.alloc().initWithObjects_()
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSMutableSet))
 
         o = NSMutableSet.alloc().initWithObjects_(1,2,3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSMutableSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
@@ -105,7 +105,7 @@ class TestVariadic (TestCase):
 
     def testSetWithObjectsCount(self):
         o = NSSet.setWithObjects_count_([1,2,3], 3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
@@ -113,23 +113,23 @@ class TestVariadic (TestCase):
         self.assert_(4 not in o)
 
         o = NSSet.setWithObjects_count_([1,2,3], 0)
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSSet))
 
         o = NSMutableSet.setWithObjects_count_([1,2,3], 3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSMutableSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
         self.assert_(3 in o)
 
         o = NSMutableSet.setWithObjects_count_([1,2,3], 0)
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSMutableSet))
 
     def testInitWithObjectsCount(self):
         o = NSSet.alloc().initWithObjects_count_([1,2,3], 3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
@@ -137,40 +137,40 @@ class TestVariadic (TestCase):
         self.assert_(4 not in o)
 
         o = NSSet.alloc().initWithObjects_count_([1,2,3], 0)
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSSet))
 
         o = NSMutableSet.alloc().initWithObjects_count_([1,2,3], 3)
-        self.assertEquals(len(o), 3)
+        self.assertEqual(len(o), 3)
         self.assert_(isinstance(o, NSMutableSet))
         self.assert_(1 in o)
         self.assert_(2 in o)
         self.assert_(3 in o)
 
         o = NSMutableSet.alloc().initWithObjects_count_([1,2,3], 0)
-        self.assertEquals(len(o), 0)
+        self.assertEqual(len(o), 0)
         self.assert_(isinstance(o, NSMutableSet))
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSSet.containsObject_)
-        self.failUnlessResultIsBOOL(NSSet.intersectsSet_)
-        self.failUnlessResultIsBOOL(NSSet.isEqualToSet_)
-        self.failUnlessResultIsBOOL(NSSet.isSubsetOfSet_)
+        self.assertResultIsBOOL(NSSet.containsObject_)
+        self.assertResultIsBOOL(NSSet.intersectsSet_)
+        self.assertResultIsBOOL(NSSet.isEqualToSet_)
+        self.assertResultIsBOOL(NSSet.isSubsetOfSet_)
 
-        self.failUnlessArgIsIn(NSSet.setWithObjects_count_, 0)
-        self.failUnlessArgSizeInArg(NSSet.setWithObjects_count_, 0, 1)
-        self.failUnlessArgIsIn(NSSet.initWithObjects_count_, 0)
-        self.failUnlessArgSizeInArg(NSSet.initWithObjects_count_, 0, 1)
+        self.assertArgIsIn(NSSet.setWithObjects_count_, 0)
+        self.assertArgSizeInArg(NSSet.setWithObjects_count_, 0, 1)
+        self.assertArgIsIn(NSSet.initWithObjects_count_, 0)
+        self.assertArgSizeInArg(NSSet.initWithObjects_count_, 0, 1)
 
-        self.failUnlessArgIsBOOL(NSSet.initWithSet_copyItems_, 1)
+        self.assertArgIsBOOL(NSSet.initWithSet_copyItems_, 1)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.failUnlessArgIsBlock(NSSet.enumerateObjectsUsingBlock_, 0, 'v@o^' + objc._C_NSBOOL)
-        self.failUnlessArgIsBlock(NSSet.enumerateObjectsWithOptions_usingBlock_, 1, 'v@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.enumerateObjectsUsingBlock_, 0, 'v@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.enumerateObjectsWithOptions_usingBlock_, 1, 'v@o^' + objc._C_NSBOOL)
 
-        self.failUnlessArgIsBlock(NSSet.objectsPassingTest_, 0, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
-        self.failUnlessArgIsBlock(NSSet.objectsWithOptions_passingTest_, 1, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.objectsPassingTest_, 0, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.objectsWithOptions_passingTest_, 1, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
 
 
 

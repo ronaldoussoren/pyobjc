@@ -4,20 +4,20 @@ from AppKit import *
 
 class TestNSSegmentedControl (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSSegmentStyleAutomatic, 0)
-        self.failUnlessEqual(NSSegmentStyleRounded, 1)
-        self.failUnlessEqual(NSSegmentStyleTexturedRounded, 2)
-        self.failUnlessEqual(NSSegmentStyleRoundRect, 3)
-        self.failUnlessEqual(NSSegmentStyleTexturedSquare, 4)
-        self.failUnlessEqual(NSSegmentStyleCapsule, 5)
-        self.failUnlessEqual(NSSegmentStyleSmallSquare, 6)
+        self.assertEqual(NSSegmentStyleAutomatic, 0)
+        self.assertEqual(NSSegmentStyleRounded, 1)
+        self.assertEqual(NSSegmentStyleTexturedRounded, 2)
+        self.assertEqual(NSSegmentStyleRoundRect, 3)
+        self.assertEqual(NSSegmentStyleTexturedSquare, 4)
+        self.assertEqual(NSSegmentStyleCapsule, 5)
+        self.assertEqual(NSSegmentStyleSmallSquare, 6)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSSegmentedControl.selectSegmentWithTag_)
-        self.failUnlessArgIsBOOL(NSSegmentedControl.setSelected_forSegment_, 0)
-        self.failUnlessResultIsBOOL(NSSegmentedControl.isSelectedForSegment_)
-        self.failUnlessArgIsBOOL(NSSegmentedControl.setEnabled_forSegment_, 0)
-        self.failUnlessResultIsBOOL(NSSegmentedControl.isEnabledForSegment_)
+        self.assertResultIsBOOL(NSSegmentedControl.selectSegmentWithTag_)
+        self.assertArgIsBOOL(NSSegmentedControl.setSelected_forSegment_, 0)
+        self.assertResultIsBOOL(NSSegmentedControl.isSelectedForSegment_)
+        self.assertArgIsBOOL(NSSegmentedControl.setEnabled_forSegment_, 0)
+        self.assertResultIsBOOL(NSSegmentedControl.isEnabledForSegment_)
 
 if __name__ == "__main__":
     main()

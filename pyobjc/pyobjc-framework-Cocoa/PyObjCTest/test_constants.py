@@ -11,7 +11,7 @@ class ContantTest (TestCase):
         self.assert_(isinstance(AppKit.NSFloatingWindowLevel, int))
 
     def testNSAnyEventMask(self):
-        self.assertEquals(AppKit.NSAnyEventMask, -1)
+        self.assertEqual(AppKit.NSAnyEventMask, -1)
 
     def testNSViewFrameDidChangeNotification(self):
         self.assert_(hasattr(AppKit, 'NSViewFrameDidChangeNotification'))

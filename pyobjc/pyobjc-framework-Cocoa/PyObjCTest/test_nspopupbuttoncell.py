@@ -4,23 +4,23 @@ from AppKit import *
 
 class TestNSPopUpButtonCell (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSPopUpNoArrow, 0)
-        self.failUnlessEqual(NSPopUpArrowAtCenter, 1)
-        self.failUnlessEqual(NSPopUpArrowAtBottom, 2)
+        self.assertEqual(NSPopUpNoArrow, 0)
+        self.assertEqual(NSPopUpArrowAtCenter, 1)
+        self.assertEqual(NSPopUpArrowAtBottom, 2)
 
-        self.failUnlessIsInstance(NSPopUpButtonCellWillPopUpNotification, unicode)
+        self.assertIsInstance(NSPopUpButtonCellWillPopUpNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessArgIsBOOL(NSPopUpButtonCell.initTextCell_pullsDown_, 1)
-        self.failUnlessResultIsBOOL(NSPopUpButtonCell.pullsDown)
-        self.failUnlessArgIsBOOL(NSPopUpButtonCell.setPullsDown_, 0)
-        self.failUnlessResultIsBOOL(NSPopUpButtonCell.autoenablesItems)
-        self.failUnlessArgIsBOOL(NSPopUpButtonCell.setAutoenablesItems_, 0)
-        self.failUnlessResultIsBOOL(NSPopUpButtonCell.usesItemFromMenu)
-        self.failUnlessArgIsBOOL(NSPopUpButtonCell.setUsesItemFromMenu_, 0)
-        self.failUnlessResultIsBOOL(NSPopUpButtonCell.altersStateOfSelectedItem)
-        self.failUnlessArgIsBOOL(NSPopUpButtonCell.setAltersStateOfSelectedItem_, 0)
-        self.failUnlessResultIsBOOL(NSPopUpButtonCell.selectItemWithTag_)
+        self.assertArgIsBOOL(NSPopUpButtonCell.initTextCell_pullsDown_, 1)
+        self.assertResultIsBOOL(NSPopUpButtonCell.pullsDown)
+        self.assertArgIsBOOL(NSPopUpButtonCell.setPullsDown_, 0)
+        self.assertResultIsBOOL(NSPopUpButtonCell.autoenablesItems)
+        self.assertArgIsBOOL(NSPopUpButtonCell.setAutoenablesItems_, 0)
+        self.assertResultIsBOOL(NSPopUpButtonCell.usesItemFromMenu)
+        self.assertArgIsBOOL(NSPopUpButtonCell.setUsesItemFromMenu_, 0)
+        self.assertResultIsBOOL(NSPopUpButtonCell.altersStateOfSelectedItem)
+        self.assertArgIsBOOL(NSPopUpButtonCell.setAltersStateOfSelectedItem_, 0)
+        self.assertResultIsBOOL(NSPopUpButtonCell.selectItemWithTag_)
 
 
 if __name__ == "__main__":

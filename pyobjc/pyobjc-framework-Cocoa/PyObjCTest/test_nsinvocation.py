@@ -13,44 +13,42 @@ class TestNSInvocation (TestCase):
         invocation.invoke()
 
         v = invocation.getReturnValue_(None)
-        self.failUnlessIsInstance(v, (int, long))
-        self.failUnlessEqual(v, 3)
+        self.assertIsInstance(v, (int, long))
+        self.assertEqual(v, 3)
 
         invocation = NSInvocation.invocationWithMethodSignature_(value.methodSignatureForSelector_('addObject:'))
         invocation.setSelector_('addObject:')
         invocation.setTarget_(value)
         invocation.setArgument_atIndex_(u"hello", 2)
         v = invocation.getArgument_atIndex_(None, 2)
-        self.failUnlessEqual(v, u"hello")
+        self.assertEqual(v, u"hello")
         invocation.invoke()
 
-        self.failUnlessEqual(value.count(), 4)
+        self.assertEqual(value.count(), 4)
 
 
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSInvocation.argumentsRetained)
+        self.assertResultIsBOOL(NSInvocation.argumentsRetained)
 
     def testNoUnsupported(self):
-        self.failIf(hasattr(Foundation, 'NSObjCValue'))
-        self.failIf(hasattr(Foundation, 'NSObjCNoType'))
-        self.failIf(hasattr(Foundation, 'NSObjCVoidType'))
-        self.failIf(hasattr(Foundation, 'NSObjCCharType'))
-        self.failIf(hasattr(Foundation, 'NSObjCShortType'))
-        self.failIf(hasattr(Foundation, 'NSObjCLongType'))
-        self.failIf(hasattr(Foundation, 'NSObjCLonglongType'))
-        self.failIf(hasattr(Foundation, 'NSObjCFloatType'))
-        self.failIf(hasattr(Foundation, 'NSObjCDoubleType'))
-        self.failIf(hasattr(Foundation, 'NSObjCBoolType'))
-        self.failIf(hasattr(Foundation, 'NSObjCSelectorType'))
-        self.failIf(hasattr(Foundation, 'NSObjCObjectType'))
-        self.failIf(hasattr(Foundation, 'NSObjCStructType'))
-        self.failIf(hasattr(Foundation, 'NSObjCPointerType'))
-        self.failIf(hasattr(Foundation, 'NSObjCStringType'))
-        self.failIf(hasattr(Foundation, 'NSObjCArrayType'))
-        self.failIf(hasattr(Foundation, 'NSObjCUnionType'))
-        self.failIf(hasattr(Foundation, 'NSObjCBitfield'))
-
-
+        self.assertNotHasAttr(Foundation, 'NSObjCValue')
+        self.assertNotHasAttr(Foundation, 'NSObjCNoType')
+        self.assertNotHasAttr(Foundation, 'NSObjCVoidType')
+        self.assertNotHasAttr(Foundation, 'NSObjCCharType')
+        self.assertNotHasAttr(Foundation, 'NSObjCShortType')
+        self.assertNotHasAttr(Foundation, 'NSObjCLongType')
+        self.assertNotHasAttr(Foundation, 'NSObjCLonglongType')
+        self.assertNotHasAttr(Foundation, 'NSObjCFloatType')
+        self.assertNotHasAttr(Foundation, 'NSObjCDoubleType')
+        self.assertNotHasAttr(Foundation, 'NSObjCBoolType')
+        self.assertNotHasAttr(Foundation, 'NSObjCSelectorType')
+        self.assertNotHasAttr(Foundation, 'NSObjCObjectType')
+        self.assertNotHasAttr(Foundation, 'NSObjCStructType')
+        self.assertNotHasAttr(Foundation, 'NSObjCPointerType')
+        self.assertNotHasAttr(Foundation, 'NSObjCStringType')
+        self.assertNotHasAttr(Foundation, 'NSObjCArrayType')
+        self.assertNotHasAttr(Foundation, 'NSObjCUnionType')
+        self.assertNotHasAttr(Foundation, 'NSObjCBitfield')
 if __name__ == "__main__":
     main()

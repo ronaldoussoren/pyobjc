@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 
 class TestCFTree (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFTreeRef)
+        self.assertIsCFType(CFTreeRef)
 
     def testCreation(self):
         context = object()
@@ -13,7 +13,7 @@ class TestCFTree (TestCase):
 
         self.assert_(CFTreeGetContext(tree) is context)
         CFTreeSetContext(tree, 42)
-        self.assertEquals(CFTreeGetContext(tree), 42)
+        self.assertEqual(CFTreeGetContext(tree), 42)
 
 
 
@@ -23,19 +23,18 @@ class TestCFTree (TestCase):
         for child in range(10):
             CFTreeAppendChild(root, CFTreeCreate(None, child))
 
-        self.assertEquals(CFTreeGetContext(CFTreeGetFirstChild(root)), 0)
+        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root)), 0)
 
         def compare(l, r, context):
             return -cmp(CFTreeGetContext(l), CFTreeGetContext(r))
 
         CFTreeSortChildren(root, compare, None)
-        self.assertEquals(CFTreeGetContext(CFTreeGetFirstChild(root)), 9)
+        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root)), 9)
 
 
     def testTypeID(self):
         v = CFTreeGetTypeID()
-        self.failUnless(isinstance(v, (int, long)))
-
+        self.assertIsInstance(v, (int, long))
     def testQuerying(self):
         root = CFTreeCreate(None, "root")
 
@@ -43,39 +42,33 @@ class TestCFTree (TestCase):
             CFTreeAppendChild(root, CFTreeCreate(None, child))
 
         p = CFTreeGetParent(root)
-        self.failUnless(p is None)
-
+        self.assertIsObject(p, None)
         c = CFTreeGetFirstChild(root)
-        self.failUnless(isinstance(c, CFTreeRef))
+        self.assertIsInstance(c, CFTreeRef)
         c2 = CFTreeGetChildAtIndex(root, 0)
-        self.failUnless(c is c2)
-
+        self.assertIsObject(c, c2)
         p = CFTreeGetParent(c)
-        self.failUnless(p is root)
-
+        self.assertIsObject(p, root)
         s = CFTreeGetNextSibling(c)
-        self.failUnless(isinstance(s, CFTreeRef))
+        self.assertIsInstance(s, CFTreeRef)
         p = CFTreeGetParent(s)
-        self.failUnless(p is root)
+        self.assertIsObject(p, root)
         s2 = CFTreeGetChildAtIndex(root, 1)
-        self.failUnless(s is s2)
-
+        self.assertIsObject(s, s2)
         s = CFTreeGetNextSibling(s)
-        self.failUnless(s is None)
-
+        self.assertIsObject(s, None)
         cnt = CFTreeGetChildCount(root)
-        self.assertEquals(cnt, 2)
+        self.assertEqual(cnt, 2)
 
         cnt = CFTreeGetChildCount(c)
-        self.assertEquals(cnt, 0)
+        self.assertEqual(cnt, 0)
 
         children = CFTreeGetChildren(root, None)
-        self.failUnless(isinstance(children, (list, tuple)))
-        self.assertEquals(len(children), 2)
+        self.assertIsInstance(children, (list, tuple))
+        self.assertEqual(len(children), 2)
 
         r = CFTreeFindRoot(s2)
-        self.failUnless(r is root)
-
+        self.assertIsObject(r, root)
     def testModification(self):
         root = CFTreeCreate(None, "root")
 
@@ -87,27 +80,26 @@ class TestCFTree (TestCase):
 
         l = []
         CFTreeApplyFunctionToChildren(root, applyFunc, l)
-        self.assertEquals(len(l), 2)
+        self.assertEqual(len(l), 2)
 
         preChild = CFTreeCreate(None, "before")
         postChild = CFTreeCreate(None, "after")
         CFTreePrependChild(root, preChild)
         CFTreeAppendChild(root, postChild)
 
-        self.assertEquals(CFTreeGetChildCount(root), 4)
+        self.assertEqual(CFTreeGetChildCount(root), 4)
         n = CFTreeGetChildAtIndex(root, 0)
-        self.failUnless(n is preChild)
+        self.assertIsObject(n, preChild)
         n = CFTreeGetChildAtIndex(root, 3)
-        self.failUnless(n is postChild)
-
+        self.assertIsObject(n, postChild)
         s = CFTreeCreate(None, "sibling")
         CFTreeInsertSibling(preChild, s)
         n = CFTreeGetChildAtIndex(root, 1)
-        self.failUnless(n is s)
-        self.assertEquals(CFTreeGetChildCount(root), 5)
+        self.assertIsObject(n, s)
+        self.assertEqual(CFTreeGetChildCount(root), 5)
 
         CFTreeRemove(s)
-        self.assertEquals(CFTreeGetChildCount(root), 4)
+        self.assertEqual(CFTreeGetChildCount(root), 4)
 
         def compare(left, right, context):
             left = CFTreeGetContext(left)
@@ -122,10 +114,10 @@ class TestCFTree (TestCase):
 
         before.sort()
         before.reverse()
-        self.assertEquals(before, after)
+        self.assertEqual(before, after)
 
         CFTreeRemoveAllChildren(root)
-        self.assertEquals(CFTreeGetChildCount(root), 0)
+        self.assertEqual(CFTreeGetChildCount(root), 0)
 
 
 

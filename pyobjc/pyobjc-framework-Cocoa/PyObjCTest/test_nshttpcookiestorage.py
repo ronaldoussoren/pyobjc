@@ -4,13 +4,11 @@ from Foundation import *
 
 class TestNSHTTPCookieStorage (TestCase):
     def testConstants(self):
-        self.assertEquals(NSHTTPCookieAcceptPolicyAlways, 0)
-        self.assertEquals(NSHTTPCookieAcceptPolicyNever, 1)
-        self.assertEquals(NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2)
+        self.assertEqual(NSHTTPCookieAcceptPolicyAlways, 0)
+        self.assertEqual(NSHTTPCookieAcceptPolicyNever, 1)
+        self.assertEqual(NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2)
 
-        self.failUnless(isinstance(NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode))
-        self.failUnless(isinstance(NSHTTPCookieManagerCookiesChangedNotification, unicode))
-
-
+        self.assertIsInstance(NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode)
+        self.assertIsInstance(NSHTTPCookieManagerCookiesChangedNotification, unicode)
 if __name__ == "__main__":
     main()

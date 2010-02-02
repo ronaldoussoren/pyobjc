@@ -11,39 +11,39 @@ class TestNSGlyphGeneratorHelper (NSObject):
 
 class TestNSGlyphGenerator (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSShowControlGlyphs, (1 << 0))
-        self.failUnlessEqual(NSShowInvisibleGlyphs, (1 << 1))
-        self.failUnlessEqual(NSWantsBidiLevels, (1 << 2))
+        self.assertEqual(NSShowControlGlyphs, (1 << 0))
+        self.assertEqual(NSShowInvisibleGlyphs, (1 << 1))
+        self.assertEqual(NSWantsBidiLevels, (1 << 2))
 
     def testProtocols(self):
-        self.failUnlessArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 0, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 1, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSGlyphGeneratorHelper.setIntAttribute_value_forGlyphAtIndex_, 2, objc._C_NSUInteger)
 
         o = TestNSGlyphGeneratorHelper.alloc().init()
         o.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_(
                 [0, 1, 2, 3, 4], 5, 3, 8)
-        self.failUnlessEqual(o.glyphs, ([0, 1, 2, 3, 4], 5, 3, 8))
-        self.failUnlessArgHasType(
+        self.assertEqual(o.glyphs, ([0, 1, 2, 3, 4], 5, 3, 8))
+        self.assertArgHasType(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             0, 'n^I')
-        self.failUnlessArgSizeInArg(
+        self.assertArgSizeInArg(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             0, 1)
-        self.failUnlessArgHasType(
+        self.assertArgHasType(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             1, objc._C_NSUInteger)
-        self.failUnlessArgHasType(
+        self.assertArgHasType(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             2, objc._C_NSUInteger)
-        self.failUnlessArgHasType(
+        self.assertArgHasType(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             3, objc._C_NSUInteger)
 
     def testMethods(self):
-        self.failUnlessArgIsOut(
+        self.assertArgIsOut(
                 NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_, 2)
-        self.failUnlessArgIsOut(
+        self.assertArgIsOut(
                 NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_, 3)
 
 

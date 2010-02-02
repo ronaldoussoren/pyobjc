@@ -4,15 +4,11 @@ from PyObjCTools.TestSupport import *
 
 class TestEAManager (TestCase):
     def testContants(self):
-        self.failUnless( isinstance(NSAppleEventManagerWillProcessFirstEventNotification, unicode) )
-        self.failUnless( isinstance(NSAppleEventTimeOutDefault, float) )
-        self.failUnless( isinstance(NSAppleEventTimeOutNone, float) )
-
+        self.assertIsInstance(NSAppleEventManagerWillProcessFirstEventNotification, unicode)
+        self.assertIsInstance(NSAppleEventTimeOutDefault, float)
+        self.assertIsInstance(NSAppleEventTimeOutNone, float)
     def testOpaque(self):
-        self.failUnless(hasattr(Foundation, 'NSAppleEventManagerSuspensionID'))
-        self.failUnless(hasattr(NSAppleEventManagerSuspensionID, '__pointer__'))
-
-
-
+        self.assertHasAttr(Foundation, 'NSAppleEventManagerSuspensionID')
+        self.assertHasAttr(NSAppleEventManagerSuspensionID, '__pointer__')
 if __name__ == "__main__":
     main()

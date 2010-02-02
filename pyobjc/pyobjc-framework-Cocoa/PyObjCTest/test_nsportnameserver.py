@@ -3,14 +3,14 @@ from PyObjCTools.TestSupport import *
 
 class TestNSPortNameServer (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSPortNameServer.registerPort_name_)
-        self.failUnlessResultIsBOOL(NSPortNameServer.removePortForName_)
+        self.assertResultIsBOOL(NSPortNameServer.registerPort_name_)
+        self.assertResultIsBOOL(NSPortNameServer.removePortForName_)
 
-        self.failUnlessResultIsBOOL(NSMachBootstrapServer.registerPort_name_)
+        self.assertResultIsBOOL(NSMachBootstrapServer.registerPort_name_)
 
-        self.failUnlessResultIsBOOL(NSSocketPortNameServer.registerPort_name_)
-        self.failUnlessResultIsBOOL(NSSocketPortNameServer.removePortForName_)
-        self.failUnlessResultIsBOOL(NSSocketPortNameServer.registerPort_name_nameServerPortNumber_)
+        self.assertResultIsBOOL(NSSocketPortNameServer.registerPort_name_)
+        self.assertResultIsBOOL(NSSocketPortNameServer.removePortForName_)
+        self.assertResultIsBOOL(NSSocketPortNameServer.registerPort_name_nameServerPortNumber_)
 
     
 

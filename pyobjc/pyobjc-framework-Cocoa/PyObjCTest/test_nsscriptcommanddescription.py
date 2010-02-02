@@ -9,7 +9,7 @@ class NSScriptCommandDescription (TestCase):
         # This should be tested on the actual NSScriptCommandDescription class,
         # but for some reason that class doesn't seem to have the
         # required method (at least not without instantating the class)
-        self.failUnlessResultIsBOOL(TestNSScriptCommandDescriptionHelper.isOptionalArgumentWithName_)
+        self.assertResultIsBOOL(TestNSScriptCommandDescriptionHelper.isOptionalArgumentWithName_)
 
 if __name__ == "__main__":
     main()

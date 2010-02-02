@@ -16,23 +16,23 @@ class TestNSRulerViewHelper (NSView):
 
 class TestNSRulerView (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSHorizontalRuler, 0)
-        self.failUnlessEqual(NSVerticalRuler, 1)
+        self.assertEqual(NSHorizontalRuler, 0)
+        self.assertEqual(NSVerticalRuler, 1)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSRulerView.trackMarker_withMouseEvent_)
-        self.failUnlessResultIsBOOL(NSRulerView.isFlipped)
+        self.assertResultIsBOOL(NSRulerView.trackMarker_withMouseEvent_)
+        self.assertResultIsBOOL(NSRulerView.isFlipped)
 
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldMoveMarker_)
+        self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldMoveMarker_)
 
-        self.failUnlessResultHasType(TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, objc._C_CGFloat)
-        self.failUnlessArgHasType(TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, 2, objc._C_CGFloat)
+        self.assertResultHasType(TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, 2, objc._C_CGFloat)
 
-        self.failUnlessResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldRemoveMarker_)
-        self.failUnlessResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldAddMarker_)
-        self.failUnlessResultHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, objc._C_CGFloat)
-        self.failUnlessArgHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, 2, objc._C_CGFloat)
+        self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldRemoveMarker_)
+        self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldAddMarker_)
+        self.assertResultHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, objc._C_CGFloat)
+        self.assertArgHasType(TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, 2, objc._C_CGFloat)
 
 if __name__ == "__main__":
     main()

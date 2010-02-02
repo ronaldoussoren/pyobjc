@@ -10,40 +10,40 @@ class TestNSRuleEditorHelper (NSObject):
 
 class TestNSRuleEditor (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSRuleEditorNestingModeSingle, 0)
-        self.failUnlessEqual(NSRuleEditorNestingModeList, 1)
-        self.failUnlessEqual(NSRuleEditorNestingModeCompound, 2)
-        self.failUnlessEqual(NSRuleEditorNestingModeSimple, 3)
+        self.assertEqual(NSRuleEditorNestingModeSingle, 0)
+        self.assertEqual(NSRuleEditorNestingModeList, 1)
+        self.assertEqual(NSRuleEditorNestingModeCompound, 2)
+        self.assertEqual(NSRuleEditorNestingModeSimple, 3)
 
-        self.failUnlessEqual(NSRuleEditorRowTypeSimple, 0)
-        self.failUnlessEqual(NSRuleEditorRowTypeCompound, 1)
+        self.assertEqual(NSRuleEditorRowTypeSimple, 0)
+        self.assertEqual(NSRuleEditorRowTypeCompound, 1)
 
-        self.failUnlessIsInstance(NSRuleEditorPredicateLeftExpression, unicode)
-        self.failUnlessIsInstance(NSRuleEditorPredicateRightExpression, unicode)
-        self.failUnlessIsInstance(NSRuleEditorPredicateComparisonModifier, unicode)
-        self.failUnlessIsInstance(NSRuleEditorPredicateOptions, unicode)
-        self.failUnlessIsInstance(NSRuleEditorPredicateOperatorType, unicode)
-        self.failUnlessIsInstance(NSRuleEditorPredicateCustomSelector, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateLeftExpression, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateRightExpression, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateComparisonModifier, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateOptions, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateOperatorType, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateCustomSelector, unicode)
 
-        self.failUnlessIsInstance(NSRuleEditorPredicateCompoundType, unicode)
-        self.failUnlessIsInstance(NSRuleEditorRowsDidChangeNotification, unicode)
+        self.assertIsInstance(NSRuleEditorPredicateCompoundType, unicode)
+        self.assertIsInstance(NSRuleEditorRowsDidChangeNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSRuleEditor.isEditable)
-        self.failUnlessArgIsBOOL(NSRuleEditor.setEditable_, 0)
-        self.failUnlessResultIsBOOL(NSRuleEditor.canRemoveAllRows)
-        self.failUnlessArgIsBOOL(NSRuleEditor.setCanRemoveAllRows_, 0)
-        self.failUnlessArgIsBOOL(NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3)
-        self.failUnlessArgIsBOOL(NSRuleEditor.removeRowsAtIndexes_includeSubrows_, 1)
-        self.failUnlessArgIsBOOL(NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1)
+        self.assertResultIsBOOL(NSRuleEditor.isEditable)
+        self.assertArgIsBOOL(NSRuleEditor.setEditable_, 0)
+        self.assertResultIsBOOL(NSRuleEditor.canRemoveAllRows)
+        self.assertArgIsBOOL(NSRuleEditor.setCanRemoveAllRows_, 0)
+        self.assertArgIsBOOL(NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3)
+        self.assertArgIsBOOL(NSRuleEditor.removeRowsAtIndexes_includeSubrows_, 1)
+        self.assertArgIsBOOL(NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1)
 
     def testProtocols(self):
-        self.failUnlessResultHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, 2, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 1, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 3, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSRuleEditorHelper.ruleEditor_displayValueForCriterion_inRow_, 2, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_, 3, objc._C_NSInteger)
+        self.assertResultHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, objc._C_NSInteger)
+        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 3, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_displayValueForCriterion_inRow_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_, 3, objc._C_NSInteger)
 
 
 if __name__ == "__main__":

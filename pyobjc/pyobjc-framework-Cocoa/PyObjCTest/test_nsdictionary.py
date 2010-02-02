@@ -212,80 +212,80 @@ class TestSubclassing (TestCase):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
 
         self.assert_(isinstance(o, MyDictionary1))
-        self.assertEquals(o._count, 4)
-        self.assertEquals(len(o._keys), 4)
-        self.assertEquals(len(o._objects), 4)
+        self.assertEqual(o._count, 4)
+        self.assertEqual(len(o._keys), 4)
+        self.assertEqual(len(o._objects), 4)
 
     def testDictWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary2, 0)
 
         self.assert_(isinstance(o, tuple))
-        self.assertEquals(o[2], 4)
-        self.assertEquals(len(o[1]), 4)
-        self.assertEquals(len(o[0]), 4)
+        self.assertEqual(o[2], 4)
+        self.assertEqual(len(o[1]), 4)
+        self.assertEqual(len(o[0]), 4)
 
 class TestVariadic (TestCase):
     def testDictionaryWithObjectsAndKeys(self):
         o = NSDictionary.dictionaryWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
-        self.assertEquals(o, {'a':42, 'b':43})
+        self.assertEqual(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSDictionary))
 
         o = NSMutableDictionary.dictionaryWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
-        self.assertEquals(o, {'a':42, 'b':43})
+        self.assertEqual(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSMutableDictionary))
 
     def testInitWithObjectsAndKeys(self):
         o = NSDictionary.alloc().initWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
-        self.assertEquals(o, {'a':42, 'b':43})
+        self.assertEqual(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSDictionary))
 
         o = NSMutableDictionary.alloc().initWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
-        self.assertEquals(o, {'a':42, 'b':43})
+        self.assertEqual(o, {'a':42, 'b':43})
         self.assert_(isinstance(o, NSMutableDictionary))
 
 
 class TestNSDictionary (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSDictionary.isEqualToDictionary_)
-        self.failUnlessResultIsBOOL(NSDictionary.writeToFile_atomically_)
-        self.failUnlessArgIsBOOL(NSDictionary.writeToFile_atomically_, 1)
-        self.failUnlessResultIsBOOL(NSDictionary.writeToURL_atomically_)
-        self.failUnlessArgIsBOOL(NSDictionary.writeToURL_atomically_, 1)
+        self.assertResultIsBOOL(NSDictionary.isEqualToDictionary_)
+        self.assertResultIsBOOL(NSDictionary.writeToFile_atomically_)
+        self.assertArgIsBOOL(NSDictionary.writeToFile_atomically_, 1)
+        self.assertResultIsBOOL(NSDictionary.writeToURL_atomically_)
+        self.assertArgIsBOOL(NSDictionary.writeToURL_atomically_, 1)
 
-        self.failUnlessArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, 'i@:@')
+        self.assertArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, 'i@:@')
 
-        self.failUnlessArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 0)
-        self.failUnlessArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2)
-        self.failUnlessArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 1)
-        self.failUnlessArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 1, 2)
+        self.assertArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 0)
+        self.assertArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2)
+        self.assertArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 1)
+        self.assertArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 1, 2)
 
-        self.failUnlessArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 0)
-        self.failUnlessArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 0, 2)
-        self.failUnlessArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 1)
-        self.failUnlessArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 1, 2)
+        self.assertArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 0)
+        self.assertArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 0, 2)
+        self.assertArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 1)
+        self.assertArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 1, 2)
 
-        self.failUnlessArgIsBOOL(NSDictionary.initWithDictionary_copyItems_, 1)
+        self.assertArgIsBOOL(NSDictionary.initWithDictionary_copyItems_, 1)
 
-        self.failUnlessIsNullTerminated(NSDictionary.initWithObjectsAndKeys_)
-        self.failUnlessIsNullTerminated(NSDictionary.dictionaryWithObjectsAndKeys_)
+        self.assertIsNullTerminated(NSDictionary.initWithObjectsAndKeys_)
+        self.assertIsNullTerminated(NSDictionary.dictionaryWithObjectsAndKeys_)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.failUnlessArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, 'v@@o^'+objc._C_NSBOOL)
-        self.failUnlessArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, 'v@@o^'+objc._C_NSBOOL)
-        self.failUnlessArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, 'i@@')
-        self.failUnlessArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, 'i@@')
+        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, 'v@@o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, 'v@@o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, 'i@@')
+        self.assertArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, 'i@@')
 
-        self.failUnlessArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
-        self.failUnlessArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
 
 if __name__ == '__main__':
     main( )

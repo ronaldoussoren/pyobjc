@@ -14,24 +14,24 @@ class TestNSHost (TestCase):
         # does not have the problem we're seeing here.
         #
         o = NSHost.hostWithAddress_(u'127.0.0.1')
-        self.assertEquals(o.addresses(), (u'127.0.0.1',))
-        self.assertEquals(o.address(), u'127.0.0.1')
+        self.assertEqual(o.addresses(), (u'127.0.0.1',))
+        self.assertEqual(o.address(), u'127.0.0.1')
 
     def testCreation2(self):
         o = NSHost.hostWithName_(u'localhost')
         l = list(o.addresses())
         l.sort()
         #self.assert_(l in ([u'127.0.0.1', u'::1'], [u'127.0.0.1']))
-        self.assertEquals(o.address(), o.addresses()[0])
+        self.assertEqual(o.address(), o.addresses()[0])
 
     def testIndirectCreation(self):
         o = PyObjC_TestClass3.createAHostWithAddress_(u'127.0.0.1')
-        self.assertEquals(o.address(), u'127.0.0.1')
+        self.assertEqual(o.address(), u'127.0.0.1')
 
     def testMethods(self):
-        self.failUnlessArgIsBOOL(NSHost.setHostCacheEnabled_, 0)
-        self.failUnlessResultIsBOOL(NSHost.isHostCacheEnabled)
-        self.failUnlessResultIsBOOL(NSHost.isEqualToHost_)
+        self.assertArgIsBOOL(NSHost.setHostCacheEnabled_, 0)
+        self.assertResultIsBOOL(NSHost.isHostCacheEnabled)
+        self.assertResultIsBOOL(NSHost.isEqualToHost_)
 
 if __name__ == "__main__":
     main()

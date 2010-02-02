@@ -17,28 +17,28 @@ class TestNSInputServerHelper (NSObject):
 
 class TestNSInputServer (TestCase):
     def testProtocols(self):
-        self.failUnlessArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, 'v@:@')
-        self.failUnlessArgHasType(TestNSInputServerHelper.markedTextSelectionChanged_client_, 0, NSRange.__typestr__)
-        self.failUnlessResultIsBOOL(TestNSInputServerHelper.canBeDisabled)
-        self.failUnlessResultIsBOOL(TestNSInputServerHelper.wantsToInterpretAllKeystrokes)
-        self.failUnlessResultIsBOOL(TestNSInputServerHelper.wantsToHandleMouseEvents)
-        self.failUnlessArgHasType(TestNSInputServerHelper.activeConversationWillChange_fromOldConversation_, 1, objc._C_NSInteger)
-        self.failUnlessArgHasType(TestNSInputServerHelper.activeConversationChanged_toNewConversation_, 1, objc._C_NSInteger)
+        self.assertArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, 'v@:@')
+        self.assertArgHasType(TestNSInputServerHelper.markedTextSelectionChanged_client_, 0, NSRange.__typestr__)
+        self.assertResultIsBOOL(TestNSInputServerHelper.canBeDisabled)
+        self.assertResultIsBOOL(TestNSInputServerHelper.wantsToInterpretAllKeystrokes)
+        self.assertResultIsBOOL(TestNSInputServerHelper.wantsToHandleMouseEvents)
+        self.assertArgHasType(TestNSInputServerHelper.activeConversationWillChange_fromOldConversation_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSInputServerHelper.activeConversationChanged_toNewConversation_, 1, objc._C_NSInteger)
 
-        self.failUnlessResultIsBOOL(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
-        self.failUnlessResultIsBOOL(TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
-        self.failUnlessResultHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 'v')
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 'v')
+        self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
 
 

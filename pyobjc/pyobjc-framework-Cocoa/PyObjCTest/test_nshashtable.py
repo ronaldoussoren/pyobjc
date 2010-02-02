@@ -5,10 +5,10 @@ from Foundation import *
 
 class TestNSHashTable (TestCase):
     def testConstants(self):
-        self.assertEquals(NSHashTableStrongMemory, 0)
-        self.assertEquals(NSHashTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
-        self.assertEquals(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
-        self.assertEquals(NSHashTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
+        self.assertEqual(NSHashTableStrongMemory, 0)
+        self.assertEqual(NSHashTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
+        self.assertEqual(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
+        self.assertEqual(NSHashTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
     @expectedFailure
     def testFunctions(self):
@@ -16,10 +16,10 @@ class TestNSHashTable (TestCase):
 
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSHashTable.containsObject_)
-        self.failUnlessResultIsBOOL(NSHashTable.intersectsHashTable_)
-        self.failUnlessResultIsBOOL(NSHashTable.isEqualToHashTable_)
-        self.failUnlessResultIsBOOL(NSHashTable.isSubsetOfHashTable_)
+        self.assertResultIsBOOL(NSHashTable.containsObject_)
+        self.assertResultIsBOOL(NSHashTable.intersectsHashTable_)
+        self.assertResultIsBOOL(NSHashTable.isEqualToHashTable_)
+        self.assertResultIsBOOL(NSHashTable.isSubsetOfHashTable_)
 
 if __name__ == "__main__":
     main()

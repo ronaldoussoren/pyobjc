@@ -8,23 +8,23 @@ class TestNSSoundHelper (NSObject):
 
 class TestNSSound (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(NSSoundPboardType, unicode)
+        self.assertIsInstance(NSSoundPboardType, unicode)
 
     def testMethods(self):
-        self.failUnlessArgIsBOOL(NSSound.initWithContentsOfURL_byReference_, 1)
-        self.failUnlessArgIsBOOL(NSSound.initWithContentsOfFile_byReference_, 1)
-        self.failUnlessResultIsBOOL(NSSound.setName_)
-        self.failUnlessResultIsBOOL(NSSound.canInitWithPasteboard_)
-        self.failUnlessResultIsBOOL(NSSound.play)
-        self.failUnlessResultIsBOOL(NSSound.pause)
-        self.failUnlessResultIsBOOL(NSSound.resume)
-        self.failUnlessResultIsBOOL(NSSound.stop)
-        self.failUnlessResultIsBOOL(NSSound.isPlaying)
-        self.failUnlessResultIsBOOL(NSSound.loops)
-        self.failUnlessArgIsBOOL(NSSound.setLoops_, 0)
+        self.assertArgIsBOOL(NSSound.initWithContentsOfURL_byReference_, 1)
+        self.assertArgIsBOOL(NSSound.initWithContentsOfFile_byReference_, 1)
+        self.assertResultIsBOOL(NSSound.setName_)
+        self.assertResultIsBOOL(NSSound.canInitWithPasteboard_)
+        self.assertResultIsBOOL(NSSound.play)
+        self.assertResultIsBOOL(NSSound.pause)
+        self.assertResultIsBOOL(NSSound.resume)
+        self.assertResultIsBOOL(NSSound.stop)
+        self.assertResultIsBOOL(NSSound.isPlaying)
+        self.assertResultIsBOOL(NSSound.loops)
+        self.assertArgIsBOOL(NSSound.setLoops_, 0)
 
     def testProtocols(self):
-        self.failUnlessArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)
+        self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)
 
 if __name__ == "__main__":
     main()

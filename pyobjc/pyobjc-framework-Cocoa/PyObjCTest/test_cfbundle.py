@@ -5,29 +5,24 @@ from PyObjCTools.TestSupport import *
 class TestCFBundle (TestCase):
 
     def testTypes(self):
-        self.failUnlessIsCFType(CFBundleRef)
+        self.assertIsCFType(CFBundleRef)
 
     def testMainBundle(self):
         bundle = CFBundleGetMainBundle()
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
     def testBundleLoader(self):
         bundle = CFBundleGetBundleWithIdentifier(u"com.apple.CoreFoundation")
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
         array = list(CFBundleGetAllBundles())
-        self.failUnless(len(array) != 0)
+        self.assertNotEqual(len(array) , 0)
         for b in array:
-            self.failUnless( isinstance(b, CFBundleRef) )
-
-
+            self.assertIsInstance(b, CFBundleRef)
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks", kCFURLPOSIXPathStyle, True)
         array = CFBundleCreateBundlesFromDirectory(None, url, u"frameworkX")
-        self.assertEquals(len(array), 0)
+        self.assertEqual(len(array), 0)
 
         array = CFBundleCreateBundlesFromDirectory(None, url, u"framework")
         self.assertNotEquals(len(array), 0)
@@ -39,153 +34,128 @@ class TestCFBundle (TestCase):
 
     def testTypeID(self):
         v = CFBundleGetTypeID()
-        self.failUnless( isinstance(v, (int, long)) )
-
-        
+        self.assertIsInstance(v, (int, long))
     def testInspection(self):
         bundle = CFBundleGetBundleWithIdentifier(u"com.apple.CoreFoundation")
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
         url = CFBundleCopyBundleURL(bundle)
-        self.failUnless( isinstance(url, CFURLRef) )
-
+        self.assertIsInstance(url, CFURLRef)
         v = CFBundleGetValueForInfoDictionaryKey(bundle, u"CFBundleIdentifier")
-        self.failUnless(v == u"com.apple.CoreFoundation")
-
+        self.assertEqual(v , u"com.apple.CoreFoundation")
         v = CFBundleGetInfoDictionary(bundle)
-        self.failUnless( isinstance(v, CFDictionaryRef) )
-        self.failUnless( v['CFBundleIdentifier'], 'com.apple.CoreFoundation')
+        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertTrue( v['CFBundleIdentifier'], 'com.apple.CoreFoundation')
 
         v = CFBundleGetLocalInfoDictionary(bundle)
-        self.failUnless( v is None or isinstance(v, CFDictionaryRef) )
-
+        if v is not None:
+            self.failUnlessIsInstance(v, CFDictionaryRef)
         type, creator = CFBundleGetPackageInfo(bundle, None, None)
-        self.failUnless(isinstance(type, (int, long)))
-        self.failUnless(isinstance(creator, (int, long)))
-
+        self.assertIsInstance(type, (int, long))
+        self.assertIsInstance(creator, (int, long))
         identifier = CFBundleGetIdentifier(bundle)
-        self.failUnless( identifier == u'com.apple.CoreFoundation')
-
+        self.assertEqual(identifier , u'com.apple.CoreFoundation')
         v = CFBundleGetVersionNumber(bundle)
-        self.failUnless( isinstance(v, (int, long)))
-
+        self.assertIsInstance(v, (int, long))
         v = CFBundleGetDevelopmentRegion(bundle)
-        self.failUnless( isinstance(v, unicode))
-
+        self.assertIsInstance(v, unicode)
         v = CFBundleCopySupportFilesDirectoryURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
-
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
         v = CFBundleCopyResourcesDirectoryURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
-
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
         v = CFBundleCopyPrivateFrameworksURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
-
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
         v = CFBundleCopySharedFrameworksURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
-
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
         v = CFBundleCopySharedSupportURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
-
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
         v = CFBundleCopyBuiltInPlugInsURL(bundle)
-        self.failUnless( v is None or isinstance(v, CFURLRef) )
+        if v is not None:
+            self.assertIsInstance(v, CFURLRef)
 
     def testDirectAccess(self):
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
 
         v = CFBundleCopyInfoDictionaryInDirectory(url)
-        self.failUnless( isinstance(v, CFDictionaryRef) )
-        self.failUnless( v[u"CFBundleIdentifier"] == u"com.apple.Foundation")
-
+        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertEqual(v[u"CFBundleIdentifier"] , u"com.apple.Foundation")
         ok, type, creator = CFBundleGetPackageInfoInDirectory(url, None, None)
-        self.failUnless(ok is True)
-        self.failUnless(isinstance(type, (int, long)))
-        self.failUnless(isinstance(creator, (int, long)))
-
+        self.assertIsObject(ok, True)
+        self.assertIsInstance(type, (int, long))
+        self.assertIsInstance(creator, (int, long))
     def testResources(self):
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Tcl.framework", kCFURLPOSIXPathStyle, True)
         bundle2 = CFBundleCreate(None, url)
-        self.failUnless( isinstance(bundle2, CFBundleRef) )
-
-
+        self.assertIsInstance(bundle2, CFBundleRef)
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", None)
-        self.failUnless( isinstance(url, CFURLRef) )
-
+        self.assertIsInstance(url, CFURLRef)
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", "dummy")
-        self.failUnless(url is None)
-
+        self.assertIsObject(url, None)
         array = CFBundleCopyResourceURLsOfType(bundle, "strings", None)
-        self.failIf(array is None)
-        self.failUnless(isinstance(array, CFArrayRef))
-
+        self.assertIsNotObject(array, None)
+        self.assertIsInstance(array, CFArrayRef)
         val = CFBundleCopyLocalizedString(bundle, "Err640.f", "value", "FoundationErrors")
-        self.failUnless(isinstance(val, unicode))
-        self.failIf(val == "value")
-
+        self.assertIsInstance(val, unicode)
+        self.assertNotEqual(val , "value")
         CFCopyLocalizedString("python", "error")
         CFCopyLocalizedStringFromTable("pyobjc", "python", "error")
         CFCopyLocalizedStringFromTableInBundle("pyobjc", "python", bundle, "comment")
         CFCopyLocalizedStringWithDefaultValue("pyobjc", "python", bundle, "default", "comment")
 
         array = CFBundleCopyBundleLocalizations(bundle)
-        self.failIf(array is None)
-        self.failUnless(isinstance(array, CFArrayRef))
-
+        self.assertIsNotObject(array, None)
+        self.assertIsInstance(array, CFArrayRef)
         arr2 = CFBundleCopyPreferredLocalizationsFromArray(array)
-        self.failIf(arr2 is None)
-        self.failUnless(isinstance(arr2, CFArrayRef))
-
+        self.assertIsNotObject(arr2, None)
+        self.assertIsInstance(arr2, CFArrayRef)
         arr2 = CFBundleCopyLocalizationsForPreferences(array, None)
-        self.failIf(arr2 is None)
-        self.failUnless(isinstance(arr2, CFArrayRef))
-
+        self.assertIsNotObject(arr2, None)
+        self.assertIsInstance(arr2, CFArrayRef)
         url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "Dutch");
         if url is None:
             url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "nl");
-        self.failUnlessIsInstance(url, CFURLRef)
+        self.assertIsInstance(url, CFURLRef)
 
         array = CFBundleCopyResourceURLsOfTypeForLocalization(bundle, "strings", None, "Dutch")
-        self.failIf(array is None)
-        self.failUnless(isinstance(array, CFArrayRef))
-
+        self.assertIsNotObject(array, None)
+        self.assertIsInstance(array, CFArrayRef)
         url = CFBundleCopyExecutableURL(bundle)
-        self.failUnless( isinstance(url, CFURLRef) )
-
+        self.assertIsInstance(url, CFURLRef)
         array = CFBundleCopyExecutableArchitectures(bundle)
-        self.failIf(array is None)
-        self.failUnless(isinstance(array, CFArrayRef))
-
-        self.failUnlessArgIsOut(CFBundlePreflightExecutable, 1)
+        self.assertIsNotObject(array, None)
+        self.assertIsInstance(array, CFArrayRef)
+        self.assertArgIsOut(CFBundlePreflightExecutable, 1)
         ok, error = CFBundlePreflightExecutable(bundle, None)
-        self.failUnless((ok is True) or (ok is False))
+        self.assertTrue((ok is True) or (ok is False))
         if ok:
-            self.failUnless(error is None)
+            self.assertIsObject(error, None)
         else:
-            self.failUnless(isinstance(error, CFErrorRef))
-
-        self.failUnlessArgIsOut(CFBundleLoadExecutableAndReturnError, 1)
+            self.assertIsInstance(error, CFErrorRef)
+        self.assertArgIsOut(CFBundleLoadExecutableAndReturnError, 1)
         ok, error = CFBundleLoadExecutableAndReturnError(bundle2, None)
-        self.failUnless((ok is True) or (ok is False))
+        self.assertTrue((ok is True) or (ok is False))
         if ok:
-            self.failUnless(error is None)
+            self.assertIsObject(error, None)
         else:
-            self.failUnless(isinstance(error, CFErrorRef))
-
+            self.assertIsInstance(error, CFErrorRef)
         ok = CFBundleLoadExecutable(bundle2)
-        self.failUnless(ok)
+        self.assertTrue(ok)
 
         ok = CFBundleIsExecutableLoaded(bundle2)
-        self.failUnless(ok)
+        self.assertTrue(ok)
 
         CFBundleUnloadExecutable(bundle2)
         ok = CFBundleIsExecutableLoaded(bundle2)
-        #self.failIf(ok)
+        #self.assertFalse(ok)
         ok = CFBundleLoadExecutable(bundle2)
-        self.failUnless(ok)
+        self.assertTrue(ok)
 
         try:
             CFBundleGetFunctionPointerForName
@@ -216,17 +186,15 @@ class TestCFBundle (TestCase):
             self.fail("CFBundleGetDataPointersForNames")
 
         url =  CFBundleCopyAuxiliaryExecutableURL(bundle, "Foundation")
-        self.failUnless( isinstance(url, CFURLRef) )
-
+        self.assertIsInstance(url, CFURLRef)
         id = CFBundleOpenBundleResourceMap(bundle)
-        self.failUnless(isinstance(id, (int, long)))
-
+        self.assertIsInstance(id, (int, long))
         CFBundleCloseBundleResourceMap(bundle, id)
 
         err,  id1, id2 = CFBundleOpenBundleResourceFiles(bundle, None, None)
-        self.failUnless(isinstance(err, (int, long)))
-        self.failUnless(isinstance(id1, (int, long)))
-        self.failUnless(isinstance(id2, (int, long)))
+        self.assertIsInstance(err, (int, long))
+        self.assertIsInstance(id1, (int, long))
+        self.assertIsInstance(id2, (int, long))
         if id1 != -1:
             CFBundleCloseBundleResourceMap(bundle, id1)
         if id2 != -1:
@@ -235,48 +203,35 @@ class TestCFBundle (TestCase):
     def testResourcesDirect(self):
         bundle = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         url = CFBundleCopyResourceURLInDirectory(bundle, "Formatter", "strings", None)
-        self.failUnless( isinstance(url, CFURLRef) )
-
+        self.assertIsInstance(url, CFURLRef)
         array = CFBundleCopyResourceURLsOfTypeInDirectory(bundle, "strings", None)
-        self.failIf(array is None)
-        self.failUnless(isinstance(array, CFArrayRef))
-
+        self.assertIsNotObject(array, None)
+        self.assertIsInstance(array, CFArrayRef)
         infoDict = CFBundleCopyInfoDictionaryForURL(bundle)
-        self.failUnless(isinstance(infoDict, CFDictionaryRef))
-
+        self.assertIsInstance(infoDict, CFDictionaryRef)
         array = CFBundleCopyLocalizationsForURL(bundle)
-        self.failUnless(isinstance(array, CFArrayRef))
-
+        self.assertIsInstance(array, CFArrayRef)
         array = CFBundleCopyExecutableArchitecturesForURL(bundle)
-        self.failUnless(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, CFArrayRef)
         for a in array:
-            self.failUnless(isinstance(a, (int, long)))
-   
+            self.assertIsInstance(a, (int, long))
     def testPlugin(self):
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Components/AppleScript.component", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
-        self.failUnless( isinstance(bundle, CFBundleRef) )
-
+        self.assertIsInstance(bundle, CFBundleRef)
         ref = CFBundleGetPlugIn(bundle)
-        self.failUnless(ref is None)
-
-
-
+        self.assertIsObject(ref, None)
     def testConstants(self):
-        self.failUnless( isinstance(kCFBundleInfoDictionaryVersionKey, unicode))
-        self.failUnless( isinstance(kCFBundleExecutableKey, unicode))
-        self.failUnless( isinstance(kCFBundleIdentifierKey, unicode))
-        self.failUnless( isinstance(kCFBundleVersionKey, unicode))
-        self.failUnless( isinstance(kCFBundleDevelopmentRegionKey, unicode))
-        self.failUnless( isinstance(kCFBundleNameKey, unicode))
-        self.failUnless( isinstance(kCFBundleLocalizationsKey, unicode))
-
-        self.failUnless( kCFBundleExecutableArchitectureI386     == 0x00000007)
-        self.failUnless( kCFBundleExecutableArchitecturePPC      == 0x00000012)
-        self.failUnless( kCFBundleExecutableArchitectureX86_64   == 0x01000007)
-        self.failUnless( kCFBundleExecutableArchitecturePPC64    == 0x01000012)
-
-
-
+        self.assertIsInstance(kCFBundleInfoDictionaryVersionKey, unicode)
+        self.assertIsInstance(kCFBundleExecutableKey, unicode)
+        self.assertIsInstance(kCFBundleIdentifierKey, unicode)
+        self.assertIsInstance(kCFBundleVersionKey, unicode)
+        self.assertIsInstance(kCFBundleDevelopmentRegionKey, unicode)
+        self.assertIsInstance(kCFBundleNameKey, unicode)
+        self.assertIsInstance(kCFBundleLocalizationsKey, unicode)
+        self.assertEqual(kCFBundleExecutableArchitectureI386     , 0x00000007)
+        self.assertEqual(kCFBundleExecutableArchitecturePPC      , 0x00000012)
+        self.assertEqual(kCFBundleExecutableArchitectureX86_64   , 0x01000007)
+        self.assertEqual(kCFBundleExecutableArchitecturePPC64    , 0x01000012)
 if __name__ == "__main__":
     main()

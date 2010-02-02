@@ -4,68 +4,61 @@ from CoreFoundation import *
 
 class TestStringTokenizer (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFStringTokenizerRef)
+        self.assertIsCFType(CFStringTokenizerRef)
 
     def testFunctions(self):
         s = u"Spring eens over een boom"
         v = CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
-        self.assertEquals(v, 'nl')
+        self.assertEqual(v, 'nl')
 
         v = CFStringTokenizerGetTypeID()
-        self.failUnless(isinstance(v, (int, long)))
-
-        self.failUnlessResultIsCFRetained(CFStringTokenizerCreate)
+        self.assertIsInstance(v, (int, long))
+        self.assertResultIsCFRetained(CFStringTokenizerCreate)
         tok = CFStringTokenizerCreate(
                 None, s, (0, len(s)), kCFStringTokenizerUnitWord, 
                 CFLocaleCopyCurrent())
-        self.failUnless(isinstance(tok, CFStringTokenizerRef))
-
+        self.assertIsInstance(tok, CFStringTokenizerRef)
         v = CFStringTokenizerGoToTokenAtIndex(tok, 2)
-        self.assertEquals(v, kCFStringTokenizerTokenNormal)
+        self.assertEqual(v, kCFStringTokenizerTokenNormal)
 
         v = CFStringTokenizerGetCurrentTokenRange(tok)
-        self.assertEquals(v, CFRange(0, 6))
+        self.assertEqual(v, CFRange(0, 6))
 
         v = CFStringTokenizerAdvanceToNextToken(tok)
-        self.assertEquals(v, kCFStringTokenizerTokenNormal)
+        self.assertEqual(v, kCFStringTokenizerTokenNormal)
 
         v = CFStringTokenizerGetCurrentTokenRange(tok)
-        self.assertEquals(v, CFRange(7, 4))
+        self.assertEqual(v, CFRange(7, 4))
 
-        self.failUnlessResultIsCFRetained(CFStringTokenizerCopyCurrentTokenAttribute)
+        self.assertResultIsCFRetained(CFStringTokenizerCopyCurrentTokenAttribute)
         v = CFStringTokenizerCopyCurrentTokenAttribute(tok, kCFStringTokenizerAttributeLanguage)
-        self.failUnless(v is None)
-
-
+        self.assertIsObject(v, None)
         s = u"A dog jumped over a log. And then some more."
         CFStringTokenizerSetString(tok, s, (0, len(s)))
 
         subref = []
         idx, ranges = CFStringTokenizerGetCurrentSubTokens(tok, None, 20, subref)
-        self.assertEquals(idx, 0)
-        self.assertEquals(ranges, ())
-        self.assertEquals(subref, [])
+        self.assertEqual(idx, 0)
+        self.assertEqual(ranges, ())
+        self.assertEqual(subref, [])
 
 
 
     def testConstants(self):
 
-        self.failUnless( kCFStringTokenizerUnitWord                           == 0 )
-        self.failUnless( kCFStringTokenizerUnitSentence                       == 1 )
-        self.failUnless( kCFStringTokenizerUnitParagraph                      == 2 )
-        self.failUnless( kCFStringTokenizerUnitLineBreak                      == 3 )
-        self.failUnless( kCFStringTokenizerUnitWordBoundary                   == 4 )
-        self.failUnless( kCFStringTokenizerAttributeLatinTranscription        == 1L << 16 )
-        self.failUnless( kCFStringTokenizerAttributeLanguage                  == 1L << 17 )
-
-        self.failUnless( kCFStringTokenizerTokenNone                          == 0 )
-        self.failUnless( kCFStringTokenizerTokenNormal                        == 1 )
-        self.failUnless( kCFStringTokenizerTokenHasSubTokensMask              == 1L << 1 )
-        self.failUnless( kCFStringTokenizerTokenHasDerivedSubTokensMask       == 1L << 2 )
-        self.failUnless( kCFStringTokenizerTokenHasHasNumbersMask             == 1L << 3 )
-        self.failUnless( kCFStringTokenizerTokenHasNonLettersMask             == 1L << 4 )
-        self.failUnless( kCFStringTokenizerTokenIsCJWordMask                  == 1L << 5 )
-
-
+        self.assertEqual(kCFStringTokenizerUnitWord                           , 0 )
+        self.assertEqual(kCFStringTokenizerUnitSentence                       , 1 )
+        self.assertEqual(kCFStringTokenizerUnitParagraph                      , 2 )
+        self.assertEqual(kCFStringTokenizerUnitLineBreak                      , 3 )
+        self.assertEqual(kCFStringTokenizerUnitWordBoundary                   , 4 )
+        self.assertEqual(kCFStringTokenizerAttributeLatinTranscription        , 1L << 16 )
+        self.assertEqual(kCFStringTokenizerAttributeLanguage                  , 1L << 17 )
+        self.assertEqual(kCFStringTokenizerTokenNone                          , 0 )
+        self.assertEqual(kCFStringTokenizerTokenNormal                        , 1 )
+        self.assertEqual(kCFStringTokenizerTokenHasSubTokensMask              , 1L << 1 )
+        self.assertEqual(kCFStringTokenizerTokenHasDerivedSubTokensMask       , 1L << 2 )
+        self.assertEqual(kCFStringTokenizerTokenHasHasNumbersMask             , 1L << 3 )
+        self.assertEqual(kCFStringTokenizerTokenHasNonLettersMask             , 1L << 4 )
+        self.assertEqual(kCFStringTokenizerTokenIsCJWordMask                  , 1L << 5 )
 if __name__ == "__main__":
     main()
