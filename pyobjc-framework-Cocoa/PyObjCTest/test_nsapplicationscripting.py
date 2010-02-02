@@ -8,7 +8,7 @@ class TestNSApplicationScriptingHelper (NSObject):
 
 class TestNSApplicationScripting (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestNSApplicationScriptingHelper.application_delegateHandlesKey_)
+        self.assertResultIsBOOL(TestNSApplicationScriptingHelper.application_delegateHandlesKey_)
 
 if __name__ == "__main__":
     main()

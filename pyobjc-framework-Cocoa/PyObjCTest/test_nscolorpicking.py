@@ -11,8 +11,8 @@ class TestNSColorPickingHelper (NSObject):
 
 class TestNSColorPicking (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestNSColorPickingHelper.supportsMode_)
-        self.failUnlessArgIsBOOL(TestNSColorPickingHelper.provideNewView_, 0)
+        self.assertResultIsBOOL(TestNSColorPickingHelper.supportsMode_)
+        self.assertArgIsBOOL(TestNSColorPickingHelper.provideNewView_, 0)
 
 if __name__ == "__main__":
     main()

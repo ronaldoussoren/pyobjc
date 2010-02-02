@@ -13,9 +13,9 @@ class TestNSLocalizedString(TestCase):
 
         s = NSLocalizedString(u"hello world", u"")
         objc.recycleAutoreleasePool()
-        self.assertEquals (s, u"hello world")
+        self.assertEqual (s, u"hello world")
         # XXX : Since we get the same object back, it's still unicode
-        #self.assertEquals (s.nsstring().description(), u"hello world")
+        #self.assertEqual (s.nsstring().description(), u"hello world")
 
 if __name__ == '__main__':
     main( )

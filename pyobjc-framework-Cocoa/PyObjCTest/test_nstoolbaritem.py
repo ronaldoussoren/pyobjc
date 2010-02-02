@@ -7,28 +7,28 @@ class TestNSToolbarItemHelper (NSObject):
 
 class TestNSToolbarItem (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSToolbarItemVisibilityPriorityStandard, 0)
-        self.failUnlessEqual(NSToolbarItemVisibilityPriorityLow, -1000)
-        self.failUnlessEqual(NSToolbarItemVisibilityPriorityHigh, 1000)
-        self.failUnlessEqual(NSToolbarItemVisibilityPriorityUser, 2000)
+        self.assertEqual(NSToolbarItemVisibilityPriorityStandard, 0)
+        self.assertEqual(NSToolbarItemVisibilityPriorityLow, -1000)
+        self.assertEqual(NSToolbarItemVisibilityPriorityHigh, 1000)
+        self.assertEqual(NSToolbarItemVisibilityPriorityUser, 2000)
 
-        self.failUnlessIsInstance(NSToolbarSeparatorItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarSpaceItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarFlexibleSpaceItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarShowColorsItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarShowFontsItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)
-        self.failUnlessIsInstance(NSToolbarPrintItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarSeparatorItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarSpaceItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarFlexibleSpaceItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarShowColorsItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarShowFontsItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarCustomizeToolbarItemIdentifier, unicode)
+        self.assertIsInstance(NSToolbarPrintItemIdentifier, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSToolbarItem.isEnabled)
-        self.failUnlessArgIsBOOL(NSToolbarItem.setEnabled_, 0)
-        self.failUnlessResultIsBOOL(NSToolbarItem.autovalidates)
-        self.failUnlessArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
-        self.failUnlessResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar)
+        self.assertResultIsBOOL(NSToolbarItem.isEnabled)
+        self.assertArgIsBOOL(NSToolbarItem.setEnabled_, 0)
+        self.assertResultIsBOOL(NSToolbarItem.autovalidates)
+        self.assertArgIsBOOL(NSToolbarItem.setAutovalidates_, 0)
+        self.assertResultIsBOOL(NSToolbarItem.allowsDuplicatesInToolbar)
 
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
+        self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 
 
 if __name__ == "__main__":

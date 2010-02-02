@@ -17,29 +17,29 @@ class TestNSBezierPath(TestCase):
     def test_creation(self):
         p = NSBezierPath.bezierPath()
         self.assert_(p is not None)
-        self.assertEquals(p.elementCount(), 0)
+        self.assertEqual(p.elementCount(), 0)
 
         p = NSBezierPath.bezierPathWithOvalInRect_(((0, 0), (100, 50)))
         self.assert_(p is not None)
-        self.assertEquals(p.elementCount(), 5)
+        self.assertEqual(p.elementCount(), 5)
 
     def test_appendPoints(self):
         p = NSBezierPath.bezierPath()
         self.assert_(p is not None)
-        self.assertEquals(p.elementCount(), 0)
+        self.assertEqual(p.elementCount(), 0)
 
         points = [ (0, 0), (100, 0), (100, 100), (0, 0) ]
         p.appendBezierPathWithPoints_count_(points, 3)
-        self.assertEquals(p.elementCount(), 3)
+        self.assertEqual(p.elementCount(), 3)
 
     def test_setLineDash(self):
         p = NSBezierPath.bezierPath()
         p.setLineDash_count_phase_((10, 10, 20, 5), 4, 45.0)
 
         pattern, count, phase = p.getLineDash_count_phase_(objc.NULL, 0, None)
-        #self.assertEquals(pattern, None)
-        self.assertEquals(pattern, objc.NULL)
-        self.assertEquals(count, 4)
+        #self.assertEqual(pattern, None)
+        self.assertEqual(pattern, objc.NULL)
+        self.assertEqual(count, 4)
         self.assertAlmostEquals(phase, 45.0)
 
         pattern, count, phase = p.getLineDash_count_phase_(None, 4, None)
@@ -47,7 +47,7 @@ class TestNSBezierPath(TestCase):
         self.assertAlmostEquals(pattern[1], 10)
         self.assertAlmostEquals(pattern[2], 20)
         self.assertAlmostEquals(pattern[3], 5)
-        self.assertEquals(count, 4)
+        self.assertEqual(count, 4)
         self.assertAlmostEquals(phase, 45.0)
 
     def test_elementAtIndex(self):
@@ -58,37 +58,37 @@ class TestNSBezierPath(TestCase):
         p.curveToPoint_controlPoint1_controlPoint2_((40, 41), (10, 11), (20, 21))
         p.closePath()
 
-        self.assertEquals(p.elementAtIndex_(0), NSMoveToBezierPathElement)
-        self.assertEquals(p.elementAtIndex_(1), NSLineToBezierPathElement)
-        self.assertEquals(p.elementAtIndex_(2), NSLineToBezierPathElement)
-        self.assertEquals(p.elementAtIndex_(3), NSCurveToBezierPathElement)
-        self.assertEquals(p.elementAtIndex_(4), NSClosePathBezierPathElement)
+        self.assertEqual(p.elementAtIndex_(0), NSMoveToBezierPathElement)
+        self.assertEqual(p.elementAtIndex_(1), NSLineToBezierPathElement)
+        self.assertEqual(p.elementAtIndex_(2), NSLineToBezierPathElement)
+        self.assertEqual(p.elementAtIndex_(3), NSCurveToBezierPathElement)
+        self.assertEqual(p.elementAtIndex_(4), NSClosePathBezierPathElement)
 
         tp, points = p.elementAtIndex_associatedPoints_(0)
-        self.assertEquals(tp, NSMoveToBezierPathElement)
-        self.assertEquals(len(points), 1)
+        self.assertEqual(tp, NSMoveToBezierPathElement)
+        self.assertEqual(len(points), 1)
         self.assertPointEquals(points[0], (10, 10))
 
         tp, points = p.elementAtIndex_associatedPoints_(1)
-        self.assertEquals(tp, NSLineToBezierPathElement)
-        self.assertEquals(len(points), 1)
+        self.assertEqual(tp, NSLineToBezierPathElement)
+        self.assertEqual(len(points), 1)
         self.assertPointEquals(points[0], (20, 30))
 
         tp, points = p.elementAtIndex_associatedPoints_(2)
-        self.assertEquals(tp, NSLineToBezierPathElement)
-        self.assertEquals(len(points), 1)
+        self.assertEqual(tp, NSLineToBezierPathElement)
+        self.assertEqual(len(points), 1)
         self.assertPointEquals(points[0], (30, 20))
 
         tp, points = p.elementAtIndex_associatedPoints_(3)
-        self.assertEquals(tp, NSCurveToBezierPathElement)
-        self.assertEquals(len(points), 3)
+        self.assertEqual(tp, NSCurveToBezierPathElement)
+        self.assertEqual(len(points), 3)
         self.assertPointEquals(points[0], (10, 11)) # control point 1
         self.assertPointEquals(points[1], (20, 21)) # control point 2
         self.assertPointEquals(points[2], (40, 41)) # end point
 
         tp, points = p.elementAtIndex_associatedPoints_(4)
-        self.assertEquals(tp, NSClosePathBezierPathElement)
-        self.assertEquals(len(points), 0)
+        self.assertEqual(tp, NSClosePathBezierPathElement)
+        self.assertEqual(len(points), 0)
 
     def test_setAssociatedPoints(self):
         p = NSBezierPath.bezierPath()
@@ -100,39 +100,39 @@ class TestNSBezierPath(TestCase):
 
         p.setAssociatedPoints_atIndex_([(0, 1)], 0)
         tp, points = p.elementAtIndex_associatedPoints_(0)
-        self.assertEquals(tp, NSMoveToBezierPathElement)
-        self.assertEquals(len(points), 1)
+        self.assertEqual(tp, NSMoveToBezierPathElement)
+        self.assertEqual(len(points), 1)
         self.assertPointEquals(points[0], (0, 1))
 
         p.setAssociatedPoints_atIndex_([(0, 1), (2,3), (3,4)], 3)
         tp, points = p.elementAtIndex_associatedPoints_(3)
-        self.assertEquals(tp, NSCurveToBezierPathElement)
-        self.assertEquals(len(points), 3)
+        self.assertEqual(tp, NSCurveToBezierPathElement)
+        self.assertEqual(len(points), 3)
         self.assertPointEquals(points[0], (0, 1)) # control point 1
         self.assertPointEquals(points[1], (2, 3)) # control point 2
         self.assertPointEquals(points[2], (3, 4)) # end point
 
 
     def testConstants(self):
-        self.failUnlessEqual(NSButtLineCapStyle, 0)
-        self.failUnlessEqual(NSRoundLineCapStyle, 1)
-        self.failUnlessEqual(NSSquareLineCapStyle, 2)
-        self.failUnlessEqual(NSMiterLineJoinStyle, 0)
-        self.failUnlessEqual(NSRoundLineJoinStyle, 1)
-        self.failUnlessEqual(NSBevelLineJoinStyle, 2)
-        self.failUnlessEqual(NSNonZeroWindingRule, 0)
-        self.failUnlessEqual(NSEvenOddWindingRule, 1)
-        self.failUnlessEqual(NSMoveToBezierPathElement, 0)
-        self.failUnlessEqual(NSLineToBezierPathElement, 1)
-        self.failUnlessEqual(NSCurveToBezierPathElement, 2)
-        self.failUnlessEqual(NSClosePathBezierPathElement, 3)
+        self.assertEqual(NSButtLineCapStyle, 0)
+        self.assertEqual(NSRoundLineCapStyle, 1)
+        self.assertEqual(NSSquareLineCapStyle, 2)
+        self.assertEqual(NSMiterLineJoinStyle, 0)
+        self.assertEqual(NSRoundLineJoinStyle, 1)
+        self.assertEqual(NSBevelLineJoinStyle, 2)
+        self.assertEqual(NSNonZeroWindingRule, 0)
+        self.assertEqual(NSEvenOddWindingRule, 1)
+        self.assertEqual(NSMoveToBezierPathElement, 0)
+        self.assertEqual(NSLineToBezierPathElement, 1)
+        self.assertEqual(NSCurveToBezierPathElement, 2)
+        self.assertEqual(NSClosePathBezierPathElement, 3)
 
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSBezierPath.isEmpty)
-        self.failUnlessResultIsBOOL(NSBezierPath.containsPoint_)
-        self.failUnlessResultIsBOOL(NSBezierPath.cachesBezierPath)
-        self.failUnlessArgIsBOOL(NSBezierPath.setCachesBezierPath_, 0)
+        self.assertResultIsBOOL(NSBezierPath.isEmpty)
+        self.assertResultIsBOOL(NSBezierPath.containsPoint_)
+        self.assertResultIsBOOL(NSBezierPath.cachesBezierPath)
+        self.assertArgIsBOOL(NSBezierPath.setCachesBezierPath_, 0)
 
 
 if __name__ == '__main__':

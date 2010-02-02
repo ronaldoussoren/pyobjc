@@ -9,9 +9,9 @@ class TestNSUserInterfaceValidationHelper (NSObject):
 
 class TestNSUserInterfaceValidation (TestCase):
     def testProtocols(self):
-        self.failUnlessResultHasType(TestNSUserInterfaceValidationHelper.action, objc._C_SEL)
-        self.failUnlessResultHasType(TestNSUserInterfaceValidationHelper.tag, objc._C_NSInteger)
-        self.failUnlessResultIsBOOL(TestNSUserInterfaceValidationHelper.validateUserInterfaceItem_)
+        self.assertResultHasType(TestNSUserInterfaceValidationHelper.action, objc._C_SEL)
+        self.assertResultHasType(TestNSUserInterfaceValidationHelper.tag, objc._C_NSInteger)
+        self.assertResultIsBOOL(TestNSUserInterfaceValidationHelper.validateUserInterfaceItem_)
 
 if __name__ == "__main__":
     main()

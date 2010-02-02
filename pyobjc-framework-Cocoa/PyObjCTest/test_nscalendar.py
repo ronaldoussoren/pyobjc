@@ -6,32 +6,32 @@ import Foundation
 
 class TestNSCalendar (TestCase):
     def testConstants(self):
-        self.assertEquals( NSEraCalendarUnit, kCFCalendarUnitEra)
-        self.assertEquals( NSYearCalendarUnit, kCFCalendarUnitYear)
-        self.assertEquals( NSMonthCalendarUnit, kCFCalendarUnitMonth)
-        self.assertEquals( NSDayCalendarUnit, kCFCalendarUnitDay)
-        self.assertEquals( NSHourCalendarUnit, kCFCalendarUnitHour)
-        self.assertEquals( NSMinuteCalendarUnit, kCFCalendarUnitMinute)
-        self.assertEquals( NSSecondCalendarUnit, kCFCalendarUnitSecond)
-        self.assertEquals( NSWeekCalendarUnit, kCFCalendarUnitWeek)
-        self.assertEquals( NSWeekdayCalendarUnit, kCFCalendarUnitWeekday)
-        self.assertEquals( NSWeekdayOrdinalCalendarUnit, kCFCalendarUnitWeekdayOrdinal)
+        self.assertEqual( NSEraCalendarUnit, kCFCalendarUnitEra)
+        self.assertEqual( NSYearCalendarUnit, kCFCalendarUnitYear)
+        self.assertEqual( NSMonthCalendarUnit, kCFCalendarUnitMonth)
+        self.assertEqual( NSDayCalendarUnit, kCFCalendarUnitDay)
+        self.assertEqual( NSHourCalendarUnit, kCFCalendarUnitHour)
+        self.assertEqual( NSMinuteCalendarUnit, kCFCalendarUnitMinute)
+        self.assertEqual( NSSecondCalendarUnit, kCFCalendarUnitSecond)
+        self.assertEqual( NSWeekCalendarUnit, kCFCalendarUnitWeek)
+        self.assertEqual( NSWeekdayCalendarUnit, kCFCalendarUnitWeekday)
+        self.assertEqual( NSWeekdayOrdinalCalendarUnit, kCFCalendarUnitWeekdayOrdinal)
 
-        self.assertEquals( NSWrapCalendarComponents, kCFCalendarComponentsWrap)
+        self.assertEqual( NSWrapCalendarComponents, kCFCalendarComponentsWrap)
 
-        self.assertEquals( NSUndefinedDateComponent, NSIntegerMax)
+        self.assertEqual( NSUndefinedDateComponent, NSIntegerMax)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.assertEquals( NSQuarterCalendarUnit, kCFCalendarUnitQuarter)
+        self.assertEqual( NSQuarterCalendarUnit, kCFCalendarUnitQuarter)
 
     @min_os_level('10.5')
     def testMethods10_5(self):
         obj = NSCalendar.currentCalendar()
 
-        self.failUnlessResultIsBOOL(NSCalendar.rangeOfUnit_startDate_interval_forDate_)
-        self.failUnlessArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1)
-        self.failUnlessArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2)
+        self.assertResultIsBOOL(NSCalendar.rangeOfUnit_startDate_interval_forDate_)
+        self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1)
+        self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2)
 
 
 if __name__ == "__main__":

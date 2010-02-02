@@ -4,23 +4,23 @@ from AppKit import *
 
 class TestNSTextContainer (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSLineSweepLeft, 0)
-        self.failUnlessEqual(NSLineSweepRight, 1)
-        self.failUnlessEqual(NSLineSweepDown, 2)
-        self.failUnlessEqual(NSLineSweepUp, 3)
-        self.failUnlessEqual(NSLineDoesntMove, 0)
-        self.failUnlessEqual(NSLineMovesLeft, 1)
-        self.failUnlessEqual(NSLineMovesRight, 2)
-        self.failUnlessEqual(NSLineMovesDown, 3)
-        self.failUnlessEqual(NSLineMovesUp, 4)
+        self.assertEqual(NSLineSweepLeft, 0)
+        self.assertEqual(NSLineSweepRight, 1)
+        self.assertEqual(NSLineSweepDown, 2)
+        self.assertEqual(NSLineSweepUp, 3)
+        self.assertEqual(NSLineDoesntMove, 0)
+        self.assertEqual(NSLineMovesLeft, 1)
+        self.assertEqual(NSLineMovesRight, 2)
+        self.assertEqual(NSLineMovesDown, 3)
+        self.assertEqual(NSLineMovesUp, 4)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSTextContainer.widthTracksTextView)
-        self.failUnlessArgIsBOOL(NSTextContainer.setWidthTracksTextView_, 0)
-        self.failUnlessResultIsBOOL(NSTextContainer.heightTracksTextView)
-        self.failUnlessArgIsBOOL(NSTextContainer.setHeightTracksTextView_, 0)
-        self.failUnlessResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
-        self.failUnlessResultIsBOOL(NSTextContainer.containsPoint_)
+        self.assertResultIsBOOL(NSTextContainer.widthTracksTextView)
+        self.assertArgIsBOOL(NSTextContainer.setWidthTracksTextView_, 0)
+        self.assertResultIsBOOL(NSTextContainer.heightTracksTextView)
+        self.assertArgIsBOOL(NSTextContainer.setHeightTracksTextView_, 0)
+        self.assertResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
+        self.assertResultIsBOOL(NSTextContainer.containsPoint_)
 
 
 if __name__ == "__main__":

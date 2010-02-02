@@ -4,15 +4,13 @@ from Foundation import *
 
 class TestNSPort (TestCase):
     def testConstants(self):
-        self.failUnless(isinstance(NSPortDidBecomeInvalidNotification, unicode))
-
-
-        self.assertEquals(NSMachPortDeallocateNone, 0)
-        self.assertEquals(NSMachPortDeallocateSendRight, (1 << 0))
-        self.assertEquals(NSMachPortDeallocateReceiveRight, (1 << 1))
+        self.assertIsInstance(NSPortDidBecomeInvalidNotification, unicode)
+        self.assertEqual(NSMachPortDeallocateNone, 0)
+        self.assertEqual(NSMachPortDeallocateSendRight, (1 << 0))
+        self.assertEqual(NSMachPortDeallocateReceiveRight, (1 << 1))
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSPort.isValid)
+        self.assertResultIsBOOL(NSPort.isValid)
 
 if __name__ == "__main__":
     main()

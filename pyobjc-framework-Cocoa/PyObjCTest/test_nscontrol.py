@@ -11,29 +11,29 @@ class TestNSControlHelper (NSObject):
 
 class TestNSControl (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSControl.ignoresMultiClick)
-        self.failUnlessArgIsBOOL(NSControl.setIgnoresMultiClick_, 0)
-        self.failUnlessResultIsBOOL(NSControl.isContinuous)
-        self.failUnlessArgIsBOOL(NSControl.setContinuous_, 0)
-        self.failUnlessResultIsBOOL(NSControl.isEnabled)
-        self.failUnlessArgIsBOOL(NSControl.setEnabled_, 0)
-        self.failUnlessArgIsBOOL(NSControl.setFloatingPointFormat_left_right_, 0)
-        self.failUnlessResultIsBOOL(NSControl.sendAction_to_)
-        self.failUnlessResultIsBOOL(NSControl.abortEditing)
-        self.failUnlessResultIsBOOL(NSControl.refusesFirstResponder)
-        self.failUnlessArgIsBOOL(NSControl.setRefusesFirstResponder_, 0)
+        self.assertResultIsBOOL(NSControl.ignoresMultiClick)
+        self.assertArgIsBOOL(NSControl.setIgnoresMultiClick_, 0)
+        self.assertResultIsBOOL(NSControl.isContinuous)
+        self.assertArgIsBOOL(NSControl.setContinuous_, 0)
+        self.assertResultIsBOOL(NSControl.isEnabled)
+        self.assertArgIsBOOL(NSControl.setEnabled_, 0)
+        self.assertArgIsBOOL(NSControl.setFloatingPointFormat_left_right_, 0)
+        self.assertResultIsBOOL(NSControl.sendAction_to_)
+        self.assertResultIsBOOL(NSControl.abortEditing)
+        self.assertResultIsBOOL(NSControl.refusesFirstResponder)
+        self.assertArgIsBOOL(NSControl.setRefusesFirstResponder_, 0)
 
     def testDelegate(self):
-        self.failUnlessResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)
-        self.failUnlessResultIsBOOL(TestNSControlHelper.control_textShouldEndEditing_)
-        self.failUnlessResultIsBOOL(TestNSControlHelper.control_didFailToFormatString_errorDescription_)
-        self.failUnlessResultIsBOOL(TestNSControlHelper.control_isValidObject_)
-        self.failUnlessResultIsBOOL(TestNSControlHelper.control_textView_doCommandBySelector_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldBeginEditing_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_textShouldEndEditing_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_didFailToFormatString_errorDescription_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_isValidObject_)
+        self.assertResultIsBOOL(TestNSControlHelper.control_textView_doCommandBySelector_)
 
     def testConstants(self):
-        self.failUnlessIsInstance(NSControlTextDidBeginEditingNotification, unicode)
-        self.failUnlessIsInstance(NSControlTextDidEndEditingNotification, unicode)
-        self.failUnlessIsInstance(NSControlTextDidChangeNotification, unicode)
+        self.assertIsInstance(NSControlTextDidBeginEditingNotification, unicode)
+        self.assertIsInstance(NSControlTextDidEndEditingNotification, unicode)
+        self.assertIsInstance(NSControlTextDidChangeNotification, unicode)
 
 if __name__ == "__main__":
     main()

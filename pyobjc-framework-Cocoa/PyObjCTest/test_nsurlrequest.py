@@ -3,17 +3,17 @@ from PyObjCTools.TestSupport import *
 
 class TestNSURLRequest (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSURLRequestUseProtocolCachePolicy, 0)
-        self.failUnlessEqual(NSURLRequestReloadIgnoringLocalCacheData, 1)
-        self.failUnlessEqual(NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4)
-        self.failUnlessEqual(NSURLRequestReloadIgnoringCacheData, NSURLRequestReloadIgnoringLocalCacheData)
-        self.failUnlessEqual(NSURLRequestReturnCacheDataElseLoad, 2)
-        self.failUnlessEqual(NSURLRequestReturnCacheDataDontLoad, 3)
-        self.failUnlessEqual(NSURLRequestReloadRevalidatingCacheData, 5)
+        self.assertEqual(NSURLRequestUseProtocolCachePolicy, 0)
+        self.assertEqual(NSURLRequestReloadIgnoringLocalCacheData, 1)
+        self.assertEqual(NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4)
+        self.assertEqual(NSURLRequestReloadIgnoringCacheData, NSURLRequestReloadIgnoringLocalCacheData)
+        self.assertEqual(NSURLRequestReturnCacheDataElseLoad, 2)
+        self.assertEqual(NSURLRequestReturnCacheDataDontLoad, 3)
+        self.assertEqual(NSURLRequestReloadRevalidatingCacheData, 5)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
-        self.failUnlessArgIsBOOL(NSMutableURLRequest.setHTTPShouldHandleCookies_, 0)
+        self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
+        self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldHandleCookies_, 0)
 
 if __name__ == "__main__":
     main()

@@ -3,20 +3,20 @@ from PyObjCTools.TestSupport import *
 
 class TestNSScriptCommand (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSNoScriptError, 0)
-        self.failUnlessEqual(NSReceiverEvaluationScriptError, 1)
-        self.failUnlessEqual(NSKeySpecifierEvaluationScriptError, 2)
-        self.failUnlessEqual(NSArgumentEvaluationScriptError, 3)
-        self.failUnlessEqual(NSReceiversCantHandleCommandScriptError,  4)
-        self.failUnlessEqual(NSRequiredArgumentsMissingScriptError, 5)
-        self.failUnlessEqual(NSArgumentsWrongScriptError,  6)
-        self.failUnlessEqual(NSUnknownKeyScriptError,  7)
-        self.failUnlessEqual(NSInternalScriptError,  8)
-        self.failUnlessEqual(NSOperationNotSupportedForKeyScriptError, 9)
-        self.failUnlessEqual(NSCannotCreateScriptCommandError, 10)
+        self.assertEqual(NSNoScriptError, 0)
+        self.assertEqual(NSReceiverEvaluationScriptError, 1)
+        self.assertEqual(NSKeySpecifierEvaluationScriptError, 2)
+        self.assertEqual(NSArgumentEvaluationScriptError, 3)
+        self.assertEqual(NSReceiversCantHandleCommandScriptError,  4)
+        self.assertEqual(NSRequiredArgumentsMissingScriptError, 5)
+        self.assertEqual(NSArgumentsWrongScriptError,  6)
+        self.assertEqual(NSUnknownKeyScriptError,  7)
+        self.assertEqual(NSInternalScriptError,  8)
+        self.assertEqual(NSOperationNotSupportedForKeyScriptError, 9)
+        self.assertEqual(NSCannotCreateScriptCommandError, 10)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSScriptCommand.isWellFormed)
+        self.assertResultIsBOOL(NSScriptCommand.isWellFormed)
 
 
 if __name__ == "__main__":

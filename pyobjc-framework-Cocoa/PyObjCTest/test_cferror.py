@@ -7,23 +7,20 @@ class TestError (TestCase):
 
     @min_os_level('10.5')
     def testTypes(self):
-        self.failUnless(CFErrorRef is NSCFError)
-
+        self.assertIsObject(CFErrorRef, NSCFError)
     @min_os_level('10.5')
     def testTypeID(self):
-        self.failUnless(isinstance(CFErrorGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFErrorGetTypeID(), (int, long))
     @min_os_level('10.5')
     def testCreation(self):
         userInfo = {
                 u'foo': u'bar',
         }
         err = CFErrorCreate(None, kCFErrorDomainPOSIX, 42,  userInfo)
-        self.failUnless(isinstance(err, CFErrorRef))
-
-        self.failUnlessResultIsCFRetained(CFErrorCopyUserInfo)
+        self.assertIsInstance(err, CFErrorRef)
+        self.assertResultIsCFRetained(CFErrorCopyUserInfo)
         dct = CFErrorCopyUserInfo(err)
-        self.assertEquals(dct, userInfo)
+        self.assertEqual(dct, userInfo)
 
         keys = [ u"key1", u"key2"]
         values = [ u"value1", u"value2"]
@@ -31,14 +28,14 @@ class TestError (TestCase):
         keys = [ NSString.stringWithString_(v) for v in keys ]
         values = [ NSString.stringWithString_(v) for v in values ]
 
-        self.failUnlessArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 3, 'n^@')
-        self.failUnlessArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 3, 5)
-        self.failUnlessArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 4, 'n^@')
-        self.failUnlessArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 4, 5)
+        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 3, 'n^@')
+        self.assertArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 3, 5)
+        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 4, 'n^@')
+        self.assertArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 4, 5)
         err = CFErrorCreateWithUserInfoKeysAndValues(None, kCFErrorDomainPOSIX, 42, keys, values, 2)
-        self.failUnless(isinstance(err, CFErrorRef))
+        self.assertIsInstance(err, CFErrorRef)
         dct = CFErrorCopyUserInfo(err)
-        self.assertEquals(dct, {u'key1': u'value1', u'key2':u'value2'})
+        self.assertEqual(dct, {u'key1': u'value1', u'key2':u'value2'})
 
     @min_os_level('10.5')
     def testInspection(self):
@@ -47,42 +44,40 @@ class TestError (TestCase):
                 kCFErrorLocalizedFailureReasonKey: "failure reason",
                 kCFErrorLocalizedRecoverySuggestionKey: 'recovery suggestion',
         }
-        self.failUnlessResultIsCFRetained(CFErrorCreate)
+        self.assertResultIsCFRetained(CFErrorCreate)
         err = CFErrorCreate(None, kCFErrorDomainPOSIX, 42,  userInfo)
-        self.failUnless(isinstance(err, CFErrorRef))
-
+        self.assertIsInstance(err, CFErrorRef)
         dom = CFErrorGetDomain(err)
-        self.assertEquals(dom, kCFErrorDomainPOSIX)
+        self.assertEqual(dom, kCFErrorDomainPOSIX)
 
         code = CFErrorGetCode(err)
-        self.assertEquals(code, 42)
+        self.assertEqual(code, 42)
 
-        self.failUnlessResultIsCFRetained(CFErrorCopyDescription)
+        self.assertResultIsCFRetained(CFErrorCopyDescription)
         v = CFErrorCopyDescription(err)
-        self.failUnlessIsIn(v, (
+        self.assertIsIn(v, (
             u'Operation could not be completed. failure reason',
             u'The operation couldn\u2019t be completed. failure reason'))
 
-        self.failUnlessResultIsCFRetained(CFErrorCopyFailureReason)
+        self.assertResultIsCFRetained(CFErrorCopyFailureReason)
         v = CFErrorCopyFailureReason(err)
-        self.assertEquals(v, u'failure reason')
+        self.assertEqual(v, u'failure reason')
 
-        self.failUnlessResultIsCFRetained(CFErrorCopyRecoverySuggestion)
+        self.assertResultIsCFRetained(CFErrorCopyRecoverySuggestion)
         v = CFErrorCopyRecoverySuggestion(err)
-        self.assertEquals(v, u'recovery suggestion')
+        self.assertEqual(v, u'recovery suggestion')
 
 
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnless(isinstance(kCFErrorDomainPOSIX, unicode))
-        self.failUnless(isinstance(kCFErrorDomainOSStatus, unicode))
-        self.failUnless(isinstance(kCFErrorDomainMach, unicode))
-        self.failUnless(isinstance(kCFErrorDomainCocoa, unicode))
-        self.failUnless(isinstance(kCFErrorLocalizedDescriptionKey, unicode))
-        self.failUnless(isinstance(kCFErrorLocalizedFailureReasonKey, unicode))
-        self.failUnless(isinstance(kCFErrorLocalizedRecoverySuggestionKey, unicode))
-        self.failUnless(isinstance(kCFErrorDescriptionKey, unicode))
-        self.failUnless(isinstance(kCFErrorUnderlyingErrorKey, unicode))
-
+        self.assertIsInstance(kCFErrorDomainPOSIX, unicode)
+        self.assertIsInstance(kCFErrorDomainOSStatus, unicode)
+        self.assertIsInstance(kCFErrorDomainMach, unicode)
+        self.assertIsInstance(kCFErrorDomainCocoa, unicode)
+        self.assertIsInstance(kCFErrorLocalizedDescriptionKey, unicode)
+        self.assertIsInstance(kCFErrorLocalizedFailureReasonKey, unicode)
+        self.assertIsInstance(kCFErrorLocalizedRecoverySuggestionKey, unicode)
+        self.assertIsInstance(kCFErrorDescriptionKey, unicode)
+        self.assertIsInstance(kCFErrorUnderlyingErrorKey, unicode)
 if __name__ == "__main__":
     main()

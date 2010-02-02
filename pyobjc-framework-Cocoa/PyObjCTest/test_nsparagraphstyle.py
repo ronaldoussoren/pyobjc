@@ -4,19 +4,19 @@ from AppKit import *
 
 class TestNSParagraphStyle (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSLeftTabStopType, 0)
-        self.failUnlessEqual(NSRightTabStopType, 1)
-        self.failUnlessEqual(NSCenterTabStopType, 2)
-        self.failUnlessEqual(NSDecimalTabStopType, 3)
+        self.assertEqual(NSLeftTabStopType, 0)
+        self.assertEqual(NSRightTabStopType, 1)
+        self.assertEqual(NSCenterTabStopType, 2)
+        self.assertEqual(NSDecimalTabStopType, 3)
 
-        self.failUnlessEqual(NSLineBreakByWordWrapping,  0)
-        self.failUnlessEqual(NSLineBreakByCharWrapping, 1)
-        self.failUnlessEqual(NSLineBreakByClipping, 2)
-        self.failUnlessEqual(NSLineBreakByTruncatingHead, 3)
-        self.failUnlessEqual(NSLineBreakByTruncatingTail, 4)
-        self.failUnlessEqual(NSLineBreakByTruncatingMiddle, 5)
+        self.assertEqual(NSLineBreakByWordWrapping,  0)
+        self.assertEqual(NSLineBreakByCharWrapping, 1)
+        self.assertEqual(NSLineBreakByClipping, 2)
+        self.assertEqual(NSLineBreakByTruncatingHead, 3)
+        self.assertEqual(NSLineBreakByTruncatingTail, 4)
+        self.assertEqual(NSLineBreakByTruncatingMiddle, 5)
 
-        self.failUnlessIsInstance(NSTabColumnTerminatorsAttributeName, unicode)
+        self.assertIsInstance(NSTabColumnTerminatorsAttributeName, unicode)
 
 if __name__ == "__main__":
     main()

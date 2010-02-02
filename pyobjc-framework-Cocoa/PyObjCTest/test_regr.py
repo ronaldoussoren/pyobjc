@@ -9,7 +9,7 @@ class TestRegr (TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
-        self.assertEquals(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
+        self.assertEqual(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
 
     def testThreadHang(self):
 
@@ -46,7 +46,7 @@ class TestRegr (TestCase):
         data = open('/tmp/pyobjc-thread.txt', 'r').read()
         self.assert_('does this print?' in data)
 
-        self.assertEquals(aList, ["before", "after"])
+        self.assertEqual(aList, ["before", "after"])
 
     def testMemoryInit(self):
         """
@@ -58,9 +58,9 @@ class TestRegr (TestCase):
         plist = 0
 
         r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0, None)
-        self.assertEquals(r[1], None)
+        self.assertEqual(r[1], None)
         r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(plist, Foundation.NSPropertyListXMLFormat_v1_0, None)
-        self.assertEquals(r[1], None)
+        self.assertEqual(r[1], None)
 
     def testTypeOverrideProblem(self):
         """

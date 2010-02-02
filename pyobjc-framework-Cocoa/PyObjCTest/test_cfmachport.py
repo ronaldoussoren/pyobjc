@@ -7,11 +7,10 @@ from CoreFoundation import *
 
 class TestMachPort (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFMachPortRef)
+        self.assertIsCFType(CFMachPortRef)
 
     def testTypeID(self):
-        self.failUnless(isinstance(CFMachPortGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFMachPortGetTypeID(), (int, long))
     def testCreate(self):
         class Context: pass
         context = Context()
@@ -21,22 +20,17 @@ class TestMachPort (TestCase):
 
         # This one cannot be tested without bindings to the low-level mach_port API's
         #port, shouldFree = CFMachPortCreateWithPort(None, 1, callout, context, None)
-        #self.failUnless(isinstance(port, CFMachPortRef))
-        #self.failUnless(shouldFree is True or shouldFree is False)
-
+        #self.assertIsInstance(port, CFMachPortRef)
+        #self.assertIsObject(shouldFree is True or shouldFree, False)
         port, shouldFree = CFMachPortCreate(None, callout, context, None)
-        self.failUnless(isinstance(port, CFMachPortRef))
-        self.failUnless(shouldFree is True or shouldFree is False)
-
+        self.assertIsInstance(port, CFMachPortRef)
+        self.assertIsObject(shouldFree is True or shouldFree, False)
         idx = CFMachPortGetPort(port)
-        self.failUnless(isinstance(idx, (int, long)))
-
+        self.assertIsInstance(idx, (int, long))
         ctx = CFMachPortGetContext(port)
-        self.failUnless(ctx is context)
-
+        self.assertIsObject(ctx, context)
         cb = CFMachPortGetInvalidationCallBack(port)
-        self.failUnless(cb is None)
-
+        self.assertIsObject(cb, None)
         global didInvalidate
         didInvalidate=False
         def invalidate(port, info):
@@ -45,15 +39,13 @@ class TestMachPort (TestCase):
 
         CFMachPortSetInvalidationCallBack(port, invalidate)
         cb = CFMachPortGetInvalidationCallBack(port)
-        self.failUnless(invalidate is cb)
-
+        self.assertIsObject(invalidate, cb)
         rls = CFMachPortCreateRunLoopSource(None, port, 0)
-        self.failUnless(isinstance(rls, CFRunLoopSourceRef))
-
-        self.failUnless(CFMachPortIsValid(port))
+        self.assertIsInstance(rls, CFRunLoopSourceRef)
+        self.assertTrue(CFMachPortIsValid(port))
         CFMachPortInvalidate(port)
-        self.failIf(CFMachPortIsValid(port))
-        self.failUnless(didInvalidate)
+        self.assertFalse(CFMachPortIsValid(port))
+        self.assertTrue(didInvalidate)
 
 if __name__ == "__main__":
     main()

@@ -12,41 +12,36 @@ class TestNSObjectHelper (NSObject):
 class TestNSObjectFunctions (TestCase):
     def testAllocation(self):
         o = NSAllocateObject(NSObject, 0, None)
-        self.failUnless(isinstance(o, NSObject))
-
+        self.assertIsInstance(o, NSObject)
         o = NSAllocateObject(NSObject, 50, None)
-        self.failUnless(isinstance(o, NSObject))
-
+        self.assertIsInstance(o, NSObject)
         NSDeallocateObject(None)
 
     def testCopy(self):
         o = NSObject.alloc().init()
-        self.failUnless(isinstance(o, NSObject))
+        self.assertIsInstance(o, NSObject)
         o2 = NSCopyObject(o, 50, None)
-        self.failUnless(isinstance(o2, NSObject))
+        self.assertIsInstance(o2, NSObject)
 
     def testShouldRetain(self):
         o = NSObject.alloc().init()
-        self.failUnless(isinstance(o, NSObject))
-
+        self.assertIsInstance(o, NSObject)
         v = NSShouldRetainWithZone(o, None)
-        self.failUnless((v is True) or (v is False))
+        self.assertTrue((v is True) or (v is False))
 
     def testRefCounts(self):
         o = NSObject.alloc().init()
 
         cnt = NSExtraRefCount(o)
-        self.failUnless(isinstance(cnt, (int, long)))
-
+        self.assertIsInstance(cnt, (int, long))
         NSIncrementExtraRefCount(o)
         v = NSExtraRefCount(o)
-        self.assertEquals(v, cnt+1)
+        self.assertEqual(v, cnt+1)
 
         v = NSDecrementExtraRefCountWasZero(o)
-        self.failUnless(v is False)
-
+        self.assertIsObject(v, False)
         v = NSExtraRefCount(o)
-        self.assertEquals(v, cnt)
+        self.assertEqual(v, cnt)
 
 
 
@@ -90,34 +85,34 @@ class TestNSObjectInteraction(TestCase):
             a = NSObject.alloc().init()
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSObject.isEqual_)
-        self.failUnlessResultIsBOOL(NSObject.isProxy)
-        self.failUnlessResultIsBOOL(NSObject.isKindOfClass_)
-        self.failUnlessResultIsBOOL(NSObject.isMemberOfClass_)
-        self.failUnlessResultIsBOOL(NSObject.conformsToProtocol_)
-        self.failUnlessResultIsBOOL(NSObject.respondsToSelector_)
-        self.failUnlessResultIsBOOL(NSObject.instancesRespondToSelector_)
-        self.failUnlessResultIsBOOL(NSObject.isSubclassOfClass_)
-        self.failUnlessResultIsBOOL(NSObject.resolveClassMethod_)
-        self.failUnlessResultIsBOOL(NSObject.resolveInstanceMethod_)
+        self.assertResultIsBOOL(NSObject.isEqual_)
+        self.assertResultIsBOOL(NSObject.isProxy)
+        self.assertResultIsBOOL(NSObject.isKindOfClass_)
+        self.assertResultIsBOOL(NSObject.isMemberOfClass_)
+        self.assertResultIsBOOL(NSObject.conformsToProtocol_)
+        self.assertResultIsBOOL(NSObject.respondsToSelector_)
+        self.assertResultIsBOOL(NSObject.instancesRespondToSelector_)
+        self.assertResultIsBOOL(NSObject.isSubclassOfClass_)
+        self.assertResultIsBOOL(NSObject.resolveClassMethod_)
+        self.assertResultIsBOOL(NSObject.resolveInstanceMethod_)
 
         o = NSObject.alloc().init()
-        self.failUnlessResultIsBOOL(o.isEqual_)
-        self.failUnlessResultIsBOOL(o.isProxy)
-        self.failUnlessResultIsBOOL(o.isKindOfClass_)
-        self.failUnlessResultIsBOOL(o.isMemberOfClass_)
-        self.failUnlessResultIsBOOL(o.conformsToProtocol_)
-        self.failUnlessResultIsBOOL(o.respondsToSelector_)
+        self.assertResultIsBOOL(o.isEqual_)
+        self.assertResultIsBOOL(o.isProxy)
+        self.assertResultIsBOOL(o.isKindOfClass_)
+        self.assertResultIsBOOL(o.isMemberOfClass_)
+        self.assertResultIsBOOL(o.conformsToProtocol_)
+        self.assertResultIsBOOL(o.respondsToSelector_)
 
 
         a = TestNSObjectHelper.alloc().init()
-        self.failUnlessArgHasType(a.copyWithZone_, 0, '^{_NSZone=}')
-        self.failUnlessArgHasType(a.mutableCopyWithZone_, 0, '^{_NSZone=}')
+        self.assertArgHasType(a.copyWithZone_, 0, '^{_NSZone=}')
+        self.assertArgHasType(a.mutableCopyWithZone_, 0, '^{_NSZone=}')
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.failUnlessResultIsBOOL(TestNSObjectHelper.beginContentAccess)
-        self.failUnlessResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
+        self.assertResultIsBOOL(TestNSObjectHelper.beginContentAccess)
+        self.assertResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
 
 
 if __name__ == '__main__':

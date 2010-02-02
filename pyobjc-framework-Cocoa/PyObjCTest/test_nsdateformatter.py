@@ -7,44 +7,43 @@ class TestNSDateFormatter (TestCase):
         formatter = NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
 
-        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 0)
-        self.failUnlessArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
-        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
+        self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 0)
+        self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
+        self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
         ok, val, range, err = formatter.getObjectValue_forString_range_error_(
                 None, "2008/10/12", NSRange(0, 10), None)
-        self.failUnless(ok)
-        self.failUnless(isinstance(val, NSDate))
-        self.failUnless(range == NSRange(0, 10))
-        self.failUnless(err is None)
-
-        self.failUnlessResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
-        self.failUnlessArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
-        self.failUnlessArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
+        self.assertTrue(ok)
+        self.assertIsInstance(val, NSDate)
+        self.assertEqual(range , NSRange(0, 10))
+        self.assertIsObject(err, None)
+        self.assertResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
+        self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
+        self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)
 
     def testConstants(self):
-        self.assertEquals(NSDateFormatterNoStyle, kCFDateFormatterNoStyle)
-        self.assertEquals(NSDateFormatterShortStyle, kCFDateFormatterShortStyle)
-        self.assertEquals(NSDateFormatterMediumStyle, kCFDateFormatterMediumStyle)
-        self.assertEquals(NSDateFormatterLongStyle, kCFDateFormatterLongStyle)
-        self.assertEquals(NSDateFormatterFullStyle, kCFDateFormatterFullStyle)
+        self.assertEqual(NSDateFormatterNoStyle, kCFDateFormatterNoStyle)
+        self.assertEqual(NSDateFormatterShortStyle, kCFDateFormatterShortStyle)
+        self.assertEqual(NSDateFormatterMediumStyle, kCFDateFormatterMediumStyle)
+        self.assertEqual(NSDateFormatterLongStyle, kCFDateFormatterLongStyle)
+        self.assertEqual(NSDateFormatterFullStyle, kCFDateFormatterFullStyle)
 
-        self.assertEquals(NSDateFormatterBehaviorDefault, 0)
-        self.assertEquals(NSDateFormatterBehavior10_0, 1000)
-        self.assertEquals(NSDateFormatterBehavior10_4, 1040)
+        self.assertEqual(NSDateFormatterBehaviorDefault, 0)
+        self.assertEqual(NSDateFormatterBehavior10_0, 1000)
+        self.assertEqual(NSDateFormatterBehavior10_4, 1040)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSDateFormatter.generatesCalendarDates)
-        self.failUnlessArgIsBOOL(NSDateFormatter.setGeneratesCalendarDates_, 0)
-        self.failUnlessResultIsBOOL(NSDateFormatter.isLenient)
-        self.failUnlessArgIsBOOL(NSDateFormatter.setLenient_, 0)
-        self.failUnlessResultIsBOOL(NSDateFormatter.isLenient)
-        self.failUnlessArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
-        self.failUnlessResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
+        self.assertResultIsBOOL(NSDateFormatter.generatesCalendarDates)
+        self.assertArgIsBOOL(NSDateFormatter.setGeneratesCalendarDates_, 0)
+        self.assertResultIsBOOL(NSDateFormatter.isLenient)
+        self.assertArgIsBOOL(NSDateFormatter.setLenient_, 0)
+        self.assertResultIsBOOL(NSDateFormatter.isLenient)
+        self.assertArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
+        self.assertResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.failUnlessResultIsBOOL(NSDateFormatter.doesRelativeDateFormatting)
-        self.failUnlessArgIsBOOL(NSDateFormatter.setDoesRelativeDateFormatting_, 0)
+        self.assertResultIsBOOL(NSDateFormatter.doesRelativeDateFormatting)
+        self.assertArgIsBOOL(NSDateFormatter.setDoesRelativeDateFormatting_, 0)
 
 
 

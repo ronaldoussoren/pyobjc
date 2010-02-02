@@ -4,18 +4,18 @@ from CoreFoundation import *
 
 class TestMessagePort (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFMessagePortRef)
+        self.assertIsCFType(CFMessagePortRef)
 
     def testConstants(self):
-        self.failUnlessEqual(kCFMessagePortSuccess, 0)
-        self.failUnlessEqual(kCFMessagePortSendTimeout, -1)
-        self.failUnlessEqual(kCFMessagePortReceiveTimeout, -2)
-        self.failUnlessEqual(kCFMessagePortIsInvalid, -3)
-        self.failUnlessEqual(kCFMessagePortTransportError, -4)
+        self.assertEqual(kCFMessagePortSuccess, 0)
+        self.assertEqual(kCFMessagePortSendTimeout, -1)
+        self.assertEqual(kCFMessagePortReceiveTimeout, -2)
+        self.assertEqual(kCFMessagePortIsInvalid, -3)
+        self.assertEqual(kCFMessagePortTransportError, -4)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessEqual(kCFMessagePortBecameInvalidError, -5)
+        self.assertEqual(kCFMessagePortBecameInvalidError, -5)
 
     @min_os_level('10.6')
     @expectedFailure
@@ -23,8 +23,7 @@ class TestMessagePort (TestCase):
         self.fail('CFMessagePortSetDispatchQueue: dispatch_queue_t not wrapped yet')
 
     def testTypeID(self):
-        self.failUnless(isinstance(CFMessagePortGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFMessagePortGetTypeID(), (int, long))
     def testInteraction(self):
         class Context: pass
         context = Context()
@@ -33,27 +32,22 @@ class TestMessagePort (TestCase):
             pass
 
         port, shouldFree = CFMessagePortCreateLocal(None, u"name", callout, context, None)
-        self.failUnless(isinstance(port, CFMessagePortRef))
-        self.failUnless(shouldFree is True or shouldFree is False)
-        
-        self.failIf(CFMessagePortIsRemote(port))
+        self.assertIsInstance(port, CFMessagePortRef)
+        self.assertIsObject(shouldFree is True or shouldFree, False)
+        self.assertFalse(CFMessagePortIsRemote(port))
         ctx = CFMessagePortGetContext(port)
-        self.failUnless(ctx is context)
-
-
+        self.assertIsObject(ctx, context)
         port = CFMessagePortCreateRemote(None, u"name")
-        self.failUnless(isinstance(port, CFMessagePortRef))
-
-        self.failUnlessResultIsBOOL(CFMessagePortIsRemote)
-        self.failUnless(CFMessagePortIsRemote(port))
-        self.failUnless(CFMessagePortGetName(port), u"name")
+        self.assertIsInstance(port, CFMessagePortRef)
+        self.assertResultIsBOOL(CFMessagePortIsRemote)
+        self.assertTrue(CFMessagePortIsRemote(port))
+        self.assertTrue(CFMessagePortGetName(port), u"name")
 
         CFMessagePortSetName(port, "newname")
-        self.failUnless(CFMessagePortGetName(port), u"newname")
+        self.assertTrue(CFMessagePortGetName(port), u"newname")
 
         cb = CFMessagePortGetInvalidationCallBack(port)
-        self.failUnless(cb is None)
-
+        self.assertIsObject(cb, None)
         global didInvalidate
         didInvalidate = False
 
@@ -66,20 +60,18 @@ class TestMessagePort (TestCase):
         cb = CFMessagePortGetInvalidationCallBack(port)
 
         # XXX: Without writing a custom wrapper we cannot guarantee this
-        #self.failUnless(cb is invalidate)
-
+        #self.assertIsObject(cb, invalidate)
         cb(None, None)
-        self.failUnless(didInvalidate is True)
+        self.assertIsObject(didInvalidate, True)
         didInvalidate = False
 
         rls = CFMessagePortCreateRunLoopSource(None, port, 0)
-        self.failUnless(isinstance(rls, CFRunLoopSourceRef))
-
-        self.failUnlessResultIsBOOL(CFMessagePortIsValid)
-        self.failUnless(CFMessagePortIsValid(port))
+        self.assertIsInstance(rls, CFRunLoopSourceRef)
+        self.assertResultIsBOOL(CFMessagePortIsValid)
+        self.assertTrue(CFMessagePortIsValid(port))
         CFMessagePortInvalidate(port)
-        self.failIf(CFMessagePortIsValid(port))
-        self.failUnless(didInvalidate)
+        self.assertFalse(CFMessagePortIsValid(port))
+        self.assertTrue(didInvalidate)
 
     @min_os_level('10.5')
     def testSending(self):
@@ -91,13 +83,13 @@ class TestMessagePort (TestCase):
             return buffer("hello world")
 
         port, shouldFree = CFMessagePortCreateLocal(None, u"pyobjc.test", callout, context, None)
-        self.failUnlessIsInstance(port, CFMessagePortRef)
+        self.assertIsInstance(port, CFMessagePortRef)
 
-        self.failUnlessArgIsOut(CFMessagePortSendRequest, 6)
+        self.assertArgIsOut(CFMessagePortSendRequest, 6)
         rls = CFMessagePortCreateRunLoopSource(None, port, 0)
         err, data = CFMessagePortSendRequest(port, 99, None, 1.0, 1.0, None, None)
-        self.failUnlessEqual(err, 0)
-        self.failUnlessEqual(data, None)
+        self.assertEqual(err, 0)
+        self.assertEqual(data, None)
 
 
 if __name__ == "__main__":

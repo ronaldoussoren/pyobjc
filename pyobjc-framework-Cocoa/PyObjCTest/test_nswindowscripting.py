@@ -3,16 +3,16 @@ from PyObjCTools.TestSupport import *
 
 class TestNSWindowScripting (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSWindow.hasCloseBox)
-        self.failUnlessResultIsBOOL(NSWindow.hasTitleBar)
-        self.failUnlessResultIsBOOL(NSWindow.isFloatingPanel)
-        self.failUnlessResultIsBOOL(NSWindow.isMiniaturizable)
-        self.failUnlessResultIsBOOL(NSWindow.isModalPanel)
-        self.failUnlessResultIsBOOL(NSWindow.isResizable)
-        self.failUnlessResultIsBOOL(NSWindow.isZoomable)
-        self.failUnlessArgIsBOOL(NSWindow.setIsMiniaturized_, 0)
-        self.failUnlessArgIsBOOL(NSWindow.setIsVisible_, 0)
-        self.failUnlessArgIsBOOL(NSWindow.setIsZoomed_, 0)
+        self.assertResultIsBOOL(NSWindow.hasCloseBox)
+        self.assertResultIsBOOL(NSWindow.hasTitleBar)
+        self.assertResultIsBOOL(NSWindow.isFloatingPanel)
+        self.assertResultIsBOOL(NSWindow.isMiniaturizable)
+        self.assertResultIsBOOL(NSWindow.isModalPanel)
+        self.assertResultIsBOOL(NSWindow.isResizable)
+        self.assertResultIsBOOL(NSWindow.isZoomable)
+        self.assertArgIsBOOL(NSWindow.setIsMiniaturized_, 0)
+        self.assertArgIsBOOL(NSWindow.setIsVisible_, 0)
+        self.assertArgIsBOOL(NSWindow.setIsZoomed_, 0)
 
 if __name__ == "__main__":
     main()

@@ -92,14 +92,14 @@ class RectTest (TestCase):
             for ox in range(w):
                 for oy in range(h):
                     allpoints.remove((x+ox, y+oy))
-                    self.assertEquals(
+                    self.assertEqual(
                         img.getPixel(x+ox, y+oy),
                         '\x00\x00\x00\xff',
                         'Black pixel at %d,%d'%(x+ox, y+oy))
 
         # And white points
         for x, y in allpoints:
-            self.assertEquals(
+            self.assertEqual(
                 img.getPixel(x, y),
                 '\x00\x00\x00\x00',
                 'White pixel at %d,%d'%(x, y))

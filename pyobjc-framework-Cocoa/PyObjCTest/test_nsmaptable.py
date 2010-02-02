@@ -5,10 +5,10 @@ from Foundation import *
 
 class TestNSMapTable (TestCase):
     def testConstants(self):
-        self.assertEquals(NSMapTableStrongMemory, 0)
-        self.assertEquals(NSMapTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
-        self.assertEquals(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
-        self.assertEquals(NSMapTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
+        self.assertEqual(NSMapTableStrongMemory, 0)
+        self.assertEqual(NSMapTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
+        self.assertEqual(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
+        self.assertEqual(NSMapTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
 
     @expectedFailure
     def testFunctions(self):

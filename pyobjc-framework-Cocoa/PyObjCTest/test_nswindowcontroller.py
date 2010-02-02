@@ -3,12 +3,12 @@ from PyObjCTools.TestSupport import *
 
 class TestNSWindowController (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSWindowController.shouldCascadeWindows)
-        self.failUnlessArgIsBOOL(NSWindowController.setShouldCascadeWindows_, 0)
-        self.failUnlessArgIsBOOL(NSWindowController.setDocumentEdited_, 0)
-        self.failUnlessResultIsBOOL(NSWindowController.shouldCloseDocument)
-        self.failUnlessArgIsBOOL(NSWindowController.setShouldCloseDocument_, 0)
-        self.failUnlessResultIsBOOL(NSWindowController.isWindowLoaded)
+        self.assertResultIsBOOL(NSWindowController.shouldCascadeWindows)
+        self.assertArgIsBOOL(NSWindowController.setShouldCascadeWindows_, 0)
+        self.assertArgIsBOOL(NSWindowController.setDocumentEdited_, 0)
+        self.assertResultIsBOOL(NSWindowController.shouldCloseDocument)
+        self.assertArgIsBOOL(NSWindowController.setShouldCloseDocument_, 0)
+        self.assertResultIsBOOL(NSWindowController.isWindowLoaded)
 
 
 if __name__ == "__main__":

@@ -9,24 +9,24 @@ class TestNSDrawerHelper (NSObject):
 
 class TestNSDrawer (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSDrawerClosedState, 0)
-        self.failUnlessEqual(NSDrawerOpeningState, 1)
-        self.failUnlessEqual(NSDrawerOpenState, 2)
-        self.failUnlessEqual(NSDrawerClosingState, 3)
+        self.assertEqual(NSDrawerClosedState, 0)
+        self.assertEqual(NSDrawerOpeningState, 1)
+        self.assertEqual(NSDrawerOpenState, 2)
+        self.assertEqual(NSDrawerClosingState, 3)
 
-        self.failUnlessIsInstance(NSDrawerWillOpenNotification, unicode)
-        self.failUnlessIsInstance(NSDrawerDidOpenNotification, unicode)
-        self.failUnlessIsInstance(NSDrawerWillCloseNotification, unicode)
-        self.failUnlessIsInstance(NSDrawerDidCloseNotification, unicode)
+        self.assertIsInstance(NSDrawerWillOpenNotification, unicode)
+        self.assertIsInstance(NSDrawerDidOpenNotification, unicode)
+        self.assertIsInstance(NSDrawerWillCloseNotification, unicode)
+        self.assertIsInstance(NSDrawerDidCloseNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessArgHasType(NSDrawer.setMinContentSize_, 0, NSSize.__typestr__)
+        self.assertArgHasType(NSDrawer.setMinContentSize_, 0, NSSize.__typestr__)
 
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
-        self.failUnlessResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
-        self.failUnlessResultHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__)
-        self.failUnlessArgHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, 1, NSSize.__typestr__)
+        self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
+        self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
+        self.assertResultHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__)
+        self.assertArgHasType(TestNSDrawerHelper.drawerWillResizeContents_toSize_, 1, NSSize.__typestr__)
 
 
 

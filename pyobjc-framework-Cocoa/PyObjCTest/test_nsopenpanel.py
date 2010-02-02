@@ -11,26 +11,26 @@ class TestOpenPanel (TestCase):
         sig = o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.signature
         dclass= o.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_.definingClass
         sig = ''.join(objc.splitSignature(sig))
-        self.assertEquals(
+        self.assertEqual(
             sig,
             'v@:@@@@@:i')
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSOpenPanel.resolvesAliases)
-        self.failUnlessArgIsBOOL(NSOpenPanel.setResolvesAliases_, 0)
-        self.failUnlessResultIsBOOL(NSOpenPanel.canChooseDirectories)
-        self.failUnlessArgIsBOOL(NSOpenPanel.setCanChooseDirectories_, 0)
-        self.failUnlessResultIsBOOL(NSOpenPanel.allowsMultipleSelection)
-        self.failUnlessArgIsBOOL(NSOpenPanel.setAllowsMultipleSelection_, 0)
-        self.failUnlessResultIsBOOL(NSOpenPanel.canChooseFiles)
-        self.failUnlessArgIsBOOL(NSOpenPanel.setCanChooseFiles_, 0)
+        self.assertResultIsBOOL(NSOpenPanel.resolvesAliases)
+        self.assertArgIsBOOL(NSOpenPanel.setResolvesAliases_, 0)
+        self.assertResultIsBOOL(NSOpenPanel.canChooseDirectories)
+        self.assertArgIsBOOL(NSOpenPanel.setCanChooseDirectories_, 0)
+        self.assertResultIsBOOL(NSOpenPanel.allowsMultipleSelection)
+        self.assertArgIsBOOL(NSOpenPanel.setAllowsMultipleSelection_, 0)
+        self.assertResultIsBOOL(NSOpenPanel.canChooseFiles)
+        self.assertArgIsBOOL(NSOpenPanel.setCanChooseFiles_, 0)
 
         panel = NSOpenPanel.openPanel()
-        self.failUnlessArgIsSEL(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, 'v@:@i^v')
-        self.failUnlessArgHasType(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, '^v')
+        self.assertArgIsSEL(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, 'v@:@i^v')
+        self.assertArgHasType(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, '^v')
 
-        self.failUnlessArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, 'v@:@i^v')
-        self.failUnlessArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, '^v')
+        self.assertArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, 'v@:@i^v')
+        self.assertArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, '^v')
 
 
 

@@ -4,117 +4,104 @@ from CoreFoundation import *
 
 class TestDateFormatter (TestCase):
     def testTypeID(self):
-        self.failUnless(isinstance(CFDateGetTypeID(), (int, long)))
-
+        self.assertIsInstance(CFDateGetTypeID(), (int, long))
     def testConstants(self):
-        self.failUnless(kCFDateFormatterNoStyle == 0)
-        self.failUnless(kCFDateFormatterShortStyle == 1)
-        self.failUnless(kCFDateFormatterMediumStyle == 2)
-        self.failUnless(kCFDateFormatterLongStyle == 3)
-        self.failUnless(kCFDateFormatterFullStyle == 4)
-
-        self.failUnlessIsInstance(kCFDateFormatterIsLenient, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterTimeZone, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterCalendarName, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterDefaultFormat, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterTwoDigitStartDate, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterDefaultDate, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterCalendar, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterEraSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterShortMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterShortWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterAMSymbol, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterPMSymbol, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterLongEraSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterVeryShortMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterStandaloneMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterShortStandaloneMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterVeryShortStandaloneMonthSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterVeryShortWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterStandaloneWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterShortStandaloneWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterVeryShortStandaloneWeekdaySymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterQuarterSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterShortQuarterSymbols, unicode)
-        self.failUnlessIsInstance(kCFDateFormatterStandaloneQuarterSymbols, unicode)
-        self.failUnlessIsInstance( kCFDateFormatterShortStandaloneQuarterSymbols, unicode)
-        self.failUnlessIsInstance( kCFDateFormatterGregorianStartDate, unicode)
+        self.assertEqual(kCFDateFormatterNoStyle , 0)
+        self.assertEqual(kCFDateFormatterShortStyle , 1)
+        self.assertEqual(kCFDateFormatterMediumStyle , 2)
+        self.assertEqual(kCFDateFormatterLongStyle , 3)
+        self.assertEqual(kCFDateFormatterFullStyle , 4)
+        self.assertIsInstance(kCFDateFormatterIsLenient, unicode)
+        self.assertIsInstance(kCFDateFormatterTimeZone, unicode)
+        self.assertIsInstance(kCFDateFormatterCalendarName, unicode)
+        self.assertIsInstance(kCFDateFormatterDefaultFormat, unicode)
+        self.assertIsInstance(kCFDateFormatterTwoDigitStartDate, unicode)
+        self.assertIsInstance(kCFDateFormatterDefaultDate, unicode)
+        self.assertIsInstance(kCFDateFormatterCalendar, unicode)
+        self.assertIsInstance(kCFDateFormatterEraSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterShortMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterShortWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterAMSymbol, unicode)
+        self.assertIsInstance(kCFDateFormatterPMSymbol, unicode)
+        self.assertIsInstance(kCFDateFormatterLongEraSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterVeryShortMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterStandaloneMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterShortStandaloneMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterVeryShortStandaloneMonthSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterVeryShortWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterStandaloneWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterShortStandaloneWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterVeryShortStandaloneWeekdaySymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterQuarterSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterShortQuarterSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterStandaloneQuarterSymbols, unicode)
+        self.assertIsInstance( kCFDateFormatterShortStandaloneQuarterSymbols, unicode)
+        self.assertIsInstance( kCFDateFormatterGregorianStartDate, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(kCFDateFormatterDoesRelativeDateFormattingKey, unicode)
+        self.assertIsInstance(kCFDateFormatterDoesRelativeDateFormattingKey, unicode)
 
     @min_os_level('10.6')
     def testFunction10_6(self):
-        self.failUnlessResultIsCFRetained(CFDateFormatterCreateDateFormatFromTemplate)
+        self.assertResultIsCFRetained(CFDateFormatterCreateDateFormatFromTemplate)
         r = CFDateFormatterCreateDateFormatFromTemplate(None, "%Y-%m-%d", 0, None)
-        self.failUnlessIsInstance(r, unicode)
+        self.assertIsInstance(r, unicode)
                             
 
 
     def testTypes(self):
-        self.failUnlessIsCFType(CFDateFormatterRef)
+        self.assertIsCFType(CFDateFormatterRef)
 
     def testInspection(self):
         locale = CFLocaleCopyCurrent()
-        self.failUnlessIsInstance(locale, CFLocaleRef)
+        self.assertIsInstance(locale, CFLocaleRef)
 
         date = CFDateCreate(None, CFAbsoluteTimeGetCurrent())
-        self.failUnlessIsInstance(date, CFDateRef)
+        self.assertIsInstance(date, CFDateRef)
 
-        self.failUnlessResultIsCFRetained(CFDateFormatterCreate)
+        self.assertResultIsCFRetained(CFDateFormatterCreate)
         fmt = CFDateFormatterCreate(None, locale, kCFDateFormatterShortStyle, kCFDateFormatterLongStyle) 
-        self.failUnless(isinstance(fmt, CFDateFormatterRef))
-
+        self.assertIsInstance(fmt, CFDateFormatterRef)
         v = CFDateFormatterGetLocale(fmt)
-        self.assertEquals(CFLocaleGetIdentifier(locale), CFLocaleGetIdentifier(v))
+        self.assertEqual(CFLocaleGetIdentifier(locale), CFLocaleGetIdentifier(v))
 
         v = CFDateFormatterGetDateStyle(fmt)
-        self.assertEquals(v, kCFDateFormatterShortStyle)
+        self.assertEqual(v, kCFDateFormatterShortStyle)
 
         v = CFDateFormatterGetTimeStyle(fmt)
-        self.assertEquals(v, kCFDateFormatterLongStyle)
+        self.assertEqual(v, kCFDateFormatterLongStyle)
 
         v = CFDateFormatterGetFormat(fmt)
-        self.failUnless(isinstance(v, unicode))
-
+        self.assertIsInstance(v, unicode)
         CFDateFormatterSetFormat(fmt, v[:-1])
         v2 = CFDateFormatterGetFormat(fmt)
-        self.assertEquals(v[:-1], v2)
+        self.assertEqual(v[:-1], v2)
 
         v = CFDateFormatterCreateStringWithDate(None, fmt, date)
-        self.failUnless(isinstance(v, unicode))
-
+        self.assertIsInstance(v, unicode)
         v = CFDateFormatterCreateStringWithAbsoluteTime(None, fmt, CFAbsoluteTimeGetCurrent())
-        self.failUnless(isinstance(v, unicode))
-
+        self.assertIsInstance(v, unicode)
         dt, rng = CFDateFormatterCreateDateFromString(None, fmt, v, (0, len(v)))
-        self.failUnless(isinstance(dt, CFDateRef))
-        self.failUnless(isinstance(rng, CFRange))
-
+        self.assertIsInstance(dt, CFDateRef)
+        self.assertIsInstance(rng, CFRange)
         ok, rng, abstime = CFDateFormatterGetAbsoluteTimeFromString(fmt, v, (0, len(v)), None)
-        self.failUnless(ok is True)
-        self.failUnless(isinstance(rng, CFRange))
-        self.failUnless(isinstance(abstime, float))
-
-        self.failUnlessResultIsCFRetained(CFDateFormatterCopyProperty)
+        self.assertIsObject(ok, True)
+        self.assertIsInstance(rng, CFRange)
+        self.assertIsInstance(abstime, float)
+        self.assertResultIsCFRetained(CFDateFormatterCopyProperty)
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterCalendarName)
-        self.failUnless(isinstance(v, unicode))
-
+        self.assertIsInstance(v, unicode)
         CFDateFormatterSetProperty(fmt, kCFDateFormatterCalendarName, u"gregorian")
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterCalendarName)
-        self.failUnlessIsInstance(v, unicode)
-        self.failUnless(v == u"gregorian")
-
+        self.assertIsInstance(v, unicode)
+        self.assertEqual(v , u"gregorian")
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
-        self.failUnless(v is True or v is False)
-
+        self.assertTrue(v is True or v is False)
         CFDateFormatterSetProperty(fmt, kCFDateFormatterIsLenient, True)
         v2 = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
-        self.failUnless(v2 is True)
-        
-
+        self.assertIsObject(v2, True)
 if __name__ == "__main__":
     main()

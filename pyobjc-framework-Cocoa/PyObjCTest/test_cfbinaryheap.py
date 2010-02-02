@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 
 class TestCFBinaryHeap (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFBinaryHeapRef)
+        self.assertIsCFType(CFBinaryHeapRef)
 
     def testCreation(self):
         heap = CFBinaryHeapCreate(
@@ -15,8 +15,8 @@ class TestCFBinaryHeap (TestCase):
         CFBinaryHeapAddValue(heap, "world")
         CFBinaryHeapAddValue(heap, "aapjes")
 
-        self.failUnless(CFBinaryHeapContainsValue(heap, "hello"))
-        self.failIf(CFBinaryHeapContainsValue(heap, "niemand"))
+        self.assertTrue(CFBinaryHeapContainsValue(heap, "hello"))
+        self.assertFalse(CFBinaryHeapContainsValue(heap, "niemand"))
 
     def testApply(self):
         def compare(l, r, info):
@@ -38,20 +38,19 @@ class TestCFBinaryHeap (TestCase):
             contexts.append(context)
 
         CFBinaryHeapApplyFunction(heap, function, None)
-        self.assertEquals(contexts, [None, None, None])
-        self.assertEquals(items, ["aapjesaapjes", "hellohello", "worldworld"])
+        self.assertEqual(contexts, [None, None, None])
+        self.assertEqual(items, ["aapjesaapjes", "hellohello", "worldworld"])
 
         ctx = ['']
         def function(item, context):
             context[0] += item
         CFBinaryHeapApplyFunction(heap, function, ctx)
-        self.assertEquals(ctx[0], 'aapjeshelloworld')
+        self.assertEqual(ctx[0], 'aapjeshelloworld')
 
 
     def testTypeID(self):
         v = CFBinaryHeapGetTypeID()
-        self.failUnless(  isinstance(v, (int, long))  )
-
+        self.assertIsInstance(v, (int, long))
     def testCopy(self):
         heap = CFBinaryHeapCreate(
                 None, 0)
@@ -76,52 +75,52 @@ class TestCFBinaryHeap (TestCase):
         CFBinaryHeapAddValue(heap, "aapjes")
 
         #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
-        #self.failUnless(ok)
-        #self.failUnlessEqual(min, "aapjes")
+        #self.assertTrue(ok)
+        #self.assertEqual(min, "aapjes")
         #self.fail()
 
         count = CFBinaryHeapGetCount(heap)
-        self.failUnlessEqual(count, 3)
+        self.assertEqual(count, 3)
 
         count = CFBinaryHeapGetCountOfValue(heap, "hello")
-        self.failUnlessEqual(count, 1)
+        self.assertEqual(count, 1)
         count = CFBinaryHeapGetCountOfValue(heap, "fobar")
-        self.failUnlessEqual(count, 0)
+        self.assertEqual(count, 0)
 
-        self.failUnless(CFBinaryHeapContainsValue(heap, "hello"))
-        self.failIf(CFBinaryHeapContainsValue(heap, "foobar"))
+        self.assertTrue(CFBinaryHeapContainsValue(heap, "hello"))
+        self.assertFalse(CFBinaryHeapContainsValue(heap, "foobar"))
 
         min = CFBinaryHeapGetMinimum(heap)
-        self.failUnlessEqual(min, "aapjes")
+        self.assertEqual(min, "aapjes")
 
         count = CFBinaryHeapGetCount(heap)
-        self.failUnlessEqual(count, 3)
+        self.assertEqual(count, 3)
 
         #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
-        #self.failUnless(ok)
-        #self.failUnlessEqual(min, "aapjes")
+        #self.assertTrue(ok)
+        #self.assertEqual(min, "aapjes")
         #self.fail()
 
         values = CFBinaryHeapGetValues(heap)
-        self.failUnlessEqual(values, ("aapjes", "hello", "world"))
+        self.assertEqual(values, ("aapjes", "hello", "world"))
 
         CFBinaryHeapRemoveMinimumValue(heap)
         values = CFBinaryHeapGetValues(heap)
-        self.failUnlessEqual(values, ("hello", "world"))
+        self.assertEqual(values, ("hello", "world"))
 
         CFBinaryHeapRemoveAllValues(heap)
         values = CFBinaryHeapGetValues(heap)
-        self.failUnlessEqual(values, ())
+        self.assertEqual(values, ())
 
     def testFunctions(self):
-        self.failUnlessArgHasType(CFBinaryHeapGetCountOfValue, 1, '@')
-        self.failUnlessArgHasType(CFBinaryHeapContainsValue, 1, '@')
-        self.failUnlessResultHasType(CFBinaryHeapGetMinimum, '@')
-        self.failUnlessResultHasType(CFBinaryHeapGetMinimumIfPresent, objc._C_NSBOOL)
-        self.failUnlessArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, 'o^@')
-        self.failUnlessArgIsFunction(CFBinaryHeapApplyFunction, 1, 'v@@', False)
-        self.failUnlessArgHasType(CFBinaryHeapApplyFunction, 2, '@')
-        self.failUnlessArgHasType(CFBinaryHeapAddValue, 1, '@')
+        self.assertArgHasType(CFBinaryHeapGetCountOfValue, 1, '@')
+        self.assertArgHasType(CFBinaryHeapContainsValue, 1, '@')
+        self.assertResultHasType(CFBinaryHeapGetMinimum, '@')
+        self.assertResultHasType(CFBinaryHeapGetMinimumIfPresent, objc._C_NSBOOL)
+        self.assertArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, 'o^@')
+        self.assertArgIsFunction(CFBinaryHeapApplyFunction, 1, 'v@@', False)
+        self.assertArgHasType(CFBinaryHeapApplyFunction, 2, '@')
+        self.assertArgHasType(CFBinaryHeapAddValue, 1, '@')
 
 if __name__ == "__main__":
     main()

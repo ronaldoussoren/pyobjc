@@ -4,18 +4,18 @@ from AppKit import *
 
 class TestAppKitErrors (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSTextReadInapplicableDocumentTypeError, 65806)
-        self.failUnlessEqual(NSTextWriteInapplicableDocumentTypeError, 66062)
-        self.failUnlessEqual(NSTextReadWriteErrorMinimum, 65792)
-        self.failUnlessEqual(NSTextReadWriteErrorMaximum, 66303)
-        self.failUnlessEqual(NSServiceApplicationNotFoundError, 66560)
-        self.failUnlessEqual(NSServiceApplicationLaunchFailedError, 66561)
-        self.failUnlessEqual(NSServiceRequestTimedOutError, 66562)
-        self.failUnlessEqual(NSServiceInvalidPasteboardDataError, 66563)
-        self.failUnlessEqual(NSServiceMalformedServiceDictionaryError, 66564)
-        self.failUnlessEqual(NSServiceMiscellaneousError, 66800)
-        self.failUnlessEqual(NSServiceErrorMinimum, 66560)
-        self.failUnlessEqual(NSServiceErrorMaximum, 66817)
+        self.assertEqual(NSTextReadInapplicableDocumentTypeError, 65806)
+        self.assertEqual(NSTextWriteInapplicableDocumentTypeError, 66062)
+        self.assertEqual(NSTextReadWriteErrorMinimum, 65792)
+        self.assertEqual(NSTextReadWriteErrorMaximum, 66303)
+        self.assertEqual(NSServiceApplicationNotFoundError, 66560)
+        self.assertEqual(NSServiceApplicationLaunchFailedError, 66561)
+        self.assertEqual(NSServiceRequestTimedOutError, 66562)
+        self.assertEqual(NSServiceInvalidPasteboardDataError, 66563)
+        self.assertEqual(NSServiceMalformedServiceDictionaryError, 66564)
+        self.assertEqual(NSServiceMiscellaneousError, 66800)
+        self.assertEqual(NSServiceErrorMinimum, 66560)
+        self.assertEqual(NSServiceErrorMaximum, 66817)
 
 
 if __name__ == "__main__":

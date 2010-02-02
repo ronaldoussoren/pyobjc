@@ -26,12 +26,12 @@ class TestCoreFoundation (TestCase):
         # Integer values:
         # self.assert_( hasattr(CoreFoundation, 'CONSTANT') )
         # self.assert_( isinstance(CoreFoundation.CONSTANT, (int, long)) )
-        # self.assertEquals(CoreFoundation.CONSTANT, 7)
+        # self.assertEqual(CoreFoundation.CONSTANT, 7)
 
         # String values:
         # self.assert_( hasattr(CoreFoundation, 'CONSTANT') )
         # self.assert_( isinstance(CoreFoundation.CONSTANT, (str, unicode)) )
-        # self.assertEquals(CoreFoundation.CONSTANT, 'value')
+        # self.assertEqual(CoreFoundation.CONSTANT, 'value')
 
     def testVariables(self):
         # Use this to test for global variables, (NSString*'s and the like)

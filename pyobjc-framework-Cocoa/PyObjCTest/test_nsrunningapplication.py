@@ -4,24 +4,24 @@ from AppKit import *
 class TestNSRunningApplication (TestCase):
     @min_os_level('10.6')
     def testConstants(self):
-        self.failUnlessEqual(NSApplicationActivateAllWindows, 1<<0)
-        self.failUnlessEqual(NSApplicationActivateIgnoringOtherApps, 1<<1)
+        self.assertEqual(NSApplicationActivateAllWindows, 1<<0)
+        self.assertEqual(NSApplicationActivateIgnoringOtherApps, 1<<1)
 
-        self.failUnlessEqual(NSApplicationActivationPolicyRegular, 0)
-        self.failUnlessEqual(NSApplicationActivationPolicyAccessory, 1)
-        self.failUnlessEqual(NSApplicationActivationPolicyProhibited, 2)
+        self.assertEqual(NSApplicationActivationPolicyRegular, 0)
+        self.assertEqual(NSApplicationActivationPolicyAccessory, 1)
+        self.assertEqual(NSApplicationActivationPolicyProhibited, 2)
 
     @min_os_level('10.6')
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSRunningApplication.isTerminated)
-        self.failUnlessResultIsBOOL(NSRunningApplication.isFinishedLaunching)
-        self.failUnlessResultIsBOOL(NSRunningApplication.isHidden)
-        self.failUnlessResultIsBOOL(NSRunningApplication.isActive)
-        self.failUnlessResultIsBOOL(NSRunningApplication.hide)
-        self.failUnlessResultIsBOOL(NSRunningApplication.unhide)
-        self.failUnlessResultIsBOOL(NSRunningApplication.activateWithOptions_)
-        self.failUnlessResultIsBOOL(NSRunningApplication.terminate)
-        self.failUnlessResultIsBOOL(NSRunningApplication.forceTerminate)
+        self.assertResultIsBOOL(NSRunningApplication.isTerminated)
+        self.assertResultIsBOOL(NSRunningApplication.isFinishedLaunching)
+        self.assertResultIsBOOL(NSRunningApplication.isHidden)
+        self.assertResultIsBOOL(NSRunningApplication.isActive)
+        self.assertResultIsBOOL(NSRunningApplication.hide)
+        self.assertResultIsBOOL(NSRunningApplication.unhide)
+        self.assertResultIsBOOL(NSRunningApplication.activateWithOptions_)
+        self.assertResultIsBOOL(NSRunningApplication.terminate)
+        self.assertResultIsBOOL(NSRunningApplication.forceTerminate)
 
 
 if __name__ == "__main__":

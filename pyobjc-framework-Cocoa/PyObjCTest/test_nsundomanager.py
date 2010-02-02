@@ -15,7 +15,7 @@ class TestNSUndoManager(TestCase):
         m.prepareWithInvocationTarget_(x).incFoo_(l)
         m.undo()
 
-        self.assertEquals(l[0], 1)
+        self.assertEqual(l[0], 1)
 
     def __del__(self, objc=objc):
         objc.recycleAutoreleasePool()
@@ -64,30 +64,27 @@ class TestSubclassingUndo(TestCase):
         m.prepareWithInvocationTarget_(x).incFoo_(l)
         m.undo()
 
-        self.assertEquals(l[0], 1)
+        self.assertEqual(l[0], 1)
 
     def testConstants(self):
-        self.failUnless(isinstance(NSUndoManagerCheckpointNotification, unicode))
-        self.failUnless(isinstance(NSUndoManagerWillUndoChangeNotification, unicode))
-        self.failUnless(isinstance(NSUndoManagerWillRedoChangeNotification, unicode))
-
-        self.failUnless(isinstance(NSUndoManagerDidUndoChangeNotification, unicode))
-        self.failUnless(isinstance(NSUndoManagerDidRedoChangeNotification, unicode))
-
-        self.failUnless(isinstance(NSUndoManagerDidOpenUndoGroupNotification, unicode))
-        self.failUnless(isinstance(NSUndoManagerWillCloseUndoGroupNotification, unicode))
-
-        self.failUnlessEqual(NSUndoCloseGroupingRunLoopOrdering, 350000)
+        self.assertIsInstance(NSUndoManagerCheckpointNotification, unicode)
+        self.assertIsInstance(NSUndoManagerWillUndoChangeNotification, unicode)
+        self.assertIsInstance(NSUndoManagerWillRedoChangeNotification, unicode)
+        self.assertIsInstance(NSUndoManagerDidUndoChangeNotification, unicode)
+        self.assertIsInstance(NSUndoManagerDidRedoChangeNotification, unicode)
+        self.assertIsInstance(NSUndoManagerDidOpenUndoGroupNotification, unicode)
+        self.assertIsInstance(NSUndoManagerWillCloseUndoGroupNotification, unicode)
+        self.assertEqual(NSUndoCloseGroupingRunLoopOrdering, 350000)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSUndoManager.isUndoRegistrationEnabled)
-        self.failUnlessResultIsBOOL(NSUndoManager.groupsByEvent)
-        self.failUnlessArgIsBOOL(NSUndoManager.setGroupsByEvent_, 0)
-        self.failUnlessResultIsBOOL(NSUndoManager.canUndo)
-        self.failUnlessResultIsBOOL(NSUndoManager.canRedo)
-        self.failUnlessResultIsBOOL(NSUndoManager.isUndoing)
-        self.failUnlessResultIsBOOL(NSUndoManager.isRedoing)
-        self.failUnlessArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, 'v@:@')
+        self.assertResultIsBOOL(NSUndoManager.isUndoRegistrationEnabled)
+        self.assertResultIsBOOL(NSUndoManager.groupsByEvent)
+        self.assertArgIsBOOL(NSUndoManager.setGroupsByEvent_, 0)
+        self.assertResultIsBOOL(NSUndoManager.canUndo)
+        self.assertResultIsBOOL(NSUndoManager.canRedo)
+        self.assertResultIsBOOL(NSUndoManager.isUndoing)
+        self.assertResultIsBOOL(NSUndoManager.isRedoing)
+        self.assertArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, 'v@:@')
 
 if __name__ == '__main__':
     main( )

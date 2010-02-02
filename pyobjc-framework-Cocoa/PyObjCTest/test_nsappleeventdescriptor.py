@@ -3,11 +3,11 @@ from PyObjCTools.TestSupport import *
 
 class TestAED (TestCase):
     def testCreateWithBytes(self):
-        self.failUnlessArgSizeInArg(NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_, 1, 2)
-        self.failUnlessArgIsIn(NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_, 1)
+        self.assertArgSizeInArg(NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_, 1, 2)
+        self.assertArgIsIn(NSAppleEventDescriptor.descriptorWithDescriptorType_bytes_length_, 1)
 
-        self.failUnlessArgSizeInArg(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1, 2)
-        self.failUnlessArgIsIn(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1)
+        self.assertArgSizeInArg(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1, 2)
+        self.assertArgIsIn(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1)
 
 #    def testInitWithAEDescNoCopy(self):
 #        # The object will call AEDisposeDesc, meaning MacPython shouldn't

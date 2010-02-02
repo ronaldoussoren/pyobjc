@@ -9,26 +9,26 @@ class TestNSDatePickerHelper (NSObject):
 
 class TestNSDatePickerCell (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSTextFieldAndStepperDatePickerStyle, 0)
-        self.failUnlessEqual(NSClockAndCalendarDatePickerStyle, 1)
-        self.failUnlessEqual(NSTextFieldDatePickerStyle, 2)
-        self.failUnlessEqual(NSSingleDateMode, 0)
-        self.failUnlessEqual(NSRangeDateMode, 1)
-        self.failUnlessEqual(NSHourMinuteDatePickerElementFlag, 0x000c)
-        self.failUnlessEqual(NSHourMinuteSecondDatePickerElementFlag, 0x000e)
-        self.failUnlessEqual(NSTimeZoneDatePickerElementFlag, 0x0010)
-        self.failUnlessEqual(NSYearMonthDatePickerElementFlag, 0x00c0)
-        self.failUnlessEqual(NSYearMonthDayDatePickerElementFlag, 0x00e0)
-        self.failUnlessEqual(NSEraDatePickerElementFlag, 0x0100)
+        self.assertEqual(NSTextFieldAndStepperDatePickerStyle, 0)
+        self.assertEqual(NSClockAndCalendarDatePickerStyle, 1)
+        self.assertEqual(NSTextFieldDatePickerStyle, 2)
+        self.assertEqual(NSSingleDateMode, 0)
+        self.assertEqual(NSRangeDateMode, 1)
+        self.assertEqual(NSHourMinuteDatePickerElementFlag, 0x000c)
+        self.assertEqual(NSHourMinuteSecondDatePickerElementFlag, 0x000e)
+        self.assertEqual(NSTimeZoneDatePickerElementFlag, 0x0010)
+        self.assertEqual(NSYearMonthDatePickerElementFlag, 0x00c0)
+        self.assertEqual(NSYearMonthDayDatePickerElementFlag, 0x00e0)
+        self.assertEqual(NSEraDatePickerElementFlag, 0x0100)
 
     def testMethods(self):
         o = TestNSDatePickerHelper.alloc().init()
         m = o.datePickerCell_validateProposedDateValue_timeInterval_.__metadata__()
-        self.failUnlessEqual(m['arguments'][3]['type'], 'N^@')
-        self.failUnlessStartswith(m['arguments'][4]['type'], 'N^')
+        self.assertEqual(m['arguments'][3]['type'], 'N^@')
+        self.assertStartswith(m['arguments'][4]['type'], 'N^')
 
-        self.failUnlessResultIsBOOL(NSDatePickerCell.drawsBackground)
-        self.failUnlessArgIsBOOL(NSDatePickerCell.setDrawsBackground_, 0)
+        self.assertResultIsBOOL(NSDatePickerCell.drawsBackground)
+        self.assertArgIsBOOL(NSDatePickerCell.setDrawsBackground_, 0)
 
 if __name__ == "__main__":
     main()

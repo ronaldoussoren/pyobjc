@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import *
 
 class TestNSGarbageCollector (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(NSGarbageCollector.isCollecting)
-        self.failUnlessResultIsBOOL(NSGarbageCollector.isEnabled)
+        self.assertResultIsBOOL(NSGarbageCollector.isCollecting)
+        self.assertResultIsBOOL(NSGarbageCollector.isEnabled)
 
 
 if __name__ == "__main__":
