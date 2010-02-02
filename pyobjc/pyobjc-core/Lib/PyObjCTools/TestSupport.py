@@ -273,11 +273,11 @@ class TestCase (_unittest.TestCase):
 
     def assertIsObject(self, value, test, message = None):
         if value is not test:
-            self.fail(message or  "%r (id=%r) is not %r (id=%r) ", value, id(value), test, id(test))
+            self.fail(message or  "%r (id=%r) is not %r (id=%r) "%(value, id(value), test, id(test)))
 
     def assertIsNotObject(self, value, test, message = None):
         if value is test:
-            self.fail(message or  "%r is %r", value, test)
+            self.fail(message or  "%r is %r"%(value, test))
 
     def assertIsNone(self, value, message = None):
         self.assertIsObject(value, None)
@@ -349,7 +349,7 @@ class TestCase (_unittest.TestCase):
         if not info['arguments'][argno+offset]['already_cfretained']:
             self.fail(message or "%r is not cfretained"%(method,))
 
-    def assertArgIsCFRetained(self, method, argno, message = None):
+    def assertArgIsNotCFRetained(self, method, argno, message = None):
         if isinstance(method, objc.selector):
             offset = 2
         else:
@@ -606,9 +606,31 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "%r is in %r"%(value, seq))
 
 
+    if not hasattr(_unittest.TestCase, 'assertGreaterThan'):
+        def assertGreaterThan(self, val, test, message=None):
+            if not (val > test):
+                self.fail(message or '%r <= %r'%(val, test))
+
+    if not hasattr(_unittest.TestCase, 'assertGreaterEqual'):
+        def assertGreaterEqual(self, val, test, message=None):
+            if not (val >= test):
+                self.fail(message or '%r < %r'%(val, test))
+
+    if not hasattr(_unittest.TestCase, 'assertLessThan'):
+        def assertLessThan(self, val, test, message=None):
+            if not (val < test):
+                self.fail(message or '%r >= %r'%(val, test))
+
+    if not hasattr(_unittest.TestCase, 'assertLessEqual'):
+        def assertLessEqual(self, val, test, message=None):
+            if not (val <= test):
+                self.fail(message or '%r > %r'%(val, test))
+
+
     if not hasattr(_unittest.TestCase, "assertAlmostEquals"):
         def assertAlmostEquals(self, val1, val2, message=None):
-            self.failUnless(abs (val1 - val2) < 0.00001, message)
+            self.failUnless(abs (val1 - val2) < 0.00001, 
+                    message or 'abs(%r - %r) >= 0.00001'%(val1, val2))
 
 
     def run(self, *args):
