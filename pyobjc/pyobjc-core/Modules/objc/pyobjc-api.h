@@ -21,6 +21,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "pyobjc-compat.h"
+
 #ifndef CGFLOAT_DEFINED
 
 #ifdef __LP64__
@@ -53,19 +55,6 @@ typedef unsigned int NSUInteger;
 
 #endif
 
-
-#ifndef PyObjC_COMPAT_H
-#if (PY_VERSION_HEX < 0x02050000)
-typedef int Py_ssize_t;
-#define PY_FORMAT_SIZE_T ""
-#define Py_ARG_SIZE_T "i"
-#define PY_SSIZE_T_MAX INT_MAX
-
-#else
-
-#define Py_ARG_SIZE_T "n"
-#endif
-#endif
 
 #import <Foundation/NSException.h>
 
@@ -347,6 +336,7 @@ struct pyobjc_api {
 	int (*is_ascii_string)(PyObject* unicode_string, const char* ascii_string);
 	int (*is_ascii_prefix)(PyObject* unicode_string, const char* ascii_string, size_t n);
 
+	int (*pyobjcobject_convert)(PyObject*,void*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -406,6 +396,8 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_NULL		  (*(PyObjC_API->pyobjc_null))
 #define PyObjC_DepythonifyCArray  (PyObjC_API->dep_c_array_count)
 #define PyObjC_VarList_New  (PyObjC_API->varlistnew)
+#define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
+
 
 
 #ifndef PYOBJC_METHOD_STUB_IMPL

@@ -4,7 +4,7 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector' ]
 
 from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
 import sys, textwrap
@@ -110,7 +110,7 @@ def namedSelector(name, signature=None):
 
 def namedselector(name, signature=None):
     import warnings
-    warnings.warn("use objc.namedSelector instead of objc.namedselector")
+    warnings.warn("use objc.namedSelector instead of objc.namedselector", stacklevel=2)
     return namedSelector(name, signature)
 
 def typedAccessor(typeSignature):
