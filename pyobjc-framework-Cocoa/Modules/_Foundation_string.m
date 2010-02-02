@@ -123,19 +123,58 @@ call_NSString_getCString_maxLength_(
 	return res;
 }
 
-static PyMethodDef _methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
+/* Python glue */
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+        PyModuleDef_HEAD_INIT,
+	"_string",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit__string(void);
+
+PyObject*
+PyInit__string(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void init_string(void);
+
 void
 init_string(void)
+#endif
 {
-	PyObject* m = Py_InitModule4("_string", _methods, "", NULL, PYTHON_API_VERSION);
-	if (m == NULL) return;
+	PyObject* m;
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("_string", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
 	Class classNSString = objc_lookUpClass("NSString");
-	if (classNSString == NULL) return;
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (classNSString == NULL) INITDONE();
+	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 
 	if (PyObjC_RegisterMethodMapping(
@@ -144,7 +183,7 @@ init_string(void)
 		call_NSString_getCString_maxLength_range_remainingRange_,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -153,9 +192,8 @@ init_string(void)
 		call_NSString_getCString_maxLength_,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
-		return;
+		INITERROR();
 	}
 
-
-	return;
+	INITDONE();
 }
