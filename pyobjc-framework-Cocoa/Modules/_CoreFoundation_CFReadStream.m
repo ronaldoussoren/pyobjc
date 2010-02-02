@@ -1,10 +1,5 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 static void* 
-mod_retain(void* info) 
+mod_readstream_retain(void* info) 
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF((PyObject*)info);
@@ -13,7 +8,7 @@ mod_retain(void* info)
 }
 
 static void
-mod_release(void* info)
+mod_readstream_release(void* info)
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_DECREF((PyObject*)info);
@@ -21,11 +16,11 @@ mod_release(void* info)
 }
 
 
-static CFStreamClientContext mod_CFStreamClientContext = {
+static CFStreamClientContext mod_CFStreamClientContext_Read = {
 	0,		
 	NULL,
-	mod_retain,
-	mod_release,
+	mod_readstream_retain,
+	mod_readstream_release,
 	NULL
 };
 
@@ -77,7 +72,7 @@ mod_CFReadStreamSetClient(
 	}
 
 	if (info != PyObjC_NULL) {
-		context = mod_CFStreamClientContext;
+		context = mod_CFStreamClientContext_Read;
 		context.info = Py_BuildValue("OO", callout, info);
 		if (context.info == NULL) {
 			return NULL;
@@ -114,62 +109,10 @@ mod_CFReadStreamSetClient(
 	return PyBool_FromLong(rv);
 }
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFReadStreamSetClient",
-		(PyCFunction)mod_CFReadStreamSetClient,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_READSTREAM_METHODS \
+        {	\
+		"CFReadStreamSetClient",	\
+		(PyCFunction)mod_CFReadStreamSetClient,	\
+		METH_VARARGS,	\
+		NULL	\
 	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFReadStream",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFReadStream(void);
-
-PyObject*
-PyInit__CFReadStream(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFReadStream(void);
-
-void
-init_CFReadStream(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFReadStream", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

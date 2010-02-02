@@ -1,8 +1,3 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 static PyObject*
 mod_CFNumberGetValue(
 	PyObject* self __attribute__((__unused__)),
@@ -246,69 +241,16 @@ mod_CFNumberCreate(
 
 
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFNumberGetValue",
-		(PyCFunction)mod_CFNumberGetValue,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_NUMBER_METHODS \
+        {	\
+		"CFNumberGetValue",	\
+		(PyCFunction)mod_CFNumberGetValue,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFNumberCreate",	\
+		(PyCFunction)mod_CFNumberCreate,	\
+		METH_VARARGS,	\
+		NULL	\
 	},
-        {
-		"CFNumberCreate",
-		(PyCFunction)mod_CFNumberCreate,
-		METH_VARARGS,
-		NULL
-	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFNumber",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFNumber(void);
-
-PyObject*
-PyInit__CFNumber(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFNumber(void);
-
-void
-init_CFNumber(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFNumber", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

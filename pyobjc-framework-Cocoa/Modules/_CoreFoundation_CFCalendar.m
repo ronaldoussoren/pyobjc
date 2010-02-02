@@ -5,10 +5,6 @@
  * arguments are integers and the number of arguments is trivially derived
  * from the format string these implementations are fairly trivial.
  */
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
 
 static PyObject*
 mod_CFCalendarAddComponents(
@@ -425,82 +421,28 @@ mod_CFCalendarGetComponentDifference(
 	return rv;
 }
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFCalendarAddComponents",
-		(PyCFunction)mod_CFCalendarAddComponents,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_CALENDAR_METHODS \
+        {	\
+		"CFCalendarAddComponents",	\
+		(PyCFunction)mod_CFCalendarAddComponents,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFCalendarComposeAbsoluteTime",	\
+		(PyCFunction)mod_CFCalendarComposeAbsoluteTime,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFCalendarDecomposeAbsoluteTime",	\
+		(PyCFunction)mod_CFCalendarDecomposeAbsoluteTime,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFCalendarGetComponentDifference",	\
+		(PyCFunction)mod_CFCalendarGetComponentDifference,	\
+		METH_VARARGS,	\
+		NULL	\
 	},
-        {
-		"CFCalendarComposeAbsoluteTime",
-		(PyCFunction)mod_CFCalendarComposeAbsoluteTime,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFCalendarDecomposeAbsoluteTime",
-		(PyCFunction)mod_CFCalendarDecomposeAbsoluteTime,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFCalendarGetComponentDifference",
-		(PyCFunction)mod_CFCalendarGetComponentDifference,
-		METH_VARARGS,
-		NULL
-	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFCalendar",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFCalendar(void);
-
-PyObject*
-PyInit__CFCalendar(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFCalendar(void);
-
-void
-init_CFCalendar(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFCalendar", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

@@ -1,7 +1,3 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
 
 static const void* 
 mod_CFTreeRetainCallback(const void* info) 
@@ -234,81 +230,28 @@ mod_CFTreeGetChildren(
 }
 
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFTreeCreate",
-		(PyCFunction)mod_CFTreeCreate,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFTreeGetContext",
-		(PyCFunction)mod_CFTreeGetContext,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFTreeSetContext",
-		(PyCFunction)mod_CFTreeSetContext,
-		METH_VARARGS,
-		NULL
-	},
-	{
-		"CFTreeGetChildren",
-		(PyCFunction)mod_CFTreeGetChildren,
-		METH_VARARGS,
-		NULL,
-	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFTree",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFTree(void);
-
-PyObject*
-PyInit__CFTree(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFTree(void);
-
-void
-init_CFTree(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFTree", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}
+#define COREFOUNDATION_TREE_METHODS \
+        {	\
+		"CFTreeCreate",	\
+		(PyCFunction)mod_CFTreeCreate,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFTreeGetContext",	\
+		(PyCFunction)mod_CFTreeGetContext,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFTreeSetContext",	\
+		(PyCFunction)mod_CFTreeSetContext,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+	{	\
+		"CFTreeGetChildren",	\
+		(PyCFunction)mod_CFTreeGetChildren,	\
+		METH_VARARGS,	\
+		NULL,	\
+	},	

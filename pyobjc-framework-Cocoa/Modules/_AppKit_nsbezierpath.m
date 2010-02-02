@@ -2,10 +2,6 @@
  * Several methods of NSBezierPath cannot be handled automaticly because the 
  * size of a C-style array depends on the value of another argument.
  */
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <AppKit/AppKit.h>
 
 static PyObject* 
 call_NSBezierPath_elementAtIndex_associatedPoints_(
@@ -260,67 +256,19 @@ error:
 }
 
 
-static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_nsbezierpath",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__nsbezierpath(void);
-
-PyObject*
-PyInit__nsbezierpath(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_nsbezierpath(void);
-
-void
-init_nsbezierpath(void)
-#endif
+static int setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_nsbezierpath", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
 	Class cls = objc_lookUpClass("NSBezierPath");
-	if (!cls) INITDONE();
+	if (!cls) {
+		return 0;
+	}
 
 	if (PyObjC_RegisterMethodMapping(cls,
 		@selector(elementAtIndex:associatedPoints:),
 		call_NSBezierPath_elementAtIndex_associatedPoints_,
 		imp_NSBezierPath_elementAtIndex_associatedPoints_) < 0 ) {
 
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(cls,
@@ -328,8 +276,7 @@ init_nsbezierpath(void)
 		call_NSBezierPath_setAssociatedPoints_atIndex_,
 		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
-		INITERROR();
+		return -1;
 	}
-
-	INITDONE();
+	return 0;
 }

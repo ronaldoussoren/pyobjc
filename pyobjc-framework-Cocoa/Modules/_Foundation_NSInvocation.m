@@ -1,8 +1,3 @@
-#include "Python.h"
-#include "pyobjc-api.h"
-
-#include <Foundation/Foundation.h>
-
 static PyObject* 
 call_NSInvocation_setArgument_atIndex_(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -328,60 +323,8 @@ call_NSInvocation_getReturnValue_(
 }
 
 
-PyDoc_STRVAR(mod_doc, "");
-
-static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_nsinvocation",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__nsinvocation(void);
-
-PyObject*
-PyInit__nsinvocation(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_nsinvocation(void);
-
-void
-init_nsinvocation(void)
-#endif
+static int setup_nsinvocation(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_nsinvocation", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
 	Class classNSInvocation = objc_lookUpClass("NSInvocation");
   
 	if (PyObjC_RegisterMethodMapping(
@@ -389,7 +332,7 @@ init_nsinvocation(void)
 			@selector(setArgument:atIndex:),
 			call_NSInvocation_setArgument_atIndex_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
-		return;
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -397,7 +340,7 @@ init_nsinvocation(void)
 			@selector(setReturnValue:),
 			call_NSInvocation_setReturnValue_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
-		return;
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -405,7 +348,7 @@ init_nsinvocation(void)
 			@selector(getArgument:atIndex:),
 			call_NSInvocation_getArgument_atIndex_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
-		return;
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -413,8 +356,8 @@ init_nsinvocation(void)
 			@selector(getReturnValue:),
 			call_NSInvocation_getReturnValue_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
-		return;
+		return -1;
 	}
 
-	INITDONE();
+	return 0;
 }

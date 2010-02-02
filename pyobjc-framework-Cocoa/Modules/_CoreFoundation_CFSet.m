@@ -1,8 +1,3 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 static PyObject*
 mod_CFSetGetValues(
 	PyObject* self __attribute__((__unused__)),
@@ -65,61 +60,10 @@ mod_CFSetGetValues(
 	return pyValues;
 }
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFSetGetValues",
-		(PyCFunction)mod_CFSetGetValues,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_SET_METHODS \
+        { 	\
+		"CFSetGetValues", 	\
+		(PyCFunction)mod_CFSetGetValues, 	\
+		METH_VARARGS, 	\
+		NULL 	\
 	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFSet",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFSet(void);
-
-PyObject*
-PyInit__CFSet(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFSet(void);
-
-void
-init_CFSet(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFSet", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

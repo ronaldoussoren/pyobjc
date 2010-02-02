@@ -1,8 +1,3 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 static PyObject*
 mod_CFDictionaryGetKeysAndValues(
 	PyObject* self __attribute__((__unused__)),
@@ -100,63 +95,10 @@ mod_CFDictionaryGetKeysAndValues(
 	return result;
 }
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFDictionaryGetKeysAndValues",
-		(PyCFunction)mod_CFDictionaryGetKeysAndValues,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_DICTIONARY_METHODS \
+        {	\
+		"CFDictionaryGetKeysAndValues",	\
+		(PyCFunction)mod_CFDictionaryGetKeysAndValues,	\
+		METH_VARARGS,	\
+		NULL	\
 	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFDictionary",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFDictionary(void);
-
-PyObject*
-PyInit__CFDictionary(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFDictionary(void);
-
-void
-init_CFDictionary(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFDictionary", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

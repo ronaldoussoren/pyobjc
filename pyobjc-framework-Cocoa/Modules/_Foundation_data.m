@@ -1,14 +1,3 @@
-/*
- * These NSData methods don't "fit" the metadata model.
- * -bytes
- * -mutableBytes
- */
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#include <Foundation/Foundation.h>
-
-
 static PyObject* call_NSData_bytes(
 	PyObject* method, PyObject* self, PyObject* arguments)
 {
@@ -220,57 +209,8 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_data",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__data(void);
-
-PyObject*
-PyInit__data(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_data(void);
-
-void
-init_data(void)
-#endif
+static int setup_nsdata(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_data", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
 	Class classNSData = objc_lookUpClass("NSData");
 	Class classNSMutableData = objc_lookUpClass("NSMutableData");
 
@@ -280,7 +220,7 @@ init_data(void)
 				 @selector(bytes),
 				 call_NSData_bytes,
 				 imp_NSData_bytes) < 0 ) {
-			INITERROR();
+			return -1;
 		}
 
 	}
@@ -291,10 +231,9 @@ init_data(void)
 				@selector(mutableBytes),
 				call_NSMutableData_mutableBytes,
 				imp_NSMutableData_mutableBytes) < 0 ) {
-			INITERROR();
+			return -1;
 		}
 	}
-
   
-	INITDONE();
+	return 0;
 }
