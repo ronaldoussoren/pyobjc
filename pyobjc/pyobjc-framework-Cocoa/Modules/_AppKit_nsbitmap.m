@@ -353,22 +353,64 @@ static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
-void init_nsbitmap(void);
-void init_nsbitmap(void)
-{
-	PyObject* m = Py_InitModule4("_nsbitmap", mod_methods, "", NULL,
-			PYTHON_API_VERSION);
+/* Python glue */
+#if PY_VERSION_HEX >= 0x03000000
 
-	PyObjC_ImportAPI(m);
+static struct PyModuleDef mod_module = {
+        PyModuleDef_HEAD_INIT,
+	"_nsbitmap",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit__nsbitmap(void);
+
+PyObject*
+PyInit__nsbitmap(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void init_nsbitmap(void);
+
+void
+init_nsbitmap(void)
+#endif
+{
+	PyObject* m;
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("_nsbitmap", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) { 
+		INITERROR();
+	}
+
+	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 	Class class_NSBitmapImageRep = objc_lookUpClass("NSBitmapImageRep");
+	if (class_NSBitmapImageRep == NULL) {
+		INITDONE();
+	}
 
 	if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep, 
 		@selector(getTIFFCompressionTypes:count:),
 		call_NSBitmapImageRep_getTIFFCompressionTypes_count_,
 		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -377,7 +419,7 @@ void init_nsbitmap(void)
 			call_NSBitmapImageRep_initWithBitmap,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -386,7 +428,7 @@ void init_nsbitmap(void)
 			call_NSBitmapImageRep_getBitmapDataPlanes_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -395,6 +437,8 @@ void init_nsbitmap(void)
 			call_NSBitmapImageRep_bitmapData,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		return;
+		INITERROR();
 	}
+
+	INITDONE();
 }

@@ -859,10 +859,6 @@ Decimal_New(NSDecimal* aDecimal)
 
 
 
-static PyMethodDef _methods[] = {
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
 static PyObject* 
 pythonify_nsdecimal(void* value)
 {
@@ -1073,27 +1069,66 @@ error:
 }
 
 
-PyDoc_STRVAR(_NSDecimal_doc, "_NSDecimal provides a wrapper for NSDecimal");
+PyDoc_STRVAR(mod_doc, "_NSDecimal provides a wrapper for NSDecimal");
+
+static PyMethodDef mod_methods[] = {
+	{
+		NULL,
+		NULL,
+		0,
+		NULL
+	}
+};
+
+
+/* Python glue */
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+        PyModuleDef_HEAD_INIT,
+	"_NSDecimal",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit__NSDecimal(void);
+
+PyObject*
+PyInit__NSDecimal(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
 
 void init_NSDecimal(void);
 
-void init_NSDecimal(void)
+void
+init_NSDecimal(void)
+#endif
 {
 	PyObject* m;
 	PyType_Ready(&Decimal_Type);
 
-	m = Py_InitModule4("_NSDecimal", _methods, _NSDecimal_doc, 
-			NULL, PYTHON_API_VERSION);
-
-
-	if (m == NULL) {
-		return;
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("_NSDecimal", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
 	}
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		printf("Importing objc failed\n");
-		return;
-	}
+	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 	PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type);
 
@@ -1139,7 +1174,7 @@ void init_NSDecimal(void)
 			@selector(initWithDecimal:),
 			call_NSDecimalNumber_initWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
-		return;
+		INITERROR();
 	}
 
 	Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
@@ -1150,7 +1185,7 @@ void init_NSDecimal(void)
 			call_NSDecimalNumber_initWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
 
-			return;
+			INITERROR();
 		}
 	}
 
@@ -1159,7 +1194,7 @@ void init_NSDecimal(void)
 			@selector(decimalNumberWithDecimal:),
 			call_NSDecimalNumber_decimalWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -1167,6 +1202,8 @@ void init_NSDecimal(void)
 			@selector(decimalValue),
 			call_NSDecimalNumber_decimalValue,
 			imp_NSDecimalNumber_decimalValue) < 0) {
-		return;
+		INITERROR();
 	}
+
+	INITDONE();
 }

@@ -2,7 +2,7 @@
 Define a category on NSObject with some useful methods.
 
 FIXME: 
-- add signature information (namedselector) to all methods
+- add signature information (namedSelector) to all methods
   (not strictly needed)
 - add docstrings everywhere
 - create unittests
@@ -14,7 +14,7 @@ NSObject = objc.lookUpClass('NSObject')
 
 class NSObject (objc.Category(NSObject)):
 
-    @objc.namedselector("_pyobjc_performOnThread:")
+    @objc.namedSelector("_pyobjc_performOnThread:")
     def _pyobjc_performOnThread_(self, callinfo):
         try:
             sel, arg = callinfo
@@ -24,7 +24,7 @@ class NSObject (objc.Category(NSObject)):
             import traceback
             traceback.print_exc(fp=sys.stderr)
 
-    @objc.namedselector("_pyobjc_performOnThreadWithResult:")
+    @objc.namedSelector("_pyobjc_performOnThreadWithResult:")
     def _pyobjc_performOnThreadWithResult_(self, callinfo):
         try:
             sel, arg, result = callinfo
@@ -36,7 +36,7 @@ class NSObject (objc.Category(NSObject)):
 
 
     if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
-        @objc.namedselector("pyobjc_performSelector:onThread:withObject:waitUntilDone:")
+        @objc.namedSelector("pyobjc_performSelector:onThread:withObject:waitUntilDone:")
         def pyobjc_performSelector_onThread_withObject_waitUntilDone_(
                 self, aSelector, thread, arg, wait):
             """
@@ -47,7 +47,7 @@ class NSObject (objc.Category(NSObject)):
             self.performSelector_onThread_withObject_waitUntilDone_(
                     'pyobjc_performOnThread:', thread, (aSelector, arg), wait)
 
-        @objc.namedselector("pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:")
+        @objc.namedSelector("pyobjc_performSelector:onThread:withObject:waitUntilDone:modes:")
         def pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
                 self, aSelector, thread, arg, wait, modes):
             """
@@ -58,7 +58,7 @@ class NSObject (objc.Category(NSObject)):
             self.performSelector_onThread_withObject_waitUntilDone_modes_(
                 'pyobjc_performOnThread:', thread, (aSelector, arg), wait, modes)
 
-    @objc.namedselector("pyobjc_performSelector:withObject:afterDelay:")
+    @objc.namedSelector("pyobjc_performSelector:withObject:afterDelay:")
     def pyobjc_performSelector_withObject_afterDelay_(
             self, aSelector, arg, delay):
         """
@@ -69,7 +69,7 @@ class NSObject (objc.Category(NSObject)):
         self.performSelector_withObject_afterDelay_(
             'pyobjc_performOnThread:', (aSelector, arg), delay)
 
-    @objc.namedselector("pyobjc_performSelector:withObject:afterDelay:inModes:")
+    @objc.namedSelector("pyobjc_performSelector:withObject:afterDelay:inModes:")
     def pyobjc_performSelector_withObject_afterDelay_inModes_(
             self, aSelector, arg, delay, modes):
         """
@@ -81,7 +81,7 @@ class NSObject (objc.Category(NSObject)):
             'pyobjc_performOnThread:', (aSelector, arg), delay, modes)
 
     if hasattr(NSObject, "performSelectorInBackground_withObject_waitUntilDone_"):
-        @objc.namedselector("pyobjc_performSelectorInBackground:withObject:")
+        @objc.namedSelector("pyobjc_performSelectorInBackground:withObject:")
         def pyobjc_performSelectorInBackground_withObject_(
                 self, aSelector, arg):
             """
@@ -93,7 +93,7 @@ class NSObject (objc.Category(NSObject)):
                 'pyobjc_performOnThread:', (aSelector, arg))
 
 
-    @objc.namedselector("pyobjc_performSelectorInBackground:withObject:waitUntilDone:")
+    @objc.namedSelector("pyobjc_performSelectorInBackground:withObject:waitUntilDone:")
     def pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_(
             self, aSelector, arg, wait):
         """
@@ -104,7 +104,7 @@ class NSObject (objc.Category(NSObject)):
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
             'pyobjc_performOnThread:', (aSelector, arg), wait)
 
-    @objc.namedselector("pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:modes:")
+    @objc.namedSelector("pyobjc_performSelectorOnMainThread:withObject:waitUntilDone:modes:")
     def pyobjc_performSelectorOnMainThread_withObject_waitUntilDone_modes_(
             self, aSelector, arg, wait, modes):
         """
@@ -118,7 +118,7 @@ class NSObject (objc.Category(NSObject)):
 
     # And some a some versions that return results
 
-    @objc.namedselector("pyobjc_performSelectorOnMainThread:withObject:modes:")
+    @objc.namedSelector("pyobjc_performSelectorOnMainThread:withObject:modes:")
     def pyobjc_performSelectorOnMainThread_withObject_modes_(
             self, aSelector, arg, modes):
         """
@@ -142,7 +142,7 @@ class NSObject (objc.Category(NSObject)):
             exc_type, exc_value, exc_trace = result
             raise exc_type, exc_value, exc_trace
 
-    @objc.namedselector("pyobjc_performSelectorOnMainThread:withObject:")
+    @objc.namedSelector("pyobjc_performSelectorOnMainThread:withObject:")
     def pyobjc_performSelectorOnMainThread_withObject_(
             self, aSelector, arg):
         result = []
@@ -161,7 +161,7 @@ class NSObject (objc.Category(NSObject)):
         # These methods require Leopard, don't define them if the 
         # platform functionality isn't present.
 
-        @objc.namedselector("pyobjc_performSelector:onThread:withObject:modes:")
+        @objc.namedSelector("pyobjc_performSelector:onThread:withObject:modes:")
         def pyobjc_performSelector_onThread_withObject_modes_(
                 self, aSelector, thread, arg, modes):
             result = []
@@ -176,7 +176,7 @@ class NSObject (objc.Category(NSObject)):
                 exc_type, exc_value, exc_trace = result
                 raise exc_type, exc_value, exc_trace
 
-        @objc.namedselector("pyobjc_performSelector:onThread:withObject:")
+        @objc.namedSelector("pyobjc_performSelector:onThread:withObject:")
         def pyobjc_performSelector_onThread_withObject_(
                 self, aSelector, thread, arg):
             result = []

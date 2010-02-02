@@ -197,15 +197,57 @@ static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
-void init_nswindow(void);
-void init_nswindow(void)
-{
-	PyObject* m = Py_InitModule4("_nswindow", mod_methods, "", NULL,
-			PYTHON_API_VERSION);
+/* Python glue */
+#if PY_VERSION_HEX >= 0x03000000
 
-	PyObjC_ImportAPI(m);
+static struct PyModuleDef mod_module = {
+        PyModuleDef_HEAD_INIT,
+	"_nswindow",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit__nswindow(void);
+
+PyObject*
+PyInit__nswindow(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+void init_nswindow(void);
+
+void
+init_nswindow(void)
+#endif
+{
+	PyObject* m;
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("_nswindow", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) { 
+		INITERROR();
+	}
+
+	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 	Class classNSWindow = objc_lookUpClass("NSWindow");
+	if (classNSWindow == NULL) {
+		INITDONE();
+	}
 
 	if (PyObjC_RegisterMethodMapping(
 		classNSWindow,
@@ -213,7 +255,7 @@ void init_nswindow(void)
 		call_NSWindow_initWithWindowRef_,
 		imp_NSWindow_initWithWindowRef_) < 0) {
 
-		return;
+		INITERROR();
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -222,6 +264,8 @@ void init_nswindow(void)
 		call_NSWindow_windowRef,
 		imp_NSWindow_windowRef) < 0) {
 
-		return;
+		INITERROR();
 	}
+
+	INITDONE();
 }

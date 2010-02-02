@@ -231,26 +231,63 @@
 
 @end
 
-static PyMethodDef no_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
 
 
+/* Python glue */
+#if PY_VERSION_HEX >= 0x03000000
+
+static struct PyModuleDef mod_module = {
+        PyModuleDef_HEAD_INIT,
+	"testhelper",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit_testhelper(void);
+
+PyObject*
+PyInit_testhelper(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
 void inittesthelper(void);
 
-void inittesthelper(void)
+void
+inittesthelper(void)
+#endif
 {
-        PyObject* m;
-
-	m = Py_InitModule4("testhelper", no_methods,
+	PyObject* m;
+#if PY_VERSION_HEX >= 0x03000000
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("testhelper", mod_methods,
 		NULL, NULL, PYTHON_API_VERSION);
-	if (!m) return;
+#endif
+	if (!m) {
+		INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) return;
+	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 	PyModule_AddObject(m, "PyObjC_TestClass3",
 		PyObjCClass_New([PyObjC_TestClass3 class]));
 	PyModule_AddObject(m, "PyObjC_TestClass4",
 		PyObjCClass_New([PyObjC_TestClass4 class]));
+
+	INITDONE();
 }
