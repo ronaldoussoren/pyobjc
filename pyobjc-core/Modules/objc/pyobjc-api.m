@@ -14,6 +14,7 @@
 #undef PyObjCObject_GetObject
 #endif
 
+
 static void do_weaklink(PyObject* module_dict, struct PyObjC_WeakLink* funcs)
 {
 	while (funcs->name) {
@@ -146,7 +147,7 @@ struct pyobjc_api objc_api = {
 	PyObjC_VarList_New,		/* PyObjC_VarList_New */
 	PyObjC_is_ascii_string,
 	PyObjC_is_ascii_prefix,
-
+	PyObjCObject_Convert,
 };
 
 int PyObjCAPI_Register(PyObject* module)

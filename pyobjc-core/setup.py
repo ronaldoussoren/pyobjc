@@ -44,6 +44,30 @@ else:
             
             unittest.main(None, None, [unittest.__file__]+self.test_args)
 
+from setuptools.command import egg_info as orig_egg_info
+
+def write_header(cmd, basename, filename):
+    data = open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU').read()
+    if not cmd.dry_run:
+        if not os.path.exists(os.path.dirname(filename)):
+            os.makedirs(os.path.dirname(filename))
+
+    cmd.write_file(basename, filename, data)
+
+
+# This is a workaround for a bug in setuptools: I'd like
+# to use the 'egg_info.writers' entry points in the setup()
+# call, but those don't work when also using a package_base
+# argument as we do.
+# (issue 123 in the distribute tracker)
+class egg_info (orig_egg_info.egg_info):
+    def run(self):
+        orig_egg_info.egg_info.run(self)
+
+        for hdr in ("pyobjc-compat.h", "pyobjc-api.h"):
+            fn = os.path.join("include", hdr)
+
+            write_header(self, fn, os.path.join(self.egg_info, fn))
 
 if sys.version_info[0] == 3:
     # FIXME: add custom test command that does the work.
@@ -365,6 +389,7 @@ Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
 """.splitlines())
 
+
 dist = setup(
     name = "pyobjc-core", 
     version = package_version(),
@@ -379,12 +404,18 @@ dist = setup(
     namespace_packages = ['PyObjCTools'],
     package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     extra_path = "PyObjC",
-    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib, 'build_py': oc_build_py, 'test': oc_test },
+    cmdclass = {'build_ext': pyobjc_build_ext, 'install_lib': pyobjc_install_lib, 'build_py': oc_build_py, 'test': oc_test, 'egg_info':egg_info },
     options = {'egg_info': {'egg_base': 'Lib'}},
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     test_suite='PyObjCTest.loader.makeTestSuite',
     zip_safe = False,
+#    entry_points = {
+#        "egg_info.writers": [
+#            "include/pyobjc-api.h = __main__:write_header",
+#            "include/pyobjc-compat.h = __main__:write_header",
+#        ],
+#    },
     **extra_args
 )
