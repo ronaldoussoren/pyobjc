@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
-from Quartz.CoreGraphics import *
+
+try:
+    from Quartz.CoreGraphics import *
+    have_Quartz = 1
+except ImportError:
+    have_Quartz = 0
 
 class TestNSWindowHelper (NSObject):
     def windowShouldClose_(self, w): return 1
@@ -85,6 +90,7 @@ class TestNSWindow (TestCase):
         self.assertIsInstance(NSWindowWillStartLiveResizeNotification, unicode)
         self.assertIsInstance(NSWindowDidEndLiveResizeNotification, unicode)
 
+    @onlyIf(have_Quartz)
     def testMagicConstants(self):
         self.assertEqual(NSNormalWindowLevel, kCGNormalWindowLevel)
         self.assertEqual(NSFloatingWindowLevel, kCGFloatingWindowLevel)

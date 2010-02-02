@@ -9,14 +9,9 @@
  *   correspond with NSDecimal* functions with the NSRoundPlain argument.
  *   They also support unary -, unary + and abs, with the obvious semantics.
  */
-#include "Python.h"
-#include "pyobjc-api.h"
-
 #ifndef  _C_CONST
 #define _C_CONST    'r'
 #endif
-
-#import <Foundation/Foundation.h>
 
 typedef struct {
 	PyObject_HEAD
@@ -1069,76 +1064,25 @@ error:
 }
 
 
-PyDoc_STRVAR(mod_doc, "_NSDecimal provides a wrapper for NSDecimal");
-
-static PyMethodDef mod_methods[] = {
-	{
-		NULL,
-		NULL,
-		0,
-		NULL
-	}
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_NSDecimal",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__NSDecimal(void);
-
-PyObject*
-PyInit__NSDecimal(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_NSDecimal(void);
-
-void
-init_NSDecimal(void)
-#endif
+static int setup_nsdecimal(PyObject* m)
 {
-	PyObject* m;
 	PyType_Ready(&Decimal_Type);
 
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_NSDecimal", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
+	if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type) == -1) {
+		return -1;
 	}
 
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type);
-
-	PyObjCPointerWrapper_Register(@encode(NSDecimal*),
+	if (PyObjCPointerWrapper_Register(@encode(NSDecimal*),
 			pythonify_nsdecimal,
-			depythonify_nsdecimal);
+			depythonify_nsdecimal) < 0) {
+		return -1;
+	}
 
-	PyObjCPointerWrapper_Register(@encode(const NSDecimal*),
+	if (PyObjCPointerWrapper_Register(@encode(const NSDecimal*),
 			pythonify_nsdecimal,
-			depythonify_nsdecimal);
+			depythonify_nsdecimal) < 0) {
+		return -1;
+	}
 
 	/* Also register some variations of the encoded name because NSDecimal
          * doesn't have a struct tag and the metadata generators make up one
@@ -1156,13 +1100,17 @@ init_NSDecimal(void)
 				sizeof(buffer)-2-sizeof("_NSDecimal"),
 				@encode(NSDecimal) + 2);
 
-		PyObjCPointerWrapper_Register(buffer+1,
+		if (PyObjCPointerWrapper_Register(buffer+1,
 				pythonify_nsdecimal,
-				depythonify_nsdecimal);
+				depythonify_nsdecimal) < 0) {
+			return -1;
+		}
 
-		PyObjCPointerWrapper_Register(buffer,
+		if (PyObjCPointerWrapper_Register(buffer,
 				pythonify_nsdecimal,
-				depythonify_nsdecimal);
+				depythonify_nsdecimal) < 0) {
+			return -1;
+		}
        	} 
 
 
@@ -1174,7 +1122,7 @@ init_NSDecimal(void)
 			@selector(initWithDecimal:),
 			call_NSDecimalNumber_initWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
-		INITERROR();
+		return -1;
 	}
 
 	Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
@@ -1185,7 +1133,7 @@ init_NSDecimal(void)
 			call_NSDecimalNumber_initWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
 
-			INITERROR();
+			return -1;
 		}
 	}
 
@@ -1194,7 +1142,7 @@ init_NSDecimal(void)
 			@selector(decimalNumberWithDecimal:),
 			call_NSDecimalNumber_decimalWithDecimal_,
 			imp_NSDecimalNumber_initWithDecimal_) < 0) {
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -1202,8 +1150,8 @@ init_NSDecimal(void)
 			@selector(decimalValue),
 			call_NSDecimalNumber_decimalValue,
 			imp_NSDecimalNumber_decimalValue) < 0) {
-		INITERROR();
+		return -1;
 	}
 
-	INITDONE();
+	return 0;
 }

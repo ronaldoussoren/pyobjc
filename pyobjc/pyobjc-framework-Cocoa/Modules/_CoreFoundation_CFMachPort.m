@@ -1,10 +1,5 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 static const void* 
-mod_retain(const void* info) 
+mod_machport_retain(const void* info) 
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF((PyObject*)info);
@@ -13,7 +8,7 @@ mod_retain(const void* info)
 }
 
 static void
-mod_release(const void* info)
+mod_machport_release(const void* info)
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_DECREF((PyObject*)info);
@@ -24,8 +19,8 @@ mod_release(const void* info)
 static CFMachPortContext mod_CFMachPortContext = {
 	0,		
 	NULL,
-	mod_retain,
-	mod_release,
+	mod_machport_retain,
+	mod_machport_release,
 	NULL
 };
 
@@ -244,7 +239,7 @@ mod_CFMachPortGetContext(
 		return NULL;
 	}
 
-	if (context.retain != mod_retain) {
+	if (context.retain != mod_machport_retain) {
 		PyErr_SetString(PyExc_ValueError, 
 			"retrieved context is not supported");
 		return NULL;
@@ -289,7 +284,7 @@ mod_CFMachPortSetInvalidationCallBack(
 		return NULL;
 	}
 
-	if (context.version != 0 || context.retain != mod_retain) {
+	if (context.version != 0 || context.retain != mod_machport_retain) {
 		PyErr_SetString(PyExc_ValueError, "invalid context");
 		return NULL;
 	}
@@ -346,7 +341,7 @@ mod_CFMachPortGetInvalidationCallBack(
 		return NULL;
 	}
 
-	if (context.version != 0 || context.retain != mod_retain) {
+	if (context.version != 0 || context.retain != mod_machport_retain) {
 		PyErr_SetString(PyExc_ValueError, "invalid context");
 		return NULL;
 	}
@@ -382,87 +377,34 @@ mod_CFMachPortGetInvalidationCallBack(
 	return NULL;
 }
 
-static PyMethodDef mod_methods[] = {
-        {
-		"CFMachPortCreate",
-		(PyCFunction)mod_CFMachPortCreate,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_MACHPORT_METHODS \
+        {	\
+		"CFMachPortCreate",	\
+		(PyCFunction)mod_CFMachPortCreate,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFMachPortCreateWithPort",	\
+		(PyCFunction)mod_CFMachPortCreateWithPort,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFMachPortGetContext",	\
+		(PyCFunction)mod_CFMachPortGetContext,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFMachPortSetInvalidationCallBack",	\
+		(PyCFunction)mod_CFMachPortSetInvalidationCallBack,	\
+		METH_VARARGS,	\
+		NULL	\
+	},	\
+        {	\
+		"CFMachPortGetInvalidationCallBack",	\
+		(PyCFunction)mod_CFMachPortGetInvalidationCallBack,	\
+		METH_VARARGS,	\
+		NULL	\
 	},
-        {
-		"CFMachPortCreateWithPort",
-		(PyCFunction)mod_CFMachPortCreateWithPort,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFMachPortGetContext",
-		(PyCFunction)mod_CFMachPortGetContext,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFMachPortSetInvalidationCallBack",
-		(PyCFunction)mod_CFMachPortSetInvalidationCallBack,
-		METH_VARARGS,
-		NULL
-	},
-        {
-		"CFMachPortGetInvalidationCallBack",
-		(PyCFunction)mod_CFMachPortGetInvalidationCallBack,
-		METH_VARARGS,
-		NULL
-	},
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFMachPort",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFMachPort(void);
-
-PyObject*
-PyInit__CFMachPort(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFMachPort(void);
-
-void
-init_CFMachPort(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFMachPort", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

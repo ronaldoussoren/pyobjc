@@ -3,14 +3,10 @@
  *
  * -addresses				[call]
  */
-#include <Python.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/un.h>
 #include <netdb.h>
-
-#include <Foundation/Foundation.h>
-#include "pyobjc-api.h"
 
 
 static PyObject *
@@ -149,61 +145,11 @@ static PyObject* call_NSNetService_addresses(
 }
 
 
-static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_netservice",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__netservice(void);
-
-PyObject*
-PyInit__netservice(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_netservice(void);
-
-void
-init_netservice(void)
-#endif
+static int setup_nsnetservice(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_netservice", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) {
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-
 	Class classNSNetService = objc_lookUpClass("NSNetService");
 	if (classNSNetService == NULL) {
-		INITDONE();
+		return 0;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -212,8 +158,8 @@ init_netservice(void)
 		call_NSNetService_addresses,
 		PyObjCUnsupportedMethod_IMP) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
-	INITDONE();
+	return 0;
 }

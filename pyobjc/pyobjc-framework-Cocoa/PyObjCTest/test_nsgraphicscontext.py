@@ -1,7 +1,12 @@
 
 from PyObjCTools.TestSupport import *
 from AppKit import *
-import Quartz.CoreGraphics
+
+try:
+    import Quartz
+except ImportError:
+    Quartz = None
+
 
 class TestNSGraphicsContext (TestCase):
     def testConstants(self):
@@ -35,7 +40,8 @@ class TestNSGraphicsContext (TestCase):
         context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
         self.assertIsInstance(context, NSGraphicsContext)
         port = context.graphicsPort()
-        self.assertIsInstance(port, Quartz.CoreGraphics.CGContextRef)
+        if Quartz is not None:
+            self.assertIsInstance(port, Quartz.CGContextRef)
 
         self.assertArgHasType(NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 0, '^{CGContext=}')
         self.assertResultHasType(NSGraphicsContext.graphicsPort, '^{CGContext=}')

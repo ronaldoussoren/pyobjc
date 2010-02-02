@@ -1,7 +1,3 @@
-#include <Python.h>
-#include <AppKit/AppKit.h>
-#include "pyobjc-api.h"
-
 static PyObject* 
 call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -349,60 +345,11 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 
 
 
-static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_nsbitmap",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__nsbitmap(void);
-
-PyObject*
-PyInit__nsbitmap(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_nsbitmap(void);
-
-void
-init_nsbitmap(void)
-#endif
+static int setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_nsbitmap", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
 	Class class_NSBitmapImageRep = objc_lookUpClass("NSBitmapImageRep");
 	if (class_NSBitmapImageRep == NULL) {
-		INITDONE();
+		return 0;
 	}
 
 	if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep, 
@@ -410,7 +357,7 @@ init_nsbitmap(void)
 		call_NSBitmapImageRep_getTIFFCompressionTypes_count_,
 		PyObjCUnsupportedMethod_IMP) < 0 ) {
 
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -419,7 +366,7 @@ init_nsbitmap(void)
 			call_NSBitmapImageRep_initWithBitmap,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -428,7 +375,7 @@ init_nsbitmap(void)
 			call_NSBitmapImageRep_getBitmapDataPlanes_,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -437,8 +384,8 @@ init_nsbitmap(void)
 			call_NSBitmapImageRep_bitmapData,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
-	INITDONE();
+	return -1;
 }

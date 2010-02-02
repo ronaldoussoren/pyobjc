@@ -20,13 +20,7 @@ __bundle__ = _objc.initFrameworkWrapper("Foundation",
 
 # Import the various manually maintained bits:
 from Foundation._functiondefines import *
-from Foundation._NSDecimal import *
-from Foundation._nsinvocation import *
-from Foundation._typecode import *
-from Foundation._nscoder import *
-from Foundation._data import *
-from Foundation._netservice import *
-from Foundation._string import *
+from Foundation._Foundation import *
 
 import Foundation._nsobject
 import Foundation._nsindexset

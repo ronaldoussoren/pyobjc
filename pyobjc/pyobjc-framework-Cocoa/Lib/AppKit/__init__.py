@@ -21,16 +21,8 @@ __bundle__ = _objc.initFrameworkWrapper("AppKit",
 # NSApp in Python)
 from AppKit._nsapp import NSApp
 
-# Import some manually maintained helper code:
-from AppKit._appmain import *
-from AppKit._nsbezierpath import *
-from AppKit._nsfont import *
-from AppKit._nsquickdrawview import *
-from AppKit._nsbezierpath import *
-from AppKit._nsview import *
-from AppKit._nsbitmap import *
-from AppKit._nswindow import *
-
+# Manually written wrappers:
+from AppKit._AppKit import *
 
 # Fix types for a number of character constants
 NSEnterCharacter = unichr(NSEnterCharacter)

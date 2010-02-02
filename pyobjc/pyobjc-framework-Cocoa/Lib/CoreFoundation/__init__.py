@@ -18,27 +18,7 @@ __bundle__ = _objc.initFrameworkWrapper("CoreFoundation",
     scan_classes=False,
     inlineTab=_inline_list_)
 
-#from CoreFoundation._CFArray import *
-from CoreFoundation._CFBag import *
-from CoreFoundation._CFBinaryHeap import *
-from CoreFoundation._CFBitVector import *
-
-from CoreFoundation._CFCalendar import *
-from CoreFoundation._CFDictionary import *
-from CoreFoundation._CFTree import *
-from CoreFoundation._CFFileDescriptor import *
-from CoreFoundation._CFMachPort import *
-from CoreFoundation._CFMessagePort import *
-from CoreFoundation._CFNumber import *
-from CoreFoundation._CFReadStream import *
-from CoreFoundation._CFRunLoopObserver import *
-from CoreFoundation._CFRunLoopTimer import *
-from CoreFoundation._CFWriteStream import *
-from CoreFoundation._CFRunLoopObserver import *
-from CoreFoundation._CFRunLoopSource import *
-from CoreFoundation._CFRunLoopTimer import *
-from CoreFoundation._CFSet import *
-from CoreFoundation._CFSocket import *
+from CoreFoundation._CoreFoundation import *
 
 #
 # 'Emulation' for CFArray contructors

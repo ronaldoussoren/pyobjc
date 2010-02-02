@@ -26,7 +26,7 @@ class TestNSPointerFunctions (TestCase):
         v = o.usesStrongWriteBarrier()
         self.assertTrue((v is True) or (v is False) )
         v = o.usesWeakReadAndWriteBarriers()
-        self.assertIsTrue((v is True) or (v is False) )
+        self.assertTrue((v is True) or (v is False) )
 
 if __name__ == "__main__":
     main()

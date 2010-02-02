@@ -1,12 +1,7 @@
-#include <Python.h>
-#include "pyobjc-api.h"
-
-#import <CoreFoundation/CoreFoundation.h>
-
 #if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
 
 static void* 
-mod_retain(void* info) 
+mod_filedescr_retain(void* info) 
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_INCREF((PyObject*)info);
@@ -15,7 +10,7 @@ mod_retain(void* info)
 }
 
 static void
-mod_release(void* info)
+mod_filedescr_release(void* info)
 {
 	PyGILState_STATE state = PyGILState_Ensure();
 	Py_DECREF((PyObject*)info);
@@ -26,8 +21,8 @@ mod_release(void* info)
 static CFFileDescriptorContext mod_CFFileDescriptorContext = {
 	0,		
 	NULL,
-	mod_retain,
-	mod_release,
+	mod_filedescr_retain,
+	mod_filedescr_release,
 	NULL
 };
 
@@ -156,7 +151,7 @@ mod_CFFileDescriptorGetContext(
 		return NULL;
 	}
 
-	if (context.retain != mod_retain) {
+	if (context.retain != mod_filedescr_retain) {
 		PyErr_SetString(PyExc_ValueError, 
 			"retrieved context is not supported");
 		return NULL;
@@ -167,71 +162,16 @@ mod_CFFileDescriptorGetContext(
 }
 #endif
 
-static PyMethodDef mod_methods[] = {
-#if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
-        {
-		"CFFileDescriptorCreate",
-		(PyCFunction)mod_CFFileDescriptorCreate,
-		METH_VARARGS,
-		NULL
+#define COREFOUNDATION_FILEDESCRIPTOR_METHODS		\
+        {		\
+		"CFFileDescriptorCreate",		\
+		(PyCFunction)mod_CFFileDescriptorCreate,		\
+		METH_VARARGS,		\
+		NULL		\
+	},		\
+        {		\
+		"CFFileDescriptorGetContext",		\
+		(PyCFunction)mod_CFFileDescriptorGetContext,		\
+		METH_VARARGS,		\
+		NULL		\
 	},
-        {
-		"CFFileDescriptorGetContext",
-		(PyCFunction)mod_CFFileDescriptorGetContext,
-		METH_VARARGS,
-		NULL
-	},
-#endif
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_CFFileDescriptor",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__CFFileDescriptor(void);
-
-PyObject*
-PyInit__CFFileDescriptor(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_CFFileDescriptor(void);
-
-void
-init_CFFileDescriptor(void)
-#endif
-{
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_CFFileDescriptor", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
-	INITDONE();
-}

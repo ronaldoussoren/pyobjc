@@ -1,7 +1,3 @@
-#include <Python.h>
-#include <AppKit/AppKit.h>
-#include "pyobjc-api.h"
-
 #ifndef __LP64__
 
 #include "pymactoolbox.h"
@@ -11,7 +7,7 @@
 	 * of pymactoolbox.h that we need because that header
 	 * doesn't work in 64-bit mode.
 	 */
-#	include <Carbon/Carbon.h>
+#	import <Carbon/Carbon.h>
 extern PyObject *WinObj_New(WindowPtr);
 extern int WinObj_Convert(PyObject *, WindowPtr *);
 extern PyObject *WinObj_WhichWindow(WindowPtr);
@@ -193,60 +189,11 @@ error:
 
 
 
-static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 } /* sentinel */
-};
-
-/* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-        PyModuleDef_HEAD_INIT,
-	"_nswindow",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
-
-PyObject* PyInit__nswindow(void);
-
-PyObject*
-PyInit__nswindow(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void init_nswindow(void);
-
-void
-init_nswindow(void)
-#endif
+static int setup_nswindows(PyObject* m __attribute__((__unused__)))
 {
-	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_nswindow", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-#endif
-	if (!m) { 
-		INITERROR();
-	}
-
-	if (PyObjC_ImportAPI(m) == -1) INITERROR();
-
 	Class classNSWindow = objc_lookUpClass("NSWindow");
 	if (classNSWindow == NULL) {
-		INITDONE();
+		return 0;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -255,7 +202,7 @@ init_nswindow(void)
 		call_NSWindow_initWithWindowRef_,
 		imp_NSWindow_initWithWindowRef_) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
 	if (PyObjC_RegisterMethodMapping(
@@ -264,8 +211,8 @@ init_nswindow(void)
 		call_NSWindow_windowRef,
 		imp_NSWindow_windowRef) < 0) {
 
-		INITERROR();
+		return -1;
 	}
 
-	INITDONE();
+	return 0;
 }
