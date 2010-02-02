@@ -58,12 +58,12 @@ typedef unsigned int NSUInteger;
 #if (PY_VERSION_HEX < 0x02050000)
 typedef int Py_ssize_t;
 #define PY_FORMAT_SIZE_T ""
-#define Py_ARG_SIZE_T "n"
+#define Py_ARG_SIZE_T "i"
 #define PY_SSIZE_T_MAX INT_MAX
 
 #else
 
-#define Py_ARG_SIZE_T "i"
+#define Py_ARG_SIZE_T "n"
 #endif
 #endif
 
