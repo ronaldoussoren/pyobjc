@@ -498,6 +498,9 @@ static Py_ssize_t extract_count(const char* type, void* pvalue)
 		return ((CFRange*)pvalue)->length;
 	}
 #endif
+	if (strncmp(type, "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1) == 0) {
+		return ((CFRange*)pvalue)->length;
+	}
 
 	if (strncmp(type, @encode(CFArrayRef), sizeof(@encode(CFArrayRef))-1) == 0 || 
 		strncmp(type, @encode(CFMutableArrayRef), sizeof(@encode(CFMutableArrayRef))-1) == 0) {
