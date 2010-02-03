@@ -338,17 +338,29 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	for (; *bool_attrs != NULL; bool_attrs++) {
 		if (attribute_bool(node, *bool_attrs, NULL, NO)) {
 			r = PyDict_SetItemString(result, *bool_attrs, Py_True);
+			if (r == -1) {
+				Py_DECREF(result);
+				return NULL;
+			}
+#if 0
+		/* Don't store default value */
 		} else {
 			r = PyDict_SetItemString(result, *bool_attrs, Py_False);
-		}
-		if (r == -1) {
-			Py_DECREF(result);
-			return NULL;
+			if (r == -1) {
+				Py_DECREF(result);
+				return NULL;
+			}
+#endif
 		}
 	}
 
 	if (attribute_bool(node, "null_accepted", NULL, YES)) {
+#if 0
+		/* Don't store default value */
 		r = PyDict_SetItemString(result, "null_accepted", Py_True);
+#else
+		r = 0;
+#endif
 	} else {
 		r = PyDict_SetItemString(result, "null_accepted", Py_False);
 	}
