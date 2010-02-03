@@ -298,7 +298,7 @@ error:
 }
 
 #if PY_VERSION_HEX < 0x03000000
-static void PyObjCBlock_CleanupCapsule(void* ptr, void* context __attribute__((__unused__)))
+static void PyObjCBlock_CleanupCapsule(void* ptr)
 {
 	PyObjCFFI_FreeBlockFunction(ptr);
 }
