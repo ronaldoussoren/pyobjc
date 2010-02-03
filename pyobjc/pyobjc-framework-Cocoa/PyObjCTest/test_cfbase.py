@@ -62,6 +62,7 @@ class TestBase (TestCase):
         o = CFRange()
         self.assertHasAttr(o, 'location')
         self.assertHasAttr(o, 'length')
+
     def testCFRangeMake(self):
         r = CFRangeMake(42, 99)
         self.assertIsInstance(r, CFRange)
@@ -130,7 +131,7 @@ class TestBase (TestCase):
         self.assertIsInstance(v, unicode)
         v = CFGetAllocator(kCFAllocatorMalloc)
         if v is not None:
-            assertIsInstance(v, CFAllocatorRef)
+            self.assertIsInstance(v, CFAllocatorRef)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
