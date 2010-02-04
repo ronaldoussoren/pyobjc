@@ -2155,7 +2155,7 @@
     <arg type='@' type64='@' printf_format='true' />
   </function>
   <function name='NSBestDepth'>
-    <retval type='i' type64='i' />
+    <retval type='i' type64='q' />
     <arg type='@' type64='@' />
     <arg type='i' type64='q' />
     <arg type='i' type64='q' />
@@ -2164,15 +2164,15 @@
   </function>
   <function name='NSBitsPerPixelFromDepth'>
     <retval type='i' type64='q' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
   </function>
   <function name='NSBitsPerSampleFromDepth'>
     <retval type='i' type64='q' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
   </function>
   <function name='NSColorSpaceFromDepth'>
     <retval type='@' type64='@' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
   </function>
   <function name='NSConvertGlyphsToPackedGlyphs'>
     <retval type='i' type64='q' />
@@ -2189,12 +2189,12 @@
   </function>
   <function name='NSCountWindows'>
     <retval type='v' type64='v' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='NSCountWindowsForContext'>
     <retval type='v' type64='v' />
     <arg type='i' type64='q' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='NSCreateFileContentsPboardType'>
     <retval already_cfretained='true' type='@' type64='@' />
@@ -2234,7 +2234,7 @@
     <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg c_array_length_in_arg='4' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='4' type='^i' type64='^q' type_modifier='n' />
     <arg c_array_length_in_arg='4' type='^@' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
@@ -2289,7 +2289,7 @@
     <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg c_array_length_in_arg='4' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='4' type='^i' type64='^q' type_modifier='n' />
     <arg c_array_length_in_arg='4' type='^f' type64='^f' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
@@ -2359,8 +2359,8 @@
   <function name='NSGetWindowServerMemory'>
     <retval type='i' type64='q' />
     <arg type='i' type64='q' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
     <arg type='^@' type_modifier='o' />
   </function>
   <function name='NSHighlightRect'>
@@ -2382,7 +2382,7 @@
   </function>
   <function name='NSOpenGLGetOption'>
     <retval type='v' type64='v' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
     <arg type='^i' type_modifier='o' />
   </function>
   <function name='NSOpenGLGetVersion'>
@@ -2392,8 +2392,8 @@
   </function>
   <function name='NSOpenGLSetOption'>
     <retval type='v' type64='v' />
-    <arg type='i' type64='i' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
+    <arg type='i' type64='q' />
   </function>
   <function name='NSPerformService'>
     <retval type='B' type64='B' />
@@ -2402,7 +2402,7 @@
   </function>
   <function name='NSPlanarFromDepth'>
     <retval type='B' type64='B' />
-    <arg type='i' type64='i' />
+    <arg type='i' type64='q' />
   </function>
   <function name='NSReadPixel'>
     <retval type='@' type64='@' />
@@ -2414,7 +2414,7 @@
   </function>
   <function name='NSRectClipList'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
   <function name='NSRectFill'>
@@ -2423,31 +2423,31 @@
   </function>
   <function name='NSRectFillList'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
   <function name='NSRectFillListUsingOperation'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg type='i' type64='q' />
     <arg type='I' />
   </function>
   <function name='NSRectFillListWithColors'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg c_array_length_in_arg='2' type='^@' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
   <function name='NSRectFillListWithColorsUsingOperation'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg c_array_length_in_arg='2' type='^@' type_modifier='n' />
     <arg type='i' type64='q' />
     <arg type='I' />
   </function>
   <function name='NSRectFillListWithGrays'>
     <retval type='v' type64='v' />
-    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
     <arg c_array_length_in_arg='2' type='^f' type64='^f' type_modifier='n' />
     <arg type='i' type64='q' />
   </function>
@@ -2548,13 +2548,13 @@
   <function name='NSWindowList'>
     <retval type='v' type64='v' />
     <arg type='i' type64='q' />
-    <arg c_array_length_in_arg='0' type='^i' type64='^i' type_modifier='o' />
+    <arg c_array_length_in_arg='0' type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='NSWindowListForContext'>
     <retval type='v' type64='v' />
     <arg type='i' type64='q' />
     <arg type='i' type64='q' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='o' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^q' type_modifier='o' />
   </function>
   <function inline='true' name='NSEventMaskFromType'>
     <retval type='I' type64='Q' />

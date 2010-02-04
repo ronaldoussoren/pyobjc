@@ -5,12 +5,8 @@ from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass4
 
 class TestNSCoderUsage(TestCase):
-    if not hasattr(TestCase, 'assertAlmostEquals'):
-        # XXX Move to a PyObjC unittest module?
-        def assertAlmostEquals(self, val1, val2):
-            self.assert_ (abs(val1 - val2) <  0.000001)
-
     def testUsage(self):
+        self.fail("FIXME 64")
         class CoderClass1 (NSObject):
             def encodeWithCoder_(self, coder):
                 # NSObject does not implement NSCoding, no need to
