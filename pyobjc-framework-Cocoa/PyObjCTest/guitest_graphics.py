@@ -63,8 +63,12 @@ class RectTest (TestCase):
         self.image = NSImage.alloc().initWithSize_((100, 100))
 
     def makeArray(self, points):
+        if sys.maxint > 2 ** 32:
+            code = 'd'
+        else:
+            code = 'f'
 
-        a = array.array('f', len(points) * [0, 0, 0, 0])
+        a = array.array(code, len(points) * [0, 0, 0, 0])
         for i in range(len(points)):
             p = points[i]
             a[(i*4) + 0] = p[0][0]

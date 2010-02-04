@@ -160,9 +160,13 @@ class TestCFNumber (TestCase):
         self.assertIsInstance(num, CFNumberRef)
         self.assertTrue(CFNumberIsFloatType(num))
         self.assertEqual(num , 1)
+
     def testNumberTypes(self):
         v = CFNumberGetType(44)
-        self.assertEqual(v , kCFNumberLongType)
+        if sys.maxint > 2 ** 32:
+            self.assertEqual(v , kCFNumberLongLongType)
+        else:
+            self.assertEqual(v , kCFNumberLongType)
         v = CFNumberGetType(2.5)
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)

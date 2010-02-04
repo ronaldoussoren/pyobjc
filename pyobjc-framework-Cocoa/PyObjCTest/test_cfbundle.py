@@ -87,6 +87,7 @@ class TestCFBundle (TestCase):
         self.assertIsObject(ok, True)
         self.assertIsInstance(type, (int, long))
         self.assertIsInstance(creator, (int, long))
+
     def testResources(self):
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)

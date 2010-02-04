@@ -3,7 +3,7 @@
 <signatures version='1.0'>
   <struct name='CFGregorianDate' type='{_CFGregorianDate="year"i"month"c"day"c"hour"c"minute"c"second"d}' type64='{_CFGregorianDate="year"i"month"c"day"c"hour"c"minute"c"second"d}' />
   <struct name='CFGregorianUnits' type='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' type64='{_CFGregorianUnits="years"i"months"i"days"i"hours"i"minutes"i"seconds"d}' />
-  <struct name='CFRange' type='{_CFRange="location"i"length"i}' type64='{_CFRange="location"q"length"q}' />
+  <struct name='CFRange' type='{_CFRange="location"l"length"l}' type64='{_CFRange="location"l"length"l}' />
   <struct name='CFSetCallBacks' type='{_CFSetCallBacks="version"i"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' type64='{_CFSetCallBacks="version"q"retain"^?"release"^?"copyDescription"^?"equal"^?"hash"^?}' />
   <struct name='CFSocketSignature' type='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' type64='{_CFSocketSignature="protocolFamily"i"socketType"i"protocol"i"address"^{__CFData=}}' />
   <struct name='CFStreamError' type='{_CFStreamError="domain"i"error"i}' type64='{_CFStreamError="domain"q"error"i}' />
@@ -920,12 +920,12 @@
     <retval type='d' />
   </function>
   <function name='CFAbsoluteTimeGetDayOfWeek'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='d' />
     <arg type='^{__CFTimeZone=}' />
   </function>
   <function name='CFAbsoluteTimeGetDayOfYear'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='d' />
     <arg type='^{__CFTimeZone=}' />
   </function>
@@ -942,7 +942,7 @@
     <arg type='^{__CFTimeZone=}' />
   </function>
   <function name='CFAbsoluteTimeGetWeekOfYear'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='d' />
     <arg type='^{__CFTimeZone=}' />
   </function>
@@ -964,7 +964,7 @@
   <function name='CFArrayAppendArray'>
     <arg type='^{__CFArray=}' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFArrayAppendValue'>
     <arg type='^{__CFArray=}' />
@@ -972,7 +972,7 @@
   </function>
   <function name='CFArrayApplyFunction'>
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
       <retval type='v' />
       <arg type='@' />
@@ -983,7 +983,7 @@
   <function name='CFArrayBSearchValues'>
     <retval type='l' type64='q' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='@' type64='@' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
       <retval type='l' />
@@ -996,7 +996,7 @@
   <function name='CFArrayContainsValue'>
     <retval type='B' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='@' type64='@' />
   </function>
   <function name='CFArrayCreateCopy'>
@@ -1022,19 +1022,19 @@
   <function name='CFArrayGetCountOfValue'>
     <retval type='l' type64='q' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='@' type64='@' />
   </function>
   <function name='CFArrayGetFirstIndexOfValue'>
     <retval type='l' type64='q' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='@' type64='@' />
   </function>
   <function name='CFArrayGetLastIndexOfValue'>
     <retval type='l' type64='q' />
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='@' type64='@' />
   </function>
   <function name='CFArrayGetTypeID'>
@@ -1047,7 +1047,7 @@
   </function>
   <function name='CFArrayGetValues'>
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='1' type='r^@' type64='r^@' type_modifier='o' />
   </function>
   <function name='CFArrayInsertValueAtIndex'>
@@ -1064,7 +1064,7 @@
   </function>
   <function name='CFArrayReplaceValues'>
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='3' type='^@' type64='^@' type_modifier='n' />
     <arg type='l' type64='l' />
   </function>
@@ -1075,7 +1075,7 @@
   </function>
   <function name='CFArraySortValues'>
     <arg type='^{__CFArray=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg function_pointer='true' function_pointer_retained='false' type='^?' type64='^?'>
       <retval type='l' />
       <arg type='@' />
@@ -1113,7 +1113,7 @@
     <retval already_cfretained='true' type='^{__CFAttributedString=}' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFAttributedStringEndEditing'>
     <arg type='^{__CFAttributedString=}' />
@@ -1123,28 +1123,28 @@
     <arg type='^{__CFAttributedString=}' />
     <arg type='l' type64='l' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFAttributedStringGetAttributeAndLongestEffectiveRange'>
     <retval type='@' />
     <arg type='^{__CFAttributedString=}' />
     <arg type='l' type64='l' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFAttributedStringGetAttributes'>
     <retval type='^{__CFDictionary=}' />
     <arg type='^{__CFAttributedString=}' />
     <arg type='l' type64='l' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFAttributedStringGetAttributesAndLongestEffectiveRange'>
     <retval type='^{__CFDictionary=}' />
     <arg type='^{__CFAttributedString=}' />
     <arg type='l' type64='l' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFAttributedStringGetLength'>
     <retval type='l' type64='q' />
@@ -1163,28 +1163,28 @@
   </function>
   <function name='CFAttributedStringRemoveAttribute'>
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFAttributedStringReplaceAttributedString'>
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFAttributedString=}' />
   </function>
   <function name='CFAttributedStringReplaceString'>
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFAttributedStringSetAttribute'>
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
     <arg type='@' />
   </function>
   <function name='CFAttributedStringSetAttributes'>
     <arg type='^{__CFAttributedString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFDictionary=}' />
     <arg type='B' />
   </function>
@@ -1309,7 +1309,7 @@
   <function name='CFBitVectorContainsBit'>
     <retval type='B' />
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFBitVectorCreate'>
@@ -1340,16 +1340,16 @@
   </function>
   <function name='CFBitVectorFlipBits'>
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFBitVectorGetBitAtIndex'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='^{__CFBitVector=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFBitVectorGetBits'>
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_of_variable_length='true' type='^v' type64='^v' type_modifier='o' />
   </function>
   <function name='CFBitVectorGetCount'>
@@ -1359,19 +1359,19 @@
   <function name='CFBitVectorGetCountOfBit'>
     <retval type='l' type64='q' />
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFBitVectorGetFirstIndexOfBit'>
     <retval type='l' type64='q' />
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFBitVectorGetLastIndexOfBit'>
     <retval type='l' type64='q' />
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFBitVectorGetTypeID'>
@@ -1388,7 +1388,7 @@
   </function>
   <function name='CFBitVectorSetBits'>
     <arg type='^{__CFBitVector=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFBitVectorSetCount'>
@@ -1404,7 +1404,7 @@
   </function>
   <function name='CFBundleCloseBundleResourceMap'>
     <arg type='^{__CFBundle=}' />
-    <arg type='s' type64='s' />
+    <arg type='s' type64='l' />
   </function>
   <function name='CFBundleCopyAuxiliaryExecutableURL'>
     <retval already_cfretained='true' type='^{__CFURL=}' />
@@ -1585,7 +1585,7 @@
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFBundleGetVersionNumber'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='^{__CFBundle=}' />
   </function>
   <function name='CFBundleIsExecutableLoaded'>
@@ -1602,13 +1602,13 @@
     <arg type='^^{__CFError}' type_modifier='o' />
   </function>
   <function name='CFBundleOpenBundleResourceFiles'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFBundle=}' />
-    <arg type='^s' type64='^s' type_modifier='o' />
-    <arg type='^s' type64='^s' type_modifier='o' />
+    <arg type='^s' type64='^l' type_modifier='o' />
+    <arg type='^s' type64='^l' type_modifier='o' />
   </function>
   <function name='CFBundleOpenBundleResourceMap'>
-    <retval type='s' type64='i' />
+    <retval type='s' type64='l' />
     <arg type='^{__CFBundle=}' />
   </function>
   <function name='CFBundlePreflightExecutable'>
@@ -1644,7 +1644,7 @@
     <arg type='^{__CFCalendar=}' />
   </function>
   <function name='CFCalendarGetMaximumRangeOfUnit'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFCalendar=}' />
     <arg type='L' />
   </function>
@@ -1653,7 +1653,7 @@
     <arg type='^{__CFCalendar=}' />
   </function>
   <function name='CFCalendarGetMinimumRangeOfUnit'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFCalendar=}' />
     <arg type='L' />
   </function>
@@ -1665,7 +1665,7 @@
     <arg type='d' />
   </function>
   <function name='CFCalendarGetRangeOfUnit'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFCalendar=}' />
     <arg type='L' />
     <arg type='L' />
@@ -1700,7 +1700,7 @@
   </function>
   <function name='CFCharacterSetAddCharactersInRange'>
     <arg type='^{__CFCharacterSet=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFCharacterSetAddCharactersInString'>
     <arg type='^{__CFCharacterSet=}' />
@@ -1738,7 +1738,7 @@
   <function name='CFCharacterSetCreateWithCharactersInRange'>
     <retval already_cfretained='true' type='^{__CFCharacterSet=}' />
     <arg type='^{__CFAllocator=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFCharacterSetCreateWithCharactersInString'>
     <retval already_cfretained='true' type='^{__CFCharacterSet=}' />
@@ -1781,7 +1781,7 @@
   </function>
   <function name='CFCharacterSetRemoveCharactersInRange'>
     <arg type='^{__CFCharacterSet=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFCharacterSetRemoveCharactersInString'>
     <arg type='^{__CFCharacterSet=}' />
@@ -1800,10 +1800,10 @@
     <arg type='L' type64='L' />
   </function>
   <function name='CFDataFind'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFData=}' />
     <arg type='^{__CFData=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='i' type64='q' />
   </function>
   <function name='CFDataAppendBytes'>
@@ -1842,7 +1842,7 @@
   </function>
   <function name='CFDataDeleteBytes'>
     <arg type='^{__CFData=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFDataGetBytePtr'>
     <retval c_array_of_variable_length='true' type='^v' type64='^v' />
@@ -1850,7 +1850,7 @@
   </function>
   <function name='CFDataGetBytes'>
     <arg type='^{__CFData=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='1' type='^v' type64='^v' type_modifier='o' />
   </function>
   <function name='CFDataGetLength'>
@@ -1870,7 +1870,7 @@
   </function>
   <function name='CFDataReplaceBytes'>
     <arg type='^{__CFData=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='3' type='^v' type64='^v' type_modifier='n' />
     <arg type='l' type64='l' />
   </function>
@@ -1906,7 +1906,7 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFDateFormatter=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='N' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='N' />
   </function>
   <function name='CFDateFormatterCreateStringWithAbsoluteTime'>
     <retval already_cfretained='true' type='^{__CFString=}' />
@@ -1924,7 +1924,7 @@
     <retval type='B' />
     <arg type='^{__CFDateFormatter=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='N' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='N' />
     <arg type='^d' type_modifier='o' />
   </function>
   <function name='CFDateFormatterGetDateStyle'>
@@ -2289,7 +2289,7 @@
     <arg type='^{__CFMessagePort=}' />
   </function>
   <function name='CFMessagePortSendRequest'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFMessagePort=}' />
     <arg type='l' type64='l' />
     <arg type='^{__CFData=}' />
@@ -2392,7 +2392,7 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFNumberFormatter=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='N' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='N' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFNumberFormatterCreateStringWithNumber'>
@@ -2433,7 +2433,7 @@
     <retval type='B' />
     <arg type='^{__CFNumberFormatter=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='N' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='N' />
     <arg type='l' />
     <arg already_retained='true' type='^@' type64='^@' type_modifier='o' />
   </function>
@@ -2563,7 +2563,7 @@
     <arg type='^{__CFReadStream=}' />
     <arg type='l' type64='l' />
     <arg type='L' type64='L' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
     <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='CFPropertyListCreateFromXMLData'>
@@ -2618,7 +2618,7 @@
     <retval c_array_length_in_arg='2' type='^v' type64='^v' />
     <arg type='^{__CFReadStream=}' />
     <arg type='l' type64='l' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
   </function>
   <function name='CFReadStreamGetError'>
     <retval type='{_CFStreamError=ii}' type64='{_CFStreamError=qi}' />
@@ -2778,7 +2778,7 @@
   </function>
   <function name='CFRunLoopRun' />
   <function name='CFRunLoopRunInMode'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFString=}' />
     <arg type='d' />
     <arg type='B' />
@@ -3029,14 +3029,14 @@
     <retval type='l' type64='q' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringCompareWithOptionsAndLocale'>
     <retval type='l' type64='q' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
     <arg type='^{__CFLocale=}' />
   </function>
@@ -3049,19 +3049,19 @@
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringConvertEncodingToWindowsCodepage'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringConvertIANACharSetNameToEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringConvertNSStringEncodingToEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringConvertWindowsCodepageToEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringCreateArrayBySeparatingStrings'>
@@ -3075,7 +3075,7 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringCreateByCombiningStrings'>
@@ -3179,14 +3179,14 @@
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFStringDelete'>
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFStringFind'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
     <arg type='L' type64='L' />
@@ -3196,33 +3196,33 @@
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringFindCharacterFromSet'>
     <retval type='B' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFCharacterSet=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFStringFindWithOptions'>
     <retval type='B' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFStringFindWithOptionsAndLocale'>
     <retval type='B' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
     <arg type='^{__CFLocale=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFStringFold'>
     <arg type='^{__CFString=}' />
@@ -3232,13 +3232,13 @@
   <function name='CFStringGetBytes'>
     <retval type='l' type64='q' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
     <arg type='C' />
     <arg type='B' />
     <arg c_array_length_in_arg='6,7' type='^v' type64='^v' type_modifier='o' />
     <arg type='l' type64='l' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
   </function>
   <function name='CFStringGetCString'>
     <retval type='B' />
@@ -3259,7 +3259,7 @@
   </function>
   <function name='CFStringGetCharacters'>
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='1' type='r^T' type64='r^T' type_modifier='o' />
   </function>
   <function name='CFStringGetCharactersPtr'>
@@ -3271,7 +3271,7 @@
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringGetFastestEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringGetFileSystemRepresentation'>
@@ -3281,7 +3281,7 @@
     <arg type='l' type64='l' />
   </function>
   <function name='CFStringGetIntValue'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringGetLength'>
@@ -3290,10 +3290,10 @@
   </function>
   <function name='CFStringGetLineBounds'>
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='^i' type64='^l' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
   </function>
   <function name='CFStringGetListOfAvailableEncodings'>
     <retval c_array_of_variable_length='true' type='^I' />
@@ -3308,7 +3308,7 @@
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringGetMostCompatibleMacStringEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='L' type64='L' />
   </function>
   <function name='CFStringGetNameOfEncoding'>
@@ -3317,22 +3317,22 @@
   </function>
   <function name='CFStringGetParagraphBounds'>
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='^i' type64='^l' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
+    <arg type='^i' type64='^l' type_modifier='o' />
   </function>
   <function name='CFStringGetRangeOfComposedCharactersAtIndex'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFStringGetSmallestEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringGetSystemEncoding'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='L' />
   </function>
   <function name='CFStringGetTypeID'>
     <retval type='L' type64='Q' />
@@ -3372,7 +3372,7 @@
   </function>
   <function name='CFStringReplace'>
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFString=}' />
   </function>
   <function name='CFStringReplaceAll'>
@@ -3392,7 +3392,7 @@
   <function name='CFStringTokenizerCopyBestStringLanguage'>
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFStringTokenizerCopyCurrentTokenAttribute'>
     <retval already_cfretained='true' type='@' />
@@ -3403,19 +3403,19 @@
     <retval already_cfretained='true' type='^{__CFStringTokenizer=}' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='L' />
     <arg type='^{__CFLocale=}' />
   </function>
   <function name='CFStringTokenizerGetCurrentSubTokens'>
     <retval type='l' type64='q' />
     <arg type='^{__CFStringTokenizer=}' />
-    <arg c_array_length_in_result='true' c_array_length_in_arg='2' type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg c_array_length_in_result='true' c_array_length_in_arg='2' type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
     <arg type='l' type64='l' />
     <arg type='^{__CFArray=}' />
   </function>
   <function name='CFStringTokenizerGetCurrentTokenRange'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFStringTokenizer=}' />
   </function>
   <function name='CFStringTokenizerGetTypeID'>
@@ -3429,12 +3429,12 @@
   <function name='CFStringTokenizerSetString'>
     <arg type='^{__CFStringTokenizer=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='CFStringTransform'>
     <retval type='B' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='N' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='N' />
     <arg type='^{__CFString=}' />
     <arg type='B' />
   </function>
@@ -3906,10 +3906,10 @@
     <arg type='^{__CFURL=}' />
   </function>
   <function name='CFURLGetByteRangeForComponent'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__CFURL=}' />
     <arg type='l' />
-    <arg type='^{_CFRange=ii}' type64='^{_CFRange=ii}' type_modifier='o' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
   </function>
   <function name='CFURLGetBytes'>
     <retval type='l' type64='q' />
@@ -3930,7 +3930,7 @@
     <arg type='l' type64='l' />
   </function>
   <function name='CFURLGetPortNumber'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFURL=}' />
   </function>
   <function name='CFURLGetString'>
@@ -4018,7 +4018,7 @@
     <arg type='^{__CFUUID=}' />
   </function>
   <function name='CFUserNotificationCancel'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFUserNotification=}' />
   </function>
   <function name='CFUserNotificationCreate'>
@@ -4036,12 +4036,12 @@
     <arg function_pointer='true' type='^?' type64='^?'>
 	    <retval type='v' />
       <arg type='^{__CFUserNotification=}' />
-      <arg type='i' />
+      <arg type='i' type64='q'/>
     </arg>
     <arg type='l' type64='l' />
   </function>
   <function name='CFUserNotificationDisplayAlert'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='d' />
     <arg type='L' type64='L' />
     <arg type='^{__CFURL=}' />
@@ -4052,10 +4052,10 @@
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
   </function>
   <function name='CFUserNotificationDisplayNotice'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='d' />
     <arg type='L' type64='L' />
     <arg type='^{__CFURL=}' />
@@ -4079,13 +4079,13 @@
     <retval type='L' type64='Q' />
   </function>
   <function name='CFUserNotificationReceiveResponse'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFUserNotification=}' />
     <arg type='d' />
-    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
   </function>
   <function name='CFUserNotificationUpdate'>
-    <retval type='l' type64='i' />
+    <retval type='l' type64='l' />
     <arg type='^{__CFUserNotification=}' />
     <arg type='d' />
     <arg type='L' type64='L' />
@@ -4314,7 +4314,7 @@
     <arg type='{_CFSwappedFloat32=I}' />
   </function>
   <function inline='true' name='CFRangeMake'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='l' type64='l' />
     <arg type='l' type64='l' />
   </function>

@@ -1,6 +1,24 @@
 NEWS file for pyobjc-framework-Cocoa
 ====================================
 
+Version 2.3
+-----------
+
+* BUGFIX: The framework wrappers for Cocoa now actually work in
+  64-bit code.
+
+* BUGFIX: Remove loads of unnecessary definitions from the bridgesupport
+  files. This seriously reduces the size of those files, and more 
+  importantly the size of running PyObjC-based programs without affecting
+  functionality.
+
+* Merge the C extensions, there are now two extensions left
+  per framework: one contains a list of inline functions for use
+  by the bridgesupport loeader, the other manual wrappers for
+  a number of functions.
+
+* (In progress) Port to python 3.x
+
 Version 2.2
 -----------
 

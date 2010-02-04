@@ -649,7 +649,7 @@
   <enum name='NSNoTopLevelContainersSpecifierError' value='1' />
   <enum name='NSNonLossyASCIIStringEncoding' value='7' />
   <enum name='NSNotEqualToPredicateOperatorType' value='5' />
-  <enum name='NSNotFound' value='2147483647' value64='-1' />
+  <enum name='NSNotFound' value='2147483647' value64='9223372036854775807' />
   <enum name='NSNotPredicateType' value='0' />
   <enum name='NSNotificationCoalescingOnName' value='1' />
   <enum name='NSNotificationCoalescingOnSender' value='2' />
@@ -1223,8 +1223,8 @@
   <function name='NSDivideRect'>
     <retval type='v' type64='v' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='o' />
-    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type_modifier='o' />
+    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
     <arg type='f' type64='d' />
     <arg type='I' />
   </function>
@@ -1257,7 +1257,7 @@
   </function>
   <function name='NSFileTypeForHFSTypeCode'>
     <retval type='@' type64='@' />
-    <arg type='L' type64='I' />
+    <arg type='L' type64='Q' />
   </function>
   <function name='NSFreeHashTable'>
     <retval type='v' type64='v' />
@@ -1273,11 +1273,11 @@
   <function name='NSGetSizeAndAlignment'>
     <retval c_array_delimited_by_null='true' type='^t' type64='^t' />
     <arg c_array_delimited_by_null='true' type='^t' type64='^t' type_modifier='n' />
-    <arg type='^I' type64='^I' type_modifier='o' />
-    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg type='^I' type64='^Q' type_modifier='o' />
+    <arg type='^I' type64='^Q' type_modifier='o' />
   </function>
   <function name='NSHFSTypeCodeFromFileType'>
-    <retval type='L' type64='I' />
+    <retval type='L' type64='Q' />
     <arg type='@' type64='@' />
   </function>
   <function name='NSHFSTypeOfFile'>
@@ -3648,7 +3648,7 @@
       <arg index='1' sel_of_type='v@:@' />
     </method>
     <method selector='classCode'>
-      <retval type='L' type64='I' />
+      <retval type='L' type64='Q' />
     </method>
     <method selector='classForArchiver'>
       <retval type='#' />
