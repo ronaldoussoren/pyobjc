@@ -6,7 +6,6 @@ from PyObjCTest.testhelper import PyObjC_TestClass4
 
 class TestNSCoderUsage(TestCase):
     def testUsage(self):
-        self.fail("FIXME 64")
         class CoderClass1 (NSObject):
             def encodeWithCoder_(self, coder):
                 # NSObject does not implement NSCoding, no need to

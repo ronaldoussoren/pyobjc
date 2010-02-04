@@ -77,8 +77,6 @@ static	char* keywords[] = { "hfsTypeCode", NULL };
 	return PyMac_BuildOSType(hfsTypeCode);
 }
 
-PyDoc_STRVAR(mod_doc, "");
-
 #define FOUNDATION_TYPECODE_METHODS				\
 	{ 							\
 		"NSFileTypeForHFSTypeCode", 			\
