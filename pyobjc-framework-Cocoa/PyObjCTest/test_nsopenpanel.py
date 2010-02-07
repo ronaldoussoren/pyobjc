@@ -26,11 +26,11 @@ class TestOpenPanel (TestCase):
         self.assertArgIsBOOL(NSOpenPanel.setCanChooseFiles_, 0)
 
         panel = NSOpenPanel.openPanel()
-        self.assertArgIsSEL(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, 'v@:@i^v')
-        self.assertArgHasType(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, '^v')
+        self.assertArgIsSEL(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 6, b'^v')
 
-        self.assertArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, 'v@:@i^v')
-        self.assertArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, '^v')
+        self.assertArgIsSEL(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 4, b'v@:@'+objc._C_NSInteger+b'^v')
+        self.assertArgHasType(panel.beginForDirectory_file_types_modelessDelegate_didEndSelector_contextInfo_, 5, b'^v')
 
 
 

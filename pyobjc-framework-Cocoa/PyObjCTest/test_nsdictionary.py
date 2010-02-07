@@ -282,7 +282,7 @@ class TestNSDictionary (TestCase):
         self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, 'v@@o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, 'v@@o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, 'i@@')
-        self.assertArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, 'i@@')
+        self.assertArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, objc._C_NSInteger + b'@@')
 
         self.assertArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
         self.assertArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)

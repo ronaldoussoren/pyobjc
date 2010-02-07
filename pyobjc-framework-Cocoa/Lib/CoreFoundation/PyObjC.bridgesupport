@@ -3930,7 +3930,7 @@
     <arg type='l' type64='l' />
   </function>
   <function name='CFURLGetPortNumber'>
-    <retval type='l' type64='l' />
+    <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
   </function>
   <function name='CFURLGetString'>

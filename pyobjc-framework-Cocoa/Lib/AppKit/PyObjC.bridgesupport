@@ -2123,8 +2123,8 @@
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
-    <arg sel_of_type='v@:@i^v' type=':' />
-    <arg sel_of_type='v@:@i^v' type=':' type64=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' type64=':' />
     <arg type='^v' type64='^v' />
     <arg type='@' type64='@' printf_format='true' />
   </function>
@@ -2136,8 +2136,8 @@
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
-    <arg sel_of_type='v@:@i^v' type=':' />
-    <arg sel_of_type='v@:@i^v' type=':' type64=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' type64=':' />
     <arg type='^v' type64='^v' />
     <arg type='@' type64='@' printf_format='true' />
   </function>
@@ -2149,8 +2149,8 @@
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
     <arg type='@' type64='@' />
-    <arg sel_of_type='v@:@i^v' type=':' />
-    <arg sel_of_type='v@:@i^v' type=':' type64=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' />
+    <arg sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' type64=':' />
     <arg type='^v' type64='^v' />
     <arg type='@' type64='@' printf_format='true' />
   </function>
@@ -2700,9 +2700,9 @@
   <informal_protocol name='NSDraggingDestination'>
     <method selector='concludeDragOperation:' type='v@:@' />
     <method selector='draggingEnded:' type='v@:@' />
-    <method selector='draggingEntered:' type='I@:@' />
+    <method selector='draggingEntered:' type='I@:@' type64='Q@:@'/>
     <method selector='draggingExited:' type='v@:@' />
-    <method selector='draggingUpdated:' type='I@:@' />
+    <method selector='draggingUpdated:' type='I@:@' type64='Q@:@'/>
     <method selector='performDragOperation:' type='B@:@' />
     <method selector='prepareForDragOperation:' type='B@:@' />
     <method selector='wantsPeriodicDraggingUpdates' type='B@:' />
@@ -2710,9 +2710,9 @@
   <informal_protocol name='NSDraggingSource'>
     <method selector='draggedImage:beganAt:' type='v@:@{_NSPoint=ff}' type64='v@:@{CGPoint=dd}' />
     <method selector='draggedImage:endedAt:deposited:' type='v@:@{_NSPoint=ff}B' type64='v@:@{CGPoint=dd}B' />
-    <method selector='draggedImage:endedAt:operation:' type='v@:@{_NSPoint=ff}I' />
+    <method selector='draggedImage:endedAt:operation:' type='v@:@{_NSPoint=ff}I' type64='v@:@{CGPoint=dd}I' />
     <method selector='draggedImage:movedTo:' type='v@:@{_NSPoint=ff}' type64='v@:@{CGPoint=dd}' />
-    <method selector='draggingSourceOperationMaskForLocal:' type='I@:B' />
+    <method selector='draggingSourceOperationMaskForLocal:' type='I@:B' type64='Q@:B'/>
     <method selector='ignoreModifierKeysWhileDragging' type='B@:' />
     <!-- <method selector='namesOfPromisedFilesDroppedAtDestination:' type='@@:@' /> -->
   </informal_protocol>
@@ -2747,7 +2747,7 @@
   </informal_protocol>
   <informal_protocol name='NSImageDelegate'>
     <method selector='image:didLoadPartOfRepresentation:withValidRows:' type='v@:@@i' type64='v@:@@q' />
-    <method selector='image:didLoadRepresentation:withStatus:' type='v@:@@I' />
+    <method selector='image:didLoadRepresentation:withStatus:' type='v@:@@I' type64='v@:@@Q'/>
     <method selector='image:didLoadRepresentationHeader:' type='v@:@@' />
     <method selector='image:willLoadRepresentation:' type='v@:@@' />
     <method selector='imageDidNotDraw:inRect:' type='@@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='@@:@{CGRect={CGPoint=dd}{CGSize=dd}}' />
@@ -2792,7 +2792,7 @@
     <method selector='outlineView:persistentObjectForItem:' type='@@:@@' /> -->
     <method selector='outlineView:setObjectValue:forTableColumn:byItem:' type='v@:@@@@' />
     <method selector='outlineView:sortDescriptorsDidChange:' type='v@:@@' />
-    <method selector='outlineView:validateDrop:proposedItem:proposedChildIndex:' type='I@:@@@i' />
+    <method selector='outlineView:validateDrop:proposedItem:proposedChildIndex:' type='I@:@@@i' type64='Q@:@@@q' />
     <method selector='outlineView:writeItems:toPasteboard:' type='B@:@@@' />
   </informal_protocol>
   <informal_protocol name='NSOutlineViewDelegate'>
@@ -2837,9 +2837,9 @@
     <method class_method='true' selector='setDefaultPlaceholder:forMarker:withBinding:' type='v@:@@@' />
   </informal_protocol>
   <informal_protocol name='NSRuleEditorDelegateMethods'>
-    <method selector='ruleEditor:child:forCriterion:withRowType:' type='@@:@i@I' />
+    <method selector='ruleEditor:child:forCriterion:withRowType:' type='@@:@i@I' type64='@@:@q@Q' />
     <method selector='ruleEditor:displayValueForCriterion:inRow:' type='@@:@@i' type64='@@:@@q' />
-    <method selector='ruleEditor:numberOfChildrenForCriterion:withRowType:' type='i@:@@I' />
+    <method selector='ruleEditor:numberOfChildrenForCriterion:withRowType:' type='i@:@@I' type64='q@:@@Q'/>
     <method selector='ruleEditor:predicatePartsForCriterion:withDisplayValue:inRow:' type='@@:@@@i' type64='@@:@@@q' />
     <method selector='ruleEditorRowsDidChange:' type='v@:@' />
   </informal_protocol>
@@ -2891,12 +2891,12 @@
   </informal_protocol>
   <informal_protocol name='NSTableDataSource'>
     <method selector='numberOfRowsInTableView:' type='i@:@' type64='q@:@' />
-    <method selector='tableView:acceptDrop:row:dropOperation:' type='B@:@@iI' />
+    <method selector='tableView:acceptDrop:row:dropOperation:' type='B@:@@iI' type64='B@:@@qQ' />
     <!-- <method selector='tableView:namesOfPromisedFilesDroppedAtDestination:forDraggedRowsWithIndexes:' type='@@:@@@' /> -->
     <method selector='tableView:objectValueForTableColumn:row:' type='@@:@@i' type64='@@:@@q' />
     <method selector='tableView:setObjectValue:forTableColumn:row:' type='v@:@@@i' type64='v@:@@@q' />
     <method selector='tableView:sortDescriptorsDidChange:' type='v@:@@' />
-    <method selector='tableView:validateDrop:proposedRow:proposedDropOperation:' type='I@:@@iI' />
+    <method selector='tableView:validateDrop:proposedRow:proposedDropOperation:' type='I@:@@iI' type64='Q@:@@qQ'/>
     <method selector='tableView:writeRows:toPasteboard:' type='B@:@@@' />
     <method selector='tableView:writeRowsWithIndexes:toPasteboard:' type='B@:@@@' />
   </informal_protocol>
@@ -2971,7 +2971,7 @@
     <method selector='tokenFieldCell:readFromPasteboard:' type='@@:@@' />
     <method selector='tokenFieldCell:representedObjectForEditingString:' type='@@:@@' /> -->
     <method selector='tokenFieldCell:shouldAddObjects:atIndex:' type='@@:@@I' type64='@@:@@Q' />
-    <method selector='tokenFieldCell:styleForRepresentedObject:' type='I@:@@' />
+    <method selector='tokenFieldCell:styleForRepresentedObject:' type='I@:@@' type64='Q@:@@'/>
     <method selector='tokenFieldCell:writeRepresentedObjects:toPasteboard:' type='B@:@@@' />
   </informal_protocol>
   <informal_protocol name='NSTokenFieldDelegate'>
@@ -3144,11 +3144,11 @@
     </method>
     <method selector='shouldBreakLineByHyphenatingBeforeCharacterAtIndex:'>
       <retval type='B' />
-      <arg index='0' type='I' />
+      <arg index='0' type='I' type64='Q' />
     </method>
     <method selector='shouldBreakLineByWordBeforeCharacterAtIndex:'>
       <retval type='B' />
-      <arg index='0' type='I' />
+      <arg index='0' type='I' type64='Q' />
     </method>
     <method selector='substituteGlyphsInRange:withGlyphs:'>
       <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
@@ -5734,7 +5734,7 @@
     </method>
     <method selector='sortUsingFunction:context:'>
 	    <arg index='0' function_pointer='true' function_pointer_retained='false'>
-		    <retval type='i'/>
+		    <retval type='i' type64='q'/>
 		    <arg type='@' />
 		    <arg type='@' />
 		    <arg type='@' />
@@ -5742,7 +5742,7 @@
 	    <arg index='1' type='@' />
     </method>
     <method selector='sortUsingSelector:'>
-      <arg index='0' sel_of_type='i@:@' />
+      <arg index='0' sel_of_type='i@:@' sel_of_type64='q@:@' />
     </method>
     <method selector='tabKeyTraversesCells'>
       <retval type='B' />
@@ -6431,7 +6431,7 @@
     </method>
     <method selector='draggedImage:endedAt:operation:'>
       <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
-      <arg index='2' type='I' />
+      <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='draggedImage:movedTo:'>
       <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
@@ -6440,7 +6440,7 @@
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='draggingEntered:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='draggingLocation'>
       <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
@@ -6449,14 +6449,14 @@
       <retval type='i' type64='q' />
     </method>
     <method selector='draggingSourceOperationMask'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='draggingSourceOperationMaskForLocal:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
       <arg index='0' type='B' />
     </method>
     <method selector='draggingUpdated:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='drawWithFrame:inView:'>
       <retval type='v' />
@@ -6515,7 +6515,7 @@
       <arg index='2' type='i' type64='q' />
     </method>
     <method selector='image:didLoadRepresentation:withStatus:'>
-      <arg index='2' type='I' />
+      <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='imageDidNotDraw:inRect:'>
       <arg index='1' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
@@ -6673,7 +6673,7 @@
       <arg index='5' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='outlineView:validateDrop:proposedItem:proposedChildIndex:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
       <arg index='3' type='i' type64='q' />
     </method>
     <method selector='outlineView:writeItems:toPasteboard:'>
@@ -6709,7 +6709,7 @@
       <retval type='B' />
     </method>
     <method selector='pathControl:validateDrop:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='pathControl:willDisplayOpenPanel:'>
       <retval type='v' />
@@ -6731,14 +6731,14 @@
     </method>
     <method selector='ruleEditor:child:forCriterion:withRowType:'>
       <arg index='1' type='i' type64='q' />
-      <arg index='3' type='I' />
+      <arg index='3' type='I' type64='Q' />
     </method>
     <method selector='ruleEditor:displayValueForCriterion:inRow:'>
       <arg index='2' type='i' type64='q' />
     </method>
     <method selector='ruleEditor:numberOfChildrenForCriterion:withRowType:'>
       <retval type='i' type64='q' />
-      <arg index='2' type='I' />
+      <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='ruleEditor:predicatePartsForCriterion:withDisplayValue:inRow:'>
       <arg index='3' type='i' type64='q' />
@@ -6852,7 +6852,7 @@
     <method selector='tableView:acceptDrop:row:dropOperation:'>
       <retval type='B' />
       <arg index='2' type='i' type64='q' />
-      <arg index='3' type='I' />
+      <arg index='3' type='I' type64='Q' />
     </method>
     <method selector='tableView:dataCellForTableColumn:row:'>
       <retval type='@' />
@@ -6908,9 +6908,9 @@
       <arg index='2' type='i' type64='q' />
     </method>
     <method selector='tableView:validateDrop:proposedRow:proposedDropOperation:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
       <arg index='2' type='i' type64='q' />
-      <arg index='3' type='I' />
+      <arg index='3' type='I' type64='Q' />
     </method>
     <method selector='tableView:willDisplayCell:forTableColumn:row:'>
       <retval type='v' />
@@ -6956,7 +6956,7 @@
     </method>
     <method selector='textView:completions:forPartialWordRange:indexOfSelectedItem:'>
       <arg index='2' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
-      <arg index='3' type_modifier='N' type='^i' type64='^l' />
+      <arg index='3' type_modifier='N' type='^i' type64='^q' />
     </method>
     <method selector='textView:doCommandBySelector:'>
       <retval type='B' />
@@ -7007,7 +7007,7 @@
     </method>
     <method selector='tokenField:completionsForSubstring:indexOfToken:indexOfSelectedItem:'>
       <arg index='2' type='i' type64='q' />
-      <arg index='3' type_modifier='o' type='^i'  type64='^l'/>
+      <arg index='3' type_modifier='o' type='^i'  type64='^q'/>
     </method>
     <method selector='tokenField:hasMenuForRepresentedObject:'>
       <retval type='B' />
@@ -7016,14 +7016,14 @@
       <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='tokenField:styleForRepresentedObject:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='tokenField:writeRepresentedObjects:toPasteboard:'>
       <retval type='B' />
     </method>
     <method selector='tokenFieldCell:completionsForSubstring:indexOfToken:indexOfSelectedItem:'>
       <arg index='2' type='i' type64='q' />
-      <arg index='3' type_modifier='o' type='^i' type64='^l' />
+      <arg index='3' type_modifier='o' type='^i' type64='^q' />
     </method>
     <method selector='tokenFieldCell:hasMenuForRepresentedObject:'>
       <retval type='B' />
@@ -7032,7 +7032,7 @@
       <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='tokenFieldCell:styleForRepresentedObject:'>
-      <retval type='I' />
+      <retval type='I' type64='Q' />
     </method>
     <method selector='tokenFieldCell:writeRepresentedObjects:toPasteboard:'>
       <retval type='B' />
@@ -7190,11 +7190,11 @@
       <retval type='B' />
     </method>
     <method selector='beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:'>
-      <arg index='4' sel_of_type='v@:@i^v' type=':' />
+      <arg index='4' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' type=':' />
       <arg index='5' type='^v' />
     </method>
     <method selector='beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='5' sel_of_type='v@:@i^v' />
+      <arg index='5' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='6' type='^v' />
     </method>
     <method selector='canChooseDirectories'>
@@ -7273,7 +7273,7 @@
   </class>
   <class name='NSPageLayout'>
     <method selector='beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:'>
-      <arg index='3' sel_of_type='v@:@i^v' />
+      <arg index='3' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='4' type='^v' />
     </method>
   </class>
@@ -7548,7 +7548,7 @@
   </class>
   <class name='NSPrintPanel'>
     <method selector='beginSheetWithPrintInfo:modalForWindow:delegate:didEndSelector:contextInfo:'>
-      <arg index='3' sel_of_type='v@:@i^v' />
+      <arg index='3' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='4' type='^v' />
     </method>
   </class>
@@ -7772,15 +7772,15 @@
       <retval type='B' />
     </method>
     <method selector='beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='5' sel_of_type='v@:@i^v' />
+      <arg index='5' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='6' type='^v' />
     </method>
     <method selector='beginForDirectory:file:types:modelessDelegate:didEndSelector:contextInfo:'>
-      <arg index='4' sel_of_type='v@:@i^v' type=':' />
+      <arg index='4' sel_of_type='v@:@i^v' type=':' sel_of_type64='v@:@q^v' />
       <arg index='5' type='^v' />
     </method>
     <method selector='beginSheetForDirectory:file:modalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='4' sel_of_type='v@:@i^v' />
+      <arg index='4' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='5' type='^v' />
     </method>
     <method selector='canCreateDirectories'>
@@ -9356,9 +9356,11 @@
     </method>
     <method selector='shouldBreakLineByHyphenatingBeforeCharacterAtIndex:'>
       <retval type='B' />
+      <arg index='0' type='I' type64='Q' />
     </method>
     <method selector='shouldBreakLineByWordBeforeCharacterAtIndex:'>
       <retval type='B' />
+      <arg index='0' type='I' type64='Q' />
     </method>
     <method selector='substituteGlyphsInRange:withGlyphs:'>
       <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />

@@ -7,7 +7,7 @@ call_NSView_getRectsBeingDrawn_count_(
 	PyObject* v;
 	NSRect* rects;
 	PyObject* arg1, *arg2;
-	int count;
+	NSInteger count;
 
 	if  (!PyArg_ParseTuple(arguments, "OO", &arg1, &arg2)) {
 		return NULL;
@@ -29,7 +29,7 @@ call_NSView_getRectsBeingDrawn_count_(
 			PyObjCObject_GetObject(self));
 
 			
-		objc_msgSendSuper(&super,
+		((void(*)(struct objc_super*, SEL, NSRect**, NSInteger*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
 				&rects, &count);
 	PyObjC_HANDLER

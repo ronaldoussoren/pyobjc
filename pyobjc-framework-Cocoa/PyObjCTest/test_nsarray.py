@@ -434,12 +434,12 @@ class TestNSArray (TestCase):
         self.assertArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
         self.assertArgSizeInArg(NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1)
 
-        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'i@@@', False)
+        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'l@@@', False)
         self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, '@')
-        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'i@@@', False)
+        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'l@@@', False)
         self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, '@')
 
-        self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'i@@@', False)
+        self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'l@@@', False)
         self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, '@')
 
         self.assertIsNullTerminated(NSArray.arrayWithObjects_)
@@ -469,19 +469,19 @@ class TestNSArray (TestCase):
                 objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSArray.sortedArrayUsingComparator_,
-                0, 'i@@')
+                0, 'l@@')
         self.assertArgIsBlock(NSArray.sortedArrayWithOptions_usingComparator_,
-                1, 'i@@')
+                1, 'l@@')
         self.assertArgIsBlock(NSArray.indexOfObject_inSortedRange_options_usingComparator_,
-                3, 'i@@')
+                3, 'l@@')
         self.assertArgHasType(NSArray.indexOfObject_inSortedRange_options_usingComparator_, 1, NSRange.__typestr__)
 
 
 
         self.assertArgIsBlock(NSMutableArray.sortUsingComparator_,
-                0, 'i@@')
+                0, 'l@@')
         self.assertArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
-                1, 'i@@')
+                1, 'l@@')
 
 
 

@@ -78,7 +78,7 @@ class TestNSBitmapImageRep(TestCase):
         self.assertEqual(len(bitmapData), len(singlePlane))
         self.assertEqual(bitmapData, singlePlane)
         
-        a = array.array('I', [255]*4)
+        a = array.array('L', [255]*4)
         self.assertArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
         d = i2.getPixel_atX_y_(a, 1, 1)
         self.assertIsObject(a, d)

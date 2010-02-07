@@ -847,7 +847,7 @@
   <enum name='NSDataReadingMapped' value='1' />
   <enum name='NSDataReadingUncached' value='2' />
   <enum name='NSDataWritingAtomic' value='1' />
-  <enum name='NSUndefinedDateComponent' value='2147483647' value64='-1' />
+  <enum name='NSUndefinedDateComponent' value='2147483647' value64='9223372036854775807' />
   <enum name='NSUndoCloseGroupingRunLoopOrdering' value='350000' />
   <enum name='NSUnicodeStringEncoding' value='10' />
   <enum name='NSUnionSetExpressionType' value='5' />
@@ -2267,28 +2267,28 @@
 	  </method>
 	  <method selector='sortedArrayUsingComparator:'>
 		  <arg index='0' block='true' >
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
 	  </method>
 	  <method selector='sortedArrayWithOptions:usingComparator:'>
 		  <arg index='1' block='true' >
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
 	  </method>
 	  <method selector='indexOfObject:inSortedRange:options:usingComparator:'>
 		  <arg index='3' block='true' >
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
 	  </method>
 	  <method selector='sortedArrayUsingFunction:context:' >
 		  <arg index='0' function_pointer='true' function_pointer_retained='false'>
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 			  <arg type='@' />
@@ -2297,7 +2297,7 @@
 	  </method>
 	  <method selector='sortedArrayUsingFunction:context:hint:' >
 		  <arg index='0' function_pointer='true' function_pointer_retained='false'>
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 			  <arg type='@' />
@@ -2768,7 +2768,7 @@
 	  </method>
 	  <method selector='keysSortedByValueWithOptions:usingComparator:'>
 		  <arg index='1' block='true' >
-			  <retval type='i'/>
+			  <retval type='i' type64='q'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
@@ -3286,21 +3286,21 @@
   <class name='NSMutableArray'>
 	  <method selector='sortUsingComparator:'>
 		  <arg index='0' block='true' >
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
 	  </method>
 	  <method selector='sortWithOptions:usingComparator:'>
 		  <arg index='1' block='true' >
-			  <retval type='i'/>
+			  <retval type='l'/>
 			  <arg type='@' />
 			  <arg type='@' />
 		  </arg>
 	  </method>
 	  <method selector='sortUsingFunction:context:' >
 		  <arg index='0' function_pointer='true' function_pointer_retained='false' >
-			  <retval type='i' />
+			  <retval type='l' />
 			  <arg type='@' />
 			  <arg type='@' />
 			  <arg type='@' />
@@ -3309,7 +3309,7 @@
 	  </method>
 	  <method selector='sortUsingFunction:context:range:' >
 		  <arg index='0' function_pointer='true' function_pointer_retained='false' >
-			  <retval type='i' />
+			  <retval type='l' />
 			  <arg type='@' />
 			  <arg type='@' />
 			  <arg type='@' />
@@ -4185,7 +4185,7 @@
     </method>
     <method selector='spellServer:findMisspelledWordInString:language:wordCount:countOnly:'>
       <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
-      <arg index='3' type_modifier='o' type="^i" type64="^l" />
+      <arg index='3' type_modifier='o' type="^i" type64="^q" />
       <arg index='4' type='B' />
     </method>
     <method selector='spellServer:suggestCompletionsForPartialWordRange:inString:language:'>
@@ -4193,7 +4193,7 @@
     </method>
     <method selector='stream:handleEvent:'>
       <retval type='v' />
-      <arg index='1' type='I' />
+      <arg index='1' type='I' type64='Q' />
     </method>
     <method selector='superclass'>
       <retval type='#' />
