@@ -587,6 +587,44 @@ code_compatible(char array_code, char type_code)
 		return YES;
 	}
 	switch (type_code) {
+	case _C_LNG_LNG:
+#ifdef __LP64__
+		/* fall through */
+#else
+		return NO;
+#endif
+	case _C_LNG: 
+		return (array_code == 'l') 
+#ifndef __LP64__
+			|| (array_code == 'i')
+#endif
+		;
+	case _C_ULNG_LNG:
+#ifdef __LP64__
+		/* fall through */
+#else
+		return NO;
+#endif
+	case _C_ULNG: 
+		return (array_code == 'L') 
+#ifndef __LP64__
+			|| (array_code == 'I')
+#endif
+		;
+
+	case _C_INT: 
+		return (array_code == 'i') 
+#ifndef __LP64__
+			|| (array_code == 'l')
+#endif
+		;
+	case _C_UINT: 
+		return (array_code == 'I') 
+#ifndef __LP64__
+			|| (array_code == 'L')
+#endif
+		;
+
 	case _C_NSBOOL:
 		return (array_code == _C_CHR) || (array_code == _C_UCHR);
 	case _C_CHAR_AS_INT:
