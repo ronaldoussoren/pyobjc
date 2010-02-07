@@ -46,7 +46,7 @@ class TestNSNumber( TestCase ):
         n = NSNumber.numberWithInt_(1)
         self.assertRaises(AttributeError, setattr, n, 'foo', 2)
 
-        n = NSNumber.numberWithLongLong_(sys.maxint + 2)
+        n = NSNumber.numberWithLongLong_(2**32 + 2)
         self.assertRaises(AttributeError, setattr, n, 'foo', 2)
 
     def testUseAsBasicType(self):
@@ -63,17 +63,17 @@ class TestNSNumber( TestCase ):
         # NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
         if sdkForPython() < (10, 5):
-		self.assertEqual(NSNumber.numberWithUnsignedInt_(sys.maxint+1),
-			    -sys.maxint-1)
+		self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
+			    -(2**31))
 	else:
-		self.assertEqual(NSNumber.numberWithUnsignedInt_(sys.maxint+1),
-			    sys.maxint+1)
+		self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
+			    (2**31))
 
     def testMethods(self):
-        v = NSNumber.numberWithUnsignedInt_(sys.maxint+1)
+        v = NSNumber.numberWithUnsignedInt_(2**31)
 
-        self.assertEqual(v.unsignedIntValue(), sys.maxint+1)
-        self.assertEqual(v.intValue(), -sys.maxint-1)
+        self.assertEqual(v.unsignedIntValue(), 2**31)
+        self.assertEqual(v.intValue(), -(2**31))
 
         v = NSNumber.numberWithInt_(10)
         self.assertEqual(v.doubleValue(), float(10))
@@ -140,13 +140,13 @@ class TestNSNumber( TestCase ):
         self.assert_(isinstance(n, (int, long)))
         self.assert_(isinstance(n, NSNumber))
 
-        n = NSNumber.numberWithLongLong_(sys.maxint * 1024L)
-        self.assertEqual(n, sys.maxint * 1024L)
+        n = NSNumber.numberWithLongLong_(2**32 * 1024L)
+        self.assertEqual(n, 2**32 * 1024L)
         self.assert_(isinstance(n, (int, long)))
         self.assert_(isinstance(n, NSNumber))
 
-        n = NSNumber.numberWithUnsignedLongLong_(sys.maxint + 100)
-        self.assertEqual(n, sys.maxint + 100)
+        n = NSNumber.numberWithUnsignedLongLong_(2**32 + 100)
+        self.assertEqual(n, 2**32 + 100)
         self.assert_(isinstance(n, (int, long)))
         self.assert_(isinstance(n, NSNumber))
 

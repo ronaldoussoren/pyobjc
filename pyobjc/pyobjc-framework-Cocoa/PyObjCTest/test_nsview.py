@@ -17,11 +17,13 @@ class TestNSView (TestCase):
 
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
-        self.assertEqual(method.__metadata__()['arguments'][2]['type'], 'o^{_NSRange=II}')
+        self.assertEqual(method.__metadata__()['arguments'][2]['type'], 'o^' + NSRange.__typestr__)
 
     def test_rectForPage(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
-        self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}12@0:4i8"))
+
+
+        self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature(NSRect.__typestr__+b"@:" + objc._C_NSInteger))
 
 
 class TestHeader (TestCase):

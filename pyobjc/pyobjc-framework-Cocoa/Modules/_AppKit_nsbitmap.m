@@ -150,7 +150,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 {
 	PyObject* result;
 	PyObject* maybeNone;
-	char *dataPlanes[5];
+	unsigned char *dataPlanes[5];
 	int garbage;
 	int width, height;
 	int bps, spp;
@@ -214,7 +214,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		newImageRep = objc_msgSendSuper(&super,
+		newImageRep = ((id(*)(struct objc_super*, SEL, unsigned char**, NSInteger, NSInteger, NSInteger, NSInteger, BOOL, BOOL, id, NSInteger, NSInteger))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
 				dataPlanes, width, height, bps, spp, 
 				hasAlpha, isPlanar, colorSpaceNameString, 
@@ -387,5 +387,5 @@ static int setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 		return -1;
 	}
 
-	return -1;
+	return 0;
 }

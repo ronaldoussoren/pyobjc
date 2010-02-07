@@ -69,11 +69,11 @@ class TestNSATSTypesetter (TestCase):
         m = o.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
         self.assertStartswith(m['arguments'][2]['type'], 'N^{')
         self.assertStartswith(m['arguments'][4]['type'], 'N^{')
-        self.assertStartswith(m['arguments'][5]['type'], 'N^f')
+        self.assertStartswith(m['arguments'][5]['type'], 'N^' + objc._C_CGFloat)
         
         m = o.shouldBreakLineByWordBeforeCharacterAtIndex_.__metadata__()
         self.assertEqual(m['retval']['type'], objc._C_NSBOOL)
-        self.assertEqual(m['arguments'][2]['type'], objc._C_UINT)
+        self.assertEqual(m['arguments'][2]['type'], objc._C_NSUInteger)
 
         m = o.shouldBreakLineByHyphenatingBeforeCharacterAtIndex_.__metadata__()
         self.assertEqual(m['retval']['type'], objc._C_NSBOOL)

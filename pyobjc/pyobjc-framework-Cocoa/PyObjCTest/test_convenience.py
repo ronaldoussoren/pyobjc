@@ -19,7 +19,7 @@ class TestConveniences(TestCase):
 
     def testHash(self):
         for hashValue in (0, sys.maxint, sys.maxint + 1L, 0xFFFFFFFFL):
-            expect = struct.unpack('i', struct.pack('I', hashValue))[0]
+            expect = struct.unpack('l', struct.pack('L', hashValue))[0]
             # Python can't hash to -1.  Surprise! :)
             if expect == -1:
                 expect = -2

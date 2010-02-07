@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 import array
+import sys
 
 class TestRegressions (TestCase):
     def testQualifiersInSignature(self):
@@ -41,7 +42,10 @@ class TestRegressions (TestCase):
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        a = array.array('f', [0] * 6)
+        if sys.maxint > 2**32:
+            a = array.array('d', [0] * 6)
+        else:
+            a = array.array('f', [0] * 6)
         v = color.getComponents_(a)
         self.assertEqual(a[0], 1.0)
 

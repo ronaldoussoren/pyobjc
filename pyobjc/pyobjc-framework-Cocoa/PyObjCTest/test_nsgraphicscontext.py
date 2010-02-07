@@ -39,8 +39,8 @@ class TestNSGraphicsContext (TestCase):
             None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0)
         context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
         self.assertIsInstance(context, NSGraphicsContext)
-        port = context.graphicsPort()
         if Quartz is not None:
+            port = context.graphicsPort()
             self.assertIsInstance(port, Quartz.CGContextRef)
 
         self.assertArgHasType(NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 0, '^{CGContext=}')
