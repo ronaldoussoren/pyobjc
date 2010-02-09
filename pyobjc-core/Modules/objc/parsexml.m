@@ -715,10 +715,11 @@ handle_enum(xmlNode* cur_node, PyObject* globalDict)
 				v = NULL;
 
 			} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 				v = PyFloat_FromString(s, &end);
 #else
 				v = PyFloat_FromString(s);
+				end = NULL;
 #endif
 				Py_DECREF(s);
 			}

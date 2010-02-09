@@ -35,7 +35,7 @@
 #include "OC_PythonDictionary.h"
 #include "OC_PythonUnicode.h"
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 #include "OC_PythonString.h"
 #endif
 
@@ -91,7 +91,7 @@ extern BOOL PyObjC_useKVO;
 extern BOOL PyObjC_nativeProperties;
 extern int PyObjC_VerboseLevel;
 extern int PyObjC_HideProtected;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 extern int PyObjC_StrBridgeEnabled;
 #endif
 extern PyObject *PyObjCStrBridgeWarning;

@@ -42,7 +42,6 @@ else:
             from PyObjCTest.loader import makeTestSuite
             import unittest
            
-            print (sys.path)
             unittest.main(None, None, [unittest.__file__]+self.test_args)
 
 from setuptools.command import egg_info as orig_egg_info
@@ -346,6 +345,7 @@ if USE_SYSTEM_FFI:
             list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
             extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
             extra_link_args=OBJC_LDFLAGS + ["-lffi"],
+            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
         ),
     ]
 
@@ -355,6 +355,7 @@ else:
             FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
             extra_compile_args=CFLAGS + FFI_CFLAGS,
             extra_link_args=OBJC_LDFLAGS,
+            depends=list(glob.glob(os.path.join('Modules', 'objc', '*.h'))),
         ),
     ]
 

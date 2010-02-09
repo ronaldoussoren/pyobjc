@@ -123,7 +123,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyInt_Check (argument)) {
 		rval = [OC_PythonNumber numberWithPythonObject:argument]; 
 		PyObjC_RegisterObjCProxy(argument, rval);
@@ -150,7 +150,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 			dictionaryWithPythonObject:argument];
 		PyObjC_RegisterObjCProxy(argument, rval);
 		r = 0;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(argument)) {
 		r = 0;
 		if (PyObjC_StrBridgeEnabled == 0) {
@@ -449,7 +449,7 @@ end:
 
 		repr = PyObject_Repr (pyObject);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		if (repr) {
 			int err;
 			NSString* result;

@@ -86,7 +86,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 			}
 			cur_class = objc_lookUpClass(PyBytes_AsString(bytes));
 			Py_DECREF(bytes);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(nm)) {
 			cur_class = objc_lookUpClass(PyString_AsString(nm));
 #else

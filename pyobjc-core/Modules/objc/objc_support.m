@@ -1673,7 +1673,7 @@ pythonify_c_value (const char *type, void *datum)
 #endif
 
 	case _C_ULNG:
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		if (*(unsigned long*)datum > LONG_MAX) {
 			retobject = (PyObject*)PyLong_FromUnsignedLongLong(
 				*(unsigned long*)datum);
@@ -1830,7 +1830,7 @@ depythonify_unsigned_int_value(
 	PyObjC_Assert(descr != NULL, -1);
 	PyObjC_Assert(out != NULL, -1);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	if (PyInt_Check (argument)) {
 		long temp = PyInt_AsLong(argument);
 		if (PyErr_Occurred()) {
@@ -1899,7 +1899,7 @@ depythonify_unsigned_int_value(
 		PyObject* tmp;
 
 		if (
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			PyString_Check(argument) || 
 #else
 			PyBytes_Check(argument) || 
@@ -1965,7 +1965,7 @@ depythonify_signed_int_value(
 	PyObjC_Assert(descr != NULL, -1);
 	PyObjC_Assert(out != NULL, -1);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	if (PyInt_Check (argument)) {
 		*out = (long long)PyInt_AsLong(argument);
 		if (PyErr_Occurred()) {
@@ -2005,7 +2005,7 @@ depythonify_signed_int_value(
 		PyObject* tmp;
 
 		if (
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			PyString_Check(argument) || 
 #else
 			PyBytes_Check(argument) || 
@@ -2119,7 +2119,7 @@ const char* type, PyObject* argument, void* datum)
 			*(int*)datum = (int)(*PyUnicode_AsUnicode(argument));
 			return 0;
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(argument)) {
 			PyObject* u = PyUnicode_FromObject(argument);
 			if (u == NULL) {
@@ -2365,7 +2365,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
 			*(UniChar*)datum = (UniChar)(*PyUnicode_AsUnicode(argument));
 			return 0;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(argument)) {
 			PyObject* u = PyUnicode_FromObject(argument);
 			if (u == NULL) {
@@ -2582,7 +2582,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_FLT:
 		if (PyFloat_Check (argument)) {
 			*(float *) datum = (float)PyFloat_AsDouble (argument);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyInt_Check (argument)) {
 			*(float *) datum = (float) PyInt_AsLong (argument);
 #endif
@@ -2592,7 +2592,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return -1;
 			}
 		} else if (
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 				PyString_Check(argument) || 
 #else
 				PyBytes_Check(argument) || 
@@ -2624,7 +2624,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 	case _C_DBL:
 		if (PyFloat_Check (argument)) {
 			*(double *) datum = PyFloat_AsDouble (argument);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyInt_Check (argument)) {
 			*(double *) datum = (double) PyInt_AsLong (argument);
 #endif
@@ -2634,7 +2634,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 				return -1;
 			}
 		} else if (
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 				PyString_Check(argument) || 
 #else
 				PyBytes_Check(argument) || 

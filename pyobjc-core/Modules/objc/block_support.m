@@ -297,7 +297,7 @@ error:
 	return NULL;
 }
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static void PyObjCBlock_CleanupCapsule(void* ptr)
 {
 	PyObjCFFI_FreeBlockFunction(ptr);

@@ -1,6 +1,6 @@
 #include "pyobjc.h"
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 PyObject* 
 PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l)

@@ -117,7 +117,8 @@ object_repr(PyObject* _self)
 		 * Don't call 'description' for uninitialized objects, that
 		 * is undefined behaviour and will crash the interpreter sometimes.
 		 */
-		res = PyObject_CallMethod((PyObject*)self, "description", NULL);
+		//res = PyObject_CallMethod((PyObject*)self, "description", NULL);
+		res = NULL;
 		if (res == NULL) {
 			PyErr_Clear();
 		} else {
@@ -246,7 +247,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 			dict = ((PyTypeObject *)base)->tp_dict;
 
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyClass_Check(base)) {
 			dict = ((PyClassObject*)base)->cl_dict;
 			protDict = NULL;
@@ -304,7 +305,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	if (PyUnicode_Check(name)) {
 		bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
 		if (bytes == NULL) return NULL;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		bytes = name; Py_INCREF(bytes);
 #endif
@@ -326,7 +327,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	obj_inst = PyObjCObject_GetObject(obj);
 	if (!obj_inst) {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyErr_Format(PyExc_AttributeError,
 		     "cannot access attribute '%.400s' of NIL '%.50s' object",
 		     PyString_AS_STRING(name),
@@ -389,7 +390,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	f = NULL;
 	if (descr != NULL 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
 #endif
 	    ) {
@@ -465,7 +466,7 @@ done:
 		if (PyObjCSelector_Check(res) 
 				&& PyObjCSelector_IsClassMethod(res)) {
 			Py_DECREF(res);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			PyErr_Format(PyExc_AttributeError,
 			     "'%.50s' object has no attribute '%.400s'",
 			     tp->tp_name, PyString_AS_STRING(name));
@@ -497,7 +498,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	if (PyUnicode_Check(name)) {
 		bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
 		if (bytes == NULL) return -1;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		bytes = name; Py_INCREF(bytes);
 #endif
@@ -528,7 +529,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	descr = _type_lookup(tp, name);
 	f = NULL;
 	if (descr != NULL 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
 #endif
 	   ) {
@@ -791,7 +792,7 @@ PyObjCClassObject PyObjCObject_Type = {
 #endif
 
      },
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
 #if PY_VERSION_HEX >= 0x02050000

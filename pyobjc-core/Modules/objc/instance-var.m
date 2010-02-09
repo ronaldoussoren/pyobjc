@@ -404,7 +404,7 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
 			return -1;
 		}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		self->name = PyObjCUtil_Strdup(PyString_AS_STRING(name));
 #endif

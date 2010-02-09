@@ -80,7 +80,7 @@ static PyObject* func_repr(PyObject* _self)
 
 	if (self->name == NULL) {
 		return PyText_FromFormat("<objc.function object at %p>", self);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(self->name)) {
 		return PyString_FromFormat("<objc.function '%s' at %p>", PyString_AsString(self->name), self);
 #else
@@ -88,7 +88,7 @@ static PyObject* func_repr(PyObject* _self)
 		return PyUnicode_FromFormat("<objc.function %R at %p>", self->name, self);
 #endif
 	} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyObject* result;
 		PyObject* name_repr = PyObject_Repr(self->name);
 		if (name_repr == NULL) {

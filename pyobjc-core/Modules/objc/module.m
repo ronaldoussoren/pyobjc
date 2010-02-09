@@ -29,7 +29,7 @@ BOOL PyObjC_nativeProperties = NO;
 
 PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_NSNumberWrapper = NULL;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 PyObject* PyObjCStrBridgeWarning = NULL;
 int PyObjC_StrBridgeEnabled = 1;
 #endif
@@ -136,7 +136,7 @@ PyObject *kwds)
 	return rval;
 }
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 PyDoc_STRVAR(setStrBridgeEnabled_doc,
   "setStrBridgeEnabled(bool)\n"
   "\n"
@@ -331,7 +331,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		
 		name = PyObject_GetAttrString(aMethod, "__name__");
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 2
 		if (PyBytes_Check(name)) {
 			PyObject* t = PyUnicode_Decode(
 					PyBytes_AsString(name),
@@ -696,7 +696,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 		return NULL;
 	}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	return PyBuffer_New(length);
 #else
 	return PyByteArray_FromStringAndSize(NULL, length);
@@ -754,7 +754,7 @@ static	Py_ssize_t	curClassCount = -1;
 	PyObject* scanClasses = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			"SO|O&O&O",
 #else
 			"UO|O&O&O",
@@ -1259,7 +1259,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
 				}
 				fieldnames[i] = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
 				Py_DECREF(bytes);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			} else if (PyString_Check(v)) {
 				fieldnames[i] = PyObjCUtil_Strdup(PyString_AS_STRING(v));
 #endif
@@ -1507,7 +1507,7 @@ PyDoc_STRVAR(_makeClosure_doc,
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
  );
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static void _callback_cleanup(void* closure)
 {
 	PyObjCFFI_FreeIMP((IMP)closure);
@@ -1696,7 +1696,7 @@ static PyMethodDef mod_methods[] = {
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
 	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	{ "setStrBridgeEnabled", (PyCFunction)setStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, setStrBridgeEnabled_doc },
 	{ "getStrBridgeEnabled", (PyCFunction)getStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, getStrBridgeEnabled_doc },
 #endif
@@ -1810,7 +1810,7 @@ struct objc_typestr_values {
 };
 
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 static int mod_traverse(PyObject *m __attribute__((__unused__)), visitproc visit __attribute__((__unused__)), void *arg __attribute__((__unused__))) 
 {
 	/* FIXME: should traverse all globals */
@@ -1942,7 +1942,7 @@ init_objc(void)
 		INITERROR();
 	}
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 	m = PyModule_Create(&mod_module);
 #else
 	m = Py_InitModule4("_objc", mod_methods, NULL,
@@ -2020,7 +2020,7 @@ init_objc(void)
 		INITERROR();
 	}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	PyObjCStrBridgeWarning = PyErr_NewException("objc.PyObjCStrBridgeWarning", PyExc_DeprecationWarning, NULL);
 	PyModule_AddObject(m, "PyObjCStrBridgeWarning", PyObjCStrBridgeWarning);
 #endif
@@ -2142,7 +2142,7 @@ init_objc(void)
 	global_release_pool = [[NSAutoreleasePool alloc] init];
 	[OC_NSAutoreleasePoolCollector newAutoreleasePool];
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 	return m;
 #endif
 

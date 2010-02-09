@@ -261,6 +261,120 @@ struct_copy(PyObject* self)
 	return result;
 }
 
+static PyObject*
+struct_mp_subscript(PyObject* self, PyObject* item)
+{
+	if (PyIndex_Check(item)) {
+		Py_ssize_t i;
+		i = PyNumber_AsSsize_t(item, PyExc_IndexError);
+		if (i == -1 && PyErr_Occurred()) {
+			return NULL;
+		} 
+		if (i < 0) {
+			i += struct_sq_length(self);
+		}
+		return struct_sq_item(self, i);
+	} else if (PySlice_Check(item)) {
+		Py_ssize_t start, stop, step, slicelength, cur, i;
+		PyObject* result;
+		PyObject* it;
+
+		if (PySlice_GetIndicesEx((PySliceObject*)item, 
+				struct_sq_length(self),
+				&start, &stop, &step, &slicelength) < 0) {
+			return NULL;
+		}
+
+		if (slicelength <= 0) {
+			return PyTuple_New(0);
+		} else if (step == 1) {
+			return struct_sq_slice(self, start, stop);
+		} else {
+			result = PyTuple_New(slicelength);
+			if (result == NULL) {
+				return NULL;
+			}
+
+			for (cur = start, i = 0; i < slicelength; 
+						cur += step, i++) {
+				it = struct_sq_item(self, cur);
+				PyTuple_SET_ITEM(result, i, it);
+			}
+			return result;
+		}
+
+	} else {
+		PyErr_Format(PyExc_TypeError,
+			"struct indices must be integers, not %.200s",
+			Py_TYPE(item)->tp_name);
+		return NULL;
+	}
+}
+
+static int
+struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
+{
+	if (PyIndex_Check(item)) {
+		Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
+		if (i == -1 && PyErr_Occurred()) {
+			return -1;
+		} 
+		if (i < 0) {
+			i += struct_sq_length(self);
+		}
+		return struct_sq_ass_item(self, i, value);
+	} else if (PySlice_Check(item)) {
+		Py_ssize_t start, stop, step, slicelength;
+
+		if (PySlice_GetIndicesEx((PySliceObject*)item, 
+				struct_sq_length(self), &start, &stop,
+				&step, &slicelength) < 0) {
+			return -1;
+		}
+		if (step == 1) {
+			return struct_sq_ass_slice(self, start, stop, value);
+		}
+
+		if (value == NULL) {
+			PyErr_Format(PyExc_TypeError,
+				"Cannot delete items in an %s instance",
+				Py_TYPE(self)->tp_name);
+			return -1;
+		}
+
+		PyObject* seq = PySequence_Fast(value, 
+				"must assign sequence to slice");
+		if (seq == NULL) return -1;
+
+		if (PySequence_Fast_GET_SIZE(seq) != slicelength) {
+			Py_DECREF(seq);
+			PyErr_Format(PyExc_TypeError,
+				"slice assignment would change size of %s "
+				"instance", Py_TYPE(self)->tp_name);
+			return -1;
+		}
+
+		Py_ssize_t cur, i;
+		for (cur = start, i = 0; i < slicelength; cur += step, i++) {
+			int r = struct_sq_ass_item(self, cur, 
+				PySequence_Fast_GET_ITEM(seq, i));
+			if (r == -1) {
+				Py_DECREF(seq);
+				return -1;
+			}
+		}
+
+		Py_DECREF(seq);
+		return 0;
+	} else {
+		PyErr_Format(PyExc_TypeError,
+			"struct indices must be integers, not %.200s",
+			Py_TYPE(item)->tp_name);
+		return -1;
+	}
+}
+
+
 static PySequenceMethods struct_as_sequence = {
 	struct_sq_length,	/* sq_length */
 	NULL,			/* sq_concat */
@@ -272,6 +386,12 @@ static PySequenceMethods struct_as_sequence = {
 	struct_sq_contains,	/* sq_contains */
 	NULL,			/* sq_inplace_concat */
 	NULL			/* sq_inplace_repeat */
+};
+
+static PyMappingMethods struct_as_mapping = {
+	struct_sq_length,
+	struct_mp_subscript,
+	struct_mp_ass_subscript,
 };
 
 static PyMethodDef struct_methods[] = {
@@ -488,7 +608,6 @@ struct_init(
 		return;
 	}
 
-
 	if (args != NULL && !PyTuple_Check(args)) {
 		PyErr_Format(PyExc_TypeError, 
 				"%s() argument tuple is not a tuple",
@@ -537,7 +656,8 @@ struct_init(
 
 		keys = PyDict_Keys(kwds);
 		if (keys == NULL) {
-			Py_DECREF(keys);
+			*(int*)retval = -1;
+			return;
 		}
 
 		if (!PyList_Check(keys)) {
@@ -561,9 +681,9 @@ struct_init(
 				k_bytes = PyUnicode_AsEncodedString(k, NULL, NULL);
 				if (k_bytes == NULL) {
 					*(int*)retval = -1;
+					return;
 				}
-				return;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			} else if (PyString_Check(k)) {
 				k_bytes = k; Py_INCREF(k_bytes);
 #endif
@@ -849,7 +969,7 @@ static PyTypeObject StructTemplate_Type = {
 	struct_repr,				/* tp_repr */
 	0,					/* tp_as_number */
 	&struct_as_sequence,			/* tp_as_sequence */
-	0,					/* tp_as_mapping */
+	&struct_as_mapping,			/* tp_as_mapping */
 	struct_hash,				/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
@@ -857,7 +977,7 @@ static PyTypeObject StructTemplate_Type = {
 	struct_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		| Py_TPFLAGS_HAVE_RICHCOMPARE 
 #endif
 		| Py_TPFLAGS_HAVE_GC, 		/* tp_flags */

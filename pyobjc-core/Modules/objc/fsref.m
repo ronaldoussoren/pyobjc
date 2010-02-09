@@ -69,7 +69,7 @@ static PyObject* fsref_as_path(PyObject* ref)
 	rc = FSRefMakePath( &((PyObjC_FSRefObject*)ref)->ref,
 			buffer, sizeof(buffer));
 	if (rc != 0) {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyMac_Error(rc);
 #else
 		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
@@ -90,7 +90,7 @@ static PyObject* fsref_from_path(PyObject* path)
 
 	if (PyUnicode_Check(path)) {
 		value = PyUnicode_AsEncodedString(path, NULL, NULL);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if(PyString_Check(path)) {
 		value = path; Py_INCREF(path);
 #endif
@@ -104,7 +104,7 @@ static PyObject* fsref_from_path(PyObject* path)
 	rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
 	Py_DECREF(value);
 	if (rc != 0) {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyMac_Error(rc);
 #else
 		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);

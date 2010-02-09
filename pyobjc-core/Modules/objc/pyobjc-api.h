@@ -412,7 +412,7 @@ typedef struct PyObjC_function_map {
 static inline PyObject*
 PyObjC_CreateInlineTab(PyObjC_function_map* map)
 {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	return PyCObject_FromVoidPtr(map, NULL);
 #else
 	return PyCapsule_New(map, "objc.__functionlist__", NULL);
@@ -425,7 +425,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 	PyObject* m;
 	PyObject* d;
 	PyObject* api_obj;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	PyObject* name = PyString_FromString("objc");
 #else
 	PyObject* name = PyUnicode_FromString("objc");
@@ -450,7 +450,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 			"No C_API in objc module");
 		return -1;
 	}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	PyObjC_API = PyCObject_AsVoidPtr(api_obj);
 #else
 	PyObjC_API = PyCapsule_GetPointer(api_obj, "objc." PYOBJC_API_NAME);

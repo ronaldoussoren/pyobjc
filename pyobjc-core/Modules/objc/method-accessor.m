@@ -248,7 +248,7 @@ obj_getattro(PyObject* _self, PyObject* name)
 		if (name_bytes == NULL) {
 			return NULL;
 		}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		name_bytes = name; Py_INCREF(name_bytes);
 #endif 
@@ -370,7 +370,7 @@ obj_repr(PyObject* _self)
 {
 	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* rval;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	PyObject* repr;
 
 	repr = PyObject_Repr(self->base);

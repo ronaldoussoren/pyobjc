@@ -154,7 +154,7 @@ free_type(void *obj)
 
 static ffi_type* signature_to_ffi_type(const char* argtype);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static void cleanup_ffitype_capsule(void* ptr, void* context __attribute__((__unused__)))
 
 {
@@ -698,7 +698,7 @@ parse_printf_args(
 			byref[curarg] = PyMem_Malloc(sizeof(int));
 			arglist[curarg] = signature_to_ffi_type(@encode(int));
 			v = PyTuple_GET_ITEM(argtuple, argoffset);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			if (PyString_Check(v)) {
 				if (PyString_Size(v) != 1) {
 					PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
@@ -2269,7 +2269,7 @@ int PyObjCFFI_CountArguments(
 }
 
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static void imp_capsule_cleanup(void* ptr, void* context __attribute__((__unused__)))
 {
 	PyObjCFFI_FreeIMP(ptr);
