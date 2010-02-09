@@ -105,6 +105,21 @@ typedef int Py_ssize_t;
 #define Py_ARG_SIZE_T "n"
 #endif
 
+
+#endif
+
+#if PY_VERSION_HEX < 0x03000000
+
+#ifndef Py_ARG_BYTES
+#define Py_ARG_BYTES "s"
+#endif
+
+#else
+
+#ifndef Py_ARG_BYTES
+#define Py_ARG_BYTES "y"
+#endif
+
 #endif
 
 #if PY_VERSION_HEX < 0x03000000

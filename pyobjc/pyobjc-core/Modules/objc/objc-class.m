@@ -1737,11 +1737,7 @@ PyObjCClass_ListProperties(PyObject* aClass)
 		const char* e;
 
 		item = Py_BuildValue(
-#if PY_VERSION_HEX < 0x03000000
-			"{ssss}",
-#else
-			"{sssy}",
-#endif
+			"{sss"Py_ARG_BYTES"}",
 			"name", name,
 			"raw_attr", attr);
 		if (item == NULL) {

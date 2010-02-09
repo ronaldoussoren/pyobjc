@@ -231,11 +231,7 @@ static  char* keywords[] = { "name", "type", "isOutlet", NULL };
 	PyObject* isOutletObj = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-				"|ssO:objc_ivar",
-#else
-				"|syO:objc_ivar",
-#endif
+				"|s"Py_ARG_BYTES"O:objc_ivar",
 			keywords, &name, &type, &isOutletObj)) {
 		return -1;
 	}

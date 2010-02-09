@@ -83,7 +83,7 @@ PyObject *kwds)
 {
 	static char* keywords[] = { "obj", NULL };
 	PyObject *o;
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:pyobjc_id",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
 		keywords, &o)) {
 		return NULL;
 	}
@@ -114,11 +114,7 @@ PyObject *kwds)
 	Py_ssize_t size;
 	PyObject *o;
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-				"O|s:repythonify",
-#else
-				"O|y:repythonify",
-#endif
+				"O|"Py_ARG_BYTES,
 		keywords, &o, &type)) {
 		return NULL;
 	}
@@ -879,11 +875,7 @@ static  char* keywords[] = { "signature", NULL };
 	PyObject* tuple;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-			"s",
-#else
-			"y",
-#endif
+			Py_ARG_BYTES,
 			keywords, &signature)) {
 		return NULL;
 	}
@@ -1170,11 +1162,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 	char* docstr = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-				"ss|s", 
-#else
-				"sy|s", 
-#endif
+				"s"Py_ARG_BYTES"|s", 
 				keywords, 
 				&name, &typestr, &docstr)) {
 		return NULL;
@@ -1233,11 +1221,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
 	Py_ssize_t field_count;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-				"ssO|s", 
-#else
-				"syO|s", 
-#endif
+				"s"Py_ARG_BYTES"O|s", 
 				keywords, 
 				&name, &typestr, &pyfieldnames, &docstr)) {
 		return NULL;
@@ -1358,11 +1342,7 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
 	char* tollfreeName = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-		"ssO|s",
-#else
-		"syO|s",
-#endif
+		"s"Py_ARG_BYTES"O|s",
 		keywords, &name, &encoding, &pTypeId, &tollfreeName)) {
 		return NULL;
 	}

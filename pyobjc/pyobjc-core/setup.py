@@ -41,7 +41,8 @@ else:
                 sys.path.remove(rootdir)
             from PyObjCTest.loader import makeTestSuite
             import unittest
-            
+           
+            print (sys.path)
             unittest.main(None, None, [unittest.__file__]+self.test_args)
 
 from setuptools.command import egg_info as orig_egg_info

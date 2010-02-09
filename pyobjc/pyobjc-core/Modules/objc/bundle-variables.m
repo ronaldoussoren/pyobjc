@@ -154,10 +154,11 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 		}
 
 		if (!PyArg_ParseTuple(item, 
+				"O!"Py_ARG_BYTES":variableInfo", 
 #if PY_VERSION_HEX < 0x03000000
-				"O!s:variableInfo", &PyBaseString_Type,
+				&PyBaseString_Type,
 #else
-				"O!y:variableInfo", &PyUnicode_Type,
+				&PyUnicode_Type,
 #endif
 				&py_name, &signature)) {
 			Py_DECREF(seq);
