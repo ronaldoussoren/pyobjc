@@ -59,7 +59,7 @@ proto_repr(PyObject* object)
 
 	if (PyUnicode_Check(self->name)) {
 		b = PyUnicode_AsEncodedString(self->name, NULL, NULL);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(self->name)) {
 		b = self->name; Py_INCREF(b);
 #endif
@@ -92,7 +92,7 @@ static	char*	keywords[] = { "name", "selectors", NULL };
 
 	if (PyUnicode_Check(name)) {
 		/* pass */
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		/* pass */
 #endif

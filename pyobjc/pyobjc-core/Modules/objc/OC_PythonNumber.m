@@ -61,7 +61,7 @@
 			PyObjC_GIL_RETURN(@encode(BOOL));
 		} else if (PyFloat_Check(value)) {
 			PyObjC_GIL_RETURN(@encode(double));
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyInt_Check(value)) {
 			PyObjC_GIL_RETURN(@encode(long));
 #endif
@@ -114,7 +114,7 @@
 	BOOL negative = NO;
 
 	PyObjC_BEGIN_WITH_GIL
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		if (PyInt_Check(value)) {
 			long lng = PyInt_AsLong(value);
 			if (lng < 0) {
@@ -257,7 +257,7 @@
 	long long result;
 
 	PyObjC_BEGIN_WITH_GIL
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		if (PyInt_Check(value)) {
 			result =  PyInt_AsLong(value);
 			PyObjC_GIL_RETURN(result);
@@ -285,7 +285,7 @@
 		if (PyLong_Check(value)) {
 			result =  PyLong_AsUnsignedLongLongMask(value);
 			PyObjC_GIL_RETURN(result);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyInt_Check(value)) {
 			result =  (unsigned long long)PyInt_AsLong(value);
 			PyObjC_GIL_RETURN(result);
@@ -326,7 +326,7 @@
 			PyObjC_GIL_FORWARD_EXC();
 		}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyObject* uniVal = PyUnicode_FromEncodedObject(repr, "ascii", "strict");
 		Py_DECREF(repr);
 		if (PyErr_Occurred()) {

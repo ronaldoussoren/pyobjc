@@ -155,7 +155,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
 		if (!PyArg_ParseTuple(item, 
 				"O!"Py_ARG_BYTES":variableInfo", 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 				&PyBaseString_Type,
 #else
 				&PyUnicode_Type,
@@ -264,7 +264,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 
 		doc = NULL;
 		if (!PyArg_ParseTuple(item, 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 				"O&s|SO;functionInfo", 
 #else
 				"O&y|UO;functionInfo", 
@@ -391,7 +391,7 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 
 		doc = NULL;
 		if (!PyArg_ParseTuple(item, 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 					"O!s|SO:functionInfo tuple", &PyBaseString_Type, 
 
 #else

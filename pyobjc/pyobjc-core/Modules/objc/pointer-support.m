@@ -273,7 +273,7 @@ PyObjectPtr_Convert(PyObject* obj, void* pObj)
 	return 0;
 }
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 static int dontClose(FILE* fp __attribute__((__unused__)))
 {
@@ -365,7 +365,7 @@ PyObjCPointerWrapper_Init(void)
 		PyObjectPtr_New, PyObjectPtr_Convert);
 	if (r == -1) return -1;
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	r = PyObjCPointerWrapper_Register(@encode(FILE*),
 		FILE_New, FILE_Convert);
 	if (r == -1) return -1;

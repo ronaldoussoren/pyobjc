@@ -122,7 +122,15 @@ typedef int Py_ssize_t;
 
 #endif
 
-#if PY_VERSION_HEX < 0x03000000
+#if __LP64__
+#define Py_ARG_NSInteger "l"
+#define Py_ARG_NSUInteger "L"
+#else
+#define Py_ARG_NSInteger "i"
+#define Py_ARG_NSUInteger "L"
+#endif
+
+#if PY_MAJOR_VERSION == 2
 #define Py_REFCNT(ob)           (((PyObject*)(ob))->ob_refcnt)
 #define Py_TYPE(ob)             (((PyObject*)(ob))->ob_type)
 #define Py_SIZE(ob)             (((PyVarObject*)(ob))->ob_size)
@@ -135,7 +143,7 @@ typedef int Py_ssize_t;
 #define PyCapsule_CheckExact(object)	PyCObject_Check(object)
 #endif
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 #define PyErr_Format PyObjCErr_Format
 
@@ -176,7 +184,7 @@ extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t 
 
 #endif
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 #define PyInt_FromLong		PyLong_FromLong
 #define PyInt_FromString	PyLong_FromString
 

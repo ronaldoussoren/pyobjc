@@ -296,7 +296,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 					return -1;
 				}
 			} 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			else if (PyString_Check(d)) {
 				descr->sel_type = PyObjCUtil_Strdup(PyString_AsString(d));
 				if (descr->sel_type == NULL) {
@@ -369,7 +369,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 					return -1;
 				}
 			}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			else if (PyInt_Check(d)) {
 				descr->ptrType = PyObjC_kFixedLengthArray;
 				descr->arrayArg = PyInt_AsLong(d);
@@ -399,7 +399,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 				}
 				descr->arrayArgOut = descr->arrayArg;
 					
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			} else if (PyInt_Check(d)) {
 				descr->ptrType = PyObjC_kArrayCountInArg;
 				descr->arrayArg = PyInt_AsLong(d);
@@ -411,7 +411,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 					if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
 						descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
 					} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 						descr->arrayArg = PyInt_AsLong(PyTuple_GET_ITEM(d, 0));
 #else
 						PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
@@ -426,7 +426,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 					if (PyLong_Check(PyTuple_GET_ITEM(d, 0))) {
 						descr->arrayArg = PyLong_AsLong(PyTuple_GET_ITEM(d, 0));
 					} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 						descr->arrayArg = PyInt_AsLong(PyTuple_GET_ITEM(d, 0));
 #else
 						PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
@@ -440,7 +440,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 					if (PyLong_Check(PyTuple_GET_ITEM(d, 1))) {
 						descr->arrayArgOut = PyLong_AsLong(PyTuple_GET_ITEM(d, 1));
 					} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 						descr->arrayArgOut = PyInt_AsLong(PyTuple_GET_ITEM(d, 1));
 #else
 						PyErr_SetString(PyExc_TypeError, "array_out argument not integer");
@@ -464,7 +464,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 				}
 				typeModifier = *PyBytes_AsString(bytes);
 				Py_DECREF(bytes);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			} else if (PyString_Check(d)) {
 				typeModifier = *PyString_AsString(d);
 #else
@@ -483,7 +483,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 
 	if (d 
 		&& (
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		  PyString_Check(d) ||
 #else
 		  PyBytes_Check(d) ||
@@ -497,7 +497,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 			if (bytes == NULL) {
 				return -1;
 			}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(d)) {
 			bytes = d; Py_INCREF(bytes);
 #else
@@ -705,7 +705,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata)
 				return NULL;
 			}
 		}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		else if (PyInt_Check(v)) {
 			methinfo->arrayArg = PyInt_AsLong(v);
 		}

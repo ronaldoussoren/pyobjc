@@ -47,7 +47,7 @@ BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel)
  *
  */
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static
 Py_ssize_t nsdata_getreadbuffer(PyObject *pyself, Py_ssize_t segment __attribute__((unused)), void **ptrptr) {
 	NSData *self = (NSData *)PyObjCObject_GetObject(pyself);
@@ -103,7 +103,7 @@ nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 
 
 static PyBufferProcs nsdata_as_buffer = {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	nsdata_getreadbuffer,
 	NULL,
 	nsdata_getsegcount,
@@ -121,7 +121,7 @@ static PyBufferProcs nsdata_as_buffer = {
 };
 
 static PyBufferProcs nsmutabledata_as_buffer = {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	nsdata_getreadbuffer,
 	nsmutabledata_getwritebuffer,
 	nsdata_getsegcount,
@@ -949,7 +949,7 @@ class_getattro(PyObject* self, PyObject* name)
 		PyErr_Clear();
 	}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	else if (PyString_Check(name) 
 			&& strncmp(PyString_AS_STRING(name), "__", 2) == 0 
 			&& strcmp(PyString_AS_STRING(name), "__dict__") != 0) {
@@ -977,7 +977,7 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 		result = PyObjCSelector_FindNative(self, PyBytes_AsString(bytes));
 		Py_DECREF(bytes);
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		result = PyObjCSelector_FindNative(self, PyString_AsString(name));
 #endif
@@ -1193,7 +1193,7 @@ static PyObject* class_richcompare(PyObject* self, PyObject* other, int op)
 	return result;
 }
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 static int
 class_compare(PyObject* self, PyObject* other)
 {
@@ -2204,7 +2204,7 @@ update_convenience_methods(PyObject* cls)
 				
 				continue;
 			}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 		} else if (PyString_Check(k)) {
 			char* n = PyString_AS_STRING(k);

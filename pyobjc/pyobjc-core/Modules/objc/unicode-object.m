@@ -292,7 +292,7 @@ PyObjCUnicode_New(NSString* value)
 
 
 	result->base.hash = -1;
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 	result->base.state = 0;
 #endif
 	result->base.defenc = NULL;

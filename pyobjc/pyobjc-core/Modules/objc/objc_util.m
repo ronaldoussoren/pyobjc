@@ -442,7 +442,7 @@ array_typestr(PyObject* array)
 		if (bytes == NULL) {
 			return '\0';
 		}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(typecode)) {
 		bytes = typecode; Py_INCREF(bytes);
 #endif
@@ -772,7 +772,7 @@ PyObjC_PythonToCArray(
 			Py_INCREF(pythonList);
 			return SHOULD_IGNORE;
 		}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {
 		PyObject* u = PyUnicode_Decode(
 				PyString_AsString(pythonList),

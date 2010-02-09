@@ -641,3 +641,86 @@ def __call__(self, *args, **kwds):
 CLASS_METHODS['NSBlock'] = (
     ('__call__', __call__),
 )
+
+
+if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 7):
+    class nsdict_view (object):
+        __slots__ = ()
+
+        def __and__(self, other):
+            result = set(self)
+            result.intersection_update(other)
+            return result
+
+        def __or__(self, other):
+            result = set(self)
+            result.update(other)
+            return result
+
+        def __sub__(self, other):
+            result = set(self)
+            result.difference_update(other)
+            return result
+
+        def __xor__(Self, other):
+            result = set(self)
+            result.symmetric_difference_update(other)
+            return result
+
+        def __len__(self):
+            return len(self.__value)
+
+    class nsdict_keys(nsdict_view):
+        __slots__=('__value')
+        def __init__(self, value):
+            self.__value =  value
+
+        def __iter__(self):
+            return iter(self.__value)
+
+        def __contains__(self, value):
+            return value in self.__value
+
+    class nsdict_values(nsdict_view):
+        __slots__=('__value')
+        def __init__(self, value):
+            self.__value =  value
+
+        def __iter__(self):
+            return iter(self.objectEnumerator())
+
+        def __contains__(self, value):
+            for v in iter(self):
+                if value == v:
+                    return True
+            return False
+
+    class nsdict_items(nsdict_view):
+        __slots__=('__value')
+        def __init__(self, value):
+            self.__value =  value
+
+        def __iter__(self):
+            for k in self.__value:
+                yield (k, self.__value[k])
+
+        def __contains__(self, value):
+            for v in iter(self):
+                if value == v:
+                    return True
+            return False
+
+    if sys.version_info[0] == 3:
+        CLASS_METHODS['NSDictionary'] = (
+            ('keys', lambda self: nsdict_keys(self)),
+            ('values', lambda self: nsdict_values(self)),
+            ('items', lambda self: nsdict_items(self)),
+        )
+
+    else:
+        CLASS_METHODS['NSDictionary'] = (
+            ('viewkeys', lambda self: nsdict_keys(self)),
+            ('viewvalues', lambda self: nsdict_values(self)),
+            ('viewitems', lambda self: nsdict_items(self)),
+        )
+

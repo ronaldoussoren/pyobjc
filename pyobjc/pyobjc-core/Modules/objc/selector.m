@@ -511,7 +511,7 @@ objcsel_repr(PyObject* _self)
 	if (sel->sel_self == NULL) {
 		rval = PyText_FromFormat("<unbound native-selector %s in %s>", sel_getName(sel->sel_selector), class_getName(sel->sel_class));
 	} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
 		if (selfrepr == NULL) {
 			return NULL;
@@ -605,7 +605,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
 		myClass = PyObjCClass_New(self->sel_class);
 		if (!(PyObject_IsInstance(pyself, myClass)
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			|| (PyString_Check(pyself) && class_isSubclassOf(self->sel_class, [NSString class])) 
 #endif
 			|| (PyUnicode_Check(pyself) && class_isSubclassOf(self->sel_class, [NSString class])) 
@@ -967,7 +967,7 @@ PyObjCSelector_New(PyObject* callable,
 	} else {
 		/* Should not happen... */
 		result->argcount = 0;
-		char* s = sel_getName(selector);
+		const char* s = sel_getName(selector);
 		while ((s = strchr(s, ':')) != NULL) {
 			result->argcount++;
 			s++;
@@ -1008,7 +1008,7 @@ pysel_repr(PyObject* _self)
 			rval = PyText_FromFormat("<unbound selector %s at %p>", sel_getName(sel->sel_selector), sel);
 		}
 	} else {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		PyObject* selfrepr = PyObject_Repr(sel->sel_self);
 		if (selfrepr == NULL) {
 			return NULL;
@@ -1332,7 +1332,7 @@ pysel_default_selector(PyObject* callable)
 		Py_DECREF(bytes);
 
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		strncpy(buf, PyString_AS_STRING(name), sizeof(buf)-1);
 #endif
@@ -1556,7 +1556,7 @@ static	char*	keywords[] = { "function", "selector", "signature",
 			return NULL;
 		}
 		
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		callable = PyObject_GetAttrString(tmp, "im_func");
 #else
 		callable = PyObject_GetAttrString(tmp, "__funct__");
@@ -1935,7 +1935,7 @@ PyObjCSelector_FromFunction(
 			return callable;
 		}
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		callable = PyObject_GetAttrString(tmp, "im_func");
 #else
 		callable = PyObject_GetAttrString(tmp, "__func__");
@@ -1961,7 +1961,7 @@ PyObjCSelector_FromFunction(
 					PyBytes_AsString(bytes));
 			Py_DECREF(bytes);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(pyname)) {
 			selector = PyObjCSelector_DefaultSelector(
 					PyString_AsString(pyname));
@@ -1979,7 +1979,7 @@ PyObjCSelector_FromFunction(
 				PyBytes_AsString(bytes));
 		Py_DECREF(bytes);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(pyname)) {
 		selector = PyObjCSelector_DefaultSelector(
 			PyString_AS_STRING(pyname));

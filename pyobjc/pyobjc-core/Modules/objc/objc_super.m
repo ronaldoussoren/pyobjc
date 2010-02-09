@@ -40,7 +40,7 @@ super_getattro(PyObject *self, PyObject *name)
 		   (i.e. super, or a subclass), not the class of su->obj. */
 		if (PyUnicode_Check(name)) {
 			skip = (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		} else if (PyString_Check(name)) {
 			skip = (
 				PyString_GET_SIZE(name) == 9 &&
@@ -89,7 +89,7 @@ super_getattro(PyObject *self, PyObject *name)
 				
 			} else if (PyType_Check(tmp))
 				dict = ((PyTypeObject *)tmp)->tp_dict;
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			else if (PyClass_Check(tmp))
 				dict = ((PyClassObject *)tmp)->cl_dict;
 #endif

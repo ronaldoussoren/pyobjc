@@ -361,7 +361,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 		Py_DECREF(bytes);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {
@@ -418,7 +418,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 		Py_DECREF(bytes);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {

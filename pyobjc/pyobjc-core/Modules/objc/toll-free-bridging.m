@@ -29,7 +29,7 @@ PyObjC_CFTypeToID(PyObject* argument)
 #if 0
 //#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x03000000)
 #endif
-#if (PY_VERSION_HEX < 0x03000000)
+#if PY_MAJOR_VERSION == 2
 	int r;
 
 	/* Fall back to MacPython CFType support: */
@@ -51,7 +51,7 @@ PyObject*
 PyObjC_IDToCFType(id argument __attribute__((__unused__)))
 {
 
-#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x03000000)
+#if !defined(__OBJC2__) && (PY_MAJOR_VERSION == 2)
 	CFTypeRef typeRef = (CFTypeRef)argument;
 	CFTypeID typeID = CFGetTypeID(argument);
 

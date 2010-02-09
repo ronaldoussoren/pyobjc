@@ -46,7 +46,7 @@ init_registry(void)
 	return 0;
 }
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 static void memblock_capsule_cleanup(void* ptr, void* closure __attribute__((__unused__)))
 {
@@ -212,7 +212,7 @@ search_special(Class class, SEL sel)
 		
 		if (
 			(PyUnicode_Check(pysel) && PyObjC_is_ascii_string(pysel, sel_getName(sel)))
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		     || (PyString_Check(pysel) && strcmp(PyString_AsString(pysel), sel_getName(sel)) == 0)
 #else
 		     || (PyBytes_Check(pysel) && strcmp(PyBytes_AsString(pysel), sel_getName(sel)) == 0)
@@ -394,7 +394,7 @@ PyObjCUnsupportedMethod_Caller(
 	PyObject* self, 
 	PyObject* args __attribute__((__unused__)))
 {
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 	PyObject* repr;
 
 	repr = PyObject_Repr(self);

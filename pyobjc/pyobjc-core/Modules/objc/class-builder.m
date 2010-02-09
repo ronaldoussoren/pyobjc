@@ -246,7 +246,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
 				PyBytes_AsString(bytes));
 			Py_DECREF(bytes);
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 		}  else if (PyString_Check(slot_value)) {
 			var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
 				PyString_AS_STRING(slot_value));
@@ -1052,7 +1052,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					PyErr_SetString(PyExc_ValueError, "empty name");
 					goto error_cleanup;
 				}
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 			} else if (PyString_Check(pyname)) {
 				ocname = PyString_AS_STRING(pyname);
 #endif
