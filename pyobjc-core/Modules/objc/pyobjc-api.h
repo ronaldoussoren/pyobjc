@@ -398,11 +398,28 @@ static struct pyobjc_api*	PyObjC_API;
 #define PyObjC_VarList_New  (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
 
+typedef void (*PyObjC_Function_Pointer)(void);
+
+typedef struct PyObjC_function_map {
+    const char* 		name;
+    PyObjC_Function_Pointer     function;
+} PyObjC_function_map;
+
 
 
 #ifndef PYOBJC_METHOD_STUB_IMPL
 
-static int
+static inline PyObject*
+PyObjC_CreateInlineTab(PyObjC_function_map* map)
+{
+#if PY_VERSION_HEX < 0x03000000
+	return PyCObject_FromVoidPtr(map, NULL);
+#else
+	return PyCapsule_New(map, "objc.__functionlist__", NULL);
+#endif
+}
+
+static inline int
 PyObjC_ImportAPI(PyObject* calling_module)
 {
 	PyObject* m;

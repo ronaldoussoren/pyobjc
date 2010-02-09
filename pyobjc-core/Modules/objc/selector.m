@@ -1499,11 +1499,7 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	int       required = 1;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-#if PY_VERSION_HEX < 0x03000000
-				"O|ssissi:selector",
-#else
-				"O|yyissi:selector",
-#endif
+				"O|"Py_ARG_BYTES Py_ARG_BYTES"issi:selector",
 			keywords, &callable, &selector, &signature,
 			&class_method, &argtypes, &rettype, &required)) {
 		return NULL;

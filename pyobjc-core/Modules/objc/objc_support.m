@@ -740,8 +740,6 @@ PyObjCRT_AlignOfType (const char *type)
 		return __alignof__(void*);
 
 	default:
-		printf("alignoftype\n");
-		abort();
 		PyErr_Format(PyObjCExc_InternalError, 
 			"PyObjCRT_AlignOfType: Unhandled type '%#x' %s", *type, type);
 		return -1;
