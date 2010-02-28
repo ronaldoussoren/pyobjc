@@ -92,7 +92,7 @@ static int
 nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
 	NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(obj);
-	if (flags & PyBUF_WRITABLE) {
+	if ((flags & PyBUF_WRITABLE) == PyBUF_WRITABLE) {
 		return PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0, flags);
 	} else {
 		return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);

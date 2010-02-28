@@ -117,8 +117,8 @@ object_repr(PyObject* _self)
 		 * Don't call 'description' for uninitialized objects, that
 		 * is undefined behaviour and will crash the interpreter sometimes.
 		 */
-		//res = PyObject_CallMethod((PyObject*)self, "description", NULL);
-		res = NULL;
+		res = PyObject_CallMethod((PyObject*)self, "description", NULL);
+		//res = NULL;
 		if (res == NULL) {
 			PyErr_Clear();
 		} else {

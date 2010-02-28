@@ -582,6 +582,7 @@ CONVENIENCE_METHODS[b'copyWithZone:'] = (
 
 CLASS_METHODS['NSNull'] = (
     ('__nonzero__',  lambda self: False ),
+    ('__bool__',  lambda self: False ),
 )
 
 NSDecimalNumber = lookUpClass('NSDecimalNumber')
@@ -667,13 +668,14 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             result.symmetric_difference_update(other)
             return result
 
-        def __len__(self):
-            return len(self.__value)
 
     class nsdict_keys(nsdict_view):
         __slots__=('__value')
         def __init__(self, value):
             self.__value =  value
+
+        def __len__(self):
+            return len(self.__value)
 
         def __iter__(self):
             return iter(self.__value)
@@ -686,8 +688,11 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         def __init__(self, value):
             self.__value =  value
 
+        def __len__(self):
+            return len(self.__value)
+
         def __iter__(self):
-            return iter(self.objectEnumerator())
+            return iter(self.__value.objectEnumerator())
 
         def __contains__(self, value):
             for v in iter(self):
@@ -699,6 +704,9 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         __slots__=('__value')
         def __init__(self, value):
             self.__value =  value
+
+        def __len__(self):
+            return len(self.__value)
 
         def __iter__(self):
             for k in self.__value:

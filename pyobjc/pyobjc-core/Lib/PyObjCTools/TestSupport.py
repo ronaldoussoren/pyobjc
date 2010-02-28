@@ -403,7 +403,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if type != '^?':
+        if type != b'^?':
             self.fail(message or "arg %d of %s is not of type function_pointer"%(
                 argno, method))
 

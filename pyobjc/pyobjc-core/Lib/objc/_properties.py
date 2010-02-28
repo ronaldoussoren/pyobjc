@@ -53,7 +53,10 @@ class object_property (object):
         self._getter = None
         self._setter = None
         self._validate = None
-        self._depends_on = list(depends_on)
+        if depends_on is None:
+            self._depends_on = ()
+        else:
+            self._depends_on = list(depends_on)
 
         self.__getprop = None
         self.__setprop = None

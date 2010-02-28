@@ -1060,7 +1060,7 @@ class TestBuffers (TestCase):
         if sys.version_info[0] == 2:
             self.assertEquals(
                 [ ord(x)+1 for x in "hello\0world" ],
-                [ ord(x) for x in v ])
+                [ x for x in v ])
         else:
             self.assertEquals(
                 [ x+1 for x in b"hello\0world" ],
@@ -1093,7 +1093,7 @@ class TestBuffers (TestCase):
         if sys.version_info[0] == 2:
             self.assertEquals(
                 [ ord(x)+2 for x in b"hello\0world" ],
-                [ ord(x) for x in v ])
+                [ x for x in v ])
         else:
             self.assertEquals(
                 [ x+2 for x in b"hello\0world" ],

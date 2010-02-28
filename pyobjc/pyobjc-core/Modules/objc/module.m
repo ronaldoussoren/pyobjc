@@ -331,7 +331,7 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		
 		name = PyObject_GetAttrString(aMethod, "__name__");
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 3
 		if (PyBytes_Check(name)) {
 			PyObject* t = PyUnicode_Decode(
 					PyBytes_AsString(name),
@@ -2141,6 +2141,18 @@ init_objc(void)
 	 */
 	global_release_pool = [[NSAutoreleasePool alloc] init];
 	[OC_NSAutoreleasePoolCollector newAutoreleasePool];
+
+#ifndef Py_ARG_BYTES
+#error "No Py_ARG_BYTES"
+#endif
+
+#ifndef Py_ARG_NSInteger
+#error "No Py_ARG_NSInteger"
+#endif
+
+#ifndef Py_ARG_NSUInteger
+#error "No Py_ARG_NSUInteger"
+#endif
 
 #if PY_MAJOR_VERSION == 3
 	return m;

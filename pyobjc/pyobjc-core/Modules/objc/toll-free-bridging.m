@@ -10,7 +10,7 @@
 
 #import <Foundation/NSURL.h>
 
-#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x02050000)
+#if 0 && !defined(__OBJC2__) && (PY_MAJOR_VERSION == 2)
 #include "pymactoolbox.h"
 #endif
 
@@ -51,7 +51,7 @@ PyObject*
 PyObjC_IDToCFType(id argument __attribute__((__unused__)))
 {
 
-#if !defined(__OBJC2__) && (PY_MAJOR_VERSION == 2)
+#if 0 && !defined(__OBJC2__) && (PY_MAJOR_VERSION == 2)
 	CFTypeRef typeRef = (CFTypeRef)argument;
 	CFTypeID typeID = CFGetTypeID(argument);
 

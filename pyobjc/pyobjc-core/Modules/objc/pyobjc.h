@@ -9,12 +9,21 @@
 
 // Loading in AppKit on Mac OS X 10.3 results in
 // a bit less than 1500 classes.
-#define PYOBJC_EXPECTED_CLASS_COUNT 2048
+#define PYOBJC_EXPECTED_CLASS_COUNT 3000
 #define PY_SSIZE_T_CLEAN
 
 #include <Python.h>
 #include "structmember.h"
 #include "pyobjc-compat.h"
+
+/* PyObjC_DEBUG: If defined the bridge will perform more internal checks */
+#ifdef Py_DEBUG
+   /* Enable when Python is compiled with internal checks enabled */
+#  define PyObjC_DEBUG
+#endif
+
+/* PyObjC_ERROR_ABORT: If defined an internal error will result in an abort() */
+#define	PyObjC_ERROR_ABORT 1
 
 
 #include <objc/objc-runtime.h>
@@ -23,6 +32,8 @@
 // how do we make this dependent on sizeof(unichar)??
 #if Py_UNICODE_SIZE == 2
 #define PyObjC_UNICODE_FAST_PATH
+#else
+#error "Py_UNICODE_SIZE != 2 is not supported"
 #endif
 
 #include "objc-runtime-compat.h"
@@ -136,17 +147,38 @@ extern PyObject* PyObjC_AdjustSelf(PyObject* self);
 
 
 
-//#ifdef Py_DEBUG
-#if 1
+#ifdef PyObjC_DEBUG
+
+#ifdef PyObjCErr_InternalError
+#define _PyObjC_InternalError_Bailout()	abort()
+#else
+#define _PyObjC_InternalError_Bailout()	((void)0)
+#endif
 
 #define PyObjCErr_InternalError() \
+    do { \
 	PyErr_Format(PyObjCExc_InternalError, \
 	   "PyObjC: internal error in %s at %s:%d", \
-	   __FUNCTION__, __FILE__, __LINE__)
+	   __FUNCTION__, __FILE__, __LINE__); \
+	   _PyObjC_InternalError_Bailout(); \
+    } while (0)
+
+#define PyObjCErr_InternalErrorMesg(msg) \
+    do { \
+	PyErr_Format(PyObjCExc_InternalError, \
+	  "PyObjC: internal error in %s at %s:%d: %s", \
+	   __FUNCTION__, __FILE__, __LINE__, msg) \
+	   _PyObjC_InternalError_Bailout(); \
+    } while (0)
+
 #define PyObjC_Assert(expr, retval) \
-	if (!(expr)) { PyObjCErr_InternalError(); return (retval); }
+	if (!(expr)) { PyObjCErr_InternalErrorMesg(\
+			"assertion failed: " #expr); return (retval); }
 
 #else
+
+#define PyObjCErr_InternalError()	((void)0)
+#define PyObjCErr_InternalErrorMesg(mesg)	((void)0)
 
 #define PyObjC_Assert(expr, retval)	((void)0)
 
