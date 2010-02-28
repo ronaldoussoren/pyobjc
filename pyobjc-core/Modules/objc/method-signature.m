@@ -295,15 +295,12 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 				if (descr->sel_type == NULL) {
 					return -1;
 				}
-			} 
-#if PY_MAJOR_VERSION == 2
-			else if (PyString_Check(d)) {
-				descr->sel_type = PyObjCUtil_Strdup(PyString_AsString(d));
+			} else if (PyBytes_Check(d)) {
+				descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
 				if (descr->sel_type == NULL) {
 					return -1;
 				}
 			}
-#endif
 		}
 	}
 

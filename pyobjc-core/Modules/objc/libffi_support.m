@@ -1867,7 +1867,7 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
 
 		if (stubUserdata->argCount == Py_SIZE(methinfo) && !haveVarArgs && !haveVarKwds) {
 			/* OK */
-		} else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
+		} else if ((stubUserdata->argCount <= 1) && (haveVarArgs || haveVarKwds)) {
 			/* OK: 
 			 *    def m(self, *args, **kwds), or 
 			 *    def m(*args, **kwds)  

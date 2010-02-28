@@ -651,23 +651,14 @@ handle_string_constant(xmlNode* cur_node, PyObject* globalDict)
 {
 	char* name = attribute_string(cur_node, "name", NULL);
 	char* value = attribute_string(cur_node, "value", "value64");
+	BOOL nsstring = attribute_bool(cur_node, "nsstring", NULL, NO);
 
 	if (name != NULL && value != NULL && *value != '\0') {
-		size_t i, len = strlen(value);
-
-		PyObject* v = NULL;
-		for (i = 0; i < len; i++) {
-			if (((unsigned char)value[i]) > 127) {
-				v = PyUnicode_DecodeUTF8(value, len, "strict");
-				if (v == NULL) {
-					if (name) xmlFree(name);
-					if (value) xmlFree(value);
-					return -1;
-				}
-				break;
-			}
-		}
-		if (v == NULL) {
+		size_t len = strlen(value);
+		PyObject* v;
+		if (nsstring) {
+			v = PyUnicode_DecodeUTF8(value, len, "strict");
+		} else {
 			v = PyBytes_InternFromStringAndSize(value, len);
 		}
 		if (v == NULL) {

@@ -108,7 +108,7 @@ typedef int Py_ssize_t;
 
 #endif
 
-#if PY_VERSION_HEX < 0x03000000
+#if PY_MAJOR_VERSION == 2
 
 #ifndef Py_ARG_BYTES
 #define Py_ARG_BYTES "s"
@@ -124,10 +124,10 @@ typedef int Py_ssize_t;
 
 #if __LP64__
 #define Py_ARG_NSInteger "l"
-#define Py_ARG_NSUInteger "L"
+#define Py_ARG_NSUInteger "k"
 #else
 #define Py_ARG_NSInteger "i"
-#define Py_ARG_NSUInteger "L"
+#define Py_ARG_NSUInteger "I"
 #endif
 
 #if PY_MAJOR_VERSION == 2
