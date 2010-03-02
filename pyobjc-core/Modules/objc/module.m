@@ -347,15 +347,20 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 		}
 #endif
 
-		if (PyObjCSelector_IsClassMethod(aMethod)) {
-			r = PyDict_SetItem(metaDict, name, aMethod);
+		if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name)) {
+			if (PyObjCSelector_IsClassMethod(aMethod)) {
+				r = PyDict_SetItem(metaDict, name, aMethod);
+			} else {
+				r = PyDict_SetItem(extraDict, name, aMethod);
+			}
+			Py_DECREF(name); name = NULL;
+			Py_DECREF(aMethod); aMethod = NULL;
+			if (r == -1) {
+				goto cleanup_and_return_error;
+			}
 		} else {
-			r = PyDict_SetItem(extraDict, name, aMethod);
-		}
-		Py_DECREF(name); name = NULL;
-		Py_DECREF(aMethod); aMethod = NULL;
-		if (r == -1) {
-			goto cleanup_and_return_error;
+			Py_DECREF(name); name = NULL;
+			Py_DECREF(aMethod); aMethod = NULL;
 		}
 	}
 

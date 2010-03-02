@@ -1163,6 +1163,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < PySequence_Fast_GET_SIZE(instance_methods); i++) {
 		value = PySequence_Fast_GET_ITEM(instance_methods, i);
 
+		if (PyBytes_Check(value)) {
+			int r = PySet_Add(hiddenSelectors, value);
+			if (r == -1) {
+				goto error_cleanup;
+			}
+		}
+
 		if (!PyObjCSelector_Check(value)) {
 			continue;
 		}

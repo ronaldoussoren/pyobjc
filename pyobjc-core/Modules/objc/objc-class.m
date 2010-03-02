@@ -924,7 +924,6 @@ static PyObject*
 class_getattro(PyObject* self, PyObject* name)
 {
 	PyObject* result = NULL;
-
 	/* Python will look for a number of "private" attributes during 
 	 * normal operations, such as when building subclasses. Avoid a
 	 * method rescan when that happens.
@@ -960,7 +959,6 @@ class_getattro(PyObject* self, PyObject* name)
 		PyErr_Clear();
 	}
 #endif
-
 	PyObjCClass_CheckMethodList(self, 1);
 	
 	result = PyType_Type.tp_getattro(self, name);
@@ -975,10 +973,19 @@ class_getattro(PyObject* self, PyObject* name)
 		if (bytes == NULL) {
 			return NULL;
 		}
+		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(bytes)))) {
+			Py_DECREF(bytes);
+			PyErr_SetObject(PyExc_AttributeError, name);
+			return NULL;
+		}
 		result = PyObjCSelector_FindNative(self, PyBytes_AsString(bytes));
 		Py_DECREF(bytes);
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
+		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(name)))) {
+			PyErr_SetObject(PyExc_AttributeError, name);
+			return NULL;
+		}
 		result = PyObjCSelector_FindNative(self, PyString_AsString(name));
 #endif
 	} else {
@@ -1108,16 +1115,21 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 			}
 		}
 
-		if (PyObjCSelector_IsClassMethod(newVal)) {
-			r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, newVal);
 
+		if (PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal))) {
+			Py_DECREF(newVal);
 		} else {
-			r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
-		}
-		Py_DECREF(newVal);
-		if (r == -1) {
-			PyErr_NoMemory();
-			return -1;
+			if (PyObjCSelector_IsClassMethod(newVal)) {
+				r = PyDict_SetItem(Py_TYPE(self)->tp_dict, name, newVal);
+
+			} else {
+				r = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, newVal);
+			}
+			Py_DECREF(newVal);
+			if (r == -1) {
+				PyErr_NoMemory();
+				return -1;
+			}
 		}
 		return 0;
 	}
@@ -1469,9 +1481,11 @@ add_class_fields(Class objc_class, PyObject* py_class, PyObject* pubDict, PyObje
 		}
 
 		/* Check if the selector should be hidden */
-		if (PyObjCClass_HiddenSelector(py_class, method_getName(methods[i]))) {
+		if (PyObjCClass_HiddenSelector(py_class, 
+					method_getName(methods[i]))) {
 			continue;
 		}
+
 
 		name = (char*)PyObjC_SELToPythonName(
 					method_getName(methods[i]), 
@@ -1519,6 +1533,12 @@ add_class_fields(Class objc_class, PyObject* py_class, PyObject* pubDict, PyObje
 		char* name;
 
 		dict = classDict;
+
+		/* Check if the selector should be hidden */
+		if (PyObjCClass_HiddenSelector(py_class, 
+					method_getName(methods[i]))) {
+			continue;
+		}
 
 		name = PyObjC_SELToPythonName(
 			method_getName(methods[i]), 
