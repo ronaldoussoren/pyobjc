@@ -92,7 +92,8 @@ class SplitSignatureTest (TestCase):
         ]
 
         for cls in objc.getClassList():
-            if cls.__name__.startswith('OC_'): continue
+            #if cls.__name__.startswith('OC_'): continue
+            if cls.__name__.startswith('OC'): continue
             for selName in cls.__dict__.keys():
                 self.assertIsInstance(selName, str)
                 if selName in EXCEPTIONS: continue

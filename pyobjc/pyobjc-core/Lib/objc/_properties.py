@@ -28,13 +28,13 @@ def _return_value(value):
 
 def _dynamic_getter(name):
     def getter(object):
-        m = getatrr(object.pyobjc_instanceMethods, name)
+        m = getattr(object.pyobjc_instanceMethods, name)
         return m()
     return getter
 
 def _dynamic_setter(name):
     def setter(object, value):
-        m = getatrr(object.pyobjc_instanceMethods, name)
+        m = getattr(object.pyobjc_instanceMethods, name)
         return m(value)
     return setter
 
@@ -68,8 +68,8 @@ class object_property (object):
                 ivar=self._ivar, typestr=self._typestr, depends_on=None)
         v.__inherit = True
 
-        v.__getprop = self.__getter
-        v.__setprop = self.__setter
+        v.__getprop = self.__getprop
+        v.__setprop = self.__setprop
         v.__parent = self
 
         return v
@@ -93,14 +93,15 @@ class object_property (object):
             self._setter = None
 
         else:
-            setterName = 'set%s%s:'%(name[0].upper(), name[1:])
-            signature = 'v@:' + self._typestr
+            setterName = b'set%s%s:'%(name[0].upper().encode('latin1'), name[1:].encode('latin1'))
+            signature = b'v@:' + self._typestr
             if self._setter is None:
                 if self.__inherit:
                     pass
 
                 elif self._dynamic:
                     self.__setprop = _dynamic_setter(setterName)
+                    instance_methods.add(setterName)
 
                 else:
 
@@ -126,9 +127,9 @@ class object_property (object):
                 instance_methods.add(self.__setprop)
 
         if self._typestr in (_C_NSBOOL, _C_BOOL):
-            getterName = 'is%s%s'%(name[0].upper(), name[:1])
+            getterName = b'is%s%s'%(name[0].upper().encode('latin1'), name[:1].encode('latin1'))
         else:
-            getterName = self._name
+            getterName = self._name.encode('latin1')
 
         if self._getter is None:
             if self.__inherit:
@@ -136,6 +137,7 @@ class object_property (object):
 
             elif self._dynamic:
                 self.__getprop = _dynamic_getter(getterName)
+                instance_methods.add(getterName)
 
             else:
                 if self._ivar is NULL:
@@ -158,11 +160,11 @@ class object_property (object):
             instance_methods.add(self.__getprop)
 
         if self._validate is not None:
-            selName = 'validate%s%s:error:'%(
-                    self._name[0].upper(), self._name[1:])
-            signature = _NSBOOL + '@:N^@o^@'
+            selName = b'validate%s%s:error:'%(
+                    self._name[0].upper().encode('latin'), self._name[1:].encode('latin'))
+            signature = _C_NSBOOL + b'@:N^@o^@'
             validate = selector(
-                    self.validate,
+                    self._validate,
                     selector=selName,
                     signature=signature)
             validate.isHidden = True
@@ -181,12 +183,14 @@ class object_property (object):
                         self._name[0].upper(), self._name[1:]),
                     signature = '@@:',
                     isClassMethod=True)
-            #affecting.isHidden = True
+            affecting.isHidden = True
             class_dict[affecting.selector] = affecting
             class_methods.add(affecting)
-                   
+
 
     def __get__(self, object, owner):
+        if object is None:
+            return self
         return self.__getprop(object)
 
     def __set__(self, object, value):
@@ -213,13 +217,15 @@ class object_property (object):
         return self
 
     def setter(self, function):
-        if self._ro:
-            raise ValueError("Defining settter for read-only property")
 
         if self.__created:
             v = self._clone()
+            v._ro = False
             v._setter = function
             return v
+
+        if self._ro:
+            raise ValueError("Defining settter for read-only property")
 
         self._setter = function
         return self
