@@ -227,7 +227,13 @@ PyObjCErr_AsExc(void)
 	if (args == NULL) {
 		PyErr_Clear();
 	} else {
-		return PyObjC_PythonToId(args);
+		id result;
+
+		if (depythonify_c_value(@encode(id), args, &result) == -1) {
+			abort();
+		}
+		NSLog(@"exception: %@", result);
+		return result;
 	}
 
 	args = PyObject_GetAttrString(exc_value, "_pyobjc_info_");
@@ -293,11 +299,11 @@ PyObjCErr_AsExc(void)
 
 	val = [NSException 
 		exceptionWithName:@"OC_PythonException"
-		reason:[NSString stringWithFormat:@"%@: %@", PyObjC_PythonToId(typerepr), PyObjC_PythonToId(repr)]
+			   reason:[NSString stringWithFormat:@"%@: %@", typerepr?PyObjC_PythonToId(typerepr):NULL, repr?PyObjC_PythonToId(repr):NULL]
 		userInfo:userInfo];
 
-	Py_DECREF(typerepr);
-	Py_DECREF(repr);
+	Py_XDECREF(typerepr);
+	Py_XDECREF(repr);
 
 	if (PyObjC_VerboseLevel) {
 		PyErr_Restore(exc_type, exc_value , exc_traceback);
