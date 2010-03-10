@@ -909,6 +909,7 @@ PyObjCSelector_NewNative(Class class,
 	if (sel_isEqual(selector, @selector(alloc)) || sel_isEqual(selector, @selector(allocWithZone:))) {
 		  result->sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
 	}
+	result->sel_call_func = NULL;
 	return (PyObject*)result;
 }
 
