@@ -7,6 +7,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.3a0
 -------------
 
+- BUGFIX: accessing methods through ``anObject.pyobjc_instancMethods`` is
+  now safer, before this release this could cause unlimited recursion
+  (although I'm not sure if it was possible to trigger this without
+  other changes in this release).
+
 - The PyObjC egg now includes the header files that should be used to
   compile to compile the extensions in the framework wrappers, which makes
   it a lot easier to access those headers.
