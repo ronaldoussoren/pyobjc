@@ -99,7 +99,6 @@ find_selector(PyObject* self, char* name, int class_method)
 	if (flattened == NULL) {
 		return NULL;
 	}
-
 	return PyObjCSelector_NewNative((Class)objc_object, sel,
 		flattened, class_method);
 }
@@ -301,9 +300,18 @@ obj_getattro(PyObject* _self, PyObject* name)
 		}
 
 	} else {
-		if (PyObjCClass_Check(self->base)) {
+		if (PyObjCClass_Check(self->base) || PyObjCObject_Check(self->base)) {
 			/* Walk the mro and look in the class dict */
-			PyObject* mro = ((PyTypeObject*)self->base)->tp_mro;
+			PyObject* mro;
+			PyObject* descr_arg;
+			
+			if (PyObjCClass_Check(self->base)) {
+				mro = ((PyTypeObject*)self->base)->tp_mro;
+				descr_arg = NULL;
+			} else {
+				mro = (Py_TYPE(self->base))->tp_mro;
+				descr_arg = self->base;
+			}
 			Py_ssize_t i, len;
 
 			len = PyTuple_GET_SIZE(mro);
@@ -319,11 +327,14 @@ obj_getattro(PyObject* _self, PyObject* name)
 						 * descriptor mechanism to
 						 * fetch the actual result
 						 */
-						v = Py_TYPE(v)->tp_descr_get(v, NULL, (PyObject*)Py_TYPE(v));
+						v = Py_TYPE(v)->tp_descr_get(v, descr_arg, (PyObject*)Py_TYPE(v));
 						result = v;
 						Py_INCREF(result);
-						break;
 					}
+					/* Found an item with the specified 
+					 * name, abort the search.
+					 */
+					break;
 				}
 			}
 	
@@ -353,14 +364,17 @@ obj_getattro(PyObject* _self, PyObject* name)
 	if (self->class_method && PyObjCObject_Check(self->base)) {
 		/* Class method */
 		((PyObjCSelector*)result)->sel_self = (PyObject*)(Py_TYPE(self->base));
+		Py_INCREF(Py_TYPE(self->base));
 	} else if (!self->class_method && PyObjCClass_Check(self->base)) {
 		/* Unbound instance method */
 		((PyObjCSelector*)result)->sel_self = NULL;
 	} else {
 		/* Bound instance method */
 		((PyObjCSelector*)result)->sel_self = self->base;
+		Py_INCREF(self->base);
+
 	}
-	Py_XINCREF(((PyObjCSelector*)result)->sel_self);
+	/*Py_XINCREF(((PyObjCSelector*)result)->sel_self);*/
 	Py_DECREF(name_bytes);
 	return result;
 }
