@@ -14,7 +14,8 @@ find_selector(PyObject* self, char* name, int class_method)
 	NSMethodSignature* methsig;
 	char  buf[1024];
 	volatile int   unbound_instance_method = 0;
-	char* flattened;
+	char* flattened = NULL;
+	PyObject* class_object;
 
 	if (name[0] == '_' && name[1] == '_') {
 		/*
@@ -28,11 +29,14 @@ find_selector(PyObject* self, char* name, int class_method)
 
 	if (PyObjCClass_Check(self)) {
 		objc_object = (id)PyObjCClass_GetClass(self);
+		class_object = self;
 
 		if (!class_method) {
 			unbound_instance_method = 1;
 		}
 	} else if (PyObjCObject_Check(self)) {
+		class_object = (PyObject*)Py_TYPE(self);
+
 		objc_object = PyObjCObject_GetObject(self);
 		if (objc_object == NULL) {
 			PyErr_SetString(PyExc_AttributeError, 
@@ -94,8 +98,14 @@ find_selector(PyObject* self, char* name, int class_method)
 		objc_object = (id)object_getClass(objc_object);
 	}
 
-	flattened = PyObjC_NSMethodSignatureToTypeString(
+	PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
+	if (meta) {
+		flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
+	} 
+	if (flattened == NULL) {
+		flattened = PyObjC_NSMethodSignatureToTypeString(
 			methsig, buf, sizeof(buf));
+	}
 	if (flattened == NULL) {
 		return NULL;
 	}

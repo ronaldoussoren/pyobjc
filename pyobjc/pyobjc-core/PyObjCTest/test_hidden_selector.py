@@ -195,8 +195,5 @@ class TestHiddenSelector (TestCase):
         v = OCTestSubHidden.performSelector_(b'bodyclass')
         self.assertEquals(v, "BODYCLASS2")
 
-    def testTypes(self):
-        self.fail("Add tests with objc._C_CHAR_AS_INT, objc._C_UNICHAR and complex APIs")
-
 if __name__ == "__main__":
     main()

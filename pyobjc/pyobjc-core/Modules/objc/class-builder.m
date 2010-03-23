@@ -1189,7 +1189,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		value = PySequence_Fast_GET_ITEM(instance_methods, i);
 
 		if (PyBytes_Check(value)) {
-			int r = PySet_Add(hiddenSelectors, value);
+			int r = PyDict_SetItem(hiddenSelectors, value, Py_None);
 			if (r == -1) {
 				goto error_cleanup;
 			}
@@ -1224,7 +1224,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				if (v == NULL) {
 					goto error_cleanup;
 				}
-				int r = PySet_Add(hiddenSelectors, v);
+				int r = PyDict_SetItem(hiddenSelectors, v, 
+						(PyObject*)PyObjCSelector_GetMetadata(value));
 				Py_DECREF(v);
 				if (r == -1) {
 					goto error_cleanup;
@@ -1236,7 +1237,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		value = PySequence_Fast_GET_ITEM(class_methods, i);
 
 		if (PyBytes_Check(value)) {
-			int r = PySet_Add(hiddenClassSelectors, value);
+			int r = PyDict_SetItem(hiddenClassSelectors, value, Py_None);
 			if (r == -1) {
 				goto error_cleanup;
 			}
@@ -1272,7 +1273,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 				if (v == NULL) {
 					goto error_cleanup;
 				}
-				int r = PySet_Add(hiddenClassSelectors, v);
+				int r = PyDict_SetItem(hiddenClassSelectors, v, 
+						(PyObject*)PyObjCSelector_GetMetadata(value));
 				Py_DECREF(v);
 				if (r == -1) {
 					goto error_cleanup;
