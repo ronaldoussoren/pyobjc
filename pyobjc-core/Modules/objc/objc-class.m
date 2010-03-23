@@ -7,8 +7,36 @@
 
 #include <stddef.h>
 
+int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod)
+{
+	PyObject* hidden;
+	if (classMethod) {
+		hidden = ((PyObjCClassObject*)tp)->hiddenClassSelectors;
+		if (hidden == NULL) {
+			hidden = PySet_New(NULL);
+			if (hidden == NULL) {
+				return -1;
+			}
+			((PyObjCClassObject*)tp)->hiddenClassSelectors = hidden;
+		}
+	} else {
+		hidden = ((PyObjCClassObject*)tp)->hiddenSelectors;
+		if (hidden == NULL) {
+			hidden = PySet_New(NULL);
+			if (hidden == NULL) {
+				return -1;
+			}
+			((PyObjCClassObject*)tp)->hiddenSelectors = hidden;
+		}
+	}
+	PyObject* v = PyBytes_InternFromString(sel_getName(sel));
+	int r = PySet_Add(hidden, v);
+	Py_DECREF(v);
+	return r;
+}
 
-BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel)
+
+BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 {
 	PyObject* mro = ((PyTypeObject*)tp)->tp_mro;
 	int i, n;
@@ -21,7 +49,12 @@ BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel)
 	for (i = 0; i < n; i++) {
 		PyObject* base = PyTuple_GET_ITEM(mro, i);
 		if (PyObjCClass_Check(base)) {
-			PyObject* hidden = ((PyObjCClassObject*)base)->hiddenSelectors;
+			PyObject* hidden;
+			if (classMethod) {
+				hidden = ((PyObjCClassObject*)base)->hiddenClassSelectors;
+			} else {
+				hidden = ((PyObjCClassObject*)base)->hiddenSelectors;
+			}
 			if (hidden != NULL) {
 				PyObject* v = PyBytes_InternFromString(sel_getName(sel));
 				if (v == NULL) {
@@ -109,7 +142,7 @@ static PyBufferProcs nsdata_as_buffer = {
 	nsdata_getsegcount,
 	NULL
 #if PY_VERSION_HEX >= 0x02060000
-	, NULL                                     
+	, nsdata_getbuffer
 	, NULL                                     
 #endif
 
@@ -127,7 +160,7 @@ static PyBufferProcs nsmutabledata_as_buffer = {
 	nsdata_getsegcount,
 	NULL
 #if PY_VERSION_HEX >= 0x02060000
-	, NULL                                     
+	, nsmutabledata_getbuffer
 	, NULL                                     
 #endif
 
@@ -378,6 +411,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	Ivar var;
 	PyObject* protectedMethods = NULL;
 	PyObject* hiddenSelectors = NULL;
+	PyObject* hiddenClassSelectors = NULL;
 	BOOL      isCFProxyClass = NO;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
@@ -432,6 +466,13 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
+	hiddenClassSelectors = PySet_New(NULL);
+	if (hiddenClassSelectors == NULL) {
+		Py_DECREF(protectedMethods);
+		Py_DECREF(hiddenSelectors);
+		return NULL;
+	}
+
 
 	/*
 	 * __pyobjc_protocols__ contains the list of protocols supported
@@ -445,6 +486,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (protocols == NULL) {
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 	} else {
@@ -456,6 +498,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (seq == NULL) {
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			Py_DECREF(protocols);
 			return NULL;
 		}
@@ -466,6 +509,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		if (protocols == NULL) {
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 		for (i = 0; i < protocols_len; i++) {
@@ -481,12 +525,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(protocols);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		return NULL;
 	}
 	PyList_Append(real_bases, py_super_class);
 	if (PyErr_Occurred()) {
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		Py_DECREF(protocols);
 		Py_DECREF(real_bases);
 		return NULL;
@@ -499,6 +545,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(real_bases);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 		if (PyObjCClass_Check(v)) {
@@ -506,6 +553,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(real_bases);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			PyErr_SetString(PyExc_TypeError, 
 					"multiple objective-C bases");
 			return NULL;
@@ -524,6 +572,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(real_bases);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		return NULL;
 	}
 
@@ -534,13 +583,14 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		/* First generate the objective-C class. This may change the
 		 * class dict.
 		 */
-		objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict, hiddenSelectors);
+		objc_class = PyObjCClass_BuildClass(super_class, protocols, name, dict, metadict, hiddenSelectors, hiddenClassSelectors);
 		if (objc_class == NULL) {
 			Py_DECREF(protocols);
 			Py_DECREF(metadict);
 			Py_DECREF(real_bases);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 
@@ -554,6 +604,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(metadict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		} else {
 			PyObjCClass_CheckMethodList(py_super_class, 1);
@@ -573,6 +624,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(real_bases);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		return NULL;
 	}
 	Py_DECREF(real_bases);
@@ -598,6 +650,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				Py_DECREF(metadict);
 				Py_DECREF(protectedMethods);
 				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
 				(void)PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
 			}
@@ -609,6 +662,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				Py_DECREF(metadict);
 				Py_DECREF(protectedMethods);
 				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
 				(void)PyObjCClass_UnbuildClass(objc_class);
 				return NULL;
 			}
@@ -625,6 +679,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(metadict);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
@@ -653,6 +708,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(metadict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		} else {
 			if (PyDict_DelItemString(dict, "__del__") < 0) {
@@ -664,6 +720,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 				Py_DECREF(metadict);
 				Py_DECREF(protectedMethods);
 				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
 				return NULL;
 			}
 		}
@@ -683,6 +740,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(metadict);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		return NULL;
 	}
 		
@@ -695,6 +753,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(metadict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 	}
@@ -711,6 +770,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(metadict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 		if (PyDict_Update(metatype->tp_dict, metadict) == -1) {
@@ -720,6 +780,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(metadict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			return NULL;
 		}
 	} else {
@@ -743,6 +804,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		Py_DECREF(old_dict);
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
+		Py_DECREF(hiddenClassSelectors);
 		(void)PyObjCClass_UnbuildClass(objc_class);
 		return NULL;
 	}
@@ -766,6 +828,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 			Py_DECREF(old_dict);
 			Py_DECREF(protectedMethods);
 			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
 			(void)PyObjCClass_UnbuildClass(objc_class);
 			return NULL;
 		}
@@ -788,6 +851,7 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	info->isCFWrapper = 0;
 	info->protectedMethods = protectedMethods;
 	info->hiddenSelectors = hiddenSelectors;
+	info->hiddenClassSelectors = hiddenClassSelectors;
 
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
@@ -966,6 +1030,8 @@ class_getattro(PyObject* self, PyObject* name)
 		return result;
 	}
 
+
+
 	/* Try to find the method anyway */
 	PyErr_Clear();
 	if (PyUnicode_Check(name)) {
@@ -973,7 +1039,7 @@ class_getattro(PyObject* self, PyObject* name)
 		if (bytes == NULL) {
 			return NULL;
 		}
-		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(bytes)))) {
+		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(bytes)), YES)) {
 			Py_DECREF(bytes);
 			PyErr_SetObject(PyExc_AttributeError, name);
 			return NULL;
@@ -982,7 +1048,7 @@ class_getattro(PyObject* self, PyObject* name)
 		Py_DECREF(bytes);
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
-		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(name)))) {
+		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(name)), YES)) {
 			PyErr_SetObject(PyExc_AttributeError, name);
 			return NULL;
 		}
@@ -1116,7 +1182,8 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 		}
 
 
-		if (PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal))) {
+		if (PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
+				PyObjCSelector_IsClassMethod(newVal))) {
 			Py_DECREF(newVal);
 		} else {
 			if (PyObjCSelector_IsClassMethod(newVal)) {
@@ -1482,7 +1549,7 @@ add_class_fields(Class objc_class, PyObject* py_class, PyObject* pubDict, PyObje
 
 		/* Check if the selector should be hidden */
 		if (PyObjCClass_HiddenSelector(py_class, 
-					method_getName(methods[i]))) {
+					method_getName(methods[i]), NO)) {
 			continue;
 		}
 
@@ -1536,7 +1603,7 @@ add_class_fields(Class objc_class, PyObject* py_class, PyObject* pubDict, PyObje
 
 		/* Check if the selector should be hidden */
 		if (PyObjCClass_HiddenSelector(py_class, 
-					method_getName(methods[i]))) {
+					method_getName(methods[i]), YES)) {
 			continue;
 		}
 
@@ -2268,3 +2335,168 @@ PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta)
 	return PyObjCClass_New(objc_metaclass_locate(meta));
 }
 
+
+int PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t methodCount)
+{
+	Class targetClass;
+	Py_ssize_t methodIndex;
+	int r;
+	struct PyObjC_method *methodsToAdd;
+	size_t curMethodIndex;
+	struct PyObjC_method *classMethodsToAdd;
+	size_t curClassMethodIndex;
+	PyObject* extraDict = NULL;
+	PyObject* metaDict = NULL;
+
+	targetClass  = PyObjCClass_GetClass(classObject);
+	if (targetClass == NULL) {
+		return -1;
+	}
+
+	if (methodCount == 0) {
+		return 0;
+	}
+
+	extraDict = PyDict_New();
+	if (extraDict == NULL) {
+		return -1;
+	}
+
+	metaDict = PyDict_New();
+	if (metaDict == NULL) {
+		Py_DECREF(extraDict);
+		return -1;
+	}
+
+	methodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
+	if (methodsToAdd == NULL) {
+		Py_DECREF(extraDict);
+		Py_DECREF(metaDict);
+		PyErr_NoMemory();
+		return -1;
+	}
+
+	classMethodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
+	if (classMethodsToAdd == NULL) {
+		Py_DECREF(extraDict);
+		Py_DECREF(metaDict);
+		PyMem_Free(methodsToAdd);
+		PyErr_NoMemory();
+		return -1;
+	}
+		
+	curMethodIndex = 0;
+	curClassMethodIndex = 0;
+
+	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
+		PyObject* aMethod = methods[methodIndex]; 
+		PyObject* name;
+		struct PyObjC_method *objcMethod;
+
+		if (PyObjCNativeSelector_Check(aMethod)) {
+			PyErr_Format(PyExc_TypeError,
+				"Cannot add a native selector to other "
+				"classes");
+			goto cleanup_and_return_error;
+		}
+
+		aMethod = PyObjCSelector_FromFunction(
+			NULL,
+			aMethod,
+			classObject,
+			NULL);
+		if (aMethod == NULL) {
+			PyErr_Format(PyExc_TypeError ,
+			      "All objects in methodArray must be of "
+			      "type <objc.selector>, <function>, "
+			      " <method> or <classmethod>");
+			goto cleanup_and_return_error;
+		}
+
+		/* install in methods to add */
+		if (PyObjCSelector_IsClassMethod(aMethod)) {
+			objcMethod = classMethodsToAdd + curClassMethodIndex++;
+		} else {
+			objcMethod = methodsToAdd + curMethodIndex++;
+		}
+		
+		objcMethod->name = PyObjCSelector_GetSelector(aMethod);
+		objcMethod->type = strdup(
+				PyObjCSelector_Signature(aMethod));
+
+		PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type));
+		if (objcMethod->type == NULL) {
+			goto cleanup_and_return_error;
+		}
+		objcMethod->imp = PyObjCFFI_MakeIMPForPyObjCSelector(
+			(PyObjCSelector*)aMethod);
+		
+		name = PyObject_GetAttrString(aMethod, "__name__");
+
+#if PY_MAJOR_VERSION == 3
+		if (PyBytes_Check(name)) {
+			PyObject* t = PyUnicode_Decode(
+					PyBytes_AsString(name),
+					PyBytes_Size(name),
+					NULL, NULL);
+			if (t == NULL) {
+				Py_DECREF(name); name = NULL;
+				Py_DECREF(aMethod); aMethod = NULL;
+				goto cleanup_and_return_error;
+			}
+			Py_DECREF(name);
+			name = t;
+		}
+#endif
+		if (PyObjCSelector_IsHidden(aMethod)) {
+			r = PyObjCClass_SetHidden(classObject, objcMethod->name, PyObjCSelector_IsClassMethod(aMethod));
+			if (r == -1) {
+				goto cleanup_and_return_error;
+			}
+		}
+
+		r = 0;
+		if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name, 
+					PyObjCSelector_IsClassMethod(aMethod))) {
+			if (PyObjCSelector_IsClassMethod(aMethod)) {
+				r = PyDict_SetItem(metaDict, name, aMethod);
+			} else {
+				r = PyDict_SetItem(extraDict, name, aMethod);
+			}
+		}
+		Py_DECREF(name); name = NULL;
+		Py_DECREF(aMethod); aMethod = NULL;
+		if (r == -1) {
+			goto cleanup_and_return_error;
+		}
+	}
+
+	/* add the methods */
+	if (curMethodIndex != 0) {
+		class_addMethodList(targetClass, methodsToAdd, curMethodIndex);
+	}
+	PyMem_Free(methodsToAdd);
+	if (curClassMethodIndex != 0) {
+		class_addMethodList(object_getClass(targetClass),
+				classMethodsToAdd, curClassMethodIndex);
+	}
+	PyMem_Free(classMethodsToAdd);
+
+	r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
+	if (r == -1) goto cleanup_and_return_error;
+
+	r = PyDict_Merge(Py_TYPE(classObject)->tp_dict, metaDict, 1);
+	if (r == -1) goto cleanup_and_return_error;
+
+	Py_DECREF(extraDict); extraDict = NULL;
+	Py_DECREF(metaDict); metaDict = NULL;
+
+	return 0;
+
+cleanup_and_return_error:
+	Py_XDECREF(metaDict);
+	Py_XDECREF(extraDict);
+	if (methodsToAdd) PyMem_Free(methodsToAdd);
+	if (classMethodsToAdd) PyMem_Free(classMethodsToAdd);
+	return -1;
+}

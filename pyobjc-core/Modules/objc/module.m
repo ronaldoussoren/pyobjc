@@ -220,16 +220,6 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 	static 	char* kwlist[] = { "targetClass", "methodsArray", NULL };
 	PyObject* classObject = NULL;
 	PyObject* methodsArray = NULL;
-	Class targetClass;
-	Py_ssize_t methodCount;
-	Py_ssize_t methodIndex;
-	int r;
-	struct PyObjC_method *methodsToAdd;
-	size_t curMethodIndex;
-	struct PyObjC_method *classMethodsToAdd;
-	size_t curClassMethodIndex;
-	PyObject* extraDict = NULL;
-	PyObject* metaDict = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, keywds, 
 			"OO:classAddMethods", kwlist,
@@ -246,154 +236,19 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
 			methodsArray, "methodsArray must be a sequence");
 	if (methodsArray == NULL) return NULL;
 	
-	targetClass  = PyObjCClass_GetClass(classObject);
-	methodCount  = PySequence_Fast_GET_SIZE(methodsArray);
+	int r = PyObjCClass_AddMethods(classObject, 
+			PySequence_Fast_ITEMS(methodsArray),
+			PySequence_Fast_GET_SIZE(methodsArray));
+	Py_DECREF(methodsArray);
 
-	if (methodCount == 0) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
-	
-	extraDict = PyDict_New();
-	if (extraDict == NULL) {
+	if (r == -1) {
 		return NULL;
 	}
-
-	metaDict = PyDict_New();
-	if (metaDict == NULL) {
-		Py_DECREF(extraDict);
-		return NULL;
-	}
-
-	methodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
-	if (methodsToAdd == NULL) {
-		Py_DECREF(extraDict);
-		Py_DECREF(metaDict);
-		PyErr_NoMemory();
-		return NULL;
-	}
-
-	classMethodsToAdd = PyMem_Malloc(sizeof(*methodsToAdd) * methodCount);
-	if (classMethodsToAdd == NULL) {
-		Py_DECREF(extraDict);
-		Py_DECREF(metaDict);
-		PyMem_Free(methodsToAdd);
-		PyErr_NoMemory();
-		return NULL;
-	}
-		
-	curMethodIndex = 0;
-	curClassMethodIndex = 0;
-
-	for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
-		PyObject* aMethod = PySequence_Fast_GET_ITEM(
-				methodsArray, methodIndex);
-		PyObject* name;
-		struct PyObjC_method *objcMethod;
-
-		if (PyObjCNativeSelector_Check(aMethod)) {
-			PyErr_Format(PyExc_TypeError,
-				"Cannot add a native selector to other "
-				"classes");
-			goto cleanup_and_return_error;
-		}
-
-		aMethod = PyObjCSelector_FromFunction(
-			NULL,
-			aMethod,
-			classObject,
-			NULL);
-		if (aMethod == NULL) {
-			PyErr_Format(PyExc_TypeError ,
-			      "All objects in methodArray must be of "
-			      "type <objc.selector>, <function>, "
-			      " <method> or <classmethod>");
-			goto cleanup_and_return_error;
-		}
-
-		/* install in methods to add */
-		if (PyObjCSelector_IsClassMethod(aMethod)) {
-			objcMethod = classMethodsToAdd + curClassMethodIndex++;
-		} else {
-			objcMethod = methodsToAdd + curMethodIndex++;
-		}
-		
-		objcMethod->name = PyObjCSelector_GetSelector(aMethod);
-		objcMethod->type = strdup(
-				PyObjCSelector_Signature(aMethod));
-
-		PyObjC_RemoveInternalTypeCodes((char*)(objcMethod->type));
-		if (objcMethod->type == NULL) {
-			goto cleanup_and_return_error;
-		}
-		objcMethod->imp = PyObjCFFI_MakeIMPForPyObjCSelector(
-			(PyObjCSelector*)aMethod);
-		
-		name = PyObject_GetAttrString(aMethod, "__name__");
-
-#if PY_MAJOR_VERSION == 3
-		if (PyBytes_Check(name)) {
-			PyObject* t = PyUnicode_Decode(
-					PyBytes_AsString(name),
-					PyBytes_Size(name),
-					NULL, NULL);
-			if (t == NULL) {
-				Py_DECREF(name); name = NULL;
-				Py_DECREF(aMethod); aMethod = NULL;
-				goto cleanup_and_return_error;
-			}
-			Py_DECREF(name);
-			name = t;
-		}
-#endif
-
-		if (!PyObjCClass_HiddenSelector(classObject, objcMethod->name)) {
-			if (PyObjCSelector_IsClassMethod(aMethod)) {
-				r = PyDict_SetItem(metaDict, name, aMethod);
-			} else {
-				r = PyDict_SetItem(extraDict, name, aMethod);
-			}
-			Py_DECREF(name); name = NULL;
-			Py_DECREF(aMethod); aMethod = NULL;
-			if (r == -1) {
-				goto cleanup_and_return_error;
-			}
-		} else {
-			Py_DECREF(name); name = NULL;
-			Py_DECREF(aMethod); aMethod = NULL;
-		}
-	}
-
-	/* add the methods */
-	if (curMethodIndex != 0) {
-		class_addMethodList(targetClass, methodsToAdd, curMethodIndex);
-	}
-	PyMem_Free(methodsToAdd);
-	if (curClassMethodIndex != 0) {
-		class_addMethodList(object_getClass(targetClass),
-				classMethodsToAdd, curClassMethodIndex);
-	}
-	PyMem_Free(classMethodsToAdd);
-
-	r = PyDict_Merge(((PyTypeObject*)classObject)->tp_dict, extraDict, 1);
-	if (r == -1) goto cleanup_and_return_error;
-
-	r = PyDict_Merge(Py_TYPE(classObject)->tp_dict, metaDict, 1);
-	if (r == -1) goto cleanup_and_return_error;
-
-	Py_DECREF(extraDict); extraDict = NULL;
-	Py_DECREF(metaDict); metaDict = NULL;
 
 	Py_INCREF(Py_None);
 	return Py_None;
-
-cleanup_and_return_error:
-	Py_XDECREF(metaDict);
-	Py_XDECREF(extraDict);
-	if (methodsToAdd) PyMem_Free(methodsToAdd);
-	if (classMethodsToAdd) PyMem_Free(classMethodsToAdd);
-	return NULL;
 }
+
 
 
 PyDoc_STRVAR(remove_autorelease_pool_doc,
@@ -1648,6 +1503,139 @@ mod_setClassSetupHook(PyObject* mod __attribute__((__unused__)), PyObject* hook)
 	return curval;
 }
 
+/* 
+ * Helper function for decoding XML metadata:
+ *
+ * This fixes an issue with metadata files: metadata files use
+ * _C_BOOL to represent type 'BOOL', but that the string should
+ * be used to represent 'bool' which has a different size on
+ * PPC. Therefore swap usage of _C_BOOL and _C_NSBOOL in data
+ * from metadata files.
+ */
+static void typecode2typecode(char* buf)
+{
+	/* Skip pointer declarations and anotations */
+	for (;;) {
+		switch(*buf) {
+		case _C_PTR:
+		case _C_IN:
+		case _C_OUT:
+		case _C_INOUT:
+		case _C_ONEWAY:
+		case _C_CONST:
+			buf++;
+			break;
+		default:
+		      goto exit;
+		}
+	}
+exit:
+
+	switch (*buf) {
+	case _C_BOOL:
+		*buf = _C_NSBOOL;
+		break;
+	case _C_NSBOOL:
+		*buf = _C_BOOL;
+		break;
+        case _C_STRUCT_B:
+		while (buf && *buf != _C_STRUCT_E && *buf && *buf++ != '=') {
+		}
+		while (buf && *buf && *buf != _C_STRUCT_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			typecode2typecode(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+	
+	case _C_UNION_B:
+		while (buf && *buf != _C_UNION_E && *buf && *buf++ != '=') {
+		}
+		while (buf && *buf && *buf != _C_UNION_E) {
+			if (*buf == '"') {
+				/* embedded field name */
+				buf = strchr(buf+1, '"');
+				if (buf == NULL) {
+					return;
+				}
+				buf++;
+			}
+			typecode2typecode(buf);
+			buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+		}
+		break;
+
+
+	case _C_ARY_B:
+		while (isdigit(*++buf));
+		typecode2typecode(buf);
+		break;
+	}
+}
+
+
+
+static PyObject*
+typestr2typestr(PyObject* args)
+{
+	char* s;
+	char* buf;
+
+	if (PyUnicode_Check(args)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(args, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		buf = PyObjCUtil_Strdup(PyBytes_AsString(args));
+		Py_DECREF(bytes);
+
+	} else if (PyBytes_Check(args)) {
+		buf = PyObjCUtil_Strdup(PyBytes_AsString(args));
+	} else {
+		PyErr_SetString(PyExc_TypeError, "expecing string");
+		return NULL;
+	}
+
+	
+	if (buf == NULL) {
+		PyErr_NoMemory();
+		return NULL;
+	}
+
+	s = buf;
+	while (s && *s) {
+		typecode2typecode(s);
+		if (s && *s == '\"') {
+			PyErr_Format(PyObjCExc_InternalError,
+				"typecode2typecode: invalid typecode '%c' "
+				"at \"%s\"", *s, s);
+			*s = '\0';
+			PyMem_Free(buf);
+			return NULL;
+
+		} else {
+			s = (char*)PyObjCRT_SkipTypeSpec(s);
+		}
+	}
+
+	PyObject* result = PyString_FromString(buf);
+	PyMem_Free(buf);
+
+	return result;
+}
+
+
+
+
+
+
 
 static PyMethodDef mod_methods[] = {
 	{
@@ -1756,6 +1744,9 @@ static PyMethodDef mod_methods[] = {
 	{ "_block_call", (PyCFunction)PyObjCBlock_Call,
 		METH_VARARGS,
 		"_block_call(block, signature, args, kwds) -> retval" },
+
+	{ "_typestr2typestr", (PyCFunction)typestr2typestr, 
+		METH_O, "private function" },
 
 
 	{ 0, 0, 0, 0 } /* sentinel */

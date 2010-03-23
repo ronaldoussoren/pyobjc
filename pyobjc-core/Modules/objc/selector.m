@@ -782,6 +782,20 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 	NSMethodSignature* methsig;
 	char  buf[1024];
 
+	if (PyObjCObject_Check(self)) {
+		if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
+			PyErr_Format(PyExc_AttributeError,
+				"No attribute %s", name);
+			return NULL;
+		}
+	} else {
+		if (PyObjCClass_HiddenSelector(self, sel, YES)) {
+			PyErr_Format(PyExc_AttributeError,
+				"No attribute %s", name);
+			return NULL;
+		}
+	}
+
 	if (Object_class == nil) {
 		Object_class = [Object class];
 	}
@@ -1487,7 +1501,7 @@ pysel_new(PyTypeObject* type __attribute__((__unused__)),
 {
 static	char*	keywords[] = { "function", "selector", "signature", 
 				"isClassMethod", "argumentTypes", 
-				"returnType", "isRequired", NULL };
+				"returnType", "isRequired", "isHidden", NULL };
 	PyObjCPythonSelector* result;
 	PyObject* callable;
 	char*     signature = NULL;
@@ -1498,11 +1512,12 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	int	  class_method = 0;
 	char      signature_buf[1024];
 	int       required = 1;
+	int       hidden = 0;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-				"O|"Py_ARG_BYTES Py_ARG_BYTES"issi:selector",
+				"O|"Py_ARG_BYTES Py_ARG_BYTES"issii:selector",
 			keywords, &callable, &selector, &signature,
-			&class_method, &argtypes, &rettype, &required)) {
+			&class_method, &argtypes, &rettype, &required, &hidden)) {
 		return NULL;
 	}
 
@@ -1584,6 +1599,9 @@ static	char*	keywords[] = { "function", "selector", "signature",
 	}
 	if (required) {
 		result->sel_flags |= PyObjCSelector_kREQUIRED;
+	}
+	if (hidden) {
+		result->sel_flags |= PyObjCSelector_kHIDDEN;
 	}
 	return (PyObject *)result;
 }
@@ -1788,6 +1806,11 @@ int   PyObjCSelector_IsClassMethod(PyObject* obj)
 	return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kCLASS_METHOD) != 0;
 }
 
+int   PyObjCSelector_IsHidden(PyObject* obj)
+{
+	return (PyObjCSelector_GetFlags(obj) & PyObjCSelector_kHIDDEN) != 0;
+}
+
 int   PyObjCSelector_GetFlags(PyObject* obj)
 {
 	return ((PyObjCSelector*)obj)->sel_flags;
@@ -1903,6 +1926,9 @@ PyObjCSelector_FromFunction(
 		if (result->callable) {
 			Py_INCREF(result->callable);
 		}
+		if (PyObjCClass_HiddenSelector(template_class, PyObjCSelector_GetSelector(callable), PyObjCSelector_IsClassMethod(callable))) {
+			((PyObjCSelector*)result)->sel_flags |= PyObjCSelector_kHIDDEN;
+		}
 		return (PyObject*)result;
 	}
 
@@ -2001,6 +2027,9 @@ PyObjCSelector_FromFunction(
 	 * is.
 	 */
 	super_sel = PyObjCClass_FindSelector(template_class, selector, is_class_method);
+	if (super_sel == NULL) {
+		PyErr_Clear();
+	}
 
 	if (is_class_method) {
 		meth = class_getClassMethod(oc_class, selector);
@@ -2028,17 +2057,22 @@ PyObjCSelector_FromFunction(
 		 * the user may have specified a more exact
 		 * signature!
 		 */
+		char* typestr = NULL;
+
 		if (super_sel == NULL) {
-			return NULL;
+			/* FIXME: This isn't optimal when hiding methods with non-standard types */
+			typestr = method_getTypeEncoding(meth);
+		} else {
+			typestr = PyObjCSelector_Signature(super_sel);
 		}
 
 		value = PyObjCSelector_New(
 			callable, 
 			selector, 
-			PyObjCSelector_Signature(super_sel),
+			typestr,
 			is_class_method,
 			oc_class);
-		Py_DECREF(super_sel);
+		Py_XDECREF(super_sel);
 	} else {
 		char* signature = NULL;
 
@@ -2058,7 +2092,7 @@ PyObjCSelector_FromFunction(
 			is_class_method,
 			oc_class);
 	}
-	if (PyObjCClass_HiddenSelector(template_class, selector)) {
+	if (PyObjCClass_HiddenSelector(template_class, selector, PyObjCSelector_IsClassMethod(value))) {
 		((PyObjCSelector*)value)->sel_flags |= PyObjCSelector_kHIDDEN;
 	}
 

@@ -168,7 +168,7 @@ PyObjCClass_FinishClass(Class objc_class)
  * is already registered with the Objective-C runtime.
  */
 int 
-PyObjCClass_UnbuildClass(Class objc_class)
+PyObjCClass_UnbuildClass(Class objc_class __attribute__((__unused__)))
 {
 	PyObjC_Assert(objc_class != nil, -1);
 	PyObjC_Assert(objc_lookUpClass(class_getName(objc_class)) == nil, -1);
@@ -611,7 +611,7 @@ static BOOL same_signature(const char* sig1, const char* sig2)
 Class 
 PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		char* name, PyObject* class_dict, PyObject* meta_dict,
-		PyObject* hiddenSelectors)
+		PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
 {
 	PyObject* seq;
 	PyObject*                key_list = NULL;
@@ -1005,6 +1005,15 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 					goto error_cleanup;
 				}
 
+
+				if (!PyObjCSelector_IsHidden(value)) {
+					if (PyDict_SetItem(meta_dict, key, value) == -1) {
+						goto error_cleanup;
+					}
+				} else {
+					shouldCopy = NO;
+				}
+
 				if (shouldCopy) {
 					r = PyDict_SetItem(meta_dict, pyname, value);
 					Py_DECREF(pyname);
@@ -1012,14 +1021,21 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 						goto error_cleanup;
 					}
 				}
-				if (PyDict_SetItem(meta_dict, key, value) == -1) {
-					goto error_cleanup;
-				}
 				if (PyDict_DelItem(class_dict, key) == -1) {
 					goto error_cleanup;
 				}
 			} else {
 				r = PySet_Add(instance_methods, value);
+				if (r == -1) {
+					goto error_cleanup;
+				}
+				if (PyObjCSelector_IsHidden(value)) {
+					r = PyDict_DelItem(class_dict, key);
+					if (r == -1) {
+						goto error_cleanup;
+					}
+					shouldCopy = NO;
+				}
 				if (shouldCopy) {
 					r = PyDict_SetItem(class_dict, pyname, value);
 					Py_DECREF(pyname);
@@ -1087,8 +1103,10 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 
 					if (PyObjCSelector_IsClassMethod(value)) {
-						if (PyDict_SetItem(meta_dict, key, value) == -1) {
-							goto error_cleanup;
+						if (!PyObjCSelector_IsHidden(value)) {
+							if (PyDict_SetItem(meta_dict, key, value) == -1) {
+								goto error_cleanup;
+							}
 						}
 						if (PyDict_DelItem(class_dict, key) == -1) {
 							goto error_cleanup;
@@ -1097,9 +1115,16 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 						r = PySet_Add(class_methods, value);
 
 					} else {
-						if (PyDict_SetItem(class_dict, key, value) < 0) {
-							Py_CLEAR(value);
-							goto error_cleanup;
+						if (PyObjCSelector_IsHidden(value)) {
+							if (PyDict_DelItem(class_dict, key) == -1) {
+								goto error_cleanup;
+							}
+						} else {
+
+							if (PyDict_SetItem(class_dict, key, value) < 0) {
+								Py_CLEAR(value);
+								goto error_cleanup;
+							}
 						}
 
 						r = PySet_Add(instance_methods, value);
@@ -1210,6 +1235,13 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 	for (i = 0; i < PySequence_Fast_GET_SIZE(class_methods); i++) {
 		value = PySequence_Fast_GET_ITEM(class_methods, i);
 
+		if (PyBytes_Check(value)) {
+			int r = PySet_Add(hiddenClassSelectors, value);
+			if (r == -1) {
+				goto error_cleanup;
+			}
+		}
+
 		if (!PyObjCSelector_Check(value)) {
 			continue;
 		}
@@ -1233,6 +1265,19 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 
 			/* Set sel_class */
 			sel->sel_class = new_class;
+
+			if (sel->sel_flags & PyObjCSelector_kHIDDEN) {
+				PyObject* v = PyBytes_InternFromString(
+					sel_getName(PyObjCSelector_GetSelector(value)));
+				if (v == NULL) {
+					goto error_cleanup;
+				}
+				int r = PySet_Add(hiddenClassSelectors, v);
+				Py_DECREF(v);
+				if (r == -1) {
+					goto error_cleanup;
+				}
+			}
 		}
 	}
 

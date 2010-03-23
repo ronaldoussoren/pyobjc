@@ -9,7 +9,8 @@ Class PyObjCClass_BuildClass(
 		char* name, 
 		PyObject* class_dict,
 		PyObject* meta_dict,
-		PyObject* hiddenSelectors);
+		PyObject* hiddenSelectors,
+		PyObject* hiddenClassSelectors);
 
 int PyObjCClass_UnbuildClass(Class new_class);
 int PyObjCClass_FinishClass(Class objc_class);
