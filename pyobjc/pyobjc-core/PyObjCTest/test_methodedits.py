@@ -212,14 +212,14 @@ class TestClassAsignments (TestCase):
         MEClass.classSomethingElse = classmethod(lambda self: 2*2)
         MEClass.classDuplicate_ = classmethod(lambda self, x: 2*x)
 
-        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("classSomethingElse"))
-        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("classDuplicate:"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_(b"classSomethingElse"))
+        self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_(b"classDuplicate:"))
 
         self.assertEquals(4, MEClass.classSomethingElse())
         self.assertEquals(8, MEClass.classDuplicate_(4))
 
     def testAssignFuzzyMethod(self):
-        self.assertRaises(ValueError, setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector=b'fuzzy', signature=b'@@:'))
+        self.assertRaises((ValueError, TypeError), setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector=b'fuzzy', signature=b'@@:'))
 
     def testRemovingMethods(self):
         theClass = NSObject

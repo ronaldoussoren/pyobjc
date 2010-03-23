@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 
 import sys
+# We need at least Python 2.5
+MIN_PYTHON = (2, 5)
+
+if sys.version_info < MIN_PYTHON:
+    vstr = '.'.join(map(str, MIN_PYTHON))
+    raise SystemExit('PyObjC: Need at least Python ' + vstr)
+
+
 if sys.version_info[:2] < (3, 0):
     import ez_setup
     ez_setup.use_setuptools()
@@ -94,12 +102,6 @@ if 'MallocStackLoggingNoCompact' in os.environ:
 # See the news file:
 #os.environ['MACOSX_DEPLOYMENT_TARGET']='10.5'
 
-# We need at least Python 2.5
-MIN_PYTHON = (2, 5)
-
-if sys.version_info < MIN_PYTHON:
-    vstr = '.'.join(map(str, MIN_PYTHON))
-    raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
 # Set USE_SYSTEM_FFI to True to link to the system version
 # of libffi

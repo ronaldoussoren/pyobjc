@@ -140,7 +140,7 @@ Version 2.3a0
   (At the very least least: the PyObjCMethodSignature objects can be shared 
   more than they are now). 
 
-  This needs further investigation to determine why we use more memory
+  This needs further investigation to determine why we seem to use more memory
   than Ruby.
 
 - TODO: Drop support for 2.5 and 

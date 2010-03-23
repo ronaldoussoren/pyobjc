@@ -95,6 +95,7 @@ typedef struct _PyObjCClassObject {
 	int useKVO;
 	PyObject* protectedMethods;
 	PyObject* hiddenSelectors;
+	PyObject* hiddenClassSelectors;
 	struct _PyObjCClassObject* meta_class; /* To be dropped */
 } PyObjCClassObject;
 
@@ -110,7 +111,9 @@ PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 int  PyObjCClass_HasPythonImplementation(PyObject* cls);
 PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
-BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel);
+BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod);
+int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod);
+int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
 
 PyObject* PyObjCClass_ListProperties(PyObject* cls);
 
