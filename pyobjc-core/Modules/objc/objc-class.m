@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 
-int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod)
+int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadata)
 {
 	PyObject* hidden;
 	if (classMethod) {
@@ -30,13 +30,14 @@ int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod)
 		}
 	}
 	PyObject* v = PyBytes_InternFromString(sel_getName(sel));
-	int r = PySet_Add(hidden, v);
+	int r = PyDict_SetItem(hidden, v, metadata);
 	Py_DECREF(v);
 	return r;
 }
 
 
-BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
+PyObject*
+PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 {
 	PyObject* mro = ((PyTypeObject*)tp)->tp_mro;
 	int i, n;
@@ -60,19 +61,19 @@ BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 				if (v == NULL) {
 					PyErr_Clear();
 				} else {
-					int r = PySet_Contains(hidden, v);
+					PyObject* r = PyDict_GetItem(hidden, v);
 					Py_DECREF(v);
-					if (r == -1) {
+					if (r == NULL) {
 						PyErr_Clear();
-					} else if (r == 1) {
-						return YES;
+					} else {
+						return r;
 					}
 				}
 			}
 		}
 	}
 
-	return NO;
+	return NULL;
 }
 
 /*
@@ -460,13 +461,13 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 		return NULL;
 	}
 
-	hiddenSelectors = PySet_New(NULL);
+	hiddenSelectors = PyDict_New();
 	if (hiddenSelectors == NULL) {
 		Py_DECREF(protectedMethods);
 		return NULL;
 	}
 
-	hiddenClassSelectors = PySet_New(NULL);
+	hiddenClassSelectors = PyDict_New();
 	if (hiddenClassSelectors == NULL) {
 		Py_DECREF(protectedMethods);
 		Py_DECREF(hiddenSelectors);
@@ -2001,6 +2002,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 	}
 
 	PyObjCClass_CheckMethodList(cls, 1);
+
 	
 	info = (PyObjCClassObject*)cls;
 	if (info->sel_to_py == NULL) {
@@ -2008,6 +2010,14 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 		if (info->sel_to_py == NULL) {
 			return NULL;
 		}
+	}
+
+	if (PyObjCClass_HiddenSelector(cls, selector, class_method)) {
+		PyErr_Format(PyExc_AttributeError,
+			"No selector %s", sel_getName(selector));
+		PyDict_SetItemString(info->sel_to_py, 
+				(char*)sel_getName(selector), Py_None);
+		return NULL;
 	}
 
 	/* First check the cache */
@@ -2449,7 +2459,8 @@ int PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t
 		}
 #endif
 		if (PyObjCSelector_IsHidden(aMethod)) {
-			r = PyObjCClass_SetHidden(classObject, objcMethod->name, PyObjCSelector_IsClassMethod(aMethod));
+			r = PyObjCClass_SetHidden(classObject, objcMethod->name, PyObjCSelector_IsClassMethod(aMethod),
+					(PyObject*)PyObjCSelector_GetMetadata(aMethod));
 			if (r == -1) {
 				goto cleanup_and_return_error;
 			}

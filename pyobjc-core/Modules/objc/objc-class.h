@@ -111,8 +111,8 @@ PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 int  PyObjCClass_HasPythonImplementation(PyObject* cls);
 PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
-BOOL PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod);
-int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod);
+PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
+int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadata);
 int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
 
 PyObject* PyObjCClass_ListProperties(PyObject* cls);

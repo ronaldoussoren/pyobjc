@@ -2061,7 +2061,12 @@ PyObjCSelector_FromFunction(
 
 		if (super_sel == NULL) {
 			/* FIXME: This isn't optimal when hiding methods with non-standard types */
-			typestr = method_getTypeEncoding(meth);
+			PyObject* met = PyObjCClass_HiddenSelector(template_class, selector, is_class_method);
+			if (met == NULL) {
+				typestr = method_getTypeEncoding(meth);
+			} else {
+				typestr = ((PyObjCMethodSignature*)met)->signature;
+			}
 		} else {
 			typestr = PyObjCSelector_Signature(super_sel);
 		}
