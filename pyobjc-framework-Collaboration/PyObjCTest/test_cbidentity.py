@@ -4,8 +4,8 @@ from Collaboration import *
 
 class TestCBIdentity (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(CBIdentity.isHidden)
-        self.failUnlessResultIsBOOL(CBIdentity.isMemberOfGroup_)
+        self.assertResultIsBOOL(CBIdentity.isHidden)
+        self.assertResultIsBOOL(CBIdentity.isMemberOfGroup_)
 
 
 if __name__ == "__main__":

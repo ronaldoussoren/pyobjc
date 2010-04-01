@@ -4,11 +4,11 @@ from Collaboration import *
 
 class TestCBIdentityPicker (TestCase):
     def testMethods(self):
-        self.failUnlessArgIsBOOL(CBIdentityPicker.setAllowsMultipleSelection_, 0)
-        self.failUnlessResultIsBOOL(CBIdentityPicker.allowsMultipleSelection)
+        self.assertArgIsBOOL(CBIdentityPicker.setAllowsMultipleSelection_, 0)
+        self.assertResultIsBOOL(CBIdentityPicker.allowsMultipleSelection)
 
-        self.failUnlessArgIsSEL(CBIdentityPicker.runModalForWindow_modalDelegate_didEndSelector_contextInfo_, 2, 'v@:@' + objc._C_NSInteger + '^v')
-        self.failUnlessArgHasType(CBIdentityPicker.runModalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, '^v')
+        self.assertArgIsSEL(CBIdentityPicker.runModalForWindow_modalDelegate_didEndSelector_contextInfo_, 2, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(CBIdentityPicker.runModalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, b'^v')
 
 
 
