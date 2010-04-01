@@ -40,7 +40,7 @@ class OCTestHidden (objc.lookUpClass('NSObject')):
 
     def boolMethod(self):
         return 1
-    boolMethod = objc.selector(boolMethod, signature=objc._C_NSBOOL + '@:')
+    boolMethod = objc.selector(boolMethod, signature=objc._C_NSBOOL + b'@:')
     boolMethod.isHidden = True
 
 class OCTestSubHidden (OCTestHidden):

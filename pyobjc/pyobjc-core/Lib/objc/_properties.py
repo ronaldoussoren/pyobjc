@@ -6,6 +6,7 @@ from objc import lookUpClass
 
 NSSet = lookUpClass('NSSet')
 
+
 def attrsetter(prop, name, copy):
     if copy:
         def func(self, value):
@@ -30,12 +31,14 @@ def _dynamic_getter(name):
     def getter(object):
         m = getattr(object.pyobjc_instanceMethods, name)
         return m()
+    getter.__name__ = name
     return getter
 
 def _dynamic_setter(name):
     def setter(object, value):
         m = getattr(object.pyobjc_instanceMethods, name)
         return m(value)
+    setter.__name__ = name
     return setter
 
 class object_property (object):
@@ -93,14 +96,15 @@ class object_property (object):
             self._setter = None
 
         else:
-            setterName = b'set%s%s:'%(name[0].upper().encode('latin1'), name[1:].encode('latin1'))
+            setterName = b'set' + name[0].upper().encode('latin1') + name[1:].encode('latin1') + b':'
             signature = b'v@:' + self._typestr
             if self._setter is None:
                 if self.__inherit:
                     pass
 
                 elif self._dynamic:
-                    self.__setprop = _dynamic_setter(setterName)
+                    dynSetterName = 'set' + name[0].upper() + name[1:] + '_'
+                    self.__setprop = _dynamic_setter(dynSetterName)
                     instance_methods.add(setterName)
 
                 else:
@@ -127,7 +131,7 @@ class object_property (object):
                 instance_methods.add(self.__setprop)
 
         if self._typestr in (_C_NSBOOL, _C_BOOL):
-            getterName = b'is%s%s'%(name[0].upper().encode('latin1'), name[:1].encode('latin1'))
+            getterName = b'is' + name[0].upper().encode('latin1') + name[:1].encode('latin1')
         else:
             getterName = self._name.encode('latin1')
 
@@ -136,7 +140,12 @@ class object_property (object):
                 pass
 
             elif self._dynamic:
-                self.__getprop = _dynamic_getter(getterName)
+                if self._typestr in (_C_NSBOOL, _C_BOOL):
+                    dynGetterName = 'is' + name[0].upper() + name[:1]
+                else:
+                    dynGetterName = self._name
+
+                self.__getprop = _dynamic_getter(dynGetterName)
                 instance_methods.add(getterName)
 
             else:
@@ -160,8 +169,7 @@ class object_property (object):
             instance_methods.add(self.__getprop)
 
         if self._validate is not None:
-            selName = b'validate%s%s:error:'%(
-                    self._name[0].upper().encode('latin'), self._name[1:].encode('latin'))
+            selName = b'validate' + self._name[0].upper().encode('latin') + self._name[1:].encode('latin') + b':error:'
             signature = _C_NSBOOL + b'@:N^@o^@'
             validate = selector(
                     self._validate,
@@ -170,7 +178,7 @@ class object_property (object):
             validate.isHidden = True
             instance_methods.add(validate)
 
-        if self._depends_on is not None:
+        if self._depends_on:
             if self.__parent is not None:
                 if self.__parent._depends_on:
                     self._depends_on.update(self.__parent._depends_on.copy())
@@ -179,9 +187,8 @@ class object_property (object):
 
             affecting = selector(
                     _return_value(NSSet.setWithArray_(list(self._depends_on))),
-                    selector = 'keyPathsForValuesAffecting%s%s'%(
-                        self._name[0].upper(), self._name[1:]),
-                    signature = '@@:',
+                    selector = b'keyPathsForValuesAffecting' + self._name[0].upper().encode('latin1') + self._name[1:].encode('latin1'),
+                    signature = b'@@:',
                     isClassMethod=True)
             affecting.isHidden = True
             class_dict[affecting.selector] = affecting
@@ -195,12 +202,12 @@ class object_property (object):
 
     def __set__(self, object, value):
         if self.__setprop is None:
-            raise ValueError("setting read-only property %r"%(self._name,))
+            raise ValueError("setting read-only property " + self._name)
 
         return self.__setprop(object, value)
 
     def __delete__(self, object):
-        raise TypeError("cannot delete property %r"%(self._name))
+        raise TypeError("cannot delete property " + self._name)
 
     def depends_on(self, keypath):
         if self._depends_on is None:
@@ -248,3 +255,49 @@ class bool_property (object_property):
             ivar=None, typestr=_C_NSBOOL):
         super(bool_property, self).__init__(
                 name, read_only, copy, dynamic, ivar, typestr)
+
+
+#
+#def _id(value):
+#    return value
+#
+#class array_proxy (object):
+#    def __init__(self, name, wrapped, read_only):
+#        self._name = name
+#        self._wrapped = wrapped
+#        self._ro = read_only
+#
+#    def __repr__(self):
+#        return '<array proxy for property ' + self._name + repr(self._wrapped) + '>'
+#
+#    def __reduce__(self):
+#        # Ensure that the proxy itself doesn't get stored
+#        # in pickles.
+#        return _id, self._wrapped
+#
+#    def __getitem__(self, index):
+#        return self._wrapped[index]
+#
+#    def __setitem__(self, index, value):
+#        # Generate the right willChange
+#        # - index can be a number or a slice
+#
+#        self._wrapped[index] = value
+#
+#        # Generate the right didChange
+#
+#    # Likewise for the rest of the list interface
+#
+#class array_property (object_property):
+#    # FIXME: getter should create an empty list on first access
+#    def __get__(self):
+#        v = object_property.__get__(self)
+#        return array_proxy(self._name, v, self._ro)
+#
+## Implement set proxy
+#
+#class set_property (object_property):
+#    # FIXME: getter should create an empty set on first access
+#    def __get__(self):
+#        v = object_property.__get__(self)
+#        return set_proxy(self._name, v, self._ro)

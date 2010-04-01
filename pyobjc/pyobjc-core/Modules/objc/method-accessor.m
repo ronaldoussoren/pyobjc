@@ -99,7 +99,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	}
 
 	PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
-	if (meta) {
+	if (meta && meta != Py_None) {
 		flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
 	} 
 	if (flattened == NULL) {
