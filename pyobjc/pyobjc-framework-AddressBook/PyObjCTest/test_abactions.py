@@ -8,7 +8,7 @@ class TestABActionHelper (NSObject):
 
 class TestABActions (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestABActionHelper.shouldEnableActionForPerson_identifier_)
+        self.assertResultIsBOOL(TestABActionHelper.shouldEnableActionForPerson_identifier_)
 
 if __name__ == "__main__":
     main()

@@ -4,101 +4,101 @@ from AddressBook import *
 
 class TestABPeoplePickerC (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kABPickerSingleValueSelection, 1 << 0)
-        self.failUnlessEqual(kABPickerMultipleValueSelection, 1 << 1)
-        self.failUnlessEqual(kABPickerAllowGroupSelection, 1 << 2)
-        self.failUnlessEqual(kABPickerAllowMultipleSelection, 1 << 3)
-        self.failUnlessEqual(kEventClassABPeoplePicker, fourcc('abpp'))
-        self.failUnlessEqual(kEventParamABPickerRef,  fourcc('abpp'))
-        self.failUnlessEqual(kEventABPeoplePickerGroupSelectionChanged, 1)
-        self.failUnlessEqual(kEventABPeoplePickerNameSelectionChanged, 2)
-        self.failUnlessEqual(kEventABPeoplePickerValueSelectionChanged, 3)
-        self.failUnlessEqual(kEventABPeoplePickerDisplayedPropertyChanged, 4)
-        self.failUnlessEqual(kEventABPeoplePickerGroupDoubleClicked, 5)
-        self.failUnlessEqual(kEventABPeoplePickerNameDoubleClicked, 6)
+        self.assertEqual(kABPickerSingleValueSelection, 1 << 0)
+        self.assertEqual(kABPickerMultipleValueSelection, 1 << 1)
+        self.assertEqual(kABPickerAllowGroupSelection, 1 << 2)
+        self.assertEqual(kABPickerAllowMultipleSelection, 1 << 3)
+        self.assertEqual(kEventClassABPeoplePicker, fourcc(b'abpp'))
+        self.assertEqual(kEventParamABPickerRef,  fourcc(b'abpp'))
+        self.assertEqual(kEventABPeoplePickerGroupSelectionChanged, 1)
+        self.assertEqual(kEventABPeoplePickerNameSelectionChanged, 2)
+        self.assertEqual(kEventABPeoplePickerValueSelectionChanged, 3)
+        self.assertEqual(kEventABPeoplePickerDisplayedPropertyChanged, 4)
+        self.assertEqual(kEventABPeoplePickerGroupDoubleClicked, 5)
+        self.assertEqual(kEventABPeoplePickerNameDoubleClicked, 6)
 
 
     def testType(self):
-        self.failUnlessIsInstance(ABPickerRef, objc.objc_class)
+        self.assertIsInstance(ABPickerRef, objc.objc_class)
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(ABPickerCreate)
+        self.assertResultIsCFRetained(ABPickerCreate)
         ref = ABPickerCreate()
         try:
-            self.failUnlessIsInstance(ref, (ABPickerRef, objc.lookUpClass('ABPeoplePickerCAdapter')))
+            self.assertIsInstance(ref, (ABPickerRef, objc.lookUpClass('ABPeoplePickerCAdapter')))
 
         except objc.error:
-            self.failUnlessIsInstance(ref, ABPickerRef)
+            self.assertIsInstance(ref, ABPickerRef)
 
         ABPickerSetFrame(ref, ((90, 100), (200, 400)))
         r = ABPickerGetFrame(ref, None)
-        self.failUnlessIsInstance(r, tuple)
-        self.failUnlessEqual(r, ((90, 100), (200, 400)))
+        self.assertIsInstance(r, tuple)
+        self.assertEqual(r, ((90, 100), (200, 400)))
 
-        self.failUnlessResultHasType(ABPickerIsVisible, objc._C_BOOL)
+        self.assertResultHasType(ABPickerIsVisible, objc._C_BOOL)
         r = ABPickerIsVisible(ref)
-        self.failUnlessIsInstance(r, bool)
-        self.failUnless(r is False)
+        self.assertIsInstance(r, bool)
+        self.assertTrue(r is False)
 
-        self.failUnlessArgHasType(ABPickerSetVisibility, 1, objc._C_BOOL)
+        self.assertArgHasType(ABPickerSetVisibility, 1, objc._C_BOOL)
         ABPickerSetVisibility(ref, True)
 
         r = ABPickerIsVisible(ref)
-        self.failUnless(r is True)
+        self.assertTrue(r is True)
 
         ABPickerSetVisibility(ref, False)
 
         r = ABPickerIsVisible(ref)
-        self.failUnless(r is False)
+        self.assertTrue(r is False)
 
         r = ABPickerGetAttributes(ref)
-        self.failUnlessIsInstance(r, (int, long))
+        self.assertIsInstance(r, (int, long))
 
         r = ABPickerChangeAttributes(ref, kABPickerAllowMultipleSelection, 0)
-        self.failUnless(r is None)
+        self.assertTrue(r is None)
 
         ABPickerAddProperty(ref, kABFirstNameProperty)
         ABPickerAddProperty(ref, kABLastNameProperty)
         ABPickerRemoveProperty(ref, kABFirstNameProperty)
 
         v = ABPickerCopyProperties(ref)
-        self.failUnlessIsInstance(v, CFArrayRef)
-        self.failUnlessEqual(tuple(v), (kABLastNameProperty,))
+        self.assertIsInstance(v, CFArrayRef)
+        self.assertEqual(tuple(v), (kABLastNameProperty,))
 
         ABPickerSetColumnTitle(ref, u"Achternaam", kABLastNameProperty)
         v = ABPickerCopyColumnTitle(ref, kABLastNameProperty)
-        self.failUnlessResultIsCFRetained(ABPickerCopyColumnTitle)
-        self.failUnlessEqual(v, u"Achternaam")
+        self.assertResultIsCFRetained(ABPickerCopyColumnTitle)
+        self.assertEqual(v, u"Achternaam")
 
         ABPickerSetDisplayedProperty(ref, kABLastNameProperty)
         v = ABPickerCopyDisplayedProperty(ref)
-        self.failUnlessResultIsCFRetained(ABPickerCopyDisplayedProperty)
-        self.failUnlessIsInstance(v, unicode)
+        self.assertResultIsCFRetained(ABPickerCopyDisplayedProperty)
+        self.assertIsInstance(v, unicode)
 
         v = ABPickerCopySelectedGroups(ref)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
         v = ABPickerCopySelectedRecords(ref)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
         v = ABPickerCopySelectedIdentifiers(ref, ABGetMe(ABGetSharedAddressBook()))
         if v is not None:
-            self.failUnlessIsInstance(v, CFArrayRef)
+            self.assertIsInstance(v, CFArrayRef)
 
         v = ABPickerCopySelectedValues(ref)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
         grp = ABCopyArrayOfAllGroups(ABGetSharedAddressBook())[0]
         usr = ABGetMe(ABGetSharedAddressBook())
 
         ABPickerSelectGroup(ref, grp, True)
-        self.failUnlessArgHasType(ABPickerSelectGroup, 2, objc._C_BOOL)
+        self.assertArgHasType(ABPickerSelectGroup, 2, objc._C_BOOL)
 
         ABPickerSelectRecord(ref, usr, False)
-        self.failUnlessArgHasType(ABPickerSelectRecord, 2, objc._C_BOOL)
+        self.assertArgHasType(ABPickerSelectRecord, 2, objc._C_BOOL)
 
         ABPickerSelectIdentifier(ref, usr, "Last", False) #ABRecordCopyUniqueId(usr), False)
-        self.failUnlessArgHasType(ABPickerSelectIdentifier, 3, objc._C_BOOL)
+        self.assertArgHasType(ABPickerSelectIdentifier, 3, objc._C_BOOL)
 
         ABPickerDeselectIdentifier(ref, usr, u"Last")
 
@@ -114,8 +114,8 @@ class TestABPeoplePickerC (TestCase):
             ABPickerEditInAddressBook(ref)
             ABPickerSelectInAddressBook(ref)
         else:
-            self.failUnlessResultHasType(ABPickerEditInAddressBook, objc._C_VOID)
-            self.failUnlessResultHasType(ABPickerSelectInAddressBook, objc._C_VOID)
+            self.assertResultHasType(ABPickerEditInAddressBook, objc._C_VOID)
+            self.assertResultHasType(ABPickerSelectInAddressBook, objc._C_VOID)
 
         r = ABPickerGetDelegate(ref)
 

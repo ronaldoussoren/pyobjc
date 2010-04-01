@@ -4,9 +4,9 @@ from AddressBook import *
 
 class TestABRecord (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(ABRecord.setValue_forProperty_)
-        self.failUnlessResultIsBOOL(ABRecord.removeValueForProperty_)
-        self.failUnlessResultIsBOOL(ABRecord.isReadOnly)
+        self.assertResultIsBOOL(ABRecord.setValue_forProperty_)
+        self.assertResultIsBOOL(ABRecord.removeValueForProperty_)
+        self.assertResultIsBOOL(ABRecord.isReadOnly)
 
 if __name__ == "__main__":
     main()
