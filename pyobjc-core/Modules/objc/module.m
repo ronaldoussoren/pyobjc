@@ -1625,7 +1625,7 @@ typestr2typestr(PyObject* args)
 		}
 	}
 
-	PyObject* result = PyString_FromString(buf);
+	PyObject* result = PyBytes_FromString(buf);
 	PyMem_Free(buf);
 
 	return result;

@@ -1040,7 +1040,7 @@ class_getattro(PyObject* self, PyObject* name)
 		if (bytes == NULL) {
 			return NULL;
 		}
-		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyString_AsString(bytes)), YES)) {
+		if (PyObjCClass_HiddenSelector(self, sel_getUid(PyBytes_AsString(bytes)), YES)) {
 			Py_DECREF(bytes);
 			PyErr_SetObject(PyExc_AttributeError, name);
 			return NULL;
@@ -1181,6 +1181,7 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 				return -1;
 			}
 		}
+
 
 
 		if (PyObjCClass_HiddenSelector(self, PyObjCSelector_GetSelector(newVal),
