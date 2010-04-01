@@ -4,15 +4,15 @@ from CalendarStore import *
 
 class TestCalRecurrenceRule (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(CalRecurrenceEnd.usesEndDate)
+        self.assertResultIsBOOL(CalRecurrenceEnd.usesEndDate)
 
     def testConstants(self):
-        self.failUnlessEqual(CalRecurrenceDaily, 0)
-        self.failUnlessEqual(CalRecurrenceWeekly, 1)
-        self.failUnlessEqual(CalRecurrenceMonthly, 2)
-        self.failUnlessEqual(CalRecurrenceYearly, 3)
+        self.assertEqual(CalRecurrenceDaily, 0)
+        self.assertEqual(CalRecurrenceWeekly, 1)
+        self.assertEqual(CalRecurrenceMonthly, 2)
+        self.assertEqual(CalRecurrenceYearly, 3)
 
-        self.failUnlessIsInstance(CalDefaultRecurrenceInterval, (int, long))
+        self.assertIsInstance(CalDefaultRecurrenceInterval, (int, long))
 
 if __name__ == "__main__":
     main()
