@@ -2,38 +2,38 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-_C_ABAddressBookRef = '^{__ABAddressBookRef=}'
-_C_ABMultiValueRef = '^{__ABMultiValue=}'
-_C_ABPersonRef = '^{__ABPerson=}'
-_C_ABGroupRef = '^{__ABGroup=}'
-_C_ABSearchElementRef = '^{__ABSearchElementRef=}'
-_C_CFStringRef = '^{__CFString=}'
-_C_CFStringRefPtr = '^^{__CFString}'
-_C_CFDictionaryRef = '^{__CFDictionary=}'
-_C_CFArrayRef = '^{__CFArray=}'
-_C_CFDataRef = '^{__CFData=}'
+_C_ABAddressBookRef = b'^{__ABAddressBookRef=}'
+_C_ABMultiValueRef = b'^{__ABMultiValue=}'
+_C_ABPersonRef = b'^{__ABPerson=}'
+_C_ABGroupRef = b'^{__ABGroup=}'
+_C_ABSearchElementRef = b'^{__ABSearchElementRef=}'
+_C_CFStringRef = b'^{__CFString=}'
+_C_CFStringRefPtr = b'^^{__CFString}'
+_C_CFDictionaryRef = b'^{__CFDictionary=}'
+_C_CFArrayRef = b'^{__CFArray=}'
+_C_CFDataRef = b'^{__CFData=}'
 
 class TestABAddressBookC (TestCase):
     def testTypes(self):
-        self.failUnless(ABAddressBookRef is ABAddressBook)
-        self.failUnless(ABPersonRef is ABPerson)
-        self.failUnless(ABSearchElementRef is ABSearchElement)
-        self.failUnless(ABGroupRef is ABGroup)
+        self.assertTrue(ABAddressBookRef is ABAddressBook)
+        self.assertTrue(ABPersonRef is ABPerson)
+        self.assertTrue(ABSearchElementRef is ABSearchElement)
+        self.assertTrue(ABGroupRef is ABGroup)
 
     def testFunctions(self):
         ref = ABGetSharedAddressBook()
-        self.failUnlessIsInstance(ref, ABAddressBookRef)
+        self.assertIsInstance(ref, ABAddressBookRef)
 
         r = ABSave(ref)
-        self.failUnlessResultHasType(ABSave, objc._C_BOOL)
-        self.failUnlessIsInstance(r, bool)
+        self.assertResultHasType(ABSave, objc._C_BOOL)
+        self.assertIsInstance(r, bool)
 
         r = ABHasUnsavedChanges(ref)
-        self.failUnlessResultHasType(ABHasUnsavedChanges, objc._C_BOOL)
-        self.failUnlessIsInstance(r, bool)
+        self.assertResultHasType(ABHasUnsavedChanges, objc._C_BOOL)
+        self.assertIsInstance(r, bool)
         
         r = me = ABGetMe(ref)
-        self.failUnlessIsInstance(r, ABPersonRef)
+        self.assertIsInstance(r, ABPersonRef)
 
         # There's only one addressbook per user account, therefore
         # testing functions that modify the adressbook isn't safe 
@@ -42,231 +42,231 @@ class TestABAddressBookC (TestCase):
         # Therefore we only test if the function signature is 
         # correct. That's not ideal, but because mutation functions
         # have a simple interface it should be sufficient.
-        self.failUnlessResultHasType(ABSetMe, objc._C_VOID)
-        self.failUnlessArgHasType(ABSetMe, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABSetMe, 1, _C_ABPersonRef)
+        self.assertResultHasType(ABSetMe, objc._C_VOID)
+        self.assertArgHasType(ABSetMe, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABSetMe, 1, _C_ABPersonRef)
 
         name = ABCopyRecordTypeFromUniqueId(ref, ABRecordCopyUniqueId(me))
-        self.failUnlessEqual(name, u'ABPerson')
+        self.assertEqual(name, u'ABPerson')
 
-        self.failUnlessResultHasType(ABAddPropertiesAndTypes, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABAddPropertiesAndTypes, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABAddPropertiesAndTypes, 2, _C_CFDictionaryRef)
+        self.assertResultHasType(ABAddPropertiesAndTypes, objc._C_CFIndex)
+        self.assertArgHasType(ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABAddPropertiesAndTypes, 1, _C_CFStringRef)
+        self.assertArgHasType(ABAddPropertiesAndTypes, 2, _C_CFDictionaryRef)
 
-        self.failUnlessResultHasType(ABRemoveProperties, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABRemoveProperties, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABRemoveProperties, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABRemoveProperties, 2, _C_CFArrayRef)
+        self.assertResultHasType(ABRemoveProperties, objc._C_CFIndex)
+        self.assertArgHasType(ABRemoveProperties, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABRemoveProperties, 1, _C_CFStringRef)
+        self.assertArgHasType(ABRemoveProperties, 2, _C_CFArrayRef)
 
         v = ABCopyArrayOfPropertiesForRecordType(ref, 'ABPerson')
-        self.failUnlessResultIsCFRetained(ABCopyArrayOfPropertiesForRecordType)
-        self.failUnlessIsInstance(v, CFArrayRef)
-        self.failUnless(len(v))
-        self.failUnlessIsInstance(v[0], unicode)
+        self.assertResultIsCFRetained(ABCopyArrayOfPropertiesForRecordType)
+        self.assertIsInstance(v, CFArrayRef)
+        self.assertTrue(len(v))
+        self.assertIsInstance(v[0], unicode)
 
         v = ABTypeOfProperty(ref, "ABPersion", v[0])
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = ABCopyRecordForUniqueId(ref, ABRecordCopyUniqueId(me)) 
-        self.failUnlessResultIsCFRetained(ABCopyRecordForUniqueId)
-        self.failUnlessIsInstance(v, ABPersonRef)
+        self.assertResultIsCFRetained(ABCopyRecordForUniqueId)
+        self.assertIsInstance(v, ABPersonRef)
 
 
-        self.failUnlessResultHasType(ABAddRecord, objc._C_BOOL)
-        self.failUnlessArgHasType(ABAddRecord, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABAddRecord, 1, objc._C_ID)
+        self.assertResultHasType(ABAddRecord, objc._C_BOOL)
+        self.assertArgHasType(ABAddRecord, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABAddRecord, 1, objc._C_ID)
 
-        self.failUnlessResultHasType(ABRemoveRecord, objc._C_BOOL)
-        self.failUnlessArgHasType(ABRemoveRecord, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABRemoveRecord, 1, objc._C_ID)
+        self.assertResultHasType(ABRemoveRecord, objc._C_BOOL)
+        self.assertArgHasType(ABRemoveRecord, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABRemoveRecord, 1, objc._C_ID)
 
         v = ABCopyArrayOfAllPeople(ref)
-        self.failUnlessResultIsCFRetained(ABCopyArrayOfAllPeople)
-        self.failUnlessIsInstance(v, NSArray)
+        self.assertResultIsCFRetained(ABCopyArrayOfAllPeople)
+        self.assertIsInstance(v, NSArray)
 
         v = ABCopyArrayOfAllGroups(ref)
-        self.failUnlessResultIsCFRetained(ABCopyArrayOfAllGroups)
-        self.failUnlessIsInstance(v, NSArray)
+        self.assertResultIsCFRetained(ABCopyArrayOfAllGroups)
+        self.assertIsInstance(v, NSArray)
 
-        self.failUnlessResultHasType(ABRecordCreateCopy, objc._C_ID)
-        self.failUnlessResultIsCFRetained(ABRecordCreateCopy)
-        self.failUnlessArgHasType(ABRecordCreateCopy, 0, objc._C_ID)
+        self.assertResultHasType(ABRecordCreateCopy, objc._C_ID)
+        self.assertResultIsCFRetained(ABRecordCreateCopy)
+        self.assertArgHasType(ABRecordCreateCopy, 0, objc._C_ID)
 
         v = ABRecordCopyRecordType(me)
-        self.failUnlessResultIsCFRetained(ABRecordCopyRecordType)
-        self.failUnlessIsInstance(v, unicode)
+        self.assertResultIsCFRetained(ABRecordCopyRecordType)
+        self.assertIsInstance(v, unicode)
 
-        self.failUnlessResultHasType(ABRecordCopyValue, objc._C_ID)
-        self.failUnlessArgHasType(ABRecordCopyValue, 0, objc._C_ID)
-        self.failUnlessArgHasType(ABRecordCopyValue, 1, _C_CFStringRef)
+        self.assertResultHasType(ABRecordCopyValue, objc._C_ID)
+        self.assertArgHasType(ABRecordCopyValue, 0, objc._C_ID)
+        self.assertArgHasType(ABRecordCopyValue, 1, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABRecordSetValue, objc._C_BOOL)
-        self.failUnlessArgHasType(ABRecordSetValue, 0, objc._C_ID)
-        self.failUnlessArgHasType(ABRecordSetValue, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABRecordSetValue, 2, objc._C_ID)
+        self.assertResultHasType(ABRecordSetValue, objc._C_BOOL)
+        self.assertArgHasType(ABRecordSetValue, 0, objc._C_ID)
+        self.assertArgHasType(ABRecordSetValue, 1, _C_CFStringRef)
+        self.assertArgHasType(ABRecordSetValue, 2, objc._C_ID)
 
-        self.failUnlessResultHasType(ABRecordRemoveValue, objc._C_BOOL)
-        self.failUnlessArgHasType(ABRecordRemoveValue, 0, objc._C_ID)
-        self.failUnlessArgHasType(ABRecordRemoveValue, 1, _C_CFStringRef)
+        self.assertResultHasType(ABRecordRemoveValue, objc._C_BOOL)
+        self.assertArgHasType(ABRecordRemoveValue, 0, objc._C_ID)
+        self.assertArgHasType(ABRecordRemoveValue, 1, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABRecordIsReadOnly, objc._C_BOOL)
-        self.failUnlessArgHasType(ABRecordIsReadOnly, 0, objc._C_ID)
+        self.assertResultHasType(ABRecordIsReadOnly, objc._C_BOOL)
+        self.assertArgHasType(ABRecordIsReadOnly, 0, objc._C_ID)
 
-        self.failUnlessResultHasType(ABRecordCopyUniqueId, _C_CFStringRef)
-        self.failUnlessArgHasType(ABRecordCopyUniqueId, 0, objc._C_ID)
+        self.assertResultHasType(ABRecordCopyUniqueId, _C_CFStringRef)
+        self.assertArgHasType(ABRecordCopyUniqueId, 0, objc._C_ID)
 
-        self.failUnlessResultHasType(ABPersonCreate, _C_ABPersonRef)
+        self.assertResultHasType(ABPersonCreate, _C_ABPersonRef)
 
-        self.failUnlessResultHasType(ABPersonCreateWithVCardRepresentation, _C_ABPersonRef)
-        self.failUnlessArgHasType(ABPersonCreateWithVCardRepresentation, 0, _C_CFDataRef)
+        self.assertResultHasType(ABPersonCreateWithVCardRepresentation, _C_ABPersonRef)
+        self.assertArgHasType(ABPersonCreateWithVCardRepresentation, 0, _C_CFDataRef)
 
-        self.failUnlessResultHasType(ABPersonCopyParentGroups, _C_CFArrayRef)
-        self.failUnlessArgHasType(ABPersonCopyParentGroups, 0, _C_ABPersonRef)
+        self.assertResultHasType(ABPersonCopyParentGroups, _C_CFArrayRef)
+        self.assertArgHasType(ABPersonCopyParentGroups, 0, _C_ABPersonRef)
 
-        self.failUnlessResultHasType(ABPersonCreateSearchElement, _C_ABSearchElementRef)
-        self.failUnlessArgHasType(ABPersonCreateSearchElement, 0, _C_CFStringRef)
-        self.failUnlessArgHasType(ABPersonCreateSearchElement, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABPersonCreateSearchElement, 2, _C_CFStringRef)
-        self.failUnlessArgHasType(ABPersonCreateSearchElement, 3, objc._C_ID)
-        self.failUnlessArgHasType(ABPersonCreateSearchElement, 4, objc._C_CFIndex)
+        self.assertResultHasType(ABPersonCreateSearchElement, _C_ABSearchElementRef)
+        self.assertArgHasType(ABPersonCreateSearchElement, 0, _C_CFStringRef)
+        self.assertArgHasType(ABPersonCreateSearchElement, 1, _C_CFStringRef)
+        self.assertArgHasType(ABPersonCreateSearchElement, 2, _C_CFStringRef)
+        self.assertArgHasType(ABPersonCreateSearchElement, 3, objc._C_ID)
+        self.assertArgHasType(ABPersonCreateSearchElement, 4, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABGroupCreate, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupCreate, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupCopyArrayOfAllMembers, _C_CFArrayRef)
-        self.failUnlessArgHasType(ABGroupCopyArrayOfAllMembers, 0, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupCopyArrayOfAllMembers, _C_CFArrayRef)
+        self.assertArgHasType(ABGroupCopyArrayOfAllMembers, 0, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupAddMember, objc._C_BOOL)
-        self.failUnlessArgHasType(ABGroupAddMember, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupAddMember, 1, _C_ABPersonRef)
+        self.assertResultHasType(ABGroupAddMember, objc._C_BOOL)
+        self.assertArgHasType(ABGroupAddMember, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupAddMember, 1, _C_ABPersonRef)
 
-        self.failUnlessResultHasType(ABGroupRemoveMember, objc._C_BOOL)
-        self.failUnlessArgHasType(ABGroupRemoveMember, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupRemoveMember, 1, _C_ABPersonRef)
+        self.assertResultHasType(ABGroupRemoveMember, objc._C_BOOL)
+        self.assertArgHasType(ABGroupRemoveMember, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupRemoveMember, 1, _C_ABPersonRef)
 
-        self.failUnlessResultHasType(ABGroupCopyArrayOfAllSubgroups, _C_CFArrayRef)
-        self.failUnlessArgHasType(ABGroupCopyArrayOfAllSubgroups, 0, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupCopyArrayOfAllSubgroups, _C_CFArrayRef)
+        self.assertArgHasType(ABGroupCopyArrayOfAllSubgroups, 0, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupAddGroup, objc._C_BOOL)
-        self.failUnlessArgHasType(ABGroupAddGroup, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupAddGroup, 1, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupAddGroup, objc._C_BOOL)
+        self.assertArgHasType(ABGroupAddGroup, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupAddGroup, 1, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupRemoveGroup, objc._C_BOOL)
-        self.failUnlessArgHasType(ABGroupRemoveGroup, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupRemoveGroup, 1, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupRemoveGroup, objc._C_BOOL)
+        self.assertArgHasType(ABGroupRemoveGroup, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupRemoveGroup, 1, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupCopyParentGroups, _C_CFArrayRef)
-        self.failUnlessArgHasType(ABGroupCopyParentGroups, 0, _C_ABGroupRef)
+        self.assertResultHasType(ABGroupCopyParentGroups, _C_CFArrayRef)
+        self.assertArgHasType(ABGroupCopyParentGroups, 0, _C_ABGroupRef)
 
-        self.failUnlessResultHasType(ABGroupSetDistributionIdentifier, objc._C_BOOL)
-        self.failUnlessArgHasType(ABGroupSetDistributionIdentifier, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupSetDistributionIdentifier, 1, _C_ABPersonRef)
-        self.failUnlessArgHasType(ABGroupSetDistributionIdentifier, 2, _C_CFStringRef)
-        self.failUnlessArgHasType(ABGroupSetDistributionIdentifier, 3, _C_CFStringRef)
+        self.assertResultHasType(ABGroupSetDistributionIdentifier, objc._C_BOOL)
+        self.assertArgHasType(ABGroupSetDistributionIdentifier, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupSetDistributionIdentifier, 1, _C_ABPersonRef)
+        self.assertArgHasType(ABGroupSetDistributionIdentifier, 2, _C_CFStringRef)
+        self.assertArgHasType(ABGroupSetDistributionIdentifier, 3, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABGroupCopyDistributionIdentifier, _C_CFStringRef)
-        self.failUnlessArgHasType(ABGroupCopyDistributionIdentifier, 0, _C_ABGroupRef)
-        self.failUnlessArgHasType(ABGroupCopyDistributionIdentifier, 1, _C_ABPersonRef)
-        self.failUnlessArgHasType(ABGroupCopyDistributionIdentifier, 2, _C_CFStringRef)
+        self.assertResultHasType(ABGroupCopyDistributionIdentifier, _C_CFStringRef)
+        self.assertArgHasType(ABGroupCopyDistributionIdentifier, 0, _C_ABGroupRef)
+        self.assertArgHasType(ABGroupCopyDistributionIdentifier, 1, _C_ABPersonRef)
+        self.assertArgHasType(ABGroupCopyDistributionIdentifier, 2, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABGroupCreateSearchElement, _C_ABSearchElementRef)
-        self.failUnlessArgHasType(ABGroupCreateSearchElement, 0, _C_CFStringRef)
-        self.failUnlessArgHasType(ABGroupCreateSearchElement, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABGroupCreateSearchElement, 2, _C_CFStringRef)
-        self.failUnlessArgHasType(ABGroupCreateSearchElement, 3, objc._C_ID)
-        self.failUnlessArgHasType(ABGroupCreateSearchElement, 4, objc._C_CFIndex)
+        self.assertResultHasType(ABGroupCreateSearchElement, _C_ABSearchElementRef)
+        self.assertArgHasType(ABGroupCreateSearchElement, 0, _C_CFStringRef)
+        self.assertArgHasType(ABGroupCreateSearchElement, 1, _C_CFStringRef)
+        self.assertArgHasType(ABGroupCreateSearchElement, 2, _C_CFStringRef)
+        self.assertArgHasType(ABGroupCreateSearchElement, 3, objc._C_ID)
+        self.assertArgHasType(ABGroupCreateSearchElement, 4, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABSearchElementCreateWithConjunction, _C_ABSearchElementRef)
-        self.failUnlessArgHasType(ABSearchElementCreateWithConjunction, 0, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABSearchElementCreateWithConjunction, 1, _C_CFArrayRef)
+        self.assertResultHasType(ABSearchElementCreateWithConjunction, _C_ABSearchElementRef)
+        self.assertArgHasType(ABSearchElementCreateWithConjunction, 0, objc._C_CFIndex)
+        self.assertArgHasType(ABSearchElementCreateWithConjunction, 1, _C_CFArrayRef)
 
-        self.failUnlessResultHasType(ABSearchElementMatchesRecord, objc._C_BOOL)
-        self.failUnlessArgHasType(ABSearchElementMatchesRecord, 0, _C_ABSearchElementRef)
-        self.failUnlessArgHasType(ABSearchElementMatchesRecord, 1, objc._C_ID)
+        self.assertResultHasType(ABSearchElementMatchesRecord, objc._C_BOOL)
+        self.assertArgHasType(ABSearchElementMatchesRecord, 0, _C_ABSearchElementRef)
+        self.assertArgHasType(ABSearchElementMatchesRecord, 1, objc._C_ID)
 
-        self.failUnlessResultHasType(ABMultiValueCreate, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCreate, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABMultiValueCount, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABMultiValueCount, 0, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCount, objc._C_CFIndex)
+        self.assertArgHasType(ABMultiValueCount, 0, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABMultiValueCopyValueAtIndex, objc._C_ID)
-        self.failUnlessArgHasType(ABMultiValueCopyValueAtIndex, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueCopyValueAtIndex, 1, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueCopyValueAtIndex, objc._C_ID)
+        self.assertArgHasType(ABMultiValueCopyValueAtIndex, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueCopyValueAtIndex, 1, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValueCopyLabelAtIndex, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueCopyLabelAtIndex, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueCopyLabelAtIndex, 1, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueCopyLabelAtIndex, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueCopyLabelAtIndex, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueCopyLabelAtIndex, 1, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValueCopyPrimaryIdentifier, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueCopyPrimaryIdentifier, 0, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCopyPrimaryIdentifier, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueCopyPrimaryIdentifier, 0, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABMultiValueIndexForIdentifier, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABMultiValueIndexForIdentifier, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueIndexForIdentifier, 1, _C_CFStringRef)
+        self.assertResultHasType(ABMultiValueIndexForIdentifier, objc._C_CFIndex)
+        self.assertArgHasType(ABMultiValueIndexForIdentifier, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueIndexForIdentifier, 1, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABMultiValueCopyIdentifierAtIndex, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueCopyIdentifierAtIndex, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueCopyIdentifierAtIndex, 1, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueCopyIdentifierAtIndex, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueCopyIdentifierAtIndex, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueCopyIdentifierAtIndex, 1, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValuePropertyType, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABMultiValuePropertyType, 0, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValuePropertyType, objc._C_CFIndex)
+        self.assertArgHasType(ABMultiValuePropertyType, 0, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABMultiValueCreateCopy, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueCreateCopy, 0, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCreateCopy, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueCreateCopy, 0, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABMultiValueCreateMutable, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCreateMutable, _C_ABMultiValueRef)
 
 
-        self.failUnlessResultHasType(ABMultiValueAdd, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueAdd, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueAdd, 1, objc._C_ID)
-        self.failUnlessArgHasType(ABMultiValueAdd, 2, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueAdd, 3, objc._C_OUT + _C_CFStringRefPtr)
+        self.assertResultHasType(ABMultiValueAdd, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueAdd, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueAdd, 1, objc._C_ID)
+        self.assertArgHasType(ABMultiValueAdd, 2, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueAdd, 3, objc._C_OUT + _C_CFStringRefPtr)
 
-        self.failUnlessResultHasType(ABMultiValueInsert, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueInsert, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueInsert, 1, objc._C_ID)
-        self.failUnlessArgHasType(ABMultiValueInsert, 2, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueInsert, 3, objc._C_CFIndex)
-        self.failUnlessArgHasType(ABMultiValueInsert, 4, objc._C_OUT + _C_CFStringRefPtr)
+        self.assertResultHasType(ABMultiValueInsert, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueInsert, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueInsert, 1, objc._C_ID)
+        self.assertArgHasType(ABMultiValueInsert, 2, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueInsert, 3, objc._C_CFIndex)
+        self.assertArgHasType(ABMultiValueInsert, 4, objc._C_OUT + _C_CFStringRefPtr)
 
-        self.failUnlessResultHasType(ABMultiValueRemove, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueRemove, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueRemove, 1, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueRemove, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueRemove, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueRemove, 1, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValueReplaceValue, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueReplaceValue, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueReplaceValue, 1, objc._C_ID)
-        self.failUnlessArgHasType(ABMultiValueReplaceValue, 2, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueReplaceValue, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueReplaceValue, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueReplaceValue, 1, objc._C_ID)
+        self.assertArgHasType(ABMultiValueReplaceValue, 2, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValueReplaceLabel, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueReplaceLabel, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueReplaceLabel, 1, _C_CFStringRef)
-        self.failUnlessArgHasType(ABMultiValueReplaceLabel, 2, objc._C_CFIndex)
+        self.assertResultHasType(ABMultiValueReplaceLabel, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueReplaceLabel, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueReplaceLabel, 1, _C_CFStringRef)
+        self.assertArgHasType(ABMultiValueReplaceLabel, 2, objc._C_CFIndex)
 
-        self.failUnlessResultHasType(ABMultiValueSetPrimaryIdentifier, objc._C_BOOL)
-        self.failUnlessArgHasType(ABMultiValueSetPrimaryIdentifier, 0, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueSetPrimaryIdentifier, 1, _C_CFStringRef)
+        self.assertResultHasType(ABMultiValueSetPrimaryIdentifier, objc._C_BOOL)
+        self.assertArgHasType(ABMultiValueSetPrimaryIdentifier, 0, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueSetPrimaryIdentifier, 1, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABMultiValueCreateMutableCopy, _C_ABMultiValueRef)
-        self.failUnlessArgHasType(ABMultiValueCreateMutableCopy, 0, _C_ABMultiValueRef)
+        self.assertResultHasType(ABMultiValueCreateMutableCopy, _C_ABMultiValueRef)
+        self.assertArgHasType(ABMultiValueCreateMutableCopy, 0, _C_ABMultiValueRef)
 
-        self.failUnlessResultHasType(ABCopyLocalizedPropertyOrLabel, _C_CFStringRef)
-        self.failUnlessArgHasType(ABCopyLocalizedPropertyOrLabel, 0, _C_CFStringRef)
+        self.assertResultHasType(ABCopyLocalizedPropertyOrLabel, _C_CFStringRef)
+        self.assertArgHasType(ABCopyLocalizedPropertyOrLabel, 0, _C_CFStringRef)
 
-        self.failUnlessResultHasType(ABCreateFormattedAddressFromDictionary, _C_CFStringRef)
-        self.failUnlessArgHasType(ABCreateFormattedAddressFromDictionary, 0, _C_ABAddressBookRef)
-        self.failUnlessArgHasType(ABCreateFormattedAddressFromDictionary, 1, _C_CFDictionaryRef)
+        self.assertResultHasType(ABCreateFormattedAddressFromDictionary, _C_CFStringRef)
+        self.assertArgHasType(ABCreateFormattedAddressFromDictionary, 0, _C_ABAddressBookRef)
+        self.assertArgHasType(ABCreateFormattedAddressFromDictionary, 1, _C_CFDictionaryRef)
 
-        self.failUnlessResultHasType(ABCopyDefaultCountryCode, _C_CFStringRef)
-        self.failUnlessArgHasType(ABCopyDefaultCountryCode, 0, _C_ABAddressBookRef)
+        self.assertResultHasType(ABCopyDefaultCountryCode, _C_CFStringRef)
+        self.assertArgHasType(ABCopyDefaultCountryCode, 0, _C_ABAddressBookRef)
 
-        self.failUnlessResultHasType(ABPersonSetImageData, objc._C_BOOL)
-        self.failUnlessArgHasType(ABPersonSetImageData, 0, _C_ABPersonRef)
-        self.failUnlessArgHasType(ABPersonSetImageData, 1, _C_CFDataRef)
+        self.assertResultHasType(ABPersonSetImageData, objc._C_BOOL)
+        self.assertArgHasType(ABPersonSetImageData, 0, _C_ABPersonRef)
+        self.assertArgHasType(ABPersonSetImageData, 1, _C_CFDataRef)
 
-        self.failUnlessResultHasType(ABPersonCopyImageData, _C_CFDataRef)
-        self.failUnlessArgHasType(ABPersonCopyImageData, 0, _C_ABPersonRef)
+        self.assertResultHasType(ABPersonCopyImageData, _C_CFDataRef)
+        self.assertArgHasType(ABPersonCopyImageData, 0, _C_ABPersonRef)
 
         r = []
 
@@ -276,7 +276,7 @@ class TestABAddressBookC (TestCase):
             r.append((imageData, tag, refcon))
 
         idx = ABBeginLoadingImageDataForClient(me, callback, 99)
-        self.failUnlessIsInstance(idx, (int, long))
+        self.assertIsInstance(idx, (int, long))
 
         #CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
         ABCancelLoadingImageDataForTag(idx)
