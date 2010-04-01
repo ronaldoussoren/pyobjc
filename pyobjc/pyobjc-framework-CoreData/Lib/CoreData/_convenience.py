@@ -20,6 +20,7 @@ def NSMOsetValue_ForKey_(self, name, value):
     except KeyError, msg:
         NSObject.__setattr__(self, name, value)
 
+
 def NSMOgetValueForKey_(self, name):
     try:
         if '__objc_python_subclass__' in self.__class__.__dict__:

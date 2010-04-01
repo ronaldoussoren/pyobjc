@@ -4,25 +4,25 @@ from CoreData import *
 
 class TestNSAttributeDescription (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSUndefinedAttributeType, 0)
-        self.failUnlessEqual(NSInteger16AttributeType, 100)
-        self.failUnlessEqual(NSInteger32AttributeType, 200)
-        self.failUnlessEqual(NSInteger64AttributeType, 300)
-        self.failUnlessEqual(NSDecimalAttributeType, 400)
-        self.failUnlessEqual(NSDoubleAttributeType, 500)
-        self.failUnlessEqual(NSFloatAttributeType, 600)
-        self.failUnlessEqual(NSStringAttributeType, 700)
-        self.failUnlessEqual(NSBooleanAttributeType, 800)
-        self.failUnlessEqual(NSDateAttributeType, 900)
-        self.failUnlessEqual(NSBinaryDataAttributeType, 1000)
+        self.assertEqual(NSUndefinedAttributeType, 0)
+        self.assertEqual(NSInteger16AttributeType, 100)
+        self.assertEqual(NSInteger32AttributeType, 200)
+        self.assertEqual(NSInteger64AttributeType, 300)
+        self.assertEqual(NSDecimalAttributeType, 400)
+        self.assertEqual(NSDoubleAttributeType, 500)
+        self.assertEqual(NSFloatAttributeType, 600)
+        self.assertEqual(NSStringAttributeType, 700)
+        self.assertEqual(NSBooleanAttributeType, 800)
+        self.assertEqual(NSDateAttributeType, 900)
+        self.assertEqual(NSBinaryDataAttributeType, 1000)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.failUnlessEqual(NSTransformableAttributeType, 1800)
+        self.assertEqual(NSTransformableAttributeType, 1800)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.failUnlessEqual(NSObjectIDAttributeType, 2000)
+        self.assertEqual(NSObjectIDAttributeType, 2000)
 
 
 if __name__ == "__main__":
