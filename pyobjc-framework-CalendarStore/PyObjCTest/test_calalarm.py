@@ -4,10 +4,10 @@ from CalendarStore import *
 
 class TestCalAlarm (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(CalAlarmActionDisplay, unicode)
-        self.failUnlessIsInstance(CalAlarmActionEmail, unicode)
-        self.failUnlessIsInstance(CalAlarmActionProcedure, unicode)
-        self.failUnlessIsInstance(CalAlarmActionSound, unicode)
+        self.assertIsInstance(CalAlarmActionDisplay, unicode)
+        self.assertIsInstance(CalAlarmActionEmail, unicode)
+        self.assertIsInstance(CalAlarmActionProcedure, unicode)
+        self.assertIsInstance(CalAlarmActionSound, unicode)
 
 
 if __name__ == "__main__":

@@ -4,10 +4,10 @@ from CalendarStore import *
 
 class TestCalAttendee (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(CalAttendeeStatusNeedsAction, unicode)
-        self.failUnlessIsInstance(CalAttendeeStatusAccepted, unicode)
-        self.failUnlessIsInstance(CalAttendeeStatusDeclined, unicode)
-        self.failUnlessIsInstance(CalAttendeeStatusTentative, unicode)
+        self.assertIsInstance(CalAttendeeStatusNeedsAction, unicode)
+        self.assertIsInstance(CalAttendeeStatusAccepted, unicode)
+        self.assertIsInstance(CalAttendeeStatusDeclined, unicode)
+        self.assertIsInstance(CalAttendeeStatusTentative, unicode)
 
 if __name__ == "__main__":
     main()

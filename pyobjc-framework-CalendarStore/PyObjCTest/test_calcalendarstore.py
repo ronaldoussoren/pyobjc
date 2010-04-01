@@ -4,37 +4,37 @@ from CalendarStore import *
 
 class TestCalCalendarStore (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(CalSpanThisEvent, 0)
-        self.failUnlessEqual(CalSpanFutureEvents, 1)
-        self.failUnlessEqual(CalSpanAllEvents, 2)
+        self.assertEqual(CalSpanThisEvent, 0)
+        self.assertEqual(CalSpanFutureEvents, 1)
+        self.assertEqual(CalSpanAllEvents, 2)
 
-        self.failUnlessIsInstance(CalCalendarsChangedNotification, unicode)
-        self.failUnlessIsInstance(CalEventsChangedNotification, unicode)
-        self.failUnlessIsInstance(CalTasksChangedNotification, unicode)
-        self.failUnlessIsInstance(CalCalendarsChangedExternallyNotification, unicode)
-        self.failUnlessIsInstance(CalEventsChangedExternallyNotification, unicode)
-        self.failUnlessIsInstance(CalTasksChangedExternallyNotification, unicode)
-        self.failUnlessIsInstance(CalInsertedRecordsKey, unicode)
-        self.failUnlessIsInstance(CalUpdatedRecordsKey, unicode)
-        self.failUnlessIsInstance(CalDeletedRecordsKey, unicode)
-        self.failUnlessIsInstance(CalSenderProcessIDKey, unicode)
-        self.failUnlessIsInstance(CalUserUIDKey, unicode)
+        self.assertIsInstance(CalCalendarsChangedNotification, unicode)
+        self.assertIsInstance(CalEventsChangedNotification, unicode)
+        self.assertIsInstance(CalTasksChangedNotification, unicode)
+        self.assertIsInstance(CalCalendarsChangedExternallyNotification, unicode)
+        self.assertIsInstance(CalEventsChangedExternallyNotification, unicode)
+        self.assertIsInstance(CalTasksChangedExternallyNotification, unicode)
+        self.assertIsInstance(CalInsertedRecordsKey, unicode)
+        self.assertIsInstance(CalUpdatedRecordsKey, unicode)
+        self.assertIsInstance(CalDeletedRecordsKey, unicode)
+        self.assertIsInstance(CalSenderProcessIDKey, unicode)
+        self.assertIsInstance(CalUserUIDKey, unicode)
 
     def testMethods(self):
-        self.failUnlessArgIsOut(CalCalendarStore.saveCalendar_error_, 1)
-        self.failUnlessArgIsOut(CalCalendarStore.removeCalendar_error_, 1)
+        self.assertArgIsOut(CalCalendarStore.saveCalendar_error_, 1)
+        self.assertArgIsOut(CalCalendarStore.removeCalendar_error_, 1)
 
-        self.failUnlessArgIsOut(CalCalendarStore.saveEvent_span_error_, 2)
-        self.failUnlessResultIsBOOL(CalCalendarStore.saveEvent_span_error_)
+        self.assertArgIsOut(CalCalendarStore.saveEvent_span_error_, 2)
+        self.assertResultIsBOOL(CalCalendarStore.saveEvent_span_error_)
 
-        self.failUnlessArgIsOut(CalCalendarStore.removeEvent_span_error_, 2)
-        self.failUnlessResultIsBOOL(CalCalendarStore.removeEvent_span_error_)
+        self.assertArgIsOut(CalCalendarStore.removeEvent_span_error_, 2)
+        self.assertResultIsBOOL(CalCalendarStore.removeEvent_span_error_)
 
-        self.failUnlessArgIsOut(CalCalendarStore.saveTask_error_, 1)
-        self.failUnlessResultIsBOOL(CalCalendarStore.saveTask_error_)
+        self.assertArgIsOut(CalCalendarStore.saveTask_error_, 1)
+        self.assertResultIsBOOL(CalCalendarStore.saveTask_error_)
 
-        self.failUnlessArgIsOut(CalCalendarStore.removeTask_error_, 1)
-        self.failUnlessResultIsBOOL(CalCalendarStore.removeTask_error_)
+        self.assertArgIsOut(CalCalendarStore.removeTask_error_, 1)
+        self.assertResultIsBOOL(CalCalendarStore.removeTask_error_)
 
 if __name__ == "__main__":
     main()
