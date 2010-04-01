@@ -299,7 +299,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)),
 
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
 	{
 		"CFNetworkExecuteProxyAutoConfigurationScript",
@@ -325,20 +325,67 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, }
 };
 
+#if PY_MAJOR_VERSION == 3
+
+static struct PyModuleDef mod_module = {
+	PyModuleDef_HEAD_INIT,
+	"_manual",
+	NULL,
+	0,
+	mod_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
+
+#define INITERROR() return NULL
+#define INITDONE() return m
+
+PyObject* PyInit__manual(void);
+
+PyObject*
+PyInit__manual(void)
+
+#else
+
+#define INITERROR() return
+#define INITDONE() return
+
+
+
 void init_manual(void);
 void init_manual(void)
+#endif
 {
-	PyObject* m = Py_InitModule4("_manual", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m;
 
-        if (PyObjC_ImportAPI(m) < 0) { return; }
+#if PY_MAJOR_VERSION == 3
+	m = PyModule_Create(&mod_module);
+#else
+	m = Py_InitModule4("_manual", mod_methods,
+		NULL, NULL, PYTHON_API_VERSION);
+#endif
+	if (!m) {
+		INITERROR();
+	}
+
+        if (PyObjC_ImportAPI(m) < 0) { 
+		INITERROR();
+	}
 
 #if PyObjC_BUILD_RELEASE >= 1005
 	if (CFNetworkExecuteProxyAutoConfigurationScript == NULL) {
-		PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationScript");
+		if (PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationScript") < 0) {
+			INITERROR();
+		}
 	}
 	if (CFNetworkExecuteProxyAutoConfigurationURL == NULL) {
-		PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationURL");
+		if (PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationURL") < 0) {
+			INITERROR();
+		}
 	}
 #endif
+
+	INITDONE();
 }

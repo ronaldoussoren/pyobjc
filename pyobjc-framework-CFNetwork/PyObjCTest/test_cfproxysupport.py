@@ -15,25 +15,25 @@ class TestCFProxySupport (TestCase):
 
     @min_os_level('10.5')
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CFNetworkCopyProxiesForURL)
+        self.assertResultIsCFRetained(CFNetworkCopyProxiesForURL)
         url = CFURLCreateWithString(None, "http://www.apple.com/", None)
         v = CFNetworkCopyProxiesForURL(url, None)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
-        self.failUnlessResultIsCFRetained(CFNetworkCopyProxiesForAutoConfigurationScript)
-        self.failUnlessArgIsOut(CFNetworkCopyProxiesForAutoConfigurationScript, 2)
+        self.assertResultIsCFRetained(CFNetworkCopyProxiesForAutoConfigurationScript)
+        self.assertArgIsOut(CFNetworkCopyProxiesForAutoConfigurationScript, 2)
         v, err  = CFNetworkCopyProxiesForAutoConfigurationScript(
                 SCRIPT, url, None)
-        self.failUnless(err is None)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertTrue(err is None)
+        self.assertIsInstance(v, CFArrayRef)
         x = v[0]
-        self.failUnlessEqual(x[kCFProxyTypeKey], kCFProxyTypeHTTP)
-        self.failUnlessEqual(x[kCFProxyHostNameKey], "proxy.apple.com")
-        self.failUnlessEqual(x[kCFProxyPortNumberKey], 8080)
+        self.assertEqual(x[kCFProxyTypeKey], kCFProxyTypeHTTP)
+        self.assertEqual(x[kCFProxyHostNameKey], "proxy.apple.com")
+        self.assertEqual(x[kCFProxyPortNumberKey], 8080)
 
-        self.failUnlessResultIsCFRetained(CFNetworkCopySystemProxySettings)
+        self.assertResultIsCFRetained(CFNetworkCopySystemProxySettings)
         v = CFNetworkCopySystemProxySettings()
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
 
     @min_os_level('10.5')
@@ -47,7 +47,7 @@ class TestCFProxySupport (TestCase):
         
         rls = CFNetworkExecuteProxyAutoConfigurationScript(
                 SCRIPT, url, callback, ctx)
-        self.failUnlessIsInstance(rls, CFRunLoopSourceRef)
+        self.assertIsInstance(rls, CFRunLoopSourceRef)
 
         rl = CFRunLoopGetCurrent()
         CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
@@ -56,10 +56,10 @@ class TestCFProxySupport (TestCase):
 
         CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
 
-        self.failIfEqual(len(lst), 0)
-        self.failUnless(lst[0][0] is ctx)
-        self.failUnlessIsInstance(lst[0][1], CFArrayRef)
-        self.failUnlessEqual(lst[0][2],  None)
+        self.assertNotEqual(len(lst), 0)
+        self.assertTrue(lst[0][0] is ctx)
+        self.assertIsInstance(lst[0][1], CFArrayRef)
+        self.assertEqual(lst[0][2],  None)
 
         lst[:] = []
         path = os.path.join(os.path.dirname(__file__), "proxy.pac")
@@ -74,7 +74,7 @@ class TestCFProxySupport (TestCase):
 
         rls = CFNetworkExecuteProxyAutoConfigurationURL(
                 scriptURL, url, callback, ctx)
-        self.failUnlessIsInstance(rls, CFRunLoopSourceRef)
+        self.assertIsInstance(rls, CFRunLoopSourceRef)
 
         CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
 
@@ -84,69 +84,69 @@ class TestCFProxySupport (TestCase):
 
         #print lst
 
-        self.failIfEqual(len(lst), 0)
-        self.failUnless(lst[0][0] is ctx)
+        self.assertNotEqual(len(lst), 0)
+        self.assertTrue(lst[0][0] is ctx)
         if lst[0][2] is None:
-            self.failUnlessIsInstance(lst[0][1], CFArrayRef)
-            self.failUnlessEqual(lst[0][2],  None)
+            self.assertIsInstance(lst[0][1], CFArrayRef)
+            self.assertEqual(lst[0][2],  None)
 
         else:
-            self.failUnlessEqual(lst[0][1],  None)
-            self.failUnlessIsInstance(lst[0][2], CFErrorRef)
+            self.assertEqual(lst[0][1],  None)
+            self.assertIsInstance(lst[0][2], CFErrorRef)
 
 
         
 
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(kCFProxyTypeKey, unicode)
-        self.failUnlessIsInstance(kCFProxyHostNameKey, unicode)
-        self.failUnlessIsInstance(kCFProxyPortNumberKey, unicode)
-        self.failUnlessIsInstance(kCFProxyAutoConfigurationURLKey, unicode)
-        self.failUnlessIsInstance(kCFProxyUsernameKey, unicode)
-        self.failUnlessIsInstance(kCFProxyPasswordKey, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeNone, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeHTTP, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeHTTPS, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeSOCKS, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeFTP, unicode)
-        self.failUnlessIsInstance(kCFProxyTypeAutoConfigurationURL, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPProxy, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
+        self.assertIsInstance(kCFProxyTypeKey, unicode)
+        self.assertIsInstance(kCFProxyHostNameKey, unicode)
+        self.assertIsInstance(kCFProxyPortNumberKey, unicode)
+        self.assertIsInstance(kCFProxyAutoConfigurationURLKey, unicode)
+        self.assertIsInstance(kCFProxyUsernameKey, unicode)
+        self.assertIsInstance(kCFProxyPasswordKey, unicode)
+        self.assertIsInstance(kCFProxyTypeNone, unicode)
+        self.assertIsInstance(kCFProxyTypeHTTP, unicode)
+        self.assertIsInstance(kCFProxyTypeHTTPS, unicode)
+        self.assertIsInstance(kCFProxyTypeSOCKS, unicode)
+        self.assertIsInstance(kCFProxyTypeFTP, unicode)
+        self.assertIsInstance(kCFProxyTypeAutoConfigurationURL, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
 
     @expectedFailure
     @min_os_level('10.5')
     def testConstants_fail(self):
-        self.failUnlessIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
+        self.assertIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
         r = CFNetworkCopySystemProxySettings()
-        self.failUnlessIsInstance(r, CFDictionaryRef)
+        self.assertIsInstance(r, CFDictionaryRef)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(kCFNetworkProxiesExceptionsList, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesExcludeSimpleHostnames, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesFTPEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesFTPPassive, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesFTPPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesFTPProxy, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesGopherEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesGopherPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesGopherProxy, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesHTTPSProxy, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesRTSPEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesRTSPPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesRTSPProxy, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSEnable, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSPort, unicode)
-        self.failUnlessIsInstance(kCFNetworkProxiesSOCKSProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesExceptionsList, unicode)
+        self.assertIsInstance(kCFNetworkProxiesExcludeSimpleHostnames, unicode)
+        self.assertIsInstance(kCFNetworkProxiesFTPEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesFTPPassive, unicode)
+        self.assertIsInstance(kCFNetworkProxiesFTPPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesFTPProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesGopherEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesGopherPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesGopherProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPSEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPSPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesHTTPSProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesRTSPEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesRTSPPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesRTSPProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesSOCKSEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesSOCKSPort, unicode)
+        self.assertIsInstance(kCFNetworkProxiesSOCKSProxy, unicode)
 
 
 

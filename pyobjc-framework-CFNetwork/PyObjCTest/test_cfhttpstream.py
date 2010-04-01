@@ -5,34 +5,34 @@ import os
 class TestCFHTTPStream (TestCase):
     @min_os_level('10.5')
     def testConstants10_5(self):
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
 
     def testConstants(self):
-        self.failUnlessEqual(kCFStreamErrorHTTPParseFailure, -1)
-        self.failUnlessEqual(kCFStreamErrorHTTPRedirectionLoop, -2)
-        self.failUnlessEqual(kCFStreamErrorHTTPBadURL, -3)
+        self.assertEqual(kCFStreamErrorHTTPParseFailure, -1)
+        self.assertEqual(kCFStreamErrorHTTPRedirectionLoop, -2)
+        self.assertEqual(kCFStreamErrorHTTPBadURL, -3)
 
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPResponseHeader, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPFinalURL, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPProxy, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPProxyHost, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPProxyPort, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPSProxyHost, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPSProxyPort, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPShouldAutoredirect, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPAttemptPersistentConnection, unicode)
-        self.failUnlessIsInstance(kCFStreamPropertyHTTPRequestBytesWrittenCount, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPResponseHeader, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPFinalURL, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPProxy, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPProxyHost, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPProxyPort, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPSProxyHost, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPSProxyPort, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPShouldAutoredirect, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPAttemptPersistentConnection, unicode)
+        self.assertIsInstance(kCFStreamPropertyHTTPRequestBytesWrittenCount, unicode)
 
     def testFunctions(self):
        url = CFURLCreateWithString(None, "http://www.python.org/", None)
-       self.failUnlessIsInstance(url, CFURLRef)
+       self.assertIsInstance(url, CFURLRef)
 
        req = CFHTTPMessageCreateRequest(None, "GET", url, kCFHTTPVersion1_1)
-       self.failUnlessIsInstance(req, CFHTTPMessageRef)
+       self.assertIsInstance(req, CFHTTPMessageRef)
 
-       self.failUnlessResultIsCFRetained(CFReadStreamCreateForHTTPRequest)
+       self.assertResultIsCFRetained(CFReadStreamCreateForHTTPRequest)
        v = CFReadStreamCreateForHTTPRequest(None, req)
-       self.failUnlessIsInstance(v, CFReadStreamRef)
+       self.assertIsInstance(v, CFReadStreamRef)
 
        fp = open("/dev/null", "w")
        fd_2 = os.dup(2)
@@ -41,11 +41,11 @@ class TestCFHTTPStream (TestCase):
        try:
            # Avoid deprecation messages from CFNetwork
 
-           self.failUnlessResultIsCFRetained(CFReadStreamCreateForStreamedHTTPRequest)
+           self.assertResultIsCFRetained(CFReadStreamCreateForStreamedHTTPRequest)
            v = CFReadStreamCreateForStreamedHTTPRequest(None, req, v)
-           self.failUnlessIsInstance(v, CFReadStreamRef)
+           self.assertIsInstance(v, CFReadStreamRef)
 
-           self.failUnlessArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
+           self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
            CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
            CFHTTPReadStreamSetProxy(v, u"localhost", 8080)

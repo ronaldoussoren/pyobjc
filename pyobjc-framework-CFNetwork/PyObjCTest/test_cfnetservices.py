@@ -4,61 +4,61 @@ from PyObjCTools.TestSupport import *
 
 class TestCFNetServices (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CFNetServiceRef)
-        self.failUnlessIsCFType(CFNetServiceMonitorRef)
-        self.failUnlessIsCFType(CFNetServiceBrowserRef)
+        self.assertIsCFType(CFNetServiceRef)
+        self.assertIsCFType(CFNetServiceMonitorRef)
+        self.assertIsCFType(CFNetServiceBrowserRef)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCFStreamErrorDomainMach, (int, long))
-        self.failUnlessIsInstance(kCFStreamErrorDomainNetServices, (int, long))
+        self.assertIsInstance(kCFStreamErrorDomainMach, (int, long))
+        self.assertIsInstance(kCFStreamErrorDomainNetServices, (int, long))
 
-        self.failUnlessEqual(kCFNetServicesErrorUnknown, -72000)
-        self.failUnlessEqual(kCFNetServicesErrorCollision, -72001)
-        self.failUnlessEqual(kCFNetServicesErrorNotFound, -72002)
-        self.failUnlessEqual(kCFNetServicesErrorInProgress, -72003)
-        self.failUnlessEqual(kCFNetServicesErrorBadArgument, -72004)
-        self.failUnlessEqual(kCFNetServicesErrorCancel, -72005)
-        self.failUnlessEqual(kCFNetServicesErrorInvalid, -72006)
-        self.failUnlessEqual(kCFNetServicesErrorTimeout, -72007)
-        self.failUnlessEqual(kCFNetServiceMonitorTXT, 1)
-        self.failUnlessEqual(kCFNetServiceFlagNoAutoRename, 1)
-        self.failUnlessEqual(kCFNetServiceFlagMoreComing, 1)
-        self.failUnlessEqual(kCFNetServiceFlagIsDomain, 2)
-        self.failUnlessEqual(kCFNetServiceFlagIsDefault, 4)
-        self.failUnlessEqual(kCFNetServiceFlagIsRegistrationDomain, 4)
-        self.failUnlessEqual(kCFNetServiceFlagRemove, 8)
+        self.assertEqual(kCFNetServicesErrorUnknown, -72000)
+        self.assertEqual(kCFNetServicesErrorCollision, -72001)
+        self.assertEqual(kCFNetServicesErrorNotFound, -72002)
+        self.assertEqual(kCFNetServicesErrorInProgress, -72003)
+        self.assertEqual(kCFNetServicesErrorBadArgument, -72004)
+        self.assertEqual(kCFNetServicesErrorCancel, -72005)
+        self.assertEqual(kCFNetServicesErrorInvalid, -72006)
+        self.assertEqual(kCFNetServicesErrorTimeout, -72007)
+        self.assertEqual(kCFNetServiceMonitorTXT, 1)
+        self.assertEqual(kCFNetServiceFlagNoAutoRename, 1)
+        self.assertEqual(kCFNetServiceFlagMoreComing, 1)
+        self.assertEqual(kCFNetServiceFlagIsDomain, 2)
+        self.assertEqual(kCFNetServiceFlagIsDefault, 4)
+        self.assertEqual(kCFNetServiceFlagIsRegistrationDomain, 4)
+        self.assertEqual(kCFNetServiceFlagRemove, 8)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CFNetServiceGetTypeID(), (int, long))
-        self.failUnlessIsInstance(CFNetServiceMonitorGetTypeID(), (int, long))
-        self.failUnlessIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetServiceGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetServiceMonitorGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
 
-        self.failUnlessResultIsCFRetained(CFNetServiceCreate)
+        self.assertResultIsCFRetained(CFNetServiceCreate)
         serv = CFNetServiceCreate(None, u"pyobjc.local", u"ssh", u"pyobjc.test.local", 9999)
-        self.failUnlessIsInstance(serv, CFNetServiceRef)
+        self.assertIsInstance(serv, CFNetServiceRef)
 
-        self.failUnlessResultIsCFRetained(CFNetServiceCreateCopy)
+        self.assertResultIsCFRetained(CFNetServiceCreateCopy)
         v = CFNetServiceCreateCopy(None, serv)
-        self.failUnlessIsInstance(v, CFNetServiceRef)
+        self.assertIsInstance(v, CFNetServiceRef)
 
         dom = CFNetServiceGetDomain(serv)
-        self.failUnlessIsInstance(dom, unicode)
+        self.assertIsInstance(dom, unicode)
 
         dom = CFNetServiceGetType(serv)
-        self.failUnlessIsInstance(dom, unicode)
+        self.assertIsInstance(dom, unicode)
 
         dom = CFNetServiceGetName(serv)
-        self.failUnlessIsInstance(dom, unicode)
+        self.assertIsInstance(dom, unicode)
 
-        self.failUnlessResultIsBOOL(CFNetServiceRegisterWithOptions)
-        self.failUnlessArgIsOut(CFNetServiceRegisterWithOptions, 2)
+        self.assertResultIsBOOL(CFNetServiceRegisterWithOptions)
+        self.assertArgIsOut(CFNetServiceRegisterWithOptions, 2)
 
         ok, err = CFNetServiceRegisterWithOptions(serv, kCFNetServiceFlagNoAutoRename, None)
-        self.failUnlessIsInstance(ok, bool)
+        self.assertIsInstance(ok, bool)
         if ok:
-            self.failUnlessEqual(err, None)
+            self.assertEqual(err, None)
         else:
-            self.failUnlessIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFStreamError)
 
 
 if __name__ == "__main__":
