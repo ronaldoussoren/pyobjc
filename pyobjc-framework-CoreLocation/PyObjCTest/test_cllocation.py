@@ -7,28 +7,28 @@ class TestCLLocation (TestCase):
     @min_os_level('10.6')
     def testTypes(self):
         v = CLLocationCoordinate2D()
-        self.failUnlessIsInstance(v.latitude, float)
-        self.failUnlessIsInstance(v.longitude, float)
-        self.failUnlessEqual(CLLocationCoordinate2D.__typestr__,
-                '{_CLLocationCoordinate2D=dd}')
+        self.assertIsInstance(v.latitude, float)
+        self.assertIsInstance(v.longitude, float)
+        self.assertEqual(CLLocationCoordinate2D.__typestr__,
+                b'{_CLLocationCoordinate2D=dd}')
 
 
     @min_os_level('10.6')
     def testConstants(self):
-        self.failUnlessIsInstance(kCLDistanceFilterNone, float)
+        self.assertIsInstance(kCLDistanceFilterNone, float)
 
-        self.failUnlessIsInstance(kCLLocationAccuracyBest, float)
-        self.failUnlessIsInstance(kCLLocationAccuracyNearestTenMeters, float)
-        self.failUnlessIsInstance(kCLLocationAccuracyHundredMeters, float)
-        self.failUnlessIsInstance(kCLLocationAccuracyKilometer, float)
-        self.failUnlessIsInstance(kCLLocationAccuracyThreeKilometers, float)
+        self.assertIsInstance(kCLLocationAccuracyBest, float)
+        self.assertIsInstance(kCLLocationAccuracyNearestTenMeters, float)
+        self.assertIsInstance(kCLLocationAccuracyHundredMeters, float)
+        self.assertIsInstance(kCLLocationAccuracyKilometer, float)
+        self.assertIsInstance(kCLLocationAccuracyThreeKilometers, float)
 
     @min_os_level('10.6')
     def testMethods(self):
-        self.failUnlessResultHasType(CLLocation.coordinate, CLLocationCoordinate2D.__typestr__)
-        #self.failUnlessArgHasType(CLLocation.setCoordinate_, 0, CLLocationCoordinate2D.__typestr__)
+        self.assertResultHasType(CLLocation.coordinate, CLLocationCoordinate2D.__typestr__)
+        #self.assertArgHasType(CLLocation.setCoordinate_, 0, CLLocationCoordinate2D.__typestr__)
 
-        self.failUnlessArgHasType(CLLocation.initWithCoordinate_altitude_horizontalAccuracy_verticalAccuracy_timestamp_, 0,
+        self.assertArgHasType(CLLocation.initWithCoordinate_altitude_horizontalAccuracy_verticalAccuracy_timestamp_, 0,
                 CLLocationCoordinate2D.__typestr__)
 
 
