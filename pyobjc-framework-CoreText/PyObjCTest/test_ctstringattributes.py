@@ -4,35 +4,35 @@ from CoreText import *
 
 class TestCTStringAttributes (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(kCTFontAttributeName, unicode)
-        self.failUnlessIsInstance(kCTKernAttributeName, unicode)
-        self.failUnlessIsInstance(kCTLigatureAttributeName, unicode)
-        self.failUnlessIsInstance(kCTForegroundColorAttributeName, unicode)
-        self.failUnlessIsInstance(kCTParagraphStyleAttributeName, unicode)
-        self.failUnlessIsInstance(kCTUnderlineStyleAttributeName, unicode)
-        self.failUnlessIsInstance(kCTVerticalFormsAttributeName, unicode)
-        self.failUnlessIsInstance(kCTGlyphInfoAttributeName, unicode)
-        self.failUnlessEqual(kCTUnderlineStyleNone,  0x00)
-        self.failUnlessEqual(kCTUnderlineStyleSingle,  0x01)
-        self.failUnlessEqual(kCTUnderlineStyleThick,  0x02)
-        self.failUnlessEqual(kCTUnderlineStyleDouble,  0x09)
-        self.failUnlessEqual(kCTUnderlinePatternSolid,  0x0000)
-        self.failUnlessEqual(kCTUnderlinePatternDot,  0x0100)
-        self.failUnlessEqual(kCTUnderlinePatternDash,  0x0200)
-        self.failUnlessEqual(kCTUnderlinePatternDashDot,  0x0300)
-        self.failUnlessEqual(kCTUnderlinePatternDashDotDot,  0x0400)
+        self.assertIsInstance(kCTFontAttributeName, unicode)
+        self.assertIsInstance(kCTKernAttributeName, unicode)
+        self.assertIsInstance(kCTLigatureAttributeName, unicode)
+        self.assertIsInstance(kCTForegroundColorAttributeName, unicode)
+        self.assertIsInstance(kCTParagraphStyleAttributeName, unicode)
+        self.assertIsInstance(kCTUnderlineStyleAttributeName, unicode)
+        self.assertIsInstance(kCTVerticalFormsAttributeName, unicode)
+        self.assertIsInstance(kCTGlyphInfoAttributeName, unicode)
+        self.assertEqual(kCTUnderlineStyleNone,  0x00)
+        self.assertEqual(kCTUnderlineStyleSingle,  0x01)
+        self.assertEqual(kCTUnderlineStyleThick,  0x02)
+        self.assertEqual(kCTUnderlineStyleDouble,  0x09)
+        self.assertEqual(kCTUnderlinePatternSolid,  0x0000)
+        self.assertEqual(kCTUnderlinePatternDot,  0x0100)
+        self.assertEqual(kCTUnderlinePatternDash,  0x0200)
+        self.assertEqual(kCTUnderlinePatternDashDot,  0x0300)
+        self.assertEqual(kCTUnderlinePatternDashDotDot,  0x0400)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
-        self.failUnlessIsInstance(kCTForegroundColorFromContextAttributeName, unicode)
-        self.failUnlessIsInstance(kCTSuperscriptAttributeName, unicode)
-        self.failUnlessIsInstance(kCTUnderlineColorAttributeName, unicode)
-        self.failUnlessIsInstance(kCTCharacterShapeAttributeName, unicode)
+        self.assertIsInstance(kCTForegroundColorFromContextAttributeName, unicode)
+        self.assertIsInstance(kCTSuperscriptAttributeName, unicode)
+        self.assertIsInstance(kCTUnderlineColorAttributeName, unicode)
+        self.assertIsInstance(kCTCharacterShapeAttributeName, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(kCTStrokeWidthAttributeName, unicode)
-        self.failUnlessIsInstance(kCTStrokeColorAttributeName, unicode)
+        self.assertIsInstance(kCTStrokeWidthAttributeName, unicode)
+        self.assertIsInstance(kCTStrokeColorAttributeName, unicode)
 
 
 if __name__ == "__main__":
