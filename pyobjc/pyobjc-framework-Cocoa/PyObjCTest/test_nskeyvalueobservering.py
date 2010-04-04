@@ -31,27 +31,27 @@ class TestNSKeyValueObserving (TestCase):
     def testContext(self):
         o = NSObject.alloc().init()
         m = o.observeValueForKeyPath_ofObject_change_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], '^v' )
+        self.assertEqual( m['arguments'][5]['type'], b'^v' )
 
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], '^v' )
+        self.assertEqual( m['arguments'][5]['type'], b'^v' )
 
         m = o.setObservationInfo_.__metadata__()
-        self.assertEqual( m['arguments'][2]['type'], '^v' )
+        self.assertEqual( m['arguments'][2]['type'], b'^v' )
 
         m = o.observationInfo.__metadata__()
-        self.assertEqual( m['retval']['type'], '^v' )
+        self.assertEqual( m['retval']['type'], b'^v' )
 
         o = NSArray.alloc().init()
         m = o.addObserver_toObjectsAtIndexes_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][6]['type'], '^v' )
+        self.assertEqual( m['arguments'][6]['type'], b'^v' )
 
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], '^v' )
+        self.assertEqual( m['arguments'][5]['type'], b'^v' )
 
         o = NSSet.alloc().init()
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], '^v' )
+        self.assertEqual( m['arguments'][5]['type'], b'^v' )
 
 
 if __name__ == "__main__":

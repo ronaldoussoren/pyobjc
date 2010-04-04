@@ -100,10 +100,10 @@ class TestNSFont(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSFont.isFixedPitch)
-        self.assertArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, 'n^I')
+        self.assertArgHasType(NSFont.getBoundingRects_forGlyphs_count_, 1, b'n^I')
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getBoundingRects_forGlyphs_count_, 1, 2)
-        self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, 'n^I')
+        self.assertArgHasType(NSFont.getAdvancements_forGlyphs_count_, 1, b'n^I')
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 0, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forGlyphs_count_, 1, 2)
         self.assertArgSizeInArg(NSFont.getAdvancements_forPackedGlyphs_length_, 0, 2)
@@ -113,20 +113,20 @@ class TestNSFont(TestCase):
     def testMethods32(self):
         self.assertResultIsBOOL(NSFont.isBaseFont)
         self.assertResultIsBOOL(NSFont.glyphIsEncoded_)
-        self.assertArgHasType(NSFont.glyphIsEncoded_, 0, 'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, 'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, 'I')
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, 'o^'+objc._C_NSBOOL)
+        self.assertArgHasType(NSFont.glyphIsEncoded_, 0, b'I')
+        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b'I')
+        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b'I')
+        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, b'o^'+objc._C_NSBOOL)
         
-        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 'n^I')
+        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, b'n^I')
         self.assertArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1)
-        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 'o^'+NSPoint.__typestr__)
+        self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, b'o^'+NSPoint.__typestr__)
         self.assertArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 1)
 
-        self.assertArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, 'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, 'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, 'o^' + NSSize.__typestr__)
-        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSFont.positionOfGlyph_struckOverGlyph_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 3, b'o^' + NSSize.__typestr__)
+        self.assertArgHasType(NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_, 4, b'o^' + objc._C_NSBOOL)
 
 
     def testFunctions(self):

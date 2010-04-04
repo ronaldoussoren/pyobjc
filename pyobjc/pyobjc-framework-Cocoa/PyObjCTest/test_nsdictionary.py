@@ -260,7 +260,7 @@ class TestNSDictionary (TestCase):
         self.assertResultIsBOOL(NSDictionary.writeToURL_atomically_)
         self.assertArgIsBOOL(NSDictionary.writeToURL_atomically_, 1)
 
-        self.assertArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, 'i@:@')
+        self.assertArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, b'i@:@')
 
         self.assertArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 0)
         self.assertArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2)
@@ -279,13 +279,13 @@ class TestNSDictionary (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, 'v@@o^'+objc._C_NSBOOL)
-        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, 'v@@o^'+objc._C_NSBOOL)
-        self.assertArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, 'i@@')
+        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, b'v@@o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_, 1, b'v@@o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, b'i@@')
         self.assertArgIsBlock(NSDictionary.keysSortedByValueWithOptions_usingComparator_, 1, objc._C_NSInteger + b'@@')
 
-        self.assertArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
-        self.assertArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + '@@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysOfEntriesPassingTest_, 0, objc._C_NSBOOL + b'@@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDictionary.keysOfEntriesWithOptions_passingTest_, 1, objc._C_NSBOOL + b'@@o^' + objc._C_NSBOOL)
 
 if __name__ == '__main__':
     main( )

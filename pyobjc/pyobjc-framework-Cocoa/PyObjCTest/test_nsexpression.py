@@ -21,8 +21,8 @@ class TestNSExpression (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSExpression.expressionForBlock_arguments_, 0, '@@@@')
-        self.assertResultIsBlock(NSExpression.expressionBlock, '@@@@')
+        self.assertArgIsBlock(NSExpression.expressionForBlock_arguments_, 0, b'@@@@')
+        self.assertResultIsBlock(NSExpression.expressionBlock, b'@@@@')
 
 
 

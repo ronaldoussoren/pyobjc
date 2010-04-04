@@ -27,7 +27,7 @@ class TestMachPort (TestCase):
         self.assertIsObject(shouldFree is True or shouldFree, False)
         idx = CFMachPortGetPort(port)
         self.assertIsInstance(idx, (int, long))
-        ctx = CFMachPortGetContext(port)
+        ctx = CFMachPortGetContext(port, None)
         self.assertIsObject(ctx, context)
         cb = CFMachPortGetInvalidationCallBack(port)
         self.assertIsObject(cb, None)

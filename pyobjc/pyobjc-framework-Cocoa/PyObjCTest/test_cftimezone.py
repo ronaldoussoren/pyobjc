@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 import time
 from CoreFoundation import *
 from Foundation import NSDictionary, NSString, NSMutableDictionary
+import sys
 
 
 class TestTimeZone (TestCase):
@@ -52,8 +53,9 @@ class TestTimeZone (TestCase):
             CFTimeZoneSetAbbreviationDictionary(map)
 
     def testZoneObject(self):
-        data = open('/usr/share/zoneinfo/posixrules', 'r').read()
-        data = buffer(data)
+        data = open('/usr/share/zoneinfo/posixrules', 'rb').read()
+        if sys.version_info[0] == 2:
+            data = buffer(data)
         zone = CFTimeZoneCreate(None, u"Europe/Amsterdam", data)
         self.assertIsInstance(zone, CFTimeZoneRef)
         self.assertResultIsCFRetained(CFTimeZoneCreateWithTimeIntervalFromGMT)

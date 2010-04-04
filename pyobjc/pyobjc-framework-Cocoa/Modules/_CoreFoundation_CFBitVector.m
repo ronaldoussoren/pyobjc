@@ -75,17 +75,17 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)),
 	}
 	if (py_bytes != Py_None) {
 		PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got instance of %s",
-			py_bytes->ob_type->tp_name);
+			Py_TYPE(py_bytes)->tp_name);
 		return NULL;
 	}
 
-	PyObject* buffer = PyString_FromStringAndSize(NULL, (range.length+7)/8);
+	PyObject* buffer = PyBytes_FromStringAndSize(NULL, (range.length+7)/8);
 	if (buffer == NULL) {
 		return NULL;
 	}
-	memset(PyString_AsString(buffer), 0, (range.length+7)/8);
+	memset(PyBytes_AsString(buffer), 0, (range.length+7)/8);
 
-	CFBitVectorGetBits(vector, range, (unsigned char*)PyString_AsString(buffer));
+	CFBitVectorGetBits(vector, range, (unsigned char*)PyBytes_AsString(buffer));
 	return buffer;
 }
 

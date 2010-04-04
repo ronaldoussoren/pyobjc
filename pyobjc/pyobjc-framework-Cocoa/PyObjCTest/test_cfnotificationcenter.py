@@ -24,9 +24,9 @@ class TestNotificationCenter (TestCase):
         def observe(center, observer, name, object, userInfo):
             notifications.append(( center, observer, name, object, userInfo ))
 
-        self.assertArgHasType(CFNotificationCenterAddObserver, 1, '@')
-        self.assertArgIsFunction(CFNotificationCenterAddObserver, 2, 'v@@@@@', True)
-        self.assertArgHasType(CFNotificationCenterAddObserver, 4, '@')
+        self.assertArgHasType(CFNotificationCenterAddObserver, 1, b'@')
+        self.assertArgIsFunction(CFNotificationCenterAddObserver, 2, b'v@@@@@', True)
+        self.assertArgHasType(CFNotificationCenterAddObserver, 4, b'@')
 
         CFNotificationCenterAddObserver(ref, u"object", observe, u"pyobjc.test", ref, CFNotificationSuspensionBehaviorDeliverImmediately)
 
@@ -46,16 +46,16 @@ class TestNotificationCenter (TestCase):
         self.assertEqual(info[2] , u"pyobjc.test")
         self.assertIsObject(info[3], ref)
         self.assertEqual(info[4] , {u"name2":u"value2"})
-        self.assertArgHasType(CFNotificationCenterRemoveObserver, 1, '@')
-        self.assertArgHasType(CFNotificationCenterRemoveObserver, 3, '@')
+        self.assertArgHasType(CFNotificationCenterRemoveObserver, 1, b'@')
+        self.assertArgHasType(CFNotificationCenterRemoveObserver, 3, b'@')
         CFNotificationCenterRemoveObserver(ref, u"object", u"pyobjc.test", ref)
 
-        self.assertArgHasType(CFNotificationCenterPostNotificationWithOptions, 2, '@') 
+        self.assertArgHasType(CFNotificationCenterPostNotificationWithOptions, 2, b'@') 
         CFNotificationCenterPostNotificationWithOptions(ref, u"pyobjc.test", ref, {u"name":u"value"},  kCFNotificationPostToAllSessions)
         self.assertEqual(len(notifications) , 2)
         CFNotificationCenterAddObserver(ref, u"object", observe, u"pyobjc.test", ref, CFNotificationSuspensionBehaviorDeliverImmediately)
 
-        self.assertArgHasType(CFNotificationCenterPostNotification, 2, '@')
+        self.assertArgHasType(CFNotificationCenterPostNotification, 2, b'@')
         self.assertArgIsBOOL(CFNotificationCenterPostNotification, 4)
         CFNotificationCenterPostNotification(ref, u"pyobjc.test", ref, {u"name2":u"value2"},  True)
         self.assertEqual(len(notifications) , 3)

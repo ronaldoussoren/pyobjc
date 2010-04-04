@@ -12,7 +12,7 @@ class TestNSTokenFieldHelper (NSObject):
 class TestNSTokenField (TestCase):
     def testProtocols(self):
         self.assertArgHasType(TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 2, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 3, 'o^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_, 3, b'o^' + objc._C_NSInteger)
         self.assertArgHasType(TestNSTokenFieldHelper.tokenField_shouldAddObjects_atIndex_, 2, objc._C_NSUInteger)
         self.assertResultIsBOOL(TestNSTokenFieldHelper.tokenField_writeRepresentedObjects_toPasteboard_)
         self.assertResultIsBOOL(TestNSTokenFieldHelper.tokenField_hasMenuForRepresentedObject_)

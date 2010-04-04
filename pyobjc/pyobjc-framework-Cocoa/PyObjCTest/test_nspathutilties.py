@@ -77,7 +77,7 @@ class TestNSPathUtilities(TestCase):
         self.assertArgIsBOOL(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1)
         self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2)
         self.assertResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
-        self.assertArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, 'o^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, b'o^' + objc._C_CHAR_AS_TEXT)
         self.assertArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 import objc
 import array
+import sys
 
 from objc import YES, NO
 from AppKit import *
@@ -23,14 +24,16 @@ class TestNSBitmapImageRep(TestCase):
 
         rPlane = array.array('B')
         rPlane.fromlist( [y%256 for y in range(0,height) for x in range(0,width)] )
+        if sys.version_info[0] == 3:
+            buffer = memoryview
         rPlane = buffer(rPlane)
 
         gPlane = array.array('B')
-        gPlane.fromlist( [y%256 for x in range(0,height) for x in range(width,0,-1)] )
+        gPlane.fromlist( [y%256 for y in range(0,height) for x in range(width,0,-1)] )
         gPlane = buffer(gPlane)
 
         bPlane = array.array('B')
-        bPlane.fromlist( [x%256 for x in range(0,height) for x in range(0,width)] )
+        bPlane.fromlist( [x%256 for y in range(0,height) for x in range(0,width)] )
         bPlane = buffer(bPlane)
 
         dataPlanes = (rPlane, gPlane, bPlane, None, None)

@@ -50,7 +50,7 @@ class TestBitVector (TestCase):
             b = CFBitVectorGetBitAtIndex(bitset, i)
             self.assertEqual(b , bits[i] )
         bits = CFBitVectorGetBits(bitset, (0, 8), None)
-        self.assertEqual(bits, chr(0x11))
+        self.assertEqual(bits, b'\x11')
 
         idx = CFBitVectorGetFirstIndexOfBit(bitset, (0,8), 1)
         self.assertEqual(idx, 3)
@@ -92,10 +92,10 @@ class TestBitVector (TestCase):
 
         CFBitVectorSetAllBits(bitset, 1)
         bits = CFBitVectorGetBits(bitset, (0, 20), None)
-        self.assertEqual(bits, '\xff\xff\xf0')
+        self.assertEqual(bits, b'\xff\xff\xf0')
         CFBitVectorSetAllBits(bitset, 0)
         bits = CFBitVectorGetBits(bitset, (0, 20), None)
-        self.assertEqual(bits, '\x00\x00\x00')
+        self.assertEqual(bits, b'\x00\x00\x00')
 
 
 

@@ -25,19 +25,19 @@ class TestNSSpellServer (TestCase):
 
     def testDelegate(self):
         self.assertResultHasType(TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_, NSRange.__typestr__)
-        self.assertArgHasType(TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_, 3, 'o^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_, 3, b'o^' + objc._C_NSInteger)
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_, 4, objc._C_NSBOOL)
 
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_suggestCompletionsForPartialWordRange_inString_language_, 1, NSRange.__typestr__)
 
         self.assertResultHasType(TestNSSpellServerHelper.spellServer_checkGrammarInString_language_details_, NSRange.__typestr__)
-        self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkGrammarInString_language_details_, 3, 'o^@')
+        self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkGrammarInString_language_details_, 3, b'o^@')
 
     @min_os_level('10.6')
     def testDelegate10_6(self):
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 3, objc._C_NSInteger)
-        self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 6, 'o^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_, 6, b'o^' + objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

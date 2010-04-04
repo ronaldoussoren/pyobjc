@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 import socket, time, struct
 from CoreFoundation import *
 import CoreFoundation
+import sys
 
 
 class TestSocket (TestCase):
@@ -63,8 +64,10 @@ class TestSocket (TestCase):
                 callback, data)
         self.assertIsInstance(sock, CFSocketRef)
         localaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 9425, 127, 0, 0, 1)
-        localaddr += '\0' * 8
-        err = CFSocketSetAddress(sock, buffer(localaddr))
+        localaddr += b'\0' * 8
+        if sys.version_info[0] == 2:
+            localaddr = buffer(localaddr)
+        err = CFSocketSetAddress(sock, localaddr)
         self.assertEqual(err, kCFSocketSuccess)
 
 
@@ -95,9 +98,11 @@ class TestSocket (TestCase):
         ip = map(int, ip.split('.'))
 
         sockaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 80, *ip)
-        sockaddr += '\0' * 8
+        sockaddr += b'\0' * 8
+        if sys.version_info[0] == 2:
+            sockaddr = buffer(sockaddr)
 
-        e = CFSocketConnectToAddress(sock, buffer(sockaddr), 1.0)
+        e = CFSocketConnectToAddress(sock, sockaddr, 1.0)
         self.assertIsInstance(e, (int, long))
         self.assertEqual(e, kCFSocketSuccess)
 

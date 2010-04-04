@@ -43,8 +43,8 @@ class TestNSGraphicsContext (TestCase):
             port = context.graphicsPort()
             self.assertIsInstance(port, Quartz.CGContextRef)
 
-        self.assertArgHasType(NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 0, '^{CGContext=}')
-        self.assertResultHasType(NSGraphicsContext.graphicsPort, '^{CGContext=}')
+        self.assertArgHasType(NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 0, b'^{CGContext=}')
+        self.assertResultHasType(NSGraphicsContext.graphicsPort, b'^{CGContext=}')
 
 
 if __name__ == "__main__":

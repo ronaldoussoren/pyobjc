@@ -6,11 +6,11 @@ call_NSInvocation_setArgument_atIndex_(
 	NSMethodSignature* signature;
 	const char* tp;
 	PyObject* py_value;
-	Py_ssize_t index;
+	NSUInteger index;
 	void* buf;
 	Py_ssize_t sz;
 
-	if  (!PyArg_ParseTuple(arguments, "On", &py_value, &index)) {
+	if  (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
 		return NULL;
 	}
 
@@ -58,7 +58,7 @@ call_NSInvocation_setArgument_atIndex_(
 				PyObjCSelector_GetClass(method),
 				PyObjCObject_GetObject(self));
 
-			(void)objc_msgSendSuper(&super,
+			((void(*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
 					buf, index);
 		}
@@ -135,7 +135,7 @@ call_NSInvocation_setReturnValue_(
 				PyObjCSelector_GetClass(method),
 				PyObjCObject_GetObject(self));
 
-			(void)objc_msgSendSuper(&super,
+			((void(*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
 					buf);
 		}
@@ -161,11 +161,11 @@ call_NSInvocation_getArgument_atIndex_(
 	NSMethodSignature* signature;
 	const char* tp;
 	PyObject* py_value;
-	Py_ssize_t index;
+	NSUInteger index;
 	void* buf;
 	Py_ssize_t sz;
 
-	if  (!PyArg_ParseTuple(arguments, "On", &py_value, &index)) {
+	if  (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
 		return NULL;
 	}
 
@@ -215,7 +215,7 @@ call_NSInvocation_getArgument_atIndex_(
 				PyObjCSelector_GetClass(method),
 				PyObjCObject_GetObject(self));
 
-			(void)objc_msgSendSuper(&super,
+			((void(*)(struct objc_super*,SEL,void*,NSUInteger))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
 					buf, index);
 		}
@@ -299,7 +299,7 @@ call_NSInvocation_getReturnValue_(
 				PyObjCSelector_GetClass(method),
 				PyObjCObject_GetObject(self));
 
-			(void)objc_msgSendSuper(&super,
+			((void(*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
 					buf);
 		}

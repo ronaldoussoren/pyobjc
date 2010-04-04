@@ -24,7 +24,7 @@ makeipaddr(struct sockaddr *addr, int addrlen)
 		Py_DECREF(v);
 		return NULL;
 	}
-	return PyString_FromString(buf);
+	return PyBytes_FromString(buf);
 }
 
 static PyObject *
@@ -54,7 +54,7 @@ makesockaddr(struct sockaddr *addr, int addrlen)
 	case AF_UNIX:
 	{
 		struct sockaddr_un *a = (struct sockaddr_un *) addr;
-		return PyString_FromString(a->sun_path);
+		return PyBytes_FromString(a->sun_path);
 	}
 
 	case AF_INET6:
@@ -106,7 +106,7 @@ static PyObject* call_NSNetService_addresses(
 			PyObjCObject_GetObject(self));
 
 			
-		res = objc_msgSendSuper(&super, @selector(addresses));
+		res = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector(addresses));
 	PyObjC_HANDLER
 		PyObjCErr_FromObjC(localException);
 		res = nil;

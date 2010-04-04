@@ -2729,7 +2729,7 @@
   </informal_protocol>
   <informal_protocol name='NSEditor'>
     <method selector='commitEditing' type='B@:' />
-    <method selector='commitEditingWithDelegate:didCommitSelector:contextInfo:' type='v@:@:^v' />
+    <method selector='commitEditingWithDelegate:didCommitSelector:contextInfo:' type='v@:@:^v' type64='v@:@:^v' />
     <method selector='discardEditing' type='v@:' />
   </informal_protocol>
   <informal_protocol name='NSEditorRegistration'>
@@ -4380,8 +4380,8 @@
       <retval type='B' />
     </method>
     <method selector='commitEditingWithDelegate:didCommitSelector:contextInfo:'>
-      <arg index='1' sel_of_type='v@:@B^v' />
-      <arg index='2' type='^v' />
+      <arg index='1' type=':' type64=':' sel_of_type='v@:@B^v' />
+      <arg index='2' type='^v' type64='^v' />
     </method>
     <method selector='isEditing'>
       <retval type='B' />
@@ -9786,7 +9786,7 @@
       <retval type='B' />
     </method>
     <method selector='commitEditingWithDelegate:didCommitSelector:contextInfo:'>
-      <arg index='1' sel_of_type='v@:@B^v' />
+      <arg index='1' type=':' sel_of_type='v@:@B^v' />
     </method>
   </class>
   <class name='NSWindow'>

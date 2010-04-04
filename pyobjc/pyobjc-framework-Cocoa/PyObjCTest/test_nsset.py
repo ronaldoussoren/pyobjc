@@ -166,11 +166,11 @@ class TestVariadic (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSSet.enumerateObjectsUsingBlock_, 0, 'v@o^' + objc._C_NSBOOL)
-        self.assertArgIsBlock(NSSet.enumerateObjectsWithOptions_usingBlock_, 1, 'v@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.enumerateObjectsUsingBlock_, 0, b'v@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.enumerateObjectsWithOptions_usingBlock_, 1, b'v@o^' + objc._C_NSBOOL)
 
-        self.assertArgIsBlock(NSSet.objectsPassingTest_, 0, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
-        self.assertArgIsBlock(NSSet.objectsWithOptions_passingTest_, 1, objc._C_NSBOOL + '@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.objectsPassingTest_, 0, objc._C_NSBOOL + b'@o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSSet.objectsWithOptions_passingTest_, 1, objc._C_NSBOOL + b'@o^' + objc._C_NSBOOL)
 
 
 

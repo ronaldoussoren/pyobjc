@@ -11,11 +11,18 @@ class ThreadingTest (TestCase):
     def setUp(self):
         # Set a very small check interval, this will make it more likely
         # that the interpreter crashes when threading is done incorrectly.
-        self._int = sys.getcheckinterval()
-        sys.setcheckinterval(1)
+        if sys.version_info[:2] >= (3, 2):
+            self._int = sys.getswitchinterval()
+            sys.setswitchinterval(0.0000001)
+        else:
+            self._int = sys.getcheckinterval()
+            sys.setcheckinterval(1)
 
     def tearDown(self):
-        sys.setcheckinterval(self._int)
+        if sys.version_info[:2] >= (3, 2):
+            sys.setswitchinterval(self._int)
+        else:
+            sys.setcheckinterval(self._int)
 
     def testNSObjectString(self):
 

@@ -48,7 +48,9 @@ static PyNumberMethods decimal_asnumber = {
 	decimal_add,			/* nb_add */
 	decimal_subtract,		/* nb_subtract */
 	decimal_multiply,		/* nb_multiply */
+#if PY_MAJOR_VERSION == 2
 	decimal_divide,			/* nb_divide */
+#endif
 	NULL,				/* nb_remainder */
 	NULL,				/* nb_divmod */
 	decimal_power,			/* nb_power */
@@ -62,16 +64,23 @@ static PyNumberMethods decimal_asnumber = {
 	NULL,				/* nb_and */
 	NULL,				/* nb_xor */
 	NULL,				/* nb_or */
+
+#if PY_MAJOR_VERSION == 2
 	decimal_coerce,			/* nb_coerce */
+#endif
 	NULL,				/* nb_int */
 	NULL,				/* nb_long */
 	NULL,				/* nb_float */
+#if PY_MAJOR_VERSION == 2
 	NULL,				/* nb_oct */
 	NULL,				/* nb_hex */
+#endif
 	decimal_inplace_add,		/* nb_inplace_add */
 	decimal_inplace_subtract,	/* nb_inplace_subtract */
 	decimal_inplace_multiply,	/* nb_inplace_multiply */
+#if PY_MAJOR_VERSION == 2
 	decimal_inplace_divide,		/* nb_inplace_divide */
+#endif
 	NULL,				/* nb_inplace_remainder */
 	NULL,				/* nb_inplace_power */
 	NULL,				/* nb_inplace_lshift */
@@ -80,9 +89,9 @@ static PyNumberMethods decimal_asnumber = {
 	NULL,				/* nb_inplace_xor */
 	NULL,				/* nb_inplace_or */
 	NULL,				/* nb_floor_divide */
-	NULL,				/* nb_true_divide */
+	decimal_divide,			/* nb_true_divide */
 	NULL,				/* nb_inplace_floor_divide */
-	NULL				/* nb_inplace_true_divide */
+	decimal_inplace_divide		/* nb_inplace_true_divide */
 #if (PY_VERSION_HEX >= 0x02050000)
 	,NULL				/* nb_index */
 #endif
@@ -155,8 +164,7 @@ decimal_getattro(PyObject *o, PyObject *attr_name)
 }
 
 static PyTypeObject Decimal_Type = {
-	PyObject_HEAD_INIT(NULL)
-	0,					/* ob_size */
+	PyVarObject_HEAD_INIT(&PyType_Type, 0)
 	"Foundation.NSDecimal",			/* tp_name */
 	sizeof (DecimalObject),			/* tp_basicsize */
 	0,					/* tp_itemsize */
@@ -176,7 +184,11 @@ static PyTypeObject Decimal_Type = {
 	decimal_getattro,			/* tp_getattro */
 	PyObject_GenericSetAttr,		/* tp_setattro */
 	0,					/* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE | Py_TPFLAGS_HAVE_INPLACEOPS, /* tp_flags */
+	Py_TPFLAGS_DEFAULT 
+#if PY_MAJOR_VERSION == 2
+		| Py_TPFLAGS_HAVE_RICHCOMPARE | Py_TPFLAGS_HAVE_INPLACEOPS
+#endif
+		, /* tp_flags */
 	"NSDecimal wrapper",			/* tp_doc */
 	0,					/* tp_traverse */
 	0,					/* tp_clear */
@@ -288,22 +300,7 @@ static char* keywords2[] = { "string", NULL };
 			    "NSDecimal(stringValue) or NSDecimal(mantissa, exponent, isNegative)");
 			return -1;
 		}
-		if (PyInt_Check(pyValue)) {
-			long lng = PyInt_AsLong(pyValue);
-			if (lng < 0) {
-				mantissa = -lng;
-				exponent = 0;
-				negative = YES;
-			} else{
-				mantissa = lng;
-				exponent = 0;
-				negative = NO;
-			}
-				
-			DecimalFromComponents(&Decimal_Value(self),
-				mantissa, exponent, negative);
-			return 0;
-		} else if (PyLong_Check(pyValue)) {
+		if (PyLong_Check(pyValue)) {
 			mantissa = PyLong_AsUnsignedLongLong(pyValue);
 			if (PyErr_Occurred()) {
 				long long lng;
@@ -329,6 +326,23 @@ static char* keywords2[] = { "string", NULL };
 					mantissa, 0, NO);
 				return 0;
 			}
+#if PY_MAJOR_VERSION == 2
+		} else if (PyInt_Check(pyValue)) {
+			long lng = PyInt_AsLong(pyValue);
+			if (lng < 0) {
+				mantissa = -lng;
+				exponent = 0;
+				negative = YES;
+			} else{
+				mantissa = lng;
+				exponent = 0;
+				negative = NO;
+			}
+				
+			DecimalFromComponents(&Decimal_Value(self),
+				mantissa, exponent, negative);
+			return 0;
+#endif
 		} else if (PyFloat_Check(pyValue)) {
 			/* Explicit conversion from float to NSDecimal
 			 * first convert the float to a string using repr, that
@@ -372,7 +386,11 @@ static char* keywords2[] = { "string", NULL };
 			}
 			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
 			return -1;
-		} else if (!PyString_Check(pyValue) && !PyUnicode_Check(pyValue)) {
+		} else if (
+#if PY_MAJOR_VERSION == 2
+				!PyString_Check(pyValue) && 
+#endif
+				!PyUnicode_Check(pyValue)) {
 			PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
 			return -1;
 		}
@@ -765,7 +783,7 @@ static int decimal_coerce(PyObject** l, PyObject** r)
 
 	if (!Decimal_Check(*l)) {
 		/* The test is needed to avoid silently converting strings */
-		if (PyString_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l)) goto error;
+		if (PyBytes_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l)) goto error;
 		
 		left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
 		if (left == NULL) goto error;
@@ -781,7 +799,7 @@ static int decimal_coerce(PyObject** l, PyObject** r)
 
 	if (!Decimal_Check(*r)) {
 		/* The test is needed to avoid silently converting strings */
-		if (PyString_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r)) goto error;
+		if (PyBytes_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r)) goto error;
 		
 		right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
 		if (right == NULL) goto error;

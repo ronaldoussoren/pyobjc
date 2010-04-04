@@ -126,7 +126,7 @@ class TestNSAttributedString (TestCase):
         self.assertResultIsBOOL(NSMutableAttributedString.readFromData_options_documentAttributes_)
         self.assertArgIsOut(NSMutableAttributedString.readFromData_options_documentAttributes_, 2)
 
-        self.assertArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, 'o^' + NSRange.__typestr__)
+        self.assertArgHasType(NSAttributedString.URLAtIndex_effectiveRange_, 1, b'o^' + NSRange.__typestr__)
 
     @min_os_level('10.5')
     def testConstants10_5(self):

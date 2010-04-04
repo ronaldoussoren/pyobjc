@@ -31,7 +31,7 @@ class TestNSImageRep (TestCase):
         self.assertArgIsBOOL(NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4)
 
         self.assertArgHasType(NSImageRep.CGImageForProposedRect_context_hints_, 0,
-                'N^' + NSRect.__typestr__)
+                b'N^' + NSRect.__typestr__)
 
 if __name__ == "__main__":
     main()

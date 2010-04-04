@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
-import errno, time, os, socket
+import errno, time, os, socket, sys
 
 
 class TestStream (TestCase):
@@ -32,25 +32,28 @@ class TestStream (TestCase):
         self.assertIsInstance(kCFStreamPropertySocketNativeHandle, unicode)
         self.assertIsInstance(kCFStreamPropertySocketRemoteHostName, unicode)
         self.assertIsInstance(kCFStreamPropertySocketRemotePortNumber, unicode)
+
     def testStructs(self):
         o = CFStreamError()
         self.assertHasAttr(o, 'domain')
         self.assertHasAttr(o, 'error')
+
     def testGetTypeID(self):
         v = CFReadStreamGetTypeID()
         self.assertIsInstance(v, (int, long))
         v = CFWriteStreamGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testReadStream(self):
-        strval = "hello world"
-        self.assertArgHasType(CFReadStreamCreateWithBytesNoCopy, 1, 'n^v')
+        strval = b"hello world"
+        self.assertArgHasType(CFReadStreamCreateWithBytesNoCopy, 1, b'n^v')
         self.assertArgSizeInArg(CFReadStreamCreateWithBytesNoCopy, 1, 2)
         stream = CFReadStreamCreateWithBytesNoCopy(None,
                 strval, len(strval), kCFAllocatorNull)
         self.assertIsInstance(stream, CFReadStreamRef)
         r, buf = CFReadStreamRead(stream, None, 10)
         self.assertEqual(r, -1)
-        self.assertEqual(buf, '')
+        self.assertEqual(buf, b'')
 
         self.assertResultIsCFRetained(CFReadStreamCopyError)
         err  = CFReadStreamCopyError(stream)
@@ -70,16 +73,16 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFReadStreamHasBytesAvailable)
         r = CFReadStreamHasBytesAvailable(stream)
         self.assertIsObject(r, True)
-        self.assertArgHasType(CFReadStreamRead, 1, 'o^v')
+        self.assertArgHasType(CFReadStreamRead, 1, b'o^v')
         self.assertArgSizeInArg(CFReadStreamRead, 1, 2)
         self.assertArgSizeInResult(CFReadStreamRead, 1)
         r, buf = CFReadStreamRead(stream, None, 5)
         self.assertEqual(r, 5)
-        self.assertEqual(buf, "hello")
+        self.assertEqual(buf, b"hello")
 
         r, buf = CFReadStreamRead(stream, None, 10)
         self.assertEqual(r, 6)
-        self.assertEqual(buf, " world")
+        self.assertEqual(buf, b" world")
 
         r = CFReadStreamHasBytesAvailable(stream)
         self.assertIsObject(r, False)
@@ -104,9 +107,9 @@ class TestStream (TestCase):
 
         r, buf = CFReadStreamRead(stream, None, 5)
         self.assertEqual(r, 5)
-        self.assertIsInstance(buf, str)
+        self.assertIsInstance(buf, bytes)
         self.assertResultSizeInArg(CFReadStreamGetBuffer, 2)
-        self.assertResultHasType(CFReadStreamGetBuffer, '^v')
+        self.assertResultHasType(CFReadStreamGetBuffer, b'^v')
         self.assertArgIsOut(CFReadStreamGetBuffer, 2)
         buf, numBytes = CFReadStreamGetBuffer(stream, 20, None)
         if buf is objc.NULL:
@@ -129,10 +132,10 @@ class TestStream (TestCase):
         self.assertEqual(err.error , 0)
     def testWriteStream(self):
         import array
-        a = array.array('c', " "*20)
+        a = array.array('b', b" "*20)
 
         # XXX: cannot express the actual type as metadata :-(
-        self.assertArgHasType(CFWriteStreamCreateWithBuffer, 1, 'n^v')
+        self.assertArgHasType(CFWriteStreamCreateWithBuffer, 1, b'n^v')
         self.assertArgSizeInArg(CFWriteStreamCreateWithBuffer, 1, 2)
         stream = CFWriteStreamCreateWithBuffer(None, a, 20)
         self.assertIsInstance(stream, CFWriteStreamRef)
@@ -146,16 +149,16 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFWriteStreamCanAcceptBytes)
         b = CFWriteStreamCanAcceptBytes(stream)
         self.assertIsObject(b, True)
-        self.assertArgHasType(CFWriteStreamWrite, 1, 'n^v')
+        self.assertArgHasType(CFWriteStreamWrite, 1, b'n^v')
         self.assertArgSizeInArg(CFWriteStreamWrite, 1, 2)
-        n = CFWriteStreamWrite(stream, "0123456789ABCDE", 15)
+        n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
-        self.assertEqual(a[0], '0')
-        self.assertEqual(a[1], '1')
-        self.assertEqual(a[9], '9')
+        self.assertEqual(bytes(a[0:1]), b'0')
+        self.assertEqual(bytes(a[1:2]), b'1')
+        self.assertEqual(bytes(a[9:10]), b'9')
 
-        n = CFWriteStreamWrite(stream, "0123456789ABCDE", 15)
+        n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, -1)
 
         err = CFWriteStreamCopyError(stream)
@@ -177,15 +180,15 @@ class TestStream (TestCase):
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
         self.assertIsObject(r, True)
-        n = CFWriteStreamWrite(stream, "0123456789ABCDE", 15)
+        n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
         self.assertResultIsCFRetained(CFWriteStreamCopyProperty)
         buf = CFWriteStreamCopyProperty(stream, kCFStreamPropertyDataWritten)
         self.assertIsInstance(buf, CFDataRef)
         buf = CFDataGetBytes(buf, (0, CFDataGetLength(buf)), None)
-        self.assertIsInstance(buf, str)
-        self.assertEqual(buf, '0123456789ABCDE')
+        self.assertIsInstance(buf, bytes)
+        self.assertEqual(buf, b'0123456789ABCDE')
 
         CFWriteStreamClose(stream)
         status = CFWriteStreamGetStatus(stream)
@@ -200,7 +203,7 @@ class TestStream (TestCase):
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
         self.assertIsObject(r, True)
-        n = CFWriteStreamWrite(stream, "0123456789ABCDE", 15)
+        n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
         self.assertResultIsCFRetained(CFReadStreamCopyProperty)
@@ -222,7 +225,7 @@ class TestStream (TestCase):
         CFWriteStreamSetProperty(stream, kCFStreamPropertyFileCurrentOffset, 0)
 
         data = open('/tmp/pyobjc.test.txt', 'rb').read()
-        self.assertEqual(data, '0123456789ABCDE')
+        self.assertEqual(data, b'0123456789ABCDE')
         os.unlink('/tmp/pyobjc.test.txt')
 
     def testStreamPair(self):
@@ -286,11 +289,16 @@ class TestStream (TestCase):
         import struct
         sockaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 80, *ip)
 
+        if sys.version_info[0] == 3:
+            sockaddr_buffer = sockaddr
+        else:
+            sockaddr_buffer = buffer(sockaddr)
+
         signature = CFSocketSignature(
                 protocolFamily=socket.AF_INET,
                 socketType=socket.SOCK_STREAM,
                 protocol=0,
-                address=buffer(sockaddr))
+                address=sockaddr_buffer)
 
         self.assertArgIsOut(CFStreamCreatePairWithPeerSocketSignature, 2)
         self.assertArgIsOut(CFStreamCreatePairWithPeerSocketSignature, 3)
@@ -309,7 +317,7 @@ class TestStream (TestCase):
     def testReadSocketASync(self):
         rl = CFRunLoopGetCurrent()
 
-        strval = "hello world"
+        strval = b"hello world"
         readStream = CFReadStreamCreateWithBytesNoCopy(None,
                 strval, len(strval), kCFAllocatorNull)
         self.assertIsInstance(readStream, CFReadStreamRef)
@@ -352,7 +360,7 @@ class TestStream (TestCase):
         rl = CFRunLoopGetCurrent()
 
         import array
-        a = array.array('c', " "*20)
+        a = array.array('b', b" "*20)
 
         writeStream = CFWriteStreamCreateWithBuffer(None, a, 20)
         self.assertIsInstance(writeStream, CFWriteStreamRef)

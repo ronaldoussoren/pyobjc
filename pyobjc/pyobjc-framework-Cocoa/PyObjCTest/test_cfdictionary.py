@@ -34,8 +34,8 @@ class TestCFDictionary (TestCase):
         def function(key, value, context):
             context.append((key, value))
 
-        self.assertArgIsFunction(CFDictionaryApplyFunction, 1, 'v@@@', False)
-        self.assertArgHasType(CFDictionaryApplyFunction, 2, '@')
+        self.assertArgIsFunction(CFDictionaryApplyFunction, 1, b'v@@@', False)
+        self.assertArgHasType(CFDictionaryApplyFunction, 2, b'@')
         CFDictionaryApplyFunction(dictionary, function, context)
 
         context.sort()

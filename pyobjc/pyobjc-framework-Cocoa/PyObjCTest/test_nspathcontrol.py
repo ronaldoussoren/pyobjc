@@ -12,7 +12,7 @@ class TestNSPathControl (TestCase):
     @min_os_level("10.5")
     def testMethods(self):
         m = NSPathControl.setDoubleAction_.__metadata__()
-        self.assertEqual(m['arguments'][2]['sel_of_type'], 'v@:@')
+        self.assertEqual(m['arguments'][2]['sel_of_type'], b'v@:@')
 
         self.assertArgIsBOOL(NSPathControl.setDraggingSourceOperationMask_forLocal_, 1)
 

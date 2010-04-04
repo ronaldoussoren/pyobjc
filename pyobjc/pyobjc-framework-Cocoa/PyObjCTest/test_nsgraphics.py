@@ -59,7 +59,7 @@ class TestNSGraphics (TestCase):
     def testFunctions(self):
         app = NSApplication.sharedApplication()
 
-        self.assertArgHasType(NSBestDepth, 4, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSBestDepth, 4, b'o^' + objc._C_NSBOOL)
         self.assertArgIsBOOL(NSBestDepth, 3)
         d, e = NSBestDepth(NSDeviceRGBColorSpace, 8, 32, False, None)
         self.assertIsInstance(d, (int, long))
@@ -194,8 +194,8 @@ class TestNSGraphics (TestCase):
         except objc.error:
             pass
 
-        self.assertArgIsSEL(NSShowAnimationEffect, 4, 'v@:^v')
-        self.assertArgHasType(NSShowAnimationEffect, 5, '^v')
+        self.assertArgIsSEL(NSShowAnimationEffect, 4, b'v@:^v')
+        self.assertArgHasType(NSShowAnimationEffect, 5, b'^v')
         try:
             NSShowAnimationEffect(NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None)
         except objc.error:

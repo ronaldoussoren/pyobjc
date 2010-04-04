@@ -113,14 +113,14 @@ class TestCFBinaryHeap (TestCase):
         self.assertEqual(values, ())
 
     def testFunctions(self):
-        self.assertArgHasType(CFBinaryHeapGetCountOfValue, 1, '@')
-        self.assertArgHasType(CFBinaryHeapContainsValue, 1, '@')
-        self.assertResultHasType(CFBinaryHeapGetMinimum, '@')
+        self.assertArgHasType(CFBinaryHeapGetCountOfValue, 1, b'@')
+        self.assertArgHasType(CFBinaryHeapContainsValue, 1, b'@')
+        self.assertResultHasType(CFBinaryHeapGetMinimum, b'@')
         self.assertResultHasType(CFBinaryHeapGetMinimumIfPresent, objc._C_NSBOOL)
-        self.assertArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, 'o^@')
-        self.assertArgIsFunction(CFBinaryHeapApplyFunction, 1, 'v@@', False)
-        self.assertArgHasType(CFBinaryHeapApplyFunction, 2, '@')
-        self.assertArgHasType(CFBinaryHeapAddValue, 1, '@')
+        self.assertArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, b'o^@')
+        self.assertArgIsFunction(CFBinaryHeapApplyFunction, 1, b'v@@', False)
+        self.assertArgHasType(CFBinaryHeapApplyFunction, 2, b'@')
+        self.assertArgHasType(CFBinaryHeapAddValue, 1, b'@')
 
 if __name__ == "__main__":
     main()

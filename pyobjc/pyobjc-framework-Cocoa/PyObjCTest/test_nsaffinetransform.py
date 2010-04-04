@@ -127,8 +127,12 @@ class TestNSAffineTransformStruct (TestCase):
 
     def testDeleteSlice(self):
         p = NSAffineTransformStruct(1,2)
+
+        def delslice(o, b, e):
+            del o[b:e]
+
         self.assertRaises(TypeError, operator.delitem, p, 0)
-        self.assertRaises(TypeError, operator.delslice, p, 0, 3)
+        self.assertRaises(TypeError, delslice, p, 0, 3)
 
     def testAssignSlice(self):
         p = NSAffineTransformStruct(1,2,3,4,5,6)
@@ -159,12 +163,18 @@ class TestNSAffineTransformStruct (TestCase):
         self.assertEqual(p.tX, 8)
         self.assertEqual(p.tY, 9)
 
-        self.assertRaises(TypeError, operator.setslice, p, 0, 2, [1,2,3])
-        self.assertRaises(TypeError, operator.setslice, p, 0, 2, [3])
+        def setslice(o, b, e, v):
+            o[b:e] = v
 
-        self.assertRaises(TypeError, operator.delslice, p, 0, 0)
-        self.assertRaises(TypeError, operator.delslice, p, 0, 1)
-        self.assertRaises(TypeError, operator.delslice, p, 0, 2)
+        def delslice(o, b, e):
+            del o[b:e]
+
+        self.assertRaises(TypeError, setslice, p, 0, 2, [1,2,3])
+        self.assertRaises(TypeError, setslice, p, 0, 2, [3])
+
+        self.assertRaises(TypeError, delslice, p, 0, 0)
+        self.assertRaises(TypeError, delslice, p, 0, 1)
+        self.assertRaises(TypeError, delslice, p, 0, 2)
 
 
 class TestAffineTransform (TestCase):

@@ -17,7 +17,7 @@ class TestNSInputServerHelper (NSObject):
 
 class TestNSInputServer (TestCase):
     def testProtocols(self):
-        self.assertArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, 'v@:@')
+        self.assertArgIsSEL(TestNSInputServerHelper.doCommandBySelector_client_, 0, b'v@:@')
         self.assertArgHasType(TestNSInputServerHelper.markedTextSelectionChanged_client_, 0, NSRange.__typestr__)
         self.assertResultIsBOOL(TestNSInputServerHelper.canBeDisabled)
         self.assertResultIsBOOL(TestNSInputServerHelper.wantsToInterpretAllKeystrokes)
@@ -35,7 +35,7 @@ class TestNSInputServer (TestCase):
         self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
-        self.assertResultHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 'v')
+        self.assertResultHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, b'v')
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_, 2, objc._C_NSUInteger)

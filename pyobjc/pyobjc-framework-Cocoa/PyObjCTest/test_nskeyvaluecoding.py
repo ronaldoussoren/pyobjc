@@ -28,10 +28,10 @@ class TestNSKeyValueCoding (TestCase):
         o = NSObject.alloc().init()
 
         m = o.validateValue_forKey_error_.__metadata__()
-        self.assertEqual(  m['arguments'][4]['type'], 'o^@' )
+        self.assertEqual(  m['arguments'][4]['type'], b'o^@' )
 
         m = o.validateValue_forKeyPath_error_.__metadata__()
-        self.assertEqual(  m['arguments'][4]['type'], 'o^@' )
+        self.assertEqual(  m['arguments'][4]['type'], b'o^@' )
 
    
     def testMethods(self):

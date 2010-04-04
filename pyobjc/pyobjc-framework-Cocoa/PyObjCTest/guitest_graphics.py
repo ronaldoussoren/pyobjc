@@ -21,7 +21,7 @@ class SimpleImage:
         self.bitmap = bitmap
         self.data = bitmap.bitmapData()
         self.rowbytes = bitmap.bytesPerRow()
-        self.pixbytes = bitmap.bitsPerPixel() / 8
+        self.pixbytes = bitmap.bitsPerPixel() // 8
         self.rowCount = bitmap.pixelsHigh()
 
         if bitmap.isPlanar():

@@ -25,9 +25,9 @@ class TestFoundation (TestCase):
         self.assert_( isinstance(Foundation.NSTimeIntervalSince1970, float) )
         self.assertEqual(Foundation.NSTimeIntervalSince1970, 978307200.0)
 
-	if os.uname()[2] < '9.':
-		self.assert_( hasattr(Foundation, 'NSMaximumStringLength') )
-		self.assert_( isinstance(Foundation.NSMaximumStringLength, (int, long)) )
+        if int(os.uname()[2].split('.')[0]) < 9:
+            self.assert_( hasattr(Foundation, 'NSMaximumStringLength') )
+            self.assert_( isinstance(Foundation.NSMaximumStringLength, (int, long)) )
         self.assert_( hasattr(Foundation, 'NSURLResponseUnknownLength') )
         self.assert_( isinstance(Foundation.NSURLResponseUnknownLength, (int, long)) )
 

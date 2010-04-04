@@ -5,6 +5,12 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 import operator
 
+def do_set_slice(op, start, stop, value):
+    op[start:stop] = value
+
+def do_del_slice(op, start, stop):
+    del op[start:stop]
+
 class TestNSPoint (TestCase):
     def testConstructor(self):
         p = NSPoint()
@@ -125,13 +131,13 @@ class TestNSPoint (TestCase):
         self.assertEqual(p.x, 4)
         self.assertEqual(p.y, 5)
 
-        self.assertRaises(TypeError, operator.setslice, p, 0, 2, [1,2,3])
-        self.assertRaises(TypeError, operator.setslice, p, 0, 2, [3])
-        self.assertRaises(TypeError, operator.setslice, p, 0, 3, [1,2,3])
+        self.assertRaises(TypeError, do_set_slice, p, 0, 2, [1,2,3])
+        self.assertRaises(TypeError, do_set_slice, p, 0, 2, [3])
+        self.assertRaises(TypeError, do_set_slice, p, 0, 3, [1,2,3])
 
-        self.assertRaises(TypeError, operator.delslice, p, 0, 0)
-        self.assertRaises(TypeError, operator.delslice, p, 0, 1)
-        self.assertRaises(TypeError, operator.delslice, p, 0, 2)
+        self.assertRaises(TypeError, do_del_slice, p, 0, 0)
+        self.assertRaises(TypeError, do_del_slice, p, 0, 1)
+        self.assertRaises(TypeError, do_del_slice, p, 0, 2)
 
 class TestNSSize (TestCase):
     def testConstructor(self):

@@ -19,8 +19,8 @@ class TestNSAlert (TestCase):
 
     def testMethods(self):
         self.assertArgIsPrintf(NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_, 4)
-        self.assertArgIsSEL(NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_, 2, 'v@:@' + objc._C_NSInteger + '^v')
-        self.assertArgHasType(NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, '^v')
+        self.assertArgIsSEL(NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_, 2, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, b'^v')
 
         self.assertResultIsBOOL(NSAlert.showsHelp)
         self.assertArgIsBOOL(NSAlert.setShowsHelp_, 0)

@@ -9,7 +9,7 @@ class TestNSPathCell (TestCase):
 
     def testMethods(self):
         m = NSPathCell.setDoubleAction_.__metadata__()
-        self.assertEqual(m['arguments'][2]['sel_of_type'], 'v@:@')
+        self.assertEqual(m['arguments'][2]['sel_of_type'], b'v@:@')
 
 
 if __name__ == "__main__":

@@ -9,23 +9,23 @@ class GlobalFunctionTest (TestCase):
     if sys.platform == 'darwin':
         def testNSFileTypeForHFSTypeCode(self):
             self.assertEqual("'rtfx'",
-                    Foundation.NSFileTypeForHFSTypeCode('rtfx'))
+                    Foundation.NSFileTypeForHFSTypeCode(b'rtfx'))
 
             # The cannonical representation for four-character-codes in python
             # is a string of 4 characters, but at least some ObjC API's return
             # longs (because these methods haven't been wrapped correctly yet).
             # NSFileTypeForHFSTypeCode therefore also accepts integers.
-            fourchar = struct.unpack('i', 'rtfx')[0]
+            fourchar = struct.unpack('i', b'rtfx')[0]
             if sys.byteorder == 'little':
-		    self.assertEqual("'xftr'",
-			    Foundation.NSFileTypeForHFSTypeCode(fourchar))
+                    self.assertEqual("'xftr'",
+                            Foundation.NSFileTypeForHFSTypeCode(fourchar))
             else:
-		    self.assertEqual("'rtfx'",
-			    Foundation.NSFileTypeForHFSTypeCode(fourchar))
+                    self.assertEqual("'rtfx'",
+                            Foundation.NSFileTypeForHFSTypeCode(fourchar))
 
         def testNSHFSTypeCodeFromFileType(self):
-            self.assertEqual(u"rtfx",
-                    Foundation.NSHFSFTypeCodeFromFileType(u"'rtfx'"))
+            self.assertEqual(b"rtfx",
+                    Foundation.NSHFSFTypeCodeFromFileType("'rtfx'"))
 
 
     def testMakeNSRect(self):
@@ -90,7 +90,7 @@ class NSLogTest (TestCase):
         finally:
 
             data = self.stopCaptureStderr()
-            self.assert_("This is a test" in data)
+            self.assert_(b"This is a test" in data)
 
     def testLoggingWithFormattingChars(self):
         self.assertRaises(ValueError, Foundation.NSLog, "This is a test %@")
@@ -101,7 +101,7 @@ class NSLogTest (TestCase):
         finally:
 
             data = self.stopCaptureStderr()
-            self.assert_("This is a test, ronald" in data, data)
+            self.assert_(b"This is a test, ronald" in data, data)
 
     def testSpotlight(self):
         if hasattr(Foundation, 'NSMetadataQuery'):

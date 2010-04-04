@@ -35,7 +35,7 @@ mod_CFMachPortCallBack(
 	PyGILState_STATE state = PyGILState_Ensure();
 
 	PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
-	PyObject* py_msg = PyString_FromStringAndSize(msg, size);
+	PyObject* py_msg = PyBytes_FromStringAndSize(msg, size);
 	PyObject* py_size = PyLong_FromLongLong(size);
 
 	PyObject* result = PyObject_CallFunction(
@@ -75,11 +75,11 @@ mod_CFMachPortCreate(
 	PyObject* py_allocator;
 	PyObject* callout;
 	PyObject* info;
-	PyObject* py_shouldFree = Py_None;
+	PyObject* py_shouldFree;
 	CFAllocatorRef allocator;
 	Boolean shouldFree;
 
-	if (!PyArg_ParseTuple(args, "OOO|O", &py_allocator, &callout, &info, &py_shouldFree)) {
+	if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &callout, &info, &py_shouldFree)) {
 		return NULL;
 	}
 
@@ -118,7 +118,7 @@ mod_CFMachPortCreate(
 		return NULL;
 	}
 
-	PyObject* result =  Py_BuildValue("OO",
+	PyObject* result =  Py_BuildValue("NN",
 			PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
 			PyBool_FromLong(shouldFree));
 
@@ -137,12 +137,12 @@ mod_CFMachPortCreateWithPort(
 	PyObject* py_port;
 	PyObject* callout;
 	PyObject* info;
-	PyObject* py_shouldFree = Py_None;
+	PyObject* py_shouldFree;
 	CFAllocatorRef allocator;
 	mach_port_t port;
 	Boolean shouldFree;
 
-	if (!PyArg_ParseTuple(args, "OOOO|O", &py_allocator, &py_port, &callout, &info, &py_shouldFree)) {
+	if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_port, &callout, &info, &py_shouldFree)) {
 		return NULL;
 	}
 
@@ -186,7 +186,7 @@ mod_CFMachPortCreateWithPort(
 		return NULL;
 	}
 
-	PyObject* result =  Py_BuildValue("OO",
+	PyObject* result =  Py_BuildValue("NN",
 			PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
 			PyBool_FromLong(shouldFree));
 
@@ -203,11 +203,11 @@ mod_CFMachPortGetContext(
 	PyObject* args)
 {
 	PyObject* py_f;
-	PyObject* py_context = NULL;
+	PyObject* py_context;
 	CFMachPortRef f;
 	CFMachPortContext context;
 
-	if (!PyArg_ParseTuple(args, "O|O", &py_f, &py_context)) {
+	if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
 		return NULL;
 	}
 

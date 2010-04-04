@@ -21,8 +21,8 @@ class TestNSPrintPanel (TestCase):
         self.assertIsInstance(NSPrintPanelAccessorySummaryItemDescriptionKey, unicode)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 3, 'v@:@' + objc._C_NSInteger + '^v')
-        self.assertArgHasType(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 4, '^v')
+        self.assertArgIsSEL(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 3, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(NSPrintPanel.beginSheetWithPrintInfo_modalForWindow_delegate_didEndSelector_contextInfo_, 4, b'^v')
 
     @min_os_level('10.6')
     def testConstants10_6(self):

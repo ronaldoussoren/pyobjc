@@ -106,8 +106,8 @@ class TestNSObjectInteraction(TestCase):
 
 
         a = TestNSObjectHelper.alloc().init()
-        self.assertArgHasType(a.copyWithZone_, 0, '^{_NSZone=}')
-        self.assertArgHasType(a.mutableCopyWithZone_, 0, '^{_NSZone=}')
+        self.assertArgHasType(a.copyWithZone_, 0, b'^{_NSZone=}')
+        self.assertArgHasType(a.mutableCopyWithZone_, 0, b'^{_NSZone=}')
 
     @min_os_level('10.6')
     def testMethods10_6(self):

@@ -108,9 +108,9 @@ class TestNSWorkspace(TestCase):
         self.assertResultIsBOOL(NSWorkspace.isFilePackageAtPath_)
         self.assertResultIsBOOL(NSWorkspace.setIcon_forFile_options_)
         self.assertResultIsBOOL(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 1, 'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 2, 'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 3, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 1, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 2, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 3, b'o^' + objc._C_NSBOOL)
         self.assertArgIsOut(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 4)
         self.assertArgIsOut(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 5)
         self.assertResultIsBOOL(NSWorkspace.performFileOperation_source_destination_files_tag_)
@@ -133,8 +133,8 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsOut(NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3)
         self.assertResultIsBOOL(NSWorkspace.showSearchResultsForQueryString_)
 
-        self.assertArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, 'v@@')
-        self.assertArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, 'v@@')
+        self.assertArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, b'v@@')
+        self.assertArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, b'v@@')
 
         self.assertResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtURL_error_)
         self.assertArgIsOut(NSWorkspace.unmountAndEjectDeviceAtURL_error_, 1)

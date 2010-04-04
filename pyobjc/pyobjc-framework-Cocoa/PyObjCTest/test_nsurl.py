@@ -82,9 +82,9 @@ class TestNSURL (TestCase):
         self.assertResultIsBOOL(NSURL.isFileReferenceURL)
 
         self.assertArgIsOut(NSURL.bookmarkDataWithOptions_includingResourceValuesForKeys_relativeToURL_error_, 3)
-        self.assertArgHasType(NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, b'o^' + objc._C_NSBOOL)
         self.assertArgIsOut(NSURL.initByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 4)
-        self.assertArgHasType(NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 3, b'o^' + objc._C_NSBOOL)
         self.assertArgIsOut(NSURL.URLByResolvingBookmarkData_options_relativeToURL_bookmarkDataIsStale_error_, 4)
         self.assertResultIsBOOL(NSURL.writeBookmarkData_toURL_options_error_)
         self.assertArgIsOut(NSURL.writeBookmarkData_toURL_options_error_, 3)

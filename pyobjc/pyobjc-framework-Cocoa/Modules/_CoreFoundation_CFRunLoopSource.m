@@ -134,7 +134,12 @@ mod_CFRunLoopSourceCreate(
 	}
 
 	PyObject* v = PyTuple_GetItem(py_context, 0);
-	if (!PyInt_Check(v) || PyInt_AsLong(v) != 0) {
+	NSInteger i;
+
+	if (PyObjC_PythonToObjC(@encode(NSInteger), v, &i) == -1) {
+		PyErr_SetString(PyExc_ValueError, "Version field must be 0");
+		return NULL;
+	} else if (i != 0) {
 		PyErr_SetString(PyExc_ValueError, "Version field must be 0");
 		return NULL;
 	}
@@ -174,11 +179,11 @@ mod_CFRunLoopSourceGetContext(
 	PyObject* args)
 {
 	PyObject* py_f;
-	PyObject* py_context = NULL;
+	PyObject* py_context;
 	CFRunLoopSourceRef f;
 	CFRunLoopSourceContext context;
 
-	if (!PyArg_ParseTuple(args, "O|O", &py_f, &py_context)) {
+	if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
 		return NULL;
 	}
 

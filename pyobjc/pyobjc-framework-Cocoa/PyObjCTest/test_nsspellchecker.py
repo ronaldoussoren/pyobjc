@@ -28,7 +28,7 @@ class TestNSSpellChecker (TestCase):
         self.assertArgHasType(NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,
                 1, NSRange.__typestr__)
         self.assertArgIsBlock(NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,
-                5, 'v' + objc._C_NSInteger + '@@' + objc._C_NSInteger)
+                5, b'v' + objc._C_NSInteger + b'@@' + objc._C_NSInteger)
 
         self.assertArgHasType(NSSpellChecker.menuForResult_string_options_atLocation_inView_, 3, NSPoint.__typestr__)
 

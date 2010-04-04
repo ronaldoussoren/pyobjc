@@ -162,7 +162,7 @@ class PyKeyValueCoding (TestCase):
 
         obj = STUB.keyValue_forObject_key_( 0, o, u"keyReturningOtherSelector")
         self.assertIsInstance(obj, objc.selector)
-        self.assertEqual(obj.selector, "getKey1")
+        self.assertEqual(obj.selector, b"getKey1")
         self.assertIsObject(obj.self, o )
     def testValueForKey2(self):
         o = KeyValueClass4.alloc().init()

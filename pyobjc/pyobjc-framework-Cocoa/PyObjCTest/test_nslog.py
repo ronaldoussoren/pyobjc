@@ -25,7 +25,7 @@ class TestNSLog (TestCase):
         finally:
             data = self._cleanup().rstrip()
 
-        self.assert_(data.endswith('] Hello world'))
+        self.assert_(data.endswith(b'] Hello world'))
 
     def testWithArguments(self):
         self._redirect()
@@ -34,7 +34,7 @@ class TestNSLog (TestCase):
         finally:
             data = self._cleanup().rstrip()
 
-        self.assert_(data.endswith('] Hello ronald: the count is 99'))
+        self.assert_(data.endswith(b'] Hello ronald: the count is 99'))
 
     def testWithInvalidFormat(self):
         self._redirect()

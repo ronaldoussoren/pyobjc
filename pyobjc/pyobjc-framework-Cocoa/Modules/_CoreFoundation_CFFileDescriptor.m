@@ -115,15 +115,15 @@ mod_CFFileDescriptorGetContext(
 	PyObject* args)
 {
 	PyObject* py_f;
-	PyObject* py_context = NULL;
+	PyObject* py_context;
 	CFFileDescriptorRef f;
 	CFFileDescriptorContext context;
 
-	if (!PyArg_ParseTuple(args, "O|O", &py_f, &py_context)) {
+	if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
 		return NULL;
 	}
 
-	if (py_context != NULL &&  py_context != Py_None) {
+	if (py_context != Py_None) {
 		PyErr_SetString(PyExc_ValueError, "invalid context");
 		return NULL;
 	}
