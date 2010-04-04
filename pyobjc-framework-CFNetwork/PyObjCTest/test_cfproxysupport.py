@@ -120,6 +120,7 @@ class TestCFProxySupport (TestCase):
     @expectedFailure
     @min_os_level('10.5')
     def testConstants_fail(self):
+        self.assertIsIn('kCFProxyAutoConfigurationHTTPResponseKey', globals())
         self.assertIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
 
     @min_os_level('10.6')
