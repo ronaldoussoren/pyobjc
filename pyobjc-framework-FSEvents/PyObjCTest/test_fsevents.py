@@ -24,12 +24,12 @@ class TestFSEvents (TestCase):
             ('kFSEventStreamEventFlagUnmount', 0x00000080),
             ):
 
-            self.assert_( hasattr(FSEvents, k) , k)
-            self.assert_( isinstance(getattr(FSEvents, k), (int, long)) )
+            self.assertHasAttr(FSEvents, k)
+            self.assertIsInstance(getattr(FSEvents, k), (int, long))
             self.assertEquals( getattr(FSEvents, k), v )
 
-        self.assert_(hasattr(FSEvents, 'kFSEventStreamEventIdSinceNow'))
-        self.assert_(isinstance(FSEvents.kFSEventStreamEventIdSinceNow, (int, long)))
+        self.assertHasAttr(FSEvents, 'kFSEventStreamEventIdSinceNow')
+        self.assertIsInstance(FSEvents.kFSEventStreamEventIdSinceNow, (int, long))
         self.assertEquals(FSEvents.kFSEventStreamEventIdSinceNow, -1)
 
 
@@ -42,42 +42,42 @@ class TestFSEvents (TestCase):
         ref = FSEventStreamCreate(None, fsevents_callback, context, 
                 ["/etc", "/tmp"], kFSEventStreamEventIdSinceNow, 2.0,  kFSEventStreamCreateFlagUseCFTypes|kFSEventStreamCreateFlagNoDefer)
 
-        self.failUnlessIsInstance(ref, FSEventStreamRef)
+        self.assertIsInstance(ref, FSEventStreamRef)
         FSEventStreamRelease(ref); ref = None
 
         ref = FSEventStreamCreateRelativeToDevice(
                 None, fsevents_callback, context,
                 os.stat('/').st_dev, [os.path.realpath("/etc"), os.path.realpath("/tmp")], kFSEventStreamEventIdSinceNow, 2.0,  kFSEventStreamCreateFlagUseCFTypes|kFSEventStreamCreateFlagNoDefer)
-        self.failUnlessIsInstance(ref, FSEventStreamRef)
+        self.assertIsInstance(ref, FSEventStreamRef)
         try:
             v = FSEventStreamGetLatestEventId(ref)
-            self.failUnlessIsInstance(v, (int, long))
+            self.assertIsInstance(v, (int, long))
 
             v = FSEventStreamGetDeviceBeingWatched(ref)
-            self.failUnlessIsInstance(v, (int, long))
+            self.assertIsInstance(v, (int, long))
 
-            self.failUnlessResultIsCFRetained(FSEventStreamCopyPathsBeingWatched)
+            self.assertResultIsCFRetained(FSEventStreamCopyPathsBeingWatched)
             v = FSEventStreamCopyPathsBeingWatched(ref)
-            self.failUnlessIsInstance(v, CFArrayRef)
-            self.failUnlessEqual(len(v), 2)
-            self.failUnlessEqual(v, [os.path.realpath("/etc")[1:], os.path.realpath("/tmp")[1:]])
+            self.assertIsInstance(v, CFArrayRef)
+            self.assertEqual(len(v), 2)
+            self.assertEqual(v, [os.path.realpath("/etc")[1:], os.path.realpath("/tmp")[1:]])
 
             v = FSEventsGetCurrentEventId()
-            self.failUnlessIsInstance(v, (int, long))
+            self.assertIsInstance(v, (int, long))
 
             v = FSEventsCopyUUIDForDevice(os.stat('/').st_dev)
-            self.failUnlessIsInstance(v, CFUUIDRef)
+            self.assertIsInstance(v, CFUUIDRef)
 
             v = FSEventsGetLastEventIdForDeviceBeforeTime(os.stat('/').st_dev, time.time()-(3600*25))
-            self.failUnlessIsInstance(v, (int, long))
+            self.assertIsInstance(v, (int, long))
 
             # Calling this function can affect the actual device (when running
             # the tests as root), therefore test against /dev which is a virtual
             # filesystem on OSX
-            self.failUnlessResultIsBOOL(FSEventsPurgeEventsForDeviceUpToEventId)
+            self.assertResultIsBOOL(FSEventsPurgeEventsForDeviceUpToEventId)
             v = FSEventsPurgeEventsForDeviceUpToEventId(os.stat('/dev').st_dev, 
                     FSEventsGetLastEventIdForDeviceBeforeTime(os.stat('/dev').st_dev, 0))
-            self.failUnlessIsInstance(v, bool)
+            self.assertIsInstance(v, bool)
 
             FSEventStreamRetain(ref)
             FSEventStreamRelease(ref)
@@ -86,11 +86,11 @@ class TestFSEvents (TestCase):
             FSEventStreamScheduleWithRunLoop(ref, rl, kCFRunLoopDefaultMode)
 
 
-            self.failUnlessResultIsBOOL(FSEventStreamStart)
+            self.assertResultIsBOOL(FSEventStreamStart)
             FSEventStreamStart(ref)
 
             v = FSEventStreamFlushAsync(ref)
-            self.failUnlessIsInstance(v, (int, long))
+            self.assertIsInstance(v, (int, long))
 
             FSEventStreamFlushSync(ref)
             FSEventStreamStop(ref)
@@ -108,7 +108,7 @@ class TestFSEvents (TestCase):
                 os.dup2(fd, 2)
 
             v = FSEventStreamCopyDescription(ref)
-            self.failUnlessIsInstance(v, unicode)
+            self.assertIsInstance(v, unicode)
 
             FSEventStreamInvalidate(ref)
 
@@ -117,8 +117,8 @@ class TestFSEvents (TestCase):
 
 
     def testOpaque(self):
-        self.assert_( hasattr(FSEvents, 'FSEventStreamRef') )
-        self.failUnlessIsOpaquePointer(FSEventStreamRef)
+        self.assertHasAttr(FSEvents, 'FSEventStreamRef')
+        self.assertIsOpaquePointer(FSEventStreamRef)
 
 
 if __name__ == "__main__":
