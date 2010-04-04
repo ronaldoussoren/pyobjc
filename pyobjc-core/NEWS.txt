@@ -77,51 +77,12 @@ Version 2.3a0
   properties for a class from the Objective-C runtime. The information does
   not include information about properties in superclasses.
 
-- TODO: ``objc.kvo_property`` support
+- Added ``objc.object_property``. This is class behaves simularly to
+  ``property``, but integrates better with Objective-C code and APIs like
+  Key-Value Observation.
 
-  Implementation plan: 
 
-  * Add class setup hook for entries in the dict::
-
-      class kvo_property (object):
-         def __pyobjc_class_setup__(self, name, class_dict, 
-	 		instance_method_list, class_method_list):
-	     class_dict[self.__ivar_name] = objc.ivar(self.__ivar_name)
-	     instance_method_list.append(
-	     	selector(self.__setter_func, hidden=True))
-
-    (The method body is bogus, but the idea should be clear enough).
-
-    DONE, but the API is not yet stable. I'll probably add an ivar_list
-    argument as well to enable adding instance variables that aren't directly
-    visible to python code.
-
-  * Add 'hidden' flag to selectors. If a selector is hidden you will not be
-    able to access it directly, only through pyobjc_instanceMethods or
-    pyobjc_classMethods.
-
-  * Later: objc.objc_class.__pyobjc_set_builder__(callable). 
-    This callable is called when a subclass is created and does most of 
-    the setup-work in class-builder.m.
-
-    Interface of the builder::
-
-        builder(name, bases, dict, protocols, 
-		instance_method_list, class_method_list) -> bases
-
-    The protocols list and the two method lists are empty when calling, 
-    the builder must add methods and protocols to the appopriate lists.
-
-    The return value is the bases tuple for the created class, calculated
-    from the bases tuple passed in (e.g. remove protocols, possibly
-    introduce and intermediate class)
-
-    The build is responsible for converting function objects in the class
-    dict to ``objc.selector`` instances and adding them to the appropriate 
-    list, the C code will not do that.
-
-    NOTE: This API is not stable and might change in future versions of PyObjC.
-
+- TODO:
   * Later: automaticly parse the property definitions in the objc runtime
     and do the right thing (but: also add global flag to enable/disable this)
 
