@@ -7,19 +7,19 @@ from DictionaryServices import *
 
 class TestDictionaryServices (TestCase):
     def testClasses(self):
-        self.failUnlessIsCFType(DCSDictionaryRef)
+        self.assertIsCFType(DCSDictionaryRef)
 
     
     def testFunctions(self):
         r = DCSGetTermRangeInString(None, u"the hello world program", 5)
-        self.failUnlessIsInstance(r, CFRange)
-        self.failUnlessEqual(r, (4, 5))
+        self.assertIsInstance(r, CFRange)
+        self.assertEqual(r, (4, 5))
 
         r = DCSCopyTextDefinition(None, u"the hello world program", r)
-        self.failUnlessIsInstance(r, unicode)
+        self.assertIsInstance(r, unicode)
 
         v = DCSDictionaryGetTypeID()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
 
 if __name__ == "__main__":
