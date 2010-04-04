@@ -358,7 +358,7 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
 }
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"FSEventStreamCreate",
 		(PyCFunction)m_FSEventStreamCreate,
@@ -377,11 +377,16 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, }
 };
 
-void init_callbacks(void);
-void init_callbacks(void)
+PyObjC_MODULE_INIT(_callbacks)
 {
-	PyObject* m = Py_InitModule4("_callbacks", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_callbacks);
+	if (m == NULL) {
+		PyObjC_INITERROR();
+	}
 
-        if (PyObjC_ImportAPI(m) < 0) { return; }
+        if (PyObjC_ImportAPI(m) < 0) { 
+		PyObjC_INITERROR();
+	}
+
+	PyObjC_INITDONE();
 }
