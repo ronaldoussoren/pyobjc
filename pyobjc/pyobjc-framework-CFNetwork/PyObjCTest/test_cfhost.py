@@ -77,7 +77,7 @@ class TestCFHost (TestCase):
         self.assertIsInstance(ok, bool)
         self.assertIsInstance(err, CFStreamError)
 
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 4.0, True)
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 4.0, False)
 
         CFHostUnscheduleFromRunLoop(host, rl, kCFRunLoopDefaultMode)
         self.assertEqual(len(lst), 1)
