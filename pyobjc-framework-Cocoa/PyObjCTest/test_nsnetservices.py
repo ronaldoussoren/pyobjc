@@ -28,9 +28,9 @@ class TestNSNetservices (TestCase):
         o = NSNetService.alloc().init()
 
         m = o.getInputStream_outputStream_.__metadata__()
-        self.assertEqual(m['retval']['type'], 'Z')
-        self.assertEqual(m['arguments'][2]['type'], 'o^@')
-        self.assertEqual(m['arguments'][3]['type'], 'o^@')
+        self.assertEqual(m['retval']['type'], b'Z')
+        self.assertEqual(m['arguments'][2]['type'], b'o^@')
+        self.assertEqual(m['arguments'][3]['type'], b'o^@')
 
     def testMethods(self):
         self.assertResultIsBOOL(NSNetService.getInputStream_outputStream_)

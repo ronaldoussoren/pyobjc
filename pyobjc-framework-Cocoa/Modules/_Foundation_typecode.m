@@ -4,9 +4,34 @@
  * Needed for backward compatiblity with earlier versions of PyObjC.
  */
 /* inline definition of PyMac_GetOSType pymactoolbox.h doesn't work in 64-bit mode */
+
+#if PY_MAJOR_VERSION == 2
 extern int PyMac_GetOSType(PyObject *v, OSType *pr);
 extern PyObject * PyMac_BuildOSType(OSType t);
 
+#else
+
+static int
+PyMac_GetOSType(PyObject *v, OSType *pr)
+{
+	uint32_t tmp;
+	if (!PyBytes_Check(v) || PyBytes_Size(v) != 4) {
+		PyErr_SetString(PyExc_TypeError,
+			"OSType arg must be byte string of 4 chars");
+		return 0;
+	}
+	memcpy((char *)&tmp, PyBytes_AsString(v), 4);
+	*pr = (OSType)ntohl(tmp);
+	return 1;
+}
+
+PyObject *
+PyMac_BuildOSType(OSType t)
+{
+	uint32_t tmp = htonl((uint32_t)t);
+	return PyBytes_FromStringAndSize((char *)&tmp, 4);
+}
+#endif
 
 
 

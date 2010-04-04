@@ -1,49 +1,45 @@
 #define CF_INLINE
 #include "Python.h"
+#include "pyobjc-api.h"
 #import <CoreFoundation/CoreFoundation.h>
 
 
-typedef void (*FUNCTION)(void);
-
-struct function_map {
-    const char* name;
-    FUNCTION    function;
-} function_map[] = {
-	{"CFByteOrderGetCurrent", (FUNCTION)&CFByteOrderGetCurrent },
-	{"CFConvertDoubleHostToSwapped", (FUNCTION)&CFConvertDoubleHostToSwapped },
-	{"CFConvertDoubleSwappedToHost", (FUNCTION)&CFConvertDoubleSwappedToHost },
-	{"CFConvertFloat32HostToSwapped", (FUNCTION)&CFConvertFloat32HostToSwapped },
-	{"CFConvertFloat32SwappedToHost", (FUNCTION)&CFConvertFloat32SwappedToHost },
-	{"CFConvertFloat64HostToSwapped", (FUNCTION)&CFConvertFloat64HostToSwapped },
-	{"CFConvertFloat64SwappedToHost", (FUNCTION)&CFConvertFloat64SwappedToHost },
-	{"CFConvertFloatHostToSwapped", (FUNCTION)&CFConvertFloatHostToSwapped },
-	{"CFConvertFloatSwappedToHost", (FUNCTION)&CFConvertFloatSwappedToHost },
-	{"CFRangeMake", (FUNCTION)&CFRangeMake },
-	{"CFStringGetCharacterFromInlineBuffer", (FUNCTION)&CFStringGetCharacterFromInlineBuffer },
-	{"CFStringInitInlineBuffer", (FUNCTION)&CFStringInitInlineBuffer },
-	{"CFSwapInt16", (FUNCTION)&CFSwapInt16 },
-	{"CFSwapInt16BigToHost", (FUNCTION)&CFSwapInt16BigToHost },
-	{"CFSwapInt16HostToBig", (FUNCTION)&CFSwapInt16HostToBig },
-	{"CFSwapInt16HostToLittle", (FUNCTION)&CFSwapInt16HostToLittle },
-	{"CFSwapInt16LittleToHost", (FUNCTION)&CFSwapInt16LittleToHost },
-	{"CFSwapInt32", (FUNCTION)&CFSwapInt32 },
-	{"CFSwapInt32BigToHost", (FUNCTION)&CFSwapInt32BigToHost },
-	{"CFSwapInt32HostToBig", (FUNCTION)&CFSwapInt32HostToBig },
-	{"CFSwapInt32HostToLittle", (FUNCTION)&CFSwapInt32HostToLittle },
-	{"CFSwapInt32LittleToHost", (FUNCTION)&CFSwapInt32LittleToHost },
-	{"CFSwapInt64", (FUNCTION)&CFSwapInt64 },
-	{"CFSwapInt64BigToHost", (FUNCTION)&CFSwapInt64BigToHost },
-	{"CFSwapInt64HostToBig", (FUNCTION)&CFSwapInt64HostToBig },
-	{"CFSwapInt64HostToLittle", (FUNCTION)&CFSwapInt64HostToLittle },
-	{"CFSwapInt64LittleToHost", (FUNCTION)&CFSwapInt64LittleToHost },
-	{"CFUserNotificationCheckBoxChecked", (FUNCTION)&CFUserNotificationCheckBoxChecked },
-	{"CFUserNotificationPopUpSelection", (FUNCTION)&CFUserNotificationPopUpSelection },
-	{"CFUserNotificationSecureTextField", (FUNCTION)&CFUserNotificationSecureTextField },
+static PyObjC_function_map function_map[] = {
+	{"CFByteOrderGetCurrent", (PyObjC_Function_Pointer)&CFByteOrderGetCurrent },
+	{"CFConvertDoubleHostToSwapped", (PyObjC_Function_Pointer)&CFConvertDoubleHostToSwapped },
+	{"CFConvertDoubleSwappedToHost", (PyObjC_Function_Pointer)&CFConvertDoubleSwappedToHost },
+	{"CFConvertFloat32HostToSwapped", (PyObjC_Function_Pointer)&CFConvertFloat32HostToSwapped },
+	{"CFConvertFloat32SwappedToHost", (PyObjC_Function_Pointer)&CFConvertFloat32SwappedToHost },
+	{"CFConvertFloat64HostToSwapped", (PyObjC_Function_Pointer)&CFConvertFloat64HostToSwapped },
+	{"CFConvertFloat64SwappedToHost", (PyObjC_Function_Pointer)&CFConvertFloat64SwappedToHost },
+	{"CFConvertFloatHostToSwapped", (PyObjC_Function_Pointer)&CFConvertFloatHostToSwapped },
+	{"CFConvertFloatSwappedToHost", (PyObjC_Function_Pointer)&CFConvertFloatSwappedToHost },
+	{"CFRangeMake", (PyObjC_Function_Pointer)&CFRangeMake },
+	{"CFStringGetCharacterFromInlineBuffer", (PyObjC_Function_Pointer)&CFStringGetCharacterFromInlineBuffer },
+	{"CFStringInitInlineBuffer", (PyObjC_Function_Pointer)&CFStringInitInlineBuffer },
+	{"CFSwapInt16", (PyObjC_Function_Pointer)&CFSwapInt16 },
+	{"CFSwapInt16BigToHost", (PyObjC_Function_Pointer)&CFSwapInt16BigToHost },
+	{"CFSwapInt16HostToBig", (PyObjC_Function_Pointer)&CFSwapInt16HostToBig },
+	{"CFSwapInt16HostToLittle", (PyObjC_Function_Pointer)&CFSwapInt16HostToLittle },
+	{"CFSwapInt16LittleToHost", (PyObjC_Function_Pointer)&CFSwapInt16LittleToHost },
+	{"CFSwapInt32", (PyObjC_Function_Pointer)&CFSwapInt32 },
+	{"CFSwapInt32BigToHost", (PyObjC_Function_Pointer)&CFSwapInt32BigToHost },
+	{"CFSwapInt32HostToBig", (PyObjC_Function_Pointer)&CFSwapInt32HostToBig },
+	{"CFSwapInt32HostToLittle", (PyObjC_Function_Pointer)&CFSwapInt32HostToLittle },
+	{"CFSwapInt32LittleToHost", (PyObjC_Function_Pointer)&CFSwapInt32LittleToHost },
+	{"CFSwapInt64", (PyObjC_Function_Pointer)&CFSwapInt64 },
+	{"CFSwapInt64BigToHost", (PyObjC_Function_Pointer)&CFSwapInt64BigToHost },
+	{"CFSwapInt64HostToBig", (PyObjC_Function_Pointer)&CFSwapInt64HostToBig },
+	{"CFSwapInt64HostToLittle", (PyObjC_Function_Pointer)&CFSwapInt64HostToLittle },
+	{"CFSwapInt64LittleToHost", (PyObjC_Function_Pointer)&CFSwapInt64LittleToHost },
+	{"CFUserNotificationCheckBoxChecked", (PyObjC_Function_Pointer)&CFUserNotificationCheckBoxChecked },
+	{"CFUserNotificationPopUpSelection", (PyObjC_Function_Pointer)&CFUserNotificationPopUpSelection },
+	{"CFUserNotificationSecureTextField", (PyObjC_Function_Pointer)&CFUserNotificationSecureTextField },
 #if  PyObjC_BUILD_RELEASE >= 1006
-	{"CFStringIsSurrogateHighCharacter", (FUNCTION)&CFStringIsSurrogateHighCharacter },
-	{"CFStringIsSurrogateLowCharacter", (FUNCTION)&CFStringIsSurrogateLowCharacter },
-	{"CFStringGetLongCharacterForSurrogatePair", (FUNCTION)&CFStringGetLongCharacterForSurrogatePair },
-	{"CFStringGetSurrogatePairForLongCharacter", (FUNCTION)&CFStringGetSurrogatePairForLongCharacter },
+	{"CFStringIsSurrogateHighCharacter", (PyObjC_Function_Pointer)&CFStringIsSurrogateHighCharacter },
+	{"CFStringIsSurrogateLowCharacter", (PyObjC_Function_Pointer)&CFStringIsSurrogateLowCharacter },
+	{"CFStringGetLongCharacterForSurrogatePair", (PyObjC_Function_Pointer)&CFStringGetLongCharacterForSurrogatePair },
+	{"CFStringGetSurrogatePairForLongCharacter", (PyObjC_Function_Pointer)&CFStringGetSurrogatePairForLongCharacter },
 #endif
     { 0, 0 }
 };
@@ -54,7 +50,7 @@ static PyMethodDef mod_methods[] = {
 
 
 /* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 
 static struct PyModuleDef mod_module = {
         PyModuleDef_HEAD_INIT,
@@ -88,7 +84,7 @@ init_inlines(void)
 #endif
 {
 	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 	m = PyModule_Create(&mod_module);
 #else
 	m = Py_InitModule4("_inlines", mod_methods,
@@ -97,7 +93,7 @@ init_inlines(void)
 
 
 	if (PyModule_AddObject(m, "_inline_list_", 
-		PyCObject_FromVoidPtr(function_map, NULL)) < 0) {
+		PyObjC_CreateInlineTab(function_map)) < 0) {
 		INITERROR();
 	}
 

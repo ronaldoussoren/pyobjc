@@ -117,7 +117,7 @@ class TestNSImage (TestCase):
         self.assertArgIsBOOL(NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4)
         self.assertArgIsBOOL(NSImage.lockFocusFlipped_, 0)
         self.assertArgHasType(NSImage.initWithCGImage_size_, 1, NSSize.__typestr__)
-        self.assertArgHasType(NSImage.CGImageForProposedRect_context_hints_, 0, 'o^' + NSRect.__typestr__)
+        self.assertArgHasType(NSImage.CGImageForProposedRect_context_hints_, 0, b'o^' + NSRect.__typestr__)
         self.assertArgHasType(NSImage.bestRepresentationForRect_context_hints_, 0, NSRect.__typestr__)
 
         self.assertResultIsBOOL(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_)

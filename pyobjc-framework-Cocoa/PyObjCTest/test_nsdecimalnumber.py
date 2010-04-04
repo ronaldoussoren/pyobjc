@@ -14,11 +14,11 @@ class TestNSDecimalNumber (TestCase):
 
         v = NSDecimalNumber.alloc().initWithDecimal_(dec)
         self.assertIsInstance(v, NSDecimalNumber)
-        self.assertEqual(str(v), '55')
+        self.assertEqual(v.description(), '55')
 
         v = NSDecimalNumber.decimalNumberWithDecimal_(dec)
         self.assertIsInstance(v, NSDecimalNumber)
-        self.assertEqual(str(v), '55')
+        self.assertEqual(v.description(), '55')
 
         o = v.decimalValue()
         self.assertIsInstance(o, NSDecimal)
@@ -34,7 +34,7 @@ class TestNSDecimalNumber (TestCase):
         dec = NSDecimal()
         o = v.scanDecimal_(dec)
         self.assertIsObject(o, True)
-        self.assertEqual(str(dec), '55.23')
+        self.assertEqual(dec.description(), '55.23')
 
 if __name__ == "__main__":
     main()

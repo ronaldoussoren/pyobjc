@@ -44,14 +44,24 @@ static	char* keywords[] = { "argv", NULL };
 		if (v == NULL) {
 			goto error_cleanup;
 		}
-		if (!PyString_Check(v)) {
+		if (PyUnicode_Check(v)) {
+			PyObject* bytes = PyUnicode_AsEncodedString(v, 
+					NULL, NULL);
+			if (!bytes) {
+				goto error_cleanup;
+			}
+			argv[i] = strdup(PyBytes_AsString(bytes));
+#if PY_MAJOR_VERSION == 2
+		} else if (PyString_Check(v)) {
+			argv[i] = strdup(PyString_AsString(v));
+#endif
+		} else {
 			PyErr_SetString(PyExc_TypeError, 
 				"NSApplicationMain: need list of strings "
 				"as argument");
 			goto error_cleanup;
 		}
 
-		argv[i] = strdup(PyString_AsString(v));
 		if (argv[i] == NULL) {
 			PyErr_SetString(PyExc_MemoryError,
 				"Out of memory");
@@ -60,42 +70,6 @@ static	char* keywords[] = { "argv", NULL };
 	}
 
 	argv[argc] = NULL;
-
-#if 0
-	/*
-	 * NSApplicationMain on MacOS X completely ignores its arguments and 
-	 * reads the argv from the shared NSProcessInfo. We *HACK* around this 
-	 * by setting a (private) instance variable of the object.
-	 *
-	 * This code is evil. Look away if you're easily scared.
-	 *
-	 * This doesn't work in 64-bit mode however. Therefore this code
-	 * is now disabled. This shouldn't make a difference when using
-	 * py2app or Xcode's PyObjC templates.
-	 */
-	{
-		typedef struct {
-			@defs(NSProcessInfo)
-		} NSProcessInfoStruct;
-	  
-		NSMutableArray *newarglist = [[NSMutableArray alloc] init];
-		NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-		char **anArg = argv;
-
-		while(*anArg) {
-			[newarglist addObject: 
-				[NSString stringWithUTF8String: *anArg]];
-			anArg++;
-		}
-
-		/* Don't release the orignal arguments, because we don't know
-		 * if the list is owned by the processInfo object.
-		 *
-		 *[((NSProcessInfoStruct *)processInfo)->arguments release]; 
-		 */
-		((NSProcessInfoStruct *)processInfo)->arguments = newarglist;
-	}
-#endif
 
 	PyObjC_DURING
 		res = NSApplicationMain(argc, (const char**)argv);

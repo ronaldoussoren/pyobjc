@@ -27,7 +27,7 @@ class TestUserNotification (TestCase):
         def callout(notification, flags):
             values.append((notification, flags))
 
-        self.assertArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, 'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
+        self.assertArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, b'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
         rls = CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
         CFRunLoopAddSource(rl, rls, kCFRunLoopDefaultMode)

@@ -80,7 +80,7 @@ class TestNSOutlineView (TestCase):
         self.assertResultIsBOOL(TestNSOutlineViewHelper.selectionShouldChangeInOutlineView_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldSelectItem_)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldSelectTableColumn_)
-        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_, 2, 'N^' + NSRect.__typestr__)
+        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_, 2, b'N^' + NSRect.__typestr__)
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_, 5, NSPoint.__typestr__)
         self.assertResultHasType(TestNSOutlineViewHelper.outlineView_heightOfRowByItem_, objc._C_CGFloat)
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldExpandItem_)

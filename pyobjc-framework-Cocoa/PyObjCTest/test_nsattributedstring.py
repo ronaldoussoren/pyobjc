@@ -148,10 +148,10 @@ class TestNSAttributedString (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgHasType(NSAttributedString.enumerateAttributesInRange_options_usingBlock_, 0, NSRange.__typestr__)
-        self.assertArgIsBlock(NSAttributedString.enumerateAttributesInRange_options_usingBlock_, 2, 'v@'+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSAttributedString.enumerateAttributesInRange_options_usingBlock_, 2, b'v@'+NSRange.__typestr__+b'o^'+objc._C_NSBOOL)
 
         self.assertArgHasType(NSAttributedString.enumerateAttribute_inRange_options_usingBlock_, 1, NSRange.__typestr__)
-        self.assertArgIsBlock(NSAttributedString.enumerateAttribute_inRange_options_usingBlock_, 3, 'v@'+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSAttributedString.enumerateAttribute_inRange_options_usingBlock_, 3, b'v@'+NSRange.__typestr__+b'o^'+objc._C_NSBOOL)
 
 if __name__ == '__main__':
     main()

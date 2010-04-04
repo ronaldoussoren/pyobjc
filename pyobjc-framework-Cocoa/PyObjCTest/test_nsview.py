@@ -17,7 +17,7 @@ class TestNSView (TestCase):
 
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
-        self.assertEqual(method.__metadata__()['arguments'][2]['type'], 'o^' + NSRange.__typestr__)
+        self.assertEqual(method.__metadata__()['arguments'][2]['type'], b'o^' + NSRange.__typestr__)
 
     def test_rectForPage(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
@@ -84,8 +84,8 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.needsToDrawRect_)
         self.assertResultIsBOOL(NSView.wantsDefaultClipping)
 
-        self.assertArgIsFunction(NSView.sortSubviewsUsingFunction_context_, 0, 'i@@@', False)
-        self.assertArgHasType(NSView.sortSubviewsUsingFunction_context_, 1, '@')
+        self.assertArgIsFunction(NSView.sortSubviewsUsingFunction_context_, 0, b'i@@@', False)
+        self.assertArgHasType(NSView.sortSubviewsUsingFunction_context_, 1, b'@')
 
         self.assertResultIsBOOL(NSView.postsFrameChangedNotifications)
         self.assertArgIsBOOL(NSView.setPostsFrameChangedNotifications_, 0)
@@ -108,7 +108,7 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.shouldDelayWindowOrderingForEvent_)
         self.assertResultIsBOOL(NSView.needsPanelToBecomeKey)
         self.assertResultIsBOOL(NSView.mouseDownCanMoveWindow)
-        self.assertArgHasType(NSView.addTrackingRect_owner_userData_assumeInside_, 2, '^v')
+        self.assertArgHasType(NSView.addTrackingRect_owner_userData_assumeInside_, 2, b'^v')
         self.assertArgIsBOOL(NSView.addTrackingRect_owner_userData_assumeInside_, 3)
         self.assertResultIsBOOL(NSView.shouldDrawColor)
         self.assertResultIsBOOL(NSView.postsBoundsChangedNotifications)
@@ -116,7 +116,7 @@ class TestHeader (TestCase):
         self.assertResultIsBOOL(NSView.inLiveResize)
         self.assertResultIsBOOL(NSView.preservesContentDuringLiveResize)
 
-        self.assertArgHasType(NSView.getRectsExposedDuringLiveResize_count_, 0, 'o^' + NSRect.__typestr__)
+        self.assertArgHasType(NSView.getRectsExposedDuringLiveResize_count_, 0, b'o^' + NSRect.__typestr__)
         m = NSView.getRectsExposedDuringLiveResize_count_.__metadata__()['arguments'][2]
         self.assertEqual(m['c_array_of_fixed_length'], 4)
         self.assertArgIsOut(NSView.getRectsExposedDuringLiveResize_count_, 1)
@@ -158,7 +158,7 @@ class TestHeader (TestCase):
 
     def testProtocol(self):
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 3, '^v')
+        self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b'^v')
 
 
     def testMissingTests(self):

@@ -135,7 +135,7 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_shouldEditTableColumn_row_, 2, objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSTableViewHelper.selectionShouldChangeInTableView_)
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectTableColumn_)
-        self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 2, 'N^' + NSRect.__typestr__)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 2, b'N^' + NSRect.__typestr__)
         self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 4, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_, 5, NSPoint.__typestr__)
         self.assertResultHasType(TestNSTableViewHelper.tableView_heightOfRow_, objc._C_CGFloat)

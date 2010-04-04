@@ -63,11 +63,10 @@ class TestCFBag (TestCase):
         exists, value = CFBagGetValueIfPresent(bag, u"b", None)
         self.assertFalse( exists )
         self.assertIsObject(value, None )
-        values = list(CFBagGetValues(bag))
-        values.sort()
-        l = [u"Hello", 42, u"World", 42, u"a", u"a", u"a"]
-        l.sort()
+        values = set(CFBagGetValues(bag))
+        l = set([u"Hello", 42, u"World", 42, u"a", u"a", u"a"])
         self.assertEqual(values , l )
+
     def testMutation(self):
         bag = CFBagCreateMutable(None, 0)
         self.assertEqual(CFBagGetCount(bag) , 0)
@@ -90,19 +89,19 @@ class TestCFBag (TestCase):
         CFBagRemoveAllValues(bag)
         self.assertEqual(CFBagGetCount(bag) , 0)
     def testFunctions(self):
-        self.assertArgHasType(CFBagGetCountOfValue, 1, '@')
-        self.assertArgHasType(CFBagContainsValue, 1, '@')
-        self.assertArgHasType(CFBagGetValue, 1, '@')
-        self.assertResultHasType(CFBagGetValue, '@')
-        self.assertArgHasType(CFBagGetValueIfPresent, 1, '@')
-        self.assertArgHasType(CFBagGetValueIfPresent, 2, 'o^@')
+        self.assertArgHasType(CFBagGetCountOfValue, 1, b'@')
+        self.assertArgHasType(CFBagContainsValue, 1, b'@')
+        self.assertArgHasType(CFBagGetValue, 1, b'@')
+        self.assertResultHasType(CFBagGetValue, b'@')
+        self.assertArgHasType(CFBagGetValueIfPresent, 1, b'@')
+        self.assertArgHasType(CFBagGetValueIfPresent, 2, b'o^@')
         self.assertResultHasType(CFBagGetValueIfPresent, objc._C_NSBOOL)
-        self.assertArgIsFunction(CFBagApplyFunction, 1, 'v@@', False)
-        self.assertArgHasType(CFBagApplyFunction, 2, '@')
-        self.assertArgHasType(CFBagAddValue, 1, '@')
-        self.assertArgHasType(CFBagReplaceValue, 1, '@')
-        self.assertArgHasType(CFBagSetValue, 1, '@')
-        self.assertArgHasType(CFBagRemoveValue, 1, '@')
+        self.assertArgIsFunction(CFBagApplyFunction, 1, b'v@@', False)
+        self.assertArgHasType(CFBagApplyFunction, 2, b'@')
+        self.assertArgHasType(CFBagAddValue, 1, b'@')
+        self.assertArgHasType(CFBagReplaceValue, 1, b'@')
+        self.assertArgHasType(CFBagSetValue, 1, b'@')
+        self.assertArgHasType(CFBagRemoveValue, 1, b'@')
 
 
 if __name__ == "__main__":

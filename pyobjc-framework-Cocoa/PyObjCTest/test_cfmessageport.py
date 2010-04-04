@@ -35,7 +35,7 @@ class TestMessagePort (TestCase):
         self.assertIsInstance(port, CFMessagePortRef)
         self.assertIsObject(shouldFree is True or shouldFree, False)
         self.assertFalse(CFMessagePortIsRemote(port))
-        ctx = CFMessagePortGetContext(port)
+        ctx = CFMessagePortGetContext(port, None)
         self.assertIsObject(ctx, context)
         port = CFMessagePortCreateRemote(None, u"name")
         self.assertIsInstance(port, CFMessagePortRef)

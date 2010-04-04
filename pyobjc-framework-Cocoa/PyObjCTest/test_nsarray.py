@@ -3,6 +3,15 @@ import objc
 
 from Foundation import *
 
+import sys
+if sys.version_info[0] == 3:
+    def cmp(a, b):
+        if a < b:
+            return -1
+        elif b < a:
+            return 1
+        return 0
+
 class TestNSArrayInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
@@ -265,6 +274,8 @@ class TestNSMutableArrayInteraction(TestCase):
 
     def testSortInvalid(self):
         # Invalid calls to sortUsingFunction:context:
+        def cmp(a, b):
+            return -1
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
@@ -274,7 +285,7 @@ class TestNSMutableArrayInteraction(TestCase):
         try:
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
-            self.assertRaises(TypeError, a.sortUsingFunction_context_, cmp, u'a')
+            self.assertRaises(TypeError, a.sortUsingFunction_context_, lambda *args: cmp(*args), u'a')
         finally:
             objc.setVerbose(t)
 
@@ -335,6 +346,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
         a = NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
+
 
         def cmpfunc(l, r):
             return -cmp(l,r)
@@ -434,13 +446,13 @@ class TestNSArray (TestCase):
         self.assertArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
         self.assertArgSizeInArg(NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1)
 
-        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, 'l@@@', False)
-        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, '@')
-        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, 'l@@@', False)
-        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, '@')
+        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_, 0, b'l@@@', False)
+        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, b'@')
+        self.assertArgIsFunction(NSArray.sortedArrayUsingFunction_context_hint_, 0, b'l@@@', False)
+        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, b'@')
 
-        self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, 'l@@@', False)
-        self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, '@')
+        self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, b'l@@@', False)
+        self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, b'@')
 
         self.assertIsNullTerminated(NSArray.arrayWithObjects_)
         self.assertIsNullTerminated(NSArray.initWithObjects_)
@@ -448,40 +460,40 @@ class TestNSArray (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBlock(NSArray.enumerateObjectsUsingBlock_, 0,
-                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                b'v@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.enumerateObjectsWithOptions_usingBlock_, 1,
-                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                b'v@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.enumerateObjectsAtIndexes_options_usingBlock_, 2,
-                'v@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                b'v@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSArray.indexOfObjectPassingTest_, 0,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.indexOfObjectWithOptions_passingTest_, 1,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.indexOfObjectAtIndexes_options_passingTest_, 2,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSArray.indexesOfObjectsPassingTest_, 0,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.indexesOfObjectsWithOptions_passingTest_, 1,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSArray.indexesOfObjectsAtIndexes_options_passingTest_, 2,
-                objc._C_NSBOOL + '@'+objc._C_NSUInteger+'o^'+objc._C_NSBOOL)
+                objc._C_NSBOOL + b'@'+objc._C_NSUInteger+b'o^'+objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSArray.sortedArrayUsingComparator_,
-                0, 'l@@')
+                0, b'l@@')
         self.assertArgIsBlock(NSArray.sortedArrayWithOptions_usingComparator_,
-                1, 'l@@')
+                1, b'l@@')
         self.assertArgIsBlock(NSArray.indexOfObject_inSortedRange_options_usingComparator_,
-                3, 'l@@')
+                3, b'l@@')
         self.assertArgHasType(NSArray.indexOfObject_inSortedRange_options_usingComparator_, 1, NSRange.__typestr__)
 
 
 
         self.assertArgIsBlock(NSMutableArray.sortUsingComparator_,
-                0, 'l@@')
+                0, b'l@@')
         self.assertArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
-                1, 'l@@')
+                1, b'l@@')
 
 
 

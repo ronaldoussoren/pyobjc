@@ -26,7 +26,7 @@ class TestNSGlyphGenerator (TestCase):
         self.assertEqual(o.glyphs, ([0, 1, 2, 3, 4], 5, 3, 8))
         self.assertArgHasType(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
-            0, 'n^I')
+            0, b'n^I')
         self.assertArgSizeInArg(
             TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
             0, 1)

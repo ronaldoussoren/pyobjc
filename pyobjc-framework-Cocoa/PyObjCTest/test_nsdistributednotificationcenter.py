@@ -15,8 +15,8 @@ class TestNSDistributedNotificationCenter (TestCase):
         self.assertEqual(NSNotificationPostToAllSessions, 2)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_, 1, 'v@:@')
-        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_, 1, 'v@:@')
+        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_, 1, b'v@:@')
+        self.assertArgIsSEL(NSDistributedNotificationCenter.addObserver_selector_name_object_, 1, b'v@:@')
 
         self.assertArgIsBOOL(NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_, 3)
         self.assertArgIsBOOL(NSDistributedNotificationCenter.setSuspended_, 0)

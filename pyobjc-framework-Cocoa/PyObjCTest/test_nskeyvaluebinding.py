@@ -35,7 +35,7 @@ class TestNSKeyValueBinding (TestCase):
         self.assertIsInstance(NSContentObjectsBinding, unicode)
         self.assertIsInstance(NSContentSetBinding, unicode)
         self.assertIsInstance(NSContentValuesBinding, unicode)
-        self.assertIsInstance(NSContentWidthBinding	, unicode)
+        self.assertIsInstance(NSContentWidthBinding, unicode)
         self.assertIsInstance(NSCriticalValueBinding, unicode)
         self.assertIsInstance(NSDataBinding, unicode)
         self.assertIsInstance(NSDisplayPatternTitleBinding, unicode)
@@ -102,7 +102,7 @@ class TestNSKeyValueBinding (TestCase):
         self.assertIsInstance(NSCreatesSortDescriptorBindingOption, unicode)
         self.assertIsInstance(NSDeletesObjectsOnRemoveBindingsOption, unicode)
         self.assertIsInstance(NSDisplayNameBindingOption, unicode)
-        self.assertIsInstance(NSDisplayPatternBindingOption	, unicode)
+        self.assertIsInstance(NSDisplayPatternBindingOption, unicode)
         self.assertIsInstance(NSHandlesContentAsCompoundValueBindingOption, unicode)
         self.assertIsInstance(NSInsertsNullPlaceholderBindingOption, unicode)
         self.assertIsInstance(NSInvokesSeparatelyWithArrayObjectsBindingOption, unicode)
@@ -136,7 +136,7 @@ class TestNSKeyValueBinding (TestCase):
     def testMethods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
-        self.assertEqual(m['arguments'][3]['sel_of_type'], 'v@:@Z^v')
+        self.assertEqual(m['arguments'][3]['sel_of_type'], b'v@:@Z^v')
 
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
 

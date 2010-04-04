@@ -8,10 +8,10 @@ class TestNSBundle (TestCase):
         obj = NSBundle.mainBundle()
 
         m = obj.preflightAndReturnError_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
 
         m = obj.loadAndReturnError_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
 
     def testMethods(self):
         b = NSBundle.mainBundle()

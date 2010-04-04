@@ -2,6 +2,16 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import NSArray, NSMutableArray
 
+import sys
+if sys.version_info[0] == 3:
+    def cmp(a, b):
+        if a < b:
+            return -1
+        elif b < a:
+            return 1
+        return 0
+
+
 class TestCFArray (TestCase):
     def testCFArrayIsNSArray(self):
         self.assert_(issubclass(CFArrayRef, NSArray))
@@ -22,8 +32,8 @@ class TestCFArray (TestCase):
     def testCFArrayApplyFunction(self):
         array = CFArrayCreate(None, [1,2,3,4], 4, kCFTypeArrayCallBacks)
 
-        self.assertArgIsFunction(CFArrayApplyFunction, 2, 'v@@', False)
-        self.assertArgHasType(CFArrayApplyFunction, 3, '@')
+        self.assertArgIsFunction(CFArrayApplyFunction, 2, b'v@@', False)
+        self.assertArgHasType(CFArrayApplyFunction, 3, b'@')
         
         items = []
         infos = []
@@ -46,9 +56,9 @@ class TestCFArray (TestCase):
         # This method causes a hard crash, reason unclear.
         array = CFArrayCreate(None, range(20), 20, kCFTypeArrayCallBacks)
 
-        self.assertArgHasType(CFArrayBSearchValues, 2, '@')
-        self.assertArgIsFunction(CFArrayBSearchValues, 3, 'l@@@', False)
-        self.assertArgHasType(CFArrayBSearchValues, 4, '@')
+        self.assertArgHasType(CFArrayBSearchValues, 2, b'@')
+        self.assertArgIsFunction(CFArrayBSearchValues, 3, b'l@@@', False)
+        self.assertArgHasType(CFArrayBSearchValues, 4, b'@')
 
         def compare(l, r, context):
             return cmp(l, r)
@@ -68,8 +78,8 @@ class TestCFArray (TestCase):
     def testSortValues(self):
         array = NSMutableArray.arrayWithArray_([4,2,1,3,0,5])
 
-        self.assertArgIsFunction(CFArraySortValues, 2, 'l@@@', False)
-        self.assertArgHasType(CFArraySortValues, 3, '@')
+        self.assertArgIsFunction(CFArraySortValues, 2, b'l@@@', False)
+        self.assertArgHasType(CFArraySortValues, 3, b'@')
 
         def compare(l, r, context):
             return cmp(l, r)
@@ -117,8 +127,8 @@ class TestCFArray (TestCase):
         self.assertEqual(CFArrayGetLastIndexOfValue(array, (0, 6), 3) , 2 )
         self.assertEqual(CFArrayGetLastIndexOfValue(array, (0, 6), 2) , 5 )
         self.assertEqual(CFArrayGetLastIndexOfValue(array, (0, 6), u"hello") , kCFNotFound )
-        self.assertArgHasType(CFArrayGetFirstIndexOfValue, 2, '@')
-        self.assertArgHasType(CFArrayGetLastIndexOfValue, 2, '@')
+        self.assertArgHasType(CFArrayGetFirstIndexOfValue, 2, b'@')
+        self.assertArgHasType(CFArrayGetLastIndexOfValue, 2, b'@')
 
 
     def testGetting(self):
@@ -128,7 +138,7 @@ class TestCFArray (TestCase):
 
         self.assertEqual(CFArrayGetValueAtIndex(array, 0) , u"a"  )
         self.assertEqual(CFArrayGetValueAtIndex(array, 1) , 2  )
-        self.assertArgHasType(CFArrayGetValues, 2, 'o^@')
+        self.assertArgHasType(CFArrayGetValues, 2, b'o^@')
         self.assertArgSizeInArg(CFArrayGetValues, 2, 1)
 
         vals = CFArrayGetValues(array, (0, 3), None)
@@ -141,9 +151,9 @@ class TestCFArray (TestCase):
         array = CFArrayCreateMutableCopy(None, 0, array)
 
 
-        self.assertArgHasType(CFArrayAppendValue, 1, '@')
-        self.assertArgHasType(CFArrayInsertValueAtIndex, 2, '@')
-        self.assertArgHasType(CFArraySetValueAtIndex, 2, '@')
+        self.assertArgHasType(CFArrayAppendValue, 1, b'@')
+        self.assertArgHasType(CFArrayInsertValueAtIndex, 2, b'@')
+        self.assertArgHasType(CFArraySetValueAtIndex, 2, b'@')
 
         CFArrayAppendValue(array, u"foo")
         self.assertEqual(array, [u"a",2,3,4,4,2,u"foo"])
@@ -161,7 +171,7 @@ class TestCFArray (TestCase):
         CFArrayExchangeValuesAtIndices(array, 1,2)
         self.assertEqual(array, [u"a",u"two",4,4,4,2,u"foo"])
 
-        self.assertArgHasType(CFArrayReplaceValues, 2, 'n^@')
+        self.assertArgHasType(CFArrayReplaceValues, 2, b'n^@')
         self.assertArgSizeInArg(CFArrayReplaceValues, 2, 3)
         CFArrayReplaceValues(array, (2,3), (u'a', u'b', u'c', u'd', u'e', u'f'), 6)
         self.assertEqual(array, [u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo'])

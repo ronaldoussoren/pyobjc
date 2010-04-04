@@ -163,17 +163,12 @@ class TestCFNumber (TestCase):
 
     def testNumberTypes(self):
         v = CFNumberGetType(44)
-        if sys.maxint > 2 ** 32:
-            self.assertEqual(v , kCFNumberLongLongType)
-        else:
-            self.assertEqual(v , kCFNumberLongType)
+        self.assertIsIn(v, (kCFNumberLongLongType, kCFNumberLongType))
         v = CFNumberGetType(2.5)
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)
-        if sys.maxint > 2 ** 32:
-            self.assertEqual(v , 8)
-        else:
-            self.assertEqual(v , 4)
+
+        self.assertEqual(v , 8)
         v = CFNumberGetByteSize(44.0)
         self.assertEqual(v , 8)
         self.assertFalse(CFNumberIsFloatType(44))

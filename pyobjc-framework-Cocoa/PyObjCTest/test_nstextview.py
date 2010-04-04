@@ -144,7 +144,7 @@ class TestNSTextView (TestCase):
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldChangeTextInRanges_replacementStrings_)
         self.assertArgHasType(TestNSTextViewHelper.textView_willDisplayToolTip_forCharacterAtIndex_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_, 2, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_, 3, 'N^'+objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_, 3, b'N^'+objc._C_NSInteger)
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_)
         self.assertArgHasType(TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_, 1, NSRange.__typestr__)
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_doCommandBySelector_)
@@ -179,7 +179,7 @@ class TestNSTextView (TestCase):
     @min_os_level('10.6')
     def testProtocols10_6(self):
         self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 3, 'N^' + objc._C_NSInteger)
+        self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 3, b'N^' + objc._C_NSInteger)
 
         self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 1, NSRange.__typestr__)
         self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 2, objc._C_NSInteger)

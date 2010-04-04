@@ -84,7 +84,7 @@ class TestSubclassingUndo(TestCase):
         self.assertResultIsBOOL(NSUndoManager.canRedo)
         self.assertResultIsBOOL(NSUndoManager.isUndoing)
         self.assertResultIsBOOL(NSUndoManager.isRedoing)
-        self.assertArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, 'v@:@')
+        self.assertArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, b'v@:@')
 
 if __name__ == '__main__':
     main( )

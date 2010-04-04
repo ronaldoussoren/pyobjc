@@ -20,8 +20,8 @@ class TestNSPrintOperation (TestCase):
         self.assertResultIsBOOL(NSPrintOperation.canSpawnSeparateThread)
         self.assertArgIsBOOL(NSPrintOperation.setCanSpawnSeparateThread_, 0)
 
-        self.assertArgIsSEL(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 2, 'v@:@' + objc._C_NSBOOL + '^v')
-        self.assertArgHasType(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 3, '^v')
+        self.assertArgIsSEL(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 2, b'v@:@' + objc._C_NSBOOL + b'^v')
+        self.assertArgHasType(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 3, b'^v')
 
         self.assertResultIsBOOL(NSPrintOperation.runOperation)
         self.assertResultIsBOOL(NSPrintOperation.deliverResult)

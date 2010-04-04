@@ -72,7 +72,7 @@ class TestRunLoop (TestCase):
         observer = CFRunLoopObserverCreate(None, kCFRunLoopEntry|kCFRunLoopExit,
                 True, 4, callback, data)
         self.assertIsInstance(observer, CFRunLoopObserverRef)
-        ctx = CFRunLoopObserverGetContext(observer)
+        ctx = CFRunLoopObserverGetContext(observer, None)
         self.assertIsObject(ctx, data)
         self.assertEqual(CFRunLoopObserverGetActivities(observer), kCFRunLoopEntry|kCFRunLoopExit)
         self.assertIsObject(CFRunLoopObserverDoesRepeat(observer), True)
@@ -80,7 +80,7 @@ class TestRunLoop (TestCase):
         self.assertIsObject(CFRunLoopObserverIsValid(observer), True)
         CFRunLoopObserverInvalidate(observer)
         self.assertIsObject(CFRunLoopObserverIsValid(observer), False)
-        ctx = CFRunLoopObserverGetContext(observer)
+        ctx = CFRunLoopObserverGetContext(observer, None)
         self.assertIsObject(ctx, objc.NULL)
         observer = CFRunLoopObserverCreate(None, kCFRunLoopEntry|kCFRunLoopExit,
                 True, 4, callback, data)
@@ -90,7 +90,7 @@ class TestRunLoop (TestCase):
         self.failUnless (CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode) is True)
 
         # Use dummy stream to ensure that the runloop actually performs work
-        strval = 'hello world'
+        strval = b'hello world'
         stream = CFReadStreamCreateWithBytesNoCopy(None,
                                 strval, len(strval), kCFAllocatorNull)
         self.assertIsInstance(stream, CFReadStreamRef)
@@ -126,13 +126,13 @@ class TestRunLoop (TestCase):
         r = CFRunLoopTimerGetInterval(timer)
         self.assertEqual(r, 0.5)
 
-        self.assertIsObject(CFRunLoopTimerGetContext(timer), data)
+        self.assertIsObject(CFRunLoopTimerGetContext(timer, None), data)
         self.assertIsObject(CFRunLoopTimerDoesRepeat(timer), True)
         self.assertEqual(CFRunLoopTimerGetOrder(timer), 0)
         self.assertIsObject(CFRunLoopTimerIsValid(timer), True)
         CFRunLoopTimerInvalidate(timer)
         self.assertIsObject(CFRunLoopTimerIsValid(timer), False)
-        self.assertIsObject(CFRunLoopTimerGetContext(timer), objc.NULL)
+        self.assertIsObject(CFRunLoopTimerGetContext(timer, None), objc.NULL)
         timer = CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
         self.assertIsObject(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
         CFRunLoopAddTimer(rl, timer, kCFRunLoopDefaultMode)
@@ -211,7 +211,7 @@ class TestRunLoop (TestCase):
         self.assertEqual(state[0][3] , kCFRunLoopDefaultMode)
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.assertArgIsBlock(CFRunLoopPerformBlock, 2, 'v')
+        self.assertArgIsBlock(CFRunLoopPerformBlock, 2, b'v')
 
 if __name__ == "__main__":
     main()

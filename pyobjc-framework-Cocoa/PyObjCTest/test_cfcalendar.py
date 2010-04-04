@@ -12,12 +12,12 @@ class TestCFCalendarVariadic (TestCase):
         self.assertIsInstance(calendar, CFCalendarRef)
 
         success, at = CFCalendarComposeAbsoluteTime(
-                calendar, None, '')
+                calendar, None, b"")
         self.assertEqual(success, True)
         self.assert_(isinstance(at, float))
 
         success, at = CFCalendarComposeAbsoluteTime(
-                calendar, None, "yMdHms", 1965, 1, 6, 14, 10, 0)
+                calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
         self.assert_(isinstance(at, float))
 
@@ -27,17 +27,17 @@ class TestCFCalendarVariadic (TestCase):
         self.assertIsInstance(calendar, CFCalendarRef)
 
         success, at = CFCalendarComposeAbsoluteTime(
-                calendar, None, "yMdHms", 1965, 1, 6, 14, 10, 0)
+                calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
         self.assert_(isinstance(at, float))
 
         success, at2 = CFCalendarAddComponents(
-                calendar, at, 0, "yH", 2, 3)
+                calendar, at, 0, b"yH", 2, 3)
         self.assertEqual(success, True)
         self.assert_(isinstance(at2, float))
 
         success, y, H = CFCalendarGetComponentDifference(
-                calendar, at, at2, 0, "yH")
+                calendar, at, at2, 0, b"yH")
         self.assertEqual(success, True)
         self.assertEqual(y, 2)
         self.assertEqual(H, 3)
@@ -49,12 +49,12 @@ class TestCFCalendarVariadic (TestCase):
         self.assert_(calendar is not None)
 
         success, at = CFCalendarComposeAbsoluteTime(
-                calendar, None, "yMdHms", 1965, 1, 6, 14, 10, 0)
+                calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
         self.assert_(isinstance(at, float))
 
         success, y, M, d, H, m, s = CFCalendarDecomposeAbsoluteTime(
-                calendar, at, "yMdHms")
+                calendar, at, b"yMdHms")
         self.assertEqual(y, 1965)
         self.assertEqual(M, 1)
         self.assertEqual(d, 6)
@@ -68,17 +68,17 @@ class TestCFCalendarVariadic (TestCase):
         self.assert_(calendar is not None)
 
         success, at1 = CFCalendarComposeAbsoluteTime(
-                calendar, None, "yMdHms", 1965, 1, 6, 14, 10, 0)
+                calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0)
         self.assertEqual(success, True)
         self.assert_(isinstance(at1, float))
 
         success, at2 = CFCalendarComposeAbsoluteTime(
-                calendar, None, "yMdHms", 1967, 2, 6, 14, 10, 0)
+                calendar, None, b"yMdHms", 1967, 2, 6, 14, 10, 0)
         self.assertEqual(success, True)
         self.assert_(isinstance(at2, float))
 
         success, y, M = CFCalendarGetComponentDifference(
-                calendar, at1, at2, 0, "yM")
+                calendar, at1, at2, 0, b"yM")
         self.assertEqual(success, True)
         self.assertEqual(y, 2)
         self.assertEqual(M, 1)
@@ -86,11 +86,13 @@ class TestCFCalendarVariadic (TestCase):
     def testTypeID(self):
         v = CFCalendarGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCreation(self):
         cal = CFCalendarCopyCurrent()
         self.assertIsInstance(cal, CFCalendarRef)
         cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
         self.assertIsInstance(cal, CFCalendarRef)
+
     def testInspection(self):
         cal = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
         self.assertIsInstance(cal, CFCalendarRef)
@@ -133,6 +135,7 @@ class TestCFCalendarVariadic (TestCase):
         self.assertIsInstance(startp, float)
         self.assertIsInstance(tip, float)
         self.assertEqual(tip , 86400.0)
+
     def testMutation(self):
         cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
 
@@ -172,6 +175,7 @@ class TestCFCalendarVariadic (TestCase):
         CFCalendarSetMinimumDaysInFirstWeek(cal, num)
         num2 = CFCalendarGetMinimumDaysInFirstWeek(cal)
         self.assertEqual(num2 , num)
+
     def testConstants(self):
         self.assertEqual(kCFCalendarUnitEra , (1 << 1) )
         self.assertEqual(kCFCalendarUnitYear , (1 << 2) )
@@ -184,6 +188,7 @@ class TestCFCalendarVariadic (TestCase):
         self.assertEqual(kCFCalendarUnitWeekday , (1 << 9) )
         self.assertEqual(kCFCalendarUnitWeekdayOrdinal , (1 << 10) )
         self.assertEqual(kCFCalendarComponentsWrap , (1 << 0) )
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(kCFCalendarUnitQuarter, 1<<11)

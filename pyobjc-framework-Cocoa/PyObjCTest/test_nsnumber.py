@@ -63,11 +63,11 @@ class TestNSNumber( TestCase ):
         # NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
         if sdkForPython() < (10, 5):
-		self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
-			    -(2**31))
-	else:
-		self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
-			    (2**31))
+            self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
+                -(2**31))
+        else:
+            self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
+                (2**31))
 
     def testMethods(self):
         v = NSNumber.numberWithUnsignedInt_(2**31)
@@ -177,7 +177,7 @@ if objc.platform == 'MACOSX':
             self.assertEqual(d.writeToFile_atomically_(
                 u"/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open(u'/tmp/pyobjctest.plist', 'ru')
+            fd = open(u'/tmp/pyobjctest.plist', 'rb')
             data = fd.read().decode('utf8')
             fd.close()
 
@@ -192,7 +192,7 @@ if objc.platform == 'MACOSX':
             self.assertEqual(d.writeToFile_atomically_(
                 u"/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open(u'/tmp/pyobjctest.plist', 'ru')
+            fd = open(u'/tmp/pyobjctest.plist', 'rb')
             data = fd.read().decode('utf8')
             fd.close()
 
@@ -200,6 +200,7 @@ if objc.platform == 'MACOSX':
 
 class TestDecimalNumber (TestCase):
     def testProxy (self):
+        self.fail("fixme")
         one = NSDecimalNumber.decimalNumberWithString_(u"1.00")
         self.assert_(isinstance(one, NSDecimalNumber))
 

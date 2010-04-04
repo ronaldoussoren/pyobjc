@@ -7,7 +7,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 	PyObject* result;
 	struct objc_super super;
 	NSTIFFCompression* list;
-	int numTypes;
+	NSInteger numTypes;
 
 	if  (!PyArg_ParseTuple(arguments, "OO", &a1, &a2)) {
 		return NULL;
@@ -27,7 +27,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 			PyObjCSelector_GetClass(method),
 			PyObjCClass_GetClass(self));
 
-		(void)objc_msgSendSuper(&super,
+		((void(*)(struct objc_super*, SEL, NSTIFFCompression**, NSInteger*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
 				&list, &numTypes);
 	PyObjC_HANDLER
@@ -162,7 +162,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 	struct objc_super super;
 
 	// check for five well defined read buffers in data planes argument
-	if (!PyArg_ParseTuple(arguments, "(z#z#z#z#z#)iiiibbsii",
+	if (!PyArg_ParseTuple(arguments, "("Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#)iiiibbsii",
 		&dataPlanes[0], &garbage,
 		&dataPlanes[1], &garbage,
 		&dataPlanes[2], &garbage,
@@ -258,9 +258,9 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		(void)objc_msgSendSuper(&super, 
+		((void(*)(struct objc_super*, SEL, unsigned char***))objc_msgSendSuper)(&super, 
 			PyObjCSelector_GetSelector(method),
-			&dataPlanes);
+			(unsigned char***)&dataPlanes);
 
 		bytesPerPlane = [
 			(NSBitmapImageRep*)PyObjCObject_GetObject(self) 
@@ -278,7 +278,16 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 	if (result != NULL) {
 		for(i=0; i<5; i++) {
 			if (dataPlanes[i]) {
+#if PY_VERSION_HEX <= 0x02069900
 				PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
+#else
+				Py_buffer info;
+				if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 1, PyBUF_FULL) < 0) {
+					return NULL;
+				}
+				PyObject* buffer = PyMemoryView_FromBuffer(&info);
+#endif
+
 				if ( (!buffer) || PyErr_Occurred()) {
 					Py_DECREF(result);
 					result = NULL;
@@ -331,8 +340,17 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 		return NULL;
 	}
 
+#if  PY_VERSION_HEX <= 0x02069900
 	result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
-	if (PyErr_Occurred()) {
+#else
+	Py_buffer info;
+	if (PyBuffer_FillInfo(&info, self, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
+		return NULL;
+	}
+	result = PyMemoryView_FromBuffer(&info);
+
+#endif
+	if (result == NULL) {
 		if (result) {
 			Py_DECREF(result);
 		}

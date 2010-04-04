@@ -1,5 +1,5 @@
 
-#ifndef __LP64__
+#if !defined(__LP64__) && PY_MAJOR_VERSION == 2
 	/* Quickdraw only exists in 32-bit mode. We do define a dummy 
 	 * init function to avoid breaking the Python module.
 	 */
@@ -25,7 +25,7 @@ call_NSQuickDrawView_qdport(
 			PyObjCObject_GetObject(self));
 
 
-		port = objc_msgSendSuper(&super,
+		port = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method));
 
 	PyObjC_HANDLER
@@ -99,7 +99,7 @@ error:
 
 static int setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
 {
-#ifndef __LP64__
+#if !defined(__LP64__) && PY_MAJOR_VERSION == 2
 	Class classNSQuickDrawView = objc_lookUpClass("NSQuickDrawView");
 	if (classNSQuickDrawView == NULL) {
 		return 0;

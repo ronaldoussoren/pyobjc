@@ -130,8 +130,8 @@ class TestNSApplication (TestCase):
         self.assertResultIsBOOL(NSApplication.isRunning)
         self.assertArgIsBOOL(NSApplication.activateIgnoringOtherApps_, 0)
 
-        self.assertArgIsSEL(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, 'v@:@' + objc._C_NSInteger + '^v')
-        self.assertArgHasType(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 4, '^v')
+        self.assertArgIsSEL(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 4, b'^v')
 
 
         self.assertArgIsBOOL(NSApplication.postEvent_atStart_, 1)

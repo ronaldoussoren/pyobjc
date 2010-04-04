@@ -5,10 +5,10 @@ from AppKit import *
 class TestNSStatusItem (TestCase):
     def testMethods(self):
         m = NSStatusItem.setAction_.__metadata__()
-        self.assertEqual(m['arguments'][2]['sel_of_type'], 'v@:@')
+        self.assertEqual(m['arguments'][2]['sel_of_type'], b'v@:@')
 
         m = NSStatusItem.setDoubleAction_.__metadata__()
-        self.assertEqual(m['arguments'][2]['sel_of_type'], 'v@:@')
+        self.assertEqual(m['arguments'][2]['sel_of_type'], b'v@:@')
 
         self.assertResultIsBOOL(NSStatusItem.isEnabled)
         self.assertArgIsBOOL(NSStatusItem.setEnabled_, 0)

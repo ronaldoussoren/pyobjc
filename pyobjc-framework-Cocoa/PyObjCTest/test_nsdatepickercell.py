@@ -24,8 +24,8 @@ class TestNSDatePickerCell (TestCase):
     def testMethods(self):
         o = TestNSDatePickerHelper.alloc().init()
         m = o.datePickerCell_validateProposedDateValue_timeInterval_.__metadata__()
-        self.assertEqual(m['arguments'][3]['type'], 'N^@')
-        self.assertStartswith(m['arguments'][4]['type'], 'N^')
+        self.assertEqual(m['arguments'][3]['type'], b'N^@')
+        self.assertStartswith(m['arguments'][4]['type'], b'N^')
 
         self.assertResultIsBOOL(NSDatePickerCell.drawsBackground)
         self.assertArgIsBOOL(NSDatePickerCell.setDrawsBackground_, 0)

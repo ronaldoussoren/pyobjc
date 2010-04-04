@@ -13,7 +13,7 @@ class TestURL (TestCase):
         self.assertIsInstance(val, (int, long))
 
     def testCreateWithBytes(self):
-        url = "http://www.omroep.nl/"
+        url = b"http://www.omroep.nl/"
 
         ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
         self.assertIsInstance(ref, CFURLRef)
@@ -24,7 +24,7 @@ class TestURL (TestCase):
         ref2 = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, ref)
         self.assertIsInstance(ref2, CFURLRef)
 
-        a = array.array('c', 'http://www.nu.nl/')
+        a = array.array('b', b'http://www.nu.nl/')
         ref3 = CFURLCreateWithBytes(None, a, len(a), kCFStringEncodingUTF8, None)
         self.assertIsInstance(ref3, CFURLRef)
 
@@ -32,7 +32,7 @@ class TestURL (TestCase):
         self.assertRaises((ValueError, TypeError), CFURLCreateWithBytes, None, unicode(url), len(url), kCFStringEncodingUTF8, None)
 
     def testCreateData(self):
-        url = "http://www.omroep.nl/ blank"
+        url = b"http://www.omroep.nl/ blank"
 
         ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
         self.assertIsInstance(ref, CFURLRef)
@@ -40,12 +40,12 @@ class TestURL (TestCase):
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, False)
         self.assertIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
-        self.assertEqual(val, url.replace(' ', '%20'))
+        self.assertEqual(val, url.replace(b' ', b'%20'))
 
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, True)
         self.assertIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
-        self.assertEqual(val, url.replace(' ', '%20'))
+        self.assertEqual(val, url.replace(b' ', b'%20'))
 
     def testCreateWithString(self):
         url = u"http://www.omroep.nl/"
@@ -63,21 +63,21 @@ class TestURL (TestCase):
         url = u"http://www.omroep.nl/sport/"
         baseref = CFURLCreateWithString(None, url, None)
 
-        self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, 'n^v')
+        self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, b'n^v')
         self.assertArgSizeInArg(CFURLCreateAbsoluteURLWithBytes, 1, 2)
-        ref = CFURLCreateAbsoluteURLWithBytes(None, "socker", len("socker"), kCFStringEncodingUTF8, baseref, True)
+        ref = CFURLCreateAbsoluteURLWithBytes(None, b"socker", len(b"socker"), kCFStringEncodingUTF8, baseref, True)
         self.assertIsInstance(ref, CFURLRef)
 
         strval =  CFURLGetString(ref)
         self.assertEqual(strval, u"http://www.omroep.nl/sport/socker")
 
-        relpath = "../../../dummy"
+        relpath = b"../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True)
         self.assertIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
         self.assertEqual(strval, u"http://www.omroep.nl/dummy")
 
-        relpath = "../../../dummy"
+        relpath = b"../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False)
         self.assertIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
@@ -108,7 +108,8 @@ class TestURL (TestCase):
         self.assertFalse(CFURLHasDirectoryPath(url))
 
         p = os.path.expanduser('~')
-        self.assertArgHasType(CFURLCreateFromFileSystemRepresentation, 1, 'n^t')
+        p = p.encode('utf-8')
+        self.assertArgHasType(CFURLCreateFromFileSystemRepresentation, 1, b'n^t')
         self.assertArgIsNullTerminated(CFURLCreateFromFileSystemRepresentation, 1)
         url = CFURLCreateFromFileSystemRepresentation(None,
                 p, len(p), True)
@@ -132,7 +133,7 @@ class TestURL (TestCase):
 
         self.assertArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
         url = CFURLCreateFromFileSystemRepresentationRelativeToBase(None,
-                "filename2", 9, False, base)
+                b"filename2", 9, False, base)
         self.assertIsInstance(url, CFURLRef)
         strval =  CFURLGetString(url)
         self.assertEqual(strval, u"filename2")
@@ -141,7 +142,7 @@ class TestURL (TestCase):
         self.assertTrue(ok)
 
         # Unfortunately metadata doesn't allow describing what we actually need
-        if '\0' in strval:
+        if b'\0' in strval:
             strval = strval[:strval.index('\0')]
         self.assertEqual(strval, u"/tmp/filename2")
 
@@ -211,7 +212,7 @@ class TestURL (TestCase):
         cnt, bytes = CFURLGetBytes(ref, None, 100)
         self.assertEqual(cnt, 62)
         self.assertEqual(bytes, 
-                "https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor")
+                b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor")
 
         cnt, bytes = CFURLGetBytes(ref, objc.NULL, 0)
         self.assertEqual(cnt, 62)
@@ -404,8 +405,8 @@ class TestURL (TestCase):
             self.assertIsInstance(n, CFDataRef)
             self.assertIsObject(err, None)
             self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromAliasRecord)
-            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 0, '^{__CFAllocator=}')
-            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 1, '^{__CFData=}')
+            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 0, b'^{__CFAllocator=}')
+            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 1, b'^{__CFData=}')
 
         finally:
             os.unlink('/tmp/pyobjc.test')

@@ -11,7 +11,7 @@ class TestNSExceptionInteraction(TestCase):
 
     def testFormat(self):
         try:
-            NSException.raise_format_('ExceptionName', 'Format: %s %d', 'hello', 42)
+            NSException.raise_format_('ExceptionName', 'Format: %s %d', b'hello', 42)
 
         except TypeError:
             raise

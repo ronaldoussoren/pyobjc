@@ -14,7 +14,7 @@ class TestNSInputManagerHelper (NSObject):
 
 class TestNSInputManager (TestCase):
     def testProtocols(self):
-        self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, 'v@:@')
+        self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, b'v@:@')
         self.assertArgHasType(TestNSInputManagerHelper.setMarkedText_selectedRange_, 1, NSRange.__typestr__)
         self.assertResultIsBOOL(TestNSInputManagerHelper.hasMarkedText)
         self.assertResultHasType(TestNSInputManagerHelper.markedRange, NSRange.__typestr__)

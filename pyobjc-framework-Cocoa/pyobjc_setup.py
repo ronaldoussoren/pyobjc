@@ -7,8 +7,60 @@ to all framework wrappers.
 
 __all__ = ('setup', 'Extension', 'Command')
 
-import ez_setup
-ez_setup.use_setuptools()
+import sys
+if sys.version_info[:2] < (3, 0):
+    import ez_setup
+    ez_setup.use_setuptools()
+
+    from setuptools.command.test import test as oc_test
+    from setuptools.command.build_py import build_py as oc_build_py
+
+    extra_args = {}
+
+
+else:
+    import distribute_setup
+    distribute_setup.use_setuptools()
+
+    from setuptools.command import test
+    from setuptools.command import build_py
+
+    from distutils import log
+
+    extra_args=dict(
+        use_2to3 = True,
+    )
+
+
+    class oc_build_py (build_py.build_py):
+        def build_packages(self):
+            log.info("Overriding build_packages to copy PyObjCTest")
+            p = self.packages
+            self.packages = list(self.packages) + ['PyObjCTest']
+            try:
+                build_py.build_py.build_packages(self)
+            finally:
+                self.packages = p
+
+
+
+    class oc_test (test.test):
+        def run_tests(self):
+            import sys, os
+
+            rootdir =  os.path.dirname(os.path.abspath(__file__))
+            if rootdir in sys.path:
+                sys.path.remove(rootdir)
+
+            import PyObjCTest
+            import unittest
+            from pkg_resources import EntryPoint
+            loader_ep = EntryPoint.parse("x="+self.test_loader)
+            loader_class = loader_ep.load(require=False)
+
+            unittest.main(None, None, [unittest.__file__]+self.test_args, testLoader=loader_class())
+
+
 
 from setuptools import setup as _setup, Extension as _Extension, Command
 from distutils.errors import DistutilsPlatformError
@@ -107,6 +159,10 @@ def setup(
         cmdclass=None,
         **kwds):
 
+
+    k = kwds.copy()
+    k.update(extra_args)
+
     os_level = get_os_level()
     os_compatible = True
     if sys.platform != 'darwin':
@@ -145,12 +201,17 @@ def setup(
             return subcommand
 
         cmdclass['build'] = create_command_subclass(build.build)
-        cmdclass['test'] = create_command_subclass(test.test)
+        cmdclass['test'] = create_command_subclass(oc_test)
         cmdclass['install'] = create_command_subclass(install.install)
         cmdclass['develop'] = create_command_subclass(develop.develop)
+        cmdclass['build_py'] = create_command_subclass(oc_build_py)
     else:
         cmdclass['build_ext'] = pyobjc_build_ext
         cmdclass['install_lib'] = pyobjc_install_lib
+        cmdclass['test'] = oc_test
+        cmdclass['build_py'] = oc_build_py
+
+
 
     _setup(
         cmdclass=cmdclass, 
@@ -164,7 +225,7 @@ def setup(
         package_data = { '': ['*.bridgesupport'] },
         test_suite='PyObjCTest',
         zip_safe = True,
-        **kwds
+        **k
     ) 
 
 

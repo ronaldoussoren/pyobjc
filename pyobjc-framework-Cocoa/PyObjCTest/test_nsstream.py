@@ -62,13 +62,13 @@ class TestNSStreamUsage(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSStream.setProperty_forKey_)
 
-        self.assertArgHasType(NSInputStream.read_maxLength_, 0, 'o^v')
+        self.assertArgHasType(NSInputStream.read_maxLength_, 0, b'o^v')
         self.assertArgSizeInArg(NSInputStream.read_maxLength_, 0, 1)
         self.assertArgSizeInResult(NSInputStream.read_maxLength_, 0)
 
         self.assertResultIsBOOL(NSInputStream.hasBytesAvailable)
 
-        self.assertArgHasType(NSOutputStream.write_maxLength_, 0, 'n^v')
+        self.assertArgHasType(NSOutputStream.write_maxLength_, 0, b'n^v')
         self.assertArgSizeInArg(NSOutputStream.write_maxLength_, 0, 1)
         self.assertResultIsBOOL(NSOutputStream.hasSpaceAvailable)
 
@@ -76,9 +76,9 @@ class TestNSStreamUsage(TestCase):
         self.assertArgHasType(b.initToFileAtPath_append_, 1, objc._C_NSBOOL)
         self.assertArgHasType(NSOutputStream.outputStreamToFileAtPath_append_, 1, objc._C_NSBOOL)
 
-        self.assertArgHasType(b.initToBuffer_capacity_, 0, 'o^v')
+        self.assertArgHasType(b.initToBuffer_capacity_, 0, b'o^v')
         self.assertArgSizeInArg(b.initToBuffer_capacity_, 0, 1)
-        self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, 'o^v')
+        self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, b'o^v')
         self.assertArgSizeInArg(NSOutputStream.outputStreamToBuffer_capacity_, 0, 1)
 
     def testDelegate(self):

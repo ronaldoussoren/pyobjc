@@ -18,8 +18,8 @@ class TestNSMenu (TestCase):
         self.assertArgHasType(TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_, 2, objc._C_NSInteger)
         self.assertArgIsBOOL(TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_, 3)
         self.assertResultIsBOOL(TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_)
-        self.assertArgHasType(TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 2, 'o^@')
-        self.assertArgHasType(TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 3, 'o^:')
+        self.assertArgHasType(TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 2, b'o^@')
+        self.assertArgHasType(TestNSMenuHelper.menuHasKeyEquivalent_forEvent_target_action_, 3, b'o^:')
 
     def testMethods(self):
         self.assertResultIsBOOL(NSMenu.menuBarVisible)

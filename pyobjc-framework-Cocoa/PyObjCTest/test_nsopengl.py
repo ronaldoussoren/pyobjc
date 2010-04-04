@@ -83,16 +83,16 @@ class TestNSOpenGL (TestCase):
         self.assertIsInstance(v, (int, long))
 
         self.assertResultHasType(NSOpenGLPixelFormat.CGLPixelFormatObj, 
-                '^{_CGLPixelFormatObject}')
+                b'^{_CGLPixelFormatObject}')
 
         self.assertResultHasType(NSOpenGLContext.CGLContextObj, 
-                '^{_CGLContextObj}')
+                b'^{_CGLContextObj}')
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, '^{_CGLPixelFormatObject}')
-        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLBufferObj, 0, '^{_CGLBufferObject}')
-        self.assertResultHasType(NSOpenGLPixelFormat.CGLBufferObj, '^{_CGLBufferObject}')
+        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLPixelFormatObj_, 0, b'^{_CGLPixelFormatObject}')
+        self.assertArgHasType(NSOpenGLPixelFormat.initWithCGLBufferObj, 0, b'^{_CGLBufferObject}')
+        self.assertResultHasType(NSOpenGLPixelFormat.CGLBufferObj, b'^{_CGLBufferObject}')
 
     @min_os_level('10.6')
     def testMethods10_6(self):

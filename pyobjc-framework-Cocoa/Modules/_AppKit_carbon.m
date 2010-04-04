@@ -3,6 +3,8 @@
  * used in AppKit and wrapped in the python core).
  */
 
+#if PY_MAJOR_VERSION == 2
+
 #ifndef __LP64__
 
 #include "pymactoolbox.h"
@@ -29,11 +31,15 @@ window2py(void* value)
 	return WinObj_New((WindowPtr)value);
 }
 
+#endif /* PY_MAJOR_VERSION == 2 */
+
 static int setup_carbon(PyObject* m __attribute__((__unused__)))
 {
+#if PY_MAJOR_VERSION == 2
 	if (PyObjCPointerWrapper_Register(@encode(WindowRef),
 	                &window2py, &py2window) < 0)
 		return -1;
+#endif
 
 	return 0;
 }

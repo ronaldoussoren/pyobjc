@@ -67,9 +67,9 @@ class TestNSATSTypesetter (TestCase):
 
         o = TestNSATSTypesetterHelper.alloc().init()
         m = o.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_.__metadata__()
-        self.assertStartswith(m['arguments'][2]['type'], 'N^{')
-        self.assertStartswith(m['arguments'][4]['type'], 'N^{')
-        self.assertStartswith(m['arguments'][5]['type'], 'N^' + objc._C_CGFloat)
+        self.assertStartswith(m['arguments'][2]['type'], b'N^{')
+        self.assertStartswith(m['arguments'][4]['type'], b'N^{')
+        self.assertStartswith(m['arguments'][5]['type'], b'N^' + objc._C_CGFloat)
         
         m = o.shouldBreakLineByWordBeforeCharacterAtIndex_.__metadata__()
         self.assertEqual(m['retval']['type'], objc._C_NSBOOL)
@@ -103,9 +103,9 @@ class TestNSATSTypesetter (TestCase):
         #self.assertStartswith(m['arguments'][3]['type'], 'o^{')
 
         m = o.glyphRangeForCharacterRange_actualCharacterRange_.__metadata__()
-        self.assertStartswith(m['retval']['type'], '{')
-        self.assertStartswith(m['arguments'][2]['type'], '{')
-        self.assertStartswith(m['arguments'][3]['type'], 'o^{')
+        self.assertStartswith(m['retval']['type'], b'{')
+        self.assertStartswith(m['arguments'][2]['type'], b'{')
+        self.assertStartswith(m['arguments'][3]['type'], b'o^{')
 
         #m = o.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_.__metadata__()
         #self.assertEqual(m['retval']['type'], objc._C_NSUInteger)

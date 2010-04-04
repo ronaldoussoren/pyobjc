@@ -32,13 +32,13 @@ class TestNSString(TestCase):
         
         self.assertEqual(v, u"hello world")
 
-        x = v.getCString_maxLength_(16)
-        self.assertEqual(x, u"hello world")
+        x = v.getCString_maxLength_(None, 16)
+        self.assertEqual(x, b"hello world")
 
-        self.assertRaises(objc.error, v.getCString_maxLength_, 4)
+        self.assertRaises(objc.error, v.getCString_maxLength_, None, 4)
 
-        x, l = v.getCString_maxLength_range_remainingRange_(4, (1, 4))
-        self.assertEqual(x, "ello")
+        x, l = v.getCString_maxLength_range_remainingRange_(None, 4, (1, 4), None)
+        self.assertEqual(x, b"ello")
         self.assertEqual(l.location, 5)
         self.assertEqual(l.length, 0)
 
@@ -58,6 +58,7 @@ class TestNSStringBridging(TestCase):
         self.assert_(isinstance(self.nsUniString, unicode))
         self.assert_(isinstance(self.pyUniString, unicode))
 
+    @onlyPython2
     def testStrConversion(self):
         curEnabledFlag = objc.getStrBridgeEnabled()
         objc.setStrBridgeEnabled(True)
@@ -160,24 +161,24 @@ class TestPickle(TestCase):
         d = v.stringByAppendingFormat_(u"hello")
         self.assertEqual(d, v + u'hello')
 
-        d = v.stringByAppendingFormat_(u"hello %s %d", "world", 101)
+        d = v.stringByAppendingFormat_(u"hello %s %d", b"world", 101)
         self.assertEqual(d, v + u'hello world 101')
 
-        v = NSString.alloc().initWithFormat_("%s %d %s", "a", 44, "cc")
+        v = NSString.alloc().initWithFormat_("%s %d %s", b"a", 44, b"cc")
         self.assertEqual(v, "a 44 cc")
 
-        v = NSString.alloc().initWithFormat_locale_("%s %d %s", None, "a", 44, "cc")
+        v = NSString.alloc().initWithFormat_locale_("%s %d %s", None, b"a", 44, b"cc")
         self.assertEqual(v, "a 44 cc")
 
-        v = NSString.stringWithFormat_("aap %s mies", "noot")
+        v = NSString.stringWithFormat_("aap %s mies", b"noot")
         self.assertEqual(v, "aap noot mies")
 
-        v = NSString.localizedStringWithFormat_("aap %s mies", "noot")
+        v = NSString.localizedStringWithFormat_("aap %s mies", b"noot")
         self.assertEqual(v, "aap noot mies")
 
 
         v = NSMutableString.stringWithString_("hello")
-        v.appendFormat_(" bar %s", "baz")
+        v.appendFormat_(" bar %s", b"baz")
         self.assertEqual(v.nsstring(), "hello bar baz")
 
 
@@ -226,7 +227,7 @@ class TestPickle(TestCase):
         self.assertEqual(NSStringEncodingConversionExternalRepresentation, 2)
 
     def testMethods(self):
-        self.assertArgHasType(NSString.getCharacters_range_, 0, 'o^' + objc._C_UNICHAR)
+        self.assertArgHasType(NSString.getCharacters_range_, 0, b'o^' + objc._C_UNICHAR)
         self.assertArgSizeInArg(NSString.getCharacters_range_, 0, 1)
 
         self.assertResultIsBOOL(NSString.isEqualToString_)
@@ -242,27 +243,27 @@ class TestPickle(TestCase):
         self.assertArgIsBOOL(NSString.dataUsingEncoding_allowLossyConversion_, 1)
         self.assertResultIsBOOL(NSString.canBeConvertedToEncoding_)
         self.assertResultIsNullTerminated(NSString.cStringUsingEncoding_)
-        self.assertResultHasType(NSString.cStringUsingEncoding_, '^v')
+        self.assertResultHasType(NSString.cStringUsingEncoding_, b'^v')
         self.assertResultIsBOOL(NSString.getCString_maxLength_encoding_)
-        self.assertArgHasType(NSString.getCString_maxLength_encoding_, 0, 'o^v')
+        self.assertArgHasType(NSString.getCString_maxLength_encoding_, 0, b'o^v')
         self.assertArgSizeInArg(NSString.getCString_maxLength_encoding_, 0, 1)
 
         self.assertResultIsBOOL(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_)
-        self.assertArgHasType(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_, 0, 'o^v')
+        self.assertArgHasType(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_, 0, b'o^v')
         self.assertArgSizeInArg(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_, 0, (1,2))
         self.assertArgIsOut(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_, 2)
         self.assertArgIsOut(NSString.getBytes_maxLength_usedLength_encoding_options_range_remainingRange_, 6)
 
-        self.assertResultHasType(NSString.UTF8String, '^' + objc._C_CHAR_AS_TEXT)
+        self.assertResultHasType(NSString.UTF8String, b'^' + objc._C_CHAR_AS_TEXT)
         self.assertResultIsNullTerminated(NSString.UTF8String)
         self.assertResultIsNullTerminated(NSString.availableStringEncodings)
 
-        self.assertArgHasType(NSString.initWithCharactersNoCopy_length_freeWhenDone_, 0, 'n^' + objc._C_UNICHAR)
+        self.assertArgHasType(NSString.initWithCharactersNoCopy_length_freeWhenDone_, 0, b'n^' + objc._C_UNICHAR)
         self.assertArgSizeInArg(NSString.initWithCharactersNoCopy_length_freeWhenDone_, 0, 1)
         self.assertArgIsBOOL(NSString.initWithCharactersNoCopy_length_freeWhenDone_, 2)
-        self.assertArgHasType(NSString.initWithCharacters_length_, 0, 'n^' + objc._C_UNICHAR)
+        self.assertArgHasType(NSString.initWithCharacters_length_, 0, b'n^' + objc._C_UNICHAR)
         self.assertArgSizeInArg(NSString.initWithCharacters_length_, 0, 1)
-        self.assertArgHasType(NSString.initWithUTF8String_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(NSString.initWithUTF8String_, 0, b'n^' + objc._C_CHAR_AS_TEXT)
         self.assertArgIsNullTerminated(NSString.initWithUTF8String_, 0)
         self.assertArgIsPrintf(NSString.initWithFormat_, 0)
         self.assertArgIsPrintf(NSString.initWithFormat_locale_, 0)
@@ -275,16 +276,16 @@ class TestPickle(TestCase):
         self.assertArgSizeInArg(NSString.initWithBytesNoCopy_length_encoding_freeWhenDone_, 0, 1)
         self.assertArgIsBOOL(NSString.initWithBytesNoCopy_length_encoding_freeWhenDone_, 3)
 
-        self.assertArgHasType(NSString.stringWithCharacters_length_, 0, 'n^' + objc._C_UNICHAR)
+        self.assertArgHasType(NSString.stringWithCharacters_length_, 0, b'n^' + objc._C_UNICHAR)
         self.assertArgSizeInArg(NSString.stringWithCharacters_length_, 0, 1)
-        self.assertArgHasType(NSString.stringWithUTF8String_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(NSString.stringWithUTF8String_, 0, b'n^' + objc._C_CHAR_AS_TEXT)
         self.assertArgIsNullTerminated(NSString.stringWithUTF8String_, 0)
         self.assertArgIsPrintf(NSString.stringWithFormat_, 0)
         self.assertArgIsPrintf(NSString.localizedStringWithFormat_, 0)
 
-        self.assertArgHasType(NSString.initWithCString_encoding_, 0, 'n^t')
+        self.assertArgHasType(NSString.initWithCString_encoding_, 0, b'n^t')
         self.assertArgIsNullTerminated(NSString.initWithCString_encoding_, 0)
-        self.assertArgHasType(NSString.stringWithCString_encoding_, 0, 'n^t')
+        self.assertArgHasType(NSString.stringWithCString_encoding_, 0, b'n^t')
         self.assertArgIsNullTerminated(NSString.stringWithCString_encoding_, 0)
 
         self.assertArgIsOut(NSString.initWithContentsOfURL_encoding_error_, 2)
@@ -310,15 +311,15 @@ class TestPickle(TestCase):
 
         self.assertArgIsPrintf(NSMutableString.appendFormat_, 0)
 
-        self.assertResultHasType(NSString.cString, '^t')
+        self.assertResultHasType(NSString.cString, b'^t')
         self.assertResultIsNullTerminated(NSString.cString)
-        self.assertResultHasType(NSString.lossyCString, '^t')
+        self.assertResultHasType(NSString.lossyCString, b'^t')
         self.assertResultIsNullTerminated(NSString.lossyCString)
 
-        self.assertArgHasType(NSString.getCString_maxLength_, 0, 'o^v')
+        self.assertArgHasType(NSString.getCString_maxLength_, 0, b'o^v')
         self.assertArgSizeInArg(NSString.getCString_maxLength_, 0, 1)
 
-        self.assertArgHasType(NSString.getCString_maxLength_range_remainingRange_, 0, 'o^v')
+        self.assertArgHasType(NSString.getCString_maxLength_range_remainingRange_, 0, b'o^v')
         self.assertArgSizeInArg(NSString.getCString_maxLength_range_remainingRange_, 0, 1)
         self.assertArgIsOut(NSString.getCString_maxLength_range_remainingRange_, 3)
 
@@ -327,17 +328,17 @@ class TestPickle(TestCase):
         self.assertResultIsBOOL(NSString.writeToURL_atomically_)
         self.assertArgIsBOOL(NSString.writeToURL_atomically_, 1)
 
-        self.assertArgHasType(NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, 'n^v')
+        self.assertArgHasType(NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, b'n^v')
         self.assertArgSizeInArg(NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, 1)
         self.assertArgIsBOOL(NSString.initWithCStringNoCopy_length_freeWhenDone_, 2)
-        self.assertArgHasType(NSString.initWithCString_length_, 0, 'n^v')
+        self.assertArgHasType(NSString.initWithCString_length_, 0, b'n^v')
         self.assertArgSizeInArg(NSString.initWithCString_length_, 0, 1)
-        self.assertArgHasType(NSString.initWithCString_, 0, 'n^v')
+        self.assertArgHasType(NSString.initWithCString_, 0, b'n^v')
         self.assertArgIsNullTerminated(NSString.initWithCString_, 0)
 
-        self.assertArgHasType(NSString.stringWithCString_length_, 0, 'n^v')
+        self.assertArgHasType(NSString.stringWithCString_length_, 0, b'n^v')
         self.assertArgSizeInArg(NSString.stringWithCString_length_, 0, 1)
-        self.assertArgHasType(NSString.stringWithCString_, 0, 'n^v')
+        self.assertArgHasType(NSString.stringWithCString_, 0, b'n^v')
         self.assertArgIsNullTerminated(NSString.stringWithCString_, 0)
 
     @min_os_level('10.6')
@@ -355,8 +356,8 @@ class TestPickle(TestCase):
     def testMethods10_6(self):
         self.assertArgHasType(NSString.enumerateSubstringsInRange_options_usingBlock_, 0, 
                 NSRange.__typestr__)
-        self.assertArgIsBlock(NSString.enumerateSubstringsInRange_options_usingBlock_, 2, 'v@'+NSRange.__typestr__+NSRange.__typestr__+'o^'+objc._C_NSBOOL)
-        self.assertArgIsBlock(NSString.enumerateLinesUsingBlock_, 0, 'v@o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSString.enumerateSubstringsInRange_options_usingBlock_, 2, b'v@'+NSRange.__typestr__+NSRange.__typestr__+b'o^'+objc._C_NSBOOL)
+        self.assertArgIsBlock(NSString.enumerateLinesUsingBlock_, 0, b'v@o^'+objc._C_NSBOOL)
 
     
 

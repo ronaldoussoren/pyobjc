@@ -59,7 +59,7 @@ class TestNSLayoutManager (TestCase):
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 2, 0)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 3)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 3, 0)
-        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 4, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 4, b'o^' + objc._C_NSBOOL)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_, 4, 0)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 1)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 1, 0)
@@ -67,18 +67,18 @@ class TestNSLayoutManager (TestCase):
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 2, 0)
         self.assertArgIsOut(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 3)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 3, 0)
-        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 4, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 4, b'o^' + objc._C_NSBOOL)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 4, 0)
-        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 5, 'o^' + objc._C_UCHR)
+        self.assertArgHasType(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 5, b'o^' + objc._C_UCHR)
         self.assertArgSizeInArg(NSLayoutManager.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_, 5, 0)
-        self.assertArgHasType(NSLayoutManager.showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment_, 0, 'n^v')
+        self.assertArgHasType(NSLayoutManager.showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment_, 0, b'n^v')
         self.assertArgSizeInArg(NSLayoutManager.showPackedGlyphs_length_glyphRange_atPoint_font_color_printingAdjustment_, 0, 1)
 
 
     @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsOut(NSLayoutManager.invalidateGlyphsForCharacterRange_changeInLength_actualCharacterRange_, 2)
-        self.assertArgHasType(NSLayoutManager.glyphAtIndex_isValidIndex_, 1, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSLayoutManager.glyphAtIndex_isValidIndex_, 1, b'o^' + objc._C_NSBOOL)
 
         self.assertArgIsIn(NSLayoutManager.setLocations_startingGlyphIndexes_count_forGlyphRange_, 0)
         self.assertArgSizeInArg(NSLayoutManager.setLocations_startingGlyphIndexes_count_forGlyphRange_, 0, 2)
@@ -91,7 +91,7 @@ class TestNSLayoutManager (TestCase):
 
         self.assertArgIsBOOL(TestNSLayoutManagerHelper.layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_, 2)
         self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_, 3, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_, 4, 'o^' + NSRange.__typestr__)
+        self.assertArgHasType(TestNSLayoutManagerHelper.layoutManager_shouldUseTemporaryAttributes_forDrawingToScreen_atCharacterIndex_effectiveRange_, 4, b'o^' + NSRange.__typestr__)
 
         self.assertArgIsBOOL(TestNSLayoutManagerHelper.layoutManager_didCompleteLayoutForTextContainer_atEnd_, 2)
 
@@ -112,7 +112,7 @@ class TestNSLayoutManager (TestCase):
         self.assertArgIsOut(NSLayoutManager.characterIndexForPoint_inTextContainer_fractionOfDistanceBetweenInsertionPoints_, 2)
 
         self.assertArgHasType(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_,
-                0, 'N^' + NSRect.__typestr__)
+                0, b'N^' + NSRect.__typestr__)
         self.assertArgSizeInArg(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_, 0, 1)
         self.assertArgHasType(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_,
                 2, NSRange.__typestr__)

@@ -69,12 +69,12 @@ mod_CFMessagePortCreateLocal(
 	PyObject* py_name;
 	PyObject* callout;
 	PyObject* info;
-	PyObject* py_shouldFree = Py_None;
+	PyObject* py_shouldFree;
 	CFAllocatorRef allocator;
 	CFStringRef name;
 	Boolean shouldFree;
 
-	if (!PyArg_ParseTuple(args, "OOOO|O", &py_allocator, &py_name, &callout, &info, &py_shouldFree)) {
+	if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &callout, &info, &py_shouldFree)) {
 		return NULL;
 	}
 
@@ -115,7 +115,7 @@ mod_CFMessagePortCreateLocal(
 		return NULL;
 	}
 
-	PyObject* result =  Py_BuildValue("OO",
+	PyObject* result =  Py_BuildValue("NN",
 			PyObjC_ObjCToPython(@encode(CFMachPortRef), &rv),
 			PyBool_FromLong(shouldFree));
 
@@ -132,11 +132,11 @@ mod_CFMessagePortGetContext(
 	PyObject* args)
 {
 	PyObject* py_f;
-	PyObject* py_context = NULL;
+	PyObject* py_context;
 	CFMessagePortRef f;
 	CFMessagePortContext context;
 
-	if (!PyArg_ParseTuple(args, "O|O", &py_f, &py_context)) {
+	if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
 		return NULL;
 	}
 

@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+import sys
 
 
 class TestCharacterSet (TestCase):
@@ -17,8 +18,9 @@ class TestCharacterSet (TestCase):
         self.assertIsInstance(set, CFCharacterSetRef)
         set = CFCharacterSetCreateWithCharactersInString(None, u"abcdefABCDEF0123456789")
         self.assertIsInstance(set, CFCharacterSetRef)
-        bytes = "0123" * (8192/4)
-        bytes = buffer(bytes)
+        bytes = b"0123" * (8192//4)
+        if sys.version_info[0] == 2:
+            bytes = buffer(bytes)
         set = CFCharacterSetCreateWithBitmapRepresentation(None, bytes)
         self.assertIsInstance(set, CFCharacterSetRef)
         set = CFCharacterSetCreateInvertedSet(None, set)

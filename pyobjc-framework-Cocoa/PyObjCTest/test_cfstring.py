@@ -17,13 +17,14 @@ class TestString (TestCase):
         self.assertNotHasAttr(CoreFoundation, 'CFStringGetPascalString')
         self.assertNotHasAttr(CoreFoundation, 'CFStringGetPascalStringPtr')
         self.assertNotHasAttr(CoreFoundation, 'CFStringAppendPascalString')
+
     def testCreation(self):
-        s = CFStringCreateWithCString(None, "hello world", kCFStringEncodingASCII)
+        s = CFStringCreateWithCString(None, b"hello world", kCFStringEncodingASCII)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
         self.assertEqual(s, u"hello world")
 
-        s = CFStringCreateWithBytes(None, "hello world", 5, kCFStringEncodingASCII, False)
+        s = CFStringCreateWithBytes(None, b"hello world", 5, kCFStringEncodingASCII, False)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
         self.assertEqual(s, u"hello")
@@ -34,14 +35,14 @@ class TestString (TestCase):
         self.assertEqual(s, u"HELLO")
 
         # NOTE: the deallocator must be kCFAllocatorNull
-        s = CFStringCreateWithCStringNoCopy(None, "hello world", 
+        s = CFStringCreateWithCStringNoCopy(None, b"hello world", 
                 kCFStringEncodingASCII, kCFAllocatorNull)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
         self.assertEqual(s, u"hello world")
 
         
-        s = CFStringCreateWithBytesNoCopy(None, "hello world", 5, kCFStringEncodingASCII, False, kCFAllocatorNull)
+        s = CFStringCreateWithBytesNoCopy(None, b"hello world", 5, kCFStringEncodingASCII, False, kCFAllocatorNull)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
         self.assertEqual(s, u"hello")
@@ -63,7 +64,7 @@ class TestString (TestCase):
         self.assertEqual(s, u"foo the bar")
 
         s = CFStringCreateWithFormat(None, None, "hello %s = %d",
-                "foo", 52)
+                b"foo", 52)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, u"hello foo = 52")
 
@@ -119,13 +120,13 @@ class TestString (TestCase):
         self.assertTrue(ok)
 
         # Annoyingly metadata cannot represent the exact interface
-        if '\0' in buf:
-            buf = buf[:buf.index('\0')]
-        self.assertEqual(buf, 'sing along')
-        self.assertIsInstance(buf, str)
+        self.assertIsInstance(buf, bytes)
+        if b'\0' in buf:
+            buf = buf[:buf.index(b'\0')]
+        self.assertEqual(buf, b'sing along')
         s = CFStringGetCStringPtr(u"apenootjes", kCFStringEncodingASCII)
         if s is not objc.NULL:
-            self.assertEqual(s, "apenootjes")
+            self.assertEqual(s, b"apenootjes")
             self.assertIsInstance(s, str)
         s = CFStringGetCharactersPtr(u"apenootjes")
         if s is not objc.NULL:
@@ -261,10 +262,10 @@ class TestString (TestCase):
         CFStringAppendCharacters(s, u"hel", 3)
         self.assertEqual(s, u"hel")
 
-        CFStringAppendCString(s, "lo world", kCFStringEncodingUTF8)
+        CFStringAppendCString(s, b"lo world", kCFStringEncodingUTF8)
         self.assertEqual(s, u"hello world")
 
-        CFStringAppendFormat(s, None, ": %s = %d", "x", 99)
+        CFStringAppendFormat(s, None, ": %s = %d", b"x", 99)
         self.assertEqual(s, u"hello world: x = 99")
 
         self.assertNotHasAttr(CoreFoundation, 'CFStringAppendFormatAndArguments')

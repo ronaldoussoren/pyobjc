@@ -110,10 +110,11 @@ class TestNSObjCRuntime (TestCase):
         self.assertEqual(v, 'NSObject')
 
     def testTypeInfo(self):
-        rest, size, align = NSGetSizeAndAlignment("ii", None, None)
-        self.assertEqual(rest, "i")
+        rest, size, align = NSGetSizeAndAlignment(b"ii", None, None)
+        self.assertEqual(rest, b"i")
         self.assertIsInstance(size, (int, long))
         self.assertIsInstance(align, (int, long))
+
     def testMinMax(self):
         self.assertEqual(MAX(1, 2), 2)
         self.assertEqual(MAX("a", "b"), "b")

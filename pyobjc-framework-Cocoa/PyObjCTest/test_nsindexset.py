@@ -17,28 +17,28 @@ class TestNSIndexSet (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsBlock(NSIndexSet.enumerateIndexesUsingBlock_, 0,
-                'v' + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                b'v' + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgIsBlock(NSIndexSet.enumerateIndexesWithOptions_usingBlock_, 1,
-                'v' + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                b'v' + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgHasType(NSIndexSet.enumerateIndexesInRange_options_usingBlock_, 0, NSRange.__typestr__)
         self.assertArgIsBlock(NSIndexSet.enumerateIndexesInRange_options_usingBlock_, 2,
-                'v' + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                b'v' + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSIndexSet.indexPassingTest_, 0, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgIsBlock(NSIndexSet.indexWithOptions_passingTest_, 1, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgHasType(NSIndexSet.indexInRange_options_passingTest_, 0,  NSRange.__typestr__)
         self.assertArgIsBlock(NSIndexSet.indexInRange_options_passingTest_, 2, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
 
         self.assertArgIsBlock(NSIndexSet.indexesPassingTest_, 0, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgIsBlock(NSIndexSet.indexesWithOptions_passingTest_, 1, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
         self.assertArgHasType(NSIndexSet.indexesInRange_options_passingTest_, 0,  NSRange.__typestr__)
         self.assertArgIsBlock(NSIndexSet.indexesInRange_options_passingTest_, 2, 
-                objc._C_NSBOOL + objc._C_NSUInteger + 'o^' + objc._C_NSBOOL)
+                objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
 
 
 if __name__ == "__main__":

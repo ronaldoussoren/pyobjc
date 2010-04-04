@@ -89,45 +89,45 @@ class TestNSFileManager (TestCase):
     def testOutput(self):
         obj = NSFileManager.defaultManager()
         m = obj.setAttributes_ofItemAtPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
 
         m = obj.createDirectoryAtPath_withIntermediateDirectories_attributes_error_.__metadata__()
-        self.assertEqual(m['arguments'][3]['type'] , 'Z')
-        self.assertTrue(m['arguments'][5]['type'].startswith('o^'))
+        self.assertEqual(m['arguments'][3]['type'] , b'Z')
+        self.assertTrue(m['arguments'][5]['type'].startswith(b'o^'))
 
         m = obj.contentsOfDirectoryAtPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         m = obj.subpathsOfDirectoryAtPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         m = obj.attributesOfItemAtPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         m = obj.attributesOfFileSystemForPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         m = obj.createSymbolicLinkAtPath_withDestinationPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
 
         m = obj.destinationOfSymbolicLinkAtPath_error_.__metadata__()
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         m = obj.copyItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m['retval']['type'] , 'Z')
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
+        self.assertEqual(m['retval']['type'] , b'Z')
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
 
         m = obj.moveItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m['retval']['type'] , 'Z')
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
+        self.assertEqual(m['retval']['type'] , b'Z')
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
 
         m = obj.linkItemAtPath_toPath_error_.__metadata__()
-        self.assertEqual(m['retval']['type'] , 'Z')
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
+        self.assertEqual(m['retval']['type'] , b'Z')
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
 
         m = obj.removeItemAtPath_error_.__metadata__()
-        self.assertEqual(m['retval']['type'] , 'Z')
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertEqual(m['retval']['type'] , b'Z')
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
     def testProtocols(self):
         class FileManagerTest1 (NSObject):
@@ -200,7 +200,7 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.removeItemAtPath_error_)
         self.assertArgIsOut(NSFileManager.removeItemAtPath_error_, 1)
 
-        self.assertArgIsBlock(NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_, 3, objc._C_NSBOOL + '@@')
+        self.assertArgIsBlock(NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_, 3, objc._C_NSBOOL + b'@@')
 
         self.assertResultIsBOOL(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_)
         self.assertArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 4)
@@ -218,16 +218,16 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.changeCurrentDirectoryPath_)
         self.assertResultIsBOOL(NSFileManager.fileExistsAtPath_)
         self.assertResultIsBOOL(NSFileManager.fileExistsAtPath_isDirectory_)
-        self.assertArgHasType(NSFileManager.fileExistsAtPath_isDirectory_, 1, 'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSFileManager.fileExistsAtPath_isDirectory_, 1, b'o^' + objc._C_NSBOOL)
         self.assertResultIsBOOL(NSFileManager.isReadableFileAtPath_)
         self.assertResultIsBOOL(NSFileManager.isWritableFileAtPath_)
         self.assertResultIsBOOL(NSFileManager.isExecutableFileAtPath_)
         self.assertResultIsBOOL(NSFileManager.isDeletableFileAtPath_)
         self.assertResultIsBOOL(NSFileManager.contentsEqualAtPath_andPath_)
         self.assertResultIsBOOL(NSFileManager.createFileAtPath_contents_attributes_)
-        self.assertResultHasType(NSFileManager.fileSystemRepresentationWithPath_, '^' + objc._C_CHAR_AS_TEXT)
+        self.assertResultHasType(NSFileManager.fileSystemRepresentationWithPath_, b'^' + objc._C_CHAR_AS_TEXT)
         self.assertResultIsNullTerminated(NSFileManager.fileSystemRepresentationWithPath_)
-        self.assertArgHasType(NSFileManager.stringWithFileSystemRepresentation_length_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(NSFileManager.stringWithFileSystemRepresentation_length_, 0, b'n^' + objc._C_CHAR_AS_TEXT)
         self.assertArgSizeInArg(NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1)
 
         self.assertResultIsBOOL(NSDictionary.fileIsImmutable)

@@ -33,8 +33,8 @@ class TestNSSavePanel (TestCase):
         self.assertResultIsBOOL(NSSavePanel.treatsFilePackagesAsDirectories)
         self.assertArgIsBOOL(NSSavePanel.setTreatsFilePackagesAsDirectories_, 0)
 
-        self.assertArgIsSEL(NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 4, 'v@:@' + objc._C_NSInteger + '^v')
-        self.assertArgHasType(NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, '^v')
+        self.assertArgIsSEL(NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 4, b'v@:@' + objc._C_NSInteger + b'^v')
+        self.assertArgHasType(NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 5, b'^v')
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldShowFilename_)
@@ -46,14 +46,14 @@ class TestNSSavePanel (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, 'v' + objc._C_NSInteger)
+        self.assertArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, b'v' + objc._C_NSInteger)
 
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldEnableURL_)
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_validateURL_error_)
-        self.assertArgHasType(TestNSSavePanelHelper.panel_validateURL_error_, 2, 'o^@')
+        self.assertArgHasType(TestNSSavePanelHelper.panel_validateURL_error_, 2, b'o^@')
 
-        self.assertArgIsBlock(NSSavePanel.beginSheetModalForWindow_completionHandler_, 1, 'v'+objc._C_NSInteger)
-        self.assertArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, 'v'+objc._C_NSInteger)
+        self.assertArgIsBlock(NSSavePanel.beginSheetModalForWindow_completionHandler_, 1, b'v'+objc._C_NSInteger)
+        self.assertArgIsBlock(NSSavePanel.beginWithCompletionHandler_, 0, b'v'+objc._C_NSInteger)
 
 if __name__ == "__main__":
     main()

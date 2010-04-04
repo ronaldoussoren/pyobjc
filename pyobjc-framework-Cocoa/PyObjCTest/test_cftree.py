@@ -1,6 +1,19 @@
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
+import sys
+if sys.version_info[0] == 3:
+    def cmp(a, b):
+        try:
+            if a < b:
+                return -1
+            elif b < a:
+                return 1
+            return 0
+
+        except TypeError:
+            return cmp(type(a).__name__, type(b).__name__)
+
 class TestCFTree (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFTreeRef)
@@ -11,9 +24,9 @@ class TestCFTree (TestCase):
 
         self.assert_(isinstance(tree, CFTreeRef))
 
-        self.assert_(CFTreeGetContext(tree) is context)
+        self.assert_(CFTreeGetContext(tree, None) is context)
         CFTreeSetContext(tree, 42)
-        self.assertEqual(CFTreeGetContext(tree), 42)
+        self.assertEqual(CFTreeGetContext(tree, None), 42)
 
 
 
@@ -23,13 +36,13 @@ class TestCFTree (TestCase):
         for child in range(10):
             CFTreeAppendChild(root, CFTreeCreate(None, child))
 
-        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root)), 0)
+        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root), None), 0)
 
         def compare(l, r, context):
-            return -cmp(CFTreeGetContext(l), CFTreeGetContext(r))
+            return -cmp(CFTreeGetContext(l, None), CFTreeGetContext(r, None))
 
         CFTreeSortChildren(root, compare, None)
-        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root)), 9)
+        self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root), None), 9)
 
 
     def testTypeID(self):
@@ -76,7 +89,7 @@ class TestCFTree (TestCase):
             CFTreeAppendChild(root, CFTreeCreate(None, child))
 
         def applyFunc(node, context):
-            context.append(CFTreeGetContext(node))
+            context.append(CFTreeGetContext(node, None))
 
         l = []
         CFTreeApplyFunctionToChildren(root, applyFunc, l)
@@ -102,8 +115,8 @@ class TestCFTree (TestCase):
         self.assertEqual(CFTreeGetChildCount(root), 4)
 
         def compare(left, right, context):
-            left = CFTreeGetContext(left)
-            right = CFTreeGetContext(right)
+            left = CFTreeGetContext(left, None)
+            right = CFTreeGetContext(right, None)
             return -cmp(left, right)
 
         before = []

@@ -1,13 +1,10 @@
 #include "Python.h"
+#include "pyobjc-api.h"
 #import <AppKit/AppKit.h>
 
-typedef void (*FUNCTION)(void);
 
-struct function_map {
-    const char* name;
-    FUNCTION    function;
-} function_map[] = {
-	{"NSEventMaskFromType", (FUNCTION)&NSEventMaskFromType },
+static PyObjC_function_map function_map[] = {
+	{"NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType },
     { 0, 0 }
 };
 
@@ -17,7 +14,7 @@ static PyMethodDef mod_methods[] = {
 
 
 /* Python glue */
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 
 static struct PyModuleDef mod_module = {
         PyModuleDef_HEAD_INIT,
@@ -51,7 +48,7 @@ init_inlines(void)
 #endif
 {
 	PyObject* m;
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 	m = PyModule_Create(&mod_module);
 #else
 	m = Py_InitModule4("_inlines", mod_methods,
@@ -62,7 +59,7 @@ init_inlines(void)
 	}
 
 	if (PyModule_AddObject(m, "_inline_list_", 
-		PyCObject_FromVoidPtr(function_map, NULL)) < 0) {
+		PyObjC_CreateInlineTab(function_map)) < 0) {
 		INITERROR();
 	}
 

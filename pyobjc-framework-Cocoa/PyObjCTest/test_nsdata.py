@@ -1,13 +1,17 @@
 from PyObjCTools.TestSupport import *
 import objc
 import array
+import sys
 
 from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass3
 
-rawBytes = "a\x13b\x00cd\xFFef\xEFgh"
-otherBytes = array.array('c')
+rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
+otherBytes = array.array('b')
 otherBytes.fromstring('12345678901234567890' * 5)
+
+if sys.version_info[0] == 3:
+    buffer = memoryview
 
 class TestNSData(TestCase):
     def testMethods(self):
@@ -87,13 +91,13 @@ class TestNSData(TestCase):
     def testBytes(self):
         # Test -bytes
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
-        bytes = data.bytes()
-        self.assertEqual(len(bytes), len(rawBytes), "bytes() and rawBytes not equal length.")
-        for i in range(0,len(bytes)):
-            self.assertEqual(rawBytes[i], bytes[i], "byte %s of bytes and rawBytes are not equal." % i)
+        bytesValue = data.bytes()
+        self.assertEqual(len(bytesValue), len(rawBytes), "bytes() and rawBytes not equal length.")
+
+        self.assertEquals(rawBytes, bytesValue)
 
         try:
-            bytes[3] = 0xAE
+            bytesValue[3] = b'\xAE'
         except TypeError, r:
             if str(r).find('buffer is read-only') is not 0:
                 raise
@@ -103,7 +107,7 @@ class TestNSData(TestCase):
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
-            mutableBytes[i] = otherBytes[i]
+            mutableBytes[i] = bytes(otherBytes[i:i+1])
         mutableBytes[1:8] = otherBytes[1:8]
 
         try:
@@ -118,7 +122,7 @@ class TestNSData(TestCase):
         # Data of different lengths may be stored in different subclasses within the class cluster.
         testFactor = range(1, 64) + [ 1000, 10000, 1000000]
         for aFactor in testFactor:
-            bigRawBytes = "1234567890" * aFactor
+            bigRawBytes = b"1234567890" * aFactor
 
             mutableData = NSMutableData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
             data = NSData.dataWithBytes_length_(bigRawBytes, len(bigRawBytes))
@@ -209,19 +213,19 @@ class TestMyData (TestCase):
     # 'initWithBytes:length:' and 'dataWithBytes:length:' have custom IMP's
     def testData(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData, 0)
-        self.assertEqual(r, ('data', 'hello world', 11))
+        self.assertEqual(r, ('data', b'hello world', 11))
 
     def testInit(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData2, 1)
-        self.assertEqual(r, ('init', 'hello world', 11))
+        self.assertEqual(r, ('init', b'hello world', 11))
 
     def testBytes(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
         b = PyObjC_TestClass3.getBytes_(r)
-        self.assertEqual(str(b.bytes()), 'hello world')
+        self.assertEqual(bytes(b.bytes()), b'hello world')
 
-        self.assertEqual(b.getBytes_length_(None, 4), 'hell')
-        self.assertEqual(b.getBytes_range_(None, NSRange(2, 4)), 'llo ')
+        self.assertEqual(b.getBytes_length_(None, 4), b'hell')
+        self.assertEqual(b.getBytes_range_(None, NSRange(2, 4)), b'llo ')
 
 
     def testBytesNone(self):
@@ -237,19 +241,22 @@ class TestMyData (TestCase):
 import array
 class TestBuffer(TestCase):
     def testArray(self):
-        a = array.array('c', 'foo')
+        a = array.array('b', b'foo')
         m = NSMutableData.dataWithData_(a)
         self.assertEqual(a.tostring(), m[:])
         self.assert_(objc.repythonify(a) is a)
         a.fromstring(m)
-        self.assertEqual(a.tostring(), 'foofoo')
+        self.assertEqual(a.tostring(), b'foofoo')
         m.appendData_(a)
-        self.assertEqual(m[:], 'foofoofoo')
-        m[3:6] = 'bar'
-        self.assertEqual(m[:], 'foobarfoo')
+        self.assertEqual(m[:], b'foofoofoo')
+        m[3:6] = b'bar'
+        self.assertEqual(m[:], b'foobarfoo')
 
     def testBuffer(self):
-        b = buffer('foo')
+        if sys.version_info[0] == 3:
+            b = b'foo'
+        else:
+            b = buffer('foo')
         m = NSMutableData.dataWithData_(b)
         self.assertEqual(b[:], m[:])
         self.assert_(objc.repythonify(b) is b)

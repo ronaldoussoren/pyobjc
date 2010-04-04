@@ -46,18 +46,24 @@ class TestNSTimer(TestCase):
         gc.collect()
         after = len(gc.get_objects())
 
-        self.assertEqual(after, before)
+        for i in range(10):
+            self._testHelp()
+
+        gc.collect()
+        after2 = len(gc.get_objects())
+
+        self.assertEqual(after, before, "%d - %d - %d"%(before, after, after2))
 
     def testMethods(self):
         self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_invocation_repeats_, 2)
         self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2)
         self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4)
-        self.assertArgIsSEL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, 'v@:@')
+        self.assertArgIsSEL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, b'v@:@')
         self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 4)
-        self.assertArgIsSEL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 2, 'v@:@')
+        self.assertArgIsSEL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 2, b'v@:@')
 
         self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 5)
-        self.assertArgIsSEL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 3, 'v@:@')
+        self.assertArgIsSEL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 3, b'v@:@')
 
         self.assertResultIsBOOL(NSTimer.isValid)
 

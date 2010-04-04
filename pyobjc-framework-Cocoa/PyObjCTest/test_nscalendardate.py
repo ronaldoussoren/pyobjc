@@ -9,12 +9,12 @@ class TestNSCalendarDate (TestCase):
                 2007, 9, 8, 19, 12, 10, NSTimeZone.systemTimeZone())
 
         m = obj.years_months_days_hours_minutes_seconds_sinceDate_.__metadata__()
-        self.assertTrue(m['arguments'][2]['type'].startswith('o^'))
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
-        self.assertTrue(m['arguments'][4]['type'].startswith('o^'))
-        self.assertTrue(m['arguments'][5]['type'].startswith('o^'))
-        self.assertTrue(m['arguments'][6]['type'].startswith('o^'))
-        self.assertTrue(m['arguments'][7]['type'].startswith('o^'))
+        self.assertTrue(m['arguments'][2]['type'].startswith(b'o^'))
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
+        self.assertTrue(m['arguments'][4]['type'].startswith(b'o^'))
+        self.assertTrue(m['arguments'][5]['type'].startswith(b'o^'))
+        self.assertTrue(m['arguments'][6]['type'].startswith(b'o^'))
+        self.assertTrue(m['arguments'][7]['type'].startswith(b'o^'))
 
         years, months, days, hours, minutes, seconds = obj.years_months_days_hours_minutes_seconds_sinceDate_(None, None, None, None, None, None, obj2)
         self.assertEqual(years, 1)

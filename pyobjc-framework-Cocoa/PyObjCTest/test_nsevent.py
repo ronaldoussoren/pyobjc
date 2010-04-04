@@ -187,15 +187,15 @@ class TestNSEvent (TestCase):
         self.assertResultIsBOOL(NSEvent.isEnteringProximity)
 
         self.assertArgIsBOOL(NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_, 8)
-        self.assertArgHasType(NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_, 8, '^v')
+        self.assertArgHasType(NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_, 8, b'^v')
 
 
-        self.assertResultHasType(NSEvent.userData, '^v')
+        self.assertResultHasType(NSEvent.userData, b'^v')
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, 'v@')
-        self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, 'v@')
+        self.assertArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b'v@')
+        self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b'v@')
 
 if __name__ == "__main__":
     main()

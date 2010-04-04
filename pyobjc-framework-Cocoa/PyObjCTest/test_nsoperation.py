@@ -25,14 +25,14 @@ class TestNSOperation (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertResultIsBlock(NSOperation.completionBlock, 'v')
-        self.assertArgIsBlock(NSOperation.setCompletionBlock_, 0, 'v')
+        self.assertResultIsBlock(NSOperation.completionBlock, b'v')
+        self.assertArgIsBlock(NSOperation.setCompletionBlock_, 0, b'v')
 
-        self.assertArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, 'v')
-        self.assertArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, 'v')
+        self.assertArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, b'v')
+        self.assertArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, b'v')
 
         self.assertArgIsBOOL(NSOperationQueue.addOperations_waitUntilFinished_, 1)
-        self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, 'v')
+        self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, b'v')
 
 if __name__ == "__main__":
     main()

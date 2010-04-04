@@ -12,24 +12,24 @@ class TestNSKeyedArchiver (TestCase):
                 NSKeyedArchiver.archivedDataWithRootObject_(u"foobar"))
         self.assertIsInstance(o, NSKeyedUnarchiver)
         m = o.decodeBytesForKey_returnedLength_.__metadata__()
-        self.assertEqual(m['retval']['type'], '^v')
-        self.assertTrue(m['arguments'][3]['type'].startswith('o^'))
+        self.assertEqual(m['retval']['type'], b'^v')
+        self.assertTrue(m['arguments'][3]['type'].startswith(b'o^'))
 
         data = NSMutableData.alloc().init()
         o = NSArchiver.alloc().initForWritingWithMutableData_(data)
         m = o.encodeBytes_length_forKey_.__metadata__()
-        self.assertEqual(m['arguments'][2]['type'], 'n^v')
+        self.assertEqual(m['arguments'][2]['type'], b'n^v')
 
     def testMethods(self):
         self.assertResultIsBOOL(NSKeyedArchiver.archiveRootObject_toFile_)
         self.assertArgIsBOOL(NSKeyedArchiver.encodeBool_forKey_, 0)
-        self.assertArgHasType(NSKeyedArchiver.encodeBytes_length_forKey_, 0, 'n^v')
+        self.assertArgHasType(NSKeyedArchiver.encodeBytes_length_forKey_, 0, b'n^v')
         self.assertArgSizeInArg(NSKeyedArchiver.encodeBytes_length_forKey_, 0, 1)
 
         self.assertResultIsBOOL(NSKeyedUnarchiver.containsValueForKey_)
         self.assertResultIsBOOL(NSKeyedUnarchiver.decodeBoolForKey_)
 
-        self.assertResultHasType(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, '^v')
+        self.assertResultHasType(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, b'^v')
         self.assertResultSizeInArg(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
         self.assertArgIsOut(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
 

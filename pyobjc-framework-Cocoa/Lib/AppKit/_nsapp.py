@@ -7,7 +7,7 @@ class _NSApp (object):
     """
     def __getrealapp(self):
         d = {}
-        objc.loadBundleVariables(__bundle__, d, [ ('NSApp', '@' ) ])
+        objc.loadBundleVariables(__bundle__, d, [ ('NSApp', b'@' ) ])
         return d.get('NSApp')
 
     __class__ = property(lambda self: self.__getrealapp().__class__)

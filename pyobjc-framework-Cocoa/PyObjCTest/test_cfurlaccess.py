@@ -1,6 +1,7 @@
 import os
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+import sys
 
 
 class TestURLAccess (TestCase):
@@ -44,8 +45,13 @@ class TestURLAccess (TestCase):
         self.assertResultIsBOOL(CFURLWriteDataAndPropertiesToResource)
         self.assertArgIsOut(CFURLWriteDataAndPropertiesToResource, 3)
         url = CFURLCreateWithFileSystemPath(None, __file__ + "TEST", kCFURLPOSIXPathStyle, False)
+
+        if sys.version_info[0] == 3:
+            def buffer(value):
+                return value
+
         ok, errorCode = CFURLWriteDataAndPropertiesToResource(
-                url, buffer("foobar"), None, None)
+                url, buffer(b"foobar"), None, None)
         self.assertTrue(ok)
         self.assertIsInstance(errorCode, (int, long))
         self.assertTrue(os.path.exists(__file__ + "TEST"))

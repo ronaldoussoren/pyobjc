@@ -28,9 +28,9 @@ class TestError (TestCase):
         keys = [ NSString.stringWithString_(v) for v in keys ]
         values = [ NSString.stringWithString_(v) for v in values ]
 
-        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 3, 'n^@')
+        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 3, b'n^@')
         self.assertArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 3, 5)
-        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 4, 'n^@')
+        self.assertArgHasType(CFErrorCreateWithUserInfoKeysAndValues, 4, b'n^@')
         self.assertArgSizeInArg(CFErrorCreateWithUserInfoKeysAndValues, 4, 5)
         err = CFErrorCreateWithUserInfoKeysAndValues(None, kCFErrorDomainPOSIX, 42, keys, values, 2)
         self.assertIsInstance(err, CFErrorRef)

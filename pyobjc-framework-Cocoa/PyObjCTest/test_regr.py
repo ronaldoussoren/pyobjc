@@ -8,8 +8,8 @@ from PyObjCTools.TestSupport import *
 class TestRegr (TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
-        self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, "/var")
-        self.assertEqual(u"/var", fm.stringWithFileSystemRepresentation_length_("/var/boo", 4))
+        self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var")
+        self.assertEqual(u"/var", fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4))
 
     def testThreadHang(self):
 

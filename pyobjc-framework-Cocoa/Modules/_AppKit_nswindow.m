@@ -1,4 +1,6 @@
-#ifndef __LP64__
+#if PY_MAJOR_VERSION == 2
+
+#ifdef __LP64__
 
 #include "pymactoolbox.h"
 
@@ -33,7 +35,7 @@ call_NSWindow_windowRef(
 			PyObjCObject_GetObject(self));
 
 
-		windowRef = objc_msgSendSuper(&super,
+		windowRef = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method));
 
 	PyObjC_HANDLER
@@ -119,7 +121,7 @@ call_NSWindow_initWithWindowRef_(
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
 
-		objc_result = objc_msgSendSuper(&super,
+		objc_result = ((id(*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method), windowRef);
 
 	PyObjC_HANDLER
@@ -187,10 +189,12 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-
+#endif /* PY_MAJOR_VERSION == 2 */
 
 static int setup_nswindows(PyObject* m __attribute__((__unused__)))
 {
+
+#if PY_MAJOR_VERSION == 2
 	Class classNSWindow = objc_lookUpClass("NSWindow");
 	if (classNSWindow == NULL) {
 		return 0;
@@ -213,6 +217,7 @@ static int setup_nswindows(PyObject* m __attribute__((__unused__)))
 
 		return -1;
 	}
+#endif
 
 	return 0;
 }
