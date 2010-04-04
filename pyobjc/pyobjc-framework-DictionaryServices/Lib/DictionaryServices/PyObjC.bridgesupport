@@ -7,10 +7,10 @@
     <retval already_cfretained='true' type='^{__CFString=}' />
     <arg type='^{__DCSDictionary=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
   </function>
   <function name='DCSGetTermRangeInString'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='^{__DCSDictionary=}' />
     <arg type='^{__CFString=}' />
     <arg type='l' type64='l' />
