@@ -16,4 +16,4 @@ __bundle__ = _objc.initFrameworkWrapper("CoreText",
         "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreText.framework"),
     globals=globals())
 
-from _manual import *
+from CoreText._manual import *

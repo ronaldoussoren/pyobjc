@@ -266,7 +266,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"CTFontCopyAvailableTables",
 		(PyCFunction)m_CTFontCopyAvailableTables,
@@ -290,17 +290,18 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, }
 };
 
-void init_manual(void);
-void init_manual(void)
+PyObjC_MODULE_INIT(_manual)
 {
-	PyObject* m = Py_InitModule4("_manual", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_manual);
+	if (m == NULL) PyObjC_INITERROR();
 
-        if (PyObjC_ImportAPI(m) < 0) { return; }
+        if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
-	PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat));
-	PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment));
-	PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode));
-	PyModule_AddIntConstant(m, "sizeof_CTWritingDirection", sizeof(CTWritingDirection));
-	PyModule_AddIntConstant(m, "sizeof_id", sizeof(id));
+	if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0) PyObjC_INITERROR();
+	if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment)) < 0) PyObjC_INITERROR();
+	if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0) PyObjC_INITERROR();
+	if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection", sizeof(CTWritingDirection)) < 0) PyObjC_INITERROR();
+	if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0) PyObjC_INITERROR();
+
+	PyObjC_INITDONE();
 }

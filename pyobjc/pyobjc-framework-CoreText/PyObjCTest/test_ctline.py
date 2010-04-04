@@ -1,85 +1,85 @@
 
 from PyObjCTools.TestSupport import *
 from CoreText import *
-from Quartz.CoreGraphics import *
+from Quartz import *
 
 import os
 
 class TestCTLine (TestCase):
     def testTypes(self):
-        self.failUnlessIsInstance(CTLineRef, objc.objc_class)
+        self.assertIsInstance(CTLineRef, objc.objc_class)
 
     def testConstants(self):
-        self.failUnlessEqual(kCTLineTruncationStart, 0)
-        self.failUnlessEqual(kCTLineTruncationEnd, 1)
-        self.failUnlessEqual(kCTLineTruncationMiddle, 2)
+        self.assertEqual(kCTLineTruncationStart, 0)
+        self.assertEqual(kCTLineTruncationEnd, 1)
+        self.assertEqual(kCTLineTruncationMiddle, 2)
 
     def testFunctions(self):
         v = CTLineGetTypeID()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
-        self.failUnlessResultIsCFRetained(CTLineCreateWithAttributedString)
+        self.assertResultIsCFRetained(CTLineCreateWithAttributedString)
         token = CTLineCreateWithAttributedString(
                 CFAttributedStringCreate(None, u"-", None))
-        self.failUnlessIsInstance(token, CTLineRef)
+        self.assertIsInstance(token, CTLineRef)
 
         line = CTLineCreateWithAttributedString(
                 CFAttributedStringCreate(None, u"hello world", None))
-        self.failUnlessIsInstance(line, CTLineRef)
+        self.assertIsInstance(line, CTLineRef)
 
-        self.failUnlessResultIsCFRetained(CTLineCreateTruncatedLine)
+        self.assertResultIsCFRetained(CTLineCreateTruncatedLine)
         v = CTLineCreateTruncatedLine(line, 20.0, kCTLineTruncationStart, token)
-        self.failUnlessIsInstance(v, CTLineRef)
+        self.assertIsInstance(v, CTLineRef)
 
-        self.failUnlessResultIsCFRetained(CTLineCreateJustifiedLine)
+        self.assertResultIsCFRetained(CTLineCreateJustifiedLine)
         v = CTLineCreateJustifiedLine(line, 0.75, 20.0)
-        self.failUnlessIsInstance(v, CTLineRef)
+        self.assertIsInstance(v, CTLineRef)
 
         v = CTLineGetGlyphCount(line)
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CTLineGetGlyphRuns(line)
-        self.failUnlessIsInstance(v, CFArrayRef)
-        
+        self.assertIsInstance(v, CFArrayRef)
+
         v = CTLineGetStringRange(line)
-        self.failUnlessIsInstance(v, CFRange)
+        self.assertIsInstance(v, CFRange)
 
         v = CTLineGetPenOffsetForFlush(line, 0.5, 40.0)
-        self.failUnlessIsInstance(v, float)
+        self.assertIsInstance(v, float)
 
         url = CFURLCreateWithFileSystemPath(None,
                 "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
-        self.failUnlessIsInstance(url, CFURLRef)
+        self.assertIsInstance(url, CFURLRef)
         ctx = CGPDFContextCreateWithURL(url, CGRect(CGPoint(0, 0), CGSize(1000, 1000)), None)
-        self.failUnlessIsInstance(ctx, CGContextRef)
+        self.assertIsInstance(ctx, CGContextRef)
 
         CTLineDraw(line, ctx)
 
         v = CTLineGetImageBounds(line, ctx)
-        self.failUnlessIsInstance(v, CGRect)
+        self.assertIsInstance(v, CGRect)
 
-        self.failUnlessArgIsOut(CTLineGetTypographicBounds, 1)
-        self.failUnlessArgIsOut(CTLineGetTypographicBounds, 2)
-        self.failUnlessArgIsOut(CTLineGetTypographicBounds, 3)
+        self.assertArgIsOut(CTLineGetTypographicBounds, 1)
+        self.assertArgIsOut(CTLineGetTypographicBounds, 2)
+        self.assertArgIsOut(CTLineGetTypographicBounds, 3)
 
         v = CTLineGetTypographicBounds(line, None, None, None)
-        self.failUnlessIsInstance(v, tuple)
-        self.failUnlessIsInstance(v[0], float)
-        self.failUnlessIsInstance(v[1], float)
-        self.failUnlessIsInstance(v[2], float)
-        self.failUnlessIsInstance(v[3], float)
+        self.assertIsInstance(v, tuple)
+        self.assertIsInstance(v[0], float)
+        self.assertIsInstance(v[1], float)
+        self.assertIsInstance(v[2], float)
+        self.assertIsInstance(v[3], float)
 
         v = CTLineGetTrailingWhitespaceWidth(line)
-        self.failUnlessIsInstance(v, float)
+        self.assertIsInstance(v, float)
 
         v = CTLineGetStringIndexForPosition(line, CGPoint(10, 10))
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
-        self.failUnlessArgIsOut(CTLineGetOffsetForStringIndex, 2)
+        self.assertArgIsOut(CTLineGetOffsetForStringIndex, 2)
         v = CTLineGetOffsetForStringIndex(line, 2, None)
-        self.failUnlessIsInstance(v, tuple)
-        self.failUnlessIsInstance(v[0], float)
-        self.failUnlessIsInstance(v[1], float)
+        self.assertIsInstance(v, tuple)
+        self.assertIsInstance(v[0], float)
+        self.assertIsInstance(v[1], float)
 
 
         if os.path.exists("/tmp/pyobjc.test.pdf"):

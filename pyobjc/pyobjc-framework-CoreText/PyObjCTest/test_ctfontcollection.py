@@ -4,37 +4,37 @@ from CoreText import *
 
 class TestCTFontCollection (TestCase):
     def testTypes(self):
-        self.failUnlessIsInstance(CTFontCollectionRef, objc.objc_class)
+        self.assertIsInstance(CTFontCollectionRef, objc.objc_class)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCTFontCollectionRemoveDuplicatesOption, unicode)
+        self.assertIsInstance(kCTFontCollectionRemoveDuplicatesOption, unicode)
 
     def testFunctions(self):
 
         v = CTFontCollectionCreateWithFontDescriptors([
             CTFontDescriptorCreateWithNameAndSize("Optima Bold", 14),
             ], None)
-        self.failUnlessIsInstance(v, CTFontCollectionRef)
+        self.assertIsInstance(v, CTFontCollectionRef)
 
         col = CTFontCollectionCreateFromAvailableFonts(None)
-        self.failUnlessIsInstance(col, CTFontCollectionRef)
+        self.assertIsInstance(col, CTFontCollectionRef)
 
-        self.failUnlessResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptors)
+        self.assertResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptors)
         v = CTFontCollectionCreateMatchingFontDescriptors(col)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
         def compare(a, b, ctx):
-            self.failUnlessIsInstance(a, CTFontDescriptorRef)
-            self.failUnlessIsInstance(b, CTFontDescriptorRef)
-            self.failUnlessEqual(ctx, "foo")
+            self.assertIsInstance(a, CTFontDescriptorRef)
+            self.assertIsInstance(b, CTFontDescriptorRef)
+            self.assertEqual(ctx, "foo")
             return 0
-        self.failUnlessResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback)
+        self.assertResultIsCFRetained(CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback)
         v = CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback(
                 col, compare, "foo")
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
 
         v = CTFontCollectionGetTypeID()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
 
 if __name__ == "__main__":

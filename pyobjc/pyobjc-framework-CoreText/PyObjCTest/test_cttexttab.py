@@ -4,25 +4,25 @@ from CoreText import *
 
 class TestCTTextTab (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CTTextTabRef)
+        self.assertIsCFType(CTTextTabRef)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCTTabColumnTerminatorsAttributeName, unicode)
+        self.assertIsInstance(kCTTabColumnTerminatorsAttributeName, unicode)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CTTextTabGetTypeID(), (int, long))
+        self.assertIsInstance(CTTextTabGetTypeID(), (int, long))
 
         tab = CTTextTabCreate(kCTCenterTextAlignment, 10.5, { u"key": u"value" })
-        self.failUnlessIsInstance(tab, CTTextTabRef)
+        self.assertIsInstance(tab, CTTextTabRef)
 
         v = CTTextTabGetAlignment(tab)
-        self.failUnlessEqual(v , kCTCenterTextAlignment)
+        self.assertEqual(v , kCTCenterTextAlignment)
 
         v = CTTextTabGetLocation(tab)
-        self.failUnlessEqual(v , 10.5)
+        self.assertEqual(v , 10.5)
 
         v = CTTextTabGetOptions(tab)
-        self.failUnlessIsInstance(v, dict)
+        self.assertIsInstance(v, dict)
 
 
 if __name__ == "__main__":
