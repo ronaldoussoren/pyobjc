@@ -12,39 +12,39 @@ class TestNSExceptionHandlerHelper (NSObject):
 
 class TestNSExceptionHandler (TestCase):
     def testProtocols(self):
-        self.failUnlessIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
+        self.assertIsInstance(protocols.NSExceptionHandlerDelegate, objc.informal_protocol)
 
-        self.failUnlessResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_)
-        self.failUnlessArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_, 2, objc._C_NSUInteger)
-        self.failUnlessResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_)
-        self.failUnlessArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_)
+        self.assertArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldLogException_mask_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_)
+        self.assertArgHasType(TestNSExceptionHandlerHelper.exceptionHandler_shouldHandleException_mask_, 2, objc._C_NSUInteger)
 
     def testConstants(self):
-        self.failUnlessIsInstance(NSUncaughtSystemExceptionException, unicode)
-        self.failUnlessIsInstance(NSUncaughtRuntimeErrorException, unicode)
-        self.failUnlessIsInstance(NSStackTraceKey, unicode)
+        self.assertIsInstance(NSUncaughtSystemExceptionException, unicode)
+        self.assertIsInstance(NSUncaughtRuntimeErrorException, unicode)
+        self.assertIsInstance(NSStackTraceKey, unicode)
 
-        self.failUnlessEqual(NSLogUncaughtExceptionMask, 1 << 0)
-        self.failUnlessEqual(NSHandleUncaughtExceptionMask, 1 << 1)
-        self.failUnlessEqual(NSLogUncaughtSystemExceptionMask, 1 << 2)
-        self.failUnlessEqual(NSHandleUncaughtSystemExceptionMask, 1 << 3)
-        self.failUnlessEqual(NSLogUncaughtRuntimeErrorMask, 1 << 4)
-        self.failUnlessEqual(NSHandleUncaughtRuntimeErrorMask, 1 << 5)
-        self.failUnlessEqual(NSLogTopLevelExceptionMask, 1 << 6)
-        self.failUnlessEqual(NSHandleTopLevelExceptionMask, 1 << 7)
-        self.failUnlessEqual(NSLogOtherExceptionMask, 1 << 8)
-        self.failUnlessEqual(NSHandleOtherExceptionMask, 1 << 9)
+        self.assertEqual(NSLogUncaughtExceptionMask, 1 << 0)
+        self.assertEqual(NSHandleUncaughtExceptionMask, 1 << 1)
+        self.assertEqual(NSLogUncaughtSystemExceptionMask, 1 << 2)
+        self.assertEqual(NSHandleUncaughtSystemExceptionMask, 1 << 3)
+        self.assertEqual(NSLogUncaughtRuntimeErrorMask, 1 << 4)
+        self.assertEqual(NSHandleUncaughtRuntimeErrorMask, 1 << 5)
+        self.assertEqual(NSLogTopLevelExceptionMask, 1 << 6)
+        self.assertEqual(NSHandleTopLevelExceptionMask, 1 << 7)
+        self.assertEqual(NSLogOtherExceptionMask, 1 << 8)
+        self.assertEqual(NSHandleOtherExceptionMask, 1 << 9)
 
-        self.failUnlessEqual(NSLogAndHandleEveryExceptionMask,
+        self.assertEqual(NSLogAndHandleEveryExceptionMask,
                 (NSLogUncaughtExceptionMask|NSLogUncaughtSystemExceptionMask|NSLogUncaughtRuntimeErrorMask|NSHandleUncaughtExceptionMask|NSHandleUncaughtSystemExceptionMask|NSHandleUncaughtRuntimeErrorMask|NSLogTopLevelExceptionMask|NSHandleTopLevelExceptionMask|NSLogOtherExceptionMask|NSHandleOtherExceptionMask))
 
-        self.failUnlessEqual(NSHangOnUncaughtExceptionMask, 1 << 0)
-        self.failUnlessEqual(NSHangOnUncaughtSystemExceptionMask, 1 << 1)
-        self.failUnlessEqual(NSHangOnUncaughtRuntimeErrorMask, 1 << 2)
-        self.failUnlessEqual(NSHangOnTopLevelExceptionMask, 1 << 3)
-        self.failUnlessEqual(NSHangOnOtherExceptionMask, 1 << 4)
+        self.assertEqual(NSHangOnUncaughtExceptionMask, 1 << 0)
+        self.assertEqual(NSHangOnUncaughtSystemExceptionMask, 1 << 1)
+        self.assertEqual(NSHangOnUncaughtRuntimeErrorMask, 1 << 2)
+        self.assertEqual(NSHangOnTopLevelExceptionMask, 1 << 3)
+        self.assertEqual(NSHangOnOtherExceptionMask, 1 << 4)
 
-        self.failUnlessEqual(NSHangOnEveryExceptionMask, (NSHangOnUncaughtExceptionMask|NSHangOnUncaughtSystemExceptionMask|NSHangOnUncaughtRuntimeErrorMask|NSHangOnTopLevelExceptionMask|NSHangOnOtherExceptionMask))
+        self.assertEqual(NSHangOnEveryExceptionMask, (NSHangOnUncaughtExceptionMask|NSHangOnUncaughtSystemExceptionMask|NSHangOnUncaughtRuntimeErrorMask|NSHangOnTopLevelExceptionMask|NSHangOnOtherExceptionMask))
 
 
 
