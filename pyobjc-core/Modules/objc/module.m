@@ -1806,53 +1806,14 @@ struct objc_typestr_values {
 };
 
 
-#if PY_MAJOR_VERSION == 3
-static int mod_traverse(PyObject *m __attribute__((__unused__)), visitproc visit __attribute__((__unused__)), void *arg __attribute__((__unused__))) 
-{
-	/* FIXME: should traverse all globals */
-	return 0;
-}
 
-static int mod_clear(PyObject* m __attribute__((__unused__)))
-{
-	/* FIXME: should clear all globals */
-	return 0;
-}
-
-static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"objc._objc",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	mod_traverse,
-	mod_clear,
-	NULL
-};
-
-#define INITERROR() return NULL
-
-PyObject* PyInit__objc(void);
-
-PyObject* 
-PyInit__objc(void)
-
-#else
-
-#define INITERROR() return
-
-void init_objc(void);
-
-void 
-init_objc(void)
-#endif
+PyObjC_MODULE_INIT(_objc)
 {
 	PyObject *m, *d, *v;
 
 	PyObjC_SetupRuntimeCompat();
 	if (PyErr_Occurred()) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	NSAutoreleasePool *initReleasePool = [[NSAutoreleasePool alloc] init];
@@ -1861,63 +1822,63 @@ init_objc(void)
 	PyObjCClass_DefaultModule = PyText_FromString("objc");
 
 	if (PyObjC_InitProxyRegistry() < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	PyObjC_TypeStr2CFTypeID = PyDict_New();
 	if (PyObjC_TypeStr2CFTypeID == NULL) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	if (PyObjCBlock_Setup() == -1) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 
 	if (PyType_Ready(&PyObjCClass_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready((PyTypeObject*)&PyObjCObject_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCSelector_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCNativeSelector_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCPythonSelector_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCInstanceVariable_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCInformalProtocol_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCFormalProtocol_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCUnicode_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCIMP_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCMethodAccessor_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjCMethodSignature_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjC_VarList_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjC_FSRefType) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyType_Ready(&PyObjC_FSSpecType) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	PyObjCSuper_Type.tp_doc = PySuper_Type.tp_doc;
@@ -1928,92 +1889,87 @@ init_objc(void)
 	PyObjCSuper_Type.tp_free = PySuper_Type.tp_free;
 	PyObjCSuper_Type.tp_traverse = PySuper_Type.tp_traverse;
 	if (PyType_Ready(&PyObjCSuper_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	if (PyObjCCFType_Setup() == -1) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyObjCXML_Init() == -1) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
-#if PY_MAJOR_VERSION == 3
-	m = PyModule_Create(&mod_module);
-#else
-	m = Py_InitModule4("_objc", mod_methods, NULL,
-			NULL, PYTHON_API_VERSION);
-#endif
+	m = PyObjC_MODULE_CREATE(_objc);
 	if (m == 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 
 	d = PyModule_GetDict(m);
 	if (d == 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	/* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
 
 	if (PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "objc_object", (PyObject*)&PyObjCObject_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "pyobjc_unicode", (PyObject*)&PyObjCUnicode_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "selector", (PyObject*)&PyObjCSelector_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "FSRef", (PyObject*)&PyObjC_FSRefType) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "FSSpec", (PyObject*)&PyObjC_FSSpecType) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "ivar", (PyObject*)&PyObjCInstanceVariable_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "informal_protocol", (PyObject*)&PyObjCInformalProtocol_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "formal_protocol", (PyObject*)&PyObjCFormalProtocol_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "varlist", (PyObject*)&PyObjC_VarList_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "function", (PyObject*)&PyObjCFunc_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "IMP", (PyObject*)&PyObjCIMP_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyDict_SetItemString(d, "super", (PyObject*)&PyObjCSuper_Type) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	v = PyObjCInitNULL();
 	if (v == NULL) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	if (PyDict_SetItemString(d, "NULL", v) < 0) {
 		Py_DECREF(v);
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	Py_DECREF(v);
 
 	if (PyObjCUtil_Init(m) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyObjCAPI_Register(m) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyObjCIMP_SetUpMethodWrappers() < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 #if PY_MAJOR_VERSION == 2
@@ -2027,48 +1983,48 @@ init_objc(void)
 		for (; cur->name != NULL; cur ++)  {
 			PyObject* t = PyBytes_FromStringAndSize(&cur->value, 1);
 			if (t == NULL) {
-				INITERROR();
+				PyObjC_INITERROR();
 			}
 			if (PyModule_AddObject(m, cur->name, t)) {
-				INITERROR();
+				PyObjC_INITERROR();
 			}
 		}
 	}
 
 	/* Add _C_CFTYPEID to avoid hardcoding this in our python code */
 	if (PyModule_AddObject(m, "_C_CFTYPEID", PyBytes_FromString(@encode(CFTypeID))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	/* Likewise for _C_NSInteger and _C_NSUInteger */
 	if (PyModule_AddObject(m, "_C_NSInteger", PyBytes_FromString(@encode(NSInteger))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyModule_AddObject(m, "_C_NSUInteger", PyBytes_FromString(@encode(NSUInteger))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyModule_AddObject(m, "_C_CFIndex", PyBytes_FromString(@encode(CFIndex))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyModule_AddObject(m, "_C_CGFloat", PyBytes_FromString(@encode(CGFloat))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 
 	if (PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in)) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 	if (PyModule_AddIntConstant(m, "_size_sockaddr_ip6", sizeof(struct sockaddr_in6)) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 
 	if (PyModule_AddStringConstant(m, "__version__", OBJC_VERSION) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	if (PyModule_AddObject(m, "_sockaddr_type", PyBytes_FromString(@encode(struct sockaddr))) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	PyObjCPointerWrapper_Init();
@@ -2077,54 +2033,54 @@ init_objc(void)
 #ifdef MAC_OS_X_VERSION_MAX_ALLOWED
 	/* An easy way to check for the MacOS X version we did build for */
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_MAX_ALLOWED */
 
 #ifdef MAC_OS_X_VERSION_MIN_REQUIRED
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_MIN_REQUIRED", MAC_OS_X_VERSION_MAX_ALLOWED) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_MIN_REQUIRED */
 
 #ifdef MAC_OS_X_VERSION_10_1
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_1 */
 
 #ifdef MAC_OS_X_VERSION_10_2
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_2 */
 
 #ifdef MAC_OS_X_VERSION_10_3
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_3 */
 
 #ifdef MAC_OS_X_VERSION_10_4
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_4 */
 
 #ifdef MAC_OS_X_VERSION_10_5
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_5 */
 
 #ifdef MAC_OS_X_VERSION_10_6
 	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6) < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 #endif /* MAC_OS_X_VERSION_10_6 */
 
 	if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
-		INITERROR();
+		PyObjC_INITERROR();
 	}
 
 	PyEval_InitThreads();
@@ -2150,8 +2106,5 @@ init_objc(void)
 #error "No Py_ARG_NSUInteger"
 #endif
 
-#if PY_MAJOR_VERSION == 3
-	return m;
-#endif
-
+	PyObjC_INITDONE();
 }

@@ -488,4 +488,50 @@ extern struct pyobjc_api	objc_api;
 
 #endif /* !PYOBJC_BUILD */
 
+/*
+ * Helper macros to simplify module init functions.
+ */
+#define PyObjC__STR(x) #x
+#define PyObjC_STR(x) PyObjC__STR(x)
+
+#if PY_MAJOR_VERSION == 3
+
+#define PyObjC_INITERROR() return NULL
+#define PyObjC_INITDONE() return m
+
+
+#define PyObjC_MODULE_INIT(name) \
+	static struct PyModuleDef mod_module = { \
+		PyModuleDef_HEAD_INIT, \
+	 	PyObjC_STR(name), \
+		NULL, \
+		0, \
+		mod_methods, \
+		NULL, \
+		NULL, \
+		NULL, \
+		NULL \
+	}; \
+	\
+	PyObject* PyInit_##name(void); \
+	PyObject* PyInit_##name(void)
+
+#define PyObjC_MODULE_CREATE(name) \
+	PyModule_Create(&mod_module);
+
+#else
+
+#define PyObjC_INITERROR() return
+#define PyObjC_INITDONE() return
+
+#define PyObjC_MODULE_INIT(name) \
+	void init##name(void); \
+	void init##name(void)
+
+#define PyObjC_MODULE_CREATE(name) \
+	Py_InitModule4(PyObjC_STR(name), mod_methods, \
+			NULL, NULL, PYTHON_API_VERSION);
+
+#endif
+
 #endif /*  PyObjC_API_H */
