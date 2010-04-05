@@ -17,14 +17,14 @@ class TestWebScriptObjectHelper (NSObject):
 
 class TestWebScriptObject (TestCase):
     def testMethods(self):
-        self.failUnlessArgHasType(TestWebScriptObjectHelper.webScriptNameForSelector_, 0, objc._C_SEL)
-        self.failUnlessArgHasType(TestWebScriptObjectHelper.isSelectorExcludedFromWebScript_, 0, objc._C_SEL)
-        self.failUnlessArgHasType(TestWebScriptObjectHelper.webScriptNameForKey_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
-        self.failUnlessArgIsNullTerminated(TestWebScriptObjectHelper.webScriptNameForKey_, 0)
-        self.failUnlessArgHasType(TestWebScriptObjectHelper.isKeyExcludedFromWebScript_, 0, 'n^' + objc._C_CHAR_AS_TEXT)
-        self.failUnlessArgIsNullTerminated(TestWebScriptObjectHelper.isKeyExcludedFromWebScript_, 0)
+        self.assertArgHasType(TestWebScriptObjectHelper.webScriptNameForSelector_, 0, objc._C_SEL)
+        self.assertArgHasType(TestWebScriptObjectHelper.isSelectorExcludedFromWebScript_, 0, objc._C_SEL)
+        self.assertArgHasType(TestWebScriptObjectHelper.webScriptNameForKey_, 0, b'n^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgIsNullTerminated(TestWebScriptObjectHelper.webScriptNameForKey_, 0)
+        self.assertArgHasType(TestWebScriptObjectHelper.isKeyExcludedFromWebScript_, 0, b'n^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgIsNullTerminated(TestWebScriptObjectHelper.isKeyExcludedFromWebScript_, 0)
 
-        self.failUnlessResultIsBOOL(WebScriptObject.throwException_)
+        self.assertResultIsBOOL(WebScriptObject.throwException_)
 
 
 

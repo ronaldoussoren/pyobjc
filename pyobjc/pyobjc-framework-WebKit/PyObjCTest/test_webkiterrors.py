@@ -4,17 +4,17 @@ from WebKit import *
 
 class TestWebKitErrors (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(WebKitErrorDomain, unicode)
-        self.failUnlessIsInstance(WebKitErrorMIMETypeKey, unicode)
-        self.failUnlessIsInstance(WebKitErrorPlugInNameKey, unicode)
-        self.failUnlessIsInstance(WebKitErrorPlugInPageURLStringKey, unicode)
+        self.assertIsInstance(WebKitErrorDomain, unicode)
+        self.assertIsInstance(WebKitErrorMIMETypeKey, unicode)
+        self.assertIsInstance(WebKitErrorPlugInNameKey, unicode)
+        self.assertIsInstance(WebKitErrorPlugInPageURLStringKey, unicode)
 
-        self.failUnlessEqual(WebKitErrorCannotShowMIMEType, 100)
-        self.failUnlessEqual(WebKitErrorCannotShowURL, 101)
-        self.failUnlessEqual(WebKitErrorFrameLoadInterruptedByPolicyChange, 102)
-        self.failUnlessEqual(WebKitErrorCannotFindPlugIn, 200)
-        self.failUnlessEqual(WebKitErrorCannotLoadPlugIn, 201)
-        self.failUnlessEqual(WebKitErrorJavaUnavailable, 202)
+        self.assertEqual(WebKitErrorCannotShowMIMEType, 100)
+        self.assertEqual(WebKitErrorCannotShowURL, 101)
+        self.assertEqual(WebKitErrorFrameLoadInterruptedByPolicyChange, 102)
+        self.assertEqual(WebKitErrorCannotFindPlugIn, 200)
+        self.assertEqual(WebKitErrorCannotLoadPlugIn, 201)
+        self.assertEqual(WebKitErrorJavaUnavailable, 202)
 
 
 

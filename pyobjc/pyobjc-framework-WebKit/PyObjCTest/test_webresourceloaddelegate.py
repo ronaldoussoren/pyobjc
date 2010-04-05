@@ -7,7 +7,7 @@ class TestWebResourceLoadDelegateHelper (NSObject):
 
 class TestWebResourceLoadDelegate (TestCase):
     def testMethods(self):
-        self.failUnlessArgHasType(
+        self.assertArgHasType(
             TestWebResourceLoadDelegateHelper.webView_resource_didReceiveContentLength_fromDataSource_,
             2, objc._C_NSInteger)
         

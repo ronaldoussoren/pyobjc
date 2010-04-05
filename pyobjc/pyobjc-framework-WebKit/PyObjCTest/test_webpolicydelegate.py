@@ -4,11 +4,11 @@ from WebKit import *
 
 class TestWebPolicyDelegate (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(WebActionNavigationTypeKey, unicode)
-        self.failUnlessIsInstance(WebActionElementKey, unicode)
-        self.failUnlessIsInstance(WebActionButtonKey, unicode)
-        self.failUnlessIsInstance(WebActionModifierFlagsKey, unicode)
-        self.failUnlessIsInstance(WebActionOriginalURLKey, unicode)
+        self.assertIsInstance(WebActionNavigationTypeKey, unicode)
+        self.assertIsInstance(WebActionElementKey, unicode)
+        self.assertIsInstance(WebActionButtonKey, unicode)
+        self.assertIsInstance(WebActionModifierFlagsKey, unicode)
+        self.assertIsInstance(WebActionOriginalURLKey, unicode)
 
 
 if __name__ == "__main__":

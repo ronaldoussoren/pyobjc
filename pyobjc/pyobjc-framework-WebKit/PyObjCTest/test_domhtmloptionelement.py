@@ -4,12 +4,12 @@ from WebKit import *
 
 class TestDOMHTMLOptionElement (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMHTMLOptionElement.defaultSelected)
-        self.failUnlessArgIsBOOL(DOMHTMLOptionElement.setDefaultSelected_, 0)
-        self.failUnlessResultIsBOOL(DOMHTMLOptionElement.disabled)
-        self.failUnlessArgIsBOOL(DOMHTMLOptionElement.setDisabled_, 0)
-        self.failUnlessResultIsBOOL(DOMHTMLOptionElement.selected)
-        self.failUnlessArgIsBOOL(DOMHTMLOptionElement.setSelected_, 0)
+        self.assertResultIsBOOL(DOMHTMLOptionElement.defaultSelected)
+        self.assertArgIsBOOL(DOMHTMLOptionElement.setDefaultSelected_, 0)
+        self.assertResultIsBOOL(DOMHTMLOptionElement.disabled)
+        self.assertArgIsBOOL(DOMHTMLOptionElement.setDisabled_, 0)
+        self.assertResultIsBOOL(DOMHTMLOptionElement.selected)
+        self.assertArgIsBOOL(DOMHTMLOptionElement.setSelected_, 0)
 
 if __name__ == "__main__":
     main()

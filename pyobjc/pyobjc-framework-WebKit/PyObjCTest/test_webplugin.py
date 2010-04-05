@@ -7,7 +7,7 @@ class TestWebPluginHelper (NSObject):
 
 class TestWebPlugin (TestCase):
     def testConstants(self):
-        self.failUnlessArgIsBOOL(TestWebPluginHelper.webPlugInSetIsSelected_, 0)
+        self.assertArgIsBOOL(TestWebPluginHelper.webPlugInSetIsSelected_, 0)
 
 if __name__ == "__main__":
     main()

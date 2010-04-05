@@ -11,11 +11,11 @@ class TestDOMEventTargetHelper (NSObject):
 
 class TestDOMEventTarget (TestCase):
     def testMethods(self):
-        self.failUnlessArgIsBOOL(TestDOMEventTargetHelper.addEventListener_listener_useCapture_, 2)
-        self.failUnlessArgIsBOOL(TestDOMEventTargetHelper.removeEventListener_listener_useCapture_, 2)
-        self.failUnlessArgIsBOOL(TestDOMEventTargetHelper.addEventListener___, 2)
-        self.failUnlessArgIsBOOL(TestDOMEventTargetHelper.removeEventListener___, 2)
-        self.failUnlessResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
+        self.assertArgIsBOOL(TestDOMEventTargetHelper.addEventListener_listener_useCapture_, 2)
+        self.assertArgIsBOOL(TestDOMEventTargetHelper.removeEventListener_listener_useCapture_, 2)
+        self.assertArgIsBOOL(TestDOMEventTargetHelper.addEventListener___, 2)
+        self.assertArgIsBOOL(TestDOMEventTargetHelper.removeEventListener___, 2)
+        self.assertResultIsBOOL(TestDOMEventTargetHelper.dispatchEvent_)
 
 if __name__ == "__main__":
     main()

@@ -4,7 +4,7 @@ from WebKit import *
 
 class TestDOMCSSStyleDeclaration (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMCSSStyleDeclaration.isPropertyImplicit_)
+        self.assertResultIsBOOL(DOMCSSStyleDeclaration.isPropertyImplicit_)
 
 
 if __name__ == "__main__":

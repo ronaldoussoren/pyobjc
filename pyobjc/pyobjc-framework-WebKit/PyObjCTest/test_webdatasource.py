@@ -4,7 +4,7 @@ from WebKit import *
 
 class TestWebDataSource (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(WebDataSource.isLoading)
+        self.assertResultIsBOOL(WebDataSource.isLoading)
 
 if __name__ == "__main__":
     main()

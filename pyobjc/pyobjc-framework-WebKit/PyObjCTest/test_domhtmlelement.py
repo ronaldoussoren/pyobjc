@@ -4,7 +4,7 @@ from WebKit import *
 
 class TestDOMHTMLElement (TestCase):
     def testMehods(self):
-        self.failUnlessResultIsBOOL(DOMHTMLElement.isContentEditable)
+        self.assertResultIsBOOL(DOMHTMLElement.isContentEditable)
 
 if __name__ == "__main__":
     main()
