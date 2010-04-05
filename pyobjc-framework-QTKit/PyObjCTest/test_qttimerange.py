@@ -5,38 +5,38 @@ from QTKit import *
 class TestQTTimeRange (TestCase):
     def testStructs(self):
         v = QTTimeRange()
-        self.failUnless(hasattr(v, 'time'))
-        self.failUnless(hasattr(v, 'duration'))
+        self.assertHasAttr(v, 'time')
+        self.assertHasAttr(v, 'duration')
 
     def testFunctions(self):
         v = QTMakeTimeWithTimeInterval(1500.0)
         w = QTMakeTimeWithTimeInterval(10.0)
 
         rng = QTMakeTimeRange(v, w)
-        self.failUnlessIsInstance(rng, QTTimeRange)
+        self.assertIsInstance(rng, QTTimeRange)
 
         rng2 = QTMakeTimeRange(w, v)
-        self.failUnlessIsInstance(rng2, QTTimeRange)
+        self.assertIsInstance(rng2, QTTimeRange)
 
-        self.failUnlessResultIsBOOL(QTTimeInTimeRange)
-        self.failUnlessResultIsBOOL(QTEqualTimeRanges)
+        self.assertResultIsBOOL(QTTimeInTimeRange)
+        self.assertResultIsBOOL(QTEqualTimeRanges)
 
         o = QTTimeInTimeRange(v, rng)
-        self.failUnless(o is True)
+        self.assertTrue(o is True)
         o = QTTimeInTimeRange(w, rng)
-        self.failUnless(o is False)
+        self.assertTrue(o is False)
 
         o = QTEqualTimeRanges(rng, rng)
-        self.failUnless(o is True)
+        self.assertTrue(o is True)
 
         o = QTTimeRangeEnd(rng)
-        self.failUnlessIsInstance(o, QTTime)
+        self.assertIsInstance(o, QTTime)
 
         o = QTUnionTimeRange(rng, rng2)
-        self.failUnlessIsInstance(o, QTTimeRange)
+        self.assertIsInstance(o, QTTimeRange)
 
         o = QTIntersectionTimeRange(rng, rng2)
-        self.failUnlessIsInstance(o, QTTimeRange)
+        self.assertIsInstance(o, QTTimeRange)
 
 if __name__ == "__main__":
     main()

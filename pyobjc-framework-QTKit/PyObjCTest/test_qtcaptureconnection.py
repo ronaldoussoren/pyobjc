@@ -5,21 +5,21 @@ from QTKit import *
 class TestQTCaptureConnection (TestCase):
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(QTCaptureConnectionFormatDescriptionWillChangeNotification, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionFormatDescriptionDidChangeNotification, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAttributeWillChangeNotification, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAttributeDidChangeNotification, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionChangedAttributeKey, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAudioAveragePowerLevelsAttribute, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAudioPeakHoldLevelsAttribute, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAudioMasterVolumeAttribute, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionAudioVolumesAttribute, unicode)
-        self.failUnlessIsInstance(QTCaptureConnectionEnabledAudioChannelsAttribute, unicode)
+        self.assertIsInstance(QTCaptureConnectionFormatDescriptionWillChangeNotification, unicode)
+        self.assertIsInstance(QTCaptureConnectionFormatDescriptionDidChangeNotification, unicode)
+        self.assertIsInstance(QTCaptureConnectionAttributeWillChangeNotification, unicode)
+        self.assertIsInstance(QTCaptureConnectionAttributeDidChangeNotification, unicode)
+        self.assertIsInstance(QTCaptureConnectionChangedAttributeKey, unicode)
+        self.assertIsInstance(QTCaptureConnectionAudioAveragePowerLevelsAttribute, unicode)
+        self.assertIsInstance(QTCaptureConnectionAudioPeakHoldLevelsAttribute, unicode)
+        self.assertIsInstance(QTCaptureConnectionAudioMasterVolumeAttribute, unicode)
+        self.assertIsInstance(QTCaptureConnectionAudioVolumesAttribute, unicode)
+        self.assertIsInstance(QTCaptureConnectionEnabledAudioChannelsAttribute, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QTCaptureConnection.isEnabled)
-        self.failUnlessArgIsBOOL(QTCaptureConnection.setEnabled_, 0)
-        self.failUnlessResultIsBOOL(QTCaptureConnection.attributeIsReadOnly_)
+        self.assertResultIsBOOL(QTCaptureConnection.isEnabled)
+        self.assertArgIsBOOL(QTCaptureConnection.setEnabled_, 0)
+        self.assertResultIsBOOL(QTCaptureConnection.attributeIsReadOnly_)
 
 
 if __name__ == "__main__":

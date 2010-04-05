@@ -4,10 +4,10 @@ from QTKit import *
 
 class TestQTCaptureView (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QTCaptureView.preservesAspectRatio)
+        self.assertResultIsBOOL(QTCaptureView.preservesAspectRatio)
 
     def testProtocols(self):
-        self.failUnlessIsInstance(protocols.QTCaptureViewDelegate, objc.informal_protocol)
+        self.assertIsInstance(protocols.QTCaptureViewDelegate, objc.informal_protocol)
 
 if __name__ == "__main__":
     main()

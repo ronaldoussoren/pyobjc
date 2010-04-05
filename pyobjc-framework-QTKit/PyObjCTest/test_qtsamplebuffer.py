@@ -4,17 +4,17 @@ from QTKit import *
 
 class TestQTSampleBuffer (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(QTSampleBufferSMPTETimeAttribute, unicode)
-        self.failUnlessIsInstance(QTSampleBufferDateRecordedAttribute, unicode)
-        self.failUnlessIsInstance(QTSampleBufferHostTimeAttribute, unicode)
-        self.failUnlessIsInstance(QTSampleBufferSceneChangeTypeAttribute, unicode)
-        self.failUnlessIsInstance(QTSampleBufferExplicitSceneChange, unicode)
-        self.failUnlessIsInstance(QTSampleBufferTimeStampDiscontinuitySceneChange, unicode)
+        self.assertIsInstance(QTSampleBufferSMPTETimeAttribute, unicode)
+        self.assertIsInstance(QTSampleBufferDateRecordedAttribute, unicode)
+        self.assertIsInstance(QTSampleBufferHostTimeAttribute, unicode)
+        self.assertIsInstance(QTSampleBufferSceneChangeTypeAttribute, unicode)
+        self.assertIsInstance(QTSampleBufferExplicitSceneChange, unicode)
+        self.assertIsInstance(QTSampleBufferTimeStampDiscontinuitySceneChange, unicode)
 
-        self.failUnlessEqual(QTSampleBufferAudioBufferListOptionAssure16ByteAlignment, 1)
+        self.assertEqual(QTSampleBufferAudioBufferListOptionAssure16ByteAlignment, 1)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QTSampleBuffer.getAudioStreamPacketDescriptions_inRange_)
+        self.assertResultIsBOOL(QTSampleBuffer.getAudioStreamPacketDescriptions_inRange_)
 
 
 

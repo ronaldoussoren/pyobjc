@@ -9,11 +9,11 @@ class TestQTCaptureFileOutputHelper  (NSObject):
 
 class TestQTCaptureFileOutput (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(QTCaptureFileOutputBufferDestinationNewFile, 1)
-        self.failUnlessEqual(QTCaptureFileOutputBufferDestinationOldFile, 2)
+        self.assertEqual(QTCaptureFileOutputBufferDestinationNewFile, 1)
+        self.assertEqual(QTCaptureFileOutputBufferDestinationOldFile, 2)
 
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestQTCaptureFileOutputHelper.captureOutput_shouldChangeOutputFileAtURL_forConnections_dueToError_)
+        self.assertResultIsBOOL(TestQTCaptureFileOutputHelper.captureOutput_shouldChangeOutputFileAtURL_forConnections_dueToError_)
 
 if __name__ == "__main__":
     main()
