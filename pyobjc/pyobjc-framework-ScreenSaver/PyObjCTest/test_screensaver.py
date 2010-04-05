@@ -7,18 +7,18 @@ import ScreenSaver
 
 class TestScreenSaver (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(ScreenSaver, 'ScreenSaverDefaults') )
-        self.assert_( isinstance(ScreenSaver.ScreenSaverDefaults, objc.objc_class) )
+        self.assertHasAttr(ScreenSaver, 'ScreenSaverDefaults')
+        self.assertIsInstance(ScreenSaver.ScreenSaverDefaults, objc.objc_class)
 
-        self.assert_( hasattr(ScreenSaver, 'ScreenSaverView') )
-        self.assert_( isinstance(ScreenSaver.ScreenSaverView, objc.objc_class) )
+        self.assertHasAttr(ScreenSaver, 'ScreenSaverView')
+        self.assertIsInstance(ScreenSaver.ScreenSaverView, objc.objc_class)
 
     def testInlines(self):
-        self.assert_( hasattr(ScreenSaver, 'SSRandomIntBetween') )
-        self.assert_( isinstance(ScreenSaver.SSRandomIntBetween, objc.function) )
+        self.assertHasAttr(ScreenSaver, 'SSRandomIntBetween')
+        self.assertIsInstance(ScreenSaver.SSRandomIntBetween, objc.function)
 
-        self.assert_( hasattr(ScreenSaver, 'SSCenteredRectInRect') )
-        self.assert_( isinstance(ScreenSaver.SSCenteredRectInRect, objc.function) )
+        self.assertHasAttr(ScreenSaver, 'SSCenteredRectInRect')
+        self.assertIsInstance(ScreenSaver.SSCenteredRectInRect, objc.function)
 
         fn = ScreenSaver.SSCenteredRectInRect
         innerRect = ScreenSaver.NSMakeRect(5, 5, 20, 30)

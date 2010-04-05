@@ -9,6 +9,7 @@ import objc as _objc
 from AppKit import *
 
 from ScreenSaver._inlines import _inline_list_
+print _inline_list_
 
 __bundle__ = _objc.initFrameworkWrapper("ScreenSaver",
     frameworkIdentifier="com.apple.ScreenSaver",
