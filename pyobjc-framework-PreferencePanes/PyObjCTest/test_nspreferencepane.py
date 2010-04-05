@@ -4,21 +4,21 @@ from PreferencePanes import *
 
 class TestNSPreferencePane (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(NSUnselectCancel, 0)
-        self.failUnlessEqual(NSUnselectNow, 1)
-        self.failUnlessEqual(NSUnselectLater, 2)
+        self.assertEqual(NSUnselectCancel, 0)
+        self.assertEqual(NSUnselectNow, 1)
+        self.assertEqual(NSUnselectLater, 2)
 
-        self.failUnlessIsInstance(NSPreferencePaneDoUnselectNotification, unicode)
-        self.failUnlessIsInstance(NSPreferencePaneCancelUnselectNotification, unicode)
+        self.assertIsInstance(NSPreferencePaneDoUnselectNotification, unicode)
+        self.assertIsInstance(NSPreferencePaneCancelUnselectNotification, unicode)
 
-        self.failUnlessEqual(kNSPrefPaneHelpMenuInfoPListKey, "NSPrefPaneHelpAnchors")
-        self.failUnlessEqual(kNSPrefPaneHelpMenuTitleKey, "title")
-        self.failUnlessEqual(kNSPrefPaneHelpMenuAnchorKey, "anchor")
+        self.assertEqual(kNSPrefPaneHelpMenuInfoPListKey, "NSPrefPaneHelpAnchors")
+        self.assertEqual(kNSPrefPaneHelpMenuTitleKey, "title")
+        self.assertEqual(kNSPrefPaneHelpMenuAnchorKey, "anchor")
 
     def testClasses(self):
-        self.failUnlessArgIsBOOL(NSPreferencePane.replyToShouldUnselect_, 0)
-        self.failUnlessResultIsBOOL(NSPreferencePane.autoSaveTextFields)
-        self.failUnlessResultIsBOOL(NSPreferencePane.isSelected)
+        self.assertArgIsBOOL(NSPreferencePane.replyToShouldUnselect_, 0)
+        self.assertResultIsBOOL(NSPreferencePane.autoSaveTextFields)
+        self.assertResultIsBOOL(NSPreferencePane.isSelected)
 
 if __name__ == "__main__":
     main()
