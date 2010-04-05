@@ -5,37 +5,37 @@ from SystemConfiguration import *
 
 class TestSCPreferences (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kSCPreferencesNotificationCommit, 1<<0)
-        self.failUnlessEqual(kSCPreferencesNotificationApply, 1<<1)
+        self.assertEqual(kSCPreferencesNotificationCommit, 1<<0)
+        self.assertEqual(kSCPreferencesNotificationApply, 1<<1)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(SCPreferencesGetTypeID(), (int, long))
+        self.assertIsInstance(SCPreferencesGetTypeID(), (int, long))
 
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
-        self.failUnlessIsInstance(ref, SCPreferencesRef)
+        self.assertIsInstance(ref, SCPreferencesRef)
 
-        self.failUnlessResultIsBOOL(SCPreferencesLock)
-        self.failUnlessArgIsBOOL(SCPreferencesLock, 1)
+        self.assertResultIsBOOL(SCPreferencesLock)
+        self.assertArgIsBOOL(SCPreferencesLock, 1)
         v = SCPreferencesLock(ref, False)
-        self.failUnlessIsInstance(v, bool)
+        self.assertIsInstance(v, bool)
 
-        self.failUnlessResultIsBOOL(SCPreferencesUnlock)
+        self.assertResultIsBOOL(SCPreferencesUnlock)
         v = SCPreferencesUnlock(ref)
-        self.failUnlessIsInstance(v, bool)
+        self.assertIsInstance(v, bool)
 
-        self.failUnlessResultIsBOOL(SCPreferencesCommitChanges)
+        self.assertResultIsBOOL(SCPreferencesCommitChanges)
         v = SCPreferencesCommitChanges(ref)
-        self.failUnlessIsInstance(v, bool)
+        self.assertIsInstance(v, bool)
 
-        self.failUnlessResultIsBOOL(SCPreferencesApplyChanges)
+        self.assertResultIsBOOL(SCPreferencesApplyChanges)
         v = SCPreferencesApplyChanges(ref)
-        self.failUnlessIsInstance(v, bool)
+        self.assertIsInstance(v, bool)
 
         r = SCPreferencesGetSignature(ref)
-        self.failUnlessIsInstance(r, CFDataRef)
+        self.assertIsInstance(r, CFDataRef)
 
         r = SCPreferencesCopyKeyList(ref)
-        self.failUnlessIsInstance(r, CFArrayRef)
+        self.assertIsInstance(r, CFArrayRef)
 
         l = []
         def callback(ref, key, ctx):
@@ -44,31 +44,31 @@ class TestSCPreferences (TestCase):
         ctx = object()
 
         v = SCPreferencesSetCallback(ref, callback, ctx)
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
-        self.failUnlessResultIsBOOL(SCPreferencesAddValue)
+        self.assertResultIsBOOL(SCPreferencesAddValue)
         r = SCPreferencesAddValue(ref, "use_python3", False)
-        self.failUnless(r is True)
+        self.assertTrue(r is True)
 
         v = SCPreferencesGetValue(ref, "use_python3")
-        self.failUnless(v is False)
+        self.assertTrue(v is False)
 
         v = SCPreferencesGetValue(ref, "use_python4")
-        self.failUnless(v is None)
+        self.assertTrue(v is None)
 
-        self.failUnlessResultIsBOOL(SCPreferencesSetValue)
+        self.assertResultIsBOOL(SCPreferencesSetValue)
         r = SCPreferencesSetValue(ref, "use_python3", "on newyearsday")
-        self.failUnless(r is True)
+        self.assertTrue(r is True)
 
-        self.failUnlessResultIsBOOL(SCPreferencesRemoveValue)
+        self.assertResultIsBOOL(SCPreferencesRemoveValue)
         r = SCPreferencesRemoveValue(ref, "use_python3")
 
-        self.failUnlessResultIsBOOL(SCPreferencesScheduleWithRunLoop)
+        self.assertResultIsBOOL(SCPreferencesScheduleWithRunLoop)
         rl = CFRunLoopGetCurrent()
         r = SCPreferencesScheduleWithRunLoop(ref, rl, kCFRunLoopCommonModes)
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, False)
 
-        self.failUnlessResultIsBOOL(SCPreferencesUnscheduleFromRunLoop)
+        self.assertResultIsBOOL(SCPreferencesUnscheduleFromRunLoop)
         r = SCPreferencesUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
 
 
@@ -82,7 +82,7 @@ class TestSCPreferences (TestCase):
         # XXX: Security frameworks aren't wrapped yet
         aref = None
         ref = SCPreferencesCreateWithAuthorization(None, "pyobjc.test", "pyobjc.test", aref)
-        self.failUnlessIsInstance(ref, SCPreferencesRef)
+        self.assertIsInstance(ref, SCPreferencesRef)
 
 
 

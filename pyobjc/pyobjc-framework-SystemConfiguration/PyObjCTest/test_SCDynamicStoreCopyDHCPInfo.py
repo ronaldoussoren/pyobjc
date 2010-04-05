@@ -8,16 +8,16 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
             pass
 
         st = SCDynamicStoreCreate(None, "pyobjc.test", callback, None)
-        self.failUnless(isinstance(st, SCDynamicStoreRef))
+        self.assertTrue(isinstance(st, SCDynamicStoreRef))
 
         info = SCDynamicStoreCopyDHCPInfo(st, None)
-        self.failUnless(isinstance(info, CFDictionaryRef))
+        self.assertTrue(isinstance(info, CFDictionaryRef))
 
         r = DHCPInfoGetOptionData(info,  1)
-        self.failUnless(r is None or isinstance(r, CFDataRef))
+        self.assertTrue(r is None or isinstance(r, CFDataRef))
 
         r = DHCPInfoGetLeaseStartTime(info)
-        self.failUnless(r is None or isinstance(r, CFDateRef))
+        self.assertTrue(r is None or isinstance(r, CFDateRef))
 
 if __name__ == "__main__":
     main()

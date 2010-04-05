@@ -527,13 +527,16 @@ static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 } /* sentinel */
 };
 
-void init_manual(void);
-
-void
-init_manual(void)
+PyObjC_MODULE_INIT(_manual)
 {
-	PyObject* m = Py_InitModule4("_manual", mod_methods,
-			mod_doc, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_manual);
+	if (!m) {
+		PyObjC_INITERROR();
+	}
 
-	if (PyObjC_ImportAPI(m) < 0) { return; }
+	if (PyObjC_ImportAPI(m) < 0) { 
+		PyObjC_INITERROR();
+	}
+
+	PyObjC_INITDONE();
 }

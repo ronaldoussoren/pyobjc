@@ -6,30 +6,30 @@ class TestSCPreferencesPath (TestCase):
 
     def testFunctions(self):
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
-        self.failUnlessIsInstance(ref, SCPreferencesRef)
+        self.assertIsInstance(ref, SCPreferencesRef)
 
         r = SCPreferencesAddValue(ref, "use", 
                 NSMutableDictionary.dictionaryWithDictionary_(
                     { "python2": True, "python3": False }))
-        self.failUnless(r)
+        self.assertTrue(r)
 
         v = SCPreferencesPathCreateUniqueChild(ref, "/")
-        self.failUnlessIsInstance(v, unicode)
+        self.assertIsInstance(v, unicode)
 
         v = SCPreferencesPathGetValue(ref, "/use")
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
         v = SCPreferencesPathSetValue(ref, "/use", dict(python2=True, python3=True))
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         v = SCPreferencesPathSetLink(ref, "/use_python", "/use")
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         v = SCPreferencesPathGetLink(ref, "/use_python")
-        self.failUnlessEqual(v, "/use")
+        self.assertEqual(v, "/use")
 
         v = SCPreferencesPathRemoveValue(ref, "/use")
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
 if __name__ == "__main__":
     main()
