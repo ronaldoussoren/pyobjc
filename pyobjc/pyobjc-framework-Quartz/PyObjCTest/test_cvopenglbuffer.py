@@ -4,34 +4,34 @@ from Quartz import *
 
 class TestCVOpenGLBuffer (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(kCVOpenGLBufferWidth, unicode)
-        self.failUnlessIsInstance(kCVOpenGLBufferHeight, unicode)
-        self.failUnlessIsInstance(kCVOpenGLBufferTarget, unicode)
-        self.failUnlessIsInstance(kCVOpenGLBufferInternalFormat, unicode)
-        self.failUnlessIsInstance(kCVOpenGLBufferMaximumMipmapLevel, unicode)
+        self.assertIsInstance(kCVOpenGLBufferWidth, unicode)
+        self.assertIsInstance(kCVOpenGLBufferHeight, unicode)
+        self.assertIsInstance(kCVOpenGLBufferTarget, unicode)
+        self.assertIsInstance(kCVOpenGLBufferInternalFormat, unicode)
+        self.assertIsInstance(kCVOpenGLBufferMaximumMipmapLevel, unicode)
 
     def testTypes(self):
-        self.failUnlessIsCFType(CVOpenGLBufferRef)
+        self.assertIsCFType(CVOpenGLBufferRef)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CVOpenGLBufferGetTypeID(), (int, long))
+        self.assertIsInstance(CVOpenGLBufferGetTypeID(), (int, long))
 
-        self.failUnlessArgIsOut(CVOpenGLBufferCreate, 4)
-        self.failUnlessArgIsCFRetained(CVOpenGLBufferCreate, 4)
+        self.assertArgIsOut(CVOpenGLBufferCreate, 4)
+        self.assertArgIsCFRetained(CVOpenGLBufferCreate, 4)
         rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(buf, CVOpenGLBufferRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(buf, CVOpenGLBufferRef)
 
         v = CVOpenGLBufferRetain(buf)
-        self.failUnless(v is buf)
+        self.assertTrue(v is buf)
 
         CVOpenGLBufferRelease(v)
 
         v = CVOpenGLBufferGetAttributes(buf)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
         # FIXME: actual test
-        self.failUnlessArgHasType(CVOpenGLBufferAttach, 0, '@')
+        self.assertArgHasType(CVOpenGLBufferAttach, 0, b'@')
 
 if __name__ == "__main__":
     main()

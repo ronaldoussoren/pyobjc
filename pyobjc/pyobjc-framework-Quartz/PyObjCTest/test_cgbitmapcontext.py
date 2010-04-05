@@ -6,32 +6,32 @@ import array
 class TestCGBitmapContext (TestCase):
     def testFunctions(self):
         bytes = array.array('B', (0 for i in xrange(100*80*4)))
-        self.failUnlessIsInstance(bytes, array.array)
-        self.failUnlessEqual(len(bytes), 100*80*4)
+        self.assertIsInstance(bytes, array.array)
+        self.assertEqual(len(bytes), 100*80*4)
         ctx = CGBitmapContextCreate(bytes, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
-        self.failUnlessIsInstance(ctx, CGContextRef)
+        self.assertIsInstance(ctx, CGContextRef)
 
         buf = CGBitmapContextGetData(ctx)
-        self.failUnlessIsInstance(buf, objc.varlist)
-        self.failUnlessIsInstance(buf[0], str)
+        self.assertIsInstance(buf, objc.varlist)
+        self.assertIsInstance(buf[0], bytes)
 
-        self.failUnlessEqual(CGBitmapContextGetWidth(ctx), 100)
-        self.failUnlessEqual(CGBitmapContextGetHeight(ctx), 80)
-        self.failUnlessEqual(CGBitmapContextGetBitsPerComponent(ctx), 8)
-        self.failUnlessEqual(CGBitmapContextGetBitsPerPixel(ctx), 32)
-        self.failUnlessEqual(CGBitmapContextGetBytesPerRow(ctx), 400)
+        self.assertEqual(CGBitmapContextGetWidth(ctx), 100)
+        self.assertEqual(CGBitmapContextGetHeight(ctx), 80)
+        self.assertEqual(CGBitmapContextGetBitsPerComponent(ctx), 8)
+        self.assertEqual(CGBitmapContextGetBitsPerPixel(ctx), 32)
+        self.assertEqual(CGBitmapContextGetBytesPerRow(ctx), 400)
 
         v = CGBitmapContextGetColorSpace(ctx)
-        self.failUnlessIsInstance(v, CGColorSpaceRef)
+        self.assertIsInstance(v, CGColorSpaceRef)
 
         v = CGBitmapContextGetAlphaInfo(ctx)
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGBitmapContextGetBitmapInfo(ctx)
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         img = CGBitmapContextCreateImage(ctx)
-        self.failUnlessIsInstance(img, CGImageRef)
+        self.assertIsInstance(img, CGImageRef)
 
 
     def testFunctions106_(self):

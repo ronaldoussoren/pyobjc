@@ -4,29 +4,29 @@ from Quartz.CoreGraphics import *
 
 class TestCGPDFContentStream (TestCase):
     def testTypes(self):
-        self.failUnlessIsOpaquePointer(CGPDFContentStreamRef)
+        self.assertIsOpaquePointer(CGPDFContentStreamRef)
 
     def testFunctions(self):
         doc = CGPDFDocumentCreateWithURL(
                 CFURLCreateWithFileSystemPath(None,
                     "/Library/Documentation/Applications/iMovie/Acknowledgements.pdf",
                     kCFURLPOSIXPathStyle, False))
-        self.failUnlessIsInstance(doc, CGPDFDocumentRef)
+        self.assertIsInstance(doc, CGPDFDocumentRef)
 
         page = CGPDFDocumentGetPage(doc, 1)
-        self.failUnlessIsInstance(page, CGPDFPageRef)
+        self.assertIsInstance(page, CGPDFPageRef)
 
         stream = CGPDFContentStreamCreateWithPage(page)
-        self.failUnlessIsInstance(stream, CGPDFContentStreamRef)
+        self.assertIsInstance(stream, CGPDFContentStreamRef)
 
 
         v = CGPDFContentStreamRetain(stream)
-        self.failUnlessEqual(v.__pointer__, stream.__pointer__)
+        self.assertEqual(v.__pointer__, stream.__pointer__)
 
         CGPDFContentStreamRelease(v)
 
-        v = CGPDFContentStreamGetResource(stream, "ColorSpace", "Cs1");
-        self.failUnlessIsInstance(v, CGPDFObject)
+        v = CGPDFContentStreamGetResource(stream, b"ColorSpace", b"Cs1");
+        self.assertIsInstance(v, CGPDFObject)
 
 
     def testIncomplete(self):

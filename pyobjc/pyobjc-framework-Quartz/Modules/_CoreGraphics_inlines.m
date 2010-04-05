@@ -1,4 +1,5 @@
 #include "Python.h"
+#include "pyobjc-api.h"
 #import <ApplicationServices/ApplicationServices.h>
 
 typedef void (*FUNCTION)(void);
@@ -20,10 +21,13 @@ static PyMethodDef mod_methods[] = {
         { 0, 0, 0, 0 } /* sentinel */
 };
 
-void init_inlines(void)
+PyObjC_MODULE_INIT(_inlines)
 {
-    PyObject* m = Py_InitModule4("_inlines", mod_methods, NULL, NULL, PYTHON_API_VERSION);
+    PyObject* m = PyObjC_MODULE_CREATE(_inlines);
+    if (!m) PyObjC_INITERROR();
 
-    PyModule_AddObject(m, "_inline_list_", 
-        PyCObject_FromVoidPtr(function_map, NULL));
+    if (PyModule_AddObject(m, "_inline_list_", 
+        PyObjC_CreateInlineTab(function_map)) < 0) PyObjC_INITERROR();
+
+    PyObjC_INITDONE();
 }

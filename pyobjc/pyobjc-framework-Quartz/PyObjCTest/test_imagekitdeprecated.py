@@ -13,40 +13,40 @@ class TestImageKitDeprecatedHelper (NSObject):
 class TestImageKitDeprecated (TestCase):
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessEqual(IKImagePickerAllowsVideoCaptureKey, IKPictureTakerAllowsVideoCaptureKey)
-        self.failUnlessEqual(IKImagePickerAllowsFileChoosingKey, IKPictureTakerAllowsFileChoosingKey)
-        self.failUnlessEqual(IKImagePickerShowRecentPictureKey, IKPictureTakerShowRecentPictureKey)
-        self.failUnlessEqual(IKImagePickerUpdateRecentPictureKey, IKPictureTakerUpdateRecentPictureKey)
-        self.failUnlessEqual(IKImagePickerAllowsEditingKey, IKPictureTakerAllowsEditingKey)
-        self.failUnlessEqual(IKImagePickerShowEffectsKey, IKPictureTakerShowEffectsKey)
-        self.failUnlessEqual(IKImagePickerInformationalTextKey, IKPictureTakerInformationalTextKey)
-        self.failUnlessEqual(IKImagePickerImageTransformsKey, IKPictureTakerImageTransformsKey)
-        self.failUnlessEqual(IKImagePickerOutputImageMaxSizeKey, IKPictureTakerOutputImageMaxSizeKey)
-        self.failUnlessEqual(IKImagePickerCropAreaSizeKey, IKPictureTakerCropAreaSizeKey)
+        self.assertEqual(IKImagePickerAllowsVideoCaptureKey, IKPictureTakerAllowsVideoCaptureKey)
+        self.assertEqual(IKImagePickerAllowsFileChoosingKey, IKPictureTakerAllowsFileChoosingKey)
+        self.assertEqual(IKImagePickerShowRecentPictureKey, IKPictureTakerShowRecentPictureKey)
+        self.assertEqual(IKImagePickerUpdateRecentPictureKey, IKPictureTakerUpdateRecentPictureKey)
+        self.assertEqual(IKImagePickerAllowsEditingKey, IKPictureTakerAllowsEditingKey)
+        self.assertEqual(IKImagePickerShowEffectsKey, IKPictureTakerShowEffectsKey)
+        self.assertEqual(IKImagePickerInformationalTextKey, IKPictureTakerInformationalTextKey)
+        self.assertEqual(IKImagePickerImageTransformsKey, IKPictureTakerImageTransformsKey)
+        self.assertEqual(IKImagePickerOutputImageMaxSizeKey, IKPictureTakerOutputImageMaxSizeKey)
+        self.assertEqual(IKImagePickerCropAreaSizeKey, IKPictureTakerCropAreaSizeKey)
 
-        self.failUnlessIsInstance(IKPictureTakerShowAddressBookPicture, unicode)
-        self.failUnlessIsInstance(IKPictureTakerShowEmptyPicture, unicode)
+        self.assertIsInstance(IKPictureTakerShowAddressBookPicture, unicode)
+        self.assertIsInstance(IKPictureTakerShowEmptyPicture, unicode)
 
     @min_os_level('10.5')
     def testMethods(self):
-        self.failUnlessArgIsSEL(IKImagePicker.beginImagePickerWithDelegate_didEndSelector_contextInfo_, 1, 'v@:@' + objc._C_NSUInteger + '^v')
-        self.failUnlessArgIsSEL(IKImagePicker.beginImagePickerSheetForWindow_withDelegate_didEndSelector_contextInfo_, 2, 'v@:@' + objc._C_NSUInteger + '^v')
+        self.assertArgIsSEL(IKImagePicker.beginImagePickerWithDelegate_didEndSelector_contextInfo_, 1, b'v@:@' + objc._C_NSUInteger + b'^v')
+        self.assertArgIsSEL(IKImagePicker.beginImagePickerSheetForWindow_withDelegate_didEndSelector_contextInfo_, 2, b'v@:@' + objc._C_NSUInteger + b'^v')
 
     @min_os_level('10.5')
     def testProtocols(self):
-        self.failUnlessIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
+        self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 
-        self.failUnlessResultHasType(TestImageKitDeprecatedHelper.numberOfCellsInImageBrowser_, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestImageKitDeprecatedHelper.imageBrowser_cellAtIndex_, 1, objc._C_NSUInteger)
-        self.failUnlessResultIsBOOL(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_)
-        self.failUnlessArgHasType(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_, 2, objc._C_NSUInteger)
+        self.assertResultHasType(TestImageKitDeprecatedHelper.numberOfCellsInImageBrowser_, objc._C_NSUInteger)
+        self.assertArgHasType(TestImageKitDeprecatedHelper.imageBrowser_cellAtIndex_, 1, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_)
+        self.assertArgHasType(TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_, 2, objc._C_NSUInteger)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeBackground, unicode)
-        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeForeground, unicode)
-        self.failUnlessIsInstance(IKImageBrowserCellLayerTypeSelection, unicode)
-        self.failUnlessIsInstance(IKImageBrowserCellLayerTypePlaceHolder, unicode)
+        self.assertIsInstance(IKImageBrowserCellLayerTypeBackground, unicode)
+        self.assertIsInstance(IKImageBrowserCellLayerTypeForeground, unicode)
+        self.assertIsInstance(IKImageBrowserCellLayerTypeSelection, unicode)
+        self.assertIsInstance(IKImageBrowserCellLayerTypePlaceHolder, unicode)
 
 if __name__ == "__main__":
     main()

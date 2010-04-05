@@ -4,40 +4,40 @@ from Quartz import *
 
 class TestCVPixelFormatDescription (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(kCVPixelFormatName, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatConstant, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatCodecType, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatFourCC, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatPlanes, unicode)
+        self.assertIsInstance(kCVPixelFormatName, unicode)
+        self.assertIsInstance(kCVPixelFormatConstant, unicode)
+        self.assertIsInstance(kCVPixelFormatCodecType, unicode)
+        self.assertIsInstance(kCVPixelFormatFourCC, unicode)
+        self.assertIsInstance(kCVPixelFormatPlanes, unicode)
 
-        self.failUnlessIsInstance(kCVPixelFormatBlockWidth, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatBlockHeight, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatBitsPerBlock, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatBlockHorizontalAlignment, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatBlockVerticalAlignment, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatHorizontalSubsampling, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatVerticalSubsampling, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatOpenGLFormat, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatOpenGLType, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatOpenGLInternalFormat, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatCGBitmapInfo, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatQDCompatibility, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatCGBitmapContextCompatibility, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatCGImageCompatibility, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatOpenGLCompatibility, unicode)
-        self.failUnlessIsInstance(kCVPixelFormatFillExtendedPixelsCallback, unicode)
+        self.assertIsInstance(kCVPixelFormatBlockWidth, unicode)
+        self.assertIsInstance(kCVPixelFormatBlockHeight, unicode)
+        self.assertIsInstance(kCVPixelFormatBitsPerBlock, unicode)
+        self.assertIsInstance(kCVPixelFormatBlockHorizontalAlignment, unicode)
+        self.assertIsInstance(kCVPixelFormatBlockVerticalAlignment, unicode)
+        self.assertIsInstance(kCVPixelFormatHorizontalSubsampling, unicode)
+        self.assertIsInstance(kCVPixelFormatVerticalSubsampling, unicode)
+        self.assertIsInstance(kCVPixelFormatOpenGLFormat, unicode)
+        self.assertIsInstance(kCVPixelFormatOpenGLType, unicode)
+        self.assertIsInstance(kCVPixelFormatOpenGLInternalFormat, unicode)
+        self.assertIsInstance(kCVPixelFormatCGBitmapInfo, unicode)
+        self.assertIsInstance(kCVPixelFormatQDCompatibility, unicode)
+        self.assertIsInstance(kCVPixelFormatCGBitmapContextCompatibility, unicode)
+        self.assertIsInstance(kCVPixelFormatCGImageCompatibility, unicode)
+        self.assertIsInstance(kCVPixelFormatOpenGLCompatibility, unicode)
+        self.assertIsInstance(kCVPixelFormatFillExtendedPixelsCallback, unicode)
 
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CVPixelFormatDescriptionCreateWithPixelFormatType)
+        self.assertResultIsCFRetained(CVPixelFormatDescriptionCreateWithPixelFormatType)
         v = CVPixelFormatDescriptionCreateWithPixelFormatType(None, kCVPixelFormatType_32ARGB)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
-        self.failUnlessResultIsCFRetained(CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes)
+        self.assertResultIsCFRetained(CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes)
         v = CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes(None)
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
         self.failIfEqual(len(v), 0)
-        self.failUnlessIsInstance(v[0], (int, long))
+        self.assertIsInstance(v[0], (int, long))
 
         tp = 42
         while tp in v:
@@ -48,7 +48,7 @@ class TestCVPixelFormatDescription (TestCase):
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(kCVPixelFormatBlackBlock, unicode)
+        self.assertIsInstance(kCVPixelFormatBlackBlock, unicode)
 
 
 

@@ -4,11 +4,11 @@ from Quartz.PDFKit import *
 
 class TestPDFAnnotation (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(PDFAnnotation.shouldDisplay)
-        self.failUnlessArgIsBOOL(PDFAnnotation.setShouldDisplay_, 0)
-        self.failUnlessResultIsBOOL(PDFAnnotation.shouldPrint)
-        self.failUnlessArgIsBOOL(PDFAnnotation.setShouldPrint_, 0)
-        self.failUnlessResultIsBOOL(PDFAnnotation.hasAppearanceStream)
+        self.assertResultIsBOOL(PDFAnnotation.shouldDisplay)
+        self.assertArgIsBOOL(PDFAnnotation.setShouldDisplay_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.shouldPrint)
+        self.assertArgIsBOOL(PDFAnnotation.setShouldPrint_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.hasAppearanceStream)
 
 if __name__ == "__main__":
     main()

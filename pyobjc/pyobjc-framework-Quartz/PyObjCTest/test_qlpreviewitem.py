@@ -12,7 +12,7 @@ class TestQLPreviewItem (TestCase):
     @min_os_level('10.6')
     def testClasses(self):
         v = objc.protocolNamed('QLPreviewItem')
-        self.failUnlessIsInstance(v, objc.formal_protocol)
+        self.assertIsInstance(v, objc.formal_protocol)
 
 if __name__ == "__main__":
     main()

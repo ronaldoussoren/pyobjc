@@ -5,153 +5,153 @@ from Quartz.CoreGraphics import *
 class TestCGDisplayConfiguration (TestCase):
 
     def testTypes(self):
-        self.failUnlessIsOpaquePointer(CGDisplayConfigRef)
+        self.assertIsOpaquePointer(CGDisplayConfigRef)
 
         err, config = CGBeginDisplayConfiguration(None)
-        self.failUnlessEqual(err, 0)
-        self.failUnlessIsInstance(config, CGDisplayConfigRef)
+        self.assertEqual(err, 0)
+        self.assertIsInstance(config, CGDisplayConfigRef)
 
         err = CGConfigureDisplayOrigin(config,
                 CGMainDisplayID(), 0, 0)
-        self.failUnlessEqual(err, 0)
+        self.assertEqual(err, 0)
 
         err = CGConfigureDisplayMode(config,
                 CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0])
-        self.failUnlessEqual(err, 0)
+        self.assertEqual(err, 0)
 
         err = CGConfigureDisplayStereoOperation(config,
                 CGMainDisplayID(), False, False)
-        self.failUnlessEqual(err, 0)
+        self.assertEqual(err, 0)
 
         err = CGConfigureDisplayMirrorOfDisplay(config,
                 CGMainDisplayID(), CGMainDisplayID())
-        self.failUnlessIsInstance(err, (int, long))
+        self.assertIsInstance(err, (int, long))
 
         err = CGCancelDisplayConfiguration(config)
-        self.failUnlessEqual(err, 0)
+        self.assertEqual(err, 0)
         config = None
 
         myInfo = object()
         info = []
         def reconfig(display, flags, userInfo):
-            self.failUnlessIsInstance(display, (int, long))
-            self.failUnlessIsInstance(flags, (int, long))
-            self.failUnless(userInfo is myInfo)
+            self.assertIsInstance(display, (int, long))
+            self.assertIsInstance(flags, (int, long))
+            self.assertTrue(userInfo is myInfo)
             info.append((display, flags, userInfo))
 
         try:
             err, config = CGBeginDisplayConfiguration(None)
-            self.failUnlessEqual(err, 0)
-            self.failUnlessIsInstance(config, CGDisplayConfigRef)
+            self.assertEqual(err, 0)
+            self.assertIsInstance(config, CGDisplayConfigRef)
 
             err = CGConfigureDisplayMode(config,
                     CGMainDisplayID(), CGDisplayAvailableModes(CGMainDisplayID())[0])
 
             err = CGDisplayRegisterReconfigurationCallback(reconfig, myInfo)
-            self.failUnlessEqual(err, 0)
+            self.assertEqual(err, 0)
 
             CGCompleteDisplayConfiguration(config, kCGConfigureForAppOnly)
 
-            self.failUnless(len(info) > 0)
+            self.assertTrue(len(info) > 0)
       
         finally:
             err = CGDisplayRemoveReconfigurationCallback(reconfig, myInfo)
-            self.failUnlessEqual(err, 0)
+            self.assertEqual(err, 0)
             l = len(info)
 
             CGRestorePermanentDisplayConfiguration()
 
-            self.failUnlessEqual(len(info), l)
+            self.assertEqual(len(info), l)
 
         err = CGDisplaySetStereoOperation(CGMainDisplayID(), False, False, kCGConfigureForAppOnly)
-        self.failUnlessIsInstance(err, (int, long))
+        self.assertIsInstance(err, (int, long))
 
         v = CGDisplayIsActive(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
         
         v = CGDisplayIsAsleep(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsOnline(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsMain(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsBuiltin(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsInMirrorSet(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsAlwaysInMirrorSet(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsInHWMirrorSet(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayMirrorsDisplay(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIsStereo(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayPrimaryDisplay(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayUnitNumber(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayVendorNumber(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayModelNumber(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplaySerialNumber(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayIOServicePort(CGMainDisplayID())
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGDisplayScreenSize(CGMainDisplayID())
-        self.failUnlessIsInstance(v, CGSize)
+        self.assertIsInstance(v, CGSize)
 
         v = CGDisplayRotation(CGMainDisplayID())
-        self.failUnlessIsInstance(v, float)
+        self.assertIsInstance(v, float)
 
         v = CGDisplayCopyColorSpace(CGMainDisplayID())
-        self.failUnlessIsInstance(v, CGColorSpaceRef)
+        self.assertIsInstance(v, CGColorSpaceRef)
 
 
     def testContents(self):
-        self.failUnlessEqual(kCGConfigureForAppOnly, 0)
-        self.failUnlessEqual(kCGConfigureForSession, 1)
-        self.failUnlessEqual(kCGConfigurePermanently, 2)
+        self.assertEqual(kCGConfigureForAppOnly, 0)
+        self.assertEqual(kCGConfigureForSession, 1)
+        self.assertEqual(kCGConfigurePermanently, 2)
 
-        self.failUnlessEqual(kCGDisplayBeginConfigurationFlag, (1 << 0))
-        self.failUnlessEqual(kCGDisplayMovedFlag, (1 << 1))
-        self.failUnlessEqual(kCGDisplaySetMainFlag, (1 << 2))
-        self.failUnlessEqual(kCGDisplaySetModeFlag, (1 << 3))
-        self.failUnlessEqual(kCGDisplayAddFlag, (1 << 4))
-        self.failUnlessEqual(kCGDisplayRemoveFlag, (1 << 5))
-        self.failUnlessEqual(kCGDisplayEnabledFlag, (1 << 8))
-        self.failUnlessEqual(kCGDisplayDisabledFlag, (1 << 9))
-        self.failUnlessEqual(kCGDisplayMirrorFlag, (1 << 10))
-        self.failUnlessEqual(kCGDisplayUnMirrorFlag, (1 << 11))
-        self.failUnlessEqual(kCGDisplayDesktopShapeChangedFlag, (1 << 12))
+        self.assertEqual(kCGDisplayBeginConfigurationFlag, (1 << 0))
+        self.assertEqual(kCGDisplayMovedFlag, (1 << 1))
+        self.assertEqual(kCGDisplaySetMainFlag, (1 << 2))
+        self.assertEqual(kCGDisplaySetModeFlag, (1 << 3))
+        self.assertEqual(kCGDisplayAddFlag, (1 << 4))
+        self.assertEqual(kCGDisplayRemoveFlag, (1 << 5))
+        self.assertEqual(kCGDisplayEnabledFlag, (1 << 8))
+        self.assertEqual(kCGDisplayDisabledFlag, (1 << 9))
+        self.assertEqual(kCGDisplayMirrorFlag, (1 << 10))
+        self.assertEqual(kCGDisplayUnMirrorFlag, (1 << 11))
+        self.assertEqual(kCGDisplayDesktopShapeChangedFlag, (1 << 12))
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.failUnlessResultHasType(CGConfigureDisplayWithDisplayMode, 'i')
-        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 0,
-                    '^{_CGDisplayConfigRef=}')
-        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 1,
-                        'I')
-        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 2,
-                            '^{CGDisplayMode}')
-        self.failUnlessArgHasType(CGConfigureDisplayWithDisplayMode, 3,
-                                '^{__CFDictionary=}')
+        self.assertResultHasType(CGConfigureDisplayWithDisplayMode, b'i')
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 0,
+                    b'^{_CGDisplayConfigRef=}')
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 1,
+                        b'I')
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 2,
+                            b'^{CGDisplayMode}')
+        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 3,
+                                b'^{__CFDictionary=}')
 
 
 if __name__ == "__main__":

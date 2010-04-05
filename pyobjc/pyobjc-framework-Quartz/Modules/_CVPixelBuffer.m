@@ -141,7 +141,7 @@ mod_CVPixelBufferCreateWithBytes(
 
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"CVPixelBufferCreateWithBytes",
 		(PyCFunction)mod_CVPixelBufferCreateWithBytes,
@@ -154,7 +154,7 @@ static PyMethodDef m_methods[] = {
 
 #else /* ! WITH_CORE_VIDEO */
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
@@ -162,11 +162,12 @@ static PyMethodDef m_methods[] = {
 
 
 
-void init_CVPixelBuffer(void);
-void init_CVPixelBuffer(void)
+PyObjC_MODULE_INIT(_CVPixelBuffer)
 {
-	PyObject* m = Py_InitModule4("_CVPixelBuffer", m_methods,
-				NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_CVPixelBuffer);
+	if (!m) PyObjC_INITERROR();
 
-	if (PyObjC_ImportAPI(m) < 0) { return; }
+	if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+
+	PyObjC_INITDONE();
 }

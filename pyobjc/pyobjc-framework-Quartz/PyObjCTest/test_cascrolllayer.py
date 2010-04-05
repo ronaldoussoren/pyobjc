@@ -5,10 +5,10 @@ from Quartz.QuartzCore import *
 class TestCAScrollLayer (TestCase):
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(kCAScrollNone, unicode)
-        self.failUnlessIsInstance(kCAScrollVertically, unicode)
-        self.failUnlessIsInstance(kCAScrollHorizontally, unicode)
-        self.failUnlessIsInstance(kCAScrollBoth, unicode)
+        self.assertIsInstance(kCAScrollNone, unicode)
+        self.assertIsInstance(kCAScrollVertically, unicode)
+        self.assertIsInstance(kCAScrollHorizontally, unicode)
+        self.assertIsInstance(kCAScrollBoth, unicode)
 
 
 if __name__ == "__main__":

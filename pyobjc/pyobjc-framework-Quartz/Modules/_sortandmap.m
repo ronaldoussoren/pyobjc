@@ -24,7 +24,7 @@ m_CGPDFDictionaryApplierFunction(
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
-	PyTuple_SET_ITEM(args, 0, PyString_FromString(key));
+	PyTuple_SET_ITEM(args, 0, PyBytes_FromString(key));
 	if (PyTuple_GET_ITEM(args, 0) == NULL) {
 		Py_DECREF(args);
 		PyObjCErr_ToObjCWithGILState(&state);
@@ -195,7 +195,7 @@ m_CGPathApply(PyObject* self __attribute__((__unused__)),
 	return Py_None;
 }
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"CGPDFDictionaryApplyFunction",
 		(PyCFunction)m_CGPDFDictionaryApplyFunction,
@@ -219,12 +219,11 @@ static PyMethodDef m_methods[] = {
 };
 
 
-void init_sortandmap(void);
-void init_sortandmap(void)
+PyObjC_MODULE_INIT(_sortandmap)
 {
-	PyObject* m = Py_InitModule4("_sortandmap", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_sortandmap);
 
-	if (PyObjC_ImportAPI(m) < 0) { return; }
+	if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+
+	PyObjC_INITDONE();
 }
-

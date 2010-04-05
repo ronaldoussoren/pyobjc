@@ -4,7 +4,7 @@ from Quartz.QuartzCore import *
 
 class TestCIPlugIn (TestCase):
     def testMethods(self):
-        self.failUnlessArgIsBOOL(CIPlugIn.loadPlugIn_allowNonExecutable_, 1)
+        self.assertArgIsBOOL(CIPlugIn.loadPlugIn_allowNonExecutable_, 1)
 
 if __name__ == "__main__":
     main()

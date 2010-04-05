@@ -155,7 +155,7 @@ m_CGReleaseScreenRefreshRects(
 }
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"CGWaitForScreenRefreshRects",
 		(PyCFunction)m_CGWaitForScreenRefreshRects,
@@ -179,12 +179,11 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-void init_doubleindirect(void);
-void init_doubleindirect(void)
+PyObjC_MODULE_INIT(_doubleindirect)
 {
-	PyObject* m = Py_InitModule4("_doubleindirect", m_methods,
-				NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_doubleindirect);
 
-	if (PyObjC_ImportAPI(m) < 0) { return; }
+	if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
+	PyObjC_INITDONE();
 }

@@ -18,16 +18,16 @@ class TestQLPreviewPanelHelper (NSObject):
 class TestQLPreviewPanel (TestCase):
     @min_os_level('10.6')
     def testClasses(self):
-        self.failUnlessIsInstance(QLPreviewPanel, objc.objc_class)
+        self.assertIsInstance(QLPreviewPanel, objc.objc_class)
 
     @min_os_level('10.6')
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QLPreviewPanel.sharedPreviewPanelExists)
-        self.failUnlessResultIsBOOL(QLPreviewPanel.enterFullScreenMode_withOptions_)
-        self.failUnlessResultIsBOOL(QLPreviewPanel.isInFullScreenMode)
+        self.assertResultIsBOOL(QLPreviewPanel.sharedPreviewPanelExists)
+        self.assertResultIsBOOL(QLPreviewPanel.enterFullScreenMode_withOptions_)
+        self.assertResultIsBOOL(QLPreviewPanel.isInFullScreenMode)
 
-        self.failUnlessResultIsBOOL(TestQLPreviewPanelHelper.acceptsPreviewPanelControl_)
-        self.failUnlessResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
+        self.assertResultIsBOOL(TestQLPreviewPanelHelper.acceptsPreviewPanelControl_)
+        self.assertResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
 
         #previewPanel_sourceFrameOnScreenForPreviewItem_
         #previewPanel_transitionImageForPreviewItem_contentRect_

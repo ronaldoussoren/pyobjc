@@ -4,40 +4,50 @@ from Quartz import *
 from CoreFoundation import CFArrayRef
 from Foundation import NSMutableData
 
+import sys
+
+if sys.version_info[0] != 2:
+    def buffer(value):
+        if isinstance(value, bytes):
+            return value
+        return value.encode('latin1')
+
+
+
 class TestCGImageDestination (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CGImageDestinationRef)
+        self.assertIsCFType(CGImageDestinationRef)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCGImageDestinationLossyCompressionQuality, unicode)
-        self.failUnlessIsInstance(kCGImageDestinationBackgroundColor, unicode)
+        self.assertIsInstance(kCGImageDestinationLossyCompressionQuality, unicode)
+        self.assertIsInstance(kCGImageDestinationBackgroundColor, unicode)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CGImageDestinationGetTypeID(), (int, long))
+        self.assertIsInstance(CGImageDestinationGetTypeID(), (int, long))
 
-        self.failUnlessResultIsCFRetained(CGImageDestinationCopyTypeIdentifiers)
+        self.assertResultIsCFRetained(CGImageDestinationCopyTypeIdentifiers)
         v = CGImageDestinationCopyTypeIdentifiers()
-        self.failUnlessIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, CFArrayRef)
         if v:
-            self.failUnlessIsInstance(v[0], unicode)
+            self.assertIsInstance(v[0], unicode)
 
         data = NSMutableData.data() 
-        self.failUnlessResultIsCFRetained(CGImageDestinationCreateWithData)
+        self.assertResultIsCFRetained(CGImageDestinationCreateWithData)
         dest = CGImageDestinationCreateWithData(data, v[0], 1, None)
-        self.failUnlessIsInstance(dest, CGImageDestinationRef)
+        self.assertIsInstance(dest, CGImageDestinationRef)
 
         url = CFURLCreateWithFileSystemPath(None,
                 "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
-        self.failUnlessResultIsCFRetained(CGImageDestinationCreateWithURL)
+        self.assertResultIsCFRetained(CGImageDestinationCreateWithURL)
         dest = CGImageDestinationCreateWithURL(url, "public.tiff", 2, None)
-        self.failUnlessIsInstance(dest, CGImageDestinationRef)
+        self.assertIsInstance(dest, CGImageDestinationRef)
 
         CGImageDestinationSetProperties(dest, {u'key': u'value'})
 
         provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
         img = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), 
                 kCGImageAlphaPremultipliedLast, provider, None, False, kCGRenderingIntentDefault)
-        self.failUnlessIsInstance(img, CGImageRef)
+        self.assertIsInstance(img, CGImageRef)
 
         CGImageDestinationAddImage(dest, img, None)
 
@@ -48,16 +58,16 @@ class TestCGImageDestination (TestCase):
         isrc = CGImageSourceCreateWithURL(url, None)
         CGImageDestinationAddImageFromSource(dest,  isrc, 0, None)
 
-        self.failUnlessResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
+        self.assertResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
         v = CGImageDestinationFinalize(dest)
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
         dta = NSMutableData.alloc().init()
         cons = CGDataConsumerCreateWithCFData(dta)
 
-        self.failUnlessResultIsCFRetained(CGImageDestinationCreateWithDataConsumer)
+        self.assertResultIsCFRetained(CGImageDestinationCreateWithDataConsumer)
         c = CGImageDestinationCreateWithDataConsumer(cons, 'public.tiff', 1, None)
-        self.failUnlessIsInstance(c, CGImageDestinationRef)
+        self.assertIsInstance(c, CGImageDestinationRef)
 
 if __name__ == "__main__":
     main()

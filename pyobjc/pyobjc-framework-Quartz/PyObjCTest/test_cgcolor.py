@@ -4,69 +4,69 @@ from Quartz.CoreGraphics import *
 
 class TestCGColor (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CGColorRef)
+        self.assertIsCFType(CGColorRef)
 
     @min_os_level('10.5')
     def testFunctions10_5(self):
-        self.failUnlessResultIsCFRetained(CGColorCreateGenericGray)
+        self.assertResultIsCFRetained(CGColorCreateGenericGray)
         color = CGColorCreateGenericGray(0.75, 0.8)
-        self.failUnlessIsInstance(color, CGColorRef)
+        self.assertIsInstance(color, CGColorRef)
 
-        self.failUnlessResultIsCFRetained(CGColorCreateGenericRGB)
+        self.assertResultIsCFRetained(CGColorCreateGenericRGB)
         color = CGColorCreateGenericRGB(0.75, 0.8, 1.0, 0.5)
-        self.failUnlessIsInstance(color, CGColorRef)
+        self.assertIsInstance(color, CGColorRef)
 
-        self.failUnlessResultIsCFRetained(CGColorCreateGenericCMYK)
+        self.assertResultIsCFRetained(CGColorCreateGenericCMYK)
         color = CGColorCreateGenericCMYK(0.75, 0.8, 0.5, 1.0, 0.5)
-        self.failUnlessIsInstance(color, CGColorRef)
+        self.assertIsInstance(color, CGColorRef)
 
         color = CGColorGetConstantColor(kCGColorWhite)
-        self.failUnlessIsInstance(color, CGColorRef)
+        self.assertIsInstance(color, CGColorRef)
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CGColorCreate)
+        self.assertResultIsCFRetained(CGColorCreate)
         color = CGColorCreate(CGColorSpaceCreateDeviceRGB(),
                 [1.0, 0.5, 0.5])
-        self.failUnlessIsInstance(color, CGColorRef)
+        self.assertIsInstance(color, CGColorRef)
 
-        self.failUnlessResultIsCFRetained(CGColorCreateCopy)
+        self.assertResultIsCFRetained(CGColorCreateCopy)
         v = CGColorCreateCopy(color)
-        self.failUnlessIsInstance(v, CGColorRef)
+        self.assertIsInstance(v, CGColorRef)
 
-        self.failUnlessResultIsCFRetained(CGColorCreateCopyWithAlpha)
+        self.assertResultIsCFRetained(CGColorCreateCopyWithAlpha)
         v = CGColorCreateCopyWithAlpha(color, 0.7)
-        self.failUnlessIsInstance(v, CGColorRef)
+        self.assertIsInstance(v, CGColorRef)
 
         CGColorRetain(color)
         CGColorRelease(color)
 
-        self.failUnlessResultHasType(CGColorEqualToColor, objc._C_BOOL)
-        self.failUnless(CGColorEqualToColor(color, color) is True)
-        self.failUnless(CGColorEqualToColor(color, v) is False)
+        self.assertResultHasType(CGColorEqualToColor, objc._C_BOOL)
+        self.assertTrue(CGColorEqualToColor(color, color) is True)
+        self.assertTrue(CGColorEqualToColor(color, v) is False)
 
-        self.failUnlessEqual(CGColorGetNumberOfComponents(color), 4)
+        self.assertEqual(CGColorGetNumberOfComponents(color), 4)
         v = CGColorGetComponents(color)
-        self.failUnlessIsInstance(v, objc.varlist)
-        self.failUnlessIsInstance(v[0], float)
+        self.assertIsInstance(v, objc.varlist)
+        self.assertIsInstance(v[0], float)
 
         v = CGColorGetAlpha(color)
-        self.failUnlessIsInstance(v, float)
+        self.assertIsInstance(v, float)
 
         v = CGColorGetColorSpace(color)
-        self.failUnlessIsInstance(v, CGColorSpaceRef)
+        self.assertIsInstance(v, CGColorSpaceRef)
 
         v = CGColorGetPattern(color)
-        self.failUnless(v is None)
+        self.assertTrue(v is None)
 
-        self.failUnlessIsInstance(CGColorGetTypeID(), (int, long))
+        self.assertIsInstance(CGColorGetTypeID(), (int, long))
 
         # CGColorCreateWithPattern, CGColorGetPattern: tested in test_cgpattern
 
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(kCGColorWhite, unicode)
-        self.failUnlessIsInstance(kCGColorBlack, unicode)
-        self.failUnlessIsInstance(kCGColorClear, unicode)
+        self.assertIsInstance(kCGColorWhite, unicode)
+        self.assertIsInstance(kCGColorBlack, unicode)
+        self.assertIsInstance(kCGColorClear, unicode)
 
 if __name__ == "__main__":
     main()

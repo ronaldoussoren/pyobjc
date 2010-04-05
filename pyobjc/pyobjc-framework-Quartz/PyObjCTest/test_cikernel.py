@@ -5,7 +5,7 @@ from Quartz import *
 
 class TestCIKernel (TestCase):
     def testMethods(self):
-        self.failUnlessArgIsSEL(CIKernel.setROISelector_, 0, CGRect.__typestr__ + '@:i' + CGRect.__typestr__ + '@')
+        self.assertArgIsSEL(CIKernel.setROISelector_, 0, CGRect.__typestr__ + b'@:i' + CGRect.__typestr__ + b'@')
 
 if __name__ == "__main__":
     main()

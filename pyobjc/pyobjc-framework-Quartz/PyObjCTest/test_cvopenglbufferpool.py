@@ -4,43 +4,43 @@ from Quartz import *
 
 class TestCVOpenGLBufferPool (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CVOpenGLBufferPoolRef)
+        self.assertIsCFType(CVOpenGLBufferPoolRef)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCVOpenGLBufferPoolMinimumBufferCountKey, unicode)
-        self.failUnlessIsInstance(kCVOpenGLBufferPoolMaximumBufferAgeKey, unicode)
+        self.assertIsInstance(kCVOpenGLBufferPoolMinimumBufferCountKey, unicode)
+        self.assertIsInstance(kCVOpenGLBufferPoolMaximumBufferAgeKey, unicode)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CVOpenGLBufferPoolGetTypeID(), (int, long))
+        self.assertIsInstance(CVOpenGLBufferPoolGetTypeID(), (int, long))
 
         # FIXME: find some good creation parameters
-        self.failUnlessArgIsOut(CVOpenGLBufferPoolCreate, 3)
-        self.failUnlessArgIsCFRetained(CVOpenGLBufferPoolCreate, 3)
+        self.assertArgIsOut(CVOpenGLBufferPoolCreate, 3)
+        self.assertArgIsCFRetained(CVOpenGLBufferPoolCreate, 3)
         rv, pool = CVOpenGLBufferPoolCreate(None, {
             kCVOpenGLBufferPoolMinimumBufferCountKey: 1,
             kCVOpenGLBufferPoolMaximumBufferAgeKey: 42.0,
             }, {}, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(pool, CVOpenGLBufferPoolRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(pool, CVOpenGLBufferPoolRef)
 
         v = CVOpenGLBufferPoolRetain(pool)
-        self.failUnless(v is pool)
+        self.assertTrue(v is pool)
         CVOpenGLBufferPoolRelease(v)
 
         v = CVOpenGLBufferPoolGetAttributes(pool)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
         v = CVOpenGLBufferPoolGetOpenGLBufferAttributes(pool)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
-        self.failUnlessArgIsOut(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)
-        self.failUnlessArgIsCFRetained(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)
+        self.assertArgIsOut(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)
+        self.assertArgIsCFRetained(CVOpenGLBufferPoolCreateOpenGLBuffer, 2)
         rv, buf = CVOpenGLBufferPoolCreateOpenGLBuffer(None, pool, None)
-        self.failUnlessIsInstance(rv, (int, long))
+        self.assertIsInstance(rv, (int, long))
         if rv == 0:
-            self.failUnlessIsInstance(buf, CVOpenGLBufferRef)
+            self.assertIsInstance(buf, CVOpenGLBufferRef)
         else:
-            self.failUnless(buf is None)
+            self.assertTrue(buf is None)
 
 if __name__ == "__main__":
     main()

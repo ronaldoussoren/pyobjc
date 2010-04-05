@@ -5,17 +5,17 @@ from Quartz import *
 class TestCVPixelBufferPool (TestCase):
 
     def testTypes(self):
-        self.failUnlessIsCFType(CVPixelBufferPoolRef)
+        self.assertIsCFType(CVPixelBufferPoolRef)
 
     def testContants(self):
-        self.failUnlessIsInstance(kCVPixelBufferPoolMinimumBufferCountKey, unicode)
-        self.failUnlessIsInstance(kCVPixelBufferPoolMaximumBufferAgeKey, unicode)
+        self.assertIsInstance(kCVPixelBufferPoolMinimumBufferCountKey, unicode)
+        self.assertIsInstance(kCVPixelBufferPoolMaximumBufferAgeKey, unicode)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CVPixelBufferPoolGetTypeID(), (int, long))
+        self.assertIsInstance(CVPixelBufferPoolGetTypeID(), (int, long))
 
-        self.failUnlessArgIsCFRetained(CVPixelBufferPoolCreate, 3)
-        self.failUnlessArgIsOut(CVPixelBufferPoolCreate, 3)
+        self.assertArgIsCFRetained(CVPixelBufferPoolCreate, 3)
+        self.assertArgIsOut(CVPixelBufferPoolCreate, 3)
         rv, pool = CVPixelBufferPoolCreate(None, {
             kCVPixelBufferPoolMinimumBufferCountKey: 1,
             kCVPixelBufferPoolMaximumBufferAgeKey: 300,
@@ -24,24 +24,24 @@ class TestCVPixelBufferPool (TestCase):
                 kCVPixelBufferHeightKey: 100,
                 kCVPixelBufferPixelFormatTypeKey: kCVPixelFormatType_32ARGB,
             }, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(pool, CVPixelBufferPoolRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(pool, CVPixelBufferPoolRef)
 
 
         v = CVPixelBufferPoolRetain(pool)
-        self.failUnless(v is pool)
+        self.assertTrue(v is pool)
         CVPixelBufferPoolRelease(pool)
 
         v = CVPixelBufferPoolGetAttributes(pool)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
         v = CVPixelBufferPoolGetPixelBufferAttributes(pool)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
 
-        self.failUnlessArgIsOut(CVPixelBufferPoolCreatePixelBuffer, 2)
+        self.assertArgIsOut(CVPixelBufferPoolCreatePixelBuffer, 2)
         rv, image = CVPixelBufferPoolCreatePixelBuffer(None, pool, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(image, CVPixelBufferRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(image, CVPixelBufferRef)
 
 
 

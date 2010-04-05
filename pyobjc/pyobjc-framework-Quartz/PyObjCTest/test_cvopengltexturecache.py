@@ -4,30 +4,30 @@ from Quartz import *
 
 class TestCVOpenGLTextureCache (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CVOpenGLTextureCacheRef)
+        self.assertIsCFType(CVOpenGLTextureCacheRef)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCVOpenGLTextureCacheChromaSamplingModeKey, unicode)
-        self.failUnlessIsInstance(kCVOpenGLTextureCacheChromaSamplingModeAutomatic, unicode)
-        self.failUnlessIsInstance(kCVOpenGLTextureCacheChromaSamplingModeHighestQuality, unicode)
-        self.failUnlessIsInstance(kCVOpenGLTextureCacheChromaSamplingModeBestPerformance, unicode)
+        self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeKey, unicode)
+        self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeAutomatic, unicode)
+        self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeHighestQuality, unicode)
+        self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeBestPerformance, unicode)
 
     def testFunctions(self):
 
         self.fail("Create CGLContext and CGLFormat")
-        self.failUnlessArgIsOut(CVOpenGLTextureCacheCreate, 5)
+        self.assertArgIsOut(CVOpenGLTextureCacheCreate, 5)
         rv, cache = CVOpenGLTextureCacheCreate(None,  None, cglCtx, cglFmt, None, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(cache, CVOpenGLTextureCacheRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(cache, CVOpenGLTextureCacheRef)
 
         v = CVOpenGLTextureCacheRetain(cache)
-        self.failUnless(v is cache)
+        self.assertTrue(v is cache)
         CVOpenGLTextureCacheRelease(v)
 
         self.fail("Create CVImageBufferRef")
         rv, texture = CVOpenGLTextureCacheCreateTextureFromImage(None, cache, img, None, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(cache, CVOpenGLTextureRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(cache, CVOpenGLTextureRef)
 
         CVOpenGLTextureCacheFlush(cache, 0)
 

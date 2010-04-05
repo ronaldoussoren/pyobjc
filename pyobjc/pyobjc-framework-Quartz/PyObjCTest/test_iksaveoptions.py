@@ -8,7 +8,7 @@ class TestIKSaveOptions (TestCase):
 
     @min_os_level('10.6')
     def testProtocol10_6(self):
-        self.failUnlessResultIsBOOL(TestIKSaveOptionsHelper.saveOptions_shouldShowUTType_)
+        self.assertResultIsBOOL(TestIKSaveOptionsHelper.saveOptions_shouldShowUTType_)
 
 
 if __name__ == "__main__":

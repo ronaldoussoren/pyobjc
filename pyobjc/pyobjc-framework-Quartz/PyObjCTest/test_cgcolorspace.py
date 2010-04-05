@@ -2,144 +2,151 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import array
+import sys
+
+if sys.version_info[0] != 2:
+    def buffer(value):
+        if isintance(value, bytes):
+            return value
+        return value.encode('latin1')
 
 class TestCGColorSpace (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kCGRenderingIntentDefault, 0)
-        self.failUnlessEqual(kCGRenderingIntentAbsoluteColorimetric, 1)
-        self.failUnlessEqual(kCGRenderingIntentRelativeColorimetric, 2)
-        self.failUnlessEqual(kCGRenderingIntentPerceptual, 3)
-        self.failUnlessEqual(kCGRenderingIntentSaturation, 4)
+        self.assertEqual(kCGRenderingIntentDefault, 0)
+        self.assertEqual(kCGRenderingIntentAbsoluteColorimetric, 1)
+        self.assertEqual(kCGRenderingIntentRelativeColorimetric, 2)
+        self.assertEqual(kCGRenderingIntentPerceptual, 3)
+        self.assertEqual(kCGRenderingIntentSaturation, 4)
 
-        self.failUnlessEqual(kCGColorSpaceModelUnknown, -1)
-        self.failUnlessEqual(kCGColorSpaceModelMonochrome, 0)
-        self.failUnlessEqual(kCGColorSpaceModelRGB, 1)
-        self.failUnlessEqual(kCGColorSpaceModelCMYK, 2)
-        self.failUnlessEqual(kCGColorSpaceModelLab, 3)
-        self.failUnlessEqual(kCGColorSpaceModelDeviceN, 4)
-        self.failUnlessEqual(kCGColorSpaceModelIndexed, 5)
-        self.failUnlessEqual(kCGColorSpaceModelPattern, 6)
+        self.assertEqual(kCGColorSpaceModelUnknown, -1)
+        self.assertEqual(kCGColorSpaceModelMonochrome, 0)
+        self.assertEqual(kCGColorSpaceModelRGB, 1)
+        self.assertEqual(kCGColorSpaceModelCMYK, 2)
+        self.assertEqual(kCGColorSpaceModelLab, 3)
+        self.assertEqual(kCGColorSpaceModelDeviceN, 4)
+        self.assertEqual(kCGColorSpaceModelIndexed, 5)
+        self.assertEqual(kCGColorSpaceModelPattern, 6)
 
-        self.failUnlessIsInstance(kCGColorSpaceGenericGray, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceGenericRGB, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceGenericCMYK, unicode)
+        self.assertIsInstance(kCGColorSpaceGenericGray, unicode)
+        self.assertIsInstance(kCGColorSpaceGenericRGB, unicode)
+        self.assertIsInstance(kCGColorSpaceGenericCMYK, unicode)
 
-        self.failUnlessIsInstance(kCGColorSpaceUserGray, basestring)
-        self.failUnlessIsInstance(kCGColorSpaceUserRGB, basestring)
-        self.failUnlessIsInstance(kCGColorSpaceUserCMYK, basestring)
+        self.assertIsInstance(kCGColorSpaceUserGray, basestring)
+        self.assertIsInstance(kCGColorSpaceUserRGB, basestring)
+        self.assertIsInstance(kCGColorSpaceUserCMYK, basestring)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
-        self.failUnlessIsInstance(kCGColorSpaceGenericRGBLinear, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
-        self.failUnlessIsInstance(kCGColorSpaceSRGB, unicode)
+        self.assertIsInstance(kCGColorSpaceGenericRGBLinear, unicode)
+        self.assertIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
+        self.assertIsInstance(kCGColorSpaceSRGB, unicode)
 
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-        self.failUnlessIsInstance(kCGColorSpaceGenericGrayGamma2_2, unicode)
+        self.assertIsInstance(kCGColorSpaceGenericGrayGamma2_2, unicode)
 
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateDeviceGray)
-        self.failUnlessIsInstance(CGColorSpaceCreateDeviceGray(), CGColorSpaceRef)
+        self.assertResultIsCFRetained(CGColorSpaceCreateDeviceGray)
+        self.assertIsInstance(CGColorSpaceCreateDeviceGray(), CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateDeviceRGB)
-        self.failUnlessIsInstance(CGColorSpaceCreateDeviceRGB(), CGColorSpaceRef)
+        self.assertResultIsCFRetained(CGColorSpaceCreateDeviceRGB)
+        self.assertIsInstance(CGColorSpaceCreateDeviceRGB(), CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateDeviceCMYK)
-        self.failUnlessIsInstance(CGColorSpaceCreateDeviceCMYK(), CGColorSpaceRef)
+        self.assertResultIsCFRetained(CGColorSpaceCreateDeviceCMYK)
+        self.assertIsInstance(CGColorSpaceCreateDeviceCMYK(), CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateCalibratedGray)
+        self.assertResultIsCFRetained(CGColorSpaceCreateCalibratedGray)
         csp = CGColorSpaceCreateCalibratedGray((0, 0, 0), (1, 1, 1), 0.8)
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateCalibratedRGB)
+        self.assertResultIsCFRetained(CGColorSpaceCreateCalibratedRGB)
         csp = CGColorSpaceCreateCalibratedRGB((0.5, 0.5, 0.2), (0.9, 0.95, 1.0), (0.7, 0.8, 0.9), (0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99))
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateLab)
+        self.assertResultIsCFRetained(CGColorSpaceCreateLab)
         csp = CGColorSpaceCreateLab((0.1, 0.1, 0.1), (0.99, 0.99, 0.99), (0.1, 0.79, 0.5, 0.99))
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreatePattern)
+        self.assertResultIsCFRetained(CGColorSpaceCreatePattern)
         csp = CGColorSpaceCreatePattern(csp)
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateWithName)
+        self.assertResultIsCFRetained(CGColorSpaceCreateWithName)
         csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
         v = CGColorSpaceRetain(csp)
-        self.failUnless(v is csp)
+        self.assertTrue(v is csp)
         CGColorSpaceRelease(csp)
 
-        self.failUnlessIsInstance(CGColorSpaceGetTypeID(), (int, long))
-        self.failUnlessIsInstance(CGColorSpaceGetNumberOfComponents(csp), (int, long))
+        self.assertIsInstance(CGColorSpaceGetTypeID(), (int, long))
+        self.assertIsInstance(CGColorSpaceGetNumberOfComponents(csp), (int, long))
 
     @min_os_level('10.5')
     def testFunctions10_5(self):
         csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-        self.failUnlessIsInstance(CGColorSpaceGetModel(csp), (int, long))
+        self.assertIsInstance(CGColorSpaceGetModel(csp), (int, long))
 
         v = CGColorSpaceGetBaseColorSpace(csp)
-        self.failUnless(v is None)
+        self.assertTrue(v is None)
 
         v = CGColorSpaceCreatePattern(csp)
         v = CGColorSpaceGetBaseColorSpace(v)
-        self.failUnless(v is csp)
+        self.assertTrue(v is csp)
 
         v = CGColorSpaceGetColorTableCount(csp)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGColorSpaceCopyICCProfile(csp)
-        self.failUnlessIsInstance(v, CFDataRef)
+        self.assertIsInstance(v, CFDataRef)
 
         data = open('/Library/ColorSync/Profiles/WebSafeColors.icc', 'rb').read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         spc = CGColorSpaceCreateICCBased(3, [0.0, 255.0, 0.0, 255.0, 0.0, 255.0],
                 provider, CGColorSpaceCreateDeviceRGB())
-        self.failUnlessIsInstance(spc, CGColorSpaceRef)
+        self.assertIsInstance(spc, CGColorSpaceRef)
         
         dta= CGColorSpaceCopyICCProfile(spc)
-        self.failUnlessIsInstance(dta, CFDataRef)
+        self.assertIsInstance(dta, CFDataRef)
 
         spc = CGColorSpaceCreateIndexed(CGColorSpaceCreateDeviceRGB(), 10,
                 (0, 1, 2)*11)
-        self.failUnlessIsInstance(spc, CGColorSpaceRef) 
+        self.assertIsInstance(spc, CGColorSpaceRef) 
 
-        self.failUnlessEqual(CGColorSpaceGetModel(spc), kCGColorSpaceModelIndexed)
+        self.assertEqual(CGColorSpaceGetModel(spc), kCGColorSpaceModelIndexed)
 
         v = CGColorSpaceGetColorTableCount(spc)
-        self.failUnlessEqual(v, 11)
+        self.assertEqual(v, 11)
 
         buf = array.array('B', [99] * (3*11))
         v = CGColorSpaceGetColorTable(spc, buf)
-        self.failUnless(buf is v)
-        self.failUnless(buf[0] == 0)
-        self.failUnless(buf[1] == 1)
-        self.failUnless(buf[2] == 2)
-        self.failUnless(buf[3] == 0)
-        self.failUnless(buf[4] == 1)
-        self.failUnless(buf[5] == 2)
+        self.assertTrue(buf is v)
+        self.assertTrue(buf[0] == 0)
+        self.assertTrue(buf[1] == 1)
+        self.assertTrue(buf[2] == 2)
+        self.assertTrue(buf[3] == 0)
+        self.assertTrue(buf[4] == 1)
+        self.assertTrue(buf[5] == 2)
 
         spc = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-        self.failUnlessIsInstance(spc, CGColorSpaceRef)
+        self.assertIsInstance(spc, CGColorSpaceRef)
 
         dta= CGColorSpaceCopyICCProfile(spc)
-        self.failUnlessIsInstance(dta, CFDataRef)
+        self.assertIsInstance(dta, CFDataRef)
 
-        self.failUnlessResultIsCFRetained(CGColorSpaceCreateWithICCProfile)
+        self.assertResultIsCFRetained(CGColorSpaceCreateWithICCProfile)
         v = CGColorSpaceCreateWithICCProfile(dta)
-        self.failUnlessIsInstance(v, CGColorSpaceRef)
+        self.assertIsInstance(v, CGColorSpaceRef)
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
         csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-        self.failUnlessIsInstance(csp, CGColorSpaceRef)
+        self.assertIsInstance(csp, CGColorSpaceRef)
 
         v = CGColorSpaceCopyName(csp)
-        self.failUnlessIsInstance(v, unicode)
+        self.assertIsInstance(v, unicode)
         
 
 if __name__ == "__main__":

@@ -335,7 +335,7 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
 }
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
 	{
 		"CGFontCopyTableTags",
@@ -373,32 +373,43 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, }
 };
 
-void init_coregraphics(void);
-void init_coregraphics(void)
+PyObjC_MODULE_INIT(_coregraphics)
 {
-	PyObject* m = Py_InitModule4("_coregraphics", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+	PyObject* m = PyObjC_MODULE_CREATE(_coregraphics);
+	if (!m) PyObjC_INITERROR();
+
 #if PyObjC_BUILD_RELEASE >= 1005
 	PyObject* d = PyModule_GetDict(m);
+	if (!d) PyObjC_INITERROR();
 #endif
 
-        if (PyObjC_ImportAPI(m) < 0) { return; }
+        if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
 #if PyObjC_BUILD_RELEASE >= 1005
 	if (CGFontCopyTableTags == NULL) {
-		PyDict_DelItemString(d, "CGFontCopyTableTags");
+		if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
+			PyObjC_INITERROR();
+		}
 	}
 
 	if (CGWindowListCreate == NULL) {
-		PyDict_DelItemString(d, "CGWindowListCreate");
+		if (PyDict_DelItemString(d, "CGWindowListCreate") < 0) {
+			PyObjC_INITERROR();
+		}
 	}
 
 	if (CGWindowListCreateDescriptionFromArray == NULL) {
-		PyDict_DelItemString(d, "CGWindowListCreateDescriptionFromArray");
+		if (PyDict_DelItemString(d, "CGWindowListCreateDescriptionFromArray") < 0) {
+			PyObjC_INITERROR();
+		}
 	}
 
 	if (CGWindowListCreateImageFromArray == NULL) {
-		PyDict_DelItemString(d, "CGWindowListCreateImageFromArray");
+		if (PyDict_DelItemString(d, "CGWindowListCreateImageFromArray") < 0) {
+			PyObjC_INITERROR();
+		}
 	}
 #endif 
+
+	PyObjC_INITDONE();
 }
