@@ -18,32 +18,32 @@ class TestIMAVManagerHelper (NSObject):
 class TestIMAVManager (TestCase):
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(IMAVManagerStateChangedNotification, unicode)
-        self.failUnlessIsInstance(IMAVManagerURLToShareChangedNotification, unicode)
+        self.assertIsInstance(IMAVManagerStateChangedNotification, unicode)
+        self.assertIsInstance(IMAVManagerURLToShareChangedNotification, unicode)
 
-        self.failUnlessEqual(IMAVInactive, 0)
-        self.failUnlessEqual(IMAVRequested, 1)
-        self.failUnlessEqual(IMAVShuttingDown, 2)
-        self.failUnlessEqual(IMAVStartingUp, 3)
-        self.failUnlessEqual(IMAVPending, 4)
-        self.failUnlessEqual(IMAVRunning, 5)
+        self.assertEqual(IMAVInactive, 0)
+        self.assertEqual(IMAVRequested, 1)
+        self.assertEqual(IMAVShuttingDown, 2)
+        self.assertEqual(IMAVStartingUp, 3)
+        self.assertEqual(IMAVPending, 4)
+        self.assertEqual(IMAVRunning, 5)
 
-        self.failUnlessEqual(IMVideoOptimizationDefault, 0)
-        self.failUnlessEqual(IMVideoOptimizationStills, 1 << 0)
-        self.failUnlessEqual(IMVideoOptimizationReplacement, 1 << 1)
+        self.assertEqual(IMVideoOptimizationDefault, 0)
+        self.assertEqual(IMVideoOptimizationStills, 1 << 0)
+        self.assertEqual(IMVideoOptimizationReplacement, 1 << 1)
 
     def testInformalProtocol (self):
         self.assert_( hasattr(protocols, 'IMVideoDataSource') )
         self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
 
-        self.failUnlessArgIsOut(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0)
-        self.failUnlessArgHasType(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, 'o^I')
+        self.assertArgIsOut(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0)
+        self.assertArgHasType(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, b'o^I')
 
-        self.failUnlessResultIsBOOL(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_)
-        self.failUnlessArgIsIn(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_, 1)
+        self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_)
+        self.assertArgIsIn(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_, 1)
 
 
-        self.failUnlessResultIsBOOL(TestIMAVManagerHelper.renderIntoOpenGLBuffer_onScreen_forTime_)
+        self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoOpenGLBuffer_onScreen_forTime_)
 
 
 if __name__ == "__main__":
