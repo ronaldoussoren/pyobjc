@@ -140,10 +140,19 @@ m_CGDataProviderGetBytesCallback(
 		size_t count)
 {
 	PyObject* info = (PyObject*)_info;
+	PyObject* buf;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* buf = PyBuffer_FromReadWriteMemory(buffer, count);
+#if 	PY_VERSION_HEX >= 0x02070000
+	Py_buffer view;
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	buf = PyMemoryView_FromBuffer(&view);
+#else
+	buf = PyBuffer_FromReadWriteMemory(buffer, count);
+#endif
 	if (buf == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -314,10 +323,19 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer,
 		size_t offset, size_t count)
 {
 	PyObject* info = (PyObject*)_info;
+	PyObject* buf;
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-	PyObject* buf = PyBuffer_FromReadWriteMemory(buffer, count);
+#if 	PY_VERSION_HEX >= 0x02070000
+	Py_buffer view;
+	if (PyBuffer_FillInfo(&view, NULL, buffer, count, 1, PyBUF_WRITABLE) < 0) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	buf = PyMemoryView_FromBuffer(&view);
+#else
+	buf = PyBuffer_FromReadWriteMemory(buffer, count);
+#endif
 	if (buf == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -667,7 +685,11 @@ m_releaseData(void* _info, const void* data, size_t size)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
+#if PY_VERSION_MAJOR == 2
 	tag = PyInt_AsLong(PyTuple_GET_ITEM(info, 2));
+#else
+	tag = PyLong_AsLong(PyTuple_GET_ITEM(info, 2));
+#endif
 
 	if (PyTuple_GET_ITEM(info, 1) != Py_None) {
 		PyObject* result = PyObject_CallFunction(
@@ -762,8 +784,13 @@ m_CGFunctionEvaluateCallback(void* _info, const float* inData, float* outData)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
+#if PY_VERSION_MAJOR == 2
 	domdim = PyInt_AsLong(PyTuple_GET_ITEM(info, 2));
 	rangedim = PyInt_AsLong(PyTuple_GET_ITEM(info, 3));
+#else
+	domdim = PyLong_AsLong(PyTuple_GET_ITEM(info, 2));
+	rangedim = PyLong_AsLong(PyTuple_GET_ITEM(info, 3));
+#endif
 
 	PyObject* input;
 	if (inData) {
@@ -1998,7 +2025,7 @@ m_CGPSConverterCreate(
 }
 
 
-static PyMethodDef m_methods[] = {
+static PyMethodDef mod_methods[] = {
 	{
 		"CGDataConsumerCreate",
 		(PyCFunction)m_CGDataConsumerCreate,
@@ -2107,20 +2134,23 @@ static PyMethodDef m_methods[] = {
 	{ 0, 0, 0, }
 };
 
-void init_callbacks(void);
-void init_callbacks(void)
+PyObjC_MODULE_INIT(_callbacks)
 {
-	PyObject* m = Py_InitModule4("_callbacks", m_methods,
-		NULL, NULL, PYTHON_API_VERSION);
-	PyObject* md = PyModule_GetDict(m);
+	PyObject* m = PyObjC_MODULE_CREATE(_callbacks);
+	if (!m) PyObjC_INITERROR();
 
-        if (PyObjC_ImportAPI(m) < 0) { return; }
+	PyObject* md = PyModule_GetDict(m);
+	if (!md) PyObjC_INITERROR();
+
+        if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
 #if PyObjC_BUILD_RELEASE >= 1005
 	if (CGDataProviderCreateSequential == NULL) {
-		PyDict_DelItemString(md, "CGDataProviderCreateSequential");
+		if (PyDict_DelItemString(md, "CGDataProviderCreateSequential") < 0) {
+			PyObjC_INITERROR();
+		}
 	}
 #endif
 	
-
+	PyObjC_INITDONE();
 }

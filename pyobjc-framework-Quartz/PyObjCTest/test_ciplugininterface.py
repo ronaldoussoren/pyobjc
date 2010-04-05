@@ -8,11 +8,11 @@ class TestCIPluginInterfaceHelper (NSObject):
 
 class TestCIPlugInInterface (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestCIPluginInterfaceHelper.load_)
+        self.assertResultIsBOOL(TestCIPluginInterfaceHelper.load_)
 
     def no_testProtocol(self):
         p = objc.protocolNamed('CIPlugInRegistration')
-        self.failUnlessIsInstancE(p, objc.formal_protocol)
+        self.assertIsInstancE(p, objc.formal_protocol)
 
 if __name__ == "__main__":
     main()

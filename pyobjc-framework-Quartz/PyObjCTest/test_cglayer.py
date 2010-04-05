@@ -6,15 +6,15 @@ import os
 
 class TestCGLayer (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(CGLayerRef)
+        self.assertIsCFType(CGLayerRef)
 
     def setUp(self):
         url = CFURLCreateWithFileSystemPath(None,
             "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
-        self.failUnlessIsInstance(url, CFURLRef)
+        self.assertIsInstance(url, CFURLRef)
         context = CGPDFContextCreateWithURL(url,
             ((0, 0), (1000, 1000)), None)
-        self.failUnlessIsInstance(context, CGContextRef)
+        self.assertIsInstance(context, CGContextRef)
         CGContextBeginPage(context, objc.NULL)
 
         self.context = context
@@ -28,27 +28,27 @@ class TestCGLayer (TestCase):
 
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(CGLayerCreateWithContext)
+        self.assertResultIsCFRetained(CGLayerCreateWithContext)
         layer = CGLayerCreateWithContext(self.context, CGSize(50, 100), None)
-        self.failUnlessIsInstance(layer, CGLayerRef)
+        self.assertIsInstance(layer, CGLayerRef)
 
         v = CGLayerRetain(layer)
-        self.failUnless(v is layer)
+        self.assertTrue(v is layer)
         CGLayerRelease(layer)
 
         sz = CGLayerGetSize(layer)
-        self.failUnlessIsInstance(sz, CGSize)
-        self.failUnlessEqual(sz, CGSize(50, 100))
+        self.assertIsInstance(sz, CGSize)
+        self.assertEqual(sz, CGSize(50, 100))
 
         self.failIfResultIsCFRetained(CGLayerGetContext)
         ctx = CGLayerGetContext(layer)
-        self.failUnlessIsInstance(ctx, CGContextRef)
+        self.assertIsInstance(ctx, CGContextRef)
         self.failIf(ctx is self.context)
 
         CGContextDrawLayerInRect(self.context, CGRectMake(0, 0, 50, 50), layer)
         CGContextDrawLayerAtPoint(self.context, CGPoint(10, 10), layer)
 
-        self.failUnlessIsInstance(CGLayerGetTypeID(), (int, long))
+        self.assertIsInstance(CGLayerGetTypeID(), (int, long))
 
 if __name__ == "__main__":
     main()

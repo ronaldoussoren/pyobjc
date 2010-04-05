@@ -5,19 +5,19 @@ from Quartz import *
 class TestIKFilterBrowserPanel (TestCase):
     @min_os_level('10.5')
     def testMethods(self):
-        self.failUnlessArgIsSEL(IKFilterBrowserPanel.beginWithOptions_modelessDelegate_didEndSelector_contextInfo_, 2, "v@:@i^v")
-        self.failUnlessArgIsSEL(IKFilterBrowserPanel.beginSheetWithOptions_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, "v@:@i^v")
+        self.assertArgIsSEL(IKFilterBrowserPanel.beginWithOptions_modelessDelegate_didEndSelector_contextInfo_, 2, b"v@:@i^v")
+        self.assertArgIsSEL(IKFilterBrowserPanel.beginSheetWithOptions_modalForWindow_modalDelegate_didEndSelector_contextInfo_, 3, b"v@:@i^v")
 
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessIsInstance(IKFilterBrowserFilterSelectedNotification, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserFilterDoubleClickNotification, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserWillPreviewFilterNotification, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserShowCategories, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserShowPreview, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserExcludeCategories, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserExcludeFilters, unicode)
-        self.failUnlessIsInstance(IKFilterBrowserDefaultInputImage, unicode)
+        self.assertIsInstance(IKFilterBrowserFilterSelectedNotification, unicode)
+        self.assertIsInstance(IKFilterBrowserFilterDoubleClickNotification, unicode)
+        self.assertIsInstance(IKFilterBrowserWillPreviewFilterNotification, unicode)
+        self.assertIsInstance(IKFilterBrowserShowCategories, unicode)
+        self.assertIsInstance(IKFilterBrowserShowPreview, unicode)
+        self.assertIsInstance(IKFilterBrowserExcludeCategories, unicode)
+        self.assertIsInstance(IKFilterBrowserExcludeFilters, unicode)
+        self.assertIsInstance(IKFilterBrowserDefaultInputImage, unicode)
 
 if __name__ == "__main__":
     main()

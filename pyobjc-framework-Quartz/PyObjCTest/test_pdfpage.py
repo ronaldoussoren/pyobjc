@@ -4,15 +4,15 @@ from Quartz.PDFKit import *
 
 class TestPDFPage (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kPDFDisplayBoxMediaBox, 0)
-        self.failUnlessEqual(kPDFDisplayBoxCropBox, 1)
-        self.failUnlessEqual(kPDFDisplayBoxBleedBox, 2)
-        self.failUnlessEqual(kPDFDisplayBoxTrimBox, 3)
-        self.failUnlessEqual(kPDFDisplayBoxArtBox, 4)
+        self.assertEqual(kPDFDisplayBoxMediaBox, 0)
+        self.assertEqual(kPDFDisplayBoxCropBox, 1)
+        self.assertEqual(kPDFDisplayBoxBleedBox, 2)
+        self.assertEqual(kPDFDisplayBoxTrimBox, 3)
+        self.assertEqual(kPDFDisplayBoxArtBox, 4)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(PDFPage.displaysAnnotations)
-        self.failUnlessArgIsBOOL(PDFPage.setDisplaysAnnotations_, 0)
+        self.assertResultIsBOOL(PDFPage.displaysAnnotations)
+        self.assertArgIsBOOL(PDFPage.setDisplaysAnnotations_, 0)
 
 if __name__ == "__main__":
     main()

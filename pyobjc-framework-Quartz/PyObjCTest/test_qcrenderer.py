@@ -7,13 +7,13 @@ class TestQCRendererHelper (NSObject):
 
 class TestQCRenderer (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(QCRendererEventKey, unicode)
-        self.failUnlessIsInstance(QCRendererMouseLocationKey, unicode)
+        self.assertIsInstance(QCRendererEventKey, unicode)
+        self.assertIsInstance(QCRendererMouseLocationKey, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)
+        self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)
 
-        self.failUnlessResultIsBOOL(QCRenderer.renderAtTime_arguments_)
+        self.assertResultIsBOOL(QCRenderer.renderAtTime_arguments_)
 
 
 if __name__ == "__main__":

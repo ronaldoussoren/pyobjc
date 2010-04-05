@@ -4,31 +4,31 @@ from Quartz.CoreGraphics import *
 
 class TestCGRemoteOperation (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(CGEventNoErr, kCGErrorSuccess)
+        self.assertEqual(CGEventNoErr, kCGErrorSuccess)
 
-        self.failUnlessEqual(kCGScreenUpdateOperationRefresh, 0)
-        self.failUnlessEqual(kCGScreenUpdateOperationMove, cast_int(1 << 0))
-        self.failUnlessEqual(kCGScreenUpdateOperationReducedDirtyRectangleCount, cast_int(1 << 31))
+        self.assertEqual(kCGScreenUpdateOperationRefresh, 0)
+        self.assertEqual(kCGScreenUpdateOperationMove, cast_int(1 << 0))
+        self.assertEqual(kCGScreenUpdateOperationReducedDirtyRectangleCount, cast_int(1 << 31))
 
-        self.failUnlessEqual(kCGEventFilterMaskPermitLocalMouseEvents, 1)
-        self.failUnlessEqual(kCGEventFilterMaskPermitLocalKeyboardEvents, 2)
-        self.failUnlessEqual(kCGEventFilterMaskPermitSystemDefinedEvents, 4)
-        self.failUnlessEqual(kCGEventFilterMaskPermitAllEvents, 7)
+        self.assertEqual(kCGEventFilterMaskPermitLocalMouseEvents, 1)
+        self.assertEqual(kCGEventFilterMaskPermitLocalKeyboardEvents, 2)
+        self.assertEqual(kCGEventFilterMaskPermitSystemDefinedEvents, 4)
+        self.assertEqual(kCGEventFilterMaskPermitAllEvents, 7)
 
-        self.failUnlessEqual(kCGEventSuppressionStateSuppressionInterval, 0)
-        self.failUnlessEqual(kCGEventSuppressionStateRemoteMouseDrag, 1)
-        self.failUnlessEqual(kCGNumberOfEventSuppressionStates, 2)
+        self.assertEqual(kCGEventSuppressionStateSuppressionInterval, 0)
+        self.assertEqual(kCGEventSuppressionStateRemoteMouseDrag, 1)
+        self.assertEqual(kCGNumberOfEventSuppressionStates, 2)
 
-        self.failUnlessEqual(kCGMouseDownEventMaskingDeadSwitchTimeout, 60.0)
+        self.assertEqual(kCGMouseDownEventMaskingDeadSwitchTimeout, 60.0)
 
-        self.failUnlessEqual(kCGEventSupressionStateSupressionInterval, kCGEventSuppressionStateSuppressionInterval)
-        self.failUnlessEqual(kCGEventSupressionStateRemoteMouseDrag, kCGEventSuppressionStateRemoteMouseDrag)
-        self.failUnlessEqual(kCGNumberOfEventSupressionStates, kCGNumberOfEventSuppressionStates)
+        self.assertEqual(kCGEventSupressionStateSupressionInterval, kCGEventSuppressionStateSuppressionInterval)
+        self.assertEqual(kCGEventSupressionStateRemoteMouseDrag, kCGEventSuppressionStateRemoteMouseDrag)
+        self.assertEqual(kCGNumberOfEventSupressionStates, kCGNumberOfEventSuppressionStates)
 
     def testStructs(self):
         v = CGScreenUpdateMoveDelta()
-        self.failUnless(hasattr(v, 'dX'))
-        self.failUnless(hasattr(v, 'dY'))
+        self.assertTrue(hasattr(v, 'dX'))
+        self.assertTrue(hasattr(v, 'dY'))
 
 
 
@@ -37,15 +37,15 @@ class TestCGRemoteOperation (TestCase):
         myInfo = object()
         callcount = [0]
         def callbackRefresh(count, rects, info):
-            self.failUnless(info is myInfo)
-            self.failUnlessIsInstance(rects, tuple)
-            self.failUnlessIsInstance(count, (int, long))
+            self.assertTrue(info is myInfo)
+            self.assertIsInstance(rects, tuple)
+            self.assertIsInstance(count, (int, long))
             for i in rects:
-                self.failUnlessIsInstance(i, CGRect)
+                self.assertIsInstance(i, CGRect)
             callcount[0] += 1
 
         err = CGRegisterScreenRefreshCallback(callbackRefresh, myInfo)
-        self.failUnlessEqual(err, 0)
+        self.assertEqual(err, 0)
 
         # FIXME: should force a refresh here
 
@@ -55,49 +55,49 @@ class TestCGRemoteOperation (TestCase):
         # time to investigate this.
         #
         #err, rects, count = CGWaitForScreenRefreshRects(None, None)
-        #self.failUnlessEqual(err, 0)
-        #self.failUnlessIsInstance(rects, tuple)
-        #self.failUnlessIsInstance(count, (int, long))
+        #self.assertEqual(err, 0)
+        #self.assertIsInstance(rects, tuple)
+        #self.assertIsInstance(count, (int, long))
         #for i in rects:
-        #    self.failUnlessIsInstance(i, CGRect)
+        #    self.assertIsInstance(i, CGRect)
 
         v = CGCursorIsVisible()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGCursorIsDrawnInFramebuffer()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
         v = CGPostMouseEvent((50, 50), True, 3, 0, 0, 0)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGPostScrollWheelEvent(3, 0, 0, 0)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGPostKeyboardEvent(0, 56, 1)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGWarpMouseCursorPosition((800, 800))
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGInhibitLocalEvents(False)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGSetLocalEventsSuppressionInterval(0.1)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGEnableEventStateCombining(0)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v  = CGSetLocalEventsFilterDuringSuppressionState(kCGEventFilterMaskPermitAllEvents, kCGEventSuppressionStateSuppressionInterval)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGAssociateMouseAndMouseCursorPosition(0)
-        self.failUnlessEqual(v, 0)
+        self.assertEqual(v, 0)
 
         v = CGWindowServerCFMachPort()
-        self.failUnlessIsInstance(v, CFMachPortRef)
+        self.assertIsInstance(v, CFMachPortRef)
 
-        self.failUnless(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
+        self.assertTrue(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
 
 
     @expectedFailure

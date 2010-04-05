@@ -4,17 +4,17 @@ from Quartz.QuartzCore import *
 
 class TestCISampler (TestCase):
     def testMethods(self):
-        self.failUnlessIsNullTerminated(CISampler.samplerWithImage_keysAndValues_)
-        self.failUnlessIsNullTerminated(CISampler.initWithImage_keysAndValues_)
+        self.assertIsNullTerminated(CISampler.samplerWithImage_keysAndValues_)
+        self.assertIsNullTerminated(CISampler.initWithImage_keysAndValues_)
 
     def testConstants(self):
-        self.failUnlessIsInstance(kCISamplerAffineMatrix, unicode)
-        self.failUnlessIsInstance(kCISamplerWrapMode, unicode)
-        self.failUnlessIsInstance(kCISamplerFilterMode, unicode)
-        self.failUnlessIsInstance(kCISamplerWrapBlack, unicode)
-        self.failUnlessIsInstance(kCISamplerWrapClamp, unicode)
-        self.failUnlessIsInstance(kCISamplerFilterNearest, unicode)
-        self.failUnlessIsInstance(kCISamplerFilterLinear, unicode)
+        self.assertIsInstance(kCISamplerAffineMatrix, unicode)
+        self.assertIsInstance(kCISamplerWrapMode, unicode)
+        self.assertIsInstance(kCISamplerFilterMode, unicode)
+        self.assertIsInstance(kCISamplerWrapBlack, unicode)
+        self.assertIsInstance(kCISamplerWrapClamp, unicode)
+        self.assertIsInstance(kCISamplerFilterNearest, unicode)
+        self.assertIsInstance(kCISamplerFilterLinear, unicode)
 
 
 if __name__ == "__main__":

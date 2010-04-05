@@ -4,14 +4,14 @@ from Quartz import *
 
 class TestCVBuffer (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(kCVBufferPropagatedAttachmentsKey, unicode)
-        self.failUnlessIsInstance(kCVBufferNonPropagatedAttachmentsKey, unicode)
-        self.failUnlessIsInstance(kCVBufferMovieTimeKey, unicode)
-        self.failUnlessIsInstance(kCVBufferTimeValueKey, unicode)
-        self.failUnlessIsInstance(kCVBufferTimeScaleKey, unicode)
+        self.assertIsInstance(kCVBufferPropagatedAttachmentsKey, unicode)
+        self.assertIsInstance(kCVBufferNonPropagatedAttachmentsKey, unicode)
+        self.assertIsInstance(kCVBufferMovieTimeKey, unicode)
+        self.assertIsInstance(kCVBufferTimeValueKey, unicode)
+        self.assertIsInstance(kCVBufferTimeScaleKey, unicode)
 
-        self.failUnlessEqual(kCVAttachmentMode_ShouldNotPropagate, 0)
-        self.failUnlessEqual(kCVAttachmentMode_ShouldPropagate, 1)
+        self.assertEqual(kCVAttachmentMode_ShouldNotPropagate, 0)
+        self.assertEqual(kCVAttachmentMode_ShouldPropagate, 1)
 
     def testTypes(self):
         try:
@@ -23,59 +23,59 @@ class TestCVBuffer (TestCase):
 
     def testFunctions(self):
         rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(buf, CVOpenGLBufferRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(buf, CVOpenGLBufferRef)
 
         rv, buf2 = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
-        self.failUnlessEqual(rv, 0)
-        self.failUnlessIsInstance(buf2, CVOpenGLBufferRef)
+        self.assertEqual(rv, 0)
+        self.assertIsInstance(buf2, CVOpenGLBufferRef)
 
         v = CVBufferRetain(buf)
-        self.failUnless(v is buf)
+        self.assertTrue(v is buf)
         CVBufferRelease(v)
 
         ctx = object()
 
-        self.failUnlessArgHasType(CVBufferSetAttachment, 2, '@')
-        self.failUnlessArgHasType(CVBufferSetAttachment, 0,  '@')
+        self.assertArgHasType(CVBufferSetAttachment, 2, b'@')
+        self.assertArgHasType(CVBufferSetAttachment, 0,  b'@')
         CVBufferSetAttachment(buf, u"pyobjc.test",  ctx, kCVAttachmentMode_ShouldPropagate)
 
-        self.failUnlessArgHasType(CVBufferGetAttachment, 0,  '@')
-        self.failUnlessResultHasType(CVBufferGetAttachment, '@')
-        self.failUnlessArgIsOut(CVBufferGetAttachment, 2)
+        self.assertArgHasType(CVBufferGetAttachment, 0,  b'@')
+        self.assertResultHasType(CVBufferGetAttachment, b'@')
+        self.assertArgIsOut(CVBufferGetAttachment, 2)
         v, mode = CVBufferGetAttachment(buf, u"pyobjc.test", None)
-        self.failUnless(v is ctx)
-        self.failUnlessEqual(mode, kCVAttachmentMode_ShouldPropagate)
+        self.assertTrue(v is ctx)
+        self.assertEqual(mode, kCVAttachmentMode_ShouldPropagate)
 
-        self.failUnlessArgHasType(CVBufferGetAttachments, 0,  '@')
+        self.assertArgHasType(CVBufferGetAttachments, 0,  b'@')
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
-        self.failUnless("pyobjc.test" in v)
+        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertTrue("pyobjc.test" in v)
 
-        self.failUnlessArgHasType(CVBufferSetAttachments, 0,  '@')
+        self.assertArgHasType(CVBufferSetAttachments, 0,  b'@')
         CVBufferSetAttachments(buf, {
             "pyobjc.test2": 42,
             "pyobjc.test3": u"hello"
         }, kCVAttachmentMode_ShouldPropagate)
 
-        self.failUnlessArgHasType(CVBufferPropagateAttachments, 0,  '@')
-        self.failUnlessArgHasType(CVBufferPropagateAttachments, 1,  '@')
+        self.assertArgHasType(CVBufferPropagateAttachments, 0,  b'@')
+        self.assertArgHasType(CVBufferPropagateAttachments, 1,  b'@')
         CVBufferPropagateAttachments(buf, buf2)
 
         v = CVBufferGetAttachments(buf2, kCVAttachmentMode_ShouldPropagate)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
-        self.failUnless("pyobjc.test2" in v)
+        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertTrue("pyobjc.test2" in v)
 
-        self.failUnlessArgHasType(CVBufferRemoveAttachment, 0,  '@')
+        self.assertArgHasType(CVBufferRemoveAttachment, 0,  b'@')
         CVBufferRemoveAttachment(buf, "pyobjc.test")
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
         self.failIf("pyobjc.test" in v)
 
-        self.failUnlessArgHasType(CVBufferRemoveAllAttachments, 0,  '@')
+        self.assertArgHasType(CVBufferRemoveAllAttachments, 0,  b'@')
         CVBufferRemoveAllAttachments(buf)
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
-        self.failUnlessIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CFDictionaryRef)
         self.failIf("pyobjc.test2" in v)
 
 

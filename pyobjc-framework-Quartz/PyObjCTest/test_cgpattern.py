@@ -6,41 +6,41 @@ import os
 
 class TestCGPattern (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kCGPatternTilingNoDistortion, 0)
-        self.failUnlessEqual(kCGPatternTilingConstantSpacingMinimalDistortion, 1)
-        self.failUnlessEqual(kCGPatternTilingConstantSpacing, 2)
+        self.assertEqual(kCGPatternTilingNoDistortion, 0)
+        self.assertEqual(kCGPatternTilingConstantSpacingMinimalDistortion, 1)
+        self.assertEqual(kCGPatternTilingConstantSpacing, 2)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(CGPatternGetTypeID(), (int, long))
+        self.assertIsInstance(CGPatternGetTypeID(), (int, long))
 
         myInfo = object()
         cnt = [0]
         def drawPattern(info, context):
-            self.failUnless(info is myInfo)
-            self.failUnlessIsInstance(context, CGContextRef)
+            self.assertTrue(info is myInfo)
+            self.assertIsInstance(context, CGContextRef)
             cnt[0] += 1
 
         pattern = CGPatternCreate(myInfo, CGRectMake(0, 0, 10, 10), CGAffineTransformIdentity, 10.0, 10.0,
                 kCGPatternTilingConstantSpacing, True, drawPattern)
-        self.failUnlessIsInstance(pattern, CGPatternRef)
+        self.assertIsInstance(pattern, CGPatternRef)
 
         v = CGPatternRetain(pattern)
-        self.failUnless(v is pattern)
+        self.assertTrue(v is pattern)
         CGPatternRelease(pattern)
 
         url = CFURLCreateWithFileSystemPath(None,
                 "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
-        self.failUnlessIsInstance(url, CFURLRef)
+        self.assertIsInstance(url, CFURLRef)
         context = CGPDFContextCreateWithURL(url,
             ((0, 0), (1000, 1000)), None)
-        self.failUnlessIsInstance(context, CGContextRef)
+        self.assertIsInstance(context, CGContextRef)
         CGContextBeginPage(context, objc.NULL)
         try:
             color = CGColorCreateWithPattern(CGColorSpaceCreatePattern(None), pattern, (0.5, 0.5, 0.5, 0.5))
-            self.failUnlessIsInstance(color, CGColorRef)
+            self.assertIsInstance(color, CGColorRef)
 
             v = CGColorGetPattern(color)
-            self.failUnless(v is pattern)
+            self.assertTrue(v is pattern)
 
             # Now draw something with the pattern color to ensure that the callback
             # is actually called at least once.

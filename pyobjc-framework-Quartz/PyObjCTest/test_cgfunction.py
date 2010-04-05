@@ -11,14 +11,14 @@ class TestCGFunction (TestCase):
             values.append(input)
             return input * 4
         
-        self.failUnlessIsInstance(CGFunctionGetTypeID(), (int, long))
+        self.assertIsInstance(CGFunctionGetTypeID(), (int, long))
 
         myInfo = object()
         func = CGFunctionCreate(myInfo, 1, [0, 1], 4, [0, 1, 0, 1, 0, 1, 0, 1], evaluate)
-        self.failUnlessIsInstance(func, CGFunctionRef)
+        self.assertIsInstance(func, CGFunctionRef)
 
         v = CGFunctionRetain(func)
-        self.failUnless(v is func)
+        self.assertTrue(v is func)
         CGFunctionRelease(func)
 
         
@@ -26,14 +26,14 @@ class TestCGFunction (TestCase):
         # shading object to check that the function is actually called.
 
         shading = CGShadingCreateAxial(CGColorSpaceCreateDeviceRGB(), (0, 0), (50, 50), func, True, True)
-        self.failUnlessIsInstance(shading, CGShadingRef)
+        self.assertIsInstance(shading, CGShadingRef)
 
         url = CFURLCreateWithFileSystemPath(None,
                 "/tmp/pyobjc.test.pdf", kCFURLPOSIXPathStyle, False)
-        self.failUnlessIsInstance(url, CFURLRef)
+        self.assertIsInstance(url, CFURLRef)
         context = CGPDFContextCreateWithURL(url,
                 ((0, 0), (1000, 1000)), None)
-        self.failUnlessIsInstance(context, CGContextRef)
+        self.assertIsInstance(context, CGContextRef)
         try:
             CGContextBeginPage(context, objc.NULL)
 
@@ -47,9 +47,9 @@ class TestCGFunction (TestCase):
         # Drawing is done, check that the shading function is actually used
         self.failIfEqual(len(values), 0)
         for item in values:
-            self.failUnlessIsInstance(item, tuple)
-            self.failUnlessEqual(len(item), 1)
-            self.failUnlessIsInstance(item[0], float)
+            self.assertIsInstance(item, tuple)
+            self.assertEqual(len(item), 1)
+            self.assertIsInstance(item[0], float)
 
         del func
 

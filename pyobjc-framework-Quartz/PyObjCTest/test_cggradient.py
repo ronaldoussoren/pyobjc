@@ -5,29 +5,29 @@ from Quartz.CoreGraphics import *
 class TestCGGradient (TestCase):
     @min_os_level('10.5')
     def testTypes(self):
-        self.failUnlessIsCFType(CGGradientRef)
+        self.assertIsCFType(CGGradientRef)
 
     @min_os_level('10.5')
     def testConstants(self):
-        self.failUnlessEqual(kCGGradientDrawsBeforeStartLocation, 1)
-        self.failUnlessEqual(kCGGradientDrawsAfterEndLocation, 2)
+        self.assertEqual(kCGGradientDrawsBeforeStartLocation, 1)
+        self.assertEqual(kCGGradientDrawsAfterEndLocation, 2)
 
     @min_os_level('10.5')
     def testFunctions(self):
-        self.failUnlessIsInstance(CGGradientGetTypeID(), (int, long))
+        self.assertIsInstance(CGGradientGetTypeID(), (int, long))
 
-        self.failUnlessResultIsCFRetained(CGGradientCreateWithColorComponents)
+        self.assertResultIsCFRetained(CGGradientCreateWithColorComponents)
         gradient = CGGradientCreateWithColorComponents(CGColorSpaceCreateDeviceRGB(),
                 (0, 0, 0, 1, 0.2, 0.4, 0.2, 1, 0.8, 0.8, 0.8, 1), (0, 0.8, 0.95), 3)
-        self.failUnlessIsInstance(gradient, CGGradientRef)
+        self.assertIsInstance(gradient, CGGradientRef)
 
-        self.failUnlessResultIsCFRetained(CGGradientCreateWithColors)
+        self.assertResultIsCFRetained(CGGradientCreateWithColors)
         gradient = CGGradientCreateWithColors(CGColorSpaceCreateDeviceRGB(),
                 (CGColorCreateGenericRGB(0, 0, 0, 1), CGColorCreateGenericRGB(0, 0.2, 0.2, 1.0)),
                 (0.2, 0.9))
 
         v = CGGradientRetain(gradient)
-        self.failUnless(v is gradient)
+        self.assertTrue(v is gradient)
 
         CGGradientRelease(gradient)
 

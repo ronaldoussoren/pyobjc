@@ -4,18 +4,18 @@ from Quartz.PDFKit import *
 
 class TestPDFActionNamed (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(kPDFActionNamedNone, 0)
-        self.failUnlessEqual(kPDFActionNamedNextPage, 1)
-        self.failUnlessEqual(kPDFActionNamedPreviousPage, 2)
-        self.failUnlessEqual(kPDFActionNamedFirstPage, 3)
-        self.failUnlessEqual(kPDFActionNamedLastPage, 4)
-        self.failUnlessEqual(kPDFActionNamedGoBack, 5)
-        self.failUnlessEqual(kPDFActionNamedGoForward, 6)
-        self.failUnlessEqual(kPDFActionNamedGoToPage, 7)
-        self.failUnlessEqual(kPDFActionNamedFind, 8)
-        self.failUnlessEqual(kPDFActionNamedPrint, 9)
-        self.failUnlessEqual(kPDFActionNamedZoomIn, 10)
-        self.failUnlessEqual(kPDFActionNamedZoomOut, 11)
+        self.assertEqual(kPDFActionNamedNone, 0)
+        self.assertEqual(kPDFActionNamedNextPage, 1)
+        self.assertEqual(kPDFActionNamedPreviousPage, 2)
+        self.assertEqual(kPDFActionNamedFirstPage, 3)
+        self.assertEqual(kPDFActionNamedLastPage, 4)
+        self.assertEqual(kPDFActionNamedGoBack, 5)
+        self.assertEqual(kPDFActionNamedGoForward, 6)
+        self.assertEqual(kPDFActionNamedGoToPage, 7)
+        self.assertEqual(kPDFActionNamedFind, 8)
+        self.assertEqual(kPDFActionNamedPrint, 9)
+        self.assertEqual(kPDFActionNamedZoomIn, 10)
+        self.assertEqual(kPDFActionNamedZoomOut, 11)
 
 if __name__ == "__main__":
     main()
