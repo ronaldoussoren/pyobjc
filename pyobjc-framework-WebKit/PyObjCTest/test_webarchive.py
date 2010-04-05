@@ -4,7 +4,7 @@ from WebKit import *
 
 class TestWebArchive (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(WebArchivePboardType, unicode)
+        self.assertIsInstance(WebArchivePboardType, unicode)
 
 if __name__ == "__main__":
     main()

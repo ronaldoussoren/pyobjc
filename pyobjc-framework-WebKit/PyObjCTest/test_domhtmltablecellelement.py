@@ -4,8 +4,8 @@ from WebKit import *
 
 class TestDOMHTMLTableCellElement (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMHTMLTableCellElement.noWrap)
-        self.failUnlessArgIsBOOL(DOMHTMLTableCellElement.setNoWrap_, 0)
+        self.assertResultIsBOOL(DOMHTMLTableCellElement.noWrap)
+        self.assertArgIsBOOL(DOMHTMLTableCellElement.setNoWrap_, 0)
 
 if __name__ == "__main__":
     main()

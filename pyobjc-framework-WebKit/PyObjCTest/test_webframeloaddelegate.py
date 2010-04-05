@@ -8,7 +8,7 @@ class TestWebFrameLoadDelegateHelper (NSObject):
 
 class TestWebFrameLoadDelegate (TestCase):
     def testMethods(self):
-        self.failUnlessArgHasType(
+        self.assertArgHasType(
                 TestWebFrameLoadDelegateHelper.webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_,
                 2, objc._C_DBL)
 

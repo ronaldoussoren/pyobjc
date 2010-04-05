@@ -13,15 +13,15 @@ class TestWebDocumentHelper (NSObject):
 
 class TestWebDocument (TestCase):
     def testMethods(self):
-        self.failUnlessArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)
+        self.assertArgIsBOOL(TestWebDocumentHelper.setNeedsLayout_, 0)
 
-        self.failUnlessResultIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_)
-        self.failUnlessArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 1)
-        self.failUnlessArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 2)
-        self.failUnlessArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 3)
+        self.assertResultIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_)
+        self.assertArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 1)
+        self.assertArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 2)
+        self.assertArgIsBOOL(TestWebDocumentHelper.searchFor_direction_caseSensitive_wrap_, 3)
 
-        self.failUnlessResultIsBOOL(TestWebDocumentHelper.supportsTextEncoding)
-        self.failUnlessResultIsBOOL(TestWebDocumentHelper.canProvideDocumentSource)
+        self.assertResultIsBOOL(TestWebDocumentHelper.supportsTextEncoding)
+        self.assertResultIsBOOL(TestWebDocumentHelper.canProvideDocumentSource)
 
 if __name__ == "__main__":
     main()

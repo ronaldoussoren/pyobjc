@@ -4,7 +4,7 @@ from WebKit import *
 
 class TestWebHistoryItem (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(WebHistoryItemChangedNotification, unicode)
+        self.assertIsInstance(WebHistoryItemChangedNotification, unicode)
 
 if __name__ == "__main__":
     main()

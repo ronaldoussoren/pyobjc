@@ -4,51 +4,51 @@ from WebKit import *
 
 class TestWebPreferences (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(WebCacheModelDocumentViewer, 0)
-        self.failUnlessEqual(WebCacheModelDocumentBrowser, 1)
-        self.failUnlessEqual(WebCacheModelPrimaryWebBrowser, 2)
+        self.assertEqual(WebCacheModelDocumentViewer, 0)
+        self.assertEqual(WebCacheModelDocumentBrowser, 1)
+        self.assertEqual(WebCacheModelPrimaryWebBrowser, 2)
 
-        self.failUnlessIsInstance(WebPreferencesChangedNotification, unicode)
+        self.assertIsInstance(WebPreferencesChangedNotification, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(WebPreferences.userStyleSheetEnabled)
-        self.failUnlessArgIsBOOL(WebPreferences.setUserStyleSheetEnabled_, 0)
+        self.assertResultIsBOOL(WebPreferences.userStyleSheetEnabled)
+        self.assertArgIsBOOL(WebPreferences.setUserStyleSheetEnabled_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.isJavaEnabled)
-        self.failUnlessArgIsBOOL(WebPreferences.setJavaEnabled_, 0)
+        self.assertResultIsBOOL(WebPreferences.isJavaEnabled)
+        self.assertArgIsBOOL(WebPreferences.setJavaEnabled_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.isJavaScriptEnabled)
-        self.failUnlessArgIsBOOL(WebPreferences.setJavaScriptEnabled_, 0)
+        self.assertResultIsBOOL(WebPreferences.isJavaScriptEnabled)
+        self.assertArgIsBOOL(WebPreferences.setJavaScriptEnabled_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.javaScriptCanOpenWindowsAutomatically)
-        self.failUnlessArgIsBOOL(WebPreferences.setJavaScriptCanOpenWindowsAutomatically_, 0)
+        self.assertResultIsBOOL(WebPreferences.javaScriptCanOpenWindowsAutomatically)
+        self.assertArgIsBOOL(WebPreferences.setJavaScriptCanOpenWindowsAutomatically_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.arePlugInsEnabled)
-        self.failUnlessArgIsBOOL(WebPreferences.setPlugInsEnabled_, 0)
+        self.assertResultIsBOOL(WebPreferences.arePlugInsEnabled)
+        self.assertArgIsBOOL(WebPreferences.setPlugInsEnabled_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.allowsAnimatedImages)
-        self.failUnlessArgIsBOOL(WebPreferences.setAllowsAnimatedImages_, 0)
+        self.assertResultIsBOOL(WebPreferences.allowsAnimatedImages)
+        self.assertArgIsBOOL(WebPreferences.setAllowsAnimatedImages_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.allowsAnimatedImageLooping)
-        self.failUnlessArgIsBOOL(WebPreferences.setAllowsAnimatedImageLooping_, 0)
+        self.assertResultIsBOOL(WebPreferences.allowsAnimatedImageLooping)
+        self.assertArgIsBOOL(WebPreferences.setAllowsAnimatedImageLooping_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.loadsImagesAutomatically)
-        self.failUnlessArgIsBOOL(WebPreferences.setLoadsImagesAutomatically_, 0)
+        self.assertResultIsBOOL(WebPreferences.loadsImagesAutomatically)
+        self.assertArgIsBOOL(WebPreferences.setLoadsImagesAutomatically_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.autosaves)
-        self.failUnlessArgIsBOOL(WebPreferences.setAutosaves_, 0)
+        self.assertResultIsBOOL(WebPreferences.autosaves)
+        self.assertArgIsBOOL(WebPreferences.setAutosaves_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.shouldPrintBackgrounds)
-        self.failUnlessArgIsBOOL(WebPreferences.setShouldPrintBackgrounds_, 0)
+        self.assertResultIsBOOL(WebPreferences.shouldPrintBackgrounds)
+        self.assertArgIsBOOL(WebPreferences.setShouldPrintBackgrounds_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.privateBrowsingEnabled)
-        self.failUnlessArgIsBOOL(WebPreferences.setPrivateBrowsingEnabled_, 0)
+        self.assertResultIsBOOL(WebPreferences.privateBrowsingEnabled)
+        self.assertArgIsBOOL(WebPreferences.setPrivateBrowsingEnabled_, 0)
 
-        self.failUnlessResultIsBOOL(WebPreferences.tabsToLinks)
-        self.failUnlessArgIsBOOL(WebPreferences.setTabsToLinks_, 0)
+        self.assertResultIsBOOL(WebPreferences.tabsToLinks)
+        self.assertArgIsBOOL(WebPreferences.setTabsToLinks_, 0)
         
-        self.failUnlessResultIsBOOL(WebPreferences.usesPageCache)
-        self.failUnlessArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
+        self.assertResultIsBOOL(WebPreferences.usesPageCache)
+        self.assertArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
 
 
 if __name__ == "__main__":

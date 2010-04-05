@@ -4,8 +4,8 @@ from WebKit import *
 
 class TestDOMHTMLUListElement (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMHTMLUListElement.compact)
-        self.failUnlessArgIsBOOL(DOMHTMLUListElement.setCompact_, 0)
+        self.assertResultIsBOOL(DOMHTMLUListElement.compact)
+        self.assertArgIsBOOL(DOMHTMLUListElement.setCompact_, 0)
 
 
 if __name__ == "__main__":

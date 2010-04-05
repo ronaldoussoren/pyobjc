@@ -4,10 +4,10 @@ from WebKit import *
 
 class TestDOMXPathException (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(DOMXPathException, unicode)
+        self.assertIsInstance(DOMXPathException, unicode)
 
-        self.failUnlessEqual(DOM_INVALID_EXPRESSION_ERR, 51)
-        self.failUnlessEqual(DOM_TYPE_ERR, 52)
+        self.assertEqual(DOM_INVALID_EXPRESSION_ERR, 51)
+        self.assertEqual(DOM_TYPE_ERR, 52)
 
 
 if __name__ == "__main__":

@@ -4,15 +4,15 @@ from WebKit import *
 
 class TestDOMElement (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMElement.hasAttribute_)
-        self.failUnlessResultIsBOOL(DOMElement.hasAttributeNS_localName_)
-        self.failUnlessArgIsBOOL(DOMElement.scrollIntoView_, 0)
-        self.failUnlessArgIsBOOL(DOMElement.scrollIntoViewIfNeeded_, 0)
-        self.failUnlessResultIsBOOL(DOMElement.hasAttributeNS__)
+        self.assertResultIsBOOL(DOMElement.hasAttribute_)
+        self.assertResultIsBOOL(DOMElement.hasAttributeNS_localName_)
+        self.assertArgIsBOOL(DOMElement.scrollIntoView_, 0)
+        self.assertArgIsBOOL(DOMElement.scrollIntoViewIfNeeded_, 0)
+        self.assertResultIsBOOL(DOMElement.hasAttributeNS__)
 
     @min_os_level('10.6')
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMElement.contains_)
+        self.assertResultIsBOOL(DOMElement.contains_)
 
 
 if __name__ == "__main__":

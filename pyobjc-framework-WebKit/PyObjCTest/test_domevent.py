@@ -5,24 +5,24 @@ from WebKit import *
 class TestDOMEvent (TestCase):
 
     def testConstants(self):
-        self.failUnlessEqual(DOM_CAPTURING_PHASE, 1)
-        self.failUnlessEqual(DOM_AT_TARGET, 2)
-        self.failUnlessEqual(DOM_BUBBLING_PHASE, 3)
+        self.assertEqual(DOM_CAPTURING_PHASE, 1)
+        self.assertEqual(DOM_AT_TARGET, 2)
+        self.assertEqual(DOM_BUBBLING_PHASE, 3)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(DOMEvent.bubbles)
-        self.failUnlessResultIsBOOL(DOMEvent.cancelable)
-        self.failUnlessArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 1)
-        self.failUnlessArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 2)
-        self.failUnlessArgIsBOOL(DOMEvent.initEvent___, 1)
-        self.failUnlessArgIsBOOL(DOMEvent.initEvent___, 2)
+        self.assertResultIsBOOL(DOMEvent.bubbles)
+        self.assertResultIsBOOL(DOMEvent.cancelable)
+        self.assertArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 1)
+        self.assertArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 2)
+        self.assertArgIsBOOL(DOMEvent.initEvent___, 1)
+        self.assertArgIsBOOL(DOMEvent.initEvent___, 2)
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.failUnlessResultIsBOOL(DOMEvent.returnValue)
-        self.failUnlessArgIsBOOL(DOMEvent.setReturnValue_, 0)
-        self.failUnlessResultIsBOOL(DOMEvent.cancelBubble)
-        self.failUnlessArgIsBOOL(DOMEvent.setCancelBubble_, 0)
+        self.assertResultIsBOOL(DOMEvent.returnValue)
+        self.assertArgIsBOOL(DOMEvent.setReturnValue_, 0)
+        self.assertResultIsBOOL(DOMEvent.cancelBubble)
+        self.assertArgIsBOOL(DOMEvent.setCancelBubble_, 0)
 
     
 
