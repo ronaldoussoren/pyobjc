@@ -4,11 +4,11 @@ from XgridFoundation import *
 
 class TestXGFile (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(XGFileTypeNone, 0)
-        self.failUnlessEqual(XGFileTypeRegular, 1)
-        self.failUnlessEqual(XGFileTypeStream, 2)
-        self.failUnlessIsInstance(XGFileStandardOutputPath, unicode)
-        self.failUnlessIsInstance(XGFileStandardErrorPath, unicode)
+        self.assertEqual(XGFileTypeNone, 0)
+        self.assertEqual(XGFileTypeRegular, 1)
+        self.assertEqual(XGFileTypeStream, 2)
+        self.assertIsInstance(XGFileStandardOutputPath, unicode)
+        self.assertIsInstance(XGFileStandardErrorPath, unicode)
 
 if __name__ == "__main__":
     main()

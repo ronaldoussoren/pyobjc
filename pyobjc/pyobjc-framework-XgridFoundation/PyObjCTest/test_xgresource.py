@@ -4,25 +4,25 @@ from XgridFoundation import *
 
 class TestXGResource (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(XGResourceStateUninitialized, 0)
-        self.failUnlessEqual(XGResourceStateOffline, 1)
-        self.failUnlessEqual(XGResourceStateConnecting, 2)
-        self.failUnlessEqual(XGResourceStateUnavailable, 3)
-        self.failUnlessEqual(XGResourceStateAvailable, 4)
-        self.failUnlessEqual(XGResourceStateWorking, 5)
-        self.failUnlessEqual(XGResourceStatePending, 6)
-        self.failUnlessEqual(XGResourceStateStarting, 7)
-        self.failUnlessEqual(XGResourceStateStagingIn, 8)
-        self.failUnlessEqual(XGResourceStateRunning, 9)
-        self.failUnlessEqual(XGResourceStateSuspended, 10)
-        self.failUnlessEqual(XGResourceStateStagingOut, 11)
-        self.failUnlessEqual(XGResourceStateCanceled, 12)
-        self.failUnlessEqual(XGResourceStateFailed, 13)
-        self.failUnlessEqual(XGResourceStateFinished, 14)
+        self.assertEqual(XGResourceStateUninitialized, 0)
+        self.assertEqual(XGResourceStateOffline, 1)
+        self.assertEqual(XGResourceStateConnecting, 2)
+        self.assertEqual(XGResourceStateUnavailable, 3)
+        self.assertEqual(XGResourceStateAvailable, 4)
+        self.assertEqual(XGResourceStateWorking, 5)
+        self.assertEqual(XGResourceStatePending, 6)
+        self.assertEqual(XGResourceStateStarting, 7)
+        self.assertEqual(XGResourceStateStagingIn, 8)
+        self.assertEqual(XGResourceStateRunning, 9)
+        self.assertEqual(XGResourceStateSuspended, 10)
+        self.assertEqual(XGResourceStateStagingOut, 11)
+        self.assertEqual(XGResourceStateCanceled, 12)
+        self.assertEqual(XGResourceStateFailed, 13)
+        self.assertEqual(XGResourceStateFinished, 14)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(XGResource.isUpdating)
-        self.failUnlessResultIsBOOL(XGResource.isUpdated)
+        self.assertResultIsBOOL(XGResource.isUpdating)
+        self.assertResultIsBOOL(XGResource.isUpdated)
 
 
 if __name__ == "__main__":
