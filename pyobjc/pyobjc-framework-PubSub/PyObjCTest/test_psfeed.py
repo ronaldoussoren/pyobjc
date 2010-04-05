@@ -4,26 +4,26 @@ from PubSub import *
 
 class TestPSFeed (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(PSErrorDomain, unicode)
+        self.assertIsInstance(PSErrorDomain, unicode)
 
-        self.failUnlessEqual(PSInternalError, 1)
-        self.failUnlessEqual(PSNotAFeedError, 2)
+        self.assertEqual(PSInternalError, 1)
+        self.assertEqual(PSNotAFeedError, 2)
 
-        self.failUnlessEqual(PSUnknownFormat, 0)
-        self.failUnlessEqual(PSRSSFormat, 1)
-        self.failUnlessEqual(PSAtomFormat, 2)
+        self.assertEqual(PSUnknownFormat, 0)
+        self.assertEqual(PSRSSFormat, 1)
+        self.assertEqual(PSAtomFormat, 2)
 
-        self.failUnlessIsInstance(PSFeedRefreshingNotification, unicode)
-        self.failUnlessIsInstance(PSFeedEntriesChangedNotification, unicode)
-        self.failUnlessIsInstance(PSFeedAddedEntriesKey, unicode)
-        self.failUnlessIsInstance(PSFeedRemovedEntriesKey, unicode)
-        self.failUnlessIsInstance(PSFeedUpdatedEntriesKey, unicode)
-        self.failUnlessIsInstance(PSFeedDidChangeEntryFlagsKey, unicode)
+        self.assertIsInstance(PSFeedRefreshingNotification, unicode)
+        self.assertIsInstance(PSFeedEntriesChangedNotification, unicode)
+        self.assertIsInstance(PSFeedAddedEntriesKey, unicode)
+        self.assertIsInstance(PSFeedRemovedEntriesKey, unicode)
+        self.assertIsInstance(PSFeedUpdatedEntriesKey, unicode)
+        self.assertIsInstance(PSFeedDidChangeEntryFlagsKey, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(PSFeed.isRefreshing)
-        self.failUnlessResultIsBOOL(PSFeed.refresh_)
-        self.failUnlessArgIsOut(PSFeed.refresh_, 0)
+        self.assertResultIsBOOL(PSFeed.isRefreshing)
+        self.assertResultIsBOOL(PSFeed.refresh_)
+        self.assertArgIsOut(PSFeed.refresh_, 0)
 
 
 if __name__ == "__main__":
