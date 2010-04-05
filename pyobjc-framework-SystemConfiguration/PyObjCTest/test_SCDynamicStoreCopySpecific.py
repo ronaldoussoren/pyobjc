@@ -8,25 +8,25 @@ class TestSCDynamicStoreCopySpecific (TestCase):
             pass
 
         st = SCDynamicStoreCreate(None, "pyobjc.test", callback, None)
-        self.failUnless(isinstance(st, SCDynamicStoreRef))
+        self.assertTrue(isinstance(st, SCDynamicStoreRef))
 
         nm, encoding = SCDynamicStoreCopyComputerName(st, None)
-        self.failUnless(isinstance(nm, unicode))
-        self.failUnless(isinstance(encoding, (int, long)))
+        self.assertTrue(isinstance(nm, unicode))
+        self.assertTrue(isinstance(encoding, (int, long)))
 
         nm, uid, gid = SCDynamicStoreCopyConsoleUser(st, None, None)
-        self.failUnless(isinstance(nm, unicode))
-        self.failUnless(isinstance(uid, (int, long)))
-        self.failUnless(isinstance(gid, (int, long)))
+        self.assertTrue(isinstance(nm, unicode))
+        self.assertTrue(isinstance(uid, (int, long)))
+        self.assertTrue(isinstance(gid, (int, long)))
 
         nm = SCDynamicStoreCopyLocalHostName(st)
-        self.failUnless(isinstance(nm, unicode))
+        self.assertTrue(isinstance(nm, unicode))
 
         nm = SCDynamicStoreCopyLocation(st)
-        self.failUnless(isinstance(nm, unicode))
+        self.assertTrue(isinstance(nm, unicode))
 
         r = SCDynamicStoreCopyProxies(st)
-        self.failUnless(r is None or isinstance(r, CFDictionaryRef))
+        self.assertTrue(r is None or isinstance(r, CFDictionaryRef))
 
 
 if __name__ == "__main__":

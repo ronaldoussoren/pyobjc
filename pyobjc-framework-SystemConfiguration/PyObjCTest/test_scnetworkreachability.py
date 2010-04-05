@@ -4,10 +4,10 @@ import socket
 
 class TestSCNetworkReachability (TestCase):
     def testTypes(self):
-        self.failUnlessIsInstance(SCNetworkReachabilityRef, objc.objc_class)
+        self.assertIsInstance(SCNetworkReachabilityRef, objc.objc_class)
 
     def testFunctions(self):
-        self.failUnlessResultIsCFRetained(SCNetworkReachabilityCreateWithAddressPair)
+        self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithAddressPair)
         v = SCNetworkReachabilityCreateWithAddressPair(None, 
                 ('0.0.0.0', 20990),
                 ('www.python.org', 80))
@@ -16,21 +16,21 @@ class TestSCNetworkReachability (TestCase):
         sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sd.listen(5)
 
-        self.failUnlessResultIsCFRetained(SCNetworkReachabilityCreateWithAddress)
+        self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithAddress)
         ref = v = SCNetworkReachabilityCreateWithAddress(None, sd.getsockname())
-        self.failUnlessIsInstance(v, SCNetworkReachabilityRef)
+        self.assertIsInstance(v, SCNetworkReachabilityRef)
 
-        self.failUnlessResultIsCFRetained(SCNetworkReachabilityCreateWithName)
-        v = SCNetworkReachabilityCreateWithName(None, 'www.python.org')
-        self.failUnlessIsInstance(v, SCNetworkReachabilityRef)
+        self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithName)
+        v = SCNetworkReachabilityCreateWithName(None, b'www.python.org')
+        self.assertIsInstance(v, SCNetworkReachabilityRef)
 
         v = SCNetworkReachabilityGetTypeID()
-        self.failUnlessIsInstance(v, (int, long))
+        self.assertIsInstance(v, (int, long))
 
-        self.failUnlessResultIsBOOL(SCNetworkReachabilityGetFlags)
+        self.assertResultIsBOOL(SCNetworkReachabilityGetFlags)
         v, fl = SCNetworkReachabilityGetFlags(ref, None)
-        self.failUnless(v)
-        self.failUnlessIsInstance(fl, (int, long))
+        self.assertTrue(v)
+        self.assertIsInstance(fl, (int, long))
 
 
         l = []
@@ -39,17 +39,17 @@ class TestSCNetworkReachability (TestCase):
             print flags
         ctx = object()
         v = SCNetworkReachabilitySetCallback(ref, callout, ctx)
-        self.failUnless(v is True)
+        self.assertTrue(v is True)
 
 
         rl = CFRunLoopGetCurrent()
-        self.failUnlessResultIsBOOL(SCNetworkReachabilityScheduleWithRunLoop)
+        self.assertResultIsBOOL(SCNetworkReachabilityScheduleWithRunLoop)
         r = SCNetworkReachabilityScheduleWithRunLoop(ref, rl, kCFRunLoopCommonModes)
 
         sd.close()
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, False)
 
-        self.failUnlessResultIsBOOL(SCNetworkReachabilityUnscheduleFromRunLoop)
+        self.assertResultIsBOOL(SCNetworkReachabilityUnscheduleFromRunLoop)
         r = SCNetworkReachabilityUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
 
         

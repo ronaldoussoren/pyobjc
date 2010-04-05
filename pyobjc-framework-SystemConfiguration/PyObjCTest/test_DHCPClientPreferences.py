@@ -10,11 +10,11 @@ class TestDHCPClientPreferences (TestCase):
 
         r = DHCPClientPreferencesSetApplicationOptions( 
                 u"org.pyobjc.TestSuite", [9, 10, 0, 9], 4)
-        self.failUnless(r is True or r is False)
+        self.assertTrue(r is True or r is False)
 
         r, count = DHCPClientPreferencesCopyApplicationOptions(u"com.apple.SystemPreferences", None)
-        self.failUnless(r is objc.NULL)
-        self.failUnless(count == 0)
+        self.assertTrue(r is objc.NULL)
+        self.assertTrue(count == 0)
 
 if __name__ == "__main__":
     main()

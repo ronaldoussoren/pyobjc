@@ -15,19 +15,19 @@ class TestSCNetwork (TestCase):
     def testHardFunctions(self):
         b, flags = SCNetworkCheckReachabilityByAddress(
                 ('www.python.org', 80), objc._size_sockaddr_ip4, None)
-        self.failUnlessIsInstance(b, bool)
-        self.failUnlessIsInstance(flags, (int, long))
-        self.failUnlessEqual(b, True)
-        self.failUnlessEqual(flags, kSCNetworkFlagsReachable)
+        self.assertIsInstance(b, bool)
+        self.assertIsInstance(flags, (int, long))
+        self.assertEqual(b, True)
+        self.assertEqual(flags, kSCNetworkFlagsReachable)
 
 
     def testFunctions(self):
-        r, flags = SCNetworkCheckReachabilityByName("www.python.org", None)
-        self.failUnless(r is True or r is False)
-        self.failUnless(isinstance(flags, (int, long)))
+        r, flags = SCNetworkCheckReachabilityByName(b"www.python.org", None)
+        self.assertTrue(r is True or r is False)
+        self.assertTrue(isinstance(flags, (int, long)))
 
         r = SCNetworkInterfaceRefreshConfiguration("en0")
-        self.failUnless(r is True or r is False)
+        self.assertTrue(r is True or r is False)
 
 
 if __name__ == "__main__":
