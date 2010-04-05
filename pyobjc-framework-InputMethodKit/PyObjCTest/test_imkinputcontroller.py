@@ -36,37 +36,37 @@ class TestIMKInputControllerHelper (NSObject):
 
 class TestIMKInputController (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(kIMKCommandMenuItemName, unicode)
-        self.failUnlessIsInstance(kIMKCommandClientName, unicode)
+        self.assertIsInstance(kIMKCommandMenuItemName, unicode)
+        self.assertIsInstance(kIMKCommandClientName, unicode)
 
     def testProtocols(self):
-        self.failUnlessIsInstance(protocols.IMKServerInput, objc.informal_protocol)
+        self.assertIsInstance(protocols.IMKServerInput, objc.informal_protocol)
 
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.inputText_key_modifiers_client_)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.inputText_key_modifiers_client_, 1, objc._C_NSInteger)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.inputText_key_modifiers_client_)
+        self.assertArgHasType(TestIMKInputControllerHelper.inputText_key_modifiers_client_, 1, objc._C_NSInteger)
 
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.inputText_client_)
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.handleEvent_client_)
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.didCommandBySelector_client_)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.didCommandBySelector_client_, 0, objc._C_SEL)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.inputText_client_)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.handleEvent_client_)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.didCommandBySelector_client_)
+        self.assertArgHasType(TestIMKInputControllerHelper.didCommandBySelector_client_, 0, objc._C_SEL)
 
 
     def testIMKMouseHandling(self):
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 2, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 3, objc._C_OUT+objc._C_PTR+objc._C_NSBOOL)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 3, objc._C_OUT+objc._C_PTR+objc._C_NSBOOL)
 
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseUpOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
-        self.failUnlessResultIsBOOL(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 0, objc._C_NSUInteger)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
-        self.failUnlessArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
         
 
