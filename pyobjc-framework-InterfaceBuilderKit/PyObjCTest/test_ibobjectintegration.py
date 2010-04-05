@@ -12,17 +12,17 @@ class TestIBObjectIntegrationHelper (NSObject):
 
 class TestIBObjectIntegration (TestCase):
     def testContants(self):
-        self.failUnlessIsInstance(IBAttributeKeyPaths, unicode)
-        self.failUnlessIsInstance(IBToOneRelationshipKeyPaths, unicode)
-        self.failUnlessIsInstance(IBToManyRelationshipKeyPaths, unicode)
-        self.failUnlessIsInstance(IBLocalizableStringKeyPaths, unicode)
-        self.failUnlessIsInstance(IBLocalizableGeometryKeyPaths, unicode)
-        self.failUnlessIsInstance(IBAdditionalLocalizableKeyPaths, unicode)
+        self.assertIsInstance(IBAttributeKeyPaths, unicode)
+        self.assertIsInstance(IBToOneRelationshipKeyPaths, unicode)
+        self.assertIsInstance(IBToManyRelationshipKeyPaths, unicode)
+        self.assertIsInstance(IBLocalizableStringKeyPaths, unicode)
+        self.assertIsInstance(IBLocalizableGeometryKeyPaths, unicode)
+        self.assertIsInstance(IBAdditionalLocalizableKeyPaths, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserMovable_)
-        self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserSizable_)
-        self.failUnlessResultIsBOOL(TestIBObjectIntegrationHelper.ibRemoveChildren_)
+        self.assertResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserMovable_)
+        self.assertResultIsBOOL(TestIBObjectIntegrationHelper.ibIsChildViewUserSizable_)
+        self.assertResultIsBOOL(TestIBObjectIntegrationHelper.ibRemoveChildren_)
 
 
 if __name__ == "__main__":
