@@ -4,32 +4,32 @@ from SearchKit import *
 
 class TestSKDocument (TestCase):
     def testTypes(self):
-        self.failUnlessIsCFType(SKDocumentRef)
+        self.assertIsCFType(SKDocumentRef)
 
     def testFunctions(self):
-        self.failUnlessIsInstance(SKDocumentGetTypeID(), (int,  long))
+        self.assertIsInstance(SKDocumentGetTypeID(), (int,  long))
 
-        self.failUnlessResultIsCFRetained(SKDocumentCreateWithURL)
+        self.assertResultIsCFRetained(SKDocumentCreateWithURL)
         ref = SKDocumentCreateWithURL(
                     CFURLCreateWithFileSystemPath(
                         None, u"/Library/Documentation/Acknowledgements.rtf",
                         kCFURLPOSIXPathStyle, False))
-        self.failUnlessIsInstance(ref, SKDocumentRef)
+        self.assertIsInstance(ref, SKDocumentRef)
 
-        self.failUnlessResultIsCFRetained(SKDocumentCopyURL)
+        self.assertResultIsCFRetained(SKDocumentCopyURL)
         v = SKDocumentCopyURL(ref)
-        self.failUnlessIsInstance(v, CFURLRef)
+        self.assertIsInstance(v, CFURLRef)
 
-        self.failUnlessResultIsCFRetained(SKDocumentCreate)
+        self.assertResultIsCFRetained(SKDocumentCreate)
         ref2 = SKDocumentCreate(
                 None, ref, "foobar")
-        self.failUnlessIsInstance(ref2, SKDocumentRef)
+        self.assertIsInstance(ref2, SKDocumentRef)
 
         v = SKDocumentGetSchemeName(ref)
-        self.failUnlessIsInstance(v, unicode)
+        self.assertIsInstance(v, unicode)
 
         v = SKDocumentGetName(ref)
-        self.failUnlessIsInstance(v, unicode)
+        self.assertIsInstance(v, unicode)
 
         v = SKDocumentGetParent(ref2)
         self.failUnless(v is ref)
