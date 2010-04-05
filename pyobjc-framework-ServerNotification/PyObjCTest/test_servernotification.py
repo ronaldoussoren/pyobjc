@@ -6,7 +6,7 @@ from ServerNotification import *
 
 class TestServerNotification (TestCase):
     def testClasses(self):
-        self.failUnlessArgIsSEL(NSServerNotificationCenter.addObserver_selector_name_object_, 1, 'v@:@')
+        self.assertArgIsSEL(NSServerNotificationCenter.addObserver_selector_name_object_, 1, b'v@:@')
 
 
 if __name__ == "__main__":
