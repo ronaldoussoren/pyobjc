@@ -4,26 +4,26 @@ from InterfaceBuilderKit import *
 
 class TestIBGeometry (TestCase):
     def testConstants(self):
-        self.failUnlessEqual(IBNoDirection, 0)
-        self.failUnlessEqual(IBMinXDirection, 1)
-        self.failUnlessEqual(IBMaxXDirection, 2)
-        self.failUnlessEqual(IBMinYDirection, 4)
-        self.failUnlessEqual(IBMaxYDirection, 8)
-        self.failUnlessEqual(IBMinXMinYDirection, (IBMinXDirection | IBMinYDirection))
-        self.failUnlessEqual(IBMinXMaxYDirection, (IBMinXDirection | IBMaxYDirection))
-        self.failUnlessEqual(IBMaxXMinYDirection, (IBMaxXDirection | IBMinYDirection))
-        self.failUnlessEqual(IBMaxXMaxYDirection, (IBMaxXDirection | IBMaxYDirection))
+        self.assertEqual(IBNoDirection, 0)
+        self.assertEqual(IBMinXDirection, 1)
+        self.assertEqual(IBMaxXDirection, 2)
+        self.assertEqual(IBMinYDirection, 4)
+        self.assertEqual(IBMaxYDirection, 8)
+        self.assertEqual(IBMinXMinYDirection, (IBMinXDirection | IBMinYDirection))
+        self.assertEqual(IBMinXMaxYDirection, (IBMinXDirection | IBMaxYDirection))
+        self.assertEqual(IBMaxXMinYDirection, (IBMaxXDirection | IBMinYDirection))
+        self.assertEqual(IBMaxXMaxYDirection, (IBMaxXDirection | IBMaxYDirection))
 
     def testStructs(self):
         o = IBInset()
-        self.failUnless(hasattr(o, 'left'))
-        self.failUnless(hasattr(o, 'top'))
-        self.failUnless(hasattr(o, 'right'))
-        self.failUnless(hasattr(o, 'bottom'))
-        self.failUnlessIsInstance(o.left, float)
-        self.failUnlessIsInstance(o.top, float)
-        self.failUnlessIsInstance(o.right, float)
-        self.failUnlessIsInstance(o.bottom, float)
+        self.assertHasAttr(o, 'left')
+        self.assertHasAttr(o, 'top')
+        self.assertHasAttr(o, 'right')
+        self.assertHasAttr(o, 'bottom')
+        self.assertIsInstance(o.left, float)
+        self.assertIsInstance(o.top, float)
+        self.assertIsInstance(o.right, float)
+        self.assertIsInstance(o.bottom, float)
 
 if __name__ == "__main__":
     main()
