@@ -4,7 +4,7 @@ from QTKit import *
 
 class TestQTCompressionOptions (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QTCompressionOptions.isEqualToCompressionOptions_)
+        self.assertResultIsBOOL(QTCompressionOptions.isEqualToCompressionOptions_)
 
 
 if __name__ == "__main__":

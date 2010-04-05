@@ -4,15 +4,15 @@ from QTKit import *
 
 class TestQTCaptureSession (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(QTCaptureSessionRuntimeErrorNotification, unicode)
-        self.failUnlessIsInstance(QTCaptureSessionErrorKey, unicode)
+        self.assertIsInstance(QTCaptureSessionRuntimeErrorNotification, unicode)
+        self.assertIsInstance(QTCaptureSessionErrorKey, unicode)
 
     def testMethods(self):
-        self.failUnlessResultIsBOOL(QTCaptureSession.addInput_error_)
-        self.failUnlessArgIsOut(QTCaptureSession.addInput_error_, 1)
-        self.failUnlessResultIsBOOL(QTCaptureSession.addOutput_error_)
-        self.failUnlessArgIsOut(QTCaptureSession.addOutput_error_, 1)
-        self.failUnlessResultIsBOOL(QTCaptureSession.isRunning)
+        self.assertResultIsBOOL(QTCaptureSession.addInput_error_)
+        self.assertArgIsOut(QTCaptureSession.addInput_error_, 1)
+        self.assertResultIsBOOL(QTCaptureSession.addOutput_error_)
+        self.assertArgIsOut(QTCaptureSession.addOutput_error_, 1)
+        self.assertResultIsBOOL(QTCaptureSession.isRunning)
 
 
 if __name__ == "__main__":
