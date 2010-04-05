@@ -11,8 +11,8 @@ class TestISyncFilterHelper (NSObject):
 
 class TestISyncFilter (TestCase):
     def testProtocols(self):
-        self.failUnlessResultIsBOOL(TestISyncFilterHelper.isEqual_)
-        self.failUnlessResultIsBOOL(TestISyncFilterHelper.shouldApplyRecord_withRecordIdentifier_)
+        self.assertResultIsBOOL(TestISyncFilterHelper.isEqual_)
+        self.assertResultIsBOOL(TestISyncFilterHelper.shouldApplyRecord_withRecordIdentifier_)
 
 
 if __name__ == "__main__":
