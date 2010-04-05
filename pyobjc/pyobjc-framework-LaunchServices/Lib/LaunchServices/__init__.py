@@ -30,5 +30,5 @@ except ImportError:
 _objc.loadBundleFunctions(
         __bundle__, globals(),
         [
-            ('_LSCopyAllApplicationURLs', 'v^@', '', { 'arguments': { 0: { 'already_retained': True, 'type_modifier': 'o',  } } } ),
+            ('_LSCopyAllApplicationURLs', b'v^@', '', { 'arguments': { 0: { 'already_retained': True, 'type_modifier': 'o',  } } } ),
         ])
