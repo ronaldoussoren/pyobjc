@@ -7,8 +7,8 @@ import SyncServices
 
 class TestSyncServices (TestCase):
     def testClasses(self):
-        self.assert_( hasattr(SyncServices, 'ISyncClient') )
-        self.assert_( isinstance(SyncServices.ISyncClient, objc.objc_class) )
+        self.assertHasAttr(SyncServices, 'ISyncClient')
+        self.assertIsInstance(SyncServices.ISyncClient, objc.objc_class)
 
 
 if __name__ == "__main__":
