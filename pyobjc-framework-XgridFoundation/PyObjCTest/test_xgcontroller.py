@@ -4,7 +4,7 @@ from XgridFoundation import *
 
 class TestXGController (TestCase):
     def testConstants(self):
-        self.failUnlessIsInstance(XGControllerWillDeallocNotification, unicode)
+        self.assertIsInstance(XGControllerWillDeallocNotification, unicode)
 
 
 if __name__ == "__main__":

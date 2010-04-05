@@ -4,7 +4,7 @@ from XgridFoundation import *
 
 class TestXGGrid (TestCase):
     def testMethods(self):
-        self.failUnlessResultIsBOOL(XGGrid.isDefault)
+        self.assertResultIsBOOL(XGGrid.isDefault)
 
 
 if __name__ == "__main__":
