@@ -7,6 +7,24 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.3a0
 -------------
 
+- (This item is currenlty only true for python3, need tests for python 2.x)
+
+  NSDictionary now fully implements the dict API, except for the differences
+  not below:
+
+  * ``NSDictionary`` doesn't have the ``__missing__`` hook.
+
+  * ``NSDictionary`` always copies keys, which gives slightly different
+     semantics from Python.
+
+  * ``NSDictionary.copy`` always returns an immutable dictionary, use
+    ``NSDictionary.mutableCopy`` to get a mutable dictionary.
+
+  ``NSDictionary`` implements one important feature that native Python
+  dictionaries don't: full support for Key-Value Observations. Sadly enough
+  it is not possible to support Key-Value Observation of native Python 
+  dictionaries without patching the interpreter.
+
 - BUGFIX: accessing methods through ``anObject.pyobjc_instancMethods`` is
   now safer, before this release this could cause unlimited recursion
   (although I'm not sure if it was possible to trigger this without

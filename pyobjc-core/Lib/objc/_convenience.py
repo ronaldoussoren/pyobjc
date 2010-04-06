@@ -190,10 +190,29 @@ CONVENIENCE_METHODS[b'removeObjectForKey:'] = (
     ('__delitem__', __delitem__removeObjectForKey_),
 )
 
-def update_setObject_forKey_(self, other):
+def update_setObject_forKey_(self, *args, **kwds):
     # XXX - should this be more flexible?
-    for key, value in other.items():
-        self[key] = value
+    if len(args) == 0:
+        pass
+    elif len(args) != 1:
+        raise TypeError("update expected at most 1 arguments, got {0}".format(
+            len(args)))
+
+
+    else:
+        other = args[0]
+        if hasattr(other, 'keys'):
+            # This mirrors the implementation of dict.update, but seems
+            # wrong for Python3 (with collectons.Dict)
+            for key in other.keys():
+                self[key] = other[key]
+
+        else:
+            for key, value in other:
+                self[key] = value
+
+    for k, v in kwds.iteritems():
+        self[k] = v
 
 def setdefault_setObject_forKey_(self, key, dflt=None):
     try:
@@ -204,11 +223,14 @@ def setdefault_setObject_forKey_(self, key, dflt=None):
 
 def __setitem__setObject_forKey_(self, key, value):
     self.setObject_forKey_(container_wrap(value), container_wrap(key))
-    
-def pop_setObject_forKey_(self, key, dflt=None):
+   
+pop_setObject_dflt=object()
+def pop_setObject_forKey_(self, key, dflt=pop_setObject_dflt):
     try:
         res = self[key]
     except KeyError:
+        if dflt == pop_setObject_dflt:
+            raise KeyError(key)
         res = dflt
     else:
         del self[key]
@@ -514,10 +536,10 @@ def fromkeys_dictionaryWithObjects_forKeys_(cls, keys, values=None):
         values = list(values)
     return cls.dictionaryWithObjects_forKeys_(values, keys)
 
-CONVENIENCE_METHODS[b'dictionaryWithObjects:forKeys:'] = (
-    ('fromkeys',
-        classmethod(fromkeys_dictionaryWithObjects_forKeys_)),
-)
+#CONVENIENCE_METHODS[b'dictionaryWithObjects:forKeys:'] = (
+    #('fromkeys',
+        #classmethod(fromkeys_dictionaryWithObjects_forKeys_)),
+#)
 
 if sys.version_info[0] == 3:
     def cmp(a, b):
@@ -645,34 +667,129 @@ CLASS_METHODS['NSBlock'] = (
 
 
 if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 7):
+    import collections
+
+    def all_contained_in(inner, outer):
+        """
+        Return True iff all items in ``inner`` are also in ``outer``.
+        """
+        for v in inner:
+            if v not in outer:
+                return False
+
+        return True
+
     class nsdict_view (object):
         __slots__ = ()
 
+        def __eq__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) == len(other):
+                return all_contained_in(self, other)
+        
+            else:
+                return False
+
+        def __ne__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) == len(other):
+                return not all_contained_in(self, other)
+        
+            else:
+                return True
+
+        def __lt__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) < len(other):
+                return all_contained_in(self, other)
+
+            else:
+                return False
+
+        def __le__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) <= len(other):
+                return all_contained_in(self, other)
+
+            else:
+                return False
+
+        def __gt__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) > len(other):
+                return all_contained_in(other, self)
+
+            else:
+                return False
+
+        def __ge__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+
+            if len(self) >= len(other):
+                return all_contained_in(other, self)
+
+            else:
+                return False
+
         def __and__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
             result = set(self)
             result.intersection_update(other)
             return result
 
         def __or__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
+            result = set(self)
+            result.update(other)
+            return result
+
+        def __ror__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
             result = set(self)
             result.update(other)
             return result
 
         def __sub__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
             result = set(self)
             result.difference_update(other)
             return result
 
-        def __xor__(Self, other):
+        def __xor__(self, other):
+            if not isinstance(other, collections.Set):
+                return NotImplemented
             result = set(self)
             result.symmetric_difference_update(other)
             return result
-
+    
+    collections.Set.register(nsdict_view)
 
     class nsdict_keys(nsdict_view):
         __slots__=('__value')
         def __init__(self, value):
             self.__value =  value
+
+        def __repr__(self):
+            keys = list(self.__value)
+            keys.sort()
+
+            return "<nsdict_keys({0})>".format(keys)
+            
 
         def __len__(self):
             return len(self.__value)
@@ -688,6 +805,12 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         def __init__(self, value):
             self.__value =  value
 
+        def __repr__(self):
+            values = list(self)
+            values.sort()
+
+            return "<nsdict_values({0})>".format(values)
+
         def __len__(self):
             return len(self.__value)
 
@@ -701,9 +824,17 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             return False
 
     class nsdict_items(nsdict_view):
+
         __slots__=('__value')
+
         def __init__(self, value):
             self.__value =  value
+
+        def __repr__(self):
+            values = list(self)
+            values.sort()
+
+            return "<nsdict_items({0})>".format(values)
 
         def __len__(self):
             return len(self.__value)
@@ -718,17 +849,81 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
                     return True
             return False
 
+    collections.KeysView.register(nsdict_keys)
+    collections.ValuesView.register(nsdict_values)
+    collections.ItemsView.register(nsdict_items)
+
+    collections.Mapping.register(lookUpClass('NSDictionary'))
+    collections.MutableMapping.register(lookUpClass('NSMutableDictionary'))
+
+
+    def nsdict_new(cls, *args, **kwds):
+        if len(args) == 0:
+            pass
+
+        elif len(args) == 1:
+            d = dict()
+            for k , v in args[0]:
+                d[container_wrap(k)] = container_wrap(v)
+
+            for k, v in kwds.iteritems():
+                d[container_wrap(k)] = container_wrap(v)
+
+            return cls.dictionaryWithDictionary_(d)
+
+        else:
+            raise TypeError(
+                    "dict expected at most 1 arguments, got {0}".format(
+                        len(args)))
+        if kwds:
+            d = dict()
+            for k, v in kwds.iteritems():
+                d[container_wrap(k)] = container_wrap(v)
+
+            return cls.dictionaryWithDictionary_(d)
+
+        return cls.dictionary()
+
+    NSDictionary = lookUpClass('NSDictionary')
+    def nsdict_fromkeys(cls, keys, value=None):
+        keys = [container_wrap(k) for k in keys]
+        values = [container_wrap(value)]*len(keys)
+
+        return NSDictionary.dictionaryWithObjects_forKeys_(values, keys)
+
+    NSMutableDictionary = lookUpClass('NSMutableDictionary')
+    def nsmutabledict_fromkeys(cls, keys, value=None):
+        result = NSMutableDictionary.dictionary()
+        value = container_wrap(value)
+        for k in keys:
+            result[container_wrap(k)] = value
+
+        return result
+
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
+            ('__new__', nsdict_new),
+            ('fromkeys', classmethod(nsdict_fromkeys)),
             ('keys', lambda self: nsdict_keys(self)),
             ('values', lambda self: nsdict_values(self)),
             ('items', lambda self: nsdict_items(self)),
         )
 
+        CLASS_METHODS['NSMutableDictionary'] = (
+            ('__new__', nsdict_new),
+            ('fromkeys', classmethod(nsmutabledict_fromkeys)),
+        )
+
     else:
         CLASS_METHODS['NSDictionary'] = (
+            ('__new__', nsdict_new),
+            ('fromkeys', classmethod(nsdict_fromkeys)),
             ('viewkeys', lambda self: nsdict_keys(self)),
             ('viewvalues', lambda self: nsdict_values(self)),
             ('viewitems', lambda self: nsdict_items(self)),
+        )
+
+        CLASS_METHODS['NSMutableDictionary'] = (
+            ('__new__', nsdict_new),
         )
 
