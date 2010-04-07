@@ -415,7 +415,7 @@ PyObjC_CreateInlineTab(PyObjC_function_map* map)
 #if PY_MAJOR_VERSION == 2
 	return PyCObject_FromVoidPtr(map, NULL);
 #else
-	return PyCapsule_New(map, "objc.__functionlist__", NULL);
+	return PyCapsule_New(map, "objc.__inline__", NULL);
 #endif
 }
 
