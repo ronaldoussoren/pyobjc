@@ -1454,10 +1454,39 @@ static  PyObject* setKeyFunc = NULL;
  * This is needed to be able to add a python object to a
  * NSArray and then use array.description()
  */
+-(BOOL)isNSArray__
+{
+	        return NO;
+}
+-(BOOL)isNSDictionary__
+{
+	        return NO;
+}
+-(BOOL)isNSSet__
+{
+	        return NO;
+}
+-(BOOL)isNSNumber__
+{
+	        return NO;
+}
+-(BOOL)isNSData__
+{
+	        return NO;
+}
+-(BOOL)isNSDate__
+{
+	        return NO;
+}
 -(BOOL)isNSString__
 {
-	return NO;
+	        return NO;
 }
+-(BOOL)isNSValue__
+{
+	        return NO;
+}
+
 
 +classFallbacksForKeyedArchiver
 {

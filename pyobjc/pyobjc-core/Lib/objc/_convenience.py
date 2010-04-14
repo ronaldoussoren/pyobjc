@@ -338,15 +338,44 @@ CONVENIENCE_METHODS[b'addObjectsFromArray:'] = (
     ('extend', extend_addObjectsFromArray_),
 )
 
-def index_indexOfObject_(self, item):
+_index_sentinel=object()
+def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
     from Foundation import NSNotFound
-    res = self.indexOfObject_(container_wrap(item))
-    if res == NSNotFound:
-        raise ValueError, "%s.index(x): x not in list" % (type(self).__name__,)
+    if start == 0 and stop is _index_sentinel:
+        res = self.indexOfObject_(container_wrap(item))
+        if res == NSNotFound:
+            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+    else:
+        l = len(self)
+        if start < 0:
+            start = l + start
+            if start < 0:
+                start = 0
+
+        if stop is not _index_sentinel:
+            if stop < 0:
+                stop = l + stop
+                if stop < 0:
+                    stop = 0
+        else:
+            stop = l
+
+        if stop <= start:
+            ln = 0 
+        else:
+            ln = stop - start
+
+
+        if ln == 0:
+            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+
+        res = self.indexOfObject_inRange_(item, (start, ln))
+        if res == NSNotFound:
+            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
     return res
 
-CONVENIENCE_METHODS[b'indexOfObject:'] = (
-    ('index', index_indexOfObject_),
+CONVENIENCE_METHODS[b'indexOfObject:inRange:'] = (
+    ('index', index_indexOfObject_inRange_),
 )
 
 def insert_insertObject_atIndex_(self, idx, item):
@@ -856,6 +885,58 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
     collections.Mapping.register(lookUpClass('NSDictionary'))
     collections.MutableMapping.register(lookUpClass('NSMutableDictionary'))
 
+    def nsarray_new(cls, sequence=None):
+        if not sequence:
+            return cls.array()
+
+        elif isinstance(sequence, (str, unicode)):
+            return cls.arrayWithArray_(list(sequence))
+
+        else:
+            if not isinstance(sequence, (list, tuple)):
+                # FIXME: teach bridge to treat range and other list-lik
+                # types correctly
+                return cls.arrayWithArray_(list(sequence))
+
+            return cls.arrayWithArray_(sequence)
+
+    NSMutableArray = lookUpClass('NSMutableArray')
+    def nsarray_add(self, other):
+        result = NSMutableArray.arrayWithArray_(self)
+        result.extend(other)
+        return result
+
+    def nsarray_radd(self, other):
+        result = NSMutableArray.arrayWithArray_(other)
+        result.extend(self)
+        return result
+
+    def nsarray_mul(self, other):
+        """
+        This tries to implement anNSArray * N
+        somewhat efficently (and definitely more
+        efficient that repeated appending).
+        """
+        result = NSMutableArray.array()
+
+        if other <= 0:
+            return result
+
+        n = 1
+        tmp = self
+        while other:
+            if other & n != 0:
+                result.extend(tmp)
+                other -= n
+
+            if other:
+                n <<= 1
+                tmp = tmp.arrayByAddingObjectsFromArray_(tmp)
+
+        #for n in xrange(other):
+            #result.extend(self)
+        return result
+
 
     def nsdict_new(cls, *args, **kwds):
         if len(args) == 0:
@@ -914,6 +995,14 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('fromkeys', classmethod(nsmutabledict_fromkeys)),
         )
 
+        CLASS_METHODS['NSArray'] = (
+            ('__new__', nsarray_new),
+            ('__add__', nsarray_add),
+            ('__radd__', nsarray_radd),
+            ('__mul__', nsarray_mul),
+            ('__rmul__', nsarray_mul),
+        )
+
     else:
         CLASS_METHODS['NSDictionary'] = (
             ('__new__', nsdict_new),
@@ -926,4 +1015,10 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         CLASS_METHODS['NSMutableDictionary'] = (
             ('__new__', nsdict_new),
         )
-
+        CLASS_METHODS['NSArray'] = (
+            ('__new__', nsarray_new),
+            ('__add__', nsarray_add),
+            ('__radd__', nsarray_radd),
+            ('__mul__', nsarray_mul),
+            ('__rmul__', nsarray_mul),
+        )
