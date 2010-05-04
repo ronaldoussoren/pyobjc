@@ -116,8 +116,9 @@ class DgTestCase (unittest.TestCase):
         else:
             extra_link = ''
 
-        commandline='MACOSX_DEPLPOYMENT_TARGET=%s cc %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
+        commandline='MACOSX_DEPLPOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),
+                get_config_var('CC'),
                 get_config_var('CFLAGS'), self.filename, ' '.join(libffiobjects),
 		extra_link)
 
