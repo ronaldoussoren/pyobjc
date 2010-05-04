@@ -14,8 +14,6 @@ from PyObjCTest.fnd import NSKeyedArchiver, NSKeyedUnarchiver
 from PyObjCTest.fnd import NSData, NSArray, NSDictionary
 from PyObjCTest.fnd import NSMutableArray, NSMutableDictionary
 
-import Foundation
-
 # 
 # First set of tests: the stdlib tests for pickling, this
 # should test everything but mixed Python/Objective-C 
