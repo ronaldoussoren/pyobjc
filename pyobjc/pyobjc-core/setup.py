@@ -1,8 +1,20 @@
 #!/usr/bin/env python
 
 import sys
+import subprocess
+import shutil
+import re
 # We need at least Python 2.5
 MIN_PYTHON = (2, 5)
+
+# Set USE_SYSTEM_FFI to True to link to the system version
+# of libffi
+USE_SYSTEM_FFI = False
+
+# Set USE_SYSTEM_LIBXML to True to link to the system version
+# of libxml2 (defaults to False to avoid problems when building
+# on 10.6 and running on an earlier release)
+USE_SYSTEM_LIBXML = False
 
 if sys.version_info < MIN_PYTHON:
     vstr = '.'.join(map(str, MIN_PYTHON))
@@ -103,9 +115,6 @@ if 'MallocStackLoggingNoCompact' in os.environ:
 #os.environ['MACOSX_DEPLOYMENT_TARGET']='10.5'
 
 
-# Set USE_SYSTEM_FFI to True to link to the system version
-# of libffi
-USE_SYSTEM_FFI = True
 
 #if int(os.uname()[2].split('.')[0]) >= 10:
 #        USE_SYSTEM_FFI = True
@@ -146,6 +155,50 @@ class pyobjc_install_lib (install_lib.install_lib):
 
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
+        if not USE_SYSTEM_LIBXML:
+            build = self.get_finalized_command('build')
+            xmldir=os.path.join(build.build_base, 'libxml')
+            if not os.path.exists(xmldir):
+                builddir=os.path.join(build.build_base, 'libxml-build')
+                if os.path.exists(builddir):
+                    shutil.rmtree(builddir)
+                os.makedirs(builddir)
+
+                cflags = get_config_var('CFLAGS')
+                if '-isysroot' in cflags:
+                    cflags = re.sub(r'-isysroot\s*\S*', '-isysroot /', cflags)
+
+                p = subprocess.Popen(
+                        ['../../libxml2-src/configure',
+                            '--disable-dependency-tracking',
+                            '--enable-static',
+                            '--disable-shared',
+                            '--prefix=%s'%(os.path.abspath(xmldir),),
+                            '--with-minimum',
+                            'CFLAGS=%s'%(cflags,),
+                            'CC=%s'%(get_config_var('CC')),
+                            ], 
+                        cwd=builddir)
+                xit=p.wait()
+                if xit != 0:
+                    shutil.rmtree(builddir)
+                    raise RuntimeError("libxml configure failed")
+                p = subprocess.Popen(
+                        ['make', 'install'],
+                        cwd=builddir)
+                xit=p.wait()
+                if xit != 0:
+                    raise RuntimeError("libxml install failed")
+
+            os.environ['PATH'] = xmldir + "/bin:" + os.environ['PATH']
+
+        for ext in self.extensions:
+            if ext.name == "objc._objc":
+                if not USE_SYSTEM_LIBXML:
+                    ext.extra_link_args.append('-Wl,-search_paths_first')
+                ext.extra_compile_args.extend(xml2config('--cflags'))
+                ext.extra_link_args.extend(xml2config('--libs'))
+
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
@@ -181,46 +234,8 @@ if sys.platform != 'darwin':
     raise SystemExit("ObjC runtime not found")
 
 from distutils.sysconfig import get_config_var
-cc = get_config_var('CC')
 
 CFLAGS=[ ]
-
-if cc == 'XXXgcc':
-    # This is experimental code that tries to avoid refering to files in 
-    # /Library/Frameworks or /usr/local.
-    # 
-    # NOTE: This is not enabled by default because the linker will still look
-    # in /usr/local/lib and /Library/Frameworks...
-
-    fp = os.popen('cpp -v </dev/null 2>&1', 'r')
-    dirs = []
-    started = False
-    for ln in fp:
-        if not started:
-            if ln.startswith('#include <...> search starts here:'):
-                started=True
-            continue
-
-        else:
-            ln = ln.strip()
-            if not ln.startswith('/'):
-                break
-
-            if ln == '/usr/local/include':
-                continue
-
-            elif ln == '/Library/Frameworks':
-                continue
-
-            if ln.endswith('(framework directory)'):
-                dirs.append(('framework', ln.split()[0]))
-            else:
-                dirs.append(('system', ln))
-
-    if dirs:
-        CFLAGS.append('-nostdinc')
-        for k, d in dirs:
-            CFLAGS.append('-i%s%s'%(k,d))
 
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
@@ -302,8 +317,8 @@ def xml2config(arg):
 
     return shlex.split(ln)
 
-CFLAGS.extend(xml2config('--cflags'))
-OBJC_LDFLAGS.extend(xml2config('--libs'))
+#CFLAGS.extend(xml2config('--cflags'))
+#OBJC_LDFLAGS.extend(xml2config('--libs'))
 
 
 

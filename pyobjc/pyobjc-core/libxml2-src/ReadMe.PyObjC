@@ -1,0 +1,11 @@
+This is a copy of libxml2 2.7.7 and is used to create binaries
+for PyObjC that do not have a dependency on the system version
+of libxml2. This is needed to avoid problems when building on later
+versions of OSX and running on earlier ones.
+
+Libxml2 is not patched in any way, any issues in libxml2 will be
+resolved upstreams and then merged here by copying a new release.
+
+There is one change w.r.t. stock libxml2: this copy does not
+include the subdirectories  "doc", "result" and "test" because these
+aren't used by PyObjC and take up a lot of disk-space
