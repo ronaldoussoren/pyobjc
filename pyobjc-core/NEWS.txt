@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.3a0
 -------------
 
+- PyObjC's support for ``NSCoding`` now also works with plain ``NSArchiver``
+  instances, not just with ``NSKeyedArchiver``.
+
 - (This item is currenlty only true for python3, need tests for python 2.x)
 
   NSDictionary now fully implements the dict API, except for the differences

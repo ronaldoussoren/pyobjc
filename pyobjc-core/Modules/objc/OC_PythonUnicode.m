@@ -173,6 +173,26 @@
 	return self;
 }
 
+-initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+{
+#ifndef PyObjC_UNICODE_FAST_PATH
+# error "Wide UNICODE builds are not supported at the moment"
+#endif
+	NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
+	Py_ssize_t charcount = [tmpval length];
+
+
+	PyObjC_BEGIN_WITH_GIL
+		value = PyUnicode_FromUnicode(NULL, charcount);
+		if (value == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		[tmpval getCharacters:PyUnicode_AS_UNICODE(value)];
+
+	PyObjC_END_WITH_GIL;
+	[tmpval release];
+	return self;
+}
 
 /* 
  * Helper method for initWithCoder, needed to deal with
