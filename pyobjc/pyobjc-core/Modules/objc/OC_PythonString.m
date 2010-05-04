@@ -157,6 +157,25 @@
 	return self;
 }
 
+-initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+{
+	NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
+
+	PyObjC_BEGIN_WITH_GIL
+		value = PyString_FromString([tmpval UTF8String]);
+		if (value == NULL) {
+			PyObjC_GIL_FORWARD_EXC();
+		}
+		PyString_InternInPlace(&value);
+
+	PyObjC_END_WITH_GIL
+
+	[tmpval release];
+	return self;
+}
+
+
+
 
 /* 
  * Helper method for initWithCoder, needed to deal with
