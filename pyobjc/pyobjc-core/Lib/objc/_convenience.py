@@ -360,18 +360,33 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
         else:
             stop = l
 
-        if stop <= start:
-            ln = 0 
+        itemcount = len(self)
+
+        if itemcount == 0:
+            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+           
         else:
-            ln = stop - start
+            if start >= itemcount:
+                start = itemcount - 1
+            if stop >= itemcount:
+                stop = itemcount - 1
+
+            if stop <= start:
+                ln = 0 
+            else:
+
+                ln = stop - start
 
 
-        if ln == 0:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            if ln == 0:
+                raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            
+            if ln > sys.maxint:
+                ln = sys.maxint
 
-        res = self.indexOfObject_inRange_(item, (start, ln))
-        if res == NSNotFound:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            res = self.indexOfObject_inRange_(item, (start, ln))
+            if res == NSNotFound:
+                raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
     return res
 
 CONVENIENCE_METHODS[b'indexOfObject:inRange:'] = (
@@ -397,6 +412,10 @@ def __getitem__objectAtIndex_(self, idx):
         #    if m is not None:
         #        return m((start, stop - start))
         return [self[i] for i in xrange(start, stop, step)]
+    
+    elif not isinstance(idx, (int, long)):
+        raise TypeError("index must be a number")
+    
     if idx < 0:
         idx += len(self)
         if idx < 0:
@@ -404,8 +423,12 @@ def __getitem__objectAtIndex_(self, idx):
 
     return container_unwrap(self.objectAtIndex_(idx), RuntimeError)
 
+def __getslice__objectAtIndex_(self, i, j):
+    return __getitem__objectAtIndex_(self, slice(i, j))
+
 CONVENIENCE_METHODS[b'objectAtIndex:'] = (
     ('__getitem__', __getitem__objectAtIndex_),
+    ('__getslice__', __getslice__objectAtIndex_),
 )
 
 def __delitem__removeObjectAtIndex_(self, idx):
@@ -430,6 +453,9 @@ def __delitem__removeObjectAtIndex_(self, idx):
             raise IndexError("list index out of range")
         
     self.removeObjectAtIndex_(idx)
+
+def __delslice__removeObjectAtIndex_(self, i, j):
+    __delitem__removeObjectAtIndex_(self, slice(i, j))
     
 def pop_removeObjectAtIndex_(self, idx=-1):
     length = len(self)
@@ -453,27 +479,72 @@ CONVENIENCE_METHODS[b'removeObjectAtIndex:'] = (
     ('remove', remove_removeObjectAtIndex_),
     ('pop', pop_removeObjectAtIndex_),
     ('__delitem__', __delitem__removeObjectAtIndex_),
+    ('__delslice__', __delslice__removeObjectAtIndex_),
 )
 
 def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
     if isinstance(idx, slice):
         start, stop, step = idx.indices(len(self))
+        if step >=0:
+            if stop <= start:
+                # Empty slice: insert values
+                stop = start
+        elif start <= stop:
+            start = stop
+
         if step == 1:
             m = getattr(self, 'replaceObjectsInRange_withObjectsFromArray_', None)
             if m is not None:
                 m((start, stop - start), ensureArray(anObject))
                 return
-        # XXX - implement this..
-        raise NotImplementedError
-    if idx < 0:
-        idx += len(self)
-        if idx < 0:
-            raise IndexError("list index out of range")
 
-    self.replaceObjectAtIndex_withObject_(idx, anObject)
+        if not isinstance(anObject, (NSArray, list, tuple)):
+            anObject = list(anObject)
+
+        slice_len = len(xrange(start, stop, step))
+        if slice_len != len(anObject):
+            raise ValueError("Replacing extended slice with %d elements by %d elements"%(
+                slice_len, len(anObject)))
+
+        if step > 0:
+            if anObject is self:
+                toAssign = list(anObject)
+            else:
+                toAssign = anObject
+            for inIdx, outIdx in enumerate(xrange(start, stop, step)): 
+                self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
+
+        elif step == 0:
+            raise ValueError("Step 0")
+
+        else:
+            if anObject is self:
+                toAssign = list(anObject)
+            else:
+                toAssign = anObject
+            #for inIdx, outIdx in reversed(enumerate(reversed(range(start, stop, step)))):
+            for inIdx, outIdx in enumerate(xrange(start, stop, step)): 
+                self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
+
+
+    elif not isinstance(idx, (int, long)):
+        raise TypeError("index is not an integer")
+
+    else:
+
+        if idx < 0:
+            idx += len(self)
+            if idx < 0:
+                raise IndexError("list index out of range")
+
+        self.replaceObjectAtIndex_withObject_(idx, anObject)
+
+def __setslice__replaceObjectAtIndex_withObject_(self, i, j, seq):
+    __setitem__replaceObjectAtIndex_withObject_(self, slice(i, j), seq)
 
 CONVENIENCE_METHODS[b'replaceObjectAtIndex:withObject:'] = (
     ('__setitem__', __setitem__replaceObjectAtIndex_withObject_),
+    ('__setslice__', __setslice__replaceObjectAtIndex_withObject_),
 )
 
 def enumeratorGenerator(anEnumerator):
@@ -885,85 +956,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
     collections.Mapping.register(lookUpClass('NSDictionary'))
     collections.MutableMapping.register(lookUpClass('NSMutableDictionary'))
 
-    def nsarray_new(cls, sequence=None):
-        if not sequence:
-            return cls.array()
 
-        elif isinstance(sequence, (str, unicode)):
-            return cls.arrayWithArray_(list(sequence))
-
-        else:
-            if not isinstance(sequence, (list, tuple)):
-                # FIXME: teach bridge to treat range and other list-lik
-                # types correctly
-                return cls.arrayWithArray_(list(sequence))
-
-            return cls.arrayWithArray_(sequence)
-
-    NSMutableArray = lookUpClass('NSMutableArray')
-    def nsarray_add(self, other):
-        result = NSMutableArray.arrayWithArray_(self)
-        result.extend(other)
-        return result
-
-    def nsarray_radd(self, other):
-        result = NSMutableArray.arrayWithArray_(other)
-        result.extend(self)
-        return result
-
-    def nsarray_mul(self, other):
-        """
-        This tries to implement anNSArray * N
-        somewhat efficently (and definitely more
-        efficient that repeated appending).
-        """
-        result = NSMutableArray.array()
-
-        if other <= 0:
-            return result
-
-        n = 1
-        tmp = self
-        while other:
-            if other & n != 0:
-                result.extend(tmp)
-                other -= n
-
-            if other:
-                n <<= 1
-                tmp = tmp.arrayByAddingObjectsFromArray_(tmp)
-
-        #for n in xrange(other):
-            #result.extend(self)
-        return result
-
-
-    def nsdict_new(cls, *args, **kwds):
-        if len(args) == 0:
-            pass
-
-        elif len(args) == 1:
-            d = dict()
-            for k , v in args[0]:
-                d[container_wrap(k)] = container_wrap(v)
-
-            for k, v in kwds.iteritems():
-                d[container_wrap(k)] = container_wrap(v)
-
-            return cls.dictionaryWithDictionary_(d)
-
-        else:
-            raise TypeError(
-                    "dict expected at most 1 arguments, got {0}".format(
-                        len(args)))
-        if kwds:
-            d = dict()
-            for k, v in kwds.iteritems():
-                d[container_wrap(k)] = container_wrap(v)
-
-            return cls.dictionaryWithDictionary_(d)
-
-        return cls.dictionary()
 
     NSDictionary = lookUpClass('NSDictionary')
     def nsdict_fromkeys(cls, keys, value=None):
@@ -995,14 +988,6 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('fromkeys', classmethod(nsmutabledict_fromkeys)),
         )
 
-        CLASS_METHODS['NSArray'] = (
-            ('__new__', nsarray_new),
-            ('__add__', nsarray_add),
-            ('__radd__', nsarray_radd),
-            ('__mul__', nsarray_mul),
-            ('__rmul__', nsarray_mul),
-        )
-
     else:
         CLASS_METHODS['NSDictionary'] = (
             ('__new__', nsdict_new),
@@ -1015,10 +1000,115 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         CLASS_METHODS['NSMutableDictionary'] = (
             ('__new__', nsdict_new),
         )
-        CLASS_METHODS['NSArray'] = (
-            ('__new__', nsarray_new),
-            ('__add__', nsarray_add),
-            ('__radd__', nsarray_radd),
-            ('__mul__', nsarray_mul),
-            ('__rmul__', nsarray_mul),
-        )
+
+    #FIXME: This shouldn't be necessary
+    NSMutableDictionary.dictionary()
+
+NSMutableArray = lookUpClass('NSMutableArray')
+def nsarray_add(self, other):
+    result = NSMutableArray.arrayWithArray_(self)
+    result.extend(other)
+    return result
+
+def nsarray_radd(self, other):
+    result = NSMutableArray.arrayWithArray_(other)
+    result.extend(self)
+    return result
+
+def nsarray_mul(self, other):
+    """
+    This tries to implement anNSArray * N
+    somewhat efficently (and definitely more
+    efficient that repeated appending).
+    """
+    result = NSMutableArray.array()
+
+    if other <= 0:
+        return result
+
+    n = 1
+    tmp = self
+    while other:
+        if other & n != 0:
+            result.extend(tmp)
+            other -= n
+
+        if other:
+            n <<= 1
+            tmp = tmp.arrayByAddingObjectsFromArray_(tmp)
+
+    #for n in xrange(other):
+        #result.extend(self)
+    return result
+
+
+def nsdict_new(cls, *args, **kwds):
+    if len(args) == 0:
+        pass
+
+    elif len(args) == 1:
+        d = dict()
+        for k , v in args[0]:
+            d[container_wrap(k)] = container_wrap(v)
+
+        for k, v in kwds.iteritems():
+            d[container_wrap(k)] = container_wrap(v)
+
+        return cls.dictionaryWithDictionary_(d)
+
+    else:
+        raise TypeError(
+                "dict expected at most 1 arguments, got {0}".format(
+                    len(args)))
+    if kwds:
+        d = dict()
+        for k, v in kwds.iteritems():
+            d[container_wrap(k)] = container_wrap(v)
+
+        return cls.dictionaryWithDictionary_(d)
+
+    return cls.dictionary()
+
+def nsarray_new(cls, sequence=None):
+    if not sequence:
+        return NSArray.array()
+
+    elif isinstance(sequence, (str, unicode)):
+        return NSArray.arrayWithArray_(list(sequence))
+
+    else:
+        if not isinstance(sequence, (list, tuple)):
+            # FIXME: teach bridge to treat range and other list-lik
+            # types correctly
+            return NSArray.arrayWithArray_(list(sequence))
+
+        return NSArray.arrayWithArray_(sequence)
+
+def nsmutablearray_new(cls, sequence=None):
+    if not sequence:
+        return NSMutableArray.array()
+
+    elif isinstance(sequence, (str, unicode)):
+        return NSMutableArray.arrayWithArray_(list(sequence))
+
+    else:
+        if not isinstance(sequence, (list, tuple)):
+            # FIXME: teach bridge to treat range and other list-lik
+            # types correctly
+            return NSMutableArray.arrayWithArray_(list(sequence))
+
+        return NSMutableArray.arrayWithArray_(sequence)
+
+CLASS_METHODS['NSArray'] = (
+    ('__add__', nsarray_add),
+    ('__radd__', nsarray_radd),
+    ('__mul__', nsarray_mul),
+    ('__rmul__', nsarray_mul),
+)
+
+# Force scans to ensure __new__ is set correctly
+# FIXME: This shouldn't be necessary!
+NSArray.__new__ = nsarray_new
+NSMutableArray.__new__ = nsmutablearray_new
+NSMutableArray.alloc().init()
+#NSMutableSet.set()
