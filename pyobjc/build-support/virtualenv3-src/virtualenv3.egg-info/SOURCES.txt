@@ -1,0 +1,15 @@
+MANIFEST.in
+PKG-INFO
+distribute-0.6.4.tar.gz
+setup.cfg
+setup.py
+virtualenv3.py
+./virtualenv3.py
+docs/index.txt
+docs/license.txt
+virtualenv3.egg-info/PKG-INFO
+virtualenv3.egg-info/SOURCES.txt
+virtualenv3.egg-info/dependency_links.txt
+virtualenv3.egg-info/entry_points.txt
+virtualenv3.egg-info/not-zip-safe
+virtualenv3.egg-info/top_level.txt

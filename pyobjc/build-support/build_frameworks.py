@@ -60,49 +60,50 @@ def build_framework(version, archs):
     lg.info("Build framework version=%r archs=%r", version, archs)
 
     builddir = os.path.join(gBaseDir, "checkouts", version, "build")
-    if os.path.exists(builddir):
-        lg.debug("Remove existing build tree")
-        shutil.rmtree(builddir)
-
-    lg.debug("Create build tree %r", builddir)
-    os.mkdir(builddir)
-
-    lg.debug("Running 'configure'")
-    p = subprocess.Popen([
-        "../configure",
-            "--enable-framework",
-            "--with-framework-name=DbgPython-{0}".format(archs),
-            "--enable-universalsdk=/",
-            "--with-universal-archs={0}".format(archs),
-            "--with-pydebug",
-        ], cwd=builddir)
-
-    xit = p.wait()
-    if xit != 0:
-        lg.debug("Configure failed for %s", version)
-        raise ShellError(xit)
-    
-    lg.debug("Running 'make'")
-    p = subprocess.Popen([
-            "make",
-        ], cwd=builddir)
-
-    xit = p.wait()
-    if xit != 0:
-        lg.debug("Make failed for %s", version)
-        raise ShellError(xit)
-
-    lg.debug("Running 'make install'")
-    p = subprocess.Popen([
-            "make",
-            "install",
-        ], cwd=builddir)
-
-    xit = p.wait()
-    if xit != 0:
-        lg.debug("Install failed for %r", version)
-        raise ShellError(xit)
-
+#    if os.path.exists(builddir):
+#        lg.debug("Remove existing build tree")
+#        shutil.rmtree(builddir)
+#
+#    lg.debug("Create build tree %r", builddir)
+#    os.mkdir(builddir)
+#
+#    lg.debug("Running 'configure'")
+#    p = subprocess.Popen([
+#        "../configure",
+#            "--enable-framework",
+#            "--with-framework-name=DbgPython-{0}".format(archs),
+#            "--enable-universalsdk=/",
+#            "--with-universal-archs={0}".format(archs),
+#            "--with-pydebug",
+#            "MACOSX_DEPLOYMENT_TARGET=10.6",
+#        ], cwd=builddir)
+#
+#    xit = p.wait()
+#    if xit != 0:
+#        lg.debug("Configure failed for %s", version)
+#        raise ShellError(xit)
+#    
+#    lg.debug("Running 'make'")
+#    p = subprocess.Popen([
+#            "make",
+#        ], cwd=builddir)
+#
+#    xit = p.wait()
+#    if xit != 0:
+#        lg.debug("Make failed for %s", version)
+#        raise ShellError(xit)
+#
+#    lg.debug("Running 'make install'")
+#    p = subprocess.Popen([
+#            "make",
+#            "install",
+#        ], cwd=builddir)
+#
+#    xit = p.wait()
+#    if xit != 0:
+#        lg.debug("Install failed for %r", version)
+#        raise ShellError(xit)
+#
     lg.debug("Installing distribute")
 
     lg.debug("Download distribute_setup script")
@@ -148,13 +149,12 @@ def build_framework(version, archs):
     # Therefore install the real virtualenv for python 2.x
     # and the fork for python 3.x
     if version[0] == '2':
-        p = subprocess.Popen([
-            os.path.join(os.path.dirname(python), "easy_install"),
-            "virtualenv"])
+        srcdir = os.path.join(gBaseDir, 'virtualenv-src')
     else:
-        p = subprocess.Popen([
-            os.path.join(os.path.dirname(python), "easy_install"),
-            "virtualenv3"])
+        srcdir = os.path.join(gBaseDir, 'virtualenv3-src')
+
+    p = subprocess.Popen([ python, "setup.py", "install" ],
+            cwd=srcdir)
 
     xit = p.wait()
     if xit != 0:
@@ -213,8 +213,8 @@ def main():
         for version in sorted(versions):
             create_checkout(version)
 
-            for archs in gArchs:
-                build_framework(version, archs)
+            for arch in sorted(archs):
+                build_framework(version, arch)
     
     except ShellError:
         sys.exit(1)

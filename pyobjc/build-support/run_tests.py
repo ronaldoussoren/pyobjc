@@ -19,7 +19,7 @@ Assumptions:
 
 (TODO: create script that builds a fresh copy of these frameworks from svn checkouts)
 """
-import getopt, sys, os, shutil, logging
+import getopt, sys, os, shutil, logging, subprocess
 from topsort import topological_sort
 
 gUsage = """\
@@ -32,34 +32,52 @@ versions: 2.6,2.7,3.1,3.2 (values seperated by commas)
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 gRootDir = os.path.dirname(gBaseDir)
 
+gVersions=["2.6", "2.7", "3.1", "3.2"]
+gArchs=["32-bit", "3-way"]
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'a:v:', ["--archs=", "--versions="])
+        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?', ["--help", "--archs=", "--versions="])
     except getopt.error as msg:
-        print(msg)
-        print(gUsage)
+        print(msg, file=sys.stderr)
+        print(gUsage, file=sys.stderr)
         sys.exit(1)
 
     if args:
-        print("Additional arguments")
-        print(gUsage)
+        print("Additional arguments", file=sys.stderr)
+        print(gUsage, file=sys.stderr)
         sys.exit(1)
 
-    versions=["2.6", "2.7", "3.1", "3.2"]
-    archs=["32-bit", "3-way"]
+    versions=gVersions
+    archs=gArchs
 
     for k, v in opts:
-        if k in ['-a', '--archs']:
+        if k in ('-?', '-h', '--help'):
+            print(gUsage)
+            sys.exit(0)
+        elif k in ['-a', '--archs']:
             archs=v.split(',')
+
+            for v in archs:
+                if v not in gArchs:
+                    print("Unsupported architecture: {0}".format(v),
+                            file=sys.stderr)
+                    sys.exit(1)
 
         elif k in ['-v', '--versions']:
             versions=v.split(',')
 
+            for v in versions:
+                if v not in gVersions:
+                    print("Unsupported Python version: {0}".format(v),
+                            file=sys.stderr)
+                    sys.exit(1)
         else:
-            raise ValueError(k)
+            print("ERROR: Unhandled script option: {0}".format(k),
+                    file=sys.stderr)
+            sys.exit(2)
 
     all_results = []
     for ver in versions:
@@ -118,7 +136,7 @@ def detect_frameworks():
             partial_order.append((dep, subdir))
 
     frameworks = topological_sort(frameworks, partial_order)
-    return frameworks
+    return frameworks[:2]
 
 
 
@@ -129,23 +147,33 @@ def run_tests(version, archs):
 
     lg.info("Run tests for Python %s with archs %s", version, archs)
 
-    subdir = os.path.join(gBaseDir, "virtualenvs", "{0}.{1}".format(version, arch))
+    subdir = os.path.join(gBaseDir, "virtualenvs", "{0}.{1}".format(version, archs))
     if os.path.exists(subdir):
         lg.debug("Remove existing virtualenv")
         shutil.rmtree(subdir)
 
     base_python = "/Library/Frameworks/DbgPython-{0}.framework/Versions/{1}/bin/python".format(
             archs, version)
+    if version[0] == '3':
+        base_python += '3'
+
     if not os.path.exists(base_python):
         lg.warning("No python installation for Python %r %r", version, archs)
         raise RuntimeError(base_python)
 
 
     lg.debug("Create virtualenv in %s", subdir)
-    p = subprocess.Popen([
-        base_python,
-        "-mvirtualenv",
-        subdir])
+    if version[0] == '2':
+        p = subprocess.Popen([
+            base_python,
+            "-mvirtualenv",
+            subdir])
+    else:
+        p = subprocess.Popen([
+            base_python,
+            "-mvirtualenv3",
+            subdir])
+
     xit = p.wait()
     if p != 0:
         lg.warning("Cannot create virtualenv in %s", subdir)
@@ -196,6 +224,11 @@ def run_tests(version, archs):
             lg.warning("Build %s failed", pkg)
             raise RuntimeError(pkg)
 
+        # TODO: 
+        # - For python2.7/3.2: use `arch` to run tests with all architectures
+        # - For python2.6/3.1: run tests using 'python-32' and 'python-64' 
+        #   when those are available
+
         lg.debug("Test %s for %s", pkg.os.path.basename(subdir))
         p = subprocess.Popen([
             os.path.join(subdir, "bin", "python"),
@@ -203,11 +236,11 @@ def run_tests(version, archs):
             cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = p.communicate()
 
-        print "====STDOUT==="
-        print (stdout)
-        print "====STDERR==="
-        print (stderr)
-        print "====ENDEND==="
+        print("====STDOUT===")
+        print(stdout)
+        print("====STDERR===")
+        print(stderr)
+        print("====ENDEND===")
 
         test_results.append((pkg, stdout, stderr))
 
