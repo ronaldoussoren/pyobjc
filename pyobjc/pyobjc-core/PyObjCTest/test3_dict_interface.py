@@ -19,9 +19,6 @@ from test import mapping_tests
 NSDictionary = objc.lookUpClass('NSDictionary')
 NSMutableDictionary = objc.lookUpClass('NSMutableDictionary')
 
-# FIXME: Need to create a dictionary to activate the __new__ method.
-NSDictionary.dictionary()
-
 class TestNSDictionaryInterface (TestCase):
     def dictClass(self):
         return NSDictionary
