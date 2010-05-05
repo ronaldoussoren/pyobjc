@@ -2,9 +2,7 @@ This directory contains a number of scripts
 that help in testing PyObjC on a number 
 of platforms.
 
-All scripts are python3 scripts, but are currently
-simple enough that they probably run with python2.6
-as well.
+All scripts are python3 scripts.
 
 WARNING: The scripts are a work-in-progress and don't 
 work right now.

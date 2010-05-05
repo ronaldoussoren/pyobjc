@@ -1,0 +1,4 @@
+
+      [console_scripts]
+      virtualenv3 = virtualenv3:main
+      
