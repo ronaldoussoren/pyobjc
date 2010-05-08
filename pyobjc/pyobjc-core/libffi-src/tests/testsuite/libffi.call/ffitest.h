@@ -9,7 +9,6 @@
 
 #define CHECK(x) !(x) ? abort() : 0
 
-
 /* Prefer MAP_ANON(YMOUS) to /dev/zero, since we don't need to keep a
    file open.  */
 #ifdef HAVE_MMAP_ANON

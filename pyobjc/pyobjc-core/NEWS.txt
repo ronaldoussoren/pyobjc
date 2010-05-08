@@ -23,10 +23,23 @@ Version 2.3a0
   * ``NSDictionary.copy`` always returns an immutable dictionary, use
     ``NSDictionary.mutableCopy`` to get a mutable dictionary.
 
+  * Instances of ``NSDictionary`` cannot be pickled
+
   ``NSDictionary`` implements one important feature that native Python
   dictionaries don't: full support for Key-Value Observations. Sadly enough
   it is not possible to support Key-Value Observation of native Python 
   dictionaries without patching the interpreter.
+
+- NSSet and NSMutableSet implement the same interface as ``frozenset`` and
+  ``set``, except for the differences listed below:
+
+  * ``NSSet.copy`` and ``NSMutableSet.copy`` always return an immutable
+     object,  use the ``mutableCopy`` method to create a mutable copy.
+
+  * Instances of ``NSSet`` cannot be pickled
+
+  FIXME: This is currently tested using ``TestJointOps`` from the stdlib 
+  testset, add the other set related tests as well.
 
 - BUGFIX: accessing methods through ``anObject.pyobjc_instancMethods`` is
   now safer, before this release this could cause unlimited recursion

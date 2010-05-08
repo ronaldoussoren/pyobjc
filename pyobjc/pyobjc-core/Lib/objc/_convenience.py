@@ -974,6 +974,39 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
         return result
 
+    def dict_new(cls, args, kwds):
+        if len(args) == 0:
+            pass
+
+        elif len(args) == 1:
+            d = dict()
+            for k , v in args[0]:
+                d[container_wrap(k)] = container_wrap(v)
+
+            for k, v in kwds.iteritems():
+                d[container_wrap(k)] = container_wrap(v)
+
+            return cls.dictionaryWithDictionary_(d)
+
+        else:
+            raise TypeError(
+                    "dict expected at most 1 arguments, got {0}".format(
+                        len(args)))
+        if kwds:
+            d = dict()
+            for k, v in kwds.iteritems():
+                d[container_wrap(k)] = container_wrap(v)
+
+            return cls.dictionaryWithDictionary_(d)
+
+        return cls.dictionary()
+
+    def nsdict_new(cls, *args, **kwds):
+        return dict_new(NSDictionary, args, kwds)
+
+    def nsmutabledict_new(cls, *args, **kwds):
+        return dict_new(NSMutableDictionary, args, kwds)
+
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
             ('__new__', nsdict_new),
@@ -984,7 +1017,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         )
 
         CLASS_METHODS['NSMutableDictionary'] = (
-            ('__new__', nsdict_new),
+            ('__new__', nsmutabledict_new),
             ('fromkeys', classmethod(nsmutabledict_fromkeys)),
         )
 
@@ -1042,32 +1075,6 @@ def nsarray_mul(self, other):
     return result
 
 
-def nsdict_new(cls, *args, **kwds):
-    if len(args) == 0:
-        pass
-
-    elif len(args) == 1:
-        d = dict()
-        for k , v in args[0]:
-            d[container_wrap(k)] = container_wrap(v)
-
-        for k, v in kwds.iteritems():
-            d[container_wrap(k)] = container_wrap(v)
-
-        return cls.dictionaryWithDictionary_(d)
-
-    else:
-        raise TypeError(
-                "dict expected at most 1 arguments, got {0}".format(
-                    len(args)))
-    if kwds:
-        d = dict()
-        for k, v in kwds.iteritems():
-            d[container_wrap(k)] = container_wrap(v)
-
-        return cls.dictionaryWithDictionary_(d)
-
-    return cls.dictionary()
 
 def nsarray_new(cls, sequence=None):
     if not sequence:
@@ -1112,3 +1119,210 @@ NSArray.__new__ = nsarray_new
 NSMutableArray.__new__ = nsmutablearray_new
 NSMutableArray.alloc().init()
 #NSMutableSet.set()
+
+NSSet = lookUpClass('NSSet')
+NSMutableSet = lookUpClass('NSMutableSet')
+
+try:
+    from collections import Set
+    Set.register(NSSet)
+except:
+    Set = (set, frozenset, NSSet)
+
+def nsset_isdisjoint(self, other):
+    for item in self:
+        if item in other:
+            return False
+    return True
+
+def nsset_union(self, *other):
+    result = self.mutableCopy()
+    for val in other:
+        if isinstance(val, Set):
+            result.unionSet_(val)
+        else:
+            result.unionSet_(set(val))
+    return result
+
+def nsset_intersection(self, *others):
+    if len(others) == 0:
+        return self.mutableCopy()
+    result = NSMutableSet()
+    for item in self:
+        for o in others:
+            if item not in o:
+                break
+        else:
+            result.add(item)
+    return result
+
+def nsset_difference(self, *others):
+    result = self.mutableCopy()
+
+    for value in others:
+        if isinstance(value, Set):
+            result.minusSet_(value)
+        else:
+            result.minusSet_(set(value))
+
+    return result
+
+def nsset_symmetric_difference(self, other):
+    result = set()
+    for item in self:
+        if item not in other:
+            result.add(item)
+    for item in other:
+        if item not in self:
+            result.add(item)
+    return NSMutableSet(result)
+    
+
+def nsset__contains__(self, value):
+    hash(value) # Force error for non-hashable values
+    return self.containsObject_(value)
+
+def nsset__or__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("NSSet|value where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("NSSet|value where value is not a set")
+    return nsset_union(self, other)
+
+def nsset__ror__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("value|NSSet where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("value|NSSet where value is not a set")
+    return nsset_union(other, self)
+
+def nsset__and__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("NSSet&value where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("NSSet&value where value is not a set")
+    return nsset_intersection(self, other)
+
+def nsset__rand__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("value&NSSet where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("value&NSSet where value is not a set")
+    return nsset_intersection(other, self)
+
+def nsset__sub__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    return nsset_difference(self, other)
+
+def nsset_rsub__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    return nsset_difference(other, self)
+
+def nsset__xor__(self, other):
+    if not isinstance(self, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    if not isinstance(other, Set):
+        raise TypeError("NSSet-value where value is not a set")
+    return nsset_symmetric_difference(other, self)
+
+def nsset_issubset(self, other):
+    return self.isSubsetOfSet_(other)
+
+def nsset__eq__(self, other):
+    if not isinstance(other, Set):
+        return False
+
+    return self.isEqualToSet_(other)
+
+def nsset__ne__(self, other):
+    if not isinstance(other, Set):
+        return True
+
+    return not self.isEqualToSet_(other)
+
+def nsset__lt__(self, other):
+    return (self <= other) and (self != other)
+
+def nsset_issuperset(self, other):
+    for item in other:
+        if item not in self:
+            return False
+
+    return True
+
+def nsset__gt__(self, other):
+    return (self >= other) and (self != other)
+
+if sys.version_info[0] == 2:
+    def nsset__cmp__(self, other):
+        try:
+            if self < other:
+                return -1
+            elif self == other:
+                return 0
+            else:
+                return 1
+        except TypeError:
+            return cmp(id(self), id(other))
+
+
+CLASS_METHODS['NSSet'] = (
+    ('__contains__',  nsset__contains__),
+    ('add',  lambda self, value: self.addObject_(value)),
+    ('isdisjoint',  nsset_isdisjoint),
+    ('union',  nsset_union),
+    ('intersection',  nsset_intersection),
+    ('difference',  nsset_difference),
+    ('symmetric_difference',  nsset_symmetric_difference),
+    ('issubset', nsset_issubset),
+    ('__eq__', nsset__eq__),
+    ('__ne__', nsset__ne__),
+    ('__le__', nsset_issubset),
+    ('__lt__', nsset__lt__),
+    ('issuperset', nsset_issuperset),
+    ('__ge__', nsset_issuperset),
+    ('__gt__', nsset__gt__),
+    ('__or__', nsset__or__),
+    ('__ror__', nsset__ror__),
+    ('__and__', nsset__and__),
+    ('__rand__', nsset__rand__),
+    ('__xor__', nsset__xor__),
+    ('__rxor__', nsset__xor__),
+    ('__sub__', nsset__sub__),
+)
+
+if sys.version_info[0] == 2:
+    CLASS_METHODS['NSSet'] += (
+        ('__cmp__', 'nsset__cmp__'),
+    )
+
+def nsset_new(cls, sequence=None):
+    if not sequence:
+        return NSSet.set()
+
+    if isinstance(sequence, (NSSet, set, frozenset)):
+        return NSSet.set().setByAddingObjectsFromSet_(sequence)
+
+    else:
+        return NSSet.set().setByAddingObjectsFromSet_(set(sequence))
+
+def nsmutableset_new(cls, sequence=None):
+    if not sequence:
+        return NSMutableSet.set()
+
+    if isinstance(sequence, (NSSet, set, frozenset)):
+        return NSMutableSet.set().setByAddingObjectsFromSet_(sequence)
+
+    else:
+        return NSMutableSet.set().setByAddingObjectsFromSet_(set(sequence))
+
+NSSet.__new__ = nsset_new
+NSMutableSet.__new__ = nsmutableset_new
+
+NSMutableSet.alloc().init()

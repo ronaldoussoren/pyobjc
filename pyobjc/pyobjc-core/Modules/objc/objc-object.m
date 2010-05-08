@@ -284,7 +284,9 @@ static PyObject** _get_dictptr(PyObject* obj)
 }
 
 
-
+void break_point(void) {
+	printf("break here\n");
+}
 static PyObject *
 object_getattro(PyObject *obj, PyObject * volatile name)
 {
@@ -317,7 +319,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	}
 
 
+
 	namestr = PyBytes_AsString(bytes);
+	if (strcmp(namestr, "_attributeWithoutModel") == 0) {
+		break_point();
+	}
 	if (namestr == NULL) {
 		if (!PyErr_Occurred()) {
 			PyErr_SetString(PyExc_ValueError, "Empty name");
