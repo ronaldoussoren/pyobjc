@@ -180,9 +180,14 @@ PyObjCErr_FromObjC(NSException* localException)
 		}
 	}
 #else
-	 buf = PyText_FromFormat("%s - %s", 
-               [[localException name] UTF8String],
-               [[localException reason] UTF8String]);
+	if ([[localException reason] UTF8String]) {
+		 buf = PyText_FromFormat("%s - %s", 
+		       [[localException name] UTF8String],
+		       [[localException reason] UTF8String]);
+	} else {
+		 buf = PyText_FromFormat("%s", 
+		       [[localException name] UTF8String]);
+	}
 	PyErr_SetObject(exception, buf);
 #endif
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
