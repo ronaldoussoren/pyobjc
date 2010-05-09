@@ -32,7 +32,7 @@ class TestSynthesize (TestCase):
         v = TestSynthesizeCopier.alloc().init()
 
         obj.setStringValue_(v)
-        self.assertIsObject(obj.stringValue(), v)
+        self.assertIs(obj.stringValue(), v)
 
         obj.setSomeTitle_(v)
         self.assertEqual(obj.someTitle(), 42)

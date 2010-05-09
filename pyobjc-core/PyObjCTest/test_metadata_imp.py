@@ -42,7 +42,7 @@ class TestArraysOut (TestCase):
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
         
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
@@ -60,7 +60,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, m, o, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -91,7 +91,7 @@ class TestArraysOut (TestCase):
 
         n, v = m(o, objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -131,7 +131,7 @@ class TestArraysInOut (TestCase):
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
@@ -154,7 +154,7 @@ class TestArraysInOut (TestCase):
 
         n, v = m(o, objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -189,7 +189,7 @@ class TestArraysInOut (TestCase):
 
         n, v = m(o, objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = OC_MetaDataTest.new()
@@ -244,9 +244,9 @@ class TestArraysIn (TestCase):
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = m(o, (p, q, r))
         self.assertEquals(len(v), 3)
-        self.assertIsObject(v[0], p)
-        self.assertIsObject(v[1], q)
-        self.assertIsObject(v[2], r)
+        self.assertIs(v[0], p)
+        self.assertIs(v[1], q)
+        self.assertIs(v[2], r)
 
         m = o.methodForSelector_('makeStringArray:')
 

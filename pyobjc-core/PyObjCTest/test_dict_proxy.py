@@ -31,7 +31,7 @@ class TestMutableSequence (TestCase):
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIsObject(OC_TestSet.classOf_(self.mapClass()), OC_PythonDictionary)
+        self.assertIs(OC_TestSet.classOf_(self.mapClass()), OC_PythonDictionary)
 
     def testMutableCopy(self):
 

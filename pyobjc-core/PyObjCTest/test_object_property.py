@@ -56,8 +56,8 @@ class TestObjectProperty (TestCase):
 
         v = OCCopy.alloc().init()
         o.p1 = v
-        self.assertIsObject(o.p1, v)
-        self.assertIsObject(o._p1, v)
+        self.assertIs(o.p1, v)
+        self.assertIs(o._p1, v)
 
         self.assertTrue(o.respondsToSelector(b'p2'))
         self.assertTrue(o.respondsToSelector(b'setP2:'))
@@ -71,15 +71,15 @@ class TestObjectProperty (TestCase):
         self.assertFalse(o.respondsToSelector(b'setP3:'))
 
         o._p3 = v
-        self.assertIsObject(o.p3, v)
+        self.assertIs(o.p3, v)
 
 
         self.assertTrue(o.respondsToSelector(b'p4'))
         self.assertTrue(o.respondsToSelector(b'setP4:'))
 
         o.p4 = v
-        self.assertIsObject(o.p4, v)
-        self.assertIsObject(o.myp4, v)
+        self.assertIs(o.p4, v)
+        self.assertIs(o.myp4, v)
 
         self.assertTrue(o.respondsToSelector(b'p5'))
         self.assertTrue(o.respondsToSelector(b'setP5:'))

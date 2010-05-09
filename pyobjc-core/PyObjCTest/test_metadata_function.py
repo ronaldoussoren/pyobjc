@@ -275,7 +275,7 @@ class TestArraysOut (TestCase):
 
         n, v = nullfill4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
         
     def testNullTerminated(self):
 
@@ -289,7 +289,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, nullfillStringArray_, None)
         n, v = nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
 
@@ -316,7 +316,7 @@ class TestArraysOut (TestCase):
 
         n, v = nullfillArray_count_(objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL )
+        self.assertIs(v, objc.NULL )
 
     def testWithCountInResult(self):
 
@@ -349,7 +349,7 @@ class TestArraysInOut (TestCase):
 
         n, v = nullreverse4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
 
@@ -369,7 +369,7 @@ class TestArraysInOut (TestCase):
 
         n, v = nullreverseStrings_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
 
@@ -401,7 +401,7 @@ class TestArraysInOut (TestCase):
 
         n, v = nullreverseArray_count_(objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
 
@@ -431,7 +431,7 @@ class TestArraysIn (TestCase):
         self.assertRaises(ValueError, make4Tuple_, objc.NULL)
 
         v = null4Tuple_(objc.NULL)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
 
     def testNullTerminated(self):
 
@@ -445,9 +445,9 @@ class TestArraysIn (TestCase):
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = makeObjectArray_((p, q, r))
         self.assertEquals(len(v), 3)
-        self.assertIsObject(v[0], p)
-        self.assertIsObject(v[1], q)
-        self.assertIsObject(v[2], r)
+        self.assertIs(v[0], p)
+        self.assertIs(v[1], q)
+        self.assertIs(v[2], r)
 
         v = makeStringArray_(())
         self.assertEquals(len(v), 0)

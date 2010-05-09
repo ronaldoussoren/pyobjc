@@ -18,6 +18,7 @@ TODO:
 
 """
 from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
+from objc._objc import registerMetaDataForSelector
 from itertools import imap
 import sys
 
@@ -238,11 +239,13 @@ def pop_setObject_forKey_(self, key, dflt=pop_setObject_dflt):
 
 def popitem_setObject_forKey_(self):
     try:
-        k = self[iter(self).next()]
+        k = iter(self).next()
     except StopIteration:
         raise KeyError, "popitem on an empty %s" % (type(self).__name__,)
     else:
-        return (k, self[k])
+        result = (k, container_unwrap(self.objectForKey_(k), KeyError))
+        self.removeObjectForKey_(k)
+        return result
 
 CONVENIENCE_METHODS[b'setObject:forKey:'] = (
     ('__setitem__', __setitem__setObject_forKey_),
@@ -672,6 +675,24 @@ def sort(self, key=None, reverse=False, cmpfunc=cmp):
     self.sortUsingFunction_context_(doCmp, cmpfunc)
 
 
+registerMetaDataForSelector(b"NSObject", b"sortUsingFunction:context:",
+        dict(
+            arguments={
+                2:  { 
+                        'callable': {
+                            'reval': 'i',
+                            'arguments': {
+                                0: { 'type': '@' },
+                                1: { 'type': '@' },
+                                2: { 'type': '@' },
+                            }
+                        },
+                        'callable_retained': False,
+                },
+                3:  { 'type': '@' },
+            },
+        ))
+
 
 CONVENIENCE_METHODS[b'sortUsingFunction:context:'] = (
     ('sort', sort),
@@ -1011,6 +1032,20 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
     def nsmutabledict_new(cls, *args, **kwds):
         return dict_new(NSMutableDictionary, args, kwds)
 
+
+    def nsdict__eq__(self, other):
+        if not isinstance(other, collections.Mapping):
+            return False
+
+        return self.isEqualToDictionary_(other)
+
+    def nsdict__ne__(self, other):
+        return not nsdict__eq__(self, other)
+
+    def nsdict__richcmp__(self, other):
+        return NotImplemented
+        
+
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
             ('fromkeys', classmethod(nsdict_fromkeys)),
@@ -1030,6 +1065,15 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('viewvalues', lambda self: nsdict_values(self)),
             ('viewitems', lambda self: nsdict_items(self)),
         )
+
+    CLASS_METHODS['NSDictionary'] += (
+        ('__eq__', nsdict__eq__),
+        ('__ne__', nsdict__ne__),
+        ('__lt__', nsdict__richcmp__),
+        ('__le__', nsdict__richcmp__),
+        ('__gt__', nsdict__richcmp__),
+        ('__ge__', nsdict__richcmp__),
+    )
 
     NSDictionary.__new__ = nsdict_new
     NSMutableDictionary.__new__ = nsmutabledict_new
@@ -1344,21 +1388,22 @@ def nsset_pop(self):
 
     v = self.anyObject()
     self.removeObject_(v)
-    return v
+    return container_unwrap(v, KeyError)
 
 def nsset_remove(self, value):
     hash(value)
+    value = container_wrap(value)
     if value not in self:
         raise KeyError(value)
     self.removeObject_(value)
 
 def nsset_discard(self, value):
     hash(value)
-    self.removeObject_(value)
+    self.removeObject_(container_wrap(value))
 
 def nsset_add(self, value):
     hash(value)
-    self.addObject_(value)
+    self.addObject_(container_wrap(value))
 
 class nsset__iter__ (object):
     def __init__(self, value):

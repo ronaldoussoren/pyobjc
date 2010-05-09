@@ -42,8 +42,8 @@ class TestInstanceVariables(TestCase):
         self.object.idVar = o
         self.object.idVar2 = o
 
-        self.assertIsObject(self.object.idVar, o)
-        self.assertIsObject(self.object.idVar2, o)
+        self.assertIs(self.object.idVar, o)
+        self.assertIs(self.object.idVar2, o)
 
         self.object.idVar = u"hello"
         self.assertEquals(self.object.idVar, u"hello")
@@ -119,7 +119,7 @@ class TestAllInstanceVariables (TestCase):
         getter = objc.getInstanceVariable
 
         cls = getter(obj, 'isa')
-        self.assertIsObject(cls, type(obj))
+        self.assertIs(cls, type(obj))
 
         self.assertEquals(getter(obj, 'intValue'), 42)
         self.assertIsInstance(getter(obj, 'intValue'), int)
@@ -175,13 +175,13 @@ class TestAllInstanceVariables (TestCase):
         self.assertRaises(TypeError, setter, 'objValue', o)
         self.assertIsNotObject(getter(obj, 'objValue'), o)
         setter(obj, 'objValue', o, True)
-        self.assertIsObject(getter(obj, 'objValue'), o)
+        self.assertIs(getter(obj, 'objValue'), o)
 
         o2 = NSObject.new()
         o2.retain()
         self.assertIsNotObject(getter(obj, 'objValue'), o2)
         setter(obj, 'objValue', o2, False)
-        self.assertIsObject(getter(obj, 'objValue'), o2)
+        self.assertIs(getter(obj, 'objValue'), o2)
 
         self.assertEquals(getter(obj, 'pyValue'), slice(1, 10, 4))
         setter(obj, 'pyValue', [1,2,3])

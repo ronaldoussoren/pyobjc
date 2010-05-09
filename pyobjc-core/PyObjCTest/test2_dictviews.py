@@ -105,11 +105,11 @@ class DictSetTest(TestCase):
         d3 = NSMutableDictionary({u'd': 4, u'e': 5})
         self.assertEqual(
             d1.viewitems() & d1.viewitems(), set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() & d2.viewitems(), set(((u'b', 2))))
+        self.assertEqual(d1.viewitems() & d2.viewitems(), set(((u'b', 2),)))
         self.assertEqual(d1.viewitems() & d3.viewitems(), set())
         self.assertEqual(d1.viewitems() & set(d1.viewitems()),
                          set(((u'a', 1), (u'b', 2))))
-        self.assertEqual(d1.viewitems() & set(d2.viewitems()), set(((u'b', 2))))
+        self.assertEqual(d1.viewitems() & set(d2.viewitems()), set(((u'b', 2),)))
         self.assertEqual(d1.viewitems() & set(d3.viewitems()), set())
 
         self.assertEqual(d1.viewitems() | d1.viewitems(),

@@ -27,7 +27,7 @@ class TestNSNumber (TestCase):
             v = getattr(NSNumber, m)(0)
             self.assertIsInstance(v, NSNumber)
             self.assertIsNotInstance(v, OC_PythonNumber)
-            self.assertIsObject(OC_TestNumber.numberClass_(v), NSCFNumber)
+            self.assertIs(OC_TestNumber.numberClass_(v), NSCFNumber)
 
     def testShortConversions(self):
         v = NSNumber.numberWithShort_(42)
@@ -197,15 +197,15 @@ class TestPyNumber (TestCase):
     def testClasses(self):
         # Ensure that python numbers are proxied using the right proxy type
         for v in (0, 1, 2**32+1, 2**64+1, 42.5):
-            self.assertIsObject(OC_TestNumber.numberClass_(v), OC_PythonNumber)
+            self.assertIs(OC_TestNumber.numberClass_(v), OC_PythonNumber)
 
         # The booleans True and False must be proxied as the corresponding
         # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code
         # get's upset.
         boolClass = objc.lookUpClass('NSCFBoolean')
         for v in (True, False):
-            self.assertIsObject(OC_TestNumber.numberClass_(v), boolClass)
-            self.assertIsObject(objc.repythonify(v), v)
+            self.assertIs(OC_TestNumber.numberClass_(v), boolClass)
+            self.assertIs(objc.repythonify(v), v)
 
 
     def testPythonIntConversions(self):

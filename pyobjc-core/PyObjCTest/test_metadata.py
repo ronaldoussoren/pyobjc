@@ -368,11 +368,11 @@ class TestArraysOut (TestCase):
 
         n, v = o.nullfill4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
         a = array.array('i', [0]* 4)
         v = o.fill4Tuple_(a);
-        self.assertIsObject(a, v)
+        self.assertIs(a, v)
         self.assertEquals(list(a), [0, -1, -8, -27])
 
         a = array.array('i', [0]* 5)
@@ -393,7 +393,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, o.nullfillStringArray_, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -421,11 +421,11 @@ class TestArraysOut (TestCase):
 
         n, v = o.nullfillArray_count_(objc.NULL, 3)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
         a = array.array('i', [0]* 10)
         v = o.fillArray_count_(a, 10);
-        self.assertIsObject(a, v)
+        self.assertIs(a, v)
         self.assertEquals(list(a), [0, 1, 4, 9, 16, 25, 36, 49, 64, 81 ])
 
     def testWithCountInResult(self):
@@ -461,11 +461,11 @@ class TestArraysInOut (TestCase):
 
         n, v = o.nullreverse4Tuple_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
         a = array.array('h', [1, 2, 3, 4])
         v = o.reverse4Tuple_(a)
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
         self.assertEquals(list(a), [4,3,2,1])
 
         a = array.array('h', [1, 2, 3, 4, 5])
@@ -492,7 +492,7 @@ class TestArraysInOut (TestCase):
 
         n, v = o.nullreverseStrings_(objc.NULL)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = OC_MetaDataTest.new()
@@ -531,11 +531,11 @@ class TestArraysInOut (TestCase):
 
         n, v = o.nullreverseArray_count_(objc.NULL, 0)
         self.assertEquals(n, 0)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
         a = array.array('f', [5.0, 7.0, 9.0, 11.0, 13.0])
         v = o.reverseArray_count_(a, 5)
-        self.assertIsObject(a, v)
+        self.assertIs(a, v)
         self.assertEquals(list(a), [13.0, 11.0, 9.0, 7.0, 5.0])
 
     def testWithCountInResult(self):
@@ -587,9 +587,9 @@ class TestArraysIn (TestCase):
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = o.makeObjectArray_((p, q, r))
         self.assertEquals(len(v), 3)
-        self.assertIsObject(v[0], p)
-        self.assertIsObject(v[1], q)
-        self.assertIsObject(v[2], r)
+        self.assertIs(v[0], p)
+        self.assertIs(v[1], q)
+        self.assertIs(v[2], r)
 
 
         v = o.makeStringArray_(())
@@ -1055,7 +1055,7 @@ class TestBuffers (TestCase):
 
         input = array.array('b', b"hello\0world")
         v = o.addOneToBytes_count_(input, len(input))
-        self.assertIsObject(v, input)
+        self.assertIs(v, input)
         self.assertNotEquals(input[0:5], b"hello")
         if sys.version_info[0] == 2:
             self.assertEquals(
@@ -1088,7 +1088,7 @@ class TestBuffers (TestCase):
 
         input = array.array('b', b"hello\0world")
         v = o.addOneToVoids_count_(input, len(input))
-        self.assertIsObject(v, input)
+        self.assertIs(v, input)
         self.assertNotEquals(input[0:5], b"hello")
         if sys.version_info[0] == 2:
             self.assertEquals(
@@ -1108,7 +1108,7 @@ class TestBuffers (TestCase):
         a = array.array('b', b'0' * 44)
         v = o.fillBuffer_count_(a, 44);
         self.assertEquals(buffer_as_bytes(v), b'\xfe'*44);
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
 
     def testOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
@@ -1122,7 +1122,7 @@ class TestBuffers (TestCase):
             a = array.array('b', (0,) * 44)
         v = o.fillVoids_count_(a, 44);
         self.assertEquals(buffer_as_bytes(v), b'\xab'*44);
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
 
 class TestVariableLengthValue (TestCase):
 

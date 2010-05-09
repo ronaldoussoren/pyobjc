@@ -7,6 +7,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.3a0
 -------------
 
+- TODO: 
+
+  * Test memory usage using the Instruments tool to check which bits
+    of PyObjC use (too) much memory. Do this using a build of
+    Python without pymalloc (because pymalloc confuses Instruments)
+
+- TODO:
+
+  * NSArray/NSMutableArray should have same interface as tuple/list
+
+  * NSData/NSMutableData should have same interface as bytes/bytearray
+    (the former obviously only for 3.x)
+
+  * Move manual wrappers and metadata for NSArray, NSData, NSDictionary,
+    NSSet and their mutable variants to pyobjc-core
+
 - PyObjC's support for ``NSCoding`` now also works with plain ``NSArchiver``
   instances, not just with ``NSKeyedArchiver``.
 

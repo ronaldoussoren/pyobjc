@@ -39,7 +39,7 @@ class TestBundleFunctions (TestCase):
 
         fn = d[u'NSClassFromString']
         value = fn(u'NSObject')
-        self.assertIsObject(value, NSObject)
+        self.assertIs(value, NSObject)
 
         # Need to look for a different example, NSCountFrames crashes
         # (that is the actual function, not the dynamic wrapper)

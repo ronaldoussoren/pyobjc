@@ -482,7 +482,7 @@ class PyOCTestSimpleArguments(TestCase):
         o = c.scannerWithString_(u"hello world")
         s = self.obj.idArg_(o)
         self.assertEquals(len(s), 1)
-        self.assertIsObject(s[0], o)
+        self.assertIs(s[0], o)
 
     def testStruct1(self):
         self.assertEquals(self.obj.dummyArg_((-1, 1)), (-2, 2))
