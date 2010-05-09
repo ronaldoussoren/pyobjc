@@ -6,17 +6,20 @@ This is a port of the set tests from the Python stdlib for 3.2
 from PyObjCTools.TestSupport import *
 
 import objc
+import operator
 NSSet = objc.lookUpClass('NSSet')
 NSMutableSet = objc.lookUpClass('NSMutableSet')
 
 import test.test_set
 from test.test_set import PassThru, check_pass_thru
+test.test_set.empty_set = NSMutableSet()
 
 
 
-class TestMutableSet (test.test_set.TestJointOps, TestCase):
-    thetype = NSMutableSet
-    basetype = NSMutableSet
+
+class TestSet (test.test_set.TestJointOps, TestCase):
+    thetype = NSSet
+    basetype = NSSet
 
     def test_cyclical_repr(self): pass
     def test_pickling(self): pass
@@ -105,10 +108,150 @@ class TestMutableSet (test.test_set.TestJointOps, TestCase):
             self.assertNotEqual(id(s), id(z))
 
 
+    def test_copy(self):
+        dup = self.s.copy()
+        self.assertEqual(id(self.s), id(dup))
 
-class TestSet (TestMutableSet):
-    thetype = NSSet
-    basetype = NSSet
+class TestMutableSet (TestSet, test.test_set.TestSet):
+    thetype = NSMutableSet
+    basetype = NSMutableSet
+
+    def test_copy(self):
+        test.test_set.TestSet.test_copy(self)
+
+    # Tests from 'TestSet'
+    def test_init(self): pass
+    def test_hash(self): pass
+    def test_weakref(self): pass
+
+class TestBasicOpsEmpty (test.test_set.TestBasicOps):
+    def setUp(self):
+        self.case   = "empty set"
+        self.values = []
+        self.set    = NSMutableSet(self.values)
+        self.dup    = NSMutableSet(self.values)
+        self.length = 0
+        self.repr   = "{(\n)}"
+
+    def test_pickling(self): pass
+
+class TestBasicOpsSingleton (test.test_set.TestBasicOps):
+    def setUp(self):
+        self.case   = "unit set (number)"
+        self.values = [3]
+        self.set    = NSMutableSet(self.values)
+        self.dup    = NSMutableSet(self.values)
+        self.length = 1
+        self.repr   = "{(\n    3\n)}"
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+    def test_pickling(self): pass
+
+class TestBasicOpsTuple (test.test_set.TestBasicOps):
+    def setUp(self):
+        self.case   = "unit set (tuple)"
+        self.values = [(0, "zero")]
+        self.set    = NSMutableSet(self.values)
+        self.dup    = NSMutableSet(self.values)
+        self.length = 1
+        self.repr   = "{(\n        (\n        0,\n        zero\n    )\n)}"
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+    def test_pickling(self): pass
+
+class TestBasicOpsTriple (test.test_set.TestBasicOps):
+    def setUp(self):
+        self.case   = "triple set"
+        self.values = [0, "zero", operator.add]
+        self.set    = NSMutableSet(self.values)
+        self.dup    = NSMutableSet(self.values)
+        self.length = 3
+        self.repr   = None
+
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+
+    def test_pickling(self): pass
+
+class TestBinaryOps (test.test_set.TestBinaryOps):
+    def setUp(self):
+        self.set = NSMutableSet((2, 4, 6))
+
+class TestUpdateOps (test.test_set.TestUpdateOps):
+    def setUp(self):
+        self.set = NSMutableSet((2, 4, 6))
+
+class TestMutate (test.test_set.TestMutate):
+    def setUp(self):
+        self.values = ["a", "b", "c"]
+        self.set = NSMutableSet(self.values)
+
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+class TestSubsetEqualEmpty (test.test_set.TestSubsetEqualEmpty):
+    left = NSMutableSet()
+    right = NSMutableSet()
+
+
+class TestSubsetEqualNonEmpty (test.test_set.TestSubsetEqualNonEmpty):
+    left  = NSMutableSet([1, 2])
+    right = NSMutableSet([1, 2])
+
+    
+class TestSubsetPartial (test.test_set.TestSubsetPartial):
+    left  = NSMutableSet([1])
+    right = NSMutableSet([1, 2])
+
+class TestOnlySetsNumeric (test.test_set.TestOnlySetsNumeric):
+    def setUp(self):
+        self.set   = NSMutableSet((1, 2, 3))
+        self.other = 19
+        self.otherIsIterable = False
+
+class TestOnlySetsOperator (test.test_set.TestOnlySetsOperator):
+    def setUp(self):
+        self.set   = NSMutableSet((1, 2, 3))
+        self.other = operator.add
+        self.otherIsIterable = False
+
+
+class TestOnlySetsTuple (test.test_set.TestOnlySetsTuple):
+    def setUp(self):
+        self.set   = NSMutableSet((1, 2, 3))
+        self.other = (2, 4, 6)
+        self.otherIsIterable = True
+
+class TestOnlySetsString (test.test_set.TestOnlySetsString):
+    def setUp(self):
+        def gen():
+            for i in xrange(0, 10, 2):
+                yield i
+        self.set   = NSMutableSet((1, 2, 3))
+        self.other = gen()
+        self.otherIsIterable = True
+
+class TestIdentities (test.test_set.TestIdentities):
+    def setUp(self):
+        self.a = NSMutableSet('abracadabra')
+        self.b = NSMutableSet('alacazam')
+
+
+# TestVariousIteratorArgs
+# TestGraphs
+
+
 
 
 
