@@ -153,7 +153,7 @@ class TestTypeCode_int8 (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.int8ArrayOf4Out_(a)
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
         self.assertEquals(v[0], ord('b'))
         self.assertEquals(v[1], ord('o'))
         self.assertEquals(v[2], ord('a'))

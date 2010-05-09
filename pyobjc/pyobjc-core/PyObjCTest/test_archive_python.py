@@ -64,17 +64,17 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             buf = self.archiverClass.archivedDataWithRootObject_(a_function)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsObject(v, a_function)
+            self.assertIs(v, a_function)
 
             buf = self.archiverClass.archivedDataWithRootObject_(a_classic_class)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsObject(v, a_classic_class)
+            self.assertIs(v, a_classic_class)
 
             buf = self.archiverClass.archivedDataWithRootObject_(a_newstyle_class)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsObject(v, a_newstyle_class)
+            self.assertIs(v, a_newstyle_class)
 
             o = a_classic_class()
             o.x = 42
@@ -169,7 +169,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, dict)
-            self.assertIsObject(v[u'self'], v)
+            self.assertIs(v[u'self'], v)
 
         def testNestedSequences(self):
             o = [ 1, 2, 3, (5, (u'a', u'b'), 6), {1:2} ]
@@ -179,7 +179,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, list)
-            self.assertIsObject(v[-1], v)
+            self.assertIs(v[-1], v)
             self.assertEquals(v[:-1], o[:-1])
 
         def testNestedInstance(self):
@@ -191,7 +191,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
             self.assertIsInstance(v, a_classic_class)
-            self.assertIsObject(v.value, v)
+            self.assertIs(v.value, v)
 
         def dont_testNestedInstanceWithReduce(self):
             # Test recursive instantation with a __reduce__ method
@@ -214,7 +214,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             print type(v.value)
             print v.value
             print v
-            self.assertIsObject(v.value, v)
+            self.assertIs(v.value, v)
 
         def testRecusiveNesting(self):
             l = []
@@ -230,12 +230,12 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertEquals(len(v), 1)
             self.assertEquals(dir(v[0]), dir(i))
             self.assertEquals(v[0].attr.keys(), [1])
-            self.assertIsObject(v[0].attr[1], v)
+            self.assertIs(v[0].attr[1], v)
 
             buf = self.archiverClass.archivedDataWithRootObject_(d)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsObject(v[1][0].attr, v)
+            self.assertIs(v[1][0].attr, v)
             
 
 
@@ -250,8 +250,8 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, tuple)
             self.assertEquals(len(v), 3)
             self.assertIsInstance(v[0], a_classic_class)
-            self.assertIsObject(v[0], v[1])
-            self.assertIsObject(v[0], v[2])
+            self.assertIs(v[0], v[1])
+            self.assertIs(v[0], v[2])
 
     class TestArchiveSimple (TestKeyedArchiveSimple):
         def setUp(self):
@@ -492,10 +492,10 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(p1, a_classic_class)
             self.assertIsInstance(p2, a_newstyle_class)
             self.assertIsInstance(p3, list)
-            self.assertIsObject(p3[0], p1)
-            self.assertIsObject(p3[1], p2)
+            self.assertIs(p3[0], p1)
+            self.assertIs(p3[1], p2)
             self.assertIsInstance(p2.lst , NSArray)
-            self.assertIsObject(p2.lst[0], p1)
+            self.assertIs(p2.lst[0], p1)
            
 
     class TestArchiveMixedGraphs (TestKeyedArchiveMixedGraphs):

@@ -18,7 +18,7 @@ class BasicSequenceTests:
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIsObject(OC_TestSet.classOf_(self.seqClass()), OC_PythonArray)
+        self.assertIs(OC_TestSet.classOf_(self.seqClass()), OC_PythonArray)
 
     def testMutableCopy(self):
 

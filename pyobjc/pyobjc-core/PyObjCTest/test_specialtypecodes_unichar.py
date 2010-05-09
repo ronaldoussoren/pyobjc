@@ -163,7 +163,7 @@ class TestTypeCode_UniChar (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('h', [0] * 4) 
         v = o.UniCharArrayOf4Out_(a)
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
         self.assertEquals(v[0], ord('b'))
         self.assertEquals(v[1], ord('o'))
         self.assertEquals(v[2], ord('a'))

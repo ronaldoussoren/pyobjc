@@ -12,7 +12,7 @@ This document is actually not a true tutorial: you do not get to build anything,
 only read and examine things.
 
 It is strongly suggested that you first do the
-`Creating your first PyObjC application`_ tutorial to get some hands-on
+:doc:`Creating your first PyObjC application <firstapp>` tutorial to get some hands-on
 experience with PyObjC, Cocoa and especially Interface Builder.
 
 Model-View-Controller
@@ -206,6 +206,3 @@ Examining an Apple example
 
 This section remains to be written.  Contributions will be gratefully accepted
 :-)
-
-
-.. _`Creating your first PyObjC application`: tutorial/index.html

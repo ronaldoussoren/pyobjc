@@ -79,7 +79,7 @@ class TestHiddenSelector (TestCase):
         o = OCTestHidden.alloc().init()
         self.assertRaises(AttributeError, getattr, o, 'boolMethod')
         v = o.pyobjc_instanceMethods.boolMethod()
-        self.assertIsObject(v, True)
+        self.assertIs(v, True)
 
 
     def testHiddenInSetupHook(self):
@@ -188,7 +188,7 @@ class TestHiddenSelector (TestCase):
 
         self.assertRaises(AttributeError, getattr, o, 'boolMethod')
         v = o.pyobjc_instanceMethods.boolMethod()
-        self.assertIsObject(v, False)
+        self.assertIs(v, False)
 
         # Class
         self.assertRaises(AttributeError, getattr, OCTestSubHidden, 'bodyclass')

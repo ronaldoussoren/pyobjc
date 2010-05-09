@@ -50,7 +50,7 @@ class BasicSetTests:
 
     def testProxyClass(self):
         # Ensure that the right class is used to proxy sets
-        self.assertIsObject(OC_TestSet.classOf_(self.setClass()), OC_PythonSet)
+        self.assertIs(OC_TestSet.classOf_(self.setClass()), OC_PythonSet)
 
     def testMutableCopy(self):
 
@@ -115,7 +115,7 @@ class BasicSetTests:
         self.assertIsNone(o)
 
         o = OC_TestSet.set_member_(s, OC_TestElem(2))
-        self.assertIsObject(o, o2)
+        self.assertIs(o, o2)
 
     def testObjectEnumerator(self):
         s = self.setClass(range(10))

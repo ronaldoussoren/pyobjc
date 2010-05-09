@@ -68,7 +68,7 @@ class TestInitializing (TestCase):
 
         o = OC_TestInitializePython2.makeInstance()
         self.assertIsInstance(o, OC_TestInitializePython2)
-        self.assertIsObject(OBJECT_LIST[-1], o)
+        self.assertIs(OBJECT_LIST[-1], o)
         del OBJECT_LIST[-1]
 
         v = OC_TestInitialize.numUninitialized()

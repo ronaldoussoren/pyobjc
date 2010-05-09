@@ -26,7 +26,7 @@ class TestCoreFoundation (TestCase):
     def testTollFree(self):
         obj = OC_TestCoreFoundation.today()
 
-        self.assertIsObject(CFDateRef, objc.lookUpClass("NSDate"))
+        self.assertIs(CFDateRef, objc.lookUpClass("NSDate"))
         self.assertIsInstance(obj, CFDateRef)
 
         v = OC_TestCoreFoundation.formatDate_(obj)

@@ -86,18 +86,18 @@ class TestTypeCode_BOOL (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertIsObject(o.BOOLValue(),True)
-        self.assertIsObject(o.BOOLValue(), False)
+        self.assertIs(o.BOOLValue(),True)
+        self.assertIs(o.BOOLValue(), False)
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArray()
         self.assertEquals(len(v), 4)
-        self.assertIsObject(v[0], True)
-        self.assertIsObject(v[1], False)
-        self.assertIsObject(v[2], True)
-        self.assertIsObject(v[3], False)
+        self.assertIs(v[0], True)
+        self.assertIs(v[1], False)
+        self.assertIs(v[2], True)
+        self.assertIs(v[3], False)
 
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -142,7 +142,7 @@ class TestTypeCode_BOOL (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.BOOLArrayOf4Out_(a)
-        self.assertIsObject(v, a)
+        self.assertIs(v, a)
         self.assertEquals(v[0], 1)
         self.assertEquals(v[1], 0)
         self.assertEquals(v[2], 1)

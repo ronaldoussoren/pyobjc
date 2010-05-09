@@ -36,7 +36,7 @@ class TestObjCRuntime (TestCase):
 
     def testRuntimeConsistency(self):
         self.assertIsNotNone(objc.lookUpClass("NSObject"))
-        self.assertIsObject(objc.lookUpClass( "NSObject" ), objc.runtime.NSObject)
+        self.assertIs(objc.lookUpClass( "NSObject" ), objc.runtime.NSObject)
 
 
 class TestClassLookup(TestCase):

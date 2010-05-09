@@ -46,7 +46,7 @@ class TestArraysOut_AllArgs (TestCase):
 
         n, v = o.nullfill4Tuple_(objc.NULL)
         self.assertEquals(n, 2)
-        #self.assertIsObject(v, objc.NULL )
+        #self.assertIs(v, objc.NULL )
         
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -63,7 +63,7 @@ class TestArraysOut_AllArgs (TestCase):
         #self.assertRaises(TypeError, o.nullfillStringArray_, None)
         n, v = o.nullfillStringArray_(objc.NULL)
         self.assertEquals(n, 9)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -91,7 +91,7 @@ class TestArraysOut_AllArgs (TestCase):
 
         n, v = o.nullfillArray_count_(objc.NULL, 3)
         self.assertEquals(n, 1)
-        #self.assertIsObject(v, objc.NULL )
+        #self.assertIs(v, objc.NULL )
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -127,7 +127,7 @@ if 0:
 
             n, v = o.nullfill4Tuple_(objc.NULL)
             #self.assertEquals(n, 2)
-            #self.assertIsObject(v, objc.NULL)
+            #self.assertIs(v, objc.NULL)
             
         def testNullTerminated(self):
             o = Py_MetaDataTest_OutputOptional.new()
@@ -144,7 +144,7 @@ if 0:
             #self.assertRaises(TypeError, o.nullfillStringArray_, None)
             #n, v = o.nullfillStringArray_(objc.NULL)
             #self.assertEquals(n, 9)
-            #self.assertIsObject(v, objc.NULL)
+            #self.assertIs(v, objc.NULL)
 
         def testWithCount(self):
             o = Py_MetaDataTest_OutputOptional.new()
@@ -172,7 +172,7 @@ if 0:
 
             n, v = o.nullfillArray_count_(objc.NULL, 3)
             #self.assertEquals(n, 1)
-            #self.assertIsObject(v, objc.NULL)
+            #self.assertIs(v, objc.NULL)
 
         def testWithCountInResult(self):
             o = Py_MetaDataTest_OutputOptional.new()
@@ -206,7 +206,7 @@ class TestArraysInOut_AllArgs (TestCase):
 
         n, v = o.nullreverse4Tuple_(objc.NULL)
         self.assertEquals(n, -1)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -227,7 +227,7 @@ class TestArraysInOut_AllArgs (TestCase):
 
         n, v = o.nullreverseStrings_(objc.NULL)
         self.assertEquals(n, 9)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -264,7 +264,7 @@ class TestArraysInOut_AllArgs (TestCase):
 
         n, v = o.nullreverseArray_count_(objc.NULL, 0)
         self.assertEquals(n, 2)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -300,7 +300,7 @@ class TestArraysIn_AllArgs (TestCase):
         #self.assertRaises(ValueError, o.make4Tuple_, objc.NULL)
 
         v, = o.null4Tuple_(objc.NULL)
-        self.assertIsObject(v, objc.NULL)
+        self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
@@ -313,8 +313,8 @@ class TestArraysIn_AllArgs (TestCase):
         p, q = NSObject.new(), NSObject.new()
         v, = o.makeObjectArray_((p, q))
         self.assertEquals(len(v), 2)
-        self.assertIsObject(v[0], p)
-        self.assertIsObject(v[1], q)
+        self.assertIs(v[0], p)
+        self.assertIs(v[1], q)
 
         v, = OC_MetaDataTest.makeStringArray_on_((), o)
         self.assertEquals(len(v), 0)
