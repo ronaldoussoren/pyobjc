@@ -12,8 +12,14 @@ Contents:
    :maxdepth: 2
 
    intro
+   tutorials/index
    typemapping
+   protocols
+   fsref-fsspec
+   xcode
+   blocks
    lib/index
+   dev/index
 
 Indices and tables
 ==================

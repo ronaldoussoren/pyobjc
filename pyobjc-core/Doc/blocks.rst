@@ -6,7 +6,9 @@ Introduction
 ------------
 
 Objective-C has the concept of "blocks", which are basically anonymous inline
-functions. The syntax for them is like this::
+functions. The syntax for them is like this:
+
+.. sourcecode:: objective-c
 
 	^{ printf("x is %d\n", 42); }
 
@@ -69,9 +71,11 @@ This metadata is an extension to the "bridgesupport" format as defined by Apple.
 
 If an argument or return value is a block the metadata should contain an "block_pointer"
 attribute, with a value of "true". The element then has subelements describing the 
-signature of block (excluding the implict block parameter). 
+signature of block (excluding the implicit block parameter). 
 
-As an example::
+As an example:
+
+.. sourcecode:: xml
 
    <arg index="0" block_pointer="true">
       <retval type="v" />

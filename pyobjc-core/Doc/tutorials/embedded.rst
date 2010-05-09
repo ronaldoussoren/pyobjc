@@ -33,6 +33,8 @@ and fill in the fields for you.
 
 Follow these steps:
 
+.. note:: Before you start, download the :download:`reference source package <embedded_src.zip>` for this tutorial.
+
 1. Make a copy of ``/Developer/Examples/AppKit/SimpleComboBox`` to work on.
    Let's call this ``SimpleComboBoxPlus``:
 
@@ -58,13 +60,12 @@ Follow these steps:
    ``ITunesCommunication`` object.
     
 7. We now need to write the code implementing the ``ITunesCommunication``
-    class.  As this tutorial is about using PyObjC in existing ObjC programs
-    and not about PyObjC itself, we are going to skip writing the code and
-    simply copy ``ITunesCommunication_1.py`` to ``ITunesCommunication.py``.
+   class.  As this tutorial is about using PyObjC in existing ObjC programs
+   and not about PyObjC itself, we are going to skip writing the code and
+   simply copy ``ITunesCommunication_1.py`` to ``ITunesCommunication.py``.
 
 8. Now we need to create the build script for our plugin, create a file named
    ``setup.py`` with the following contents:
-
 
    .. sourcecode:: python
 
