@@ -38,8 +38,25 @@ Version 2.3a0
 
   * Instances of ``NSSet`` cannot be pickled
 
-  FIXME: This is currently tested using ``TestJointOps`` from the stdlib 
-  testset, add the other set related tests as well.
+  * In-place operators are not implemented, which means that ``aSet |= value``
+    will assign a new object to ``aSet`` (as if you wrote ``aSet = aSet | value``.
+
+    This is needed because the bridge cannot know if if ``aSet`` is mutable,
+    let alone if ``aSet`` is a value that you are allowed to mutate by API
+    contracts.
+
+  * It is not possible to subclass ``NSSet`` and ``NSMutableSet`` in the same
+    way as Python's ``set`` and ``frozenset`` classes because the Cocoa
+    classes are class clusters (which means that all instances of ``NSSet``
+    are actually instances of, non-necessarily public, subclasses.
+
+  * Sadly enough ``set([1,2,3]) == NSSet([1, 2, 3])`` evaluates to False,
+    even though the values are equavalent. Reversing the order of
+    the test (``NSSet([1, 2, 3]) == set([1,2,3])``) results in the 
+    expected result. 
+
+    This is caused by the way equality tests for sets are implemented in
+    CPython and is not something that can be fixed in PyObjC.
 
 - BUGFIX: accessing methods through ``anObject.pyobjc_instancMethods`` is
   now safer, before this release this could cause unlimited recursion

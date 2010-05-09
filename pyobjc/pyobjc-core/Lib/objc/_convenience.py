@@ -1136,7 +1136,8 @@ def nsset_isdisjoint(self, other):
     return True
 
 def nsset_union(self, *other):
-    result = self.mutableCopy()
+    result = NSMutableSet()
+    result.unionSet_(self)
     for val in other:
         if isinstance(val, Set):
             result.unionSet_(val)
@@ -1168,14 +1169,14 @@ def nsset_difference(self, *others):
     return result
 
 def nsset_symmetric_difference(self, other):
-    result = set()
+    result = NSMutableSet()
     for item in self:
         if item not in other:
             result.add(item)
     for item in other:
         if item not in self:
             result.add(item)
-    return NSMutableSet(result)
+    return result
     
 
 def nsset__contains__(self, value):
@@ -1232,7 +1233,16 @@ def nsset__xor__(self, other):
     return nsset_symmetric_difference(other, self)
 
 def nsset_issubset(self, other):
-    return self.isSubsetOfSet_(other)
+    if isinstance(other, Set):
+        return self.isSubsetOfSet_(other)
+
+    else:
+        return self.isSubsetOfSet_(set(other))
+
+def nsset__le__(self, other):
+    if not isinstance(other, Set):
+        raise TypeError()
+    return nsset_issubset(self, other)
 
 def nsset__eq__(self, other):
     if not isinstance(other, Set):
@@ -1247,16 +1257,29 @@ def nsset__ne__(self, other):
     return not self.isEqualToSet_(other)
 
 def nsset__lt__(self, other):
+    if not isinstance(other, Set):
+        raise TypeError()
+
     return (self <= other) and (self != other)
 
 def nsset_issuperset(self, other):
+    if not isinstance(other, Set):
+        other = set(other)
+
     for item in other:
         if item not in self:
             return False
 
     return True
 
+def nsset__ge__(self, other):
+    if not isinstance(other, Set):
+        raise TypeError()
+    return nsset_issuperset(self, other)
+
 def nsset__gt__(self, other):
+    if not isinstance(other, Set):
+        raise TypeError()
     return (self >= other) and (self != other)
 
 if sys.version_info[0] == 2:
@@ -1271,10 +1294,91 @@ if sys.version_info[0] == 2:
         except TypeError:
             return cmp(id(self), id(other))
 
+def nsset__length_hint__(self):
+    return len(self)
+
+def nsset_update(self, *others):
+    for other in others:
+        if isinstance(other, Set):
+            self.unionSet_(other)
+        else:
+            self.unionSet_(set(other))
+
+def nsset_intersection_update(self, *others):
+    for other in others:
+        if isinstance(other, Set):
+            self.intersectSet_(other)
+        else:
+            self.intersectSet_(set(other))
+
+def nsset_difference_update(self, *others):
+    for other in others:
+        if isinstance(other, Set):
+            self.minusSet_(other)
+        else:
+            self.minusSet_(set(other))
+
+def nsset_symmetric_difference_update(self, other):
+    toadd = set()
+    toremove = set()
+
+    if isinstance(other, Set):
+        totest = other
+    else:
+        totest = set(other)
+
+    for value in self:
+        if value in totest:
+            toremove.add(value)
+    for value in other:
+        if value not in self:
+            toadd.add(value)
+
+    self.minusSet_(toremove)
+    self.unionSet_(toadd)
+
+def nsset_pop(self):
+    if len(self) == 0:
+        raise KeyError()
+
+    v = self.anyObject()
+    self.removeObject_(v)
+    return v
+
+def nsset_remove(self, value):
+    hash(value)
+    if value not in self:
+        raise KeyError(value)
+    self.removeObject_(value)
+
+def nsset_discard(self, value):
+    hash(value)
+    self.removeObject_(value)
+
+def nsset_add(self, value):
+    hash(value)
+    self.addObject_(value)
+
+class nsset__iter__ (object):
+    def __init__(self, value):
+        self._size = len(value)
+        self._enum = value.objectEnumerator()
+
+    def __length_hint__(self):
+        return self._size
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        self._size -= 1
+        return container_unwrap(self._enum.nextObject(), StopIteration)
+
 
 CLASS_METHODS['NSSet'] = (
+    ('__iter__', lambda self: nsset__iter__(self)),
+    ('__length_hint__', nsset__length_hint__),
     ('__contains__',  nsset__contains__),
-    ('add',  lambda self, value: self.addObject_(value)),
     ('isdisjoint',  nsset_isdisjoint),
     ('union',  nsset_union),
     ('intersection',  nsset_intersection),
@@ -1283,10 +1387,10 @@ CLASS_METHODS['NSSet'] = (
     ('issubset', nsset_issubset),
     ('__eq__', nsset__eq__),
     ('__ne__', nsset__ne__),
-    ('__le__', nsset_issubset),
+    ('__le__', nsset__le__),
     ('__lt__', nsset__lt__),
     ('issuperset', nsset_issuperset),
-    ('__ge__', nsset_issuperset),
+    ('__ge__', nsset__ge__),
     ('__gt__', nsset__gt__),
     ('__or__', nsset__or__),
     ('__ror__', nsset__ror__),
@@ -1302,6 +1406,18 @@ if sys.version_info[0] == 2:
         ('__cmp__', 'nsset__cmp__'),
     )
 
+CLASS_METHODS['NSMutableSet'] = (
+    ('add',  nsset_add), 
+    ('remove',  nsset_remove),
+    ('discard',  nsset_discard),
+    ('update', nsset_update),
+    ('intersection_update', nsset_intersection_update),
+    ('difference_update', nsset_difference_update),
+    ('symmetric_difference_update', nsset_symmetric_difference_update),
+    ('clear', lambda self: self.removeAllObjects()),
+    ('pop', nsset_pop),
+)
+
 def nsset_new(cls, sequence=None):
     if not sequence:
         return NSSet.set()
@@ -1314,13 +1430,17 @@ def nsset_new(cls, sequence=None):
 
 def nsmutableset_new(cls, sequence=None):
     if not sequence:
-        return NSMutableSet.set()
+        value = NSMutableSet.set()
 
-    if isinstance(sequence, (NSSet, set, frozenset)):
-        return NSMutableSet.set().setByAddingObjectsFromSet_(sequence)
+    elif isinstance(sequence, (NSSet, set, frozenset)):
+        value = NSMutableSet.set()
+        value.unionSet_(sequence)
 
     else:
-        return NSMutableSet.set().setByAddingObjectsFromSet_(set(sequence))
+        value = NSMutableSet.set()
+        value.unionSet_(set(sequence))
+
+    return value
 
 NSSet.__new__ = nsset_new
 NSMutableSet.__new__ = nsmutableset_new
