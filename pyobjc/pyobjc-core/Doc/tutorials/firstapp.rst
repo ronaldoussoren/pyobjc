@@ -28,11 +28,13 @@ installed.  See `Getting the Xcode Tools`_.
 Getting Started
 ---------------
 
+.. note:: Before you start, download the :download:`reference source package <firstapp_src.zip>` for this tutorial.
+
 1. Create a work directory ``src``.  Check which Python you have installed
    PyObjC for, by running ``python`` and checking that ``import Foundation``
    works.  If it does not work it could be that you have installed PyObjC for
    ``/usr/local/bin/python`` but Apple's ``/usr/bin/python`` comes first in
-   your ``$PATH``.  Make sure you use the right python whereever it says
+   your ``$PATH``.  Make sure you use the right python wherever it says
    ``python`` in this tutorial.
    
 2. Start Interface Builder, select *Cocoa Application*
@@ -45,12 +47,11 @@ Getting Started
    ConverterController to the Interface", and stop at
    "*Implementing the Classes of Currency Converter*", as we are going to do
    this in Python, not Objective-C.  Your nib file should now be the same as
-   step3-MainMenu.nib_.
+   *step3-MainMenu.nib*.
    
 .. _`Developing Cocoa Objective-C Applications: a Tutorial`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html
 .. _`chapter 3`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/index.html?http://developer.apple.com/documentation/Cocoa/Conceptual/ObjCTutorial/chapter03/chapter_3_section_1.html
-.. _step3-MainMenu.nib: step3-MainMenu.nib.zip
-   
+
 4. Create the skeleton Python script by running the ``nibclassbuilder`` script.
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for
    you.  Invoke it as follows (from the ``src`` directory):
@@ -66,10 +67,8 @@ Getting Started
 
        $ nibclassbuilder MainMenu.nib > CurrencyConverter.py
    
-   The result of this can be seen in step4-CurrencyConverter.py_.
+   The result of this can be seen in *step4-CurrencyConverter.py*.
 
-.. _step4-CurrencyConverter.py: step4-CurrencyConverter.py.html
-               
 Testing the user interface
 --------------------------
 
@@ -87,10 +86,8 @@ Testing the user interface
             data_files=['MainMenu.nib'],
         )
 
-   The result of this can be seen in step5-setup.py_.
+   The result of this can be seen in *step5-setup.py*.
 
-.. _step5-setup.py: step5-setup.py.html
-   
 6. Run the setup script to create a temporary application bundle for
    development:
 
@@ -118,7 +115,7 @@ Testing the user interface
    
         $ open dist/CurrencyConverter.app
        
-   - run it directly from the Terminal, as::
+   - run it directly from the Terminal, as:
 
      .. sourcecode:: sh
    
@@ -170,9 +167,7 @@ Writing the code
    more detail on this.
    
    The application should now be fully functional, try it.  The results of what
-   we have up to now can be seen in step8-CurrencyConverter.py_.
-   
-.. _step8-CurrencyConverter.py: step8-CurrencyConverter.py.html
+   we have up to now can be seen in *step8-CurrencyConverter.py*.
    
 Extending the functionality
 ---------------------------
@@ -247,9 +242,7 @@ Debugging
     you try and invert an exchange rate of ``0``.
       
 12. Fix the final bug by testing for ``rate == 0.0`` in ``invertRate_()``.
-    The result is in the step12-src_ directory.
-    
-.. _step12-src: step12-src.zip
+    The result is in the *step12-src* directory.
    
 Creating a redistributable application
 --------------------------------------

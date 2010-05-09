@@ -1,6 +1,6 @@
-=====================================================
-(Developers) How to wrap an Objective-C class library
-=====================================================
+========================================
+How to wrap an Objective-C class library
+========================================
 
 .. :author: Ronald Oussoren
 

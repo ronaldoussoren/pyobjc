@@ -7,9 +7,6 @@ An introduction to PyObjC
 	:URL: http://pyobjc.sourceforge.net/
 	:copyright: 2003-2005 The PyObjC Project
 
-
-.. contents::
-
 Preface
 -------
 
