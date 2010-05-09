@@ -248,8 +248,41 @@ class TestIdentities (test.test_set.TestIdentities):
         self.b = NSMutableSet('alacazam')
 
 
-# TestVariousIteratorArgs
-# TestGraphs
+class TestVariousIteratorArgs (test.test_set.TestVariousIteratorArgs):
+    def setUp(self):
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+    def test_inplace_methods(self):
+        for data in ("123", "", range(1000), ('do', 1.2), xrange(2000,2200,5), 'december'):
+            for methname in ('update', 'intersection_update', 'difference_update', 'symmetric_difference_update'):
+                for g in (test.test_set.G, test.test_set.I, test.test_set.Ig, test.test_set.S, test.test_set.L, test.test_set.R):
+                    #s = set('january')
+                    s = NSMutableSet('january')
+                    #t = s.copy()
+                    t = s.mutableCopy()
+                    getattr(s, methname)(list(g(data)))
+                    getattr(t, methname)(g(data))
+                    self.assertEqual(sorted(s), sorted(t))
+
+                self.assertRaises(TypeError, getattr(set('january'), methname), test.test_set.X(data))
+                self.assertRaises(TypeError, getattr(set('january'), methname), test.test_set.N(data))
+                self.assertRaises(ZeroDivisionError, getattr(set('january'), methname), test.test_set.E(data))
+
+
+
+
+class TestGraphs (test.test_set.TestGraphs):
+    def setUp(self):
+        test.test_set.set = NSMutableSet
+
+    def tearDown(self):
+        del test.test_set.set
+
+
+
 
 
 

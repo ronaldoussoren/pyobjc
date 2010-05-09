@@ -766,7 +766,7 @@ CLASS_METHODS['NSBlock'] = (
 )
 
 
-if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 7):
+if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 6):
     import collections
 
     def all_contained_in(inner, outer):
@@ -980,7 +980,11 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
         elif len(args) == 1:
             d = dict()
-            for k , v in args[0]:
+            if isinstance(args[0], collections.Mapping):
+                items = args[0].iteritems()
+            else:
+                items = args[0]
+            for k , v in items:
                 d[container_wrap(k)] = container_wrap(v)
 
             for k, v in kwds.iteritems():
@@ -1009,7 +1013,6 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
-            ('__new__', nsdict_new),
             ('fromkeys', classmethod(nsdict_fromkeys)),
             ('keys', lambda self: nsdict_keys(self)),
             ('values', lambda self: nsdict_values(self)),
@@ -1017,25 +1020,23 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         )
 
         CLASS_METHODS['NSMutableDictionary'] = (
-            ('__new__', nsmutabledict_new),
             ('fromkeys', classmethod(nsmutabledict_fromkeys)),
         )
 
     else:
         CLASS_METHODS['NSDictionary'] = (
-            ('__new__', nsdict_new),
             ('fromkeys', classmethod(nsdict_fromkeys)),
             ('viewkeys', lambda self: nsdict_keys(self)),
             ('viewvalues', lambda self: nsdict_values(self)),
             ('viewitems', lambda self: nsdict_items(self)),
         )
 
-        CLASS_METHODS['NSMutableDictionary'] = (
-            ('__new__', nsdict_new),
-        )
+    NSDictionary.__new__ = nsdict_new
+    NSMutableDictionary.__new__ = nsmutabledict_new
+
+    NSMutableDictionary.dictionary()
 
     #FIXME: This shouldn't be necessary
-    NSMutableDictionary.dictionary()
 
 NSMutableArray = lookUpClass('NSMutableArray')
 def nsarray_add(self, other):
@@ -1330,7 +1331,7 @@ def nsset_symmetric_difference_update(self, other):
     for value in self:
         if value in totest:
             toremove.add(value)
-    for value in other:
+    for value in totest:
         if value not in self:
             toadd.add(value)
 
