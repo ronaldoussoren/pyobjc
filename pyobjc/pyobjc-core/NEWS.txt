@@ -15,8 +15,6 @@ Version 2.3a0
 
 - TODO:
 
-  * NSArray/NSMutableArray should have same interface as tuple/list
-
   * NSData/NSMutableData should have same interface as bytes/bytearray
     (the former obviously only for 3.x)
 
@@ -162,8 +160,10 @@ Version 2.3a0
   * The plan: flag == False in 2.3, flag == True in 2.4, remove flag in 2.5.
     (and: add hooks to py2app to enable setting the flag in setup.py)
 
-- TODO: compile bridgesupport files into something more efficient, drop
-  libxml support code (to because of libxml on 10.6 and 10.5 mess)
+- Binaries are build using a local copy of libxml by default, to avoid
+  problems when building on OSX 10.6 and running on earlier releases.
+
+- TODO: compile bridgesupport files into something more efficient.
 
   (At the very least least: the PyObjCMethodSignature objects can be shared 
   more than they are now). 
@@ -183,9 +183,7 @@ Version 2.3a0
   This should improve performance and reduce memory usage (when proper caching
   is used).
 
-- TODO: Rebuild documentation using Sphinx
-
-  (In progress)
+- The documentation is now written using Sphinx.
 
 - The (undocument) module ``PyObjCTools.DistUtilsSupport`` is no longer
   present.
