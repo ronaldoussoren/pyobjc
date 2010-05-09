@@ -271,11 +271,11 @@ class TestCase (_unittest.TestCase):
         if not hasattr(tp, "__typestr__"):
             self.fail(message or "%r is not an opaque-pointer"%(tp,))
 
-    def assertIsObject(self, value, test, message = None):
+    def assertIs(self, value, test, message = None):
         if value is not test:
             self.fail(message or  "%r (id=%r) is not %r (id=%r) "%(value, id(value), test, id(test)))
 
-    def assertIsNotObject(self, value, test, message = None):
+    def assertIsNot(self, value, test, message = None):
         if value is test:
             self.fail(message or  "%r is %r"%(value, test))
 
@@ -706,6 +706,8 @@ class TestCase (_unittest.TestCase):
     failUnlessIsNotIn = _deprecate(assertIsNotIn)
     failIfIsIn = _deprecate(assertIsNotIn)
     assertNotIsInstance = _deprecate(assertIsNotInstance)
+    assertIsObject = _deprecate(assertIs)
+    assertIsNotObject = _deprecate(assertIsNot)
 
     del _deprecate
 
