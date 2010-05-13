@@ -26,7 +26,7 @@ class TestPython3Types (TestCase):
         bundle = NSBundle.bundleForClass_(NSBundle)
 
         tab = [
-                ( u'NSHomeDirectory', b'@'),
+                ( 'NSHomeDirectory', b'@'),
         ]
         d = {}
         objc.loadBundleFunctions(bundle, d, tab)
@@ -34,12 +34,12 @@ class TestPython3Types (TestCase):
 
 
         tab = [
-                ( u'NSHomeDirectory', u'@'),
+                ( 'NSHomeDirectory', '@'),
         ]
         self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
 
         tab = [
-                ( b'NSHomeDirectory', b'@'),
+                ( 'NSHomeDirectory', b'@'),
         ]
         self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
 
@@ -48,7 +48,7 @@ class TestPython3Types (TestCase):
         bundle = NSBundle.bundleForClass_(NSBundle)
 
         tab = [
-            (u'NSAppleScriptErrorMessage', b'@'),
+            ('NSAppleScriptErrorMessage', b'@'),
         ]
 
         d = {}
@@ -58,7 +58,7 @@ class TestPython3Types (TestCase):
 
 
         tab = [
-            (u'NSAppleScriptErrorMessage', u'@'),
+            ('NSAppleScriptErrorMessage', '@'),
         ]
 
         self.assertRaises(TypeError, objc.loadBundleVariables, bundle, d, tab)

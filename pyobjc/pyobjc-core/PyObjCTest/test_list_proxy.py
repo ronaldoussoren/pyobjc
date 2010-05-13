@@ -25,13 +25,13 @@ class BasicSequenceTests:
         s = self.seqClass(range(20))
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(list(s), o)
-        self.assertIsNotObject(s, o)
+        self.assertIsNot(s, o)
         self.assertIsInstance(o, list)
 
         s = self.seqClass()
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
         self.assertEquals(list(s), o)
-        self.assertIsNotObject(s, o)
+        self.assertIsNot(s, o)
         self.assertIsInstance(o, list)
 
 
@@ -63,12 +63,12 @@ class TestMutableSequence (TestCase, BasicSequenceTests):
         s = self.seqClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assertIsNotObject(s, o)
+        self.assertIsNot(s, o)
 
         s = self.seqClass(range(20))
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEquals(s, o)
-        self.assertIsNotObject(s, o)
+        self.assertIsNot(s, o)
 
 
 

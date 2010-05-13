@@ -64,8 +64,8 @@ class TestObjectProperty (TestCase):
 
         o.p2 = v
         self.assertIsInstance(o.p2, OCCopy)
-        self.assertIsNotObject(o.p2, v)
-        self.assertIsNotObject(o._p2, v)
+        self.assertIsNot(o.p2, v)
+        self.assertIsNot(o._p2, v)
 
         self.assertTrue(o.respondsToSelector(b'p3'))
         self.assertFalse(o.respondsToSelector(b'setP3:'))

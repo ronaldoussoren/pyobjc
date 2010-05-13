@@ -4,6 +4,8 @@ import sys
 import subprocess
 import shutil
 import re
+import os
+
 # We need at least Python 2.5
 MIN_PYTHON = (2, 5)
 
@@ -42,6 +44,10 @@ else:
     from setuptools.command import test
     from distutils import log
     class oc_build_py (build_py.build_py):
+        def run_2to3(self, files, doctests=True):
+            files = [ fn for fn in files if not os.path.basename(fn).startswith('test3_') ]
+            super(oc_build_py, self).run_2to3(files, doctests)
+
         def build_packages(self):
             log.info("Overriding build_packages to copy PyObjCTest")        
             p = self.packages
