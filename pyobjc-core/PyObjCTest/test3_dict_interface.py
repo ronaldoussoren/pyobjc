@@ -497,7 +497,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
                     if copymode < 0:
                         b[repr(i)] = i
                 if copymode > 0:
-                    b = a.copy()
+                    b = a.mutableCopy()
                 for i in range(size):
                     ka, va = ta = a.popitem()
                     self.assertEqual(va, int(ka))
@@ -538,10 +538,10 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
                 else:
                     return 42
 
-        x = BadHash()
-        d[x] = 42
-        x.fail = True
-        self.assertRaises(Exc, d.pop, x)
+        #x = BadHash()
+        #d[x] = 42
+        #x.fail = True
+        #self.assertRaises(Exc, d.pop, x)
 
 class DictSetTest (TestCase):
     testclass = NSDictionary

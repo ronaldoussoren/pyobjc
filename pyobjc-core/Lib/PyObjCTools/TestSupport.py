@@ -280,7 +280,7 @@ class TestCase (_unittest.TestCase):
             self.fail(message or  "%r is %r"%(value, test))
 
     def assertIsNone(self, value, message = None):
-        self.assertIsObject(value, None)
+        self.assertIs(value, None)
 
     def assertIsNotNone(self, value, message = None):
         if value is None:

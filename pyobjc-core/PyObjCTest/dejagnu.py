@@ -6,6 +6,7 @@ import os
 import re
 import sys
 import signal
+import codecs
 from fnmatch import fnmatch
 import unittest
 from distutils.util import get_platform
@@ -54,7 +55,12 @@ def parseDG(fdata):
         if item[0] == 'dg-do':
             result.append(('run', item[1]))
         elif item[2] == 'dg-output':
-            result.append(('expect', item[3].decode('string_escape')))
+            if sys.version_info[0] == 3:
+                value = codecs.decode(item[3], 'unicode_escape')
+            else:
+                value = item[3].decode('string_escape')
+            result.append(('expect', value))
+
     return result
 
 

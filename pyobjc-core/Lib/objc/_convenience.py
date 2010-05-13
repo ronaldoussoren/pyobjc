@@ -237,10 +237,13 @@ def pop_setObject_forKey_(self, key, dflt=pop_setObject_dflt):
         del self[key]
     return res
 
+NSAutoreleasePool = lookUpClass('NSAutoreleasePool')
+
 def popitem_setObject_forKey_(self):
     try:
-        k = iter(self).next()
-    except StopIteration:
+        it = self.keyEnumerator()
+        k = container_unwrap(it.nextObject(), StopIteration)
+    except (StopIteration, IndexError):
         raise KeyError, "popitem on an empty %s" % (type(self).__name__,)
     else:
         result = (k, container_unwrap(self.objectForKey_(k), KeyError))
@@ -561,14 +564,14 @@ def dictItems(aDict):
     keys = aDict.allKeys()
     return zip(keys, imap(aDict.__getitem__, keys))
 
-CONVENIENCE_METHODS[b'allKeys'] = (
-    ('keys', lambda self: self.allKeys()),
-    ('items', lambda self: dictItems(self)),
-)
+#CONVENIENCE_METHODS[b'allKeys'] = (
+#    ('keys', lambda self: self.allKeys()),
+#    ('items', lambda self: dictItems(self)),
+#)
 
-CONVENIENCE_METHODS[b'allValues'] = (
-    ('values', lambda self: self.allValues()),
-)
+#CONVENIENCE_METHODS[b'allValues'] = (
+    #('values', lambda self: self.allValues()),
+#)
 
 def itemsGenerator(aDict):
     for key in aDict:
@@ -1064,6 +1067,9 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('viewkeys', lambda self: nsdict_keys(self)),
             ('viewvalues', lambda self: nsdict_values(self)),
             ('viewitems', lambda self: nsdict_items(self)),
+            ('keys', lambda self: self.allKeys()),
+            ('items', lambda self: dictItems(self)),
+            ('values', lambda self: self.allValues()),
         )
 
     CLASS_METHODS['NSDictionary'] += (

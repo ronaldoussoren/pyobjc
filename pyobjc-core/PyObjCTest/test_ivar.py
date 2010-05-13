@@ -171,15 +171,15 @@ class TestAllInstanceVariables (TestCase):
         self.assertEquals(getter(obj, 'strValue'), None)
 
         o = NSObject.new()
-        self.assertIsNotObject(getter(obj, 'objValue'), o)
+        self.assertIsNot(getter(obj, 'objValue'), o)
         self.assertRaises(TypeError, setter, 'objValue', o)
-        self.assertIsNotObject(getter(obj, 'objValue'), o)
+        self.assertIsNot(getter(obj, 'objValue'), o)
         setter(obj, 'objValue', o, True)
         self.assertIs(getter(obj, 'objValue'), o)
 
         o2 = NSObject.new()
         o2.retain()
-        self.assertIsNotObject(getter(obj, 'objValue'), o2)
+        self.assertIsNot(getter(obj, 'objValue'), o2)
         setter(obj, 'objValue', o2, False)
         self.assertIs(getter(obj, 'objValue'), o2)
 
