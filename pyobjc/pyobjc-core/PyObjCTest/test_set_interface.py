@@ -21,6 +21,7 @@ class TestSet (test.test_set.TestJointOps, TestCase):
     thetype = NSSet
     basetype = NSSet
 
+    def test_cyclical_print(self): pass
     def test_cyclical_repr(self): pass
     def test_pickling(self): pass
     def test_do_not_rehash_dict_keys(self): pass
@@ -117,7 +118,11 @@ class TestMutableSet (TestSet, test.test_set.TestSet):
     basetype = NSMutableSet
 
     def test_copy(self):
-        test.test_set.TestSet.test_copy(self)
+        dup = self.s.copy()
+        self.assertEqual(self.s, dup)
+        self.assertNotEqual(id(self.s), id(dup))
+        #self.assertEqual(type(dup), self.basetype)
+        self.assertIsInstance(dup, self.basetype)
 
     # Tests from 'TestSet'
     def test_init(self): pass
@@ -265,11 +270,13 @@ class TestVariousIteratorArgs (test.test_set.TestVariousIteratorArgs):
                     t = s.mutableCopy()
                     getattr(s, methname)(list(g(data)))
                     getattr(t, methname)(g(data))
-                    self.assertEqual(sorted(s), sorted(t))
+                    self.assertEqual(sorted(s, key=repr), sorted(t, key=repr))
 
                 self.assertRaises(TypeError, getattr(set('january'), methname), test.test_set.X(data))
                 self.assertRaises(TypeError, getattr(set('january'), methname), test.test_set.N(data))
                 self.assertRaises(ZeroDivisionError, getattr(set('january'), methname), test.test_set.E(data))
+
+
 
 
 

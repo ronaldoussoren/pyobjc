@@ -39,7 +39,7 @@ class TestPython3Types (TestCase):
         self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
 
         tab = [
-                ( 'NSHomeDirectory', b'@'),
+                ( b'NSHomeDirectory', b'@'),
         ]
         self.assertRaises(TypeError, objc.loadBundleFunctions, bundle, d, tab)
 
