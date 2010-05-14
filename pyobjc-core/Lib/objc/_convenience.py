@@ -346,7 +346,8 @@ CONVENIENCE_METHODS[b'addObjectsFromArray:'] = (
 
 _index_sentinel=object()
 def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
-    from Foundation import NSNotFound
+    #from Foundation import NSNotFound
+    NSNotFound = sys.maxsize
     if start == 0 and stop is _index_sentinel:
         res = self.indexOfObject_(container_wrap(item))
         if res == NSNotFound:

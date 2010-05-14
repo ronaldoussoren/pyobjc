@@ -18,6 +18,9 @@ import copy
 
 from pickle import PicklingError, UnpicklingError, whichmodule
 
+if hasattr(sys, 'intern'):
+    intern = sys.intern
+
 
 # FIXME: This requires manual wrappers from the Foundation bindings
 def setupPythonObject():
@@ -444,7 +447,13 @@ def setupPythonObject():
 
         if state:
             try:
-                value.__dict__.update(state)
+                inst_dict = value.__dict__
+                for k, v in state.iteritems():
+                    if type(k) == str:
+                        inst_dict[intern(k)] = v
+                    else:
+                        inst_dict[k] = v
+
             except RuntimeError:
                 for k, v in state.items():
                     setattr(value, intern(k), v)
@@ -493,7 +502,13 @@ def setupPythonObject():
 
         if state:
             try:
-                value.__dict__.update(state)
+                inst_dict = value.__dict__
+
+                for k, v in state.iteritems():
+                    if type(k) == str:
+                        inst_dict[intern(k)] = v
+                    else:
+                        inst_dict[k] = v
 
             except RuntimeError:
                 for k, v in state.items():
