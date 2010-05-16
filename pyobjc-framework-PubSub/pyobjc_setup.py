@@ -224,7 +224,7 @@ def setup(
         dependency_links = [],
         package_data = { '': ['*.bridgesupport'] },
         test_suite='PyObjCTest',
-        zip_safe = True,
+        zip_safe = False,
         **k
     ) 
 
