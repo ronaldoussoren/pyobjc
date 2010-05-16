@@ -17,10 +17,27 @@ Assumptions:
 - there are python frameworks for the various architectures: DbgPython-VARIANT.framework
 - those frameworks contain distribute and virtualenv
 
-(TODO: create script that builds a fresh copy of these frameworks from svn checkouts)
 """
-import getopt, sys, os, shutil, logging, subprocess
+import sys
+sys.dont_write_bytecode = True
+
+import distribute_setup
+distribute_setup.use_setuptools()
+
+import pkg_resources
+# Use Jinja2 for templating because that's the
+# only one that supports Python3 at this time.
+pkg_resources.require('Jinja2')
+
+import getopt, os, shutil, logging, subprocess, time
 from topsort import topological_sort
+
+from jinja2 import Template
+
+gBaseDir = '.'
+gIndexTemplate = os.path.join(gBaseDir, 'templates', 'index.html')
+gTestResults = os.path.join(gBaseDir, "testresults")
+
 
 gUsage = """\
 run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions,versions]
@@ -31,9 +48,35 @@ versions: 2.6,2.7,3.1,3.2 (values seperated by commas)
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 gRootDir = os.path.dirname(gBaseDir)
+gTestResults = os.path.join(gBaseDir, "testresults")
+
+gFrameworkNameTemplate="DbgPython-{archs}"
 
 gVersions=["2.6", "2.7", "3.1", "3.2"]
 gArchs=["32-bit", "3-way"]
+
+gVersions=["2.6", "2.7", ] #"3.2"]
+gArchs=["3-way"]
+
+gArchMap={
+    '3-way': ['ppc', 'i386', 'x86_64'],
+    '32-bit': ['ppc', 'i386'],
+    'intel': ['i386', 'x86_64'],
+}
+
+# XXX: Temporary workaround for structure of 
+# my local work environment.
+gPyObjCCore="pyobjc-core"
+if os.path.exists(os.path.join(gRootDir, "pyobjc-core-py3k")):
+    gPyObjCCore="pyobjc-core-py3k"
+
+
+def supports_arch_command(version):
+    major, minor = map(int, version.split('.'))
+    if major == 2:
+        return minor >= 7
+    else:
+        return minor >= 2
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -82,23 +125,9 @@ def main():
     all_results = []
     for ver in versions:
         for arch in archs:
-            test_results = run_tests(ver, arch)
-            all_results.append([ver, arch, test_results])
+            run_tests(ver, arch)
 
-    report_results(all_results)
-
-def report_results(all_results):
-    for version, archs, test_results in all_results:
-        title = "Architectures {1} for Python {0}".format(version, archs)
-        print(title)
-        print("="*len(title))
-        print()
-        
-        for pkg, stdout, stderr in test_results:
-            summary = stdout.splitlines()[-1]
-            print("{0:>20}: {1}".format(pkg, summary))
-
-        print()
+    gen_summary(versions, archs)
 
 
 def detect_frameworks():
@@ -136,24 +165,34 @@ def detect_frameworks():
             partial_order.append((dep, subdir))
 
     frameworks = topological_sort(frameworks, partial_order)
-    return frameworks[:2]
+    return frameworks
 
 
 
 def run_tests(version, archs):
-    test_results = []
 
     lg = logging.getLogger("run_tests")
 
     lg.info("Run tests for Python %s with archs %s", version, archs)
 
-    subdir = os.path.join(gBaseDir, "virtualenvs", "{0}.{1}".format(version, archs))
+    subdir = os.path.join(gBaseDir, "virtualenvs", "{0}--{1}".format(version, archs))
     if os.path.exists(subdir):
         lg.debug("Remove existing virtualenv")
         shutil.rmtree(subdir)
 
-    base_python = "/Library/Frameworks/DbgPython-{0}.framework/Versions/{1}/bin/python".format(
-            archs, version)
+    if not os.path.exists(os.path.dirname(subdir)):
+        os.mkdir(os.path.dirname(subdir))
+
+    resultdir = os.path.join(gTestResults, "{0}--{1}".format(version, archs))
+    if os.path.exists(resultdir):
+        lg.debug("Remove existing results directory")
+        shutil.rmtree(resultdir)
+
+    if not os.path.exists(os.path.dirname(resultdir)):
+        os.mkdir(os.path.dirname(resultdir))
+
+    base_python = "/Library/Frameworks/{0}.framework/Versions/{1}/bin/python".format(
+            gFrameworkNameTemplate.format(archs=archs, version=version), version)
     if version[0] == '3':
         base_python += '3'
 
@@ -175,7 +214,7 @@ def run_tests(version, archs):
             subdir])
 
     xit = p.wait()
-    if p != 0:
+    if xit != 0:
         lg.warning("Cannot create virtualenv in %s", subdir)
         raise RuntimeError(subdir)
 
@@ -187,8 +226,14 @@ def run_tests(version, archs):
     # There are circular dependencies w.r.t. testing the Cocoa and Quartz wrappers,
     # install pyobjc-core, pyobjc-framework-Cocoa and pyobjc-framework-Quartz
     # to ensure we avoid those problems.
-    for pkg in ["pyobjc-core-py3k", "pyobjc-framework-Cocoa", "pyobjc-framework-Quartz"]:
-        pkgroot = os.path.join(gRootDir, pkg)
+    for pkg in ["pyobjc-core", "pyobjc-framework-Cocoa", "pyobjc-framework-Quartz"]:
+        if not os.path.exists(os.path.join(resultdir, pkg)):
+            os.makedirs(os.path.join(resultdir, pkg))
+
+        if pkg == "pyobjc-core":
+            pkgroot = os.path.join(gRootDir, gPyObjCCore)
+        else:
+            pkgroot = os.path.join(gRootDir, pkg)
         pkgbuild = os.path.join(pkgroot, "build")
         if os.path.exists(pkgbuild):
             lg.debug("Remove build directory for %s", pkg)
@@ -198,7 +243,12 @@ def run_tests(version, archs):
         p = subprocess.Popen([
             os.path.join(subdir, "bin", "python"),
             "setup.py", "install"],
-            cwd=pkgroot)
+            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+        stdout, _ = p.communicate()
+
+        with open(os.path.join(resultdir, pkg, "pre-build-stdout.txt"), "wb") as fd:
+            fd.write(stdout)
 
         xit = p.wait()
         if xit != 0:
@@ -206,48 +256,86 @@ def run_tests(version, archs):
             raise RuntimeError(pkg)
 
     lg.debug("Start testing cycle")
-    for pkg in ["pyobjc-core-py3k"] + detect_frameworks():
-        pkgroot = os.path.join(gRootDir, pkg)
+    for pkg in ["pyobjc-core"] + detect_frameworks():
+        if not os.path.exists(os.path.join(resultdir, pkg)):
+            os.makedirs(os.path.join(resultdir, pkg))
+
+        if pkg == "pyobjc-core":
+            pkgroot = os.path.join(gRootDir, gPyObjCCore)
+        else:
+            pkgroot = os.path.join(gRootDir, pkg)
+
         pkgbuild = os.path.join(pkgroot, "build")
         if os.path.exists(pkgbuild):
             lg.debug("Remove build directory for %s", pkg)
             shutil.rmtree(pkgbuild)
 
-        lg.debug("Build %s for %s", pkg.os.path.basename(subdir))
+        lg.debug("Build %s for %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
             os.path.join(subdir, "bin", "python"),
-            "setup.py", "build"],
-            cwd=pkgroot)
+            "setup.py", "install"],
+            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+        stdout, _ = p.communicate()
+        with open(os.path.join(resultdir, pkg, "build-stdout.txt"), "wb") as fd:
+            fd.write(stdout)
 
         xit = p.wait()
         if xit != 0:
+            print(stdout)
             lg.warning("Build %s failed", pkg)
-            raise RuntimeError(pkg)
+            #raise RuntimeError(pkg)
+            continue
 
         # TODO: 
         # - For python2.7/3.2: use `arch` to run tests with all architectures
         # - For python2.6/3.1: run tests using 'python-32' and 'python-64' 
         #   when those are available
 
-        lg.debug("Test %s for %s", pkg.os.path.basename(subdir))
-        p = subprocess.Popen([
-            os.path.join(subdir, "bin", "python"),
-            "setup.py", "test"],
-            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        stdout, stderr = p.communicate()
+        if supports_arch_command(version):
+            for a in gArchMap[archs]:
+                lg.info("Test %s for %s (%s)", pkg, os.path.basename(subdir), a)
+                p = subprocess.Popen([
+                    '/usr/bin/arch', '-' + a,
+                    os.path.join(subdir, "bin", "python"),
+                    "setup.py", "test"],
+                    cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                stdout, _ = p.communicate()
 
-        print("====STDOUT===")
-        print(stdout)
-        print("====STDERR===")
-        print(stderr)
-        print("====ENDEND===")
+                with open(os.path.join(resultdir, pkg, "test-stdout-{0}.txt".format(a)), "wb") as fd:
+                    fd.write(stdout)
 
-        test_results.append((pkg, stdout, stderr))
+                status = stdout.splitlines()
+                if status[-1].startswith(b'['):
+                    status = status[-2]
+                else:
+                    status = status[-1]
+                status = status.decode('UTF-8')
+                lg.info("Test %s for %s (%s): %s", pkg, os.path.basename(subdir), a, status)
 
-        xit = p.wait()
-        if xit != 0:
-            lg.warning("Test %s failed", pkg)
-            raise RuntimeError(pkg)
+                xit = p.wait()
+                if xit != 0:
+                    lg.warning("Test %s failed", pkg)
+                
+        else:
+            lg.debug("Test %s for %s", pkg, os.path.basename(subdir))
+            p = subprocess.Popen([
+                os.path.join(subdir, "bin", "python"),
+                "setup.py", "test"],
+                cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            stdout, _ = p.communicate()
+
+            with open(os.path.join(resultdir, pkg, "test-stdout.txt"), "wb") as fd:
+                fd.write(stdout)
+
+            status = stdout.splitlines()[-1]
+            lg.info("Test %s for %s: %s", pkg, os.path.basename(subdir), status)
+
+            xit = p.wait()
+            if xit != 0:
+                lg.warning("Test %s failed", pkg)
+                continue
+                #raise RuntimeError(pkg)
 
         
         lg.debug("Install %s into %s", pkg, os.path.basename(subdir))
@@ -262,7 +350,171 @@ def run_tests(version, archs):
             raise RuntimeError(pkg)
 
        
-    return test_results
+
+def parse_tests(inputfile):
+    result = {
+        'test_pass':  0,
+        'test_fail':  0,
+        'test_error': 0,
+    }
+    with open(inputfile) as stream:
+        for ln in stream:
+            ln = ln.rstrip()
+            if ln.endswith('... ok'):
+                result['test_pass'] += 1
+            elif ln.endswith('... FAIL'):
+                result['test_fail'] += 1
+            elif ln.endswith('... ERROR'):
+                result['test_error'] += 1
+
+    result['class_pass'] = ''
+    result['class_fail'] = ''
+    result['class_error'] = ''
+    if result['test_pass'] == 0  \
+        and result['test_fail'] == 0 \
+        and result['test_error'] == 0:
+            result['class_pass'] = 'error'
+    if result['test_fail']:
+        result['class_fail'] = 'warning'
+    if result['test_error']:
+        result['class_error'] = 'error'
+
+    if result['test_error'] + result['test_fail'] == 0:
+        result['class_pass'] = 'ok'
+                
+    return result
+
+def parse_build(inputfile):
+    result = {
+        'build_warnings': 0,
+        'build_errors':   0,
+    }
+    with open(inputfile) as stream:
+        for ln in stream:
+            if 'error:' in ln:
+                result['build_errors'] += 1
+
+            elif 'warning:' in ln:
+                result['build_warnings'] += 1
+
+    result['class_warnings'] = ''
+    result['class_errors'] = ''
+    if result['build_warnings']:
+        result['class_warnings'] = 'warning'
+    if result['build_errors']:
+        result['class_errors'] = 'error'
+
+    if result['build_warnings'] + result['build_errors'] == 0:
+        result['class_warnings'] = 'ok'
+        result['class_errors'] = 'ok'
+
+    return result
+
+def get_svnversion():
+    p = subprocess.Popen([
+        'svnversion',
+        ], cwd='..', stdout=subprocess.PIPE)
+    stdout, _ = p.communicate()
+    xit = p.wait()
+    if xit != 0:
+        raise RuntimeError(xit)
+
+    return stdout.decode('UTF-8')
+
+def get_svnurl():
+    p = subprocess.Popen([
+        'svn', 'info', '.'
+        ], cwd='..', stdout=subprocess.PIPE)
+    stdout, _ = p.communicate()
+    xit = p.wait()
+    if xit != 0:
+        raise RuntimeError(xit)
+
+    for ln in stdout.splitlines():
+        if ln.startswith(b'URL'):
+            return ln.split(None, 1)[1].decode('UTF-8')
+
+def get_osx_version():
+    p = subprocess.Popen([
+        'sw_vers',
+        ], cwd='..', stdout=subprocess.PIPE)
+    stdout, _ = p.communicate()
+    xit = p.wait()
+    if xit != 0:
+        raise RuntimeError(xit)
+
+    r = {}
+    for ln in stdout.splitlines():
+        k, v = ln.decode('UTF-8').split(':', 1)
+        r[k.strip()] = v.strip()
+
+    return "{ProductName} {ProductVersion} ({BuildVersion})".format(**r)
+
+def gen_summary(versions, archs):
+    with open(gIndexTemplate) as fp:
+        tmpl = Template(fp.read())
+
+    svn={}
+    svn['revision'] = get_svnversion()
+    svn['url'] = get_svnurl()
+
+    osx={}
+    osx['version'] = get_osx_version()
+
+    versions = {}
+
+    for subdir in os.listdir(gTestResults):
+        if subdir == 'index.html': continue
+        version, style = subdir.split('--')
+
+        if version not in versions: continue
+        if style not in archs: continue
+
+        versions[(version, style)] = modules = []
+
+        for mod in os.listdir(os.path.join(gTestResults, subdir)):
+            moddir = os.path.join(gTestResults, subdir, mod)
+            info = parse_build(os.path.join(moddir, 'build-stdout.txt'))
+            info['name'] = mod
+            modules.append(info)
+            info['archs'] = []
+            info['class'] = None
+
+            if info['build_errors']:
+                info['class'] = 'error'
+            #elif info['build_warnings']:
+                #info['class'] = 'warning'
+
+            for fn in os.listdir(moddir):
+                if not fn.startswith('test'): continue
+
+                if fn == 'test-stdout.txt':
+                    a = 'all'
+
+                else:
+                    a = fn.split('-')[-1].split('.')[0]
+
+                info['archs'].append(a)
+                info[a] =  parse_tests(os.path.join(moddir, fn))
+
+                if info[a]['test_fail'] and (info['class'] is None):
+                    info['class'] = 'warning'
+
+                if info[a]['test_error']:
+                    info['class'] = 'error'
+
+
+            if info['class'] is None:
+                info['class'] = 'ok'
+
+    with open(os.path.join(gTestResults, 'index.html'), 'w') as fp:
+        fp.write(tmpl.render(
+            svn=svn,
+            osx=osx,
+            versions=versions,
+            sorted=sorted,
+            timestamp=time.ctime(),
+            ))
 
 if __name__ == "__main__":
     try:
