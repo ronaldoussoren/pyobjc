@@ -2,21 +2,44 @@
 """
 Script that builds a number of python frameworks as
 used by the run_tests.py script
+
+FIXME:
+- Both variants need to be build with simular options
+  to the official builds: 32-bit with SDK 10.4u and deployment
+  target 10.3, 3-way without SDK and depl. target 10.5.
+
+  This will have to wait until my sdkroot patches get committed,
+  without that patch I cannot build the 32-bit variant on 
+  SL.
+- get rid of the global variables
 """
-import subprocess, getopt, logging, os, sys, shutil
+import sys
+sys.dont_write_bytecode = True
+
+import subprocess, getopt, logging, os, shutil
 from urllib.request import urlopen
+
 
 gUsage="""\
 build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch archs]
 
 - versions: comma seperated list of python versiosn, defaults to "2.6,2.7,3.1,3.2"
-- archs: comma seperated list of build variations, defaults to "32-bit,intel"
+- archs: comma seperated list of build variations, defaults to "32-bit,3-way"
 """
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 
-gArchs = ("32-bit", "intel")
+gArchs = ("32-bit", "3-way")
 
+
+# Name of the Python framework and any additional arguments
+# passed to the configure command.
+gFrameworkNameTemplate="DbgPython-{archs}"
+gExtraConfigureArgs=[
+    "--with-pydebug",
+]
+
+# Location of the SVN branches to be used
 gURLMap = {
     '2.6': 'http://svn.python.org/projects/python/branches/release26-maint',
     '2.7': 'http://svn.python.org/projects/python/trunk',
@@ -26,10 +49,32 @@ gURLMap = {
 }
 
 
+# Name of the OSX SDK used to build the framework, keyed of the architecture
+# variant.
+gSdkMap={
+    '32-bit': '/',
+    '3-way': '/',
+}
+
+# Name of the OSX Deployment Target used to build the framework, keyed of 
+# the architecture variant.
+gDeploymentTargetMap={
+    #'32-bit': '10.4',
+    '32-bit': '10.5',
+    '3-way': '10.5',
+}
+
+
+
 class ShellError (Exception):
+    """ An error occurred while running a shell command """
     pass
 
 def create_checkout(version):
+    """
+    Create or update the checkout of the given version
+    of Python.
+    """
     lg = logging.getLogger("create_checkout")
     lg.info("Create checkout for %s", version)
 
@@ -56,55 +101,66 @@ def create_checkout(version):
         raise ShellError(xit)
 
 def build_framework(version, archs):
+    """
+    Build the given version of Python in the given architecture
+    variant. 
+
+    This also installs distribute and virtualenv (the latter using
+    a local copy of the package).
+    """
     lg = logging.getLogger("build_framework")
     lg.info("Build framework version=%r archs=%r", version, archs)
 
     builddir = os.path.join(gBaseDir, "checkouts", version, "build")
-#    if os.path.exists(builddir):
-#        lg.debug("Remove existing build tree")
-#        shutil.rmtree(builddir)
-#
-#    lg.debug("Create build tree %r", builddir)
-#    os.mkdir(builddir)
-#
-#    lg.debug("Running 'configure'")
-#    p = subprocess.Popen([
-#        "../configure",
-#            "--enable-framework",
-#            "--with-framework-name=DbgPython-{0}".format(archs),
-#            "--enable-universalsdk=/",
-#            "--with-universal-archs={0}".format(archs),
-#            "--with-pydebug",
-#            "MACOSX_DEPLOYMENT_TARGET=10.6",
-#        ], cwd=builddir)
-#
-#    xit = p.wait()
-#    if xit != 0:
-#        lg.debug("Configure failed for %s", version)
-#        raise ShellError(xit)
-#    
-#    lg.debug("Running 'make'")
-#    p = subprocess.Popen([
-#            "make",
-#        ], cwd=builddir)
-#
-#    xit = p.wait()
-#    if xit != 0:
-#        lg.debug("Make failed for %s", version)
-#        raise ShellError(xit)
-#
-#    lg.debug("Running 'make install'")
-#    p = subprocess.Popen([
-#            "make",
-#            "install",
-#        ], cwd=builddir)
-#
-#    xit = p.wait()
-#    if xit != 0:
-#        lg.debug("Install failed for %r", version)
-#        raise ShellError(xit)
-#
+    if os.path.exists(builddir):
+        lg.debug("Remove existing build tree")
+        shutil.rmtree(builddir)
+
+    lg.debug("Create build tree %r", builddir)
+    os.mkdir(builddir)
+
+    lg.debug("Running 'configure'")
+    p = subprocess.Popen([
+        "../configure",
+            "--enable-framework",
+            "--with-framework-name={0}".format(gFrameworkNameTemplate.format(version=version, archs=archs)),
+            "--enable-universalsdk={0}".format(gSdkMap[archs]),
+            "--with-universal-archs={0}".format(archs),
+            ] + gExtraConfigureArgs + [
+            "MACOSX_DEPLOYMENT_TARGET={0}".format(gDeploymentTargetMap[archs]),
+            ], cwd=builddir)
+
+    xit = p.wait()
+    if xit != 0:
+        lg.debug("Configure failed for %s", version)
+        raise ShellError(xit)
+    
+    lg.debug("Running 'make'")
+    p = subprocess.Popen([
+            "make",
+        ], cwd=builddir)
+
+    xit = p.wait()
+    if xit != 0:
+        lg.debug("Make failed for %s", version)
+        raise ShellError(xit)
+
+    lg.debug("Running 'make install'")
+    p = subprocess.Popen([
+            "make",
+            "install",
+        ], cwd=builddir)
+
+    xit = p.wait()
+    if xit != 0:
+        lg.debug("Install failed for %r", version)
+        raise ShellError(xit)
+
+def install_distribute(version, archs):
+    lg = logging.getLogger("install_distribute")
     lg.debug("Installing distribute")
+
+    builddir = os.path.join(gBaseDir, "checkouts", version, "build")
 
     lg.debug("Download distribute_setup script")
     fd = urlopen("http://python-distribute.org/distribute_setup.py")
@@ -116,8 +172,10 @@ def build_framework(version, archs):
     fd.write(data)
     fd.close()
 
-    python = "/Library/Frameworks/DbgPython-{0}.framework/Versions/{1}/bin/python".format(
-            archs, version)
+    frameworkName=gFrameworkNameTemplate.format(archs=archs, version=version)
+
+    python = "/Library/Frameworks/{0}.framework/Versions/{1}/bin/python".format(
+            frameworkName, version)
     if version[0] == '3':
         python += '3'
 
@@ -133,16 +191,28 @@ def build_framework(version, archs):
             lg.warning("Running 2to3 failed")
             raise ShellError(xit)
 
-    lg.debug("Run distribute_setup script")
+    lg.debug("Run distribute_setup script '%s' with '%s'", scriptfn, python)
     p = subprocess.Popen([
         python,
-        scriptfn])
+        scriptfn],
+        cwd=os.path.join(gBaseDir, "checkouts"))
     xit = p.wait()
     if xit != 0:
         lg.warning("Installing 'distribute' failed")
         raise ShellError(xit)
 
-    lg.debug("Installing virtualenv")
+
+def install_virtualenv(version, archs):
+    lg = logging.getLogger("install_virtualenv")
+
+    lg.info("Installing virtualenv from local source")
+
+    frameworkName=gFrameworkNameTemplate.format(archs=archs, version=version)
+
+    python = "/Library/Frameworks/{0}.framework/Versions/{1}/bin/python".format(
+            frameworkName, version)
+    if version[0] == '3':
+        python += '3'
 
     # Sadly enough plain virtualenv doens't support 
     # python3 yet, but there is a fork that does.
@@ -158,10 +228,9 @@ def build_framework(version, archs):
 
     xit = p.wait()
     if xit != 0:
-        lg.warning("Installing 'distribute' failed")
+        lg.warning("Installing 'virtualenv' failed")
         raise ShellError(xit)
 
-    lg.info("Installation of %r done", version)
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -180,6 +249,8 @@ def main():
         print("Additional arguments", file=sys.stderr)
         print(gUsage, file=sys.stderr)
         sys.exit(1)
+
+
 
     for k, v in opts:
         if k in ('-h', '-?', '--help'):
@@ -209,12 +280,21 @@ def main():
                     file=sys.stderr)
             sys.exit(2)
 
+    lg = logging.getLogger("build_frameworks")
+    lg.info("Building versions: %s", versions)
+    lg.info("Building architectures: %s", archs)
     try:
         for version in sorted(versions):
             create_checkout(version)
 
             for arch in sorted(archs):
+                lg.info('Building framework for python %s (%s)', version, arch)
                 build_framework(version, arch)
+                lg.info('Installing distribute for python %s (%s)', version, arch)
+                install_distribute(version, arch)
+                lg.info('Installing virtualenv for python %s (%s)', version, arch)
+                install_virtualenv(version, arch)
+                lg.info('Done python %s (%s)', version, arch)
     
     except ShellError:
         sys.exit(1)
