@@ -2057,7 +2057,7 @@ PyObjCSelector_FromFunction(
 		 * the user may have specified a more exact
 		 * signature!
 		 */
-		char* typestr = NULL;
+		const char* typestr = NULL;
 
 		if (super_sel == NULL) {
 			/* FIXME: This isn't optimal when hiding methods with non-standard types */

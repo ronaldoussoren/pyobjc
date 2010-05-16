@@ -46,7 +46,7 @@ init_registry(void)
 	return 0;
 }
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
 
 static void memblock_capsule_cleanup(void* ptr, void* closure __attribute__((__unused__)))
 {

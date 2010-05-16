@@ -155,8 +155,7 @@ free_type(void *obj)
 static ffi_type* signature_to_ffi_type(const char* argtype);
 
 #if PY_MAJOR_VERSION == 2
-static void cleanup_ffitype_capsule(void* ptr, void* context __attribute__((__unused__)))
-
+static void cleanup_ffitype_capsule(void* ptr)
 {
 	free_type(ptr);
 }
@@ -2269,7 +2268,7 @@ int PyObjCFFI_CountArguments(
 }
 
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
 static void imp_capsule_cleanup(void* ptr, void* context __attribute__((__unused__)))
 {
 	PyObjCFFI_FreeIMP(ptr);

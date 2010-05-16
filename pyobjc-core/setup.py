@@ -257,52 +257,28 @@ CFLAGS.extend([
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, platform.mac_ver()[0].split('.')[:2]))),
     "-no-cpp-precomp",
     "-DMACOSX",
-    #"-Wno-long-double",
-    #"-Wselector",
-    #"-Wstrict-overflow",
     "-g",
-    #"-fobjc-gc",
     "-fexceptions",
 
-    ## Arghh, a stupid compiler flag can cause problems. Don't 
-    ## enable -O0 if you value your sanity. With -O0 PyObjC will crash
-    ## on i386 systems when a method returns a struct that isn't returned
-    ## in registers. 
-    #"-O0",
-    "-O1",
-    #"-O2",
-    #"-O3",
-    #'-arch', 'x86_64', '-arch', 'ppc64',
 
     # Loads of warning flags
     "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-    "-Wformat=2", "-W", "-Wshadow",
+    "-Wformat=2", "-W", 
+    #"-Wshadow", # disabled due to warnings from Python headers
     "-Wpointer-arith", #"-Wwrite-strings",
     "-Wmissing-declarations",
     "-Wnested-externs",
     "-Wno-long-long",
-    #"-Wfloat-equal",
-
-    # These two are fairly useless:
-    #"-Wunreachable-code",
-    #"-pedantic",
 
     "-Wno-import",
-    #"-Werror",
-
-    # use the same optimization as Python, probably -O3,
-    # but can be overrided by one of the following:
-
-    # no optimization, for debugging
-    #"-O0",
-
-    # g4 optimized
-    #"-fast", "-fPIC", "-mcpu=7450",
-
-    # g5 optimized
-    #"-fast", "-fPIC",
     ])
 
+## Arghh, a stupid compiler flag can cause problems. Don't 
+## enable -O0 if you value your sanity. With -O0 PyObjC will crash
+## on i386 systems when a method returns a struct that isn't returned
+## in registers. 
+if '-O0' in get_config_var('CFLAGS'):
+    CFLAGS.append('-O1')
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 

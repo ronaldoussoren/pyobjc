@@ -502,10 +502,10 @@ initmetadatafunction(void)
 		INITERROR();
 	}
 	
-#if PY_VERSION_HEX >= 0x03000000
-	v = PyCapsule_New(gFunctionMap, "objc.__functionlist__", NULL);
-#else
+#if PY_VERSION_MAJOR == 2 && PY_VERSION_MINOR < 7
 	v = PyCObject_FromVoidPtr(gFunctionMap, NULL);
+#else
+	v = PyCapsule_New(gFunctionMap, "objc.__functionlist__", NULL);
 #endif
 	if (v == NULL) {
 		INITERROR();

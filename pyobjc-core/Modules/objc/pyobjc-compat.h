@@ -135,12 +135,16 @@ typedef int Py_ssize_t;
 #define Py_TYPE(ob)             (((PyObject*)(ob))->ob_type)
 #define Py_SIZE(ob)             (((PyVarObject*)(ob))->ob_size)
 
+
 /* Source-level backward compatibility: use PyCapsule API in sources, fall back to
  * PyCObject when needed.
  */
+#if PY_MINOR_VERSION < 7
 #define PyCapsule_New(pointer, name, destructor) PyCObject_FromVoidPtr(pointer, destructor)
 #define PyCapsule_GetPointer(object, name) PyCObject_AsVoidPtr(object)
 #define PyCapsule_CheckExact(object)	PyCObject_Check(object)
+#endif
+
 #endif
 
 #if PY_MAJOR_VERSION == 2
