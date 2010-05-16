@@ -871,6 +871,10 @@ PyObjCRT_SizeOfType (const char *type)
 	{
 		Py_ssize_t max_size = 0;
 		type++;
+		/* Skip name part: */
+		while (*type != _C_UNION_E && *type++ != '='); 
+
+		/* Calculate size: */
 		while (*type != _C_UNION_E) {
 			itemSize = PyObjCRT_SizeOfType (type);
 			if (itemSize == -1) return -1;
@@ -2807,4 +2811,71 @@ void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 		((PyObjCObject*)proxy)-> flags &= ~PyObjCObject_kSHOULD_NOT_RELEASE;
 	}
 	Py_DECREF(proxy);
+}
+
+BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
+{
+	return YES;
+	/* Ignore type modifiers */
+	type1 = PyObjCRT_SkipTypeQualifiers(type1);
+	type2 = PyObjCRT_SkipTypeQualifiers(type2);
+
+	if (PyObjCRT_SizeOfType(type1) != PyObjCRT_SizeOfType(type2)) {
+		return NO;
+	}
+	switch (*type1) {
+	case _C_FLT: case _C_DBL: 
+		switch (*type2) {
+		case _C_FLT: case _C_DBL: 
+			return YES;
+	 	default:     
+			return NO;
+		}
+
+	case _C_ID:
+		if (*type2 == _C_ID) {
+			return YES;
+		}
+		if (type2[0] == _C_PTR && type2[1] == _C_VOID) {
+			return YES;
+		}
+		return NO;
+
+	case _C_CHARPTR:
+		if (*type2 == _C_CHARPTR) {
+			return YES;
+		} else if (*type2 == _C_PTR) {
+			return PyObjC_signatures_compatible("c", type2+1);
+		} else {
+			return NO;
+		}
+	
+	case _C_PTR:
+		if (type2[1] == _C_VOID && type2[0] == _C_ID) {
+			return YES;
+		}
+		if (*type2 == _C_CHARPTR) {
+			return PyObjC_signatures_compatible(type1+1, "c");
+		}
+		if (*type2 != _C_PTR) {
+			return NO;
+		}
+		return PyObjC_signatures_compatible(type1+1, type2+1);
+	
+	default:
+		switch (*type2) {
+		case _C_ID: case _C_PTR: return NO;
+		case _C_FLT: case _C_DBL: return NO;
+		default: return YES;
+		}
+	}
+}
+BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
+{
+	BOOL r =  _PyObjC_signatures_compatible(type1, type2);
+
+	if (!r) {
+		NSLog(@"Compatible: '%s' '%s' -> %d", type1, type2, r);
+	}
+	return r;
 }

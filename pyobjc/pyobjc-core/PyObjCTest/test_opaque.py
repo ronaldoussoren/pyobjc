@@ -60,7 +60,7 @@ class TestFromC (TestCase):
 
         # There is no exposed type object that for PyCObject, test the
         # type name instead
-        if sys.version_info[0] == 2:
+        if sys.version_info[0] == 2 and sys.version_info[1] < 7:
             self.assertEquals( type(f.__cobject__()).__name__, 'PyCObject' )
         else:
             self.assertEquals( type(f.__cobject__()).__name__, 'PyCapsule' )

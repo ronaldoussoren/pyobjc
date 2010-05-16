@@ -22,6 +22,13 @@
 #ifndef _objc_support_H
 #define _objc_support_H
 
+extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
+/* Returns True iff two typestrings are compatible:
+ * - elements have same size
+ * - 'id' is compatible with 'void*' and not with other types
+ * - 'float'/'double' are not compatible with integer types.
+ */
+
 /*#F Takes a C value pointed by @var{datum} with its type encoded in
   @var{type}, that should be coming from an ObjC @encode directive,
   and returns an equivalent Python object where C structures and

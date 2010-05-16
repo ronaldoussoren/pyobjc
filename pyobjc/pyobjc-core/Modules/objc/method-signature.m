@@ -508,6 +508,14 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 		}
 
 		char* type = PyBytes_AsString(bytes);
+
+		if (!PyObjC_signatures_compatible(descr->type, type)) {
+			/* The new signature is not compatible enough, ignore the 
+			 * override.
+			 */
+			type = descr->type;
+		}
+
 		char* tp = PyMem_Malloc(strlen(type)+2);
 		if (tp == NULL) {
 			Py_XDECREF(bytes);

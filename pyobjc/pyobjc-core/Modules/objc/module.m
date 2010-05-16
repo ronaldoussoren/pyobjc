@@ -1367,7 +1367,7 @@ PyDoc_STRVAR(_makeClosure_doc,
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
  );
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
 static void _callback_cleanup(void* closure)
 {
 	PyObjCFFI_FreeIMP((IMP)closure);

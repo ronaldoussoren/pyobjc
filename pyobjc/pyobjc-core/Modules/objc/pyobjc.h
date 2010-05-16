@@ -167,14 +167,15 @@ extern PyObject* PyObjC_AdjustSelf(PyObject* self);
     do { \
 	PyErr_Format(PyObjCExc_InternalError, \
 	  "PyObjC: internal error in %s at %s:%d: %s", \
-	   __FUNCTION__, __FILE__, __LINE__, msg) \
+	   __FUNCTION__, __FILE__, __LINE__, msg); \
 	   _PyObjC_InternalError_Bailout(); \
     } while (0)
 
 #define PyObjC_Assert(expr, retval) \
+	do { \
 	if (!(expr)) { PyObjCErr_InternalErrorMesg(\
-			"assertion failed: " #expr); return (retval); }
-
+			"assertion failed: " #expr); return (retval); } \
+	} while (0)
 #else
 
 #define PyObjCErr_InternalError()	((void)0)
