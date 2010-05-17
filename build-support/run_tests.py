@@ -72,11 +72,22 @@ if os.path.exists(os.path.join(gRootDir, "pyobjc-core-py3k")):
 
 
 def supports_arch_command(version):
+
+    # In virtualenvs both 2.6 and 2.7 support
+    # the 'arch' command because virtualenv
+    # copies the real interpreter into the 
+    # virtualenv.
+    return True
+
+    # This code is true for the python 
+    # interpreter outside of virtual environments:
+    """
     major, minor = map(int, version.split('.'))
     if major == 2:
         return minor >= 7
     else:
         return minor >= 2
+    """
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
@@ -122,7 +133,6 @@ def main():
                     file=sys.stderr)
             sys.exit(2)
 
-    all_results = []
     for ver in versions:
         for arch in archs:
             run_tests(ver, arch)
@@ -450,7 +460,7 @@ def get_osx_version():
 
     return "{ProductName} {ProductVersion} ({BuildVersion})".format(**r)
 
-def gen_summary(versions, archs):
+def gen_summary(report_versions, report_archs):
     with open(gIndexTemplate) as fp:
         tmpl = Template(fp.read())
 
@@ -467,8 +477,8 @@ def gen_summary(versions, archs):
         if subdir == 'index.html': continue
         version, style = subdir.split('--')
 
-        if version not in versions: continue
-        if style not in archs: continue
+        if version not in report_versions: continue
+        if style not in report_archs: continue
 
         versions[(version, style)] = modules = []
 
