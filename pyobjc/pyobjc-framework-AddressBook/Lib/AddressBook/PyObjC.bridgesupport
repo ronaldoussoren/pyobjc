@@ -191,14 +191,14 @@
     <arg function_pointer='true' type='^?' type64='^?' >
 	    <retval type='^v'/>
 	    <arg type='@' />
-	    <arg type='l' type64='l'/>
+	    <arg type='l' type64='q'/>
 	    <arg type='^v' />
     </arg>
 
     <arg type='^v' type64='^v' />
   </function>
   <function name='ABCancelLoadingImageDataForTag'>
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABCopyArrayOfAllGroups'>
     <retval already_cfretained='true' type='^{__CFArray=}' type64='^{__CFArray=}' />
@@ -285,7 +285,7 @@
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABGroupRemoveGroup'>
     <retval type='Z' />
@@ -322,12 +322,12 @@
   <function name='ABMultiValueCopyIdentifierAtIndex'>
     <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueCopyLabelAtIndex'>
     <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueCopyPrimaryIdentifier'>
     <retval already_cfretained='true' type='^{__CFString=}' type64='^{__CFString=}' />
@@ -336,7 +336,7 @@
   <function name='ABMultiValueCopyValueAtIndex'>
     <retval already_cfretained='true' type='@' type64='@' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueCount'>
     <retval type='l' type64='q' />
@@ -366,7 +366,7 @@
     <arg type='^{__ABMultiValue=}' />
     <arg type='@' />
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
     <arg type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='ABMultiValuePropertyType'>
@@ -376,19 +376,19 @@
   <function name='ABMultiValueRemove'>
     <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueReplaceLabel'>
     <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueReplaceValue'>
     <retval type='Z' />
     <arg type='^{__ABMultiValue=}' />
     <arg type='@' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABMultiValueSetPrimaryIdentifier'>
     <retval type='Z' />
@@ -416,7 +416,7 @@
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='^{__CFString=}' type64='^{__CFString=}' />
     <arg type='@' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
   </function>
   <function name='ABPersonCreateWithVCardRepresentation'>
     <retval already_cfretained='true' type='^{__ABPerson=}' />
@@ -501,7 +501,7 @@
   </function>
   <function name='ABPickerGetFrame'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
   </function>
   <function name='ABPickerIsVisible'>
     <retval type='Z' />
@@ -545,7 +545,7 @@
   </function>
   <function name='ABPickerSetFrame'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
   </function>
   <function name='ABPickerSetVisibility'>
     <arg type='^{OpaqueABPicker=}' />
@@ -600,7 +600,7 @@
   </function>
   <function name='ABSearchElementCreateWithConjunction'>
     <retval already_cfretained='true' type='^{__ABSearchElementRef=}' />
-    <arg type='l' type64='l' />
+    <arg type='l' type64='q' />
     <arg type='^{__CFArray=}' type64='^{__CFArray=}' />
   </function>
   <function name='ABSearchElementMatchesRecord'>
