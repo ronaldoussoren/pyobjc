@@ -32,7 +32,7 @@ class TestABPeoplePickerC (TestCase):
 
         ABPickerSetFrame(ref, ((90, 100), (200, 400)))
         r = ABPickerGetFrame(ref, None)
-        self.assertIsInstance(r, tuple)
+        self.assertIsInstance(r, NSRect)
         self.assertEqual(r, ((90, 100), (200, 400)))
 
         self.assertResultHasType(ABPickerIsVisible, objc._C_BOOL)
@@ -63,7 +63,10 @@ class TestABPeoplePickerC (TestCase):
 
         v = ABPickerCopyProperties(ref)
         self.assertIsInstance(v, CFArrayRef)
-        self.assertEqual(tuple(v), (kABLastNameProperty,))
+
+        # Disable detailed testing, the RemoveProperties function
+        # doesn't actually remove. See radar #7999195.
+        #self.assertEqual(tuple(v), (kABLastNameProperty,))
 
         ABPickerSetColumnTitle(ref, u"Achternaam", kABLastNameProperty)
         v = ABPickerCopyColumnTitle(ref, kABLastNameProperty)
