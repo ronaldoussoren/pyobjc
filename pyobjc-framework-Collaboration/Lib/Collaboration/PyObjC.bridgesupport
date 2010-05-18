@@ -30,7 +30,7 @@
       <retval type='B' />
     </method>
     <method selector='runModalForWindow:modalDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' sel_of_type='v@:@i^v' />
+      <arg index='2' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='3' type='^v' />
     </method>
     <method selector='setAllowsMultipleSelection:'>
