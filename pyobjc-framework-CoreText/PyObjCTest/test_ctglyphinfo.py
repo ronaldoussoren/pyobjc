@@ -43,7 +43,7 @@ class TestCTGlyphInfo (TestCase):
         v = CTGlyphInfoGetCharacterIdentifier(info)
         self.assertIsInstance(v, (int, long))
 
-        self.failIfResultIsCFRetained(CTGlyphInfoGetCharacterCollection)
+        self.assertResultIsNotCFRetained(CTGlyphInfoGetCharacterCollection)
         v = CTGlyphInfoGetCharacterCollection(info)
         self.assertIsInstance(v, (int, long))
 
