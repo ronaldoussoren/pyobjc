@@ -38,7 +38,7 @@ class TestCTFrame (TestCase):
         v = CTFrameGetVisibleStringRange(frame)
         self.assertIsInstance(v, CFRange)
 
-        self.failIfResultIsCFRetained(CTFrameGetPath)
+        self.assertResultIsNotCFRetained(CTFrameGetPath)
         v = CTFrameGetPath(frame)
         self.assertIsInstance(v, CGPathRef)
 

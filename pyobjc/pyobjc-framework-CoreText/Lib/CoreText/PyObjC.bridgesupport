@@ -403,7 +403,7 @@
     <retval already_cfretained='true' type='^{__CTFont=}' />
     <arg type='^{__CTFont=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
   </function>
   <function name='CTFontCreatePathForGlyph'>
     <retval type='^{CGPath=}' />
@@ -539,7 +539,7 @@
     <arg type='^{__CTFont=}' />
     <arg type='I' />
     <arg type='^S' type_modifier='n' c_array_length_in_arg='4' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' c_array_length_in_arg='4' />
+    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' c_array_length_in_arg='4' />
     <arg type='l' type64='l' />
   </function>
   <function name='CTFontGetCapHeight'>
@@ -630,8 +630,8 @@
   </function>
   <function name='CTFrameGetLineOrigins'>
     <arg type='^{__CTFrame=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
-    <arg c_array_length_in_arg='1' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='o' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
+    <arg c_array_length_in_arg='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' />
   </function>
   <function name='CTFrameGetLines'>
     <retval type='^{__CFArray=}' />
@@ -642,20 +642,20 @@
     <arg type='^{__CTFrame=}' />
   </function>
   <function name='CTFrameGetStringRange'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{__CTFrame=}' />
   </function>
   <function name='CTFrameGetTypeID'>
     <retval type='L' type64='Q' />
   </function>
   <function name='CTFrameGetVisibleStringRange'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{__CTFrame=}' />
   </function>
   <function name='CTFramesetterCreateFrame'>
     <retval already_cfretained='true' type='^{__CTFrame=}' />
     <arg type='^{__CTFramesetter=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{CGPath=}' type64='^{CGPath=}' />
     <arg type='^{__CFDictionary=}' />
   </function>
@@ -755,10 +755,10 @@
   <function name='CTLineGetStringIndexForPosition'>
     <retval type='l' type64='q' />
     <arg type='^{__CTLine=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=dd}' />
   </function>
   <function name='CTLineGetStringRange'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{__CTLine=}' />
   </function>
   <function name='CTLineGetTrailingWhitespaceWidth'>
@@ -797,7 +797,7 @@
   <function name='CTRunDraw'>
     <arg type='^{__CTRun=}' />
     <arg type='^{CGContext=}' type64='^{CGContext=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
   </function>
   <function name='CTRunGetAttributes'>
     <retval type='^{__CFDictionary=}' />
@@ -809,7 +809,7 @@
   </function>
   <function name='CTRunGetGlyphs'>
     <arg type='^{__CTRun=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='1' type='^S' type_modifier='o' />
   </function>
   <function name='CTRunGetGlyphsPtr'>
@@ -820,11 +820,11 @@
     <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='^{__CTRun=}' />
     <arg type='^{CGContext=}' type64='^{CGContext=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
   </function>
   <function name='CTRunGetPositions'>
     <arg type='^{__CTRun=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' c_array_length_in_arg='1'  />
   </function>
   <function name='CTRunGetPositionsPtr'>
@@ -837,7 +837,7 @@
   </function>
   <function name='CTRunGetStringIndices'>
     <arg type='^{__CTRun=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='o' />
   </function>
   <function name='CTRunGetStringIndicesPtr'>
@@ -845,7 +845,7 @@
     <arg type='^{__CTRun=}' />
   </function>
   <function name='CTRunGetStringRange'>
-    <retval type='{_CFRange=ii}' type64='{_CFRange=qq}' />
+    <retval type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^{__CTRun=}' />
   </function>
   <function name='CTRunGetTextMatrix'>
@@ -858,7 +858,7 @@
   <function name='CTRunGetTypographicBounds'>
     <retval type='d' />
     <arg type='^{__CTRun=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
     <arg type='^f' type64='^f' type_modifier='o' />
     <arg type='^f' type64='^f' type_modifier='o' />
     <arg type='^f' type64='^f' type_modifier='o' />
@@ -887,7 +887,7 @@
   <function name='CTTypesetterCreateLine'>
     <retval already_cfretained='true' type='^{__CTLine=}' />
     <arg type='^{__CTTypesetter=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
   </function>
   <function name='CTTypesetterCreateWithAttributedString'>
     <retval already_cfretained='true' type='^{__CTTypesetter=}' />
