@@ -95,7 +95,11 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
 		return;
 	}
 
+#ifdef __LP64__
+	PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=qi}", (void*)error);
+#else
 	PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=ii}", (void*)error);
+#endif
 	if (py_error == NULL) {
 		Py_DECREF(py_host);
 		Py_DECREF(py_info);

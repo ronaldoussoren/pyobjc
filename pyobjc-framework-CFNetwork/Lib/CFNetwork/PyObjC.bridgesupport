@@ -312,7 +312,7 @@
   <function name='CFHTTPAuthenticationIsValid'>
     <retval type='B' />
     <arg type='^{_CFHTTPAuthentication=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFHTTPAuthenticationRequiresAccountDomain'>
     <retval type='B' />
@@ -346,7 +346,7 @@
     <arg type='^{__CFHTTPMessage=}' />
     <arg type='^{_CFHTTPAuthentication=}' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFHTTPMessageApplyCredentials'>
     <retval type='B' />
@@ -354,7 +354,7 @@
     <arg type='^{_CFHTTPAuthentication=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFHTTPMessageCopyAllHeaderFields'>
     <retval type='^{__CFDictionary=}' already_cfretained='true' />
@@ -492,13 +492,13 @@
     <retval type='B' />
     <arg type='^{__CFHost=}' />
     <arg type='^?' />
-    <arg type='^{CFHostClientContext=i^v^?^?^?}' type64='^{CFHostClientContext=i^v^?^?^?}' />
+    <arg type='^{CFHostClientContext=l^v^?^?^?}' type64='^{CFHostClientContext=l^v^?^?^?}' />
   </function>
   <function name='CFHostStartInfoResolution'>
     <retval type='B' />
     <arg type='^{__CFHost=}' />
     <arg type='i' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFHostUnscheduleFromRunLoop'>
     <arg type='^{__CFHost=}' />
@@ -533,7 +533,7 @@
     <retval type='^{__CFNetServiceBrowser=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='^?' />
-    <arg type='^{CFNetServiceClientContext=i^v^?^?^?}' type64='^{CFNetServiceClientContext=i^v^?^?^?}' />
+    <arg type='^{CFNetServiceClientContext=l^v^?^?^?}' type64='^{CFNetServiceClientContext=l^v^?^?^?}' />
   </function>
   <function name='CFNetServiceBrowserGetTypeID'>
     <retval type='L' type64='Q' />
@@ -550,18 +550,18 @@
     <retval type='B' />
     <arg type='^{__CFNetServiceBrowser=}' />
     <arg type='B' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceBrowserSearchForServices'>
     <retval type='B' />
     <arg type='^{__CFNetServiceBrowser=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceBrowserStopSearch'>
     <arg type='^{__CFNetServiceBrowser=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceBrowserUnscheduleFromRunLoop'>
     <arg type='^{__CFNetServiceBrowser=}' />
@@ -634,7 +634,7 @@
     <arg type='^{__CFAllocator=}' />
     <arg type='^{__CFNetService=}' />
     <arg type='^?' />
-    <arg type='^{CFNetServiceClientContext=i^v^?^?^?}' type64='^{CFNetServiceClientContext=i^v^?^?^?}' />
+    <arg type='^{CFNetServiceClientContext=l^v^?^?^?}' type64='^{CFNetServiceClientContext=l^v^?^?^?}' />
   </function>
   <function name='CFNetServiceMonitorGetTypeID'>
     <retval type='L' type64='Q' />
@@ -651,11 +651,11 @@
     <retval type='B' />
     <arg type='^{__CFNetServiceMonitor=}' />
     <arg type='i' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceMonitorStop'>
     <arg type='^{__CFNetServiceMonitor=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceMonitorUnscheduleFromRunLoop'>
     <arg type='^{__CFNetServiceMonitor=}' />
@@ -665,24 +665,24 @@
   <function name='CFNetServiceRegister'>
     <retval type='B' />
     <arg type='^{__CFNetService=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceRegisterWithOptions'>
     <retval type='B' />
     <arg type='^{__CFNetService=}' />
     <arg type='L' type64='L' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceResolve'>
     <retval type='B' />
     <arg type='^{__CFNetService=}' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceResolveWithTimeout'>
     <retval type='B' />
     <arg type='^{__CFNetService=}' />
     <arg type='d' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceScheduleWithRunLoop'>
     <arg type='^{__CFNetService=}' />
@@ -693,7 +693,7 @@
     <retval type='B' />
     <arg type='^{__CFNetService=}' />
     <arg type='^?' />
-    <arg type='^{CFNetServiceClientContext=i^v^?^?^?}' type64='^{CFNetServiceClientContext=i^v^?^?^?}' />
+    <arg type='^{CFNetServiceClientContext=l^v^?^?^?}' type64='^{CFNetServiceClientContext=l^v^?^?^?}' />
   </function>
   <function name='CFNetServiceSetProtocolSpecificInformation'>
     <arg type='^{__CFNetService=}' />
@@ -765,10 +765,10 @@
   </function>
   <function inline='true' name='CFSocketStreamSOCKSGetError'>
     <retval type='l' type64='i' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function inline='true' name='CFSocketStreamSOCKSGetErrorSubdomain'>
     <retval type='l' type64='i' />
-    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=ii}' type_modifier='o' />
+    <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
 </signatures>
