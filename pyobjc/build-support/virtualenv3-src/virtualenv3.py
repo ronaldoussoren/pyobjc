@@ -231,60 +231,34 @@ def make_exe(fn):
         logger.info('Changed mode of %s to %s', fn, oct(newmode))
 
 def install_setuptools(py_executable, unzip=False):
-    setup_fn = 'setuptools-0.6c9-py%s.egg' % sys.version[:3]
+    #setup_fn = 'setuptools-0.6c9-py%s.egg' % sys.version[:3]
     search_dirs = ['.', os.path.dirname(__file__), join(os.path.dirname(__file__), 'support-files')]
-    if os.path.splitext(os.path.dirname(__file__))[0] != 'virtualenv':
+    if os.path.splitext(os.path.dirname(__file__))[0] != 'virtualenv3':
         # Probably some boot script; just in case virtualenv is installed...
         try:
-            import virtualenv
+            import virtualenv3
         except ImportError:
             pass
         else:
-            search_dirs.append(os.path.join(os.path.dirname(virtualenv.__file__), 'support-files'))
+            search_dirs.append(os.path.join(os.path.dirname(virtualenv3.__file__), 'support-files'))
+
+    setup_fn = None
     for dir in search_dirs:
-        if os.path.exists(join(dir, setup_fn)):
-            setup_fn = join(dir, setup_fn)
-            break
-    if is_jython and os._name == 'nt':
-        # Jython's .bat sys.executable can't handle a command line
-        # argument with newlines
-        import tempfile
-        fd, ez_setup = tempfile.mkstemp('.py')
-        os.write(fd, EZ_SETUP_PY)
-        os.close(fd)
-        cmd = [py_executable, ez_setup]
-    else:
-        cmd = [py_executable, '-c', EZ_SETUP_PY]
-    if unzip:
-        cmd.append('--always-unzip')
-    env = {}
-    if logger.stdout_level_matches(logger.DEBUG):
-        cmd.append('-v')
-    if os.path.exists(setup_fn):
-        logger.info('Using existing Setuptools egg: %s', setup_fn)
-        cmd.append(setup_fn)
-        if os.environ.get('PYTHONPATH'):
-            env['PYTHONPATH'] = setup_fn + os.path.pathsep + os.environ['PYTHONPATH']
-        else:
-            env['PYTHONPATH'] = setup_fn
-    else:
-        logger.info('No Setuptools egg found; downloading')
-        cmd.extend(['--always-copy', '-U', 'setuptools'])
-    logger.start_progress('Installing setuptools...')
-    logger.indent += 2
-    cwd = None
-    if not os.access(os.getcwd(), os.W_OK):
-        cwd = '/tmp'
-    try:
-        call_subprocess(cmd, show_stdout=False,
-                        filter_stdout=filter_ez_setup,
-                        extra_env=env,
-                        cwd=cwd)
-    finally:
-        logger.indent -= 2
-        logger.end_progress()
-        if is_jython and os._name == 'nt':
-            os.remove(ez_setup)
+        for fn in os.listdir(dir):
+            if fn.startswith('distribute') and fn.endswith('-py%s.egg'%(sys.version[:3],)):
+                setup_fn = join(dir, fn)
+                break
+
+
+    path = os.environ['PATH']
+    path = os.path.dirname(py_executable) + ":" + path
+    env = { "PATH": path }
+    cmd = [ "/bin/sh", setup_fn ]
+
+    call_subprocess(cmd, show_stdout=False,
+        filter_stdout=filter_ez_setup,
+        extra_env=env,
+        )
 
 def filter_ez_setup(line):
     if not line.strip():

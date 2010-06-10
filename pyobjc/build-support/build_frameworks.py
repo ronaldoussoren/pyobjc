@@ -29,7 +29,7 @@ build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch archs
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 
-gArchs = ("32-bit", "3-way")
+gArchs = ("32-bit", "3-way", "intel")
 
 
 # Name of the Python framework and any additional arguments
@@ -52,19 +52,20 @@ gURLMap = {
 # Name of the OSX SDK used to build the framework, keyed of the architecture
 # variant.
 gSdkMap={
+    #'32-bit': '/Developer/SDKs/MacOSX10.4u.sdk',
     '32-bit': '/',
     '3-way': '/',
+    'intel': '/',
 }
 
 # Name of the OSX Deployment Target used to build the framework, keyed of 
 # the architecture variant.
 gDeploymentTargetMap={
-    #'32-bit': '10.4',
+    #'32-bit': '10.3',
     '32-bit': '10.5',
-    '3-way': '10.5',
+    '3-way':  '10.5',
+    'intel':  '10.6',
 }
-
-
 
 class ShellError (Exception):
     """ An error occurred while running a shell command """
@@ -160,17 +161,11 @@ def install_distribute(version, archs):
     lg = logging.getLogger("install_distribute")
     lg.debug("Installing distribute")
 
-    builddir = os.path.join(gBaseDir, "checkouts", version, "build")
-
-    lg.debug("Download distribute_setup script")
-    fd = urlopen("http://python-distribute.org/distribute_setup.py")
-    data = fd.read()
-    fd.close()
-
-    scriptfn = os.path.join(builddir, "distribute_setup.py")
-    fd = open(scriptfn, "wb")
-    fd.write(data)
-    fd.close()
+    distribute_dir = os.path.join(gBaseDir, "distribute-0.6.12-patched")
+    builddir = os.path.join(distribute_dir, "build")
+    if os.path.exists(builddir):
+        lg.debug("Remove existing 'build' subdir")
+        shutil.rmtree(builddir)
 
     frameworkName=gFrameworkNameTemplate.format(archs=archs, version=version)
 
@@ -180,22 +175,10 @@ def install_distribute(version, archs):
         python += '3'
 
 
-        # Script is in python2 format, translate to python3 before 
-        # trying to run it.
-        lg.debug("Convert install script to python3")
-        p = subprocess.Popen([
-            os.path.join(os.path.dirname(python), "2to3"),
-            scriptfn])
-        xit = p.wait()
-        if xit != 0:
-            lg.warning("Running 2to3 failed")
-            raise ShellError(xit)
-
-    lg.debug("Run distribute_setup script '%s' with '%s'", scriptfn, python)
+    lg.debug("Run setup script with '%s'", python)
     p = subprocess.Popen([
-        python,
-        scriptfn],
-        cwd=os.path.join(gBaseDir, "checkouts"))
+        python, "setup.py", "install"],
+        cwd=distribute_dir)
     xit = p.wait()
     if xit != 0:
         lg.warning("Installing 'distribute' failed")
