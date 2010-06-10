@@ -183,6 +183,18 @@ def run_tests(version, archs):
 
     lg = logging.getLogger("run_tests")
 
+    p = subprocess.Popen(["xcode-select", "-print-path" ],
+        cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    stdout, _ = p.communicate()
+    path = stdout.strip()
+    path = os.path.join(path, "Library", "PrivateFrameworks")
+    ib_env = {
+        'DYLD_FRAMEWORK_PATH': path,
+    }
+    del path
+    
+
     lg.info("Run tests for Python %s with archs %s", version, archs)
 
     subdir = os.path.join(gBaseDir, "virtualenvs", "{0}--{1}".format(version, archs))
@@ -281,6 +293,13 @@ def run_tests(version, archs):
         else:
             pkgroot = os.path.join(gRootDir, pkg)
 
+        if pkg == "pyobjc-framework-InterfaceBuilderKit":
+            env = os.environ.copy()
+            env.update(ib_env)
+            
+        else:
+            env = os.environ
+
         pkgbuild = os.path.join(pkgroot, "build")
         if os.path.exists(pkgbuild):
             lg.debug("Remove build directory for %s", pkg)
@@ -313,7 +332,7 @@ def run_tests(version, archs):
                 p = subprocess.Popen([
                     '/usr/bin/arch', '-' + a,
                     python, "setup.py", "test"],
-                    cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env)
                 stdout, _ = p.communicate()
 
                 with open(os.path.join(resultdir, pkg, "test-stdout-{0}.txt".format(a)), "wb") as fd:
@@ -335,7 +354,8 @@ def run_tests(version, archs):
             lg.debug("Test %s for %s", pkg, os.path.basename(subdir))
             p = subprocess.Popen([
                 python, "setup.py", "test"],
-                cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                env=env)
             stdout, _ = p.communicate()
 
             with open(os.path.join(resultdir, pkg, "test-stdout.txt"), "wb") as fd:
