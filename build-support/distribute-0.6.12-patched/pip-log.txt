@@ -1,0 +1,104 @@
+Downloading/unpacking ReportLab
+  Getting page http://pypi.python.org/simple/ReportLab
+  URLs to search for versions for ReportLab:
+  * http://pypi.python.org/simple/ReportLab/
+  Getting page http://pypi.python.org/simple/ReportLab/
+  Getting page http://www.reportlab.com/
+  Analyzing links from page http://pypi.python.org/simple/reportlab
+    Skipping link http://pypi.python.org/packages/2.4/r/reportlab/reportlab-2.3.win32-py2.4.exe#md5=a1825c170ce933bd1b9944606b523509 (from http://pypi.python.org/simple/reportlab); unknown archive format: .exe
+    Found link http://pypi.python.org/packages/source/r/reportlab/reportlab-2.3.tar.gz#md5=9a02caf296059dda1257c4ef41368b94 (from http://pypi.python.org/simple/reportlab), version: 2.3
+    Found link http://pypi.python.org/packages/source/r/reportlab/reportLab-2.3.zip#md5=7d98b26fa287a9e4be4d35d682ce64ac (from http://pypi.python.org/simple/reportlab), version: 2.3
+    Skipping link http://pypi.python.org/packages/2.5/r/reportlab/reportlab-2.3.win32-py2.5.exe#md5=b66599092beaf5749b96c024df8d4e27 (from http://pypi.python.org/simple/reportlab); unknown archive format: .exe
+    Skipping link http://pypi.python.org/packages/2.6/r/reportlab/reportlab-2.3.win32-py2.6.exe#md5=8ef0820fbb4443fe351c05f03238249c (from http://pypi.python.org/simple/reportlab); unknown archive format: .exe
+    Skipping link http://pypi.python.org/packages/2.3/r/reportlab/reportlab-2.3.win32-py2.3.exe#md5=c1ce4c77277cab24390d0b612158a1e0 (from http://pypi.python.org/simple/reportlab); unknown archive format: .exe
+    Skipping link http://www.reportlab.com/ (from http://pypi.python.org/simple/reportlab); not a file
+  Analyzing links from page http://www.reportlab.com/
+    Skipping link http://www.reportlab.com/media/base/base.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/base/jquery-ui-1.7.2.custom.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/feeds/all/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/news/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/snippets/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/casestudies/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/media/base/home.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/software/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/contact/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/accounts/login/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/hilton_hotels/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/statements_and_valuations/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/langham/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/wow/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/wikipedia/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/seychelles/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/fidelity-eforms/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/zhone-product-factsheets/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/alabama_school_report_cards/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/hp_sales_assessments/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/travel/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/finance/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/print/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/ecommerce/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/careers/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/terms/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.org (from http://www.reportlab.com/); not a file
+  Analyzing links from page http://www.reportlab.com/
+    Skipping link http://www.reportlab.com/media/base/base.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/base/jquery-ui-1.7.2.custom.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/feeds/all/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/news/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/snippets/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/feeds/casestudies/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/media/base/home.css (from http://www.reportlab.com/); unknown archive format: .css
+    Skipping link http://www.reportlab.com/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/software/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/contact/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/accounts/login/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/hilton_hotels/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/statements_and_valuations/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/langham/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/wow/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/wikipedia/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/seychelles/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/fidelity-eforms/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/zhone-product-factsheets/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/alabama_school_report_cards/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/casestudy/hp_sales_assessments/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/travel/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/finance/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/print/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/solutions/sectors/ecommerce/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/careers/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.com/about/terms/ (from http://www.reportlab.com/); not a file
+    Skipping link http://www.reportlab.org (from http://www.reportlab.com/); not a file
+  Using version 2.3 (newest of versions: 2.3, 2.3)
+  Downloading from URL http://pypi.python.org/packages/source/r/reportlab/reportlab-2.3.tar.gz#md5=9a02caf296059dda1257c4ef41368b94 (from http://pypi.python.org/simple/reportlab)
+  Running setup.py egg_info for package ReportLab
+    Traceback (most recent call last):
+      File "<string>", line 14, in <module>
+    IOError: [Errno 2] No such file or directory: '/Users/tarek/Dev/bitbucket.org/distribute-0.6/build/ReportLab/setup.py'
+    Complete output from command python setup.py egg_info:
+    Traceback (most recent call last):
+
+  File "<string>", line 14, in <module>
+
+IOError: [Errno 2] No such file or directory: '/Users/tarek/Dev/bitbucket.org/distribute-0.6/build/ReportLab/setup.py'
+
+----------------------------------------
+Command python setup.py egg_info failed with error code 1
+Exception information:
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pip-0.6-py2.6.egg/pip.py", line 482, in main
+    self.run(options, args)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pip-0.6-py2.6.egg/pip.py", line 675, in run
+    requirement_set.install_files(finder, force_root_egg_info=self.bundle)
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pip-0.6-py2.6.egg/pip.py", line 2452, in install_files
+    req_to_install.run_egg_info()
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pip-0.6-py2.6.egg/pip.py", line 1827, in run_egg_info
+    command_desc='python setup.py egg_info')
+  File "/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages/pip-0.6-py2.6.egg/pip.py", line 4347, in call_subprocess
+    % (command_desc, proc.returncode))
+InstallationError: Command python setup.py egg_info failed with error code 1

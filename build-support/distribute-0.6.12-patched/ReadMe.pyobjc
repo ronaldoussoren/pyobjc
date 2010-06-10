@@ -1,0 +1,4 @@
+Patches:
+
+* remove usage for distutils.sysconfig._config_vars
+  from setuptools.command.build_ext (python 3.2 compat)

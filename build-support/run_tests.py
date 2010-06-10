@@ -42,8 +42,8 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 gUsage = """\
 run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions,versions]
 
-archs:    32-bit,3-way   (values separated by commas)
-versions: 2.6,2.7,3.1,3.2 (values seperated by commas)
+archs:    32-bit,3-way,intel (values separated by commas)
+versions: 2.6,2.7,3.1,3.2    (values seperated by commas)
 """
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
@@ -53,9 +53,9 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 gFrameworkNameTemplate="DbgPython-{archs}"
 
 gVersions=["2.6", "2.7", "3.1", "3.2"]
-gArchs=["32-bit", "3-way"]
+gArchs=["32-bit", "3-way", "intel"]
 
-gVersions=["2.6", "2.7", ] #"3.2"]
+gVersions=["3.2", "2.6", "2.7", ] #"3.2"]
 gArchs=["3-way"]
 
 gArchMap={
@@ -93,7 +93,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?', ["--help", "--archs=", "--versions="])
+        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?', ["help", "archs=", "versions="])
     except getopt.error as msg:
         print(msg, file=sys.stderr)
         print(gUsage, file=sys.stderr)
@@ -206,6 +206,8 @@ def run_tests(version, archs):
     if version[0] == '3':
         base_python += '3'
 
+    lg.debug("Interpreter: %s", base_python)
+
     if not os.path.exists(base_python):
         lg.warning("No python installation for Python %r %r", version, archs)
         raise RuntimeError(base_python)
@@ -221,6 +223,7 @@ def run_tests(version, archs):
         p = subprocess.Popen([
             base_python,
             "-mvirtualenv3",
+            "-v",
             subdir])
 
     xit = p.wait()
@@ -233,6 +236,10 @@ def run_tests(version, archs):
 
 
     lg.debug("Install base packages")
+    if sys.version_info[0] == 3:
+        python = os.path.join(subdir, "bin", "python3")
+    else:
+        python = os.path.join(subdir, "bin", "python")
     # There are circular dependencies w.r.t. testing the Cocoa and Quartz wrappers,
     # install pyobjc-core, pyobjc-framework-Cocoa and pyobjc-framework-Quartz
     # to ensure we avoid those problems.
@@ -249,10 +256,9 @@ def run_tests(version, archs):
             lg.debug("Remove build directory for %s", pkg)
             shutil.rmtree(pkgbuild)
         
-        lg.debug("Install %s into %s", pkg, os.path.basename(subdir))
+        lg.info("Install %s into %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
-            os.path.join(subdir, "bin", "python"),
-            "setup.py", "install"],
+            python, "setup.py", "install"],
             cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         stdout, _ = p.communicate()
@@ -282,8 +288,7 @@ def run_tests(version, archs):
 
         lg.debug("Build %s for %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
-            os.path.join(subdir, "bin", "python"),
-            "setup.py", "install"],
+            python, "setup.py", "install"],
             cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         stdout, _ = p.communicate()
@@ -307,8 +312,7 @@ def run_tests(version, archs):
                 lg.info("Test %s for %s (%s)", pkg, os.path.basename(subdir), a)
                 p = subprocess.Popen([
                     '/usr/bin/arch', '-' + a,
-                    os.path.join(subdir, "bin", "python"),
-                    "setup.py", "test"],
+                    python, "setup.py", "test"],
                     cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 stdout, _ = p.communicate()
 
@@ -330,8 +334,7 @@ def run_tests(version, archs):
         else:
             lg.debug("Test %s for %s", pkg, os.path.basename(subdir))
             p = subprocess.Popen([
-                os.path.join(subdir, "bin", "python"),
-                "setup.py", "test"],
+                python, "setup.py", "test"],
                 cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             stdout, _ = p.communicate()
 
@@ -350,8 +353,7 @@ def run_tests(version, archs):
         
         lg.debug("Install %s into %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
-            os.path.join(subdir, "bin", "python"),
-            "setup.py", "install"],
+            python, "setup.py", "install"],
             cwd=pkgroot)
 
         xit = p.wait()
@@ -367,8 +369,11 @@ def parse_tests(inputfile):
         'test_fail':  0,
         'test_error': 0,
     }
+    last_line = ''
     with open(inputfile) as stream:
         for ln in stream:
+            if not ln.startswith('['):
+                last_line = ln
             ln = ln.rstrip()
             if ln.endswith('... ok'):
                 result['test_pass'] += 1
@@ -376,6 +381,20 @@ def parse_tests(inputfile):
                 result['test_fail'] += 1
             elif ln.endswith('... ERROR'):
                 result['test_error'] += 1
+
+            elif 'Fatal Python error' in ln:
+                # Interpreter aborted itself, 
+                # treat this as a test error
+                result['test_error'] += 1
+
+
+    if not last_line.split()[0].isupper():
+        # The last line of the output should
+        # be the unittest status line, which
+        # starts with an uppercase word. 
+        # Not having it is an error (and tends
+        # to be caused by interpreter crashes)
+        result['test_error'] += 1
 
     result['class_pass'] = ''
     result['class_fail'] = ''
@@ -401,8 +420,30 @@ def parse_build(inputfile):
     }
     with open(inputfile) as stream:
         for ln in stream:
+            if 'warning: no directories found matching' in ln:
+                # Completely harmless warning
+                continue
+
+
             if 'error:' in ln:
                 result['build_errors'] += 1
+
+            elif ln.startswith('../../libxml2-src/') or \
+                    ln.startswith('libffi-src'):
+                # Ignore warnings in 3th-party libraries (pyobjc-core)
+                continue
+
+
+            elif 'is deprecated' in ln and 'objc/Protocol.h' in ln:
+                # Pyobjc-core uses deprecated access methods for protocols
+                # in 32-bit mode. 
+                continue
+
+            elif 'is deprecated' in ln:
+                # Ignore all deprecation errors for now, framework wrappers
+                # also trigger these when they contain manual wrappers for
+                # deprecated APIs.
+                continue
 
             elif 'warning:' in ln:
                 result['build_warnings'] += 1
