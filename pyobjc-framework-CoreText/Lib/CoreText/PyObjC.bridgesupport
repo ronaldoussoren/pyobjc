@@ -16,7 +16,15 @@
   <cftype gettypeid_func='CTRunGetTypeID' name='CTRunRef' type='^{__CTRun=}' type64='^{__CTRun=}' />
   <cftype gettypeid_func='CTTextTabGetTypeID' name='CTTextTabRef' type='^{__CTTextTab=}' type64='^{__CTTextTab=}' />
   <cftype gettypeid_func='CTTypesetterGetTypeID' name='CTTypesetterRef' type='^{__CTTypesetter=}' type64='^{__CTTypesetter=}' />
+  <constant name='kCTStrokeWidthAttributeName' type='^{__CFString=}' />
+  <constant name='kCTTypesetterOptionForcedEmbeddingLevel' type='^{__CFString=}' />
+  <constant name='kCTStrokeColorAttributeName' type='^{__CFString=}' />
+  <constant name='kCTForegroundColorFromContextAttributeName' type='^{__CFString=}' />
   <constant name='kCTFontAttributeName' type='^{__CFString=}' />
+  <constant name='kCTSuperscriptAttributeName' type='^{__CFString=}' />
+  <constant name='kCTUnderlineColorAttributeName' type='^{__CFString=}' />
+  <constant name='kCTCharacterShapeAttributeName' type='^{__CFString=}' />
+  <constant name='kCTFontURLAttribute' type='^{__CFString=}' />
   <constant name='kCTFontURLAttribute' type='^{__CFString=}' />
   <constant name='kCTFontFormatAttribute' type='^{__CFString=}' />
   <constant name='kCTFontBaselineAdjustAttribute' type='^{__CFString=}' />
@@ -777,7 +785,7 @@
   </function>
   <function name='CTParagraphStyleCreate'>
     <retval already_cfretained='true' type='^{__CTParagraphStyle=}' />
-    <arg type='^{CTParagraphStyleSetting=II^v}' type64='^{CTParagraphStyleSetting=II^v}' type_modifier='n' />
+    <arg type='^{CTParagraphStyleSetting=II^v}' type64='^{CTParagraphStyleSetting=IQ^v}' type_modifier='n' c_array_length_in_arg='1' />
     <arg type='l' type64='l' />
   </function>
   <function name='CTParagraphStyleCreateCopy'>

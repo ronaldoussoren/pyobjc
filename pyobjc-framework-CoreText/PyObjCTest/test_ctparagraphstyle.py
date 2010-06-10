@@ -100,7 +100,7 @@ class TestCTParagraphStyle (TestCase):
                 CTParagraphStyleSetting(
                     spec=kCTParagraphStyleSpecifierBaseWritingDirection,
                     valueSize=sizeof_CTWritingDirection,
-                    value=chr(kCTParagraphStyleSpecifierTailIndent)),
+                    value=chr(kCTParagraphStyleSpecifierTailIndent).encode('latin1')),
                 CTParagraphStyleSetting(
                     spec=kCTParagraphStyleSpecifierFirstLineHeadIndent,
                     valueSize=sizeof_CGFloat,
