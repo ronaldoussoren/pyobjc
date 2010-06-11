@@ -55,7 +55,7 @@ gFrameworkNameTemplate="DbgPython-{archs}"
 gVersions=["2.6", "2.7", "3.1", "3.2"]
 gArchs=["32-bit", "3-way", "intel"]
 
-gVersions=["3.2", "2.6", "2.7", ] #"3.2"]
+gVersions=["3.2", "2.7"]
 gArchs=["3-way"]
 
 gArchMap={
@@ -139,7 +139,6 @@ def main():
 
     gen_summary(versions, archs)
 
-
 def detect_frameworks():
     """
     Returns a list of framework wrappers in the order they should
@@ -184,11 +183,11 @@ def run_tests(version, archs):
     lg = logging.getLogger("run_tests")
 
     p = subprocess.Popen(["xcode-select", "-print-path" ],
-        cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     stdout, _ = p.communicate()
     path = stdout.strip()
-    path = os.path.join(path, "Library", "PrivateFrameworks")
+    path = os.path.join(path.decode('UTF-8'), "Library", "PrivateFrameworks")
     ib_env = {
         'DYLD_FRAMEWORK_PATH': path,
     }
@@ -235,7 +234,6 @@ def run_tests(version, archs):
         p = subprocess.Popen([
             base_python,
             "-mvirtualenv3",
-            "-v",
             subdir])
 
     xit = p.wait()
