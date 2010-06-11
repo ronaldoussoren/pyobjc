@@ -2,10 +2,10 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
-import unittest
+from PyObjCTools.TestSupport import *
 import WebKit
 
-class TestWebKit (unittest.TestCase):
+class TestWebKit (TestCase):
     def testClasses(self):
         self.assert_( hasattr(WebKit, 'WebResource') )
         self.assert_( isinstance(WebKit.WebResource, objc.objc_class) )
@@ -30,6 +30,7 @@ class TestWebKit (unittest.TestCase):
         self.assert_( hasattr(WebKit, 'DOMRangeException') )
         self.assert_( isinstance(WebKit.DOMRangeException, unicode) )
 
+    @onlyOn32Bit
     def testFunctions(self):
         self.assert_( hasattr(WebKit, 'WebConvertNSImageToCGImageRef') )
         self.assert_(isinstance(WebKit.WebConvertNSImageToCGImageRef, objc.function) )
@@ -37,5 +38,4 @@ class TestWebKit (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
-
+    main()

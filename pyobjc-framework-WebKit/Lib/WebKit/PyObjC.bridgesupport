@@ -785,7 +785,7 @@
     <method selector='webView:shouldPerformAction:fromSender:' type='B@:@:@' />
     <method selector='webView:validateUserInterfaceItem:defaultValidation:' type='B@:@@B' />
     <method selector='webView:willPerformDragDestinationAction:forDraggingInfo:' type='v@:@i@' />
-    <method selector='webView:willPerformDragSourceAction:fromPoint:withPasteboard:' type='v@:@i{_NSPoint=ff}@' type64='v@:@i{CGPoint=dd}@' />
+    <method selector='webView:willPerformDragSourceAction:fromPoint:withPasteboard:' type='v@:@i{_NSPoint=ff}@' type64='v@:@q{CGPoint=dd}@' />
     <method selector='webViewAreToolbarsVisible:' type='B@:@' />
     <method selector='webViewClose:' type='v@:@' />
     <method selector='webViewContentRect:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@' />
