@@ -491,8 +491,6 @@ mod_SCNetworkReachabilitySetCallback(
 }
 
 
-PyDoc_STRVAR(mod_doc, "");
-
 static PyMethodDef mod_methods[] = {
 	{ 
 		"SCDynamicStoreCreate", 
