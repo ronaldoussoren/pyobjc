@@ -102,21 +102,21 @@
   <function name='SKIndexCopyDocumentRefsForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^q' type_modifier='n' />
     <arg c_array_length_in_arg='1' type='^@' type64='^@' type_modifier='o' />
   </function>
   <function name='SKIndexCopyDocumentURLsForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^q' type_modifier='n' />
     <arg already_retained='true' c_array_length_in_arg='1' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='SKIndexCopyInfoForDocumentIDs'>
     <arg type='^{__SKIndex=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='n' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^q' type_modifier='n' />
     <arg already_retained='true' c_array_length_in_arg='1' type='^^{__CFString}' type_modifier='o' />
-    <arg c_array_length_in_arg='1' type='^i' type64='^i' type_modifier='o' />
+    <arg c_array_length_in_arg='1' type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='SKIndexCopyTermIDArrayForDocumentID'>
     <retval already_cfretained='true' type='^{__CFArray=}' />
@@ -272,10 +272,10 @@
     <retval type='B' />
     <arg type='^{__SKSearch=}' />
     <arg type='l' type64='l' />
-    <arg c_array_length_in_arg='1,5' type='^i' type64='^i' type_modifier='o' />
+    <arg c_array_length_in_arg='1,5' type='^i' type64='^q' type_modifier='o' />
     <arg c_array_length_in_arg='1,5' type='^f' type_modifier='o' />
     <arg type='d' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='SKSearchGetTypeID'>
     <retval type='L' type64='Q' />
@@ -330,7 +330,7 @@
   <function comment='deprecated' name='SKSearchResultsGetInfoInRange'>
     <retval type='l' type64='q' />
     <arg type='^{__SKSearchResults=}' />
-    <arg type='{_CFRange=ii}' type64='{_CFRange=ii}' />
+    <arg type='{_CFRange=ii}' type64='{_CFRange=qq}' />
     <arg c_array_length_in_arg='1' c_array_length_in_result='true' type='^@' type64='^@' type_modifier='o' />
     <arg c_array_length_in_arg='1' c_array_length_in_result='true' type='^^{__SKIndex}' type_modifier='o' />
     <arg c_array_length_in_arg='1' c_array_length_in_result='true' type='^f' type_modifier='o' />
@@ -370,8 +370,8 @@
     <retval type='l' type64='q' />
     <arg type='^{__SKSummary=}' />
     <arg type='l' type64='l' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='SKSummaryGetSentenceCount'>
     <retval type='l' type64='q' />
@@ -381,9 +381,9 @@
     <retval type='l' type64='q' />
     <arg type='^{__SKSummary=}' />
     <arg type='l' type64='l' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
-    <arg type='^i' type64='^i' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
+    <arg type='^i' type64='^q' type_modifier='o' />
   </function>
   <function name='SKSummaryGetTypeID'>
     <retval type='L' type64='Q' />

@@ -16,6 +16,7 @@ __bundle__ = _objc.initFrameworkWrapper("SearchKit",
 
 try:
     SKIndexGetTypeID
+    SKDocumentRef
 
 except NameError:
     # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
@@ -49,7 +50,7 @@ except NameError:
                 # a SKSearch object
                 SKSearchCreate(rI, "q", 0)
                 searchref = objc.registerCFSignature(
-                        "SKSearchRef", "^{__SKSearch=}", SKSearchGetTypeID())
+                        "SKSearchRef", b"^{__SKSearch=}", SKSearchGetTypeID())
             else:
                 searchref = SKSearchRef
 
@@ -79,27 +80,27 @@ except NameError:
             return summaryID
 
         indexType = objc.registerCFSignature(
-                "SKIndexRef", "^{__SKIndex=}", indexID)
+                "SKIndexRef", b"^{__SKIndex=}", indexID)
         iterType = objc.registerCFSignature(
-                "SKIndexDocumentIteratorRef", "^{__SKIndexDocumentIterator=}", indexID)
+                "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", indexID)
         groupType = objc.registerCFSignature(
-                "SKSearchGroupRef", "^{__SKSearchGroup=}", groupID)
+                "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID)
         resultType = objc.registerCFSignature(
-                "SKSearchResultsRef", "^{__SKSearchResults=}", resultID)
+                "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID)
         summaryType = objc.registerCFSignature(
-                "SKSummaryRef", "^{__SKSummary=}", summaryID)
+                "SKSummaryRef", b"^{__SKSummary=}", summaryID)
 
         # For some reason SKDocumentGetTypeID doesn't return the right value
         # when the framework loader calls it the first time around,
         # by this time the framework is fully initialized and we get
         # the correct result.
         SKDocumentRef = objc.registerCFSignature(
-                "SKDocumentRef", "@", SKDocumentGetTypeID())
+                "SKDocumentRef", b"@", SKDocumentGetTypeID())
 
 
         return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType, 
                 SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
-                SKSummaryGetTypeID, summaryType,
+                SKSummaryGetTypeID, summaryType, iterType,
                 SKDocumentRef, searchref)
 
     (SKIndexGetTypeID, SKIndexRef, 
@@ -107,7 +108,10 @@ except NameError:
         SKSearchGroupGetTypeID, SKSearchGroupRef,
         SKSearchResultsGetTypeID, SKSearchResultsRef,
         SKSummaryGetTypeID, SKSummaryRef,
+        SKIndexDocumentIteratorRef,
         SKDocumentRef, SKSearchRef,
     ) = workaround()
+
+    print "performed workaround"
 
     del workaround
