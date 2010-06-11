@@ -76,6 +76,7 @@ class TestSCPreferences (TestCase):
 
 
 
+    @expectedFailure
     def testSecurityIntegreation(self):
         self.fail("Need Security framework wrappers")
         #aref = SFAuthorization.authorization().authorizationRef ()

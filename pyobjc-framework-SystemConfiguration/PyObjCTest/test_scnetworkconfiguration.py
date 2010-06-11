@@ -188,7 +188,7 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(iface, SCVLANInterfaceRef))
 
         r = SCVLANInterfaceGetPhysicalInterface(iface)
-        self.assertTrue(r is a[0])
+        self.assertEqual(r, a[0])
 
         t = SCVLANInterfaceGetTag(iface)
         self.assertEquals(t, 99)
@@ -197,13 +197,13 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(t is None or isinstance(t, CFDictionaryRef))
 
         r = SCVLANInterfaceSetPhysicalInterfaceAndTag(iface, a[0], 42)
-        self.assertTrue(r is True)
+        self.assertIs(r, True)
 
         r = SCVLANInterfaceSetLocalizedDisplayName(iface, "octest")
-        self.assertTrue(r is True)
+        self.assertIs(r, True)
 
         r = SCVLANInterfaceSetOptions(iface, {"name": "foo"})
-        self.assertTrue(r is True)
+        self.assertIs(r, True)
 
         t = SCVLANInterfaceGetOptions(iface)
         self.assertTrue(isinstance(t, CFDictionaryRef))
