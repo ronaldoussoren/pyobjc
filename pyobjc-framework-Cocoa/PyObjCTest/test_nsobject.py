@@ -39,7 +39,7 @@ class TestNSObjectFunctions (TestCase):
         self.assertEqual(v, cnt+1)
 
         v = NSDecrementExtraRefCountWasZero(o)
-        self.assertIsObject(v, False)
+        self.assertIs(v, False)
         v = NSExtraRefCount(o)
         self.assertEqual(v, cnt)
 

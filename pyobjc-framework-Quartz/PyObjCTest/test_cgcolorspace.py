@@ -6,7 +6,7 @@ import sys
 
 if sys.version_info[0] != 2:
     def buffer(value):
-        if isintance(value, bytes):
+        if isinstance(value, bytes):
             return value
         return value.encode('latin1')
 

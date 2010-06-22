@@ -62,7 +62,7 @@ class TestNSNumber( TestCase ):
     def testUnsignedIssues(self):
         # NSNumber stores unsigned numbers as signed numbers
         # This is a bug in Cocoa... (RADAR #4007594), fixed in 10.5
-        if sdkForPython() < (10, 5):
+        if sdkForPython() is not None and sdkForPython() < (10, 5):
             self.assertEqual(NSNumber.numberWithUnsignedInt_(2**31),
                 -(2**31))
         else:
@@ -200,7 +200,6 @@ if objc.platform == 'MACOSX':
 
 class TestDecimalNumber (TestCase):
     def testProxy (self):
-        self.fail("fixme")
         one = NSDecimalNumber.decimalNumberWithString_(u"1.00")
         self.assert_(isinstance(one, NSDecimalNumber))
 

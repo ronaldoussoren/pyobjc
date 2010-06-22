@@ -12,11 +12,11 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-XgridFoundation',
-    version='2.2',
+    version="2.3b1",
     description = "Wrappers for the framework XgridFoundation on Mac OS X",
     packages = [ "XgridFoundation" ],
     install_requires = [ 
-        'pyobjc-core>=2.2',
-        'pyobjc-framework-Cocoa>=2.2',
+        'pyobjc-core>=2.3b1',
+        'pyobjc-framework-Cocoa>=2.3b1',
     ],
 )

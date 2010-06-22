@@ -161,7 +161,7 @@
     <method selector='imageSubtitle' type='@@:' />
     <method selector='imageTitle' type='@@:' />
     <method selector='imageUID' type='@@:' />
-    <method selector='imageVersion' type='I@:' type64='(&apos;Q@:&apos;,)' />
+    <method selector='imageVersion' type='I@:' type64='Q@:' />
     <method selector='isSelectable' type='B@:' />
   </informal_protocol>
   <class name='IKDeviceBrowserView'>
@@ -343,11 +343,11 @@
   </class>
   <class name='IKImagePicker'>
     <method selector='beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' sel_of_type='v@:@I^v'/>
+      <arg index='2' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v' />
       <arg index='3' type='^v' />
     </method>
     <method selector='beginImagePickerWithDelegate:didEndSelector:contextInfo:'>
-      <arg index='1' type=':' sel_of_type='v@:@I^v'/>
+      <arg index='1' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v' />
       <arg index='2' type='^v' />
     </method>
   </class>

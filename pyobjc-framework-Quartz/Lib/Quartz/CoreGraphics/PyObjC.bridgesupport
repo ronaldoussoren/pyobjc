@@ -15,12 +15,9 @@
   <struct name='CGEventTapInformation' type='{CGEventTapInformation="eventTapID"I"tapPoint"I"options"I"eventsOfInterest"Q"tappingProcess"i"processBeingTapped"i"enabled"B"minUsecLatency"f"avgUsecLatency"f"maxUsecLatency"f}' type64='{CGEventTapInformation="eventTapID"I"tapPoint"I"options"I"eventsOfInterest"Q"tappingProcess"i"processBeingTapped"i"enabled"B"minUsecLatency"f"avgUsecLatency"f"maxUsecLatency"f}' />
   <struct name='CGFunctionCallbacks' type='{CGFunctionCallbacks="version"I"evaluate"^?"releaseInfo"^?}' type64='{CGFunctionCallbacks="version"I"evaluate"^?"releaseInfo"^?}' />
   <struct name='CGPSConverterCallbacks' type='{CGPSConverterCallbacks="version"I"beginDocument"^?"endDocument"^?"beginPage"^?"endPage"^?"noteProgress"^?"noteMessage"^?"releaseInfo"^?}' type64='{CGPSConverterCallbacks="version"I"beginDocument"^?"endDocument"^?"beginPage"^?"endPage"^?"noteProgress"^?"noteMessage"^?"releaseInfo"^?}' />
-  <struct name='CGPathElement' type='{CGPathElement="type"i"points"^{CGPoint}}' type64='{CGPathElement="type"i"points"^{CGPoint}}' />
+  <struct name='CGPathElement' type='{CGPathElement="type"i"points"^{_NSPoint}}' type64='{CGPathElement="type"i"points"^{_NSPoint}}' />
   <struct name='CGPatternCallbacks' type='{CGPatternCallbacks="version"I"drawPattern"^?"releaseInfo"^?}' type64='{CGPatternCallbacks="version"I"drawPattern"^?"releaseInfo"^?}' />
-  <struct name='CGPoint' type='{CGPoint="x"f"y"f}' type64='{CGPoint="x"d"y"d}' />
-  <struct name='CGRect' type='{CGRect="origin"{CGPoint="x"f"y"f}"size"{CGSize="width"f"height"f}}' type64='{CGRect="origin"{CGPoint="x"d"y"d}"size"{CGSize="width"d"height"d}}' />
   <struct name='CGScreenUpdateMoveDelta' type='{_CGScreenUpdateMoveDelta="dX"i"dY"i}' type64='{_CGScreenUpdateMoveDelta="dX"i"dY"i}' />
-  <struct name='CGSize' type='{CGSize="width"f"height"f}' type64='{CGSize="width"d"height"d}' />
   <opaque name='CGDirectPaletteRef' type='^{_CGDirectPaletteRef=}' type64='^{_CGDirectPaletteRef=}' />
   <opaque name='CGDisplayConfigRef' type='^{_CGDisplayConfigRef=}' type64='^{_CGDisplayConfigRef=}' />
   <opaque name='CGEventTapProxy' type='^{__CGEventTapProxy=}' type64='^{__CGEventTapProxy=}' />
@@ -53,11 +50,11 @@
   <cftype gettypeid_func='CGPatternGetTypeID' name='CGPatternRef' type='^{CGPattern=}' type64='^{CGPattern=}' />
   <cftype gettypeid_func='CGShadingGetTypeID' name='CGShadingRef' type='^{CGShading=}' type64='^{CGShading=}' />
   <constant name='CGAffineTransformIdentity' type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-  <constant name='CGPointZero' type='{CGPoint=ff}' type64='{CGPoint=dd}' />
-  <constant name='CGRectInfinite' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-  <constant name='CGRectNull' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-  <constant name='CGRectZero' type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-  <constant name='CGSizeZero' type='{CGSize=ff}' type64='{CGSize=dd}' />
+  <constant name='CGPointZero' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+  <constant name='CGRectInfinite' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+  <constant name='CGRectNull' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+  <constant name='CGRectZero' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+  <constant name='CGSizeZero' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   <constant name='kCGColorBlack' type='^{__CFString=}' />
   <constant name='kCGColorClear' type='^{__CFString=}' />
   <constant name='kCGColorSpaceGenericGrayGamma2_2' type='^{__CFString=}' />
@@ -487,7 +484,7 @@
   <function name='CGDisplayCreateImageForRect'>
     <retval already_cfretained='true' type='^{CGImage=}' />
     <arg type='I' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGDisplayModeRelease'>
 	  <retval type='v' />
@@ -534,61 +531,61 @@
   </function>
   <function name='CGAffineTransformConcat'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGAffineTransformEqualToTransform'>
     <retval type='Z' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGAffineTransformInvert'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGAffineTransformIsIdentity'>
     <retval type='Z' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGAffineTransformMake'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformMakeRotation'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformMakeScale'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformMakeTranslation'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformRotate'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='f' type64='f' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformScale'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAffineTransformTranslate'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGAssociateMouseAndMouseCursorPosition'>
     <retval type='i' />
@@ -671,27 +668,27 @@
   <function name='CGColorCreateCopyWithAlpha'>
     <retval already_cfretained='true' type='^{CGColor=}' />
     <arg type='^{CGColor=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGColorCreateGenericCMYK'>
     <retval already_cfretained='true' type='^{CGColor=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGColorCreateGenericGray'>
     <retval already_cfretained='true' type='^{CGColor=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGColorCreateGenericRGB'>
     <retval already_cfretained='true' type='^{CGColor=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGColorCreateWithPattern'>
     <retval already_cfretained='true' type='^{CGColor=}' />
@@ -755,16 +752,16 @@
   </function>
   <function name='CGColorSpaceCreateCalibratedGray'>
     <retval already_cfretained='true' type='^{CGColorSpace=}' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='f' type64='f' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGColorSpaceCreateCalibratedRGB'>
     <retval already_cfretained='true' type='^{CGColorSpace=}' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[9f]' type64='[9f]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[9f]' type64='[9d]' />
   </function>
   <function name='CGColorSpaceCreateDeviceCMYK'>
     <retval already_cfretained='true' type='^{CGColorSpace=}' />
@@ -790,9 +787,9 @@
   </function>
   <function name='CGColorSpaceCreateLab'>
     <retval already_cfretained='true' type='^{CGColorSpace=}' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[3f]' type64='[3f]' />
-    <arg type='[4f]' type64='[4f]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[3f]' type64='[3d]' />
+    <arg type='[4f]' type64='[4d]' />
   </function>
   <function name='CGColorSpaceCreatePattern'>
     <retval already_cfretained='true' type='^{CGColorSpace=}' />
@@ -885,42 +882,42 @@
   </function>
   <function name='CGContextAddArc'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
     <arg type='i' />
   </function>
   <function name='CGContextAddArcToPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextAddCurveToPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextAddEllipseInRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextAddLineToPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextAddLines'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='2' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextAddPath'>
@@ -929,23 +926,23 @@
   </function>
   <function name='CGContextAddQuadCurveToPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextAddRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextAddRects'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextBeginPage'>
     <arg type='^{CGContext=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
   </function>
   <function name='CGContextBeginPath'>
     <arg type='^{CGContext=}' />
@@ -956,28 +953,28 @@
   </function>
   <function name='CGContextBeginTransparencyLayerWithRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGContextClearRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextClip'>
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextClipToMask'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGImage=}' />
   </function>
   <function name='CGContextClipToRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextClipToRects'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextClosePath'>
@@ -985,63 +982,63 @@
   </function>
   <function name='CGContextConcatCTM'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGContextConvertPointToDeviceSpace'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGContextConvertPointToUserSpace'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGContextConvertRectToDeviceSpace'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextConvertRectToUserSpace'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextConvertSizeToDeviceSpace'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGContextConvertSizeToUserSpace'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGContextDrawImage'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGImage=}' />
   </function>
   <function name='CGContextDrawLayerAtPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGLayer=}' />
   </function>
   <function name='CGContextDrawLayerInRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGLayer=}' />
   </function>
   <function name='CGContextDrawLinearGradient'>
     <arg type='^{CGContext=}' />
     <arg type='^{CGGradient=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='I' />
   </function>
   <function name='CGContextDrawPDFDocument'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
@@ -1056,10 +1053,10 @@
   <function name='CGContextDrawRadialGradient'>
     <arg type='^{CGContext=}' />
     <arg type='^{CGGradient=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='f' type64='f' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='f' type64='d' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='f' type64='d' />
     <arg type='I' />
   </function>
   <function name='CGContextSetShouldSubpixelPositionFonts'>
@@ -1080,7 +1077,7 @@
   </function>
   <function name='CGContextDrawTiledImage'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGImage=}' />
   </function>
   <function name='CGContextEOClip'>
@@ -1097,18 +1094,18 @@
   </function>
   <function name='CGContextFillEllipseInRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextFillPath'>
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextFillRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextFillRects'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextFlush'>
@@ -1119,7 +1116,7 @@
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetClipBoundingBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetInterpolationQuality'>
@@ -1127,11 +1124,11 @@
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetPathBoundingBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetPathCurrentPoint'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetTextMatrix'>
@@ -1139,7 +1136,7 @@
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetTextPosition'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextGetTypeID'>
@@ -1155,13 +1152,13 @@
   </function>
   <function name='CGContextMoveToPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextPathContainsPoint'>
     <retval type='Z' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='i' />
   </function>
   <function name='CGContextRelease'>
@@ -1179,20 +1176,20 @@
   </function>
   <function name='CGContextRotateCTM'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSaveGState'>
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextScaleCTM'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSelectFont'>
     <arg type='^{CGContext=}' />
     <arg numeric='false' type='*' type64='*' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
     <arg type='i' />
   </function>
   <function name='CGContextSetAllowsAntialiasing'>
@@ -1201,7 +1198,7 @@
   </function>
   <function name='CGContextSetAlpha'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetBlendMode'>
     <arg type='^{CGContext=}' />
@@ -1209,23 +1206,23 @@
   </function>
   <function name='CGContextSetCMYKFillColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetCMYKStrokeColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetCharacterSpacing'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetFillColor'>
     <arg type='^{CGContext=}' />
@@ -1246,7 +1243,7 @@
   </function>
   <function name='CGContextSetFlatness'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetFont'>
     <arg type='^{CGContext=}' />
@@ -1254,17 +1251,17 @@
   </function>
   <function name='CGContextSetFontSize'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetGrayFillColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetGrayStrokeColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetInterpolationQuality'>
     <arg type='^{CGContext=}' />
@@ -1276,7 +1273,7 @@
   </function>
   <function name='CGContextSetLineDash'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
     <arg c_array_length_in_arg='3' type='^f' type64='^f' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
@@ -1286,29 +1283,29 @@
   </function>
   <function name='CGContextSetLineWidth'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetMiterLimit'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetPatternPhase'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGContextSetRGBFillColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetRGBStrokeColor'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetRenderingIntent'>
     <arg type='^{CGContext=}' />
@@ -1316,13 +1313,13 @@
   </function>
   <function name='CGContextSetShadow'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSetShadowWithColor'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='f' type64='d' />
     <arg type='^{CGColor=}' />
   </function>
   <function name='CGContextSetShouldAntialias'>
@@ -1356,12 +1353,12 @@
   </function>
   <function name='CGContextSetTextMatrix'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGContextSetTextPosition'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextShowGlyphs'>
     <arg type='^{CGContext=}' />
@@ -1370,21 +1367,21 @@
   </function>
   <function name='CGContextShowGlyphsAtPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
     <arg c_array_length_in_arg='4' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextShowGlyphsAtPositions'>
     <arg type='^{CGContext=}' />
     <arg c_array_length_in_arg='3' type='^S' />
-    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' />
+    <arg c_array_length_in_arg='3' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextShowGlyphsWithAdvances'>
     <arg type='^{CGContext=}' />
     <arg c_array_length_in_arg='3' type='^S' type_modifier='n' />
-    <arg c_array_length_in_arg='3' type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{_NSSize=ff}' type64='^{_NSSize=dd}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextShowText'>
@@ -1394,18 +1391,18 @@
   </function>
   <function name='CGContextShowTextAtPoint'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
     <arg numeric='false' type='*' type64='*' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextStrokeEllipseInRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextStrokeLineSegments'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='2' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextStrokePath'>
@@ -1413,20 +1410,20 @@
   </function>
   <function name='CGContextStrokeRect'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGContextStrokeRectWithWidth'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGContextSynchronize'>
     <arg type='^{CGContext=}' />
   </function>
   <function name='CGContextTranslateCTM'>
     <arg type='^{CGContext=}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGCursorIsDrawnInFramebuffer'>
     <retval type='i' />
@@ -1566,7 +1563,7 @@
     <arg type='I' />
   </function>
   <function name='CGDisplayBounds'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='I' />
   </function>
   <function name='CGDisplayBytesPerRow'>
@@ -1679,7 +1676,7 @@
   <function name='CGDisplayMoveCursorToPoint'>
     <retval type='i' />
     <arg type='I' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGDisplayPixelsHigh'>
     <retval type='L' type64='Q' />
@@ -1717,7 +1714,7 @@
     <arg type='I' />
   </function>
   <function name='CGDisplayScreenSize'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='I' />
   </function>
   <function name='CGDisplaySerialNumber'>
@@ -1795,7 +1792,7 @@
     <retval already_cfretained='true' type='^{__CGEvent=}' />
     <arg type='^{__CGEventSource=}' />
     <arg type='I' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='I' />
   </function>
   <function name='CGEventCreateScrollWheelEvent' variadic='true' c_array_length_in_arg='2'>
@@ -1824,7 +1821,7 @@
     <arg type='I' />
   </function>
   <function name='CGEventGetLocation'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{__CGEvent=}' />
   </function>
   <function name='CGEventGetTimestamp'>
@@ -1839,7 +1836,7 @@
     <retval type='L' type64='Q' />
   </function>
   <function name='CGEventGetUnflippedLocation'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{__CGEvent=}' />
   </function>
   <function name='CGEventKeyboardGetUnicodeString'>
@@ -1877,7 +1874,7 @@
   </function>
   <function name='CGEventSetLocation'>
     <arg type='^{__CGEvent=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGEventSetSource'>
     <arg type='^{__CGEvent=}' />
@@ -2077,7 +2074,7 @@
     <arg type='^{CGFont=}' />
   </function>
   <function name='CGFontGetFontBBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGFont=}' />
   </function>
   <function name='CGFontGetGlyphAdvances'>
@@ -2092,7 +2089,7 @@
     <arg type='^{CGFont=}' />
     <arg c_array_length_in_arg='2' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
-    <arg c_array_length_in_arg='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
+    <arg c_array_length_in_arg='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
   </function>
   <function name='CGFontGetGlyphWithGlyphName'>
     <retval type='S' />
@@ -2155,12 +2152,12 @@
   <function name='CGGLContextCreate'>
     <retval already_cfretained='true' type='^{CGContext=}' />
     <arg type='^v' type64='^v' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='^{CGColorSpace=}' />
   </function>
   <function name='CGGLContextUpdateViewportSize'>
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGGetActiveDisplayList'>
     <retval type='i' />
@@ -2199,14 +2196,14 @@
   </function>
   <function name='CGGetDisplaysWithPoint'>
     <retval type='i' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='I' />
     <arg c_array_length_in_arg='1,3' type='^I' type_modifier='o' />
     <arg type='^I' type_modifier='o' />
   </function>
   <function name='CGGetDisplaysWithRect'>
     <retval type='i' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='I' />
     <arg c_array_length_in_arg='1,3' type='^I' type_modifier='o' />
     <arg type='^I' type_modifier='o' />
@@ -2276,7 +2273,7 @@
   <function name='CGImageCreateWithImageInRect'>
     <retval already_cfretained='true' type='^{CGImage=}' />
     <arg type='^{CGImage=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGImageCreateWithJPEGDataProvider'>
     <retval already_cfretained='true' type='^{CGImage=}' />
@@ -2382,7 +2379,7 @@
   <function name='CGLayerCreateWithContext'>
     <retval already_cfretained='true' type='^{CGLayer=}' />
     <arg type='^{CGContext=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGLayerGetContext'>
@@ -2390,7 +2387,7 @@
     <arg type='^{CGLayer=}' />
   </function>
   <function name='CGLayerGetSize'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='^{CGLayer=}' />
   </function>
   <function name='CGLayerGetTypeID'>
@@ -2503,7 +2500,7 @@
   <function name='CGPDFContextAddDestinationAtPoint'>
     <arg type='^{CGContext=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGPDFContextBeginPage'>
     <arg type='^{CGContext=}' />
@@ -2515,13 +2512,13 @@
   <function name='CGPDFContextCreate'>
     <retval already_cfretained='true' type='^{CGContext=}' />
     <arg type='^{CGDataConsumer=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGPDFContextCreateWithURL'>
     <retval already_cfretained='true' type='^{CGContext=}' />
     <arg type='^{__CFURL=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='^{__CFDictionary=}' />
   </function>
   <function name='CGPDFContextEndPage'>
@@ -2530,12 +2527,12 @@
   <function name='CGPDFContextSetDestinationForRect'>
     <arg type='^{CGContext=}' />
     <arg type='^{__CFString=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGPDFContextSetURLForRect'>
     <arg type='^{CGContext=}' />
     <arg type='^{__CFURL=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function comment='manual wrapper' name='CGPDFDictionaryApplyFunction'>
     <arg type='^{CGPDFDictionary=}' />
@@ -2617,12 +2614,12 @@
     <arg type='^{__CFURL=}' />
   </function>
   <function name='CGPDFDocumentGetArtBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
   <function name='CGPDFDocumentGetBleedBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
@@ -2631,7 +2628,7 @@
     <arg type='^{CGPDFDocument=}' />
   </function>
   <function name='CGPDFDocumentGetCropBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
@@ -2644,7 +2641,7 @@
     <arg type='^{CGPDFDocument=}' />
   </function>
   <function name='CGPDFDocumentGetMediaBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
@@ -2663,7 +2660,7 @@
     <arg type='i' />
   </function>
   <function name='CGPDFDocumentGetTrimBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFDocument=}' />
     <arg type='i' />
   </function>
@@ -2721,7 +2718,7 @@
     <arg function_pointer='true' type='^?' type64='^?' />
   </function>
   <function name='CGPDFPageGetBoxRect'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPDFPage=}' />
     <arg type='i' />
   </function>
@@ -2737,7 +2734,7 @@
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
     <arg type='^{CGPDFPage=}' />
     <arg type='i' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='i' />
     <arg type='Z' />
   </function>
@@ -2934,72 +2931,72 @@
   </function>
   <function name='CGPathAddArc'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
     <arg type='Z' />
   </function>
   <function name='CGPathAddArcToPoint'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGPathAddCurveToPoint'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGPathAddEllipseInRect'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGPathAddLineToPoint'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGPathAddLines'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=ff}' type_modifier='n' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGPathAddPath'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
     <arg type='^{CGPath=}' />
   </function>
   <function name='CGPathAddQuadCurveToPoint'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGPathAddRect'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGPathAddRects'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg c_array_length_in_arg='3' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='n' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function comment='manual wrapper' name='CGPathApply'>
@@ -3013,8 +3010,8 @@
   <function name='CGPathContainsPoint'>
     <retval type='Z' />
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='Z' />
   </function>
   <function name='CGPathCreateCopy'>
@@ -3034,11 +3031,11 @@
     <arg type='^{CGPath=}' />
   </function>
   <function name='CGPathGetBoundingBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{CGPath=}' />
   </function>
   <function name='CGPathGetCurrentPoint'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGPath=}' />
   </function>
   <function name='CGPathGetTypeID'>
@@ -3051,13 +3048,13 @@
   <function name='CGPathIsRect'>
     <retval type='Z' />
     <arg type='^{CGPath=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=ff}{CGSize=ff}}' type_modifier='o' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
   </function>
   <function name='CGPathMoveToPoint'>
     <arg type='^{CGPath=}' />
-    <arg type='^{CGAffineTransform=ffffff}' type_modifier='n' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='^{CGAffineTransform=ffffff}' type64='^{CGAffineTransform=dddddd}' type_modifier='n' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGPathRelease'>
     <arg type='^{CGPath=}' />
@@ -3069,10 +3066,10 @@
   <function comment='manual wrapper' name='CGPatternCreate'>
     <retval already_cfretained='true' type='^{CGPattern=}' />
     <arg type='^v' type64='^v' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
     <arg type='i' />
     <arg type='Z' />
     <arg type='r^{CGPatternCallbacks=I^?^?}' type64='r^{CGPatternCallbacks=I^?^?}' />
@@ -3088,23 +3085,23 @@
     <arg type='^{CGPattern=}' />
   </function>
   <function name='CGPointApplyAffineTransform'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGPointCreateDictionaryRepresentation'>
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGPointEqualToPoint'>
     <retval type='Z' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGPointMakeWithDictionaryRepresentation'>
     <retval type='Z' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' />
+    <arg type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='o' />
   </function>
   <function name='CGPostKeyboardEvent'>
     <retval type='i' />
@@ -3114,7 +3111,7 @@
   </function>
   <function name='CGPostMouseEvent' variadic='true' c_array_length_in_arg='2'>
     <retval type='i' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='i' />
     <arg type='I' />
     <arg type='i' />
@@ -3125,119 +3122,119 @@
     <arg type='i' />
   </function>
   <function name='CGRectApplyAffineTransform'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGRectContainsPoint'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGRectContainsRect'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectCreateDictionaryRepresentation'>
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectDivide'>
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
+    <arg type='f' type64='d' />
     <arg type='i' />
   </function>
   <function name='CGRectEqualToRect'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetHeight'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMaxX'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMaxY'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMidX'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMidY'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMinX'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetMinY'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectGetWidth'>
     <retval type='f' type64='d' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectInset'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGRectIntegral'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectIntersection'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectIntersectsRect'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectIsEmpty'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectIsInfinite'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectIsNull'>
     <retval type='Z' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectMakeWithDictionaryRepresentation'>
     <retval type='Z' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
   </function>
   <function name='CGRectOffset'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CGRectStandardize'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRectUnion'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function comment='manual wrapper' name='CGRegisterScreenRefreshCallback'>
     <retval type='i' />
@@ -3252,7 +3249,7 @@
     <arg type='I' />
   </function>
   <function comment='manual wrapper' name='CGReleaseScreenRefreshRects'>
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function name='CGRestorePermanentDisplayConfiguration' />
   <function comment='manual wrapper' name='CGScreenRegisterMoveCallback'>
@@ -3313,8 +3310,8 @@
   <function name='CGShadingCreateAxial'>
     <retval already_cfretained='true' type='^{CGShading=}' />
     <arg type='^{CGColorSpace=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
     <arg type='^{CGFunction=}' />
     <arg type='Z' />
     <arg type='Z' />
@@ -3322,10 +3319,10 @@
   <function name='CGShadingCreateRadial'>
     <retval already_cfretained='true' type='^{CGShading=}' />
     <arg type='^{CGColorSpace=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='f' type64='f' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
-    <arg type='f' type64='f' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='f' type64='d' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='f' type64='d' />
     <arg type='^{CGFunction=}' />
     <arg type='Z' />
     <arg type='Z' />
@@ -3348,23 +3345,23 @@
     <retval type='i' />
   </function>
   <function name='CGSizeApplyAffineTransform'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CGSizeCreateDictionaryRepresentation'>
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGSizeEqualToSize'>
     <retval type='Z' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
-    <arg type='{CGSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
   </function>
   <function name='CGSizeMakeWithDictionaryRepresentation'>
     <retval type='Z' />
     <arg type='^{__CFDictionary=}' />
-    <arg type='^{CGSize=ff}' type64='^{CGSize=dd}' type_modifier='o' />
+    <arg type='^{_NSSize=ff}' type64='^{_NSSize=dd}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGUnregisterScreenRefreshCallback'>
     <arg type='^?' type64='^?' />
@@ -3372,20 +3369,20 @@
   </function>
   <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenRefreshRects'>
     <retval type='i' />
-    <arg c_array_length_in_arg='1' type='^^{CGRect}' type_modifier='o' />
+    <arg c_array_length_in_arg='1' type='^^{_NSRect}' type_modifier='o' />
     <arg type='^I' type_modifier='o' />
   </function>
   <function comment='manual wrapper, array value returned by indirection' name='CGWaitForScreenUpdateRects'>
     <retval type='i' />
     <arg type='I' />
     <arg type='^I' type_modifier='o' />
-    <arg c_array_length_in_arg='3' type='^^{CGRect}' type_modifier='o' />
+    <arg c_array_length_in_arg='3' type='^^{_NSRect}' type_modifier='o' />
     <arg type='^I' type64='^Q' />
     <arg type='^{_CGScreenUpdateMoveDelta=ii}' type64='^{_CGScreenUpdateMoveDelta=ii}' />
   </function>
   <function name='CGWarpMouseCursorPosition'>
     <retval type='i' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=ff}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CGWindowLevelForKey'>
     <retval type='i' />
@@ -3407,14 +3404,14 @@
   </function>
   <function name='CGWindowListCreateImage'>
     <retval already_cfretained='true' type='^{CGImage=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='I' />
     <arg type='I' />
     <arg type='I' />
   </function>
   <function name='CGWindowListCreateImageFromArray'>
     <retval already_cfretained='true' type='^{CGImage=}' />
-    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=ff}{CGSize=ff}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CFArray=}' />
     <arg type='I' />
   </function>
@@ -3422,20 +3419,20 @@
     <retval type='^{__CFMachPort=}' />
   </function>
   <function inline='true' name='CGPointMake'>
-    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function inline='true' name='CGRectMake'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function inline='true' name='CGSizeMake'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
 </signatures>

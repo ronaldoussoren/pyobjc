@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import CoreFoundation
 
-
 class TestRunLoop (TestCase):
 
     def testTypes(self):
@@ -73,15 +72,15 @@ class TestRunLoop (TestCase):
                 True, 4, callback, data)
         self.assertIsInstance(observer, CFRunLoopObserverRef)
         ctx = CFRunLoopObserverGetContext(observer, None)
-        self.assertIsObject(ctx, data)
+        self.assertIs(ctx, data)
         self.assertEqual(CFRunLoopObserverGetActivities(observer), kCFRunLoopEntry|kCFRunLoopExit)
-        self.assertIsObject(CFRunLoopObserverDoesRepeat(observer), True)
+        self.assertIs(CFRunLoopObserverDoesRepeat(observer), True)
         self.assertEqual(CFRunLoopObserverGetOrder(observer), 4)
-        self.assertIsObject(CFRunLoopObserverIsValid(observer), True)
+        self.assertIs(CFRunLoopObserverIsValid(observer), True)
         CFRunLoopObserverInvalidate(observer)
-        self.assertIsObject(CFRunLoopObserverIsValid(observer), False)
+        self.assertIs(CFRunLoopObserverIsValid(observer), False)
         ctx = CFRunLoopObserverGetContext(observer, None)
-        self.assertIsObject(ctx, objc.NULL)
+        self.assertIs(ctx, objc.NULL)
         observer = CFRunLoopObserverCreate(None, kCFRunLoopEntry|kCFRunLoopExit,
                 True, 4, callback, data)
         self.assertIsInstance(observer, CFRunLoopObserverRef)
@@ -100,9 +99,9 @@ class TestRunLoop (TestCase):
         
         self.assertNotEqual(len(state) , 0 )
         for item in state:
-            self.assertIsObject(item[0], observer)
+            self.assertIs(item[0], observer)
             self.assertIsIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
-            self.assertIsObject(item[2], data)
+            self.assertIs(item[2], data)
         CFRunLoopRemoveObserver(rl, observer, kCFRunLoopDefaultMode)
         self.failUnless (CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode) is False)
 
@@ -126,25 +125,25 @@ class TestRunLoop (TestCase):
         r = CFRunLoopTimerGetInterval(timer)
         self.assertEqual(r, 0.5)
 
-        self.assertIsObject(CFRunLoopTimerGetContext(timer, None), data)
-        self.assertIsObject(CFRunLoopTimerDoesRepeat(timer), True)
+        self.assertIs(CFRunLoopTimerGetContext(timer, None), data)
+        self.assertIs(CFRunLoopTimerDoesRepeat(timer), True)
         self.assertEqual(CFRunLoopTimerGetOrder(timer), 0)
-        self.assertIsObject(CFRunLoopTimerIsValid(timer), True)
+        self.assertIs(CFRunLoopTimerIsValid(timer), True)
         CFRunLoopTimerInvalidate(timer)
-        self.assertIsObject(CFRunLoopTimerIsValid(timer), False)
-        self.assertIsObject(CFRunLoopTimerGetContext(timer, None), objc.NULL)
+        self.assertIs(CFRunLoopTimerIsValid(timer), False)
+        self.assertIs(CFRunLoopTimerGetContext(timer, None), objc.NULL)
         timer = CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
-        self.assertIsObject(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
         CFRunLoopAddTimer(rl, timer, kCFRunLoopDefaultMode)
-        self.assertIsObject(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), True)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), True)
         res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
 
         CFRunLoopRemoveTimer(rl, timer, kCFRunLoopDefaultMode)
-        self.assertIsObject(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
         self.assertFalse(len(state) < 3)
         for item in state:
-            self.assertIsObject(item[0], timer)
-            self.assertIsObject(item[1], data)
+            self.assertIs(item[0], timer)
+            self.assertIs(item[1], data)
     def testSource(self):
         rl = CFRunLoopGetCurrent()
         
@@ -169,19 +168,19 @@ class TestRunLoop (TestCase):
         self.assertEqual(ctx[4], data)
 
         self.assertEqual(CFRunLoopSourceGetOrder(source), 55)
-        self.assertIsObject(CFRunLoopSourceIsValid(source), True)
+        self.assertIs(CFRunLoopSourceIsValid(source), True)
         CFRunLoopSourceInvalidate(source)
-        self.assertIsObject(CFRunLoopSourceIsValid(source), False)
+        self.assertIs(CFRunLoopSourceIsValid(source), False)
         source = CFRunLoopSourceCreate(None, 55, 
                 (0, schedule, cancel, perform, data))
         self.assertIsInstance(source, CFRunLoopSourceRef)
-        self.assertIsObject(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
+        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
         CFRunLoopAddSource(rl, source, kCFRunLoopDefaultMode)
-        self.assertIsObject(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), True)
+        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), True)
         self.assertEqual(len(state) , 1)
         self.assertEqual(state[0][0] , 'schedule')
-        self.assertIsObject(state[0][1], data)
-        self.assertIsObject(state[0][2], rl)
+        self.assertIs(state[0][1], data)
+        self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3] , kCFRunLoopDefaultMode)
         del state[:]
 
@@ -199,15 +198,15 @@ class TestRunLoop (TestCase):
 
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0] , 'perform')
-        self.assertIsObject(state[0][1], data)
+        self.assertIs(state[0][1], data)
         del state[:]
 
         CFRunLoopRemoveSource(rl, source, kCFRunLoopDefaultMode)
-        self.assertIsObject(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
+        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0] , 'cancel')
-        self.assertIsObject(state[0][1], data)
-        self.assertIsObject(state[0][2], rl)
+        self.assertIs(state[0][1], data)
+        self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3] , kCFRunLoopDefaultMode)
     @min_os_level('10.6')
     def testFunctions10_6(self):

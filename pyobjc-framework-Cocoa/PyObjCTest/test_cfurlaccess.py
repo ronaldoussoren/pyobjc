@@ -29,7 +29,7 @@ class TestURLAccess (TestCase):
         self.assertArgIsOut(CFURLCreatePropertyFromResource, 3)
         val, errorCode = CFURLCreatePropertyFromResource(None, url, kCFURLFileExists, None)
         self.assertIsInstance(errorCode, (int, long))
-        self.assertIsObject(val, True)
+        self.assertIs(val, True)
         self.assertResultIsBOOL(CFURLCreateDataAndPropertiesFromResource)
         self.assertArgIsOut(CFURLCreateDataAndPropertiesFromResource, 2)
         self.assertArgIsOut(CFURLCreateDataAndPropertiesFromResource, 3)
@@ -49,6 +49,8 @@ class TestURLAccess (TestCase):
         if sys.version_info[0] == 3:
             def buffer(value):
                 return value
+        else:
+            from __builtin__ import buffer
 
         ok, errorCode = CFURLWriteDataAndPropertiesToResource(
                 url, buffer(b"foobar"), None, None)

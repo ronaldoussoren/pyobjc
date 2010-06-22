@@ -12,7 +12,7 @@ class TestAE (TestCase):
         obj = NSAppleScript.alloc().initWithSource_(
                 'tell application Terminal to do Xscript "ls -l"')
         ok, error = obj.compileAndReturnError_(None)
-        self.assertIsObject(ok, False)
+        self.assertIs(ok, False)
         self.assertIsInstance(error, NSDictionary)
     def testMethods(self):
         self.assertResultIsBOOL(NSAppleScript.isCompiled)

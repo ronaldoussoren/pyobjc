@@ -131,8 +131,8 @@ class TestNSKeyValueBinding (TestCase):
 
     def testFunctions(self):
         o = NSObject.alloc().init()
-        self.assertIsObject(NSIsControllerMarker(o), False)
-        self.assertIsObject(NSIsControllerMarker(NSMultipleValuesMarker), True)
+        self.assertIs(NSIsControllerMarker(o), False)
+        self.assertIs(NSIsControllerMarker(NSMultipleValuesMarker), True)
     def testMethods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()

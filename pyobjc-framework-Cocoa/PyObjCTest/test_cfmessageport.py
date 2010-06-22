@@ -33,10 +33,10 @@ class TestMessagePort (TestCase):
 
         port, shouldFree = CFMessagePortCreateLocal(None, u"name", callout, context, None)
         self.assertIsInstance(port, CFMessagePortRef)
-        self.assertIsObject(shouldFree is True or shouldFree, False)
+        self.assertIs(shouldFree is True or shouldFree, False)
         self.assertFalse(CFMessagePortIsRemote(port))
         ctx = CFMessagePortGetContext(port, None)
-        self.assertIsObject(ctx, context)
+        self.assertIs(ctx, context)
         port = CFMessagePortCreateRemote(None, u"name")
         self.assertIsInstance(port, CFMessagePortRef)
         self.assertResultIsBOOL(CFMessagePortIsRemote)
@@ -47,7 +47,7 @@ class TestMessagePort (TestCase):
         self.assertTrue(CFMessagePortGetName(port), u"newname")
 
         cb = CFMessagePortGetInvalidationCallBack(port)
-        self.assertIsObject(cb, None)
+        self.assertIs(cb, None)
         global didInvalidate
         didInvalidate = False
 
@@ -60,9 +60,9 @@ class TestMessagePort (TestCase):
         cb = CFMessagePortGetInvalidationCallBack(port)
 
         # XXX: Without writing a custom wrapper we cannot guarantee this
-        #self.assertIsObject(cb, invalidate)
+        #self.assertIs(cb, invalidate)
         cb(None, None)
-        self.assertIsObject(didInvalidate, True)
+        self.assertIs(didInvalidate, True)
         didInvalidate = False
 
         rls = CFMessagePortCreateRunLoopSource(None, port, 0)

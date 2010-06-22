@@ -2302,7 +2302,7 @@
     <arg type='^{__CFMessagePort=}' />
     <arg function_pointer='true' type='^?' type64='^?'>
       <arg type='@' />
-      <arg type='@' />
+      <arg type='^{PyObject}' />
     </arg>
   </function>
   <function name='CFMessagePortSetName'>

@@ -108,7 +108,7 @@ class TestNSApplication (TestCase):
         NSUnregisterServicesProvider("foobar")
 
     def testNSApp(self):
-        self.assertIsNotObject(NSApp, None)
+        self.assertIsNot(NSApp, None)
         self.assertEqual(type(NSApp).__name__, "_NSApp")
         self.assertHasAttr(NSApp, '__call__')
         app = NSApp()

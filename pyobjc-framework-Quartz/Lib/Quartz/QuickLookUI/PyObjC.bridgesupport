@@ -11,25 +11,24 @@
   </informal_protocol>
   <class name='NSObject'>
     <method selector='acceptsPreviewPanelControl:'>
-      <retval type='B' />
+      <retval type='B' type64='B' />
     </method>
     <method selector='previewPanel:handleEvent:'>
-      <retval type='B' />
+      <retval type='B' type64='B' />
     </method>
     <method selector='previewPanel:sourceFrameOnScreenForPreviewItem:'>
-      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     </method>
   </class>
   <class name='QLPreviewPanel'>
     <method selector='enterFullScreenMode:withOptions:'>
-      <retval type='B' />
+      <retval type='B' type64='B' />
     </method>
     <method class_method='true' selector='sharedPreviewPanelExists'>
-      <retval type='B' />
+      <retval type='B' type64='B' />
     </method>
     <method selector='sharedPreviewPanelExists'>
-      <retval type='B' />
+      <retval type='B' type64='B' />
     </method>
   </class>
 </signatures>
-

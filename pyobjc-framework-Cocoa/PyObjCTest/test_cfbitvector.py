@@ -24,7 +24,7 @@ class TestBitVector (TestCase):
         set3 = CFBitVectorCreateMutableCopy(None, 0, bitset)
         self.assertIsInstance(set3, CFBitVectorRef)
         self.assertEqual(CFBitVectorGetCount(set3) , 30)
-        self.assertIsNotObject(set3, set)
+        self.assertIsNot(set3, set)
         bitset = CFBitVectorCreateMutable(None, 0)
         self.assertIsInstance(bitset, CFBitVectorRef)
         self.assertEqual(CFBitVectorGetCount(bitset) , 0)
@@ -34,7 +34,7 @@ class TestBitVector (TestCase):
         set3 = CFBitVectorCreateMutableCopy(None, 0, bitset)
         self.assertIsInstance(set3, CFBitVectorRef)
         self.assertEqual(CFBitVectorGetCount(set3) , 0)
-        self.assertIsNotObject(set3, set)
+        self.assertIsNot(set3, set)
     def testInspection(self):
         bitset = CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 32)
 

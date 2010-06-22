@@ -28,7 +28,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertEqual(kCGCaptureNoOptions, 0)
         self.assertEqual(kCGCaptureNoFill, 1)
 
-        self.failIf(hasattr(CoreGraphics, 'kCGDirectMainDisplay'))
+        self.assertNotHasAttr(CoreGraphics, 'kCGDirectMainDisplay')
 
     def testFunctions(self):
         self.assertIsInstance(CGMainDisplayID(), (int, long))
@@ -83,7 +83,7 @@ class TestCGDirectDisplay (TestCase):
 
         v = CGDisplayIDToOpenGLDisplayMask(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
-        self.failIfEqual(v, 0)
+        self.assertNotEqual(v, 0)
 
         id = CGOpenGLDisplayMaskToDisplayID(v)
         self.assertIsInstance(id, (int, long))

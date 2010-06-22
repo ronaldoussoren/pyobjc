@@ -2813,12 +2813,28 @@ void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 	Py_DECREF(proxy);
 }
 
-BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
+static BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
-	return YES;
+	//return YES;
 	/* Ignore type modifiers */
 	type1 = PyObjCRT_SkipTypeQualifiers(type1);
 	type2 = PyObjCRT_SkipTypeQualifiers(type2);
+
+	if (*type1 == _C_ARY_B) {
+		if (type2[0] == _C_PTR) {
+			type1++;
+			while (isdigit(*type1)) type1++;
+			return PyObjC_signatures_compatible(type1, type2+1);
+		} else if (type2[0] == _C_ARY_B) {
+			type1++;
+			while (isdigit(*type1)) type1++;
+			type2++;
+			while (isdigit(*type2)) type2++;
+			return PyObjC_signatures_compatible(type1, type2);
+		}
+		return NO;
+	}
+
 
 	if (PyObjCRT_SizeOfType(type1) != PyObjCRT_SizeOfType(type2)) {
 		return NO;
@@ -2851,7 +2867,7 @@ BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
 		}
 	
 	case _C_PTR:
-		if (type2[1] == _C_VOID && type2[0] == _C_ID) {
+		if (type1[1] == _C_VOID && type2[0] == _C_ID) {
 			return YES;
 		}
 		if (*type2 == _C_CHARPTR) {
@@ -2860,7 +2876,11 @@ BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
 		if (*type2 != _C_PTR) {
 			return NO;
 		}
+		if (type1[1] == _C_VOID || type2[1] == _C_VOID) {
+			return YES;
+		}
 		return PyObjC_signatures_compatible(type1+1, type2+1);
+
 	
 	default:
 		switch (*type2) {
@@ -2870,6 +2890,7 @@ BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
 		}
 	}
 }
+
 BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
 	BOOL r =  _PyObjC_signatures_compatible(type1, type2);

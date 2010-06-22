@@ -89,7 +89,7 @@ class TestBase (TestCase):
         CFAllocatorSetDefault(kCFAllocatorMalloc)
         r2 = CFAllocatorGetDefault()
         self.assertIsInstance(r2, CFAllocatorRef)
-        self.assertIsObject(r2, kCFAllocatorMalloc)
+        self.assertIs(r2, kCFAllocatorMalloc)
         # Restore default allocator
         CFAllocatorSetDefault(r)
 
@@ -121,9 +121,9 @@ class TestBase (TestCase):
         del obj
 
         i = CFEqual(kCFAllocatorMalloc, kCFAllocatorNull)
-        self.assertIsObject(i, False)
+        self.assertIs(i, False)
         i = CFEqual(kCFAllocatorMalloc, kCFAllocatorMalloc)
-        self.assertIsObject(i, True)
+        self.assertIs(i, True)
         i = CFHash(kCFAllocatorMalloc)
         self.assertTrue(i, (int, long))
 

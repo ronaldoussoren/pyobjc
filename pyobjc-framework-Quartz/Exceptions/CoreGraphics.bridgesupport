@@ -686,7 +686,7 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGPointMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' />
+    <arg index='1' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='o' />
   </function>
   <function name='CGPostMouseEvent' variadic='true' />
   <function name='CGPostScrollWheelEvent' variadic='true' />
@@ -694,18 +694,18 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGRectDivide'>
-    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
-    <arg index='2' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg index='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
+    <arg index='2' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
   </function>
   <function name='CGRectMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg index='1' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGRegisterScreenRefreshCallback'>
     <arg index='0' type='^?' type64='^?' />
     <arg comment='context' index='1' type='^v' type64='^v' />
   </function>
   <function comment='manual wrapper' name='CGReleaseScreenRefreshRects'>
-    <arg index='0' type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg index='0' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
   </function>
   <function comment='manual wrapper' name='CGScreenRegisterMoveCallback'>
     <arg index='0' type='^?' type64='^?' />
@@ -741,7 +741,7 @@
     <retval already_cfretained='true' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
   </function>
   <function name='CGSizeMakeWithDictionaryRepresentation'>
-    <arg index='1' type='^{CGSize=ff}' type64='^{CGSize=dd}' type_modifier='o' />
+    <arg index='1' type='^{_NSSize=ff}' type64='^{_NSSize=dd}' type_modifier='o' />
   </function>
   <function comment='manual wrapper' name='CGUnregisterScreenRefreshCallback'>
     <arg index='0' type='^?' type64='^?' />

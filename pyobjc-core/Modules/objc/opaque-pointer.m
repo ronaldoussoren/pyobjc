@@ -147,7 +147,7 @@ static  ffi_cif* new_cif = NULL;
 
 	if (new_cif == NULL) {
 		PyObjCMethodSignature* signature;
-		signature = PyObjCMethodSignature_FromSignature(new_cif_signature);
+		signature = PyObjCMethodSignature_FromSignature(new_cif_signature, NO);
 		new_cif = PyObjCFFI_CIFForSignature(signature);
 		Py_DECREF(signature);
 		if (new_cif == NULL) {
@@ -157,7 +157,7 @@ static  ffi_cif* new_cif = NULL;
 
 	if (convert_cif == NULL) {
 		PyObjCMethodSignature* signature;
-		signature = PyObjCMethodSignature_FromSignature(convert_cif_signature); 
+		signature = PyObjCMethodSignature_FromSignature(convert_cif_signature, YES); 
 		convert_cif = PyObjCFFI_CIFForSignature(signature);
 		Py_DECREF(signature);
 		if (convert_cif == NULL) {

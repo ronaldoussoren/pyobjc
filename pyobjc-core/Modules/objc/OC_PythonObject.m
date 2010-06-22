@@ -1494,6 +1494,24 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 
+/*
+ * Fake implementation for _cfTypeID, which gets called by
+ * system frameworks on some occassions.
+ */
+static BOOL haveTypeID = NO;
+static CFTypeID _NSObjectTypeID;
+
+-(CFTypeID)_cfTypeID
+{
+	if (haveTypeID) {
+		NSObject* obj = [[NSObject alloc] init];
+		_NSObjectTypeID = CFGetTypeID((CFTypeRef)obj);
+		[obj release];
+		haveTypeID = YES;
+	}
+	return _NSObjectTypeID;
+}
+
 
 @end /* OC_PythonObject class implementation */
 

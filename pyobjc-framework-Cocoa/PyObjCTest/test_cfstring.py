@@ -7,7 +7,7 @@ from Foundation import NSCFString
 
 class TestString (TestCase):
     def testType(self):
-        self.assertIsObject(CFStringRef, NSCFString)
+        self.assertIs(CFStringRef, NSCFString)
     def testTypeID(self):
         v = CFStringGetTypeID()
         self.assertIsInstance(v, (int, long))
@@ -191,14 +191,14 @@ class TestString (TestCase):
         found, rng = CFStringFindWithOptionsAndLocale(
                 u"the longer string", u"longer",
                 CFRange(0, 17), 0, CFLocaleCopyCurrent(), None)
-        self.assertIsObject(found, True)
+        self.assertIs(found, True)
         self.assertIsInstance(rng, CFRange)
         self.assertEqual(rng, CFRange(4, 6))
 
         found, rng = CFStringFindWithOptions(
                 u"the longer string", u"longer",
                 CFRange(0, 17), 0, None)
-        self.assertIsObject(found, True)
+        self.assertIs(found, True)
         self.assertIsInstance(rng, CFRange)
         self.assertEqual(rng, CFRange(4, 6))
 
@@ -212,18 +212,18 @@ class TestString (TestCase):
         self.assertEqual(rng, CFRange(6, 5))
 
         ok = CFStringHasPrefix(u"hello", u"he")
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         ok = CFStringHasPrefix(u"hello", u"ge")
-        self.assertIsObject(ok, False)
+        self.assertIs(ok, False)
         ok = CFStringHasSuffix(u"hello", "lo")
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         rng = CFStringGetRangeOfComposedCharactersAtIndex(
                 u"hello world", 5)
         self.assertIsInstance(rng, CFRange)
         found, rng = CFStringFindCharacterFromSet("hello  world",
                 CFCharacterSetGetPredefined(kCFCharacterSetWhitespace),
                 CFRange(0, 12), 0, None)
-        self.assertIsObject(found, True)
+        self.assertIs(found, True)
         self.assertIsInstance(rng, CFRange)
         lineBeginIndex, lineEndIndex, contentsEndIndex = CFStringGetLineBounds(
                 u"hello\n\nworld", CFRange(0, 12), None, None, None)
@@ -335,12 +335,12 @@ class TestString (TestCase):
         ok, rng = CFStringTransform(s, CFRange(0, 3), kCFStringTransformToXMLHex, 
                                         False)
         self.assertEqual(s, 'A C') 
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         self.assertEqual(rng, CFRange(0, 3))
 
     def testStringEncoding(self):
         ok = CFStringIsEncodingAvailable(kCFStringEncodingUTF8)
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         encodings = CFStringGetListOfAvailableEncodings()
         self.assertIsInstance(encodings, objc.varlist)
         for e in encodings:

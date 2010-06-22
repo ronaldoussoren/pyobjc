@@ -531,7 +531,7 @@
     <arg type='^{__CTFont=}' />
     <arg type='I' />
     <arg type='^S' type_modifier='n' c_array_length_in_arg='4' />
-    <arg type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='o' c_array_length_in_arg='4' />
+    <arg type='^{_NSSize=ff}' type64='^{_NSSize=ff}' type_modifier='o' c_array_length_in_arg='4' />
     <arg type='l' type64='l' />
   </function>
   <function name='CTFontGetAscent'>
@@ -539,15 +539,15 @@
     <arg type='^{__CTFont=}' />
   </function>
   <function name='CTFontGetBoundingBox'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CTFont=}' />
   </function>
   <function name='CTFontGetBoundingRectsForGlyphs'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CTFont=}' />
     <arg type='I' />
     <arg type='^S' type_modifier='n' c_array_length_in_arg='4' />
-    <arg type='^{CGRect={CGPoint=ff}{CGSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' c_array_length_in_arg='4' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' c_array_length_in_arg='4' />
     <arg type='l' type64='l' />
   </function>
   <function name='CTFontGetCapHeight'>
@@ -621,7 +621,7 @@
   <function name='CTFontGetVerticalTranslationsForGlyphs'>
     <arg type='^{__CTFont=}' />
     <arg type='^S' type_modifier='n' c_array_length_in_arg='3' />
-    <arg type='^{CGSize=ff}' type64='^{CGSize=ff}' type_modifier='o' c_array_length_in_arg='3' />
+    <arg type='^{_NSSize=ff}' type64='^{_NSSize=ff}' type_modifier='o' c_array_length_in_arg='3' />
     <arg type='l' type64='l' />
   </function>
   <function name='CTFontGetXHeight'>
@@ -639,7 +639,7 @@
   <function name='CTFrameGetLineOrigins'>
     <arg type='^{__CTFrame=}' />
     <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
-    <arg c_array_length_in_arg='1' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' />
+    <arg c_array_length_in_arg='1' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='o' />
   </function>
   <function name='CTFrameGetLines'>
     <retval type='^{__CFArray=}' />
@@ -744,7 +744,7 @@
     <arg type='^{__CTLine=}' />
   </function>
   <function name='CTLineGetImageBounds'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CTLine=}' />
     <arg type='^{CGContext=}' type64='^{CGContext=}' />
   </function>
@@ -763,7 +763,7 @@
   <function name='CTLineGetStringIndexForPosition'>
     <retval type='l' type64='q' />
     <arg type='^{__CTLine=}' />
-    <arg type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
   </function>
   <function name='CTLineGetStringRange'>
     <retval type='{_CFRange=ii}' type64='{_CFRange=ll}' />
@@ -825,7 +825,7 @@
     <arg type='^{__CTRun=}' />
   </function>
   <function name='CTRunGetImageBounds'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='^{__CTRun=}' />
     <arg type='^{CGContext=}' type64='^{CGContext=}' />
     <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
@@ -833,10 +833,10 @@
   <function name='CTRunGetPositions'>
     <arg type='^{__CTRun=}' />
     <arg type='{_CFRange=ii}' type64='{_CFRange=ll}' />
-    <arg type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' c_array_length_in_arg='1'  />
+    <arg type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='o' c_array_length_in_arg='1'  />
   </function>
   <function name='CTRunGetPositionsPtr'>
-    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' c_array_of_variable_length='true' />
+    <retval type='r^{_NSPoint=ff}' type64='r^{_NSPoint=dd}' c_array_of_variable_length='true' />
     <arg type='^{__CTRun=}' />
   </function>
   <function name='CTRunGetStatus'>

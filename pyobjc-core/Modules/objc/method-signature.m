@@ -231,7 +231,7 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector,
 }
 
 
-static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
+static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 {
 	PyObject* d;
 	char typeModifier = 0;
@@ -327,7 +327,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 				buffer[0] = _C_ID;
 				buffer[1] = '\0';
 			}
-			descr->callable = PyObjCMethodSignature_WithMetaData(buffer, d);
+			descr->callable = PyObjCMethodSignature_WithMetaData(buffer, d, NO);
 			if (descr->callable == NULL) {
 				return -1;
 			}
@@ -507,9 +507,9 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 			return -1;
 		}
 
-		char* type = PyBytes_AsString(bytes);
+		const char* type = PyBytes_AsString(bytes);
 
-		if (!PyObjC_signatures_compatible(descr->type, type)) {
+		if (is_native && !PyObjC_signatures_compatible(descr->type, type)) {
 			/* The new signature is not compatible enough, ignore the 
 			 * override.
 			 */
@@ -624,7 +624,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta)
 }
 
 PyObjCMethodSignature* 
-PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata)
+PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BOOL is_native)
 {
 	PyObjCMethodSignature* methinfo;
 	PyObject* v;
@@ -643,7 +643,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata)
 
 	if (metadata) {
 		PyObject* retval = PyDict_GetItemString(metadata, "retval");
-		if (setup_meta(&methinfo->rettype, retval) == -1) {
+		if (setup_meta(&methinfo->rettype, retval, is_native) == -1) {
 			Py_DECREF(methinfo);
 			return NULL;
 		}
@@ -675,7 +675,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata)
 		} else {
 			d = NULL;
 		}
-		if (setup_meta(methinfo->argtype + i, d) == -1) {
+		if (setup_meta(methinfo->argtype + i, d, is_native) == -1) {
 			Py_DECREF(k);
 			Py_DECREF(methinfo);
 			return NULL;
@@ -747,13 +747,14 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata)
 
 
 PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
-		Class cls, BOOL isClassMethod, SEL sel, const char* signature)
+		Class cls, BOOL isClassMethod, SEL sel, const char* signature,
+		BOOL is_native)
 {
 	PyObjCMethodSignature* methinfo;
 	PyObject* metadata;
 
 	metadata = PyObjC_FindInRegistry(registry, cls, sel);
-	methinfo =  PyObjCMethodSignature_WithMetaData(signature, metadata);
+	methinfo =  PyObjCMethodSignature_WithMetaData(signature, metadata, is_native);
 	if (isClassMethod) {
 		const char* nm  = sel_getName(sel);
 		if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {

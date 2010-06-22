@@ -42,7 +42,7 @@ class TestCFBag (TestCase):
         self.assertIsInstance(bag2, CFBagRef)
         bag3 = CFBagCreateMutableCopy(None, 0, bag)
         self.assertIsInstance(bag3, CFBagRef)
-        self.assertIsNotObject(bag3, bag )
+        self.assertIsNot(bag3, bag )
     def testInspect(self):
         bag = CFBagCreate(None, [u"Hello", 42, u"World", 42, u"a", u"a", u"a"], 7)
         self.assertIsInstance(bag, CFBagRef)
@@ -54,7 +54,7 @@ class TestCFBag (TestCase):
         self.assertFalse( CFBagContainsValue(bag, u"b") )
 
         v = CFBagGetValue(bag, u"b")
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         v = CFBagGetValue(bag, u"a")
         self.assertEqual(v , u"a")
         exists, value = CFBagGetValueIfPresent(bag, u"a", None)
@@ -62,7 +62,7 @@ class TestCFBag (TestCase):
         self.assertEqual(value , u"a" )
         exists, value = CFBagGetValueIfPresent(bag, u"b", None)
         self.assertFalse( exists )
-        self.assertIsObject(value, None )
+        self.assertIs(value, None )
         values = set(CFBagGetValues(bag))
         l = set([u"Hello", 42, u"World", 42, u"a", u"a", u"a"])
         self.assertEqual(values , l )

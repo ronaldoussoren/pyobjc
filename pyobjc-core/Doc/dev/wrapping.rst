@@ -7,6 +7,14 @@ How to wrap an Objective-C class library
 Introduction
 ------------
 
+.. warning::
+
+  This document is very dated and needs to be rewritten. The easiest way
+  to wrap a framework that requires more than what is described in
+  `The basics`_ is to copy an existing framework wrapper and adapt that.
+
+  Tool support is currently totally broken.
+
 This document describes how you can wrap on Objective-C class library using
 a Python module or package.  This document assumes that your class library is
 located in a framework.

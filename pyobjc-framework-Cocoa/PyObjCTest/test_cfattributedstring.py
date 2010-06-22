@@ -5,8 +5,8 @@ from Foundation import NSCFAttributedString
 
 class TestAttributedString (TestCase):
     def testTypes(self):
-        self.assertIsObject(CFAttributedStringRef, NSCFAttributedString )
-        self.assertIsObject(CFMutableAttributedStringRef, NSCFAttributedString )
+        self.assertIs(CFAttributedStringRef, NSCFAttributedString )
+        self.assertIs(CFMutableAttributedStringRef, NSCFAttributedString )
     def testTypeID(self):
         v = CFAttributedStringGetTypeID()
         self.assertIsInstance(v, (int, long))
@@ -16,7 +16,7 @@ class TestAttributedString (TestCase):
         val = CFAttributedStringCreateWithSubstring(None, val, (1,2))
         self.assertIsInstance(val, CFAttributedStringRef)
         val2 = CFAttributedStringCreateCopy(None, val)
-        self.assertIsObject(val2, val)
+        self.assertIs(val2, val)
     def testGetting(self):
         val = CFAttributedStringCreate(None, u"hello", {u'foo': 42, u'bar':'baz'})
         self.assertIsInstance(val, CFAttributedStringRef)
@@ -55,12 +55,12 @@ class TestAttributedString (TestCase):
         self.assertIsInstance(orig, CFAttributedStringRef)
         val = CFAttributedStringCreateMutableCopy(None, 0, orig)
         self.assertIsInstance(orig, CFAttributedStringRef)
-        self.assertIsNotObject(val, orig)
+        self.assertIsNot(val, orig)
         CFAttributedStringReplaceString(val, (0,3), "Hal")
         dta = CFAttributedStringGetString(val)
         self.assertEqual(dta , u"Hallo" )
         v = CFAttributedStringGetMutableString(val)
-        self.assertIsObject(v, None )
+        self.assertIs(v, None )
         CFAttributedStringSetAttributes(val, (0, 2), {u'ronald':99}, False)
         v, rng = CFAttributedStringGetAttributes(val, 1, None)
         self.assertEqual(v , {u'ronald':99, u'foo': 42, u'bar': 'baz' } )

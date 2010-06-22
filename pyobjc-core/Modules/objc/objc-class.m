@@ -114,7 +114,6 @@ Py_ssize_t nsdata_getsegcount(PyObject *pyself, Py_ssize_t *lenp) {
 
 #if PY_VERSION_HEX >= 0x02060000
 
-
 static int
 nsdata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
@@ -1737,19 +1736,49 @@ PyObjCClass_New(Class objc_class)
 	info->protectedMethods = protectedMethods;
 	info->hiddenSelectors = hiddenSelectors;
 
+	objc_class_register(objc_class, result);
+
 	/*
 	 * Support the buffer protocol in the wrappers for NSData and
 	 * NSMutableData, the only two classes where this makes sense.
 	 */
-	if (strcmp(className, "NSData") == 0) {
-		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
-	} else if (strcmp(className, "NSMutableData") == 0) {
+#if 0
+	if (strcmp(className, "_NSZombie_") == 0) {
+		/* pass */
+	} else if (strcmp(className, "nil") == 0) {
+		/* pass */
+	} else if ([objc_class isSubclassOfClass:[NSMutableData class]]) {
+	/*} else if (strcmp(className, "NSMutableData") == 0) {*/
 		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
+	} else if ([objc_class isSubclassOfClass:[NSData class]]) {
+	/*if (strcmp(className, "NSData") == 0) { */
+		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
 	} else if (strcmp(className, "NSBlock") == 0) {
 		((PyTypeObject *)result)->tp_basicsize = sizeof(PyObjCBlockObject);
 		PyType_Modified((PyTypeObject*)result);
 		PyType_Ready((PyTypeObject *)result);
 	}
+#else
+	if (strcmp(className, "NSMutableData") == 0) {
+		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
+#if PY_VERSION_HEX >= 0x02060000
+		((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
+#endif
+		PyType_Modified((PyTypeObject*)result);
+		PyType_Ready((PyTypeObject *)result);
+	} else if (strcmp(className, "NSData") == 0) {
+		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
+#if PY_VERSION_HEX >= 0x02060000
+		((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
+#endif
+		PyType_Modified((PyTypeObject*)result);
+		PyType_Ready((PyTypeObject *)result);
+	} else if (strcmp(className, "NSBlock") == 0) {
+		((PyTypeObject *)result)->tp_basicsize = sizeof(PyObjCBlockObject);
+		PyType_Modified((PyTypeObject*)result);
+		PyType_Ready((PyTypeObject *)result);
+	}
+#endif
 
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
@@ -1762,7 +1791,6 @@ PyObjCClass_New(Class objc_class)
 		PyErr_Clear();
 	}
 
-	objc_class_register(objc_class, result);
 
 	return result;
 }

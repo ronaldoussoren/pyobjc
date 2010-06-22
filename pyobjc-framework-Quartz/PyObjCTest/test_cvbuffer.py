@@ -70,13 +70,13 @@ class TestCVBuffer (TestCase):
         CVBufferRemoveAttachment(buf, "pyobjc.test")
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
-        self.failIf("pyobjc.test" in v)
+        self.assertFalse("pyobjc.test" in v)
 
         self.assertArgHasType(CVBufferRemoveAllAttachments, 0,  b'@')
         CVBufferRemoveAllAttachments(buf)
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
-        self.failIf("pyobjc.test2" in v)
+        self.assertFalse("pyobjc.test2" in v)
 
 
 if __name__ == "__main__":

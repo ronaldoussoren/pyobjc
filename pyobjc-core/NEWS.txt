@@ -4,22 +4,22 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.3a0
+Version 2.3b1
 -------------
 
-- TODO: 
+- This version requires Python 2.6 or later, and also supports
+  Python 3.1 or later.
 
-  * Test memory usage using the Instruments tool to check which bits
-    of PyObjC use (too) much memory. Do this using a build of
-    Python without pymalloc (because pymalloc confuses Instruments)
+- BUGFIX: The generic proxy for Python objects now implements
+  ``-(CFTypeID)_cfTypeID``, which should result in less hard to
+  understand Objective-C exceptions.
 
-- TODO:
+- BUGFIX: The metadata file support now checks if the metadata is 
+  compatible with information gathered from the Objective-C runtime. 
 
-  * NSData/NSMutableData should have same interface as bytes/bytearray
-    (the former obviously only for 3.x)
-
-  * Move manual wrappers and metadata for NSArray, NSData, NSDictionary,
-    NSSet and their mutable variants to pyobjc-core
+  This ensures that when a native method signature is incompatible
+  with the signature in a metadata file the brige won't garble the
+  correct information (and that in turn avoids hard crashes).
 
 - PyObjC's support for ``NSCoding`` now also works with plain ``NSArchiver``
   instances, not just with ``NSKeyedArchiver``.
@@ -106,9 +106,6 @@ Version 2.3a0
 
   * Documentation updates
 
-  * Implement python3 dict, list, ... APIs for NSDictionary and friends,
-    with unittests.
-
 - The Python 3.x port does not support transparent proxies for 'FILE*'
   "objects" because the ``file`` type in Python3 is not implemented on
   top of the C library stdio.
@@ -128,7 +125,6 @@ Version 2.3a0
   or the data instance is resized. That's a result of API restrictions
   in Apple's frameworks.
 
-
 - The PyObjCTest testsuite now supports version-specific tests: for
   Python 2.x it will load modules whose name starts with 'test2_' and for
   Python 3.x those starting with 'test3_'. For both versions it will
@@ -146,44 +142,28 @@ Version 2.3a0
   ``property``, but integrates better with Objective-C code and APIs like
   Key-Value Observation.
 
+- Added ``objc.array_property``. This is simular to ``objc.object_property``,
+  but models a list-like object and implements the right Objective-C interfaces
+  for Key-Value Coding/Observations.
 
-- TODO:
-  * Later: automaticly parse the property definitions in the objc runtime
-    and do the right thing (but: also add global flag to enable/disable this)
+- Added ``objc.set_property``. This is simular to 
+  ``objc.object_property``, but models a set-like object and implements the 
+  right Objective-C interfaces for Key-Value Coding/Observations.
 
-    Partially done: there is a function for parsing property definitions, but
-    that isn't used yet.
+- Added ``objc.dict_property``. This is simular to
+  ``objc.object_property``, but models a dict-like object and implements the
+  right Objective-C interfaces for Key-Value Coding/Observations.
 
-  * Later: add metadata hooks + the data itself to define properties (again:
-    using the global flag to enable/disable properties on existing classes)
-
-  * The plan: flag == False in 2.3, flag == True in 2.4, remove flag in 2.5.
-    (and: add hooks to py2app to enable setting the flag in setup.py)
-
-- Binaries are build using a local copy of libxml by default, to avoid
-  problems when building on OSX 10.6 and running on earlier releases.
-
-- TODO: compile bridgesupport files into something more efficient.
-
-  (At the very least least: the PyObjCMethodSignature objects can be shared 
-  more than they are now). 
-
-  This needs further investigation to determine why we seem to use more memory
-  than Ruby.
-
-- TODO: Drop support for 2.5 and 
-
-  * implement '__dir__'
-
-  * avoid scanning the entire class
-
-  * drop 'addConvenienceForSelector', but instead of that add convenience methods
-    to classes.
-
-  This should improve performance and reduce memory usage (when proper caching
-  is used).
+- NOTE: The interfaces of ``array_property``, ``set_property`` and ``dict_property``
+  are minimal w.r.t. options for tweaking their behaviour. That will change in
+  future versions of PyObjC. 
+  
+  Please let us know which hooks would be usefull.
 
 - The documentation is now written using Sphinx.
+
+  NOTE: This is an operation in progress, the documentation needs work to be
+  truly usefull.
 
 - The (undocument) module ``PyObjCTools.DistUtilsSupport`` is no longer
   present.

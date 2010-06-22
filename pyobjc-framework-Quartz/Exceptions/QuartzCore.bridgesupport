@@ -182,7 +182,7 @@
   </class>
   <class name='CIKernel'>
     <method selector='setROISelector:'>
-      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' />
+      <arg index='0' sel_of_type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}@' />
     </method>
   </class>
   <class name='CISampler'>
@@ -349,7 +349,7 @@
   </class>
   <class name='CIKernel'>
     <method selector='setROISelector:'>
-      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' />
+      <arg index='0' sel_of_type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}@' />
     </method>
   </class>
   <class name='CISampler'>
@@ -516,7 +516,7 @@
   </class>
   <class name='CIKernel'>
     <method selector='setROISelector:'>
-      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' />
+      <arg index='0' sel_of_type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}@' />
     </method>
   </class>
   <class name='CISampler'>

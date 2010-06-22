@@ -40,14 +40,6 @@ class TestClassSetupHook (TestCase):
         self.fail("Test (and implementation) incomplete")
 
 
-class TestKVOProperty_Array (TestCase):
-    def testIncomplete(self):
-        self.fail("Implement objc.array_property")
-
-class TestKVOProperty_Set (TestCase):
-    def testIncomplete(self):
-        self.fail("Implement objc.set_property")
-
 
 if __name__ == "__main__":
     main()

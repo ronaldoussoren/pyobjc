@@ -9,6 +9,12 @@ import os
 # We need at least Python 2.5
 MIN_PYTHON = (2, 5)
 
+# FIXME: autodetect default values for USE_* variables:
+#  both should be false by default, unless
+#  1) python is /usr/bin/python: both should be true
+#  2) python build with --with-system-libffi: USE_SYSTEM_FFI
+#     should be true.
+
 # Set USE_SYSTEM_FFI to True to link to the system version
 # of libffi
 USE_SYSTEM_FFI = False
@@ -385,6 +391,7 @@ License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
+Programming Language :: Python :: 3
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces

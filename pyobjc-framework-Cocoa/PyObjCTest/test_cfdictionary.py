@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 class TestCFDictionary (TestCase):
 
     def testTypes(self):
-        self.assertIsObject(CFDictionaryRef, NSCFDictionary)
+        self.assertIs(CFDictionaryRef, NSCFDictionary)
     def testCreation(self):
         dictionary = CFDictionaryCreate(None,
                 ('aap', 'noot', 'mies', 'wim'),
@@ -76,7 +76,7 @@ class TestCFDictionary (TestCase):
         self.assertFalse(CFDictionaryContainsValue(dct, u"key3"))
 
         self.assertEqual(CFDictionaryGetValue(dct, "key2") , 42)
-        self.assertIsObject(CFDictionaryGetValue(dct, "key3"), None)
+        self.assertIs(CFDictionaryGetValue(dct, "key3"), None)
         self.assertResultHasType(CFDictionaryGetValueIfPresent, objc._C_NSBOOL)
         self.assertArgIsOut(CFDictionaryGetValueIfPresent, 2)
         ok, value = CFDictionaryGetValueIfPresent(dct, "key2", None)
@@ -84,7 +84,7 @@ class TestCFDictionary (TestCase):
         self.assertEqual(value , 42)
         ok, value = CFDictionaryGetValueIfPresent(dct, "key3", None)
         self.assertFalse(ok)
-        self.assertIsObject(value, None)
+        self.assertIs(value, None)
         keys, values = CFDictionaryGetKeysAndValues(dct, None, None)
         self.assertEqual(values , (42, 42))
         keys = list(keys)

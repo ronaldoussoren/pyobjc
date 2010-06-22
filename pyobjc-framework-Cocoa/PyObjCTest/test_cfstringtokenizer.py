@@ -32,7 +32,7 @@ class TestStringTokenizer (TestCase):
 
         self.assertResultIsCFRetained(CFStringTokenizerCopyCurrentTokenAttribute)
         v = CFStringTokenizerCopyCurrentTokenAttribute(tok, kCFStringTokenizerAttributeLanguage)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         s = u"A dog jumped over a log. And then some more."
         CFStringTokenizerSetString(tok, s, (0, len(s)))
 

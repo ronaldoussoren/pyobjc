@@ -45,7 +45,7 @@ class TestCGFunction (TestCase):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
         # Drawing is done, check that the shading function is actually used
-        self.failIfEqual(len(values), 0)
+        self.assertNotEqual(len(values), 0)
         for item in values:
             self.assertIsInstance(item, tuple)
             self.assertEqual(len(item), 1)

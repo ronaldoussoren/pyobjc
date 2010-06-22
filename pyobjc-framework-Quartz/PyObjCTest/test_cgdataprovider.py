@@ -33,7 +33,7 @@ class TestCGDataProvider (TestCase):
         data = CGDataProviderCopyData(provider)
         self.assertIsInstance(data, CFDataRef)
 
-        info = ["hello world", False]
+        info = [b"hello world", False]
         def release(info):
             info[-1] = True
         provider = CGDataProviderCreateWithData(info, info[0], len(info[0]), release)

@@ -75,7 +75,7 @@ if 0:
             self.assertEqual(str(q), str(r))
 
             v = NSDecimalIsNotANumber(o)
-            self.assertIsObject(v, False)
+            self.assertIs(v, False)
             v = NSDecimal()
             NSDecimalCopy(v, o)
             self.assertEqual(str(v), str(o))

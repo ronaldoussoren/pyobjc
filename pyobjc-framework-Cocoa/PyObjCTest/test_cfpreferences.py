@@ -24,14 +24,14 @@ class TestPreferences (TestCase):
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertResultIsBOOL(CFPreferencesAppValueIsForced)
         v = CFPreferencesAppValueIsForced("AutoFocus", "com.apple.Terminal")
-        self.assertIsObject(v is True or v, False)
+        self.assertIs(v is True or v, False)
     def testSetting(self):
         prefsFn = os.path.expanduser('~/Library/Preferences/PyObjCTest.plist')
         if os.path.exists(prefsFn):
             os.unlink(prefsFn)
 
         v = CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         CFPreferencesSetAppValue("PyObjCTestValue", "value1", "PyObjCTest")
         v = CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
         self.assertEqual(v , "value1")
@@ -48,15 +48,15 @@ class TestPreferences (TestCase):
         self.assertEqual(v , "value2")
         CFPreferencesSetValue("PyObjCTestValue2", None, "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         v = CFPreferencesCopyValue("PyObjCTestValue2", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         v = CFPreferencesCopyValue("PyObjCTestValue", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
-        self.assertIsNotObject(v, None)
+        self.assertIsNot(v, None)
         CFPreferencesSetMultiple({
             'key1': 99,
             'key2': 42,
         }, ["PyObjCTestValue"], "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         v = CFPreferencesCopyValue("PyObjCTestValue", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         v = CFPreferencesCopyValue("key2", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertEqual(v , 42)
         if os.path.exists(prefsFn):

@@ -111,7 +111,7 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)),
 	}
 
 	for (i = 0; i < len; i++) {
-		CGWindowID cur = (CGWindowID)CFArrayGetValueAtIndex(windowList, i);
+		CGWindowID cur = (CGWindowID)(NSInteger)CFArrayGetValueAtIndex(windowList, i);
 		PyObject* v = PyObjC_ObjCToPython(@encode(CGWindowID), &cur);
 		if (v == NULL) {
 			CFRelease(windowList);
@@ -150,7 +150,7 @@ createWindowList(PyObject* items)
 			CFRelease(array);
 			return NULL;
 		}
-		CFArrayAppendValue(array, (const void*)windowID);
+		CFArrayAppendValue(array, (const void*)(NSInteger)windowID);
 	}
 	Py_DECREF(seq);
 	return (CFArrayRef)array;

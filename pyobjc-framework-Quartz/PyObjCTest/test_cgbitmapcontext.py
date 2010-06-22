@@ -5,10 +5,10 @@ import array
 
 class TestCGBitmapContext (TestCase):
     def testFunctions(self):
-        bytes = array.array('B', (0 for i in xrange(100*80*4)))
-        self.assertIsInstance(bytes, array.array)
-        self.assertEqual(len(bytes), 100*80*4)
-        ctx = CGBitmapContextCreate(bytes, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
+        bytes_val = array.array('B', (0 for i in xrange(100*80*4)))
+        self.assertIsInstance(bytes_val, array.array)
+        self.assertEqual(len(bytes_val), 100*80*4)
+        ctx = CGBitmapContextCreate(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
         self.assertIsInstance(ctx, CGContextRef)
 
         buf = CGBitmapContextGetData(ctx)

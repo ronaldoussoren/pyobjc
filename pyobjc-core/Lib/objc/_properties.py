@@ -1,5 +1,5 @@
-__all__ = ('object_property', 'bool_property', )
-        #'array_property', 'set_property')
+__all__ = ('object_property', 'bool_property',
+        'array_property', 'set_property', 'dict_property')
 
 from objc import ivar, selector, _C_ID, _C_NSBOOL, _C_BOOL, NULL
 from objc import lookUpClass
@@ -257,47 +257,390 @@ class bool_property (object_property):
                 name, read_only, copy, dynamic, ivar, typestr)
 
 
-#
-#def _id(value):
-#    return value
-#
-#class array_proxy (object):
-#    def __init__(self, name, wrapped, read_only):
-#        self._name = name
-#        self._wrapped = wrapped
-#        self._ro = read_only
-#
-#    def __repr__(self):
-#        return '<array proxy for property ' + self._name + repr(self._wrapped) + '>'
-#
-#    def __reduce__(self):
-#        # Ensure that the proxy itself doesn't get stored
-#        # in pickles.
-#        return _id, self._wrapped
-#
-#    def __getitem__(self, index):
-#        return self._wrapped[index]
-#
-#    def __setitem__(self, index, value):
-#        # Generate the right willChange
-#        # - index can be a number or a slice
-#
-#        self._wrapped[index] = value
-#
-#        # Generate the right didChange
-#
-#    # Likewise for the rest of the list interface
-#
-#class array_property (object_property):
-#    # FIXME: getter should create an empty list on first access
-#    def __get__(self):
-#        v = object_property.__get__(self)
-#        return array_proxy(self._name, v, self._ro)
-#
-## Implement set proxy
-#
-#class set_property (object_property):
-#    # FIXME: getter should create an empty set on first access
-#    def __get__(self):
-#        v = object_property.__get__(self)
-#        return set_proxy(self._name, v, self._ro)
+
+def _id(value):
+    return value
+
+NSIndexSet = lookUpClass('NSIndexSet')
+NSMutableIndexSet = lookUpClass('NSMutableIndexSet')
+NSKeyValueChangeSetting = 1
+NSKeyValueChangeInsertion = 2
+NSKeyValueChangeRemoval = 3
+NSKeyValueChangeReplacement = 4
+
+
+class array_proxy (object):
+    # XXX: The implemenation should be complete, but is currently not
+    # tested.
+    __slots__ = ('_name', '_wrapped', '_parent', '_ro')
+
+    def __init__(cls, name, parent, wrapped, read_only):
+        v = cls.alloc().init()
+        v._name = name
+        v._wrapped = wrapped
+        v._parent = parent
+        v._ro = read_only
+
+
+    def __indexSetForIndex(self, index):
+        if isinstance(index, slice):
+            result = NSMutableIndexSet.alloc().init()
+            start, stop, step = index.indices(len(self._wrapped))
+            for i in xrange(start, stop, step):
+                result.addIndex(index)
+
+            return result
+
+        else:
+            if index < 0:
+                v = len(self) + index
+                if v < 0:
+                    raise IndexError(index)
+                return NSIndexSet.alloc().initWithIndex_(v)
+
+            else:
+                return NSIndexSet.alloc().initWithIndex_(v)
+        
+
+
+    def __repr__(self):
+        return '<array proxy for property ' + self._name + repr(self._wrapped) + '>'
+
+    def __reduce__(self):
+        # Ensure that the proxy itself doesn't get stored
+        # in pickles.
+        return _id, self._wrapped
+
+    def __getattr__(self, name):
+        # Default: just defer to wrapped list
+        return getattr(self._wrapped, name)
+
+    def __getitem__(self, index):
+        return self._wrapped[index]
+
+    def __setitem__(self, index, value):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        indexes = self.__indexSetForIndex(index)
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeSetting,
+                indexes, self._name)
+        try:
+            self._wrapped[index] = value
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeReplacement,
+                indexes, self._name)
+
+    def __delitem__(self, index):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        indexes = self.__indexSetForIndex(index)
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeRemoval,
+                indexes, self._name)
+        try:
+            self._wrapped[index] = value
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeRemoval,
+                indexes, self._name)
+
+    def append(self, value):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        index = len(self._wrapped)
+        indexes = NSIndexSet.alloc().initWithIndex_(index)
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+        try:
+            self._wrapped.append(value)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+
+    def insert(self, index, value):
+        if isinstance(index, slice):
+            raise TypeError("insert argument 1 is a slice")
+
+        indexes = self.__indexSetForIndex(index)
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+        try:
+            self._wrapped.insert(index, value)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+
+    def pop(self, index=-1):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        if isinstance(index, slice):
+            raise TypeError("insert argument 1 is a slice")
+
+        indexes = self.__indexSetForIndex(index)
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeRemoval,
+                indexes, self._name)
+        try:
+            self._wrapped.insert(index, value)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeRemoval,
+                indexes, self._name)
+
+    def extend(self, values):
+        # XXX: This is suboptimal but correct
+        for item in values:
+            self.append(values)
+
+
+    def sort(self, cmp=None, key=None, reverse=False):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                (0, len(self._wrapped)))
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeReplacement,
+                indexes, self._name)
+        try:
+            self._wrapped.sort(cmp=cmp, key=key, reverse=reverse)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeReplacement,
+                indexes, self._name)
+
+    def reverse(self):
+        if self._ro:
+            raise TypeError("Property '%s' is read-only"%(self._name,))
+
+        indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                (0, len(self._wrapped)))
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeReplacement,
+                indexes, self._name)
+        try:
+            self._wrapped.reverse()
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeReplacement,
+                indexes, self._name)
+
+
+class array_property (object_property):
+    def __get__(self):
+        v = object_property.__get__(self)
+        if v is None:
+            v = list()
+            object_property.__set__(self, v)
+        return array_proxy(self._name, self, v, self._ro)
+
+NSKeyValueUnionSetMutation = 1,
+NSKeyValueMinusSetMutation = 2,
+NSKeyValueIntersectSetMutation = 3,
+NSKeyValueSetSetMutation = 4
+             
+
+class set_proxy (object):
+    __slots__ = ('_name', '_wrapped', '_parent', '_ro')
+
+    def __init__(cls, name, parent, wrapped, read_only):
+        v = cls.alloc().init()
+        v._name = name
+        v._wrapped = wrapped
+        v._parent = parent
+        v._ro = read_only
+
+    def __getattr__(self, attr):
+        return getattr(self.wrapped, attr)
+
+    def add(self, item):
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueUnionSetMutation,
+                set(item),
+        )
+        try:
+            self._wrapped.add(item)
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueUnionSetMutation,
+                set(item),
+            )
+
+    def clear(self):
+        object = set(self._wrapped)
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                object
+        )
+        try:
+            self._wrapped.clear()
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                object
+            )
+
+    def difference_update(self, *others):
+        s = set()
+        s.update(*others)
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                s
+        )
+        try:
+            self._wrapped.difference_update(s)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                s
+            )
+
+
+    def discard(self, item):
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                set(item)
+        )
+        try:
+            self._wrapped.discard(s)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                set(item)
+            )
+        
+    def intersection_update(self, other):
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueIntersectSetMutation,
+                set(item)
+        )
+        try:
+            self._wrapped.intersection_update(s)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueIntersectSetMutation,
+                set(item)
+            )
+
+    def pop(self):
+        try:
+            v = iter(self).next()
+        except KeyError:
+            raise KeyError("Empty set")
+        
+        self.remove(v)
+
+
+    def remove(self, item):
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                set(item)
+        )
+        try:
+            self._wrapped.remove(s)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                set(item)
+            )
+
+    def symmetric_difference_update(self, other):
+        other = set(other)
+        s = set()
+        for item in other:
+            if item in self:
+                s.add(item)
+
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                s
+        )
+        try:
+            self._wrapped.symmetric_difference_update(other)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueMinusSetMutation,
+                s
+            )
+
+    def update(self, *others):
+        s = set()
+        s.update(*others)
+
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueUnionSetMutation,
+                s
+        )
+        try:
+            self._wrapped.update(s)
+
+        finally:
+            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+                self._name,
+                NSKeyValueUnionSetMutation,
+                s
+            )
+
+
+    def __ior__(self, other):
+        return self|other
+
+    def __isub__(self, other):
+        return self-other
+
+    def __ixor__(self, other):
+        return self^other
+
+    def __iand__(self, other):
+        return self&other
+
+
+
+class set_property (object_property):
+    def __get__(self):
+        v = object_property.__get__(self)
+        if v is None:
+            v = set()
+            object_property.__set__(self, v)
+        return set_proxy(self._name, v, self._ro)
+
+
+NSMutableDictionary = lookUpClass('NSMutableDictionary')
+
+class dict_property (object_property):
+    def __get__(self):
+        v = object_property.__get__(self)
+        if v is None:
+            v = NSMutableDictionary.alloc().init()
+            object_property.__set__(self, v)
+        return dict_proxy(self._name, v, self._ro)

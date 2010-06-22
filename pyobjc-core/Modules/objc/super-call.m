@@ -48,7 +48,7 @@ init_registry(void)
 
 #if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
 
-static void memblock_capsule_cleanup(void* ptr, void* closure __attribute__((__unused__)))
+static void memblock_capsule_cleanup(void* ptr)
 {
 	PyMem_Free(ptr);
 }
@@ -350,7 +350,8 @@ PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 		methinfo = PyObjCMethodSignature_ForSelector(
 				class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
 				PyObjCSelector_GetSelector(sel),
-				PyObjCSelector_Signature(sel));
+				PyObjCSelector_Signature(sel),
+				PyObjCNativeSelector_Check(sel));
 		if (methinfo == NULL) {
 			return NULL;
 		}
@@ -365,7 +366,8 @@ PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 		methinfo = PyObjCMethodSignature_ForSelector(
 				class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
 				PyObjCSelector_GetSelector(sel),
-				PyObjCSelector_Signature(sel));
+				PyObjCSelector_Signature(sel),
+				PyObjCNativeSelector_Check(sel));
 		if (methinfo == NULL) {
 			return NULL;
 		}

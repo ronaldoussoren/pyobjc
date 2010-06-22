@@ -38,10 +38,29 @@ instead of ``Py`` as the prefix for globally visible symbols.
 
 All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as
 their first include.  The (Objective-)C files in the wrappers for frameworks
-should include ``"pyobjc-api.h"`` and should not use other include-files in
-``Modules/objc`` other than ``pyobjc-api.h`` and ``wrapper-const-table.h``.
+should include ``"pyobjc-api.h"`` and should not use other headers files from
+``pyobjc-core``.
 
-.. _`PEP 7`: http://www.python.org/peps/pep-0007.txt
+The ``setup.py`` for a framework wrapper should defer most work to 
+``pyobjc_setup.py``, like so:
+
+.. code-block:: python
+
+   from pyobjc_setup import setup
+
+   setup(
+      name='pyobjc-framework-AddressBook',
+      version="2.3"
+      description = "Wrappers for the framework AddressBook on Mac OS X",
+      packages = [ "AddressBook" ],
+      install_requires = [
+          'pyobjc-core>=2.3b1',
+          'pyobjc-framework-Cocoa>=2.3b1',
+      ],
+   )
+
+The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but 
+dynamicly fetches that at build time.
 
 Documentation
 -------------
@@ -83,3 +102,4 @@ in the DocUtils source tree.
         
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 
+.. _`PEP 7`: http://www.python.org/peps/pep-0007.txt

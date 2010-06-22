@@ -83,7 +83,7 @@ class TestSocket (TestCase):
 
     
         ctx = CFSocketGetContext(sock, None)
-        self.assertIsObject(ctx, data)
+        self.assertIs(ctx, data)
         flags = CFSocketGetSocketFlags(sock)
         self.assertIsInstance(flags, (int, long))
         CFSocketSetSocketFlags(sock, kCFSocketAutomaticallyReenableReadCallBack|kCFSocketAutomaticallyReenableAcceptCallBack)
@@ -122,11 +122,11 @@ class TestSocket (TestCase):
 
 
         ok = CFSocketIsValid(sock)
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         CFSocketInvalidate(sock)
         self.assertResultIsBOOL(CFSocketIsValid)
         ok = CFSocketIsValid(sock)
-        self.assertIsObject(ok, False)
+        self.assertIs(ok, False)
         localaddr = struct.pack('>BBHBBBB', 16, socket.AF_INET, 9424, 127, 0, 0, 1)
         localaddr += '\0' * 8
         signature = CFSocketSignature(

@@ -40,12 +40,12 @@ import os
 
 setup(
     name='pyobjc-framework-Quartz',
-    version='2.2',
+    version="2.3b1",
     description = "Wrappers for the Quartz frameworks on Mac OS X",
     packages = [ "Quartz", "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", "Quartz.PDFKit", "Quartz.QuartzFilters" ],
     install_requires = [ 
-        'pyobjc-core>=2.2',
-        'pyobjc-framework-Cocoa>=2.2',
+        'pyobjc-core>=2.3b1',
+        'pyobjc-framework-Cocoa>=2.3b1',
     ],
     ext_modules = [
         # CoreVideo
