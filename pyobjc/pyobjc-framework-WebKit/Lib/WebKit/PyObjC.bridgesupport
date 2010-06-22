@@ -762,9 +762,9 @@
     <method selector='webView:createWebViewModalDialogWithRequest:' type='@@:@@' />
     <method selector='webView:createWebViewWithRequest:' type='@@:@@' />
     <method selector='webView:dragDestinationActionMaskForDraggingInfo:' type='I@:@@' type64='Q@:@@' />
-    <method selector='webView:dragSourceActionMaskForPoint:' type='I@:@{_NSPoint=ff}' type64='Q@:@{CGPoint=dd}' />
-    <method selector='webView:drawFooterInRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <method selector='webView:drawHeaderInRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <method selector='webView:dragSourceActionMaskForPoint:' type='I@:@{_NSPoint=ff}' type64='Q@:@{_NSPoint=dd}' />
+    <method selector='webView:drawFooterInRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <method selector='webView:drawHeaderInRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <method selector='webView:makeFirstResponder:' type='v@:@@' />
     <method selector='webView:mouseDidMoveOverElement:modifierFlags:' type='v@:@@I' type64='v@:@@Q' />
     <method selector='webView:printFrameView:' type='v@:@@' />
@@ -776,8 +776,8 @@
     <method selector='webView:runJavaScriptTextInputPanelWithPrompt:defaultText:' type='@@:@@@' />
     <method selector='webView:runJavaScriptTextInputPanelWithPrompt:defaultText:initiatedByFrame:' type='@@:@@@@' />
     <method selector='webView:runOpenPanelForFileButtonWithResultListener:' type='v@:@@' />
-    <method selector='webView:setContentRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{CGRect={CGPoint=dd}{CGSize=dd}}' />
-    <method selector='webView:setFrame:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <method selector='webView:setContentRect:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <method selector='webView:setFrame:' type='v@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='v@:@{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <method selector='webView:setResizable:' type='v@:@B' />
     <method selector='webView:setStatusBarVisible:' type='v@:@B' />
     <method selector='webView:setStatusText:' type='v@:@@' />
@@ -785,14 +785,14 @@
     <method selector='webView:shouldPerformAction:fromSender:' type='B@:@:@' />
     <method selector='webView:validateUserInterfaceItem:defaultValidation:' type='B@:@@B' />
     <method selector='webView:willPerformDragDestinationAction:forDraggingInfo:' type='v@:@i@' />
-    <method selector='webView:willPerformDragSourceAction:fromPoint:withPasteboard:' type='v@:@i{_NSPoint=ff}@' type64='v@:@q{CGPoint=dd}@' />
+    <method selector='webView:willPerformDragSourceAction:fromPoint:withPasteboard:' type='v@:@i{_NSPoint=ff}@' type64='v@:@q{_NSPoint=dd}@' />
     <method selector='webViewAreToolbarsVisible:' type='B@:@' />
     <method selector='webViewClose:' type='v@:@' />
-    <method selector='webViewContentRect:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@' />
+    <method selector='webViewContentRect:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:@' />
     <method selector='webViewFirstResponder:' type='@@:@' />
     <method selector='webViewFocus:' type='v@:@' />
     <method selector='webViewFooterHeight:' type='f@:@' />
-    <method selector='webViewFrame:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@' />
+    <method selector='webViewFrame:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:@' />
     <method selector='webViewHeaderHeight:' type='f@:@' />
     <method selector='webViewIsResizable:' type='B@:@' />
     <method selector='webViewIsStatusBarVisible:' type='B@:@' />

@@ -870,7 +870,3 @@ It is possible to override property accessor in a subclass::
 
 This can also be used to convert a read-only property to a read-write one
 by adding a setter accessor.
-
-
-   
-   

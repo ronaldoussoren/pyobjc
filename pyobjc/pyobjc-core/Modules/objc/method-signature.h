@@ -63,10 +63,10 @@ struct _PyObjCMethodSignature {
 };
 
 
-extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata);
+extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BOOL is_native);
 
 extern PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
-		                Class cls, BOOL isClassMethod, SEL sel, const char* signature);
+	Class cls, BOOL isClassMethod, SEL sel, const char* signature, BOOL is_native);
 
 
 
@@ -81,9 +81,9 @@ extern PyObject*
 PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 static inline PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
-		const char* sig)
+		const char* sig, BOOL is_native)
 {
-	return PyObjCMethodSignature_WithMetaData(sig, NULL);
+	return PyObjCMethodSignature_WithMetaData(sig, NULL, is_native);
 }
 
 #endif /* PyObjC_METHODSIGNATURE_H */

@@ -17,10 +17,10 @@ class TestNSRange (TestCase):
 
         self.assertEqual(NSMaxRange(v), 5)
         self.assertResultIsBOOL(NSLocationInRange)
-        self.assertIsObject(NSLocationInRange(3, v), True)
-        self.assertIsObject(NSLocationInRange(15, v), False)
+        self.assertIs(NSLocationInRange(3, v), True)
+        self.assertIs(NSLocationInRange(15, v), False)
         self.assertResultIsBOOL(NSEqualRanges)
-        self.assertIsObject(NSEqualRanges(v, v), True)
+        self.assertIs(NSEqualRanges(v, v), True)
         v = NSUnionRange((1, 3), (5, 10))
         self.assertIsInstance(v, NSRange)
 

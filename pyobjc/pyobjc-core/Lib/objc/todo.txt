@@ -1,0 +1,50 @@
+- TODO:
+  * Later: automaticly parse the property definitions in the objc runtime
+    and do the right thing (but: also add global flag to enable/disable this)
+
+    Partially done: there is a function for parsing property definitions, but
+    that isn't used yet.
+
+  * Later: add metadata hooks + the data itself to define properties (again:
+    using the global flag to enable/disable properties on existing classes)
+
+  * The plan: flag == False in 2.3, flag == True in 2.4, remove flag in 2.5.
+    (and: add hooks to py2app to enable setting the flag in setup.py)
+
+- Binaries are build using a local copy of libxml by default, to avoid
+  problems when building on OSX 10.6 and running on earlier releases.
+
+- TODO: compile bridgesupport files into something more efficient.
+
+  (At the very least least: the PyObjCMethodSignature objects can be shared 
+  more than they are now). 
+
+  This needs further investigation to determine why we seem to use more memory
+  than Ruby.
+
+- TODO: Drop support for 2.5 and 
+
+  * implement '__dir__'
+
+  * avoid scanning the entire class
+
+  * drop 'addConvenienceForSelector', but instead of that add convenience methods
+    to classes.
+
+  This should improve performance and reduce memory usage (when proper caching
+  is used).
+
+- TODO:
+
+  * Test memory usage using the Instruments tool to check which bits
+    of PyObjC use (too) much memory. Do this using a build of
+    Python without pymalloc (because pymalloc confuses Instruments)
+
+- TODO:
+
+  * NSData/NSMutableData should have same interface as bytes/bytearray
+    (the former obviously only for 3.x)
+
+  * Move manual wrappers and metadata for NSArray, NSData, NSDictionary,
+    NSSet and their mutable variants to pyobjc-core
+

@@ -15,7 +15,7 @@ class TestNSDateFormatter (TestCase):
         self.assertTrue(ok)
         self.assertIsInstance(val, NSDate)
         self.assertEqual(range , NSRange(0, 10))
-        self.assertIsObject(err, None)
+        self.assertIs(err, None)
         self.assertResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
         self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
         self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)

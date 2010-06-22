@@ -315,7 +315,7 @@ build_intermediate_class(Class base_class, char* name)
 
 	if ([base_class instancesRespondToSelector:@selector(copyWithZone:)]) {
 		methinfo = PyObjCMethodSignature_FromSignature(
-				copyWithZone_signature);
+				copyWithZone_signature, NO);
 		if (methinfo == NULL) goto error_cleanup; 
 		closure = PyObjCFFI_MakeClosure(methinfo, 
 				object_method_copyWithZone_, base_class);
@@ -330,7 +330,7 @@ build_intermediate_class(Class base_class, char* name)
 	}
 	if ([base_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
 		methinfo = PyObjCMethodSignature_FromSignature(
-				copyWithZone_signature);
+				copyWithZone_signature, NO);
 		if (methinfo == NULL) goto error_cleanup; 
 		closure = PyObjCFFI_MakeClosure(methinfo, 
 				object_method_copyWithZone_, base_class);
@@ -344,7 +344,7 @@ build_intermediate_class(Class base_class, char* name)
 			copyWithZone_signature);
 	}
 
-	methinfo = PyObjCMethodSignature_FromSignature("v@:");
+	methinfo = PyObjCMethodSignature_FromSignature("v@:", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, object_method_dealloc,
 		base_class);
@@ -354,7 +354,7 @@ build_intermediate_class(Class base_class, char* name)
 	preclass_addMethod( intermediate_class, @selector(dealloc),
 			(IMP)closure, "v@:");
 
-	methinfo = PyObjCMethodSignature_FromSignature("v@:");
+	methinfo = PyObjCMethodSignature_FromSignature("v@:", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, object_method_finalize,
 		base_class);
@@ -364,7 +364,7 @@ build_intermediate_class(Class base_class, char* name)
 	preclass_addMethod( intermediate_class, @selector(finalize),
 			(IMP)closure, "v@:");
 
-	methinfo = PyObjCMethodSignature_FromSignature("@@:@");
+	methinfo = PyObjCMethodSignature_FromSignature("@@:@", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, object_method_valueForKey_,
 		base_class);
@@ -376,7 +376,7 @@ build_intermediate_class(Class base_class, char* name)
 	preclass_addMethod(intermediate_class, @selector(storedValueForKey:),
 		(IMP)closure, "@@:@");
 
-	methinfo = PyObjCMethodSignature_FromSignature("v@:@@");
+	methinfo = PyObjCMethodSignature_FromSignature("v@:@@", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, object_method_setValue_forKey_,
 		base_class);
@@ -390,7 +390,7 @@ build_intermediate_class(Class base_class, char* name)
 		@selector(takeValue:forKey:),       (IMP)closure, "v@:@@");
 
 
-	methinfo = PyObjCMethodSignature_FromSignature("c@::");
+	methinfo = PyObjCMethodSignature_FromSignature("c@::", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, 
 		object_method_respondsToSelector,
@@ -401,7 +401,7 @@ build_intermediate_class(Class base_class, char* name)
 		@selector(respondsToSelector:), 
 		(IMP)closure, "c@::");
 
-	methinfo = PyObjCMethodSignature_FromSignature("@@::");
+	methinfo = PyObjCMethodSignature_FromSignature("@@::", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, 
 		object_method_methodSignatureForSelector,
@@ -412,7 +412,7 @@ build_intermediate_class(Class base_class, char* name)
 		@selector(methodSignatureForSelector:), 
 		(IMP)closure, "@@::");
 
-	methinfo = PyObjCMethodSignature_FromSignature("v@:@");
+	methinfo = PyObjCMethodSignature_FromSignature("v@:@", NO);
 	if (methinfo == NULL) goto error_cleanup; 
 	closure = PyObjCFFI_MakeClosure(methinfo, 
 		object_method_forwardInvocation,
@@ -427,7 +427,7 @@ build_intermediate_class(Class base_class, char* name)
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 	if (_KVOHackLevel() == BROKEN_KVO) {
-		methinfo = PyObjCMethodSignature_FromSignature("v@:@");
+		methinfo = PyObjCMethodSignature_FromSignature("v@:@", NO);
 		if (methinfo == NULL) goto error_cleanup; 
 		closure = PyObjCFFI_MakeClosure(methinfo, object_method_willOrDidChangeValueForKey_,
 			base_class);
@@ -1294,7 +1294,7 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
 		PyObjCMethodSignature* methinfo;
 
 #		define METH(pyname, selector, types, imp) 		\
-		        methinfo = PyObjCMethodSignature_FromSignature(types); \
+		        methinfo = PyObjCMethodSignature_FromSignature(types, NO); \
 			if (methinfo == NULL) goto error_cleanup; \
 			closure = PyObjCFFI_MakeClosure(methinfo, imp, \
 					super_class); \
@@ -2026,7 +2026,7 @@ object_method_forwardInvocation(
 
 
 	signature = PyObjCMethodSignature_FromSignature(
-		PyObjCSelector_Signature(pymeth));
+		PyObjCSelector_Signature(pymeth), NO);
 	len = Py_SIZE(signature);
 
 	Py_XDECREF(pymeth); pymeth = NULL;

@@ -7,7 +7,7 @@ from Foundation import NSURL
 
 class TestURL (TestCase):
     def testTypes(self):
-        self.assertIsObject(CFURLRef, NSURL)
+        self.assertIs(CFURLRef, NSURL)
     def testTypeID(self):
         val = CFURLGetTypeID()
         self.assertIsInstance(val, (int, long))
@@ -376,7 +376,7 @@ class TestURL (TestCase):
 
             self.assertResultIsCFRetained(CFURLCreateBookmarkData)
             data, err = CFURLCreateBookmarkData(None, url, kCFURLBookmarkCreationSuitableForBookmarkFile, [kCFURLNameKey, kCFURLIsHiddenKey], None, None)
-            self.assertIsObject(err, None)
+            self.assertIs(err, None)
             self.assertIsInstance(data, CFDataRef)
 
             self.assertResultIsCFRetained(CFURLCreateByResolvingBookmarkData)
@@ -384,7 +384,7 @@ class TestURL (TestCase):
             self.assertEqual(u, url)
             self.assertIsInstance(stale, bool)
             self.assertFalse(stale)
-            self.assertIsObject(err, None)
+            self.assertIs(err, None)
             self.assertResultIsCFRetained(CFURLCreateResourcePropertiesForKeysFromBookmarkData)
             v = CFURLCreateResourcePropertiesForKeysFromBookmarkData(None, [kCFURLNameKey], data)
             self.assertIsInstance(v, CFDictionaryRef)
@@ -397,13 +397,13 @@ class TestURL (TestCase):
                 u"/tmp/pyobjc.test.2", kCFURLPOSIXPathStyle, False)
             ok, err = CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
             self.assertTrue(ok)
-            self.assertIsObject(err, None)
+            self.assertIs(err, None)
             self.assertTrue(os.path.exists('/tmp/pyobjc.test.2'))
 
             self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromFile)
             n, err = CFURLCreateBookmarkDataFromFile(None, refURL, None)
             self.assertIsInstance(n, CFDataRef)
-            self.assertIsObject(err, None)
+            self.assertIs(err, None)
             self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromAliasRecord)
             self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 0, b'^{__CFAllocator=}')
             self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 1, b'^{__CFData=}')

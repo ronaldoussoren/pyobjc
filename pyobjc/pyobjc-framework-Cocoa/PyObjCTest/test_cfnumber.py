@@ -84,8 +84,8 @@ class TestCFNumber (TestCase):
 
     def testBoolean(self):
         self.assertIsInstance(CFBooleanGetTypeID(), (int, long))
-        self.assertIsObject(CFBooleanGetValue(kCFBooleanTrue), True)
-        self.assertIsObject(CFBooleanGetValue(kCFBooleanFalse), False)
+        self.assertIs(CFBooleanGetValue(kCFBooleanTrue), True)
+        self.assertIs(CFBooleanGetValue(kCFBooleanFalse), False)
         self.assertTrue(CFBooleanGetValue(True))
         self.assertFalse(CFBooleanGetValue(False))
 
@@ -177,8 +177,8 @@ class TestCFNumber (TestCase):
         r = CFNumberCompare(44, 45, 0)
         self.assertLessThan(r , 0)
     def testConstants(self):
-        self.assertIsObject(kCFBooleanTrue, True)
-        self.assertIsObject(kCFBooleanFalse, False)
+        self.assertIs(kCFBooleanTrue, True)
+        self.assertIs(kCFBooleanFalse, False)
         self.assertEqual(kCFNumberSInt8Type , 1)
         self.assertEqual(kCFNumberSInt16Type , 2)
         self.assertEqual(kCFNumberSInt32Type , 3)

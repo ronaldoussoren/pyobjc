@@ -88,7 +88,7 @@ class TestDateFormatter (TestCase):
         self.assertIsInstance(dt, CFDateRef)
         self.assertIsInstance(rng, CFRange)
         ok, rng, abstime = CFDateFormatterGetAbsoluteTimeFromString(fmt, v, (0, len(v)), None)
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         self.assertIsInstance(rng, CFRange)
         self.assertIsInstance(abstime, float)
         self.assertResultIsCFRetained(CFDateFormatterCopyProperty)
@@ -102,6 +102,6 @@ class TestDateFormatter (TestCase):
         self.assertTrue(v is True or v is False)
         CFDateFormatterSetProperty(fmt, kCFDateFormatterIsLenient, True)
         v2 = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
-        self.assertIsObject(v2, True)
+        self.assertIs(v2, True)
 if __name__ == "__main__":
     main()

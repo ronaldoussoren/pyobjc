@@ -106,6 +106,7 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)),
 				&delta);
 
 	PyObjC_HANDLER
+		err = -1; /* Avoid compiler warning */
 		PyObjCErr_FromObjC(localException);
 	PyObjC_ENDHANDLER
 

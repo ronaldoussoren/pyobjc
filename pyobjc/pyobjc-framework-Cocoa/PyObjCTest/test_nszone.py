@@ -43,9 +43,9 @@ class TestNSZone (TestCase):
         o = NSObject.alloc().init()
         CFRetain(o)
         v = NSMakeCollectable(o)
-        self.assertIsObject(v, o)
+        self.assertIs(v, o)
         v = NSMakeCollectable(None)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
     def testInfoFunctions(self):
         v = NSPageSize()
         self.assertIsInstance(v, (int, long))

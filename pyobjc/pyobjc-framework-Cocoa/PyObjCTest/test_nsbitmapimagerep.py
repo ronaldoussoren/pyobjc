@@ -12,6 +12,7 @@ class TestNSBitmapImageRep(TestCase):
         width = 256
         height = 256
         dataPlanes = (None, None, None, None, None)
+        dataPlanes = None
         i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
         self.assert_(i1)
 
@@ -26,6 +27,8 @@ class TestNSBitmapImageRep(TestCase):
         rPlane.fromlist( [y%256 for y in range(0,height) for x in range(0,width)] )
         if sys.version_info[0] == 3:
             buffer = memoryview
+        else:
+            from __builtin__ import buffer
         rPlane = buffer(rPlane)
 
         gPlane = array.array('B')
@@ -84,7 +87,7 @@ class TestNSBitmapImageRep(TestCase):
         a = array.array('L', [255]*4)
         self.assertArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
         d = i2.getPixel_atX_y_(a, 1, 1)
-        self.assertIsObject(a, d)
+        self.assertIs(a, d)
 class TestBadCreation(TestCase):
 
     # Redirect stderr to /dev/null for the duration of this test, 

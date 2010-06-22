@@ -11,11 +11,11 @@ and (Objective-)C frameworks
 from pyobjc_setup import *
 setup(
     name='pyobjc-framework-CoreData',
-    version='2.2',
+    version="2.3b1",
     description = "Wrappers for the framework CoreData on Mac OS X",
     packages = [ "CoreData" ],
     install_requires = [ 
-        'pyobjc-core>=2.2',
-        'pyobjc-framework-Cocoa>=2.2',
+        'pyobjc-core>=2.3b1',
+        'pyobjc-framework-Cocoa>=2.3b1',
     ],
 )

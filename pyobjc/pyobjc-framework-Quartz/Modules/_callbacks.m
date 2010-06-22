@@ -776,7 +776,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
  */
 
 static void
-m_CGFunctionEvaluateCallback(void* _info, const float* inData, float* outData)
+m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outData)
 {
 	PyObject* info = (PyObject*)_info;
 	long      domdim;
@@ -794,7 +794,7 @@ m_CGFunctionEvaluateCallback(void* _info, const float* inData, float* outData)
 
 	PyObject* input;
 	if (inData) {
-		input = PyObjC_CArrayToPython(@encode(float), (void*)inData, domdim);
+		input = PyObjC_CArrayToPython(@encode(CGFloat), (void*)inData, domdim);
 	} else {
 		input = Py_None;
 		Py_INCREF(Py_None);
@@ -811,7 +811,7 @@ m_CGFunctionEvaluateCallback(void* _info, const float* inData, float* outData)
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
-	if (PyObjC_DepythonifyCArray(@encode(float), rangedim, NO, result, (void*)outData) < 0) {
+	if (PyObjC_DepythonifyCArray(@encode(CGFloat), rangedim, NO, result, (void*)outData) < 0) {
 		Py_DECREF(result);
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -852,8 +852,8 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* evaluate;
 	size_t domainDimension;
 	size_t rangeDimension;
-	float* domainArr;
-	float* rangeArr;
+	CGFloat* domainArr;
+	CGFloat* rangeArr;
 	CGFunctionRef result = NULL;
 	PyObject* domainBuf = NULL;
 	PyObject* rangeBuf = NULL;
@@ -879,7 +879,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 	} else  {
 		/*  Parse Array */
 		Py_ssize_t cnt = domainDimension * 2;
-		domainTag = PyObjC_PythonToCArray(NO, NO, @encode(float),
+		domainTag = PyObjC_PythonToCArray(NO, NO, @encode(CGFloat),
 				domain, (void**)&domainArr, &cnt, &domainBuf);
 		if (domainTag < 0) {
 			return NULL;
@@ -894,7 +894,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)),
 		Py_ssize_t cnt = rangeDimension * 2;
 
 		/*  Parse Array */
-		rangeTag = PyObjC_PythonToCArray(NO, NO, @encode(float),
+		rangeTag = PyObjC_PythonToCArray(NO, NO, @encode(CGFloat),
 				range, (void**)&rangeArr, &cnt, &rangeBuf);
 		if (rangeTag < 0) {
 			if (domainTag != -1) {

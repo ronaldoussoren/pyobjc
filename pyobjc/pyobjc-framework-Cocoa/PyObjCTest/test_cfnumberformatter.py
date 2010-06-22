@@ -13,7 +13,7 @@ class TestNumberFormatter (TestCase):
         fmt = CFNumberFormatterCreate(None, locale, kCFNumberFormatterDecimalStyle)
         self.assertIsInstance(fmt, CFNumberFormatterRef)
         v = CFNumberFormatterGetLocale(fmt)
-        self.assertIsObject(v, locale)
+        self.assertIs(v, locale)
         v = CFNumberFormatterGetStyle(fmt)
         self.assertEqual(v , kCFNumberFormatterDecimalStyle)
         v = CFNumberFormatterGetFormat(fmt)

@@ -37,7 +37,7 @@ class TestUserNotification (TestCase):
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
 
         self.assertEqual(len(values), 1)
-        self.assertIsObject(values[0][0], ref)
+        self.assertIs(values[0][0], ref)
         self.assertIsInstance(values[0][1], (int, long))
 
         self.assertArgIsOut(CFUserNotificationReceiveResponse, 2)

@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 
 from SystemConfiguration import *
+import sys
 
 class TestSCNetworkConfiguration (TestCase):
 
@@ -52,7 +53,6 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(kSCNetworkProtocolTypeSMB, unicode))
 
     def testFunctions(self):
-
         r = SCNetworkInterfaceGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
 
@@ -63,7 +63,6 @@ class TestSCNetworkConfiguration (TestCase):
         for iface in r:
             if SCNetworkInterfaceGetBSDName(iface).startswith('en'):
                 break
-
         r = SCNetworkInterfaceGetSupportedInterfaceTypes(iface)
         self.assertTrue(isinstance(r, CFArrayRef))
         self.assertTrue(isinstance(r[0], unicode))
@@ -117,22 +116,29 @@ class TestSCNetworkConfiguration (TestCase):
         r = SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[1])
         self.assertTrue(isinstance(r, CFArrayRef))
 
-        r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(iface, None, None, None)
-        self.assertTrue(r is True)
-        self.assertTrue(isinstance(mtu_cur, (int, long)))
-        self.assertTrue(isinstance(mtu_min, (int, long)))
-        self.assertTrue(isinstance(mtu_max, (int, long)))
+        if sys.byteorder == 'little':
+            # These tests crash in Rosetta on an intel machine::
+            #
+            #   Unhandled transform (1) for ioctl group = 105 (i), number = 68, length = 32
+            #   Illegal instruction
 
-        r = SCNetworkInterfaceSetMediaOptions(iface,
+            # I haven't filed a bug for this yet.
+
+            r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(iface, None, None, None)
+            self.assertTrue(r is True)
+            self.assertTrue(isinstance(mtu_cur, (int, long)))
+            self.assertTrue(isinstance(mtu_min, (int, long)))
+            self.assertTrue(isinstance(mtu_max, (int, long)))
+            r = SCNetworkInterfaceSetMediaOptions(iface,
                 current['MediaSubType'],
                 current['MediaOptions'])
-        self.assertTrue(r is True or r is False)
+            self.assertTrue(r is True or r is False)
 
-        r = SCNetworkInterfaceSetMTU(iface, mtu_cur)
-        self.assertTrue(r is True or r is False)
+            r = SCNetworkInterfaceSetMTU(iface, mtu_cur)
+            self.assertTrue(r is True or r is False)
 
-        r = SCNetworkInterfaceForceConfigurationRefresh(iface)
-        self.assertTrue(r is True or r is False)
+            r = SCNetworkInterfaceForceConfigurationRefresh(iface)
+            self.assertTrue(r is True or r is False)
 
         prefs = SCPreferencesCreate(None, "SystemConfiguration", None)
         self.assertTrue(isinstance(prefs, SCPreferencesRef))
@@ -174,6 +180,7 @@ class TestSCNetworkConfiguration (TestCase):
 
             r = SCBondInterfaceRemove(iface)
             self.assertTrue(r is True)
+
 
         r = SCBondStatusGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))

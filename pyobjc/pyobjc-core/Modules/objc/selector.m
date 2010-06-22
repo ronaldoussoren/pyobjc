@@ -114,7 +114,9 @@ PyObjCSelector_GetMetadata(PyObject* _self)
 			self->sel_class,
 			(self->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 			self->sel_selector,
-			self->sel_python_signature);
+			self->sel_python_signature,
+			PyObjCNativeSelector_Check(self)
+			);
 		if (self->sel_methinfo == NULL) return NULL;
 
 		if (PyObjCPythonSelector_Check(_self)) {
@@ -932,7 +934,7 @@ static char gSheetMethodSignature[] = { _C_VOID, _C_ID, _C_SEL, _C_ID, _C_INT, _
 
 PyObject*
 PyObjCSelector_New(PyObject* callable, 
-	SEL selector, char* signature, int class_method, Class cls)
+	SEL selector, const char* signature, int class_method, Class cls)
 {
 	PyObjCPythonSelector* result;
 	if (signature == NULL) {

@@ -346,7 +346,7 @@
     <retval type='I' />
   </function>
   <function name='CVImageBufferGetCleanRect'>
-    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetColorSpace'>
@@ -354,11 +354,11 @@
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetDisplaySize'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetEncodedSize'>
-    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     <arg type='@' />
   </function>
   <function name='CVOpenGLBufferAttach'>

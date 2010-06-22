@@ -30,10 +30,10 @@
     <method selector='ibIsChildInitiallySelectable:' type='B@:@' />
     <method selector='ibIsChildViewUserMovable:' type='B@:@' />
     <method selector='ibIsChildViewUserSizable:' type='B@:@' />
-    <method selector='ibObjectAtLocation:inWindowController:' type='@@:{_NSPoint=ff}@' type64='@@:{CGPoint=dd}@' />
+    <method selector='ibObjectAtLocation:inWindowController:' type='@@:{_NSPoint=ff}@' type64='@@:{_NSPoint=dd}@' />
     <method selector='ibPopulateAttributeInspectorClasses:' type='v@:@' />
     <method selector='ibPopulateKeyPaths:' type='v@:@' />
-    <method selector='ibRectForChild:inWindowController:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@@' type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:@@' />
+    <method selector='ibRectForChild:inWindowController:' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@@' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:@@' />
   </informal_protocol>
   <class name='IBDocument'>
     <method selector='addObject:toParent:'>
@@ -205,7 +205,7 @@
     </method>
     <method selector='ibObjectAtLocation:inWindowController:'>
       <retval type='@' />
-      <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+      <arg index='0' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
       <arg index='1' type='@' />
     </method>
     <method selector='ibPopulateAttributeInspectorClasses:'>
@@ -217,7 +217,7 @@
       <arg index='0' type='@' />
     </method>
     <method selector='ibRectForChild:inWindowController:'>
-      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
       <arg index='0' type='@' />
       <arg index='1' type='@' />
     </method>
@@ -237,13 +237,13 @@
       <retval type='{IBInsetTag=ffff}' />
     </method>
     <method selector='ibMaximumSize'>
-      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     </method>
     <method selector='ibMinimumSize'>
-      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     </method>
     <method selector='ibPreferredDesignSize'>
-      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
     </method>
     <method selector='ibPreferredResizeDirection'>
       <retval type='i' />

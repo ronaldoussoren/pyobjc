@@ -7,7 +7,7 @@ class TestError (TestCase):
 
     @min_os_level('10.5')
     def testTypes(self):
-        self.assertIsObject(CFErrorRef, NSCFError)
+        self.assertIs(CFErrorRef, NSCFError)
     @min_os_level('10.5')
     def testTypeID(self):
         self.assertIsInstance(CFErrorGetTypeID(), (int, long))

@@ -33,7 +33,7 @@ class TestNSDecimalNumber (TestCase):
         
         dec = NSDecimal()
         o = v.scanDecimal_(dec)
-        self.assertIsObject(o, True)
+        self.assertIs(o, True)
         self.assertEqual(dec.description(), '55.23')
 
 if __name__ == "__main__":

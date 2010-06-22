@@ -244,33 +244,33 @@
   </function>
   <function name='CATransform3DConcat'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DEqualToTransform'>
     <retval type='Z' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DGetAffineTransform'>
     <retval type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DInvert'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DIsAffine'>
     <retval type='Z' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DIsIdentity'>
     <retval type='Z' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
   </function>
   <function name='CATransform3DMakeAffineTransform'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=ffffff}' />
+    <arg type='{CGAffineTransform=ffffff}' type64='{CGAffineTransform=dddddd}' />
   </function>
   <function name='CATransform3DMakeRotation'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
@@ -293,7 +293,7 @@
   </function>
   <function name='CATransform3DRotate'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
@@ -301,14 +301,14 @@
   </function>
   <function name='CATransform3DScale'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
   </function>
   <function name='CATransform3DTranslate'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=ffffffffffffffff}' />
+    <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
     <arg type='f' type64='f' />
@@ -325,7 +325,7 @@
   <informal_protocol name='CALayoutManager'>
     <method selector='invalidateLayoutOfLayer:' type='v@:@' />
     <method selector='layoutSublayersOfLayer:' type='v@:@' />
-    <method selector='preferredSizeOfLayer:' type='{CGSize=ff}@:@' type64='{CGSize=dd}@:@' />
+    <method selector='preferredSizeOfLayer:' type='{_NSSize=ff}@:@' type64='{_NSSize=dd}@:@' />
   </informal_protocol>
   <informal_protocol name='CIImageProvider'>
     <method selector='provideImageData:bytesPerRow:origin:size:userInfo:' type='v@:^vLLL@' type64='v@:^vQQQ@' />
@@ -657,7 +657,7 @@
   </class>
   <class name='CIKernel'>
     <method selector='setROISelector:'>
-      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' />
+      <arg index='0' sel_of_type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}@' />
     </method>
   </class>
   <class name='CIPlugIn'>

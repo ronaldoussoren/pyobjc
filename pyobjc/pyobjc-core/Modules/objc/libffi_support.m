@@ -154,7 +154,7 @@ free_type(void *obj)
 
 static ffi_type* signature_to_ffi_type(const char* argtype);
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
 static void cleanup_ffitype_capsule(void* ptr)
 {
 	free_type(ptr);
@@ -2026,7 +2026,8 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 				pythonSelector->sel_class, 
 				(pythonSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 				pythonSelector->sel_selector,
-				pythonSelector->sel_python_signature);
+				pythonSelector->sel_python_signature,
+				PyObjCNativeSelector_Check(pythonSelector));
 
 		result = PyObjCFFI_MakeIMPForSignature(methinfo, pythonSelector->sel_selector, pythonSelector->callable);
 		Py_DECREF(methinfo);
@@ -2269,11 +2270,11 @@ int PyObjCFFI_CountArguments(
 
 
 #if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 7
-static void imp_capsule_cleanup(void* ptr, void* context __attribute__((__unused__)))
+static void imp_capsule_cleanup(void* ptr)
 {
 	PyObjCFFI_FreeIMP(ptr);
 }
-static void block_capsule_cleanup(void* ptr, void* context __attribute__((__unused__)))
+static void block_capsule_cleanup(void* ptr)
 {
 	PyObjCBlock_Release(ptr);
 }

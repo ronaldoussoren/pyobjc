@@ -100,7 +100,12 @@ class TestPythonCoder(TestCase):
 
         d = o.fetchData_(coder)
         self.assertEqual(d.length(), 10)
-        self.assertEqual(bytes(d.bytes()), b"ABCDEabcde")
+
+        b = d.bytes()
+        if isinstance(b, memoryview):
+            self.assertEqual(b.tobytes(), b"ABCDEabcde")
+        else:
+            self.assertEqual(bytes(b), b"ABCDEabcde")
 
         d = o.fetchArray_(coder)
         self.assertEqual(tuple(range(10)), tuple(d))

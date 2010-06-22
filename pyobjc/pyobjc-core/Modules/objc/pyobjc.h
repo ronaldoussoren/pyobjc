@@ -5,7 +5,7 @@
  * Central include file for PyObjC. 
  */
 
-#define OBJC_VERSION "2.3a0"
+#define OBJC_VERSION "2.3b1"
 
 // Loading in AppKit on Mac OS X 10.3 results in
 // a bit less than 1500 classes.

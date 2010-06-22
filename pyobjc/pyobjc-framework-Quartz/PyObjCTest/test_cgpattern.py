@@ -55,7 +55,7 @@ class TestCGPattern (TestCase):
             if os.path.exists("/tmp/pyobjc.test.pdf"):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
-        self.failIfEqual(cnt[0], 0)
+        self.assertNotEqual(cnt[0], 0)
 
 
 if __name__ == "__main__":

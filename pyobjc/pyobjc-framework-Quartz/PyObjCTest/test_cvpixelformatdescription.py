@@ -36,7 +36,7 @@ class TestCVPixelFormatDescription (TestCase):
         self.assertResultIsCFRetained(CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes)
         v = CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes(None)
         self.assertIsInstance(v, CFArrayRef)
-        self.failIfEqual(len(v), 0)
+        self.assertNotEqual(len(v), 0)
         self.assertIsInstance(v[0], (int, long))
 
         tp = 42

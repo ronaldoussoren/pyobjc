@@ -56,9 +56,9 @@ class TestDate (TestCase):
         self.assertLessThan(cmp , 0)
         dt = CFGregorianDate()
         dt.month = 12
-        self.assertIsObject(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths), True)
+        self.assertIs(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths), True)
         dt.month = 99
-        self.assertIsObject(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths), False)
+        self.assertIs(CFGregorianDateIsValid(dt, kCFGregorianUnitsMonths), False)
         tz = CFTimeZoneCopyDefault()
         dt.year = 2008
         dt.day = 1

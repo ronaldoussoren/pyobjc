@@ -256,10 +256,10 @@
     <arg index='1' type='^{CGContext=}' type64='^{CGContext=}' />
   </function>
   <function name='CTRunGetPositions'>
-    <arg index='2' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='o' c_array_length_in_arg='1' />
+    <arg index='2' type='^{_NSPoint=ff}' type64='^{_NSPoint=dd}' type_modifier='o' c_array_length_in_arg='1' />
   </function>
   <function name='CTRunGetPositionsPtr'>
-    <retval type='r^{CGPoint=ff}' type64='r^{CGPoint=dd}' c_array_of_variable_length='true' />
+    <retval type='r^{_NSPoint=ff}' type64='r^{_NSPoint=dd}' c_array_of_variable_length='true' />
   </function>
   <function name='CTRunGetStringIndices'>
     <arg c_array_length_in_arg='1' index='2' type_modifier='o' />

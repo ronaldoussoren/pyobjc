@@ -29,7 +29,7 @@ static PyObject* call_NSData_bytes(
 
 	if (bytes == NULL && PyErr_Occurred()) return NULL;
 
-#if PY_VERSION_HEX <= 0x02069900
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
 	result = PyBuffer_FromMemory((char*)bytes, bytes_len);
 #else
 	/* 2.7 or later: use a memory view */
@@ -149,7 +149,7 @@ call_NSMutableData_mutableBytes(
 
 	if (bytes == NULL && PyErr_Occurred()) return NULL;
 
-#if PY_VERSION_HEX <= 0x02069900
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
 	result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
 
 #else

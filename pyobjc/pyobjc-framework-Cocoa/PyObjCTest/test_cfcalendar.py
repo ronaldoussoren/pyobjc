@@ -131,7 +131,7 @@ class TestCFCalendarVariadic (TestCase):
         v = CFCalendarGetOrdinalityOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
         self.assertIsInstance(v, (int, long))
         ok, startp, tip = CFCalendarGetTimeRangeOfUnit(cal, kCFCalendarUnitDay, CFAbsoluteTimeGetCurrent(), None, None)
-        self.assertIsObject(ok, True)
+        self.assertIs(ok, True)
         self.assertIsInstance(startp, float)
         self.assertIsInstance(tip, float)
         self.assertEqual(tip , 86400.0)

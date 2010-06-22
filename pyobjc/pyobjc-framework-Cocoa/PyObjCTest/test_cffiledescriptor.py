@@ -25,7 +25,7 @@ class TestFileDescriptor (TestCase):
         self.assertIsInstance(fd, CFFileDescriptorRef)
         self.assertEqual(CFFileDescriptorGetNativeDescriptor(fd) , 0)
         ctx = CFFileDescriptorGetContext(fd, None)
-        self.assertIsObject(ctx, context)
+        self.assertIs(ctx, context)
         CFFileDescriptorEnableCallBacks(fd, kCFFileDescriptorReadCallBack)
         CFFileDescriptorDisableCallBacks(fd, kCFFileDescriptorReadCallBack|kCFFileDescriptorWriteCallBack)
 

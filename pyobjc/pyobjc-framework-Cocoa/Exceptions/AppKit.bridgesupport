@@ -1163,11 +1163,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -2250,11 +2250,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -3340,11 +3340,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -4421,11 +4421,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -5502,11 +5502,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -6583,11 +6583,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -7664,11 +7664,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -8742,11 +8742,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>
@@ -9820,11 +9820,11 @@
       <arg comment='where does this come from?' index='0' type='^v' />
     </method>
     <method comment='needs work' selector='getRectsBeingDrawn:count:'>
-      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{CGRect}' />
+      <arg comment='fixme: c-array-of-count by-reference' index='0' type='r^^{_NSRect}' type64='r^^{_NSRect}' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='getRectsExposedDuringLiveResize:count:'>
-      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+      <arg comment='not quite true, but cannot describe otherwise' index='0' type='r^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='r^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
       <arg index='1' type_modifier='o' />
     </method>
     <method selector='knowsPageRange:'>

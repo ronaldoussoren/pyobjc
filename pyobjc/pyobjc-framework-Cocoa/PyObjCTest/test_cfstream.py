@@ -65,14 +65,14 @@ class TestStream (TestCase):
 
         self.assertResultIsBOOL(CFReadStreamOpen)
         r = CFReadStreamOpen(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         status = CFReadStreamGetStatus(stream)
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusOpen)
 
         self.assertResultIsBOOL(CFReadStreamHasBytesAvailable)
         r = CFReadStreamHasBytesAvailable(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         self.assertArgHasType(CFReadStreamRead, 1, b'o^v')
         self.assertArgSizeInArg(CFReadStreamRead, 1, 2)
         self.assertArgSizeInResult(CFReadStreamRead, 1)
@@ -85,9 +85,9 @@ class TestStream (TestCase):
         self.assertEqual(buf, b" world")
 
         r = CFReadStreamHasBytesAvailable(stream)
-        self.assertIsObject(r, False)
+        self.assertIs(r, False)
         r = CFReadStreamClose(stream)
-        self.assertIsObject(r, None)
+        self.assertIs(r, None)
         status = CFReadStreamGetStatus(stream)
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusClosed)
@@ -100,7 +100,7 @@ class TestStream (TestCase):
                     CFURLCreateWithString(None, u"file:///etc/shells", None))
         self.assertIsInstance(stream, CFReadStreamRef)
         r = CFReadStreamOpen(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         status = CFReadStreamGetStatus(stream)
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusOpen)
@@ -122,7 +122,7 @@ class TestStream (TestCase):
         self.assertEqual(val, 5)
 
         r = CFReadStreamSetProperty(stream, kCFStreamPropertyFileCurrentOffset, 10)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         val = CFReadStreamCopyProperty(stream, kCFStreamPropertyFileCurrentOffset)
         self.assertEqual(val, 10)
 
@@ -141,22 +141,27 @@ class TestStream (TestCase):
         self.assertIsInstance(stream, CFWriteStreamRef)
         self.assertResultIsBOOL(CFWriteStreamOpen)
         r = CFWriteStreamOpen(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         status = CFWriteStreamGetStatus(stream)
         self.assertIsInstance(status, (int, long))
         self.assertEqual(status, kCFStreamStatusOpen)
 
         self.assertResultIsBOOL(CFWriteStreamCanAcceptBytes)
         b = CFWriteStreamCanAcceptBytes(stream)
-        self.assertIsObject(b, True)
+        self.assertIs(b, True)
         self.assertArgHasType(CFWriteStreamWrite, 1, b'n^v')
         self.assertArgSizeInArg(CFWriteStreamWrite, 1, 2)
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
-        self.assertEqual(bytes(a[0:1]), b'0')
-        self.assertEqual(bytes(a[1:2]), b'1')
-        self.assertEqual(bytes(a[9:10]), b'9')
+        if sys.version_info[0] == 3:
+            self.assertEqual(bytes(a[0:1]), b'0')
+            self.assertEqual(bytes(a[1:2]), b'1')
+            self.assertEqual(bytes(a[9:10]), b'9')
+        else:
+            self.assertEqual((a[0]), ord('0'))
+            self.assertEqual((a[1]), ord('1'))
+            self.assertEqual((a[9]), ord('9'))
 
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, -1)
@@ -179,7 +184,7 @@ class TestStream (TestCase):
         stream = CFWriteStreamCreateWithAllocatedBuffers(None, None)
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
@@ -202,7 +207,7 @@ class TestStream (TestCase):
                 CFURLCreateWithString(None, u"file:///tmp/pyobjc.test.txt", None))
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         n = CFWriteStreamWrite(stream, b"0123456789ABCDE", 15)
         self.assertEqual(n, 15)
 
@@ -212,7 +217,7 @@ class TestStream (TestCase):
 
         self.assertResultIsBOOL(CFReadStreamSetProperty)
         r = CFReadStreamSetProperty(stream, kCFStreamPropertyFileCurrentOffset, 10)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         val = CFReadStreamCopyProperty(stream, kCFStreamPropertyFileCurrentOffset)
         self.assertEqual(val, 10)
 
@@ -351,8 +356,8 @@ class TestStream (TestCase):
             self.assertTrue(ok)
 
         self.assertEqual(len(state) , 1)
-        self.assertIsObject(state[0][0], readStream)
-        self.assertIsObject(state[0][2], data)
+        self.assertIs(state[0][0], readStream)
+        self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], kCFStreamEventHasBytesAvailable)
 
 
@@ -365,7 +370,7 @@ class TestStream (TestCase):
         writeStream = CFWriteStreamCreateWithBuffer(None, a, 20)
         self.assertIsInstance(writeStream, CFWriteStreamRef)
         r = CFWriteStreamOpen(writeStream)
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         data = {}
         state = []
         def callback(stream, kind, info):
@@ -389,8 +394,8 @@ class TestStream (TestCase):
             self.assertTrue(ok)
 
         self.assertEqual(len(state) , 1)
-        self.assertIsObject(state[0][0], writeStream)
-        self.assertIsObject(state[0][2], data)
+        self.assertIs(state[0][0], writeStream)
+        self.assertIs(state[0][2], data)
         self.assertEqual(state[0][1], kCFStreamEventCanAcceptBytes)
 
 if __name__ == "__main__":

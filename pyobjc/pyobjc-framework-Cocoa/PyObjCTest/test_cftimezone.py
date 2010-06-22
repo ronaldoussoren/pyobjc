@@ -17,7 +17,7 @@ class TestTimeZone (TestCase):
         self.assertIsInstance(zone, CFTimeZoneRef)
     def testResetSystem(self):
         v = CFTimeZoneResetSystem()
-        self.assertIsObject(v, None )
+        self.assertIs(v, None )
     def testCopyDefault(self):
         zone = CFTimeZoneCopyDefault()
         self.assertIsInstance(zone, CFTimeZoneRef)
@@ -44,7 +44,7 @@ class TestTimeZone (TestCase):
         newmap[u'AAA'] = u'Europe/Amsterdam'
 
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         try:
             map2 = CFTimeZoneCopyAbbreviationDictionary()
             self.assertIsInstance(map2, CFDictionaryRef)
@@ -83,7 +83,7 @@ class TestTimeZone (TestCase):
 
         r = CFTimeZoneIsDaylightSavingTime(zone, 
                 CFGregorianDateGetAbsoluteTime(dt, zone))
-        self.assertIsObject(r, True)
+        self.assertIs(r, True)
         dt = CFGregorianDate(
                 year = 2008,
                 month = 11,

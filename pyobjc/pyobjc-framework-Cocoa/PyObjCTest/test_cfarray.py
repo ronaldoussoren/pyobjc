@@ -102,7 +102,7 @@ class TestCFArray (TestCase):
         cpy = CFArrayCreateMutableCopy(None, 0, array)
         self.assertEqual(cpy, [1,2,3,4])
         self.assert_(isinstance(cpy, CFMutableArrayRef))
-        self.assertIsNotObject(cpy, array )
+        self.assertIsNot(cpy, array )
     def testCounts(self):
         array = CFArrayCreate(None, [1,2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [1,2,3,4,4,2])

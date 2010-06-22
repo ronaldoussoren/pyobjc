@@ -36,7 +36,7 @@ class TestNSAccessibility (TestCase):
 
 
         v = NSAccessibilityUnignoredAncestor(b)
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
         v = NSAccessibilityUnignoredDescendant(b)
         self.assertIsInstance(b, NSView)
 
@@ -47,7 +47,7 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(v, NSArray)
 
         v = NSAccessibilityPostNotification(b, "hello")
-        self.assertIsObject(v, None)
+        self.assertIs(v, None)
     def testConstants(self):
         self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
         self.assertIsInstance(NSAccessibilityRoleAttribute, unicode)

@@ -28,8 +28,8 @@ PyObjC_CFTypeToID(PyObject* argument)
 
 #if 0
 //#if !defined(__OBJC2__) && (PY_VERSION_HEX < 0x03000000)
-#endif
-#if PY_MAJOR_VERSION == 2
+//#endif
+//#if PY_MAJOR_VERSION == 2
 	int r;
 
 	/* Fall back to MacPython CFType support: */

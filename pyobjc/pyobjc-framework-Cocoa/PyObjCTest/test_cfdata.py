@@ -6,7 +6,7 @@ import sys
 
 class TestData (TestCase):
     def testTypes(self):
-        self.assertIsObject(CFDataRef, NSCFData)
+        self.assertIs(CFDataRef, NSCFData)
     def testTypeID(self):
         v = CFDataGetTypeID()
         self.assertTrue(v, (int, long))
