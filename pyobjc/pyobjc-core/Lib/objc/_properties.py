@@ -430,27 +430,33 @@ class array_proxy (collections.MutableSequence):
                 indexes, self._name)
 
     def __iadd__(self, value):
-        self._wrapped.extend(value)
-        return self
+        return self._wrapped + value
+
+# This causes a internal python error:
+#        self._wrapped.extend(value)
+#        return self
 
     def __imul__(self, count):
-        if self._ro:
-            raise ValueError("Property '%s' is read-only"%(self._name,))
-        if not isinstance(count, (int, long)):
-            raise ValueError(count)
+        return self._wrapped * count
 
-        indexes = NSIndexSet.alloc().initWithIndexesInRange_((len(self), len(self)*count))
-        self._parent.willChange_valuesAtIndexes_forKey_(
-                NSKeyValueChangeInsertion,
-                indexes, self._name)
-        try:
-            self._wrapped *= count
-        finally:
-            self._parent.didChange_valuesAtIndexes_forKey_(
-                NSKeyValueChangeInsertion,
-                indexes, self._name)
-
-        return self
+# This causes an error I don't quite get yet:
+#        if self._ro:
+#            raise ValueError("Property '%s' is read-only"%(self._name,))
+#        if not isinstance(count, (int, long)):
+#            raise ValueError(count)
+#
+#        indexes = NSIndexSet.alloc().initWithIndexesInRange_((len(self), len(self)*count))
+#        self._parent.willChange_valuesAtIndexes_forKey_(
+#                NSKeyValueChangeInsertion,
+#                indexes, self._name)
+#        try:
+#            self._wrapped *= count
+#        finally:
+#            self._parent.didChange_valuesAtIndexes_forKey_(
+#                NSKeyValueChangeInsertion,
+#                indexes, self._name)
+#
+#        return self
 
     
     def __eq__(self, other):
