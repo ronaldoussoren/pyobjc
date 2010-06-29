@@ -99,7 +99,11 @@ class TestNSData(TestCase):
         try:
             bytesValue[3] = b'\xAE'
         except TypeError, r:
-            if str(r).find('buffer is read-only') is not 0:
+            if str(r).find('buffer is read-only') == 0:
+                pass
+            elif str(r).find('cannot modify read-only memory') == 0:
+                pass
+            else:
                 raise
 
     def testMutableBytes(self):
@@ -107,13 +111,17 @@ class TestNSData(TestCase):
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
-            mutableBytes[i] = bytes(otherBytes[i:i+1])
-        mutableBytes[1:8] = otherBytes[1:8]
+            mutableBytes[i] = otherBytes[i:i+1].tostring()
+        mutableBytes[1:8] = otherBytes[1:8].tostring()
 
         try:
-            mutableBytes[2:10] = otherBytes[1:5]
-        except TypeError, r:
-            if str(r).find('right operand length must match slice length') is not 0:
+            mutableBytes[2:10] = otherBytes[1:5].tostring()
+        except (TypeError, ValueError), r:
+            if str(r).find('right operand length must match slice length') == 0:
+                pass
+            elif 'cannot modify size of memoryview object' in str(r):
+                pass
+            else:
                 raise
 
     def testVariousDataLengths(self):
@@ -222,7 +230,12 @@ class TestMyData (TestCase):
     def testBytes(self):
         r = PyObjC_TestClass3.makeDataWithBytes_method_(MyData3, 1)
         b = PyObjC_TestClass3.getBytes_(r)
-        self.assertEqual(bytes(b.bytes()), b'hello world')
+
+        # Check for memoryview
+        if isinstance(b.bytes(), memoryview):
+            self.assertEqual(b.bytes().tobytes(), b'hello world')
+        else:
+            self.assertEqual(bytes(b.bytes()), b'hello world')
 
         self.assertEqual(b.getBytes_length_(None, 4), b'hell')
         self.assertEqual(b.getBytes_range_(None, NSRange(2, 4)), b'llo ')

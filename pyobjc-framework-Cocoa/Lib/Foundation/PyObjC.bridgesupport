@@ -5,10 +5,10 @@
   <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
   <struct name='NSAffineTransformStruct' type='{_NSAffineTransformStruct="m11"f"m12"f"m21"f"m22"f"tX"f"tY"f}' type64='{_NSAffineTransformStruct="m11"d"m12"d"m21"d"m22"d"tX"d"tY"d}' />
   <struct name='NSDecimal' type='{_NSDecimal="_exponent"b8"_length"b4"_isNegative"b1"_isCompact"b1"_reserved"b18"_mantissa"[8S]}' type64='{_NSDecimal="_exponent"b8"_length"b4"_isNegative"b1"_isCompact"b1"_reserved"b18"_mantissa"[8S]}' />
-  <struct name='NSPoint' type='{_NSPoint="x"f"y"f}' type64='{_NSPoint="x"d"y"d}' />
+  <struct name='NSPoint' type='{_NSPoint="x"f"y"f}' type64='{CGPoint="x"d"y"d}' />
   <struct name='NSRange' type='{_NSRange="location"I"length"I}' type64='{_NSRange="location"Q"length"Q}' />
-  <struct name='NSRect' type='{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}' type64='{_NSRect="origin"{_NSPoint="x"d"y"d}"size"{_NSSize="width"d"height"d}}' />
-  <struct name='NSSize' type='{_NSSize="width"f"height"f}' type64='{_NSSize="width"d"height"d}' />
+  <struct name='NSRect' type='{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}' type64='{CGRect="origin"{CGPoint="x"d"y"d}"size"{CGSize="width"d"height"d}}' />
+  <struct name='NSSize' type='{_NSSize="width"f"height"f}' type64='{CGSize="width"d"height"d}' />
   <struct name='NSSwappedDouble' type='{_NSSwappedDouble="v"Q}' type64='{_NSSwappedDouble="v"Q}' />
   <struct name='NSSwappedFloat' type='{_NSSwappedFloat="v"I}' type64='{_NSSwappedFloat="v"I}' />
   <opaque name='NSAppleEventManagerSuspensionID' type='^{__NSAppleEventManagerSuspension=}' type64='^{__NSAppleEventManagerSuspension=}' />
@@ -348,9 +348,9 @@
   <constant name='NSXMLParserErrorDomain' type='@' />
   <constant name='NSHelpAnchorErrorKey' type='@' />
   <constant name='NSYearMonthWeekDesignations' type='@' />
-  <constant name='NSZeroPoint' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-  <constant name='NSZeroRect' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-  <constant name='NSZeroSize' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+  <constant name='NSZeroPoint' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+  <constant name='NSZeroRect' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  <constant name='NSZeroSize' type='{_NSSize=ff}' type64='{CGSize=dd}' />
   <constant name='NSLocaleCollatorIdentifier' type='@' />
   <constant name='NSLocaleQuotationBeginDelimiterKey' type='@' />
   <constant name='NSLocaleQuotationEndDelimiterKey' type='@' />
@@ -1152,8 +1152,8 @@
   </function>
   <function name='NSContainsRect'>
     <retval type='B' type64='B' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSCopyHashTableWithZone'>
     <retval already_cfretained='true' type='@' type64='@' />
@@ -1222,9 +1222,9 @@
   </function>
   <function name='NSDivideRect'>
     <retval type='v' type64='v' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
-    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
+    <arg null_accepted='false' type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
     <arg type='f' type64='d' />
     <arg type='I' />
   </function>
@@ -1238,18 +1238,18 @@
   </function>
   <function name='NSEqualPoints'>
     <retval type='B' type64='B' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
   </function>
   <function name='NSEqualRects'>
     <retval type='B' type64='B' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSEqualSizes'>
     <retval type='B' type64='B' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=dd}' />
   </function>
   <function name='NSExtraRefCount'>
     <retval type='I' type64='Q' />
@@ -1296,14 +1296,14 @@
     <arg type='@' type64='@' />
   </function>
   <function name='NSInsetRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
   </function>
   <function name='NSIntegralRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSIntersectionRange'>
     <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
@@ -1311,18 +1311,18 @@
     <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
   </function>
   <function name='NSIntersectionRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSIntersectsRect'>
     <retval type='B' type64='B' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSIsEmptyRect'>
     <retval type='B' type64='B' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSIsFreedObject'>
     <retval type='B' type64='B' />
@@ -1384,13 +1384,13 @@
   </function>
   <function name='NSMouseInRect'>
     <retval type='B' type64='B' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='B' type64='B' />
   </function>
   <function name='NSOffsetRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
   </function>
@@ -1401,13 +1401,13 @@
     <retval type='I' type64='Q' />
   </function>
   <function name='NSPointFromString'>
-    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     <arg type='@' type64='@' />
   </function>
   <function name='NSPointInRect'>
     <retval type='B' type64='B' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSProtocolFromString'>
     <retval type='@' type64='@' />
@@ -1426,7 +1426,7 @@
     <arg type='@' type64='@' />
   </function>
   <function name='NSRectFromString'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='@' type64='@' />
   </function>
   <function name='NSRecycleZone'>
@@ -1470,7 +1470,7 @@
     <arg type='^{_NSZone=}' />
   </function>
   <function name='NSSizeFromString'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
     <arg type='@' type64='@' />
   </function>
   <function name='NSStringFromClass'>
@@ -1487,7 +1487,7 @@
   </function>
   <function name='NSStringFromPoint'>
     <retval type='@' type64='@' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
   </function>
   <function name='NSStringFromProtocol'>
     <retval type='@' type64='@' />
@@ -1499,7 +1499,7 @@
   </function>
   <function name='NSStringFromRect'>
     <retval type='@' type64='@' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSStringFromSelector'>
     <retval type='@' type64='@' />
@@ -1507,7 +1507,7 @@
   </function>
   <function name='NSStringFromSize'>
     <retval type='@' type64='@' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=dd}' />
   </function>
   <function name='NSTemporaryDirectory'>
     <retval type='@' type64='@' />
@@ -1518,9 +1518,9 @@
     <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
   </function>
   <function name='NSUnionRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function name='NSUserName'>
     <retval type='@' type64='@' />
@@ -1556,7 +1556,7 @@
   </function>
   <function inline='true' name='NSHeight'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSHostByteOrder'>
     <retval type='l' type64='q' />
@@ -1571,7 +1571,7 @@
     <arg type='@' type64='@' />
   </function>
   <function inline='true' name='NSMakePoint'>
-    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
   </function>
@@ -1581,14 +1581,14 @@
     <arg type='I' type64='Q' />
   </function>
   <function inline='true' name='NSMakeRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
   </function>
   <function inline='true' name='NSMakeSize'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
     <arg type='f' type64='d' />
     <arg type='f' type64='d' />
   </function>
@@ -1598,51 +1598,51 @@
   </function>
   <function inline='true' name='NSMaxX'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSMaxY'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSMidX'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSMidY'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSMinX'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSMinY'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSPointFromCGPoint'>
-    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{CGPoint=ff}' type64='{CGPoint=dd}' />
   </function>
   <function inline='true' name='NSPointToCGPoint'>
-    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+    <retval type='{CGPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
   </function>
   <function inline='true' name='NSRectFromCGRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSRectToCGRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='NSSizeFromCGSize'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+    <arg type='{CGSize=ff}' type64='{CGSize=dd}' />
   </function>
   <function inline='true' name='NSSizeToCGSize'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=dd}' />
   </function>
   <function inline='true' name='NSSwapBigDoubleToHost'>
     <retval type='d' type64='d' />
@@ -1798,7 +1798,7 @@
   </function>
   <function inline='true' name='NSWidth'>
     <retval type='f' type64='d' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <informal_protocol name='NSArchiverCallback'>
     <method selector='classForArchiver' type='#@:' />
@@ -2134,12 +2134,12 @@
       <arg index='0' type='{_NSAffineTransformStruct=ffffff}' type64='{_NSAffineTransformStruct=dddddd}' />
     </method>
     <method selector='transformPoint:'>
-      <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-      <arg index='0' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+      <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='transformSize:'>
-      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
-      <arg index='0' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+      <arg index='0' type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
     <method selector='transformStruct'>
       <retval type='{_NSAffineTransformStruct=ffffff}' type64='{_NSAffineTransformStruct=dddddd}' />
@@ -2494,24 +2494,24 @@
       <arg index='0' type_modifier='o' />
     </method>
     <method selector='decodePoint'>
-      <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='decodePointForKey:'>
-      <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
       <arg index='0' type='@' />
     </method>
     <method selector='decodeRect'>
-      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method selector='decodeRectForKey:'>
-      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
       <arg index='0' type='@' />
     </method>
     <method selector='decodeSize'>
-      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
     <method selector='decodeSizeForKey:'>
-      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
       <arg index='0' type='@' />
     </method>
     <method selector='decodeValueOfObjCType:at:'>
@@ -2535,22 +2535,22 @@
       <arg c_array_length_in_arg='1' index='0' type='^v' type64='^v' type_modifier='n' />
     </method>
     <method selector='encodePoint:'>
-      <arg index='0' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='encodePoint:forKey:'>
-      <arg index='0' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='encodeRect:'>
-      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method selector='encodeRect:forKey:'>
-      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method selector='encodeSize:'>
-      <arg index='0' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <arg index='0' type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
     <method selector='encodeSize:forKey:'>
-      <arg index='0' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <arg index='0' type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
     <method selector='encodeValueOfObjCType:at:'>
       <arg c_array_delimited_by_null='true' index='0' type='^t' type64='^t' type_modifier='n' />
@@ -5300,16 +5300,16 @@
       <retval c_array_delimited_by_null='true' type='^t' />
     </method>
     <method selector='pointValue'>
-      <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method selector='rangeValue'>
       <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
     </method>
     <method selector='rectValue'>
-      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method selector='sizeValue'>
-      <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
     <method class_method='true' selector='value:withObjCType:'>
       <arg index='0' type='^v' type_modifier='n' c_array_of_variable_length='true' />
@@ -5320,17 +5320,17 @@
       <arg c_array_delimited_by_null='true' index='1' type='^t' type_modifier='n' />
     </method>
     <method class_method='true' selector='valueWithPoint:'>
-      <arg index='0' type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
+      <arg index='0' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
     </method>
     <method class_method='true' selector='valueWithPointer:' suggestion='use some other method' />
     <method class_method='true' selector='valueWithRange:'>
       <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
     </method>
     <method class_method='true' selector='valueWithRect:'>
-      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+      <arg index='0' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     </method>
     <method class_method='true' selector='valueWithSize:'>
-      <arg index='0' type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+      <arg index='0' type='{_NSSize=ff}' type64='{CGSize=dd}' />
     </method>
   </class>
   <class name='NSValueTransformer'>
