@@ -501,7 +501,7 @@
   </function>
   <function name='ABPickerGetFrame'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='o' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='o' />
   </function>
   <function name='ABPickerIsVisible'>
     <retval type='Z' />
@@ -545,7 +545,7 @@
   </function>
   <function name='ABPickerSetFrame'>
     <arg type='^{OpaqueABPicker=}' />
-    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{_NSRect={_NSPoint=dd}{_NSSize=dd}}' type_modifier='n' />
+    <arg type='^{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='^{CGRect={CGPoint=dd}{CGSize=dd}}' type_modifier='n' />
   </function>
   <function name='ABPickerSetVisibility'>
     <arg type='^{OpaqueABPicker=}' />
