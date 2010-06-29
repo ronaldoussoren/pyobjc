@@ -431,6 +431,7 @@ def __getitem__objectAtIndex_(self, idx):
     return container_unwrap(self.objectAtIndex_(idx), RuntimeError)
 
 def __getslice__objectAtIndex_(self, i, j):
+    i = max(i, 0); j = max(j, 0)
     return __getitem__objectAtIndex_(self, slice(i, j))
 
 CONVENIENCE_METHODS[b'objectAtIndex:'] = (
@@ -547,6 +548,8 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
         self.replaceObjectAtIndex_withObject_(idx, anObject)
 
 def __setslice__replaceObjectAtIndex_withObject_(self, i, j, seq):
+    i = max(i, 0)
+    j = max(j, 0)
     __setitem__replaceObjectAtIndex_withObject_(self, slice(i, j), seq)
 
 CONVENIENCE_METHODS[b'replaceObjectAtIndex:withObject:'] = (
