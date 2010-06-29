@@ -8,57 +8,52 @@ to all framework wrappers.
 __all__ = ('setup', 'Extension', 'Command')
 
 import sys
-if sys.version_info[:2] < (3, 0):
-    import ez_setup
-    ez_setup.use_setuptools()
 
-    from setuptools.command.test import test as oc_test
-    from setuptools.command.build_py import build_py as oc_build_py
+try:
+    import setuptools
 
-    extra_args = {}
-
-
-else:
+except ImportError:
     import distribute_setup
     distribute_setup.use_setuptools()
 
-    from setuptools.command import test
-    from setuptools.command import build_py
+from setuptools.command import test
+from setuptools.command import build_py
 
-    from distutils import log
+from distutils import log
 
-    extra_args=dict(
-        use_2to3 = True,
-    )
-
-
-    class oc_build_py (build_py.build_py):
-        def build_packages(self):
-            log.info("Overriding build_packages to copy PyObjCTest")
-            p = self.packages
-            self.packages = list(self.packages) + ['PyObjCTest']
-            try:
-                build_py.build_py.build_packages(self)
-            finally:
-                self.packages = p
+extra_args=dict(
+    use_2to3 = True,
+)
 
 
+class oc_build_py (build_py.build_py):
+    def build_packages(self):
+        log.info("Overriding build_packages to copy PyObjCTest")
+        p = self.packages
+        self.packages = list(self.packages) + ['PyObjCTest']
+        try:
+            build_py.build_py.build_packages(self)
+        finally:
+            self.packages = p
 
-    class oc_test (test.test):
-        def run_tests(self):
-            import sys, os
 
-            rootdir =  os.path.dirname(os.path.abspath(__file__))
+
+class oc_test (test.test):
+    def run_tests(self):
+        import sys, os
+
+        rootdir =  os.path.dirname(os.path.abspath(__file__))
+        if sys.version_info[0] == 3:
             if rootdir in sys.path:
                 sys.path.remove(rootdir)
 
-            import PyObjCTest
-            import unittest
-            from pkg_resources import EntryPoint
-            loader_ep = EntryPoint.parse("x="+self.test_loader)
-            loader_class = loader_ep.load(require=False)
+        import PyObjCTest
+        import unittest
+        from pkg_resources import EntryPoint
+        loader_ep = EntryPoint.parse("x="+self.test_loader)
+        loader_class = loader_ep.load(require=False)
 
-            unittest.main(None, None, [unittest.__file__]+self.test_args, testLoader=loader_class())
+        unittest.main(None, None, [unittest.__file__]+self.test_args, testLoader=loader_class())
 
 
 
