@@ -970,6 +970,29 @@ class set_proxy (collections.MutableSet):
 
         return self&other
 
+def makeSetAccessors(name):
+    def countOf(self):
+        return len(getattr(self, name))
+
+    def enumeratorOf(self):
+        return iter(getattr(self, name))
+
+    def memberOf(self, value):
+        collection =  getattr(self, name)
+        if value not in collection:
+            return None
+
+        for item in collection:
+            if item == value:
+                return item
+
+    def add(self, value):
+        getattr(self, name).add(value)
+
+    def remove(self, value):
+        getattr(self, name).discard(value)
+
+    return countOf, enumeratorOf, memberOf, add, remove
 
 
 class set_property (object_property):
@@ -994,6 +1017,66 @@ class set_property (object_property):
             v = set()
             object_property.__set__(self, object, v)
         return v
+
+    def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
+        super(set_property, self).__pyobjc_class_setup__(name, class_dict, instance_methods, class_methods)
+
+        # (Mutable) Unordered Accessors
+        # FIXME: should only do the mutable bits when we're actually a mutable property
+
+        name = self._name
+        Name = name[0].upper() + name[1:]
+
+        countOf, enumeratorOf, memberOf, add, remove = makeSetAccessors(self._name)
+
+        countOf = selector(countOf, 
+                selector  = 'countOf%s'%(Name,),
+                signature = _C_NSUInteger + '@:',
+        )
+        countOf.isHidden = True
+        instance_methods.add(countOf)
+
+        enumeratorOf = selector(enumeratorOf, 
+                selector  = 'enumeratorOf%s'%(Name,),
+                signature = '@@:',
+        )
+        enumeratorOf.isHidden = True
+        instance_methods.add(enumeratorOf)
+
+        memberOf = selector(memberOf, 
+                selector  = 'memberOf%s:'%(Name,),
+                signature = '@@:@',
+        )
+        memberOf.isHidden = True
+        instance_methods.add(memberOf)
+
+        add1 = selector(add, 
+                selector  = 'add%s:'%(Name,),
+                signature = 'v@:@',
+        )
+        add1.isHidden = True
+        instance_methods.add(add1)
+
+        add2 = selector(add, 
+                selector  = 'add%sObject:'%(Name,),
+                signature = 'v@:@',
+        )
+        add2.isHidden = True
+        instance_methods.add(add2)
+
+        remove1 = selector(remove, 
+                selector  = 'remove%s:'%(Name,),
+                signature = 'v@:@',
+        )
+        remove1.isHidden = True
+        instance_methods.add(remove1)
+
+        remove2 = selector(remove, 
+                selector  = 'remove%sObject:'%(Name,),
+                signature = 'v@:@',
+        )
+        remove2.isHidden = True
+        instance_methods.add(remove2)
 
 
 NSMutableDictionary = lookUpClass('NSMutableDictionary')

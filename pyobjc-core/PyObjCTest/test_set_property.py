@@ -215,5 +215,56 @@ class TestSetProperty (TestCase):
             self.assertEquals(observer.values[-1][-1]['old'], set([1,2,3]))
             self.assertEquals(observer.values[-1][-1]['new'], set([2,3,4]))
 
+    def testObjCAccessors(self):
+        # Check that the right ObjC array accessors are defined and work properly
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"setASet:"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"aSet"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"countOfASet"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"enumeratorOfASet"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"memberOfASet:"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"addASet:"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"addASetObject:"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"removeASet:"))
+        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"removeASetObject:"))
+
+        o = TestSetPropertyHelper.alloc().init()
+        self.assertEquals(0, o.pyobjc_instanceMethods.countOfASet())
+        self.assertRaises(AttributeError, getattr, o, 'countOfASet')
+        o.aSet.add(1)
+        o.aSet.add(2)
+
+        v = list(sorted(o.pyobjc_instanceMethods.enumeratorOfASet()))
+        self.assertEquals(v, [1,2])
+
+        class Testing (object):
+            def __hash__(self):
+                return 42
+
+            def __eq__(self, other):
+                return isinstance(other, Testing)
+    
+        p = Testing()
+        o.aSet.add(p)
+
+        v = o.pyobjc_instanceMethods.memberOfASet_(Testing())
+        self.assertIs(p, v)
+
+        self.assertNotIn(9, o.aSet)
+        o.pyobjc_instanceMethods.addASet_(9)
+        self.assertIn(9, o.aSet)
+
+        self.assertNotIn(10, o.aSet)
+        o.pyobjc_instanceMethods.addASetObject_(10)
+        self.assertIn(10, o.aSet)
+
+        self.assertIn(9, o.aSet)
+        o.pyobjc_instanceMethods.removeASet_(9)
+        self.assertNotIn(9, o.aSet)
+
+        self.assertIn(10, o.aSet)
+        o.pyobjc_instanceMethods.removeASetObject_(10)
+        self.assertNotIn(10, o.aSet)
+
+
 if __name__ == "__main__":
     main()
