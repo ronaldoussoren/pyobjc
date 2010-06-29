@@ -340,11 +340,21 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 		return NULL;
 	}
 
-#if  PY_VERSION_HEX <= 0x02069900
+#if  PY_VERSION_HEX <= 0x02069900 
 	result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
 #else
+	/* A memory view requires that the backing store implements the buffer
+	 * interface, therefore create a mutable bytes object to do that for us.
+	 */
 	Py_buffer info;
-	if (PyBuffer_FillInfo(&info, self, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
+	NSMutableData* data = [[NSMutableData alloc] initWithBytesNoCopy:bitmapData length: bytesPerPlane freeWhenDone:NO];
+	PyObject* bytesBuf = PyObjC_ObjCToPython("@", &data);
+	[data release];
+	if (bytesBuf == NULL) {
+		return NULL;
+	}
+
+	if (PyBuffer_FillInfo(&info, bytesBuf, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
 		return NULL;
 	}
 	result = PyMemoryView_FromBuffer(&info);
