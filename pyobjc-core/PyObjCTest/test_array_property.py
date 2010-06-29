@@ -586,6 +586,13 @@ class TestArrayProperty (TestCase):
             self.fail("ValueError not raised")
 
 
+    def testAssingmentInteraction(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        array = o.array
+
+        o.array.append(1)
+        self.assertEquals(len(o.array), 1)
+        self.assertEquals(len(array), 1)
 
 if __name__ == "__main__":
     main()

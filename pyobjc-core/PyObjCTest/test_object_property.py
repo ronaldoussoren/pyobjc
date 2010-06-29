@@ -24,11 +24,13 @@ class OCObserve (NSObject):
     def init(self):
         self = super(OCObserve, self).init()
         self.values = []
+        self.registrations = []
         return self
 
     def register(self, object, keypath):
         object.addObserver_forKeyPath_options_context_(
                 self, keypath, 0x3, None)
+        self.registrations.append((object, keypath))
 
     def unregister(self, object, keypath):
         object.removeObserver_forKeyPath_(self, keypath)
@@ -36,6 +38,14 @@ class OCObserve (NSObject):
     def observeValueForKeyPath_ofObject_change_context_(
             self, keypath, object, change, context):
         self.values.append((object, keypath, change))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        for o, k in self.registrations:
+            self.unregister(o, k)
+        self.registrations = []
 
 
 class TestObjectProperty (TestCase):

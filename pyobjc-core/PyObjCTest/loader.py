@@ -53,7 +53,8 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
 
 
 def makeTestSuite():
-    topdir = dirname(dirname(__file__))
+    import __main__
+    topdir = dirname(__main__.__file__)
     if sys.version_info[0] == 3:
         del sys.path[1]
         deja_topdir = dirname(dirname(topdir))
