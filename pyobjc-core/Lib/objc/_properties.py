@@ -1,16 +1,23 @@
 __all__ = ('object_property', 'bool_property',
         'array_property', 'set_property', 'dict_property')
 
-from objc import ivar, selector, _C_ID, _C_NSBOOL, _C_BOOL, NULL
+from objc import ivar, selector, _C_ID, _C_NSBOOL, _C_BOOL, NULL, _C_NSUInteger
 from objc import lookUpClass
+import collections
+from copy import copy as copy_func
+import sys
 
 NSSet = lookUpClass('NSSet')
+NSObject = lookUpClass('NSObject')
 
 
 def attrsetter(prop, name, copy):
     if copy:
         def func(self, value):
-            setattr(self, name, value.copy())
+            if isinstance(value, NSObject):
+                setattr(self, name, value.copy())
+            else:
+                setattr(self, name, copy_func(value))
     else:
         def func(self, value):
             setattr(self, name, value)
@@ -268,18 +275,17 @@ NSKeyValueChangeInsertion = 2
 NSKeyValueChangeRemoval = 3
 NSKeyValueChangeReplacement = 4
 
-
-class array_proxy (object):
+# FIXME: split into two: array_proxy and mutable_array_proxy
+class array_proxy (collections.MutableSequence):
     # XXX: The implemenation should be complete, but is currently not
     # tested.
     __slots__ = ('_name', '_wrapped', '_parent', '_ro')
 
-    def __init__(cls, name, parent, wrapped, read_only):
-        v = cls.alloc().init()
-        v._name = name
-        v._wrapped = wrapped
-        v._parent = parent
-        v._ro = read_only
+    def __init__(self, name, parent, wrapped, read_only):
+        self._wrapped = wrapped
+        self._name = name
+        self._parent = parent
+        self._ro = read_only
 
 
     def __indexSetForIndex(self, index):
@@ -287,7 +293,7 @@ class array_proxy (object):
             result = NSMutableIndexSet.alloc().init()
             start, stop, step = index.indices(len(self._wrapped))
             for i in xrange(start, stop, step):
-                result.addIndex(index)
+                result.addIndex_(i)
 
             return result
 
@@ -299,7 +305,7 @@ class array_proxy (object):
                 return NSIndexSet.alloc().initWithIndex_(v)
 
             else:
-                return NSIndexSet.alloc().initWithIndex_(v)
+                return NSIndexSet.alloc().initWithIndex_(index)
         
 
 
@@ -315,12 +321,15 @@ class array_proxy (object):
         # Default: just defer to wrapped list
         return getattr(self._wrapped, name)
 
+    def __len__(self):
+        return self._wrapped.__len__()
+
     def __getitem__(self, index):
         return self._wrapped[index]
 
     def __setitem__(self, index, value):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
         indexes = self.__indexSetForIndex(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
@@ -335,14 +344,14 @@ class array_proxy (object):
 
     def __delitem__(self, index):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
         indexes = self.__indexSetForIndex(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeRemoval,
                 indexes, self._name)
         try:
-            self._wrapped[index] = value
+            del self._wrapped[index]
         finally:
             self._parent.didChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeRemoval,
@@ -350,9 +359,9 @@ class array_proxy (object):
 
     def append(self, value):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
-        index = len(self._wrapped)
+        index = len(self)
         indexes = NSIndexSet.alloc().initWithIndex_(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeInsertion,
@@ -365,8 +374,11 @@ class array_proxy (object):
                 indexes, self._name)
 
     def insert(self, index, value):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         if isinstance(index, slice):
-            raise TypeError("insert argument 1 is a slice")
+            raise ValueError("insert argument 1 is a slice")
 
         indexes = self.__indexSetForIndex(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
@@ -381,17 +393,17 @@ class array_proxy (object):
 
     def pop(self, index=-1):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
         if isinstance(index, slice):
-            raise TypeError("insert argument 1 is a slice")
+            raise ValueError("insert argument 1 is a slice")
 
         indexes = self.__indexSetForIndex(index)
         self._parent.willChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeRemoval,
                 indexes, self._name)
         try:
-            self._wrapped.insert(index, value)
+            return self._wrapped.pop(index)
         finally:
             self._parent.didChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeRemoval,
@@ -399,13 +411,102 @@ class array_proxy (object):
 
     def extend(self, values):
         # XXX: This is suboptimal but correct
-        for item in values:
-            self.append(values)
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
+        values = list(values)
+
+        indexes = NSIndexSet.alloc().initWithIndexesInRange_((len(self), len(values)))
+
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+        try:
+            for item in values:
+                self._wrapped.append(item)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+
+    def __iadd__(self, value):
+        self._wrapped.extend(value)
+        return self
+
+    def __imul__(self, count):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+        if not isinstance(count, (int, long)):
+            raise ValueError(count)
+
+        indexes = NSIndexSet.alloc().initWithIndexesInRange_((len(self), len(self)*count))
+        self._parent.willChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+        try:
+            self._wrapped *= count
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
+                NSKeyValueChangeInsertion,
+                indexes, self._name)
+
+        return self
+
+    
+    def __eq__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped == other._wrapped
+
+        else:
+            return self._wrapped == other
+
+    def __ne__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped != other._wrapped
+
+        else:
+            return self._wrapped != other
+
+    def __lt__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped < other._wrapped
+
+        else:
+            return self._wrapped < other
+
+    def __le__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped <= other._wrapped
+
+        else:
+            return self._wrapped <= other
+
+    def __gt__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped > other._wrapped
+
+        else:
+            return self._wrapped > other
+
+    def __ge__(self, other):
+        if isinstance(other, array_proxy):
+            return self._wrapped >= other._wrapped
+
+        else:
+            return self._wrapped >= other
+
+
+    if sys.version_info[0] == 2:
+        def __cmp__(self, other):
+            if isinstance(other, array_proxy):
+                return cmp(self._wrapped, other._wrapped)
+
+            else:
+                return cmp(self._wrapped, other)
 
     def sort(self, cmp=None, key=None, reverse=False):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
         indexes = NSIndexSet.alloc().initWithIndexesInRange_(
                 (0, len(self._wrapped)))
@@ -421,7 +522,7 @@ class array_proxy (object):
 
     def reverse(self):
         if self._ro:
-            raise TypeError("Property '%s' is read-only"%(self._name,))
+            raise ValueError("Property '%s' is read-only"%(self._name,))
 
         indexes = NSIndexSet.alloc().initWithIndexesInRange_(
                 (0, len(self._wrapped)))
@@ -435,14 +536,96 @@ class array_proxy (object):
                 NSKeyValueChangeReplacement,
                 indexes, self._name)
 
+def makeArrayAccessors(name):
+    
+    def countOf(self):
+        return len(getattr(self, name))
+
+    def objectIn(self, idx):
+        return getattr(self, name)[idx]
+
+    def insert(self, value, idx):
+        getattr(self, name).insert(idx, value)
+
+    def replace(self, idx, value):
+        getattr(self, name)[idx] = value
+
+    def remove(self, idx):
+        del getattr(self, name)[idx]
+
+    return countOf, objectIn, insert, remove, replace
 
 class array_property (object_property):
-    def __get__(self):
-        v = object_property.__get__(self)
+    def __init__(self, name=None, 
+            read_only=False, copy=True, dynamic=False, 
+            ivar=None, depends_on=None):
+        super(array_property, self).__init__(name, 
+                read_only=read_only, 
+                copy=copy, dynamic=dynamic,
+                ivar=ivar, depends_on=depends_on)
+
+    def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
+        super(array_property, self).__pyobjc_class_setup__(name, class_dict, instance_methods, class_methods)
+
+
+        # Insert (Mutable) Indexed Accessors
+        # FIXME: should only do the mutable bits when we're actually a mutable property
+
+        name = self._name
+        Name = name[0].upper() + name[1:]
+
+        countOf, objectIn, insert, remove, replace = makeArrayAccessors(self._name)
+
+        countOf = selector(countOf, 
+                selector  = 'countOf%s'%(Name,),
+                signature = _C_NSUInteger + '@:',
+        )
+        countOf.isHidden = True
+        instance_methods.add(countOf)
+
+        objectIn = selector(objectIn, 
+                selector  = 'objectIn%sAtIndex:'%(Name,),
+                signature = '@@:' + _C_NSUInteger,
+        )
+        objectIn.isHidden = True
+        instance_methods.add(objectIn)
+
+        insert = selector(insert, 
+                selector  = 'insertObject:in%sAtIndex:'%(Name,),
+                signature = 'v@:@' + _C_NSUInteger,
+        )
+        insert.isHidden = True
+        instance_methods.add(insert)
+
+        remove = selector(remove, 
+                selector  = 'removeObjectFrom%sAtIndex:'%(Name,),
+                signature = 'v@:' + _C_NSUInteger,
+        )
+        remove.isHidden = True
+        instance_methods.add(remove)
+
+        replace = selector(replace, 
+                selector  = 'replaceObjectIn%sAtIndex:withObject:'%(Name,),
+                signature = 'v@:' + _C_NSUInteger + '@',
+        )
+        replace.isHidden = True
+        instance_methods.add(replace)
+
+
+    def __set__(self, object, value):
+        if isinstance(value, array_property):
+            print "set1", object, value
+            value = list(value)
+            print "set2", object, value
+
+        super(array_property, self).__set__(object, value)
+
+    def __get__(self, object, owner):
+        v = object_property.__get__(self, object, owner)
         if v is None:
             v = list()
-            object_property.__set__(self, v)
-        return array_proxy(self._name, self, v, self._ro)
+            object_property.__set__(self, object, v)
+        return array_proxy(self._name, object, v, self._ro)
 
 NSKeyValueUnionSetMutation = 1,
 NSKeyValueMinusSetMutation = 2,
