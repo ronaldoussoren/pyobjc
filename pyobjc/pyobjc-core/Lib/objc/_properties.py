@@ -279,14 +279,21 @@ NSKeyValueChangeReplacement = 4
 class array_proxy (collections.MutableSequence):
     # XXX: The implemenation should be complete, but is currently not
     # tested.
-    __slots__ = ('_name', '_wrapped', '_parent', '_ro')
+    __slots__ = ('_name', '_parent', '__wrapped', '_ro')
 
     def __init__(self, name, parent, wrapped, read_only):
-        self._wrapped = wrapped
         self._name = name
         self._parent = parent
         self._ro = read_only
+        self.__wrapped = wrapped
 
+    @property
+    def _wrapped(self):
+        return self.__wrapped.__getvalue__(self._parent)
+
+    @_wrapped.setter
+    def _wrapped(self, value):
+        setattr(self._parent, self._name, value)
 
     def __indexSetForIndex(self, index):
         if isinstance(index, slice):
@@ -310,7 +317,7 @@ class array_proxy (collections.MutableSequence):
 
 
     def __repr__(self):
-        return '<array proxy for property ' + self._name + repr(self._wrapped) + '>'
+        return '<array proxy for property ' + self._name + ' ' + repr(self._wrapped) + '>'
 
     def __reduce__(self):
         # Ensure that the proxy itself doesn't get stored
@@ -620,9 +627,7 @@ class array_property (object_property):
 
     def __set__(self, object, value):
         if isinstance(value, array_property):
-            print "set1", object, value
             value = list(value)
-            print "set2", object, value
 
         super(array_property, self).__set__(object, value)
 
@@ -631,43 +636,129 @@ class array_property (object_property):
         if v is None:
             v = list()
             object_property.__set__(self, object, v)
-        return array_proxy(self._name, object, v, self._ro)
+        return array_proxy(self._name, object, self, self._ro)
 
-NSKeyValueUnionSetMutation = 1,
-NSKeyValueMinusSetMutation = 2,
-NSKeyValueIntersectSetMutation = 3,
+    def __getvalue__(self, object):
+        v = object_property.__get__(self, object, None)
+        if v is None:
+            v = list()
+            object_property.__set__(self, object, v)
+        return v
+
+
+NSKeyValueUnionSetMutation = 1
+NSKeyValueMinusSetMutation = 2
+NSKeyValueIntersectSetMutation = 3
 NSKeyValueSetSetMutation = 4
              
 
-class set_proxy (object):
-    __slots__ = ('_name', '_wrapped', '_parent', '_ro')
+class set_proxy (collections.MutableSet):
+    __slots__ = ('_name', '__wrapped', '_parent', '_ro')
 
-    def __init__(cls, name, parent, wrapped, read_only):
-        v = cls.alloc().init()
-        v._name = name
-        v._wrapped = wrapped
-        v._parent = parent
-        v._ro = read_only
+    def __init__(self, name, parent, wrapped, read_only):
+        self._name = name
+        self._parent = parent
+        self._ro = read_only
+        self.__wrapped = wrapped
+
+    def __repr__(self):
+        return '<set proxy for property ' + self._name + ' ' + repr(self._wrapped) + '>'
+
+    @property
+    def _wrapped(self):
+        return self.__wrapped.__getvalue__(self._parent)
+
+    @_wrapped.setter
+    def _wrapped(self, value):
+        setattr(self._parent, self._name, value)
 
     def __getattr__(self, attr):
-        return getattr(self.wrapped, attr)
+        return getattr(self._wrapped, attr)
+
+
+    def __contains__(self, value):
+        return self._wrapped.__contains__(value)
+    
+    def __iter__(self):
+        return self._wrapped.__iter__()
+    
+    def __len__(self):
+        return self._wrapped.__len__()
+
+
+    def __eq__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped == other._wrapped
+
+        else:
+            return self._wrapped == other
+
+    def __ne__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped != other._wrapped
+
+        else:
+            return self._wrapped != other
+
+    def __lt__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped < other._wrapped
+
+        else:
+            return self._wrapped < other
+
+    def __le__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped <= other._wrapped
+
+        else:
+            return self._wrapped <= other
+
+    def __gt__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped > other._wrapped
+
+        else:
+            return self._wrapped > other
+
+    def __ge__(self, other):
+        if isinstance(other, set_proxy):
+            return self._wrapped >= other._wrapped
+
+        else:
+            return self._wrapped >= other
+
+
+    if sys.version_info[0] == 2:
+        def __cmp__(self, other):
+            if isinstance(other, set_proxy):
+                return cmp(self._wrapped, other._wrapped)
+
+            else:
+                return cmp(self._wrapped, other)
 
     def add(self, item):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueUnionSetMutation,
-                set(item),
+                set([item]),
         )
         try:
             self._wrapped.add(item)
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueUnionSetMutation,
-                set(item),
+                set([item]),
             )
 
     def clear(self):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         object = set(self._wrapped)
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
@@ -677,13 +768,16 @@ class set_proxy (object):
         try:
             self._wrapped.clear()
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
                 object
             )
 
     def difference_update(self, *others):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         s = set()
         s.update(*others)
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
@@ -695,7 +789,7 @@ class set_proxy (object):
             self._wrapped.difference_update(s)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
                 s
@@ -703,38 +797,47 @@ class set_proxy (object):
 
 
     def discard(self, item):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
-                set(item)
+                set([item])
         )
         try:
-            self._wrapped.discard(s)
+            self._wrapped.discard(item)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
-                set(item)
+                set([item])
             )
         
     def intersection_update(self, other):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueIntersectSetMutation,
-                set(item)
+                set([item])
         )
         try:
             self._wrapped.intersection_update(s)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueIntersectSetMutation,
-                set(item)
+                set([item])
             )
 
     def pop(self):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         try:
             v = iter(self).next()
         except KeyError:
@@ -744,44 +847,75 @@ class set_proxy (object):
 
 
     def remove(self, item):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
-                set(item)
+                set([item])
         )
         try:
-            self._wrapped.remove(s)
+            self._wrapped.remove(item)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
-                set(item)
+                set([item])
             )
 
     def symmetric_difference_update(self, other):
+        # NOTE: This method does not call the corresponding method
+        # of the wrapped set to ensure that we generate the right
+        # notifications.
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         other = set(other)
-        s = set()
-        for item in other:
-            if item in self:
-                s.add(item)
+
+        to_add = set()
+        to_remove = set()
+        for o in other:
+            if o in self:
+                to_remove.add(o)
+            else:
+                to_add.add(o)
 
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueMinusSetMutation,
-                s
+                to_remove
         )
         try:
-            self._wrapped.symmetric_difference_update(other)
+            self._wrapped.difference_update(to_remove)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
+                    self._name,
+                    NSKeyValueMinusSetMutation,
+                    to_remove
+            )
+
+        self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
-                NSKeyValueMinusSetMutation,
-                s
+                NSKeyValueUnionSetMutation,
+                to_add
+        )
+        try:
+            self._wrapped.update(to_add)
+
+        finally:
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
+                    self._name,
+                    NSKeyValueUnionSetMutation,
+                    to_add
             )
 
     def update(self, *others):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         s = set()
         s.update(*others)
 
@@ -794,42 +928,81 @@ class set_proxy (object):
             self._wrapped.update(s)
 
         finally:
-            self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
+            self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
                 self._name,
                 NSKeyValueUnionSetMutation,
                 s
             )
 
+    def __or__(self, other):
+        return self._wrapped | other
+
+    def __and__(self, other):
+        return self._wrapped & other
+
+    def __xor__(self, other):
+        return self._wrapped ^ other
+
+    def __sub__(self, other):
+        return self._wrapped - other
 
     def __ior__(self, other):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         return self|other
 
     def __isub__(self, other):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         return self-other
 
     def __ixor__(self, other):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         return self^other
 
     def __iand__(self, other):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only"%(self._name,))
+
         return self&other
 
 
 
 class set_property (object_property):
-    def __get__(self):
-        v = object_property.__get__(self)
+    def __init__(self, name=None, 
+            read_only=False, copy=True, dynamic=False, 
+            ivar=None, depends_on=None):
+        super(set_property, self).__init__(name, 
+                read_only=read_only, 
+                copy=copy, dynamic=dynamic,
+                ivar=ivar, depends_on=depends_on)
+
+    def __get__(self, object, owner):
+        v = object_property.__get__(self, object, owner)
         if v is None:
             v = set()
-            object_property.__set__(self, v)
-        return set_proxy(self._name, v, self._ro)
+            object_property.__set__(self, object, v)
+        return set_proxy(self._name, object, self, self._ro)
+
+    def __getvalue__(self, object):
+        v = object_property.__get__(self, object, None)
+        if v is None:
+            v = set()
+            object_property.__set__(self, object, v)
+        return v
 
 
 NSMutableDictionary = lookUpClass('NSMutableDictionary')
 
 class dict_property (object_property):
-    def __get__(self):
-        v = object_property.__get__(self)
+    def __get__(self, object, owner):
+        v = object_property.__get__(self, object, owner)
         if v is None:
             v = NSMutableDictionary.alloc().init()
-            object_property.__set__(self, v)
-        return dict_proxy(self._name, v, self._ro)
+            object_property.__set__(self, object, v)
+        return object_property.__get__(self, object, owner)
+        
