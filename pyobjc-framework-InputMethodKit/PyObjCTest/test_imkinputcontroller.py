@@ -1,6 +1,6 @@
-
 from PyObjCTools.TestSupport import *
 from InputMethodKit import *
+import sys
 
 class TestIMKInputControllerHelper (NSObject):
     def inputText_key_modifiers_client_(self, s, k, m, snd):
@@ -55,6 +55,7 @@ class TestIMKInputController (TestCase):
         self.assertResultIsBOOL(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_)
         self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 1, NSPoint.__typestr__)
+
         self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 2, objc._C_NSUInteger)
         self.assertArgHasType(TestIMKInputControllerHelper.mouseDownOnCharacterIndex_coordinate_withModifier_continueTracking_client_, 3, objc._C_OUT+objc._C_PTR+objc._C_NSBOOL)
 

@@ -66,20 +66,20 @@
     <method selector='mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:'>
       <retval type='B' />
       <arg index='0' type='I' type64='Q' />
-      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
       <arg index='2' type='I' type64='Q' />
       <arg index='3' type='^B' type_modifier='o' />
     </method>
     <method selector='mouseMovedOnCharacterIndex:coordinate:withModifier:client:'>
       <retval type='B' />
       <arg index='0' type='I' type64='Q' />
-      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
       <arg index='2' type='I' type64='Q' />
     </method>
     <method selector='mouseUpOnCharacterIndex:coordinate:withModifier:client:'>
       <retval type='B' />
       <arg index='0' type='I' type64='Q' />
-      <arg index='1' type='{_NSPoint=ff}' type64='{_CGPoint=dd}' />
+      <arg index='1' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
       <arg index='2' type='I' type64='Q' />
     </method>
   </class>
