@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from QTKit import *
+import sys
 
 class TestQTMovieHelper (NSObject):
     def movie_linkToURL_(self, m, u):
@@ -192,7 +193,10 @@ class TestQTMovie (TestCase):
         self.assertArgIsOut(QTMovie.initWithDataReference_error_, 1)
         self.assertArgIsOut(QTMovie.initWithPasteboard_error_, 1)
         self.assertArgIsOut(QTMovie.initWithData_error_, 1)
-        self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{?={?=qll}{?=qll}}')
+        if sys.maxint > 2**32:
+            self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{?={?=qqq}{?=qqq}}')
+        else:
+            self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{?={?=qll}{?=qll}}')
         self.assertArgIsOut(QTMovie.initWithMovie_timeRange_error_, 2)
         self.assertArgIsOut(QTMovie.initWithAttributes_error_, 1)
         self.assertArgIsOut(QTMovie.movieWithTimeRange_error_, 1)
