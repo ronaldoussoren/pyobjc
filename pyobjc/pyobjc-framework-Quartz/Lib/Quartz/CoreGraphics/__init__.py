@@ -8,12 +8,6 @@ documentation for details on how to use these functions and classes.
 import objc as _objc
 from CoreFoundation import *
 
-# Make sure CGSize, CGPoint and CGRect are aliases
-# for the corresponding types in Foundation.
-from Foundation import NSSize  as CGSize
-from Foundation import NSPoint as CGPoint
-from Foundation import NSRect  as CGRect
-
 from Quartz.CoreGraphics._inlines import _inline_list_
 
 __bundle__ = _objc.initFrameworkWrapper("CoreGraphics",

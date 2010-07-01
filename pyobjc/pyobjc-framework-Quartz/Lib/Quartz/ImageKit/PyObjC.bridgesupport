@@ -343,11 +343,11 @@
   </class>
   <class name='IKImagePicker'>
     <method selector='beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v' />
+      <arg index='2' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v'/>
       <arg index='3' type='^v' />
     </method>
     <method selector='beginImagePickerWithDelegate:didEndSelector:contextInfo:'>
-      <arg index='1' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v' />
+      <arg index='1' type=':' sel_of_type='v@:@I^v' sel_of_type64='v@:@Q^v'/>
       <arg index='2' type='^v' />
     </method>
   </class>
@@ -403,18 +403,18 @@
   </class>
   <class name='IKPictureTaker'>
     <method selector='beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@i^v'/>
+      <arg index='2' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v'/>
       <arg index='3' type='^v' />
     </method>
     <method selector='beginPictureTakerWithDelegate:didEndSelector:contextInfo:'>
-      <arg index='1' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@i^v' />
+      <arg index='1' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v' />
       <arg index='2' type='^v' />
     </method>
     <method selector='mirroring'>
       <retval type='B' />
     </method>
     <method selector='popUpRecentsMenuForView:withDelegate:didEndSelector:contextInfo:'>
-      <arg index='2' type=':' sel_of_type='v@:@i^v' />
+      <arg index='2' type=':' sel_of_type='v@:@i^v' sel_of_type64='v@:@q^v'/>
       <arg index='3' type='^v' />
     </method>
     <method selector='setMirroring:'>
@@ -441,7 +441,7 @@
 	  </method>
     <method selector='canExportSlideshowItemAtIndex:toApplication:'>
       <retval type='B' />
-	    <arg index='0'  type='I' />
+	    <arg index='0'  type='I' type64='Q'/>
     </method>
     <method selector='image'>
       <retval type='^{CGImage=}' />
@@ -460,16 +460,16 @@
     </method>
     <method selector='thumbnailWithMaximumSize:'>
       <retval type='^{CGImage=}' />
-      <arg index='0' type='{_NSSize=ff}' />
+      <arg index='0' type='{_NSSize=ff}' type64='{CGSize=dd}'/>
     </method>
     <method selector='slideshowItemAtIndex:'>
-	    <arg index='0'  type='I' />
+	    <arg index='0'  type='I' type64='Q'/>
     </method>
     <method selector='nameOfSlideshowItemAtIndex:'>
-	    <arg index='0'  type='I' />
+	    <arg index='0'  type='I' type64='Q'/>
     </method>
     <method selector='slideshowDidChangeCurrentIndex:'>
-	    <arg index='0'  type='I' />
+	    <arg index='0'  type='I' type64='Q'/>
     </method>
   </class>
 </signatures>

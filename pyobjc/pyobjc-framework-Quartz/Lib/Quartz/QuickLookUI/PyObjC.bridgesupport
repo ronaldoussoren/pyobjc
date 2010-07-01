@@ -19,6 +19,9 @@
     <method selector='previewPanel:sourceFrameOnScreenForPreviewItem:'>
       <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
     </method>
+    <method selector='previewPanel:transitionImageForPreviewItem:contentRect:'>
+      <arg index='2' type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    </method>
   </class>
   <class name='QLPreviewPanel'>
     <method selector='enterFullScreenMode:withOptions:'>
@@ -28,6 +31,9 @@
       <retval type='B' type64='B' />
     </method>
     <method selector='sharedPreviewPanelExists'>
+      <retval type='B' type64='B' />
+    </method>
+    <method selector='isInFullScreenMode'>
       <retval type='B' type64='B' />
     </method>
   </class>
