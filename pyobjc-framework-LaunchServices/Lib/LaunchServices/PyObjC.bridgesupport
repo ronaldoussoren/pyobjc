@@ -480,7 +480,7 @@
     <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o'/>
   </function>
   <function name='GetIconRefFromComponent'>
-    <retval type='l' type64='i' />
+    <retval type='i' type64='i' />
     <arg type='^{ComponentRecord=[1l]}' type64='^{ComponentRecord=[1q]}' />
     <arg type='^^{OpaqueIconRef}' type64='^^{OpaqueIconRef}' type_modifier='o' />
   </function>
@@ -683,7 +683,7 @@
     <retval type='l' type64='i' />
     <arg type='L' type64='L' />
     <arg c_array_length_in_arg='0' type='^T' type_modifier='n' />
-    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg type='^I' type64='^Q' type_modifier='o' />
   </function>
   <function name='LSGetHandlerOptionsForContentType'>
     <retval type='L' type64='I' />
