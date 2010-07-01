@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 
-import ez_setup
-ez_setup.use_setuptools()
+try:
+    import setuptools
+
+except ImportError:
+    import distribute_setup
+    distribute_setup.use_setuptools()
+
+    import setuptools
 
 import os
 
-VERSION='2.2'
+VERSION="2.3b1"
 
 # NOTE: This list of requirements is split into sections for 10.4
 # and 10.5 to make it possible to install PyObjC from source on all
