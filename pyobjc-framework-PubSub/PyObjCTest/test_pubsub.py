@@ -10,8 +10,6 @@ class TestPubSub (TestCase):
         self.assert_( hasattr(PubSub, 'PSAuthor') )
         self.assert_( isinstance(PubSub.PSAuthor, objc.objc_class) )
 
-        self.assert_( hasattr(PubSub, 'PSPublishedFeed') )
-        self.assert_( isinstance(PubSub.PSPublishedFeed, objc.objc_class) )
 
     def testProtocols(self):
         self.assert_( hasattr(PubSub, 'protocols') )
