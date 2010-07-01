@@ -4,9 +4,9 @@
   <depends_on path='/System/Library/Frameworks/AppKit.framework/AppKit' />
   <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
   <function inline='true' name='SSCenteredRectInRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' />
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <function inline='true' name='SSRandomFloatBetween'>
     <retval type='f' />
@@ -19,9 +19,9 @@
     <arg type='i' />
   </function>
   <function inline='true' name='SSRandomPointForSizeWithinRect'>
-    <retval type='{_NSPoint=ff}' type64='{_NSPoint=dd}' />
-    <arg type='{_NSSize=ff}' type64='{_NSSize=ff}' />
-    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' />
+    <retval type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=ff}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
   </function>
   <class name='ScreenSaverView'>
     <method selector='hasConfigureSheet'>
