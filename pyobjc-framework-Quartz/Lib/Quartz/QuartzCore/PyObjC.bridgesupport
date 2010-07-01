@@ -274,44 +274,44 @@
   </function>
   <function name='CATransform3DMakeRotation'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CATransform3DMakeScale'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CATransform3DMakeTranslation'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CATransform3DRotate'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CATransform3DScale'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <function name='CATransform3DTranslate'>
     <retval type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
     <arg type='{CATransform3D=ffffffffffffffff}' type64='{CATransform3D=dddddddddddddddd}' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
-    <arg type='f' type64='f' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
+    <arg type='f' type64='d' />
   </function>
   <informal_protocol name='CAAnimationDelegate'>
     <method selector='animationDidStart:' type='v@:@' />
@@ -325,7 +325,7 @@
   <informal_protocol name='CALayoutManager'>
     <method selector='invalidateLayoutOfLayer:' type='v@:@' />
     <method selector='layoutSublayersOfLayer:' type='v@:@' />
-    <method selector='preferredSizeOfLayer:' type='{_NSSize=ff}@:@' type64='{_NSSize=dd}@:@' />
+    <method selector='preferredSizeOfLayer:' type='{CGSize=ff}@:@' type64='{CGSize=dd}@:@' />
   </informal_protocol>
   <informal_protocol name='CIImageProvider'>
     <method selector='provideImageData:bytesPerRow:origin:size:userInfo:' type='v@:^vLLL@' type64='v@:^vQQQ@' />
@@ -657,7 +657,7 @@
   </class>
   <class name='CIKernel'>
     <method selector='setROISelector:'>
-      <arg index='0' sel_of_type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:i{_NSRect={_NSPoint=ff}{_NSSize=ff}}@' />
+      <arg index='0' sel_of_type='{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@' sel_of_type64='{CGRect={CGPoint=dd}{CGSize=dd}}@:i{CGRect={CGPoint=dd}{CGSize=dd}}@' />
     </method>
   </class>
   <class name='CIPlugIn'>

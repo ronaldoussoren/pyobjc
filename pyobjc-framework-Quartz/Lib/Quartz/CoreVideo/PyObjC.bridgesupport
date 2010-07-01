@@ -346,7 +346,7 @@
     <retval type='I' />
   </function>
   <function name='CVImageBufferGetCleanRect'>
-    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{_NSRect={_NSPoint=dd}{_NSSize=dd}}' />
+    <retval type='{CGRect={CGPoint=ff}{CGSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetColorSpace'>
@@ -354,11 +354,11 @@
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetDisplaySize'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
     <arg type='@' />
   </function>
   <function name='CVImageBufferGetEncodedSize'>
-    <retval type='{_NSSize=ff}' type64='{_NSSize=dd}' />
+    <retval type='{CGSize=ff}' type64='{CGSize=dd}' />
     <arg type='@' />
   </function>
   <function name='CVOpenGLBufferAttach'>
@@ -538,10 +538,10 @@
   </function>
   <function name='CVPixelBufferGetExtendedPixels'>
     <arg type='@' />
-    <arg type='^I' type64='^I' type_modifier='o' />
-    <arg type='^I' type64='^I' type_modifier='o' />
-    <arg type='^I' type64='^I' type_modifier='o' />
-    <arg type='^I' type64='^I' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
+    <arg type='^I' type64='^L' type_modifier='o' />
   </function>
   <function name='CVPixelBufferGetHeight'>
     <retval type='L' type64='Q' />

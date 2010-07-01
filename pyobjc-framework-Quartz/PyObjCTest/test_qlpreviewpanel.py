@@ -29,9 +29,8 @@ class TestQLPreviewPanel (TestCase):
         self.assertResultIsBOOL(TestQLPreviewPanelHelper.acceptsPreviewPanelControl_)
         self.assertResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
 
-        #previewPanel_sourceFrameOnScreenForPreviewItem_
-        #previewPanel_transitionImageForPreviewItem_contentRect_
-        self.fail("finishme")
+        self.assertResultHasType(TestQLPreviewPanelHelper.previewPanel_sourceFrameOnScreenForPreviewItem_, NSRect.__typestr__)
+        self.assertArgHasType(TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_, 2, NSRect.__typestr__)
 
 if __name__ == "__main__":
     main()

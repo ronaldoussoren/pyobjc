@@ -39,5 +39,5 @@ except ImportError:
 
 try:
     from Quartz.QuickLookUI import *
-except ImportError:
+except ImportError, msg:
     pass
