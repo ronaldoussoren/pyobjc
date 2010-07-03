@@ -29,52 +29,50 @@ if sys.version_info < MIN_PYTHON:
     raise SystemExit('PyObjC: Need at least Python ' + vstr)
 
 
-if sys.version_info[:2] < (3, 0):
-    import ez_setup
-    ez_setup.use_setuptools()
+try:
+    import setuptools
 
-    extra_args=dict()
-    from setuptools.command.build_py import build_py as oc_build_py
-    from setuptools.command.test import test as oc_test
-
-else:
+except ImportError:
     import distribute_setup
     distribute_setup.use_setuptools()
 
 
-    extra_args=dict(
-        use_2to3 = True,
-    )
+extra_args=dict(
+    use_2to3 = True,
+)
 
-    from setuptools.command import build_py
-    from setuptools.command import test
-    from distutils import log
-    class oc_build_py (build_py.build_py):
-        def run_2to3(self, files, doctests=True):
-            files = [ fn for fn in files if not os.path.basename(fn).startswith('test3_') ]
-            super(oc_build_py, self).run_2to3(files, doctests)
+from setuptools.command import build_py
+from setuptools.command import test
+from distutils import log
+class oc_build_py (build_py.build_py):
+    def run_2to3(self, files, doctests=True):
+        files = [ fn for fn in files if not os.path.basename(fn).startswith('test3_') ]
+        build_py.build_py.run_2to3(self, files, doctests)
 
-        def build_packages(self):
-            log.info("Overriding build_packages to copy PyObjCTest")        
-            p = self.packages
-            self.packages = list(self.packages) + ['PyObjCTest']
-            try:
-                build_py.build_py.build_packages(self)
-            finally:
-                self.packages = p
+    def build_packages(self):
+        log.info("Overriding build_packages to copy PyObjCTest")        
+        p = self.packages
+        self.packages = list(self.packages) + ['PyObjCTest']
+        try:
+            build_py.build_py.build_packages(self)
+        finally:
+            self.packages = p
 
-    from pkg_resources import working_set, normalize_path, add_activation_listener, require
+from pkg_resources import working_set, normalize_path, add_activation_listener, require
 
-    class oc_test (test.test):
-        def run_tests(self):
-            import sys, os
+class oc_test (test.test):
+    def run_tests(self):
+        import sys, os
+
+        if sys.version_info[0] == 3:
             rootdir =  os.path.dirname(os.path.abspath(__file__))
             if rootdir in sys.path:
                 sys.path.remove(rootdir)
-            from PyObjCTest.loader import makeTestSuite
-            import unittest
-           
-            unittest.main(None, None, [unittest.__file__]+self.test_args)
+
+        from PyObjCTest.loader import makeTestSuite
+        import unittest
+       
+        unittest.main(None, None, [unittest.__file__]+self.test_args)
 
 from setuptools.command import egg_info as orig_egg_info
 
@@ -157,11 +155,22 @@ from setuptools.command import build_ext, install_lib
 import os
 
 class pyobjc_install_lib (install_lib.install_lib):
+    def run(self):
+        print "===== install_lib"
+        install_lib.install_lib.run(self)
+        print "----- install_lib"
+
+
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
         for fn in install_lib._install_lib.get_outputs(self):
             if 'PyObjCTest' in fn:
                 result[fn] = 1
+
+        for fn in os.listdir('PyObjCTest'):
+            result[os.path.join('PyObjCTest', fn)] = 1
+            result[os.path.join(self.install_dir, 'PyObjCTest', fn)] = 1
+
 
         return result
 
