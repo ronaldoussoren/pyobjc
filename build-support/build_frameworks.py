@@ -29,7 +29,7 @@ build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch archs
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 
-gArchs = ("32-bit", "3-way", "intel")
+gArchs = ("32-bit", "3-way")
 
 
 # Name of the Python framework and any additional arguments
@@ -42,7 +42,7 @@ gExtraConfigureArgs=[
 # Location of the SVN branches to be used
 gURLMap = {
     '2.6': 'http://svn.python.org/projects/python/branches/release26-maint',
-    '2.7': 'http://svn.python.org/projects/python/trunk',
+    '2.7': 'http://svn.python.org/projects/python/branches/release27-maint',
 
     '3.1': 'http://svn.python.org/projects/python/branches/release31-maint',
     '3.2': 'http://svn.python.org/projects/python/branches/py3k',
@@ -52,8 +52,7 @@ gURLMap = {
 # Name of the OSX SDK used to build the framework, keyed of the architecture
 # variant.
 gSdkMap={
-    #'32-bit': '/Developer/SDKs/MacOSX10.4u.sdk',
-    '32-bit': '/',
+    '32-bit': '/Developer/SDKs/MacOSX10.4u.sdk',
     '3-way': '/',
     'intel': '/',
 }
@@ -61,10 +60,10 @@ gSdkMap={
 # Name of the OSX Deployment Target used to build the framework, keyed of 
 # the architecture variant.
 gDeploymentTargetMap={
-    #'32-bit': '10.3',
-    '32-bit': '10.5',
+    '32-bit': '10.3',
+    #'32-bit': '10.5',
     '3-way':  '10.5',
-    'intel':  '10.6',
+    'intel':  '10.5',
 }
 
 class ShellError (Exception):
