@@ -7,6 +7,21 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.3b1
 -------------
 
+- "<struct>" definitions in the bridgesupport files can now have
+  an alias attribute containing the name of Python type that should
+  be used to proxy values of this type.
+
+  This is used in the Quartz bindings to ensure that ``CGRect``
+  and ``NSRect`` (from the Foundation framework) map onto the 
+  same Python type.
+
+- Added ``objc.registerStructAlias``, a helper function to add
+  a type encoding that should map on an already existing struct
+  type.
+
+- Use this to ensure that ``NSRect`` and ``CGRect`` are the same
+  (in the Foundation and Quartz bindings).
+
 - This version requires Python 2.6 or later, and also supports
   Python 3.1 or later.
 

@@ -1059,6 +1059,35 @@ static char* keywords[] = { "class", "selector", "metadata", NULL };
 	}
 }
 
+PyDoc_STRVAR(registerStructAlias_doc,
+	"registerStructAlias(typestr, structType)\n"
+	"\n"
+	"Registers 'typestr' as a type that should be mapped onto 'structType'\n"
+	"'structType' must be created using 'createStructType' (or through \n"
+	"a metadata file."
+);
+static PyObject*
+registerStructAlias(PyObject* self __attribute__((__unused__)),
+		                PyObject* args, PyObject* kwds)
+{
+	static char* keywords[] = { "typestr", "structType", NULL };
+	char* typestr;
+	PyObject* structType;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
+				Py_ARG_BYTES "O",
+				keywords, &typestr, &structType)) {
+		return NULL;
+	}
+
+	if (PyObjC_RegisterStructAlias(typestr, structType) == -1) {
+		return NULL;
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+
 PyDoc_STRVAR(createStructType_doc,
 	"createStructType(name, typestr, fieldnames, doc) -> type\n"
 	"\n"
@@ -1718,6 +1747,8 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, createOpaquePointerType_doc },
 	{ "createStructType", (PyCFunction)createStructType,
 		METH_VARARGS|METH_KEYWORDS, createStructType_doc },
+	{ "registerStructAlias", (PyCFunction)registerStructAlias,
+		METH_VARARGS|METH_KEYWORDS, registerStructAlias_doc },
 	{ "registerMetaDataForSelector", (PyCFunction)registerMetaData,
 		METH_VARARGS|METH_KEYWORDS, registerMetaData_doc },
 	{ "_updatingMetadata", (PyCFunction)_updatingMetadata,

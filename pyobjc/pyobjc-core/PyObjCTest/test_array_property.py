@@ -10,7 +10,7 @@ class TestArrayPropertyHelper (NSObject):
     array = objc.array_property()
     roArray = objc.array_property(read_only=True)
 
-from test_object_property import OCObserve
+from PyObjCTest.test_object_property import OCObserve
 
 class TestArrayProperty (TestCase):
     def _testMissing(self):

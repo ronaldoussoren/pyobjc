@@ -8,6 +8,7 @@ documentation for details on how to use these functions and classes.
 import objc as _objc
 #import ATS
 from CoreFoundation import *
+import Foundation
 from Quartz import *
 
 __bundle__ = _objc.initFrameworkWrapper("CoreText",

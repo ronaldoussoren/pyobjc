@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
 import objc
-from test_object_property import OCObserve
+from PyObjCTest.test_object_property import OCObserve
 
 NSObject = objc.lookUpClass('NSObject')
 

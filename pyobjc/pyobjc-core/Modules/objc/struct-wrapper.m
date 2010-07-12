@@ -1291,3 +1291,39 @@ PyObjC_RegisterStructType(
 
 	return structType;
 }
+
+int 
+PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
+{
+	char buf[1024];
+	int r;
+
+	if (strlen(signature) > 1023) {
+		PyErr_SetString(PyExc_ValueError, "typestr too long");
+		return -1;
+	}
+	if (PyObjCRT_RemoveFieldNames(buf, signature) == NULL) {
+		return -1;
+	}
+
+	if (structRegistry == NULL) {
+		structRegistry = PyDict_New();
+		if (structRegistry == NULL) {
+			return -1;
+		}
+	}
+
+	r = PyDict_SetItemString(structRegistry, buf, structType);
+	if (r == -1) {
+		return -1;
+	}
+
+	/* Register again using the typecode used in the ObjC runtime */
+	PyObjC_RemoveInternalTypeCodes(buf);
+	r = PyDict_SetItemString(structRegistry, buf, structType);
+	if (r == -1) {
+		return -1;
+	}
+
+	return 0;
+}

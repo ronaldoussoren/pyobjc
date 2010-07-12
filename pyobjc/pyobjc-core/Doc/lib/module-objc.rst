@@ -870,3 +870,36 @@ It is possible to override property accessor in a subclass::
 
 This can also be used to convert a read-only property to a read-write one
 by adding a setter accessor.
+
+
+Properties for structured types
+...............................
+
+Key-Value Coding is slightly different for structured types like sets and
+lists (ordered and unordered collections). For this reason PyObjC also provides
+subclasses of :class:`object_property` that are tuned for these types.
+
+.. class:: array_property
+
+   This property implements a list-like property. When you access the property
+   you will get an object that implements the ``MutableSequence`` ABC, and
+   that will generate the correct Key-Value Observation notifications when
+   the datastructure is updated.
+
+.. class:: set_property
+
+   This property implements a set-like property. When you access the property
+   you will get an object that implements the ``MutableSet`` ABC, and
+   that will generate the correct Key-Value Observation notifications when
+   the datastructure is updated.
+
+.. class:: dict_property
+
+   This property is like an :class:`object_property`, but has an empty
+   NSMutableDictionary object as its default value. This type is mostly
+   provided to have a complete set of property types.
+
+These collection properties are at this time experimental and do not yet
+provide proper hooks for tweaking their behavior. Future versions of PyObjC
+will provide such hooks (for example a method that will be called when an
+item is inserted in an array property).

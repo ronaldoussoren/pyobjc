@@ -13,8 +13,8 @@
 
 #define PyObjCSelector_HEAD \
 	PyObject_HEAD 			\
-	char*		sel_python_signature;  \
-	char* 		sel_native_signature; \
+	const char*	sel_python_signature;  \
+	const char* 	sel_native_signature; \
 	SEL		sel_selector;	\
 	PyObject*	sel_self;	\
 	Class		sel_class;	\
@@ -56,7 +56,7 @@ extern PyTypeObject PyObjCPythonSelector_Type;
 #define PyObjCPythonSelector_Check(obj) PyObject_TypeCheck(obj, &PyObjCPythonSelector_Type)
 
 PyObject* PyObjCSelector_Copy(PyObject* obj);
-char* PyObjCSelector_Signature(PyObject* obj);
+const char* PyObjCSelector_Signature(PyObject* obj);
 #define PyObjCSelector_GetNativeSignature(obj) (((PyObjCSelector*)obj)->sel_native_signature)
 SEL   PyObjCSelector_GetSelector(PyObject* obj);
 int   PyObjCSelector_GetFlags(PyObject* obj);

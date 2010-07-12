@@ -2813,9 +2813,8 @@ void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 	Py_DECREF(proxy);
 }
 
-static BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
+BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
-	//return YES;
 	/* Ignore type modifiers */
 	type1 = PyObjCRT_SkipTypeQualifiers(type1);
 	type2 = PyObjCRT_SkipTypeQualifiers(type2);
@@ -2889,14 +2888,4 @@ static BOOL _PyObjC_signatures_compatible(const char* type1, const char* type2)
 		default: return YES;
 		}
 	}
-}
-
-BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
-{
-	BOOL r =  _PyObjC_signatures_compatible(type1, type2);
-
-	if (!r) {
-		NSLog(@"Compatible: '%s' '%s' -> %d", type1, type2, r);
-	}
-	return r;
 }

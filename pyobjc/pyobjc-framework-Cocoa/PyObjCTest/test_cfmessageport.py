@@ -25,6 +25,7 @@ class TestMessagePort (TestCase):
     def testTypeID(self):
         self.assertIsInstance(CFMessagePortGetTypeID(), (int, long))
     def testInteraction(self):
+        self.fail("research")
         class Context: pass
         context = Context()
 

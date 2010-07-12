@@ -235,7 +235,7 @@ base_signature_setter(PyObject* _self, PyObject* newVal, void* closure __attribu
 		return -1;
 	}
 
-	PyMem_Free(self->sel_python_signature);
+	PyMem_Free((char*)self->sel_python_signature);
 	self->sel_python_signature = t;
 	return 0;
 }
@@ -373,11 +373,11 @@ sel_dealloc(PyObject* object)
 	Py_XDECREF(self->sel_methinfo);
 	self->sel_methinfo = NULL;
 
-	PyMem_Free(self->sel_python_signature);
+	PyMem_Free((char*)self->sel_python_signature);
 	self->sel_python_signature = NULL;
 
 	if (self->sel_native_signature != NULL) {
-		PyMem_Free(self->sel_native_signature);
+		PyMem_Free((char*)self->sel_native_signature);
 		self->sel_native_signature = NULL;
 	}
 	if (self->sel_self) { 
@@ -960,7 +960,7 @@ PyObjCSelector_New(PyObject* callable,
 		Py_DECREF(result);
 		return NULL;
 	}
-	PyObjC_RemoveInternalTypeCodes(result->sel_native_signature);
+	PyObjC_RemoveInternalTypeCodes((char*)result->sel_native_signature);
 
 	result->sel_self = NULL;
 	result->sel_class = cls;
@@ -1772,7 +1772,7 @@ PyTypeObject PyObjCPythonSelector_Type = {
 
 };
 
-char* PyObjCSelector_Signature(PyObject* obj)
+const char* PyObjCSelector_Signature(PyObject* obj)
 {
 	return ((PyObjCSelector*)obj)->sel_python_signature;
 }

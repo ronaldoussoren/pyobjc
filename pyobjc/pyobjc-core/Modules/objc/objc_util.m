@@ -237,7 +237,6 @@ PyObjCErr_AsExc(void)
 		if (depythonify_c_value(@encode(id), args, &result) == -1) {
 			abort();
 		}
-		NSLog(@"exception: %@", result);
 		return result;
 	}
 
@@ -1243,4 +1242,31 @@ int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, s
 		}
 	}
 	return 1;
+}
+
+PyObject*
+PyObjC_ImportName(const char* name)
+{
+	PyObject* py_name;
+	PyObject* mod;
+	char* c = strrchr(name, '.');
+
+	if (c == NULL) {
+		/* Toplevel module */
+		py_name = PyText_FromString(name);
+		mod = PyImport_Import(py_name);
+		Py_DECREF(py_name);
+		return mod;
+	} else {
+		py_name = PyText_FromStringAndSize(name, c - name);
+		mod = PyImport_Import(py_name);
+		Py_DECREF(py_name);
+		if (mod == NULL) {
+			return NULL;
+		}
+
+		PyObject* v = PyObject_GetAttrString(mod, c + 1);
+		Py_DECREF(mod);
+		return v;
+	}
 }

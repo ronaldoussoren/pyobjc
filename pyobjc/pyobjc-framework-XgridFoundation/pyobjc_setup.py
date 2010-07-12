@@ -8,6 +8,7 @@ to all framework wrappers.
 __all__ = ('setup', 'Extension', 'Command')
 
 import sys
+from pkg_resources import Distribution
 
 try:
     import setuptools
@@ -28,7 +29,7 @@ extra_args=dict(
 
 class oc_build_py (build_py.build_py):
     def build_packages(self):
-        log.info("Overriding build_packages to copy PyObjCTest")
+        log.info("overriding build_packages to copy PyObjCTest")
         p = self.packages
         self.packages = list(self.packages) + ['PyObjCTest']
         try:
@@ -46,6 +47,21 @@ class oc_test (test.test):
         if rootdir in sys.path:
             sys.path.remove(rootdir)
 
+        # Ensure that any installed versions of this package aren't on sys.path
+        ei_cmd = self.get_finalized_command('egg_info')
+        egg_name = ei_cmd.egg_name.replace('-', '_')
+
+        to_remove = []
+        for dirname in sys.path:
+            bn = os.path.basename(dirname)
+            if bn.startswith(egg_name + "-"):
+                to_remove.append(dirname)
+
+        for dirname in to_remove:
+            log.info("removing installed %r from sys.path before testing"%(dirname,))
+            sys.path.remove(dirname)
+
+        # Actually run the tests
         import PyObjCTest
         import unittest
         from pkg_resources import EntryPoint
@@ -58,8 +74,8 @@ class oc_test (test.test):
 
 from setuptools import setup as _setup, Extension as _Extension, Command
 from distutils.errors import DistutilsPlatformError
-from distutils.command import build, install, install_lib
-from setuptools.command import develop, test, build_ext
+from distutils.command import build, install
+from setuptools.command import develop, test, build_ext, install_lib
 import pkg_resources
 import shutil
 import os
@@ -79,7 +95,15 @@ class pyobjc_install_lib (install_lib.install_lib):
             if 'PyObjCTest' in fn:
                 result[fn] = 1
 
+        result['PyObjCTest'] = 1
+        result[os.path.join(self.install_dir, 'PyObjCTest')] = 1
+        for fn in os.listdir('PyObjCTest'):
+            result[os.path.join('PyObjCTest', fn)] = 1
+            result[os.path.join(self.install_dir, 'PyObjCTest', fn)] = 1
+
         return result
+
+
 
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
@@ -196,7 +220,7 @@ def setup(
 
         cmdclass['build'] = create_command_subclass(build.build)
         cmdclass['test'] = create_command_subclass(oc_test)
-        cmdclass['install'] = create_command_subclass(install.install)
+        cmdclass['install'] = create_command_subclass(pyobjc_install_lib)
         cmdclass['develop'] = create_command_subclass(develop.develop)
         cmdclass['build_py'] = create_command_subclass(oc_build_py)
     else:

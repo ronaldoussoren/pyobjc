@@ -699,6 +699,7 @@ m_releaseData(void* _info, const void* data, size_t size)
 			PyObjC_FreeCArray(tag, (void*)data);
 			Py_DECREF(info);
 			PyObjCErr_ToObjCWithGILState(&state);
+			return;
 		}
 		Py_DECREF(result);
 
@@ -724,7 +725,6 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
 	if (!PyArg_ParseTuple(args, "OOlO", &info, &data, &size, &release)) {
 		return NULL;
 	}
-
 	if (release != Py_None && !PyCallable_Check(release)) {
 		PyErr_SetString(PyExc_TypeError, "release not callable");
 		return NULL;
@@ -743,9 +743,9 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
 
 	PyObject* real_info;
 	if (bufobj != NULL) {
-		real_info = Py_BuildValue("OOlOO", info, release, tag, bufobj);
+		real_info = Py_BuildValue("OOlO", info, release, (long)tag, bufobj);
 	} else {
-		real_info = Py_BuildValue("OOlO", info, release, tag);
+		real_info = Py_BuildValue("OOl", info, release, (long)tag);
 	}
 
 	CGDataProviderRef result;
@@ -767,7 +767,9 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
 
 	PyObject* retval = PyObjC_ObjCToPython(
 			@encode(CGDataProviderRef), &result);
+	printf("%s %d\n", __FILE__, __LINE__);
 	CFRelease(result);
+	printf("%s %d\n", __FILE__, __LINE__);
 	return retval;
 }
 
