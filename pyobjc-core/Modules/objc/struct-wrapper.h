@@ -92,4 +92,6 @@ PyObject* PyObjC_RegisterStructType(
  */     
 PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature);
 
+int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
+
 #endif /* PyObjC_STRUCT_MEMBER */

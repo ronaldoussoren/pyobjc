@@ -1112,6 +1112,7 @@ handle_class(xmlNode* cur_node)
 			return -1;
 		}
 
+
 		r = PyObjC_registerMetaData(pyClassname, pySelector, metadata);
 		Py_DECREF(pySelector);
 		Py_DECREF(metadata);
@@ -1499,26 +1500,55 @@ handle_struct(xmlNode* cur_node, PyObject* globalDict)
 {
 	char* name = attribute_string(cur_node, "name", NULL);
 	char* type = attribute_string(cur_node, "type", "type64");
+	char* alias = attribute_string(cur_node, "alias", NULL);
 	typestr2typestr(type);
 
+
 	if (name != NULL && type != NULL && *type != '\0') {
-		PyObject* v = PyObjC_RegisterStructType(
+		PyObject* v = NULL;
+
+		if (alias != NULL) {
+			int r;
+
+			v = PyObjC_ImportName(alias);
+
+			if (v != NULL) {
+			
+				r = PyObjC_RegisterStructAlias(type, v);
+				if (r == -1) {
+					Py_DECREF(v);
+					if (name) xmlFree(name);
+					if (type) xmlFree(type);
+					if (alias) xmlFree(alias);
+					return -1;
+				}
+			} else {
+				/* Fall through to regular handling */
+				PyErr_Clear();
+			}
+		}
+			
+
+		if (v == NULL) {
+			v = PyObjC_RegisterStructType(
 				PyObjCUtil_Strdup(type), 
 				PyObjCUtil_Strdup(name), 
 				"", NULL, -1, NULL);
 
-		if (v == NULL) {
-			if (name) xmlFree(name);
-			if (type) xmlFree(type);
-			return -1;
-		}
+			if (v == NULL) {
+				if (name) xmlFree(name);
+				if (type) xmlFree(type);
+				if (alias) xmlFree(alias);
+				return -1;
+			}
 
-		if (structConvenience != NULL) {
-			PyObject* o = PyObject_CallFunction(
-					structConvenience, 
-					"ss", name, type);
-			Py_XDECREF(o);
-			PyErr_Clear();
+			if (structConvenience != NULL) {
+				PyObject* o = PyObject_CallFunction(
+						structConvenience, 
+						"ss", name, type);
+				Py_XDECREF(o);
+				PyErr_Clear();
+			}
 		}
 
 		int r = PyDict_SetItemString(globalDict, name, v);
@@ -1526,12 +1556,14 @@ handle_struct(xmlNode* cur_node, PyObject* globalDict)
 		if (r == -1) {
 			if (name) xmlFree(name);
 			if (type) xmlFree(type);
+			if (alias) xmlFree(alias);
 			return -1;
 		}
 	}
 
 	if (name) xmlFree(name);
 	if (type) xmlFree(type);
+	if (alias) xmlFree(alias);
 	return 0;
 }
 

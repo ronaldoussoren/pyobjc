@@ -21,6 +21,9 @@ _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
 _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
 _leaksVerbose = True
 
+def _typemap(tp):
+    return tp.replace('_NSRect', 'CGRect').replace('_NSPoint', 'CGPoint').replace('_NSSize', 'CGSize')
+
 def sdkForPython(_cache=[]):
     """
     Return the SDK version used to compile Python itself,
@@ -381,7 +384,7 @@ class TestCase (_unittest.TestCase):
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
         type = info['retval']['type']
-        if type != tp:
+        if type != tp and _typemap(type) != _typemap(tp):
             self.fail(message or "result of %r is not of type %r, but %r"%(
                 method, tp, type))
         
@@ -392,7 +395,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if type != tp:
+        if type != tp and _typemap(type) != _typemap(tp):
             self.fail(message or "arg %d of %s is not of type %r, but %r"%(
                 argno, method, tp, type))
 
@@ -483,7 +486,7 @@ class TestCase (_unittest.TestCase):
                 argno, method))
 
         st = info['arguments'][argno+offset].get('sel_of_type')
-        if st != sel_type:
+        if st != sel_type and _typemap(st) != _typemap(sel_type):
             self.fail(message or "arg %d of %s doesn't have sel_type %r but %r"%(
                 argno, method, sel_type, st))
 
@@ -591,7 +594,7 @@ class TestCase (_unittest.TestCase):
 
     def assertIsInstance(self, value, types, message=None):
         if not isinstance(value, types):
-            self.fail(message or "%s is not an instance of %r"%(value, types))
+            self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
 
     def assertIsNotInstance(self, value, types, message=None):
         if isinstance(value, types):

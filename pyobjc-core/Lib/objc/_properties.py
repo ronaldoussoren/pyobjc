@@ -517,21 +517,39 @@ class array_proxy (collections.MutableSequence):
             else:
                 return cmp(self._wrapped, other)
 
-    def sort(self, cmp=None, key=None, reverse=False):
-        if self._ro:
-            raise ValueError("Property '%s' is read-only"%(self._name,))
+    if sys.version_info[0] == 2:
+        def sort(self, cmp=None, key=None, reverse=False):
+            if self._ro:
+                raise ValueError("Property '%s' is read-only"%(self._name,))
 
-        indexes = NSIndexSet.alloc().initWithIndexesInRange_(
-                (0, len(self._wrapped)))
-        self._parent.willChange_valuesAtIndexes_forKey_(
-                NSKeyValueChangeReplacement,
-                indexes, self._name)
-        try:
-            self._wrapped.sort(cmp=cmp, key=key, reverse=reverse)
-        finally:
-            self._parent.didChange_valuesAtIndexes_forKey_(
-                NSKeyValueChangeReplacement,
-                indexes, self._name)
+            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                    (0, len(self._wrapped)))
+            self._parent.willChange_valuesAtIndexes_forKey_(
+                    NSKeyValueChangeReplacement,
+                    indexes, self._name)
+            try:
+                self._wrapped.sort(cmp=cmp, key=key, reverse=reverse)
+            finally:
+                self._parent.didChange_valuesAtIndexes_forKey_(
+                    NSKeyValueChangeReplacement,
+                    indexes, self._name)
+
+    else:
+        def sort(self, key=None, reverse=False):
+            if self._ro:
+                raise ValueError("Property '%s' is read-only"%(self._name,))
+
+            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                    (0, len(self._wrapped)))
+            self._parent.willChange_valuesAtIndexes_forKey_(
+                    NSKeyValueChangeReplacement,
+                    indexes, self._name)
+            try:
+                self._wrapped.sort(key=key, reverse=reverse)
+            finally:
+                self._parent.didChange_valuesAtIndexes_forKey_(
+                    NSKeyValueChangeReplacement,
+                    indexes, self._name)
 
     def reverse(self):
         if self._ro:
@@ -590,36 +608,36 @@ class array_property (object_property):
         countOf, objectIn, insert, remove, replace = makeArrayAccessors(self._name)
 
         countOf = selector(countOf, 
-                selector  = 'countOf%s'%(Name,),
-                signature = _C_NSUInteger + '@:',
+                selector  = ('countOf%s'%(Name,)).encode('latin1'),
+                signature = _C_NSUInteger + b'@:',
         )
         countOf.isHidden = True
         instance_methods.add(countOf)
 
         objectIn = selector(objectIn, 
-                selector  = 'objectIn%sAtIndex:'%(Name,),
-                signature = '@@:' + _C_NSUInteger,
+                selector  = ('objectIn%sAtIndex:'%(Name,)).encode('latin1'),
+                signature = b'@@:' + _C_NSUInteger,
         )
         objectIn.isHidden = True
         instance_methods.add(objectIn)
 
         insert = selector(insert, 
-                selector  = 'insertObject:in%sAtIndex:'%(Name,),
-                signature = 'v@:@' + _C_NSUInteger,
+                selector  = ('insertObject:in%sAtIndex:'%(Name,)).encode('latin1'),
+                signature = b'v@:@' + _C_NSUInteger,
         )
         insert.isHidden = True
         instance_methods.add(insert)
 
         remove = selector(remove, 
-                selector  = 'removeObjectFrom%sAtIndex:'%(Name,),
-                signature = 'v@:' + _C_NSUInteger,
+                selector  = ('removeObjectFrom%sAtIndex:'%(Name,)).encode('latin1'),
+                signature = b'v@:' + _C_NSUInteger,
         )
         remove.isHidden = True
         instance_methods.add(remove)
 
         replace = selector(replace, 
-                selector  = 'replaceObjectIn%sAtIndex:withObject:'%(Name,),
-                signature = 'v@:' + _C_NSUInteger + '@',
+                selector  = ('replaceObjectIn%sAtIndex:withObject:'%(Name,)).encode('latin1'),
+                signature = b'v@:' + _C_NSUInteger + b'@',
         )
         replace.isHidden = True
         instance_methods.add(replace)
@@ -1030,50 +1048,50 @@ class set_property (object_property):
         countOf, enumeratorOf, memberOf, add, remove = makeSetAccessors(self._name)
 
         countOf = selector(countOf, 
-                selector  = 'countOf%s'%(Name,),
-                signature = _C_NSUInteger + '@:',
+                selector  = ('countOf%s'%(Name,)).encode('latin1'),
+                signature = _C_NSUInteger + b'@:',
         )
         countOf.isHidden = True
         instance_methods.add(countOf)
 
         enumeratorOf = selector(enumeratorOf, 
-                selector  = 'enumeratorOf%s'%(Name,),
-                signature = '@@:',
+                selector  = ('enumeratorOf%s'%(Name,)).encode('latin1'),
+                signature = b'@@:',
         )
         enumeratorOf.isHidden = True
         instance_methods.add(enumeratorOf)
 
         memberOf = selector(memberOf, 
-                selector  = 'memberOf%s:'%(Name,),
-                signature = '@@:@',
+                selector  = ('memberOf%s:'%(Name,)).encode('latin'),
+                signature = b'@@:@',
         )
         memberOf.isHidden = True
         instance_methods.add(memberOf)
 
         add1 = selector(add, 
-                selector  = 'add%s:'%(Name,),
-                signature = 'v@:@',
+                selector  = ('add%s:'%(Name,)).encode('latin'),
+                signature = b'v@:@',
         )
         add1.isHidden = True
         instance_methods.add(add1)
 
         add2 = selector(add, 
-                selector  = 'add%sObject:'%(Name,),
-                signature = 'v@:@',
+                selector  = ('add%sObject:'%(Name,)).encode('latin1'),
+                signature = b'v@:@',
         )
         add2.isHidden = True
         instance_methods.add(add2)
 
         remove1 = selector(remove, 
-                selector  = 'remove%s:'%(Name,),
-                signature = 'v@:@',
+                selector  = ('remove%s:'%(Name,)).encode('latin1'),
+                signature = b'v@:@',
         )
         remove1.isHidden = True
         instance_methods.add(remove1)
 
         remove2 = selector(remove, 
-                selector  = 'remove%sObject:'%(Name,),
-                signature = 'v@:@',
+                selector  = ('remove%sObject:'%(Name,)).encode('latin'),
+                signature = b'v@:@',
         )
         remove2.isHidden = True
         instance_methods.add(remove2)

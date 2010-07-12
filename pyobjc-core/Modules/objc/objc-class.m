@@ -118,18 +118,21 @@ static int
 nsdata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
 	NSData *self = (NSData *)PyObjCObject_GetObject(obj);
-	return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+	int r = PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+	return r;
 }
 
 static int
 nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
 	NSMutableData *self = (NSMutableData *)PyObjCObject_GetObject(obj);
+	int r;
 	if ((flags & PyBUF_WRITABLE) == PyBUF_WRITABLE) {
-		return PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0, flags);
+		r = PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0, flags);
 	} else {
-		return PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
+		r = PyBuffer_FillInfo(view, obj, (void*)[self bytes], [self length], 1, flags);
 	}
+	return r;
 }
 
 #endif
@@ -1761,14 +1764,14 @@ PyObjCClass_New(Class objc_class)
 #else
 	if (strcmp(className, "NSMutableData") == 0) {
 		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
-#if PY_VERSION_HEX >= 0x02060000
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION >= 6
 		((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
 #endif
 		PyType_Modified((PyTypeObject*)result);
 		PyType_Ready((PyTypeObject *)result);
 	} else if (strcmp(className, "NSData") == 0) {
 		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
-#if PY_VERSION_HEX >= 0x02060000
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION >= 6
 		((PyTypeObject *)result)->tp_flags |= Py_TPFLAGS_HAVE_NEWBUFFER;
 #endif
 		PyType_Modified((PyTypeObject*)result);

@@ -78,6 +78,7 @@ class TestSCDynamicStore (TestCase):
         r = SCDynamicStoreCopyNotifiedKeys(st)
         self.assertTrue(isinstance(r, CFArrayRef))
 
+    @expectedFailure
     def testCallbacks(self):
         if os.getuid() != 0:
             self.fail("WARNING: Need root privileges to test callback mechanism")

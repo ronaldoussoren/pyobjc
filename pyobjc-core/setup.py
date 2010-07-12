@@ -155,12 +155,6 @@ from setuptools.command import build_ext, install_lib
 import os
 
 class pyobjc_install_lib (install_lib.install_lib):
-    def run(self):
-        print "===== install_lib"
-        install_lib.install_lib.run(self)
-        print "----- install_lib"
-
-
     def get_exclusions(self):
         result = install_lib.install_lib.get_exclusions(self)
         for fn in install_lib._install_lib.get_outputs(self):

@@ -38,11 +38,14 @@ from pyobjc_setup import setup, Extension
 
 import os
 
+subpackages = [ "Quartz.%s"%(fn,) for fn in os.listdir('Lib/Quartz') if os.path.exists(os.path.join('Lib/Quartz', fn, "__init__.py"))]
+
+
 setup(
     name='pyobjc-framework-Quartz',
     version="2.3b1",
     description = "Wrappers for the Quartz frameworks on Mac OS X",
-    packages = [ "Quartz", "Quartz.CoreGraphics", "Quartz.ImageIO", "Quartz.QuartzCore", "Quartz.CoreVideo", "Quartz.QuartzComposer", "Quartz.ImageKit", "Quartz.PDFKit", "Quartz.QuartzFilters" ],
+    packages = [ "Quartz" ] + subpackages,
     install_requires = [ 
         'pyobjc-core>=2.3b1',
         'pyobjc-framework-Cocoa>=2.3b1',

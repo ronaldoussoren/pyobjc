@@ -47,4 +47,6 @@ extern int PyObjCClass_Convert(PyObject* object, void* pvar);
 extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string);
 extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n);
 
+extern PyObject* PyObjC_ImportName(const char* name);
+
 #endif /* OBJC_UTIL */

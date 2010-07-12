@@ -40,4 +40,6 @@ except ImportError:
 try:
     from Quartz.QuickLookUI import *
 except ImportError, msg:
+    import traceback
+    traceback.print_exc()
     pass
