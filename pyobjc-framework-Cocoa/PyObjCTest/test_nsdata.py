@@ -13,6 +13,11 @@ otherBytes.fromstring('12345678901234567890' * 5)
 if sys.version_info[0] == 3:
     buffer = memoryview
 
+try:
+    memoryview
+except NameError:
+    memoryview = None
+
 class TestNSData(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSData.writeToFile_atomically_)
@@ -150,20 +155,20 @@ class TestNSData(TestCase):
         b, err = NSData.alloc().initWithContentsOfFile_options_error_(
                 "/etc/hosts", 0, None)
         self.assertIsInstance(b, NSData)
-        self.assertIsObject(err, None)
+        self.assertIs(err, None)
         b2, err = NSData.alloc().initWithContentsOfFile_options_error_(
                 "/etc/hosts.nosuchfile", 0, None)
-        self.assertIsObject(b2, None)
+        self.assertIs(b2, None)
         self.assertIsInstance(err, NSError)
         url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts', False)
         b, err = NSData.alloc().initWithContentsOfURL_options_error_(
                 url, 0, None)
         self.assertIsInstance(b, NSData)
-        self.assertIsObject(err, None)
+        self.assertIs(err, None)
         url = NSURL.fileURLWithPath_isDirectory_('/etc/hosts.nosuchfile', False)
         b2, err = NSData.alloc().initWithContentsOfURL_options_error_(
                 url, 0, None)
-        self.assertIsObject(b2, None)
+        self.assertIs(b2, None)
         self.assertIsInstance(err, NSError)
 class MyData (NSData):
     def dataWithBytes_length_(self, bytes, length):

@@ -84,9 +84,9 @@ class TestRunLoop (TestCase):
         observer = CFRunLoopObserverCreate(None, kCFRunLoopEntry|kCFRunLoopExit,
                 True, 4, callback, data)
         self.assertIsInstance(observer, CFRunLoopObserverRef)
-        self.failUnless (CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode) is False)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), False)
         CFRunLoopAddObserver(rl, observer, kCFRunLoopDefaultMode)
-        self.failUnless (CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode) is True)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), True)
 
         # Use dummy stream to ensure that the runloop actually performs work
         strval = b'hello world'
@@ -103,7 +103,7 @@ class TestRunLoop (TestCase):
             self.assertIsIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
             self.assertIs(item[2], data)
         CFRunLoopRemoveObserver(rl, observer, kCFRunLoopDefaultMode)
-        self.failUnless (CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode) is False)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), False)
 
 
     def testTimer(self):

@@ -62,6 +62,8 @@ class oc_test (test.test):
             sys.path.remove(dirname)
 
         # Actually run the tests
+        if sys.version_info[0] == 2:
+            sys.path.insert(0, rootdir)
         import PyObjCTest
         import unittest
         from pkg_resources import EntryPoint
