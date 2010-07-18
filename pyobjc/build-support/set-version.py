@@ -11,7 +11,7 @@ Run tests aftwards before doing a commit.
 """
 import os, sys, re
 
-DRYRUN=True
+DRYRUN=False
 
 
 topdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,7 +58,7 @@ for subdir in os.listdir(topdir):
     print ("Updating '%s'"%(subdir,))
     fn = os.path.join(topdir, subdir, "setup.py")
     r = re.compile('^\s*version=.*$', re.MULTILINE)
-    data = r.sub('    version="%s"'%(VERSION,), load_file(fn))
+    data = r.sub('    version="%s",'%(VERSION,), load_file(fn))
 
     r = re.compile('^\s*\'pyobjc-core>=.*$', re.MULTILINE)
     data = r.sub('        \'pyobjc-core>=%s\','%(VERSION,), data)

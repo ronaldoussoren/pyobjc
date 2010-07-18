@@ -42,7 +42,7 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 gUsage = """\
 run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions,versions]
 
-archs:    32-bit,3-way,intel (values separated by commas)
+archs:    32-bit,3-way (values separated by commas)
 versions: 2.6,2.7,3.1,3.2    (values seperated by commas)
 """
 
@@ -52,23 +52,14 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 
 gFrameworkNameTemplate="DbgPython-{archs}"
 
-gVersions=["2.6", "2.7", "3.1", "3.2"]
-gArchs=["32-bit", "3-way", "intel"]
-
-gVersions=["3.2", "2.7"]
-gArchs=["3-way"]
+gVersions=["3.2", "2.7", "3.1", "2.6"]
+gArchs=["32-bit", "3-way"]
 
 gArchMap={
     '3-way': ['ppc', 'i386', 'x86_64'],
     '32-bit': ['ppc', 'i386'],
     'intel': ['i386', 'x86_64'],
 }
-
-# XXX: Temporary workaround for structure of 
-# my local work environment.
-gPyObjCCore="pyobjc-core"
-if os.path.exists(os.path.join(gRootDir, "pyobjc-core-py3k")):
-    gPyObjCCore="pyobjc-core-py3k"
 
 
 def supports_arch_command(version):
@@ -217,6 +208,9 @@ def run_tests(version, archs):
     if version[0] == '3':
         base_python += '3'
 
+    if os.path.exists(base_python + "-all"):
+        base_python = base_python + "-all"
+
     lg.debug("Interpreter: %s", base_python)
 
     if not os.path.exists(base_python):
@@ -246,7 +240,7 @@ def run_tests(version, archs):
 
 
     lg.debug("Install base packages")
-    if sys.version_info[0] == 3:
+    if version[0] == '3':
         python = os.path.join(subdir, "bin", "python3")
     else:
         python = os.path.join(subdir, "bin", "python")
@@ -257,10 +251,7 @@ def run_tests(version, archs):
         if not os.path.exists(os.path.join(resultdir, pkg)):
             os.makedirs(os.path.join(resultdir, pkg))
 
-        if pkg == "pyobjc-core":
-            pkgroot = os.path.join(gRootDir, gPyObjCCore)
-        else:
-            pkgroot = os.path.join(gRootDir, pkg)
+        pkgroot = os.path.join(gRootDir, pkg)
         pkgbuild = os.path.join(pkgroot, "build")
         if os.path.exists(pkgbuild):
             lg.debug("Remove build directory for %s", pkg)
@@ -286,10 +277,7 @@ def run_tests(version, archs):
         if not os.path.exists(os.path.join(resultdir, pkg)):
             os.makedirs(os.path.join(resultdir, pkg))
 
-        if pkg == "pyobjc-core":
-            pkgroot = os.path.join(gRootDir, gPyObjCCore)
-        else:
-            pkgroot = os.path.join(gRootDir, pkg)
+        pkgroot = os.path.join(gRootDir, pkg)
 
         if pkg == "pyobjc-framework-InterfaceBuilderKit":
             env = os.environ.copy()
@@ -347,6 +335,9 @@ def run_tests(version, archs):
                 xit = p.wait()
                 if xit != 0:
                     lg.warning("Test %s failed", pkg)
+
+                with open(os.path.join(resultdir, pkg, "test-stdout-{0}.exit".format(a)), "w") as fd:
+                    fd.write(str(xit))
                 
         else:
             lg.debug("Test %s for %s", pkg, os.path.basename(subdir))
@@ -556,6 +547,7 @@ def gen_summary(report_versions, report_archs):
 
             for fn in os.listdir(moddir):
                 if not fn.startswith('test'): continue
+                if fn.endswith('exit'): continue
 
                 if fn == 'test-stdout.txt':
                     a = 'all'
@@ -566,11 +558,18 @@ def gen_summary(report_versions, report_archs):
                 info['archs'].append(a)
                 info[a] =  parse_tests(os.path.join(moddir, fn))
 
+                with open (os.path.join(moddir, fn)[:-3] + 'exit') as fd:
+                    info[a]['exit'] = fd.read().strip()
+
+
                 if info[a]['test_fail'] and (info['class'] is None):
                     info['class'] = 'warning'
 
                 if info[a]['test_error']:
                     info['class'] = 'error'
+
+                if info[a]['exit'] != 0:
+                    info['class'] = 'crash'
 
 
             if info['class'] is None:
