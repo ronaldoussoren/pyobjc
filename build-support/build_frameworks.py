@@ -34,10 +34,22 @@ gArchs = ("32-bit", "3-way")
 
 # Name of the Python framework and any additional arguments
 # passed to the configure command.
-gFrameworkNameTemplate="DbgPython-{archs}"
-gExtraConfigureArgs=[
-    "--with-pydebug",
+gFlavours = [
+        dict(
+            name="debug",
+            template="DbgPython-{archs}",
+            flags=[
+                "--with-pydebug",
+            ],
+        ),
+#        dict(
+#            name="release",
+#            template="ReleasePython-{archs}",
+#            flags=[
+#            ],
+#        ),
 ]
+
 
 # Location of the SVN branches to be used
 gURLMap = {
@@ -100,7 +112,7 @@ def create_checkout(version):
         lg.warn("Checkout for %s failed", version)
         raise ShellError(xit)
 
-def build_framework(version, archs):
+def build_framework(flavour, version, archs):
     """
     Build the given version of Python in the given architecture
     variant. 
@@ -109,7 +121,7 @@ def build_framework(version, archs):
     a local copy of the package).
     """
     lg = logging.getLogger("build_framework")
-    lg.info("Build framework version=%r archs=%r", version, archs)
+    lg.info("Build %s framework version=%r archs=%r", flavour["name"], version, archs)
 
     builddir = os.path.join(gBaseDir, "checkouts", version, "build")
     if os.path.exists(builddir):
@@ -123,10 +135,10 @@ def build_framework(version, archs):
     p = subprocess.Popen([
         "../configure",
             "--enable-framework",
-            "--with-framework-name={0}".format(gFrameworkNameTemplate.format(version=version, archs=archs)),
+            "--with-framework-name={0}".format(flavour["template"].format(version=version, archs=archs)),
             "--enable-universalsdk={0}".format(gSdkMap[archs]),
             "--with-universal-archs={0}".format(archs),
-            ] + gExtraConfigureArgs + [
+            ] + flavour["flags"] + [
             "MACOSX_DEPLOYMENT_TARGET={0}".format(gDeploymentTargetMap[archs]),
             ], cwd=builddir)
 
@@ -156,7 +168,7 @@ def build_framework(version, archs):
         lg.debug("Install failed for %r", version)
         raise ShellError(xit)
 
-def install_distribute(version, archs):
+def install_distribute(flavour, version, archs):
     lg = logging.getLogger("install_distribute")
     lg.debug("Installing distribute")
 
@@ -166,7 +178,7 @@ def install_distribute(version, archs):
         lg.debug("Remove existing 'build' subdir")
         shutil.rmtree(builddir)
 
-    frameworkName=gFrameworkNameTemplate.format(archs=archs, version=version)
+    frameworkName=flavour["template"].format(archs=archs, version=version)
 
     python = "/Library/Frameworks/{0}.framework/Versions/{1}/bin/python".format(
             frameworkName, version)
@@ -184,12 +196,12 @@ def install_distribute(version, archs):
         raise ShellError(xit)
 
 
-def install_virtualenv(version, archs):
+def install_virtualenv(flavour, version, archs):
     lg = logging.getLogger("install_virtualenv")
 
     lg.info("Installing virtualenv from local source")
 
-    frameworkName=gFrameworkNameTemplate.format(archs=archs, version=version)
+    frameworkName=flavour["template"].format(archs=archs, version=version)
 
     python = "/Library/Frameworks/{0}.framework/Versions/{1}/bin/python".format(
             frameworkName, version)
@@ -269,14 +281,21 @@ def main():
         for version in sorted(versions):
             create_checkout(version)
 
-            for arch in sorted(archs):
-                lg.info('Building framework for python %s (%s)', version, arch)
-                build_framework(version, arch)
-                lg.info('Installing distribute for python %s (%s)', version, arch)
-                install_distribute(version, arch)
-                lg.info('Installing virtualenv for python %s (%s)', version, arch)
-                install_virtualenv(version, arch)
-                lg.info('Done python %s (%s)', version, arch)
+            for flavour in gFlavours:
+                for arch in sorted(archs):
+                    try:
+                        lg.info('Building %s framework for python %s (%s)', flavour["name"], version, arch)
+                        build_framework(flavour, version, arch)
+                        lg.info('Installing distribute for python %s (%s)', version, arch)
+                        install_distribute(flavour, version, arch)
+                        lg.info('Installing virtualenv for python %s (%s)', version, arch)
+                        install_virtualenv(flavour, version, arch)
+                        lg.info('Done %s python %s (%s)', flavour["name"], version, arch)
+                    except Exception as exc:
+                        lg.warning("building %s for pyton %s (%s) failed: %s",
+                                flavour["name"], version, arch, exc)
+                        import traceback
+                        traceback.print_exc()
     
     except ShellError:
         sys.exit(1)
