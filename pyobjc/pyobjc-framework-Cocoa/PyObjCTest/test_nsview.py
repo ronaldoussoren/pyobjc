@@ -23,7 +23,7 @@ class TestNSView (TestCase):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
 
 
-        self.failUnlessResultHasType(method, NSRect.__typestr__)
+        self.assertResultHasType(method, NSRect.__typestr__)
         #self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature(NSRect.__typestr__+b"@:" + objc._C_NSInteger))
 
 

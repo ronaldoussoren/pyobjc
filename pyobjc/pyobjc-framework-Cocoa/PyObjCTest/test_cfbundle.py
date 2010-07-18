@@ -48,7 +48,7 @@ class TestCFBundle (TestCase):
 
         v = CFBundleGetLocalInfoDictionary(bundle)
         if v is not None:
-            self.failUnlessIsInstance(v, CFDictionaryRef)
+            self.assertIsInstance(v, CFDictionaryRef)
         type, creator = CFBundleGetPackageInfo(bundle, None, None)
         self.assertIsInstance(type, (int, long))
         self.assertIsInstance(creator, (int, long))

@@ -4,6 +4,11 @@ import objc
 from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass4
 
+try:
+    memoryview
+except NameError:
+    memoryview = None
+
 class TestNSCoderUsage(TestCase):
     def testUsage(self):
         class CoderClass1 (NSObject):

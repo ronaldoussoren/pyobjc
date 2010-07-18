@@ -46,7 +46,7 @@ class TestUserNotification (TestCase):
         self.assertIsInstance(flags, (int, long))
         v = CFUserNotificationGetResponseDictionary(ref)
         if v is not None:
-            self.failUnlessIsInstance(v, CFDictionaryRef)
+            self.assertIsInstance(v, CFDictionaryRef)
         error = CFUserNotificationUpdate(ref, 2.0, 0, infoDict)
         self.assertEqual(error , 0)
         error = CFUserNotificationCancel(ref)
@@ -54,7 +54,7 @@ class TestUserNotification (TestCase):
         
         v = CFUserNotificationGetResponseValue(ref, kCFUserNotificationTextFieldValuesKey, 0)
         if v is not None:
-            self.failUnlessIsInstance(v, unicode)
+            self.assertIsInstance(v, unicode)
     def testAlert(self):
         err, flags = CFUserNotificationDisplayAlert(0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None)
         self.assertEqual(err , 0)
