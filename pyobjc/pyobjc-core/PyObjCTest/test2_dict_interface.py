@@ -65,13 +65,13 @@ class TestDict (test.test_dict.DictTest, TestCase):
 
     def test_contains(self):
         d = NSMutableDictionary({})
-        self.assertIsNotIn('a', d)
+        self.assertNotIn('a', d)
         self.assertFalse('a' in d)
         self.assertTrue('a' not in d)
         d = NSMutableDictionary({'a': 1, 'b': 2})
-        self.assertIsIn('a', d)
-        self.assertIsIn('b', d)
-        self.assertIsNotIn('c', d)
+        self.assertIn('a', d)
+        self.assertIn('b', d)
+        self.assertNotIn('c', d)
 
         self.assertRaises(TypeError, d.__contains__)
 

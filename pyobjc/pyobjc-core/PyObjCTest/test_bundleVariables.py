@@ -13,8 +13,8 @@ class TestBundleVariables (TestCase):
                 ('NSBundleDidLoadNotification', b'@'),
             ])
 
-        self.assertIsIn(u'NSBundleDidLoadNotification', d)
-        self.assertIsIn(u'NSAppleScriptErrorMessage', d)
+        self.assertIn(u'NSBundleDidLoadNotification', d)
+        self.assertIn(u'NSAppleScriptErrorMessage', d)
 
         self.assertIsInstance(d[u'NSAppleScriptErrorMessage'], objc.pyobjc_unicode)
         self.assertIsInstance(d[u'NSBundleDidLoadNotification'], objc.pyobjc_unicode)
@@ -26,8 +26,8 @@ class TestBundleVariables (TestCase):
                 ('NSFoundationVersionNumber', objc._C_DBL),
             ])
 
-        self.assertIsIn('NSDebugEnabled', d)
-        self.assertIsIn('NSFoundationVersionNumber', d)
+        self.assertIn('NSDebugEnabled', d)
+        self.assertIn('NSFoundationVersionNumber', d)
 
         self.assertIsInstance(d['NSFoundationVersionNumber'], float)
         self.assertIsInstance(d['NSDebugEnabled'], int)

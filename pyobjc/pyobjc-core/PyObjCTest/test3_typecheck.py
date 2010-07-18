@@ -30,7 +30,7 @@ class TestPython3Types (TestCase):
         ]
         d = {}
         objc.loadBundleFunctions(bundle, d, tab)
-        self.assertIsIn('NSHomeDirectory', d)
+        self.assertIn('NSHomeDirectory', d)
 
 
         tab = [
@@ -53,7 +53,7 @@ class TestPython3Types (TestCase):
 
         d = {}
         objc.loadBundleVariables(bundle, d, tab)
-        self.assertIsIn('NSAppleScriptErrorMessage', d)
+        self.assertIn('NSAppleScriptErrorMessage', d)
 
 
 

@@ -88,7 +88,7 @@ class BasicSetTests:
         self.assertEquals(OC_TestSet.anyObjectOfSet_(s), None)
 
         s = self.setClass([1,2,3,4])
-        self.assertIsIn(OC_TestSet.anyObjectOfSet_(s), s)
+        self.assertIn(OC_TestSet.anyObjectOfSet_(s), s)
 
     def testContainsObject_(self):
         s = self.setClass([1,2,3])

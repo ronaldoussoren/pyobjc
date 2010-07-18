@@ -54,9 +54,9 @@ class TestClassLookup(TestCase):
         NSException = objc.lookUpClass('NSException')
         NSMutableArray = objc.lookUpClass('NSMutableArray')
 
-        self.assertIsIn(NSObject, objc.getClassList())
-        self.assertIsIn(NSException, objc.getClassList())
-        self.assertIsIn(NSMutableArray, objc.getClassList())
+        self.assertIn(NSObject, objc.getClassList())
+        self.assertIn(NSException, objc.getClassList())
+        self.assertIn(NSMutableArray, objc.getClassList())
 
 class TestMethodInvocation(TestCase):
     def setUp(self):
@@ -74,7 +74,7 @@ class TestMethodInvocation(TestCase):
 
 class TestClassDict(TestCase):
     def testDict(self):
-        self.assertIsIn("attributesAtIndex_longestEffectiveRange_inRange_", NSAttributedString.__dict__)
+        self.assertIn("attributesAtIndex_longestEffectiveRange_inRange_", NSAttributedString.__dict__)
 
 class TestPickle(TestCase):
     # We don't support pickling at the moment, make sure we enforce that.

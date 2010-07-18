@@ -196,7 +196,7 @@ class PyOCTestSimpleReturns(TestCase):
         OC_TestClass1.clsReset()
         self.assertEquals(len(OC_TestClass1.idClsFunc()), 0)
         self.assertEquals(type(OC_TestClass1.idClsFunc()).__name__, 'NSHost')
-        self.assertIsIn(str(OC_TestClass1.idClsFunc()), ('{}', '{\n}'))
+        self.assertIn(str(OC_TestClass1.idClsFunc()), ('{}', '{\n}'))
         self.assertEquals(OC_TestClass1.idClsFunc(), None)
 
     # testCls* ends here
@@ -309,7 +309,7 @@ class PyOCTestSimpleReturns(TestCase):
         obj.reset()
         self.assertEquals(len(obj.idFunc()), 0)
         self.assertEquals(type(obj.idFunc()).__name__, 'NSHost')
-        self.assertIsIn(str(obj.idFunc()), ('{}', '{\n}'))
+        self.assertIn(str(obj.idFunc()), ('{}', '{\n}'))
         self.assertEquals(obj.idFunc(), None)
 
     def testStruct1(self):

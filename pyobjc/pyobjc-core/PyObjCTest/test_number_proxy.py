@@ -138,7 +138,7 @@ class TestNSNumber (TestCase):
         #   printf("%llu\n", lv);
         # 
 
-        self.assertIsIn(
+        self.assertIn(
                 OC_TestNumber.numberAsUnsignedLongLong_(v),
                     (18446744073709551489, 18446744073709551488))
 

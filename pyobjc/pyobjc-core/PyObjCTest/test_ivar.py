@@ -213,9 +213,9 @@ class TestAllInstanceVariables (TestCase):
         # Note: cannot check the exact contents of dir(), who knows
         # what NSObject defines...
         v = objc.listInstanceVariables(obj)
-        self.assertIsIn(('charValue', objc._C_CHR), v)
-        self.assertIsIn(('intValue', objc._C_INT), v)
-        self.assertIsIn(('isa', objc._C_CLASS), v)
+        self.assertIn(('charValue', objc._C_CHR), v)
+        self.assertIn(('intValue', objc._C_INT), v)
+        self.assertIn(('isa', objc._C_CLASS), v)
 
     
     def testAnonymousIvar(self):

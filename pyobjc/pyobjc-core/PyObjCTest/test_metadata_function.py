@@ -256,7 +256,7 @@ objc._loadFunctionList(function_list, globals(),  _FunctionTable, False)
 class TestExists (TestCase):
     def testFunctionsExists(self):
         for item in _FunctionTable:
-            self.assertIsIn(item[0], globals())
+            self.assertIn(item[0], globals())
 
 class TestArrayDefault (TestCase):
     # TODO: what is the default anyway?

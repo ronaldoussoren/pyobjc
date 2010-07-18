@@ -43,10 +43,10 @@ class TestNSDictionaryInterface (TestCase):
         d = self.createDictionary(a=1, b=2)
         k = d.keys()
 
-        self.assertIsIn('a', d)
-        self.assertIsIn('b', d)
-        self.assertIsIn('a', k)
-        self.assertIsIn('b', k)
+        self.assertIn('a', d)
+        self.assertIn('b', d)
+        self.assertIn('a', k)
+        self.assertIn('b', k)
 
         self.assertIsNotInstance(k, list)
 
@@ -287,19 +287,19 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         d = self.createDictionary(a=1, b=2)
         k = d.keys()
 
-        self.assertIsIn('a', d)
-        self.assertIsIn('b', d)
-        self.assertIsIn('a', k)
-        self.assertIsIn('b', k)
+        self.assertIn('a', d)
+        self.assertIn('b', d)
+        self.assertIn('a', k)
+        self.assertIn('b', k)
 
         self.assertIsNotInstance(k, list)
 
-        self.assertIsNotIn('c', d)
-        self.assertIsNotIn('c', k)
+        self.assertNotIn('c', d)
+        self.assertNotIn('c', k)
 
         d['c'] = 3
-        self.assertIsIn('c', d)
-        self.assertIsIn('c', k)
+        self.assertIn('c', d)
+        self.assertIn('c', k)
 
     def testValuesMutable(self):
         d = self.createDictionary()
