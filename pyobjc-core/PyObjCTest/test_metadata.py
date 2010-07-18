@@ -920,18 +920,18 @@ class TestMetaDataAccess (TestCase):
     def testSuggestions(self):
         meta = OC_MetaDataTest.varargsMethodWithObjects_.__metadata__()
         self.assertIsInstance(meta, dict)
-        self.assertIsIn('suggestion', meta)
+        self.assertIn('suggestion', meta)
         self.assertEquals(meta['suggestion'], "Variadic functions/methods are not supported")
 
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
         self.assertIsInstance(meta, dict)
-        self.assertIsIn('suggestion', meta)
+        self.assertIn('suggestion', meta)
         self.assertEquals(meta['suggestion'], "please ignore me")
 
     def testPrintfFormat(self): 
         meta = OC_MetaDataTest.makeArrayWithFormat_.__metadata__()
         self.assertEquals(meta['variadic'], True)
-        self.assertIsNotIn('printf_format', meta['arguments'][0])
+        self.assertNotIn('printf_format', meta['arguments'][0])
         self.assertEquals(meta['arguments'][2]['printf_format'], True)
 
     def testVariadic(self):
@@ -956,8 +956,8 @@ class TestMetaDataAccess (TestCase):
 
     def testAllowNull(self):
         meta = OC_MetaDataTest.make4Tuple_.__metadata__()
-        self.assertIsNotIn('null_accepted', meta['retval'])
-        self.assertIsNotIn( 'null_accepted', meta['arguments'][0])
+        self.assertNotIn('null_accepted', meta['retval'])
+        self.assertNotIn( 'null_accepted', meta['arguments'][0])
 
         meta = OC_MetaDataTest.make4Tuple_.__metadata__()
         self.assertEquals(meta['arguments'][2]['null_accepted'], False)

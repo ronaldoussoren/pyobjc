@@ -23,9 +23,9 @@ class TestBundleFunctions (TestCase):
         d = {}
         objc.loadBundleFunctions(self.bundle, d, FUNCTIONS)
 
-        self.assertIsIn('NSIsFreedObject', d)
-        self.assertIsIn('NSCountFrames', d)
-        self.assertIsIn('NSHomeDirectory', d)
+        self.assertIn('NSIsFreedObject', d)
+        self.assertIn('NSCountFrames', d)
+        self.assertIn('NSHomeDirectory', d)
 
         # Don't use this API, it is unsupported and causes warnings.
         #fn = d[u'NSIsFreedObject']

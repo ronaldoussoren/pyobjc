@@ -289,8 +289,8 @@ class TestOverridingSpecials(TestCase):
         self.assertEquals(aList, [])
         del o
         self.assertEquals(len(aList), 2)
-        self.assertIsIn('dealloc', aList)
-        self.assertIsIn('__del__', aList)
+        self.assertIn('dealloc', aList)
+        self.assertIn('__del__', aList)
 
         class SubClassWithDealloc(ClassWithDealloc):
             def dealloc(self):
@@ -302,9 +302,9 @@ class TestOverridingSpecials(TestCase):
         self.assertEquals(aList, [])
         del o
         self.assertEquals(len(aList), 3)
-        self.assertIsIn('dealloc.dealloc', aList)
-        self.assertIsIn('dealloc', aList)
-        self.assertIsIn('__del__', aList)
+        self.assertIn('dealloc.dealloc', aList)
+        self.assertIn('dealloc', aList)
+        self.assertIn('__del__', aList)
 
         class ClassWithDeallocAndDel(NSObject):
             def init(self):
@@ -325,9 +325,9 @@ class TestOverridingSpecials(TestCase):
         self.assertEquals(aList, [])
         del o
         self.assertEquals(len(aList), 3)
-        self.assertIsIn('mydel', aList)
-        self.assertIsIn('dealloc', aList)
-        self.assertIsIn('__del__', aList)
+        self.assertIn('mydel', aList)
+        self.assertIn('dealloc', aList)
+        self.assertIn('__del__', aList)
 
     def testMethodNames(self):
 

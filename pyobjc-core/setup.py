@@ -69,8 +69,23 @@ class oc_test (test.test):
             if rootdir in sys.path:
                 sys.path.remove(rootdir)
 
+        ei_cmd = self.get_finalized_command('egg_info')
+        egg_name = ei_cmd.egg_name.replace('-', '_')
+
+        to_remove = []
+        for dirname in sys.path:
+            bn = os.path.basename(dirname)
+            if bn.startswith(egg_name + "-"):
+                to_remove.append(dirname)
+
+        for dirname in to_remove:
+            log.info("removing installed %r from sys.path before testing"%(dirname,))
+            sys.path.remove(dirname)
+
         from PyObjCTest.loader import makeTestSuite
         import unittest
+
+        #import pprint; pprint.pprint(sys.path)
        
         unittest.main(None, None, [unittest.__file__]+self.test_args)
 
@@ -287,6 +302,7 @@ CFLAGS.extend([
 ## on i386 systems when a method returns a struct that isn't returned
 ## in registers. 
 if '-O0' in get_config_var('CFLAGS'):
+    print "Change -O0 to -O1"
     CFLAGS.append('-O1')
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')

@@ -97,7 +97,7 @@ class TestLockingBasic (TestCase):
 
         thr.join()
 
-        self.assertIsNotIn("LOCK FOUND", lst)
+        self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
                 self.assertTrue(lst[idx+1].endswith(' b'))
@@ -123,7 +123,7 @@ class TestLockingBasic (TestCase):
 
         thr.join()
 
-        self.assertIsNotIn("LOCK FOUND", lst)
+        self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
                 self.assertTrue(lst[idx+1].endswith(' b'))
@@ -155,7 +155,7 @@ class TestLockingWithStatement (TestCase):
 
         thr.join()
 
-        self.assertIsNotIn("LOCK FOUND", lst)
+        self.assertNotIn("LOCK FOUND", lst)
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
                 self.assertTrue(lst[idx+1].endswith(' b'))

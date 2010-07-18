@@ -600,11 +600,11 @@ class TestCase (_unittest.TestCase):
         if isinstance(value, types):
             self.fail(message or "%s is an instance of %r"%(value, types))
 
-    def assertIsIn(self, value, seq, message=None):
+    def assertIn(self, value, seq, message=None):
         if value not in seq:
             self.fail(message or "%r is not in %r"%(value, seq))
 
-    def assertIsNotIn(self, value, seq, message=None):
+    def assertNotIn(self, value, seq, message=None):
         if value in seq:
             self.fail(message or "%r is in %r"%(value, seq))
 
@@ -668,6 +668,10 @@ class TestCase (_unittest.TestCase):
             return original_func(*args, **kwds)
         return deprecated_func
 
+    failUnlessIsIn = _deprecate(assertIn)
+    failUnlessIsNotIn = _deprecate(assertNotIn)
+    assertIsIn = _deprecate(assertIn)
+    assertIsNotIn = _deprecate(assertNotIn)
     failUnlessIsCFType = _deprecate(assertIsCFType)
     failUnlessIsOpaquePointer = _deprecate(assertIsOpaquePointer)
     failUnlessIsNone = _deprecate(assertIsNone)
