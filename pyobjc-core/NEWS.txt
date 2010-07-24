@@ -4,8 +4,16 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.3b1
--------------
+Version 2.3
+-----------
+
+- Add some experimental code that slightly reduces the amount of
+  memory used when loading bridgesupport files.
+
+  Futher work is needed to investigate what causes the memory
+  usage to increase as much as it does, sadly enough Instruments
+  doesn't play nice with ``--with-pymalloc`` and for some reason
+  'import Foundation' crashes with ``--without-pymalloc``.
 
 - "<struct>" definitions in the bridgesupport files can now have
   an alias attribute containing the name of Python type that should

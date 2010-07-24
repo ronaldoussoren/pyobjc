@@ -197,5 +197,9 @@ extern PyObject* PyBytes_InternFromString(const char* v);
 extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 #endif
 
+extern void      PyObjC_ClearIntern(void);
+extern PyObject* PyObjC_InternValue(PyObject* orig);
+extern PyObject* PyObjC_IntFromString(char* v, char**pend, int base);
+extern PyObject* PyObjC_IntFromLong(long v);
 
 #endif /* PyObjC_COMPAT_H */

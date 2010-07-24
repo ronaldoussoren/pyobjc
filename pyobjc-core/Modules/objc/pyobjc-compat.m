@@ -467,3 +467,90 @@ PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
 
 
 #endif /* Py3K */
+
+/* 
+ * Helper function for making sure that we don't store duplicate data
+ * for the metadata bridges.
+ *
+ * Interface: call on value, don't update value afterwards. Steals
+ * reference to argument and returns a new reference.
+ */
+static	PyObject* intern_mapping = NULL;
+
+void	  PyObjC_ClearIntern(void)
+{
+	Py_CLEAR(intern_mapping);
+}
+
+PyObject* PyObjC_InternValue(PyObject* orig)
+{
+
+	PyObject* v;
+	PyObject* key;
+	
+	if (orig == NULL) {
+		return NULL;
+	}
+
+	if (intern_mapping == NULL) {
+		intern_mapping = PyDict_New();
+		if (intern_mapping == NULL) {
+			Py_DECREF(orig);
+			return NULL;
+		}
+	}
+
+	if (PyList_Check(orig)) {
+		key = PyList_AsTuple(orig);
+		if (key == NULL) {
+			Py_DECREF(orig);
+			return NULL;
+		}
+	} else if (PyDict_Check(orig)) {
+		/* This is not ideal, but should help reduce the amount of noise */
+		key = PyObject_Repr(orig);
+		if (key == NULL) {
+			Py_DECREF(orig);
+			return NULL;
+		}
+
+	} else {
+		key = orig;
+		Py_INCREF(key);
+	}
+
+	v = PyDict_GetItem(intern_mapping, key);
+	if (v == NULL) {
+		int r = PyDict_SetItem(intern_mapping, key, orig);
+		Py_DECREF(key);
+		if (r == -1) {
+			Py_DECREF(orig);
+			return NULL;
+		}
+		v = orig;
+	} else {
+		Py_DECREF(key);
+		Py_INCREF(v);
+		Py_DECREF(orig);
+	}
+	return v;
+}
+
+PyObject* PyObjC_IntFromString(char* v, char**pend, int base)
+{
+	PyObject* r = PyInt_FromString(v, pend, base);
+	if (r == NULL) {
+		return NULL;
+	}
+	return PyObjC_InternValue(r);
+}
+
+
+PyObject* PyObjC_IntFromLong(long v)
+{
+	PyObject* r = PyInt_FromLong(v);
+	if (r == NULL) {
+		return NULL;
+	}
+	return PyObjC_InternValue(r);
+}

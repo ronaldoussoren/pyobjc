@@ -311,7 +311,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 	s = attribute_string(node, "c_array_of_fixed_length", NULL);
 	if (s && *s) {
 		char* end;
-		v = PyInt_FromString(s, &end, 10);
+		v = PyObjC_IntFromString(s, &end, 10);
 		if (v == NULL) {
 			xmlFree(s);
 			Py_DECREF(result);
@@ -384,9 +384,9 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 			}
 
 			if (isMethod) {
-				v = PyInt_FromLong(input + 2);
+				v = PyObjC_IntFromLong(input + 2);
 			} else {
-				v = PyInt_FromLong(input);
+				v = PyObjC_IntFromLong(input);
 			}
 			if (v == NULL) {
 				Py_DECREF(result);
@@ -503,7 +503,7 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 			PyDict_SetItemString(a, "type", av);
 			Py_DECREF(av);
 
-			av = PyInt_FromLong(idx++);
+			av = PyObjC_IntFromLong(idx++);
 			if (av == NULL) {
 				Py_DECREF(a);
 				Py_DECREF(av);
@@ -523,12 +523,12 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 				continue;
 			}
 			if (strcmp((char*)al->name, "arg") == 0) {
-				PyObject* d = xmlToArgMeta(al, NO, NULL);
+				PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, NO, NULL));
 				if (d == NULL) {
 					Py_DECREF(result);
 					return NULL;
 				}
-				v = PyInt_FromLong(idx++);
+				v = PyObjC_IntFromLong(idx++);
 				if (v == NULL) {
 					Py_DECREF(d);
 					Py_DECREF(v);
@@ -543,11 +543,12 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 					return NULL;
 				}
 			} else if (strcmp((char*)al->name, "retval") == 0) {
-				PyObject* d = xmlToArgMeta(al, NO, NULL);
+				PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, NO, NULL));
 				if (d == NULL) {
 					Py_DECREF(result);
 					return NULL;
 				}
+
 				r = PyDict_SetItemString(meta, "retval", d);
 				Py_DECREF(d);
 				if (r == -1) {
@@ -633,6 +634,13 @@ handle_constant(xmlNode* cur_node, PyObject* globalDict)
 				return -1;
 			}
 
+			v = PyObjC_InternValue(v);
+			if (v == NULL) {
+				if (name) xmlFree(name);
+				if (type) xmlFree(type);
+				return -1;
+			}
+
 			int r = PyDict_SetItemString(globalDict, name, v);
 			if (r == -1) {
 				if (name) xmlFree(name);
@@ -701,7 +709,7 @@ handle_enum(xmlNode* cur_node, PyObject* globalDict)
 
 		if (strchr(value, '.') != NULL) {
 			/* floating point literal */
-			PyObject* s = PyText_InternFromString(value);
+			PyObject* s = PyText_FromString(value);
 			if (s == NULL) {
 				v = NULL;
 
@@ -716,7 +724,7 @@ handle_enum(xmlNode* cur_node, PyObject* globalDict)
 			}
 		} else {
 			/* integer literal */
-			v = PyInt_FromString(value, &end, 10);
+			v = PyObjC_IntFromString(value, &end, 10);
 		}
 
 		if (v == NULL) {
@@ -852,7 +860,7 @@ handle_cftype(xmlNode* cur_node, PyObject* globalDict, PyObject* cftypes)
 		} else {
 			CFTypeID typeid = getfunc();
 
-			v = PyInt_FromLong(typeid);
+			v = PyObjC_IntFromLong(typeid);
 			if (v == NULL) {
 				goto end;
 			}
@@ -995,7 +1003,7 @@ handle_class(xmlNode* cur_node)
 			if (c_length != NULL) {
 				long cnt = strtol(c_length, NULL, 10);
 
-				v = PyInt_FromLong(cnt);
+				v = PyObjC_IntFromLong(cnt);
 				if (v == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
@@ -1040,7 +1048,7 @@ handle_class(xmlNode* cur_node)
 
 			if (strcmp((char*)al->name, "arg") == 0) {
 				int argIdx;
-				PyObject* d = xmlToArgMeta(al, YES, &argIdx);
+				PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, YES, &argIdx));
 				if (d == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
@@ -1049,7 +1057,7 @@ handle_class(xmlNode* cur_node)
 					return -1;
 				}
 				
-				PyObject* idx = PyInt_FromLong(argIdx+2);
+				PyObject* idx = PyObjC_IntFromLong(argIdx+2);
 				if (idx == NULL) {
 					Py_DECREF(d);
 					Py_DECREF(metadata);
@@ -1071,7 +1079,7 @@ handle_class(xmlNode* cur_node)
 				}
 
 			} else if (strcmp((char*)al->name, "retval") == 0) {
-				PyObject* d = xmlToArgMeta(al, YES, NULL);
+				PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, YES, NULL));
 				if (d == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
@@ -1109,6 +1117,13 @@ handle_class(xmlNode* cur_node)
 			Py_DECREF(pyClassname);
 			Py_DECREF(metadata);
 			xmlFree(classname);
+			return -1;
+		}
+
+		metadata = PyObjC_InternValue(metadata);
+		if (metadata == NULL) {
+			Py_DECREF(pyClassname);
+			Py_DECREF(pySelector);
 			return -1;
 		}
 
@@ -1220,7 +1235,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 		char* ch = attribute_string(cur_node, "c_array_length_in_arg", NULL);
 		if (ch) {
 			long count = strtol(ch, NULL, 10);
-			v = PyInt_FromLong(count);
+			v = PyObjC_IntFromLong(count);
 			if (v == NULL) {
 				xmlFree(name);
 				Py_DECREF(metadata);
@@ -1265,7 +1280,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 		}
 
 		if (strcmp((char*)al->name, "arg") == 0) {
-			PyObject* d = xmlToArgMeta(al, NO, NULL);
+			PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, NO, NULL));
 			if (d == NULL) {
 				goto error;
 			}
@@ -1281,7 +1296,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 				goto error;
 			}
 
-			PyObject* argIdx = PyInt_FromLong(PyList_Size(siglist)-2);
+			PyObject* argIdx = PyObjC_IntFromLong(PyList_Size(siglist)-2);
 			if (argIdx == NULL) {
 				Py_DECREF(d);
 				goto error;
@@ -1297,7 +1312,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 
 		} else if (strcmp((char*)al->name, "retval") == 0) {
 
-			PyObject* d = xmlToArgMeta(al, NO, NULL);
+			PyObject* d = PyObjC_InternValue(xmlToArgMeta(al, NO, NULL));
 			if (d == NULL) {
 				goto error;
 			}
@@ -1325,7 +1340,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 
 
 	/* We have the complete metadata, now build the proxy object for it */
-	PyObject* signature = PyObject_CallMethod(empty_bytes, "join", "O", siglist);
+	PyObject* signature = PyObjC_InternValue(PyObject_CallMethod(empty_bytes, "join", "O", siglist));
 	if (signature == NULL) {
 		goto error;
 	}
@@ -1334,6 +1349,15 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 	if (nm == NULL) {
 		goto error;
 	}
+
+	metadata = PyObjC_InternValue(metadata);
+	if (metadata == NULL) {
+		Py_DECREF(nm);
+		Py_DECREF(metadata);
+		Py_DECREF(arguments);
+		Py_DECREF(siglist);
+	}
+
 	v = PyObjCFunc_New(nm, function, PyBytes_AsString(signature), Py_None, metadata);
 
 	Py_DECREF(nm);

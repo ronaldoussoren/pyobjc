@@ -1662,8 +1662,13 @@ typestr2typestr(PyObject* args)
 
 
 
-
-
+static PyObject*
+_clear_intern(PyObject* self __attribute__((__unused__)))
+{
+	PyObjC_ClearIntern();
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 
 static PyMethodDef mod_methods[] = {
@@ -1778,6 +1783,8 @@ static PyMethodDef mod_methods[] = {
 
 	{ "_typestr2typestr", (PyCFunction)typestr2typestr, 
 		METH_O, "private function" },
+
+	{ "_clear_intern", (PyCFunction)_clear_intern, METH_NOARGS,  NULL },
 
 
 	{ 0, 0, 0, 0 } /* sentinel */

@@ -13,20 +13,6 @@ import textwrap
 from objc import function, registerMetaDataForSelector
 
 
-# Import ElementTree from one of the various locations where
-# it might be found
-try:
-        # Python 2.5
-        import xml.etree.cElementTree as ET
-except ImportError:
-        # And earlier (with separate install)
-        try:
-            import cElementTree as ET
-        
-        except ImportError:
-            import elementtree.ElementTree as ET
-
-
 # Are we in a 64-bit build:
 is64Bit = (sys.maxint > 2147483647)
 # Are we in a little-endian build:
@@ -179,7 +165,6 @@ def initFrameworkWrapper(frameworkName,
         path = os.path.join(dn, fn)
         if os.path.exists(path):
             data = open(path, 'rb').read()
-            doc = ET.fromstring(data)
 
             dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
