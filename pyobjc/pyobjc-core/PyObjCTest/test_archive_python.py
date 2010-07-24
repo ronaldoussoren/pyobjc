@@ -282,6 +282,9 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         # format such tests are irrelevant to archiving support)
 
         @onlyIf(0, "python unittest not relevant for archiving")
+        def test_load_classic_instance(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
         def test_insecure_strings(self): pass
 
         @onlyIf(0, "python unittest not relevant for archiving")
