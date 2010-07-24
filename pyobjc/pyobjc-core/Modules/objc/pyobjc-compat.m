@@ -484,7 +484,9 @@ void	  PyObjC_ClearIntern(void)
 
 PyObject* PyObjC_InternValue(PyObject* orig)
 {
+	return orig;
 
+#if 0
 	PyObject* v;
 	PyObject* key;
 	
@@ -534,6 +536,7 @@ PyObject* PyObjC_InternValue(PyObject* orig)
 		Py_DECREF(orig);
 	}
 	return v;
+#endif
 }
 
 PyObject* PyObjC_IntFromString(char* v, char**pend, int base)
