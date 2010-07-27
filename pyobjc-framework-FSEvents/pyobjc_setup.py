@@ -62,6 +62,9 @@ class oc_test (test.test):
             sys.path.remove(dirname)
 
         # Actually run the tests
+        if sys.version_info[0] == 2:
+            sys.path.insert(0, rootdir)
+    
         import PyObjCTest
         import unittest
         from pkg_resources import EntryPoint
@@ -82,6 +85,28 @@ import os
 import plistlib
 import sys
 import __main__
+
+CLASSIFIERS = filter(None,
+"""
+Development Status :: 5 - Production/Stable
+Environment :: Console
+Environment :: MacOS X :: Cocoa
+Intended Audience :: Developers
+License :: OSI Approved :: MIT License
+Natural Language :: English
+Operating System :: MacOS :: MacOS X
+Programming Language :: Python
+Programming Language :: Python :: 2
+Programming Language :: Python :: 2.6
+Programming Language :: Python :: 2.7
+Programming Language :: Python :: 3
+Programming Language :: Python :: 3.1
+Programming Language :: Python :: 3.2
+Programming Language :: Objective C
+Topic :: Software Development :: Libraries :: Python Modules
+Topic :: Software Development :: User Interfaces
+""".splitlines())
+
 
 def get_os_level():
     pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
