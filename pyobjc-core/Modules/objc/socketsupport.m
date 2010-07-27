@@ -34,7 +34,7 @@ setup_exceptions(void)
 	}
 
 	Py_XDECREF(socket_gaierror);
-	socket_error = PyObject_GetAttrString(mod, "gaierror");
+	socket_gaierror = PyObject_GetAttrString(mod, "gaierror");
 	if (socket_gaierror == NULL) {
 		Py_DECREF(mod);
 		return -1;
@@ -54,6 +54,7 @@ set_gaierror(int error)
 			}
 		}
 		PyErr_SetFromErrno(socket_error);
+		return NULL;
 	}
 
 	PyObject* v = Py_BuildValue("is", error, gai_strerror(error));
@@ -65,6 +66,7 @@ set_gaierror(int error)
 		}
 		PyErr_SetObject(socket_gaierror, v);
 		Py_DECREF(v);
+		return NULL;
 	}
 	return NULL;
 }
