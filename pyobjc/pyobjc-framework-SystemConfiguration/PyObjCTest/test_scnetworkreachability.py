@@ -2,10 +2,13 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 import socket
 
+from test_scnetwork import resolver_available
+
 class TestSCNetworkReachability (TestCase):
     def testTypes(self):
         self.assertIsInstance(SCNetworkReachabilityRef, objc.objc_class)
 
+    @onlyIf(resolver_available(), "No DNS resolver available")
     def testFunctions(self):
         self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithAddressPair)
         v = SCNetworkReachabilityCreateWithAddressPair(None, 

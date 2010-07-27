@@ -1,6 +1,7 @@
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
 import sys
+import socket
 
 if sys.version_info[0] != 2:
     def buffer(value):
@@ -24,6 +25,13 @@ class TestCFHost (TestCase):
         v = CFHostCreateWithName(None, u"www.python.org")
         self.assertIsInstance(v, CFHostRef)
 
+        try:
+            value = socket.gethostbyname('www.python.org')
+            expected_resolution = True
+        except socket.error:
+            expected_resolution = False
+
+
 
         addr = ' ' * 24;
         self.assertResultIsCFRetained(CFHostCreateWithAddress)
@@ -33,7 +41,7 @@ class TestCFHost (TestCase):
         self.assertResultIsBOOL(CFHostStartInfoResolution)
         self.assertArgIsOut(CFHostStartInfoResolution, 2)
         ok, error = CFHostStartInfoResolution(v, kCFHostAddresses, None)
-        self.assertIsObject(ok, True)
+        self.assertIsObject(ok, expected_resolution)
         self.assertIsInstance(error, CFStreamError)
 
         self.assertResultIsCFRetained(CFHostCreateCopy)

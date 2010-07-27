@@ -12,12 +12,12 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-InstantMessage',
-    version="2.3b1",
+    version="2.3",
     description = "Wrappers for the framework InstantMessage on Mac OS X",
     packages = [ "InstantMessage" ],
     install_requires = [ 
-        'pyobjc-core>=2.3b1',
-        'pyobjc-framework-Cocoa>=2.3b1',
-        'pyobjc-framework-Quartz>=2.3b1',
+        'pyobjc-core>=2.3',
+        'pyobjc-framework-Cocoa>=2.3',
+        'pyobjc-framework-Quartz>=2.3',
     ],
 )
