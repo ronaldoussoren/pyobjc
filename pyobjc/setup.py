@@ -11,7 +11,7 @@ except ImportError:
 
 import os
 
-VERSION="2.3b1"
+VERSION="2.3"
 
 # NOTE: This list of requirements is split into sections for 10.4
 # and 10.5 to make it possible to install PyObjC from source on all
@@ -60,7 +60,7 @@ REQUIRES_10_6=[
 ]
 
 import platform
-rel = map(int, platform.mac_ver()[0].split('.')[:2])
+rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
 if rel >= (10, 5):
     REQUIRES.extend(REQUIRES_10_5)
 if rel >= (10, 6):
