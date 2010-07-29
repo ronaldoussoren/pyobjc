@@ -13,12 +13,12 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-QTKit',
-    version="2.3",
+    version="2.4a0",
     description = "Wrappers for the framework QTKit on Mac OS X",
     packages = [ "QTKit" ],
     install_requires = [ 
-        'pyobjc-core>=2.3',
-        'pyobjc-framework-Cocoa>=2.3',
-        'pyobjc-framework-Quartz>=2.3',
+        'pyobjc-core>=2.4a0',
+        'pyobjc-framework-Cocoa>=2.4a0',
+        'pyobjc-framework-Quartz>=2.4a0',
     ],
 )
