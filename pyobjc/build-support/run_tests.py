@@ -40,7 +40,7 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 
 
 gUsage = """\
-run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions,versions]
+run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions=versions] [-s|--setup-only]
 
 archs:    32-bit,3-way (values separated by commas)
 versions: 2.6,2.7,3.1,3.2    (values seperated by commas)
@@ -84,7 +84,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?', ["help", "archs=", "versions="])
+        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?s', ["help", "archs=", "versions=", "setup-only"])
     except getopt.error as msg:
         print(msg, file=sys.stderr)
         print(gUsage, file=sys.stderr)
@@ -97,6 +97,7 @@ def main():
 
     versions=gVersions
     archs=gArchs
+    setup_only=False
 
     for k, v in opts:
         if k in ('-?', '-h', '--help'):
@@ -119,6 +120,10 @@ def main():
                     print("Unsupported Python version: {0}".format(v),
                             file=sys.stderr)
                     sys.exit(1)
+
+        elif k in ['-s', '--setup-only']:
+            setup_only = True
+
         else:
             print("ERROR: Unhandled script option: {0}".format(k),
                     file=sys.stderr)
@@ -126,7 +131,10 @@ def main():
 
     for ver in versions:
         for arch in archs:
-            run_tests(ver, arch)
+            run_tests(ver, arch, setup_only)
+
+    if setup_only:
+        return
 
     gen_summary(versions, archs)
 
@@ -169,7 +177,7 @@ def detect_frameworks():
 
 
 
-def run_tests(version, archs):
+def run_tests(version, archs, setup_only):
 
     lg = logging.getLogger("run_tests")
 
@@ -271,6 +279,10 @@ def run_tests(version, archs):
         if xit != 0:
             lg.warning("Install %s failed", pkg)
             raise RuntimeError(pkg)
+
+    if setup_only:
+        lg.info("Don't actually run the tests")
+        return
 
     lg.debug("Start testing cycle")
     for pkg in ["pyobjc-core"] + detect_frameworks():
