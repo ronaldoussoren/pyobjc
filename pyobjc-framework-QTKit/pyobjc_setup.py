@@ -150,7 +150,7 @@ class pyobjc_build_ext (build_ext.build_ext):
 
         else:
             data = gPyObjCAPI_H
-            open(os.path.join(include_rot, 'pyobjc-api.h'), 'w').write(data)
+            open(os.path.join(include_root, 'pyobjc-api.h'), 'w').write(data)
 
         for e in self.extensions:
             if include_root not in e.include_dirs:
