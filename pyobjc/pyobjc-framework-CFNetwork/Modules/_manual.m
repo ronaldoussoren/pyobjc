@@ -179,7 +179,9 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 
 	return rv;
 }
+#endif
 
+#if PyObjC_BUILD_RELEASE >= 1005
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unused__)),
 		PyObject* args)
