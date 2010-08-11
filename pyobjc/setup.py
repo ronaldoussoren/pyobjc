@@ -11,7 +11,7 @@ except ImportError:
 
 import os
 
-VERSION="2.3"
+VERSION="2.3.1a0"
 
 # NOTE: This list of requirements is split into sections for 10.4
 # and 10.5 to make it possible to install PyObjC from source on all
