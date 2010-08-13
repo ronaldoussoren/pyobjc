@@ -8,7 +8,6 @@ import CoreData
 
 class CoreDataTestObject (CoreData.NSManagedObject):
     def __getattr__(self, k):
-        print "get", k
         raise AttributeError(k)
 
     def __setattr__(self, k, v):
@@ -60,7 +59,6 @@ class Test (TestCase):
 
     def testPythonicAttribute(self):
         managedObject = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
-        print managedObject
 
         testValue = u'Ducks have webbed feet'
         self.assertRaises(AttributeError, setattr, managedObject, 'attributeWithoutModel', testValue)
@@ -121,7 +119,7 @@ class TestSubclass (TestCase):
         self.assertEquals(testValue, managedObject._.testAttribute)
 
     def testPythonicAttribute(self):
-        self.fail("research recursion problem")
+        #self.fail("research recursion problem")
         managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(self.entity, self.managedObjectContext)
         self.assert_(isinstance(managedObject, CoreDataTestObject))
 
