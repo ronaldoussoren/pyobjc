@@ -2,6 +2,8 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import errno, time, os, socket, sys
 
+from test_cfsocket import onTheNetwork
+
 
 class TestStream (TestCase):
     def testTypes(self):
@@ -251,6 +253,7 @@ class TestStream (TestCase):
 
         del readStream, writeStream
 
+    @onlyIf(onTheNetwork)
     def testSockets(self):
         sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         sd.connect(('www.apple.com', 80))

@@ -136,8 +136,9 @@ class TestRunLoop (TestCase):
         self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
         CFRunLoopAddTimer(rl, timer, kCFRunLoopDefaultMode)
         self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), True)
-        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.3, True)
 
+        CFRunLoopTimerInvalidate(timer)
         CFRunLoopRemoveTimer(rl, timer, kCFRunLoopDefaultMode)
         self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
         self.assertFalse(len(state) < 3)

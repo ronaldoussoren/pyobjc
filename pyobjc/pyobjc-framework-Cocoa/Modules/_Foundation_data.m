@@ -33,13 +33,11 @@ static PyObject* call_NSData_bytes(
 	result = PyBuffer_FromMemory((char*)bytes, bytes_len);
 #else
 	/* 2.7 or later: use a memory view */
-	printf("\n-data %p\n", bytes);
 	Py_buffer info;
 	if (PyBuffer_FillInfo(&info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO) < 0) {
 		return NULL;
 	}
 	result = PyMemoryView_FromBuffer(&info);
-	printf("-> %s\n", PyObject_REPR(result));
 #endif
 
 	return result;

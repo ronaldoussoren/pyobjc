@@ -4,6 +4,15 @@ from CoreFoundation import *
 import CoreFoundation
 import sys
 
+def onTheNetwork():
+    try:
+        socket.gethostbyname('www.apple.com')
+
+    except socket.gaierror:
+        return False
+
+    return True
+
 
 class TestSocket (TestCase):
     def testTypes(self):
@@ -53,6 +62,7 @@ class TestSocket (TestCase):
         CFSocketSetDefaultNameRegistryPortNumber(p1)
 
 
+    @onlyIf(onTheNetwork(), "cannot test without internet connection")
     def testSocketFunctions(self):
         data = {}
         state = []
@@ -161,5 +171,6 @@ class TestSocket (TestCase):
         self.assertNotHasAttr(CoreFoundation, 'CFSocketRegisterSocketSignature')
         self.assertNotHasAttr(CoreFoundation, 'CFSocketRegisterValue')
         self.assertNotHasAttr(CoreFoundation, 'CFSocketUnregister')
+
 if __name__ == "__main__":
     main()

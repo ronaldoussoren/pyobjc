@@ -2266,7 +2266,7 @@
   <function name='CFMessagePortGetInvalidationCallBack'>
     <retval function_pointer='true' type='^?' type64='^?'>
       <arg type='@' />
-      <arg type='@' />
+      <arg type='^v' />
     </retval>
     <arg type='^{__CFMessagePort=}' />
   </function>
@@ -2302,7 +2302,7 @@
     <arg type='^{__CFMessagePort=}' />
     <arg function_pointer='true' type='^?' type64='^?'>
       <arg type='@' />
-      <arg type='@' />
+      <arg type='^v' />
     </arg>
   </function>
   <function name='CFMessagePortSetName'>

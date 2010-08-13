@@ -34,7 +34,8 @@ class TestUserNotification (TestCase):
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
 
         CFUserNotificationCancel(ref)
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 5.0, True)
+        CFRunLoopRemoveSource(rl, rls, kCFRunLoopDefaultMode)
 
         self.assertEqual(len(values), 1)
         self.assertIs(values[0][0], ref)
