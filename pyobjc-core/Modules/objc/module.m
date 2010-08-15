@@ -556,7 +556,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 		return NULL;
 	}
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
 	return PyBuffer_New(length);
 #else
 	return PyByteArray_FromStringAndSize(NULL, length);
