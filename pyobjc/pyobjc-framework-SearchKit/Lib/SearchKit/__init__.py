@@ -82,13 +82,14 @@ except NameError:
         indexType = objc.registerCFSignature(
                 "SKIndexRef", b"^{__SKIndex=}", indexID)
         iterType = objc.registerCFSignature(
-                "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", indexID)
+                "SKIndexDocumentIteratorRef", b"^{__SKIndexDocumentIterator=}", iterID)
         groupType = objc.registerCFSignature(
                 "SKSearchGroupRef", b"^{__SKSearchGroup=}", groupID)
         resultType = objc.registerCFSignature(
                 "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID)
         summaryType = objc.registerCFSignature(
                 "SKSummaryRef", b"^{__SKSummary=}", summaryID)
+
 
         # For some reason SKDocumentGetTypeID doesn't return the right value
         # when the framework loader calls it the first time around,
@@ -111,7 +112,5 @@ except NameError:
         SKIndexDocumentIteratorRef,
         SKDocumentRef, SKSearchRef,
     ) = workaround()
-
-    print "performed workaround"
 
     del workaround

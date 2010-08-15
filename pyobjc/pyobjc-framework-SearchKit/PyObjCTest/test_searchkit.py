@@ -2,18 +2,17 @@
 Some simple tests to check that the framework is properly wrapped.
 '''
 import objc
+from PyObjCTools.TestSupport import *
 import unittest
 import SearchKit
 
-class TestSearchKit (unittest.TestCase):
+class TestSearchKit (TestCase):
     def testClasses(self):
         self.assert_( hasattr(SearchKit, 'SKDocumentRef') )
-        self.assert_( issubclass(SearchKit.SKDocumentRef, objc.lookUpClass('NSCFType')) )
-        self.assert_( SearchKit.SKDocumentRef is not objc.lookUpClass('NSCFType') )
+        self.assertIsCFType( SearchKit.SKDocumentRef )
 
         self.assert_( hasattr(SearchKit, 'SKIndexRef') )
-        self.assert_( issubclass(SearchKit.SKIndexRef, objc.lookUpClass('NSCFType')) )
-        self.assert_( SearchKit.SKIndexRef is not objc.lookUpClass('NSCFType') )
+        self.assertIsCFType( SearchKit.SKIndexRef )
 
     def testValues(self):
         self.assert_( hasattr(SearchKit, 'kSKIndexInverted') )
@@ -39,5 +38,5 @@ class TestSearchKit (unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    main()
 
