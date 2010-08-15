@@ -3,9 +3,6 @@ from PyObjCTools.TestSupport import *
 from LaunchServices import *
 
 class TestLSSharedFileList (TestCase):
-    def testIncomplete(self):
-        self.fail("Add header tests for <LaunchServices/LSSharedFileList.h>")
-
     def testTypes(self):
         self.assertIsCFType(LSSharedFileListRef)
         self.assertIsCFType(LSSharedFileListItemRef)
@@ -57,11 +54,11 @@ class TestLSSharedFileList (TestCase):
 
         self.assertResultIsCFRetained(LSSharedFileListCopyProperty)
         self.assertResultHasType(LSSharedFileListCopyProperty, b'@')
-        v = LSSharedFileListCopyProperty(lst, u"name")
+        v = LSSharedFileListCopyProperty(lst, u"pyobjc.name")
 
         v = LSSharedFileListSetProperty(lst, u"pyobjc.name", u"value")
         self.assertIsInstance(v, (int, long))
-        v = LSSharedFileListCopyProperty(lst, u"name")
+        v = LSSharedFileListCopyProperty(lst, u"pyobjc.name")
         self.assertEqual(v, u"value")
 
         self.assertArgIsOut(LSSharedFileListCopySnapshot, 1)
@@ -110,14 +107,7 @@ class TestLSSharedFileList (TestCase):
 
 
 
-
-
-
-
-
-
-
-
+    @expectedFailure
     def testMissing(self):
         # Needs more infrastructure
         self.fail('LSSharedFileListSetAuthorization')

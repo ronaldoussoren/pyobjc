@@ -1,8 +1,20 @@
 
 from PyObjCTools.TestSupport import *
 from LaunchServices import *
+import sys
+import os
 
 class TestLSOpen (TestCase):
+    def setUp(self):
+        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')
+        fp = open(self.path, 'w')
+        fp.write('test contents')
+        fp.close()
+
+    def tearDown(self):
+        if os.path.exists(self.path):
+            os.unlink(self.path)
+
     def testConstants(self):
         self.assertEqual(kLSLaunchDefaults, 0x00000001)
         self.assertEqual(kLSLaunchAndPrint, 0x00000002)
@@ -24,12 +36,28 @@ class TestLSOpen (TestCase):
         self.assertEqual(kLSLaunchHasUntrustedContents, 0x00400000)
 
     def testStructs(self):
+        self.fail("LSLaunchFSRefSpec")
+        self.fail("LSLaunchFSRefSpec")
+        self.fail("LSApplicationParameters")
         pass
 
 
-        
-    def testIncomplete(self):
-        self.fail("Add header tests for <LaunchServices/LSOpen.h>")
+    def testFunctions(self):
+        url = CFURLCreateFromFileSystemRepresentation(None, self.path, len(self.path), True)
 
+        self.assertArgIsOut(LSOpenCFURLRef, 1)
+        ok, u = LSOpenCFURLRef(url, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(u, CFURLRef)
+
+        self.fail("LSOpenApplication")
+        self.fail("LSOpenItemsWithRole")
+        self.fail("LSOpenURLsWithRole")
+
+    def testFSRef(self):
+        self.fail("LSLaunchFSRefSpec")
+        self.fail("LSOpenFromRefSpec")
+        self.fail("LSOpenFromURLSpec")
+        
 if __name__ == "__main__":
     main()

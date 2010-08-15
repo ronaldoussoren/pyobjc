@@ -6,6 +6,7 @@
   <depends_on path='/System/Library/Frameworks/Security.framework/Security' />
   <depends_on path='/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/AE' />
   <depends_on path='/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation' />
+  <struct name='LSItemInfoRecord' type='{LSItemInfoRecord="flags"I"filetype"I"creator"I"extension"^{__CFString}"iconFileName"^{__CFString}"kindID"I}' type64='{LSItemInfoRecord="flags"I"filetype"I"creator"I"extension"^{__CFString}}' />
   <struct name='LSApplicationParameters' type='{LSApplicationParameters="version"i"flags"I"application"^{FSRef}"asyncLaunchRefCon"^v"environment"^{__CFDictionary}"argv"^{__CFArray}"initialEvent"^{AEDesc}}' type64='{LSApplicationParameters="version"q"flags"I"application"^{FSRef}"asyncLaunchRefCon"^v"environment"^{__CFDictionary}"argv"^{__CFArray}"initialEvent"^{AEDesc}}' />
   <struct name='LSLaunchFSRefSpec' type='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"I"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchFSRefSpec="appRef"^{FSRef}"numDocs"Q"itemRefs"^{FSRef}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
   <struct name='LSLaunchURLSpec' type='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' type64='{LSLaunchURLSpec="appURL"^{__CFURL}"itemURLs"^{__CFArray}"passThruParams"^{AEDesc}"launchFlags"I"asyncRefCon"^v}' />
@@ -574,7 +575,7 @@
     <retval type='l' type64='i' />
     <arg type='^{__CFString=}' />
     <arg type='L' type64='L' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSCopyApplicationURLsForURL'>
     <retval already_cfretained='true' type='^{__CFArray=}' />
@@ -593,19 +594,19 @@
   <function name='LSCopyDisplayNameForRef'>
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type_modifier='n' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSCopyDisplayNameForURL'>
     <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSCopyItemAttribute'>
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type_modifier='n' />
     <arg type='L' type64='L' />
     <arg type='^{__CFString=}' />
-    <arg already_retained='true' type='^@' type_modifier='o' />
+    <arg already_cfretained='true' type='^@' type_modifier='o' />
   </function>
   <function name='LSCopyItemAttributes'>
     <retval type='l' type64='i' />
@@ -618,35 +619,35 @@
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type_modifier='n' />
     <arg type='L' type64='L' />
-    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type_modifier='o' />
+    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}}' type_modifier='o' />
   </function>
   <function name='LSCopyItemInfoForURL'>
     <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
     <arg type='L' type64='L' />
-    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type_modifier='o' />
+    <arg type='^{LSItemInfoRecord=III^{__CFString}^{__CFString}I}' type64='^{LSItemInfoRecord=III^{__CFString}}' type_modifier='o' />
   </function>
   <function name='LSCopyKindStringForMIMEType'>
     <retval type='l' type64='i' />
     <arg type='^{__CFString=}' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSCopyKindStringForRef'>
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type_modifier='n' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSCopyKindStringForTypeInfo'>
     <retval type='l' type64='i' />
     <arg type='L' type64='L' />
     <arg type='L' type64='L' />
     <arg type='^{__CFString=}' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSCopyKindStringForURL'>
     <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
   </function>
   <function name='LSFindApplicationForInfo'>
     <retval type='l' type64='i' />
@@ -654,7 +655,7 @@
     <arg type='^{__CFString=}' />
     <arg type='^{__CFString=}' />
     <arg type='^{FSRef=[80C]}' type_modifier='o' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSGetApplicationForInfo'>
     <retval type='l' type64='i' />
@@ -663,21 +664,21 @@
     <arg type='^{__CFString=}' />
     <arg type='L' type64='L' />
     <arg type='^{FSRef=[80C]}' type_modifier='o' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSGetApplicationForItem'>
     <retval type='l' type64='i' />
     <arg type='^{FSRef=[80C]}' type_modifier='n' />
     <arg type='L' type64='L' />
     <arg type='^{FSRef=[80C]}' type_modifier='o' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSGetApplicationForURL'>
     <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
     <arg type='L' type64='L' />
     <arg type='^{FSRef=[80C]}' type_modifier='o' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSGetExtensionInfo'>
     <retval type='l' type64='i' />
@@ -701,7 +702,7 @@
   <function name='LSOpenCFURLRef'>
     <retval type='l' type64='i' />
     <arg type='^{__CFURL=}' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSOpenFSRef'>
     <retval type='l' type64='i' />
@@ -716,7 +717,7 @@
   <function name='LSOpenFromURLSpec'>
     <retval type='l' type64='i' />
     <arg type='^{LSLaunchURLSpec=^{__CFURL}^{__CFArray}^{AEDesc}I^v}' type_modifier='n' />
-    <arg already_retained='true' type='^^{__CFURL}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFURL}' type_modifier='o' />
   </function>
   <function name='LSOpenItemsWithRole'>
     <retval type='l' type64='i' />
@@ -799,7 +800,7 @@
   <function name='LSSharedFileListCopySnapshot'>
     <retval already_cfretained='true' type='^{__CFArray=}' />
     <arg type='^{OpaqueLSSharedFileListRef=}' />
-    <arg type='^I' type64='^I' />
+    <arg type='^I' type64='^I' type_modifier='o' />
   </function>
   <function name='LSSharedFileListCreate'>
     <retval type='^{OpaqueLSSharedFileListRef=}' already_cfretained='true' />
@@ -825,7 +826,7 @@
     <arg type='^{__CFArray=}' />
   </function>
   <function name='LSSharedFileListInsertItemURL'>
-    <retval type='^{OpaqueLSSharedFileListItemRef=}' />
+    <retval type='^{OpaqueLSSharedFileListItemRef=}' already_cfretained='true' />
     <arg type='^{OpaqueLSSharedFileListRef=}' />
     <arg type='^{OpaqueLSSharedFileListItemRef=}' />
     <arg type='^{__CFString=}' />

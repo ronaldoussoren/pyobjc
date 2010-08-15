@@ -24,6 +24,8 @@ except ImportError:
             "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/LaunchServices.framework"),
         globals=globals())
 
+kLSRolesAll = -1
+
 # 
 # Load an undocumented, yet announced function. This function was announced
 # in TN2029 (http://developer.apple.com/technotes/tn/tn2029.html)
