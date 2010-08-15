@@ -7,10 +7,20 @@ API Notes for framework LaunchServices
   Not supported at the moment because the Authorization framweork isn't properly 
   wrapped yet.
 
-* ``LSSharedFileListItemRef``
+* ``LSLaunchFSRefSpec``, ``LSLaunchURLSpec``
 
-  Not tested at the moment, uses ``LSSharedFileListInsertItemURL`` instead.
+  These types aren't supported in this version.
 
-* The tests for this framework are incomplete, although
-  most functions should work just fine.
+* ``LSOpenApplication``
+
+  This function is not yet supported. The bridge itself isn't smart
+  enough yet to process the first argument without a manual wrapper.
+
+* ``LSOpenItemsWithRole``, ``LSOpenURLsWithRole``
+
+  The ``inAEParam`` and ``inAppParams`` must be None.
+
+* ``LSOpenFromRefSpec``, ``LSOpenFromURLSpec``
+
+  This functions are not yet supported and need manual wrappers.
 

@@ -20,9 +20,12 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(kLSSharedFileListVolumesComputerVisible, unicode)
         self.assertIsInstance(kLSSharedFileListVolumesIDiskVisible, unicode)
         self.assertIsInstance(kLSSharedFileListVolumesNetworkVisible, unicode)
+        self.assertIsInstance(kLSSharedFileListItemHidden, unicode)
+
+    @min_os_level('10.5')
+    def testMagicConstants10_5(self):
         self.assertIsInstance(kLSSharedFileListItemBeforeFirst, LSSharedFileListItemRef)
         self.assertIsInstance(kLSSharedFileListItemLast, LSSharedFileListItemRef)
-        self.assertIsInstance(kLSSharedFileListItemHidden, unicode)
 
     def testConstants(self):
         self.assertEqual(kLSSharedFileListNoUserInteraction, 1)
@@ -67,7 +70,7 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(seed, (int,long))
 
         self.assertResultIsCFRetained(LSSharedFileListInsertItemURL)
-        item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, "PyObjC.Test", None, 
+        item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, u"PyObjC.Test", None, 
                 CFURLCreateWithString(None, "file:///etc/hosts", None), {}, [])
         self.assertIsInstance(item, LSSharedFileListItemRef)
 
@@ -75,7 +78,8 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(v, (int, long))
 
         v = LSSharedFileListItemCopyIconRef(item)
-        self.assertIsObject(v, None)
+        if v is not None:
+            self.assertIsInstance(v, IconRef)
 
         self.assertResultIsCFRetained(LSSharedFileListItemCopyDisplayName)
         v = LSSharedFileListItemCopyDisplayName(item)
@@ -86,14 +90,16 @@ class TestLSSharedFileList (TestCase):
         self.assertArgIsCFRetained(LSSharedFileListItemResolve, 2)
         v, url, ref = LSSharedFileListItemResolve(item, 0, None, objc.NULL)
         self.assertIsInstance(v, (int, long))
-        self.assertIsInstance(url, CFURLRef)
+        if url is not None:
+            self.assertIsInstance(url, CFURLRef)
 
-        v = LSSharedFileListItemSetProperty(item, u"name", u"pyobjc.test")
+        v = LSSharedFileListItemSetProperty(item, u"pyobjc.name", u"pyobjc.test")
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSSharedFileListItemCopyProperty)
-        v = LSSharedFileListItemCopyProperty(item, u"name")
-        self.assertEqual(v, "pyobjc.test")
+        v = LSSharedFileListItemCopyProperty(item, u"pyobjc.name")
+        if v is not None:
+            self.assertEqual(v, "pyobjc.test")
 
         v = LSSharedFileListItemMove(lst, item, kLSSharedFileListItemBeforeFirst)
         self.assertIsInstance(v, (int, long))

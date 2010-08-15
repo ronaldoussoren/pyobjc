@@ -68,7 +68,7 @@ class TestLSInfo (TestCase):
         self.assertEqual(kLSRolesViewer, 0x00000002)
         self.assertEqual(kLSRolesEditor, 0x00000004)
         self.assertEqual(kLSRolesShell, 0x00000008)
-        self.assertEqual(kLSRolesAll, cast_int(0xFFFFFFFF))
+        self.assertEqual(kLSRolesAll, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(kLSUnknownKindID, 0)
         self.assertEqual(kLSUnknownType, 0)
         self.assertEqual(kLSUnknownCreator, 0)
@@ -151,32 +151,37 @@ class TestLSInfo (TestCase):
         self.assertArgIsOut(LSGetApplicationForInfo, 4)
         self.assertArgIsOut(LSGetApplicationForInfo, 5)
         self.assertArgIsCFRetained(LSGetApplicationForInfo, 5)
-        ok, ref, url = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, "txt", kLSRolesAll, None, None)
+
+        ok, ref, info_url = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, "txt", kLSRolesAll, None, None)
         self.assertEquals(ok, 0)
         self.assertIsInstance(ref, objc.FSRef)
-        self.assertIsInstance(url, CFURLRef)
+        self.assertIsInstance(info_url, CFURLRef)
         
         self.assertArgIsOut(LSCopyApplicationForMIMEType, 2)
-        self.assertArgIsCFRetained(LSGetApplicationForInfo, 2)
-        ok, url = LSCopyApplicationForMIMEType("text/plain", kLSRolesAll, None)
+        self.assertArgIsCFRetained(LSCopyApplicationForMIMEType, 2)
+        ok, info_url = LSCopyApplicationForMIMEType("text/plain", kLSRolesAll, None)
         self.assertEquals(ok, 0)
-        self.assertIsInstance(url, CFURLRef)
+        self.assertIsInstance(info_url, CFURLRef)
 
         self.assertArgIsOut(LSGetApplicationForURL, 2)
         self.assertArgIsOut(LSGetApplicationForURL, 3)
         self.assertArgIsCFRetained(LSGetApplicationForURL, 3)
-        ok, ref, url = LSGetApplicationForURL(url, kLSRolesAll, None)
+        ok, ref, info_url = LSGetApplicationForURL(url, kLSRolesAll, None, None)
         self.assertEquals(ok, 0)
         self.assertIsInstance(ref, objc.FSRef)
-        self.assertIsInstance(url, CFURLRef)
+        self.assertIsInstance(info_url, CFURLRef)
 
-        self.assertArgIsOut(LSGetApplicationForURL, 3)
-        self.assertArgIsOut(LSGetApplicationForURL, 4)
-        self.assertArgIsCFRetained(LSGetApplicationForURL, 4)
-        ok, ref, url = LSGetApplicationForURL(kLSUnknownCreator, None, self.path, None, None)
-        self.assertEquals(ok, 0)
-        self.assertIsInstance(ref, objc.FSRef)
-        self.assertIsInstance(url, CFURLRef)
+        self.assertArgIsOut(LSFindApplicationForInfo, 3)
+        self.assertArgIsOut(LSFindApplicationForInfo, 4)
+        self.assertArgIsCFRetained(LSFindApplicationForInfo, 4)
+        ok, ref, info_url = LSFindApplicationForInfo(kLSUnknownCreator, None, "foo.app", None, None)
+        # XXX: The code looks correct but fails, however the corresponding C code also fails.
+        #self.assertEquals(ok, 0)
+        self.assertIsInstance(ok, (int, long))
+        if ref is not None:
+            self.assertIsInstance(ref, objc.FSRef)
+        if info_url is not None:
+            self.assertIsInstance(info_url, CFURLRef)
 
         self.assertArgIsOut(LSCanURLAcceptURL, 4)
         ok, status = LSCanURLAcceptURL(url, url, kLSRolesAll, kLSAcceptDefault, None)
@@ -193,22 +198,22 @@ class TestLSInfo (TestCase):
             self.assertIsInstance(a, CFURLRef)
 
         
-        default_role = LSCopyDefaultRoleHandlerForContentType("text.plain", kLSRolesAll)
+        default_role = LSCopyDefaultRoleHandlerForContentType("public.plain-text", kLSRolesAll)
         self.assertIsInstance(default_role, unicode)
 
-        v = LSCopyAllRoleHandlersForContentType("text.plain", kLSRolesAll)
+        v = LSCopyAllRoleHandlersForContentType("public.plain-text", kLSRolesAll)
         self.assertIsInstance(v, CFArrayRef)
         for a in v:
             self.assertIsInstance(a, unicode)
 
 
-        ok = LSSetDefaultRoleHandlerForContentType("text.plain", kLSRolesAll, default_role)
+        ok = LSSetDefaultRoleHandlerForContentType("public.plain-text", kLSRolesAll, default_role)
         self.assertIsInstance(ok, (int, long))
 
-        v = LSGetHandlerOptionsForContentType("text.plain")
+        v = LSGetHandlerOptionsForContentType("public.plain-text")
         self.assertIsInstance(v, (int, long))
 
-        ok = LSSetHandlerOptionsForContentType("text.plain", v)
+        ok = LSSetHandlerOptionsForContentType("public.plain-text", v)
         self.assertIsInstance(ok, (int, long))
 
         self.assertResultIsCFRetained(LSCopyDefaultHandlerForURLScheme)
@@ -233,17 +238,56 @@ class TestLSInfo (TestCase):
 
 
     def testFSRef(self):
-        self.fail('LSCopyItemInfoForRef')
-        self.fail('LSCopyDisplayNameForRef')
-        self.fail('LSSetExtensionHiddenForRef')
-        self.fail('LSCopyKindStringForRef')
-        self.fail('LSGetApplicationForItem')
-        self.fail('LSCanRefAcceptItem')
-        self.fail('LSRegisterFSRef')
-        self.fail('LSCopyItemAttribute')
-        self.fail('LSSetItemAttribute')
+        ref = objc.FSRef.from_pathname(self.path)
+        self.assertIsInstance(ref, objc.FSRef)
 
-        
+        ok, info = LSCopyItemInfoForRef(ref, kLSRequestExtension|kLSRequestTypeCreator, None)
+        self.assertEqual(ok, 0)
+        self.assertIsInstance(info, LSItemInfoRecord)
+
+        self.assertArgIsOut(LSCopyDisplayNameForRef, 1)
+        self.assertArgIsCFRetained(LSCopyDisplayNameForRef, 1)
+        ok, info = LSCopyDisplayNameForRef(ref, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(info, unicode)
+
+        self.assertArgIsBOOL(LSSetExtensionHiddenForRef, 1)
+        ok = LSSetExtensionHiddenForRef(ref, True)
+        self.assertEquals(ok, 0)
+
+        self.assertArgIsOut(LSCopyKindStringForRef, 1)
+        self.assertArgIsCFRetained(LSCopyKindStringForRef, 1)
+        ok, info = LSCopyKindStringForRef(ref, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(info, unicode)
+
+        self.assertArgIsOut(LSGetApplicationForItem, 2)
+        self.assertArgIsOut(LSGetApplicationForItem, 3)
+        self.assertArgIsCFRetained(LSGetApplicationForItem, 3)
+        ok, info_ref, info_url = LSGetApplicationForItem(ref, kLSRolesAll, None, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(info_ref, objc.FSRef)
+        self.assertIsInstance(info_url, CFURLRef)
+
+
+        app_ref = objc.FSRef.from_pathname('/Applications/TextEdit.app')
+        self.assertArgIsOut(LSCanRefAcceptItem, 4)
+        ok, accepts = LSCanRefAcceptItem(ref, app_ref, kLSRolesAll, kLSAcceptDefault, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(accepts, bool)
+
+        ok = LSRegisterFSRef(ref, False)
+        self.assertIsInstance(ok, (int, long))
+
+        self.assertArgHasType(LSCopyItemAttribute, 3, 'o^@')
+        ok, value = LSCopyItemAttribute(ref, kLSRolesAll, kLSItemExtensionIsHidden, None)
+        self.assertEquals(ok, 0)
+        self.assertIsInstance(value, bool)
+
+
+        ok = LSSetItemAttribute(ref, kLSRolesAll, kLSItemRoleHandlerDisplayName, u"foo")
+        self.assertIsInstance(ok, (int, long))
+
 
 
 if __name__ == "__main__":

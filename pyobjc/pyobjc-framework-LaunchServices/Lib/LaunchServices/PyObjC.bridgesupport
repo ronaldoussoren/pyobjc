@@ -38,11 +38,9 @@
   <constant name='kLSSharedFileListFavoriteItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListFavoriteVolumes' type='^{__CFString=}' />
   <constant name='kLSSharedFileListGlobalLoginItems' type='^{__CFString=}' />
-  <!--
   <constant name='kLSSharedFileListItemBeforeFirst' type='^{OpaqueLSSharedFileListItemRef=}' magic_cookie='true' />
-  <constant name='kLSSharedFileListItemHidden' type='^{__CFString=}' />
   <constant name='kLSSharedFileListItemLast' type='^{OpaqueLSSharedFileListItemRef=}' magic_cookie='true' />
-  -->
+  <constant name='kLSSharedFileListItemHidden' type='^{__CFString=}' />
   <constant name='kLSSharedFileListRecentApplicationItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListRecentDocumentItems' type='^{__CFString=}' />
   <constant name='kLSSharedFileListRecentItemsMaxAmount' type='^{__CFString=}' />
@@ -349,7 +347,7 @@
   <enum name='kLSRequestExtensionFlagsOnly' value='64' />
   <enum name='kLSRequestIconAndKind' value='32' />
   <enum name='kLSRequestTypeCreator' value='2' />
-  <enum name='kLSRolesAll' value='-1' />
+  <enum name='kLSRolesAll' value='4294967295' value64='18446744073709551615'/>
   <enum name='kLSRolesEditor' value='4' />
   <enum name='kLSRolesNone' value='1' />
   <enum name='kLSRolesShell' value='8' />
@@ -726,7 +724,7 @@
     <arg type='L' type64='L' />
     <arg type='^{AEKeyDesc=I{AEDesc=I^^{OpaqueAEDataStorageType}}}' type_modifier='n' />
     <arg type='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type64='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type_modifier='n' />
-    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' />
+    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' c_array_length_in_arg='6' />
     <arg type='l' type64='l' />
   </function>
   <function name='LSOpenURLsWithRole'>
@@ -735,7 +733,7 @@
     <arg type='L' type64='L' />
     <arg type='^{AEKeyDesc=I{AEDesc=I^^{OpaqueAEDataStorageType}}}' type_modifier='n' />
     <arg type='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type64='^{LSApplicationParameters=iI^{FSRef}^v^{__CFDictionary}^{__CFArray}^{AEDesc}}' type_modifier='n' />
-    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' />
+    <arg type='^{ProcessSerialNumber=II}' type_modifier='o' c_array_length_in_arg='5' />
     <arg type='l' type64='l' />
   </function>
   <function name='LSRegisterFSRef'>
@@ -776,7 +774,7 @@
   </function>
   <function name='LSSetItemAttribute'>
     <retval type='l' type64='i' />
-    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' type_modifier='n'/>
     <arg type='L' type64='L' />
     <arg type='^{__CFString=}' />
     <arg type='@' />
@@ -870,8 +868,8 @@
     <retval type='l' type64='i' />
     <arg type='^{OpaqueLSSharedFileListItemRef=}' />
     <arg type='L' type64='L' />
-    <arg type='^^{__CFURL}' type64='^^{__CFURL}' />
-    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' />
+    <arg type='^^{__CFURL}' type64='^^{__CFURL}' type_modifier='o' already_cfretained='true' />
+    <arg type='^{FSRef=[80C]}' type64='^{FSRef=[80C]}' type_modifier='o' />
   </function>
   <function name='LSSharedFileListItemSetProperty'>
     <retval type='l' type64='i' />
