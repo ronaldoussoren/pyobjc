@@ -6,8 +6,8 @@ import os
 
 class TestSKIndex (TestCase):
     def testTypes(self):
-        self.assertIsInstance(SKIndexRef, objc.objc_class)
-        self.assertIsInstance(SKIndexDocumentIteratorRef, objc.objc_class)
+        self.assertIsCFType(SKIndexRef)
+        self.assertIsCFType(SKIndexDocumentIteratorRef)
 
     def testConstants(self):
         self.assertEqual(kSKIndexUnknown, 0)
