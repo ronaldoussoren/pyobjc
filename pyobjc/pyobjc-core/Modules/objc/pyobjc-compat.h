@@ -111,7 +111,7 @@ typedef int Py_ssize_t;
 #if PY_MAJOR_VERSION == 2
 
 #ifndef Py_ARG_BYTES
-#define Py_ARG_BYTES "s"
+#define Py_ARG_BYTES "z"
 #endif
 
 #else

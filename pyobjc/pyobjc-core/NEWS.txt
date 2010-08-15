@@ -4,6 +4,12 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.4
+-----------
+
+- ``objc.allocateBuffer`` now returns a bytearray on python >= 2.6,
+  it used to return a buffer object in Python 2.
+
 Version 2.3
 -----------
 
