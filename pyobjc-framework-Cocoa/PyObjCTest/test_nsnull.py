@@ -4,7 +4,6 @@ from Foundation import NSNull
 class TestNSNull (TestCase):
     def testBool(self):
         v = NSNull.null()
-        print bool(v)
         self.assert_(not v)
         self.assert_(v is not None)
 

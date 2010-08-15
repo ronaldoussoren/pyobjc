@@ -67,107 +67,37 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 	return result;
 }
 
-#if 0
-static PyObject*
-call_NSBitmapImageRep_initWithBitmapDataPlanes_bitmapFormat(
-		PyObject* method, PyObject* self, PyObject* arguments)
-{
-	PyObject* py_planes;
-	unsigned char** planes;
-	Py_ssize_t  nr_planes;
-	PyObject* py_width;
-	NSInteger width;
-	PyObject* py_height;
-	NSInteger height;
-	long	  bitsPerSample;
-	long	  samplesPerPixel;
-	PyObject* py_hasAlpha;
-	BOOL	  hasAlpha;
-	PyObject* py_isPlanar;
-	BOOL	  isPlanar;
-	PyObject* py_colorSpaceName;
-	NSString* colorSpaceName;
-	long	  bitmapFormat;
-	PyObject* py_bytesPerRow;
-	NSInteger bytesPerRow;
-	PyObject* py_bitsPerPixel;
-	NSInteger bitsPerPixel;
-
-	if (!PyArg_Parse(args, "OOOiiOOOiOO", 
-		&py_planes, &py_width, &py_height, &bitsPerSample,
-		&samplesPerPixel, &py_hasAlpha, &py_isPlanar,
-		&bitmapFormat, &py_bytesPerRow, &py_bitsPerPixel)) {
-
-		return NULL;
-	}
-
-	if (PyObjC_PythonToObjC(@encode(NSInteger), py_width, &width) == -1) {
-		return NULL;
-	}
-	if (PyObjC_PythonToObjC(@encode(NSInteger), py_height, &height) == -1) {
-		return NULL;
-	}
-	hasAlpha = PyObject_IsTrue(py_hasAlpha);
-	isPlanar = PyObject_IsTrue(py_isPlanar);
-	if (PyObjC_PythonToObjC(@encode(NSInteger), py_bytesPerRow, &bytesPerRow) == -1) {
-		return NULL;
-	}
-	if (PyObjC_PythonToObjC(@encode(NSInteger), py_bitsPerPixel, &bitsPerPixel) == -1) {
-		return NULL;
-	}
-
-	if (py_planes == Py_None) {
-		planes = NULL;
-		nr_planes = -1;
-	} else {
-		PyObject* seq = PySequence_Fast(py_planes,
-				"Planes must be sequence");
-		if (seq == NULL) {
-			return NULL;
-		}
-		nr_planes = PySequence_Fast_GET_SIZE(seq);
-
-		planes = malloc(sizeof(unsigned char*) * nr_planes);
-		if (planes == NULL) {
-			PyErr_NoMemory();
-			Py_DECREF(seq);
-			return NULL;
-		}
-
-		Py_ssize_t i;
-		for (i = 0; i < nr_planes; i++) {
-
-		}
-	}
-}
-#endif
-
-
-/* XXX: Needs looking into, argument parsing seems awfully complex */
 static PyObject*
 call_NSBitmapImageRep_initWithBitmap(PyObject* method, 
 		PyObject* self, PyObject* arguments)
 {
 	PyObject* result;
 	PyObject* maybeNone;
-	unsigned char *dataPlanes[5];
+	const void *dataPlanes[5];
 	int garbage;
 	int width, height;
 	int bps, spp;
 	BOOL hasAlpha, isPlanar;
 	char *colorSpaceName;
 	NSString *colorSpaceNameString;
-	int bpr, bpp;
+	int bpr, bpp, i;
 	NSBitmapImageRep *newImageRep;
 	struct objc_super super;
+	PyObject*  py_Planes[5];
+	Py_buffer  planeBuffers[5];
+
+	for (i = 0; i < 5; i++) {
+		py_Planes[i] = NULL;
+		planeBuffers[i].buf = NULL;
+	}
 
 	// check for five well defined read buffers in data planes argument
-	if (!PyArg_ParseTuple(arguments, "("Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#"Py_ARG_BYTES"#)iiiibbsii",
-		&dataPlanes[0], &garbage,
-		&dataPlanes[1], &garbage,
-		&dataPlanes[2], &garbage,
-		&dataPlanes[3], &garbage,
-		&dataPlanes[4], &garbage,
+	if (!PyArg_ParseTuple(arguments, "(OOOOO)iiiibbsii",
+		py_Planes + 0,
+		py_Planes + 1,
+		py_Planes + 2,
+		py_Planes + 3,
+		py_Planes + 4,
 		&width,
 		&height,
 		&bps,
@@ -184,6 +114,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 
 		PyErr_Clear();
 		bzero(dataPlanes, sizeof(dataPlanes));
+		bzero(py_Planes, sizeof(py_Planes));
 
 		if (!PyArg_ParseTuple(arguments, "Oiiiibbsii",
 				 &maybeNone,
@@ -205,6 +136,35 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 				return NULL;
 			}
 		}
+	} else {
+		for (i = 0; i < 5; i++) {
+			if (py_Planes[i] == Py_None) {
+				dataPlanes[i] = NULL;
+			} else {
+				int r = PyObject_GetBuffer(py_Planes[i], planeBuffers + i,
+						PyBUF_SIMPLE);
+				if (r == 0) {
+					dataPlanes[i] = planeBuffers[i].buf;
+				} else {
+#if PY_MAJOR_VERSION == 2
+					/* Fall back to old-style buffers, not all python 2 types 
+					 * implement the newer APIs and that includes the stdlib.
+					 */
+					PyErr_Clear();
+					void * buf;
+					Py_ssize_t len;
+					int r = PyObject_AsReadBuffer(py_Planes[i], 
+						&buf, &len);
+					if (r == -1) {
+						goto error_cleanup;
+					}
+					dataPlanes[i] = buf;
+#else
+					goto error_cleanup;
+#endif
+				}
+			}
+		}
 	}
 
 	colorSpaceNameString = [NSString stringWithUTF8String: colorSpaceName];
@@ -214,7 +174,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		newImageRep = ((id(*)(struct objc_super*, SEL, unsigned char**, NSInteger, NSInteger, NSInteger, NSInteger, BOOL, BOOL, id, NSInteger, NSInteger))objc_msgSendSuper)(&super,
+		newImageRep = ((id(*)(struct objc_super*, SEL, const void**, NSInteger, NSInteger, NSInteger, NSInteger, BOOL, BOOL, id, NSInteger, NSInteger))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
 				dataPlanes, width, height, bps, spp, 
 				hasAlpha, isPlanar, colorSpaceNameString, 
@@ -226,6 +186,12 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 		newImageRep = nil;
 	PyObjC_ENDHANDLER
 
+	for (i = 0; i < 5; i++) {
+		if (py_Planes[i] != NULL && planeBuffers[i].buf != NULL) {
+			PyBuffer_Release(&planeBuffers[i]);
+		}
+	}
+
 	if (newImageRep == nil && PyErr_Occurred()) {
 		return NULL;
 	}
@@ -233,6 +199,165 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 	result = PyObjC_IdToPython(newImageRep);
 
 	return result;
+
+error_cleanup:
+	{
+		int j = i;
+		for (i = 0; i < j; i++) {
+			if (py_Planes[i] != NULL && planeBuffers[i].buf != NULL) {
+				PyBuffer_Release(&planeBuffers[i]);
+			}
+		}
+	}
+	return NULL;
+}
+
+static PyObject*
+call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, 
+		PyObject* self, PyObject* arguments)
+{
+	PyObject* result;
+	PyObject* maybeNone;
+	const void *dataPlanes[5];
+	int garbage;
+	int width, height;
+	int bps, spp;
+	BOOL hasAlpha, isPlanar;
+	char *colorSpaceName;
+	NSString *colorSpaceNameString;
+	int bpr, bpp, i;
+	NSBitmapImageRep *newImageRep;
+	int format;
+	struct objc_super super;
+	PyObject*  py_Planes[5];
+	Py_buffer  planeBuffers[5];
+
+	for (i = 0; i < 5; i++) {
+		py_Planes[i] = NULL;
+		planeBuffers[i].buf = NULL;
+	}
+
+	// check for five well defined read buffers in data planes argument
+	if (!PyArg_ParseTuple(arguments, "(OOOOO)iiiibbsiii",
+		py_Planes + 0,
+		py_Planes + 1,
+		py_Planes + 2,
+		py_Planes + 3,
+		py_Planes + 4,
+		&width,
+		&height,
+		&bps,
+		&spp,
+		&hasAlpha,
+		&isPlanar,
+		&colorSpaceName,
+		&format,
+		&bpr,
+		&bpp)) {
+
+		if ( !PyErr_ExceptionMatches(PyExc_TypeError) ) {
+			return NULL;
+		}
+
+		PyErr_Clear();
+		bzero(dataPlanes, sizeof(dataPlanes));
+		bzero(py_Planes, sizeof(py_Planes));
+
+		if (!PyArg_ParseTuple(arguments, "Oiiiibbsiii",
+				 &maybeNone,
+				 &width,
+				 &height,
+				 &bps,
+				 &spp,
+				 &hasAlpha,
+				 &isPlanar,
+				 &colorSpaceName,
+				 &format,
+				 &bpr,
+				 &bpp)){
+
+			return NULL; //! any other situations that we need to parse specific args go here
+		} else {
+			// first arg must be none as nothing else makes sense
+			if (maybeNone != Py_None) {
+				PyErr_SetString(PyExc_TypeError, "First argument must be a 5 element Tuple or None.");
+				return NULL;
+			}
+		}
+	} else {
+		for (i = 0; i < 5; i++) {
+			if (py_Planes[i] == Py_None) {
+				dataPlanes[i] = NULL;
+			} else {
+				int r = PyObject_GetBuffer(py_Planes[i], planeBuffers + i,
+						PyBUF_SIMPLE);
+				if (r == 0) {
+					dataPlanes[i] = planeBuffers[i].buf;
+				} else {
+#if PY_MAJOR_VERSION == 2
+					/* Fall back to old-style buffers, not all python 2 types 
+					 * implement the newer APIs and that includes the stdlib.
+					 */
+					PyErr_Clear();
+					void * buf;
+					Py_ssize_t len;
+					int r = PyObject_AsReadBuffer(py_Planes[i], 
+						&buf, &len);
+					if (r == -1) {
+						goto error_cleanup;
+					}
+					dataPlanes[i] = buf;
+#else
+					goto error_cleanup;
+#endif
+				}
+			}
+		}
+	}
+
+	colorSpaceNameString = [NSString stringWithUTF8String: colorSpaceName];
+
+	PyObjC_DURING
+		PyObjC_InitSuper(&super,
+			PyObjCSelector_GetClass(method),
+			PyObjCObject_GetObject(self));
+    
+		newImageRep = ((id(*)(struct objc_super*, SEL, const void**, NSInteger, NSInteger, NSInteger, NSInteger, BOOL, BOOL, id, NSBitmapFormat, NSInteger, NSInteger))objc_msgSendSuper)(&super,
+				PyObjCSelector_GetSelector(method),
+				dataPlanes, width, height, bps, spp, 
+				hasAlpha, isPlanar, colorSpaceNameString, 
+				(NSBitmapFormat)format, bpr, bpp);
+
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+		result = NULL;
+		newImageRep = nil;
+	PyObjC_ENDHANDLER
+
+	for (i = 0; i < 5; i++) {
+		if (py_Planes[i] != NULL && planeBuffers[i].buf != NULL) {
+			PyBuffer_Release(&planeBuffers[i]);
+		}
+	}
+
+	if (newImageRep == nil && PyErr_Occurred()) {
+		return NULL;
+	}
+
+	result = PyObjC_IdToPython(newImageRep);
+
+	return result;
+
+error_cleanup:
+	{
+		int j = i;
+		for (i = 0; i < j; i++) {
+			if (py_Planes[i] != NULL && planeBuffers[i].buf != NULL) {
+				PyBuffer_Release(&planeBuffers[i]);
+			}
+		}
+	}
+	return NULL;
 }
 
 
@@ -282,7 +407,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 				PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
 #else
 				Py_buffer info;
-				if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 1, PyBUF_FULL) < 0) {
+				if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 0, PyBUF_FULL) < 0) {
 					return NULL;
 				}
 				PyObject* buffer = PyMemoryView_FromBuffer(&info);
@@ -322,7 +447,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		bitmapData = (unsigned char *) objc_msgSendSuper(&super, 
+		bitmapData = (unsigned char *(*)(id, SEL)) objc_msgSendSuper(&super, 
 				PyObjCSelector_GetSelector(method));
 			
 		bytesPerPlane = [
@@ -340,13 +465,15 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 		return NULL;
 	}
 
-#if  PY_VERSION_HEX <= 0x02069900 
+#if  PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
 	result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
 #else
+
 	/* A memory view requires that the backing store implements the buffer
 	 * interface, therefore create a mutable bytes object to do that for us.
 	 */
 	Py_buffer info;
+#if 0
 	NSMutableData* data = [[NSMutableData alloc] initWithBytesNoCopy:bitmapData length: bytesPerPlane freeWhenDone:NO];
 	PyObject* bytesBuf = PyObjC_ObjCToPython("@", &data);
 	[data release];
@@ -355,6 +482,8 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 	}
 
 	if (PyBuffer_FillInfo(&info, bytesBuf, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
+#endif
+	if (PyBuffer_FillInfo(&info, NULL, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
 		return NULL;
 	}
 	result = PyMemoryView_FromBuffer(&info);
@@ -392,6 +521,15 @@ static int setup_nsbitmap(PyObject* m __attribute__((__unused__)))
 			class_NSBitmapImageRep,
 			@selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:),
 			call_NSBitmapImageRep_initWithBitmap,
+			PyObjCUnsupportedMethod_IMP) < 0) {
+
+		return -1;
+	}
+
+	if (PyObjC_RegisterMethodMapping(
+			class_NSBitmapImageRep,
+			@selector(initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:),
+			call_NSBitmapImageRep_initWithBitmapFormat,
 			PyObjCUnsupportedMethod_IMP) < 0) {
 
 		return -1;

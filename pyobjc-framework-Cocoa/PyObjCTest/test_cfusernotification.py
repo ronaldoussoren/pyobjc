@@ -9,6 +9,9 @@ class TestUserNotification (TestCase):
         id = CFUserNotificationGetTypeID()
         self.assertIsInstance(id, (int, long))
     def testCreation(self):
+        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = u"pyobjctest.cfusernotificaton"
+
         rl = CFRunLoopGetCurrent()
 
         infoDict = {
@@ -30,11 +33,12 @@ class TestUserNotification (TestCase):
         self.assertArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, b'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
         rls = CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
-        CFRunLoopAddSource(rl, rls, kCFRunLoopDefaultMode)
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+        CFRunLoopAddSource(rl, rls, runloop_mode)
+        CFRunLoopRunInMode(runloop_mode, 2.0, True)
 
         CFUserNotificationCancel(ref)
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
+        CFRunLoopRunInMode(runloop_mode, 5.0, True)
+        CFRunLoopRemoveSource(rl, rls, runloop_mode)
 
         self.assertEqual(len(values), 1)
         self.assertIs(values[0][0], ref)

@@ -30,6 +30,9 @@ class TestRunLoop (TestCase):
         self.assertIsInstance(CFRunLoopObserverGetTypeID(), (int, long))
         self.assertIsInstance(CFRunLoopTimerGetTypeID(), (int, long))
     def testRunloop(self):
+        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = "pyobjctest.cfrunloop"
+
         loop = CFRunLoopGetCurrent()
         self.assertIsInstance(loop, CFRunLoopRef)
         loop = CFRunLoopGetMain()
@@ -46,7 +49,7 @@ class TestRunLoop (TestCase):
         CFRunLoopAddCommonMode(loop, "pyobjctest")
         allmodes = CFRunLoopCopyAllModes(loop)
 
-        tm = CFRunLoopGetNextTimerFireDate(loop, kCFRunLoopDefaultMode)
+        tm = CFRunLoopGetNextTimerFireDate(loop, runloop_mode)
         self.assertIsInstance(tm, float)
         b = CFRunLoopIsWaiting(loop)
         self.assertIsInstance(b, bool)
@@ -59,7 +62,10 @@ class TestRunLoop (TestCase):
 
         # CFRunLoopRun is hard to test reliably
         self.assertHasAttr(CoreFoundation, 'CFRunLoopRun')
+
     def testObserver(self):
+        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = "pyobjctest.cfrunloop"
 
         rl = CFRunLoopGetCurrent()
 
@@ -84,29 +90,31 @@ class TestRunLoop (TestCase):
         observer = CFRunLoopObserverCreate(None, kCFRunLoopEntry|kCFRunLoopExit,
                 True, 4, callback, data)
         self.assertIsInstance(observer, CFRunLoopObserverRef)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), False)
-        CFRunLoopAddObserver(rl, observer, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), True)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
+        CFRunLoopAddObserver(rl, observer, runloop_mode)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), True)
 
         # Use dummy stream to ensure that the runloop actually performs work
         strval = b'hello world'
         stream = CFReadStreamCreateWithBytesNoCopy(None,
                                 strval, len(strval), kCFAllocatorNull)
         self.assertIsInstance(stream, CFReadStreamRef)
-        CFReadStreamScheduleWithRunLoop(stream, rl, kCFRunLoopDefaultMode)
-        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
-        CFReadStreamUnscheduleFromRunLoop(stream, rl, kCFRunLoopDefaultMode)
+        CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
+        res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
+        CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
         
         self.assertNotEqual(len(state) , 0 )
         for item in state:
             self.assertIs(item[0], observer)
             self.assertIsIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
             self.assertIs(item[2], data)
-        CFRunLoopRemoveObserver(rl, observer, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, kCFRunLoopDefaultMode), False)
+        CFRunLoopRemoveObserver(rl, observer, runloop_mode)
+        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
 
 
     def testTimer(self):
+        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = "pyobjctest.cfrunloop"
         rl = CFRunLoopGetCurrent()
 
         state = []
@@ -133,18 +141,22 @@ class TestRunLoop (TestCase):
         self.assertIs(CFRunLoopTimerIsValid(timer), False)
         self.assertIs(CFRunLoopTimerGetContext(timer, None), objc.NULL)
         timer = CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
-        CFRunLoopAddTimer(rl, timer, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), True)
-        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 2.0, True)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), False)
+        CFRunLoopAddTimer(rl, timer, runloop_mode)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), True)
+        res = CFRunLoopRunInMode(runloop_mode, 1.3, True)
 
-        CFRunLoopRemoveTimer(rl, timer, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, kCFRunLoopDefaultMode), False)
+        CFRunLoopTimerInvalidate(timer)
+        CFRunLoopRemoveTimer(rl, timer, runloop_mode)
+        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), False)
         self.assertFalse(len(state) < 3)
         for item in state:
             self.assertIs(item[0], timer)
             self.assertIs(item[1], data)
     def testSource(self):
+        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = "pyobjctest.cfrunloop"
+
         rl = CFRunLoopGetCurrent()
         
         state = []
@@ -174,17 +186,17 @@ class TestRunLoop (TestCase):
         source = CFRunLoopSourceCreate(None, 55, 
                 (0, schedule, cancel, perform, data))
         self.assertIsInstance(source, CFRunLoopSourceRef)
-        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
-        CFRunLoopAddSource(rl, source, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), True)
+        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), False)
+        CFRunLoopAddSource(rl, source, runloop_mode)
+        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), True)
         self.assertEqual(len(state) , 1)
         self.assertEqual(state[0][0] , 'schedule')
         self.assertIs(state[0][1], data)
         self.assertIs(state[0][2], rl)
-        self.assertEqual(state[0][3] , kCFRunLoopDefaultMode)
+        self.assertEqual(state[0][3] , runloop_mode)
         del state[:]
 
-        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5, True)
+        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
         self.assertIsInstance(res, (int, long))
         #self.assertEqual(res, kCFRunLoopRunTimedOut)
 
@@ -192,7 +204,7 @@ class TestRunLoop (TestCase):
 
         CFRunLoopSourceSignal(source)
 
-        res = CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.5, True)
+        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
         self.assertIsInstance(res, (int, long))
         self.assertEqual(res, kCFRunLoopRunHandledSource)
 
@@ -201,13 +213,13 @@ class TestRunLoop (TestCase):
         self.assertIs(state[0][1], data)
         del state[:]
 
-        CFRunLoopRemoveSource(rl, source, kCFRunLoopDefaultMode)
-        self.assertIs(CFRunLoopContainsSource(rl, source, kCFRunLoopDefaultMode), False)
+        CFRunLoopRemoveSource(rl, source, runloop_mode)
+        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), False)
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0] , 'cancel')
         self.assertIs(state[0][1], data)
         self.assertIs(state[0][2], rl)
-        self.assertEqual(state[0][3] , kCFRunLoopDefaultMode)
+        self.assertEqual(state[0][3] , runloop_mode)
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.assertArgIsBlock(CFRunLoopPerformBlock, 2, b'v')

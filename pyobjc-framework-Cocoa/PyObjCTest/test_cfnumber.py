@@ -168,7 +168,10 @@ class TestCFNumber (TestCase):
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)
 
-        self.assertEqual(v , 8)
+        if sys.maxint >= 2**32:
+            self.assertEqual(v , 8)
+        else:
+            self.assertEqual(v , 4)
         v = CFNumberGetByteSize(44.0)
         self.assertEqual(v , 8)
         self.assertFalse(CFNumberIsFloatType(44))

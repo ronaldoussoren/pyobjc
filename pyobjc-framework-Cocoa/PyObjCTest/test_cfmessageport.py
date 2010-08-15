@@ -24,28 +24,29 @@ class TestMessagePort (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFMessagePortGetTypeID(), (int, long))
+
     def testInteraction(self):
-        self.fail("research")
         class Context: pass
         context = Context()
 
         def callout(port, messageid, data, info):
             pass
-
         port, shouldFree = CFMessagePortCreateLocal(None, u"name", callout, context, None)
         self.assertIsInstance(port, CFMessagePortRef)
         self.assertIs(shouldFree is True or shouldFree, False)
         self.assertFalse(CFMessagePortIsRemote(port))
         ctx = CFMessagePortGetContext(port, None)
         self.assertIs(ctx, context)
-        port = CFMessagePortCreateRemote(None, u"name")
-        self.assertIsInstance(port, CFMessagePortRef)
-        self.assertResultIsBOOL(CFMessagePortIsRemote)
-        self.assertTrue(CFMessagePortIsRemote(port))
-        self.assertTrue(CFMessagePortGetName(port), u"name")
 
-        CFMessagePortSetName(port, "newname")
-        self.assertTrue(CFMessagePortGetName(port), u"newname")
+        port2 = CFMessagePortCreateRemote(None, u"name")
+        self.assertIsInstance(port2, CFMessagePortRef)
+        self.assertResultIsBOOL(CFMessagePortIsRemote)
+        self.assertTrue(CFMessagePortIsRemote(port2))
+        self.assertTrue(CFMessagePortGetName(port2), u"name")
+
+
+        CFMessagePortSetName(port2, "newname")
+        self.assertTrue(CFMessagePortGetName(port2), u"newname")
 
         cb = CFMessagePortGetInvalidationCallBack(port)
         self.assertIs(cb, None)
