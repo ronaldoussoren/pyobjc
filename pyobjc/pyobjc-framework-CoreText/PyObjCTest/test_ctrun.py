@@ -15,7 +15,6 @@ class TestCTRun (TestCase):
         self.assertEqual(kCTRunStatusHasNonIdentityMatrix, (1 << 2))
 
     def testFunctions(self):
-        return
         self.assertIsInstance(CTRunGetTypeID(), (int, long))
 
         line = CTLineCreateWithAttributedString(
@@ -88,8 +87,29 @@ class TestCTRun (TestCase):
 
     @min_os_level('10.5')
     def testFunctions10_5(self):
-        self.fail('CTRunGetAdvancesPtr')
-        self.fail('CTRunGetAdvances')
+        self.assertArgIsOut(CTRunGetAdvances, 2)
+        self.assertArgSizeInArg(CTRunGetAdvances, 2, 1)
+
+        line = CTLineCreateWithAttributedString(
+                CFAttributedStringCreate(None, u"hello world", None))
+        self.assertIsInstance(line, CTLineRef)
+
+        run = CTLineGetGlyphRuns(line)[0]
+        self.assertIsInstance(run, CTRunRef)
+
+        r = CTRunGetAdvances(run, CFRange(1, 3), None)
+        self.assertIsInstance(r, (list, tuple))
+        self.assertEquals(len(r), 3)
+        for i in xrange(3):
+            self.assertIsInstance(r[i], CGSize)
+
+
+        try:
+            CTRunGetAdvancesPtr
+        except NameError:
+            pass
+        else:
+            self.fail("CTRunGetAdvancesPtr is defined")
 
 
 if __name__ == "__main__":

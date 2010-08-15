@@ -921,5 +921,19 @@
     <arg type='l' type64='l' />
     <arg type='d' />
   </function>
+  <function name='CTFramesetterSuggestFrameSizeWithConstraints'>
+    <retval type='{_NSSize=ff}' type64='{CGSize=dd}' />
+    <arg type='^{__CTTypesetter=}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='@' />
+    <arg type='{_NSSize=ff}' type64='{CGSize=dd}' />
+    <arg type='^{_CFRange=ll}' type64='^{_CFRange=ll}' type_modifier='o' />
+  </function>
+  <function name='CTRunGetAdvances'>
+    <retval type='v' />
+    <arg type='^{__CTRun=}' />
+    <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
+    <arg type='^{_NSSize=ff}' type64='^{CGSize=dd}' type_modifier='o' c_array_length_in_arg='1' />
+  </function>
 </signatures>
 

@@ -34,7 +34,13 @@ class TestCTGlyphInfo (TestCase):
         self.assertIsInstance(v, CTGlyphInfoRef)
 
         self.assertResultIsCFRetained(CTGlyphInfoCreateWithCharacterIdentifier)
-        v = CTGlyphInfoCreateWithCharacterIdentifier(3254, kCTIdentityMappingCharacterCollection, "(c)")
+
+        for collection in (kCTIdentityMappingCharacterCollection, kCTAdobeCNS1CharacterCollection,
+                kCTAdobeGB1CharacterCollection, kCTAdobeJapan1CharacterCollection, 
+                kCTAdobeJapan2CharacterCollection, kCTAdobeKorea1CharacterCollection):
+            v = CTGlyphInfoCreateWithCharacterIdentifier(3254, collection, "(c)")
+            if v is not None:
+                break
         self.assertIsInstance(v, CTGlyphInfoRef)
 
         v = CTGlyphInfoGetGlyphName(info)

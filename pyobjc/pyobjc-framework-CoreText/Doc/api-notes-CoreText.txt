@@ -43,3 +43,5 @@ API Notes for CoreText
 
   Use ``CTParagraphStyleGetTabStops`` to fetch the tabstops from a style object, using
   ``CTParagraphStyleGetValueSpecifieker`` is not supported with key ``kCTParagraphStyleSpecifierTabStops``.
+
+* ``CTRunGetAdvancesPtr`` is not supported, use ``CTRunGetAdvances`` instead.
