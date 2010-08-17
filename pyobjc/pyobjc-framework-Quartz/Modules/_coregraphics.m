@@ -334,6 +334,133 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
 	return rv;
 }
 
+#if PyObjC_BUILD_RELEASE >= 1006
+static void
+m_releasecallback(void* releaseInfo, void* data)
+{
+	PyObject* py_data = (PyObject*)releaseInfo;
+
+	PyGILState_STATE   state = PyGILState_Ensure();
+
+	if (PyTuple_GET_ITEM(releaseInfo, 0) != Py_None) {
+		PyObject* r = PyObject_CallFunction(
+			PyTuple_GET_ITEM(py_data, 0), "OO",
+			PyTuple_GET_ITEM(py_data, 1),
+			PyTuple_GET_ITEM(py_data, 2));
+		Py_XDECREF(r);
+	}
+
+	Py_DECREF(py_data);
+
+	if (PyErr_Occurred()) {
+		PyObjCErr_ToObjCWithGILState(&state);
+	}
+	PyGILState_Release(state);
+
+}
+
+static PyObject*
+m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)), 
+		PyObject* args)
+{
+	PyObject* py_data;
+	PyObject* py_width;
+	PyObject* py_height;
+	PyObject* py_bitsPerComponent;
+	PyObject* py_bytesPerRow;
+	PyObject* py_colorSpace;
+	PyObject* py_bitmapInfo;
+	PyObject* py_releaseCallback;
+	PyObject* py_releaseInfo;
+
+	void*	data;
+	size_t  width;
+	size_t  height;
+	size_t  bitsPerComponent;
+	size_t  bytesPerRow;
+	CGColorSpaceRef colorSpace;
+	CGBitmapInfo bitmapInfo;
+
+	if (!PyArg_ParseTuple(args, "OOOOOOOOO", 
+		&py_data, &py_width, &py_height, &py_bitsPerComponent, 
+		&py_bytesPerRow, &py_colorSpace, &py_bitmapInfo,
+		&py_releaseCallback, &py_releaseInfo
+		)) {
+		return NULL;
+	}
+
+	if (PyObjC_PythonToObjC(@encode(size_t), py_width, &width) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(CGColorSpaceRef), py_colorSpace, &colorSpace) == -1) {
+		return NULL;
+	}
+	if (PyObjC_PythonToObjC(@encode(CGBitmapInfo), py_bitmapInfo, &bitmapInfo) == -1) {
+		return NULL;
+	}
+
+	if (py_data == Py_None) {
+		data = NULL;
+
+	} else if (PyUnicode_Check(py_data)) {
+		PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
+		return NULL;
+
+	} else {
+		Py_ssize_t size;
+
+		if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
+			return NULL;
+		}
+	}
+
+	PyObject* releaseInfo = PyTuple_New(3);
+	if (releaseInfo == NULL) {
+		return NULL;
+	}
+	PyTuple_SET_ITEM(releaseInfo, 0, py_releaseCallback);
+	Py_INCREF(py_releaseCallback);
+	PyTuple_SET_ITEM(releaseInfo, 1, py_releaseInfo);
+	Py_INCREF(py_releaseInfo);
+	PyTuple_SET_ITEM(releaseInfo, 2, py_data);
+	Py_INCREF(py_data);
+
+
+	CGContextRef ctx = NULL;
+	PyObjC_DURING
+		ctx = CGBitmapContextCreateWithData(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback, releaseInfo);
+
+	PyObjC_HANDLER
+		ctx = NULL;
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (ctx == NULL && PyErr_Occurred()) {
+		Py_DECREF(releaseInfo);
+		return NULL;
+	}
+
+	if (ctx == NULL)  {
+		Py_DECREF(releaseInfo);
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	PyObject* rv = PyObjC_ObjCToPython(@encode(CGContextRef), &ctx);
+	CFRelease(ctx);
+	return rv;
+}
+#endif
+
 
 static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
@@ -368,6 +495,14 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS,
 		NULL
 	},
+#if PyObjC_BUILD_RELEASE >= 1006
+	{
+		"CGBitmapContextCreateWithData",
+		(PyCFunction)m_CGBitmapContextCreateWithData,
+		METH_VARARGS,
+		NULL
+	},
+#endif
 
 
 	{ 0, 0, 0, }

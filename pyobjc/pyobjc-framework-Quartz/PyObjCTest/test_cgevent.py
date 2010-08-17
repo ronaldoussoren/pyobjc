@@ -7,7 +7,7 @@ class TestCGEvent (TestCase):
         self.assertIsCFType(CGEventRef)
         self.assertIsCFType(CGEventSourceRef)
 
-    def testMissing(self):
+    def testEventFunctions(self):
         evt = CGEventCreateMouseEvent(None, kCGEventLeftMouseDown, (80, 90), kCGMouseButtonLeft)
         self.assertIsInstance(evt, CGEventRef)
 
@@ -61,13 +61,33 @@ class TestCGEvent (TestCase):
 
         CGEventSetDoubleValueField(evt, kCGMouseEventPressure, 42.5)
 
+        self.assertArgHasType(CGEventTapEnable, 0, '^{__CFMachPort=}')
+        self.assertArgHasType(CGEventTapEnable, 1, objc._C_BOOL)
+
+        self.assertResultHasType(CGEventTapIsEnabled, objc._C_BOOL)
+        self.assertArgHasType(CGEventTapIsEnabled, 0, '^{__CFMachPort=}')
+
+        self.assertArgHasType(CGEventTapPostEvent, 0, '^{__CGEventTapProxy=}')
+        self.assertArgHasType(CGEventTapPostEvent, 1, '^{__CGEvent=}')
+
+        self.assertResultHasType(CGGetEventTapList, objc._C_INT)
+        self.assertArgHasType(CGGetEventTapList, 0, objc._C_UINT)
+        self.assertArgHasType(CGGetEventTapList, 1, 'o^' + CGEventTapInformation.__typestr__)
+        self.assertArgSizeInArg(CGGetEventTapList, 1, (0, 2))
+        self.assertArgHasType(CGGetEventTapList, 2, 'o^' + objc._C_UINT)
+
+        self.assertResultHasType(CGEventPost, objc._C_VOID)
+        self.assertArgHasType(CGEventPost, 0, objc._C_UINT)
+        self.assertArgHasType(CGEventPost, 1, '^{__CGEvent=}')
+
+        self.assertResultHasType(CGEventPostToPSN, objc._C_VOID)
+        self.assertArgHasType(CGEventPostToPSN, 0, 'n^{ProcessSerialNumber=II}')
+        self.assertArgHasType(CGEventPostToPSN, 1, '^{__CGEvent=}')
+
+
+    @expectedFailure
+    def testMissing(self):
         self.fail("CGEventTapCreateForPSN")
-        self.fail("CGEventTapEnable")
-        self.fail("CGEventTapIsEnabled")
-        self.fail("CGEventTapPostEvent")
-        self.fail("CGGetEventTapList")
-        self.fail("CGEventPost")
-        self.fail("CGEventPostToPSN")
 
 
     def testFunctions(self):
