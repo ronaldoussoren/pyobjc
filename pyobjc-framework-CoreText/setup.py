@@ -22,7 +22,7 @@ from pyobjc_setup import setup, Extension
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-CoreText',
-    version="2.3.1a0",
+    version="2.3.1",
     description = "Wrappers for the framework CoreText on Mac OS X",
     packages = [ "CoreText" ],
     ext_modules = [
@@ -32,8 +32,8 @@ setup(
             ),
     ],
     install_requires = [ 
-        'pyobjc-core>=2.3.1a0',
-        'pyobjc-framework-Cocoa>=2.3.1a0',
-        'pyobjc-framework-Quartz>=2.3.1a0',
+        'pyobjc-core>=2.3.1',
+        'pyobjc-framework-Cocoa>=2.3.1',
+        'pyobjc-framework-Quartz>=2.3.1',
     ],
 )
