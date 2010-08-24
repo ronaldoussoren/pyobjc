@@ -35,7 +35,23 @@ class TestCGBitmapContext (TestCase):
 
 
     def testFunctions106_(self):
-        self.fail("CGBitmapContextCreateWithData: manual wrapper")
+        bytes_val = array.array('B', (0 for i in xrange(100*80*4)))
+        ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, None, None)
+        self.assertIsInstance(ctx, CGContextRef)
+        del ctx
+
+        list = []
+        release_info = object()
+        def callback(info, data):
+            list.append((info, data))
+
+        ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, callback, release_info)
+        self.assertIsInstance(ctx, CGContextRef)
+        del ctx
+
+        self.assertEquals(len(list), 1)
+        self.assertIs(list[0][0], release_info)
+        self.assertIs(list[0][1], bytes_val)
 
 
 if __name__ == "__main__":

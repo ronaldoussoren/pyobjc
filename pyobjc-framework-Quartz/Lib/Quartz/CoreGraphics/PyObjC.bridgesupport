@@ -1365,7 +1365,7 @@
   </function>
   <function name='CGContextShowGlyphs'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='1' type='^S' type_modifier='n' />
+    <arg c_array_length_in_arg='2' type='^S' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextShowGlyphsAtPoint'>
@@ -1377,8 +1377,8 @@
   </function>
   <function name='CGContextShowGlyphsAtPositions'>
     <arg type='^{CGContext=}' />
-    <arg c_array_length_in_arg='3' type='^S' />
-    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' />
+    <arg c_array_length_in_arg='3' type='^S' type_modifier='n' />
+    <arg c_array_length_in_arg='3' type='^{CGPoint=ff}' type64='^{CGPoint=dd}' type_modifier='n' />
     <arg type='L' type64='L' />
   </function>
   <function name='CGContextShowGlyphsWithAdvances'>

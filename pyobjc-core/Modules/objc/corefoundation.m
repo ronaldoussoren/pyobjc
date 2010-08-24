@@ -259,10 +259,8 @@ PyObject* PyObjCCF_NewSpecial(char* typestr, void* datum)
 	CFTypeID typeid;
 
 	if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) {
-		Py_DECREF(v);
 		return NULL;
 	}
-	Py_DECREF(v);
 
 	if (gTypeid2class != NULL) {
 		PyObject* cfid;

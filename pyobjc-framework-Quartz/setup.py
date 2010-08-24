@@ -32,6 +32,15 @@ packages to avoid name clashes with Apple provided wrappers for CoreGraphics.
 
 WARNING: Running the unittests will change your display settings during the
 testrun, which will probably mess up your window layout.
+
+NEWS
+====
+
+2.4
+---
+
+* Add wrapper for ``CGBitmapContextCreateWithData``
+
 '''
 
 from pyobjc_setup import setup, Extension
