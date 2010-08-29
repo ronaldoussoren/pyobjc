@@ -123,7 +123,7 @@ def endSheetMethod(meth):
     Return a selector that can be used as the delegate callback for
     sheet methods
     """
-    return objc.selector(meth, signature='v@:@ii')
+    return objc.selector(meth, signature=b'v@:@ii')
 
 
 def unexpectedErrorAlertPanel():

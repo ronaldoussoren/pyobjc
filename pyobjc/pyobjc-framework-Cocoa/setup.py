@@ -17,6 +17,9 @@ NEWS
   introducing Python 3 support.
 
 - Add wrapper for [NSBitmapImageRep -initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:]
+
+- ``PyObjCTools.AppHelper.endSheetMethod`` now works with python 3.x
+
 '''
 from pyobjc_setup import setup, Extension
 import os
