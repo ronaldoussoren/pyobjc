@@ -227,7 +227,7 @@ PyObjCUnicode_New(NSString* value)
 	 *  		NSArray.alloc().init()
 	 */
 	PyObjCUnicodeObject* result;
-// XXX - I don't know how to get gcc to let me use sizeof(unichar)
+
 #ifdef PyObjC_UNICODE_FAST_PATH
 	Py_ssize_t length = [value length];
 
@@ -237,6 +237,7 @@ PyObjCUnicode_New(NSString* value)
 	}
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
 	Py_UNICODE* tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
+	tptr[0] = tptr[length] = 0;
 	result->base.str = tptr;
 	/*PyUnicode_AS_UNICODE(result) = tptr;*/
 	tptr = NULL;
