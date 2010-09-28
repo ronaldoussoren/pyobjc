@@ -71,13 +71,13 @@
 		 */
 		NSStringEncoding encoding = [NSString defaultCStringEncoding];
 		const char* pycoding = PyUnicode_GetDefaultEncoding();
-		if (strcmp(pycoding, "ascii")) {
+		if (strcmp(pycoding, "ascii") == 0) {
 			encoding = NSASCIIStringEncoding;
-		} else if (strcmp(pycoding, "utf-8")) {
+		} else if (strcmp(pycoding, "utf-8") == 0) {
 			encoding = NSUTF8StringEncoding;
-		} else if (strcmp(pycoding, "latin1")) {
+		} else if (strcmp(pycoding, "latin1") == 0) {
 			encoding = NSISOLatin1StringEncoding;
-		} else if (strcmp(pycoding, "macroman")) {
+		} else if (strcmp(pycoding, "macroman") == 0) {
 			encoding = NSMacOSRomanStringEncoding;
 		} else {
 			/* A very non-standard system encoding, use
