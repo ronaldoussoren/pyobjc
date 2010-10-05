@@ -403,7 +403,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 	if (result != NULL) {
 		for(i=0; i<5; i++) {
 			if (dataPlanes[i]) {
-#if PY_VERSION_HEX <= 0x02069900
+#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
 				PyObject* buffer = PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
 #else
 				Py_buffer info;
@@ -465,7 +465,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 		return NULL;
 	}
 
-#if  PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION < 6
+#if  PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
 	result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
 #else
 
@@ -473,16 +473,6 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 	 * interface, therefore create a mutable bytes object to do that for us.
 	 */
 	Py_buffer info;
-#if 0
-	NSMutableData* data = [[NSMutableData alloc] initWithBytesNoCopy:bitmapData length: bytesPerPlane freeWhenDone:NO];
-	PyObject* bytesBuf = PyObjC_ObjCToPython("@", &data);
-	[data release];
-	if (bytesBuf == NULL) {
-		return NULL;
-	}
-
-	if (PyBuffer_FillInfo(&info, bytesBuf, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
-#endif
 	if (PyBuffer_FillInfo(&info, NULL, bitmapData, bytesPerPlane, 0, PyBUF_FULL) < 0) {
 		return NULL;
 	}

@@ -99,7 +99,11 @@ class TestNSData(TestCase):
         bytesValue = data.bytes()
         self.assertEqual(len(bytesValue), len(rawBytes), "bytes() and rawBytes not equal length.")
 
-        self.assertEquals(rawBytes, bytesValue)
+        if sys.version_info[:2] <= (2,6):
+            self.assertEquals(buffer(rawBytes), bytesValue)
+
+        else:
+            self.assertEquals(rawBytes, bytesValue)
 
         try:
             bytesValue[3] = b'\xAE'
@@ -281,7 +285,17 @@ class TestBuffer(TestCase):
         self.assertEqual(buffer(m)[:], m[:])
 
 
+class TestRegressions (TestCase):
+    def testDataStr(self):
+        if sys.version_info[0] == 2:
+            input = buffer("hello")
+            input_str = "hello"
+        else:
+            input = b"hello"
+            input_str = str(input)
 
+        buf = NSData.dataWithData_(input)
+        self.assertEquals(str(buf), input_str)
 
 
 if __name__ == '__main__':
