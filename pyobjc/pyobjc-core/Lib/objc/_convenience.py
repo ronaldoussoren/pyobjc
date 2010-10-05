@@ -767,8 +767,22 @@ def NSData__getitem__(self, item):
     except TypeError:
         return buff[:][item]
 
+
+if sys.version_info[:2] <= (2,6):
+    def NSData__str__(self):
+        return self.bytes()[:]
+
+elif sys.version_info[0] == 2:
+    def NSData__str__(self):
+        return str(self.bytes().tobytes())
+
+else:
+    def NSData__str__(self):
+        return str(self.bytes().tobytes())
+
+
 CLASS_METHODS['NSData'] = (
-    ('__str__', lambda self: self.bytes()[:]),
+    ('__str__', NSData__str__),
     ('__getitem__', NSData__getitem__),
     ('__getslice__', NSData__getslice__),
 )
