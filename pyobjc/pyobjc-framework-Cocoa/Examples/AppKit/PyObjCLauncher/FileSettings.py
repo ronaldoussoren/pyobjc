@@ -20,7 +20,7 @@ class FileSettings(NSObject):
         elif filetype == u'Python Bytecode Document':
             curdefault = cls.fsdefault_pyc
         else:
-            NSLog(u'Funny File Type: %s\n' % (filetype,))
+            NSLog(u'Funny File Type: %s\n', filetype)
             curdefault = cls.fsdefault_py
             filetype = u'Python Script'
         if curdefault is None:
@@ -36,7 +36,7 @@ class FileSettings(NSObject):
         elif filetype == u'Python Bytecode Document':
             curdefault = cls.default_pyc
         else:
-            NSLog(u'Funny File Type: %s\n' % (filetype,))
+            NSLog(u'Funny File Type: %s', filetype)
             curdefault = cls.default_py
             filetype = u'Python Script'
         if curdefault is None:
@@ -67,11 +67,11 @@ class FileSettings(NSObject):
             path = bndl.pathForResource_ofType_(u'factorySettings', u'plist')
             type(self).factorySettings = NSDictionary.dictionaryWithContentsOfFile_(path)
             if type(self).factorySettings is None:
-                NSLog(u'Missing %s' % (path,))
+                NSLog(u'Missing %s', path)
                 return None
         dct = type(self).factorySettings.get(filetype)
         if dct is None:
-            NSLog(u'factorySettings.plist misses file type "%s"' % (filetype,))
+            NSLog(u'factorySettings.plist misses file type "%s"', filetype)
             return None
 
         self.applyValuesFromDict_(dct)

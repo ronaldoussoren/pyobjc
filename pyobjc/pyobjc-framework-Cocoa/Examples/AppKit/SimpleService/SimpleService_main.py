@@ -6,7 +6,7 @@ from PyObjCTools import AppHelper
 def main():
     #NSLog(u"main()")
     serviceProvider = ServiceTest.alloc().init()
-    #NSLog(u"serviceProvider = %r" % (serviceProvider,))
+    #NSLog(u"serviceProvider = %s", serviceProvider)
     NSRegisterServicesProvider(serviceProvider, u"PyObjCSimpleService")
     #NSLog(u"registered as PyObjCSimpleService")
     AppHelper.runConsoleEventLoop()

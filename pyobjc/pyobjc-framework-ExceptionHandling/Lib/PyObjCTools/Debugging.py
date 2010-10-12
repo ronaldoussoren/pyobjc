@@ -56,7 +56,7 @@ def nsLogObjCException(exception):
     pipe = os.popen('/usr/bin/atos -p %d %s' % (os.getpid(), stack))
     stacktrace = pipe.readlines()
     stacktrace.reverse()
-    NSLog(u"*** ObjC exception '%s' (reason: '%s') discarded\n" % (
+    NSLog(u"%@", u"*** ObjC exception '%s' (reason: '%s') discarded\n" % (
             exception.name(), exception.reason(),
         ) +
         u'Stack trace (most recent call last):\n' +

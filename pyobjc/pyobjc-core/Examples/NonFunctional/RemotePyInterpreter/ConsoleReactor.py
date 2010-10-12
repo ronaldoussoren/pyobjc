@@ -52,7 +52,7 @@ class ConsoleReactor(NSObject):
         sel = 'handle%sCommand:' % (basic.capitalize())
         cmd = command[1:]
         if not self.respondsToSelector_(sel):
-            NSLog(u'%r does not respond to %r' % (self, command))
+            NSLog(u'%r does not respond to %s', self, command)
         else:
             # XXX - this crashes PyObjC??
             # self.performSelector_withObject_(sel, cmd)
@@ -119,7 +119,7 @@ class ConsoleReactor(NSObject):
         elif name == 'RemoteConsole.initialize':
             self.doCallback_sequence_args_(lambda *args:None, seq, args)
         else:
-            self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
+            self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r', self, command,])
 
     def close(self):
         if self.connection is not None:

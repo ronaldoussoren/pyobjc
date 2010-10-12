@@ -63,7 +63,7 @@ class MyDocument(NSDocument):
         else:
             res = os.system(cmdline)
         if res:
-            NSLog(u'Exit status: %d' % (res,))
+            NSLog(u'Exit status: %d', res)
             return False
         return True
 

@@ -8,14 +8,14 @@ def serviceSelector(fn):
     return objc.selector(fn, signature="v@:@@o^@")
 
 def ERROR(s):
-    #NSLog(u"ERROR: %s" % (s,))
+    #NSLog(u"ERROR: %s", s)
     return s
 
 class ServiceTest(NSObject):
 
     @serviceSelector
     def doOpenFileService_userData_error_(self, pboard, data, error):
-        #NSLog(u"doOpenFileService_userData_error_(%r, %r)" % (pboard, data,))
+        #NSLog(u"doOpenFileService_userData_error_(%s, %s)", pboard, data)
         try:
             types = pboard.types()
             pboardString = None
@@ -42,7 +42,7 @@ class ServiceTest(NSObject):
 
     @serviceSelector
     def doCapitalizeService_userData_error_(self, pboard, data, err):
-        #NSLog(u"doCapitalizeService_userData_error_(%r, %r)" % (pboard, data,))
+        #NSLog(u"doCapitalizeService_userData_error_(%s, %s)", pboard, data)
         try:
             types = pboard.types()
             pboardString = None

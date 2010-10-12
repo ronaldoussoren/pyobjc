@@ -59,7 +59,7 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
                 self.delegate.expectCodeInput_withPrompt_(input_received, '')
 
             else:
-                self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
+                self.doCallback_sequence_args_(NSLog, seq, [u'%s does not respond to expect %s', self, command])
         elif name == 'RemoteConsole.initialize':
             def gotTitle(repr_versioninfo, executable, pid):
                 self.delegate.setVersion_executable_pid_(
@@ -72,7 +72,7 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
         #    meth = getattr(fh, name[len('RemoteFileLike.'):])
         #    self.doCallback_sequence_args_(meth, seq, args[1:])
         else:
-            self.doCallback_sequence_args_(NSLog, seq, [u'%r does not respond to expect %r' % (self, command,)])
+            self.doCallback_sequence_args_(NSLog, seq, [u'%s does not respond to expect %s', self, command])
     
     def close(self):
         super(RemotePyInterpreterReactor, self).close()

@@ -74,7 +74,7 @@ class AsyncPythonInterpreter(NSObject):
                 try:
                     rval = typeCheck(rval)
                 except TypeError:
-                    NSLog(u'%s failed type check %s with value %r' % (k, typeCheck.__name__, rval))
+                    NSLog(u'%s failed type check %s with value %s', k, typeCheck.__name__, rval)
                     rval = None
             if rval is None:
                 defaults.setObject_forKey_(v, k)
@@ -131,7 +131,7 @@ class AsyncPythonInterpreter(NSObject):
         newData = ui.objectForKey_(NSFileHandleNotificationDataItem)
         if newData is None:
             self.close()
-            NSLog(u'Error: %r' % (ui.objectForKey_(NSFileHandleError),))
+            NSLog(u'Error: %@', ui.objectForKey_(NSFileHandleError))
             return
         bytes = newData.bytes()[:]
         if len(bytes) == 0:
@@ -140,7 +140,7 @@ class AsyncPythonInterpreter(NSObject):
         self.remoteFileHandle.readInBackgroundAndNotify()
         start = len(self.buffer)
         buff = self.buffer + newData.bytes()[:]
-        #NSLog(u'current buffer: %r' % (buff,))
+        #NSLog(u'current buffer: %s', buff)
         lines = []
         while True:
             linebreak = buff.find('\n', start) + 1
@@ -149,13 +149,13 @@ class AsyncPythonInterpreter(NSObject):
             lines.append(buff[:linebreak])
             buff = buff[linebreak:]
             start = 0
-        #NSLog(u'lines: %r' % (lines,))
+        #NSLog(u'lines: %s', lines)
         self.buffer = buff
         for line in lines:
             self.commandReactor.lineReceived_fromConnection_(line, self)
 
     def writeBytes_(self, bytes):
-        #NSLog(u'Writing bytes: %r' % (bytes,))
+        #NSLog(u'Writing bytes: %s' bytes)
         try:
             self.remoteFileHandle.writeData_(NSData.dataWithBytes_length_(bytes, len(bytes)))
         except objc.error:

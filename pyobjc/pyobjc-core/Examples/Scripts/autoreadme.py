@@ -38,8 +38,8 @@ class NotificationHandler(NSObject):
                 success, app, None = workspace.getInfoForFile_application_type_(
                         fullPath)
                 if not success:
-                    NSLog("Failed to find application to open file %s"%(
-                        fullPath,))
+                    NSLog("Failed to find application to open file %s",
+                        fullPath)
                     return
                 workspace.openFile_withApplication_(fullPath, app)
 

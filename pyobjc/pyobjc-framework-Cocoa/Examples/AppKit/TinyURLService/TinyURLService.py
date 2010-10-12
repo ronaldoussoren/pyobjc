@@ -11,7 +11,7 @@ def serviceSelector(fn):
     return objc.selector(fn, signature="v@:@@o^@")
 
 def ERROR(s):
-    #NSLog(u"ERROR: %s" % (s,))
+    #NSLog(u"ERROR: %s", s)
     return s
 
 NAME = 'TinyURLService-0.0'
@@ -27,7 +27,7 @@ class TinyURLService(NSObject):
         # Mail.app in 10.4.1 doesn't do NSURLPboardType correctly!
         # Probably elsewhere too, so we just use strings.
         try:
-            #NSLog(u'doTinyURLService: %r' % (pboard,))
+            #NSLog(u'doTinyURLService: %s', pboard)
             types = pboard.types()
             url = None
 
@@ -35,10 +35,10 @@ class TinyURLService(NSObject):
             if NSStringPboardType in types:
                 #NSLog(u'getting NSStringPboardType')
                 urlString = pboard.stringForType_(NSStringPboardType)
-                #NSLog(u'NSStringPboardType: %r' % (urlString,))
+                #NSLog(u'NSStringPboardType: %s', urlString)
                 url = NSURL.URLWithString_(urlString.strip())
                 if url is None:
-                    #NSLog(u'urlString was %r' % (urlString,))
+                    #NSLog(u'urlString was %s', urlString)
                     return ERROR(NSLocalizedString(
                         "Error: Given URL was not well-formed.",
                         "Given URL not well-formed."
@@ -52,15 +52,15 @@ class TinyURLService(NSObject):
 
 
             urlString = url.absoluteString()
-            #NSLog(u'urlString = %r' % (urlString,))
+            #NSLog(u'urlString = %s', urlString)
             
             res = getTinyURL(urlString.UTF8String())
 
             #NSLog(u'res = %r' % (res,))
             resURL = NSURL.URLWithString_(res)
-            #NSLog(u'resURL = %r' % (resURL,))
+            #NSLog(u'resURL = %s', resURL)
             if resURL is None:
-                NSLog(u'res was %r' % (res,))
+                NSLog(u'res was %s', res)
                 return ERROR(NSLocalizedString(
                     "Error: Resultant URL was not well-formed.",
                     "Resultant URL not well-formed."
