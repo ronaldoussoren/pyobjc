@@ -5,6 +5,7 @@ import subprocess
 import shutil
 import re
 import os
+import plistlib
 
 # We need at least Python 2.5
 MIN_PYTHON = (2, 5)
@@ -41,9 +42,19 @@ extra_args=dict(
     use_2to3 = True,
 )
 
+def get_os_level():
+    pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
+    v = pl['ProductVersion']
+    return '.'.join(v.split('.')[:2])
+
+
+
+
+
 from setuptools.command import build_py
 from setuptools.command import test
 from distutils import log
+
 class oc_build_py (build_py.build_py):
     def run_2to3(self, files, doctests=True):
         files = [ fn for fn in files if not os.path.basename(fn).startswith('test3_') ]
@@ -295,6 +306,7 @@ CFLAGS.extend([
     "-Wno-long-long",
 
     "-Wno-import",
+    "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, get_os_level().split('.')))),
     ])
 
 ## Arghh, a stupid compiler flag can cause problems. Don't 

@@ -1671,6 +1671,133 @@ _clear_intern(PyObject* self __attribute__((__unused__)))
 }
 
 
+#if    PyObjC_BUILD_RELEASE >= 1006
+    /* Associated Object support. Functionality is available on OSX 10.6 or later. */
+
+PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
+	"setAssociatedObject(object, key, value, [policy=objc.OBJC_ASSOCIATION_RETAIN])\n"
+	"\n"
+	"Set the value for an object assiociation. Use 'None' as the\n"
+	"value to clear an association.");
+static PyObject*
+PyObjC_setAssociatedObject(PyObject* self __attribute__((__unused__)),
+	PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "object", "key", "value", "policy", NULL };
+	id object;
+	PyObject* key;
+	id value;
+	long	  policy = OBJC_ASSOCIATION_RETAIN;
+
+	if (objc_setAssociatedObject == NULL) {
+		PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
+		return NULL;
+	}
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO&|i",
+		keywords, 
+		PyObjCObject_Convert, &object,
+		&key,
+		PyObjCObject_Convert, &value,
+		&policy
+		)) {
+		
+		return NULL;
+	}
+
+	PyObjC_DURING
+		objc_setAssociatedObject(object, (void*)key, value, policy);
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+
+PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
+	"getAssociatedObject(object, key) -> value\n"
+	"\n"
+	"Get the value for an object assiociation. Returns None \n"
+	"when they association doesn't exist.");
+static PyObject*
+PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)),
+	PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "object", "key", NULL};
+	id object;
+	PyObject* key;
+	id value;
+
+	if (objc_getAssociatedObject == NULL) {
+		PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
+		return NULL;
+	}
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&O",
+		keywords, 
+		PyObjCObject_Convert, &object,
+		&key
+		)) {
+		
+		return NULL;
+	}
+
+	PyObjC_DURING
+		value = objc_getAssociatedObject(object, (void*)key);
+	PyObjC_HANDLER
+		value = nil;
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	return PyObjC_IdToPython(value);
+}
+
+PyDoc_STRVAR(PyObjC_removeAssociatedObjects_doc,
+	"removeAssociatedObjects(object)\n"
+	"\n"
+	"Remove all assocations from an object. This should in general not be used because\n"
+	"it clear all references, including those made from unrelated code.\n");
+
+static PyObject*
+PyObjC_removeAssociatedObjects(PyObject* self __attribute__((__unused__)),
+	PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "object", NULL};
+	id object;
+
+	if (objc_removeAssociatedObjects == NULL) {
+		PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
+		return NULL;
+	}
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&",
+		keywords, 
+		PyObjCObject_Convert, &object
+		)) {
+		
+		return NULL;
+	}
+
+	PyObjC_DURING
+		objc_removeAssociatedObjects(object);
+	PyObjC_HANDLER
+		PyObjCErr_FromObjC(localException);
+	PyObjC_ENDHANDLER
+
+	if (PyErr_Occurred()) return NULL;
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+#endif
+
+
 static PyMethodDef mod_methods[] = {
 	{
 		"_setClassSetUpHook",
@@ -1786,6 +1913,16 @@ static PyMethodDef mod_methods[] = {
 
 	{ "_clear_intern", (PyCFunction)_clear_intern, METH_NOARGS,  NULL },
 
+#if    PyObjC_BUILD_RELEASE >= 1006
+
+	{ "setAssociatedObject", (PyCFunction)PyObjC_setAssociatedObject,
+		METH_VARARGS|METH_KEYWORDS, PyObjC_setAssociatedObject_doc },
+	{ "getAssociatedObject", (PyCFunction)PyObjC_getAssociatedObject,
+		METH_VARARGS|METH_KEYWORDS, PyObjC_getAssociatedObject_doc },
+	{ "removeAssociatedObjects", (PyCFunction)PyObjC_removeAssociatedObjects,
+		METH_VARARGS|METH_KEYWORDS, PyObjC_removeAssociatedObjects_doc },
+
+#endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };
@@ -2067,6 +2204,42 @@ PyObjC_MODULE_INIT(_objc)
 
 	PyObjCPointerWrapper_Init();
 	PyObjC_InstallAllocHack();
+
+#if    PyObjC_BUILD_RELEASE >= 1006
+	if (objc_setAssociatedObject != NULL) {
+		if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN) < 0) {
+			PyObjC_INITERROR();
+		}
+		if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_RETAIN_NONATOMIC", OBJC_ASSOCIATION_RETAIN_NONATOMIC) < 0) {
+			PyObjC_INITERROR();
+		}
+		if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_COPY_NONATOMIC", OBJC_ASSOCIATION_COPY_NONATOMIC) < 0) {
+			PyObjC_INITERROR();
+		}
+		if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_RETAIN", OBJC_ASSOCIATION_RETAIN) < 0) {
+			PyObjC_INITERROR();
+		}
+		if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY) < 0) {
+			PyObjC_INITERROR();
+		}
+	} else {
+		/* Build on a system where object associations are available, running on a platform where they aren't.
+		 * Disable the wrappers.
+		 */
+		if (PyDict_DelItemString(d, "setAssociatedObject") < 0) {
+			PyErr_Clear();
+		}
+		if (PyDict_DelItemString(d, "getAssociatedObject") < 0) {
+			PyErr_Clear();
+		}
+		if (PyDict_DelItemString(d, "removeAssociatedObjects") < 0) {
+			PyErr_Clear();
+		}
+
+	}
+#endif /* PyObjC_BUILD_RELEASE >= 1006 */
+
+
 
 #ifdef MAC_OS_X_VERSION_MAX_ALLOWED
 	/* An easy way to check for the MacOS X version we did build for */

@@ -13,6 +13,15 @@ Version 2.4
 - ``objc.FSRef.from_pathname`` actually works instead of always raising
    a TypeError.
 
+- ``objc.getAssociatedObject``, ``objc.setAssociatedObject`` and
+  ``objc.removeAssociatedObjects`` are wrappers for the corresponding
+  functions in the Objective-C runtime API.  These functions are only
+  available when PyObjC was build on a system running OSX 10.6 or later,
+  and the script is also running on such as system.
+
+  The ``policy`` argument for ``objc.setAssociatedObject`` is optional and
+  defaults to ``objc.OBJC_ASSOCIATION_RETAIN``.
+
 Version 2.3
 -----------
 
