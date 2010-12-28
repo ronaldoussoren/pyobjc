@@ -641,7 +641,17 @@ handle_constant(xmlNode* cur_node, PyObject* globalDict)
 				return -1;
 			}
 
-			int r = PyDict_SetItemString(globalDict, name, v);
+			int r;
+			if (PyObjCUnicode_Check(v) &&
+				PyObjC_is_ascii_string(v, name)) {
+				/* avoid duplicate storage for unicode
+				 * constants where the name and value
+				 * are equal.
+				 */
+				r = PyDict_SetItem(globalDict, v, v);
+			} else {
+				r = PyDict_SetItemString(globalDict, name, v);
+			}
 			if (r == -1) {
 				if (name) xmlFree(name);
 				if (type) xmlFree(type);
@@ -664,6 +674,8 @@ handle_string_constant(xmlNode* cur_node, PyObject* globalDict)
 	if (name != NULL && value != NULL && *value != '\0') {
 		size_t len = strlen(value);
 		PyObject* v;
+		BOOL name_equals_value = (strcmp(name, value) == 0);
+
 		if (nsstring) {
 			v = PyUnicode_DecodeUTF8(value, len, "strict");
 		} else {
@@ -675,7 +687,16 @@ handle_string_constant(xmlNode* cur_node, PyObject* globalDict)
 			return -1;
 		}
 
-		int r = PyDict_SetItemString(globalDict, name, v);
+		int r;
+		if (name_equals_value 
+#if PY_MAJOR_VERSION == 3
+				&& nsstring	
+#endif
+				) {
+			r = PyDict_SetItem(globalDict, v, v);
+		} else {
+			r = PyDict_SetItemString(globalDict, name, v);
+		}
 		Py_DECREF(v);
 		if (r == -1) {
 			if (name) xmlFree(name);
@@ -931,6 +952,7 @@ handle_class(xmlNode* cur_node)
 		PyObject* metadata = PyDict_New();
 		if (metadata == NULL) {
 			Py_XDECREF(pyClassname);
+			if (c_length) xmlFree(c_length);
 			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
@@ -943,6 +965,7 @@ handle_class(xmlNode* cur_node)
 				if (r == -1) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -957,6 +980,7 @@ handle_class(xmlNode* cur_node)
 				if (r == -1) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -968,6 +992,7 @@ handle_class(xmlNode* cur_node)
 		if (v == NULL) {
 			Py_DECREF(metadata);
 			Py_XDECREF(pyClassname);
+			if (c_length) xmlFree(c_length);
 			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
@@ -977,6 +1002,7 @@ handle_class(xmlNode* cur_node)
 		if (r == -1) {
 			Py_DECREF(metadata);
 			Py_XDECREF(pyClassname);
+			if (c_length) xmlFree(c_length);
 			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
@@ -987,6 +1013,7 @@ handle_class(xmlNode* cur_node)
 			if (v == NULL) {
 				Py_DECREF(metadata);
 				Py_XDECREF(pyClassname);
+				if (c_length) xmlFree(c_length);
 				xmlFree(selname);
 				xmlFree(classname);
 				return -1;
@@ -995,6 +1022,7 @@ handle_class(xmlNode* cur_node)
 			if (r == -1) {
 				Py_DECREF(metadata);
 				Py_XDECREF(pyClassname);
+				if (c_length) xmlFree(c_length);
 				xmlFree(selname);
 				xmlFree(classname);
 				return -1;
@@ -1007,6 +1035,7 @@ handle_class(xmlNode* cur_node)
 				if (v == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1015,6 +1044,7 @@ handle_class(xmlNode* cur_node)
 				if (r == -1) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1026,6 +1056,7 @@ handle_class(xmlNode* cur_node)
 		if (arguments == NULL) {
 			Py_DECREF(metadata);
 			Py_XDECREF(pyClassname);
+			if (c_length) xmlFree(c_length);
 			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
@@ -1035,6 +1066,7 @@ handle_class(xmlNode* cur_node)
 		if (r == -1) {
 			Py_DECREF(metadata);
 			Py_XDECREF(pyClassname);
+			if (c_length) xmlFree(c_length);
 			xmlFree(selname);
 			xmlFree(classname);
 			return -1;
@@ -1052,6 +1084,7 @@ handle_class(xmlNode* cur_node)
 				if (d == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1062,6 +1095,7 @@ handle_class(xmlNode* cur_node)
 					Py_DECREF(d);
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1073,6 +1107,7 @@ handle_class(xmlNode* cur_node)
 				if (r == -1) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1083,6 +1118,7 @@ handle_class(xmlNode* cur_node)
 				if (d == NULL) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1093,6 +1129,7 @@ handle_class(xmlNode* cur_node)
 				if (r == -1) {
 					Py_DECREF(metadata);
 					Py_XDECREF(pyClassname);
+					if (c_length) xmlFree(c_length);
 					xmlFree(selname);
 					xmlFree(classname);
 					return -1;
@@ -1100,11 +1137,15 @@ handle_class(xmlNode* cur_node)
 			}
 		}
 
+		if (c_length) xmlFree(c_length);
+		c_length = NULL;
+
 		/* Complete metadata for a method, register it */
 		if (pyClassname == NULL) {
 			pyClassname = PyBytes_InternFromString(classname);
 			if (pyClassname == NULL) {
 				Py_DECREF(metadata);
+				if (c_length) xmlFree(c_length);
 				xmlFree(selname);
 				xmlFree(classname);
 				return -1;
@@ -1158,6 +1199,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 			/* Function doesn't exist, don't bother to process
 			 * metadata for it.
 			 */
+			xmlFree(name);
 			return 0;
 		}
 	}
@@ -1415,6 +1457,8 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 				methodList = PyList_New(0);
 				if (methodList == NULL) {
 					xmlFree(name);
+					xmlFree(selector);
+					xmlFree(type);
 					return -1;
 				}
 			}
@@ -1423,6 +1467,8 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 				type, isClassMethod, NULL);
 			if (m == NULL) {
 				Py_DECREF(methodList);
+				xmlFree(selector);
+				xmlFree(type);
 				xmlFree(name);
 				return -1;
 			}
@@ -1430,6 +1476,8 @@ handle_informal_protocol(xmlNode* cur_node, const char* framework, PyObject* glo
 			Py_DECREF(m);
 			if (r == -1) {
 				Py_DECREF(methodList);
+				xmlFree(selector);
+				xmlFree(type);
 				xmlFree(name);
 				return -1;
 			}
@@ -1647,9 +1695,12 @@ PyObjC_ProcessXML(char* data, int length, PyObject* globalDict, const char* dyli
 	PyObject* func_aliases = NULL;
 	PyObject* cftypes = NULL;
 
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+
 	if (setupCFClasses) {
 		cftypes = PyList_New(0);
 		if (cftypes == NULL) {
+			[pool release];
 			return -1;
 		}
 	}
@@ -1658,6 +1709,7 @@ PyObjC_ProcessXML(char* data, int length, PyObject* globalDict, const char* dyli
 	xmlDoc* doc = xmlReadMemory(data, length,
 		"noname.xml", NULL, 0 /*XML_PARSE_COMPACT*/);
 	if (doc == NULL) {
+		[pool release];
 		PyErr_SetString(PyObjCExc_Error, "invalid bridgesupport file");
 		return -1;
 	}
@@ -1674,6 +1726,8 @@ PyObjC_ProcessXML(char* data, int length, PyObject* globalDict, const char* dyli
 	xmlNode* root = xmlDocGetRootElement(doc);
 	xmlNode* cur_node;
 	if (root->type != XML_ELEMENT_NODE || strcmp((char*)root->name, "signatures") != 0) {
+		[pool release];
+		xmlFreeDoc(doc);
 		PyErr_SetString(PyObjCExc_Error, "invalid root node in bridgesupport file");
 		return -1;
 	}
@@ -1684,6 +1738,8 @@ PyObjC_ProcessXML(char* data, int length, PyObject* globalDict, const char* dyli
 
 	func_aliases = PyList_New(0);
 	if (func_aliases == NULL) {
+		[pool release];
+		xmlFreeDoc(doc);
 		return -1;
 	}
 
@@ -1782,6 +1838,7 @@ end:
 
 	Py_DECREF(func_aliases);
 	xmlFreeDoc(doc);
+	[pool release];
 	if (PyErr_Occurred()) {
 		return -1;
 	} else {
