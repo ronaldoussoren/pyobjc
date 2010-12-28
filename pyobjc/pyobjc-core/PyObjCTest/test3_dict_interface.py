@@ -141,8 +141,8 @@ class TestNSDictionaryInterface (TestCase):
 
 
     def testEq(self):
-        self.assertEquals(self.createDictionary(), self.createDictionary())
-        self.assertEquals(self.createDictionary(a=1), self.createDictionary(a=1))
+        self.assertEqual(self.createDictionary(), self.createDictionary())
+        self.assertEqual(self.createDictionary(a=1), self.createDictionary(a=1))
 
         class Exc(Exception): pass
 

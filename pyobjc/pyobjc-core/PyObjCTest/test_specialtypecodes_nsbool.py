@@ -93,7 +93,7 @@ class TestTypeCode_BOOL (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArray()
-        self.assertEquals(len(v), 4)
+        self.assertEqual(len(v), 4)
         self.assertIs(v[0], True)
         self.assertIs(v[1], False)
         self.assertIs(v[2], True)
@@ -103,23 +103,23 @@ class TestTypeCode_BOOL (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArg_andBOOLArg_(True, False)
-        self.assertEquals(v, (1, 0))
+        self.assertEqual(v, (1, 0))
 
         v = o.BOOLArg_andBOOLArg_(False, True)
-        self.assertEquals(v, (0, 1))
+        self.assertEqual(v, (0, 1))
 
     def testFixedArrayIn(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArrayOf4In_([True, False, True, False])
-        self.assertEquals(v, (1, 0, 1, 0))
+        self.assertEqual(v, (1, 0, 1, 0))
 
         v = o.BOOLArrayOf4In_([False, True, False, True])
-        self.assertEquals(v, (0, 1, 0, 1))
+        self.assertEqual(v, (0, 1, 0, 1))
 
         a = array.array('b', [1, 0, 1, 0])
         v = o.BOOLArrayOf4In_(a)
-        self.assertEquals(v, (1, 0, 1, 0))
+        self.assertEqual(v, (1, 0, 1, 0))
 
         # It should not be possible to use a string as an array of booleans
         self.assertRaises(ValueError, o.BOOLArrayOf4In_, b"\x00\x01\x00\x01")
@@ -128,36 +128,36 @@ class TestTypeCode_BOOL (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.BOOLArrayOf4Out_(None)
-        self.assertEquals(v, (True, False, True, False))
+        self.assertEqual(v, (True, False, True, False))
 
         v = o.BOOLArrayOf4Out_(None)
-        self.assertEquals(v, (False, True, False, True))
+        self.assertEqual(v, (False, True, False, True))
 
         v = o.BOOLArrayOf4Out_(None)
-        self.assertEquals(v, (True, True, True, True))
+        self.assertEqual(v, (True, True, True, True))
 
         v = o.BOOLArrayOf4Out_(None)
-        self.assertEquals(v, (False, False, False, False))
+        self.assertEqual(v, (False, False, False, False))
 
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.BOOLArrayOf4Out_(a)
         self.assertIs(v, a)
-        self.assertEquals(v[0], 1)
-        self.assertEquals(v[1], 0)
-        self.assertEquals(v[2], 1)
-        self.assertEquals(v[3], 0)
+        self.assertEqual(v[0], 1)
+        self.assertEqual(v[1], 0)
+        self.assertEqual(v[2], 1)
+        self.assertEqual(v[3], 0)
 
     def testFixedArrayInOut_(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v, w = o.BOOLArrayOf4InOut_([True, False, True, False])
-        self.assertEquals(v, (True, False, True, False))
-        self.assertEquals(w, (True, True, True, True))
+        self.assertEqual(v, (True, False, True, False))
+        self.assertEqual(w, (True, True, True, True))
 
         v, w = o.BOOLArrayOf4InOut_([False, True, False, True])
-        self.assertEquals(v, (False, True, False, True))
-        self.assertEquals(w, (False, False, False, False))
+        self.assertEqual(v, (False, True, False, True))
+        self.assertEqual(w, (False, False, False, False))
 
         # It should not be possible to use a string as an array of booleans
         self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, b"\x00\x01\x00\x01")

@@ -19,52 +19,52 @@ class TestInitializing (TestCase):
     #
     def testDontRetainUnitialized1(self):
         start = OC_TestInitialize.numUninitialized()
-        self.assertEquals(start, 0)
+        self.assertEqual(start, 0)
 
         o = OC_TestInitialize.alloc()
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
         o = o.init()
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEquals(s, u"hello")
+        self.assertEqual(s, u"hello")
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
     def testDontRetainUnitialized2(self):
         start = OC_TestInitialize.numUninitialized()
-        self.assertEquals(start, 0)
+        self.assertEqual(start, 0)
 
         o = OC_TestInitialize.makeInstance()
         self.assertIsInstance(o, OC_TestInitialize)
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEquals(s, u"hello")
+        self.assertEqual(s, u"hello")
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
     def testDontRetainUnitialized3(self):
         start = OC_TestInitialize.numUninitialized()
-        self.assertEquals(start, 0)
+        self.assertEqual(start, 0)
 
         o = OC_TestInitializePython.makeInstance()
         self.assertIsInstance(o, OC_TestInitializePython)
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEquals(s, u"hello")
+        self.assertEqual(s, u"hello")
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
     def testDontRetainUnitialized4(self):
         start = OC_TestInitialize.numUninitialized()
-        self.assertEquals(start, 0)
+        self.assertEqual(start, 0)
 
         o = OC_TestInitializePython2.makeInstance()
         self.assertIsInstance(o, OC_TestInitializePython2)
@@ -72,12 +72,12 @@ class TestInitializing (TestCase):
         del OBJECT_LIST[-1]
 
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEquals(s, u"hello")
+        self.assertEqual(s, u"hello")
         v = OC_TestInitialize.numUninitialized()
-        self.assertEquals(v, start)
+        self.assertEqual(v, start)
 
 if __name__ == "__main__":
     main()

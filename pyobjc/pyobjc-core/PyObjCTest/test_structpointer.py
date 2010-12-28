@@ -11,7 +11,7 @@ class TestOpaqueStructPointer (TestCase):
         # more information.
         retval = objc.splitSignature(
                 OC_TestStructPointer.returnPointerToStruct.signature)[0]
-        self.assertNotEquals(TestStructPointerStructPtr.__typestr__, retval)
+        self.assertNotEqual(TestStructPointerStructPtr.__typestr__, retval)
 
         # And then check that the correct pointer wrapper is created
         v = OC_TestStructPointer.returnPointerToStruct()

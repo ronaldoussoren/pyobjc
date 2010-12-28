@@ -24,19 +24,19 @@ if 0:
             o = VarArgsClass1.alloc().init()
             l = []
             o.instanceMethod1_(l, 1, 2, 3)
-            self.assertEquals(l, [(1,2,3)])
+            self.assertEqual(l, [(1,2,3)])
 
             l = []
             VarArgsClass1.classMethod1_(l, 3, 4, 5)
-            self.assertEquals(l, [(3,4,5)])
+            self.assertEqual(l, [(3,4,5)])
 
             l = []
             o.instanceMethod2_(l, 1, 2, 3)
-            self.assertEquals(l, [(1,2,3)])
+            self.assertEqual(l, [(1,2,3)])
 
             l = []
             VarArgsClass1.classMethod2_(l, 3, 4, 5)
-            self.assertEquals(l, [(3,4,5)])
+            self.assertEqual(l, [(3,4,5)])
 
         def testKeywordArguments(self):
             class VarArgsClass2 (NSObject):
@@ -51,11 +51,11 @@ if 0:
             o = VarArgsClass2.alloc().init()
             l = []
             o.instanceMethod1_(l, a=1, c=2)
-            self.assertEquals(l, [{'a':1 ,'c':2}])
+            self.assertEqual(l, [{'a':1 ,'c':2}])
 
             l = []
             VarArgsClass2.classMethod1_(l, foo='bar', baz='foo')
-            self.assertEquals(l, [{'foo':'bar', 'baz':'foo'}])
+            self.assertEqual(l, [{'foo':'bar', 'baz':'foo'}])
 
 if __name__ == "__main__":
     main()

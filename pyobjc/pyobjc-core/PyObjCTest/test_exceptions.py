@@ -16,10 +16,10 @@ class TestExceptionsFromObjC (TestCase):
             o.raiseSimple()
 
         except objc.error, e:
-            self.assertEquals(str(e), 'SimpleException - hello world')
-            self.assertEquals(e._pyobjc_info_['name'], u'SimpleException')
-            self.assertEquals(e._pyobjc_info_['reason'], u'hello world')
-            self.assertEquals(e._pyobjc_info_['userInfo'], None)
+            self.assertEqual(str(e), 'SimpleException - hello world')
+            self.assertEqual(e._pyobjc_info_['name'], u'SimpleException')
+            self.assertEqual(e._pyobjc_info_['reason'], u'hello world')
+            self.assertEqual(e._pyobjc_info_['userInfo'], None)
 
     def testSimpleWithInfo(self):
         o = PyObjCTestExceptions.alloc().init()
@@ -28,10 +28,10 @@ class TestExceptionsFromObjC (TestCase):
             o.raiseSimpleWithInfo()
 
         except objc.error, e:
-            self.assertEquals(str(e), 'InfoException - Reason string')
-            self.assertEquals(e._pyobjc_info_['name'], u'InfoException')
-            self.assertEquals(e._pyobjc_info_['reason'], u'Reason string')
-            self.assertEquals(e._pyobjc_info_['userInfo'], {
+            self.assertEqual(str(e), 'InfoException - Reason string')
+            self.assertEqual(e._pyobjc_info_['name'], u'InfoException')
+            self.assertEqual(e._pyobjc_info_['reason'], u'Reason string')
+            self.assertEqual(e._pyobjc_info_['userInfo'], {
                 'key1': 'value1',
                 'key2': 'value2',
             })
@@ -44,12 +44,12 @@ class TestExceptionsFromObjC (TestCase):
 
         except objc.error, e:
             if sys.version_info[0] == 2:
-                self.assertEquals(str(e), u'SimpleException\u1234\u2049 - hello world'.encode('utf-8'))
+                self.assertEqual(str(e), u'SimpleException\u1234\u2049 - hello world'.encode('utf-8'))
             else:
-                self.assertEquals(str(e), u'SimpleException\u1234\u2049 - hello world')
-            self.assertEquals(e._pyobjc_info_['name'], u'SimpleException\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['reason'], u'hello world')
-            self.assertEquals(e._pyobjc_info_['userInfo'], None)
+                self.assertEqual(str(e), u'SimpleException\u1234\u2049 - hello world')
+            self.assertEqual(e._pyobjc_info_['name'], u'SimpleException\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['reason'], u'hello world')
+            self.assertEqual(e._pyobjc_info_['userInfo'], None)
 
     def testUnicodeReason(self):
         o = PyObjCTestExceptions.alloc().init()
@@ -59,12 +59,12 @@ class TestExceptionsFromObjC (TestCase):
 
         except objc.error, e:
             if sys.version_info[0] == 2:
-                self.assertEquals(str(e), u'SimpleException - hello world\u1234\u2049'.encode('utf-8'))
+                self.assertEqual(str(e), u'SimpleException - hello world\u1234\u2049'.encode('utf-8'))
             else:
-                self.assertEquals(str(e), u'SimpleException - hello world\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['name'], u'SimpleException')
-            self.assertEquals(e._pyobjc_info_['reason'], u'hello world\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['userInfo'], None)
+                self.assertEqual(str(e), u'SimpleException - hello world\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['name'], u'SimpleException')
+            self.assertEqual(e._pyobjc_info_['reason'], u'hello world\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['userInfo'], None)
 
     def testUnicodeWithInfo(self):
         o = PyObjCTestExceptions.alloc().init()
@@ -74,12 +74,12 @@ class TestExceptionsFromObjC (TestCase):
 
         except objc.error, e:
             if sys.version_info[0] == 2:
-                self.assertEquals(str(e), u'InfoException\u1234\u2049 - Reason string\u1234\u2049'.encode('utf-8'))
+                self.assertEqual(str(e), u'InfoException\u1234\u2049 - Reason string\u1234\u2049'.encode('utf-8'))
             else:
-                self.assertEquals(str(e), u'InfoException\u1234\u2049 - Reason string\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['name'], u'InfoException\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['reason'], u'Reason string\u1234\u2049')
-            self.assertEquals(e._pyobjc_info_['userInfo'], {
+                self.assertEqual(str(e), u'InfoException\u1234\u2049 - Reason string\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['name'], u'InfoException\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['reason'], u'Reason string\u1234\u2049')
+            self.assertEqual(e._pyobjc_info_['userInfo'], {
                 u'key1\u1234\u2049': u'value1\u1234\u2049',
                 u'key2\u1234\u2049': u'value2\u1234\u2049',
             })
@@ -92,7 +92,7 @@ class TestExceptionsFromObjC (TestCase):
             o.raiseAString()
 
         except objc.error, e:
-            self.assertEquals(e._pyobjc_exc_, u"thrown string")
+            self.assertEqual(e._pyobjc_exc_, u"thrown string")
 
 if __name__ == "__main__":
     main()

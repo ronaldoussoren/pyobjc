@@ -28,22 +28,22 @@ class TestSockAddrSupport (TestCase):
         o = PyObjCTestSockAddr
         
         v = o.sockAddrToValue_(('1.2.3.4', 45))
-        self.assertEquals(v, ('IPv4', '1.2.3.4', 45))
+        self.assertEqual(v, ('IPv4', '1.2.3.4', 45))
 
         v = o.sockAddrToValue_(('::1', 90, 4, 5))
-        self.assertEquals(v, ('IPv6', '::1', 90, 4, 5))
+        self.assertEqual(v, ('IPv6', '::1', 90, 4, 5))
         
     def testIPv4FromC(self):
         o = PyObjCTestSockAddr
         
         v = o.getIPv4Addr_(None)
-        self.assertEquals(v, (b'127.0.0.1', 80))
+        self.assertEqual(v, (b'127.0.0.1', 80))
         
     def testIPv6FromC(self):
         o = PyObjCTestSockAddr
 
         v = o.getIPv6Addr_(None)
-        self.assertEquals(v, (b'::1', 443, 2, 3))
+        self.assertEqual(v, (b'::1', 443, 2, 3))
         
 if __name__ == "__main__":
 	main()

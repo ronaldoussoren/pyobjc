@@ -20,14 +20,14 @@ class TestPickleNumber (TestCase):
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, number_type)
         self.assertIsInstance(v2, int)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, number_type)
         self.assertIsInstance(v2, int)
 
@@ -38,14 +38,14 @@ class TestPickleNumber (TestCase):
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, OC_PythonFloat)
         self.assertIsInstance(v2, float)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, OC_PythonFloat)
         self.assertIsInstance(v2, float)
 
@@ -57,14 +57,14 @@ class TestPickleNumber (TestCase):
         # First python pickle
         s = pickle.dumps(v)
         v2 = pickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, OC_PythonLong)
         self.assertIsInstance(v2, long)
 
         # Then C pickle
         s = cPickle.dumps(v)
         v2 = cPickle.loads(s)
-        self.assertEquals(v2, v)
+        self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, OC_PythonLong)
         self.assertIsInstance(v2, long)
 

@@ -35,7 +35,7 @@ class TestBundleFunctions (TestCase):
 
         fn = d[u'NSHomeDirectory']
         value = fn()
-        self.assertEquals(value, os.path.expanduser('~'))
+        self.assertEqual(value, os.path.expanduser('~'))
 
         fn = d[u'NSClassFromString']
         value = fn(u'NSObject')

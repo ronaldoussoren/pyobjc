@@ -44,8 +44,8 @@ class PurePython:
 class TestFromObjCSuperToObjCClass(TestCase):
     def testBasicBehavior(self):
         anInstance = Methods.new()
-        self.assertEquals(anInstance.description(), u"<methods>")
-        self.assertEquals(anInstance.newMethod(), u"<new-method>")
+        self.assertEqual(anInstance.description(), u"<methods>")
+        self.assertEqual(anInstance.newMethod(), u"<new-method>")
 
     def testDescriptionOverride(self):
         objc.classAddMethods(MEClass, [Methods.pyobjc_instanceMethods.description])
@@ -54,8 +54,8 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), u"<methods>")
-        self.assertEquals(preEverythingInstance.description(), u"<methods>")
+        self.assertEqual(newInstance.description(), u"<methods>")
+        self.assertEqual(preEverythingInstance.description(), u"<methods>")
 
     def testNewMethod(self):
         objc.classAddMethods(MEClass, [Methods.pyobjc_instanceMethods.newMethod])
@@ -64,8 +64,8 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.newMethod(), u"<new-method>")
-        self.assertEquals(preEverythingInstance.newMethod(), u"<new-method>")
+        self.assertEqual(newInstance.newMethod(), u"<new-method>")
+        self.assertEqual(preEverythingInstance.newMethod(), u"<new-method>")
 
     def testSubDescriptionOverride(self):
         objc.classAddMethods(MEClass, [MethodsSub.pyobjc_instanceMethods.description])
@@ -74,8 +74,8 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), u"<sub-methods>")
-        self.assertEquals(preEverythingInstance.description(), u"<sub-methods>")
+        self.assertEqual(newInstance.description(), u"<sub-methods>")
+        self.assertEqual(preEverythingInstance.description(), u"<sub-methods>")
 
     def testSubNewMethod(self):
         objc.classAddMethods(MEClass, [MethodsSub.newMethod, MethodsSub.newSubMethod])
@@ -85,10 +85,10 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.newMethod(), u"<sub-new-method>")
-        self.assertEquals(preEverythingInstance.newMethod(), u"<sub-new-method>")
-        self.assertEquals(newInstance.newSubMethod(), u"<new-method-sub>")
-        self.assertEquals(preEverythingInstance.newSubMethod(), u"<new-method-sub>")
+        self.assertEqual(newInstance.newMethod(), u"<sub-new-method>")
+        self.assertEqual(preEverythingInstance.newMethod(), u"<sub-new-method>")
+        self.assertEqual(newInstance.newSubMethod(), u"<new-method-sub>")
+        self.assertEqual(preEverythingInstance.newSubMethod(), u"<new-method-sub>")
 
     def testNewClassMethod(self):
 
@@ -101,7 +101,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
         self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("aNewClassMethod"))
 
         self.assertTrue(MEClass.aNewClassMethod.isClassMethod)
-        self.assertEquals(MEClass.aNewClassMethod(), 'Foo cls')
+        self.assertEqual(MEClass.aNewClassMethod(), 'Foo cls')
 
     def testAddedMethodType(self):
         def anotherNewClassMethod(cls):
@@ -120,8 +120,8 @@ class TestFromObjCSuperToObjCClass(TestCase):
         self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_("anotherNewClassMethod"))
         self.assertTrue(MEClass.pyobjc_classMethods.instancesRespondToSelector_("anotherNewMethod"))
 
-        self.assertEquals(MEClass.anotherNewClassMethod.__doc__, "CLS DOC STRING")
-        self.assertEquals(MEClass.anotherNewMethod.__doc__, "INST DOC STRING")
+        self.assertEqual(MEClass.anotherNewClassMethod.__doc__, "CLS DOC STRING")
+        self.assertEqual(MEClass.anotherNewMethod.__doc__, "INST DOC STRING")
 
 
 
@@ -146,13 +146,13 @@ class TestFromPythonClassToObjCClass(TestCase):
         newInstance = MEClass.new()
 
         # This is bogus, see above:
-        #self.assertEquals(newInstance.description(), u"<pure>")
-        #self.assertEquals(newInstance.newMethod(), u"<pure-new>")
-        #self.assertEquals(newInstance.purePythonMethod(), u"<pure-py>")
+        #self.assertEqual(newInstance.description(), u"<pure>")
+        #self.assertEqual(newInstance.newMethod(), u"<pure-new>")
+        #self.assertEqual(newInstance.purePythonMethod(), u"<pure-py>")
 
-        #self.assertEquals(preEverythingInstance.description(), u"<pure>")
-        #self.assertEquals(preEverythingInstance.newMethod(), u"<pure-new>")
-        #self.assertEquals(preEverythingInstance.purePythonMethod(), u"<pure-py>")
+        #self.assertEqual(preEverythingInstance.description(), u"<pure>")
+        #self.assertEqual(preEverythingInstance.newMethod(), u"<pure-new>")
+        #self.assertEqual(preEverythingInstance.purePythonMethod(), u"<pure-py>")
 
         self.assertRaises(TypeError, newInstance.description)
         self.assertRaises(TypeError, newInstance.newMethod)
@@ -185,13 +185,13 @@ class TestFromPythonClassToObjCClass(TestCase):
 
         newInstance = MEClass.new()
 
-        self.assertEquals(newInstance.description(), u"<pure>")
-        self.assertEquals(newInstance.newMethod(), u"<pure-new>")
-        self.assertEquals(newInstance.purePythonMethod(), u"<pure-py>")
+        self.assertEqual(newInstance.description(), u"<pure>")
+        self.assertEqual(newInstance.newMethod(), u"<pure-new>")
+        self.assertEqual(newInstance.purePythonMethod(), u"<pure-py>")
 
-        self.assertEquals(preEverythingInstance.description(), u"<pure>")
-        self.assertEquals(preEverythingInstance.newMethod(), u"<pure-new>")
-        self.assertEquals(preEverythingInstance.purePythonMethod(), u"<pure-py>")
+        self.assertEqual(preEverythingInstance.description(), u"<pure>")
+        self.assertEqual(preEverythingInstance.newMethod(), u"<pure-new>")
+        self.assertEqual(preEverythingInstance.purePythonMethod(), u"<pure-py>")
 
 
 
@@ -205,8 +205,8 @@ class TestClassAsignments (TestCase):
 
         o = MEClass.alloc().init()
 
-        self.assertEquals(4, o.doSomethingElse())
-        self.assertEquals(8, o.doDuplicate_(4))
+        self.assertEqual(4, o.doSomethingElse())
+        self.assertEqual(8, o.doDuplicate_(4))
 
     def testAssignAClassMethod(self):
         MEClass.classSomethingElse = classmethod(lambda self: 2*2)
@@ -215,8 +215,8 @@ class TestClassAsignments (TestCase):
         self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_(b"classSomethingElse"))
         self.assertTrue(MEClass.pyobjc_classMethods.respondsToSelector_(b"classDuplicate:"))
 
-        self.assertEquals(4, MEClass.classSomethingElse())
-        self.assertEquals(8, MEClass.classDuplicate_(4))
+        self.assertEqual(4, MEClass.classSomethingElse())
+        self.assertEqual(8, MEClass.classDuplicate_(4))
 
     def testAssignFuzzyMethod(self):
         self.assertRaises((ValueError, TypeError), setattr, MEClass, 'fuzzyMethod', objc.selector(None, selector=b'fuzzy', signature=b'@@:'))
@@ -249,7 +249,7 @@ class TestCategory (TestCase):
 
         self.assertTrue(o.categoryMethod())
         self.assertTrue(not o.categoryMethod2())
-        self.assertEquals(Methods.anotherClassMethod(), "hello")
+        self.assertEqual(Methods.anotherClassMethod(), "hello")
 
     def testObjCClassCategory(self):
         NSObject = objc.lookUpClass('NSObject')
@@ -314,13 +314,13 @@ class TestCategory (TestCase):
 
         obj = BaseClassRedef.alloc().init()
 
-        self.assertEquals(obj.foo(), 2)
+        self.assertEqual(obj.foo(), 2)
 
         def foo(self):
             return 3
         BaseClassRedef.foo = foo
 
-        self.assertEquals(obj.foo(), 3)
+        self.assertEqual(obj.foo(), 3)
 
     def testCategeryWithDocString (self):
         class NSObjectCat (NSObject):

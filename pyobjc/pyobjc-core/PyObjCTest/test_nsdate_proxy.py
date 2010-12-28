@@ -15,10 +15,10 @@ class TestNSDateProxy (TestCase):
         date = datetime.date.today()
 
         value = formatter.stringFromDate_(NSDate.date())
-        self.assertEquals(value, date.strftime('%Y-%m-%d'))
+        self.assertEqual(value, date.strftime('%Y-%m-%d'))
 
         value = formatter.stringFromDate_(date)
-        self.assertEquals(value, date.strftime('%Y-%m-%d'))
+        self.assertEqual(value, date.strftime('%Y-%m-%d'))
 
 
     def testFormattingForDateTime(self):
@@ -30,7 +30,7 @@ class TestNSDateProxy (TestCase):
         date = datetime.datetime.now()
 
         value = formatter.stringFromDate_(date)
-        self.assertEquals(value, date.strftime('%Y-%m-%d %H:%M:%S'))
+        self.assertEqual(value, date.strftime('%Y-%m-%d %H:%M:%S'))
 
         
 if __name__ == "__main__":

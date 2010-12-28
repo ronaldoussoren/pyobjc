@@ -38,35 +38,35 @@ class TestRetains(TestCase):
         global LeaksDel
 
         LeaksDel = 0
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
 
         o = LeaksClass.alloc().init()
         self.assertIsNotNone(o)
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         del o
-        self.assertEquals(LeaksDel, 1)
+        self.assertEqual(LeaksDel, 1)
 
     def testOCClass1(self):
         global LeaksDel
 
         LeaksDel = 0
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         pool = NSAutoreleasePool.alloc().init()
         c = NSMutableArray.arrayWithArray_([ LeaksClass.alloc().init() ])
         del pool
 
         pool = NSAutoreleasePool.alloc().init()
         self.assertIsNotNone(c)
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         del c
         del pool
-        self.assertEquals(LeaksDel, 1)
+        self.assertEqual(LeaksDel, 1)
 
     def testOCClass2(self):
         global LeaksDel
 
         LeaksDel = 0
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         pool = NSAutoreleasePool.alloc().init()
         c = NSMutableArray.alloc()
         c = c.initWithArray_(
@@ -75,10 +75,10 @@ class TestRetains(TestCase):
 
         pool = NSAutoreleasePool.alloc().init()
         self.assertIsNotNone(c)
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         del c
         del pool
-        self.assertEquals(LeaksDel, 1)
+        self.assertEqual(LeaksDel, 1)
 
     def testSlots(self):
         global LeaksDel
@@ -87,10 +87,10 @@ class TestRetains(TestCase):
         pool = NSAutoreleasePool.alloc().init()
 
         o = SlottedClass.alloc().init()
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         del o
         del pool
-        self.assertEquals(LeaksDel, 1)
+        self.assertEqual(LeaksDel, 1)
 
     def testMembers(self):
         global LeaksDel
@@ -99,11 +99,11 @@ class TestRetains(TestCase):
         pool = NSAutoreleasePool.alloc().init()
 
         o = MemberClass.alloc().init()
-        self.assertEquals(LeaksDel, 0)
+        self.assertEqual(LeaksDel, 0)
         del o
         del pool
         gc.collect()
-        self.assertEquals(LeaksDel, 1)
+        self.assertEqual(LeaksDel, 1)
 
 
 

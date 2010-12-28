@@ -16,24 +16,24 @@ class TestFilePointer (TestCase):
         line = o.readline_(fp)
         fp.close()
 
-        self.assertEquals(line, gFirstPasswdLine)
+        self.assertEqual(line, gFirstPasswdLine)
 
     def testOpenReadingInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/etc/passwd', 'r')
         self.assertIsInstance(fp, file)
-        self.assertEquals(fp.mode, 'r')
+        self.assertEqual(fp.mode, 'r')
 
         line = fp.readline()
         fp.close()
 
-        self.assertEquals(line, gFirstPasswdLine)
+        self.assertEqual(line, gFirstPasswdLine)
 
     def testOpenWritingInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'w')
         self.assertIsInstance(fp, file)
-        self.assertEquals(fp.mode, 'w')
+        self.assertEqual(fp.mode, 'w')
 
         fp.write('foobar\n')
         fp.flush() # XXX: this isn't quite correct?
@@ -41,26 +41,26 @@ class TestFilePointer (TestCase):
 
         fp = open('/tmp/pyobjc.filepointer.txt')
         data = fp.read()
-        self.assertEquals(data, 'foobar\n')
+        self.assertEqual(data, 'foobar\n')
         fp.close()
 
     def testOpenReadWriteInObjC(self):
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'w+')
         self.assertIsInstance(fp, file)
-        self.assertEquals(fp.mode, 'w+')
+        self.assertEqual(fp.mode, 'w+')
 
     def dont_testOpenAppendInObjC(self):
         # We can't reliably detect append mode, don't bother testing for it.
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'a')
         self.assertIsInstance(fp, file)
-        self.assertEquals(fp.mode, 'a')
+        self.assertEqual(fp.mode, 'a')
 
         o = OC_TestFilePointer.new()
         fp = o.openFile_withMode_('/tmp/pyobjc.filepointer.txt', 'a+')
         self.assertIsInstance(fp, file)
-        self.assertEquals(fp.mode, 'a+')
+        self.assertEqual(fp.mode, 'a+')
 
 if __name__ == "__main__":
     main()

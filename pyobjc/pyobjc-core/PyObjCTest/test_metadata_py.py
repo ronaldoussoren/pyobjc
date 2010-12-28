@@ -450,23 +450,23 @@ class TestArraysOut (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         v = OC_MetaDataTest.fill4Tuple_on_(None, o)
-        self.assertEquals(list(v), list(range(9, 13)))
+        self.assertEqual(list(v), list(range(9, 13)))
 
         v = OC_MetaDataTest.fill4Tuple_on_(None, o)
-        self.assertEquals(list(v), list(range(9, 13)))
+        self.assertEqual(list(v), list(range(9, 13)))
 
         self.assertRaises(ValueError, OC_MetaDataTest.fill4Tuple_on_, objc.NULL, o)
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
-        self.assertEquals(n, 1)
-        self.assertEquals(list(v), list(range(1, 5)))
+        self.assertEqual(n, 1)
+        self.assertEqual(list(v), list(range(1, 5)))
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(None, o)
-        self.assertEquals(n, 1)
-        self.assertEquals(list(v), list(range(1, 5)))
+        self.assertEqual(n, 1)
+        self.assertEqual(list(v), list(range(1, 5)))
 
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(objc.NULL, o)
-        self.assertEquals(n, 2)
+        self.assertEqual(n, 2)
         self.assertIs(v, objc.NULL)
         
     def testNullTerminated(self):
@@ -481,42 +481,42 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, OC_MetaDataTest.nullfillStringArray_on_, o)
         self.assertRaises(TypeError, OC_MetaDataTest.nullfillStringArray_on_, None, o)
         n, v = OC_MetaDataTest.nullfillStringArray_on_(objc.NULL, o)
-        self.assertEquals(n, 9)
+        self.assertEqual(n, 9)
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
 
         v = OC_MetaDataTest.fillArray_count_on_(None, 3, o)
-        self.assertEquals(list(v),  [10, 11, 12])
+        self.assertEqual(list(v),  [10, 11, 12])
 
         v = OC_MetaDataTest.fillArray_count_on_(None, 5, o)
-        self.assertEquals(list(v),  [10, 11, 12, 13, 14])
+        self.assertEqual(list(v),  [10, 11, 12, 13, 14])
 
         v = OC_MetaDataTest.fillArray_count_on_(None, 0, o)
-        self.assertEquals(list(v),  [])
+        self.assertEqual(list(v),  [])
 
         self.assertRaises(ValueError, OC_MetaDataTest.fillArray_count_on_, objc.NULL, 0, o)
     
         n, v = OC_MetaDataTest.nullfillArray_count_on_(None, 3, o)
-        self.assertEquals(n, 2)
-        self.assertEquals(list(v),  [30,31,32])
+        self.assertEqual(n, 2)
+        self.assertEqual(list(v),  [30,31,32])
 
 
         n, v = OC_MetaDataTest.nullfillArray_count_on_(objc.NULL, 3, o)
-        self.assertEquals(n, 1)
+        self.assertEqual(n, 1)
         self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
 
         c, v = OC_MetaDataTest.fillArray_uptoCount_on_(None, 20, o)
-        self.assertEquals(c, 10)
-        self.assertEquals(list(v),  [i+10 for i in range(10)])
+        self.assertEqual(c, 10)
+        self.assertEqual(list(v),  [i+10 for i in range(10)])
 
         c, v = OC_MetaDataTest.maybeFillArray_on_(None, o)
-        self.assertEquals(c, 2)
-        self.assertEquals(list(v),  [0, 1])
+        self.assertEqual(c, 2)
+        self.assertEqual(list(v),  [0, 1])
 
 class TestArraysInOut (TestCase):
     def testFixedSize(self):
@@ -524,8 +524,8 @@ class TestArraysInOut (TestCase):
 
         a = (1,2,3,4)
         v = OC_MetaDataTest.reverse4Tuple_on_(a, o)
-        self.assertEquals(a, (1,2,3,4))
-        self.assertEquals(v, (43, 44, 45, 46))
+        self.assertEqual(a, (1,2,3,4))
+        self.assertEqual(v, (43, 44, 45, 46))
 
         self.assertRaises(ValueError, OC_MetaDataTest.reverse4Tuple_on_, (1,2,3), o)
         self.assertRaises(ValueError, OC_MetaDataTest.reverse4Tuple_on_, (1,2,3,4,5), o)
@@ -533,12 +533,12 @@ class TestArraysInOut (TestCase):
 
         a = (1,2,3,4)
         n, v = OC_MetaDataTest.nullreverse4Tuple_on_(a, o)
-        self.assertEquals(n, 1)
-        self.assertEquals(a, (1,2,3,4))
-        self.assertEquals(v, (43, 44, 45, 46))
+        self.assertEqual(n, 1)
+        self.assertEqual(a, (1,2,3,4))
+        self.assertEqual(v, (43, 44, 45, 46))
 
         n, v = OC_MetaDataTest.nullreverse4Tuple_on_(objc.NULL, o)
-        self.assertEquals(n, -1)
+        self.assertEqual(n, -1)
         self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
@@ -546,20 +546,20 @@ class TestArraysInOut (TestCase):
 
         a = (b'aap', b'boot', b'cello')
         v = OC_MetaDataTest.reverseStrings_on_(a, o)
-        self.assertEquals(a, (b'aap', b'boot', b'cello'))
-        self.assertEquals(v, (b'paa', b'toob', b'ollec'))
+        self.assertEqual(a, (b'aap', b'boot', b'cello'))
+        self.assertEqual(v, (b'paa', b'toob', b'ollec'))
 
         self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, (1,2), o)
         self.assertRaises(ValueError, OC_MetaDataTest.reverseStrings_on_, objc.NULL, o)
 
         a = (b'aap', b'boot', b'cello')
         n, v = OC_MetaDataTest.nullreverseStrings_on_(a, o)
-        self.assertEquals(n, 10)
-        self.assertEquals(a, (b'aap', b'boot', b'cello'))
-        self.assertEquals(v, (b'paa', b'toob', b'ollec'))
+        self.assertEqual(n, 10)
+        self.assertEqual(a, (b'aap', b'boot', b'cello'))
+        self.assertEqual(v, (b'paa', b'toob', b'ollec'))
 
         n, v = OC_MetaDataTest.nullreverseStrings_on_(objc.NULL, o)
-        self.assertEquals(n, 9)
+        self.assertEqual(n, 9)
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
@@ -567,58 +567,58 @@ class TestArraysInOut (TestCase):
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         v = OC_MetaDataTest.reverseArray_count_on_(a, 4, o)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (2.0, 3.0, 4.0, 5.0))
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         v = OC_MetaDataTest.reverseArray_count_on_(a, 5, o)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (2.0, 3.0, 4.0, 5.0, 6.0))
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (2.0, 3.0, 4.0, 5.0, 6.0))
 
         # Nice to have, but doesn't work without major
         # surgery:
         #a = (1.0, 2.0, 3.0, 4.0, 5.0)
         #v = OC_MetaDataTest.reverseArray_count_on_(a, None, o)
-        #self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        #self.assertEquals(v, (2.0, 3.0, 4.0, 5.0, 6.0))
+        #self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        #self.assertEqual(v, (2.0, 3.0, 4.0, 5.0, 6.0))
 
         self.assertRaises(ValueError, OC_MetaDataTest.reverseArray_count_on_, (1.0, 2.0), 5, o)
         self.assertRaises(ValueError, OC_MetaDataTest.reverseArray_count_on_, objc.NULL, 0, o)
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         n, v = OC_MetaDataTest.nullreverseArray_count_on_(a, 5, o)
-        self.assertEquals(n, 9)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (43.0, 44.0, 45.0, 46.0, 47.0))
+        self.assertEqual(n, 9)
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (43.0, 44.0, 45.0, 46.0, 47.0))
 
         n, v = OC_MetaDataTest.nullreverseArray_count_on_(objc.NULL, 0, o)
-        self.assertEquals(n, 2)
+        self.assertEqual(n, 2)
         self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
 
         c, v = OC_MetaDataTest.reverseArray_uptoCount_on_(range(10), 10, o)
-        self.assertEquals(c, 5)
-        self.assertEquals(len(v), 5)
-        self.assertEquals(list(v),  [0, 10, 20, 30, 40])
+        self.assertEqual(c, 5)
+        self.assertEqual(len(v), 5)
+        self.assertEqual(list(v),  [0, 10, 20, 30, 40])
         
         c, v = OC_MetaDataTest.maybeReverseArray_on_([1,2,3,4], o)
-        self.assertEquals(c, 2)
-        self.assertEquals(len(v), 2)
-        self.assertEquals(list(v),  [45, 51])
+        self.assertEqual(c, 2)
+        self.assertEqual(len(v), 2)
+        self.assertEqual(list(v),  [45, 51])
 
 class TestArraysIn (TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
         v,  = OC_MetaDataTest.make4Tuple_on_((1.0, 4.0, 8.0, 12.5), o)
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1.0, 4.0, 8.0, 12.5])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1.0, 4.0, 8.0, 12.5])
 
         v, = OC_MetaDataTest.make4Tuple_on_((1, 2, 3, 4), o)
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1.0, 2.0, 3.0, 4.0])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
         self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3), o)
         self.assertRaises(ValueError, OC_MetaDataTest.make4Tuple_on_, (1, 2, 3, 4, 5), o)
@@ -631,54 +631,54 @@ class TestArraysIn (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         v, = OC_MetaDataTest.makeStringArray_on_((b"hello", b"world", b"there"), o)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), ["hello", "world", "there"])
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), ["hello", "world", "there"])
 
         NSObject = objc.lookUpClass('NSObject')
         p, q = NSObject.new(), NSObject.new()
         v, = o.makeObjectArray_((p, q))
-        self.assertEquals(len(v), 2)
+        self.assertEqual(len(v), 2)
         self.assertIs(v[0], p)
         self.assertIs(v[1], q)
 
         v, = OC_MetaDataTest.makeStringArray_on_((), o)
-        self.assertEquals(len(v), 0)
+        self.assertEqual(len(v), 0)
 
         self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, [1,2], o)
         self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, objc.NULL, o)
 
         v, = OC_MetaDataTest.nullStringArray_on_(objc.NULL, o)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
     def testWithCount(self):
         o = Py_MetaDataTest_AllArgs.new()
 
         v, c = OC_MetaDataTest.makeIntArray_count_on_((1,2,3,4), 3, o)
-        self.assertEquals(c, 3)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [1,2,3])
+        self.assertEqual(c, 3)
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), [1,2,3])
         
         # XXX: This one would be nice to have, but not entirely trivial
         #v, c = OC_MetaDataTest.makeIntArray_count_on_((1,2,3,4), None, o)
-        #self.assertEquals(c, 3)
-        #self.assertEquals(len(v), 3)
-        #self.assertEquals(list(v), [1,2,3,4])
+        #self.assertEqual(c, 3)
+        #self.assertEqual(len(v), 3)
+        #self.assertEqual(list(v), [1,2,3,4])
 
         self.assertRaises(ValueError, OC_MetaDataTest.makeIntArray_count_on_, [1,2,3], 4, o)
         self.assertRaises(ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 0, o)
         self.assertRaises(ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 1, o)
 
         v, c = OC_MetaDataTest.nullIntArray_count_on_(objc.NULL, 0, o)
-        self.assertEquals(c, 0)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(c, 0)
+        self.assertEqual(v, objc.NULL)
 
         self.assertRaises(ValueError, OC_MetaDataTest.makeIntArray_count_on_, objc.NULL, 1, o)
 
         # Make sure this also works when the length is in a pass-by-reference argument
         v, c = OC_MetaDataTest.makeIntArray_countPtr_on_((1,2,3,4), 4, o)
-        self.assertEquals(c, 4)
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1,2,3,4])
+        self.assertEqual(c, 4)
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1,2,3,4])
 
 class TestArrayReturns (TestCase):
     # TODO:
@@ -689,34 +689,34 @@ class TestArrayReturns (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         v = OC_MetaDataTest.makeIntArrayOf5On_(o)
-        self.assertEquals( len(v), 5 )
-        self.assertEquals( list(v), [100, 200, 300, 400, 500] )
+        self.assertEqual( len(v), 5 )
+        self.assertEqual( list(v), [100, 200, 300, 400, 500] )
 
         v = OC_MetaDataTest.nullIntArrayOf5On_(o)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
     def testSizeInArgument(self):
         o = Py_MetaDataTest_AllArgs.new()
         v = OC_MetaDataTest.makeIntArrayOf_on_(3, o)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [20, 21, 22])
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), [20, 21, 22])
 
         v = OC_MetaDataTest.makeIntArrayOf_on_(10, o)
-        self.assertEquals(len(v), 10)
-        self.assertEquals(list(v), list(range(20, 30)))
+        self.assertEqual(len(v), 10)
+        self.assertEqual(list(v), list(range(20, 30)))
 
         v = OC_MetaDataTest.nullIntArrayOf_on_(100, o)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
     def testNULLterminated(self):
         o  = Py_MetaDataTest_AllArgs.new()
 
         v = OC_MetaDataTest.makeStringArrayOn_(o)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [ b"jaap", b"pieter", b"hans" ])
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), [ b"jaap", b"pieter", b"hans" ])
 
         v = OC_MetaDataTest.nullStringArrayOn_(o)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
 class TestByReference (TestCase):
     # Pass by reference arguments. 
@@ -727,10 +727,10 @@ class TestByReference (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
         
         r = OC_MetaDataTest.sumX_andY_on_(1, 2, o)
-        self.assertEquals(r, 1**2+2**2)
+        self.assertEqual(r, 1**2+2**2)
 
         r = OC_MetaDataTest.sumX_andY_on_(2535, 5325, o)
-        self.assertEquals(r, 2535**2 + 5325**2)
+        self.assertEqual(r, 2535**2 + 5325**2)
 
         self.assertRaises(ValueError, OC_MetaDataTest.sumX_andY_on_, 42, objc.NULL, o)
 
@@ -738,20 +738,20 @@ class TestByReference (TestCase):
         o = Py_MetaDataTest_AllArgs.new()
 
         div, rem = OC_MetaDataTest.divBy5_remainder_on_(55, None, o)
-        self.assertEquals(div, int(55 / 7))
-        self.assertEquals(rem, int(55 % 7))
+        self.assertEqual(div, int(55 / 7))
+        self.assertEqual(rem, int(55 % 7))
 
         div, rem = OC_MetaDataTest.divBy5_remainder_on_(13, None, o)
-        self.assertEquals(div, int(13 / 7))
-        self.assertEquals(rem, int(13 % 7))
+        self.assertEqual(div, int(13 / 7))
+        self.assertEqual(rem, int(13 % 7))
 
         self.assertRaises(ValueError, OC_MetaDataTest.divBy5_remainder_on_, 42, objc.NULL, o)
 
     def testInputOutput(self):
         o = Py_MetaDataTest_AllArgs.new()
         x, y = OC_MetaDataTest.swapX_andY_on_(42, 284, o)
-        self.assertEquals(x, 284*2)
-        self.assertEquals(y, 42*2)
+        self.assertEqual(x, 284*2)
+        self.assertEqual(y, 42*2)
 
         self.assertRaises(ValueError, OC_MetaDataTest.swapX_andY_on_, 42, objc.NULL, o)
 
@@ -764,49 +764,49 @@ class TestByReference (TestCase):
 
         # All arguments present
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 3)
-        self.assertEquals(y, 9)
-        self.assertEquals(z, 10)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(y, 9)
+        self.assertEqual(z, 10)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 3)
-        self.assertEquals(y, 9)
-        self.assertEquals(z, 10)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(y, 9)
+        self.assertEqual(z, 10)
 
         # Argument 1 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-        self.assertEquals(y, 11)
-        self.assertEquals(z, 12)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(y, 11)
+        self.assertEqual(z, 12)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-        self.assertEquals(y, 11)
-        self.assertEquals(z, 12)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(y, 11)
+        self.assertEqual(z, 12)
 
         # Argument 2 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, objc.NULL, 2, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-        self.assertEquals(y, objc.NULL)
-        self.assertEquals(z, 14)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(y, objc.NULL)
+        self.assertEqual(z, 14)
 
         # Argument 3 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-        self.assertEquals(y, 15)
-        self.assertEquals(z, objc.NULL)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(y, 15)
+        self.assertEqual(z, objc.NULL)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(lambda x: x is not objc.NULL, r)), 2)
-        self.assertEquals(y, 15)
-        self.assertEquals(z, objc.NULL)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(y, 15)
+        self.assertEqual(z, objc.NULL)
 
 if __name__ == "__main__":
     main()

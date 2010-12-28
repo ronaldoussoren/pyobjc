@@ -41,14 +41,14 @@ class TestRecode (TestCase):
         v = (55, True)
         w = objc.repythonify(v, EmbeddedBoolStruct.__typestr__)
         self.assertIsInstance(w, EmbeddedBoolStruct)
-        self.assertEquals(w.count, 55)
+        self.assertEqual(w.count, 55)
         self.assertIs(w.isValid, True)
 
     def testBoolArrayStruct(self):
         v = (42, [0, 1, 1, 0])
         w = objc.repythonify(v, EmbeddedBoolArrayStruct.__typestr__)
         self.assertIsInstance(w, EmbeddedBoolArrayStruct)
-        self.assertEquals(w.count, 42)
+        self.assertEqual(w.count, 42)
         self.assertIs(w.valid[0], False)
         self.assertIs(w.valid[1], True)
         self.assertIs(w.valid[2], True)
@@ -64,7 +64,7 @@ class TestObjectiveC (TestCase):
         v = (55, True)
         w = o.identicalEmbeddedBoolStruct_(v)
         self.assertIsInstance(w, EmbeddedBoolStruct)
-        self.assertEquals(w.count, 55)
+        self.assertEqual(w.count, 55)
         self.assertIs(w.isValid, True)
 
     def testBoolArrayStruct(self):
@@ -73,7 +73,7 @@ class TestObjectiveC (TestCase):
         v = (42, [0, 1, 1, 0])
         w = o.identicalEmbeddedBoolArrayStruct_(v)
         self.assertIsInstance(w, EmbeddedBoolArrayStruct)
-        self.assertEquals(w.count, 42)
+        self.assertEqual(w.count, 42)
         self.assertIs(w.valid[0], False)
         self.assertIs(w.valid[1], True)
         self.assertIs(w.valid[2], True)

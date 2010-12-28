@@ -10,8 +10,8 @@ class TestProtected (TestCase):
 
     def testProtectedCallable(self):
         o = PyObjCTest_Protected.new()
-        self.assertEquals(None, o._protectedMethod())
-        self.assertEquals(None, o.publicMethod())
+        self.assertEqual(None, o._protectedMethod())
+        self.assertEqual(None, o.publicMethod())
 
 if __name__ == "__main__":
     PyObjCTest.main()

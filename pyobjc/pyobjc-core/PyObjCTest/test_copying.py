@@ -101,15 +101,15 @@ class TestNSCopying (TestCase):
     def testCopyingWithoutSuperFromObjC(self):
         v = OC_TestCopy1.alloc().init()
         self.assertFalse(v.copyWithZone_.isClassMethod)
-        self.assertEquals(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
+        self.assertEqual(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
         del v
 
         p = NSAutoreleasePool.alloc().init()
         o = OC_CopyHelper.doCopySetup_(OC_TestCopy1)
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
         self.assertRaises(AttributeError, getattr, o, 'z')
 
     def testCopyingWithSuperFromObjC(self):
@@ -126,38 +126,38 @@ class TestNSCopying (TestCase):
         del o
 
         o = OC_TestCopy4.alloc().init()
-        self.assertEquals(o.copyWithZone_.callable.occlass, "OC_TestCopy4")
+        self.assertEqual(o.copyWithZone_.callable.occlass, "OC_TestCopy4")
         del o
 
         p = NSAutoreleasePool.alloc().init()
         o = OC_CopyHelper.doCopySetup_(OC_TestCopy2)
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.intVal(), 40)
 
         p = NSAutoreleasePool.alloc().init()
         o = OC_CopyHelper.doCopySetup_(OC_TestCopy3)
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.intVal(), 40)
 
         p = NSAutoreleasePool.alloc().init()
         o = OC_CopyHelper.doCopySetup_(OC_TestCopy4)
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.z, "hello")
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.z, "hello")
+        self.assertEqual(o.intVal(), 40)
 
     def testCopyingWithoutSuper(self):
         v = OC_TestCopy1.alloc().init()
         self.assertFalse(v.copyWithZone_.isClassMethod)
-        self.assertEquals(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
+        self.assertEqual(v.copyWithZone_.callable.occlass, "OC_TestCopy1")
         del v
 
         v = OC_TestCopy1.alloc().init()
@@ -169,8 +169,8 @@ class TestNSCopying (TestCase):
         del v
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
         self.assertRaises(AttributeError, getattr, o, 'z')
 
     def testCopyingWithSuper(self):
@@ -187,7 +187,7 @@ class TestNSCopying (TestCase):
         del o
 
         o = OC_TestCopy4.alloc().init()
-        self.assertEquals(o.copyWithZone_.callable.occlass, "OC_TestCopy4")
+        self.assertEqual(o.copyWithZone_.callable.occlass, "OC_TestCopy4")
         del o
 
         p = NSAutoreleasePool.alloc().init()
@@ -199,9 +199,9 @@ class TestNSCopying (TestCase):
         del v
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.intVal(), 40)
 
         p = NSAutoreleasePool.alloc().init()
         v = OC_TestCopy3.alloc().init()
@@ -212,9 +212,9 @@ class TestNSCopying (TestCase):
         del v
         del p
 
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.intVal(), 40)
 
         p = NSAutoreleasePool.alloc().init()
         v = OC_TestCopy4.alloc().init()
@@ -225,10 +225,10 @@ class TestNSCopying (TestCase):
         del v
         del p
 
-        self.assertEquals(o.z, "hello")
-        self.assertEquals(o.y, 24)
-        self.assertEquals(o.x, 42)
-        self.assertEquals(o.intVal(), 40)
+        self.assertEqual(o.z, "hello")
+        self.assertEqual(o.y, 24)
+        self.assertEqual(o.x, 42)
+        self.assertEqual(o.intVal(), 40)
 
 
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -244,7 +244,7 @@ class TestPyCopyObjC (TestCase):
 
         b = copy.copy(a)
         self.assertIsInstance(b, NSMutableArray)
-        self.assertEquals(list(a), list(b))
+        self.assertEqual(list(a), list(b))
 
 
 if __name__ == "__main__":

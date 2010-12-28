@@ -18,8 +18,8 @@ class TestBasicIMP (TestCase):
         m = cls.pyobjc_classMethods.methodForSelector_("alloc")
         self.assertIsInstance(m, objc.IMP)
         self.assertTrue(m.__metadata__()['classmethod'])
-        self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.alloc.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, b'alloc')
+        self.assertEqual(m.__metadata__()['retval']['already_retained'], cls.alloc.__metadata__()['retval']['already_retained'])
+        self.assertEqual(m.selector, b'alloc')
 
         o = m(cls).init()
         self.assertIsInstance(o, cls)
@@ -29,8 +29,8 @@ class TestBasicIMP (TestCase):
         m = cls.instanceMethodForSelector_("init")
         self.assertIsInstance(m, objc.IMP)
         self.assertFalse(m.__metadata__()['classmethod'])
-        self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, b'init')
+        self.assertEqual(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
+        self.assertEqual(m.selector, b'init')
 
         o = m(cls.alloc())
         self.assertIsInstance(o, cls)
@@ -42,8 +42,8 @@ class TestBasicIMP (TestCase):
         m = o.methodForSelector_("init")
         self.assertIsInstance(m, objc.IMP)
         self.assertFalse(m.__metadata__()['classmethod'])
-        self.assertEquals(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
-        self.assertEquals(m.selector, b'init')
+        self.assertEqual(m.__metadata__()['retval']['already_retained'], cls.init.__metadata__()['retval']['already_retained'])
+        self.assertEqual(m.selector, b'init')
 
         o = m(cls.alloc())
         self.assertIsInstance(o, cls)
@@ -51,7 +51,7 @@ class TestBasicIMP (TestCase):
     def testDescription(self):
         o = NSObject.alloc().init()
 
-        self.assertEquals(o.description(), o.methodForSelector_(b'description')(o))
+        self.assertEqual(o.description(), o.methodForSelector_(b'description')(o))
 
 
 

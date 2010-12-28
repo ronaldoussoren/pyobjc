@@ -24,13 +24,13 @@ class BasicSequenceTests:
 
         s = self.seqClass(range(20))
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
-        self.assertEquals(list(s), o)
+        self.assertEqual(list(s), o)
         self.assertIsNot(s, o)
         self.assertIsInstance(o, list)
 
         s = self.seqClass()
         o = OC_TestSet.set_mutableCopyWithZone_(s, None)
-        self.assertEquals(list(s), o)
+        self.assertEqual(list(s), o)
         self.assertIsNot(s, o)
         self.assertIsInstance(o, list)
 
@@ -43,11 +43,11 @@ class TestImmutableSequence (TestCase, BasicSequenceTests):
     def testCopy(self):
         s = self.seqClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
-        self.assertEquals(s, o)
+        self.assertEqual(s, o)
 
         s = self.seqClass(range(20))
         o = OC_TestSet.set_copyWithZone_(s, None)
-        self.assertEquals(s, o)
+        self.assertEqual(s, o)
 
     def testNotMutable(self):
         # Ensure that a frozenset cannot be mutated
@@ -62,12 +62,12 @@ class TestMutableSequence (TestCase, BasicSequenceTests):
     def testCopy(self):
         s = self.seqClass()
         o = OC_TestSet.set_copyWithZone_(s, None)
-        self.assertEquals(s, o)
+        self.assertEqual(s, o)
         self.assertIsNot(s, o)
 
         s = self.seqClass(range(20))
         o = OC_TestSet.set_copyWithZone_(s, None)
-        self.assertEquals(s, o)
+        self.assertEqual(s, o)
         self.assertIsNot(s, o)
 
 

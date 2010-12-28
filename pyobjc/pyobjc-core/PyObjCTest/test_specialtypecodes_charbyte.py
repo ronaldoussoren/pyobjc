@@ -88,43 +88,43 @@ class TestTypeCode_byte (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertEquals(o.byteValue(), b'a')
-        self.assertEquals(o.byteValue(), b'\x37')
-        self.assertEquals(o.byteValue(), b'z')
+        self.assertEqual(o.byteValue(), b'a')
+        self.assertEqual(o.byteValue(), b'\x37')
+        self.assertEqual(o.byteValue(), b'z')
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteArray()
-        self.assertEquals(len(v), 4)
+        self.assertEqual(len(v), 4)
         self.assertIsInstance(v, bytes)
 
         if sys.version_info[0] == 2:
-            self.assertEquals(v[0], b'\x64')
-            self.assertEquals(v[1], b'\xc8')
-            self.assertEquals(v[2], b'\x96')
-            self.assertEquals(v[3], b'\x63')
+            self.assertEqual(v[0], b'\x64')
+            self.assertEqual(v[1], b'\xc8')
+            self.assertEqual(v[2], b'\x96')
+            self.assertEqual(v[3], b'\x63')
         else:
-            self.assertEquals(v[0], 0x64)
-            self.assertEquals(v[1], 0xc8)
-            self.assertEquals(v[2], 0x96)
-            self.assertEquals(v[3], 0x63)
+            self.assertEqual(v[0], 0x64)
+            self.assertEqual(v[1], 0xc8)
+            self.assertEqual(v[2], 0x96)
+            self.assertEqual(v[3], 0x63)
 
     def testReturnValueString(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteString()
         self.assertIsInstance(v, bytes)
-        self.assertEquals(v, b"hello world");
+        self.assertEqual(v, b"hello world");
 
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteArg_andbyteArg_(b'\x44', b'\x99')
-        self.assertEquals(v, (unichr(0x44), unichr(0x99)))
+        self.assertEqual(v, (unichr(0x44), unichr(0x99)))
 
         v = o.byteArg_andbyteArg_(b'a', b'b')
-        self.assertEquals(v, ('a', 'b'))
+        self.assertEqual(v, ('a', 'b'))
 
         self.assertRaises(ValueError, o.byteArg_andbyteArg_, 200, 100)
 
@@ -132,12 +132,12 @@ class TestTypeCode_byte (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteStringArg_(b"hello world")
-        self.assertEquals(v, "hello world")
+        self.assertEqual(v, "hello world")
         self.assertIsInstance(v, unicode)
 
         v = o.byteStringArg_([b'a', b'b'])
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, "ab")
+        self.assertEqual(v, "ab")
 
         self.assertRaises(ValueError,  o.byteStringArg_, [99, 100, 100, 0])
 
@@ -145,37 +145,37 @@ class TestTypeCode_byte (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteArrayOf4In_(b"work")
-        self.assertEquals(v, "work")
+        self.assertEqual(v, "work")
 
         v = o.byteArrayOf4In_([b'a', b'b', b'c', b'd'])
-        self.assertEquals(v, 'abcd')
+        self.assertEqual(v, 'abcd')
 
         a = array.array('B', [200, 150, 80, 20])
         v = o.byteArrayOf4In_(a)
-        self.assertEquals(v, u''.join([
+        self.assertEqual(v, u''.join([
             unichr(200), unichr(150), unichr(80), unichr(20)]))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteArrayOf4Out_(None)
-        self.assertEquals(v, b"boat")
+        self.assertEqual(v, b"boat")
 
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.byteArrayOf4Out_(a)
         self.assertIs(v, a)
-        self.assertEquals(v[0], ord('b'))
-        self.assertEquals(v[1], ord('o'))
-        self.assertEquals(v[2], ord('a'))
-        self.assertEquals(v[3], ord('t'))
+        self.assertEqual(v[0], ord('b'))
+        self.assertEqual(v[1], ord('o'))
+        self.assertEqual(v[2], ord('a'))
+        self.assertEqual(v[3], ord('t'))
 
     def testFixedArrayInOut_(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v, w = o.byteArrayOf4InOut_(b"foot")
-        self.assertEquals(v, "foot")
-        self.assertEquals(w, b"hand")
+        self.assertEqual(v, "foot")
+        self.assertEqual(w, b"hand")
 
 if __name__ == "__main__":
     main()

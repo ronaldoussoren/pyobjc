@@ -32,102 +32,102 @@ class TestNSNumber (TestCase):
     def testShortConversions(self):
         v = NSNumber.numberWithShort_(42)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
     def testIntConversions(self):
         v = NSNumber.numberWithInt_(42)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
         # Negative values
         v = NSNumber.numberWithInt_(-42)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 214)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 214)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
         if sys.maxint == (2 ** 31) -1:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
 
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), -42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), -42.0)
 
         # Overflow
         v = NSNumber.numberWithInt_(892455)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -25049)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -25049)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
     def testDoubleConversions(self):
         v = NSNumber.numberWithDouble_(75.5)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 75.5)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 75.5)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 75.5)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 75.5)
 
         # Negative values
         v = NSNumber.numberWithDouble_(-127.6)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 129)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 129)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
 
         if sys.maxint == (2 ** 31) -1:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551488)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551488)
 
         # The first entry in the tuple below is incorrect, that happens to be what
         # is returned by NSNumber on some platforms (in particular, any Python where
@@ -142,53 +142,53 @@ class TestNSNumber (TestCase):
                 OC_TestNumber.numberAsUnsignedLongLong_(v),
                     (18446744073709551489, 18446744073709551488))
 
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), -127.6)
 
         # Overflow
         v = NSNumber.numberWithDouble_(float(2**64 + 99))
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
 
         if sys.byteorder == 'big':
-            self.assertEquals(OC_TestNumber.numberAsChar_(v), -1)
-            self.assertEquals(OC_TestNumber.numberAsShort_(v), -1)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 255)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
+            self.assertEqual(OC_TestNumber.numberAsChar_(v), -1)
+            self.assertEqual(OC_TestNumber.numberAsShort_(v), -1)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 255)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
         else:
-            self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsChar_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsShort_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 0)
 
     def testCompare(self):
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(1)), NSOrderedAscending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithUnsignedLongLong_(2**40)), NSOrderedAscending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(42.0)), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(1)), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithUnsignedLongLong_(2**40)), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(42.0)), NSOrderedAscending)
 
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(-1)), NSOrderedDescending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(-2**60)), NSOrderedDescending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(-42.0)), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(-1)), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(-2**60)), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(-42.0)), NSOrderedDescending)
 
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(0)), NSOrderedSame)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(0.0)), NSOrderedSame)
-        self.assertEquals(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(0)), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLong_(0)), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithDouble_(0.0)), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(0)), NSOrderedSame)
 
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithInt_(0))
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"0")
+        self.assertEqual(v, u"0")
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(2**60))
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, unicode(str(2**60)))
+        self.assertEqual(v, unicode(str(2**60)))
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(-2**60))
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, unicode(str(-2**60)))
+        self.assertEqual(v, unicode(str(-2**60)))
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithDouble_(264.0))
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"264")
+        self.assertEqual(v, u"264")
 
 
 class TestPyNumber (TestCase):
@@ -215,188 +215,188 @@ class TestPyNumber (TestCase):
         # overflow.
         v = 42
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
         # Negative values
         v = -42
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 214)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 214)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
         if sys.maxint == (2 ** 31) -1:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
 
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), -42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), -42.0)
 
         # Overflow
         v = 892455
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -25049)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -25049)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
     def testPythonLongConversions(self):
         v = long(42)
         self.assertIsInstance(v, long)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 42)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
         # Negative values
         v = long(-42)
         self.assertIsInstance(v, long)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), -42)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 214)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -42)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 214)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
         if sys.maxint == (2 ** 31) -1:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
 
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), -42.0)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551574)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), -42.0)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), -42.0)
 
         # Overflow
         v = long(892455)
         self.assertIsInstance(v, long)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -25049)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 39)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -25049)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 39)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
         # Very much overflow
         v = 2 ** 64 + 1
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 1)
 
     def testDoubleConversions(self):
         v = 75.5
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 75)
-        self.assertEquals(OC_TestNumber.numberAsFloat_(v), 75.5)
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), 75.5)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 75)
+        self.assertEqual(OC_TestNumber.numberAsFloat_(v), 75.5)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), 75.5)
 
         # Negative values
         v = -127.6
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
-        self.assertEquals(OC_TestNumber.numberAsChar_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsShort_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsInt_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsLong_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsLongLong_(v), -127)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 129)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
-        self.assertEquals(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsChar_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsShort_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsInt_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsLong_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -127)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 129)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
+        self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
 
         if sys.maxint == (2 ** 31) -1:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551489)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551489)
 
         if sys.byteorder == 'big':
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 4294967169)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 4294967169)
         else:
-            self.assertEquals(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedLongLong_(v), 18446744073709551489)
 
-        self.assertEquals(OC_TestNumber.numberAsDouble_(v), -127.6)
+        self.assertEqual(OC_TestNumber.numberAsDouble_(v), -127.6)
 
         # Overflow
         v = float(2**64 + 99)
 
-        self.assertEquals(OC_TestNumber.numberAsBOOL_(v), 1)
+        self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
 
         if sys.byteorder == 'big':
-            self.assertEquals(OC_TestNumber.numberAsChar_(v), -1)
-            self.assertEquals(OC_TestNumber.numberAsShort_(v), -1)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 255)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
+            self.assertEqual(OC_TestNumber.numberAsChar_(v), -1)
+            self.assertEqual(OC_TestNumber.numberAsShort_(v), -1)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 255)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
         else:
-            self.assertEquals(OC_TestNumber.numberAsChar_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsShort_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedChar_(v), 0)
-            self.assertEquals(OC_TestNumber.numberAsUnsignedShort_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsChar_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsShort_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 0)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 0)
 
     def testCompare(self):
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, 1), NSOrderedAscending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, 2**64), NSOrderedAscending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, 42.0), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, 1), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, 2**64), NSOrderedAscending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, 42.0), NSOrderedAscending)
 
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, -1), NSOrderedDescending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, -2**64), NSOrderedDescending)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, -42.0), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, -1), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, -2**64), NSOrderedDescending)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, -42.0), NSOrderedDescending)
 
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, 0), NSOrderedSame)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, 0.0), NSOrderedSame)
-        self.assertEquals(OC_TestNumber.compareA_andB_(0, long(0)), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, 0), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, 0.0), NSOrderedSame)
+        self.assertEqual(OC_TestNumber.compareA_andB_(0, long(0)), NSOrderedSame)
 
     def testNumberEqual(self):
         self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 1))
@@ -414,27 +414,27 @@ class TestPyNumber (TestCase):
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(0)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"0")
+        self.assertEqual(v, u"0")
 
         v = OC_TestNumber.numberDescription_(2**64)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, unicode(repr(2**64)))
+        self.assertEqual(v, unicode(repr(2**64)))
 
         v = OC_TestNumber.numberDescription_(-2**64)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, unicode(repr(-2**64)))
+        self.assertEqual(v, unicode(repr(-2**64)))
 
         v = OC_TestNumber.numberDescription_(264.0)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"264.0")
+        self.assertEqual(v, u"264.0")
 
         v = OC_TestNumber.numberDescription_(False)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"0")
+        self.assertEqual(v, u"0")
 
         v = OC_TestNumber.numberDescription_(True)
         self.assertIsInstance(v, unicode)
-        self.assertEquals(v, u"1")
+        self.assertEqual(v, u"1")
 
 class TestInteractions (TestCase):
     # Test interactions between Python and NSNumber numbers
@@ -489,16 +489,16 @@ class TestNumberFormatter (TestCase):
 
         n = NSNumber.numberWithInt_(42)
         p = 42
-        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
+        self.assertEqual(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
 
         n = NSNumber.numberWithInt_(-42)
         p = -42
-        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
+        self.assertEqual(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
 
 
         n = NSNumber.numberWithDouble_(10.42)
         p = 10.42
-        self.assertEquals(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
+        self.assertEqual(formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p))
 
 if __name__ == "__main__":
     main()

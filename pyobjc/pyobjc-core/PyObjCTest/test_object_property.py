@@ -96,9 +96,9 @@ class TestObjectProperty (TestCase):
         self.assertTrue(o.respondsToSelector(b'p6'))
         self.assertTrue(o.respondsToSelector(b'setP6:'))
         s = o.methodSignatureForSelector_(b'p5')
-        self.assertEquals(s.methodReturnType(), objc._C_INT)
+        self.assertEqual(s.methodReturnType(), objc._C_INT)
         s = o.methodSignatureForSelector_(b'p6')
-        self.assertEquals(s.methodReturnType(), objc._C_DBL)
+        self.assertEqual(s.methodReturnType(), objc._C_DBL)
 
     def testDepends(self):
         class OCTestObjectProperty2 (NSObject):
@@ -118,25 +118,25 @@ class TestObjectProperty (TestCase):
         observer.register(object, 'p3')
         try:
 
-            self.assertEquals(observer.values, [])
+            self.assertEqual(observer.values, [])
 
             object.p1 = "a"
             object.p2 = "b"
-            self.assertEquals(object.p3, ("a", "b"))
+            self.assertEqual(object.p3, ("a", "b"))
 
-            self.assertEquals(len(observer.values), 4)
+            self.assertEqual(len(observer.values), 4)
 
             if observer.values[0][1] == 'p1':
-                self.assertEquals(observer.values[1][1], 'p3')
+                self.assertEqual(observer.values[1][1], 'p3')
             else:
-                self.assertEquals(observer.values[0][1], 'p3')
-                self.assertEquals(observer.values[1][1], 'p1')
+                self.assertEqual(observer.values[0][1], 'p3')
+                self.assertEqual(observer.values[1][1], 'p1')
 
             if observer.values[2][1] == 'p2':
-                self.assertEquals(observer.values[3][1], 'p3')
+                self.assertEqual(observer.values[3][1], 'p3')
             else:
-                self.assertEquals(observer.values[2][1], 'p3')
-                self.assertEquals(observer.values[3][1], 'p2')
+                self.assertEqual(observer.values[2][1], 'p3')
+                self.assertEqual(observer.values[3][1], 'p2')
 
         finally:
             observer.unregister(object, 'p1')
@@ -171,21 +171,21 @@ class TestObjectProperty (TestCase):
 
         o = OCTestObjectProperty4.alloc().init()
         o.p1 = 'f'
-        self.assertEquals(o.p1, 'f?!')
-        self.assertEquals(o._p1, 'f?')
-        self.assertEquals(l, [('set', 'f'), ('get',)])
+        self.assertEqual(o.p1, 'f?!')
+        self.assertEqual(o._p1, 'f?')
+        self.assertEqual(l, [('set', 'f'), ('get',)])
 
         ok, value, error = o.validateValue_forKey_error_(
                 1, 'p1', None)
         self.assertTrue(ok)
-        self.assertEquals(value, 1)
-        self.assertEquals(error, None)
+        self.assertEqual(value, 1)
+        self.assertEqual(error, None)
 
         ok, value, error = o.validateValue_forKey_error_(
                 9, 'p1', None)
         self.assertFalse(ok)
-        self.assertEquals(value, 2)
-        self.assertEquals(error, u"snake")
+        self.assertEqual(value, 2)
+        self.assertEqual(error, u"snake")
 
     def testNative(self):
         l = []
@@ -205,13 +205,13 @@ class TestObjectProperty (TestCase):
 
         o = OCTestObjectProperty7.alloc().init()
         o.setValue_forKey_(42, 'p1')
-        self.assertEquals(o._p1, 42)
+        self.assertEqual(o._p1, 42)
 
         o._p1 = u"monkey"
         v = o.valueForKey_('p1')
-        self.assertEquals(v, u"monkey")
+        self.assertEqual(v, u"monkey")
 
-        self.assertEquals(l, ["set", "get"])
+        self.assertEqual(l, ["set", "get"])
 
 
     def testDynamic(self):
@@ -237,10 +237,10 @@ class TestObjectProperty (TestCase):
         self.assertIsInstance(OCTestObjectProperty8.p1, objc.object_property)
 
 
-        self.assertEquals(o.p1, 42)
+        self.assertEqual(o.p1, 42)
         o.p1 = 99
-        self.assertEquals(o.p1, 99)
-        self.assertEquals(v[0], 99)
+        self.assertEqual(o.p1, 99)
+        self.assertEqual(v[0], 99)
 
 
     def testReadOnly(self):
@@ -266,13 +266,13 @@ class TestObjectProperty (TestCase):
         base = OCTestObjectProperty5.alloc().init()
         self.assertRaises(ValueError, setattr, base, 'p1', 1)
         base.p2 = 'b'
-        self.assertEquals(base.p2, 'b')
+        self.assertEqual(base.p2, 'b')
 
         sub = OCTestObjectProperty6.alloc().init()
         sub.p1 = 1
         sub.p2 = 'a'
-        self.assertEquals(sub.p1, 1)
-        self.assertEquals(sub.p2, 'a')
+        self.assertEqual(sub.p1, 1)
+        self.assertEqual(sub.p2, 'a')
 
 if __name__ == "__main__":
     main()

@@ -31,13 +31,13 @@ else:
             # BaseClass still refers to the old class, if we look it up again
             # we get to see the new value. There's not much we can do about that.
             obj = objc.lookUpClass(BaseName).new()
-            self.assertEquals(obj.testPosingMethod(), u"<PoseClass instance>")
+            self.assertEqual(obj.testPosingMethod(), u"<PoseClass instance>")
 
             # XXX: next assertion fails because the runtime seems to copy the
             # original class.
             #self.assertIsInstance(obj, PoseClass)
-            self.assertNotEquals(BaseClass.__name__, BaseName)
-            self.assertEquals(PoseClass.__name__, BaseName)
+            self.assertNotEqual(BaseClass.__name__, BaseName)
+            self.assertEqual(PoseClass.__name__, BaseName)
             del obj
 
 

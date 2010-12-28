@@ -22,7 +22,7 @@ class TestPythonRoundTrip (TestCase):
 
         for v in (self, object(), list, sum):
             container.setStoredObject_(v)
-            self.assert_(v is container.storedObject(), repr(v))
+            self.assertTrue(v is container.storedObject(), repr(v))
 
 
     def testPythonContainer(self):
@@ -31,7 +31,7 @@ class TestPythonRoundTrip (TestCase):
 
         for v in ( [1, 2,3], (1,2,3), {1:2, 3:4} ):
             container.setStoredObject_(v)
-            self.assert_(v is container.storedObject(), repr(v))
+            self.assertTrue(v is container.storedObject(), repr(v))
 
     def dont_testPythonStrings(self):
         # XXX: this test would always fail, this is by design.
@@ -40,7 +40,7 @@ class TestPythonRoundTrip (TestCase):
 
         for v in ( u"Hello world", "Hello world" ):
             container.setStoredObject_(v)
-            self.assert_(v is container.storedObject(), repr(v))
+            self.assertTrue(v is container.storedObject(), repr(v))
 
     def dont_testPythonNumber(self):
         # XXX: this test would always fail, need to move some code to C
@@ -49,7 +49,7 @@ class TestPythonRoundTrip (TestCase):
 
         for v in (99999, 99999L, 10.0):
             container.setStoredObject_(v)
-            self.assert_(v is container.storedObject, repr(v))
+            self.assertTrue(v is container.storedObject, repr(v))
 
 
 class ObjCRoundTrip (TestCase):
@@ -62,11 +62,11 @@ class ObjCRoundTrip (TestCase):
         container.setStoredObjectToResultOf_on_("new", cls)
 
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToResultOf_on_("class", cls)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
     def testNSString(self):
 
@@ -75,22 +75,22 @@ class ObjCRoundTrip (TestCase):
         cls = objc.lookUpClass("NSObject")
         container.setStoredObjectToResultOf_on_("description", cls)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
-        self.assert_(isinstance(v, unicode))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(isinstance(v, unicode))
 
         cls = objc.lookUpClass("NSMutableString")
         container.setStoredObjectToResultOf_on_("new", cls)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
-        self.assert_(isinstance(v, unicode))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(isinstance(v, unicode))
 
     def testProtocol(self):
         container = OC_TestIdentity.alloc().init()
 
         container.setStoredObjectToAProtocol()
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
-        self.assert_(isinstance(v, objc.formal_protocol))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(isinstance(v, objc.formal_protocol))
 
     if sys.maxint < 2 ** 32:
         def testObject(self):
@@ -98,55 +98,55 @@ class ObjCRoundTrip (TestCase):
             cls = objc.lookUpClass("Object")
             container.setStoredObjectAnInstanceOfClassic_(cls)
             v = container.storedObject()
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
-            self.assert_(isinstance(v, cls))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(isinstance(v, cls))
 
     def testNSNumber(self):
         container = OC_TestIdentity.alloc().init()
 
         container.setStoredObjectToInteger_(10)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToInteger_(-40)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToUnsignedInteger_(40)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToUnsignedInteger_(2 ** 32 - 4)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         if sys.maxint < 2 ** 32:
             container.setStoredObjectToLongLong_(sys.maxint * 2)
             v = container.storedObject()
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToLongLong_(-sys.maxint)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToUnsignedLongLong_(sys.maxint * 2)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToFloat_(10.0)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
         container.setStoredObjectToDouble_(9999.0)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
     def testNSDecimalNumber(self):
         container = OC_TestIdentity.alloc().init()
         cls = objc.lookUpClass("NSDecimalNumber")
         container.setStoredObjectToResultOf_on_("zero", cls)
         v = container.storedObject()
-        self.assert_(container.isSameObjectAsStored_(v), repr(v))
+        self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
 
 class ObjCtoPython (TestCase):
@@ -156,7 +156,7 @@ class ObjCtoPython (TestCase):
             v1 = container.storedObject()
             v2 = container.storedObject()
 
-            self.assert_(v1 is v2, message)
+            self.assertTrue(v1 is v2, message)
 
     def testNSObject(self):
         container = OC_TestIdentity.alloc().init()
@@ -170,7 +170,7 @@ class ObjCtoPython (TestCase):
         v1 = container.storedObject()
         container.setStoredObjectToResultOf_on_("new", cls)
         v2 = container.storedObject()
-        self.assert_(v1 is not v2, "different objects")
+        self.assertTrue(v1 is not v2, "different objects")
 
     def dont_testNSString(self):
         # This would always fail, NSStrings get a new proxy everytime
@@ -251,7 +251,7 @@ class PythonToObjC (TestCase):
         for v in (self, object(), list, sum):
             container.setStoredObject_(v)
 
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
 
     def testContainers(self):
@@ -260,7 +260,7 @@ class PythonToObjC (TestCase):
         for v in ([1,2,3], (1,2,3), {1:2, 3:4}):
             container.setStoredObject_(v)
 
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
     def dont_testStrings(self):
         # These get converted, not proxied
@@ -269,7 +269,7 @@ class PythonToObjC (TestCase):
         for v in ("hello world", u"a unicode string"):
             container.setStoredObject_(v)
 
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
     def dont_testNumbers(self):
         # These get converted, not proxied
@@ -278,7 +278,7 @@ class PythonToObjC (TestCase):
         for v in (1, 666666, 1L, 66666L, 1.0,):
             container.setStoredObject_(v)
 
-            self.assert_(container.isSameObjectAsStored_(v), repr(v))
+            self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
 class TestSerializingDataStructures (TestCase):
     # OC_Python{Array,Dictionary} used to contain specialized 

@@ -70,7 +70,9 @@ class DgTestCase (unittest.TestCase):
         self.filename = filename
 
     def runTest(self):
-        script = parseDG(open(self.filename).read())
+        fp = open(self.filename)
+        script = parseDG(fp.read())
+        fp.close()
         output = []
 
         for command, data in script:
@@ -99,7 +101,7 @@ class DgTestCase (unittest.TestCase):
         data = self.runTestCase()
 
         if output != '':
-            self.assertEquals(data.rstrip(), output.rstrip())
+            self.assertEqual(data.rstrip(), output.rstrip())
         os.unlink('/tmp/test.bin')
 
 

@@ -82,7 +82,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, a_classic_class)
-            self.assertEquals(o.x, 42)
+            self.assertEqual(o.x, 42)
 
             buf = self.archiverClass.archivedDataWithRootObject_(u"hello")
             self.assertIsInstance(buf, NSData)
@@ -93,19 +93,19 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, str)
-            self.assertEquals(v, "hello")
+            self.assertEqual(v, "hello")
 
             buf = self.archiverClass.archivedDataWithRootObject_(sys.maxint * 4)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, long)
-            self.assertEquals(v, sys.maxint * 4)
+            self.assertEqual(v, sys.maxint * 4)
 
             buf = self.archiverClass.archivedDataWithRootObject_(sys.maxint ** 4)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, long)
-            self.assertEquals(v, sys.maxint ** 4)
+            self.assertEqual(v, sys.maxint ** 4)
 
         def testSimpleLists(self):
             o = []
@@ -113,14 +113,14 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, list)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
             o = [u"hello", 42]
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, list)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
         def testSimpleTuples(self):
             o = ()
@@ -128,14 +128,14 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, tuple)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
             o = (u"hello", 42)
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, tuple)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
         def testSimpleDicts(self):
             o = {}
@@ -143,14 +143,14 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, dict)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
             o = {u"hello": u"bar", 42: 1.5 }
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, dict)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
         def testNestedDicts(self):
             o = {
@@ -161,7 +161,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, dict)
-            self.assertEquals(v, o)
+            self.assertEqual(v, o)
 
             o = {}
             o[u'self'] = o
@@ -180,7 +180,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, list)
             self.assertIs(v[-1], v)
-            self.assertEquals(v[:-1], o[:-1])
+            self.assertEqual(v[:-1], o[:-1])
 
         def testNestedInstance(self):
             o = a_classic_class()
@@ -227,9 +227,9 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
-            self.assertEquals(len(v), 1)
-            self.assertEquals(dir(v[0]), dir(i))
-            self.assertEquals(v[0].attr.keys(), [1])
+            self.assertEqual(len(v), 1)
+            self.assertEqual(dir(v[0]), dir(i))
+            self.assertEqual(v[0].attr.keys(), [1])
             self.assertIs(v[0].attr[1], v)
 
             buf = self.archiverClass.archivedDataWithRootObject_(d)
@@ -248,7 +248,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
             self.assertIsInstance(v, tuple)
-            self.assertEquals(len(v), 3)
+            self.assertEqual(len(v), 3)
             self.assertIsInstance(v[0], a_classic_class)
             self.assertIs(v[0], v[1])
             self.assertIs(v[0], v[2])
@@ -353,20 +353,20 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             x = 12345678910111213141516178920L << (256*8)
             buf = self.dumps(x)
             v = self.loads(buf)
-            self.assertEquals(v, x)
+            self.assertEqual(v, x)
 
             x = -x
 
             buf = self.dumps(x)
             v = self.loads(buf)
 
-            self.assertEquals(v, x)
+            self.assertEqual(v, x)
 
             for val in (0L, 1L, long(sys.maxint), long(sys.maxint * 128)):
                 for x in val, -val:
                     buf = self.dumps(x)
                     v = self.loads(buf)
-                    self.assertEquals(v, x)
+                    self.assertEqual(v, x)
 
 
 
@@ -492,7 +492,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
             out = self.loads(buf)
             self.assertIsInstance(out, NSArray)
-            self.assertEquals(len(out), 3)
+            self.assertEqual(len(out), 3)
 
             p1 = out[0]
             p2 = out[1]

@@ -64,18 +64,18 @@ class TestRegressions(TestCase):
             sys.stderr = sys.__stderr__
 
         # A warning is three lines: location info, source code, empty line
-        self.assertEquals(len(io.getvalue().split('\n')), 3)
+        self.assertEqual(len(io.getvalue().split('\n')), 3)
 
     def testOneWayMethods(self):
         # This one should be in test_methods*.py
         from PyObjCTest.initialize import OC_TestInitialize
 
         o = OC_TestInitialize.alloc().init()
-        self.assertEquals(objc.splitSignature(o.onewayVoidMethod.signature), (objc._C_ONEWAY + objc._C_VOID, objc._C_ID, objc._C_SEL))
+        self.assertEqual(objc.splitSignature(o.onewayVoidMethod.signature), (objc._C_ONEWAY + objc._C_VOID, objc._C_ID, objc._C_SEL))
 
         # Make sure we can call the method
         o.onewayVoidMethod()
-        self.assertEquals(o.isInitialized(), -1)
+        self.assertEqual(o.isInitialized(), -1)
 
 
     def testNoneAsSelf (self):
@@ -107,11 +107,11 @@ class TestRegressions(TestCase):
 
         o = structargs.StructArgClass.alloc().init()
         v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
-        self.assertEquals(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
+        self.assertEqual(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
     def testInitialize(self):
         calls=[]
-        self.assertEquals(len(calls), 0)
+        self.assertEqual(len(calls), 0)
 
         class InitializeTestClass (NSObject):
             @classmethod
@@ -119,32 +119,32 @@ class TestRegressions(TestCase):
                 calls.append(repr(cls))
 
         o = InitializeTestClass.new()
-        self.assertEquals(len(calls), 1)
+        self.assertEqual(len(calls), 1)
         o = InitializeTestClass.new()
-        self.assertEquals(len(calls), 1)
+        self.assertEqual(len(calls), 1)
 
     def testPrivateIntrospection(self):
         o = testbndl.PyObjC_TestClass4.alloc().init()
-        self.assertEquals(o._privateMethodWithArg_(1.5), 1)
-        self.assertEquals(o._privateMethodWithArg_(-2.5), -2)
+        self.assertEqual(o._privateMethodWithArg_(1.5), 1)
+        self.assertEqual(o._privateMethodWithArg_(-2.5), -2)
 
         imp = testbndl.PyObjC_TestClass4.instanceMethodForSelector_('_privateMethodWithArg:')
-        self.assertEquals(imp.signature, b'i@:f')
+        self.assertEqual(imp.signature, b'i@:f')
 
         sel = testbndl.PyObjC_TestClass4._privateMethodWithArg_
-        self.assertEquals(sel.signature, b'i@:f')
+        self.assertEqual(sel.signature, b'i@:f')
 
     def testStructReturnPy(self):
         o = ReturnAStruct.alloc().init()
         p = structargs.StructArgClass.alloc().init()
 
         v = p.someRectWithObject_X_Y_H_W_(o, 1, 2, 3, 4)
-        self.assertEquals(v, ((1,2),(3,4)))
+        self.assertEqual(v, ((1,2),(3,4)))
 
     def testStructReturn(self):
         o = structargs.StructArgClass.alloc().init()
         v = o.someRect()
-        self.assertEquals(v, ((1,2),(3,4)))
+        self.assertEqual(v, ((1,2),(3,4)))
 
 
 
@@ -160,7 +160,7 @@ if sys.byteorder == 'little':
         o = structargs.StructArgClass.alloc().init()
 
         p = self.AlignmentTestClass.alloc().init()
-        self.assertEquals(p.testWithObject_(o) % 16, o.stackPtr() % 16)
+        self.assertEqual(p.testWithObject_(o) % 16, o.stackPtr() % 16)
 
 
 

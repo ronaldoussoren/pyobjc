@@ -63,7 +63,7 @@ from PyObjCTest.NULL import *
 class TestNULL (TestCase):
     def testNULL(self):
         self.assertHasAttr(objc, 'NULL')
-        self.assertEquals(repr(objc.NULL), 'objc.NULL')
+        self.assertEqual(repr(objc.NULL), 'objc.NULL')
         self.assertRaises(TypeError, type(objc.NULL))
 
 
@@ -113,13 +113,13 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = obj.callList_andInOut_(v, 42)
-        self.assertEquals(v, ["42"])
-        self.assertEquals(rv, (12, 21))
+        self.assertEqual(v, ["42"])
+        self.assertEqual(rv, (12, 21))
 
         v = []
         rv = obj.callList_andInOut_(v, objc.NULL)
-        self.assertEquals(v, ["NULL"])
-        self.assertEquals(rv,  (12, objc.NULL))
+        self.assertEqual(v, ["NULL"])
+        self.assertEqual(rv,  (12, objc.NULL))
 
     def testCallInOutNULL2(self):
         # If nothing is specified the bridge assumes the argument behaves
@@ -129,25 +129,25 @@ class TestNULLArguments (TestCase):
 
         v = []
         self.assertRaises(ValueError, obj.callList_andInOut2_, v, 42)
-        self.assertEquals(v, [])
+        self.assertEqual(v, [])
 
         v = []
         rv = obj.callList_andInOut2_(v, objc.NULL)
-        self.assertEquals(v, ["NULL"])
-        self.assertEquals(rv,  (12, objc.NULL))
+        self.assertEqual(v, ["NULL"])
+        self.assertEqual(rv,  (12, objc.NULL))
 
     def testCallInNULL(self):
         obj = OCTestNULL.alloc().init()
 
         v = []
         rv = obj.callList_andIn_(v, 42)
-        self.assertEquals(v, ["42"])
-        self.assertEquals(rv, 24)
+        self.assertEqual(v, ["42"])
+        self.assertEqual(rv, 24)
 
         v = []
         rv = obj.callList_andIn_(v, objc.NULL)
-        self.assertEquals(v, ["NULL"])
-        self.assertEquals(rv,  24)
+        self.assertEqual(v, ["NULL"])
+        self.assertEqual(rv,  24)
 
 
     def testCalledInOutNULL(self):
@@ -156,13 +156,13 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andInOut_(obj, v, 42)
-        self.assertEquals(v, ['42'])
-        self.assertEquals(rv, (13, 84))
+        self.assertEqual(v, ['42'])
+        self.assertEqual(rv, (13, 84))
 
         v = []
         rv = helper.on_callList_andInOut_(obj, v, objc.NULL)
-        self.assertEquals(v, ['objc.NULL'])
-        self.assertEquals(rv, (13, objc.NULL))
+        self.assertEqual(v, ['objc.NULL'])
+        self.assertEqual(rv, (13, objc.NULL))
 
     def testCalledInNULL(self):
         helper = OCTestNULL.alloc().init()
@@ -170,13 +170,13 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andIn_(obj, v, 42)
-        self.assertEquals(v, ['42'])
-        self.assertEquals(rv, 26)
+        self.assertEqual(v, ['42'])
+        self.assertEqual(rv, 26)
 
         v = []
         rv = helper.on_callList_andIn_(obj, v, objc.NULL)
-        self.assertEquals(v, ['objc.NULL'])
-        self.assertEquals(rv, 26)
+        self.assertEqual(v, ['objc.NULL'])
+        self.assertEqual(rv, 26)
 
     def testCalledOutNULL(self):
 
@@ -185,19 +185,19 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andOut_(obj, v, 42)
-        self.assertEquals(v, ['Nothing here'])
-        self.assertEquals(rv, (27, 99))
+        self.assertEqual(v, ['Nothing here'])
+        self.assertEqual(rv, (27, 99))
 
         v = []
         rv = helper.on_callList_andOut_(obj, v, objc.NULL)
-        self.assertEquals(v, ['Nothing here'])
-        self.assertEquals(rv, (27, objc.NULL))
+        self.assertEqual(v, ['Nothing here'])
+        self.assertEqual(rv, (27, objc.NULL))
 
         rv = helper.on_callOut_(obj, 42)
-        self.assertEquals(rv, 441)
+        self.assertEqual(rv, 441)
 
         rv = helper.on_callOut_(obj, objc.NULL)
-        self.assertEquals(rv, objc.NULL)
+        self.assertEqual(rv, objc.NULL)
 
     def dont_testCalledOutNULL(self):
         """

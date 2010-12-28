@@ -88,40 +88,40 @@ class TestTypeCode_int8 (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertEquals(o.int8Value(), ord('a'))
-        self.assertEquals(o.int8Value(), 55)
-        self.assertEquals(o.int8Value(), ord('z'))
+        self.assertEqual(o.int8Value(), ord('a'))
+        self.assertEqual(o.int8Value(), 55)
+        self.assertEqual(o.int8Value(), ord('z'))
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8Array()
-        self.assertEquals(len(v), 4)
-        self.assertEquals(v[0], 100)
-        self.assertEquals(v[1], -56)
-        self.assertEquals(v[2], -106)
-        self.assertEquals(v[3], 99)
+        self.assertEqual(len(v), 4)
+        self.assertEqual(v[0], 100)
+        self.assertEqual(v[1], -56)
+        self.assertEqual(v[2], -106)
+        self.assertEqual(v[3], 99)
 
     def testReturnValueString(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8String()
         self.assertIsInstance(v, (list, tuple))
-        self.assertEquals(len(v), 5)
-        self.assertEquals(v[0], ord("h"))
-        self.assertEquals(v[1], ord("e"))
-        self.assertEquals(v[2], ord("l"))
-        self.assertEquals(v[3], ord("l"))
-        self.assertEquals(v[4], ord("o"))
+        self.assertEqual(len(v), 5)
+        self.assertEqual(v[0], ord("h"))
+        self.assertEqual(v[1], ord("e"))
+        self.assertEqual(v[2], ord("l"))
+        self.assertEqual(v[3], ord("l"))
+        self.assertEqual(v[4], ord("o"))
 
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8Arg_andint8Arg_(44, 127)
-        self.assertEquals(v, (44, 127))
+        self.assertEqual(v, (44, 127))
 
         v = o.int8Arg_andint8Arg_(ord('a'), ord('b'))
-        self.assertEquals(v, (ord('a'), ord('b')))
+        self.assertEqual(v, (ord('a'), ord('b')))
 
         self.assertRaises(ValueError, o.int8Arg_andint8Arg_, 'a', 'b')
 
@@ -129,7 +129,7 @@ class TestTypeCode_int8 (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8StringArg_([1, 2, 3, 4])
-        self.assertEquals(v, [1,2,3,4])
+        self.assertEqual(v, [1,2,3,4])
 
         self.assertRaises(ValueError,  o.int8StringArg_, 'abc')
         self.assertRaises(ValueError,  o.int8StringArg_, ['a', 'b'])
@@ -138,33 +138,33 @@ class TestTypeCode_int8 (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8ArrayOf4In_([1,2,3,4])
-        self.assertEquals(v, [1,2,3,4])
+        self.assertEqual(v, [1,2,3,4])
 
         a = array.array('B', [200, 150, 80, 20])
         v = o.int8ArrayOf4In_(a)
-        self.assertEquals(v, (-56, -106, 80, 20))
+        self.assertEqual(v, (-56, -106, 80, 20))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8ArrayOf4Out_(None)
-        self.assertEquals(v, (ord('b'), ord('o'), ord('a'), ord('t')))
+        self.assertEqual(v, (ord('b'), ord('o'), ord('a'), ord('t')))
 
         o = OC_TestSpecialTypeCode.alloc().init()
         a = array.array('b', [0] * 4) 
         v = o.int8ArrayOf4Out_(a)
         self.assertIs(v, a)
-        self.assertEquals(v[0], ord('b'))
-        self.assertEquals(v[1], ord('o'))
-        self.assertEquals(v[2], ord('a'))
-        self.assertEquals(v[3], ord('t'))
+        self.assertEqual(v[0], ord('b'))
+        self.assertEqual(v[1], ord('o'))
+        self.assertEqual(v[2], ord('a'))
+        self.assertEqual(v[3], ord('t'))
 
     def testFixedArrayInOut_(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v, w = o.int8ArrayOf4InOut_([1,2,3,4])
-        self.assertEquals(v, [1,2,3,4])
-        self.assertEquals(w, (ord('h'), ord('a'), ord('n'), ord('d')))
+        self.assertEqual(v, [1,2,3,4])
+        self.assertEqual(w, (ord('h'), ord('a'), ord('n'), ord('d')))
 
 if __name__ == "__main__":
     main()

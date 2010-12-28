@@ -10,7 +10,7 @@ class TestAllocateBuffer(TestCase):
 
     def testBuffer(self):
         b = objc.allocateBuffer(10000)
-        self.assertEquals(len(b), 10000)
+        self.assertEqual(len(b), 10000)
 
         if sys.version_info[0] == 2:
             for i in range(0,10000):

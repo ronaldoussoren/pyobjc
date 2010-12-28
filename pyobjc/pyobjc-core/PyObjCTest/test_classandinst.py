@@ -67,7 +67,7 @@ class TestClassAndInstance(TestCase):
     def testClassAndInstance(self):
 
         # Having the next line true would be nice:
-        #self.assertEquals(PyObjC_TestClassAndInstance.isInstance(), objc.NO)
+        #self.assertEqual(PyObjC_TestClassAndInstance.isInstance(), objc.NO)
         # But we'll have to settle for this one instead:
         self.assertFalse(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
         self.assertTrue(PyObjC_TestClassAndInstance.alloc().init().isInstance())
@@ -75,7 +75,7 @@ class TestClassAndInstance(TestCase):
 #    @min_os_level('10.5')
 #    def testUnallocatable(self):
 #        # FIXME: This crashes on Tiger, haven't had time to debug yet
-#        self.assertEquals(PyObjC_TestUnallocatable.alloc(), None)
+#        self.assertEqual(PyObjC_TestUnallocatable.alloc(), None)
 
 if __name__ == '__main__':
     main()

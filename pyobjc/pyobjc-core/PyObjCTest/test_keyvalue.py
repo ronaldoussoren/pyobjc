@@ -80,114 +80,114 @@ class PyKeyValueCoding (TestCase):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key1"), 1)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key2"), 2)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key3"), 3)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key4"), u"4")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"multiple"), o.multiple)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key2"), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key3"), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"key4"), u"4")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"multiple"), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEY, o, u"nokey")
 
     def testValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"foo"), u"foobar")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"bar"), u"foobarfoobar")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"roprop"), u"read-only")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"foo"), u"foobar")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"bar"), u"foobarfoobar")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"roprop"), u"read-only")
 
     def testStoredValueForKey(self):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key1"), 1)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key2"), 2)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key3"), 3)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key4"), u"4")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"multiple"), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key2"), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key3"), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"key4"), u"4")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"multiple"), o.multiple)
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_STOREDVALUEFORKEY, o, u"nokey")
 
     def testStoredValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"foo"), u"foobar")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"bar"), u"foobarfoobar")
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"roprop"), u"read-only")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"foo"), u"foobar")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"bar"), u"foobarfoobar")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_STOREDVALUEFORKEY, o, u"roprop"), u"read-only")
 
     def testValueForKeyPath(self):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple"), o.multiple)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2"), o.multiple.level2)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple"), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2"), o.multiple.level2)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2.level3.keyA"), o.multiple.level2.level3.keyA)
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, o, u"multiple.level2.level3.keyB"), o.multiple.level2.level3.keyB)
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_VALUEFORKEYPATH, o, u"multiple.level2.nokey")
 
     def testValuesForKeys(self):
         o = KeyValueClass2()
 
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUESFORKEYS, o, [u"key1", u"key2", u"key3", u"key4"]), { u"key1":1, u"key2": 2, u"key3": 3, u"key4": u"4"} )
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUESFORKEYS, o, [u"key1", u"key2", u"key3", u"key4"]), { u"key1":1, u"key2": 2, u"key3": 3, u"key4": u"4"} )
 
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, DO_VALUESFORKEYS, o, [ u"key1", u"key2", u"nokey", u"key3" ])
 
     def testTakeValueForKey(self):
         o = KeyValueClass2()
 
-        self.assertEquals(o.key3, 3)
+        self.assertEqual(o.key3, 3)
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key3', u'drie')
-        self.assertEquals(o.key3, u"drie")
+        self.assertEqual(o.key3, u"drie")
 
-        self.assertEquals(o._key4, u"4")
+        self.assertEqual(o._key4, u"4")
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key4', u'vier')
-        self.assertEquals(o._key4, u"viervierviervier")
+        self.assertEqual(o._key4, u"viervierviervier")
 
         o.key5 = 1
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key5', u'V')
-        self.assertEquals(o.key5, u"VVVVV")
+        self.assertEqual(o.key5, u"VVVVV")
 
         self.assertNotHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'key9', u'IX')
         self.assertHasAttr(o, u'key9')
-        self.assertEquals(o.key9, u'IX')
+        self.assertEqual(o.key9, u'IX')
 
     def testTakeValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEquals(o.foo, u"foobar")
+        self.assertEqual(o.foo, u"foobar")
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEY, o, u'foo', u'FOO')
-        self.assertEquals(o.foo, u"FOO")
+        self.assertEqual(o.foo, u"FOO")
 
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_TAKEVALUE_FORKEY, o, u'key9', u'IX')
 
     def testTakeStoredValueForKey(self):
         o = KeyValueClass2()
 
-        self.assertEquals(o.key3, 3)
+        self.assertEqual(o.key3, 3)
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key3', u'drie')
-        self.assertEquals(o.key3, u"drie")
+        self.assertEqual(o.key3, u"drie")
 
-        self.assertEquals(o._key4, u"4")
+        self.assertEqual(o._key4, u"4")
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key4', u'vier')
-        self.assertEquals(o._key4, u"viervierviervier")
+        self.assertEqual(o._key4, u"viervierviervier")
 
         o.key5 = 1
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key5', u'V')
-        self.assertEquals(o.key5, u"VVVVV")
+        self.assertEqual(o.key5, u"VVVVV")
 
         self.assertNotHasAttr(o, u'key9')
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'key9', u'IX')
         self.assertHasAttr(o, u'key9')
-        self.assertEquals(o.key9, u'IX')
+        self.assertEqual(o.key9, u'IX')
 
     def testStoredTakeValueForKey2(self):
         o = KeyValueClass3()
 
-        self.assertEquals(o.foo, u"foobar")
+        self.assertEqual(o.foo, u"foobar")
         STUB.setKeyValue_forObject_key_value_(DO_TAKESTOREDVALUE_FORKEY, o, u'foo', u'FOO')
-        self.assertEquals(o.foo, u"FOO")
+        self.assertEqual(o.foo, u"FOO")
 
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_TAKESTOREDVALUE_FORKEY, o, u'key9', u'IX')
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_TAKESTOREDVALUE_FORKEY, o, u'roprop', u'IX')
@@ -195,8 +195,8 @@ class PyKeyValueCoding (TestCase):
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass2()
 
-        self.assertEquals(o.key3, 3)
-        self.assertEquals(o._key4, u"4")
+        self.assertEqual(o.key3, 3)
+        self.assertEqual(o._key4, u"4")
         o.key5 = 1
         self.assertNotHasAttr(o, u'key9')
 
@@ -208,18 +208,18 @@ class PyKeyValueCoding (TestCase):
                 u'key9': u'IX',
             })
 
-        self.assertEquals(o.key3, u"drie")
-        self.assertEquals(o._key4, u"viervierviervier")
-        self.assertEquals(o.key5, u"VVVVV")
+        self.assertEqual(o.key3, u"drie")
+        self.assertEqual(o._key4, u"viervierviervier")
+        self.assertEqual(o.key5, u"VVVVV")
         self.assertHasAttr(o, u'key9')
-        self.assertEquals(o.key9, u'IX')
+        self.assertEqual(o.key9, u'IX')
 
     def testTakeValuesFromDictionary2(self):
         o = KeyValueClass3()
 
-        self.assertEquals(o.foo, u"foobar")
+        self.assertEqual(o.foo, u"foobar")
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUESFROMDICT, o, None, { u'foo': u'FOO' })
-        self.assertEquals(o.foo, u"FOO")
+        self.assertEqual(o.foo, u"FOO")
 
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_TAKEVALUESFROMDICT, o, None, { u'key9':  u'IX' })
         self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_TAKEVALUESFROMDICT, o, None, { u'roprop':  u'IX' })
@@ -228,14 +228,14 @@ class PyKeyValueCoding (TestCase):
         o = KeyValueClass2()
         o.addMultiple()
 
-        self.assertEquals(o.multiple.level2.level3.keyA, u"hello")
-        self.assertEquals(o.multiple.level2.level3.keyB, u"world")
+        self.assertEqual(o.multiple.level2.level3.keyA, u"hello")
+        self.assertEqual(o.multiple.level2.level3.keyB, u"world")
 
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEYPATH, o, u"multiple.level2.level3.keyA", u"KeyAValue")
-        self.assertEquals(o.multiple.level2.level3.keyA, u"KeyAValue")
+        self.assertEqual(o.multiple.level2.level3.keyA, u"KeyAValue")
 
         STUB.setKeyValue_forObject_key_value_(DO_TAKEVALUE_FORKEYPATH, o, u"multiple.level2.level3.keyB", 9.999)
-        self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
+        self.assertEqual(o.multiple.level2.level3.keyB, 9.999)
 
 
 class TestAccMethod (TestCase):
@@ -245,7 +245,7 @@ class TestAccMethod (TestCase):
                 return u"FOO"
 
         # check the result for valueForKey: u"callme" on a Foo instance
-        self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, Foo(), u"callme"), u"FOO")
+        self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, Foo(), u"callme"), u"FOO")
 
     def testStr(self):
         # Strings are automaticly converted to NSStrings, and those don't have
@@ -258,31 +258,31 @@ class TestAccMethod (TestCase):
 
 class AbstractKVCodingTest:
     def testBaseValueForKey(self):
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"directString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"indirectString"))
-        self.assertEquals(DirectNumber,
+        self.assertEqual(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"directNumber"))
-        self.assertEquals(IndirectNumber,
+        self.assertEqual(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"indirectNumber"))
 
     def testPathValueForKey(self):
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"directHead.directString"))
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"indirectHead.directString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"directHead.indirectString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"indirectHead.indirectString"))
-        self.assertEquals(DirectNumber,
+        self.assertEqual(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"directHead.directNumber"))
-        self.assertEquals(DirectNumber,
+        self.assertEqual(DirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"indirectHead.directNumber"))
-        self.assertEquals(IndirectNumber,
+        self.assertEqual(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"directHead.indirectNumber"))
-        self.assertEquals(IndirectNumber,
+        self.assertEqual(IndirectNumber,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"indirectHead.indirectNumber"))
 
 class TestObjCKVCoding(AbstractKVCodingTest, TestCase):
@@ -306,19 +306,19 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
         self.path = KVPySubOverObjCPath.new()
 
     def testOverValueKey(self):
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"overDirectString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEY, self.base, u"overIndirectString"))
 
     def testOverValueKeyPath(self):
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"overDirectHead.directString"))
-        self.assertEquals(DirectString,
+        self.assertEqual(DirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"overIndirectHead.directString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"overDirectHead.indirectString"))
-        self.assertEquals(IndirectString,
+        self.assertEqual(IndirectString,
             STUB.keyValue_forObject_key_(DO_VALUEFORKEYPATH, self.path, u"overIndirectHead.indirectString"))
 
 
@@ -333,51 +333,51 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
         def testPythonConvention(self):
             o = KeyValueClass2()
 
-            self.assertEquals(o._pythonConvention, u'BAD')
-            self.assertEquals(o.pythonConvention(), u'GOOD')
-            self.assertEquals(o._pythonConventionValue, u'GOOD')
-            self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
+            self.assertEqual(o._pythonConvention, u'BAD')
+            self.assertEqual(o.pythonConvention(), u'GOOD')
+            self.assertEqual(o._pythonConventionValue, u'GOOD')
+            self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'GOOD')
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'pythonConvention', u'CHANGED')
-            self.assertEquals(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'CHANGED')
-            self.assertEquals(o._pythonConvention, u'BAD')
-            self.assertEquals(o.pythonConvention(), u'CHANGED')
-            self.assertEquals(o._pythonConventionValue, u'CHANGED')
+            self.assertEqual(STUB.keyValue_forObject_key_(DO_VALUEFORKEY, o, u"pythonConvention"), u'CHANGED')
+            self.assertEqual(o._pythonConvention, u'BAD')
+            self.assertEqual(o.pythonConvention(), u'CHANGED')
+            self.assertEqual(o._pythonConventionValue, u'CHANGED')
 
 
         def testSetValueForKey(self):
             o = KeyValueClass2()
 
-            self.assertEquals(o.key3, 3)
+            self.assertEqual(o.key3, 3)
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key3', u'drie')
-            self.assertEquals(o.key3, u"drie")
+            self.assertEqual(o.key3, u"drie")
 
-            self.assertEquals(o._key4, u"4")
+            self.assertEqual(o._key4, u"4")
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key4', u'vier')
-            self.assertEquals(o._key4, u"viervierviervier")
+            self.assertEqual(o._key4, u"viervierviervier")
 
             o.key5 = 1
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key5', u'V')
-            self.assertEquals(o.key5, u"VVVVV")
+            self.assertEqual(o.key5, u"VVVVV")
 
             self.assertNotHasAttr(o, u'key9')
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'key9', u'IX')
             self.assertHasAttr(o, u'key9')
-            self.assertEquals(o.key9, u'IX')
+            self.assertEqual(o.key9, u'IX')
 
         def testTakeValueForKey2(self):
             o = KeyValueClass3()
 
-            self.assertEquals(o.foo, u"foobar")
+            self.assertEqual(o.foo, u"foobar")
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEY, o, u'foo', u'FOO')
-            self.assertEquals(o.foo, u"FOO")
+            self.assertEqual(o.foo, u"FOO")
 
             self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUE_FORKEY, o, u'key9', u'IX')
 
         def testSetValuesForKeysFromDictionary(self):
             o = KeyValueClass2()
 
-            self.assertEquals(o.key3, 3)
-            self.assertEquals(o._key4, u"4")
+            self.assertEqual(o.key3, 3)
+            self.assertEqual(o._key4, u"4")
             o.key5 = 1
             self.assertNotHasAttr(o, u'key9')
 
@@ -389,18 +389,18 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
                     u'key9': u'IX',
                 })
 
-            self.assertEquals(o.key3, u"drie")
-            self.assertEquals(o._key4, u"viervierviervier")
-            self.assertEquals(o.key5, u"VVVVV")
+            self.assertEqual(o.key3, u"drie")
+            self.assertEqual(o._key4, u"viervierviervier")
+            self.assertEqual(o.key5, u"VVVVV")
             self.assertHasAttr(o, u'key9')
-            self.assertEquals(o.key9, u'IX')
+            self.assertEqual(o.key9, u'IX')
 
         def testSetValuesForKeysFromDictionary2(self):
             o = KeyValueClass3()
 
-            self.assertEquals(o.foo, u"foobar")
+            self.assertEqual(o.foo, u"foobar")
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUESFORKEYSFROMDICT, o, None, { u'foo': u'FOO' })
-            self.assertEquals(o.foo, u"FOO")
+            self.assertEqual(o.foo, u"FOO")
 
             self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUESFORKEYSFROMDICT, o, None, { u'key9': u'IX' })
             self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, DO_SETVALUESFORKEYSFROMDICT, o, None, { u'roprop': u'IX' })
@@ -409,14 +409,14 @@ if sys.platform == "darwin" and os.uname()[2] >= '7.0.0':
             o = KeyValueClass2()
             o.addMultiple()
 
-            self.assertEquals(o.multiple.level2.level3.keyA, u"hello")
-            self.assertEquals(o.multiple.level2.level3.keyB, u"world")
+            self.assertEqual(o.multiple.level2.level3.keyA, u"hello")
+            self.assertEqual(o.multiple.level2.level3.keyB, u"world")
 
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEYPATH, o, u"multiple.level2.level3.keyA", u"KeyAValue")
-            self.assertEquals(o.multiple.level2.level3.keyA, u"KeyAValue")
+            self.assertEqual(o.multiple.level2.level3.keyA, u"KeyAValue")
 
             STUB.setKeyValue_forObject_key_value_(DO_SETVALUE_FORKEYPATH, o, u"multiple.level2.level3.keyB", 9.999)
-            self.assertEquals(o.multiple.level2.level3.keyB, 9.999)
+            self.assertEqual(o.multiple.level2.level3.keyB, 9.999)
 
 
 class PyObjC_TestKeyValueSource (NSObject):
@@ -431,7 +431,7 @@ if PyObjCTest_KeyValueObserver is not None:
 
         def testOne(self):
             o = PyObjCTest_KeyValueObserver.alloc().initWithInstanceOfClass_withKey_(PyObjC_TestKeyValueSource, u"foobar")
-            self.assertEquals(o.getValue(), u"Hello world")
+            self.assertEqual(o.getValue(), u"Hello world")
             del o
 
     global DEALLOCS
@@ -499,14 +499,14 @@ if PyObjCTest_KeyValueObserver is not None:
             o = PyObjCTestObserved2.alloc().init()
             pool = NSAutoreleasePool.alloc().init()
 
-            self.assertEquals(o.foo, None)
-            self.assertEquals(o.bar, None)
+            self.assertEqual(o.foo, None)
+            self.assertEqual(o.bar, None)
 
             o.foo = u'foo'
-            self.assertEquals(o.foo, u'foo')
+            self.assertEqual(o.foo, u'foo')
 
             o.bar = u'bar'
-            self.assertEquals(o.bar, u'bar')
+            self.assertEqual(o.bar, u'bar')
 
             o.addObserver_forKeyPath_options_context_(observer, u'bar',
                 (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
@@ -516,19 +516,19 @@ if PyObjCTest_KeyValueObserver is not None:
                 0)
             try:
                 o.bar = u"world"
-                self.assertEquals(o.bar, u"world")
+                self.assertEqual(o.bar, u"world")
 
                 o.foo = u"xxx"
-                self.assertEquals(o.foo, u"xxx")
+                self.assertEqual(o.foo, u"xxx")
             finally:
                 o.removeObserver_forKeyPath_(observer, u"bar")
                 o.removeObserver_forKeyPath_(observer, u"foo")
 
-            self.assertEquals(len(observer.observed), 2)
+            self.assertEqual(len(observer.observed), 2)
 
-            self.assertEquals(observer.observed[0],
+            self.assertEqual(observer.observed[0],
                 (u'bar', o,  { u'kind': 1, u'new': u'world', u'old': u'bar' }, 0))
-            self.assertEquals(observer.observed[1],
+            self.assertEqual(observer.observed[1],
                 (u'foo', o, { u'kind': 1, u'new': u'xxx', u'old': u'foo' }, 0))
 
             del observer
@@ -537,7 +537,7 @@ if PyObjCTest_KeyValueObserver is not None:
             before = DEALLOCS
             del o
             del outer_pool
-            self.assertEquals(DEALLOCS, before+1, u"Leaking an observed object")
+            self.assertEqual(DEALLOCS, before+1, u"Leaking an observed object")
 
         def testObserving(self):
             outer_pool = NSAutoreleasePool.alloc().init()
@@ -545,15 +545,15 @@ if PyObjCTest_KeyValueObserver is not None:
 
             o = PyObjCTestObserved1.alloc().init()
 
-            self.assertEquals(o.bar(), None)
+            self.assertEqual(o.bar(), None)
             o.setBar_(u"hello")
-            self.assertEquals(o.bar(), u"hello")
+            self.assertEqual(o.bar(), u"hello")
 
             # See below
             PyObjCTestObserved1.FOOBASE = u"base3"
             try:
                 o.setFoo_(u"yyy")
-                self.assertEquals(o.foo(), u"base3yyy")
+                self.assertEqual(o.foo(), u"base3yyy")
             finally:
                 PyObjCTestObserved1.FOOBASE = u"base"
 
@@ -569,10 +569,10 @@ if PyObjCTest_KeyValueObserver is not None:
 
             try:
                 o.setBar_(u"world")
-                self.assertEquals(o.bar(), u"world")
+                self.assertEqual(o.bar(), u"world")
 
                 o.setFoo_(u"xxx")
-                self.assertEquals(o.foo(), u"basexxx")
+                self.assertEqual(o.foo(), u"basexxx")
 
                 # Change a "class" attribute, and make sure the object sees
                 # that change (e.g. the fact that Cocoa changes the ISA pointer
@@ -580,29 +580,29 @@ if PyObjCTest_KeyValueObserver is not None:
                 PyObjCTestObserved1.FOOBASE = u"base2"
 
                 o.setFoo_(u"yyy")
-                self.assertEquals(o.foo(), u"base2yyy")
+                self.assertEqual(o.foo(), u"base2yyy")
 
             finally:
                 o.removeObserver_forKeyPath_(observer, u"bar")
                 o.removeObserver_forKeyPath_(observer, u"foo")
                 PyObjCTestObserved1.FOOBASE = u"base"
 
-            self.assertEquals(len(observer.observed), 3)
+            self.assertEqual(len(observer.observed), 3)
 
-            self.assertEquals(observer.observed[0],
+            self.assertEqual(observer.observed[0],
                 (u'bar', o,  { u'kind': 1, u'new': u'world', u'old': u'hello' }, 0))
-            self.assertEquals(observer.observed[1],
+            self.assertEqual(observer.observed[1],
                 (u'foo', o, { u'kind': 1, u'new': u'basexxx', u'old': u'base3yyy' }, 0))
-            self.assertEquals(observer.observed[2],
+            self.assertEqual(observer.observed[2],
                 (u'foo', o, { u'kind': 1, u'new': u'base2yyy', u'old': u'basexxx' }, 0))
-            self.assertEquals(o.bar(), u"world")
+            self.assertEqual(o.bar(), u"world")
 
             del observer
 
             before = DEALLOCS
             del o
             del outer_pool
-            self.assertEquals(DEALLOCS, before+1, u"Leaking an observed object")
+            self.assertEqual(DEALLOCS, before+1, u"Leaking an observed object")
 
         def testObserving2(self):
             observer = PyObjCTestObserver.alloc().init()
@@ -622,13 +622,13 @@ if PyObjCTest_KeyValueObserver is not None:
                 PyObjCTestObserved1.FOOBASE = u"base2"
 
                 o.setFoo_(u"yyy")
-                self.assertEquals(o.foo(), u"base2yyy")
+                self.assertEqual(o.foo(), u"base2yyy")
 
             finally:
                 o.removeObserver_forKeyPath_(observer, u"bar")
                 PyObjCTestObserved1.FOOBASE = u"base"
 
-            self.assertEquals(len(observer.observed), 0)
+            self.assertEqual(len(observer.observed), 0)
 
         @min_os_level('10.5')
         def testReceiveObserved(self):

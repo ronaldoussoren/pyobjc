@@ -388,14 +388,14 @@ class TestImplicitSignature (TestCase):
         class OC_ImplProto_ColonMatch1 (NSObject):
             def simplemethod(self):
                 pass
-        self.assertEquals(OC_ImplProto_ColonMatch1.simplemethod.selector, b'simplemethod')
-        self.assertEquals(OC_ImplProto_ColonMatch1.simplemethod.signature, b'v@:')
+        self.assertEqual(OC_ImplProto_ColonMatch1.simplemethod.selector, b'simplemethod')
+        self.assertEqual(OC_ImplProto_ColonMatch1.simplemethod.signature, b'v@:')
 
         class OC_ImplProto_ColonMatch2 (NSObject):
             def simplemethod_arg2_(self, a, b):
                 return 1
-        self.assertEquals(OC_ImplProto_ColonMatch2.simplemethod_arg2_.selector, b'simplemethod:arg2:')
-        self.assertEquals(OC_ImplProto_ColonMatch2.simplemethod_arg2_.signature, b'@@:@@')
+        self.assertEqual(OC_ImplProto_ColonMatch2.simplemethod_arg2_.selector, b'simplemethod:arg2:')
+        self.assertEqual(OC_ImplProto_ColonMatch2.simplemethod_arg2_.signature, b'@@:@@')
 
     def testTooFewColons(self):
         # OK: the number of implied colons is smaller than the actual number of
@@ -407,8 +407,8 @@ class TestImplicitSignature (TestCase):
         class OC_ImplProto_TooFew1 (NSObject):
             def myMethod(self, arg1, arg2=4):
                 pass
-        self.assertEquals(OC_ImplProto_TooFew1.myMethod.selector, b'myMethod')
-        self.assertEquals(OC_ImplProto_TooFew1.myMethod.signature, b'v@:@@')
+        self.assertEqual(OC_ImplProto_TooFew1.myMethod.selector, b'myMethod')
+        self.assertEqual(OC_ImplProto_TooFew1.myMethod.signature, b'v@:@@')
 
     def testTooManyColons(self):
         # OK: the number of implied colons is larger than the actual number
@@ -418,8 +418,8 @@ class TestImplicitSignature (TestCase):
         class OC_ImplProto_TooMany2 (NSObject):
             def run_to_completion(self):
                 pass
-        self.assertEquals(OC_ImplProto_TooMany2.run_to_completion.selector, b'run_to_completion')
-        self.assertEquals(OC_ImplProto_TooMany2.run_to_completion.signature, b'v@:')
+        self.assertEqual(OC_ImplProto_TooMany2.run_to_completion.selector, b'run_to_completion')
+        self.assertEqual(OC_ImplProto_TooMany2.run_to_completion.signature, b'v@:')
 
     def testImpliedColonTooFew(self):
         # BAD: a method that is obviously intented to be an objective-C method, but
@@ -494,26 +494,26 @@ class TestImplicitSignature (TestCase):
             def methodWithArg_(self, arg): pass
 
         # Check method signatures
-        self.assertEquals(OC_ImplProto_Variations.method1.selector, b"method1")
-        self.assertEquals(OC_ImplProto_Variations.method2.selector, b"method2")
-        self.assertEquals(OC_ImplProto_Variations.method1_.selector, b"method1:")
-        self.assertEquals(OC_ImplProto_Variations.methodWithX_andY_.selector, b"methodWithX:andY:")
-        self.assertEquals(OC_ImplProto_Variations.method_with_embedded_underscores.selector, b"method_with_embedded_underscores")
-        #self.assertEquals(OC_ImplProto_Variations.__magic__.selector, b"__magic__")
-        self.assertEquals(OC_ImplProto_Variations._leadingColon.selector, b"_leadingColon")
-        self.assertEquals(OC_ImplProto_Variations._leadingColon_.selector, b"_leadingColon:")
-        self.assertEquals(OC_ImplProto_Variations.methodWithArg_.selector, b"methodWithArg:")
+        self.assertEqual(OC_ImplProto_Variations.method1.selector, b"method1")
+        self.assertEqual(OC_ImplProto_Variations.method2.selector, b"method2")
+        self.assertEqual(OC_ImplProto_Variations.method1_.selector, b"method1:")
+        self.assertEqual(OC_ImplProto_Variations.methodWithX_andY_.selector, b"methodWithX:andY:")
+        self.assertEqual(OC_ImplProto_Variations.method_with_embedded_underscores.selector, b"method_with_embedded_underscores")
+        #self.assertEqual(OC_ImplProto_Variations.__magic__.selector, b"__magic__")
+        self.assertEqual(OC_ImplProto_Variations._leadingColon.selector, b"_leadingColon")
+        self.assertEqual(OC_ImplProto_Variations._leadingColon_.selector, b"_leadingColon:")
+        self.assertEqual(OC_ImplProto_Variations.methodWithArg_.selector, b"methodWithArg:")
 
         # And the implied type signature
-        self.assertEquals(OC_ImplProto_Variations.method1.signature, b"v@:")
-        self.assertEquals(OC_ImplProto_Variations.method2.signature, b"@@:")
-        self.assertEquals(OC_ImplProto_Variations.method1_.signature, b"v@:@")
-        self.assertEquals(OC_ImplProto_Variations.methodWithX_andY_.signature, b"v@:@@")
-        self.assertEquals(OC_ImplProto_Variations.method_with_embedded_underscores.signature, b"v@:@")
-        #self.assertEquals(OC_ImplProto_Variations.__magic__.signature, b"v@:")
-        self.assertEquals(OC_ImplProto_Variations._leadingColon.signature, b"v@:")
-        self.assertEquals(OC_ImplProto_Variations._leadingColon_.signature, b"@@:@")
-        self.assertEquals(OC_ImplProto_Variations.methodWithArg_.signature, b"v@:@")
+        self.assertEqual(OC_ImplProto_Variations.method1.signature, b"v@:")
+        self.assertEqual(OC_ImplProto_Variations.method2.signature, b"@@:")
+        self.assertEqual(OC_ImplProto_Variations.method1_.signature, b"v@:@")
+        self.assertEqual(OC_ImplProto_Variations.methodWithX_andY_.signature, b"v@:@@")
+        self.assertEqual(OC_ImplProto_Variations.method_with_embedded_underscores.signature, b"v@:@")
+        #self.assertEqual(OC_ImplProto_Variations.__magic__.signature, b"v@:")
+        self.assertEqual(OC_ImplProto_Variations._leadingColon.signature, b"v@:")
+        self.assertEqual(OC_ImplProto_Variations._leadingColon_.signature, b"@@:@")
+        self.assertEqual(OC_ImplProto_Variations.methodWithArg_.signature, b"v@:@")
 
 if __name__ == "__main__":
     main()

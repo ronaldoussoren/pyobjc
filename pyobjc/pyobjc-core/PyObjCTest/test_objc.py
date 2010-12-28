@@ -103,7 +103,7 @@ class TestDescription (TestCase):
         EXPECTS = u'(a)', u'hello', u'2'
         EXPECTS = repr(a), u'hello', u'2'
         for obj,expect in zip(TESTS, EXPECTS):
-            self.assertEquals(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
+            self.assertEqual(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
 
 if __name__ == '__main__':
     main()

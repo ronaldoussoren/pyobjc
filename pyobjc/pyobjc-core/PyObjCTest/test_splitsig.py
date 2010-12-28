@@ -58,15 +58,15 @@ class SplitSignatureTest (TestCase):
 
 
     def testSimple(self):
-        self.assertEquals(objc.splitSignature(b"@:@"), (b'@',b':',b'@'))
-        self.assertEquals(objc.splitSignature(b"@:10{NSRect=ff}"), (b'@',b':',b'{NSRect=ff}'))
-        self.assertEquals(objc.splitSignature(b"@:o^@"), (b'@',b':',b'o^@'))
+        self.assertEqual(objc.splitSignature(b"@:@"), (b'@',b':',b'@'))
+        self.assertEqual(objc.splitSignature(b"@:10{NSRect=ff}"), (b'@',b':',b'{NSRect=ff}'))
+        self.assertEqual(objc.splitSignature(b"@:o^@"), (b'@',b':',b'o^@'))
 
         # Block pointer
-        self.assertEquals(objc.splitSignature(b"@:@?"), (b'@',b':',b'@?'))
+        self.assertEqual(objc.splitSignature(b"@:@?"), (b'@',b':',b'@?'))
 
         # struct definition in an struct objc_ivar
-        self.assertEquals(objc.splitSignature(b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'), (b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',))
+        self.assertEqual(objc.splitSignature(b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'), (b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',))
 
     def testSignatureCount(self):
         EXCEPTIONS=[
@@ -110,7 +110,7 @@ class SplitSignatureTest (TestCase):
                 argcount = len(elems) - 3 # retval, self, _sel
                 coloncount = sel.selector.count(b':')
 
-                self.assertEquals(argcount, coloncount, 
+                self.assertEqual(argcount, coloncount, 
                         '%s [%d:%d] %r %r'%(sel.selector.decode('latin1'), argcount, coloncount, elems, cls))
 
 

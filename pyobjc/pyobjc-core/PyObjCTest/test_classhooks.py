@@ -22,9 +22,9 @@ class TestClassSetupHook (TestCase):
         class TestSpecialProperty (objc.lookUpClass('NSObject')):
             myprop = specialproperty()
 
-            self.assertEquals(myprop.name, None)
+            self.assertEqual(myprop.name, None)
 
-        self.assertEquals(TestSpecialProperty.myprop.name, 'myprop')
+        self.assertEqual(TestSpecialProperty.myprop.name, 'myprop')
 
         o = TestSpecialProperty.alloc().init()
         self.assertHasAttr(o, 'specialmyprop')

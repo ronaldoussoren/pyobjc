@@ -25,7 +25,7 @@ class TestInformalProtocols(TestCase):
         class ProtoClass1 (NSObject):
             def testMethod(self):
                 pass
-        self.assertEquals(ProtoClass1.testMethod.signature, b"I@:")
+        self.assertEqual(ProtoClass1.testMethod.signature, b"I@:")
 
 
     def doIncompleteClass(self):
@@ -160,8 +160,8 @@ if sys.maxint < 2 ** 32:
                 def anotherProto_with_(self, a1, a2):
                     pass
 
-            self.assertEquals(MyClassImplementingMyProtocol.protoMethod.signature, b"I@:")
-            self.assertEquals(MyClassImplementingMyProtocol.anotherProto_with_.signature, b"v@:ii")
+            self.assertEqual(MyClassImplementingMyProtocol.protoMethod.signature, b"I@:")
+            self.assertEqual(MyClassImplementingMyProtocol.anotherProto_with_.signature, b"v@:ii")
             self.assertTrue(MyClassImplementingMyProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
 
             class MyClassImplementingMyOtherProtocol(NSObject, MyOtherProtocol):
@@ -169,9 +169,9 @@ if sys.maxint < 2 ** 32:
                 def anotherProto_with_(self, a1, a2): pass
                 def yetAnother_(self, a): pass
 
-            self.assertEquals(MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:")
-            self.assertEquals(MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii")
-            self.assertEquals(MyClassImplementingMyOtherProtocol.yetAnother_.signature, b"i@:I")
+            self.assertEqual(MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:")
+            self.assertEqual(MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii")
+            self.assertEqual(MyClassImplementingMyOtherProtocol.yetAnother_.signature, b"i@:I")
             self.assertTrue(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyProtocol))
             self.assertTrue(MyClassImplementingMyOtherProtocol.pyobjc_classMethods.conformsToProtocol_(MyOtherProtocol))
 
@@ -192,9 +192,9 @@ if sys.maxint < 2 ** 32:
 
                     aClassOne_ = classmethod(aClassOne_)
 
-            self.assertEquals(ImplementingMyClassProtocol.anAnotherOne_.signature, b'i@:i')
-            self.assertEquals(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
-            self.assertEquals(ImplementingMyClassProtocol.aClassOne_.signature, b'@@:i')
+            self.assertEqual(ImplementingMyClassProtocol.anAnotherOne_.signature, b'i@:i')
+            self.assertEqual(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
+            self.assertEqual(ImplementingMyClassProtocol.aClassOne_.signature, b'@@:i')
 
             # TODO: protocol with class and instance method with different
             # signatures.
@@ -217,19 +217,19 @@ if sys.maxint < 2 ** 32:
                 ])
 
         def testMethodInfo(self):
-            self.assertEquals(
+            self.assertEqual(
                     MyProtocol.descriptionForInstanceMethod_("protoMethod"),
                         ("protoMethod", "I@:"))
 
-            self.assertEquals(
+            self.assertEqual(
                     MyProtocol.descriptionForInstanceMethod_("nosuchmethod"),
                         None)
 
-            self.assertEquals(
+            self.assertEqual(
                     MyClassProtocol.descriptionForClassMethod_("aClassOne:"),
                         ("aClassOne:", "@@:i"))
 
-            self.assertEquals(
+            self.assertEqual(
                     MyClassProtocol.descriptionForClassMethod_("nosuchmethod"),
                         None)
 
@@ -241,7 +241,7 @@ if sys.maxint < 2 ** 32:
             # NOTE: This is not very important, the only methods that are not
             # explicitly wrapped should be compatibility methods that will
             # cause a warning when called.
-            self.assertEquals(1, 0)
+            self.assertEqual(1, 0)
 
 if __name__ == '__main__':
     main()

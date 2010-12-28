@@ -25,8 +25,8 @@ class TestSubclassing(TestCase):
 
         self.assertHasAttr(RaiseClass, 'raise__')
         self.assertHasAttr(RaiseClass, 'raise')
-        self.assertEquals(RaiseClass.raise__.selector, b'raise')
-        self.assertEquals(getattr(RaiseClass, 'raise').selector, b'raise')
+        self.assertEqual(RaiseClass.raise__.selector, b'raise')
+        self.assertEqual(getattr(RaiseClass, 'raise').selector, b'raise')
 
     def testMIObjC(self):
         try:
@@ -53,18 +53,18 @@ class TestSubclassing(TestCase):
 
         obj = Level1Class.alloc().init()
         v = obj.hello()
-        self.assertEquals(v, "level1")
+        self.assertEqual(v, "level1")
 
         obj = Level2Class.alloc().init()
         v = obj.hello()
-        self.assertEquals(v, "level2")
+        self.assertEqual(v, "level2")
 
         v = obj.superHello()
-        self.assertEquals(v, "level1")
+        self.assertEqual(v, "level1")
 
         v = obj.description()
         # this may be a bit hardwired for comfort
-        self.assertEquals(v.find("<Level2Class"), 0)
+        self.assertEqual(v.find("<Level2Class"), 0)
 
     def testMethodSignature(self):
         class Signature (NSObject):
@@ -76,17 +76,17 @@ class TestSubclassing(TestCase):
 
         self.assertIsInstance(v, Signature)
 
-        self.assertEquals(v.methodSignatureForSelector_('foo:'), None)
+        self.assertEqual(v.methodSignatureForSelector_('foo:'), None)
 
         x = v.methodSignatureForSelector_('test:x:')
         self.assertIsNotNone(x)
 
-        self.assertEquals(x.methodReturnType(), b'v')
-        self.assertEquals(x.numberOfArguments(), 4)
-        self.assertEquals(x.getArgumentTypeAtIndex_(0), b'@')
-        self.assertEquals(x.getArgumentTypeAtIndex_(1), b':')
-        self.assertEquals(x.getArgumentTypeAtIndex_(2), b'@')
-        self.assertEquals(x.getArgumentTypeAtIndex_(3), b'i')
+        self.assertEqual(x.methodReturnType(), b'v')
+        self.assertEqual(x.numberOfArguments(), 4)
+        self.assertEqual(x.getArgumentTypeAtIndex_(0), b'@')
+        self.assertEqual(x.getArgumentTypeAtIndex_(1), b':')
+        self.assertEqual(x.getArgumentTypeAtIndex_(2), b'@')
+        self.assertEqual(x.getArgumentTypeAtIndex_(3), b'i')
 
 
 class TestSelectors(TestCase):
@@ -125,13 +125,13 @@ class TestCopying (TestCase):
         o = MyCopyClass.alloc().init()
         o.foobar = 1
 
-        self.assertEquals(o.foobar, 1)
+        self.assertEqual(o.foobar, 1)
 
         # Make a copy from ObjC (see testbundle.m)
         c = PyObjC_TestClass3.makeACopy_(o)
 
         self.assertIsInstance(c, MyCopyClass)
-        self.assertEquals(c.foobar, 2)
+        self.assertEqual(c.foobar, 2)
 
 
     def testMultipleInheritance1(self):
@@ -147,7 +147,7 @@ class TestCopying (TestCase):
         self.assertHasAttr(MITestClass1, 'mixinMethod')
 
         o = MITestClass1.alloc().init()
-        self.assertEquals(o.mixinMethod(), "foo")
+        self.assertEqual(o.mixinMethod(), "foo")
 
     def testMultipleInheritance2(self):
         # old-style class mixin
@@ -162,7 +162,7 @@ class TestCopying (TestCase):
         self.assertHasAttr(MITestClass2, 'mixinMethod')
 
         o = MITestClass2.alloc().init()
-        self.assertEquals(o.mixinMethod(), "foo")
+        self.assertEqual(o.mixinMethod(), "foo")
 
 class TestClassMethods (TestCase):
 
@@ -200,9 +200,9 @@ class TestOverridingSpecials(TestCase):
                 return objc.super(ClassWithAlloc, cls).alloc()
 
             
-        self.assertEquals(aList[0], 0)
+        self.assertEqual(aList[0], 0)
         o = ClassWithAlloc.alloc().init()
-        self.assertEquals(aList[0], 1)
+        self.assertEqual(aList[0], 1)
         self.assertIsInstance(o, NSObject)
         del o
 
@@ -224,14 +224,14 @@ class TestOverridingSpecials(TestCase):
         o = ClassWithRetaining.alloc().init()
         v = o.retainCount()
         o.retain()
-        self.assertEquals(aList, ['retain'])
-        self.assertEquals(o.retainCount(), v+1)
+        self.assertEqual(aList, ['retain'])
+        self.assertEqual(o.retainCount(), v+1)
         o.release()
-        self.assertEquals(aList, ['retain', 'release'])
-        self.assertEquals(o.retainCount(), v)
+        self.assertEqual(aList, ['retain', 'release'])
+        self.assertEqual(o.retainCount(), v)
         del o
 
-        self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
+        self.assertEqual(aList, ['retain', 'release', 'release', '__del__'])
 
         # Test again, now remove all python references and create one
         # again.
@@ -240,14 +240,14 @@ class TestOverridingSpecials(TestCase):
         o = ClassWithRetaining.alloc().init()
         v = NSArray.arrayWithArray_([o])
         del o
-        self.assertEquals(aList, ['retain'])
+        self.assertEqual(aList, ['retain'])
         o = v[0]
-        self.assertEquals(aList, ['retain'])
+        self.assertEqual(aList, ['retain'])
         del v
         del o
         del pool
         
-        self.assertEquals(aList, ['retain', 'release', 'release', '__del__'])
+        self.assertEqual(aList, ['retain', 'release', 'release', '__del__'])
 
         class ClassWithRetainCount(NSObject):
             def retainCount(self):
@@ -256,10 +256,10 @@ class TestOverridingSpecials(TestCase):
         
         del aList[:]
         o = ClassWithRetainCount.alloc().init()
-        self.assertEquals(aList, [])
+        self.assertEqual(aList, [])
         v = o.retainCount()
         self.assertIsInstance(v, int)
-        self.assertEquals(aList, ['retainCount'])
+        self.assertEqual(aList, ['retainCount'])
         del o
 
     def testOverrideDealloc(self):
@@ -269,9 +269,9 @@ class TestOverridingSpecials(TestCase):
             def __del__(self):
                 aList.append('__del__')
 
-        self.assertEquals(aList, [])
+        self.assertEqual(aList, [])
         Dummy()
-        self.assertEquals(aList, ['__del__'])
+        self.assertEqual(aList, ['__del__'])
 
         class ClassWithDealloc(NSObject):
             def init(self):
@@ -286,9 +286,9 @@ class TestOverridingSpecials(TestCase):
 
         del aList[:]
         o = ClassWithDealloc.alloc().init()
-        self.assertEquals(aList, [])
+        self.assertEqual(aList, [])
         del o
-        self.assertEquals(len(aList), 2)
+        self.assertEqual(len(aList), 2)
         self.assertIn('dealloc', aList)
         self.assertIn('__del__', aList)
 
@@ -299,9 +299,9 @@ class TestOverridingSpecials(TestCase):
 
         del aList[:]
         o = SubClassWithDealloc.alloc().init()
-        self.assertEquals(aList, [])
+        self.assertEqual(aList, [])
         del o
-        self.assertEquals(len(aList), 3)
+        self.assertEqual(len(aList), 3)
         self.assertIn('dealloc.dealloc', aList)
         self.assertIn('dealloc', aList)
         self.assertIn('__del__', aList)
@@ -322,9 +322,9 @@ class TestOverridingSpecials(TestCase):
 
         del aList[:]
         o = ClassWithDeallocAndDel.alloc().init()
-        self.assertEquals(aList, [])
+        self.assertEqual(aList, [])
         del o
-        self.assertEquals(len(aList), 3)
+        self.assertEqual(len(aList), 3)
         self.assertIn('mydel', aList)
         self.assertIn('dealloc', aList)
         self.assertIn('__del__', aList)
@@ -354,15 +354,15 @@ class TestOverridingSpecials(TestCase):
 
         MethodNamesClass.__foo_bar__ = __foo_bar__
 
-        self.assertEquals(MethodNamesClass.someName_andArg_.selector,
+        self.assertEqual(MethodNamesClass.someName_andArg_.selector,
                 b'someName:andArg:')
-        self.assertEquals(MethodNamesClass._someName_andArg_.selector,
+        self.assertEqual(MethodNamesClass._someName_andArg_.selector,
                 b'_someName:andArg:')
-        self.assertEquals(MethodNamesClass.__foo_bar__.selector,
+        self.assertEqual(MethodNamesClass.__foo_bar__.selector,
                 b'__foo_bar__')
-        self.assertEquals(MethodNamesClass.raise__.selector,
+        self.assertEqual(MethodNamesClass.raise__.selector,
                 b'raise')
-        self.assertEquals(MethodNamesClass.froobnicate__.selector,
+        self.assertEqual(MethodNamesClass.froobnicate__.selector,
                 b'froobnicate::')
 
     def testOverrideRespondsToSelector(self):
@@ -379,15 +379,15 @@ class TestOverridingSpecials(TestCase):
         lst = []
         o = OC_RespondsClass.alloc().initWithList_(lst)
 
-        self.assertEquals(lst, [])
+        self.assertEqual(lst, [])
 
         b = o.respondsToSelector_('init')
         self.assertTrue(b)
-        self.assertEquals(lst, ['init'])
+        self.assertEqual(lst, ['init'])
 
         b = o.respondsToSelector_('alloc')
         self.assertFalse(b)
-        self.assertEquals(lst, ['init', 'alloc'])
+        self.assertEqual(lst, ['init', 'alloc'])
 
     def testOverrideInstancesRespondToSelector(self):
         lst = []
@@ -398,15 +398,15 @@ class TestOverridingSpecials(TestCase):
                 lst.append(selector)
                 return objc.super(OC_InstancesRespondClass, cls).instancesRespondToSelector_(selector)
 
-        self.assertEquals(lst, [])
+        self.assertEqual(lst, [])
 
         b = OC_InstancesRespondClass.instancesRespondToSelector_('init')
         self.assertTrue(b)
-        self.assertEquals(lst, ['init'])
+        self.assertEqual(lst, ['init'])
 
         b = OC_InstancesRespondClass.instancesRespondToSelector_('alloc')
         self.assertFalse(b)
-        self.assertEquals(lst, ['init', 'alloc'])
+        self.assertEqual(lst, ['init', 'alloc'])
 
     def testImplementingSetValueForKey(self):
         values = {}

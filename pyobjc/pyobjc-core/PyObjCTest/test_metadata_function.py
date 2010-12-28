@@ -265,16 +265,16 @@ class TestArrayDefault (TestCase):
 class TestArraysOut (TestCase):
     def testFixedSize(self):
         v = fill4Tuple_(None)
-        self.assertEquals(list(v), [0, -1, -8, -27])
+        self.assertEqual(list(v), [0, -1, -8, -27])
 
         self.assertRaises(ValueError, fill4Tuple_, objc.NULL)
 
         n, v = nullfill4Tuple_(None)
-        self.assertEquals(n, 1)
-        self.assertEquals(list(v), [0, -1, -8, -27])
+        self.assertEqual(n, 1)
+        self.assertEqual(list(v), [0, -1, -8, -27])
 
         n, v = nullfill4Tuple_(objc.NULL)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
         
     def testNullTerminated(self):
@@ -288,45 +288,45 @@ class TestArraysOut (TestCase):
         self.assertRaises(TypeError, nullfillStringArray_)
         self.assertRaises(TypeError, nullfillStringArray_, None)
         n, v = nullfillStringArray_(objc.NULL)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
 
         v = fillArray_count_(None, 3)
-        self.assertEquals(list(v),  [0,1,4])
+        self.assertEqual(list(v),  [0,1,4])
 
         v = fillArray_count_(None, 3)
-        self.assertEquals(list(v),  [0,1,4])
+        self.assertEqual(list(v),  [0,1,4])
 
         v = fillArray_count_(None, 5)
-        self.assertEquals(list(v),  [0,1,4,9,16])
+        self.assertEqual(list(v),  [0,1,4,9,16])
 
         v = fillArray_count_(None, 0)
-        self.assertEquals(list(v),  [])
+        self.assertEqual(list(v),  [])
 
         self.assertRaises(ValueError, fillArray_count_, objc.NULL, 0)
         
         n, v = nullfillArray_count_(None, 3)
-        self.assertEquals(n, 1)
-        self.assertEquals(list(v),  [0,1,4])
+        self.assertEqual(n, 1)
+        self.assertEqual(list(v),  [0,1,4])
         n, v = nullfillArray_count_(None, 3)
-        self.assertEquals(n, 1)
-        self.assertEquals(list(v),  [0,1,4])
+        self.assertEqual(n, 1)
+        self.assertEqual(list(v),  [0,1,4])
 
         n, v = nullfillArray_count_(objc.NULL, 3)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL )
 
     def testWithCountInResult(self):
 
         c, v = fillArray_uptoCount_(None, 20)
-        self.assertEquals(c, 10)
-        self.assertEquals(list(v),  [i+2 for i in range(10)])
+        self.assertEqual(c, 10)
+        self.assertEqual(list(v),  [i+2 for i in range(10)])
 
         c, v = maybeFillArray_(None)
-        self.assertEquals(c, 2)
-        self.assertEquals(list(v),  [10, 11])
+        self.assertEqual(c, 2)
+        self.assertEqual(list(v),  [10, 11])
 
 
 class TestArraysInOut (TestCase):
@@ -334,8 +334,8 @@ class TestArraysInOut (TestCase):
 
         a = (1,2,3,4)
         v = reverse4Tuple_(a)
-        self.assertEquals(a, (1,2,3,4))
-        self.assertEquals(v, (4,3,2,1))
+        self.assertEqual(a, (1,2,3,4))
+        self.assertEqual(v, (4,3,2,1))
 
         self.assertRaises(ValueError, reverse4Tuple_, (1,2,3))
         self.assertRaises(ValueError, reverse4Tuple_, (1,2,3,4,5))
@@ -343,88 +343,88 @@ class TestArraysInOut (TestCase):
 
         a = (1,2,3,4)
         n, v = nullreverse4Tuple_(a)
-        self.assertEquals(n, 1)
-        self.assertEquals(a, (1,2,3,4))
-        self.assertEquals(v, (4,3,2,1))
+        self.assertEqual(n, 1)
+        self.assertEqual(a, (1,2,3,4))
+        self.assertEqual(v, (4,3,2,1))
 
         n, v = nullreverse4Tuple_(objc.NULL)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
 
         a = (b'a', b'b', b'c')
         v = reverseStrings_(a)
-        self.assertEquals(a, (b'a', b'b', b'c'))
-        self.assertEquals(v, (b'c', b'b', b'a'))
+        self.assertEqual(a, (b'a', b'b', b'c'))
+        self.assertEqual(v, (b'c', b'b', b'a'))
 
         self.assertRaises(ValueError, reverseStrings_, (1,2))
         self.assertRaises(ValueError, reverseStrings_, objc.NULL)
 
         a = (b'a', b'b', b'c')
         n, v = nullreverseStrings_(a)
-        self.assertEquals(n, 1)
-        self.assertEquals(a, (b'a', b'b', b'c'))
-        self.assertEquals(v, (b'c', b'b', b'a'))
+        self.assertEqual(n, 1)
+        self.assertEqual(a, (b'a', b'b', b'c'))
+        self.assertEqual(v, (b'c', b'b', b'a'))
 
         n, v = nullreverseStrings_(objc.NULL)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
     def testWithCount(self):
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         v = reverseArray_count_(a, 4)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (4.0, 3.0, 2.0, 1.0))
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (4.0, 3.0, 2.0, 1.0))
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         v = reverseArray_count_(a, 5)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (5.0, 4.0, 3.0, 2.0, 1.0))
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (5.0, 4.0, 3.0, 2.0, 1.0))
 
         # Nice to have, but doesn't work without major
         # surgery:
         #a = (1.0, 2.0, 3.0, 4.0, 5.0)
         #v = reverseArray_count_(a, None)
-        #self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        #self.assertEquals(v, (5.0, 4.0, 3.0, 2.0, 1.0))
+        #self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        #self.assertEqual(v, (5.0, 4.0, 3.0, 2.0, 1.0))
 
         self.assertRaises(ValueError, reverseArray_count_, (1.0, 2.0), 5)
         self.assertRaises(ValueError, reverseArray_count_, objc.NULL, 0)
 
         a = (1.0, 2.0, 3.0, 4.0, 5.0)
         n, v = nullreverseArray_count_(a, 5)
-        self.assertEquals(n, 1)
-        self.assertEquals(a, (1.0, 2.0, 3.0, 4.0, 5.0))
-        self.assertEquals(v, (5.0, 4.0, 3.0, 2.0, 1.0))
+        self.assertEqual(n, 1)
+        self.assertEqual(a, (1.0, 2.0, 3.0, 4.0, 5.0))
+        self.assertEqual(v, (5.0, 4.0, 3.0, 2.0, 1.0))
 
         n, v = nullreverseArray_count_(objc.NULL, 0)
-        self.assertEquals(n, 0)
+        self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
     def testWithCountInResult(self):
 
         c, v = reverseArray_uptoCount_(range(10), 10)
-        self.assertEquals(c, 5)
-        self.assertEquals(len(v), 5)
-        self.assertEquals(list(v),  [9, 8, 7, 6, 5])
+        self.assertEqual(c, 5)
+        self.assertEqual(len(v), 5)
+        self.assertEqual(list(v),  [9, 8, 7, 6, 5])
         
         c, v = maybeReverseArray_([1,2,3,4])
-        self.assertEquals(c, 2)
-        self.assertEquals(len(v), 2)
-        self.assertEquals(list(v),  [4, 3])
+        self.assertEqual(c, 2)
+        self.assertEqual(len(v), 2)
+        self.assertEqual(list(v),  [4, 3])
 
 class TestArraysIn (TestCase):
     def testFixedSize(self):
 
         v = make4Tuple_((1.0, 4.0, 8.0, 12.5))
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1.0, 4.0, 8.0, 12.5])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1.0, 4.0, 8.0, 12.5])
 
         v = make4Tuple_((1, 2, 3, 4))
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1.0, 2.0, 3.0, 4.0])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
         self.assertRaises(ValueError, make4Tuple_, (1, 2, 3))
         self.assertRaises(ValueError, make4Tuple_, (1, 2, 3, 4, 5))
@@ -436,52 +436,52 @@ class TestArraysIn (TestCase):
     def testNullTerminated(self):
 
         v = makeStringArray_((b"hello", b"world", b"there"))
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [u"hello", u"world", u"there"])
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), [u"hello", u"world", u"there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
         self.assertIsInstance(v[0], unicode)
 
         NSObject = objc.lookUpClass('NSObject')
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
         v = makeObjectArray_((p, q, r))
-        self.assertEquals(len(v), 3)
+        self.assertEqual(len(v), 3)
         self.assertIs(v[0], p)
         self.assertIs(v[1], q)
         self.assertIs(v[2], r)
 
         v = makeStringArray_(())
-        self.assertEquals(len(v), 0)
+        self.assertEqual(len(v), 0)
 
         self.assertRaises(ValueError, makeStringArray_, [1,2])
         self.assertRaises(ValueError, makeStringArray_, objc.NULL)
 
         v = nullStringArray_(objc.NULL)
-        self.assertEquals(v, None)
+        self.assertEqual(v, None)
 
     def testWithCount(self):
 
         v = makeIntArray_count_((1,2,3,4), 3)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(list(v), [1,2,3])
+        self.assertEqual(len(v), 3)
+        self.assertEqual(list(v), [1,2,3])
         
         # XXX: This one would be nice to have, but not entirely trivial
         #v = makeIntArray_count_((1,2,3,4), None)
-        #self.assertEquals(len(v), 3)
-        #self.assertEquals(list(v), [1,2,3,4])
+        #self.assertEqual(len(v), 3)
+        #self.assertEqual(list(v), [1,2,3,4])
 
         self.assertRaises(ValueError, makeIntArray_count_, [1,2,3], 4)
         self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 0)
         self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 1)
 
         v = nullIntArray_count_(objc.NULL, 0)
-        self.assertEquals(v, None)
+        self.assertEqual(v, None)
 
         self.assertRaises(ValueError, makeIntArray_count_, objc.NULL, 1)
 
         # Make sure this also works when the length is in a pass-by-reference argument
         v = makeIntArray_countPtr_((1,2,3,4), 4)
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [1,2,3,4])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [1,2,3,4])
 
 class TestArrayReturns (TestCase):
     # TODO:
@@ -491,39 +491,39 @@ class TestArrayReturns (TestCase):
     def testFixedSize(self):
 
         v = makeIntArrayOf5()
-        self.assertEquals( len(v), 5 )
-        self.assertEquals( v[0], 0 )
-        self.assertEquals( v[1], 1 )
-        self.assertEquals( v[2], 4 )
-        self.assertEquals( v[3], 9 )
-        self.assertEquals( v[4], 16 )
+        self.assertEqual( len(v), 5 )
+        self.assertEqual( v[0], 0 )
+        self.assertEqual( v[1], 1 )
+        self.assertEqual( v[2], 4 )
+        self.assertEqual( v[3], 9 )
+        self.assertEqual( v[4], 16 )
 
         v = nullIntArrayOf5()
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
     def testSizeInArgument(self):
         v = makeIntArrayOf_(3)
-        self.assertEquals(len(v), 3)
-        self.assertEquals(v[0], 0)
-        self.assertEquals(v[1], 1)
-        self.assertEquals(v[2], 8)
+        self.assertEqual(len(v), 3)
+        self.assertEqual(v[0], 0)
+        self.assertEqual(v[1], 1)
+        self.assertEqual(v[2], 8)
 
         v = makeIntArrayOf_(10)
-        self.assertEquals(len(v), 10)
+        self.assertEqual(len(v), 10)
         for i in range(10):
-            self.assertEquals(v[i], i**3)
+            self.assertEqual(v[i], i**3)
 
         v = nullIntArrayOf_(100)
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
     def testNULLterminated(self):
 
         v = makeStringArray()
-        self.assertEquals(len(v), 4)
-        self.assertEquals(list(v), [b"hello", b"world", b"out", b"there"])
+        self.assertEqual(len(v), 4)
+        self.assertEqual(list(v), [b"hello", b"world", b"out", b"there"])
 
         v = nullStringArray()
-        self.assertEquals(v, objc.NULL)
+        self.assertEqual(v, objc.NULL)
 
 class TestByReference (TestCase):
     # Pass by reference arguments. 
@@ -533,29 +533,29 @@ class TestByReference (TestCase):
     def testInput(self):
         
         r = sumX_andY_(1, 2)
-        self.assertEquals(r, 1+2)
+        self.assertEqual(r, 1+2)
 
         r = sumX_andY_(2535, 5325)
-        self.assertEquals(r, 2535 + 5325)
+        self.assertEqual(r, 2535 + 5325)
 
         self.assertRaises(ValueError, sumX_andY_, 42, objc.NULL)
 
     def testOutput(self):
 
         div, rem = divBy5_remainder_(55, None)
-        self.assertEquals(div, 11)
-        self.assertEquals(rem, 0)
+        self.assertEqual(div, 11)
+        self.assertEqual(rem, 0)
 
         div, rem = divBy5_remainder_(13, None)
-        self.assertEquals(div, 2)
-        self.assertEquals(rem, 3)
+        self.assertEqual(div, 2)
+        self.assertEqual(rem, 3)
 
         self.assertRaises(ValueError, divBy5_remainder_, 42, objc.NULL)
 
     def testInputOutput(self):
         x, y = swapX_andY_(42, 284)
-        self.assertEquals(x, 284)
-        self.assertEquals(y, 42)
+        self.assertEqual(x, 284)
+        self.assertEqual(y, 42)
 
         self.assertRaises(ValueError, swapX_andY_, 42, objc.NULL)
 
@@ -566,60 +566,60 @@ class TestByReference (TestCase):
             return int(value, 0)
 
         r, y, z = input_output_inputAndOutput_(1, None, 2)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 3)
-        self.assertEquals(y, 3)
-        self.assertEquals(z, -1)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 3)
+        self.assertEqual(y, 3)
+        self.assertEqual(z, -1)
 
         # Argument 1 is NULL
         r, y, z = input_output_inputAndOutput_(objc.NULL, None, 2)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-        self.assertEquals(y, 40)
-        self.assertEquals(z, -2)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(y, 40)
+        self.assertEqual(z, -2)
 
         r, y, z = input_output_inputAndOutput_(objc.NULL, None, 2)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-        self.assertEquals(y, 40)
-        self.assertEquals(z, -2)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(y, 40)
+        self.assertEqual(z, -2)
 
         # Argument 2 is NULL
         r, y, z = input_output_inputAndOutput_(1, objc.NULL, 2)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-        self.assertEquals(y, objc.NULL)
-        self.assertEquals(z, -1)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(y, objc.NULL)
+        self.assertEqual(z, -1)
 
         # Argument 3 is NULL
         r, y, z = input_output_inputAndOutput_(1, None, objc.NULL)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-        self.assertEquals(y, 43)
-        self.assertEquals(z, objc.NULL)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(y, 43)
+        self.assertEqual(z, objc.NULL)
 
         r, y, z = input_output_inputAndOutput_(1, None, objc.NULL)
-        self.assertEquals(len(r), 3)
-        self.assertEquals(len(filter(None, map(makeNum, r))), 2)
-        self.assertEquals(y, 43)
-        self.assertEquals(z, objc.NULL)
+        self.assertEqual(len(r), 3)
+        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(y, 43)
+        self.assertEqual(z, objc.NULL)
 
 class TestPrintfFormat (TestCase):
     def test_nsformat(self):
 
         v = makeArrayWithFormat_("%3d", 10)
-        self.assertEquals(list(v), [ "%3d", " 10"])
+        self.assertEqual(list(v), [ "%3d", " 10"])
 
         v = makeArrayWithFormat_("hello %s", b"world")
-        self.assertEquals(list(v), [ "hello %s", "hello world"])
+        self.assertEqual(list(v), [ "hello %s", "hello world"])
 
     def test_cformat(self):
 
         v = makeArrayWithCFormat_(b"%3d", 10)
-        self.assertEquals(list(v), [ "%3d", " 10"])
+        self.assertEqual(list(v), [ "%3d", " 10"])
 
         v = makeArrayWithCFormat_(b"hello %s", b"world")
-        self.assertEquals(list(v), [ "hello %s", "hello world"])
+        self.assertEqual(list(v), [ "hello %s", "hello world"])
 
 if __name__ == "__main__":
     main()

@@ -9,8 +9,8 @@ objc.registerMetaDataForSelector(b"PyObjC_TestOutputInitializer",
 class TestOutputInitializer(TestCase):
     def testOutputInitializer(self):
         robj, rtrue = PyObjC_TestOutputInitializer.alloc().initWithBooleanOutput_(None)
-        self.assertEquals(rtrue, objc.YES)
-        self.assertEquals(robj.isInitialized(), objc.YES)
+        self.assertEqual(rtrue, objc.YES)
+        self.assertEqual(robj.isInitialized(), objc.YES)
 
 if __name__ == '__main__':
     main()
