@@ -82,6 +82,7 @@ gBooleanAttributesDefaultingTrue=[
 
 gBooleanAttributesDefaultingFalse=[
     'nsstring',
+    'free_result',
     'already_retained',
     'already_cfretained',
     'class_method',
@@ -114,7 +115,6 @@ gExceptionAttributes = dict(
             'type', 'type64', 
             'already_retained',
             'already_cfretained',
-            'numeric',
             'c_array_length_in_arg',
             'c_array_of_fixed_length',
             'c_array_delimited_by_null',
@@ -122,6 +122,7 @@ gExceptionAttributes = dict(
             'sel_of_type',
             'function_pointer',
             'function_pointer_retained',
+            'free_result',
         ],
     arg = [ 
             'type', 'type64', 
@@ -129,7 +130,6 @@ gExceptionAttributes = dict(
             'null_accepted', 
             'already_retained',
             'already_cfretained',
-            'numeric',
             'c_array_length_in_arg',
             'c_array_of_fixed_length',
             'c_array_delimited_by_null',
@@ -331,6 +331,7 @@ def indentET(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
+
 class cleanfile(file):
     def write(self, s):
         file.write(self, cleanup_text(s))
@@ -408,7 +409,7 @@ def framework_header(f, known={}, env=dict(os.environ)):
 
 def link_flag_for_framework(name):
     try:
-        framework_find(name)
+        framework_find(name + '.framework')
         return name
 
     except ValueError:
@@ -624,11 +625,13 @@ class FrameworkMetadata (object):
         self.special_type_encodings.add(objc._C_PTR+objc._C_BOOL)
 
         if hasattr(objc, '_C_UNICHAR'):
+            #print "WITH _C_UNICHAR"
             self.special_type_encodings.add(objc._C_UNICHAR)
             self.special_type_encodings.add(objc._C_PTR+objc._C_UNICHAR)
             self.special_type_encodings.add(objc._C_PTR+objc._C_PTR+objc._C_UNICHAR)
             self.special_type_encodings.add(objc._C_CONST+objc._C_PTR+objc._C_UNICHAR)
         else:
+            #print "WITHOUT _C_UNICHAR"
             objc._C_UNICHAR = self.encodedType('unichar')[0]
 
         if hasattr(objc, '_C_CHAR_AS_TEXT'):
@@ -766,11 +769,11 @@ class FrameworkMetadata (object):
         # Make up a struct tag if a struct definition doesn't have one
         if data and data.startswith('{?'):
             if ' ' not in ctype:
-                data = data[0] + ctype + data[2:]
+                data = data[0] + "_" + ctype + data[2:]
 
         if data2 and data2.startswith('{?'):
             if ' ' not in ctype:
-                data2 = data2[0] + ctype + data2[2:]
+                data2 = data2[0] + "_" + ctype + data2[2:]
 
 
         if data:
@@ -863,6 +866,9 @@ class FrameworkMetadata (object):
                 objc._C_IN, objc._C_OUT, objc._C_INOUT, objc._C_CONST):
             encoded = encoded[1:]
 
+        if encoded == objc._C_ID:
+            return False
+
         for nm, tp, tp64 in self.cftypes:
             if tp == encoded:
                 return True
@@ -911,7 +917,7 @@ class FrameworkMetadata (object):
         if self.isCFType(encoded) or self.isOpaquePointerType(encoded):
             return False
 
-        return True
+        return False
     
     def emitDependecyList(self, fp):
         for k in sorted(self.dependencies):
@@ -1073,6 +1079,7 @@ class FrameworkMetadata (object):
 
             func.set('name', nm)
             self.copyExceptionData(func, exc)
+            self.pruneComment(func)
 
             retexc = self.find_exception('function', nm, 'retval')
 
@@ -1095,8 +1102,6 @@ class FrameworkMetadata (object):
                 if arg['encoded64'] and arg['encoded64'] != arg['encoded']:
                     e.set('type64', arg['encoded'])
 
-                if 'numeric' in arg:
-                    e.set('numeric', arg['numeric'])
 
                 self.copyExceptionData(e, exc, copyChildren=True)
                 self.pruneComment(e)
@@ -1177,6 +1182,10 @@ class FrameworkMetadata (object):
                         'method', method['selector'],
                         exceptions=clsexc, nameattr='selector')
 
+                if methodExc is not None and methodExc.get('ignore') == 'true':
+                    print 'ignore', classname, method['selector']
+                    continue
+
                 # The 'ignore' atribute on methods is slight different than
                 # on other elements: copy to the metadata file.
                 #if methodExc and methodExc.get('ignore') == 'true':
@@ -1190,6 +1199,12 @@ class FrameworkMetadata (object):
                     meth.set('variadic', 'true')
                 if method.get('comment'):
                     meth.set('comment', method['comment'])
+
+                if methodExc is not None and methodExc.get('suggestion'):
+                    # If the method has a suggestion, skip all other metadata
+                    # we might have calculated.
+                    meth.set('suggestion', methodExc.get('suggestion'))
+                    #continue
 
                 self.copyExceptionData(meth, methodExc)
                 self.pruneComment(meth)
@@ -1273,6 +1288,7 @@ class FrameworkMetadata (object):
                 if nm == name:
                     break
             else:
+                print "No exception data for %s yet", nm, node
                 e = ET.SubElement(root, node.tag, name=nm)
                 self.copyExceptionData(e, node)
                 if node is not None:
@@ -1299,9 +1315,10 @@ class FrameworkMetadata (object):
             if name.startswith('_') and exc is None:
                 continue
 
-            e = ET.SubElement(root, 'struct', name=name)
+            e = ET.SubElement(root, 'struct', name=name, type=encoded, type64=encoded64)
             if exc is not None and exc.get('ignore') == 'true':
                 e.set('ignore', 'true')
+
 
             self.copyExceptionData(e, exc)
 
@@ -1368,6 +1385,8 @@ class FrameworkMetadata (object):
                 e = ET.SubElement(root, 'string_constant', name=name)
 
                 if exc.get('ignore') == 'true':
+                    if exc.get('comment'):
+                        e.set('comment', exc.get('comment'))
                     e.set('ignore', 'true')
 
                 self.copyExceptionData(e, exc)
@@ -1388,6 +1407,8 @@ class FrameworkMetadata (object):
             exc = self.find_exception('function', nm)
             if exc is not None and exc.get('ignore') == 'true':
                 e = ET.SubElement(root, 'function', name=nm, ignore='true')
+                if exc.get('comment'):
+                    e.set('comment', exc.get('comment'))
                 continue
 
             func = None
@@ -1506,15 +1527,12 @@ class FrameworkMetadata (object):
             for idx, arg in enumerate(arginfo):
                 exc = self.find_exception('function', nm, 'arg', idx)
 
-                if exc is not None or self.isPointerType(arg['encoded']) or 'numeric' in arg:
+                if exc is not None or self.isPointerType(arg['encoded']):
                     func = makeFunction()
                     e = ET.SubElement(func, 'arg', index=str(idx))
                     e.set('type', arg['encoded'])
                     if arg.get('encoded64'):
                         e.set('type64', arg['encoded64'])
-
-                    if 'numeric' in arg:
-                        e.set('numeric', arg['numeric'])
 
                     self.copyExceptionData(e, exc, copyChildren=True)
                     self.pruneTypeInfo(e, 'type', arg['encoded'], arg.get('encoded64'))
@@ -1597,8 +1615,10 @@ class FrameworkMetadata (object):
                 exc = self.find_exception(
                         'retval', None, exceptions = methodExc)
 
+                #print "DEBUGCHECK: method ret", ret
                 if self.isPointerType(ret) or (ret64 and self.isPointerType(ret64)) or ret == objc._C_SEL: 
                     # Ignore special_encodings for the exceptions file:
+                    #print "DEBUGCHECK: copy into exceptions", self.isPointerType(ret), self.isPointerType(ret64), ret == objc._C_SEL
                     # or ret in self.special_type_encodings:
                     if meth is None:
                         cls, meth = getMethod()
@@ -1634,7 +1654,7 @@ class FrameworkMetadata (object):
                     if arg in self.special_type_encodings:
                         # Don't add these to the exceptions file unless there
                         # is other metadata.
-                        if exc is not None:
+                        if exc is not None or self.isPointerType(arg):
                             cls, meth = getMethod()
                             e = ET.SubElement(meth, 
                                     'arg', index=str(argidx))
@@ -1676,7 +1696,7 @@ class FrameworkMetadata (object):
                         self.classes[classname],
                         nameAttr='selector', getName=lambda x:x['selector'])
 
-        self.copyUnhandledNodes(root, 'class', self.classes)
+        self.copyUnhandledNodes(root, 'class', self.classes.values())
 
         print >>fp, HEADER
         indentET(root)
@@ -1700,7 +1720,8 @@ class FrameworkMetadata (object):
             if node.get('type'):
                 # Ensure that this type gets used throughout: add the type
                 # to the encodings dict and to special_type_encodings
-                self.special_type_encodings.add(node.get('type'))
+                if node.get('type') != objc._C_ID:
+                    self.special_type_encodings.add(node.get('type'))
 
                 nm = node.get('name')
                 tp = self.stripStructFieldNames(node.get('type'))
@@ -2412,7 +2433,7 @@ class FrameworkMetadata (object):
                 logging.debug("Cannot get encoded struct %s", nm) 
                 continue
 
-            if realTp != tp:
+            if realTp != tp and tp != objc._C_ID:
                 self.special_type_encodings.add(tp)
                 self.types[nm] = tp
                 self.types[nm + '*'] = objc._C_PTR + tp
@@ -2463,14 +2484,78 @@ class FrameworkMetadata (object):
         # Skip structs containing function pointers, those cannot be
         # wrapped automaticly (yet?)
         if isinstance(token, Struct):
+            if contains_instances_of(token.matches(), FunctionStructMember): return
             externalname = name
+            fields = token.matches()
 
         elif isinstance(token, NamedStruct):
             if contains_instances_of(token.matches(), FunctionStructMember): return
 
             externalname = token.matches()[-1]['name']
+            fields = token.matches()[:-1]
         else:
             externalname = token['name']
+            fields = token.matches()
+
+
+
+
+
+# And attempt to avoid compiling, won't work when a struct has different
+# definitions for 64-bit vs. 32-bit (such as NSPoint).
+#
+#        data   = [ objc._C_STRUCT_B]
+#        data64 = [ objc._C_STRUCT_B]
+#
+#        if token['structname']:
+#            data.append(token['structname'])
+#            data64.append(token['structname'])
+#        else:
+#            data.append('_' + externalname)
+#            data64.append('_' + externalname)
+#        data.append('=')
+#        data64.append('=')
+#        for field in fields:
+#            name = field['name']
+#            array = ''
+#            if name.endswith('['):
+#                name, array = name.split('[', 1)
+#                array = '[' + array
+#
+#            print "XXX: Struct field", externalname, field
+#
+#            data.append('"%s"'%(name))
+#            data64.append('"%s"'%(name))
+#            tp, tp64 = self.encodedType(field['type'] + array)
+#            #if tp == objc._C_LNG:
+#                #tp = objc._C_INT
+#            #elif tp == objc._C_ULNG:
+#                #tp = objc._C_UINT
+#            if tp64 == objc._C_LNG:
+#                tp64 = objc._C_LNG_LNG
+#            elif tp64 == objc._C_ULNG:
+#                tp64 = objc._C_ULNG_LNG
+#            data.append(tp)
+#            data64.append(tp64)
+#        data.append(objc._C_STRUCT_E)
+#        data64.append(objc._C_STRUCT_E)
+#        try:
+#            data = ''.join(data)
+#        except TypeError:
+#            data = ''
+#            return
+#
+#        try:
+#            data64 = ''.join(data64)
+#        except TypeError:
+#            data64 = ''
+#
+#        if not data and not data64:
+#            # A field-type could not be encoded in 32-bit or 64-bit mode,
+#            # ignore the struct
+#            print "Ignore struct %s: cannot encode some fields"%(externalname,)
+#            return
+            
 
         ivarType = externalname
         data, data64 = self._compileAndRun(
@@ -2480,11 +2565,33 @@ class FrameworkMetadata (object):
         # Found a struct without a struct tag. That's rather useless because
         # two different types may have the same structure (excluding field *names*)
         # Therefore make up a struct tag.
+
+        print type(token).__name__, externalname, data, self.stripStructFieldNames(data)
+        if externalname in self.types:
+            print "-->", self.types[externalname]
+
         if data and data[1] == '?':
             data = data[0] + '_' + externalname + data[2:]
-
-        if data64 and data64[1] == '?':
+        if data and data64[1] == '?':
             data64 = data64[0] + '_' + externalname + data64[2:]
+
+        exc = self.find_exception('struct', externalname)
+        if exc is not None and exc.get('type') is not None:
+            data = exc.get('type')
+        if exc is not None and exc.get('type64') is not None:
+            data64 = exc.get('type64')
+
+        self.types[externalname] = self.stripStructFieldNames(data)
+        self.types64[externalname] = self.stripStructFieldNames(data64)
+        self.types[externalname+'*'] = objc._C_PTR+self.stripStructFieldNames(data)
+        self.types64[externalname+'*'] = objc._C_PTR+self.stripStructFieldNames(data64)
+        print externalname, self.types[externalname]
+
+        #if data64 and data64[1] == '?':
+        #    data64 = data64[0] + '_' + externalname + data64[2:]
+        self.types64[externalname] = self.stripStructFieldNames(data64)
+        self.types64[externalname+'*'] = objc._C_PTR+self.stripStructFieldNames(data64)
+
 
         self.structs.append((externalname, data, data64))
         logging.debug("Struct definition for %s", externalname)
@@ -2497,7 +2604,8 @@ class FrameworkMetadata (object):
         indirect = normalize_type(token['indirection'])
 
         if not indirect and tag in self.plain_structs:
-            self._processNamedStruct(token)
+            print "--->", token
+            #self._processNamedStruct(token)
             return
 
         logging.debug("Process opaque struct: %(name)s"% token)
@@ -2598,6 +2706,8 @@ class FrameworkMetadata (object):
 
                 returnType, returnType64 = self.encodedType(t['returntype'] or 'id')
                 if self.isPointerType(returnType) or returnType in self.special_type_encodings:
+                    if not t['name']:
+                        print t
                     methods.append(
                         dict(
                             selector=t['name'],
@@ -2654,6 +2764,8 @@ class FrameworkMetadata (object):
 
 
                 selector = ''.join(segs)
+                if not selector:
+                    print t
 
 
                 for i in range(len(segs)+1):
@@ -2752,8 +2864,6 @@ class FrameworkMetadata (object):
 
                     # First try to tell about the propertygetter
                     returnsMeta = {}
-                    if self.isStringyType(tp, curtype):
-                        returnsMeta['numeric'] = 'false'
                     
                     if self.isPointerType(tp) or tp in self.special_type_encodings or returnsMeta:
                         methods.append(
@@ -2800,9 +2910,6 @@ class FrameworkMetadata (object):
 
                 returnType, returnType64 = self.encodedType(t['returntype'] or 'id')
                 returnsMeta = {}
-                if self.isStringyType(returnType, t['returntype'] or 'id'):
-                    returnsMeta['numeric'] = 'false'
-
                 if self.isPointerType(returnType) or returnType in self.special_type_encodings or returnsMeta:
                     methods.append(
                         dict(
@@ -2824,8 +2931,6 @@ class FrameworkMetadata (object):
                
                 returnType, returnType64 = self.encodedType(t['returntype'] or 'id')
                 returnsMeta = {}
-                if self.isStringyType(returnType, t['returntype'] or 'id'):
-                    returnsMeta['numeric'] = 'false'
 
                 haveSpecial = self.isPointerType(returnType) or returnType in self.special_type_encodings
                 arguments = {}
@@ -2857,8 +2962,7 @@ class FrameworkMetadata (object):
 
                         elif self.isStringyType(argType, s['type']):
                             haveSpecial = True
-                            arguments[idx] = (argType, argType64, {
-                                'numeric': 'false'})
+                            arguments[idx] = (argType, argType64, None)
 
 
                 selector = ''.join(segs)
@@ -2915,7 +3019,7 @@ class FrameworkMetadata (object):
                 )
 
                 if returnType64 and returnType64 != returnType:
-                    methods[-1]['type64'] = returnType64 + '@:',
+                    methods[-1]['type64'] = returnType64 + '@:'
 
             elif isinstance(t, SegmentedMethodDef):
                 if t['kind'] == '-':
@@ -2996,8 +3100,6 @@ class FrameworkMetadata (object):
                         name, returns)
                 return
             returnMeta = {}
-            if self.isStringyType(returnType, returns):
-                returnMeta['numeric'] = 'false'
 
             self.functions.append((name, (returnType,returnType64, returnMeta), [], False))
             return
@@ -3012,8 +3114,6 @@ class FrameworkMetadata (object):
             return
 
         returnMeta = {}
-        if self.isStringyType(returnType, returns):
-            returnMeta['numeric'] = 'false'
 
         arginfo = []
         for idx, arg in enumerate([ x for x in token.matches()[:-1] if not isinstance(x, BlockComment)]):
@@ -3061,8 +3161,6 @@ class FrameworkMetadata (object):
                     name, tp, idx)
                 return
 
-            if self.isStringyType(arg['encoded'], tp):
-                arg['numeric'] = 'false'
 
         if isinstance(token, StaticInlineFunction):
             self.inline_functions.append((name, (returnType, returnType64), arginfo, variadic))
@@ -3347,7 +3445,10 @@ def _main():
 
         outfp.close()
         if options.outfile:
-            os.rename(options.outfile + '~', options.outfile)
+            try:
+                os.rename(options.outfile + '~', options.outfile)
+            except os.error, msg:
+                print options.outfile, msg
 
         if options.format == 'both':
 
@@ -3360,7 +3461,10 @@ def _main():
             meta.emitExceptionsXML(outfp)
 
             if options.outmeta:
-                os.rename(options.outmeta + '~', options.outmeta)
+                try:
+                    os.rename(options.outmeta + '~', options.outmeta)
+                except os.error, msg:
+                    print options.outmeta, msg
 
     except:
         if options.outfile is not None:

@@ -18,18 +18,20 @@ sys.dont_write_bytecode = True
 
 import subprocess, getopt, logging, os, shutil
 from urllib.request import urlopen
+import pprint
 
 
 gUsage="""\
-build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch archs]
+build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch=archs] [-f flavours] [--flavours=flavours]
 
 - versions: comma seperated list of python versiosn, defaults to "2.6,2.7,3.1,3.2"
-- archs: comma seperated list of build variations, defaults to "32-bit,3-way"
+- archs: comma seperated list of build architectures, defaults to "32-bit,3-way"
+- flavours: comma separated list of build variants, defaults to "release,debug"
 """
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
 
-gArchs = ("32-bit", "3-way")
+gArchs = ("32-bit", "3-way", "intel")
 
 
 # Name of the Python framework and any additional arguments
@@ -42,12 +44,12 @@ gFlavours = [
                 "--with-pydebug",
             ],
         ),
-#        dict(
-#            name="release",
-#            template="ReleasePython-{archs}",
-#            flags=[
-#            ],
-#        ),
+        dict(
+            name="release",
+            template="ReleasePython-{archs}",
+            flags=[
+            ],
+        ),
 ]
 
 
@@ -75,7 +77,14 @@ gDeploymentTargetMap={
     '32-bit': '10.3',
     #'32-bit': '10.5',
     '3-way':  '10.5',
-    'intel':  '10.5',
+    'intel':  '10.6',
+}
+
+gArchMap = {
+    '2.6': {'32-bit'},
+    '2.7': {'32-bit', 'intel', '3-way'},
+    '3.1': {'32-bit'},
+    '3.2': {'32-bit', 'intel', '3-way'},
 }
 
 class ShellError (Exception):
@@ -99,16 +108,20 @@ def create_checkout(version):
         lg.debug("Update checkout")
         p = subprocess.Popen([
             'svn', 'up'],
-            cwd=checkoutdir)
+            cwd=checkoutdir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            env=os.environ)
     else:
         lg.debug("Initial checkout checkout")
         p = subprocess.Popen([
-            'svn', 'co', gURLMap[version], checkoutdir])
+            'svn', 'co', gURLMap[version], checkoutdir], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            env=os.environ)
 
+    data = p.communicate()[0]
     xit = p.wait()
     if xit == 0:
         lg.info("Checkout for %s is now up-to-date", version)
     else:
+        print(data.decode('utf-8').rstrip())
         lg.warn("Checkout for %s failed", version)
         raise ShellError(xit)
 
@@ -140,20 +153,25 @@ def build_framework(flavour, version, archs):
             "--with-universal-archs={0}".format(archs),
             ] + flavour["flags"] + [
             "MACOSX_DEPLOYMENT_TARGET={0}".format(gDeploymentTargetMap[archs]),
-            ], cwd=builddir)
+            ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
+
+    data = p.communicate()[0]
 
     xit = p.wait()
     if xit != 0:
+        print(data.decode('utf-8').rstrip())
         lg.debug("Configure failed for %s", version)
         raise ShellError(xit)
     
     lg.debug("Running 'make'")
     p = subprocess.Popen([
             "make",
-        ], cwd=builddir)
+        ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
+    data = p.communicate()[0]
 
     xit = p.wait()
     if xit != 0:
+        print(data.decode('utf-8').rstrip())
         lg.debug("Make failed for %s", version)
         raise ShellError(xit)
 
@@ -161,10 +179,12 @@ def build_framework(flavour, version, archs):
     p = subprocess.Popen([
             "make",
             "install",
-        ], cwd=builddir)
+        ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
+    data = p.communicate()[0]
 
     xit = p.wait()
     if xit != 0:
+        print(data.decode('utf-8').rstrip())
         lg.debug("Install failed for %r", version)
         raise ShellError(xit)
 
@@ -173,6 +193,7 @@ def install_distribute(flavour, version, archs):
     lg.debug("Installing distribute")
 
     distribute_dir = os.path.join(gBaseDir, "distribute-0.6.12-patched")
+    distribute_dir = os.path.join(gBaseDir, "distribute-0.6.14")
     builddir = os.path.join(distribute_dir, "build")
     if os.path.exists(builddir):
         lg.debug("Remove existing 'build' subdir")
@@ -186,12 +207,19 @@ def install_distribute(flavour, version, archs):
         python += '3'
 
 
+    if os.path.exists(os.path.join(distribute_dir, 'build')):
+        shutil.rmtree(os.path.join(distribute_dir, 'build'))
+
     lg.debug("Run setup script with '%s'", python)
     p = subprocess.Popen([
         python, "setup.py", "install"],
-        cwd=distribute_dir)
+        cwd=distribute_dir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
+    
+    data = p.communicate()[0]
+
     xit = p.wait()
     if xit != 0:
+        print(data.decode('utf-8').rstrip())
         lg.warning("Installing 'distribute' failed")
         raise ShellError(xit)
 
@@ -217,11 +245,17 @@ def install_virtualenv(flavour, version, archs):
     else:
         srcdir = os.path.join(gBaseDir, 'virtualenv3-src')
 
+    if os.path.exists(os.path.join(srcdir, 'build')):
+        shutil.rmtree(os.path.join(srcdir, 'build'))
+
     p = subprocess.Popen([ python, "setup.py", "install" ],
-            cwd=srcdir)
+            cwd=srcdir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
+
+    data = p.communicate()[0]
 
     xit = p.wait()
     if xit != 0:
+        print(data.decode('utf-8').rstrip())
         lg.warning("Installing 'virtualenv' failed")
         raise ShellError(xit)
 
@@ -230,7 +264,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'v:a:h?', ['help', 'versions=', 'archs='])
+        opts, args = getopt.getopt(sys.argv[1:], 'v:a:h?f:', ['help', 'versions=', 'archs=', 'flavours=', 'flavors='])
     except getopt.error as msg:
         print(msg, file=sys.stderr)
         print(gUsage, file=sys.stderr)
@@ -238,6 +272,7 @@ def main():
 
     versions = sorted(gURLMap.keys())
     archs = gArchs
+    flavours = gFlavours
 
     if args:
         print("Additional arguments", file=sys.stderr)
@@ -269,6 +304,14 @@ def main():
                             file=sys.stderr)
                     sys.exit(1)
 
+        elif k in ('-f', '--flavours', '--flavors'):
+            flavours = [v.strip() for v in v.split(',')]
+            for v in flavours:
+                if v not in gFlavours:
+                    print("Unsupported python flavour: {0}".format(v), 
+                            file=sys.stderr)
+                    sys.exit(1)
+
         else:
             print("ERROR: unhandled script option: {0}".format(k), 
                     file=sys.stderr)
@@ -281,8 +324,12 @@ def main():
         for version in sorted(versions):
             create_checkout(version)
 
-            for flavour in gFlavours:
+            for flavour in flavours:
                 for arch in sorted(archs):
+                    if arch not in gArchMap[version]:
+                        lg.info('Skip %s framework for python %s (%s)', flavour["name"], version, arch)
+                        continue
+
                     try:
                         lg.info('Building %s framework for python %s (%s)', flavour["name"], version, arch)
                         build_framework(flavour, version, arch)

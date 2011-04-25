@@ -114,6 +114,23 @@ INIT_TMPL=textwrap.dedent("""\
         globals=globals())
 """)
 
+INIT_TMPL_NOID=textwrap.dedent("""\
+    '''
+    Python mapping for the %(framework)s framework.
+
+    This module does not contain docstrings for the wrapped code, check Apple's
+    documentation for details on how to use these functions and classes. 
+    '''
+
+    import objc as _objc
+    %(frameworkDepends)s
+
+    __bundle__ = _objc.initFrameworkWrapper("%(framework)s",
+        frameworkPath=_objc.pathForFramework(
+            "%(frameworkPath)s"),
+        globals=globals())
+""")
+
 
 # Note: the test template doesn't define tests, but only contains a template
 # for some tests. This is because it would be rather pointless to check if 
@@ -217,7 +234,8 @@ def getBundleIdentifier(frameworkPath):
             raise RuntimeError, "plutil failed"
         pl = plistlib.readPlist('Info.plist')
         os.unlink('Info.plist')
-    return pl['CFBundleIdentifier']
+
+    return pl.get('CFBundleIdentifier', None)
 
 def getFrameworkPath(framework):
 
@@ -336,7 +354,11 @@ def main():
         
     fp = open(
         os.path.join(basedir, "Lib", framework, '__init__.py'), 'w')
-    fp.write(INIT_TMPL % locals())
+
+    if bundleIdentifier is None:
+        fp.write(INIT_TMPL_NOID % locals())
+    else:
+        fp.write(INIT_TMPL % locals())
     fp.close()
 
     fp = open(

@@ -32,7 +32,7 @@ def make_test(name):
             except AssertionError:
                 return
 
-            raise AssertionError, "NSInvocation works!"
+            self.fail("NSInvocation works!")
 
         return test_CheckNSInvoke
 

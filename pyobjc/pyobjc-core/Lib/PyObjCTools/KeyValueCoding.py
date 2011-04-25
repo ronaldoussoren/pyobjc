@@ -25,16 +25,21 @@ See the Cocoa documentation on the Apple developer website for more
 information on Key-Value coding. The protocol is basicly used to enable
 weaker coupling between the view and model layers.
 """
+from __future__ import unicode_literals
+import sys
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
+if sys.version_info[0] == 2:
+    __all__ = tuple(str(x) for x in __all__)
+
 
 import objc
 import types
-from itertools import imap
-try:
-    set
-except NameError:
-    from sets import Set as set
+
+if sys.version_info[0] == 2:
+    from itertools import imap as map
+else:
+    basestr = str
 
 if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:forKey:'):
     SETVALUEFORKEY = 'setValue_forKey_'
@@ -42,6 +47,10 @@ if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:for
 else:
     SETVALUEFORKEY = 'takeValue_forKey_'
     SETVALUEFORKEYPATH = 'takeValue_forKeyPath_'
+
+if sys.version_info[0] == 2:
+    SETVALUEFORKEY = str(SETVALUEFORKEY)
+    SETVALUEFORKEYPATH = str(SETVALUEFORKEYPATH)
 
 def keyCaps(s):
     return s[:1].capitalize() + s[1:]
@@ -70,18 +79,18 @@ def msum(iterable):
 
 class ArrayOperators(object):
     def avg(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         lst = getKeyPath(obj, path)
         count = len(lst)
         if count == 0:
             return 0.0
-        return msum(imap(float, lst)) / count
+        return msum(map(float, lst)) / count
     
     def count(self, obj, segments):
         return len(obj)
     
     def distinctUnionOfArrays(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         rval = []
         s = set()
         lists = getKeyPath(obj, path)
@@ -94,7 +103,7 @@ class ArrayOperators(object):
         return rval
 
     def distinctUnionOfObjects(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         rval = []
         s = set()
         lst = getKeyPath(obj, path)
@@ -106,20 +115,20 @@ class ArrayOperators(object):
         return rval
         
     def max(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         return max(getKeyPath(obj, path))
     
     def min(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         return min(getKeyPath(obj, path))
     
     def sum(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         lst = getKeyPath(obj, path)
-        return msum(imap(float, lst))
+        return msum(map(float, lst))
 
     def unionOfArrays(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         rval = []
         lists = getKeyPath(obj, path)
         for lst in lists:
@@ -127,7 +136,7 @@ class ArrayOperators(object):
         return rval
 
     def unionOfObjects(self, obj, segments):
-        path = u'.'.join(segments)
+        path = '.'.join(segments)
         return getKeyPath(obj, path)
 
 arrayOperators = ArrayOperators()
@@ -152,10 +161,10 @@ def getKey(obj, key):
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
             return obj.valueForKey_(key)
-        except ValueError, msg:
+        except ValueError as msg:
             # This is not entirely correct, should check if this
             # is the right kind of ValueError before translating
-            raise KeyError, str(msg)
+            raise KeyError(str(msg))
     
     # check for dict-like objects
     getitem = getattr(obj, '__getitem__', None)
@@ -194,7 +203,7 @@ def getKey(obj, key):
         except AttributeError:
             continue
 
-        if isinstance(m, types.MethodType) and m.im_self is obj:
+        if isinstance(m, types.MethodType) and m.__self__ is obj:
             return m()
 
         elif isinstance(m, types.BuiltinMethodType):
@@ -210,7 +219,7 @@ def getKey(obj, key):
     try:
         return getattr(obj, "_" + key)
     except AttributeError:
-        raise KeyError, "Key %s does not exist" % (key,)
+        raise KeyError("Key %s does not exist" % (key,))
 
 
 def setKey(obj, key, value):
@@ -233,8 +242,8 @@ def setKey(obj, key, value):
         try:
             getattr(obj, SETVALUEFORKEY)(value, key)
             return
-        except ValueError, msg:
-            raise KeyError, str(msg)
+        except ValueError as msg:
+            raise KeyError(str(msg))
 
     aBase = 'set' + keyCaps(key)
     for accessor in (aBase + '_', aBase, 'set_' + key):
@@ -258,7 +267,7 @@ def setKey(obj, key, value):
     try:
         setattr(obj, key, value)
     except AttributeError:
-        raise KeyError, "Key %s does not exist" % (key,)
+        raise KeyError("Key %s does not exist" % (key,))
 
 def getKeyPath(obj, keypath):
     """
@@ -275,11 +284,11 @@ def getKeyPath(obj, keypath):
     cur = obj
     elemiter = iter(elements)
     for e in elemiter:
-        if e[:1] == u'@':
+        if e[:1] == '@':
             try:
                 oper = getattr(arrayOperators, e[1:])
             except AttributeError:
-                raise KeyError, "Array operator %s not implemented" % (e,)
+                raise KeyError("Array operator %s not implemented" % (e,))
             return oper(cur, elemiter)
         cur = getKey(cur, e)
     return cur
@@ -320,10 +329,10 @@ class kvc(object):
 
     def __getitem__(self, item):
         if not isinstance(item, basestring):
-            raise TypeError, 'Keys must be strings'
+            raise TypeError('Keys must be strings')
         return getKeyPath(self.__pyobjc_object__, item)
 
     def __setitem__(self, item, value):
         if not isinstance(item, basestring):
-            raise TypeError, 'Keys must be strings'
+            raise TypeError('Keys must be strings')
         setKeyPath(self.__pyobjc_object__, item, value)

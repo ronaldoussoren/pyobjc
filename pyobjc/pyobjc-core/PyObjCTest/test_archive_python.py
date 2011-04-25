@@ -5,7 +5,13 @@ Testcases for NSArchive-ing python objects.
 """
 import os
 
-import sys, copy_reg
+import sys
+
+if sys.version_info[0] == 3:
+    import copyreg
+
+else:
+    import copy_reg as copyreg
 
 from PyObjCTools.TestSupport import *
 
@@ -19,6 +25,14 @@ from PyObjCTest.fnd import NSMutableArray, NSMutableDictionary
 # should test everything but mixed Python/Objective-C 
 # object-graphs.
 #
+
+if sys.version_info[0] == 3:
+    # Dummy conversion functions, to make it easier to have
+    # the same test code in python 2 and 3.
+    def unicode(v):
+        return v
+    def long(v):
+        return v
 
 import test.pickletester
 
@@ -84,10 +98,11 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, a_classic_class)
             self.assertEqual(o.x, 42)
 
-            buf = self.archiverClass.archivedDataWithRootObject_(u"hello")
-            self.assertIsInstance(buf, NSData)
-            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsInstance(v, unicode)
+            if sys.version_info[0] == 2:
+                buf = self.archiverClass.archivedDataWithRootObject_(unicode("hello"))
+                self.assertIsInstance(buf, NSData)
+                v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+                self.assertIsInstance(v, unicode)
 
             buf = self.archiverClass.archivedDataWithRootObject_("hello")
             self.assertIsInstance(buf, NSData)
@@ -95,17 +110,17 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, str)
             self.assertEqual(v, "hello")
 
-            buf = self.archiverClass.archivedDataWithRootObject_(sys.maxint * 4)
+            buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize * 4)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, long)
-            self.assertEqual(v, sys.maxint * 4)
+            self.assertEqual(v, sys.maxsize * 4)
 
-            buf = self.archiverClass.archivedDataWithRootObject_(sys.maxint ** 4)
+            buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize ** 4)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, long)
-            self.assertEqual(v, sys.maxint ** 4)
+            self.assertEqual(v, sys.maxsize ** 4)
 
         def testSimpleLists(self):
             o = []
@@ -115,7 +130,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, list)
             self.assertEqual(v, o)
 
-            o = [u"hello", 42]
+            o = [unicode("hello"), 42]
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -130,7 +145,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, tuple)
             self.assertEqual(v, o)
 
-            o = (u"hello", 42)
+            o = (unicode("hello"), 42)
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -145,7 +160,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertIsInstance(v, dict)
             self.assertEqual(v, o)
 
-            o = {u"hello": u"bar", 42: 1.5 }
+            o = {unicode("hello"): unicode("bar"), 42: 1.5 }
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -154,8 +169,8 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
         def testNestedDicts(self):
             o = {
-                    u"hello": { 1:2 },
-                    u"world": u"foobar"
+                    unicode("hello"): { 1:2 },
+                    unicode("world"): unicode("foobar")
                 }
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
@@ -164,15 +179,15 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             self.assertEqual(v, o)
 
             o = {}
-            o[u'self'] = o
+            o[unicode('self')] = o
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
             self.assertIsInstance(v, dict)
-            self.assertIs(v[u'self'], v)
+            self.assertIs(v[unicode('self')], v)
 
         def testNestedSequences(self):
-            o = [ 1, 2, 3, (5, (u'a', u'b'), 6), {1:2} ]
+            o = [ 1, 2, 3, (5, (unicode('a'), unicode('b')), 6), {1:2} ]
             o[-1] = o
 
             buf = self.archiverClass.archivedDataWithRootObject_(o)
@@ -204,16 +219,12 @@ if int(os.uname()[2].split('.')[0]) >= 9:
             import pickle
             b = pickle.dumps(o)
             o2 = pickle.loads(b)
-            print "+++", o2.value is o2
 
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
             self.assertIsInstance(v, a_reducing_class)
-            print type(v.value)
-            print v.value
-            print v
             self.assertIs(v.value, v)
 
         def testRecusiveNesting(self):
@@ -291,7 +302,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         def test_load_from_canned_string(self): pass
 
         @onlyIf(0, "python unittest not relevant for archiving")
-        def test_maxint64(self): pass
+        def test_maxsize64(self): pass
 
         @onlyIf(0, "python unittest not relevant for archiving")
         def test_dict_chunking(self): pass
@@ -350,7 +361,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
         def test_long(self):
             # The real test_long method takes way to much time, test a subset
-            x = 12345678910111213141516178920L << (256*8)
+            x = 12345678910111213141516178920 << (256*8)
             buf = self.dumps(x)
             v = self.loads(buf)
             self.assertEqual(v, x)
@@ -362,7 +373,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
             self.assertEqual(v, x)
 
-            for val in (0L, 1L, long(sys.maxint), long(sys.maxint * 128)):
+            for val in (long(0), long(1), long(sys.maxsize), long(sys.maxsize * 128)):
                 for x in val, -val:
                     buf = self.dumps(x)
                     v = self.loads(buf)
@@ -377,7 +388,7 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         def produce_global_ext(self, extcode, opcode):
             e = test.pickletester.ExtensionSaver(extcode)
             try:
-                copy_reg.add_extension(__name__, "MyList", extcode)
+                copyreg.add_extension(__name__, "MyList", extcode)
                 x = MyList([1, 2, 3])
                 x.foo = 42
                 x.bar = "hello"

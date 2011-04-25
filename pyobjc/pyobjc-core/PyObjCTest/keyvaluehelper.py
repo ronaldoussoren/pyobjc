@@ -1,13 +1,14 @@
 """
 Helper module for KeyValue tests
 """
+from __future__ import unicode_literals, absolute_import
 from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
 import objc
 
 NSObject = objc.lookUpClass('NSObject')
 
-DirectString = u'Direct String'
-IndirectString = u'Indirect String'
+DirectString = 'Direct String'
+IndirectString = 'Indirect String'
 DirectNumber = 42
 IndirectNumber = 84
 

@@ -1,5 +1,6 @@
+from __future__ import absolute_import, unicode_literals
 import objc
-import PyObjCTest.fnd as Foundation
+from . import fnd as Foundation
 from PyObjCTools.TestSupport import *
 
 class TestBundleVariables (TestCase):
@@ -13,11 +14,11 @@ class TestBundleVariables (TestCase):
                 ('NSBundleDidLoadNotification', b'@'),
             ])
 
-        self.assertIn(u'NSBundleDidLoadNotification', d)
-        self.assertIn(u'NSAppleScriptErrorMessage', d)
+        self.assertIn('NSBundleDidLoadNotification', d)
+        self.assertIn('NSAppleScriptErrorMessage', d)
 
-        self.assertIsInstance(d[u'NSAppleScriptErrorMessage'], objc.pyobjc_unicode)
-        self.assertIsInstance(d[u'NSBundleDidLoadNotification'], objc.pyobjc_unicode)
+        self.assertIsInstance(d['NSAppleScriptErrorMessage'], objc.pyobjc_unicode)
+        self.assertIsInstance(d['NSBundleDidLoadNotification'], objc.pyobjc_unicode)
 
     def testSimple(self):
         d = {}

@@ -4,8 +4,8 @@ Script for building the example.
 Usage:
     python setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
+import sys
 
 infoPlist = dict(
     CFBundleName='Shell Environment',
@@ -19,6 +19,10 @@ infoPlist = dict(
     NSMainNibFile='EnvironmentPane',
 )
 
+setup_args = {}
+if sys.version_info[0] == 3:
+    setup_args['use_2to3'] = 1
+
 setup(
     name="Shell Environment",
     plugin=['ShellEnv.py'],
@@ -27,4 +31,5 @@ setup(
         extension=".prefPane",
         plist=infoPlist,
     )),
+    **setup_args
 )

@@ -22,6 +22,9 @@ CFDateRef = objc.registerCFSignature(
         "NSDate",
     )
 
+if sys.version_info[0] == 3:
+    unicode = str
+
 class TestCoreFoundation (TestCase):
     def testTollFree(self):
         obj = OC_TestCoreFoundation.today()

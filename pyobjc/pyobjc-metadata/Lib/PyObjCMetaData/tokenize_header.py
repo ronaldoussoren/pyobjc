@@ -551,7 +551,7 @@ class NestedStructMember(Token):
 class StructMember(Token):
     pattern = pattern(r'''
     (const\s+)?
-    (?P<type>%(IDENTIFIER)s%(INDIRECTION)s*)
+    (?P<type>(?:%(IDENTIFIER)s\s*)+%(INDIRECTION)s*)
     \s*(const\s+)?
     (?P<name>
         %(IDENTIFIER)s

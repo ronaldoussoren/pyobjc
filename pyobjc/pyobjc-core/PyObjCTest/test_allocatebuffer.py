@@ -20,7 +20,7 @@ class TestAllocateBuffer(TestCase):
             b[5:10] = 'abcde'
             try:
                 b[5:10] = 'abcdefghijk'
-            except TypeError, r:
+            except TypeError as r:
                 if str(r).find("right operand length must match slice length") is not 0:
                     raise
 

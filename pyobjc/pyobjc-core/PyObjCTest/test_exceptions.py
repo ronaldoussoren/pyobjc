@@ -15,7 +15,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseSimple()
 
-        except objc.error, e:
+        except objc.error as e:
             self.assertEqual(str(e), 'SimpleException - hello world')
             self.assertEqual(e._pyobjc_info_['name'], u'SimpleException')
             self.assertEqual(e._pyobjc_info_['reason'], u'hello world')
@@ -27,7 +27,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseSimpleWithInfo()
 
-        except objc.error, e:
+        except objc.error as e:
             self.assertEqual(str(e), 'InfoException - Reason string')
             self.assertEqual(e._pyobjc_info_['name'], u'InfoException')
             self.assertEqual(e._pyobjc_info_['reason'], u'Reason string')
@@ -42,7 +42,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseUnicodeName()
 
-        except objc.error, e:
+        except objc.error as e:
             if sys.version_info[0] == 2:
                 self.assertEqual(str(e), u'SimpleException\u1234\u2049 - hello world'.encode('utf-8'))
             else:
@@ -57,7 +57,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseUnicodeReason()
 
-        except objc.error, e:
+        except objc.error as e:
             if sys.version_info[0] == 2:
                 self.assertEqual(str(e), u'SimpleException - hello world\u1234\u2049'.encode('utf-8'))
             else:
@@ -72,7 +72,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseUnicodeWithInfo()
 
-        except objc.error, e:
+        except objc.error as e:
             if sys.version_info[0] == 2:
                 self.assertEqual(str(e), u'InfoException\u1234\u2049 - Reason string\u1234\u2049'.encode('utf-8'))
             else:
@@ -91,7 +91,7 @@ class TestExceptionsFromObjC (TestCase):
         try:
             o.raiseAString()
 
-        except objc.error, e:
+        except objc.error as e:
             self.assertEqual(e._pyobjc_exc_, u"thrown string")
 
 if __name__ == "__main__":

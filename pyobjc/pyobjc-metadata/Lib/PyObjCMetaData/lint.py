@@ -18,12 +18,18 @@ gCoreFoundationTypes = [
     'r^{__CFData}',
 ]
 
+gOpaqueTypes = [
+        '^{_NSZone=}',
+]
+
 default_name_attribute='name'
 name_attribute={
     'method': 'selector',
+    'depends_on': 'path',
 }
 
 mandatory_attributes={
+    'depends_on': ('path,'),
     'struct': ('name',),
     'cftype': ('name',),
     'opaque': ('name',),
@@ -39,6 +45,7 @@ mandatory_attributes={
 }
 
 valid_attributes={
+    'depends_on': ('path,'),
     'struct': ('name', 'type', 'type64', 'opaque'),
     'cftype': ('name', 'type', 'type64', 'tollfree', 'gettypeid_func'),
     'opaque': ('name', 'type', 'type64'),
@@ -50,9 +57,9 @@ valid_attributes={
     'class': ('name',),
     'informal_protocol': ('name',),
     ('informal_protocol', 'method'): ('selector', 'type', 'type64', 'class_method'),
-    ('class', 'method'): ('selector', 'class_method', 'variadic', 'ignore', 'suggestion', ),
-    'arg': ('c_array_length_in_arg', 'c_array_of_fixed_length', 'c_array_delimited_by_null', 'c_array_of_variable_length', 'function_pointer', 'sel_of_type', 'sel_of_type64', 'c_array_length_in_retval', 'type_modifier', 'null_accepted', 'printf_format', 'already_retained', 'type', 'type64', 'index'),
-    'retval': ('c_array_length_in_arg', 'c_array_of_fixed_length', 'c_array_delimited_by_null', 'c_array_of_variable_length', 'function_pointer', 'sel_of_type', 'sel_of_type64', 'already_retained', 'type', 'type64'),
+    ('class', 'method'): ('selector', 'class_method', 'variadic', 'ignore', 'suggestion', 'c_array_delimited_by_null', ),
+    'arg': ('c_array_length_in_arg', 'c_array_of_fixed_length', 'c_array_delimited_by_null', 'c_array_of_variable_length', 'function_pointer', 'sel_of_type', 'sel_of_type64', 'c_array_length_in_retval', 'type_modifier', 'null_accepted', 'printf_format', 'already_retained', 'already_cfretained', 'type', 'type64', 'index', 'function_pointer_retained', 'c_array_length_in_result'),
+    'retval': ('c_array_length_in_arg', 'c_array_of_fixed_length', 'c_array_delimited_by_null', 'c_array_of_variable_length', 'function_pointer', 'sel_of_type', 'sel_of_type64', 'already_retained', 'already_cfretained', 'type', 'type64'),
 }
 
 boolean_attributes={
@@ -63,8 +70,8 @@ boolean_attributes={
     'function': ('variadic', 'inline'),
     ('informal_protocol', 'method'): ('class_method',),
     ('class', 'method'): ('class_method', 'variadic', 'ignore', ),
-    'arg': ('c_array_delimitd_by_null', 'c_array_of_variable_length', 'function_pointer', 'c_array_length_in_retval', 'null_accepted', 'printf_format', 'already_retained', ),
-    'retval': ('c_array_delimitd_by_null', 'c_array_of_variable_length', 'function_pointer', 'already_retained'),
+    'arg': ('c_array_delimitd_by_null', 'c_array_of_variable_length', 'function_pointer', 'c_array_length_in_retval', 'null_accepted', 'printf_format', 'already_cfretained', 'already_retained', 'function_pointer_retained', 'c_array_length_in_result',),
+    'retval': ('c_array_delimitd_by_null', 'c_array_of_variable_length', 'function_pointer', 'already_cfretained', 'already_retained'),
 }
 
 encoding_attributes={
@@ -72,7 +79,7 @@ encoding_attributes={
     'cftype': ('type', 'type64',),
     'opaque': ('type', 'type64',),
     'constant': ('type', 'type64',),
-    ('informal_protocol', 'method'): ('type', 'type64'),
+    #('informal_protocol', 'method'): ('type', 'type64'),
     'arg': ('type', 'type64',),
     'retval': ('type', 'type64',),
 }
@@ -136,7 +143,8 @@ def validate_encoding(typestr):
             objc._C_CLASS, objc._C_DBL, objc._C_FLT, objc._C_ID, objc._C_INT, 
             objc._C_LNG, objc._C_LNG_LNG, objc._C_NSBOOL, objc._C_SEL, objc._C_SHT, 
             objc._C_UCHR, objc._C_UINT, objc._C_ULNG, objc._C_ULNG_LNG, objc._C_UNDEF, 
-            objc._C_USHT):
+            objc._C_USHT, objc._C_VOID, objc._C_CHAR_AS_INT, objc._C_CHAR_AS_TEXT,
+            objc._C_UNICHAR):
 
         return len(typestr) == 1
 
@@ -210,6 +218,12 @@ def validate_encoding(typestr):
         while typestr and typestr[0].isdigit():
             typestr = typestr[1:]
         return typestr == ''
+
+    elif typestr[0] in (objc._C_PTR, objc._C_IN, objc._C_OUT, objc._C_INOUT, objc._C_CONST):
+        return validate_encoding(typestr[1:])
+
+    else:
+        return False
 
     return True
 
@@ -365,9 +379,12 @@ def validateArgRetval(tag, element, numArg):
                 print "WARNING: %s: non-selector (%s) and sel_of_type annotation"%(
                         tag, element.get('type'))
 
+        if tp == '*':
+            print "WARNING: %s: has type=='*'"%(tag,)
+
         if tp.startswith('^') or tp.startswith('r^'):
             if element.tag == 'arg' and element.get('type_modifier') is None:
-                if tp not in gCoreFoundationTypes and tp != '^?':
+                if tp not in gCoreFoundationTypes and tp not in gOpaqueTypes and tp != '^?' and tp != '^v':
                     print "WARNING: %s: pointer-type (%s) without 'type_modifier'"%(
                         tag, tp)
 
@@ -375,6 +392,16 @@ def validateArgRetval(tag, element, numArg):
             if element.get('function_pointer') != 'true':
                 print "WARNING: %s: type '^?', but not a function_pointer"%(
                         tag,)
+
+        if element.get('function_pointer'):
+            if tp != '^?':
+                print "WARNING: %s: function_pointer, but type is %r"%(
+                        tag, tp)
+
+
+        if element.get('function_pointer_retained'):
+            if not element.get('function_pointer'):
+                print "WARNING: %s: function_pointer_retained, but not a function_pointer"%(tag,)
 
 
 
@@ -641,9 +668,9 @@ def main():
                     print "ERROR: %s %r: method without 'selector'"%(
                             element.tag, name(element))
 
-                basicValidation('%s %r: %s %r'%(
-                    element.tag, name(element), method.tag, name(method)),
-                    method, element)
+                mmsg = '%s %r: %s %r'%(
+                        element.tag, name(element), method.tag, name(method))
+                basicValidation(mmsg, method, element)
 
                 arglist = list(method.getchildren())
                 if len(arglist) != 0:
@@ -701,12 +728,18 @@ def main():
                         validateArgRetval('%s %r: %s %r (arg %s)'%(
                             element.tag, name(element), method.tag, name(method), a.get('index')), a, None)
 
+        elif element.tag == 'opaque':
+            tp = element.get('type')
+            if tp is not None:
+                gOpaqueTypes.append(tp)
+
         else:
             if element.tag not in valid_attributes:
                 print "ERROR: illegal tag: %r"%(element.tag,)
             elif len(list(element.getchildren())) != 0:
                 print "ERROR: %s %r:Subelements present"%(
                         element.tag, name(element))
+
 
     
 if __name__ == "__main__":

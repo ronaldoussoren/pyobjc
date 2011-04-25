@@ -4,6 +4,7 @@ Helper code for implementing unittests.
 This module is unsupported and is primairily used in the PyObjC
 testsuite.
 """
+from __future__ import print_function
 import plistlib as _pl
 import unittest as _unittest
 import objc
@@ -654,12 +655,12 @@ class TestCase (_unittest.TestCase):
             if _useleaks:
                 leaksAfter = _leaks()
                 if len(leaksBefore) != len(leaksAfter):
-                    print "\ntest %s is leaking [%d lines]"%(self, len(leaksAfter) - len(leaksBefore))
+                    print("\ntest %s is leaking [%d lines]"%(self, len(leaksAfter) - len(leaksBefore)))
                     if _leaksVerbose:
                         # XXX: add a smartish filter the surpresses the leaks
                         # in leaksBefore.
                         for ln in leaksAfter:
-                            print ln
+                            print(ln)
 
     def _deprecate(original_func):
         def deprecated_func(*args, **kwds):

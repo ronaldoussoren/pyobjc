@@ -1,5 +1,6 @@
+from __future__ import absolute_import, unicode_literals
 import objc
-import PyObjCTest.fnd as Foundation
+from . import fnd as Foundation
 from PyObjCTools.TestSupport import *
 import os
 
@@ -9,10 +10,10 @@ def S(*args):
     return b''.join(args)
 
 FUNCTIONS=[
-    ( u'NSHomeDirectory', S(objc._C_ID)),
-    ( u'NSIsFreedObject', S(objc._C_NSBOOL, objc._C_ID) ),
-    ( u'NSCountFrames', S(objc._C_UINT) ),
-    ( u'NSClassFromString', S(objc._C_CLASS, objc._C_ID) ),
+    ( 'NSHomeDirectory', S(objc._C_ID)),
+    ( 'NSIsFreedObject', S(objc._C_NSBOOL, objc._C_ID) ),
+    ( 'NSCountFrames', S(objc._C_UINT) ),
+    ( 'NSClassFromString', S(objc._C_CLASS, objc._C_ID) ),
 ]
 
 class TestBundleFunctions (TestCase):
@@ -33,12 +34,12 @@ class TestBundleFunctions (TestCase):
         #value = fn(obj)
         #self.assertTrue(not value)
 
-        fn = d[u'NSHomeDirectory']
+        fn = d['NSHomeDirectory']
         value = fn()
         self.assertEqual(value, os.path.expanduser('~'))
 
-        fn = d[u'NSClassFromString']
-        value = fn(u'NSObject')
+        fn = d['NSClassFromString']
+        value = fn('NSObject')
         self.assertIs(value, NSObject)
 
         # Need to look for a different example, NSCountFrames crashes

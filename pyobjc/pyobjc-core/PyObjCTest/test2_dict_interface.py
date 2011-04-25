@@ -154,7 +154,7 @@ class TestDict (test.test_dict.DictTest, TestCase):
         d.clear()
         class FailingUserDict:
             def keys(self):
-                raise Exc
+                raise Exc()
         self.assertRaises(Exc, d.update, FailingUserDict())
 
         class FailingUserDict:
@@ -168,7 +168,7 @@ class TestDict (test.test_dict.DictTest, TestCase):
                         if self.i:
                             self.i = 0
                             return 'a'
-                        raise Exc
+                        raise Exc()
                 return BogonIter()
             def __getitem__(self, key):
                 return key
@@ -186,10 +186,10 @@ class TestDict (test.test_dict.DictTest, TestCase):
                             rtn = chr(self.i)
                             self.i += 1
                             return rtn
-                        raise StopIteration
+                        raise StopIteration()
                 return BogonIter()
             def __getitem__(self, key):
-                raise Exc
+                raise Exc()
         self.assertRaises(Exc, d.update, FailingUserDict())
 
         class badseq(object):

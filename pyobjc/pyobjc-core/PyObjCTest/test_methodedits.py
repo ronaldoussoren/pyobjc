@@ -277,7 +277,7 @@ class TestCategory (TestCase):
             class NSObject ( objc.Category(NSObject), object ):
                 pass
 
-            raise AssertionError, u"Can use objc.Category with MI"
+            self.fail("Can use objc.Category with MI")
         except TypeError:
             pass
 
@@ -286,7 +286,7 @@ class TestCategory (TestCase):
             class NSFoo (objc.Category(NSObject)):
                     pass
 
-            raise AssertionError, u"Category name != class name"
+            self.fail("Category name != class name")
 
         except TypeError:
             pass
@@ -298,7 +298,7 @@ class TestCategory (TestCase):
             class list (objc.Category(list)):
                 pass
 
-            raise AssertionError, u"Category on list???"
+            self.fail("Category on list???")
 
         except TypeError:
             pass

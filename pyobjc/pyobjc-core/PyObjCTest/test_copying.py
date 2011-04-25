@@ -7,7 +7,7 @@ from PyObjCTest.copying import OC_CopyHelper, OC_CopyBase
 
 def funcattr(**kwds):
     def annotate(func):
-        for k, v in kwds.iteritems():
+        for k, v in kwds.items():
             setattr(func, k, v)
         return func
     return annotate

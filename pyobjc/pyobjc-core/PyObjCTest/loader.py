@@ -1,8 +1,10 @@
+from __future__ import absolute_import, print_function
 import sys, os, string, glob
 from os.path import basename, dirname, splitext, join, expanduser
 from fnmatch import fnmatch
 import unittest
-import dejagnu
+
+from . import dejagnu
 
 from distutils.command.install_lib import install_lib
 from distutils.errors import DistutilsOptionError
@@ -28,7 +30,7 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     """
 
     testFiles = recursiveGlob(root, pathPattern)
-    testModules = map(lambda x:x[len(root)+1:-3].replace('/', '.'), testFiles)
+    testModules = [ x[len(root)+1:-3].replace('/', '.') for x in  testFiles ]
     if package is not None:
         testModules = [(package + '.' + m) for m in testModules]
 
@@ -37,8 +39,8 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     for modName in testModules:
         try:
             module = __import__(modName)
-        except ImportError, msg:
-            print "SKIP %s: %s"%(modName, msg)
+        except ImportError as msg:
+            print("SKIP %s: %s"%(modName, msg))
             continue
 
         if '.' in modName:

@@ -6,7 +6,7 @@ import objc as _objc
 __bundle__ = _objc.loadBundle(
         'Foundation',
         globals(),
-        bundle_identifier=u'com.apple.Foundation',
+        bundle_identifier='com.apple.Foundation',
 )
 
 _objc.loadBundleVariables(__bundle__, globals(), [

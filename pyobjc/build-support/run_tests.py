@@ -40,9 +40,9 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 
 
 gUsage = """\
-run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions=versions] [-s|--setup-only]
+run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions=versions] [-s|--setup-only] [-i index.html|--index=index.html] [--skip-quartz]
 
-archs:    32-bit,3-way (values separated by commas)
+archs:    32-bit,3-way,intel (values separated by commas)
 versions: 2.6,2.7,3.1,3.2    (values seperated by commas)
 """
 
@@ -52,8 +52,6 @@ gTestResults = os.path.join(gBaseDir, "testresults")
 
 gFrameworkNameTemplate="DbgPython-{archs}"
 
-gVersions=["3.2", "2.7", "3.1", "2.6"]
-gArchs=["32-bit", "3-way"]
 
 gArchMap={
     '3-way': ['ppc', 'i386', 'x86_64'],
@@ -61,6 +59,14 @@ gArchMap={
     'intel': ['i386', 'x86_64'],
 }
 
+gVersionArchs = {
+    '2.6': {'32-bit'},
+    '2.7': {'32-bit', 'intel', '3-way'},
+    '3.1': {'32-bit'},
+    '3.2': {'32-bit', 'intel', '3-way'},
+}
+gVersions=list(sorted(gVersionArchs))
+gArchs=list(sorted(gArchMap))
 
 def supports_arch_command(version):
 
@@ -84,7 +90,7 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?s', ["help", "archs=", "versions=", "setup-only"])
+        opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?si', ["help", "archs=", "versions=", "setup-only", "index=", "skip-quartz"])
     except getopt.error as msg:
         print(msg, file=sys.stderr)
         print(gUsage, file=sys.stderr)
@@ -95,9 +101,11 @@ def main():
         print(gUsage, file=sys.stderr)
         sys.exit(1)
 
-    versions=gVersions
-    archs=gArchs
-    setup_only=False
+    versions = gVersions
+    archs = gArchs
+    setup_only = False
+    index_html = 'index.html'
+    skip_quartz = False
 
     for k, v in opts:
         if k in ('-?', '-h', '--help'):
@@ -124,19 +132,30 @@ def main():
         elif k in ['-s', '--setup-only']:
             setup_only = True
 
+        elif k in ['-i', '--index']:
+            index_html = v
+
+        elif k in ['--skip-quartz']:
+            skip_quartz = True
+
         else:
             print("ERROR: Unhandled script option: {0}".format(k),
                     file=sys.stderr)
             sys.exit(2)
 
+    if 'MACOSX_DEPLOYMENT_TARGET' in os.environ:
+        del os.environ['MACOSX_DEPLOYMENT_TARGET']
+
     for ver in versions:
         for arch in archs:
-            run_tests(ver, arch, setup_only)
+            if arch not in gVersionArchs[ver]:
+                continue
+            run_tests(ver, arch, setup_only, skip_quartz)
 
     if setup_only:
         return
 
-    gen_summary(versions, archs)
+    gen_summary(index_html, versions, archs)
 
 def detect_frameworks():
     """
@@ -177,12 +196,16 @@ def detect_frameworks():
 
 
 
-def run_tests(version, archs, setup_only):
+def run_tests(version, archs, setup_only, skip_quartz):
 
     lg = logging.getLogger("run_tests")
 
+    lg.info("Running tests python %s with archs %s setup_only=%s skip_quartz=%s",
+            version, archs, setup_only, skip_quartz)
+
     p = subprocess.Popen(["xcode-select", "-print-path" ],
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        env=os.environ)
 
     stdout, _ = p.communicate()
     path = stdout.strip()
@@ -231,12 +254,12 @@ def run_tests(version, archs, setup_only):
         p = subprocess.Popen([
             base_python,
             "-mvirtualenv",
-            subdir])
+            subdir], env=os.environ)
     else:
         p = subprocess.Popen([
             base_python,
             "-mvirtualenv3",
-            subdir])
+            subdir], env=os.environ)
 
     xit = p.wait()
     if xit != 0:
@@ -268,7 +291,8 @@ def run_tests(version, archs, setup_only):
         lg.info("Install %s into %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
             python, "setup.py", "install"],
-            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            env=os.environ)
 
         stdout, _ = p.communicate()
 
@@ -306,7 +330,8 @@ def run_tests(version, archs, setup_only):
         lg.debug("Build %s for %s", pkg, os.path.basename(subdir))
         p = subprocess.Popen([
             python, "setup.py", "install"],
-            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            cwd=pkgroot, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, 
+            env=os.environ)
 
         stdout, _ = p.communicate()
         with open(os.path.join(resultdir, pkg, "build-stdout.txt"), "wb") as fd:
@@ -318,6 +343,20 @@ def run_tests(version, archs, setup_only):
             lg.warning("Build %s failed", pkg)
             #raise RuntimeError(pkg)
             continue
+
+        lg.debug("Install %s into %s", pkg, os.path.basename(subdir))
+        p = subprocess.Popen([
+            python, "setup.py", "install"],
+            cwd=pkgroot, env=os.environ)
+
+        xit = p.wait()
+        if xit != 0:
+            lg.warning("Install %s failed", pkg)
+            raise RuntimeError(pkg)
+
+        if pkg == 'pyobjc-framework-Quartz':
+            if skip_quartz:
+                continue
 
         # TODO: 
         # - For python2.7/3.2: use `arch` to run tests with all architectures
@@ -372,15 +411,6 @@ def run_tests(version, archs, setup_only):
                 #raise RuntimeError(pkg)
 
         
-        lg.debug("Install %s into %s", pkg, os.path.basename(subdir))
-        p = subprocess.Popen([
-            python, "setup.py", "install"],
-            cwd=pkgroot)
-
-        xit = p.wait()
-        if xit != 0:
-            lg.warning("Install %s failed", pkg)
-            raise RuntimeError(pkg)
 
        
 
@@ -522,7 +552,7 @@ def get_osx_version():
 
     return "{ProductName} {ProductVersion} ({BuildVersion})".format(**r)
 
-def gen_summary(report_versions, report_archs):
+def gen_summary(index_html, report_versions, report_archs):
     with open(gIndexTemplate) as fp:
         tmpl = Template(fp.read())
 
@@ -536,11 +566,14 @@ def gen_summary(report_versions, report_archs):
     versions = {}
 
     for subdir in os.listdir(gTestResults):
-        if subdir == 'index.html': continue
+        if '--' not in subdir: continue
         version, style = subdir.split('--')
 
         if version not in report_versions: continue
         if style not in report_archs: continue
+
+        if style not in gVersionArchs[version]:
+            continue
 
         versions[(version, style)] = modules = []
 
@@ -587,7 +620,7 @@ def gen_summary(report_versions, report_archs):
             if info['class'] is None:
                 info['class'] = 'ok'
 
-    with open(os.path.join(gTestResults, 'index.html'), 'w') as fp:
+    with open(os.path.join(gTestResults, index_html), 'w') as fp:
         fp.write(tmpl.render(
             svn=svn,
             osx=osx,

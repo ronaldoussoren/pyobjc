@@ -19,7 +19,7 @@ as easily cause a crash when such a signal gets in.
 
           DO NOT USE THIS MODULE IN PRODUCTION CODE
 """
-
+from __future__ import print_function
 import signal
 import traceback
 import os
@@ -34,9 +34,9 @@ def dumpHandler(signum, frame):
     then re-raise the signal
     """
     resetFatalSignals()
-    print "*** Handling fatal signal '%d'." % signum
+    print("*** Handling fatal signal '%d'." % signum)
     traceback.print_stack(frame)
-    print "*** Restored handlers and resignaling."
+    print("*** Restored handlers and resignaling.")
     os.kill(os.getpid(), signum)
 
 def installHandler(sig):

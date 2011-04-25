@@ -122,7 +122,7 @@ class EnvironmentPane (NSPreferencePane):
         if not os.path.isdir(dname):
             try:
                 os.mkdir(dname)
-            except os.error, msg:
+            except os.error:
                 return False
 
         if not self.environ.writeToFile_atomically_(fname, True):

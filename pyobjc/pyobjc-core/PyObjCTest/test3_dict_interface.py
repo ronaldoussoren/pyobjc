@@ -211,7 +211,7 @@ class TestNSDictionaryInterface (TestCase):
     def testErrorsInViewContainmentCheck(self):
         class C:
             def __eq__(self, other):
-                raise RuntimeError
+                raise RuntimeError()
 
         d1 = self.dictClass().dictionaryWithDictionary_({1: C()})
         d2 = self.dictClass().dictionaryWithDictionary_({1: C()})

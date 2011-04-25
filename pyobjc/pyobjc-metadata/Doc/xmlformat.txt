@@ -26,7 +26,7 @@ Changes from the shared format
   - 'z': a small integer of type ``char``
   - 'Z': a value of type 'bool'
 
-* PyObjC adds the attribute "block_pointer" to the "arg" and "retval" elements.
+* PyObjC adds the attribute "block" to the "arg" and "retval" elements.
 
 * PyObjC adds the attribute "c_array_delimited_by_null" to the "function" and
   "method" elements.
@@ -422,7 +422,7 @@ Attributes
    can contain the encoded signature for the selector. This can be used by
    bridges for additional type-checking.
 
- * ``block_pointer`` (BOOLEAN): if true the argument is a block. 
+ * ``block`` (BOOLEAN): if true the argument is a block. 
 
    The signature of the block is described by subelements of this element and
    does not include the implement first argument.
