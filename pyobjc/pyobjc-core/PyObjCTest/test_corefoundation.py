@@ -4,6 +4,7 @@ Testcases for the CoreFoundation wrappers introduced in 1.5
 import objc
 from PyObjCTools.TestSupport import *
 import re
+import sys
 
 from PyObjCTest.corefoundation import *
 

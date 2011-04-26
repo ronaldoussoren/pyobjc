@@ -185,7 +185,13 @@ class TestNumbers (TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, float(0)))
 
         with filterWarnings('error', DeprecationWarning):
-            self.assertRaises(DeprecationWarning, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN+100)
+            try:
+                pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100)
+            except DeprecationWarning:
+                pass
+
+            else:
+                self.fail("No deprecation warning")
 
         with filterWarnings('ignore', DeprecationWarning):
             self.assertEqual(-LLONG_MIN+100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100))

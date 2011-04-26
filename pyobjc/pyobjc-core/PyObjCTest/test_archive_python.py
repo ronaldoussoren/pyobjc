@@ -358,6 +358,9 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         @onlyIf(0, "python unittest not relevant for archiving")
         def test_unicode(self): pass
 
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_maxint64(self): pass
+
 
         def test_long(self):
             # The real test_long method takes way to much time, test a subset
