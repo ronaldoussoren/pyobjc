@@ -38,6 +38,8 @@ import types
 
 if sys.version_info[0] == 2:
     from itertools import imap as map
+    pass
+
 else:
     basestr = str
 

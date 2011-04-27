@@ -27,12 +27,8 @@ from PyObjCTest.fnd import NSMutableArray, NSMutableDictionary
 #
 
 if sys.version_info[0] == 3:
-    # Dummy conversion functions, to make it easier to have
-    # the same test code in python 2 and 3.
-    def unicode(v):
-        return v
-    def long(v):
-        return v
+    unicode = str
+    long = int
 
 import test.pickletester
 
@@ -360,6 +356,9 @@ if int(os.uname()[2].split('.')[0]) >= 9:
 
         @onlyIf(0, "python unittest not relevant for archiving")
         def test_maxint64(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_empty_bytestring(self): pass
 
 
         def test_long(self):

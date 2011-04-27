@@ -54,6 +54,8 @@ def get_os_level():
 from setuptools.command import build_py
 from setuptools.command import test
 from distutils import log
+from distutils.core import Command
+
 
 class oc_build_py (build_py.build_py):
     def run_2to3(self, files, doctests=True):
@@ -72,33 +74,119 @@ class oc_build_py (build_py.build_py):
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
 
 class oc_test (test.test):
-    def run_tests(self):
-        import sys, os
+    description = "run test suite"
+    user_options = [
+        ('verbosity=', None, "print what tests are run"),
+    ]
 
-        if sys.version_info[0] == 3:
-            rootdir =  os.path.dirname(os.path.abspath(__file__))
-            if rootdir in sys.path:
-                sys.path.remove(rootdir)
+    def initialize_options(self):
+        self.verbosity='1'
 
+    def finalize_options(self):
+        if isinstance(self.verbosity, str):
+            self.verbosity = int(self.verbosity)
+
+
+    def cleanup_environment(self):
         ei_cmd = self.get_finalized_command('egg_info')
         egg_name = ei_cmd.egg_name.replace('-', '_')
 
-        to_remove = []
+        to_remove =  []
         for dirname in sys.path:
             bn = os.path.basename(dirname)
             if bn.startswith(egg_name + "-"):
                 to_remove.append(dirname)
 
         for dirname in to_remove:
-            log.info("removing installed %r from sys.path before testing"%(dirname,))
+            log.info("removing installed %r from sys.path before testing"%(
+                dirname,))
             sys.path.remove(dirname)
 
-        from PyObjCTest.loader import makeTestSuite
+        from pkg_resources import add_activation_listener
+        add_activation_listener(lambda dist: dist.activate())
+        working_set.__init__()
+
+    def add_project_to_sys_path(self):
+        from pkg_resources import normalize_path, add_activation_listener
+        from pkg_resources import working_set, require
+
+        if getattr(self.distribution, 'use_2to3', False):
+
+            # Using 2to3, cannot do this inplace:
+            self.reinitialize_command('build_py', inplace=0)
+            self.run_command('build_py')
+            bpy_cmd = self.get_finalized_command("build_py")
+            build_path = normalize_path(bpy_cmd.build_lib)
+
+            self.reinitialize_command('egg_info', egg_base=build_path)
+            self.run_command('egg_info')
+
+            self.reinitialize_command('build_ext', inplace=0)
+            self.run_command('build_ext')
+
+        else:
+            self.reinitialize_command('egg_info')
+            self.run_command('egg_info')
+            self.reinitialize_command('build_ext', inplace=1)
+            self.run_command('build_ext')
+        
+        self.__old_path = sys.path[:]
+        self.__old_modules = sys.modules.copy()
+
+        del sys.modules['PyObjCTools']
+
+
+        ei_cmd = self.get_finalized_command('egg_info')
+        sys.path.insert(0, normalize_path(ei_cmd.egg_base))
+        sys.path.insert(1, os.path.dirname(__file__))
+            
+        add_activation_listener(lambda dist: dist.activate())
+        working_set.__init__()
+        require('%s==%s'%(ei_cmd.egg_name, ei_cmd.egg_version))
+
+    def remove_from_sys_path(self):
+        from pkg_resources import working_set
+        sys.path[:] = self.__old_path
+        sys.modules.clear()
+        sys.modules.update(self.__old_modules)
+        working_set.__init__()
+
+
+    def run(self):
         import unittest
 
-        #import pprint; pprint.pprint(sys.path)
-       
-        unittest.main(None, None, [unittest.__file__]+self.test_args)
+        # Ensure that build directory is on sys.path (py3k)
+        import sys
+
+        self.cleanup_environment()
+        self.add_project_to_sys_path()
+
+        from PyObjCTest.loader import makeTestSuite
+        import PyObjCTools.TestSupport as mod
+
+        try:
+            meta = self.distribution.metadata
+            name = meta.get_name()
+            test_pkg = name + "_tests"
+            suite = makeTestSuite()
+
+            runner = unittest.TextTestRunner(verbosity=self.verbosity)
+            result = runner.run(suite)
+
+            # Print out summary. This is a structured format that
+            # should make it easy to use this information in scripts.
+            summary = dict(
+                count=result.testsRun,
+                fails=len(result.failures),
+                errors=len(result.errors),
+                xfails=len(getattr(result, 'expectedFailures', [])),
+                xpass=len(getattr(result, 'expectedSuccesses', [])),
+                skip=len(getattr(result, 'skipped', [])),
+            )
+            print("SUMMARY: %s"%(summary,))
+
+        finally:
+            self.remove_from_sys_path()
 
 from setuptools.command import egg_info as orig_egg_info
 
@@ -453,7 +541,7 @@ dist = setup(
     classifiers = CLASSIFIERS,
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
-    test_suite='PyObjCTest.loader.makeTestSuite',
+#    test_suite='PyObjCTest.loader.makeTestSuite',
     zip_safe = False,
 #    entry_points = {
 #        "egg_info.writers": [
