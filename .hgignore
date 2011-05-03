@@ -1,0 +1,11 @@
+build
+dist
+.DS_Store
+__pycache__
+
+syntax: glob
+*.so
+*.egg-info
+*.dSYM
+*.pyc
+unittest2-*.egg
