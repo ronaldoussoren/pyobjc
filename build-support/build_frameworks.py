@@ -18,15 +18,14 @@ sys.dont_write_bytecode = True
 
 import subprocess, getopt, logging, os, shutil
 from urllib.request import urlopen
-import pprint
 
 
 gUsage="""\
-build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch=archs] [-f flavours] [--flavours=flavours]
+build_frameworks.py [-v versions] [--versions=versions] [-a archs] [--arch archs] \\
+   [--refresh-clone|--no-refresh-clone]
 
 - versions: comma seperated list of python versiosn, defaults to "2.6,2.7,3.1,3.2"
-- archs: comma seperated list of build architectures, defaults to "32-bit,3-way"
-- flavours: comma separated list of build variants, defaults to "release,debug"
+- archs: comma seperated list of build variations, defaults to "32-bit,3-way"
 """
 
 gBaseDir = os.path.dirname(os.path.abspath(__file__))
@@ -44,24 +43,22 @@ gFlavours = [
                 "--with-pydebug",
             ],
         ),
-        dict(
-            name="release",
-            template="ReleasePython-{archs}",
-            flags=[
-            ],
-        ),
+#        dict(
+#            name="release",
+#            template="ReleasePython-{archs}",
+#            flags=[
+#            ],
+#        ),
 ]
 
-
-# Location of the SVN branches to be used
-gURLMap = {
-    '2.6': 'http://svn.python.org/projects/python/branches/release26-maint',
-    '2.7': 'http://svn.python.org/projects/python/branches/release27-maint',
-
-    '3.1': 'http://svn.python.org/projects/python/branches/release31-maint',
-    '3.2': 'http://svn.python.org/projects/python/branches/py3k',
+gHgURL='http://hg.python.org/cpython'
+gBranchMap={
+    '2.6': '2.6',
+    '2.7': '2.7',
+    '3.1': '3.1',
+    '3.2': '3.2',
+    '3.3': 'default',
 }
-
 
 # Name of the OSX SDK used to build the framework, keyed of the architecture
 # variant.
@@ -77,53 +74,78 @@ gDeploymentTargetMap={
     '32-bit': '10.3',
     #'32-bit': '10.5',
     '3-way':  '10.5',
-    'intel':  '10.6',
-}
-
-gArchMap = {
-    '2.6': {'32-bit'},
-    '2.7': {'32-bit', 'intel', '3-way'},
-    '3.1': {'32-bit'},
-    '3.2': {'32-bit', 'intel', '3-way'},
+    'intel':  '10.5',
 }
 
 class ShellError (Exception):
     """ An error occurred while running a shell command """
     pass
 
-def create_checkout(version):
-    """
-    Create or update the checkout of the given version
-    of Python.
-    """
-    lg = logging.getLogger("create_checkout")
-    lg.info("Create checkout for %s", version)
+def refresh_local_clone():
+    lg = logging.getLogger("refresh_local_clone")
+    lg.info("Refreshing local clone")
 
-    checkoutdir = os.path.join(gBaseDir, "checkouts", version)
+    checkoutdir = os.path.join(gBaseDir, "checkout")
     if not os.path.exists(checkoutdir):
         lg.debug("Create directory %r", checkoutdir)
         os.makedirs(checkoutdir)
 
-    if os.path.exists(os.path.join(checkoutdir, '.svn')):
-        lg.debug("Update checkout")
+    if not os.path.exists(os.path.join(checkoutdir, '.hg')):
+        lg.debug("Initial clone")
         p = subprocess.Popen([
-            'svn', 'up'],
-            cwd=checkoutdir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            env=os.environ)
-    else:
-        lg.debug("Initial checkout checkout")
-        p = subprocess.Popen([
-            'svn', 'co', gURLMap[version], checkoutdir], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-            env=os.environ)
+            'hg', 'clone', gHgURL, checkoutdir
+        ])
 
-    data = p.communicate()[0]
+    else:
+        lg.debug("Update clone")
+        p = subprocess.Popen([
+            'hg', 'pull', '-u'],
+            cwd=checkoutdir,
+        )
+
     xit = p.wait()
     if xit == 0:
-        lg.info("Checkout for %s is now up-to-date", version)
+        lg.info("Local clone is now up-to-date")
     else:
-        print(data.decode('utf-8').rstrip())
-        lg.warn("Checkout for %s failed", version)
+        lg.warn("Pull for local clone failed")
         raise ShellError(xit)
+
+
+def switch_branch(version):
+    """
+    Create or update the checkout of the given version
+    of Python.
+    """
+    lg = logging.getLogger("switch_branch")
+    lg.info("Switch to branch %s", version)
+
+    checkoutdir = os.path.join(gBaseDir, "checkout")
+    if not os.path.exists(checkoutdir):
+        lg.error("No local clone available")
+        raise ShellError(1)
+
+    p = subprocess.Popen([
+        'hg', 'up', '-C', version],
+        cwd=checkoutdir)
+
+    xit = p.wait()
+    if xit == 0:
+        lg.info("Branch for %s is now up-to-date", version)
+    else:
+        lg.warn("Branch for %s failed", version)
+        raise ShellError(xit)
+
+    p = subprocess.Popen([
+        'hg', 'branch'],
+        cwd=checkoutdir,
+        stdout=subprocess.PIPE)
+    data = p.communicate()[0]
+    data = data.decode('utf-8').strip()
+    xit = p.wait()
+    if data != version:
+        lg.warn("Switching branch failed")
+        raise ShellExit(1)
+
 
 def build_framework(flavour, version, archs):
     """
@@ -136,7 +158,7 @@ def build_framework(flavour, version, archs):
     lg = logging.getLogger("build_framework")
     lg.info("Build %s framework version=%r archs=%r", flavour["name"], version, archs)
 
-    builddir = os.path.join(gBaseDir, "checkouts", version, "build")
+    builddir = os.path.join(gBaseDir, "checkout", "build")
     if os.path.exists(builddir):
         lg.debug("Remove existing build tree")
         shutil.rmtree(builddir)
@@ -153,38 +175,71 @@ def build_framework(flavour, version, archs):
             "--with-universal-archs={0}".format(archs),
             ] + flavour["flags"] + [
             "MACOSX_DEPLOYMENT_TARGET={0}".format(gDeploymentTargetMap[archs]),
-            ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
-
-    data = p.communicate()[0]
+            ], cwd=builddir)
 
     xit = p.wait()
     if xit != 0:
-        print(data.decode('utf-8').rstrip())
         lg.debug("Configure failed for %s", version)
         raise ShellError(xit)
+
+
+
+    lg.debug('Removing unwanted installation bits from Makefile')
+    fp = open(os.path.join(builddir, 'Makefile'))
+    contents = fp.read()
+    fp.close()
+    
+    # Ensure that nothing gets installed in /Applications
+    contents = contents.replace('frameworkinstallapps4way', '')
+    contents = contents.replace('frameworkinstallapps', '')
+
+    # Ensure that nothting gets installed in /usr/local
+    contents = contents.replace(' frameworkinstallunixtools4way', ' ')
+    contents = contents.replace(' frameworkinstallunixtools', ' ')
+    
+    fp = open(os.path.join(builddir, 'Makefile'), 'w')
+    fp.write(contents)
+    fp.close()
+
+
+
+
+    fp = open(os.path.join(builddir, 'Mac', 'Makefile'))
+    contents = fp.read()
+    fp.close()
+
+    contents = contents.replace('"$(PYTHONAPPSDIR)"', '')
+    fp = open(os.path.join(builddir, 'Mac', 'Makefile'), 'w')
+    fp.write(contents)
+    fp.close()
+
+
+
     
     lg.debug("Running 'make'")
     p = subprocess.Popen([
             "make",
-        ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
-    data = p.communicate()[0]
+        ], cwd=builddir)
 
     xit = p.wait()
     if xit != 0:
-        print(data.decode('utf-8').rstrip())
         lg.debug("Make failed for %s", version)
         raise ShellError(xit)
+
+    install_tree = "/Library/Frameworks/{0}.framework/Versions/{1}".format(
+            flavour["template"].format(version=version, archs=archs), version)
+    if os.path.exists(install_tree):
+        lg.debug("Removing existing tree (%s)", install_tree)
+        #shutil.rmtree(install_tree)
 
     lg.debug("Running 'make install'")
     p = subprocess.Popen([
             "make",
             "install",
-        ], cwd=builddir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
-    data = p.communicate()[0]
+        ], cwd=builddir)
 
     xit = p.wait()
     if xit != 0:
-        print(data.decode('utf-8').rstrip())
         lg.debug("Install failed for %r", version)
         raise ShellError(xit)
 
@@ -192,8 +247,29 @@ def install_distribute(flavour, version, archs):
     lg = logging.getLogger("install_distribute")
     lg.debug("Installing distribute")
 
-    distribute_dir = os.path.join(gBaseDir, "distribute-0.6.12-patched")
-    distribute_dir = os.path.join(gBaseDir, "distribute-0.6.14")
+    distribute='distribute-0.6.15'
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache')):
+        os.mkdir(os.path.join(gBaseDir, 'cache'))
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache', distribute + '.tar.gz')):
+        lg.warning("Downloading %s from PyPI"%(distribute,))
+        url = 'http://pypi.python.org/packages/source/d/distribute/' + distribute + '.tar.gz'
+        fp = urlopen(url)
+        data = fp.read()
+        fp.close()
+
+        fp = open(os.path.join(gBaseDir, 'cache', distribute + '.tar.gz'), 'wb')
+        fp.write(data)
+        fp.close()
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache', distribute)):
+        lg.warning("Unpacking %s archive"%(distribute,))
+        shutil.unpack_archive(
+            os.path.join(gBaseDir, 'cache', distribute + '.tar.gz'),
+            os.path.join(gBaseDir, 'cache'))
+
+    distribute_dir = os.path.join(gBaseDir, "cache", distribute)
     builddir = os.path.join(distribute_dir, "build")
     if os.path.exists(builddir):
         lg.debug("Remove existing 'build' subdir")
@@ -206,28 +282,47 @@ def install_distribute(flavour, version, archs):
     if version[0] == '3':
         python += '3'
 
-
-    if os.path.exists(os.path.join(distribute_dir, 'build')):
-        shutil.rmtree(os.path.join(distribute_dir, 'build'))
-
     lg.debug("Run setup script with '%s'", python)
     p = subprocess.Popen([
         python, "setup.py", "install"],
-        cwd=distribute_dir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
-    
-    data = p.communicate()[0]
-
+        cwd=distribute_dir)
     xit = p.wait()
     if xit != 0:
-        print(data.decode('utf-8').rstrip())
         lg.warning("Installing 'distribute' failed")
         raise ShellError(xit)
 
-
 def install_virtualenv(flavour, version, archs):
-    lg = logging.getLogger("install_virtualenv")
+    lg = logging.getLogger("install_distribute")
+    lg.debug("Installing virtualenv")
 
-    lg.info("Installing virtualenv from local source")
+    virtualenv='virtualenv-1.6'
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache')):
+        os.mkdir(os.path.join(gBaseDir, 'cache'))
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache', virtualenv + '.tar.gz')):
+        lg.warning("Downloading %s from PyPI"%(virtualenv,))
+        url = 'http://pypi.python.org/packages/source/v/virtualenv/' + virtualenv + '.tar.gz'
+        fp = urlopen(url)
+        data = fp.read()
+        fp.close()
+
+        fp = open(os.path.join(gBaseDir, 'cache', virtualenv + '.tar.gz'), 'wb')
+        fp.write(data)
+        fp.close()
+
+    if not os.path.exists(os.path.join(gBaseDir, 'cache', virtualenv)):
+        lg.warning("Unpacking %s archive"%(virtualenv,))
+        shutil.unpack_archive(
+            os.path.join(gBaseDir, 'cache', virtualenv + '.tar.gz'),
+            os.path.join(gBaseDir, 'cache'))
+
+    virtualenv_dir = os.path.join(gBaseDir, "cache", virtualenv)
+    virtualenv_dir = os.path.join(gBaseDir, virtualenv)
+    builddir = os.path.join(virtualenv_dir, "build")
+    if os.path.exists(builddir):
+        lg.debug("Remove existing 'build' subdir")
+        shutil.rmtree(builddir)
 
     frameworkName=flavour["template"].format(archs=archs, version=version)
 
@@ -236,43 +331,39 @@ def install_virtualenv(flavour, version, archs):
     if version[0] == '3':
         python += '3'
 
-    # Sadly enough plain virtualenv doens't support 
-    # python3 yet, but there is a fork that does.
-    # Therefore install the real virtualenv for python 2.x
-    # and the fork for python 3.x
-    if version[0] == '2':
-        srcdir = os.path.join(gBaseDir, 'virtualenv-src')
-    else:
-        srcdir = os.path.join(gBaseDir, 'virtualenv3-src')
-
-    if os.path.exists(os.path.join(srcdir, 'build')):
-        shutil.rmtree(os.path.join(srcdir, 'build'))
-
-    p = subprocess.Popen([ python, "setup.py", "install" ],
-            cwd=srcdir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=os.environ)
-
-    data = p.communicate()[0]
-
+    lg.debug("Run setup script with '%s'", python)
+    p = subprocess.Popen([
+        python, "setup.py", "install"],
+        cwd=virtualenv_dir)
     xit = p.wait()
     if xit != 0:
-        print(data.decode('utf-8').rstrip())
         lg.warning("Installing 'virtualenv' failed")
         raise ShellError(xit)
 
 
+
 def main():
     logging.basicConfig(level=logging.DEBUG)
+    import sysconfig
+
+    import os
+    os.environ['PATH'] = '/Developer/usr/bin:' + os.environ['PATH']
+
+    if 'MACOSX_DEPLOYMENT_TARGET' in os.environ:
+        del os.environ['MACOSX_DEPLOYMENT_TARGET']
+    os.unsetenv('MACOSX_DEPLOYMENT_TARGET')
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'v:a:h?f:', ['help', 'versions=', 'archs=', 'flavours=', 'flavors='])
+        opts, args = getopt.getopt(sys.argv[1:], 'v:a:h?', ['help', 'versions=', 'archs=', 
+            'refresh-clone', 'no-refresh-clone'])
     except getopt.error as msg:
         print(msg, file=sys.stderr)
         print(gUsage, file=sys.stderr)
         sys.exit(1)
 
-    versions = sorted(gURLMap.keys())
+    versions = sorted(gBranchMap.keys())
     archs = gArchs
-    flavours = gFlavours
+    refresh_clone = True
 
     if args:
         print("Additional arguments", file=sys.stderr)
@@ -286,11 +377,17 @@ def main():
             print(gUsage)
             sys.exit(0)
 
+        elif k == '--refresh-clone':
+            refresh_clone=True
+
+        elif k == '--no-refresh-clone':
+            refresh_clone=False
+
         elif k in ('-v', '--versions'):
             versions = v.split(',')
 
             for v in versions:
-                if v not in gURLMap:
+                if v not in gBranchMap:
                     print("Unsupported python version: {0}".format(v), 
                             file=sys.stderr)
                     sys.exit(1)
@@ -304,14 +401,6 @@ def main():
                             file=sys.stderr)
                     sys.exit(1)
 
-        elif k in ('-f', '--flavours', '--flavors'):
-            flavours = [v.strip() for v in v.split(',')]
-            for v in flavours:
-                if v not in gFlavours:
-                    print("Unsupported python flavour: {0}".format(v), 
-                            file=sys.stderr)
-                    sys.exit(1)
-
         else:
             print("ERROR: unhandled script option: {0}".format(k), 
                     file=sys.stderr)
@@ -320,16 +409,14 @@ def main():
     lg = logging.getLogger("build_frameworks")
     lg.info("Building versions: %s", versions)
     lg.info("Building architectures: %s", archs)
+    if refresh_clone:
+        refresh_local_clone()
     try:
         for version in sorted(versions):
-            create_checkout(version)
+            switch_branch(gBranchMap[version])
 
-            for flavour in flavours:
+            for flavour in gFlavours:
                 for arch in sorted(archs):
-                    if arch not in gArchMap[version]:
-                        lg.info('Skip %s framework for python %s (%s)', flavour["name"], version, arch)
-                        continue
-
                     try:
                         lg.info('Building %s framework for python %s (%s)', flavour["name"], version, arch)
                         build_framework(flavour, version, arch)
@@ -338,6 +425,9 @@ def main():
                         lg.info('Installing virtualenv for python %s (%s)', version, arch)
                         install_virtualenv(flavour, version, arch)
                         lg.info('Done %s python %s (%s)', flavour["name"], version, arch)
+
+                    except ShellError:
+                        raise
                     except Exception as exc:
                         lg.warning("building %s for pyton %s (%s) failed: %s",
                                 flavour["name"], version, arch, exc)

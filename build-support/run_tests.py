@@ -38,21 +38,6 @@ gBaseDir = '.'
 gIndexTemplate = os.path.join(gBaseDir, 'templates', 'index.html')
 gTestResults = os.path.join(gBaseDir, "testresults")
 
-
-gUsage = """\
-run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions=versions] [-s|--setup-only] [-i index.html|--index=index.html] [--skip-quartz]
-
-archs:    32-bit,3-way,intel (values separated by commas)
-versions: 2.6,2.7,3.1,3.2    (values seperated by commas)
-"""
-
-gBaseDir = os.path.dirname(os.path.abspath(__file__))
-gRootDir = os.path.dirname(gBaseDir)
-gTestResults = os.path.join(gBaseDir, "testresults")
-
-gFrameworkNameTemplate="DbgPython-{archs}"
-
-
 gArchMap={
     '3-way': ['ppc', 'i386', 'x86_64'],
     '32-bit': ['ppc', 'i386'],
@@ -64,9 +49,26 @@ gVersionArchs = {
     '2.7': {'32-bit', 'intel', '3-way'},
     '3.1': {'32-bit'},
     '3.2': {'32-bit', 'intel', '3-way'},
+    '3.3': {'32-bit', 'intel', '3-way'},
 }
 gVersions=list(sorted(gVersionArchs))
 gArchs=list(sorted(gArchMap))
+
+
+gUsage = """\
+run_tests.py [-a archs] [--archs=archs] [-v versions] [--versions=versions] [-s|--setup-only] [-i index.html|--index=index.html] [--skip-quartz]
+
+archs:    %s (values separated by commas)
+versions: %s (values seperated by commas)
+"""%(",".join(gArchs), ",".join(gVersions))
+
+gBaseDir = os.path.dirname(os.path.abspath(__file__))
+gRootDir = os.path.dirname(gBaseDir)
+gTestResults = os.path.join(gBaseDir, "testresults")
+
+gFrameworkNameTemplate="DbgPython-{archs}"
+
+
 
 def supports_arch_command(version):
 
@@ -88,6 +90,14 @@ def supports_arch_command(version):
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
+
+    import sysconfig
+    import os
+    os.environ['PATH'] = '/Developer/usr/bin:' + os.environ['PATH']
+
+    if 'MACOSX_DEPLOYMENT_TARGET' in os.environ:
+        del os.environ['MACOSX_DEPLOYMENT_TARGET']
+    os.unsetenv('MACOSX_DEPLOYMENT_TARGET')
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'a:v:h?si', ["help", "archs=", "versions=", "setup-only", "index=", "skip-quartz"])
