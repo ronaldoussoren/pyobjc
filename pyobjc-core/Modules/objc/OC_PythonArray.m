@@ -244,7 +244,7 @@ static PyObject* mapTypes = NULL;
 			}
 		}
 
-		w = PyObject_CallMethod(value, "insert", "iO", idx, v);
+		w = PyObject_CallMethod(value, "insert", Py_ARG_SIZE_T "O", theIndex, v);
 		if (unlikely(w == NULL)) {
 			Py_DECREF(v);
 			PyObjC_GIL_FORWARD_EXC();

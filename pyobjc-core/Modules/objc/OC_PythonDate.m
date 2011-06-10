@@ -25,7 +25,7 @@ static PyObject* datetime_types = NULL;
 		Py_DECREF(name); name = NULL;
 
 		if (datetime == NULL) {
-			Py_DECREF(datetime);
+			Py_DECREF(name);
 			PyErr_Clear();
 			return nil;
 		}
@@ -43,7 +43,7 @@ static PyObject* datetime_types = NULL;
 
 
 	if (PySequence_Contains(datetime_types, (PyObject*)(Py_TYPE(object)))) {
-		return [[OC_PythonDate alloc] initWithPythonObject:object];
+		return [[[OC_PythonDate alloc] initWithPythonObject:object] autorelease];
 	}
 	return nil;
 }
@@ -181,6 +181,7 @@ static PyObject* datetime_types = NULL;
 				"%Y-%m-%d %H:%M:%S %z");
 			if (v == NULL) {
 				/* Raise ObjC exception */
+				PyObjC_GIL_FORWARD_EXC();
 			}
 
 

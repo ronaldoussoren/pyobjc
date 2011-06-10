@@ -22,6 +22,9 @@
 #import <mach-o/loader.h>
 #import <objc/Protocol.h>
 
+#include <dlfcn.h>
+
+
 int PyObjC_VerboseLevel = 0;
 int PyObjC_HideProtected = 1;
 BOOL PyObjC_useKVO = YES;
@@ -955,7 +958,7 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
 	for (i = 0; i < protCount; i++) {
 		PyObject *p = PyObjCFormalProtocol_ForProtocol(protlist[i]);
 		if (p == NULL) {
-			Py_DECREF(p);
+			Py_DECREF(protocols);
 			free(protlist);
 			return NULL;
 		}
@@ -1797,6 +1800,41 @@ static char* keywords[] = { "object", NULL};
 }
 #endif
 
+static PyObject*
+PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)),
+	PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "name", "type", "magic", NULL };
+	char* name;
+	char* type;
+	int   magic;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "ssi",
+		keywords, &name, &type, &magic)) {
+		
+		return NULL;
+	}
+
+	void* buf = dlsym(RTLD_DEFAULT, name);
+	if (buf == NULL) {
+		PyErr_SetString(PyExc_AttributeError, name);
+		return NULL;
+	}
+
+	PyObject* v;
+
+	if (magic) {
+		v = PyObjCCF_NewSpecial(type, buf);
+	} else {
+		v = pythonify_c_value(type, buf);
+	}
+
+	if (v == NULL) {
+		return NULL;
+	}
+	return v;
+}
+
 
 static PyMethodDef mod_methods[] = {
 	{
@@ -1923,6 +1961,9 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, PyObjC_removeAssociatedObjects_doc },
 
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */
+
+	{ "_loadConstant", (PyCFunction)PyObjC_LoadConstant,
+		METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };

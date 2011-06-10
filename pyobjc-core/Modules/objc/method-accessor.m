@@ -123,7 +123,6 @@ make_dict(PyObject* self, int class_method)
 	void* iterator;
 	char  buf[256];
 	Class    objc_class;
-	PyObject* bound_self;
 
 	if (PyObjCObject_Check(self)) {
 		id obj = PyObjCObject_GetObject(self);
@@ -133,12 +132,10 @@ make_dict(PyObject* self, int class_method)
 
 		if (class_method) {
 			cls = object_getClass(obj);
-			bound_self = (PyObject*)Py_TYPE(self);
 			objc_class = object_getClass(cls); 
 		} else {
 			cls = object_getClass(obj);
 			objc_class = cls;
-			bound_self = self;
 		}
 
 	} else if (PyObjCClass_Check(self)) {
@@ -146,9 +143,6 @@ make_dict(PyObject* self, int class_method)
 		objc_class = cls;
 		if (class_method) {
 			objc_class = object_getClass(cls);
-			bound_self = self;
-		} else {
-			bound_self = NULL;
 		}
 
 	} else {
@@ -167,6 +161,7 @@ make_dict(PyObject* self, int class_method)
 		if (methods == NULL) {
 			objc_class = class_getSuperclass((Class)objc_class);
 			cls = class_getSuperclass((Class)cls);
+			continue;
 		}
 
 		for (i = 0; i < method_count; i++) {

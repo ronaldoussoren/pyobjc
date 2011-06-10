@@ -70,11 +70,12 @@
 		if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
 			PyErr_Clear();
 			rval = 0;
-		}
-		if ((NSUInteger)buffer_len > NSUIntegerMax) {
-			rval = NSUIntegerMax;
 		} else {
-			rval = buffer_len;
+			if ((NSUInteger)buffer_len > NSUIntegerMax) {
+				rval = NSUIntegerMax;
+			} else {
+				rval = buffer_len;
+			}
 		}
 	PyObjC_END_WITH_GIL
 	return rval;

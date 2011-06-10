@@ -533,7 +533,6 @@ static PyObject*
 get_method_for_selector(PyObject *obj, SEL aSelector)
 {
 	const char*  meth_name;
-	Py_ssize_t   len;
 	char         pymeth_name[256];
 	Py_ssize_t   argcount;
 	PyObject*    pymethod;
@@ -546,7 +545,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	}
 
 	meth_name = sel_getName(aSelector);
-	len = strlen(meth_name);
       
 	for (argcount=0, p=meth_name; *p; p++) {
 		if (*p == ':') {
@@ -1157,8 +1155,8 @@ static  PyObject* setKeyFunc = NULL;
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	id target;
-	int len;
-	int i;
+	NSInteger len;
+	NSInteger i;
 
 	len = [elems count];
 	target = self;

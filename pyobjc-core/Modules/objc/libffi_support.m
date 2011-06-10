@@ -2339,7 +2339,6 @@ int PyObjCFFI_ParseArguments(
 				resttype = gCharEncoding;
 			}
 
-			error = 0;
 			argument = PyTuple_GET_ITEM (args, py_arg);
 			py_arg ++;
 
@@ -2708,8 +2707,6 @@ int PyObjCFFI_ParseArguments(
 					if (methinfo->argtype[i].printfFormat) {
 						printf_format = argument;
 						Py_INCREF(argument);
-						error = 0;
-
 					} 
 					error = depythonify_c_value (
 						argtype+1, 
@@ -2804,23 +2801,22 @@ int PyObjCFFI_ParseArguments(
 
 					case PyObjC_kNullTerminatedArray:
 						{
-						const char* buf;
-						Py_ssize_t len;
+							const char* buf;
+							Py_ssize_t len;
 
-						error = PyObject_AsCharBuffer(argument, &buf, &len);
-						if (error != -1) {
-							byref[i] = PyMem_Malloc(len+1);
-							if (byref[i] == NULL) {
-								PyErr_NoMemory();
-								error = -1;
+							error = PyObject_AsCharBuffer(argument, &buf, &len);
+							if (error != -1) {
+								byref[i] = PyMem_Malloc(len+1);
+								if (byref[i] == NULL) {
+									PyErr_NoMemory();
+									error = -1;
+								} else {
+									memcpy(byref[i], buf, len);
+									((char*)byref[i])[len] = '\0';
+								}
 							} else {
-								memcpy(byref[i], buf, len);
-								((char*)byref[i])[len] = '\0';
+								error = -1;
 							}
-							Py_DECREF(seq);
-						} else {
-							error = -1;
-						}
 						}
 						break;
 

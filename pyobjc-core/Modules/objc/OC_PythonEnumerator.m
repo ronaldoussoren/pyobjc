@@ -4,7 +4,7 @@
 
 +enumeratorWithPythonObject:(PyObject*)object
 {
-	return [[self alloc] initWithPythonObject:object];
+	return [[[self alloc] initWithPythonObject:object] autorelease];
 }
 
 -initWithPythonObject:(PyObject*)object

@@ -15,9 +15,9 @@ extern PyObject* PyObjCExc_BadPrototypeError;
 int PyObjCUtil_Init(PyObject* module);
 
 void PyObjCErr_FromObjC(NSException* localException);
-void PyObjCErr_ToObjC(void);
+void PyObjCErr_ToObjC(void) __attribute__((__noreturn__));
 
-void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state);
+void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state) __attribute__((__noreturn__));
 
 NSException* PyObjCErr_AsExc(void);
 

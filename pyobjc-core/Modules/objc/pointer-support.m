@@ -81,9 +81,6 @@ static struct wrapper*
 FindWrapper(const char* signature)
 {
 	Py_ssize_t i;
-	Py_ssize_t len;
-
-	len = strlen(signature);
 
 	for (i = 0; i < item_count; i++) {
 		if (strncmp(signature, items[i].signature, items[i].offset) == 0) {

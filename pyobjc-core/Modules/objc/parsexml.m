@@ -506,7 +506,6 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 			av = PyObjC_IntFromLong(idx++);
 			if (av == NULL) {
 				Py_DECREF(a);
-				Py_DECREF(av);
 				Py_DECREF(result);
 				return NULL;
 			}
@@ -531,7 +530,6 @@ xmlToArgMeta(xmlNode* node, BOOL isMethod, int* argIdx)
 				v = PyObjC_IntFromLong(idx++);
 				if (v == NULL) {
 					Py_DECREF(d);
-					Py_DECREF(v);
 					Py_DECREF(result);
 					return NULL;
 				}
@@ -1394,10 +1392,7 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 
 	metadata = PyObjC_InternValue(metadata);
 	if (metadata == NULL) {
-		Py_DECREF(nm);
-		Py_DECREF(metadata);
-		Py_DECREF(arguments);
-		Py_DECREF(siglist);
+		goto error;
 	}
 
 	v = PyObjCFunc_New(nm, function, PyBytes_AsString(signature), Py_None, metadata);
@@ -1422,9 +1417,9 @@ handle_function(xmlNode* cur_node, PyObject* globalDict, struct functionlist* in
 	return 0;
 
 error:
-	Py_DECREF(siglist);
-	Py_DECREF(arguments);
-	Py_DECREF(metadata);
+	Py_XDECREF(siglist);
+	Py_XDECREF(arguments);
+	Py_XDECREF(metadata);
 	xmlFree(name);
 	return -1;
 }

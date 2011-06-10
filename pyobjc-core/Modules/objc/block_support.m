@@ -39,6 +39,7 @@ enum {
     BLOCK_HAS_CTOR =          (1 << 26), // helpers have C++ code
     BLOCK_IS_GLOBAL =         (1 << 28),
     BLOCK_HAS_DESCRIPTOR =    (1 << 29), // interim until complete world build is accomplished
+    BLOCK_HAS_SIGNATURE  =    (1 << 30), // interim until complete world build is accomplished
 };
 
 
@@ -49,7 +50,8 @@ void _Block_object_dispose(const void *object, const int flags) BLOCK_FUNC_ATTRI
 	/* minimal definition, only contains the definitions we actually use */
 
 enum {
-	BLOCK_HAS_COPY_DISPOSE =  (1 << 25)
+	BLOCK_HAS_COPY_DISPOSE =  (1 << 25),
+   	BLOCK_HAS_SIGNATURE  =    (1 << 30) // interim until complete world build is accomplished
 };
 
 #endif
@@ -66,6 +68,13 @@ struct block_descriptor {
 	unsigned long int size;
 	void (*copy_helper)(void* dst, void*src);
 	void (*dispose_helper)(void* src);
+	const char* signature;
+};
+
+struct block_descriptor_basic {
+	unsigned long int reserved;
+	unsigned long int size;
+	void* rest[1];
 };
 
 struct block_literal {
@@ -76,6 +85,22 @@ struct block_literal {
 	struct block_descriptor* descriptor;
 	PyObject* invoke_cleanup;
 };
+
+extern const char* PyObjCBlock_GetSignature(void* _block)
+{
+	struct block_literal* block = (struct block_literal*)_block;
+	struct block_descriptor_basic* descriptor = (struct block_descriptor_basic*)block->descriptor;
+	int offset = 0;
+
+	offset = 0;
+	if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
+		offset += 2;
+	}
+	if (block->flags & BLOCK_HAS_SIGNATURE) {
+		return descriptor->rest[offset];
+	}
+	return NULL;
+}
 
 static void 
 oc_copy_helper(void* _dst, void* _src)
@@ -117,7 +142,8 @@ static struct block_descriptor gDescriptorTemplate = {
 	0,
 	sizeof(struct block_literal),
 	oc_copy_helper,
-	oc_dispose_helper
+	oc_dispose_helper,
+	0
 };
 
 static struct block_literal gLiteralTemplate = {
@@ -324,6 +350,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 	}
 
 	*block = gLiteralTemplate;
+	/* XXX: block->descriptor needs to be copied to be able to add a signature to it */
 	block->isa = gStackBlockClass;
 	block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
 	if (block->invoke == NULL) {
