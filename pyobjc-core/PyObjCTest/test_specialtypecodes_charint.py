@@ -88,9 +88,10 @@ class TestTypeCode_int8 (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertEqual(o.int8Value(), ord('a'))
-        self.assertEqual(o.int8Value(), 55)
-        self.assertEqual(o.int8Value(), ord('z'))
+        self.assertEqual(o.int8Value(), 1)
+        self.assertEqual(o.int8Value(), 2)
+        self.assertEqual(o.int8Value(), 3)
+        self.assertEqual(o.int8Value(), 4)
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
