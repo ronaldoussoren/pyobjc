@@ -449,7 +449,34 @@ ffi_call(
 					case X86_64_INTEGER_CLASS:
 					case X86_64_INTEGERSI_CLASS:
 						reg_args->gpr[gprcount] = 0;
-						memcpy (&reg_args->gpr[gprcount], a, size < 8 ? size : 8);
+						switch (arg_types[i]->type) {
+						case FFI_TYPE_SINT8:
+						   {
+							int8_t shortval = *(int8_t*)a;
+							int64_t  actval = (int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
+						case FFI_TYPE_SINT16:
+						   {
+							int16_t shortval = *(int16_t*)a;
+							int64_t  actval = (int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
+						case FFI_TYPE_SINT32:
+						   {
+							int32_t shortval = *(int32_t*)a;
+							int64_t  actval = (int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
+						default:
+							memcpy (&reg_args->gpr[gprcount], a, size < 8 ? size : 8);
+						}
 						gprcount++;
 						break;
 

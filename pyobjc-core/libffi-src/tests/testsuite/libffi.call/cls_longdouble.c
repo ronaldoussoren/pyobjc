@@ -43,7 +43,7 @@ cls_ldouble_gn(ffi_cif* cif, void* resp, void** args, void* userdata)
 		a1, a2, a3, a4, a5, a6, a7, a8);
 }
 
-int main (void)
+int main(void)
 {
 	ffi_cif	cif;
 #ifndef USING_MMAP
@@ -52,7 +52,6 @@ int main (void)
 	ffi_closure*	pcl;
 	void*			args[9];
 	ffi_type*		arg_types[9];
-//	ffi_type		cls_ldouble_type;
 	long double		res	= 0;
 
 #ifdef USING_MMAP
@@ -69,11 +68,6 @@ int main (void)
 	long double	arg6	= 6;
 	long double	arg7	= 7;
 	long double	arg8	= 8;
-
-/*	cls_ldouble_type.size = sizeof(long double);
-	cls_ldouble_type.alignment = 0;
-	cls_ldouble_type.type = FFI_TYPE_LONGDOUBLE;
-	cls_ldouble_type.elements = NULL;*/
 
 	arg_types[0] = &ffi_type_longdouble;
 	arg_types[1] = &ffi_type_longdouble;
@@ -112,5 +106,5 @@ int main (void)
 	printf("res: %Lg\n", res);
 	/* { dg-output "\nres: 36" } */
 
-  exit(0);
+	return 0;
 }

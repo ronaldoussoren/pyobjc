@@ -6,6 +6,10 @@
 	NOTE: This file was added by PyObjC.
 */
 
+#if defined(__APPLE__) && defined(__MACH__) && !defined(MACOSX)
+	#define MACOSX
+#endif
+
 #ifndef MACOSX
 #error "This file is only supported on Mac OS X"
 #endif
@@ -62,7 +66,7 @@
 #define EH_FRAME_FLAGS "aw"
 
 /*	Define this if you want extra debugging. */
-/*	#undef FFI_DEBUG */
+#undef FFI_DEBUG
 
 /*	Define this is you do not want support for the raw API. */
 #define FFI_NO_RAW_API 1
