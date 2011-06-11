@@ -809,7 +809,7 @@ PyObjCClassObject PyObjCObject_Type = {
      0,					/* name */
      0,					/* slots */
 #endif
-   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*

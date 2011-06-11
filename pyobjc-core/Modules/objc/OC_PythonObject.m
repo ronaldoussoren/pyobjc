@@ -378,7 +378,9 @@ end:
 	PyObjC_END_WITH_GIL
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL
@@ -972,7 +974,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return YES;
 }
 
-+ (BOOL)accessInstanceVariablesDirectly;
++ (BOOL)accessInstanceVariablesDirectly
 {
 	return YES;
 }
@@ -1010,7 +1012,7 @@ getModuleFunction(char* modname, char* funcname)
 /*
  *  Call PyObjCTools.KeyValueCoding.getKey to get the value for a key
  */
-- valueForKey:(NSString*) key;
+- valueForKey:(NSString*) key
 {
 static  PyObject* getKeyFunc = NULL;
 
@@ -1051,7 +1053,7 @@ static  PyObject* getKeyFunc = NULL;
 	return res;
 }
 
-- storedValueForKey: (NSString*) key;
+- storedValueForKey: (NSString*) key
 {
 	return [self valueForKey: key];
 }
@@ -1065,7 +1067,7 @@ static  PyObject* getKeyFunc = NULL;
 	[self setValue: value forKey: key];
 }
 
-- (void)setValue: value forKey: (NSString*) key;
+- (void)setValue: value forKey: (NSString*) key
 {
 static  PyObject* setKeyFunc = NULL;
 
@@ -1108,12 +1110,12 @@ static  PyObject* setKeyFunc = NULL;
 	PyObjC_END_WITH_GIL
 }
 
-- (void)takeStoredValue: value forKey: (NSString*) key;
+- (void)takeStoredValue: value forKey: (NSString*) key
 {
 	[self takeValue: value forKey: key];
 }
 
-- (NSDictionary*) valuesForKeys: (NSArray*)keys;
+- (NSDictionary*) valuesForKeys: (NSArray*)keys
 {
 	NSMutableDictionary* result;
 	NSEnumerator* enumerator;
@@ -1130,7 +1132,7 @@ static  PyObject* setKeyFunc = NULL;
 	return result;
 }
 
-- valueForKeyPath: (NSString*) keyPath;
+- valueForKeyPath: (NSString*) keyPath
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	NSEnumerator* enumerator = [elems objectEnumerator];
@@ -1151,7 +1153,7 @@ static  PyObject* setKeyFunc = NULL;
 	[self setValue: value forKeyPath: keyPath];
 }
 	
-- (void)setValue: value forKeyPath: (NSString*) keyPath;
+- (void)setValue: value forKeyPath: (NSString*) keyPath
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	id target;
@@ -1172,7 +1174,7 @@ static  PyObject* setKeyFunc = NULL;
 	[self setValuesForKeysWithDictionary: aDictionary];
 }
 
-- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary;
+- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary
 {
 	NSEnumerator* enumerator = [aDictionary keyEnumerator];
 	id aKey;
@@ -1184,31 +1186,31 @@ static  PyObject* setKeyFunc = NULL;
 	}
 }
 
-- (void)unableToSetNilForKey: (NSString*) key;
+- (void)unableToSetNilForKey: (NSString*) key
 {
 	[NSException 
 		raise: NSUnknownKeyException 
 		format: @"cannot set Nil for key: %@", key];
 }
 
-- (void)handleQueryWithUnboundKey: (NSString*) key;
+- (void)handleQueryWithUnboundKey: (NSString*) key
 {
 	[self valueForUndefinedKey: key];
 }
 
-- (void)valueForUndefinedKey: (NSString*)key;
+- (void)valueForUndefinedKey: (NSString*)key
 {
 	[NSException 
 		raise: NSUnknownKeyException
 		format: @"query for unknown key: %@", key];
 }
 
-- (void)handleTakeValue: value forUnboundKey: (NSString*) key;
+- (void)handleTakeValue: value forUnboundKey: (NSString*) key
 {
 	[self setValue: value forUndefinedKey: key];
 }
 
-- (void)setValue: value forUndefinedKey: (NSString*) key;
+- (void)setValue: value forUndefinedKey: (NSString*) key
 {
 	[NSException 
 		raise: NSUnknownKeyException 
@@ -1216,12 +1218,12 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context;
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
-	NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#x in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, options, context);
+	NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#lx in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, (long)options, context);
 	return;
 }
-- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
 {
 	NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
 }

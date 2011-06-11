@@ -99,9 +99,14 @@
 
 +(NSString*)formatDate:(CFDateRef)date
 {
+	CFLocaleRef currentLocale = CFLocaleCopyCurrent();
 	CFDateFormatterRef formatter = CFDateFormatterCreate(
-			NULL, CFLocaleCopyCurrent(), 
+			NULL, currentLocale, 
 			kCFDateFormatterShortStyle, NSDateFormatterNoStyle  );
+
+	if (currentLocale != NULL) {
+		CFRelease(currentLocale);
+	}
 
 	NSString* result = (NSString*)CFDateFormatterCreateStringWithDate(
 			NULL, formatter, date);

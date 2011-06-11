@@ -20,7 +20,7 @@
 #ifdef __ppc64__
 extern bool ffi64_stret_needs_ptr(const ffi_type* inType,
 		        unsigned short*, unsigned short*);
-#endif;
+#endif
 
 /*
  * Define SMALL_STRUCT_LIMIT as the largest struct that will be returned

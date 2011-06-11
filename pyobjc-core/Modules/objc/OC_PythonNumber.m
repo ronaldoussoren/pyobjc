@@ -2,7 +2,7 @@
 
 @implementation OC_PythonNumber
 
-+ numberWithPythonObject:(PyObject*)v;
++ numberWithPythonObject:(PyObject*)v
 {
 	OC_PythonNumber* res;
 
@@ -11,7 +11,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -35,7 +35,9 @@
 	return value;
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL

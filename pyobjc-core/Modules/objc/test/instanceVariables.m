@@ -15,7 +15,7 @@
 	NSRect  rectValue;
 	NSObject* nilValue;
 	PyObject* pyValue;
-	NSString* objValue;
+	NSObject* objValue;
 }
 -init;
 -(void)dealloc;

@@ -363,7 +363,11 @@ static NSArray* makeArrayWithFormat_(NSString* fmt, ...)
 	char buffer[2048];
 
 	va_start(ap, fmt);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
 	vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+#pragma clang diagnostic pop
 	va_end(ap);
 
 	return [NSArray arrayWithObjects: 

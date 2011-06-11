@@ -16,6 +16,32 @@
 #include "structmember.h"
 #include "pyobjc-compat.h"
 
+#ifdef __clang__
+
+/* This is a crude hack to disable a otherwise useful warning in the context of
+ * PyTuple_SET_ITEM, without disabling it everywhere
+ */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warray-bounds"
+static inline void _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
+{
+	PyTuple_SET_ITEM(tuple, idx, value);
+}
+#undef PyTuple_SET_ITEM
+#define PyTuple_SET_ITEM(a, b, c) _PyObjCTuple_SetItem(a, b, c)
+
+static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
+{
+	return PyTuple_GET_ITEM(tuple, idx);
+}
+#undef PyTuple_GET_ITEM
+#define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
+
+#pragma clang diagnostic pop
+
+#endif /* __clang__ */
+
+
 /* PyObjC_DEBUG: If defined the bridge will perform more internal checks */
 #ifdef Py_DEBUG
    /* Enable when Python is compiled with internal checks enabled */

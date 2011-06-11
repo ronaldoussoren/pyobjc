@@ -92,6 +92,7 @@ BEGIN_UNITTEST(CheckNSInvoke)
 	[inv setArgument: &v2 atIndex: 3];
 
 	[inv invoke];
+	[obj release];
 	ASSERT_EQUALS(invokeHelper.f1, v1.f1, "%d");
 	ASSERT_EQUALS(invokeHelper.f2, v1.f2, "%g");
 	ASSERT_EQUALS(invokeHelper.s[0], v1.s[0], "%d");

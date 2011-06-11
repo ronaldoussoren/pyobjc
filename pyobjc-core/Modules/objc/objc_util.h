@@ -39,7 +39,7 @@ PyObject* PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t, bool already_re
 int     PyObjC_IsPythonKeyword(const char* word);
 
 
-extern int PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen);
+extern int PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen);
 
 extern int PyObjCObject_Convert(PyObject* object, void* pvar);
 extern int PyObjCClass_Convert(PyObject* object, void* pvar);

@@ -11,7 +11,7 @@
 @end
 
 @implementation OC_TestCFSocket
--(id)create
+-(id)newSocket
 {
 	CFSocketRef sock;
 

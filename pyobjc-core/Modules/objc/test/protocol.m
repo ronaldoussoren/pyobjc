@@ -11,12 +11,16 @@
 -(void)method2:(int)v;
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprotocol"
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @interface OC_TestProtocolClass : NSObject <OC_TestProtocol>
 {}
 @end
 
 @implementation OC_TestProtocolClass
 @end
+#pragma clang diagnostic pop
 
 static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }

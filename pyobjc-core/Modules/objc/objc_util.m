@@ -330,6 +330,9 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
 		PyGILState_Release(*state);
 	}
 	[exc raise];
+
+	/* Fatal error: this should never happen */
+	abort();
 }
 
 
@@ -1082,17 +1085,17 @@ PyObjC_IsPythonKeyword(const char* word)
 }
 
 int
-PyObjCRT_SimplifySignature(char* signature, char* buf, size_t buflen)
+PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
 {
-	char* cur;
-	char* end;
-	char* next;
+	const char* cur;
+	const char* end;
+	const char* next;
 
 	cur = signature;
 	*buf = '\0';
 
 	while (*cur != '\0') {
-		next = end = (char*)PyObjCRT_SkipTypeSpec(cur);
+		next = end = PyObjCRT_SkipTypeSpec(cur);
 		end -= 1;
 		while (end != cur && isdigit(*end)) {
 			end --;

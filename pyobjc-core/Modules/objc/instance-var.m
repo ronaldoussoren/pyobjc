@@ -195,7 +195,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 				[new_value retain];
 				[old_value release];
 			PyObjC_HANDLER
-				NSLog(@"PyObjC: ignoring exception during attribute replacement", localException);
+				NSLog(@"PyObjC: ignoring exception during attribute replacement: %@", localException);
 			PyObjC_ENDHANDLER
 		}
 

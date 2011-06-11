@@ -27,7 +27,7 @@
 
 	retval = [tmp copyWithZone:nil];
 	[tmp release];
-	return retval;
+	return [retval autorelease];
 }
 +(NSObject*)newObjectOfClass:(Class)aClass
 {

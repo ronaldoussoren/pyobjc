@@ -1822,7 +1822,7 @@ int   PyObjCSelector_GetFlags(PyObject* obj)
 /*
  * Find the signature of 'selector' in the list of protocols.
  */
-static char*
+static const char*
 find_protocol_signature(PyObject* protocols, SEL selector, int is_class_method)
 {
 	Py_ssize_t len;
@@ -2081,7 +2081,7 @@ PyObjCSelector_FromFunction(
 			oc_class);
 		Py_XDECREF(super_sel);
 	} else {
-		char* signature = NULL;
+		const char* signature = NULL;
 
 		PyErr_Clear(); /* The call to PyObjCClass_FindSelector failed */
 		if (protocols != NULL) {

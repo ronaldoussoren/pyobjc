@@ -172,7 +172,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	}
 	return result;
 }
--(int*)   nullIntArrayOf5
+-(const int*)   nullIntArrayOf5
 {
 	return NULL;
 }
@@ -266,7 +266,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	return array;
 }
 
--(NSArray*)makeObjectArray:(id*)data;
+-(NSArray*)makeObjectArray:(id*)data
 {
 	NSMutableArray* array;
 
@@ -297,7 +297,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	}
 }
 
--(void)fill4Tuple:(int*)data;
+-(void)fill4Tuple:(int*)data
 {
 	int i;
 	for (i = 0; i < 4; i++) {
@@ -305,7 +305,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	}
 }
 
--(int)nullfill4Tuple:(int*)data;
+-(int)nullfill4Tuple:(int*)data
 {
 	if (data == NULL) {
 		return 0;
@@ -328,7 +328,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	return 1;
 }
 
--(void)reverseArray:(float*)data count:(int)count;
+-(void)reverseArray:(float*)data count:(int)count
 {
 	float t;
 	int i;
@@ -339,14 +339,14 @@ static void use_id(id x __attribute__((__unused__))) { };
 	}
 }
 
--(int)nullreverseArray:(float*)data count:(int)count;
+-(int)nullreverseArray:(float*)data count:(int)count
 {
 	if (data == NULL) return 0;
 	[self reverseArray:data count:count];
 	return 1;
 }
 
--(void)reverseStrings:(char**)data;
+-(void)reverseStrings:(char**)data
 {
 	int count, i;
 	char* t;
@@ -362,7 +362,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	}
 }
 
--(int)nullreverseStrings:(char**)data;
+-(int)nullreverseStrings:(char**)data
 {
 	if (data == NULL) return 0;
 	[self reverseStrings:data];
@@ -476,7 +476,7 @@ static void use_id(id x __attribute__((__unused__))) { };
 	return count/2;
 }
 
--(int)maybeReverseArray:(short*)data;
+-(int)maybeReverseArray:(short*)data
 {
 	[self reverse4Tuple:data];
 	return 2;
@@ -658,9 +658,14 @@ static void use_id(id x __attribute__((__unused__))) { };
 	va_list ap;
 	char buffer[2048];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
 	va_start(ap, fmt);
 	vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
 	va_end(ap);
+
+#pragma clang diagnostic pop
 
 	return [NSArray arrayWithObjects: 
 			fmt, 
@@ -683,10 +688,10 @@ static void use_id(id x __attribute__((__unused__))) { };
 			NULL];
 }
 
--(NSArray*)makeArrayWithArguments:(id)arg, ...;
+-(NSArray*)makeArrayWithArguments:(id)arg, ...
 {
 	va_list ap;
-	NSMutableArray* array = [[NSMutableArray alloc] init];
+	NSMutableArray* array = [[[NSMutableArray alloc] init] autorelease];
 	if (arg == NULL) {
 		return array;
 	}

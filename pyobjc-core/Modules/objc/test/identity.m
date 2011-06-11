@@ -64,7 +64,7 @@
 	isClassic = 0;
 }
 
--(void)setStoredClassicObject:(NSObject*)object;
+-(void)setStoredClassicObject:(NSObject*)object
 {
 	if (!isClassic) {
 		[storedObject release];
@@ -120,11 +120,11 @@
 
 -(void)setStoredObjectAnInstanceOf:(Class) cls
 {
-	[self setStoredObject: [[cls alloc] init]];
+	[self setStoredObject: [[[cls alloc] init] autorelease]];
 }
 -(void)setStoredObjectAnInstanceOfClassic:(Class)cls
 {
-	[self setStoredClassicObject:[cls new]];
+	[self setStoredClassicObject:[[cls new] autorelease]];
 }
 
 -(void)writeStoredObjectToFile:(NSString*)fname

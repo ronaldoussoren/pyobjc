@@ -51,7 +51,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ arrayWithPythonObject:(PyObject*)v;
++ arrayWithPythonObject:(PyObject*)v
 {
 	OC_PythonArray* res;
 
@@ -60,7 +60,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -84,7 +84,9 @@ static PyObject* mapTypes = NULL;
 	return value;
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL
@@ -151,7 +153,7 @@ static PyObject* mapTypes = NULL;
 }
 
 
--(void)replaceObjectAtIndex:(NSUInteger)idx withObject:newValue;
+-(void)replaceObjectAtIndex:(NSUInteger)idx withObject:newValue
 {
 	PyObject* v;
 
@@ -279,7 +281,7 @@ static PyObject* mapTypes = NULL;
 	PyObjC_END_WITH_GIL;
 }
 
--(void)removeObjectAtIndex:(NSUInteger)idx;
+-(void)removeObjectAtIndex:(NSUInteger)idx
 {
 	int r;
 

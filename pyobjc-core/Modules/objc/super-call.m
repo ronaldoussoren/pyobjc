@@ -277,7 +277,7 @@ PyObjC_FindCallFunc(Class class, SEL sel)
 }
 
 static struct registry*
-find_signature(char* signature)
+find_signature(const char* signature)
 {
 	PyObject* o;
 	struct registry* r;

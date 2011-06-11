@@ -52,7 +52,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ setWithPythonObject:(PyObject*)v;
++ setWithPythonObject:(PyObject*)v
 {
 	OC_PythonSet* res;
 
@@ -61,7 +61,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -85,7 +85,9 @@ static PyObject* mapTypes = NULL;
 	return value;
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL

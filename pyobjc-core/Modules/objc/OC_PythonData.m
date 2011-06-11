@@ -3,7 +3,7 @@
 
 @implementation OC_PythonData 
 
-+ dataWithPythonObject:(PyObject*)v;
++ dataWithPythonObject:(PyObject*)v
 {
 	OC_PythonData* res;
 
@@ -12,7 +12,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -40,8 +40,9 @@
 	return value;
 }
 
+-(BOOL)supportsWeakPointers { return YES; }
 
--(void)release
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL

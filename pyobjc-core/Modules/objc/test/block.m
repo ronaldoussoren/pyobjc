@@ -21,12 +21,12 @@
 
 -(int(^)(void))getIntBlock
 {
-	return ^{ return 42; };
+	return [[^{ return 42; } copy] autorelease];
 }
 
 -(double(^)(double,double))getFloatBlock
 {
-	return ^(double a, double b) { return a + b; };
+	return [[^(double a, double b) { return a + b; } copy] autorelease];
 }
 
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value

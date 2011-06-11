@@ -306,15 +306,25 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
 
 			case 'R':
 			case 'S':
+			   {
 				/* unused, since we already have the result */
 				(void) va_arg(vargs, PyObject *);
 
-				memcpy(s, PyString_AS_STRING(*callresult),
+				/* FIXME: The clang analyzer thinks that 'callresult' might be 
+				 * NULL here. That's wrong, this is the second loop through 
+				 * the format string and on the previous loop callresults got
+				 * created and filled.
+				 */
+
+				if (callresult != NULL) {
+					memcpy(s, PyString_AS_STRING(*callresult),
 					  PyString_GET_SIZE(*callresult));
-				s += PyString_GET_SIZE(*callresult);
-				Py_DECREF(*callresult); *callresult = NULL;
+					s += PyString_GET_SIZE(*callresult);
+					Py_DECREF(*callresult); *callresult = NULL;
+				}
 				callresult++;
 				break;
+			    }
 
 			case '%':
 				*s++ = '%';

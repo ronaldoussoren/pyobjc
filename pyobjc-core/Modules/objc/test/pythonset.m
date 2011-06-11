@@ -23,12 +23,12 @@ typedef unsigned int NSUInteger;
 /* copying */
 +(id)set:(NSSet*)set copyWithZone:(NSZone*)zone
 {
-	return [set copyWithZone:zone];
+	return [[set copyWithZone:zone] autorelease];
 }
 
 +(id)set:(NSSet*)set mutableCopyWithZone:(NSZone*)zone
 {
-	return [set mutableCopyWithZone:zone];
+	return [[set mutableCopyWithZone:zone] autorelease];
 }
 
 

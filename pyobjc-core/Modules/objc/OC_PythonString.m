@@ -5,7 +5,7 @@
 
 @implementation OC_PythonString 
 
-+ stringWithPythonObject:(PyObject*)v;
++ stringWithPythonObject:(PyObject*)v
 {
 	OC_PythonString* res;
 
@@ -14,7 +14,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	Py_INCREF(v);
 	Py_XDECREF(value);
@@ -35,8 +35,9 @@
 	return value;
 }
 
+-(BOOL)supportsWeakPointers { return YES; }
 
--(void)release
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL

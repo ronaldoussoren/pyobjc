@@ -532,12 +532,15 @@ ffi_prep_closure(
 	return FFI_OK;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
 int
 ffi_closure_unix64_inner(
 	ffi_closure*	closure,
 	void*			rvalue,
 	RegisterArgs*	reg_args,
 	char*			argp)
+#pragma clang diagnostic pop
 {
 	ffi_cif*	cif = closure->cif;
 	void**		avalue = alloca(cif->nargs * sizeof(void *));

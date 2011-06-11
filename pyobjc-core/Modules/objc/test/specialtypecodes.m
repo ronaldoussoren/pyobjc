@@ -68,7 +68,7 @@ static char gNumCharValues[] = { 1, 2, 3, 4 };
 
 -(char)int8Value
 {
-	char result = gTextCharValues[_idx];
+	char result = gNumCharValues[_idx];
 	_idx = (_idx + 1) % (sizeof(gNumCharValues)/sizeof(char));
 	return result;
 }
@@ -321,7 +321,7 @@ static char gNumCharValues[] = { 1, 2, 3, 4 };
 	for (i = 0; value[i] != 0; i++) {
 		[a addObject:[NSNumber numberWithInt:value[i]]];
 	}
-	return a;
+	return [a autorelease];
 }
 
 -(NSObject*)int8Arg:(char)a andint8Arg:(char)b

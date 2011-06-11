@@ -81,7 +81,7 @@ static PyObject* fsref_as_path(PyObject* ref)
 			strlen((char*)buffer), NULL);
 }
 
-static PyObject* fsref_from_path(PyObject* self, PyObject* path)
+static PyObject* fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
 {
 	PyObject* value;
 	FSRef result;

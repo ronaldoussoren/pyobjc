@@ -233,7 +233,7 @@ static char* g_charps[] = {
 	g_idx = 0;
 }
 
-+ (long long)longlongClsFunc;
++ (long long)longlongClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
 	return g_longlongs[g_idx++];
@@ -245,7 +245,7 @@ static char* g_charps[] = {
 	return g_ulonglongs[g_idx++];
 }
 
-+ (long)longClsFunc;
++ (long)longClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
 	return g_longs[g_idx++];
@@ -257,7 +257,7 @@ static char* g_charps[] = {
 	return g_ulongs[g_idx++];
 }
 
-+ (int)intClsFunc;
++ (int)intClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
 	return g_ints[g_idx++];
@@ -281,37 +281,37 @@ static char* g_charps[] = {
 	return g_ushorts[g_idx++];
 }
 
-+ (char)charClsFunc;
++ (char)charClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_chars)) g_idx = 0;
 	return g_chars[g_idx++];
 }
 
-+ (unsigned char)ucharClsFunc;
++ (unsigned char)ucharClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
 	return g_uchars[g_idx++];
 }
 
-+ (float)floatClsFunc;
++ (float)floatClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
 	return g_floats[g_idx++];
 }
 
-+ (double)doubleClsFunc;
++ (double)doubleClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
 	return g_doubles[g_idx++];
 }
 
-+ (char*)charpClsFunc;
++ (char*)charpClsFunc
 {
 	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
 	return g_charps[g_idx++];
 }
 
-+ (id)idClsFunc;
++ (id)idClsFunc
 {
 	if (g_idx > 3) g_idx = 0;
 	
@@ -329,7 +329,7 @@ static char* g_charps[] = {
 	g_idx = 0;
 }
 
-- (long long)longlongFunc;
+- (long long)longlongFunc
 {
 	if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
 	return g_longlongs[g_idx++];
@@ -341,7 +341,7 @@ static char* g_charps[] = {
 	return g_ulonglongs[g_idx++];
 }
 
-- (long)longFunc;
+- (long)longFunc
 {
 	if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
 	return g_longs[g_idx++];
@@ -353,7 +353,7 @@ static char* g_charps[] = {
 	return g_ulongs[g_idx++];
 }
 
-- (int)intFunc;
+- (int)intFunc
 {
 	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
 	return g_ints[g_idx++];
@@ -377,37 +377,37 @@ static char* g_charps[] = {
 	return g_ushorts[g_idx++];
 }
 
-- (char)charFunc;
+- (char)charFunc
 {
 	if (g_idx > ARRAYSIZE(g_chars)) g_idx = 0;
 	return g_chars[g_idx++];
 }
 
-- (unsigned char)ucharFunc;
+- (unsigned char)ucharFunc
 {
 	if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
 	return g_uchars[g_idx++];
 }
 
-- (float)floatFunc;
+- (float)floatFunc
 {
 	if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
 	return g_floats[g_idx++];
 }
 
-- (double)doubleFunc;
+- (double)doubleFunc
 {
 	if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
 	return g_doubles[g_idx++];
 }
 
-- (char*)charpFunc;
+- (char*)charpFunc
 {
 	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
 	return g_charps[g_idx++];
 }
 
-- (id)idFunc;
+- (id)idFunc
 {
 	if (g_idx > 3) g_idx = 0;
 	
@@ -563,199 +563,199 @@ static 	char buf[1024];
 	return result;
 }
 
-- (char)passInChar:(char*)arg;
+- (char)passInChar:(char*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutChar:(char*)arg;
+- (void)passOutChar:(char*)arg
 {
 	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
 	*arg = g_chars[g_idx++];
 }
 
-- (void)passInOutChar:(char*)arg;
+- (void)passInOutChar:(char*)arg
 {
 	*arg += 42;
 }
 
-- (unsigned char)passInUChar:(unsigned char*)arg;
+- (unsigned char)passInUChar:(unsigned char*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutUChar:(unsigned char*)arg;
+- (void)passOutUChar:(unsigned char*)arg
 {
 	if (g_idx > ARRAYSIZE(g_uchars)) g_idx = 0;
 	*arg = g_uchars[g_idx++];
 }
 
-- (void)passInOutUChar:(unsigned char*)arg;
+- (void)passInOutUChar:(unsigned char*)arg
 {
 	*arg += 42;
 }
 
-- (short)passInShort:(short*)arg;
+- (short)passInShort:(short*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutShort:(short*)arg;
+- (void)passOutShort:(short*)arg
 {
 	if (g_idx > ARRAYSIZE(g_shorts)) g_idx = 0;
 	*arg = g_shorts[g_idx++];
 }
 
-- (void)passInOutShort:(short*)arg;
+- (void)passInOutShort:(short*)arg
 {
 	*arg += 42;
 }
 
-- (unsigned short)passInUShort:(unsigned short*)arg;
+- (unsigned short)passInUShort:(unsigned short*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutUShort:(unsigned short*)arg;
+- (void)passOutUShort:(unsigned short*)arg
 {
 	if (g_idx > ARRAYSIZE(g_ushorts)) g_idx = 0;
 	*arg = g_ushorts[g_idx++];
 }
 
-- (void)passInOutUShort:(unsigned short*)arg;
+- (void)passInOutUShort:(unsigned short*)arg
 {
 	*arg += 42;
 }
 
-- (int)passInInt:(int*)arg;
+- (int)passInInt:(int*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutInt:(int*)arg;
+- (void)passOutInt:(int*)arg
 {
 	if (g_idx > ARRAYSIZE(g_ints)) g_idx = 0;
 	*arg = g_ints[g_idx++];
 }
 
-- (void)passInOutInt:(int*)arg;
+- (void)passInOutInt:(int*)arg
 {
 	*arg += 42;
 }
 
-- (unsigned int)passInUInt:(unsigned int*)arg;
+- (unsigned int)passInUInt:(unsigned int*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutUInt:(unsigned int*)arg;
+- (void)passOutUInt:(unsigned int*)arg
 {
 	if (g_idx > ARRAYSIZE(g_uints)) g_idx = 0;
 	*arg = g_uints[g_idx++];
 }
 
-- (void)passInOutUInt:(unsigned int*)arg;
+- (void)passInOutUInt:(unsigned int*)arg
 {
 	*arg += 42;
 }
 
-- (long)passInLong:(long*)arg;
+- (long)passInLong:(long*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutLong:(long*)arg;
+- (void)passOutLong:(long*)arg
 {
 	if (g_idx > ARRAYSIZE(g_longs)) g_idx = 0;
 	*arg = g_longs[g_idx++];
 }
 
-- (void)passInOutLong:(long*)arg;
+- (void)passInOutLong:(long*)arg
 {
 	*arg += 42;
 }
 
-- (unsigned long)passInULong:(unsigned long*)arg;
+- (unsigned long)passInULong:(unsigned long*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutULong:(unsigned long*)arg;
+- (void)passOutULong:(unsigned long*)arg
 {
 	if (g_idx > ARRAYSIZE(g_ulongs)) g_idx = 0;
 	*arg = g_ulongs[g_idx++];
 }
 
-- (void)passInOutULong:(unsigned long*)arg;
+- (void)passInOutULong:(unsigned long*)arg
 {
 	*arg += 42;
 }
 
-- (long long)passInLongLong:(long long*)arg;
+- (long long)passInLongLong:(long long*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutLongLong:(long long*)arg;
+- (void)passOutLongLong:(long long*)arg
 {
 	if (g_idx > ARRAYSIZE(g_longlongs)) g_idx = 0;
 	*arg = g_longlongs[g_idx++];
 }
 
-- (void)passInOutLongLong:(long long*)arg;
+- (void)passInOutLongLong:(long long*)arg
 {
 	*arg += 42;
 }
 
-- (unsigned long long)passInULongLong:(unsigned long long*)arg;
+- (unsigned long long)passInULongLong:(unsigned long long*)arg
 {
 	return *arg + 9;
 }
 
-- (void)passOutULongLong:(unsigned long long*)arg;
+- (void)passOutULongLong:(unsigned long long*)arg
 {
 	if (g_idx > ARRAYSIZE(g_ulonglongs)) g_idx = 0;
 	*arg = g_ulonglongs[g_idx++];
 }
 
-- (void)passInOutULongLong:(unsigned long long*)arg;
+- (void)passInOutULongLong:(unsigned long long*)arg
 {
 	*arg += 42;
 }
 
-- (float)passInFloat:(float*)arg;
+- (float)passInFloat:(float*)arg
 {
 	return *arg * 9;
 }
 
-- (void)passOutFloat:(float*)arg;
+- (void)passOutFloat:(float*)arg
 {
 	if (g_idx > ARRAYSIZE(g_floats)) g_idx = 0;
 	*arg = g_floats[g_idx++];
 }
 
-- (void)passInOutFloat:(float*)arg;
+- (void)passInOutFloat:(float*)arg
 {
 	*arg *= 42;
 }
 
-- (double)passInDouble:(double*)arg;
+- (double)passInDouble:(double*)arg
 {
 	return *arg * 9;
 }
 
-- (void)passOutDouble:(double*)arg;
+- (void)passOutDouble:(double*)arg
 {
 	if (g_idx > ARRAYSIZE(g_doubles)) g_idx = 0;
 	*arg = g_doubles[g_idx++];
 }
 
-- (void)passInOutDouble:(double*)arg;
+- (void)passInOutDouble:(double*)arg
 {
 	*arg *= 42;
 }
 
-- (char*)passInCharp:(char**)arg;
+- (char*)passInCharp:(char**)arg
 {
 	/* Yes this is leaking, but we're only testing method calling */
 	int len = strlen(*arg);
@@ -771,13 +771,13 @@ static 	char buf[1024];
 	return res;
 }
 
-- (void)passOutCharp:(char**)arg;
+- (void)passOutCharp:(char**)arg
 {
 	if (g_idx > ARRAYSIZE(g_charps)) g_idx = 0;
 	*arg = g_charps[g_idx++];
 }
 
-- (void)passInOutCharp:(char**)arg;
+- (void)passInOutCharp:(char**)arg
 {
 	/* Yes this is leaking, but we're only testing method calling */
 	int len = strlen(*arg);
@@ -793,7 +793,7 @@ static 	char buf[1024];
 	*arg = res;
 }
 
-- (id)passInID:(id*)arg;
+- (id)passInID:(id*)arg
 {
 	id temp;
 
@@ -805,7 +805,7 @@ static 	char buf[1024];
 	return [NSArray arrayWithObject:temp];
 }
 
-- (void)passOutID:(id*)arg;
+- (void)passOutID:(id*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	
@@ -817,7 +817,7 @@ static 	char buf[1024];
 	}
 }
 
-- (void)passInOutID:(id*)arg;
+- (void)passInOutID:(id*)arg
 {
 	id temp;
 
@@ -1114,72 +1114,72 @@ static 	char buf[1024];
 	return [arg nspointFunc];
 }
 
-- (long long)callInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+- (long long)callInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj
 {
 	return [obj longlongArg:arg];
 }
 
-- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)callInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj
 {
 	return [obj ulonglongArg:arg];
 }
 
-- (long)callInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+- (long)callInstanceLongArg:(long)arg on:(OC_TestClass1*)obj
 {
 	return [obj longArg:arg];
 }
 
-- (unsigned long)callInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+- (unsigned long)callInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj
 {
 	return [obj ulongArg:arg];
 }
 
-- (int)callInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+- (int)callInstanceIntArg:(int)arg on:(OC_TestClass1*)obj
 {
 	return [obj intArg:arg];
 }
 
-- (unsigned int)callInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+- (unsigned int)callInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj
 {
 	return [obj uintArg:arg];
 }
 
-- (short)callInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+- (short)callInstanceShortArg:(short)arg on:(OC_TestClass1*)obj
 {
 	return [obj shortArg:arg];
 }
 
-- (unsigned short)callInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+- (unsigned short)callInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj
 {
 	return [obj ushortArg:arg];
 }
 
-- (char)callInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+- (char)callInstanceCharArg:(char)arg on:(OC_TestClass1*)obj
 {
 	return [obj charArg:arg];
 }
 
-- (unsigned char)callInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+- (unsigned char)callInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj
 {
 	return [obj ucharArg:arg];
 }
 
-- (float)callInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+- (float)callInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj
 {
 	return [obj floatArg:arg];
 }
 
-- (double)callInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (double)callInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj
 {
 	return [obj doubleArg:arg];
 }
 
-- (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+- (char*)callInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj
 {
 	return [obj charpArg:arg];
 }
 
-- (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+- (id)callInstanceIdArg:(id)arg on:(OC_TestClass1*)obj
 {
 	return [obj idArg:arg];
 }
@@ -1282,7 +1282,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj;
+- (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj
 {
 	long long res;
 	NSInvocation* inv;
@@ -1295,7 +1295,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj;
+- (unsigned long long)invokeInstanceUnsignedLongLongArg:(unsigned long long)arg on:(OC_TestClass1*)obj
 {
 	unsigned long long res;
 	NSInvocation* inv;
@@ -1308,7 +1308,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj;
+- (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj
 {
 	long res;
 	NSInvocation* inv;
@@ -1321,7 +1321,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (unsigned long)invokeInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj;
+- (unsigned long)invokeInstanceUnsignedLongArg:(unsigned long)arg on:(OC_TestClass1*)obj
 {
 	unsigned long res;
 	NSInvocation* inv;
@@ -1334,7 +1334,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj;
+- (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj
 {
 	int res;
 	NSInvocation* inv;
@@ -1347,7 +1347,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj;
+- (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj
 {
 	unsigned int res;
 	NSInvocation* inv;
@@ -1360,7 +1360,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj;
+- (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj
 {
 	short res;
 	NSInvocation* inv;
@@ -1373,7 +1373,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj;
+- (unsigned short)invokeInstanceUnsignedShortArg:(unsigned short)arg on:(OC_TestClass1*)obj
 {
 	unsigned short res;
 	NSInvocation* inv;
@@ -1386,7 +1386,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj;
+- (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj
 {
 	char res;
 	NSInvocation* inv;
@@ -1399,7 +1399,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj;
+- (unsigned char)invokeInstanceUnsignedCharArg:(unsigned char)arg on:(OC_TestClass1*)obj
 {
 	unsigned char res;
 	NSInvocation* inv;
@@ -1412,7 +1412,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj;
+- (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj
 {
 	float res;
 	NSInvocation* inv;
@@ -1425,7 +1425,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj;
+- (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj
 {
 	double res;
 	NSInvocation* inv;
@@ -1438,7 +1438,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj;
+- (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj
 {
 	char* res;
 	NSInvocation* inv;
@@ -1451,7 +1451,7 @@ static 	char buf[1024];
 	return res;
 }
 
-- (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj;
+- (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj
 {
 	id res;
 	NSInvocation* inv;
@@ -1474,9 +1474,11 @@ static 	char buf[1024];
 {
 }
 +createAHostWithAddress:(NSString*)address;
-+makeACopy:source;
-+makeDataWithBytes:(Class)cls method:(int)i;
++copyValue:source;
+#if 0
++newDataWithBytes:(Class)cls method:(int)i;
 +makeDictFromClass:(Class)cls method:(int)i;
+#endif
 +getBytes:(NSData*)data;
 +keyValue:(int)idx forObject: value key: id;
 +(void)setKeyValue:(int)idx forObject: object key: key value: value;
@@ -1500,8 +1502,8 @@ static 	char buf[1024];
 	}
 }
 
-
-+makeDataWithBytes:(Class)cls method:(int)i
+#if 0
++newDataWithBytes:(Class)cls method:(int)i
 {
 	if (i == 0) {
 		return [cls dataWithBytes:"hello world" length:sizeof("hello world")-1];
@@ -1510,7 +1512,9 @@ static 	char buf[1024];
 		return [o initWithBytes:"hello world" length:sizeof("hello world")-1];
 	}
 }
+#endif
 
+#if 0
 +makeDictFromClass:(Class)cls method:(int)i
 {
 	id objects[4];
@@ -1536,9 +1540,10 @@ static 	char buf[1024];
 				forKeys:keys count:4];
 	}
 }
+#endif
 
 
-+makeACopy:source
++copyValue:source
 {
 	id theCopy;
 	id pool;
@@ -1583,10 +1588,10 @@ static 	char buf[1024];
 	}
 }
 
-+(NSObject*)createObservedOfClass:(Class)class observer:(NSObject*)obj keyPath:(NSString*)path
++(NSObject*)makeObservedOfClass:(Class)theClass observer:(NSObject*)obj keyPath:(NSString*)path
 {
 #if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
-	NSObject* o = [[class alloc] init];
+	NSObject* o = [[[theClass alloc] init] autorelease];
 	[o addObserver:obj
 	   forKeyPath:path
 	   options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
@@ -1595,7 +1600,7 @@ static 	char buf[1024];
 #else
 	/* Use arguments */
 	int i;
-	i = (int)&class; i = (int)&obj; i = (int)&path;
+	i = (int)&theClass; i = (int)&obj; i = (int)&path;
 	return nil;
 #endif
 }
@@ -1633,7 +1638,7 @@ static 	char buf[1024];
 	[pool release];
 }
 
-- (id)returnObject;
+- (id)returnObject
 {
 	return returnObject;
 }
@@ -1720,16 +1725,16 @@ static 	char buf[1024];
     return self;
 }
 
-- (NSString *) indirectString; { return indirectString; }
-- (void) setIndirectString: (NSString *) aString;
+- (NSString *) indirectString { return indirectString; }
+- (void) setIndirectString: (NSString *) aString
 {
     [aString retain];
     [indirectString release];
     indirectString = aString;
 }
 
-- (NSNumber *) indirectNumber; { return indirectNumber; }
-- (void) setIndirectNumber: (NSNumber *) aNumber;
+- (NSNumber *) indirectNumber { return indirectNumber; }
+- (void) setIndirectNumber: (NSNumber *) aNumber
 {
     [aNumber retain];
     [indirectNumber release];
@@ -1757,7 +1762,7 @@ static 	char buf[1024];
 }
 
 - (PyObjCTest_KVBaseClass *) indirectHead { return indirectHead; } 
-- (void) setInidrectHead: (PyObjCTest_KVBaseClass *) aHead;
+- (void) setInidrectHead: (PyObjCTest_KVBaseClass *) aHead
 {
     [aHead retain];
     [indirectHead release];

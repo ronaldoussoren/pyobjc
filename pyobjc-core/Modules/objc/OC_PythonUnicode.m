@@ -3,7 +3,7 @@
 
 @implementation OC_PythonUnicode 
 
-+ unicodeWithPythonObject:(PyObject*)v;
++ unicodeWithPythonObject:(PyObject*)v
 {
 	OC_PythonUnicode* res;
 
@@ -12,7 +12,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	Py_INCREF(v);
 	Py_XDECREF(value);
@@ -36,7 +36,9 @@
 
 
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* There is small race condition when an object is almost deallocated
 	 * in one thread and fetched from the registration mapping in another
@@ -52,6 +54,9 @@
 	/* FIXME2: in rare occasions we're trying to acquire the GIL during 
 	 * shutdown and if we're very unlucky this can happen after the 
 	 * GILState machinery has shut down...
+	 */
+	/* FIXME3: Should switch to __weak on OSX 10.7 or later, that should
+	 * fix this issue without a performance penalty.
 	 */
 #if 0
 	if ([self retainCount] == 1) {

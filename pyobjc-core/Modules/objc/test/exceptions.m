@@ -39,14 +39,14 @@ static NSString* addSomeUnicode(NSString* input)
 				NULL]] raise];
 }
 
--(void)raiseUnicodeName;
+-(void)raiseUnicodeName
 {
 	[NSException 	
 		raise:addSomeUnicode(@"SimpleException") 
 		format:@"hello world"];
 }
 
--(void)raiseUnicodeReason;
+-(void)raiseUnicodeReason
 {
 	[NSException 
 		raise:@"SimpleException" 

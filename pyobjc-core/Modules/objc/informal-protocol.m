@@ -319,7 +319,7 @@ findSelInDict(PyObject* clsdict, SEL selector)
 }
 
 int 
-signaturesEqual(char* sig1, char* sig2)
+signaturesEqual(const char* sig1, const char* sig2)
 {
 	char buf1[1024];
 	char buf2[1024];

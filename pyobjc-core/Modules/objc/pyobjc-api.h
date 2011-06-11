@@ -16,7 +16,6 @@
  * compatibility.
  */
 
-#include "Python.h"
 #include <objc/objc.h>
 
 #import <Foundation/Foundation.h>
@@ -279,7 +278,7 @@ struct pyobjc_api {
 	const char* (*selname)(SEL sel);
 
 	/* PyObjCRT_SimplifySignature */
-	int (*simplify_sig)(char* signature, char* buf, size_t buflen);
+	int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
 
 	/* PyObjC_FreeCArray */
 	void    (*free_c_array)(int,void*);

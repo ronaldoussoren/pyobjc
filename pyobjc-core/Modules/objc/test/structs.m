@@ -47,7 +47,7 @@ static	struct FooStruct structs[4] = {
 
 	return [object arrayOf4Structs:structs];
 }
--(NSObject*)arrayOf4Structs:(struct FooStruct[4])argument;
+-(NSObject*)arrayOf4Structs:(struct FooStruct[4])argument
 {
 	return [NSData dataWithBytes:(void*)argument length:sizeof(argument)];
 }

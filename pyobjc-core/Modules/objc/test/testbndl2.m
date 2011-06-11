@@ -2389,7 +2389,7 @@ static id arg2id(const char* argtype, void* argptr)
 {
 	g_idx = 0;
 }
--(void)reset;
+-(void)reset
 {
 	g_idx = 0;
 }
@@ -2401,7 +2401,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_bool_values[g_idx++];
 }
 
--(bool)boolMethod;
+-(bool)boolMethod
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_bool_values[g_idx++];
@@ -2414,7 +2414,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_BOOL_values[g_idx++];
 }
 
--(BOOL)BOOLMethod;
+-(BOOL)BOOLMethod
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_BOOL_values[g_idx++];
@@ -2426,7 +2426,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_char_values[g_idx++];
 }
 
--(char)charMethod;
+-(char)charMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_char_values[g_idx++];
@@ -2438,7 +2438,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_signedshort_values[g_idx++];
 }
 
--(signed short)signedshortMethod;
+-(signed short)signedshortMethod
 {
 	if (g_idx > 5) g_idx = 0;
 	return g_signedshort_values[g_idx++];
@@ -2450,7 +2450,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_signedint_values[g_idx++];
 }
 
--(signed int)signedintMethod;
+-(signed int)signedintMethod
 {
 	if (g_idx > 5) g_idx = 0;
 	return g_signedint_values[g_idx++];
@@ -2462,7 +2462,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_signedlong_values[g_idx++];
 }
 
--(signed long)signedlongMethod;
+-(signed long)signedlongMethod
 {
 	if (g_idx > 5) g_idx = 0;
 	return g_signedlong_values[g_idx++];
@@ -2474,7 +2474,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_signedlonglong_values[g_idx++];
 }
 
--(signed long long)signedlonglongMethod;
+-(signed long long)signedlonglongMethod
 {
 	if (g_idx > 5) g_idx = 0;
 	return g_signedlonglong_values[g_idx++];
@@ -2486,7 +2486,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_unsignedchar_values[g_idx++];
 }
 
--(unsigned char)unsignedcharMethod;
+-(unsigned char)unsignedcharMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_unsignedchar_values[g_idx++];
@@ -2498,7 +2498,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_unsignedshort_values[g_idx++];
 }
 
--(unsigned short)unsignedshortMethod;
+-(unsigned short)unsignedshortMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_unsignedshort_values[g_idx++];
@@ -2510,7 +2510,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_unsignedint_values[g_idx++];
 }
 
--(unsigned int)unsignedintMethod;
+-(unsigned int)unsignedintMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_unsignedint_values[g_idx++];
@@ -2522,7 +2522,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_unsignedlong_values[g_idx++];
 }
 
--(unsigned long)unsignedlongMethod;
+-(unsigned long)unsignedlongMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_unsignedlong_values[g_idx++];
@@ -2534,7 +2534,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_unsignedlonglong_values[g_idx++];
 }
 
--(unsigned long long)unsignedlonglongMethod;
+-(unsigned long long)unsignedlonglongMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_unsignedlonglong_values[g_idx++];
@@ -2546,7 +2546,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_float_values[g_idx++];
 }
 
--(float)floatMethod;
+-(float)floatMethod
 {
 	if (g_idx > 4) g_idx = 0;
 	return g_float_values[g_idx++];
@@ -2558,7 +2558,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_double_values[g_idx++];
 }
 
--(double)doubleMethod;
+-(double)doubleMethod
 {
 	if (g_idx > 4) g_idx = 0;
 	return g_double_values[g_idx++];
@@ -2570,7 +2570,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_id_values[g_idx++];
 }
 
--(id)idMethod;
+-(id)idMethod
 {
 	if (g_idx > 1) g_idx = 0;
 	return g_id_values[g_idx++];
@@ -2582,7 +2582,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_charPtr_values[g_idx++];
 }
 
--(char*)charPtrMethod;
+-(char*)charPtrMethod
 {
 	if (g_idx > 3) g_idx = 0;
 	return g_charPtr_values[g_idx++];
@@ -2594,7 +2594,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_NSPoint_values[g_idx++];
 }
 
--(NSPoint)NSPointMethod;
+-(NSPoint)NSPointMethod
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_NSPoint_values[g_idx++];
@@ -2606,7 +2606,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_NSRect_values[g_idx++];
 }
 
--(NSRect)NSRectMethod;
+-(NSRect)NSRectMethod
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_NSRect_values[g_idx++];
@@ -2618,7 +2618,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_structTestStruct1_values[g_idx++];
 }
 
--(struct TestStruct1)structTestStruct1Method;
+-(struct TestStruct1)structTestStruct1Method
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_structTestStruct1_values[g_idx++];
@@ -2630,7 +2630,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_structTestStruct2_values[g_idx++];
 }
 
--(struct TestStruct2)structTestStruct2Method;
+-(struct TestStruct2)structTestStruct2Method
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_structTestStruct2_values[g_idx++];
@@ -2642,7 +2642,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_structTestStruct3_values[g_idx++];
 }
 
--(struct TestStruct3)structTestStruct3Method;
+-(struct TestStruct3)structTestStruct3Method
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_structTestStruct3_values[g_idx++];
@@ -2654,7 +2654,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_structTestStruct4_values[g_idx++];
 }
 
--(struct TestStruct4)structTestStruct4Method;
+-(struct TestStruct4)structTestStruct4Method
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_structTestStruct4_values[g_idx++];
@@ -2666,7 +2666,7 @@ static id arg2id(const char* argtype, void* argptr)
 	return g_structTestStruct5_values[g_idx++];
 }
 
--(struct TestStruct5)structTestStruct5Method;
+-(struct TestStruct5)structTestStruct5Method
 {
 	if (g_idx > 2) g_idx = 0;
 	return g_structTestStruct5_values[g_idx++];
@@ -7648,13 +7648,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(bool), arg);
 }
 
--(void)boolOutArg:(bool*)arg;
+-(void)boolOutArg:(bool*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_bool_values[g_idx++];
 }
 
--(id)boolInOutArg:(bool*)arg;
+-(id)boolInOutArg:(bool*)arg
 {
 	id res = arg2id(@encode(bool), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -7668,13 +7668,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(BOOL), arg);
 }
 
--(void)BOOLOutArg:(BOOL*)arg;
+-(void)BOOLOutArg:(BOOL*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_BOOL_values[g_idx++];
 }
 
--(id)BOOLInOutArg:(BOOL*)arg;
+-(id)BOOLInOutArg:(BOOL*)arg
 {
 	id res = arg2id(@encode(BOOL), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -7687,13 +7687,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(char), arg);
 }
 
--(void)charOutArg:(char*)arg;
+-(void)charOutArg:(char*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_char_values[g_idx++];
 }
 
--(id)charInOutArg:(char*)arg;
+-(id)charInOutArg:(char*)arg
 {
 	id res = arg2id(@encode(char), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7706,13 +7706,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(signed short), arg);
 }
 
--(void)signedshortOutArg:(signed short*)arg;
+-(void)signedshortOutArg:(signed short*)arg
 {
 	if (g_idx > 5) g_idx = 0;
 	*arg = g_signedshort_values[g_idx++];
 }
 
--(id)signedshortInOutArg:(signed short*)arg;
+-(id)signedshortInOutArg:(signed short*)arg
 {
 	id res = arg2id(@encode(signed short), arg);
 	if (g_idx > 5) g_idx = 0;
@@ -7725,13 +7725,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(signed int), arg);
 }
 
--(void)signedintOutArg:(signed int*)arg;
+-(void)signedintOutArg:(signed int*)arg
 {
 	if (g_idx > 5) g_idx = 0;
 	*arg = g_signedint_values[g_idx++];
 }
 
--(id)signedintInOutArg:(signed int*)arg;
+-(id)signedintInOutArg:(signed int*)arg
 {
 	id res = arg2id(@encode(signed int), arg);
 	if (g_idx > 5) g_idx = 0;
@@ -7744,13 +7744,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(signed long), arg);
 }
 
--(void)signedlongOutArg:(signed long*)arg;
+-(void)signedlongOutArg:(signed long*)arg
 {
 	if (g_idx > 5) g_idx = 0;
 	*arg = g_signedlong_values[g_idx++];
 }
 
--(id)signedlongInOutArg:(signed long*)arg;
+-(id)signedlongInOutArg:(signed long*)arg
 {
 	id res = arg2id(@encode(signed long), arg);
 	if (g_idx > 5) g_idx = 0;
@@ -7763,13 +7763,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(signed long long), arg);
 }
 
--(void)signedlonglongOutArg:(signed long long*)arg;
+-(void)signedlonglongOutArg:(signed long long*)arg
 {
 	if (g_idx > 5) g_idx = 0;
 	*arg = g_signedlonglong_values[g_idx++];
 }
 
--(id)signedlonglongInOutArg:(signed long long*)arg;
+-(id)signedlonglongInOutArg:(signed long long*)arg
 {
 	id res = arg2id(@encode(signed long long), arg);
 	if (g_idx > 5) g_idx = 0;
@@ -7782,13 +7782,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(unsigned char), arg);
 }
 
--(void)unsignedcharOutArg:(unsigned char*)arg;
+-(void)unsignedcharOutArg:(unsigned char*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_unsignedchar_values[g_idx++];
 }
 
--(id)unsignedcharInOutArg:(unsigned char*)arg;
+-(id)unsignedcharInOutArg:(unsigned char*)arg
 {
 	id res = arg2id(@encode(unsigned char), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7801,13 +7801,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(unsigned short), arg);
 }
 
--(void)unsignedshortOutArg:(unsigned short*)arg;
+-(void)unsignedshortOutArg:(unsigned short*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_unsignedshort_values[g_idx++];
 }
 
--(id)unsignedshortInOutArg:(unsigned short*)arg;
+-(id)unsignedshortInOutArg:(unsigned short*)arg
 {
 	id res = arg2id(@encode(unsigned short), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7820,13 +7820,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(unsigned int), arg);
 }
 
--(void)unsignedintOutArg:(unsigned int*)arg;
+-(void)unsignedintOutArg:(unsigned int*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_unsignedint_values[g_idx++];
 }
 
--(id)unsignedintInOutArg:(unsigned int*)arg;
+-(id)unsignedintInOutArg:(unsigned int*)arg
 {
 	id res = arg2id(@encode(unsigned int), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7839,13 +7839,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(unsigned long), arg);
 }
 
--(void)unsignedlongOutArg:(unsigned long*)arg;
+-(void)unsignedlongOutArg:(unsigned long*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_unsignedlong_values[g_idx++];
 }
 
--(id)unsignedlongInOutArg:(unsigned long*)arg;
+-(id)unsignedlongInOutArg:(unsigned long*)arg
 {
 	id res = arg2id(@encode(unsigned long), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7858,13 +7858,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(unsigned long long), arg);
 }
 
--(void)unsignedlonglongOutArg:(unsigned long long*)arg;
+-(void)unsignedlonglongOutArg:(unsigned long long*)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_unsignedlonglong_values[g_idx++];
 }
 
--(id)unsignedlonglongInOutArg:(unsigned long long*)arg;
+-(id)unsignedlonglongInOutArg:(unsigned long long*)arg
 {
 	id res = arg2id(@encode(unsigned long long), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7877,13 +7877,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(float), arg);
 }
 
--(void)floatOutArg:(float*)arg;
+-(void)floatOutArg:(float*)arg
 {
 	if (g_idx > 4) g_idx = 0;
 	*arg = g_float_values[g_idx++];
 }
 
--(id)floatInOutArg:(float*)arg;
+-(id)floatInOutArg:(float*)arg
 {
 	id res = arg2id(@encode(float), arg);
 	if (g_idx > 4) g_idx = 0;
@@ -7896,13 +7896,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(double), arg);
 }
 
--(void)doubleOutArg:(double*)arg;
+-(void)doubleOutArg:(double*)arg
 {
 	if (g_idx > 4) g_idx = 0;
 	*arg = g_double_values[g_idx++];
 }
 
--(id)doubleInOutArg:(double*)arg;
+-(id)doubleInOutArg:(double*)arg
 {
 	id res = arg2id(@encode(double), arg);
 	if (g_idx > 4) g_idx = 0;
@@ -7915,13 +7915,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(id), arg);
 }
 
--(void)idOutArg:(id*)arg;
+-(void)idOutArg:(id*)arg
 {
 	if (g_idx > 1) g_idx = 0;
 	*arg = g_id_values[g_idx++];
 }
 
--(id)idInOutArg:(id*)arg;
+-(id)idInOutArg:(id*)arg
 {
 	id res = arg2id(@encode(id), arg);
 	if (g_idx > 1) g_idx = 0;
@@ -7934,13 +7934,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(char*), arg);
 }
 
--(void)charPtrOutArg:(char**)arg;
+-(void)charPtrOutArg:(char**)arg
 {
 	if (g_idx > 3) g_idx = 0;
 	*arg = g_charPtr_values[g_idx++];
 }
 
--(id)charPtrInOutArg:(char**)arg;
+-(id)charPtrInOutArg:(char**)arg
 {
 	id res = arg2id(@encode(char*), arg);
 	if (g_idx > 3) g_idx = 0;
@@ -7953,13 +7953,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(NSPoint), arg);
 }
 
--(void)NSPointOutArg:(NSPoint*)arg;
+-(void)NSPointOutArg:(NSPoint*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_NSPoint_values[g_idx++];
 }
 
--(id)NSPointInOutArg:(NSPoint*)arg;
+-(id)NSPointInOutArg:(NSPoint*)arg
 {
 	id res = arg2id(@encode(NSPoint), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -7972,13 +7972,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(NSRect), arg);
 }
 
--(void)NSRectOutArg:(NSRect*)arg;
+-(void)NSRectOutArg:(NSRect*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_NSRect_values[g_idx++];
 }
 
--(id)NSRectInOutArg:(NSRect*)arg;
+-(id)NSRectInOutArg:(NSRect*)arg
 {
 	id res = arg2id(@encode(NSRect), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -7991,13 +7991,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(struct TestStruct1), arg);
 }
 
--(void)structTestStruct1OutArg:(struct TestStruct1*)arg;
+-(void)structTestStruct1OutArg:(struct TestStruct1*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_structTestStruct1_values[g_idx++];
 }
 
--(id)structTestStruct1InOutArg:(struct TestStruct1*)arg;
+-(id)structTestStruct1InOutArg:(struct TestStruct1*)arg
 {
 	id res = arg2id(@encode(struct TestStruct1), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -8010,13 +8010,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(struct TestStruct2), arg);
 }
 
--(void)structTestStruct2OutArg:(struct TestStruct2*)arg;
+-(void)structTestStruct2OutArg:(struct TestStruct2*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_structTestStruct2_values[g_idx++];
 }
 
--(id)structTestStruct2InOutArg:(struct TestStruct2*)arg;
+-(id)structTestStruct2InOutArg:(struct TestStruct2*)arg
 {
 	id res = arg2id(@encode(struct TestStruct2), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -8029,13 +8029,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(struct TestStruct3), arg);
 }
 
--(void)structTestStruct3OutArg:(struct TestStruct3*)arg;
+-(void)structTestStruct3OutArg:(struct TestStruct3*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_structTestStruct3_values[g_idx++];
 }
 
--(id)structTestStruct3InOutArg:(struct TestStruct3*)arg;
+-(id)structTestStruct3InOutArg:(struct TestStruct3*)arg
 {
 	id res = arg2id(@encode(struct TestStruct3), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -8048,13 +8048,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(struct TestStruct4), arg);
 }
 
--(void)structTestStruct4OutArg:(struct TestStruct4*)arg;
+-(void)structTestStruct4OutArg:(struct TestStruct4*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_structTestStruct4_values[g_idx++];
 }
 
--(id)structTestStruct4InOutArg:(struct TestStruct4*)arg;
+-(id)structTestStruct4InOutArg:(struct TestStruct4*)arg
 {
 	id res = arg2id(@encode(struct TestStruct4), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -8067,13 +8067,13 @@ static id arg2id(const char* argtype, void* argptr)
 	return arg2id(@encode(struct TestStruct5), arg);
 }
 
--(void)structTestStruct5OutArg:(struct TestStruct5*)arg;
+-(void)structTestStruct5OutArg:(struct TestStruct5*)arg
 {
 	if (g_idx > 2) g_idx = 0;
 	*arg = g_structTestStruct5_values[g_idx++];
 }
 
--(id)structTestStruct5InOutArg:(struct TestStruct5*)arg;
+-(id)structTestStruct5InOutArg:(struct TestStruct5*)arg
 {
 	id res = arg2id(@encode(struct TestStruct5), arg);
 	if (g_idx > 2) g_idx = 0;
@@ -19674,7 +19674,12 @@ inittestbndl2(void)
 #endif
 
 	/* Initialize g_id_values */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 	g_id_values[0] = NSPriorDayDesignations;
+
+#pragma clang diagnostic pop
 
 	INITDONE();
 }

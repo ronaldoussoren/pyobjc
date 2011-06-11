@@ -31,12 +31,12 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonDictionaryEnumerator
 
-+enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v;
++enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
 {
 	return [[[self alloc] initWithWrappedDictionary:v] autorelease];
 }
 
--initWithWrappedDictionary:(OC_PythonDictionary*)v;
+-initWithWrappedDictionary:(OC_PythonDictionary*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -114,7 +114,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+dictionaryWithPythonObject:(PyObject*)v;
++dictionaryWithPythonObject:(PyObject*)v
 {
 	OC_PythonDictionary* res = 
 		[[OC_PythonDictionary alloc] initWithPythonObject:v];
@@ -122,7 +122,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
--initWithPythonObject:(PyObject*)v;
+-initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -133,7 +133,9 @@ static PyObject* mapTypes = NULL;
 	return self;
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL

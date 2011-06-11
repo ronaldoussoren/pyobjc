@@ -5,7 +5,7 @@ static PyObject* datetime_types = NULL;
 
 @implementation OC_PythonDate 
 
-+ depythonifyObject:(PyObject*)object;
++ depythonifyObject:(PyObject*)object
 {
 	if (datetime_types == NULL) {
 		/* Initialize the mapping table, don't worry about
@@ -25,7 +25,6 @@ static PyObject* datetime_types = NULL;
 		Py_DECREF(name); name = NULL;
 
 		if (datetime == NULL) {
-			Py_DECREF(name);
 			PyErr_Clear();
 			return nil;
 		}
@@ -48,16 +47,16 @@ static PyObject* datetime_types = NULL;
 	return nil;
 }
 
-+ dateWithPythonObject:(PyObject*)v;
++ dateWithPythonObject:(PyObject*)v
 {
-	OC_PythonArray* res;
+	OC_PythonDate* res;
 
 	res = [[OC_PythonDate alloc] initWithPythonObject:v];
 	[res autorelease];
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v;
+- initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -82,7 +81,9 @@ static PyObject* datetime_types = NULL;
 	return value;
 }
 
--(void)release
+-(BOOL)supportsWeakPointers { return YES; }
+
+-(oneway void)release
 {
 	/* See comment in OC_PythonUnicode */
 	PyObjC_BEGIN_WITH_GIL
@@ -236,10 +237,15 @@ static PyObject* datetime_types = NULL;
 }
 
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (id)addTimeInterval:(NSTimeInterval)seconds
 {
 	return [[self _make_oc_value] addTimeInterval:seconds];
 }
+
+#pragma clang diagnostic pop
 
 - (NSComparisonResult)compare:(NSDate *)anotherDate
 {

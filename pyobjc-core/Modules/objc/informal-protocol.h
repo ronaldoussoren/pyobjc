@@ -22,7 +22,7 @@ PyObject* PyObjCInformalProtocol_FindProtocol(SEL selector);
 
 /* TODO: rename */
 PyObject* findSelInDict(PyObject* clsdict, SEL selector);
-int signaturesEqual(char* sig1, char* sig2);
+int signaturesEqual(const char* sig1, const char* sig2);
 
 
 
