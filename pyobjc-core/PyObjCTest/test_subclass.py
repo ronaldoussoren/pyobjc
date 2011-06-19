@@ -128,7 +128,7 @@ class TestCopying (TestCase):
         self.assertEqual(o.foobar, 1)
 
         # Make a copy from ObjC (see testbundle.m)
-        c = PyObjC_TestClass3.makeACopy_(o)
+        c = PyObjC_TestClass3.copyValue_(o)
 
         self.assertIsInstance(c, MyCopyClass)
         self.assertEqual(c.foobar, 2)

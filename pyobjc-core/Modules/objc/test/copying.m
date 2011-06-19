@@ -12,12 +12,12 @@
 
 @interface OC_CopyHelper : NSObject
 { }
-+(NSObject*)doCopySetup:(Class)aClass;
++(NSObject<NSCopying>*)doCopySetup:(Class)aClass;
 +(NSObject*)newObjectOfClass:(Class)aClass;
 @end
 
 @implementation OC_CopyHelper
-+(NSObject*)doCopySetup:(Class)aClass
++(NSObject<NSCopying>*)doCopySetup:(Class)aClass
 {
 	NSObject<NSCopying>* tmp;
 	NSObject* retval;

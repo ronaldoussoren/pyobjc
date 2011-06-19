@@ -40,6 +40,7 @@ from objc._functions import *
 from objc._locking import *
 from objc._context import *
 from objc._properties import *
+from objc._lazyimport import *
 
 import objc._pycoder as _pycoder
 

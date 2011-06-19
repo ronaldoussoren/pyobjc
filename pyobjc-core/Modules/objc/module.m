@@ -1359,6 +1359,7 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 	return NULL;
 }
 
+#if 0
 PyDoc_STRVAR(parseBridgeSupport_doc,
  "parseBridgeSupport(xmldata, globals, framework [, dylib_path] [, inlineTab]) -> None\n"
  "\n"
@@ -1391,6 +1392,7 @@ parseBridgeSupport(PyObject* self __attribute__((__unused__)),
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+#endif
 
 
 PyDoc_STRVAR(_makeClosure_doc,
@@ -1930,12 +1932,14 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS, "private function" },
 	{ "_sockaddrToPython", (PyCFunction)PyObjC_SockAddrToPython,
 		METH_VARARGS, "private function" },
+#if 0
 	{ "parseBridgeSupport", (PyCFunction)parseBridgeSupport,
 		METH_VARARGS|METH_KEYWORDS, parseBridgeSupport_doc },
 	{ "_setSetupCFClasses", (PyCFunction)PyObjC_SetSetupCFClasses, 
 		METH_O, "private function" },
 	{ "_setStructConvenience", (PyCFunction)PyObjC_SetStructConvenience, 
 		METH_O, "private function" },
+#endif
 	{ "_ivar_dict", (PyCFunction)ivar_dict, METH_NOARGS, "private functions" },
 
 	{ "_objc_sync_enter", (PyCFunction)PyObjC_objc_sync_enter,
@@ -2111,9 +2115,12 @@ PyObjC_MODULE_INIT(_objc)
 	if (PyObjCCFType_Setup() == -1) {
 		PyObjC_INITERROR();
 	}
+
+#if 0
 	if (PyObjCXML_Init() == -1) {
 		PyObjC_INITERROR();
 	}
+#endif
 
 	m = PyObjC_MODULE_CREATE(_objc);
 	if (m == 0) {

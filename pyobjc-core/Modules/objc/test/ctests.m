@@ -4,6 +4,7 @@
  *
  * The PyObjC unittest objc.test.test_ctests executes the tests in this file.
  */
+#include "Python.h"
 #include "pyobjc-api.h"
 #include "pyobjc-compat.h"
 
@@ -161,8 +162,8 @@ BEGIN_UNITTEST(FillStruct1)
 	input = PyTuple_New(2);
 	FAIL_IF(input == NULL);
 
-	PyTuple_SET_ITEM(input, 0, PyInt_FromLong(1));
-	PyTuple_SET_ITEM(input, 1, PyFloat_FromDouble(2));
+	PyTuple_SetItem(input, 0, PyInt_FromLong(1));
+	PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
 	
 	r = PyObjC_PythonToObjC(@encode(struct Struct1), input, &output);
 	FAIL_IF(r < 0);
@@ -185,15 +186,15 @@ BEGIN_UNITTEST(FillStruct2)
 	FAIL_IF(input == NULL);
 
 	v = PyTuple_New(5);
-	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(10));
-	PyTuple_SET_ITEM(v, 1, PyInt_FromLong(11));
-	PyTuple_SET_ITEM(v, 2, PyInt_FromLong(12));
-	PyTuple_SET_ITEM(v, 3, PyInt_FromLong(13));
-	PyTuple_SET_ITEM(v, 4, PyInt_FromLong(14));
+	PyTuple_SetItem(v, 0, PyInt_FromLong(10));
+	PyTuple_SetItem(v, 1, PyInt_FromLong(11));
+	PyTuple_SetItem(v, 2, PyInt_FromLong(12));
+	PyTuple_SetItem(v, 3, PyInt_FromLong(13));
+	PyTuple_SetItem(v, 4, PyInt_FromLong(14));
 
-	PyTuple_SET_ITEM(input, 0, PyInt_FromLong(1));
-	PyTuple_SET_ITEM(input, 1, PyFloat_FromDouble(2));
-	PyTuple_SET_ITEM(input, 2, v);
+	PyTuple_SetItem(input, 0, PyInt_FromLong(1));
+	PyTuple_SetItem(input, 1, PyFloat_FromDouble(2));
+	PyTuple_SetItem(input, 2, v);
 	
 	r = PyObjC_PythonToObjC(@encode(struct Struct2), input, &output);
 	FAIL_IF(r < 0);
@@ -219,8 +220,8 @@ BEGIN_UNITTEST(FillStruct3)
 	input = PyTuple_New(2);
 	FAIL_IF(input == NULL);
 
-	PyTuple_SET_ITEM(input, 0,  PyBytes_FromStringAndSize("\001", 1));
-	PyTuple_SET_ITEM(input, 1, PyInt_FromLong(2));
+	PyTuple_SetItem(input, 0,  PyBytes_FromStringAndSize("\001", 1));
+	PyTuple_SetItem(input, 1, PyInt_FromLong(2));
 	
 	r = PyObjC_PythonToObjC(@encode(struct Struct3), input, &output);
 	FAIL_IF(r < 0);
@@ -241,8 +242,8 @@ BEGIN_UNITTEST(FillStruct4)
 	input = PyTuple_New(2);
 	FAIL_IF(input == NULL);
 
-	PyTuple_SET_ITEM(input, 0,  PyBytes_FromStringAndSize("\001", 1));
-	PyTuple_SET_ITEM(input, 1, PyInt_FromLong(500000));
+	PyTuple_SetItem(input, 0,  PyBytes_FromStringAndSize("\001", 1));
+	PyTuple_SetItem(input, 1, PyInt_FromLong(500000));
 	
 	r = PyObjC_PythonToObjC(@encode(struct Struct4), input, &output);
 	FAIL_IF(r < 0);
@@ -265,14 +266,14 @@ BEGIN_UNITTEST(FillStruct5Array)
 	FAIL_IF(input == NULL);
 
 	v = PyTuple_New(2);
-	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(500000));
-	PyTuple_SET_ITEM(v, 1,  PyBytes_FromStringAndSize("\001", 1));
-	PyTuple_SET_ITEM(input, 0, v);
+	PyTuple_SetItem(v, 0, PyInt_FromLong(500000));
+	PyTuple_SetItem(v, 1,  PyBytes_FromStringAndSize("\001", 1));
+	PyTuple_SetItem(input, 0, v);
 
 	v = PyTuple_New(2);
-	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(1000000));
-	PyTuple_SET_ITEM(v, 1,  PyBytes_FromStringAndSize("\002", 1));
-	PyTuple_SET_ITEM(input, 1, v);
+	PyTuple_SetItem(v, 0, PyInt_FromLong(1000000));
+	PyTuple_SetItem(v, 1,  PyBytes_FromStringAndSize("\002", 1));
+	PyTuple_SetItem(input, 1, v);
 	
 	r = PyObjC_PythonToObjC(@encode(Struct5Array), input, &output);
 	FAIL_IF(r < 0);
@@ -300,13 +301,13 @@ BEGIN_UNITTEST(ExtractStruct1)
 	ASSERT_ISINSTANCE(output, Tuple);	
 	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
 #endif
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Float);
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 0)), 1, "%d");
-	ASSERT_EQUALS(PyFloat_AsDouble(PyTuple_GET_ITEM(output, 1)), 2.0, "%g");
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Float);
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
+	ASSERT_EQUALS(PyFloat_AsDouble(PyTuple_GetItem(output, 1)), 2.0, "%g");
 
 END_UNITTEST
 
@@ -331,19 +332,19 @@ BEGIN_UNITTEST(ExtractStruct2)
 	ASSERT_ISINSTANCE(output, Tuple);	
 	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 3, "%d");
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
 #endif
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Float);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 2), Tuple);
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 0)), 1, "%d");
-	ASSERT_EQUALS(PyFloat_AsDouble(PyTuple_GET_ITEM(output, 1)), 2.0, "%g");
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Float);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 2), Tuple);
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
+	ASSERT_EQUALS(PyFloat_AsDouble(PyTuple_GetItem(output, 1)), 2.0, "%g");
 
-	tup = PyTuple_GET_ITEM(output, 2);
+	tup = PyTuple_GetItem(output, 2);
 	ASSERT_EQUALS(PyTuple_GET_SIZE(tup), 5, "%d");
 
-	v = PyTuple_GET_ITEM(tup, 0);
+	v = PyTuple_GetItem(tup, 0);
 #if PY_VERSION_HEX < 0x03000000
 	ASSERT_ISINSTANCE(v, Int);
 #else
@@ -351,7 +352,7 @@ BEGIN_UNITTEST(ExtractStruct2)
 #endif
 	ASSERT_EQUALS(PyInt_AsLong(v), 3, "%d");
 
-	v = PyTuple_GET_ITEM(tup, 1);
+	v = PyTuple_GetItem(tup, 1);
 #if PY_VERSION_HEX < 0x03000000
 	ASSERT_ISINSTANCE(v, Int);
 #else
@@ -359,7 +360,7 @@ BEGIN_UNITTEST(ExtractStruct2)
 #endif
 	ASSERT_EQUALS(PyInt_AsLong(v), 4, "%d");
 
-	v = PyTuple_GET_ITEM(tup, 2);
+	v = PyTuple_GetItem(tup, 2);
 #if PY_VERSION_HEX < 0x03000000
 	ASSERT_ISINSTANCE(v, Int);
 #else
@@ -367,7 +368,7 @@ BEGIN_UNITTEST(ExtractStruct2)
 #endif
 	ASSERT_EQUALS(PyInt_AsLong(v), 5, "%d");
 
-	v = PyTuple_GET_ITEM(tup, 3);
+	v = PyTuple_GetItem(tup, 3);
 #if PY_VERSION_HEX < 0x03000000
 	ASSERT_ISINSTANCE(v, Int);
 #else
@@ -375,7 +376,7 @@ BEGIN_UNITTEST(ExtractStruct2)
 #endif
 	ASSERT_EQUALS(PyInt_AsLong(v), 6, "%d");
 
-	v = PyTuple_GET_ITEM(tup, 4);
+	v = PyTuple_GetItem(tup, 4);
 #if PY_VERSION_HEX < 0x03000000
 	ASSERT_ISINSTANCE(v, Int);
 #else
@@ -399,14 +400,14 @@ BEGIN_UNITTEST(ExtractStruct3)
 	ASSERT_ISINSTANCE(output, Tuple);	
 	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Int);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Long);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
 #endif
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 0)), 1, "%d");
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 1)), 2, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 1)), 2, "%d");
 
 END_UNITTEST
 
@@ -424,19 +425,19 @@ BEGIN_UNITTEST(ExtractStruct4)
 	ASSERT_ISINSTANCE(output, Tuple);	
 	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Int);
 #ifdef __LP64__
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
 #endif
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 0), Long);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(output, 1), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(output, 1), Long);
 #endif
 
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 0)), 1, "%d");
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(output, 1)), 500000, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 0)), 1, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(output, 1)), 500000, "%d");
 
 END_UNITTEST
 
@@ -457,29 +458,29 @@ BEGIN_UNITTEST(ExtractStruct5Array)
 	ASSERT_ISINSTANCE(output, Tuple);	
 	ASSERT_EQUALS(PyTuple_GET_SIZE(output), 2, "%d");
 
-	v = PyTuple_GET_ITEM(output, 0);
+	v = PyTuple_GetItem(output, 0);
 	ASSERT_ISINSTANCE(v, Tuple);
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Int);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Long);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Long);
 #endif
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 0)), 500000, "%d");
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 1)), 1, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(v, 0)), 500000, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(v, 1)), 1, "%d");
 
-	v = PyTuple_GET_ITEM(output, 1);
+	v = PyTuple_GetItem(output, 1);
 	ASSERT_ISINSTANCE(v, Tuple);
 #if PY_VERSION_HEX < 0x03000000
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Int);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Int);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Int);
 #else
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 0), Long);
-	ASSERT_ISINSTANCE(PyTuple_GET_ITEM(v, 1), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 0), Long);
+	ASSERT_ISINSTANCE(PyTuple_GetItem(v, 1), Long);
 #endif
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 0)), 1000000, "%d");
-	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GET_ITEM(v, 1)), 2, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(v, 0)), 1000000, "%d");
+	ASSERT_EQUALS(PyInt_AsLong(PyTuple_GetItem(v, 1)), 2, "%d");
 
 END_UNITTEST
 
@@ -765,15 +766,15 @@ BEGIN_UNITTEST(FillNSRect)
 	FAIL_IF(input == NULL);
 
 	v= PyTuple_New(2);
-	PyTuple_SET_ITEM(v, 0, PyInt_FromLong(10));
-	PyTuple_SET_ITEM(v, 1, PyInt_FromLong(11));
+	PyTuple_SetItem(v, 0, PyInt_FromLong(10));
+	PyTuple_SetItem(v, 1, PyInt_FromLong(11));
 
 	t= PyTuple_New(2);
-	PyTuple_SET_ITEM(t, 0, PyInt_FromLong(20));
-	PyTuple_SET_ITEM(t, 1, PyInt_FromLong(21));
+	PyTuple_SetItem(t, 0, PyInt_FromLong(20));
+	PyTuple_SetItem(t, 1, PyInt_FromLong(21));
 
-	PyTuple_SET_ITEM(input, 0, v);
-	PyTuple_SET_ITEM(input, 1, t);
+	PyTuple_SetItem(input, 0, v);
+	PyTuple_SetItem(input, 1, t);
 	
 	r = PyObjC_PythonToObjC(@encode(NSRect), input, &output.rect);
 	FAIL_IF(r < 0);

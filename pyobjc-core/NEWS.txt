@@ -4,8 +4,16 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.4
------------
+Version 2.4  (or 3.0)
+---------------------
+
+- Introduced a way to compile bridgesupport data and lazily load wrappers.
+
+  Avoid using "from Cocoa import *" to get the most benefits from this,
+  use either "import Cocoa" or "from Cocoa import NSObject".
+
+- ``objc.initFrameworkWrapper`` is now deprecated, switch to the new
+  compiled metadata code instead.
 
 - ``objc.allocateBuffer`` now returns a bytearray on python >= 2.6,
   it used to return a buffer object in Python 2.

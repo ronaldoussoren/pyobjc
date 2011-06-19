@@ -360,7 +360,7 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 		PyErr_SetString(PyExc_TypeError, "function_list not a PyCapsule");
 		return NULL;
 	}
-	function_list = PyCapsule_GetPointer(pyFunctionsList, "objc.__functionlist__");
+	function_list = PyCapsule_GetPointer(pyFunctionsList, "objc.__inline__");
 	if (function_list == NULL) {
 		PyErr_SetString(PyExc_ValueError, "no function list\n");
 		return NULL;
@@ -401,6 +401,7 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 			Py_DECREF(seq);
 			return NULL;
 		}
+
 
 		value = find_function(function_list, name);
 		if (value == NULL) {

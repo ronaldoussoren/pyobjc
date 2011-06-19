@@ -1208,6 +1208,12 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
 
 int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 {
+#if PY_MAJOR_VERSION == 2
+	if (PyString_Check(unicode_string)) {
+		return strcmp(PyString_AsString(unicode_string), ascii_string) == 0;
+	} else {
+#endif
+
 	size_t uni_sz = PyUnicode_GetSize(unicode_string);
 	size_t i;
 	Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
@@ -1228,6 +1234,9 @@ int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 		return 0;
 	}
 	return 1;
+#if PY_MAJOR_VERSION == 2
+	}
+#endif
 }
 
 int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)

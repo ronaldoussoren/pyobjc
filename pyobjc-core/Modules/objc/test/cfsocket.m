@@ -7,7 +7,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 @interface OC_TestCFSocket : NSObject
--(id)create;
+-(id)newSocket;
 @end
 
 @implementation OC_TestCFSocket

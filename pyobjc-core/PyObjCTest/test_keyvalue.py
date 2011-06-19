@@ -641,7 +641,7 @@ if PyObjCTest_KeyValueObserver is not None:
             # KVO is implemented there.
 
             observer = PyObjCTestObserver.alloc().init()
-            o = STUB.createObservedOfClass_observer_keyPath_(
+            o = STUB.makeObservedOfClass_observer_keyPath_(
                     NSObject, observer, u"observationInfo")
 
             try:

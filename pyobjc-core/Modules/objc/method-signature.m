@@ -754,6 +754,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
 	PyObject* metadata;
 
 	metadata = PyObjC_FindInRegistry(registry, cls, sel);
+
 	methinfo =  PyObjCMethodSignature_WithMetaData(signature, metadata, is_native);
 	if (isClassMethod) {
 		const char* nm  = sel_getName(sel);

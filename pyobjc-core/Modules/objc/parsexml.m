@@ -1,3 +1,4 @@
+#if 0
 /*
  * A fast parser for BridgeSupport files.
  *
@@ -1840,3 +1841,4 @@ end:
 		return 0;
 	}
 }
+#endif

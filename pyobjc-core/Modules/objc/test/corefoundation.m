@@ -37,7 +37,7 @@
 	return @encode(CFUUIDRef);
 }
 
-+(CFTypeID)typeidForCFUUIDRef;
++(CFTypeID)typeidForCFUUIDRef
 {
 	return CFUUIDGetTypeID();
 }
@@ -75,17 +75,17 @@
 
 
 
-+(char*)signatureForCFDateRef;
++(char*)signatureForCFDateRef
 {
 	return @encode(CFDateRef);
 }
 
-+(CFTypeID)typeidForCFDateRef;
++(CFTypeID)typeidForCFDateRef
 {
 	return CFDateGetTypeID();
 }
 
-+(CFDateRef)today;
++(CFDateRef)today
 {
 	CFDateRef result;
 
