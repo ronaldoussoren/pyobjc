@@ -1,6 +1,19 @@
 NEWS file for pyobjc-framework-Cocoa
 ====================================
 
+Version 2.4
+-----------
+
+* Switch to the compiled metadata format instead of using a brigesupport file.
+
+* Fix wrappers for a number of NSBitmap methods, those got broken while
+  introducing Python 3 support.
+
+* Add wrapper for [NSBitmapImageRep -initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:]
+
+* ``PyObjCTools.AppHelper.endSheetMethod`` now works with python 3.x
+
+
 Version 2.3
 -----------
 

@@ -22,8 +22,8 @@ mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
 	if (info == NULL) return;
 
 	PyGILState_STATE state = PyGILState_Ensure();
-	if (PyTuple_GET_ITEM(info, 1) != Py_None)  {
-		PyObject* py_info = PyTuple_GET_ITEM(info, 4);
+	if (PyTuple_GetItem(info, 1) != Py_None)  {
+		PyObject* py_info = PyTuple_GetItem(info, 4);
 		PyObject* py_rl = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
 		if (py_rl == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
@@ -34,7 +34,7 @@ mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
 		}
 
 		PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 1),
+			PyTuple_GetItem(info, 1),
 			"ONN", py_info, py_rl, py_mode);
 		if (result == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
@@ -50,8 +50,8 @@ mod_cancel(void* info, CFRunLoopRef rl, CFStringRef mode)
 	if (info == NULL) return;
 
 	PyGILState_STATE state = PyGILState_Ensure();
-	if (PyTuple_GET_ITEM(info, 2) != Py_None)  {
-		PyObject* py_info = PyTuple_GET_ITEM(info, 4);
+	if (PyTuple_GetItem(info, 2) != Py_None)  {
+		PyObject* py_info = PyTuple_GetItem(info, 4);
 		PyObject* py_rl = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
 		if (py_rl == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
@@ -62,7 +62,7 @@ mod_cancel(void* info, CFRunLoopRef rl, CFStringRef mode)
 		}
 
 		PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 2),
+			PyTuple_GetItem(info, 2),
 			"ONN", py_info, py_rl, py_mode);
 		if (result == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);
@@ -78,11 +78,11 @@ mod_perform(void* info)
 	if (info == NULL) return;
 
 	PyGILState_STATE state = PyGILState_Ensure();
-	if (PyTuple_GET_ITEM(info, 3) != Py_None)  {
-		PyObject* py_info = PyTuple_GET_ITEM(info, 4);
+	if (PyTuple_GetItem(info, 3) != Py_None)  {
+		PyObject* py_info = PyTuple_GetItem(info, 4);
 
 		PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 3),
+			PyTuple_GetItem(info, 3),
 			"O", py_info);
 		if (result == NULL) {
 			PyObjCErr_ToObjCWithGILState(&state);

@@ -38,8 +38,8 @@ mod_CFReadStreamClientCallBack(
 		@encode(CFStreamEventType), &eventType);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
-		"NNO", py_f, py_eventType, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 0),
+		"NNO", py_f, py_eventType, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}

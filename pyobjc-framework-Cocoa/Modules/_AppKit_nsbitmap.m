@@ -44,14 +44,14 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(result, 1, PyInt_FromLong(numTypes));
-	if (PyTuple_GET_ITEM(result, 1) == NULL) {
+	PyTuple_SetItem(result, 1, PyInt_FromLong(numTypes));
+	if (PyTuple_GetItem(result, 1) == NULL) {
 		Py_DECREF(result);
 		return NULL;
 	}
 
 	if (numTypes < 0) {
-		PyTuple_SET_ITEM(result, 0, Py_None);
+		PyTuple_SetItem(result, 0, Py_None);
 		Py_INCREF(Py_None);
 	} else {
 		PyObject* v = PyObjC_CArrayToPython(
@@ -61,7 +61,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(
 			Py_DECREF(result);
 			return NULL;
 		}
-		PyTuple_SET_ITEM(result, 0, v);
+		PyTuple_SetItem(result, 0, v);
 	}
 
 	return result;
@@ -74,7 +74,6 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 	PyObject* result;
 	PyObject* maybeNone;
 	const void *dataPlanes[5];
-	int garbage;
 	int width, height;
 	int bps, spp;
 	BOOL hasAlpha, isPlanar;
@@ -151,7 +150,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method,
 					 * implement the newer APIs and that includes the stdlib.
 					 */
 					PyErr_Clear();
-					void * buf;
+					const void * buf;
 					Py_ssize_t len;
 					int r = PyObject_AsReadBuffer(py_Planes[i], 
 						&buf, &len);
@@ -219,7 +218,6 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method,
 	PyObject* result;
 	PyObject* maybeNone;
 	const void *dataPlanes[5];
-	int garbage;
 	int width, height;
 	int bps, spp;
 	BOOL hasAlpha, isPlanar;
@@ -299,7 +297,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method,
 					 * implement the newer APIs and that includes the stdlib.
 					 */
 					PyErr_Clear();
-					void * buf;
+					const void * buf;
 					Py_ssize_t len;
 					int r = PyObject_AsReadBuffer(py_Planes[i], 
 						&buf, &len);
@@ -417,10 +415,10 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method,
 					Py_DECREF(result);
 					result = NULL;
 				}
-				PyTuple_SET_ITEM(result, i, buffer);
+				PyTuple_SetItem(result, i, buffer);
 			} else {
 				Py_INCREF(Py_None);
-				PyTuple_SET_ITEM(result, i, Py_None);
+				PyTuple_SetItem(result, i, Py_None);
 			}
 		}
 	}
@@ -447,7 +445,7 @@ call_NSBitmapImageRep_bitmapData(PyObject* method,
 			PyObjCSelector_GetClass(method),
 			PyObjCObject_GetObject(self));
     
-		bitmapData = (unsigned char *(*)(id, SEL)) objc_msgSendSuper(&super, 
+		bitmapData = ((unsigned char *(*)(struct objc_super*, SEL)) objc_msgSendSuper)(&super, 
 				PyObjCSelector_GetSelector(method));
 			
 		bytesPerPlane = [

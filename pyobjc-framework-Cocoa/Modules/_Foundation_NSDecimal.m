@@ -1116,7 +1116,7 @@ static int setup_nsdecimal(PyObject* m)
 	        snprintf(buffer+3, sizeof(buffer) - 3, "_NSDecimal");
 	        snprintf(buffer+2+sizeof("_NSDecimal"),
 				sizeof(buffer)-2-sizeof("_NSDecimal"),
-				@encode(NSDecimal) + 2);
+				"%s", @encode(NSDecimal) + 2);
 
 		if (PyObjCPointerWrapper_Register(buffer+1,
 				pythonify_nsdecimal,

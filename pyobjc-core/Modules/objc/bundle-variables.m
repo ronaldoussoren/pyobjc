@@ -362,7 +362,7 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 	}
 	function_list = PyCapsule_GetPointer(pyFunctionsList, "objc.__inline__");
 	if (function_list == NULL) {
-		PyErr_SetString(PyExc_ValueError, "no function list\n");
+		PyErr_SetString(PyExc_ValueError, "no function list");
 		return NULL;
 	}
 

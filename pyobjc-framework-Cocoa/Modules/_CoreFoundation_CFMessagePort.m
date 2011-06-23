@@ -41,8 +41,8 @@ mod_CFMessagePortCallBack(
 		@encode(CFDataRef), &data);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
-		"NNNO", py_f, py_msgid, py_data, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 0),
+		"NNNO", py_f, py_msgid, py_data, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -174,8 +174,8 @@ mod_CFMessagePortGetContext(
 		return NULL;
 	}
 
-	Py_INCREF(PyTuple_GET_ITEM((PyObject*)context.info, 1));
-	return PyTuple_GET_ITEM((PyObject*)context.info, 1);
+	Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
+	return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
 #define COREFOUNDATION_MESSAGEPORT_METHODS \

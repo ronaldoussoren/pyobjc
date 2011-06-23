@@ -72,7 +72,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(res, 0, PyBytes_FromString(buf));
+	PyTuple_SetItem(res, 0, PyBytes_FromString(buf));
 	free(buf);
 	if (PyErr_Occurred()) {
 		Py_DECREF(res);
@@ -87,9 +87,9 @@ call_NSString_getCString_maxLength_range_remainingRange_(
 			return NULL;
 		}
 
-		PyTuple_SET_ITEM(res, 1, rangeObj);
+		PyTuple_SetItem(res, 1, rangeObj);
 	} else {
-		PyTuple_SET_ITEM(res, 1, PyObjC_NULL);
+		PyTuple_SetItem(res, 1, PyObjC_NULL);
 	}
 	return res;
 }

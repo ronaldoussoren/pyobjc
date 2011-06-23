@@ -27,25 +27,25 @@ mod_CFCalendarAddComponents(
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFCalendarRef), 
-		PyTuple_GET_ITEM(args, 0), &calendar);
+		PyTuple_GetItem(args, 0), &calendar);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), 
-		PyTuple_GET_ITEM(args, 1), &at);
+		PyTuple_GetItem(args, 1), &at);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFOptionFlags), 
-		PyTuple_GET_ITEM(args, 2), &flags);
+		PyTuple_GetItem(args, 2), &flags);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(char*), 
-		PyTuple_GET_ITEM(args, 3), &componentDesc);
+		PyTuple_GetItem(args, 3), &componentDesc);
 	if (r == -1) {
 		return NULL;
 	}
@@ -68,7 +68,7 @@ mod_CFCalendarAddComponents(
 	len = strlen(componentDesc);
 	for (i = 0; i < len; i++) {
 		r = PyObjC_PythonToObjC(@encode(int), 
-			PyTuple_GET_ITEM(args, 4 + i), params + i);
+			PyTuple_GetItem(args, 4 + i), params + i);
 		if (r == -1) {
 			return NULL;
 		}
@@ -125,18 +125,18 @@ mod_CFCalendarComposeAbsoluteTime(
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFCalendarRef), 
-		PyTuple_GET_ITEM(args, 0), &calendar);
+		PyTuple_GetItem(args, 0), &calendar);
 	if (r == -1) {
 		return NULL;
 	}
 
-	if (PyTuple_GET_ITEM(args, 1) != Py_None) {
+	if (PyTuple_GetItem(args, 1) != Py_None) {
 		PyErr_SetString(PyExc_TypeError, "placeholder for 'at' must be None");
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(char*), 
-		PyTuple_GET_ITEM(args, 2), &componentDesc);
+		PyTuple_GetItem(args, 2), &componentDesc);
 	if (r == -1) {
 		return NULL;
 	}
@@ -159,7 +159,7 @@ mod_CFCalendarComposeAbsoluteTime(
 	len = strlen(componentDesc);
 	for (i = 0; i < len; i++) {
 		r = PyObjC_PythonToObjC(@encode(int), 
-			PyTuple_GET_ITEM(args, 3 + i), params + i);
+			PyTuple_GetItem(args, 3 + i), params + i);
 		if (r == -1) {
 			return NULL;
 		}
@@ -215,19 +215,19 @@ mod_CFCalendarDecomposeAbsoluteTime(
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFCalendarRef), 
-		PyTuple_GET_ITEM(args, 0), &calendar);
+		PyTuple_GetItem(args, 0), &calendar);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), 
-		PyTuple_GET_ITEM(args, 1), &at);
+		PyTuple_GetItem(args, 1), &at);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(char*), 
-		PyTuple_GET_ITEM(args, 2), &componentDesc);
+		PyTuple_GetItem(args, 2), &componentDesc);
 	if (r == -1) {
 		return NULL;
 	}
@@ -251,7 +251,7 @@ mod_CFCalendarDecomposeAbsoluteTime(
 
 		len = strlen(componentDesc);
 		for (i = 0; i < len; i++) {
-			if (PyTuple_GET_ITEM(args, 3 + i) != Py_None) {
+			if (PyTuple_GetItem(args, 3 + i) != Py_None) {
 				PyErr_SetString(PyExc_ValueError,
 					"Bad placeholder value");
 				return NULL;
@@ -285,7 +285,7 @@ mod_CFCalendarDecomposeAbsoluteTime(
 	if (b  == NULL) {
 		return NULL;
 	}
-	PyTuple_SET_ITEM(rv, 0, b);
+	PyTuple_SetItem(rv, 0, b);
 
 	Py_ssize_t i, len;
 	len = strlen(componentDesc);
@@ -295,7 +295,7 @@ mod_CFCalendarDecomposeAbsoluteTime(
 			Py_DECREF(rv);
 			return NULL;
 		}
-		PyTuple_SET_ITEM(rv, i+1, v);
+		PyTuple_SetItem(rv, i+1, v);
 	}
 	return rv;
 }
@@ -323,31 +323,31 @@ mod_CFCalendarGetComponentDifference(
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFCalendarRef), 
-		PyTuple_GET_ITEM(args, 0), &calendar);
+		PyTuple_GetItem(args, 0), &calendar);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), 
-		PyTuple_GET_ITEM(args, 1), &startingAt);
+		PyTuple_GetItem(args, 1), &startingAt);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFAbsoluteTime), 
-		PyTuple_GET_ITEM(args, 2), &resultAt);
+		PyTuple_GetItem(args, 2), &resultAt);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(CFOptionFlags), 
-		PyTuple_GET_ITEM(args, 3), &options);
+		PyTuple_GetItem(args, 3), &options);
 	if (r == -1) {
 		return NULL;
 	}
 
 	r = PyObjC_PythonToObjC(@encode(char*), 
-		PyTuple_GET_ITEM(args, 4), &componentDesc);
+		PyTuple_GetItem(args, 4), &componentDesc);
 	if (r == -1) {
 		return NULL;
 	}
@@ -371,7 +371,7 @@ mod_CFCalendarGetComponentDifference(
 
 		len = strlen(componentDesc);
 		for (i = 0; i < len; i++) {
-			if (PyTuple_GET_ITEM(args, 5 + i) != Py_None) {
+			if (PyTuple_GetItem(args, 5 + i) != Py_None) {
 				PyErr_SetString(PyExc_ValueError,
 					"Bad placeholder value");
 				return NULL;
@@ -406,7 +406,7 @@ mod_CFCalendarGetComponentDifference(
 	if (b  == NULL) {
 		return NULL;
 	}
-	PyTuple_SET_ITEM(rv, 0, b);
+	PyTuple_SetItem(rv, 0, b);
 
 	Py_ssize_t i, len;
 	len = strlen(componentDesc);
@@ -416,7 +416,7 @@ mod_CFCalendarGetComponentDifference(
 			Py_DECREF(rv);
 			return NULL;
 		}
-		PyTuple_SET_ITEM(rv, i+1, v);
+		PyTuple_SetItem(rv, i+1, v);
 	}
 	return rv;
 }

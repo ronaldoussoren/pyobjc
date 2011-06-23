@@ -39,8 +39,8 @@ mod_CFMachPortCallBack(
 	PyObject* py_size = PyLong_FromLongLong(size);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
-		"NNNO", py_f, py_msg, py_size, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 0),
+		"NNNO", py_f, py_msg, py_size, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -57,8 +57,8 @@ mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void *_info)
 	PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 2),
-		"NO", py_f, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 2),
+		"NO", py_f, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -245,8 +245,8 @@ mod_CFMachPortGetContext(
 		return NULL;
 	}
 
-	Py_INCREF(PyTuple_GET_ITEM((PyObject*)context.info, 1));
-	return PyTuple_GET_ITEM((PyObject*)context.info, 1);
+	Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
+	return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
 /*
@@ -289,9 +289,9 @@ mod_CFMachPortSetInvalidationCallBack(
 		return NULL;
 	}
 
-	Py_DECREF(PyTuple_GET_ITEM((PyObject*)context.info, 2));
+	Py_DECREF(PyTuple_GetItem((PyObject*)context.info, 2));
 	Py_INCREF(callout);
-	PyTuple_SET_ITEM((PyObject*)context.info, 2, callout);
+	PyTuple_SetItem((PyObject*)context.info, 2, callout);
 
 
 	PyObjC_DURING
@@ -367,7 +367,7 @@ mod_CFMachPortGetInvalidationCallBack(
 	}
 
 	if (rv == mod_CFMachPortInvalidationCallBack) {
-		PyObject* result = PyTuple_GET_ITEM((PyObject*)context.info, 2);
+		PyObject* result = PyTuple_GetItem((PyObject*)context.info, 2);
 		Py_INCREF(result);
 		return result;
 	}

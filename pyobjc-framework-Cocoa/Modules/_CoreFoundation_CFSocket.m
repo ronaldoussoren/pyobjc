@@ -78,8 +78,8 @@ mod_CFSocketCallBack(
 
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
-		"NNNNO", py_s, py_type, py_address, py_data, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 0),
+		"NNNNO", py_s, py_type, py_address, py_data, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}

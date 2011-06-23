@@ -6,20 +6,6 @@ These wrappers don't include documentation, please check Apple's documention
 for information on how to use these frameworks and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
-
-NEWS
-====
-
-2.4
------
-
-- Fix wrappers for a number of NSBitmap methods, those got broken while
-  introducing Python 3 support.
-
-- Add wrapper for [NSBitmapImageRep -initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:]
-
-- ``PyObjCTools.AppHelper.endSheetMethod`` now works with python 3.x
-
 '''
 from pyobjc_setup import setup, Extension
 import os

@@ -314,6 +314,7 @@ def emit_enums(fp, tree):
         if value is None and value64 is not None:
             value = value64
 
+
         if value is None:
             le_value = int(node.get("le_value"))
             be_value = int(node.get("be_value"))
@@ -326,6 +327,17 @@ def emit_enums(fp, tree):
             fp.write("$")
 
         else:
+            if '.' in value:
+                value = float(value)
+            else:
+                value = int(value)
+
+            if '.' in value64:
+                value64 = float(value64)
+            else:
+                value64 = int(value64)
+
+
             others[name] = sel32or64(value, value64)
 
     fp.write("'''\n")
@@ -347,7 +359,7 @@ def emit_strconsts(fp, tree):
             value = value.encode('ascii')
         items[nm] = value
 
-    print >>fp, "string_constants = %s"%(items)
+    print >>fp, "misc.update(%s)"%(items)
 
 def emit_functions(fp, tree):
     items = {}
@@ -367,7 +379,7 @@ def emit_functions(fp, tree):
             if node.get('c_array_delimited_by_null', 'false') == 'true':
                 meta['c_array_delimited_by_null'] = True
 
-            if node.get('c_array_delimited_by_null') is not None:
+            if node.get('c_array_length_in_arg') is not None:
                 meta['c_array_length_in_arg'] =  \
                         int(node.get('c_array_length_in_arg'))
 
@@ -582,6 +594,14 @@ def emit_classes(fp, tree):
                 continue
             sel = bstr(method.get('selector'))
             meta = {}
+            if method.get('variadic', 'false') == 'true':
+                meta['variadic'] = 'true'
+                if method.get('c_array_delimited_by_null', 'false') == 'true':
+                    meta['c_array_delimited_by_null'] = True
+
+                if method.get('c_array_length_in_arg') is not None:
+                    meta['c_array_length_in_arg'] =  \
+                            int(node.get('c_array_length_in_arg'))
             for info in method:
                 if info.tag == 'retval':
                     n = meta['retval'] = {}

@@ -474,6 +474,30 @@ ffi_call(
 							break;
 						   }
 
+						case FFI_TYPE_UINT8:
+						   {
+							u_int8_t shortval = *(u_int8_t*)a;
+							u_int64_t  actval = (u_int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
+						case FFI_TYPE_UINT16:
+						   {
+							u_int16_t shortval = *(u_int16_t*)a;
+							u_int64_t  actval = (u_int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
+						case FFI_TYPE_UINT32:
+						   {
+							u_int32_t shortval = *(u_int32_t*)a;
+							u_int64_t  actval = (u_int64_t)shortval;
+							memcpy (&reg_args->gpr[gprcount], &actval, 8);
+							break;
+						   }
+
 						default:
 							memcpy (&reg_args->gpr[gprcount], a, size < 8 ? size : 8);
 						}

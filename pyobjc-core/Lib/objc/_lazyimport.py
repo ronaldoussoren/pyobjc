@@ -70,6 +70,15 @@ class ObjCLazyModule (module):
 
         self.__load_cftypes(metadict.get('cftypes'))
 
+        if metadict.get('protocols') is not None:
+            self.__dict__['protocols'] = module('%s.protocols'%(name,))
+            self.__dict__['protocols'].__dict__.update(
+                    metadict['protocols'])
+
+            for p in objc.protocolsForProcess():
+                                setattr(self.__dict__['protocols'], p.__name__, p)
+
+
     def __dir__(self):
         return self.__all__
 

@@ -35,8 +35,8 @@ mod_CFRunLoopTimerCallBack(
 	PyObject* py_f = PyObjC_ObjCToPython(@encode(CFRunLoopTimerRef), &f);
 
 	PyObject* result = PyObject_CallFunction(
-		PyTuple_GET_ITEM(info, 0),
-		"NO", py_f, PyTuple_GET_ITEM(info, 1));
+		PyTuple_GetItem(info, 0),
+		"NO", py_f, PyTuple_GetItem(info, 1));
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
@@ -167,8 +167,8 @@ mod_CFRunLoopTimerGetContext(
 		return PyObjC_NULL;
 	}
 
-	Py_INCREF(PyTuple_GET_ITEM((PyObject*)context.info, 1));
-	return PyTuple_GET_ITEM((PyObject*)context.info, 1);
+	Py_INCREF(PyTuple_GetItem((PyObject*)context.info, 1));
+	return PyTuple_GetItem((PyObject*)context.info, 1);
 }
 
 #define COREFOUNDATION_RUNLOOPTIMER_METHODS \

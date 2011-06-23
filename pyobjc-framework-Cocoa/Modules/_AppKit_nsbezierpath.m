@@ -68,14 +68,14 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 		return NULL;
 	}
 
-	PyTuple_SET_ITEM(result, 0, v);
+	PyTuple_SetItem(result, 0, v);
 
 	v = PyObjC_CArrayToPython(@encode(NSPoint), points, pointCount);
 	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
 	}
-	PyTuple_SET_ITEM(result, 1, v);
+	PyTuple_SetItem(result, 1, v);
 
 	return result;
 }
@@ -186,7 +186,7 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(
 
 	v = PyInt_FromLong(idx);
 	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 1, v);
+	PyTuple_SetItem(arglist, 1, v);
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;

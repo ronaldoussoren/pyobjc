@@ -167,7 +167,7 @@ imp_NSWindow_initWithWindowRef_(
 	
 	v = WinObj_New(windowRef);
 	if (v == NULL) goto error;
-	PyTuple_SET_ITEM(arglist, 1, v); 
+	PyTuple_SetItem(arglist, 1, v); 
 
 	result = PyObject_Call((PyObject*)callable, arglist, NULL);
 	Py_DECREF(arglist); arglist = NULL;
