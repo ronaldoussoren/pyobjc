@@ -5,11 +5,14 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
 
-import objc as _objc
-from AppKit import *
+import sys
+import objc
+import AppKit
+from Automator import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("Automator",
-    frameworkIdentifier="com.apple.AutomatorFramework",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/Automator.framework"),
-    globals=globals())
+sys.modules['Automator'] = objc.ObjCLazyModule('Automator',
+        "com.apple.AutomatorFramework", objc.pathForFramework("/System/Library/Frameworks/Automator.framework"),
+        _metadata.__dict__, None, {
+            '__doc__': __doc__,
+            '__path__': __path__,
+        }, (AppKit,))

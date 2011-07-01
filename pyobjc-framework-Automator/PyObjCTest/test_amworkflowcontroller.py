@@ -7,6 +7,7 @@ class TestAMWorkflowController (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AMWorkflowController.canRun)
         self.assertResultIsBOOL(AMWorkflowController.isRunning)
+        self.assertResultIsBOOL(AMWorkflowController.isPaused)
 
 if __name__ == "__main__":
     main()
