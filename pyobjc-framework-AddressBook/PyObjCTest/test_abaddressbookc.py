@@ -61,7 +61,7 @@ class TestABAddressBookC (TestCase):
 
         v = ABCopyArrayOfPropertiesForRecordType(ref, 'ABPerson')
         self.assertResultIsCFRetained(ABCopyArrayOfPropertiesForRecordType)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
         self.assertTrue(len(v))
         self.assertIsInstance(v[0], unicode)
 

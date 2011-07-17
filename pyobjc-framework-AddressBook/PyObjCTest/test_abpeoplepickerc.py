@@ -62,7 +62,7 @@ class TestABPeoplePickerC (TestCase):
         ABPickerRemoveProperty(ref, kABFirstNameProperty)
 
         v = ABPickerCopyProperties(ref)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
 
         # Disable detailed testing, the RemoveProperties function
         # doesn't actually remove. See radar #7999195.
@@ -79,17 +79,17 @@ class TestABPeoplePickerC (TestCase):
         self.assertIsInstance(v, unicode)
 
         v = ABPickerCopySelectedGroups(ref)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
 
         v = ABPickerCopySelectedRecords(ref)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
 
         v = ABPickerCopySelectedIdentifiers(ref, ABGetMe(ABGetSharedAddressBook()))
         if v is not None:
-            self.assertIsInstance(v, CFArrayRef)
+            self.assertIsInstance(v, NSArray)
 
         v = ABPickerCopySelectedValues(ref)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
 
         grp = ABCopyArrayOfAllGroups(ABGetSharedAddressBook())[0]
         usr = ABGetMe(ABGetSharedAddressBook())
