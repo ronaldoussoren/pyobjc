@@ -5,11 +5,17 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
 
-import objc as _objc
-from AppKit import *
+import sys
+import objc
+import AppKit
 
-__bundle__ = _objc.initFrameworkWrapper("AppleScriptKit",
-    frameworkIdentifier="com.apple.AppleScriptKit",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/AppleScriptKit.framework"),
-    globals=globals())
+from AppleScriptKit import _metadata
+
+sys.modules['AppleScriptKit'] = mod = objc.ObjCLazyModule("AppleScriptKit",
+    "com.apple.AppleScriptKit",
+    objc.pathForFramework("/System/Library/Frameworks/AppleScriptKit.framework"),
+    _metadata.__dict__, None, {
+        '__doc__': __doc__,
+        'objc': objc,
+        '__path__': __path__,
+    }, (AppKit,))

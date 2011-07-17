@@ -9,3 +9,4 @@ syntax: glob
 *.dSYM
 *.pyc
 unittest2-*.egg
+*.swp
