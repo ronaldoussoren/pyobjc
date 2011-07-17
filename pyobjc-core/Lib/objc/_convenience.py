@@ -714,8 +714,12 @@ CONVENIENCE_METHODS[b'hasSuffix:'] = (
 )
 
 
+def __copy__(self):
+    if hasattr(self, 'mutableCopy'):
+        return self.mutableCopyWithZone_(None)
+    return self.copyWithZone_(None)
 CONVENIENCE_METHODS[b'copyWithZone:'] = (
-    ('__copy__', lambda self: self.copyWithZone_(None)),
+    ('__copy__', __copy__),
 )
 
 # This won't work:
