@@ -5,8 +5,7 @@ from Automator import *
 class TestAMAction (TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertIsVararg(AMAction.logMessageWithLevel_format_)
-        self.assertIsArgIsFormat(AMAction.logMessageWithLevel_format_, 1)
+        self.assertArgIsPrintf(AMAction.logMessageWithLevel_format_, 1)
         self.assertArgIsOut(AMAction.runWithInput_error_, 1)
 
     @min_os_level("10.5")
