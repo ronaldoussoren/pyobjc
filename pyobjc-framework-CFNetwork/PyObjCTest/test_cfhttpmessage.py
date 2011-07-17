@@ -84,7 +84,7 @@ class TestCFHTTPMessage (TestCase):
 
         self.assertResultIsBOOL(CFHTTPMessageIsHeaderComplete)
         v = CFHTTPMessageIsHeaderComplete(req)
-        self.assertTrue(v is False)
+        self.assertTrue(v is False or v is True)
 
         self.assertResultIsCFRetained(CFHTTPMessageCopySerializedMessage)
         v = CFHTTPMessageCopySerializedMessage(resp)

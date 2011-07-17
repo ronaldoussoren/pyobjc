@@ -5,13 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
 
-from CoreFoundation import *
+import sys
+import objc
+import CoreFoundation
 
-__bundle__ = objc.initFrameworkWrapper("CFNetwork",
-    frameworkIdentifier="com.apple.CFNetwork",
-    frameworkPath=objc.pathForFramework(
-        "/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"),
-    globals=globals())
+from CFNetwork import _metadata
 
 def CFSocketStreamSOCKSGetError(err):
     return err.error & 0xFFFF
@@ -19,4 +17,18 @@ def CFSocketStreamSOCKSGetError(err):
 def CFSocketStreamSOCKSGetErrorSubdomain(err):
     return (err.error >> 16) & 0xFFFF
 
-from CFNetwork._manual import *
+sys.modules['CFNetwork'] = mod = objc.ObjCLazyModule(
+    "CFNetwork", "com.apple.CFNetwork",
+    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"),
+    _metadata.__dict__, None, {
+        '__doc__': __doc__,
+        'objc': objc,
+        '__path__': __path__,
+        'CFSocketStreamSOCKSGetError': CFSocketStreamSOCKSGetError,
+        'CFSocketStreamSOCKSGetErrorSubdomain': CFSocketStreamSOCKSGetErrorSubdomain,
+    }, (CoreFoundation,))
+
+
+import CFNetwork._manual
+for nm in dir(CFNetwork._manual):
+    setattr(mod, nm, getattr(CFNetwork._manual, nm))
