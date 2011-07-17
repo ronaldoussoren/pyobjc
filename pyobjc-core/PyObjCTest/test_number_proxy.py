@@ -11,7 +11,11 @@ from PyObjCTest.pythonnumber import OC_TestNumber
 import objc
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
-NSCFNumber = objc.lookUpClass("NSCFNumber")
+try:
+    NSCFNumber = objc.lookUpClass("__NSCFNumber")
+except objc.error:
+    NSCFNumber = objc.lookUpClass("NSCFNumber")
+
 
 NSOrderedAscending = -1
 NSOrderedSame = 0
@@ -202,7 +206,11 @@ class TestPyNumber (TestCase):
         # The booleans True and False must be proxied as the corresponding
         # NSNumber constants, otherwise lowlevel Cocoa/CoreFoundation code
         # get's upset.
-        boolClass = objc.lookUpClass('NSCFBoolean')
+        try:
+            boolClass = objc.lookUpClass('__NSCFBoolean')
+        except objc.error:
+            boolClass = objc.lookUpClass('NSCFBoolean')
+
         for v in (True, False):
             self.assertIs(OC_TestNumber.numberClass_(v), boolClass)
             self.assertIs(objc.repythonify(v), v)

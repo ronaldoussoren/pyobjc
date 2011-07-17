@@ -243,6 +243,7 @@ class TestPyCopyObjC (TestCase):
         self.assertIsInstance(a, NSMutableArray)
 
         b = copy.copy(a)
+	b.append('d')
         self.assertIsInstance(b, NSMutableArray)
         self.assertEqual(list(a), list(b))
 
