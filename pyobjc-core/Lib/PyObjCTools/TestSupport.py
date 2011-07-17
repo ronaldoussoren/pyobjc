@@ -17,6 +17,10 @@ from distutils.sysconfig import get_config_var as _get_config_var
 import re as _re
 import warnings
 
+# Ensure that methods in this module get filtered in the tracebacks
+# from unittest
+__unittest = False
+
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
 _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))

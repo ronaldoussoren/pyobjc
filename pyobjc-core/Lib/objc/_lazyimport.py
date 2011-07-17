@@ -225,10 +225,19 @@ class ObjCLazyModule (module):
 
         for name, type, gettypeid_func, tollfree in cftypes:
             if tollfree:
+                for nm in tollfree.split(','):
+                    try: 
+                        objc.lookUpClass(nm)
+                    except objc.error:
+                        pass
+                    else:
+                        tollfree = nm
+                        break
                 v = objc.registerCFSignature(name, type, None, tollfree)
                 if v is not None:
                     self.__dict__[name] = v
                     continue
+
             try:
                 func = getattr(self, gettypeid_func)
             except AttributeError:
@@ -243,6 +252,15 @@ class ObjCLazyModule (module):
                 continue
 
             if tollfree:
+                for nm in tollfree.split(','):
+                    try: 
+                        objc.lookUpClass(nm)
+                    except objc.error:
+                        pass
+                    else:
+                        tollfree = nm
+                        break
+
                 v = objc.registerCFSignature(name, type, func(), tollfree)
             else:
                 v = objc.registerCFSignature(name, type, func())

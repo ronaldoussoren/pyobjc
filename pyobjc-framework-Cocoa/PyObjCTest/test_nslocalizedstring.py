@@ -2,7 +2,7 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-from Foundation import NSLocalizedString
+from Foundation import NSLocalizedString, NSAutoreleasePool
 
 class TestNSLocalizedString(TestCase):
     def testBasic(self):
@@ -11,8 +11,9 @@ class TestNSLocalizedString(TestCase):
         if objc.platform != 'MACOSX':
             return
 
+        pool = NSAutoreleasePool.alloc().init()
         s = NSLocalizedString(u"hello world", u"")
-        objc.recycleAutoreleasePool()
+        del pool
         self.assertEqual (s, u"hello world")
         # XXX : Since we get the same object back, it's still unicode
         #self.assertEqual (s.nsstring().description(), u"hello world")

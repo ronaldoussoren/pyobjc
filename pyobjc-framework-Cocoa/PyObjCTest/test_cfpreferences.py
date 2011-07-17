@@ -5,18 +5,18 @@ from CoreFoundation import *
 
 class TestPreferences (TestCase):
     def testGetting(self):
-        v = CFPreferencesCopyAppValue("WindowCloseAction", "com.apple.Terminal")
+        v = CFPreferencesCopyAppValue("Default Window Settings", "com.apple.Terminal")
         self.assertIsInstance(v, unicode)
         self.assertResultIsBOOL(CFPreferencesGetAppBooleanValue)
         self.assertArgHasType(CFPreferencesGetAppBooleanValue, 2, b'o^Z')
-        v, valid = CFPreferencesGetAppBooleanValue("AutoFocus", "com.apple.Terminal", None)
+        v, valid = CFPreferencesGetAppBooleanValue("SecureKeyboardEntry", "com.apple.Terminal", None)
         self.assertTrue(valid)
         self.assertIsInstance(v, bool)
         self.assertArgHasType(CFPreferencesGetAppIntegerValue, 2, b'o^Z')
-        v, valid = CFPreferencesGetAppIntegerValue("WindowCloseAction", "com.apple.Terminal", None)
+        v, valid = CFPreferencesGetAppIntegerValue("ABMetaDataChangeCount", "com.apple.AddressBook", None)
         self.assertTrue(valid)
         self.assertIsInstance(v, (int, long))
-        v = CFPreferencesCopyValue("WindowCloseAction", "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        v = CFPreferencesCopyValue("Default Window Settings", "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(v, unicode)
         v = CFPreferencesCopyMultiple(None, "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(v, CFDictionaryRef)

@@ -5,7 +5,13 @@ from PyObjCTools.TestSupport import *
 class TestCFDictionary (TestCase):
 
     def testTypes(self):
+        try:
+            NSCFDictionary = objc.lookUpClass('__NSCFDictionary')
+        except objc.error:
+            NSCFDictionary = objc.lookUpClass('NSCFDictionary')
+
         self.assertIs(CFDictionaryRef, NSCFDictionary)
+
     def testCreation(self):
         dictionary = CFDictionaryCreate(None,
                 ('aap', 'noot', 'mies', 'wim'),

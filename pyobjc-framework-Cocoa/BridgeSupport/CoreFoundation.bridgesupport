@@ -24,26 +24,26 @@
   <struct name='CFXMLProcessingInstructionInfo' type='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' type64='{_CFXMLProcessingInstructionInfo="dataString"^{__CFString=}}' />
   <cftype gettypeid_func='CFURLEnumeratorGetTypeID' name='CFURLEnumeratorRef' type='^{__CFURLEnumerator=}' type64='^{__CFURLEnumerator=}' />
   <cftype gettypeid_func='CFAllocatorGetTypeID' name='CFAllocatorRef' type='^{__CFAllocator=}' type64='^{__CFAllocator=}' />
-  <cftype gettypeid_func='CFArrayGetTypeID' name='CFArrayRef' tollfree='NSCFArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
-  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFAttributedStringRef' tollfree='NSCFAttributedString' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' />
+  <cftype gettypeid_func='CFArrayGetTypeID' name='CFArrayRef' tollfree='__NSCFArray,NSCFArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
+  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFAttributedStringRef' tollfree='__NSCFAttributedString,NSCFAttributedString' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' />
   <cftype gettypeid_func='CFBagGetTypeID' name='CFBagRef' type='^{__CFBag=}' type64='^{__CFBag=}' />
   <cftype gettypeid_func='CFBinaryHeapGetTypeID' name='CFBinaryHeapRef' type='^{__CFBinaryHeap=}' type64='^{__CFBinaryHeap=}' />
   <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFBitVectorRef' type='^{__CFBitVector=}' type64='^{__CFBitVector=}' />
-  <cftype gettypeid_func='CFBooleanGetTypeID' name='CFBooleanRef' tollfree='NSCFBoolean' type='^{__CFBoolean=}' type64='^{__CFBoolean=}' />
+  <cftype gettypeid_func='CFBooleanGetTypeID' name='CFBooleanRef' tollfree='__NSCFBoolean,NSCFBoolean' type='^{__CFBoolean=}' type64='^{__CFBoolean=}' />
   <cftype gettypeid_func='CFBundleGetTypeID' name='CFBundleRef' type='^{__CFBundle=}' type64='^{__CFBundle=}' />
   <cftype gettypeid_func='CFCalendarGetTypeID' name='CFCalendarRef' tollfree='__NSCFCalendar' type='^{__CFCalendar=}' type64='^{__CFCalendar=}' />
-  <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFCharacterSetRef' tollfree='NSCFCharacterSet' type='^{__CFCharacterSet=}' type64='^{__CFCharacterSet=}' />
-  <cftype gettypeid_func='CFDataGetTypeID' name='CFDataRef' tollfree='NSCFData' type='^{__CFData=}' type64='^{__CFData=}' />
+  <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFCharacterSetRef' tollfree='__NSCFCharacterSet,NSCFCharacterSet' type='^{__CFCharacterSet=}' type64='^{__CFCharacterSet=}' />
+  <cftype gettypeid_func='CFDataGetTypeID' name='CFDataRef' tollfree='__NSCFData,NSCFData' type='^{__CFData=}' type64='^{__CFData=}' />
   <cftype gettypeid_func='CFDateFormatterGetTypeID' name='CFDateFormatterRef' type='^{__CFDateFormatter=}' type64='^{__CFDateFormatter=}' />
-  <cftype gettypeid_func='CFDateGetTypeID' name='CFDateRef' tollfree='__NSCFDate' type='^{__CFDate=}' type64='^{__CFDate=}' />
-  <cftype gettypeid_func='CFDictionaryGetTypeID' name='CFDictionaryRef' tollfree='NSCFDictionary' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
-  <cftype gettypeid_func='CFErrorGetTypeID' name='CFErrorRef' tollfree='NSCFError' type='^{__CFError=}' type64='^{__CFError=}' />
+  <cftype gettypeid_func='CFDateGetTypeID' name='CFDateRef' tollfree='__NSCFDate,NSCFDate,__NSDate' type='^{__CFDate=}' type64='^{__CFDate=}' />
+  <cftype gettypeid_func='CFDictionaryGetTypeID' name='CFDictionaryRef' tollfree='__NSCFDictionary,NSCFDictionary' type='^{__CFDictionary=}' type64='^{__CFDictionary=}' />
+  <cftype gettypeid_func='CFErrorGetTypeID' name='CFErrorRef' tollfree='__NSCFError,NSCFError' type='^{__CFError=}' type64='^{__CFError=}' />
   <cftype gettypeid_func='CFFileDescriptorGetTypeID' name='CFFileDescriptorRef' type='^{__CFFileDescriptor=}' type64='^{__CFFileDescriptor=}' />
-  <cftype gettypeid_func='CFLocaleGetTypeID' name='CFLocaleRef' tollfree='NSCFLocale' type='^{__CFLocale=}' type64='^{__CFLocale=}' />
+  <cftype gettypeid_func='CFLocaleGetTypeID' name='CFLocaleRef' tollfree='__NSCFLocale,NSCFLocale' type='^{__CFLocale=}' type64='^{__CFLocale=}' />
   <cftype gettypeid_func='CFMachPortGetTypeID' name='CFMachPortRef' tollfree='NSMachPort' type='^{__CFMachPort=}' type64='^{__CFMachPort=}' />
   <cftype gettypeid_func='CFMessagePortGetTypeID' name='CFMessagePortRef' type='^{__CFMessagePort=}' type64='^{__CFMessagePort=}' />
   <cftype gettypeid_func='CFArrayGetTypeID' name='CFMutableArrayRef' tollfree='NSMutableArray' type='^{__CFArray=}' type64='^{__CFArray=}' />
-  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFMutableAttributedStringRef' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' tollfree='NSCFAttributedString' />
+  <cftype gettypeid_func='CFAttributedStringGetTypeID' name='CFMutableAttributedStringRef' type='^{__CFAttributedString=}' type64='^{__CFAttributedString=}' tollfree='__NSCFAttributedString,NSCFAttributedString' />
   <cftype gettypeid_func='CFBagGetTypeID' name='CFMutableBagRef' type='^{__CFBag=}' type64='^{__CFBag=}' />
   <cftype gettypeid_func='CFBitVectorGetTypeID' name='CFMutableBitVectorRef' type='^{__CFBitVector=}' type64='^{__CFBitVector=}' />
   <cftype gettypeid_func='CFCharacterSetGetTypeID' name='CFMutableCharacterSetRef' type='^{__CFCharacterSet=}' type64='^{__CFCharacterSet=}' />
@@ -54,23 +54,23 @@
   <cftype gettypeid_func='CFNotificationCenterGetTypeID' name='CFNotificationCenterRef' type='^{__CFNotificationCenter=}' type64='^{__CFNotificationCenter=}' />
   <cftype gettypeid_func='CFNullGetTypeID' name='CFNullRef' tollfree='NSNull' type='^{__CFNull=}' type64='^{__CFNull=}' />
   <cftype gettypeid_func='CFNumberFormatterGetTypeID' name='CFNumberFormatterRef' type='^{__CFNumberFormatter=}' type64='^{__CFNumberFormatter=}' />
-  <cftype gettypeid_func='CFNumberGetTypeID' name='CFNumberRef' tollfree='NSCFNumber' type='^{__CFNumber=}' type64='^{__CFNumber=}' />
+  <cftype gettypeid_func='CFNumberGetTypeID' name='CFNumberRef' tollfree='__NSCFNumber,NSCFNumber' type='^{__CFNumber=}' type64='^{__CFNumber=}' />
   <cftype gettypeid_func='CFPlugInInstanceGetTypeID' name='CFPlugInInstanceRef' type='^{__CFPlugInInstance=}' type64='^{__CFPlugInInstance=}' />
-  <cftype gettypeid_func='CFReadStreamGetTypeID' name='CFReadStreamRef' tollfree='NSCFInputStream' type='^{__CFReadStream=}' type64='^{__CFReadStream=}' />
+  <cftype gettypeid_func='CFReadStreamGetTypeID' name='CFReadStreamRef' tollfree='__NSCFInputStream,NSCFInputStream' type='^{__CFReadStream=}' type64='^{__CFReadStream=}' />
   <cftype gettypeid_func='CFRunLoopObserverGetTypeID' name='CFRunLoopObserverRef' type='^{__CFRunLoopObserver=}' type64='^{__CFRunLoopObserver=}' />
   <cftype gettypeid_func='CFRunLoopGetTypeID' name='CFRunLoopRef' type='^{__CFRunLoop=}' type64='^{__CFRunLoop=}' />
   <cftype gettypeid_func='CFRunLoopSourceGetTypeID' name='CFRunLoopSourceRef' type='^{__CFRunLoopSource=}' type64='^{__CFRunLoopSource=}' />
-  <cftype gettypeid_func='CFRunLoopTimerGetTypeID' name='CFRunLoopTimerRef' tollfree='NSCFTimer' type='^{__CFRunLoopTimer=}' type64='^{__CFRunLoopTimer=}' />
-  <cftype gettypeid_func='CFSetGetTypeID' name='CFSetRef' tollfree='NSCFSet' type='^{__CFSet=}' type64='^{__CFSet=}' />
+  <cftype gettypeid_func='CFRunLoopTimerGetTypeID' name='CFRunLoopTimerRef' tollfree='__NSCFTimer,NSCFTimer' type='^{__CFRunLoopTimer=}' type64='^{__CFRunLoopTimer=}' />
+  <cftype gettypeid_func='CFSetGetTypeID' name='CFSetRef' tollfree='__NSCFSet,NSCFSet' type='^{__CFSet=}' type64='^{__CFSet=}' />
   <cftype gettypeid_func='CFSocketGetTypeID' name='CFSocketRef' type='^{__CFSocket=}' type64='^{__CFSocket=}' />
-  <cftype gettypeid_func='CFStringGetTypeID' name='CFStringRef' tollfree='NSCFString' type='^{__CFString=}' type64='^{__CFString=}' />
+  <cftype gettypeid_func='CFStringGetTypeID' name='CFStringRef' tollfree='__NSCFString,NSCFString' type='^{__CFString=}' type64='^{__CFString=}' />
   <cftype gettypeid_func='CFStringTokenizerGetTypeID' name='CFStringTokenizerRef' type='^{__CFStringTokenizer=}' type64='^{__CFStringTokenizer=}' />
-  <cftype gettypeid_func='CFTimeZoneGetTypeID' name='CFTimeZoneRef' tollfree='__NSCFTimeZone' type='^{__CFTimeZone=}' type64='^{__CFTimeZone=}' />
+  <cftype gettypeid_func='CFTimeZoneGetTypeID' name='CFTimeZoneRef' tollfree='__NSCFTimeZone,__NSTimeZone' type='^{__CFTimeZone=}' type64='^{__CFTimeZone=}' />
   <cftype gettypeid_func='CFTreeGetTypeID' name='CFTreeRef' type='^{__CFTree=}' type64='^{__CFTree=}' />
   <cftype gettypeid_func='CFURLGetTypeID' name='CFURLRef' tollfree='NSURL' type='^{__CFURL=}' type64='^{__CFURL=}' />
   <cftype gettypeid_func='CFUUIDGetTypeID' name='CFUUIDRef' type='^{__CFUUID=}' type64='^{__CFUUID=}' />
   <cftype gettypeid_func='CFUserNotificationGetTypeID' name='CFUserNotificationRef' type='^{__CFUserNotification=}' type64='^{__CFUserNotification=}' />
-  <cftype gettypeid_func='CFWriteStreamGetTypeID' name='CFWriteStreamRef' tollfree='NSCFOutputStream' type='^{__CFWriteStream=}' type64='^{__CFWriteStream=}' />
+  <cftype gettypeid_func='CFWriteStreamGetTypeID' name='CFWriteStreamRef' tollfree='__NSCFOutputStream,NSCFOutputStream' type='^{__CFWriteStream=}' type64='^{__CFWriteStream=}' />
   <cftype gettypeid_func='CFXMLNodeGetTypeID' name='CFXMLNodeRef' type='^{__CFXMLNode=}' type64='^{__CFXMLNode=}' />
   <cftype gettypeid_func='CFXMLParserGetTypeID' name='CFXMLParserRef' type='^{__CFXMLParser=}' type64='^{__CFXMLParser=}' />
   <constant name='kCFURLNameKey' type='^{__CFString}' />

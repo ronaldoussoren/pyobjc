@@ -1,6 +1,6 @@
 # Generated file, don't edit
 # Source: BridgeSupport/Foundation.bridgesupport
-# Last update: Wed Jun 22 07:37:48 2011
+# Last update: Sun Jul 17 16:27:43 2011
 
 import objc, sys
 
@@ -875,6 +875,7 @@ try:
     r('NSUndoManager', b'canRedo', {'retval': {'type': b'Z'}})
     r('NSUndoManager', b'canUndo', {'retval': {'type': b'Z'}})
     r('NSUndoManager', b'groupsByEvent', {'retval': {'type': b'Z'}})
+    r('NSUndoManager', b'setGroupsByEvent:', {'arguments': {2: {'type': b'Z'}}})
     r('NSUndoManager', b'isRedoing', {'retval': {'type': b'Z'}})
     r('NSUndoManager', b'isUndoRegistrationEnabled', {'retval': {'type': b'Z'}})
     r('NSUndoManager', b'isUndoing', {'retval': {'type': b'Z'}})

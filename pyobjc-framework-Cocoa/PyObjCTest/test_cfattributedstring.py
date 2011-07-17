@@ -5,8 +5,15 @@ from Foundation import NSCFAttributedString
 
 class TestAttributedString (TestCase):
     def testTypes(self):
+        try:
+            NSCFAttributedString = objc.lookUpClass('__NSCFAttributedString')
+        except objc.error:
+            NSCFAttributedString = objc.lookUpClass('NSCFAttributedString')
+
         self.assertIs(CFAttributedStringRef, NSCFAttributedString )
         self.assertIs(CFMutableAttributedStringRef, NSCFAttributedString )
+
+
     def testTypeID(self):
         v = CFAttributedStringGetTypeID()
         self.assertIsInstance(v, (int, long))

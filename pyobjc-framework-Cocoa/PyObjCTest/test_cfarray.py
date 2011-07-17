@@ -20,14 +20,14 @@ class TestCFArray (TestCase):
     def testCFArrayCreate(self):
         array = CFArrayCreate(None, [1,2,3,4], 4, kCFTypeArrayCallBacks)
         self.assertEqual(array, [1,2,3,4])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
 
         array = CFArrayCreateMutable(None, 0, kCFTypeArrayCallBacks)
         CFArrayAppendValue(array, 42)
         CFArrayAppendValue(array, 43)
         CFArrayAppendValue(array, 44)
         self.assertEqual(array, [42, 43, 44])
-        self.assert_(isinstance(array, CFMutableArrayRef))
+        self.assertIsInstance(array, CFMutableArrayRef)
 
     def testCFArrayApplyFunction(self):
         array = CFArrayCreate(None, [1,2,3,4], 4, kCFTypeArrayCallBacks)
@@ -90,23 +90,24 @@ class TestCFArray (TestCase):
     def testTypeID(self):
         v = CFArrayGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCopy(self):
         array = CFArrayCreate(None, [1,2,3,4], 4, kCFTypeArrayCallBacks)
         self.assertEqual(array, [1,2,3,4])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
 
         cpy = CFArrayCreateCopy(None, array)
         self.assertEqual(cpy, [1,2,3,4])
-        self.assert_(isinstance(cpy, CFArrayRef))
+        self.assertIsInstance(cpy, NSArray)
 
         cpy = CFArrayCreateMutableCopy(None, 0, array)
         self.assertEqual(cpy, [1,2,3,4])
-        self.assert_(isinstance(cpy, CFMutableArrayRef))
+        self.assertIsInstance(cpy, CFMutableArrayRef)
         self.assertIsNot(cpy, array )
     def testCounts(self):
         array = CFArrayCreate(None, [1,2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [1,2,3,4,4,2])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
 
         self.assertEqual(CFArrayGetCount(array) , 6 )
         self.assertEqual(CFArrayGetCountOfValue(array, (0,6), 4) , 2 )
@@ -115,7 +116,7 @@ class TestCFArray (TestCase):
     def testContains(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [u"a",2,3,4,4,2])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
 
         self.assertFalse( CFArrayContainsValue(array, (0, 6), u"hello") )
         self.assertTrue( CFArrayContainsValue(array, (0, 6), 4) )
@@ -134,7 +135,7 @@ class TestCFArray (TestCase):
     def testGetting(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [u"a",2,3,4,4,2])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
 
         self.assertEqual(CFArrayGetValueAtIndex(array, 0) , u"a"  )
         self.assertEqual(CFArrayGetValueAtIndex(array, 1) , 2  )
@@ -144,10 +145,11 @@ class TestCFArray (TestCase):
         vals = CFArrayGetValues(array, (0, 3), None)
         self.assertIsInstance(vals, tuple)
         self.assertEqual(vals , (u"a", 2, 3) )
+
     def testUpdating(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [u"a",2,3,4,4,2])
-        self.assert_(isinstance(array, CFArrayRef))
+        self.assertIsInstance(array, NSArray)
         array = CFArrayCreateMutableCopy(None, 0, array)
 
 

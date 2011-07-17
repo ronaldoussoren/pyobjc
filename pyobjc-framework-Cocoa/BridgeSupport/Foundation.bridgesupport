@@ -5254,6 +5254,9 @@
     <method selector='groupsByEvent'>
       <retval type='B' />
     </method>
+    <method selector='setGroupsByEvent:'>
+      <arg index='0' type='B' />
+    </method>
     <method selector='isRedoing'>
       <retval type='B' />
     </method>

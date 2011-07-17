@@ -308,7 +308,8 @@ class TestURL (TestCase):
         fp.close()
         try:
             baseURL = CFURLCreateWithFileSystemPath(None,
-                u"/tmp/pyobjc.test", kCFURLPOSIXPathStyle, False)
+                os.path.realpath(u"/tmp/pyobjc.test"), 
+                kCFURLPOSIXPathStyle, False)
             self.assertIsInstance(baseURL, CFURLRef)
 
             self.assertResultIsCFRetained(CFURLCreateFileReferenceURL)

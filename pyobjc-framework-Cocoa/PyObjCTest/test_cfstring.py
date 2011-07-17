@@ -2,7 +2,11 @@ from PyObjCTools.TestSupport import *
 import array
 from CoreFoundation import *
 import CoreFoundation
-from Foundation import NSCFString
+
+try:
+    from Foundation import __NSCFString as NSCFString
+except ImportError:
+    from Foundation import NSCFString
 
 
 class TestString (TestCase):

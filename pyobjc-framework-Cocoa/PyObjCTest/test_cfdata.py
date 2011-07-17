@@ -6,6 +6,11 @@ import sys
 
 class TestData (TestCase):
     def testTypes(self):
+        try:
+            NSCFData = objc.lookUpClass('__NSCFData')
+        except objc.error:
+            NSCFData = objc.lookUpClass('NSCFData')
+
         self.assertIs(CFDataRef, NSCFData)
     def testTypeID(self):
         v = CFDataGetTypeID()
