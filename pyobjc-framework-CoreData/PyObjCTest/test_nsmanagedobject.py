@@ -4,7 +4,10 @@ from CoreData import *
 
 class TestNSManagedObject (TestCase):
     def testMethods(self):
-        o = NSManagedObject.alloc().init()
+        descr = NSEntityDescription.alloc().init()
+        descr.setName_(u'Name')
+        o = NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(descr, None)
+
         self.assertResultIsBOOL(o.isInserted)
         self.assertResultIsBOOL(o.isUpdated)
         self.assertResultIsBOOL(o.isDeleted)
