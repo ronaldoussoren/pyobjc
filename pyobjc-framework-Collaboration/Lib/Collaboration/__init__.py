@@ -5,11 +5,17 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
 
-import objc as _objc
-from Foundation import *
+import sys
+import objc
+import Foundation
 
-__bundle__ = _objc.initFrameworkWrapper("Collaboration",
-    frameworkIdentifier="com.apple.Collaboration",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/Collaboration.framework"),
-    globals=globals())
+from Collaboration import _metadata
+
+sys.modules['Collaboration'] = objc.ObjCLazyModule(
+    "Collaboration", "com.apple.Collaboration",
+    objc.pathForFramework("/System/Library/Frameworks/Collaboration.framework"),
+    _metadata.__dict__, None, {
+        '__doc__': __doc__,
+        '__path__': __path__,
+        'objc': objc,
+    }, (Foundation,))
