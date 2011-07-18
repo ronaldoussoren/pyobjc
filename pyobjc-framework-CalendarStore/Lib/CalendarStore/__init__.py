@@ -5,11 +5,17 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
 
-import objc as _objc
-from Foundation import *
+import sys
+import objc
+import Foundation
 
-__bundle__ = _objc.initFrameworkWrapper("CalendarStore",
-    frameworkIdentifier="com.apple.CalendarStore",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/CalendarStore.framework"),
-    globals=globals())
+from CalendarStore import _metadata
+
+sys.modules['CalendarStore'] = objc.ObjCLazyModule(
+    "CalendarStore", "com.apple.CalendarStore",
+    objc.pathForFramework("/System/Library/Frameworks/CalendarStore.framework"),
+    _metadata.__dict__, None, {
+        '__doc__': __doc__,
+        '__path__': __path__,
+        'objc': objc,
+    })

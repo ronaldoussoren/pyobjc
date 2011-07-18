@@ -15,4 +15,5 @@ sys.modules['Automator'] = objc.ObjCLazyModule('Automator',
         _metadata.__dict__, None, {
             '__doc__': __doc__,
             '__path__': __path__,
+            'objc': objc,
         }, (AppKit,))
