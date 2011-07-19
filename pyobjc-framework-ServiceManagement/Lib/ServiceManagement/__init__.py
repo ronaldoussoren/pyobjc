@@ -4,13 +4,17 @@ Python mapping for the ServiceManagement framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import CoreFoundation
 
-import objc as _objc
-from CoreFoundation import *
-#from Security import *
+from ServiceManagement import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("ServiceManagement",
-    frameworkIdentifier="com.apple.bsd.ServiceManagement",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/ServiceManagement.framework"),
-    globals=globals())
+sys.modules['ServiceManagement'] = mod = objc.ObjCLazyModule('ServiceManagement',
+    "com.apple.bsd.ServiceManagement",
+    objc.pathForFramework("/System/Library/Frameworks/ServiceManagement.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( CoreFoundation, ))

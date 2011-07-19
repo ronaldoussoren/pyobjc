@@ -247,26 +247,33 @@ def install_distribute(flavour, version, archs):
     lg = logging.getLogger("install_distribute")
     lg.debug("Installing distribute")
 
-    distribute='distribute-0.6.15'
+    distribute='distribute-0.6.16'
+
+    # Temporarily use a checkout, the latest release at this time is broken with
+    # recent python3 checkouts.
+    distribute='tarek-distribute-7f58b783778a'
 
     if not os.path.exists(os.path.join(gBaseDir, 'cache')):
         os.mkdir(os.path.join(gBaseDir, 'cache'))
 
-    if not os.path.exists(os.path.join(gBaseDir, 'cache', distribute + '.tar.gz')):
-        lg.warning("Downloading %s from PyPI"%(distribute,))
-        url = 'http://pypi.python.org/packages/source/d/distribute/' + distribute + '.tar.gz'
-        fp = urlopen(url)
-        data = fp.read()
-        fp.close()
+    archivefn = os.path.join(gBaseDir, 'cache', distribute + '.tar.bz2')
+    if not os.path.exists(archivefn):
+        archivefn = os.path.exists(os.path.join(gBaseDir, 'cache', distribute + '.tar.gz'))
+        if not os.path.exists(archivefn):
+            lg.warning("Downloading %s from PyPI"%(distribute,))
+            url = 'http://pypi.python.org/packages/source/d/distribute/' + distribute + '.tar.gz'
+            fp = urlopen(url)
+            data = fp.read()
+            fp.close()
 
-        fp = open(os.path.join(gBaseDir, 'cache', distribute + '.tar.gz'), 'wb')
-        fp.write(data)
-        fp.close()
+            fp = open(archivefn, 'wb')
+            fp.write(data)
+            fp.close()
 
     if not os.path.exists(os.path.join(gBaseDir, 'cache', distribute)):
         lg.warning("Unpacking %s archive"%(distribute,))
         shutil.unpack_archive(
-            os.path.join(gBaseDir, 'cache', distribute + '.tar.gz'),
+            archivefn,
             os.path.join(gBaseDir, 'cache'))
 
     distribute_dir = os.path.join(gBaseDir, "cache", distribute)

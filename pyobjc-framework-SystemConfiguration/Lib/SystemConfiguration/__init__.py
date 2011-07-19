@@ -4,17 +4,25 @@ Python mapping for the SystemConfiguration framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import Foundation
+import SystemConfiguration._manual
 
-import objc as _objc
-from Foundation import *
+from SystemConfiguration import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("SystemConfiguration",
-    frameworkIdentifier="com.apple.SystemConfiguration",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/SystemConfiguration.framework"),
-    globals=globals())
+sys.modules['SystemConfiguration'] = mod = objc.ObjCLazyModule('SystemConfiguration',
+    "com.apple.SystemConfiguration",
+    objc.pathForFramework("/System/Library/Frameworks/SystemConfiguration.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( Foundation, SystemConfiguration._manual,))
 
-from SystemConfiguration._manual import *
+import SystemConfiguration._manual as m
+for nm in dir(m):
+   setattr(mod, nm, getattr(m, nm))
 
-SCBondInterfaceRef = SCNetworkInterfaceRef
-SCVLANInterfaceRef = SCNetworkInterfaceRef
+mod.SCBondInterfaceRef = mod.SCNetworkInterfaceRef
+mod.SCVLANInterfaceRef = mod.SCNetworkInterfaceRef
