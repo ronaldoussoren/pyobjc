@@ -5,11 +5,6 @@ from Foundation import NSMutableDictionary
 class TestSCPreferencesPath (TestCase):
 
     def testFunctions(self):
-        try:
-            CFDictionaryRef = objc.lookUpClass('__CFDictionaryRef')
-        except objc.error:
-            CFDictionaryRef = objc.lookUpClass('CFDictionaryRef')
-
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SCPreferencesRef)
 
@@ -22,7 +17,7 @@ class TestSCPreferencesPath (TestCase):
         self.assertIsInstance(v, unicode)
 
         v = SCPreferencesPathGetValue(ref, "/use")
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, NSDictionary)
 
         v = SCPreferencesPathSetValue(ref, "/use", dict(python2=True, python3=True))
         self.assertTrue(v is True)

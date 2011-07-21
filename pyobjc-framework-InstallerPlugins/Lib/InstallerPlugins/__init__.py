@@ -4,12 +4,17 @@ Python mapping for the InstallerPlugins framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import AppKit
 
-import objc as _objc
-from AppKit import *
+from InstallerPlugins import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("InstallerPlugins",
-    frameworkIdentifier="com.apple.InstallerPlugins",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/InstallerPlugins.framework"),
-    globals=globals())
+sys.modules['InstallerPlugins'] = mod = objc.ObjCLazyModule('InstallerPlugins',
+    "com.apple.InstallerPlugins",
+    objc.pathForFramework("/System/Library/Frameworks/InstallerPlugins.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( AppKit,))

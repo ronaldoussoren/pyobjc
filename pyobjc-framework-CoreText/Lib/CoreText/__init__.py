@@ -4,17 +4,23 @@ Python mapping for the CoreText framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import CoreFoundation
+import Quartz
+import CoreText._manual
 
-import objc as _objc
-#import ATS
-from CoreFoundation import *
-import Foundation
-from Quartz import *
+from CoreText import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("CoreText",
-    frameworkIdentifier="com.apple.CoreText",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreText.framework"),
-    globals=globals())
+sys.modules['CoreText'] = mod = objc.ObjCLazyModule('CoreText',
+    "com.apple.CoreText",
+    objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreText.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( CoreFoundation, Quartz, CoreText._manual,))
 
-from CoreText._manual import *
+import CoreText._manual as m
+for nm in dir(m):
+   setattr(mod, nm, getattr(m, nm))

@@ -1,6 +1,7 @@
 ''' 
 Wrappers for the framework "InterfaceBuilderKit" on MacOSX. This framework
-is only available when you've installed Xcode 3.0 or later. 
+is only available when you've installed Xcode 3.x, but not with earlier or
+later releases of Xcode.
 
 The Interface Builder Kit is a framework containing the classes you use to 
 implement custom plug-ins for Interface Builder. A plug-in injects one or 

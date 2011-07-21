@@ -135,6 +135,7 @@ def main():
     emit_cftype(fp, input_tree)
     emit_classes(fp, input_tree)
     emit_informal_protocols(fp, input_tree)
+    emit_null(fp, input_tree)
 
 def rewrite_typecode(value):
     result = []
@@ -142,6 +143,9 @@ def rewrite_typecode(value):
     while value and value[0] in (objc._C_PTR, objc._C_IN, objc._C_INOUT, objc._C_ONEWAY, objc._C_CONST):
         result.append(value[0])
         value = value[1:]
+
+    if not value:
+        return ''.join(result), ''
 
     if value[0] == objc._C_BOOL:
         result.append(objc._C_NSBOOL)
@@ -663,3 +667,12 @@ def emit_informal_protocols(fp, tree):
 
     if protocols:
         fp.write('protocols=%s\n'%(protocols))
+
+def emit_null(fp, tree):
+    values = {}
+    for node in tree.findall('.//null_const'):
+        name = node.get('name')
+        values[name] = None
+
+    if values:
+        fp.write('misc.update(%r)'%(values,))
