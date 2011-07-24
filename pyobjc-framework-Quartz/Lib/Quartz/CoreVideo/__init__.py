@@ -4,16 +4,19 @@ Python mapping for the CoreVideo framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import CoreFoundation
 
-import objc as _objc
-from CoreFoundation import *
+from Quartz.CoreVideo import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("CoreVideo",
-    frameworkIdentifier="com.apple.CoreVideo",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/CoreVideo.framework"),
-    globals=globals(),
-    frameworkResourceName="Quartz.CoreVideo",
-    scan_classes=False) 
+sys.modules['Quartz.CoreVideo'] = mod = objc.ObjCLazyModule('Quartz.CoreVideo',
+    "com.apple.CoreVideo",
+    objc.pathForFramework("/System/Library/Frameworks/CoreVideo.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( CoreFoundation, ))
 
-from Quartz.CoreVideo._CVPixelBuffer import *
+import Quartz.CoreVideo._CVPixelBuffer

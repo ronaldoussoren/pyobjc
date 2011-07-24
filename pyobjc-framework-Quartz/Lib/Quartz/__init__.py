@@ -1,43 +1,75 @@
 """
 Helper module that makes it easier to import all of Quartz
 """
+import sys
+import objc
+import Foundation
+import AppKit
 
-try:
-    from Quartz.CoreGraphics import *
-except ImportError:
-    pass
+def _load():
+    submods = []
+    sys.modules['Quartz'] = mod = objc.ObjCLazyModule('Quartz', 
+            None, None, {}, None, {
+                '__doc__': __doc__,
+                'objc': objc,
+                '__path__': __path__,
+            }, submods)
 
-try:
-    from Quartz.ImageIO import *
-except ImportError:
-    pass
 
-try:
-    from Quartz.CoreVideo import *
-except ImportError:
-    pass
+    try:
+        from Quartz import CoreGraphics as m
+        submods.append(m)
+        mod.CoreGraphics = m
+    except ImportError:
+        pass
 
-try:
-    from Quartz.QuartzCore import *
-except ImportError:
-    pass
+    try:
+        from Quartz import ImageIO as m
+        submods.append(m)
+        mod.ImageIO = m
+    except ImportError:
+        pass
 
-try:
-    from Quartz.ImageKit import *
-except ImportError:
-    pass
+    try:
+        from Quartz import CoreVideo as m
+        submods.append(m)
+        mod.CoreVideo = m
+    except ImportError:
+        pass
 
-try:
-    from Quartz.PDFKit import *
-except ImportError:
-    pass
+    try:
+        from Quartz import QuartzCore as m
+        submods.append(m)
+        mod.QuartCore = m
+    except ImportError:
+        pass
 
-try:
-    from Quartz.QuartzFilters import *
-except ImportError:
-    pass
+    try:
+        from Quartz import ImageIO as m
+        submods.append(m)
+        mod.ImageIO = m
+    except ImportError:
+        pass
 
-try:
-    from Quartz.QuickLookUI import *
-except ImportError, msg:
-    pass
+    try:
+        from Quartz import PDFKit as m
+        submods.append(m)
+        mod.PDFKit = m
+    except ImportError:
+        pass
+
+    try:
+        from Quartz import QuartzFilters as m
+        submods.append(m)
+        mod.QuartzFilters = m
+    except ImportError:
+        pass
+
+    try:
+        from Quartz import QuickLookUI as m
+        submods.append(m)
+        mod.QuickLookUI = m
+    except ImportError:
+        pass
+
+_load()

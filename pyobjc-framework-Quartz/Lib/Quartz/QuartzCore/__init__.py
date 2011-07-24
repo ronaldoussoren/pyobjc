@@ -4,15 +4,18 @@ Python mapping for the QuartzCore framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import Quartz.CoreVideo
+import Foundation
 
-import objc as _objc
-#from Quartz.CoreVideo import *
-from Foundation import *
+from Quartz.QuartzCore import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("QuartzCore",
-    frameworkIdentifier="com.apple.QuartzCore",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/QuartzCore.framework"),
-    frameworkResourceName="Quartz.QuartzCore",
-    globals=globals())
-
+sys.modules['Quartz.QuartzCore'] = mod = objc.ObjCLazyModule('Quartz.QuartzCore',
+    "com.apple.QuartzCore",
+    objc.pathForFramework("/System/Library/Frameworks/QuartzCore.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( Quartz.CoreVideo, Foundation,))

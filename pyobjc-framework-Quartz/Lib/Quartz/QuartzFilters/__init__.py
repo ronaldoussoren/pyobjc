@@ -4,14 +4,17 @@ Python mapping for the QuartzCore framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes. 
 '''
+import sys
+import objc
+import Foundation
 
-import objc as _objc
-from Foundation import *
+from Quartz.QuartzFilters import _metadata
 
-__bundle__ = _objc.initFrameworkWrapper("QuartFilters",
-    frameworkIdentifier="com.apple.quartzfilters",
-    frameworkPath=_objc.pathForFramework(
-        "/System/Library/Frameworks/Quartz.framework/Frameworks/QuartzFilters.framework"),
-    frameworkResourceName="Quartz.QuartzFilters",
-    globals=globals())
-
+sys.modules['Quartz.QuartzFilters'] = mod = objc.ObjCLazyModule('Quartz.QuartzFilters',
+    "com.apple.quartzfilters",
+    objc.pathForFramework("/System/Library/Frameworks/Quartz.framework/Frameworks/QuartzFilters.framework"),
+    _metadata.__dict__, None, {
+       '__doc__': __doc__,
+       '__path__': __path__,
+       'objc': objc,
+    }, ( Foundation,))
