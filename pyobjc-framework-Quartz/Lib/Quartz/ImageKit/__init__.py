@@ -7,7 +7,6 @@ documentation for details on how to use these functions and classes.
 import sys
 import objc
 import Cocoa
-import Quartz.QuartzCore
 
 from Quartz.ImageKit import _metadata
 
@@ -18,4 +17,4 @@ sys.modules['Quartz.ImageKit'] = mod = objc.ObjCLazyModule('Quartz.ImageKit',
        '__doc__': __doc__,
        '__path__': __path__,
        'objc': objc,
-    }, ( Cocoa, Quartz.QuartzCore,))
+    }, ( Cocoa, ))

@@ -19,4 +19,10 @@ sys.modules['Quartz.CoreVideo'] = mod = objc.ObjCLazyModule('Quartz.CoreVideo',
        'objc': objc,
     }, ( CoreFoundation, ))
 
-import Quartz.CoreVideo._CVPixelBuffer
+def _load(mod):
+    import Quartz
+    Quartz.CoreVideo = mod
+    import Quartz.CoreVideo._CVPixelBuffer as m
+    for nm in dir(m):
+        setattr(mod, nm, getattr(m, nm))
+_load(mod)

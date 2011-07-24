@@ -7,7 +7,6 @@ documentation for details on how to use these functions and classes.
 import sys
 import objc
 import Cocoa
-#import QuickLook
 
 from Quartz.QuickLookUI import _metadata
 

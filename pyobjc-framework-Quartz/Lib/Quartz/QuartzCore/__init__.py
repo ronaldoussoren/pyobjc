@@ -6,7 +6,6 @@ documentation for details on how to use these functions and classes.
 '''
 import sys
 import objc
-import Quartz.CoreVideo
 import Foundation
 
 from Quartz.QuartzCore import _metadata
@@ -18,4 +17,4 @@ sys.modules['Quartz.QuartzCore'] = mod = objc.ObjCLazyModule('Quartz.QuartzCore'
        '__doc__': __doc__,
        '__path__': __path__,
        'objc': objc,
-    }, ( Quartz.CoreVideo, Foundation,))
+    }, ( Foundation,))
