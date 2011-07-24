@@ -767,9 +767,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)),
 
 	PyObject* retval = PyObjC_ObjCToPython(
 			@encode(CGDataProviderRef), &result);
-	printf("%s %d\n", __FILE__, __LINE__);
 	CFRelease(result);
-	printf("%s %d\n", __FILE__, __LINE__);
 	return retval;
 }
 

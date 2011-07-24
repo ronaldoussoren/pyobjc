@@ -31,6 +31,13 @@ def _load():
         pass
 
     try:
+        from Quartz import ImageKit as m
+        submods.append(m)
+        mod.ImageIO = m
+    except ImportError:
+        pass
+
+    try:
         from Quartz import CoreVideo as m
         submods.append(m)
         mod.CoreVideo = m

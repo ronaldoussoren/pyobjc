@@ -1,6 +1,6 @@
 # Generated file, don't edit
 # Source: BridgeSupport/ImageIO.bridgesupport
-# Last update: Thu Jul 21 17:06:24 2011
+# Last update: Sun Jul 24 21:38:04 2011
 
 import objc, sys
 

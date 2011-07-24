@@ -275,13 +275,16 @@ def emit_misc(fp, tree):
     fp.write("}\n")
 
 def emit_constants(fp, tree):
-
+    fixed = {}
     fp.write("constants = '''$")
     for node in tree.findall('.//constant'):
         if node.get('ignore', 'false') == 'true':
             continue
         name = node.get("name")
         type = rewrite_typestr(node.get("type", "@"))
+        type64 = node.get("type64", None)
+        if type64 is not None:
+            type64 = rewrite_typestr(type64)
 
         if type[0] == '{':
             _, rest = type.split('=', 1)
@@ -290,7 +293,10 @@ def emit_constants(fp, tree):
                 # other unhandled types
                 continue
 
-        type = rewrite_typestr(type)
+        if type64 is not None and type64 != type:
+            fixed[name] = sel32or64(type, type64)
+            continue
+
 
         if node.get("magic_cookie", "false") == "true":
             type = "=" + type
@@ -303,6 +309,8 @@ def emit_constants(fp, tree):
             fp.write(type)
         fp.write("$")
     fp.write("'''\n")
+    if fixed:
+        fp.write("constants_dict = %r\n"%(fixed,))
 
 
 def emit_enums(fp, tree):

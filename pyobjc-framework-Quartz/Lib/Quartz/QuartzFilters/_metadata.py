@@ -1,6 +1,6 @@
 # Generated file, don't edit
 # Source: BridgeSupport/QuartzFilters.bridgesupport
-# Last update: Thu Jul 21 17:06:27 2011
+# Last update: Sun Jul 24 21:38:05 2011
 
 import objc, sys
 

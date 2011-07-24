@@ -64,6 +64,7 @@ class ObjCLazyModule (module):
         self.__dict__.update(metadict.get('misc', {}))
         self.__parents = parents
         self.__varmap = metadict.get('constants')
+        self.__varmap_dct = metadict.get('constants_dict', {})
         self.__enummap = metadict.get('enums')
         self.__funcmap = metadict.get('functions')
         self.__inlinelist = inline_list
@@ -128,6 +129,13 @@ class ObjCLazyModule (module):
         all = set()
 
         # Ensure that all dynamic entries get loaded
+        if self.__varmap_dct:
+            for nm in self.__varmap_dct:
+                try:
+                    getattr(self, nm)
+                except AttributeError:
+                    pass
+
         if self.__varmap:
             for nm in re.findall(r"\$([A-Z0-9a-z_]*)(?:@[^$]*)?(?=\$)", self.__varmap):
                 try:
@@ -169,6 +177,11 @@ class ObjCLazyModule (module):
         # FIXME: Loading variables and functions requires too much
         # code at the moment, the objc API can be adjusted for
         # this later on.
+        if self.__varmap_dct:
+            if name in self.__varmap_dct:
+                tp = self.__varmap_dct[name]
+                return objc._loadConstant(name, tp, False)
+
         if self.__varmap:
             m = re.search(r"\$%s(@[^$]*)?\$"%(name,), self.__varmap)
             if m is not None:

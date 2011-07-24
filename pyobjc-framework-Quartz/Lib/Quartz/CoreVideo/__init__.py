@@ -24,5 +24,6 @@ def _load(mod):
     Quartz.CoreVideo = mod
     import Quartz.CoreVideo._CVPixelBuffer as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
 _load(mod)

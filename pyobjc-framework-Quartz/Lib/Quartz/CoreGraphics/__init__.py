@@ -28,18 +28,23 @@ def _load(mod):
 
     import Quartz.CoreGraphics._callbacks as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
     import Quartz.CoreGraphics._doubleindirect as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
     import Quartz.CoreGraphics._sortandmap as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
     import Quartz.CoreGraphics._coregraphics as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
     import Quartz.CoreGraphics._contextmanager as m
     for nm in dir(m):
+        if nm.startswith('_'): continue
         setattr(mod, nm, getattr(m, nm))
 
     mod.setCGPathElement(mod.CGPathElement)

@@ -1,6 +1,6 @@
 # Generated file, don't edit
 # Source: BridgeSupport/QuickLookUI.bridgesupport
-# Last update: Thu Jul 21 17:06:28 2011
+# Last update: Sun Jul 24 21:38:06 2011
 
 import objc, sys
 
