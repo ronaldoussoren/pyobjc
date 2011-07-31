@@ -21,6 +21,8 @@ class TestCalCalendarStore (TestCase):
         self.assertIsInstance(CalUserUIDKey, unicode)
 
     def testMethods(self):
+        self.assertResultIsBOOL(CalCalendarStore.saveCalendar_error_)
+        self.assertResultIsBOOL(CalCalendarStore.removeCalendar_error_)
         self.assertArgIsOut(CalCalendarStore.saveCalendar_error_, 1)
         self.assertArgIsOut(CalCalendarStore.removeCalendar_error_, 1)
 

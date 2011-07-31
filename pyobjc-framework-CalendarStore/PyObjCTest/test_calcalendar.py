@@ -15,6 +15,8 @@ class TestCalCalendar (TestCase):
     def testConstants10_6(self):
         self.assertIsInstance(CalCalendarTypeExchange, unicode)
 
+    def testMethods(self):
+        self.assertResultIsBOOL(CalCalendar.isEditable)
 
 
 if __name__ == "__main__":

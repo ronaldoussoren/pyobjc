@@ -98,5 +98,10 @@
       <arg index='0' type='B' />
     </method>
   </class>
+  <class name='CalCalendar'>
+    <method selector='isEditable'>
+      <retval type='B' />
+    </method>
+  </class>
 </signatures>
 
