@@ -18,5 +18,11 @@ class TestAMAction (TestCase):
         self.assertArgIsOut(AMAction.runWithInput_fromAction_error_, 2)
         self.assertResultIsBOOL(AMAction.isStopped)
 
+    def testConstants(self):
+        self.assertEqual(AMLogLevelDebug, 0)
+        self.assertEqual(AMLogLevelInfo, 1)
+        self.assertEqual(AMLogLevelWarn, 2)
+        self.assertEqual(AMLogLevelError, 3)
+
 if __name__ == "__main__":
     main()
