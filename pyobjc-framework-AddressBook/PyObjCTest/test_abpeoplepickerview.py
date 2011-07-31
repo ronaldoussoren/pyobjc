@@ -18,5 +18,15 @@ class TestABPeoplePickerView (TestCase):
         self.assertArgIsBOOL(ABPeoplePickerView.selectRecord_byExtendingSelection_, 1)
         self.assertArgIsBOOL(ABPeoplePickerView.selectIdentifier_forPerson_byExtendingSelection_, 2)
 
+        self.assertResultIsBOOL(ABPeoplePickerView.allowsGroupSelection)
+        self.assertArgIsBOOL(ABPeoplePickerView.setAllowsGroupSelection_, 0)
+        self.assertResultIsBOOL(ABPeoplePickerView.allowsMultipleSelection)
+        self.assertArgIsBOOL(ABPeoplePickerView.setAllowsMultipleSelection_, 0)
+
+        self.assertArgIsSEL(ABPeoplePickerView.setGroupDoubleAction_, 0, 'v@:@')
+        self.assertArgIsSEL(ABPeoplePickerView.setNameDoubleAction_, 0, 'v@:@')
+
+
+
 if __name__ == "__main__":
     main()

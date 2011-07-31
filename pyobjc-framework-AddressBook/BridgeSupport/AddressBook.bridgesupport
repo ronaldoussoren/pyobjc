@@ -12,6 +12,9 @@
   <cftype name='ABPersonRef' tollfree='ABPerson' type='^{__ABPerson=}' type64='^{__ABPerson=}' />
   <cftype name='ABPickerRef' tollfree='ABPeoplePickerView' type='^{OpaqueABPicker=}' type64='^{OpaqueABPicker=}' />
   <cftype name='ABSearchElementRef' tollfree='ABSearchElement' type='^{__ABSearchElementRef=}' type64='^{__ABSearchElementRef=}' />
+  <constant name='kABEmailMobileMeLabel' type='@' />
+  <constant name='kABBirthdayComponentsProperty' type='@' />
+  <constant name='kABOtherDateComponentsProperty' type='@' />
   <constant name='ABPeoplePickerDisplayedPropertyDidChangeNotification' type='@' />
   <constant name='ABPeoplePickerGroupSelectionDidChangeNotification' type='@' />
   <constant name='ABPeoplePickerNameSelectionDidChangeNotification' type='@' />
@@ -29,6 +32,7 @@
   <constant name='kABAddressWorkLabel' type='@' />
   <constant name='kABAddressZIPKey' type='@' />
   <constant name='kABAnniversaryLabel' type='@' />
+  <constant name='kABAIMMobileMeLabel' type='@' />
   <constant name='kABAssistantLabel' type='@' />
   <constant name='kABBirthdayProperty' type='@' />
   <constant name='kABBrotherLabel' type='@' />
@@ -57,7 +61,33 @@
   <constant name='kABInsertedRecords' type='@' />
   <constant name='kABJabberHomeLabel' type='@' />
   <constant name='kABJabberInstantProperty' type='@' />
+  <constant name='kABBirthdayComponentsProperty' type='@' />
+  <constant name='kABOtherDateComponentsProperty' type='@' />
+  <constant name='kABInstantMessageProperty' type='@' />
+  <constant name='kABInstantMessageUsernameKey' type='@' />
+  <constant name='kABInstantMessageServiceKey' type='@' />
+  <constant name='kABInstantMessageServiceAIM' type='@' />
+  <constant name='kABInstantMessageServiceFacebook' type='@' />
+  <constant name='kABInstantMessageServiceGaduGadu' type='@' />
+  <constant name='kABInstantMessageServiceGoogleTalk' type='@' />
+  <constant name='kABInstantMessageServiceICQ' type='@' />
+  <constant name='kABInstantMessageServiceJabber' type='@' />
+  <constant name='kABInstantMessageServiceMSN' type='@' />
+  <constant name='kABInstantMessageServiceQQ' type='@' />
+  <constant name='kABInstantMessageServiceSkype' type='@' />
+  <constant name='kABInstantMessageServiceYahoo' type='@' />
+  <constant name='kABSocialProfileProperty' type='@' />
+  <constant name='kABSocialProfileURLKey' type='@' />
+  <constant name='kABSocialProfileUsernameKey' type='@' />
+  <constant name='kABSocialProfileUserIdentifierKey' type='@' />
+  <constant name='kABSocialProfileServiceKey' type='@' />
+  <constant name='kABSocialProfileServiceTwitter' type='@' />
+  <constant name='kABSocialProfileServiceFacebook' type='@' />
+  <constant name='kABSocialProfileServiceLinkedIn' type='@' />
+  <constant name='kABSocialProfileServiceFlickr' type='@' />
+  <constant name='kABSocialProfileServiceMySpace' type='@' />
   <constant name='kABJabberWorkLabel' type='@' />
+  <constant name='kABMobileMeLabel' type='@' />
   <constant name='kABJobTitleProperty' type='@' />
   <constant name='kABLastNamePhoneticProperty' type='@' />
   <constant name='kABLastNameProperty' type='@' />
@@ -100,6 +130,14 @@
   <constant name='kABYahooHomeLabel' type='@' />
   <constant name='kABYahooInstantProperty' type='@' />
   <constant name='kABYahooWorkLabel' type='@' />
+  <constant name='ABAddressBookErrorDomain' type='@' />
+  <constant name='ABMultiValueIdentifiersErrorKey' type='@' />
+  <enum name='kABDateComponentsProperty' value='8' />
+  <enum name='ABAddRecordsError' value='1001' />
+  <enum name='ABRemoveRecordsError' value='1002' />
+  <enum name='ABPropertyValueValidationError' value='1012' />
+  <enum name='ABPropertyUnsupportedBySourceError' value='1013' />
+  <enum name='ABPropertyReadOnlyError' value='1014' />
   <enum name='ABMultipleValueSelection' value='2' />
   <enum name='kABShowAsResource' value='2' />
   <enum name='kABShowAsRoom' value='3' />
@@ -131,6 +169,7 @@
   <enum name='kABMultiArrayProperty' value='261' />
   <enum name='kABMultiDataProperty' value='263' />
   <enum name='kABMultiDateProperty' value='260' />
+  <enum name='kABMultiDateComponentsProperty' value='264' />
   <enum name='kABMultiDictionaryProperty' value='262' />
   <enum name='kABMultiIntegerProperty' value='258' />
   <enum name='kABMultiRealProperty' value='259' />
@@ -628,11 +667,19 @@
     <method selector='addRecord:'>
       <retval type='B' />
     </method>
+    <method selector='addRecord:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
+    </method>
     <method selector='hasUnsavedChanges'>
       <retval type='B' />
     </method>
     <method selector='removeRecord:'>
       <retval type='B' />
+    </method>
+    <method selector='removeRecord:error:'>
+      <retval type='B' />
+      <arg index='1' type_modifier='o' />
     </method>
     <method selector='save'>
       <retval type='B' />
@@ -717,6 +764,10 @@
     <method selector='setValue:forProperty:'>
       <retval type='B' />
     </method>
+    <method selector='setValue:forProperty:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
+    </method>
   </class>
   <class name='ABSearchElement'>
     <method selector='matchesRecord:'>
@@ -726,6 +777,14 @@
   <class name='NSObject'>
     <method selector='shouldEnableActionForPerson:identifier:'>
       <retval type='B' />
+    </method>
+  </class>
+  <class name='ABPersonView'>
+    <method selector='editing'>
+      <retval type='B' />
+    </method>
+    <method selector='setEditing:'>
+      <arg index='0' type='B' />
     </method>
   </class>
 </signatures>

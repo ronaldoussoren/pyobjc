@@ -3,15 +3,49 @@ from PyObjCTools.TestSupport import *
 from AddressBook import *
 
 class TestABGlobals (TestCase):
-    @min_os_level('10.5')
-    def testConstants10_5(self):
-          self.assertIsInstance(kABCalendarURIsProperty, unicode)
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kABMobileMeLabel, unicode)
+        self.assertIsInstance(kABBirthdayComponentsProperty, unicode)
+        self.assertIsInstance(kABOtherDateComponentsProperty, unicode)
+        self.assertIsInstance(kABInstantMessageProperty, unicode)
+        self.assertIsInstance(kABInstantMessageUsernameKey, unicode)
+        self.assertIsInstance(kABInstantMessageServiceKey, unicode)
+        self.assertIsInstance(kABInstantMessageServiceAIM, unicode)
+        self.assertIsInstance(kABInstantMessageServiceFacebook, unicode)
+        self.assertIsInstance(kABInstantMessageServiceGaduGadu, unicode)
+        self.assertIsInstance(kABInstantMessageServiceGoogleTalk, unicode)
+        self.assertIsInstance(kABInstantMessageServiceICQ, unicode)
+        self.assertIsInstance(kABInstantMessageServiceJabber, unicode)
+        self.assertIsInstance(kABInstantMessageServiceMSN, unicode)
+        self.assertIsInstance(kABInstantMessageServiceQQ, unicode)
+        self.assertIsInstance(kABInstantMessageServiceSkype, unicode)
+        self.assertIsInstance(kABInstantMessageServiceYahoo, unicode)
+        self.assertIsInstance(kABSocialProfileProperty, unicode)
+        self.assertIsInstance(kABSocialProfileURLKey, unicode)
+        self.assertIsInstance(kABSocialProfileUsernameKey, unicode)
+        self.assertIsInstance(kABSocialProfileUserIdentifierKey, unicode)
+        self.assertIsInstance(kABSocialProfileServiceKey, unicode)
+        self.assertIsInstance(kABSocialProfileServiceTwitter, unicode)
+        self.assertIsInstance(kABSocialProfileServiceFacebook, unicode)
+        self.assertIsInstance(kABSocialProfileServiceLinkedIn, unicode)
+        self.assertIsInstance(kABSocialProfileServiceFlickr, unicode)
+        self.assertIsInstance(kABSocialProfileServiceMySpace, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
           self.assertIsInstance(kABPhoneiPhoneLabel, unicode)
           self.assertEqual(kABShowAsResource, 2)
           self.assertEqual(kABShowAsRoom, 3)
+
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+          self.assertIsInstance(kABCalendarURIsProperty, unicode)
+
+    @expectedFailure
+    def testConstants_10_7_broken(self):
+        self.assertIsInstance(kABEmailMobileMeLabel, unicode)
+        self.assertIsInstance(kABAIMMobileMeLabel, unicode)
 
     def testConstants(self):
         self.assertEqual(kABShowAsMask, 07)
@@ -33,6 +67,7 @@ class TestABGlobals (TestCase):
         self.assertIsInstance(kABNicknameProperty, unicode)
         self.assertIsInstance(kABMaidenNameProperty, unicode)
         self.assertIsInstance(kABBirthdayProperty, unicode)
+
         self.assertIsInstance(kABOrganizationProperty, unicode)
         self.assertIsInstance(kABJobTitleProperty, unicode)
         self.assertIsInstance(kABHomePageProperty, unicode)
