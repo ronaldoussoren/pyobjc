@@ -7,11 +7,20 @@ if sys.version_info[0] != 2:
         return value.encode('latin1')
 
 class TestCFHTTPMessage (TestCase):
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)
+        self.assertIsInstance(kCFHTTPAuthenticationSchemeXMobileMeAuthToken, unicode)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
+
+    @expectedFailure
+    @min_os_level('10.5')
+    def testConstants10_5_failure(self):
+        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
 
     def testConstants(self):
         self.assertIsInstance(kCFHTTPVersion1_0, unicode)
@@ -113,9 +122,3 @@ class TestCFHTTPMessage (TestCase):
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-

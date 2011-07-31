@@ -3,6 +3,14 @@ from CFNetwork import *
 
 
 class TestCFSocketStream (TestCase):
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCFStreamNetworkServiceType, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeVoIP, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeVideo, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeBackground, unicode)
+        self.assertIsInstance(kCFStreamNetworkServiceTypeVoice, unicode)
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCFStreamPropertySSLPeerTrust, unicode)
@@ -37,6 +45,7 @@ class TestCFSocketStream (TestCase):
         self.assertEqual(kCFStreamErrorSOCKS4IdConflict, 93)
         self.assertEqual(kSOCKS5NoAcceptableMethod, 0xFF)
 
+        self.assertIsInstance(kCFStreamPropertySOCKSProxy, unicode)
         self.assertIsInstance(kCFStreamPropertySOCKSProxyHost, unicode)
         self.assertIsInstance(kCFStreamPropertySOCKSProxyPort, unicode)
         self.assertIsInstance(kCFStreamPropertySOCKSVersion, unicode)

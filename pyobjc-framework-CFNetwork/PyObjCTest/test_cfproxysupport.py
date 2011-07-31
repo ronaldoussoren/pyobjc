@@ -95,10 +95,18 @@ class TestCFProxySupport (TestCase):
             self.assertIsInstance(lst[0][2], CFErrorRef)
 
 
-        
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCFProxyAutoConfigurationJavaScriptKey, unicode)
+        self.assertIsInstance(kCFProxyTypeAutoConfigurationJavaScript, unicode)
+
+    @expectedFailure
+    @min_os_level('10.7')
+    def testConstants10_7_failure(self):
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigJavaScript, unicode)
 
     @min_os_level('10.5')
-    def testConstants(self):
+    def testConstants10_5(self):
         self.assertIsInstance(kCFProxyTypeKey, unicode)
         self.assertIsInstance(kCFProxyHostNameKey, unicode)
         self.assertIsInstance(kCFProxyPortNumberKey, unicode)
@@ -114,8 +122,6 @@ class TestCFProxySupport (TestCase):
         self.assertIsInstance(kCFNetworkProxiesHTTPEnable, unicode)
         self.assertIsInstance(kCFNetworkProxiesHTTPPort, unicode)
         self.assertIsInstance(kCFNetworkProxiesHTTPProxy, unicode)
-        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
-        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
 
     @expectedFailure
     @min_os_level('10.5')
@@ -148,6 +154,9 @@ class TestCFProxySupport (TestCase):
         self.assertIsInstance(kCFNetworkProxiesSOCKSEnable, unicode)
         self.assertIsInstance(kCFNetworkProxiesSOCKSPort, unicode)
         self.assertIsInstance(kCFNetworkProxiesSOCKSProxy, unicode)
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
+        self.assertIsInstance(kCFNetworkProxiesProxyAutoDiscoveryEnable, unicode)
 
 
 

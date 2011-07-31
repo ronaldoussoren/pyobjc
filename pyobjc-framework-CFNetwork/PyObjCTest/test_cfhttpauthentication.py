@@ -70,7 +70,7 @@ class TestCFFTPStream (TestCase):
             self.assertIsInstance(err, CFStreamError)
 
         self.assertResultIsCFRetained(CFHTTPAuthenticationCopyRealm)
-        self.assertResultHasType(CFHTTPAuthenticationCopyRealm, b'^{__CFString=}')
+        self.assertResultHasType(CFHTTPAuthenticationCopyRealm, b'@')
         v = CFHTTPAuthenticationCopyRealm(ref)
         self.assertTrue(v is None or isinstance(v, unicode))
 
@@ -80,7 +80,7 @@ class TestCFFTPStream (TestCase):
         self.assertTrue(v is None or isinstance(v, CFArrayRef))
 
         self.assertResultIsCFRetained(CFHTTPAuthenticationCopyMethod)
-        self.assertResultHasType(CFHTTPAuthenticationCopyMethod, b'^{__CFString=}')
+        self.assertResultHasType(CFHTTPAuthenticationCopyMethod, b'@')
         v = CFHTTPAuthenticationCopyMethod(ref)
         self.assertTrue(v is None or isinstance(v, unicode))
 

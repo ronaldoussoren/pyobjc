@@ -8,6 +8,8 @@ class TestCFHTTPStream (TestCase):
         self.assertIsInstance(kCFStreamPropertyHTTPFinalRequest, unicode)
 
     def testConstants(self):
+        self.assertIsInstance(kCFStreamErrorDomainHTTP, (int, long))
+
         self.assertEqual(kCFStreamErrorHTTPParseFailure, -1)
         self.assertEqual(kCFStreamErrorHTTPRedirectionLoop, -2)
         self.assertEqual(kCFStreamErrorHTTPBadURL, -3)

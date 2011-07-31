@@ -1,5 +1,11 @@
 from CFNetwork import *
+import Foundation
+import sys
 from PyObjCTools.TestSupport import *
+
+if sys.version_info[0] != 2:
+    def buffer(value):
+        return value.encode('latin1')
 
 
 class TestCFNetServices (TestCase):
@@ -59,6 +65,65 @@ class TestCFNetServices (TestCase):
             self.assertEqual(err, None)
         else:
             self.assertIsInstance(err, CFStreamError)
+
+        self.assertResultIsBOOL(CFNetServiceResolveWithTimeout)
+        self.assertArgIsOut(CFNetServiceResolveWithTimeout, 2)
+        ok, err = CFNetServiceResolveWithTimeout(serv, 1.0, None)
+        self.assertIsInstance(ok, bool)
+        if ok:
+            self.assertEqual(err, None)
+        else:
+            self.assertIsInstance(err, CFStreamError)
+
+        host = CFNetServiceGetTargetHost(serv)
+        self.assertIsInstance(host, (unicode, type(None)))
+
+        port = CFNetServiceGetPortNumber(serv)
+        self.assertIsInstance(port, (int, long))
+
+        v = CFNetServiceGetAddressing(serv)
+        self.assertIsInstance(v, (Foundation.NSArray, type(None)))
+
+        v = CFNetServiceGetTXTData(serv)
+        self.assertIsInstance(v, (Foundation.NSData, type(None)))
+
+        v = CFNetServiceCreateTXTDataWithDictionary(None, {'key': 'value', 'key2': 'value2'})
+        self.assertIsInstance(v, Foundation.NSData)
+
+        v = CFNetServiceCreateDictionaryWithTXTData(None, v)
+        self.assertIsInstance(v, Foundation.NSDictionary)
+
+        self.assertResultIsBOOL(CFNetServiceSetTXTData)
+        ok = CFNetServiceSetTXTData(serv, buffer("hello"))
+        self.assertIsInstance(ok, bool)
+
+        rl = CFRunLoopGetCurrent()
+        CFNetServiceScheduleWithRunLoop(serv, rl, kCFRunLoopDefaultMode)
+        CFNetServiceUnscheduleFromRunLoop(serv, rl, kCFRunLoopDefaultMode)
+
+        CFNetServiceCancel(serv)
+
+    @expectedFailure
+    def testMissingTests(self):
+        self.fail("CFNetServiceSetClient")
+        self.fail("CFNetServiceMonitorCreate")
+        self.fail("CFNetServiceMonitorInvalidate")
+        self.fail("CFNetServiceMonitorStart")
+        self.fail("CFNetServiceMonitorStop")
+        self.fail("CFNetServiceMonitorScheduleWithRunLoop")
+        self.fail("CFNetServiceMonitorUnscheduleFromRunLoop")
+        self.fail("CFNetServiceBrowserCreate")
+        self.fail("CFNetServiceBrowserInvalidate")
+        self.fail("CFNetServiceBrowserSearchForDomains")
+        self.fail("CFNetServiceBrowserSearchForServices")
+        self.fail("CFNetServiceBrowserStopSearch")
+        self.fail("CFNetServiceBrowserScheduleWithRunLoop")
+        self.fail("CFNetServiceBrowserUnscheduleFromRunLoop")
+        self.fail("CFNetServiceRegister")
+        self.fail("CFNetServiceResolve")
+        self.fail("CFNetServiceGetProtocolSpecificInformation")
+        self.fail("CFNetServiceSetProtocolSpecificInformation")
+        
 
 
 if __name__ == "__main__":

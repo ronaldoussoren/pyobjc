@@ -14,6 +14,8 @@ class TestCFNetwork (TestCase):
         self.assertIsInstance(kCFSOCKSNegotiationMethodKey, unicode)
         self.assertIsInstance(kCFDNSServiceFailureKey, unicode)
         self.assertIsInstance(kCFFTPStatusCodeKey, unicode)
+        self.assertIsInstance(kCFURLErrorFailingURLErrorKey, unicode)
+        self.assertIsInstance(kCFURLErrorFailingURLStringErrorKey, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -66,8 +68,6 @@ class TestCFNetwork (TestCase):
         self.assertEqual(kCFURLErrorDownloadDecodingFailedToComplete, -3007)
         self.assertEqual(kCFHTTPCookieCannotParseCookieFile, -4000)
 
-        self.assertIsInstance(kCFURLErrorFailingURLErrorKey, unicode)
-        self.assertIsInstance(kCFURLErrorFailingURLStringErrorKey, unicode)
 
 
     def testConstants(self):

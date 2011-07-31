@@ -30,6 +30,7 @@
   <constant name='kCFNetworkProxiesGopherPort' type='@' />
   <constant name='kCFNetworkProxiesGopherProxy' type='@' />
   <constant name='kCFProxyAutoConfigurationHTTPResponseKey' type='@' />
+  <constant name='kCFProxyAutoConfigurationJavaScriptKey' type='@' />
   <constant name='kCFURLErrorFailingURLErrorKey' type='@' />
   <constant name='kCFURLErrorFailingURLStringErrorKey' type='@' />
   <constant name='kCFStreamErrorDomainMach' type='i' />
@@ -40,114 +41,125 @@
   <constant name='kCFStreamErrorDomainNetDB' type='i' />
   <constant name='kCFStreamErrorDomainSystemConfiguration' type='i' />
   <constant name='kCFStreamErrorDomainNetServices' type='i' />
-  <constant name='kCFProxyTypeKey' type='^{__CFString=}' />
-  <constant name='kCFProxyHostNameKey' type='^{__CFString=}' />
-  <constant name='kCFProxyPortNumberKey' type='^{__CFString=}' />
-  <constant name='kCFProxyAutoConfigurationURLKey' type='^{__CFString=}' />
-  <constant name='kCFProxyUsernameKey' type='^{__CFString=}' />
-  <constant name='kCFProxyPasswordKey' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeNone' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeHTTP' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeHTTPS' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeSOCKS' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeFTP' type='^{__CFString=}' />
-  <constant name='kCFProxyTypeAutoConfigurationURL' type='^{__CFString=}' />
-  <constant name='kCFNetworkProxiesHTTPEnable' type='^{__CFString=}' />
-  <constant name='kCFNetworkProxiesHTTPPort' type='^{__CFString=}' />
-  <constant name='kCFNetworkProxiesHTTPProxy' type='^{__CFString=}' />
-  <constant name='kCFNetworkProxiesProxyAutoConfigEnable' type='^{__CFString=}' />
-  <constant name='kCFNetworkProxiesProxyAutoConfigURLString' type='^{__CFString=}' />
-  <constant name='kCFErrorDomainCFNetwork' type='^{__CFString=}' />
-  <constant name='kCFErrorDomainWinSock' type='^{__CFString=}' />
-  <constant name='kCFGetAddrInfoFailureKey' type='^{__CFString=}' />
-  <constant name='kCFSOCKSStatusCodeKey' type='^{__CFString=}' />
-  <constant name='kCFSOCKSVersionKey' type='^{__CFString=}' />
-  <constant name='kCFSOCKSNegotiationMethodKey' type='^{__CFString=}' />
-  <constant name='kCFDNSServiceFailureKey' type='^{__CFString=}' />
-  <constant name='kCFFTPStatusCodeKey' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPResponseHeader' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPFinalURL' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPFinalRequest' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPProxy' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPProxyHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPProxyPort' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPSProxyHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPSProxyPort' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationUsername' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationPassword' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationAccountDomain' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPShouldAutoredirect' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPAttemptPersistentConnection' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyHTTPRequestBytesWrittenCount' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPUserName' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPPassword' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPUsePassiveMode' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPResourceSize' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPFetchResourceInfo' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPFileTransferOffset' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPAttemptPersistentConnection' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPProxy' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPProxyHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPProxyPort' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPProxyUser' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyFTPProxyPassword' type='^{__CFString=}' />
-  <constant name='kCFHTTPVersion1_0' type='^{__CFString=}' />
-  <constant name='kCFHTTPVersion1_1' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationSchemeBasic' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationSchemeDigest' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationSchemeNTLM' type='^{__CFString=}' />
-  <constant name='kCFHTTPAuthenticationSchemeNegotiate' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceMode' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceName' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceOwner' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceGroup' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceLink' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceSize' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceType' type='^{__CFString=}' />
-  <constant name='kCFFTPResourceModDate' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSPassword' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSProxy' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSProxyHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSProxyPort' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSUser' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSVersion' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyShouldCloseNativeSocket' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySocketSecurityLevel' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSOCKSVersion4' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSOCKSVersion5' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelNegotiatedSSL' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelNone' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelSSLv2' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelSSLv3' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelTLSv1' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSProxyHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSProxyPort' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSVersion' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSOCKSVersion4' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSOCKSVersion5' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSUser' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySOCKSPassword' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySocketSecurityLevel' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelNone' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelSSLv2' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelSSLv3' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelTLSv1' type='^{__CFString=}' />
-  <constant name='kCFStreamSocketSecurityLevelNegotiatedSSL' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertyShouldCloseNativeSocket' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySocketRemoteHost' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySocketRemoteNetService' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySSLPeerCertificates' type='^{__CFString=}' />
-  <constant name='kCFStreamPropertySSLSettings' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLLevel' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLAllowsExpiredCertificates' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLAllowsExpiredRoots' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLAllowsAnyRoot' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLValidatesCertificateChain' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLPeerName' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLCertificates' type='^{__CFString=}' />
-  <constant name='kCFStreamSSLIsServer' type='^{__CFString=}' />
+  <constant name='kCFProxyTypeKey' type='@' />
+  <constant name='kCFProxyHostNameKey' type='@' />
+  <constant name='kCFProxyPortNumberKey' type='@' />
+  <constant name='kCFProxyAutoConfigurationURLKey' type='@' />
+  <constant name='kCFProxyUsernameKey' type='@' />
+  <constant name='kCFProxyTypeAutoConfigurationJavaScript' type='@' />
+  <constant name='kCFNetworkProxiesProxyAutoConfigJavaScript' type='@' />
+  <constant name='kCFNetworkProxiesProxyAutoDiscoveryEnable' type='@' />
+  <constant name='kCFProxyPasswordKey' type='@' />
+  <constant name='kCFProxyTypeNone' type='@' />
+  <constant name='kCFProxyTypeHTTP' type='@' />
+  <constant name='kCFProxyTypeHTTPS' type='@' />
+  <constant name='kCFProxyTypeSOCKS' type='@' />
+  <constant name='kCFProxyTypeFTP' type='@' />
+  <constant name='kCFStreamNetworkServiceType' type='@' />
+  <constant name='kCFStreamNetworkServiceTypeVoIP' type='@' />
+  <constant name='kCFStreamNetworkServiceTypeVideo' type='@' />
+  <constant name='kCFStreamNetworkServiceTypeBackground' type='@' />
+  <constant name='kCFStreamNetworkServiceTypeVoice' type='@' />
+  <constant name='kCFProxyTypeAutoConfigurationURL' type='@' />
+  <constant name='kCFNetworkProxiesHTTPEnable' type='@' />
+  <constant name='kCFNetworkProxiesHTTPPort' type='@' />
+  <constant name='kCFNetworkProxiesHTTPProxy' type='@' />
+  <constant name='kCFNetworkProxiesProxyAutoConfigEnable' type='@' />
+  <constant name='kCFNetworkProxiesProxyAutoConfigURLString' type='@' />
+  <constant name='kCFErrorDomainCFNetwork' type='@' />
+  <constant name='kCFErrorDomainWinSock' type='@' />
+  <constant name='kCFGetAddrInfoFailureKey' type='@' />
+  <constant name='kCFSOCKSStatusCodeKey' type='@' />
+  <constant name='kCFSOCKSVersionKey' type='@' />
+  <constant name='kCFSOCKSNegotiationMethodKey' type='@' />
+  <constant name='kCFDNSServiceFailureKey' type='@' />
+  <constant name='kCFFTPStatusCodeKey' type='@' />
+  <constant name='kCFStreamPropertyHTTPResponseHeader' type='@' />
+  <constant name='kCFStreamPropertyHTTPFinalURL' type='@' />
+  <constant name='kCFStreamPropertyHTTPFinalRequest' type='@' />
+  <constant name='kCFStreamPropertyHTTPProxy' type='@' />
+  <constant name='kCFStreamPropertyHTTPProxyHost' type='@' />
+  <constant name='kCFStreamPropertyHTTPProxyPort' type='@' />
+  <constant name='kCFStreamPropertyHTTPSProxyHost' type='@' />
+  <constant name='kCFStreamPropertyHTTPSProxyPort' type='@' />
+  <constant name='kCFHTTPAuthenticationUsername' type='@' />
+  <constant name='kCFHTTPAuthenticationPassword' type='@' />
+  <constant name='kCFHTTPAuthenticationAccountDomain' type='@' />
+  <constant name='kCFStreamPropertyHTTPShouldAutoredirect' type='@' />
+  <constant name='kCFStreamPropertyHTTPAttemptPersistentConnection' type='@' />
+  <constant name='kCFStreamPropertyHTTPRequestBytesWrittenCount' type='@' />
+  <constant name='kCFStreamPropertyFTPUserName' type='@' />
+  <constant name='kCFStreamPropertyFTPPassword' type='@' />
+  <constant name='kCFStreamPropertyFTPUsePassiveMode' type='@' />
+  <constant name='kCFStreamPropertyFTPResourceSize' type='@' />
+  <constant name='kCFStreamPropertyFTPFetchResourceInfo' type='@' />
+  <constant name='kCFStreamPropertyFTPFileTransferOffset' type='@' />
+  <constant name='kCFStreamPropertyFTPAttemptPersistentConnection' type='@' />
+  <constant name='kCFStreamPropertyFTPProxy' type='@' />
+  <constant name='kCFStreamPropertyFTPProxyHost' type='@' />
+  <constant name='kCFStreamPropertyFTPProxyPort' type='@' />
+  <constant name='kCFStreamPropertyFTPProxyUser' type='@' />
+  <constant name='kCFStreamPropertyFTPProxyPassword' type='@' />
+  <constant name='kCFHTTPVersion1_0' type='@' />
+  <constant name='kCFHTTPVersion1_1' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeBasic' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeDigest' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeNTLM' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeNegotiate' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeNegotiate2' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeXMobileMeAuthToken' type='@' />
+  <constant name='kCFHTTPAuthenticationSchemeKerberos' type='@' />
+  <constant name='kCFFTPResourceMode' type='@' />
+  <constant name='kCFFTPResourceName' type='@' />
+  <constant name='kCFFTPResourceOwner' type='@' />
+  <constant name='kCFFTPResourceGroup' type='@' />
+  <constant name='kCFFTPResourceLink' type='@' />
+  <constant name='kCFFTPResourceSize' type='@' />
+  <constant name='kCFFTPResourceType' type='@' />
+  <constant name='kCFFTPResourceModDate' type='@' />
+  <constant name='kCFStreamPropertySOCKSPassword' type='@' />
+  <constant name='kCFStreamPropertySOCKSProxy' type='@' />
+  <constant name='kCFStreamPropertySOCKSProxyHost' type='@' />
+  <constant name='kCFStreamPropertySOCKSProxyPort' type='@' />
+  <constant name='kCFStreamPropertySOCKSUser' type='@' />
+  <constant name='kCFStreamPropertySOCKSVersion' type='@' />
+  <constant name='kCFStreamPropertyShouldCloseNativeSocket' type='@' />
+  <constant name='kCFStreamPropertySocketSecurityLevel' type='@' />
+  <constant name='kCFStreamSocketSOCKSVersion4' type='@' />
+  <constant name='kCFStreamSocketSOCKSVersion5' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelNegotiatedSSL' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelNone' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelSSLv2' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelSSLv3' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelTLSv1' type='@' />
+  <constant name='kCFStreamPropertySOCKSProxyHost' type='@' />
+  <constant name='kCFStreamPropertySOCKSProxyPort' type='@' />
+  <constant name='kCFStreamPropertySOCKSVersion' type='@' />
+  <constant name='kCFStreamSocketSOCKSVersion4' type='@' />
+  <constant name='kCFStreamSocketSOCKSVersion5' type='@' />
+  <constant name='kCFStreamPropertySOCKSUser' type='@' />
+  <constant name='kCFStreamPropertySOCKSPassword' type='@' />
+  <constant name='kCFStreamPropertySocketSecurityLevel' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelNone' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelSSLv2' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelSSLv3' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelTLSv1' type='@' />
+  <constant name='kCFStreamSocketSecurityLevelNegotiatedSSL' type='@' />
+  <constant name='kCFStreamPropertyShouldCloseNativeSocket' type='@' />
+  <constant name='kCFStreamPropertySocketRemoteHost' type='@' />
+  <constant name='kCFStreamPropertySocketRemoteNetService' type='@' />
+  <constant name='kCFStreamPropertySSLPeerCertificates' type='@' />
+  <constant name='kCFStreamPropertySSLSettings' type='@' />
+  <constant name='kCFStreamSSLLevel' type='@' />
+  <constant name='kCFStreamSSLAllowsExpiredCertificates' type='@' />
+  <constant name='kCFStreamSSLAllowsExpiredRoots' type='@' />
+  <constant name='kCFStreamSSLAllowsAnyRoot' type='@' />
+  <constant name='kCFStreamSSLValidatesCertificateChain' type='@' />
+  <constant name='kCFStreamSSLPeerName' type='@' />
+  <constant name='kCFStreamSSLCertificates' type='@' />
+  <constant name='kCFStreamSSLIsServer' type='@' />
   <constant name='kCFStreamErrorDomainWinSock' type='i' />
-  <constant name='kCFStreamPropertyProxyLocalBypass' type='^{__CFString=}' />
+  <constant name='kCFStreamPropertyProxyLocalBypass' type='@' />
   <enum name='kCFErrorHTTPAuthenticationTypeUnsupported' value='300' />
   <enum name='kCFErrorHTTPBadCredentials' value='301' />
   <enum name='kCFErrorHTTPBadProxyCredentials' value='307' />
@@ -294,11 +306,11 @@
     <arg type='^{_CFHTTPAuthentication=}' />
   </function>
   <function name='CFHTTPAuthenticationCopyMethod'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{_CFHTTPAuthentication=}' />
   </function>
   <function name='CFHTTPAuthenticationCopyRealm'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{_CFHTTPAuthentication=}' />
   </function>
   <function name='CFHTTPAuthenticationCreateFromResponse'>
@@ -330,9 +342,9 @@
     <retval type='B' />
     <arg type='^{__CFHTTPMessage=}' />
     <arg type='^{__CFHTTPMessage=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
+    <arg type='@' />
     <arg type='B' />
   </function>
   <function name='CFHTTPMessageAppendBytes'>
@@ -352,8 +364,8 @@
     <retval type='B' />
     <arg type='^{__CFHTTPMessage=}' />
     <arg type='^{_CFHTTPAuthentication=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
     <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFHTTPMessageCopyAllHeaderFields'>
@@ -365,12 +377,12 @@
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCopyHeaderFieldValue'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{__CFHTTPMessage=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFHTTPMessageCopyRequestMethod'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCopyRequestURL'>
@@ -378,7 +390,7 @@
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCopyResponseStatusLine'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCopySerializedMessage'>
@@ -386,7 +398,7 @@
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCopyVersion'>
-    <retval type='^{__CFString=}' already_cfretained='true' />
+    <retval type='@' already_cfretained='true' />
     <arg type='^{__CFHTTPMessage=}' />
   </function>
   <function name='CFHTTPMessageCreateCopy'>
@@ -402,16 +414,16 @@
   <function name='CFHTTPMessageCreateRequest'>
     <retval type='^{__CFHTTPMessage=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
     <arg type='^{__CFURL=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFHTTPMessageCreateResponse'>
     <retval type='^{__CFHTTPMessage=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='l' type64='l' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
   </function>
   <function name='CFHTTPMessageGetResponseStatusCode'>
     <retval type='l' type64='q' />
@@ -434,12 +446,12 @@
   </function>
   <function name='CFHTTPMessageSetHeaderFieldValue'>
     <arg type='^{__CFHTTPMessage=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
   </function>
   <function name='CFHTTPReadStreamSetProxy'>
     <arg type='^{__CFReadStream=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFHTTPReadStreamSetRedirectsAutomatically'>
@@ -463,7 +475,7 @@
   <function name='CFHostCreateWithName'>
     <retval type='^{__CFHost=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFHostGetAddressing'>
     <retval type='^{__CFArray=}' />
@@ -486,7 +498,7 @@
   <function name='CFHostScheduleWithRunLoop'>
     <arg type='^{__CFHost=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFHostSetClient'>
     <retval type='B' />
@@ -503,7 +515,7 @@
   <function name='CFHostUnscheduleFromRunLoop'>
     <arg type='^{__CFHost=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetDiagnosticCopyNetworkStatusPassively'>
     <retval type='l' />
@@ -527,7 +539,7 @@
   </function>
   <function name='CFNetDiagnosticSetName'>
     <arg type='^{__CFNetDiagnostic=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceBrowserCreate'>
     <retval type='^{__CFNetServiceBrowser=}' already_cfretained='true' />
@@ -544,7 +556,7 @@
   <function name='CFNetServiceBrowserScheduleWithRunLoop'>
     <arg type='^{__CFNetServiceBrowser=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceBrowserSearchForDomains'>
     <retval type='B' />
@@ -555,8 +567,8 @@
   <function name='CFNetServiceBrowserSearchForServices'>
     <retval type='B' />
     <arg type='^{__CFNetServiceBrowser=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
     <arg type='^{_CFStreamError=ii}' type64='^{_CFStreamError=qi}' type_modifier='o' />
   </function>
   <function name='CFNetServiceBrowserStopSearch'>
@@ -566,7 +578,7 @@
   <function name='CFNetServiceBrowserUnscheduleFromRunLoop'>
     <arg type='^{__CFNetServiceBrowser=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceCancel'>
     <arg type='^{__CFNetService=}' />
@@ -574,9 +586,9 @@
   <function name='CFNetServiceCreate'>
     <retval type='^{__CFNetService=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
+    <arg type='@' />
+    <arg type='@' />
     <arg type='l' type64='l' />
   </function>
   <function name='CFNetServiceCreateCopy'>
@@ -599,11 +611,11 @@
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetDomain'>
-    <retval type='^{__CFString=}' />
+    <retval type='@' />
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetName'>
-    <retval type='^{__CFString=}' />
+    <retval type='@' />
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetPortNumber'>
@@ -611,7 +623,7 @@
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetProtocolSpecificInformation'>
-    <retval type='^{__CFString=}' />
+    <retval type='@' />
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetTXTData'>
@@ -619,11 +631,11 @@
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetTargetHost'>
-    <retval type='^{__CFString=}' />
+    <retval type='@' />
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetType'>
-    <retval type='^{__CFString=}' />
+    <retval type='@' />
     <arg type='^{__CFNetService=}' />
   </function>
   <function name='CFNetServiceGetTypeID'>
@@ -645,7 +657,7 @@
   <function name='CFNetServiceMonitorScheduleWithRunLoop'>
     <arg type='^{__CFNetServiceMonitor=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceMonitorStart'>
     <retval type='B' />
@@ -660,7 +672,7 @@
   <function name='CFNetServiceMonitorUnscheduleFromRunLoop'>
     <arg type='^{__CFNetServiceMonitor=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceRegister'>
     <retval type='B' />
@@ -687,7 +699,7 @@
   <function name='CFNetServiceScheduleWithRunLoop'>
     <arg type='^{__CFNetService=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceSetClient'>
     <retval type='B' />
@@ -697,7 +709,7 @@
   </function>
   <function name='CFNetServiceSetProtocolSpecificInformation'>
     <arg type='^{__CFNetService=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetServiceSetTXTData'>
     <retval type='B' />
@@ -707,11 +719,11 @@
   <function name='CFNetServiceUnscheduleFromRunLoop'>
     <arg type='^{__CFNetService=}' />
     <arg type='^{__CFRunLoop=}' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
   </function>
   <function name='CFNetworkCopyProxiesForAutoConfigurationScript'>
     <retval type='^{__CFArray=}' already_cfretained='true' />
-    <arg type='^{__CFString=}' />
+    <arg type='@' />
     <arg type='^{__CFURL=}' />
     <arg type='^^{__CFError}' type_modifier='o' />
   </function>
