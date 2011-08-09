@@ -37,6 +37,7 @@ class TestNSGeometry (TestCase):
         self.assertHasAttr(Foundation, 'NSPointToCGPoint')
         self.assertHasAttr(Foundation, 'NSSizeFromCGSize')
         self.assertHasAttr(Foundation, 'NSSizeToCGSize')
+
     def testFunctions(self):
         p1 = NSPoint(1, 2)
         p2 = NSPoint(3, 4)
@@ -123,11 +124,49 @@ class TestNSGeometry (TestCase):
     def testCoderMethods(self):
         self.assertArgHasType(NSCoder.encodePoint_, 0, NSPoint.__typestr__)
         self.assertResultHasType(NSCoder.decodePoint, NSPoint.__typestr__)
+        self.assertArgHasType(NSCoder.encodePoint_forKey_, 0, NSPoint.__typestr__)
+        self.assertResultHasType(NSCoder.decodePointForKey_, NSPoint.__typestr__)
+
         self.assertArgHasType(NSCoder.encodeSize_, 0, NSSize.__typestr__)
         self.assertResultHasType(NSCoder.decodeSize, NSSize.__typestr__)
+        self.assertArgHasType(NSCoder.encodeSize_forKey_, 0, NSSize.__typestr__)
+        self.assertResultHasType(NSCoder.decodeSizeForKey_, NSSize.__typestr__)
+
         self.assertArgHasType(NSCoder.encodeRect_, 0, NSRect.__typestr__)
         self.assertResultHasType(NSCoder.decodeRect, NSRect.__typestr__)
+        self.assertArgHasType(NSCoder.encodeRect_forKey_, 0, NSRect.__typestr__)
+        self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSAlignMinXInward, 1 << 0)
+        self.assertEqual(NSAlignMinYInward, 1 << 1)
+        self.assertEqual(NSAlignMaxXInward, 1 << 2)
+        self.assertEqual(NSAlignMaxYInward, 1 << 3)
+        self.assertEqual(NSAlignWidthInward, 1 << 4)
+        self.assertEqual(NSAlignHeightInward, 1 << 5)
+        self.assertEqual(NSAlignMinXOutward, 1 << 8)
+        self.assertEqual(NSAlignMinYOutward, 1 << 9)
+        self.assertEqual(NSAlignMaxXOutward, 1 << 10)
+        self.assertEqual(NSAlignMaxYOutward, 1 << 11)
+        self.assertEqual(NSAlignWidthOutward, 1 << 12)
+        self.assertEqual(NSAlignHeightOutward, 1 << 13)
+        self.assertEqual(NSAlignMinXNearest, 1 << 16)
+        self.assertEqual(NSAlignMinYNearest, 1 << 17)
+        self.assertEqual(NSAlignMaxXNearest, 1 << 18)
+        self.assertEqual(NSAlignMaxYNearest, 1 << 19)
+        self.assertEqual(NSAlignWidthNearest, 1 << 20)
+        self.assertEqual(NSAlignHeightNearest, 1 << 21)
+        self.assertEqual(NSAlignRectFlipped, 1 << 63)
+        self.assertEqual(NSAlignAllEdgesInward, NSAlignMinXInward|NSAlignMaxXInward|NSAlignMinYInward|NSAlignMaxYInward)
+        self.assertEqual(NSAlignAllEdgesOutward, NSAlignMinXOutward|NSAlignMaxXOutward|NSAlignMinYOutward|NSAlignMaxYOutward)
+        self.assertEqual(NSAlignAllEdgesNearest, NSAlignMinXNearest|NSAlignMaxXNearest|NSAlignMinYNearest|NSAlignMaxYNearest)
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        r2 = NSRect(NSPoint(4.5, 5.5), NSSize(7.5, 8.5))
+        r = NSIntegralRectWithOptions(r2, NSAlignAllEdgesNearest)
+        self.assertIsInstance(r, NSRect)
 
 if __name__ == "__main__":
     main()

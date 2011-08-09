@@ -17,6 +17,7 @@ class TestError (TestCase):
     @min_os_level('10.5')
     def testTypeID(self):
         self.assertIsInstance(CFErrorGetTypeID(), (int, long))
+
     @min_os_level('10.5')
     def testCreation(self):
         userInfo = {
@@ -73,7 +74,6 @@ class TestError (TestCase):
         v = CFErrorCopyRecoverySuggestion(err)
         self.assertEqual(v, u'recovery suggestion')
 
-
     @min_os_level('10.5')
     def testConstants(self):
         self.assertIsInstance(kCFErrorDomainPOSIX, unicode)
@@ -85,5 +85,11 @@ class TestError (TestCase):
         self.assertIsInstance(kCFErrorLocalizedRecoverySuggestionKey, unicode)
         self.assertIsInstance(kCFErrorDescriptionKey, unicode)
         self.assertIsInstance(kCFErrorUnderlyingErrorKey, unicode)
+    
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCFErrorURLKey, unicode)
+        self.assertIsInstance(kCFErrorFilePathKey, unicode)
+
 if __name__ == "__main__":
     main()

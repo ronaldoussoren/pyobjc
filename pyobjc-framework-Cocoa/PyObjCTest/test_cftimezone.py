@@ -12,15 +12,19 @@ class TestTimeZone (TestCase):
     def testTypeID(self):
         id = CFTimeZoneGetTypeID()
         self.assertIsInstance(id, (int, long))
+
     def testSystemZone(self):
         zone = CFTimeZoneCopySystem()
         self.assertIsInstance(zone, CFTimeZoneRef)
+
     def testResetSystem(self):
         v = CFTimeZoneResetSystem()
         self.assertIs(v, None )
+
     def testCopyDefault(self):
         zone = CFTimeZoneCopyDefault()
         self.assertIsInstance(zone, CFTimeZoneRef)
+
     def testNames(self):
         self.assertResultIsCFRetained(CFTimeZoneCopyKnownNames)
         array = CFTimeZoneCopyKnownNames()
@@ -28,12 +32,14 @@ class TestTimeZone (TestCase):
         self.assertNotEqual(len(array) , 0 )
         for nm in array:
             self.assertIsInstance(nm, unicode)
+
     def testAbbreviationDict(self):
         map = CFTimeZoneCopyAbbreviationDictionary()
         self.assertIsInstance(map, CFDictionaryRef)
         for key, value in map.items():
             self.assertIsInstance(key, unicode)
             self.assertIsInstance(value, unicode)
+
     @min_os_level('10.6')
     def testAbbrievationDictSetting(self):
         # Setting the dictionary is technically also possible
@@ -104,17 +110,15 @@ class TestTimeZone (TestCase):
         nm = CFTimeZoneCopyLocalizedName(zone, 
                 kCFTimeZoneNameStyleShortStandard, CFLocaleCopyCurrent())
         self.assertIsInstance(nm, unicode)
+
     def testConstants(self):
         self.assertEqual(kCFTimeZoneNameStyleStandard , 0 )
         self.assertEqual(kCFTimeZoneNameStyleShortStandard , 1 )
         self.assertEqual(kCFTimeZoneNameStyleDaylightSaving , 2 )
         self.assertEqual(kCFTimeZoneNameStyleShortDaylightSaving , 3 )
         self.assertIsInstance(kCFTimeZoneSystemTimeZoneDidChangeNotification, unicode)
-    @min_os_level('10.6')
-    def testConstants10_6(self):
         self.assertEqual(kCFTimeZoneNameStyleGeneric, 4)
         self.assertEqual(kCFTimeZoneNameStyleShortGeneric, 5)
-
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ class TestNSConnection (TestCase):
         self.assertIsInstance(NSConnectionDidDieNotification, unicode)
         self.assertIsInstance(NSFailedAuthenticationException, unicode)
         self.assertIsInstance(NSConnectionDidInitializeNotification, unicode)
+
     def testMethods(self):
         self.assertArgIsBOOL(NSConnection.setIndependentConversationQueueing_, 0)
         self.assertResultIsBOOL(NSConnection.independentConversationQueueing)

@@ -42,7 +42,6 @@ class TestCFCalendarVariadic (TestCase):
         self.assertEqual(y, 2)
         self.assertEqual(H, 3)
 
-
     def testCFCalendarDecomposeAbsoluteTime(self):
         calendar = CFCalendarCreateWithIdentifier(
                 None, kCFGregorianCalendar)
@@ -127,7 +126,6 @@ class TestCFCalendarVariadic (TestCase):
         self.assertEqual(rng.location, 1)
         self.assertEqual(rng.length, monthLength)
 
-
         v = CFCalendarGetOrdinalityOfUnit(cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent())
         self.assertIsInstance(v, (int, long))
         ok, startp, tip = CFCalendarGetTimeRangeOfUnit(cal, kCFCalendarUnitDay, CFAbsoluteTimeGetCurrent(), None, None)
@@ -192,6 +190,12 @@ class TestCFCalendarVariadic (TestCase):
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(kCFCalendarUnitQuarter, 1<<11)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(kCFCalendarUnitWeekOfMonth, 1<<12)
+        self.assertEqual(kCFCalendarUnitWeekOfYear, 1<<13)
+        self.assertEqual(kCFCalendarUnitYearForWeekOfYear, 1<<14)
 
 
 if __name__ == "__main__":

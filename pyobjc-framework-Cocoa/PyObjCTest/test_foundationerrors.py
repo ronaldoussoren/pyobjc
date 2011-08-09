@@ -18,6 +18,7 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSFileWriteInvalidFileNameError, 514)
         self.assertEqual(NSFileWriteInapplicableStringEncodingError, 517)
         self.assertEqual(NSFileWriteUnsupportedSchemeError, 518)
+        self.assertEqual(NSFileWriteOutOfSpaceError, 640)
         self.assertEqual(NSKeyValueValidationError, 1024)
         self.assertEqual(NSUserCancelledError, 3072)
         self.assertEqual(NSExecutableNotLoadableError, 3584)
@@ -33,6 +34,7 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSExecutableErrorMaximum, 3839)
         self.assertEqual(NSFormattingErrorMinimum, 2048)
         self.assertEqual(NSFormattingErrorMaximum, 2559)
+        self.assertEqual(NSFormattingError, 2048)
 
     @min_os_level('10.6')
     def testConstants10_6(self):

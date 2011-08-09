@@ -25,6 +25,7 @@ class TestNSLocale (TestCase):
         self.assertIsInstance(NSIslamicCalendar, unicode)
         self.assertIsInstance(NSIslamicCivilCalendar, unicode)
         self.assertIsInstance(NSJapaneseCalendar, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSLocaleCollatorIdentifier, unicode)
@@ -42,9 +43,6 @@ class TestNSLocale (TestCase):
         self.assertEqual(NSLocaleLanguageDirectionRightToLeft, kCFLocaleLanguageDirectionRightToLeft)
         self.assertEqual(NSLocaleLanguageDirectionTopToBottom, kCFLocaleLanguageDirectionTopToBottom)
         self.assertEqual(NSLocaleLanguageDirectionBottomToTop, kCFLocaleLanguageDirectionBottomToTop)
-
-
-
 
 
 if __name__ == "__main__":

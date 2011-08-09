@@ -8,6 +8,7 @@ class TestUserNotification (TestCase):
     def testTypeID(self):
         id = CFUserNotificationGetTypeID()
         self.assertIsInstance(id, (int, long))
+
     def testCreation(self):
         runloop_mode = kCFRunLoopDefaultMode
         runloop_mode = u"pyobjctest.cfusernotificaton"
@@ -59,6 +60,7 @@ class TestUserNotification (TestCase):
         v = CFUserNotificationGetResponseValue(ref, kCFUserNotificationTextFieldValuesKey, 0)
         if v is not None:
             self.assertIsInstance(v, unicode)
+
     def testAlert(self):
         err, flags = CFUserNotificationDisplayAlert(0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None)
         self.assertEqual(err , 0)
@@ -66,9 +68,11 @@ class TestUserNotification (TestCase):
         err, flags = CFUserNotificationDisplayAlert(0.1, 0, None, None, None, "Header", "Message", "Cancel", "OK", "Rest", None)
         self.assertEqual(err , 0)
         self.assertIsInstance(flags, (int, long))
+
     def testNotice(self):
         err = CFUserNotificationDisplayNotice(0.1, 0, None, None, None, "Header", "Message", "Cancel")
         self.assertEqual(err , 0)
+
     def testInlines(self):
         flag = CFUserNotificationCheckBoxChecked(2)
         self.assertEqual(flag , 1 << 10 )
@@ -76,6 +80,7 @@ class TestUserNotification (TestCase):
         self.assertEqual(flag , 1 << 18 )
         flag = CFUserNotificationPopUpSelection(2)
         self.assertEqual(flag , 2 << 24 )
+
     def testConstants(self):
         self.assertEqual(kCFUserNotificationStopAlertLevel       , 0)
         self.assertEqual(kCFUserNotificationNoteAlertLevel       , 1)
@@ -101,5 +106,7 @@ class TestUserNotification (TestCase):
         self.assertIsInstance(kCFUserNotificationCheckBoxTitlesKey, unicode)
         self.assertIsInstance(kCFUserNotificationTextFieldValuesKey, unicode)
         self.assertIsInstance(kCFUserNotificationPopUpSelectionKey, unicode)
+
+
 if __name__ == "__main__":
     main()

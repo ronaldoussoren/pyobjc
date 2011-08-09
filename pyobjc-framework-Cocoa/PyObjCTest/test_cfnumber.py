@@ -179,6 +179,7 @@ class TestCFNumber (TestCase):
 
         r = CFNumberCompare(44, 45, 0)
         self.assertLessThan(r , 0)
+
     def testConstants(self):
         self.assertIs(kCFBooleanTrue, True)
         self.assertIs(kCFBooleanFalse, False)
@@ -202,5 +203,6 @@ class TestCFNumber (TestCase):
         self.assertIsInstance(kCFNumberPositiveInfinity, float)
         self.assertIsInstance(kCFNumberNegativeInfinity, float)
         self.assertIsInstance(kCFNumberNaN, float)
+
 if __name__ == "__main__":
     main()

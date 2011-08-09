@@ -25,6 +25,7 @@ class TestPreferences (TestCase):
         self.assertResultIsBOOL(CFPreferencesAppValueIsForced)
         v = CFPreferencesAppValueIsForced("AutoFocus", "com.apple.Terminal")
         self.assertIs(v is True or v, False)
+
     def testSetting(self):
         prefsFn = os.path.expanduser('~/Library/Preferences/PyObjCTest.plist')
         if os.path.exists(prefsFn):
@@ -74,6 +75,7 @@ class TestPreferences (TestCase):
         keys = CFPreferencesCopyKeyList(u"com.apple.AddressBook", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(keys, CFArrayRef)
         self.assertIsIn(u"ABNameSorting", keys)
+
     def testConstants(self):
         self.assertIsInstance(kCFPreferencesAnyApplication, unicode)
         self.assertIsInstance(kCFPreferencesCurrentApplication, unicode)
@@ -81,5 +83,6 @@ class TestPreferences (TestCase):
         self.assertIsInstance(kCFPreferencesCurrentHost, unicode)
         self.assertIsInstance(kCFPreferencesAnyUser, unicode)
         self.assertIsInstance(kCFPreferencesCurrentUser, unicode)
+
 if __name__ == "__main__":
     main()

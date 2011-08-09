@@ -28,6 +28,7 @@ class TestNSKeyValueObserving (TestCase):
         self.assertIsInstance(NSKeyValueChangeOldKey, unicode)
         self.assertIsInstance(NSKeyValueChangeIndexesKey, unicode)
         self.assertIsInstance(NSKeyValueChangeNotificationIsPriorKey, unicode)
+
     def testContext(self):
         o = NSObject.alloc().init()
         m = o.observeValueForKeyPath_ofObject_change_context_.__metadata__()
@@ -53,6 +54,28 @@ class TestNSKeyValueObserving (TestCase):
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
         self.assertEqual( m['arguments'][5]['type'], b'^v' )
 
+    @min_os_level('10.7')
+    def testContext10_7(self):
+        o = NSObject.alloc().init()
+        m = o.removeObserver_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][4]['type'], b'^v')
+
+        o = NSMutableArray.alloc().init()
+        m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][5]['type'], b'^v')
+        
+        o = NSOrderedSet.alloc().init()
+        m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][5]['type'], b'^v')
+
+        o = NSSet.alloc().init()
+        m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][5]['type'], b'^v')
+
+
+
+    def testMethods(self):
+        self.assertResultIsBOOL(NSObject.automaticallyNotifiesObserversForKey)
 
 if __name__ == "__main__":
     main()

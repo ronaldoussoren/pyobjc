@@ -81,6 +81,10 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_6 1060
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_7
+#define MAC_OS_X_VERSION_10_7 1070
+#endif
+
 
 /* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX,
  * compensate.

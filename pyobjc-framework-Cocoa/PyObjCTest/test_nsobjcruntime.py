@@ -43,6 +43,22 @@ class TestNSObjCRuntime (TestCase):
         self.assertEqual(NSFoundationVersionNumber10_4_9, 567.29)
         self.assertEqual(NSFoundationVersionNumber10_4_10,        567.29)
         self.assertEqual(NSFoundationVersionNumber10_4_11,        567.36)
+        self.assertEqual( NSFoundationVersionNumber10_5, 677.00)
+        self.assertEqual( NSFoundationVersionNumber10_5_1, 677.10)
+        self.assertEqual( NSFoundationVersionNumber10_5_2, 677.15)
+        self.assertEqual( NSFoundationVersionNumber10_5_3, 677.19)
+        self.assertEqual( NSFoundationVersionNumber10_5_4, 677.19)
+        self.assertEqual( NSFoundationVersionNumber10_5_5, 677.21)
+        self.assertEqual( NSFoundationVersionNumber10_5_6, 677.22)
+        self.assertEqual( NSFoundationVersionNumber10_5_7, 677.24)
+        self.assertEqual( NSFoundationVersionNumber10_5_8, 677.26)
+        self.assertEqual( NSFoundationVersionNumber10_6, 751.00)
+        self.assertEqual( NSFoundationVersionNumber10_6_1, 751.00)
+        self.assertEqual( NSFoundationVersionNumber10_6_2, 751.14)
+        self.assertEqual( NSFoundationVersionNumber10_6_3, 751.21)
+        self.assertEqual( NSFoundationVersionNumber10_6_4, 751.29)
+        self.assertEqual( NSFoundationVersionNumber10_6_5, 751.42)
+
 
         self.assertIsInstance(NSFoundationVersionNumber, float)
         self.assertIsInstance(NSIntegerMax, (int, long))
@@ -122,6 +138,9 @@ class TestNSObjCRuntime (TestCase):
         self.assertEqual(MIN("a", "b"), "a")
         self.assertEqual(ABS(-1), 1)
         self.assertEqual(ABS(-1.0), 1.0)
+
+    def testFunctions(self):
+        self.assertArgIsPrintf(NSLog, 0)
 
 if __name__ == "__main__":
     main()

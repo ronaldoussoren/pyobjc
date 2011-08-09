@@ -74,5 +74,6 @@ class TestNSByteOrder (TestCase):
         self.assertIsInstance(v, NSSwappedFloat)
         v = NSSwapHostFloatToLittle(55.0)
         self.assertIsInstance(v, NSSwappedFloat)
+
 if __name__ == "__main__":
     main()

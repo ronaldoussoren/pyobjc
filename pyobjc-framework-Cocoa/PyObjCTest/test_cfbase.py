@@ -49,6 +49,22 @@ class TestBase (TestCase):
         self.assertEqual(kCFCoreFoundationVersionNumber10_4_9,    368.28)
         self.assertEqual(kCFCoreFoundationVersionNumber10_4_10,   368.28)
         self.assertEqual(kCFCoreFoundationVersionNumber10_4_11,   368.31)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5,      476.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_1,    476.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_2,    476.10)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_3,    476.13)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_4,    476.14)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_5,    476.15)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_6,    476.17)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_5_7,    476.18)
+        self.assertEqual(CFCoreFoundationVersionNumber10_5_8,    476.19)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6,      550.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_1,    550.00)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_2,    550.13)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_3,    550.19)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_4,    550.29)
+        self.assertEqual(kCFCoreFoundationVersionNumber10_6_5,    550.42)
+
 
         self.assertEqual(kCFCompareLessThan, -1)
         self.assertEqual(kCFCompareEqualTo, 0)
@@ -101,6 +117,7 @@ class TestBase (TestCase):
         r = CFAllocatorGetPreferredSizeForSize(kCFAllocatorDefault, 15, 0)
         self.assertIsInstance(r, (int, long))
         self.assertGreaterEqual(r , 15)
+
     def testGenericFunctions(self):
         id = CFGetTypeID(kCFAllocatorMalloc)
         self.assertEqual(id, CFAllocatorGetTypeID())

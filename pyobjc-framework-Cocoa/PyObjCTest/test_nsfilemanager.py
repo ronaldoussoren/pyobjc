@@ -59,6 +59,7 @@ class TestNSFileManager (TestCase):
         self.assertIsInstance(NSFileSystemFreeSize, unicode)
         self.assertIsInstance(NSFileSystemNodes, unicode)
         self.assertIsInstance(NSFileSystemFreeNodes, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(NSVolumeEnumerationSkipHiddenVolumes, 1<<1)
@@ -85,6 +86,29 @@ class TestNSFileManager (TestCase):
         self.assertArgIsOut(NSFileManager.linkItemAtURL_toURL_error_, 2)
         self.assertResultIsBOOL(NSFileManager.removeItemAtURL_error_)
         self.assertArgIsOut(NSFileManager.removeItemAtURL_error_, 1)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_)
+        self.assertArgIsBOOL(NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_, 1)
+        self.assertArgIsOut(NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_, 3)
+
+        self.assertResultIsBOOL(NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_)
+        self.assertArgIsOut(NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_, 2)
+
+        self.assertResultIsBOOL(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_)
+        self.assertArgIsBOOL(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_, 0)
+        self.assertArgIsOut(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_, 3)
+        self.assertResultIsBOOL(NSFileManager.isUbiquitousItemAtURL_)
+
+        self.assertResultIsBOOL(NSFileManager.startDownloadingUbiquitousItemAtURL_error_)
+        self.assertArgIsOut(NSFileManager.startDownloadingUbiquitousItemAtURL_error_, 1)
+
+        self.assertResultIsBOOL(NSFileManager.evictUbiquitousItemAtURL_error_)
+        self.assertArgIsOut(NSFileManager.evictUbiquitousItemAtURL_error_, 1)
+
+        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error, 1)
+        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error, 2)
 
     def testOutput(self):
         obj = NSFileManager.defaultManager()

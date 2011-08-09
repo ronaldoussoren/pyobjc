@@ -13,5 +13,6 @@ class TestNSHFSFileTypes (TestCase):
            
         v = NSHFSTypeOfFile('/Library/Documentation/Acknowledgements.rtf')
         self.assertIsInstance(v, unicode)
+
 if __name__ == "__main__":
     main()

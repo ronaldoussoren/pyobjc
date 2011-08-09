@@ -8,12 +8,14 @@ class TestAE (TestCase):
         self.assertIsInstance(NSAppleScriptErrorAppName, unicode)
         self.assertIsInstance(NSAppleScriptErrorBriefMessage, unicode)
         self.assertIsInstance(NSAppleScriptErrorRange, unicode)
+
     def testOutput(self):
         obj = NSAppleScript.alloc().initWithSource_(
                 'tell application Terminal to do Xscript "ls -l"')
         ok, error = obj.compileAndReturnError_(None)
         self.assertIs(ok, False)
         self.assertIsInstance(error, NSDictionary)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSAppleScript.isCompiled)
         self.assertResultIsBOOL(NSAppleScript.compileAndReturnError_)

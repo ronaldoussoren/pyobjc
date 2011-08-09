@@ -5,6 +5,7 @@ from CoreFoundation import *
 class TestDateFormatter (TestCase):
     def testTypeID(self):
         self.assertIsInstance(CFDateGetTypeID(), (int, long))
+
     def testConstants(self):
         self.assertEqual(kCFDateFormatterNoStyle , 0)
         self.assertEqual(kCFDateFormatterShortStyle , 1)
@@ -37,8 +38,8 @@ class TestDateFormatter (TestCase):
         self.assertIsInstance(kCFDateFormatterQuarterSymbols, unicode)
         self.assertIsInstance(kCFDateFormatterShortQuarterSymbols, unicode)
         self.assertIsInstance(kCFDateFormatterStandaloneQuarterSymbols, unicode)
-        self.assertIsInstance( kCFDateFormatterShortStandaloneQuarterSymbols, unicode)
-        self.assertIsInstance( kCFDateFormatterGregorianStartDate, unicode)
+        self.assertIsInstance(kCFDateFormatterShortStandaloneQuarterSymbols, unicode)
+        self.assertIsInstance(kCFDateFormatterGregorianStartDate, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -50,10 +51,10 @@ class TestDateFormatter (TestCase):
         r = CFDateFormatterCreateDateFormatFromTemplate(None, "%Y-%m-%d", 0, None)
         self.assertIsInstance(r, unicode)
                             
-
-
     def testTypes(self):
         self.assertIsCFType(CFDateFormatterRef)
+
+        self.assertIsInstance(CFDateFormatterGetTypeID(), (int, long))
 
     def testInspection(self):
         locale = CFLocaleCopyCurrent()
@@ -103,5 +104,6 @@ class TestDateFormatter (TestCase):
         CFDateFormatterSetProperty(fmt, kCFDateFormatterIsLenient, True)
         v2 = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
         self.assertIs(v2, True)
+
 if __name__ == "__main__":
     main()

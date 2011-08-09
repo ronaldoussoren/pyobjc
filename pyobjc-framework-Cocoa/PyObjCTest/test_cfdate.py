@@ -11,6 +11,7 @@ class TestDate (TestCase):
     def testTypeID(self):
         v = CFDateGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testConstants(self):
         self.assertIsInstance(kCFAbsoluteTimeIntervalSince1970, float)
         self.assertIsInstance(kCFAbsoluteTimeIntervalSince1904, float)
@@ -21,6 +22,7 @@ class TestDate (TestCase):
         self.assertEqual(kCFGregorianUnitsMinutes , (1 << 4))
         self.assertEqual(kCFGregorianUnitsSeconds , (1 << 5))
         self.assertEqual(kCFGregorianAllUnits , 0x00FFFFFF)
+
     def testStructs(self):
         v = CFGregorianDate()
         self.assertHasAttr(v, 'year')
@@ -29,6 +31,7 @@ class TestDate (TestCase):
         self.assertHasAttr(v, 'hour')
         self.assertHasAttr(v, 'minute')
         self.assertHasAttr(v, 'second')
+
         v = CFGregorianUnits()
         self.assertHasAttr(v, 'years')
         self.assertHasAttr(v, 'months')
@@ -36,14 +39,17 @@ class TestDate (TestCase):
         self.assertHasAttr(v, 'hours')
         self.assertHasAttr(v, 'minutes')
         self.assertHasAttr(v, 'seconds')
+
     def testAbsoluteTime(self):
         v = CFAbsoluteTimeGetCurrent()
         self.assertIsInstance(v, float)
         self.assertLessThan(abs(v - time.time() + kCFAbsoluteTimeIntervalSince1970) , 1.0)
+
     def testCreation(self):
         now = CFAbsoluteTimeGetCurrent()
         dt = CFDateCreate(None, now)
         self.assertIsInstance(dt, CFDateRef)
+
     def testInspection(self):
         now = CFAbsoluteTimeGetCurrent()
         nowtm = time.localtime()
@@ -83,5 +89,6 @@ class TestDate (TestCase):
         self.assertEqual(v , nowtm.tm_yday)
         v = CFAbsoluteTimeGetWeekOfYear(now, tz)
         self.assertIsInstance(v, (int, long))
+
 if __name__ == "__main__":
     main()

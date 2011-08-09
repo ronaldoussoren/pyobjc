@@ -42,10 +42,7 @@ class TestStringTokenizer (TestCase):
         self.assertEqual(ranges, ())
         self.assertEqual(subref, [])
 
-
-
     def testConstants(self):
-
         self.assertEqual(kCFStringTokenizerUnitWord                           , 0 )
         self.assertEqual(kCFStringTokenizerUnitSentence                       , 1 )
         self.assertEqual(kCFStringTokenizerUnitParagraph                      , 2 )
@@ -60,5 +57,6 @@ class TestStringTokenizer (TestCase):
         self.assertEqual(kCFStringTokenizerTokenHasHasNumbersMask             , 1L << 3 )
         self.assertEqual(kCFStringTokenizerTokenHasNonLettersMask             , 1L << 4 )
         self.assertEqual(kCFStringTokenizerTokenIsCJWordMask                  , 1L << 5 )
+
 if __name__ == "__main__":
     main()

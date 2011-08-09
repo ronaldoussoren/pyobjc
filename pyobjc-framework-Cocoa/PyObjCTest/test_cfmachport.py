@@ -11,6 +11,7 @@ class TestMachPort (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFMachPortGetTypeID(), (int, long))
+
     def testCreate(self):
         class Context: pass
         context = Context()

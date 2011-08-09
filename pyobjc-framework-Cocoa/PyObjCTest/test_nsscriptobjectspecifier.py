@@ -36,5 +36,7 @@ class TestNSScriptObjectSpecifiers (TestCase):
         self.assertArgIsOut(NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1)
         self.assertResultSizeInArg(NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1)
 
+        self.assertResultIsBOOL(NSPositionalSpecifier.insertionReplaces)
+
 if __name__ == "__main__":
     main()

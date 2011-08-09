@@ -189,6 +189,13 @@ class TestAffineTransform (TestCase):
         self.assertIsInstance(t, NSAffineTransformStruct)
         self.assertEqual(s, t)
 
+        v = transform.transformPoint((1,1))
+        self.assertIsInstance(v, NSPoint)
+
+        v = transform.transformSize((1,1))
+        self.assertIsInstance(v, NSSize)
+
+
 
 
 if __name__ == "__main__":

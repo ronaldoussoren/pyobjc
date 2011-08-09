@@ -28,8 +28,6 @@ class TestCFTree (TestCase):
         CFTreeSetContext(tree, 42)
         self.assertEqual(CFTreeGetContext(tree, None), 42)
 
-
-
     def testCreateTree(self):
         root = CFTreeCreate(None, "root")
 
@@ -44,10 +42,10 @@ class TestCFTree (TestCase):
         CFTreeSortChildren(root, compare, None)
         self.assertEqual(CFTreeGetContext(CFTreeGetFirstChild(root), None), 9)
 
-
     def testTypeID(self):
         v = CFTreeGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testQuerying(self):
         root = CFTreeCreate(None, "root")
 
@@ -82,6 +80,7 @@ class TestCFTree (TestCase):
 
         r = CFTreeFindRoot(s2)
         self.assertIs(r, root)
+
     def testModification(self):
         root = CFTreeCreate(None, "root")
 

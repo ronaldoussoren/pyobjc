@@ -10,5 +10,6 @@ class TestNSHTTPCookieStorage (TestCase):
 
         self.assertIsInstance(NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode)
         self.assertIsInstance(NSHTTPCookieManagerCookiesChangedNotification, unicode)
+
 if __name__ == "__main__":
     main()

@@ -99,7 +99,6 @@ if 0:
             t = NSDecimalString(v, None)
             self.assertEqual(t, u'3.375')
 
-
         def testCompare(self):
             small = NSDecimal(u"1")
             small2 = NSDecimal(u"1")
@@ -274,6 +273,9 @@ if 0:
 
             self.assertRaises(TypeError, operator.mul, o, 1.2)
             self.assertRaises(TypeError, operator.mul, 1.2, o)
+
+            NSDecimalMultiplyByPowerOf10(r, o, 4, NSRoundPlain)
+            self.assertEqual(r, NSDecimal(20000))
 
         def testDivision(self):
             r = NSDecimal()

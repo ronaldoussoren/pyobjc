@@ -8,9 +8,9 @@ class TestXMLNode (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFXMLNodeRef)
 
-
     def testConstants(self):
         self.assertEqual(kCFXMLNodeCurrentVersion , 1 )
+
         self.assertEqual(kCFXMLNodeTypeDocument , 1 )
         self.assertEqual(kCFXMLNodeTypeElement , 2 )
         self.assertEqual(kCFXMLNodeTypeAttribute , 3 )
@@ -26,11 +26,13 @@ class TestXMLNode (TestCase):
         self.assertEqual(kCFXMLNodeTypeNotation , 13 )
         self.assertEqual(kCFXMLNodeTypeElementTypeDeclaration , 14 )
         self.assertEqual(kCFXMLNodeTypeAttributeListDeclaration , 15 )
+
         self.assertEqual(kCFXMLEntityTypeParameter , 0 )
         self.assertEqual(kCFXMLEntityTypeParsedInternal , 1 )
         self.assertEqual(kCFXMLEntityTypeParsedExternal , 2 )
         self.assertEqual(kCFXMLEntityTypeUnparsed , 3 )
         self.assertEqual(kCFXMLEntityTypeCharacter , 4 )
+
     def testStructs(self):
         return 
 
@@ -67,6 +69,7 @@ class TestXMLNode (TestCase):
         self.assertHasAttr(o, 'notationName')
         o = CFXMLEntityReferenceInfo()
         self.assertHasAttr(o, 'entityType')
+
     def testFunctions(self):
         self.assertIsInstance(CFXMLNodeGetTypeID(), (int, long))
 
@@ -77,6 +80,10 @@ class TestXMLNode (TestCase):
 
         self.assertResultIsCFRetained(CFXMLNodeCreateCopy)
         self.assertResultIsCFRetained(CFXMLTreeCreateWithNode)
+
+    @expectedFailure
+    def testMissingWrappers(self):
+        self.fail("CFXML requires manual wrappers (low prio)")
 
 if __name__ == "__main__":
     main()

@@ -10,6 +10,7 @@ class TestCFBundle (TestCase):
     def testMainBundle(self):
         bundle = CFBundleGetMainBundle()
         self.assertIsInstance(bundle, CFBundleRef)
+
     def testBundleLoader(self):
         bundle = CFBundleGetBundleWithIdentifier(u"com.apple.CoreFoundation")
         self.assertIsInstance(bundle, CFBundleRef)
@@ -17,7 +18,8 @@ class TestCFBundle (TestCase):
         self.assertNotEqual(len(array) , 0)
         for b in array:
             self.assertIsInstance(b, CFBundleRef)
-        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
         self.assertIsInstance(bundle, CFBundleRef)
         url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks", kCFURLPOSIXPathStyle, True)
@@ -30,11 +32,10 @@ class TestCFBundle (TestCase):
         array = CFBundleCreateBundlesFromDirectory(None, url, None)
         self.assertNotEquals(len(array), 0)
 
-
-
     def testTypeID(self):
         v = CFBundleGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testInspection(self):
         bundle = CFBundleGetBundleWithIdentifier(u"com.apple.CoreFoundation")
         self.assertIsInstance(bundle, CFBundleRef)
@@ -78,7 +79,8 @@ class TestCFBundle (TestCase):
             self.assertIsInstance(v, CFURLRef)
 
     def testDirectAccess(self):
-        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
 
         v = CFBundleCopyInfoDictionaryInDirectory(url)
         self.assertIsInstance(v, CFDictionaryRef)
@@ -89,10 +91,12 @@ class TestCFBundle (TestCase):
         self.assertIsInstance(creator, (int, long))
 
     def testResources(self):
-        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
         self.assertIsInstance(bundle, CFBundleRef)
-        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Tcl.framework", kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Frameworks/Tcl.framework", kCFURLPOSIXPathStyle, True)
         bundle2 = CFBundleCreate(None, url)
         self.assertIsInstance(bundle2, CFBundleRef)
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", None)
@@ -202,7 +206,8 @@ class TestCFBundle (TestCase):
             CFBundleCloseBundleResourceMap(bundle, id2)
 
     def testResourcesDirect(self):
-        bundle = CFURLCreateWithFileSystemPath(None, u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
+        bundle = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Frameworks/Foundation.framework", kCFURLPOSIXPathStyle, True)
         url = CFBundleCopyResourceURLInDirectory(bundle, "Formatter", "strings", None)
         self.assertIsInstance(url, CFURLRef)
         array = CFBundleCopyResourceURLsOfTypeInDirectory(bundle, "strings", None)
@@ -216,12 +221,15 @@ class TestCFBundle (TestCase):
         self.assertIsInstance(array, CFArrayRef)
         for a in array:
             self.assertIsInstance(a, (int, long))
+
     def testPlugin(self):
-        url = CFURLCreateWithFileSystemPath(None, u"/System/Library/Components/AppleScript.component", kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(None, 
+                u"/System/Library/Components/AppleScript.component", kCFURLPOSIXPathStyle, True)
         bundle = CFBundleCreate(None, url)
         self.assertIsInstance(bundle, CFBundleRef)
         ref = CFBundleGetPlugIn(bundle)
         self.assertIs(ref, None)
+
     def testConstants(self):
         self.assertIsInstance(kCFBundleInfoDictionaryVersionKey, unicode)
         self.assertIsInstance(kCFBundleExecutableKey, unicode)
@@ -234,5 +242,6 @@ class TestCFBundle (TestCase):
         self.assertEqual(kCFBundleExecutableArchitecturePPC      , 0x00000012)
         self.assertEqual(kCFBundleExecutableArchitectureX86_64   , 0x01000007)
         self.assertEqual(kCFBundleExecutableArchitecturePPC64    , 0x01000012)
+
 if __name__ == "__main__":
     main()

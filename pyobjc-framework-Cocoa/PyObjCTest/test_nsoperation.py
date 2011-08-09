@@ -23,6 +23,7 @@ class TestNSOperation (TestCase):
         self.assertResultIsBOOL(NSOperationQueue.isSuspended)
         self.assertArgIsBOOL(NSOperationQueue.setSuspended_, 0)
 
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBlock(NSOperation.completionBlock, b'v')

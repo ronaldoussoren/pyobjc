@@ -7,6 +7,7 @@ class TestNSDateFormatter (TestCase):
         formatter = NSDateFormatter.alloc().init()
         formatter.setDateFormat_("yyyy/mm/dd")
 
+        self.assertResultIsBOOL(NSDateFormatter.getObjectValue_forString_range_error_)
         self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 0)
         self.assertArgIsInOut(NSDateFormatter.getObjectValue_forString_range_error_, 2)
         self.assertArgIsOut(NSDateFormatter.getObjectValue_forString_range_error_, 3)

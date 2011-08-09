@@ -20,6 +20,7 @@ except NameError:
 
 class TestNSData(TestCase):
     def testMethods(self):
+        self.assertResultIsBOOL(NSData.isEqualToData_)
         self.assertResultIsBOOL(NSData.writeToFile_atomically_)
         self.assertArgIsBOOL(NSData.writeToFile_atomically_, 1)
         self.assertResultIsBOOL(NSData.writeToURL_atomically_)
@@ -46,6 +47,10 @@ class TestNSData(TestCase):
         self.assertEqual(NSDataWritingAtomic, 1<<0)
         self.assertEqual(NSDataSearchBackwards, 1<<0)
         self.assertEqual(NSDataSearchAnchored, 1<<1)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSDataReadingMappedAlways, 1<<3)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

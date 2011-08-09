@@ -132,6 +132,7 @@ class TestStream (TestCase):
         self.assertIsInstance(err, CFStreamError)
         self.assertEqual(err.domain , 0)
         self.assertEqual(err.error , 0)
+
     def testWriteStream(self):
         import array
         a = array.array('b', b" "*20)

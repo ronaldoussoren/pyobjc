@@ -12,9 +12,6 @@ class TestMessagePort (TestCase):
         self.assertEqual(kCFMessagePortReceiveTimeout, -2)
         self.assertEqual(kCFMessagePortIsInvalid, -3)
         self.assertEqual(kCFMessagePortTransportError, -4)
-
-    @min_os_level('10.6')
-    def testConstants10_6(self):
         self.assertEqual(kCFMessagePortBecameInvalidError, -5)
 
     @min_os_level('10.6')

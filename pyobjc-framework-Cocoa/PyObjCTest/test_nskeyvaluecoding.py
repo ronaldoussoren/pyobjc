@@ -24,6 +24,7 @@ class TestNSKeyValueCoding (TestCase):
         self.assertIsInstance(NSUnionOfArraysKeyValueOperator, unicode)
         self.assertIsInstance(NSUnionOfObjectsKeyValueOperator, unicode)
         self.assertIsInstance(NSUnionOfSetsKeyValueOperator, unicode)
+
     def testDefineValidation(self):
         o = NSObject.alloc().init()
 
@@ -40,6 +41,8 @@ class TestNSKeyValueCoding (TestCase):
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKey_error_, 2)
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_)
+
+        self.assertArgIsInOut(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 0)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 2)
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.useStoredAccessor)
 

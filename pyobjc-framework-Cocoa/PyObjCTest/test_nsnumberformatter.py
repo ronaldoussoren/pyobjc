@@ -54,7 +54,5 @@ class TestNSNumberFormatter (TestCase):
         self.assertResultIsBOOL(NSNumberFormatter.localizesFormat)
         self.assertArgIsBOOL(NSNumberFormatter.setLocalizesFormat_, 0)
 
-
-
 if __name__ == "__main__":
     main()

@@ -24,6 +24,13 @@ class TestNSExpression (TestCase):
         self.assertArgIsBlock(NSExpression.expressionForBlock_arguments_, 0, b'@@@@')
         self.assertResultIsBlock(NSExpression.expressionBlock, b'@@@@')
 
+    @expectedFailure
+    @min_os_level('10.6')
+    def testMethod10_6_unsupported(self):
+        # There is no documentation for this method, it is therefore unclear what kind
+        # of format string is used
+        self.fail('expressionWithFormat:fmt, ...')
+
 
 
 if __name__ == "__main__":

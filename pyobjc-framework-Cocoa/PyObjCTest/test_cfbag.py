@@ -35,6 +35,7 @@ class TestCFBag (TestCase):
     def testTypeID(self):
         v = CFBagGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCopy(self):
         bag = CFBagCreate(None, [1,1,2,3,4], 5)
         self.assertIsInstance(bag, CFBagRef)
@@ -43,6 +44,7 @@ class TestCFBag (TestCase):
         bag3 = CFBagCreateMutableCopy(None, 0, bag)
         self.assertIsInstance(bag3, CFBagRef)
         self.assertIsNot(bag3, bag )
+
     def testInspect(self):
         bag = CFBagCreate(None, [u"Hello", 42, u"World", 42, u"a", u"a", u"a"], 7)
         self.assertIsInstance(bag, CFBagRef)
@@ -50,8 +52,8 @@ class TestCFBag (TestCase):
         self.assertEqual(CFBagGetCountOfValue(bag, u"Hello") , 1)
         self.assertEqual(CFBagGetCountOfValue(bag, 42) , 2)
         self.assertEqual(CFBagGetCountOfValue(bag, u"a") , 3)
-        self.assertTrue( CFBagContainsValue(bag, u"a") )
-        self.assertFalse( CFBagContainsValue(bag, u"b") )
+        self.assertTrue(CFBagContainsValue(bag, u"a") )
+        self.assertFalse(CFBagContainsValue(bag, u"b") )
 
         v = CFBagGetValue(bag, u"b")
         self.assertIs(v, None)
@@ -88,6 +90,7 @@ class TestCFBag (TestCase):
         self.assertEqual(CFBagGetCount(bag) , 1)
         CFBagRemoveAllValues(bag)
         self.assertEqual(CFBagGetCount(bag) , 0)
+
     def testFunctions(self):
         self.assertArgHasType(CFBagGetCountOfValue, 1, b'@')
         self.assertArgHasType(CFBagContainsValue, 1, b'@')
@@ -102,7 +105,6 @@ class TestCFBag (TestCase):
         self.assertArgHasType(CFBagReplaceValue, 1, b'@')
         self.assertArgHasType(CFBagSetValue, 1, b'@')
         self.assertArgHasType(CFBagRemoveValue, 1, b'@')
-
 
 if __name__ == "__main__":
     main()

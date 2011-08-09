@@ -40,6 +40,17 @@ class TestNSIndexSet (TestCase):
         self.assertArgIsBlock(NSIndexSet.indexesInRange_options_passingTest_, 2, 
                 objc._C_NSBOOL + objc._C_NSUInteger + b'o^' + objc._C_NSBOOL)
 
+    @min_os_level('10.7')
+    def testMethod10_7(self):
+        self.assertArgIsBlock(NSIndexSet.enumerateRangesUsingBlock_, 0,
+                'v' + NSRange.__typestr__ + b'o^B')
+
+        self.assertArgIsBlock(NSIndexSet.enumerateRangesWithOptions_usingBlock_, 1,
+                'v' + NSRange.__typestr__ + b'o^B')
+
+        self.assertArgIsBlock(NSIndexSet.enumerateRangesInRange_options_usingBlock_, 2,
+                'v' + NSRange.__typestr__ + b'o^B')
+
 
 if __name__ == "__main__":
     main()

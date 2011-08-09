@@ -9,6 +9,7 @@ class TestNotificationCenter (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFNotificationCenterGetTypeID(), (int, long))
+
     def testGetting(self):
         ref = CFNotificationCenterGetLocalCenter();
         self.assertIsInstance(ref,CFNotificationCenterRef)
@@ -16,6 +17,7 @@ class TestNotificationCenter (TestCase):
         self.assertIsInstance(ref,CFNotificationCenterRef)
         ref = CFNotificationCenterGetDarwinNotifyCenter();
         self.assertIsInstance(ref,CFNotificationCenterRef)
+
     def testSending(self):
         ref = CFNotificationCenterGetLocalCenter();
         self.assertIsInstance(ref,CFNotificationCenterRef)
@@ -62,14 +64,15 @@ class TestNotificationCenter (TestCase):
         CFNotificationCenterRemoveEveryObserver(ref, u"object")
         CFNotificationCenterPostNotification(ref, u"pyobjc.test", ref, {u"name2":u"value2"},  True)
         self.assertEqual(len(notifications) , 3)
+
     def testConstants(self):
         self.assertEqual(CFNotificationSuspensionBehaviorDrop, 1)
         self.assertEqual(CFNotificationSuspensionBehaviorCoalesce, 2)
         self.assertEqual(CFNotificationSuspensionBehaviorHold, 3)
         self.assertEqual(CFNotificationSuspensionBehaviorDeliverImmediately, 4)
+
         self.assertEqual(kCFNotificationDeliverImmediately, 1)
         self.assertEqual(kCFNotificationPostToAllSessions, 2)
-
 
 if __name__ == "__main__":
     main()

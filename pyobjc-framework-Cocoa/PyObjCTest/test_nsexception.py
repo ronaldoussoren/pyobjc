@@ -45,6 +45,7 @@ class TestNSException (TestCase):
     @expectedFailure
     def testUncaughtExceptionHandler(self):
         self.fail("NSSetUncaughtExceptionHandler")
+        self.fail("NSGetUncaughtExceptionHandler")
 
     def testNoAssert(self):
         self.assertNotHasAttr(Foundation, 'NSAssert5')
@@ -61,6 +62,7 @@ class TestNSException (TestCase):
         self.assertNotHasAttr(Foundation, 'NSCAssert1')
         self.assertNotHasAttr(Foundation, 'NSCAssert')
         self.assertNotHasAttr(Foundation, 'NSCParameterAssert')
+
     def testMethods(self):
         self.assertArgIsPrintf(NSException.raise_format_, 1)
 

@@ -36,10 +36,12 @@ class TestNSBundle (TestCase):
 
         self.assertIsInstance(NSBundleDidLoadNotification, unicode)
         self.assertIsInstance(NSLoadedClasses, unicode)
+
     def testDefines(self):
         self.assertHasAttr(Foundation, 'NSLocalizedString')
         self.assertHasAttr(Foundation, 'NSLocalizedStringFromTable')
         self.assertHasAttr(Foundation, 'NSLocalizedStringFromTableInBundle')
         self.assertHasAttr(Foundation, 'NSLocalizedStringWithDefaultValue')
+
 if __name__ == "__main__":
     main()

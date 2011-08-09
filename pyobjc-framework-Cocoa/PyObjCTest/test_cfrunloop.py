@@ -24,11 +24,13 @@ class TestRunLoop (TestCase):
         self.assertEqual(kCFRunLoopAllActivities , 0x0FFFFFFF)
         self.assertIsInstance(kCFRunLoopDefaultMode, unicode)
         self.assertIsInstance(kCFRunLoopCommonModes, unicode)
+
     def testGetTypeID(self):
         self.assertIsInstance(CFRunLoopGetTypeID(), (int, long))
         self.assertIsInstance(CFRunLoopSourceGetTypeID(), (int, long))
         self.assertIsInstance(CFRunLoopObserverGetTypeID(), (int, long))
         self.assertIsInstance(CFRunLoopTimerGetTypeID(), (int, long))
+
     def testRunloop(self):
         runloop_mode = kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
@@ -111,7 +113,6 @@ class TestRunLoop (TestCase):
         CFRunLoopRemoveObserver(rl, observer, runloop_mode)
         self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
 
-
     def testTimer(self):
         runloop_mode = kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
@@ -153,6 +154,7 @@ class TestRunLoop (TestCase):
         for item in state:
             self.assertIs(item[0], timer)
             self.assertIs(item[1], data)
+
     def testSource(self):
         runloop_mode = kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
@@ -220,9 +222,66 @@ class TestRunLoop (TestCase):
         self.assertIs(state[0][1], data)
         self.assertIs(state[0][2], rl)
         self.assertEqual(state[0][3] , runloop_mode)
+
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.assertArgIsBlock(CFRunLoopPerformBlock, 2, b'v')
+
+
+        runloop_mode = kCFRunLoopDefaultMode
+        rl = CFRunLoopGetCurrent()
+
+        l = []
+        def doit():
+            l.append(True)
+        CFRunLoopPerformBlock(rl, runloop_mode, doit)
+        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
+
+        self.assertEqual(l, [True])
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.assertArgIsBool(CFRunLoopObserverCreateWithHandler, 2)
+        self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, "v^{__CFRunLoopObserver=}I")
+
+        l = []
+        def record(observer, activity):
+            l.append((observer, activity))
+
+
+        ref = CFRunLoopObserverCreateWithHandler(None, kCFRunLoopAllActivities, False, 0, record)
+        self.assertIsInstance(ref, CFRunLoopObserverRef)
+
+        runloop_mode = kCFRunLoopDefaultMode
+        rl = CFRunLoopGetCurrent()
+
+        CFRunLoopAddObserver(rl, ref, runloop_mode)
+        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        CFRunLoopRemoveObserver(rl, ref, runloop_mode)
+
+
+        self.assertIsNotEqual(l, [])
+        for a, b in l:
+            self.assertEqual(a, ref)
+            self.assertIsInstance(b, (int, long))
+
+
+        self.assertArgIsBlock(CFRunLoopTimerCreateWithHandler, 5, 'v^{__CFRunLoopTimer=}')
+        l = []
+        ref = CFRunLoopTimerCreateWithHandler(None, 
+                CFAbsoluteTimeGetCurrent() + 0.5, 0.0, 0, lambda x: l.append(x))
+        self.assertIsInstance(ref, CFRunLoopTimerRef)
+
+        CFRunLoopAddTimer(rl, ref, runloop_mode)
+        res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
+        CFRunLoopRemovetimer(rl, ref, runloop_mode)
+
+        self.assertNotEqual(l, [])
+        for a in l:
+            self.assertEqual(a, ref)
+
+
+
 
 if __name__ == "__main__":
     main()

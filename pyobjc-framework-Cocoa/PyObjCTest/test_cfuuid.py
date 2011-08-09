@@ -10,8 +10,8 @@ class TestCFUUIDAPI (TestCase):
     def testTypeID(self):
         v = CFUUIDGetTypeID()
         self.assertIsInstance(v, (int, long))
-    def testCreate(self):
 
+    def testCreate(self):
         self.assertResultIsCFRetained(CFUUIDCreate)
         uuid = CFUUIDCreate(None)
         self.assertIsNot(uuid, None)
@@ -20,6 +20,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertIsInstance(text, unicode)
         m = re.match('^[0-9A-Z]{8}(-[0-9A-Z]{4}){3}-[0-9A-Z]{12}$', text)
         self.assertIsNot(m, None )
+
     def testCreateWithBytes(self):
         self.assertResultIsCFRetained(CFUUIDCreateWithBytes)
         uuid = CFUUIDCreateWithBytes(None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
@@ -43,6 +44,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertEqual(text , u'01020304-0506-0708-090A-0B0C0D0E0F10')
         # CFUUID interns values
         self.assertIs(uuid1, uuid2)
+
     def testGetBytes(self):
         uuid = CFUUIDCreateWithBytes(None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
         self.assertIsNot(uuid, None)
@@ -65,6 +67,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertEqual(bytes.byte13 , 14)
         self.assertEqual(bytes.byte14 , 15)
         self.assertEqual(bytes.byte15 , 16)
+
     def testConstant(self):
         # This is an interesting one, the result of 
         # CFUUIDGetConstantUUIDWithBytes should not be released.
@@ -84,6 +87,7 @@ class TestCFUUIDAPI (TestCase):
         t = CFUUIDCreateString(None, uuid)
 
         self.assertEqual(s , t)
+
     def testCreateFromUUIDBytes(self):
         bytes = CFUUIDBytes(*range(16, 32))
         uuid = CFUUIDCreateFromUUIDBytes(None, bytes)
@@ -92,6 +96,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertIsInstance(uuid, CFUUIDRef)
         text = CFUUIDCreateString(None, uuid)
         self.assertEqual(text , u'10111213-1415-1617-1819-1A1B1C1D1E1F' )
+
     def testStructs(self):
         o = CFUUIDBytes()
         self.assertHasAttr(o, 'byte0')
@@ -110,5 +115,6 @@ class TestCFUUIDAPI (TestCase):
         self.assertHasAttr(o, 'byte13')
         self.assertHasAttr(o, 'byte14')
         self.assertHasAttr(o, 'byte15')
+
 if __name__ == "__main__":
     main()

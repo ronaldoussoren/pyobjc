@@ -20,6 +20,7 @@ class TestSocket (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFSocketGetTypeID(), (int, long))
+
     def testConstants(self):
         self.assertEqual(kCFSocketSuccess , 0)
         self.assertEqual(kCFSocketError , -1)
@@ -44,13 +45,13 @@ class TestSocket (TestCase):
         self.assertIsInstance(kCFSocketRetrieveCommand, unicode)
         self.assertEqual(kCFSocketLeaveErrors, 64)
 
-
     def testStructs(self):
         o = CFSocketSignature()
         self.assertHasAttr(o, 'protocolFamily')
         self.assertHasAttr(o, 'socketType')
         self.assertHasAttr(o, 'protocol')
         self.assertHasAttr(o, 'address')
+
     def testNameRegistry(self):
         p1 = CFSocketGetDefaultNameRegistryPortNumber()
         self.assertIsInstance(p1, (int, long))
@@ -60,7 +61,6 @@ class TestSocket (TestCase):
         self.assertEqual(p2, p1+1)
 
         CFSocketSetDefaultNameRegistryPortNumber(p1)
-
 
     @onlyIf(onTheNetwork(), "cannot test without internet connection")
     def testSocketFunctions(self):
@@ -161,6 +161,7 @@ class TestSocket (TestCase):
         self.assertResultIsCFRetained(CFSocketCreateRunLoopSource)
         src = CFSocketCreateRunLoopSource(None, sock, 0)
         self.assertIsInstance(src, CFRunLoopSourceRef)
+
     def testSocketNameServer(self):
         # The documentation says:
         #   Name server functionality is currently inoperable in Mac OS X.

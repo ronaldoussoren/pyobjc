@@ -2338,6 +2338,12 @@ PyObjC_MODULE_INIT(_objc)
 	}
 #endif /* MAC_OS_X_VERSION_10_6 */
 
+#ifdef MAC_OS_X_VERSION_10_7
+	if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7) < 0) {
+		PyObjC_INITERROR();
+	}
+#endif /* MAC_OS_X_VERSION_10_6 */
+
 	if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
 		PyObjC_INITERROR();
 	}

@@ -8,6 +8,7 @@ class TestNumberFormatter (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFNumberFormatterGetTypeID(), (int, long))
+
     def testFuncs(self):
         locale = CFLocaleCopyCurrent()
         fmt = CFNumberFormatterCreate(None, locale, kCFNumberFormatterDecimalStyle)
@@ -44,27 +45,29 @@ class TestNumberFormatter (TestCase):
         self.assertEqual(frac, 2)
         self.assertEqual(rnd, 0.0)
 
-
-
     def testConstants(self):
-        self.assertEqual(kCFNumberFormatterNoStyle , 0)
-        self.assertEqual(kCFNumberFormatterDecimalStyle , 1)
-        self.assertEqual(kCFNumberFormatterCurrencyStyle , 2)
-        self.assertEqual(kCFNumberFormatterPercentStyle , 3)
-        self.assertEqual(kCFNumberFormatterScientificStyle , 4)
-        self.assertEqual(kCFNumberFormatterSpellOutStyle , 5)
-        self.assertEqual(kCFNumberFormatterParseIntegersOnly , 1)
-        self.assertEqual(kCFNumberFormatterRoundCeiling , 0)
-        self.assertEqual(kCFNumberFormatterRoundFloor , 1)
-        self.assertEqual(kCFNumberFormatterRoundDown , 2)
-        self.assertEqual(kCFNumberFormatterRoundUp , 3)
-        self.assertEqual(kCFNumberFormatterRoundHalfEven , 4)
-        self.assertEqual(kCFNumberFormatterRoundHalfDown , 5)
-        self.assertEqual(kCFNumberFormatterRoundHalfUp , 6)
-        self.assertEqual(kCFNumberFormatterPadBeforePrefix , 0)
-        self.assertEqual(kCFNumberFormatterPadAfterPrefix , 1)
-        self.assertEqual(kCFNumberFormatterPadBeforeSuffix , 2)
-        self.assertEqual(kCFNumberFormatterPadAfterSuffix , 3)
+        self.assertEqual(kCFNumberFormatterNoStyle, 0)
+        self.assertEqual(kCFNumberFormatterDecimalStyle, 1)
+        self.assertEqual(kCFNumberFormatterCurrencyStyle, 2)
+        self.assertEqual(kCFNumberFormatterPercentStyle, 3)
+        self.assertEqual(kCFNumberFormatterScientificStyle, 4)
+        self.assertEqual(kCFNumberFormatterSpellOutStyle, 5)
+
+        self.assertEqual(kCFNumberFormatterParseIntegersOnly, 1)
+
+        self.assertEqual(kCFNumberFormatterRoundCeiling, 0)
+        self.assertEqual(kCFNumberFormatterRoundFloor, 1)
+        self.assertEqual(kCFNumberFormatterRoundDown, 2)
+        self.assertEqual(kCFNumberFormatterRoundUp, 3)
+        self.assertEqual(kCFNumberFormatterRoundHalfEven, 4)
+        self.assertEqual(kCFNumberFormatterRoundHalfDown, 5)
+        self.assertEqual(kCFNumberFormatterRoundHalfUp, 6)
+
+        self.assertEqual(kCFNumberFormatterPadBeforePrefix, 0)
+        self.assertEqual(kCFNumberFormatterPadAfterPrefix, 1)
+        self.assertEqual(kCFNumberFormatterPadBeforeSuffix, 2)
+        self.assertEqual(kCFNumberFormatterPadAfterSuffix, 3)
+
         self.assertIsInstance(kCFNumberFormatterCurrencyCode, unicode)
         self.assertIsInstance(kCFNumberFormatterDecimalSeparator, unicode)
         self.assertIsInstance(kCFNumberFormatterCurrencyDecimalSeparator, unicode)
@@ -98,6 +101,7 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(kCFNumberFormatterNegativeSuffix, unicode)
         self.assertIsInstance(kCFNumberFormatterPerMillSymbol, unicode)
         self.assertIsInstance(kCFNumberFormatterInternationalCurrencySymbol, unicode)
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance(kCFNumberFormatterCurrencyGroupingSeparator, unicode)
@@ -105,5 +109,6 @@ class TestNumberFormatter (TestCase):
         self.assertIsInstance(kCFNumberFormatterUseSignificantDigits, unicode)
         self.assertIsInstance(kCFNumberFormatterMinSignificantDigits, unicode)
         self.assertIsInstance(kCFNumberFormatterMaxSignificantDigits, unicode)
+
 if __name__ == "__main__":
     main()

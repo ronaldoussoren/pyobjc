@@ -9,6 +9,7 @@ class TestByteOrder (TestCase):
         self.assertEqual(CFByteOrderUnknown , 0)
         self.assertEqual(CFByteOrderLittleEndian , 1)
         self.assertEqual(CFByteOrderBigEndian , 2)
+
     def testCurrent(self):
         if sys.byteorder == 'little':
             self.assertTrue(CFByteOrderGetCurrent(), CFByteOrderLittleEndian)
@@ -92,5 +93,6 @@ class TestByteOrder (TestCase):
         self.assertIsInstance(swapped, CFSwappedFloat64)
         v = CFConvertDoubleSwappedToHost(swapped)
         self.assertEqual(v , 2.5)
+
 if __name__ == "__main__":
     main()

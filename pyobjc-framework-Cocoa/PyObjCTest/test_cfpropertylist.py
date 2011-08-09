@@ -22,8 +22,8 @@ class TestPropertyList (TestCase):
         self.assertEqual(v['key2'] , True)
         valid = CFPropertyListIsValid({u"key": 42, u"key2": True}, kCFPropertyListBinaryFormat_v1_0)
         self.assertIs(valid, True)
-    def testStreams(self):
 
+    def testStreams(self):
         stream = CFWriteStreamCreateWithAllocatedBuffers(kCFAllocatorDefault, kCFAllocatorDefault)
         r = CFWriteStreamOpen(stream)
         self.assertTrue(r)
@@ -55,15 +55,15 @@ class TestPropertyList (TestCase):
         self.assertIs(errorString, None)
         self.assertEqual(res, value)
 
-
-
     def testConstants(self):
         self.assertEqual(kCFPropertyListImmutable , 0)
         self.assertEqual(kCFPropertyListMutableContainers , 1)
         self.assertEqual(kCFPropertyListMutableContainersAndLeaves , 2)
+
         self.assertEqual(kCFPropertyListOpenStepFormat , 1)
         self.assertEqual(kCFPropertyListXMLFormat_v1_0 , 100)
         self.assertEqual(kCFPropertyListBinaryFormat_v1_0 , 200)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(kCFPropertyListReadCorruptError, 3840)
@@ -110,8 +110,6 @@ class TestPropertyList (TestCase):
         dta, err = CFPropertyListCreateData(None, {'key':'value'}, kCFPropertyListBinaryFormat_v1_0, 0, None)
         self.assertIsInstance(dta, CFDataRef)
         self.assertEqual(err, None)
-
-
 
 if __name__ == "__main__":
     main()

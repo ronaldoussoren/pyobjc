@@ -12,9 +12,11 @@ class TestFileDescriptor (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFFileDescriptorGetTypeID(), (int, long))
+
     def testConstants(self):
         self.assertEqual(kCFFileDescriptorReadCallBack , 1 << 0)
         self.assertEqual(kCFFileDescriptorWriteCallBack , 1 << 1)
+
     def testInspection(self):
         def callout(fd, types, context):
             pass

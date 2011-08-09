@@ -8,6 +8,9 @@ class TestNSObjectHelper (NSObject):
     def isContentDiscarded(self): return 1
     def beginContentAccess(self): return 1
 
+    def retainWeakReference(self): return 0
+    def allowsWeakReference(self): return 0
+
 
 class TestNSObjectFunctions (TestCase):
     def testAllocation(self):
@@ -42,9 +45,6 @@ class TestNSObjectFunctions (TestCase):
         self.assertIs(v, False)
         v = NSExtraRefCount(o)
         self.assertEqual(v, cnt)
-
-
-
 
 
 
@@ -96,6 +96,7 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(NSObject.resolveClassMethod_)
         self.assertResultIsBOOL(NSObject.resolveInstanceMethod_)
 
+
         o = NSObject.alloc().init()
         self.assertResultIsBOOL(o.isEqual_)
         self.assertResultIsBOOL(o.isProxy)
@@ -114,6 +115,10 @@ class TestNSObjectInteraction(TestCase):
         self.assertResultIsBOOL(TestNSObjectHelper.beginContentAccess)
         self.assertResultIsBOOL(TestNSObjectHelper.isContentDiscarded)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSObjectHelper.allowsWeakReference)
+        self.assertResultIsBOOL(NSObjectHelper.retainWeakReference)
 
 if __name__ == '__main__':
     main( )

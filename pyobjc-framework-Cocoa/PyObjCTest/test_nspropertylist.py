@@ -14,5 +14,15 @@ class TestNSPropertyList (TestCase):
         self.assertArgIsOut(NSPropertyListSerialization.propertyListWithData_options_format_error_, 3)
         self.assertArgIsOut(NSPropertyListSerialization.propertyListWithStream_options_format_error_, 3)
 
+    @min_os_lelve('10.6')
+    def testConstants10_7(self):
+        self.assertEqual(NSPropertyListImmutable, kCFPropertyListImmutable)
+        self.assertEqual(NSPropertyListMutableContainers, kCFPropertyListMutableContainers)
+        self.assertEqual(NSPropertyListMutableContainersAndLeaves, kCFPropertyListMutableContainersAndLeaves)
+
+        self.assertEqual(NSPropertyListOpenStepFormat, kCFPropertyListOpenStepFormat)
+        self.assertEqual(NSPropertyListXMLFormat_v1_0, kCFPropertyListXMLFormat_v1_0)
+        self.assertEqual(NSPropertyListBinaryFormat_v1_0, kCFPropertyListBinaryFormat_v1_0)
+
 if __name__ == "__main__":
     main()

@@ -8,6 +8,7 @@ from Foundation import NSURL
 class TestURL (TestCase):
     def testTypes(self):
         self.assertIs(CFURLRef, NSURL)
+
     def testTypeID(self):
         val = CFURLGetTypeID()
         self.assertIsInstance(val, (int, long))
@@ -96,6 +97,7 @@ class TestURL (TestCase):
         abs = CFURLCopyAbsoluteURL(ref)
         self.assertIsInstance(abs, CFURLRef)
         self.assertEqual(CFURLGetString(abs) , u"http://www.omroep.nl/sport" )
+
     def testPaths(self):
         url = CFURLCreateWithFileSystemPath(None,
                 u"/tmp/", kCFURLPOSIXPathStyle, True)
@@ -464,7 +466,54 @@ class TestURL (TestCase):
         self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1<<8)
         self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1<<9)
 
-
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCFURLKeysOfUnsetValuesKey, unicode)
+        self.assertIsInstance(kCFURLFileResourceIdentifierKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIdentifierKey, unicode)
+        self.assertIsInstance(kCFURLPreferredIOBlockSizeKey, unicode)
+        self.assertIsInstance(kCFURLIsReadableKey, unicode)
+        self.assertIsInstance(kCFURLIsWritableKey, unicode)
+        self.assertIsInstance(kCFURLIsExecutableKey, unicode)
+        self.assertIsInstance(kCFURLFileSecurityKey, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeKey, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeNamedPipe, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeCharacterSpecial, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeDirectory, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeBlockSpecial, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeRegular, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeSymbolicLink, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeSocket, unicode)
+        self.assertIsInstance(kCFURLFileResourceTypeUnknown, unicode)
+        self.assertIsInstance(kCFURLTotalFileSizeKey, unicode)
+        self.assertIsInstance(kCFURLTotalFileAllocatedSizeKey, unicode)
+        self.assertIsInstance(kCFURLIsMountTriggerKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsRootDirectoryDatesKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsVolumeSizesKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsRenamingKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsAdvisoryFileLockingKey, unicode)
+        self.assertIsInstance(kCFURLVolumeSupportsExtendedSecurityKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsBrowsableKey, unicode)
+        self.assertIsInstance(kCFURLVolumeMaximumFileSizeKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsEjectableKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsRemovableKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsInternalKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsAutomountedKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsLocalKey, unicode)
+        self.assertIsInstance(kCFURLVolumeIsReadOnlyKey, unicode)
+        self.assertIsInstance(kCFURLVolumeCreationDateKey, unicode)
+        self.assertIsInstance(kCFURLVolumeURLForRemountingKey, unicode)
+        self.assertIsInstance(kCFURLVolumeUUIDStringKey, unicode)
+        self.assertIsInstance(kCFURLVolumeNameKey, unicode)
+        self.assertIsInstance(kCFURLVolumeLocalizedNameKey, unicode)
+        self.assertIsInstance(kCFURLIsUbiquitousItemKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemHasUnresolvedConflictsKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemIsDownloadedKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemIsDownloadingKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemIsUploadedKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemIsUploadingKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemPercentDownloadedKey, unicode)
+        self.assertIsInstance(kCFURLUbiquitousItemPercentUploadedKey, unicode)
 
 if __name__ == "__main__":
     main()

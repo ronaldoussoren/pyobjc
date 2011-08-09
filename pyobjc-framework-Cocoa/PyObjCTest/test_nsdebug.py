@@ -4,7 +4,6 @@ import Foundation
 
 class TestNSDebug (TestCase):
     def testNoUnsupportedSymbols(self):
-
         self.assertNotHasAttr(Foundation, 'NSDebugEnabled')
         self.assertNotHasAttr(Foundation, 'NSZombieEnabled')
         self.assertNotHasAttr(Foundation, 'NSDeallocateZombies')
@@ -15,6 +14,7 @@ class TestNSDebug (TestCase):
         self.assertNotHasAttr(Foundation, 'NSCountFrames')
         self.assertHasAttr(Foundation, 'NSIsFreedObject')
         self.assertHasAttr(Foundation, 'NSRecordAllocationEvent')
+
     def testConstants(self):
         self.assertEqual(Foundation.NSObjectAutoreleasedEvent, 3)
         self.assertEqual(Foundation.NSObjectExtraRefIncrementedEvent, 4)

@@ -7,6 +7,7 @@ class TestNSKeyedArchiver (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSInvalidArchiveOperationException, unicode)
         self.assertIsInstance(NSInvalidUnarchiveOperationException, unicode)
+
     def testOutput(self):
         o = NSKeyedUnarchiver.alloc().initForReadingWithData_(
                 NSKeyedArchiver.archivedDataWithRootObject_(u"foobar"))

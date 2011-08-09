@@ -7,6 +7,7 @@ class TestNSRange (TestCase):
         v = NSRange()
         self.assertHasAttr(v, 'location')
         self.assertHasAttr(v, 'length')
+
     def testFunctions(self):
         v = NSMakeRange(1, 4)
         self.assertIsInstance(v, NSRange)
@@ -33,6 +34,8 @@ class TestNSRange (TestCase):
         w = NSRangeFromString(v)
         self.assertIsInstance(w, NSRange)
         self.assertEqual(w, (9, 10))
+
+        self.assertResultHasType(NSValue.rangeValue, NSRange.__typestr__)
 
 if __name__ == "__main__":
     main()

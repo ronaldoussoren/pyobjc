@@ -13,6 +13,61 @@
   <struct name='NSSwappedFloat' type='{_NSSwappedFloat="v"I}' type64='{_NSSwappedFloat="v"I}' />
   <opaque name='NSAppleEventManagerSuspensionID' type='^{__NSAppleEventManagerSuspension=}' type64='^{__NSAppleEventManagerSuspension=}' />
   <opaque name='NSZone*' type='^{_NSZone=}' type64='^{_NSZone=}' />
+  <constant name='NSMetadataQueryLocalDocumentsScope' type='@' />
+  <constant name='NSMetadataQueryUbiquitousDocumentsScope' type='@' />
+  <constant name='NSMetadataQueryUbiquitousDataScope' type='@' />
+  <constant name='NSMetadataItemFSNameKey' type='@' />
+  <constant name='NSMetadataItemDisplayNameKey' type='@' />
+  <constant name='NSMetadataItemURLKey' type='@' />
+  <constant name='NSMetadataItemPathKey' type='@' />
+  <constant name='NSMetadataItemFSSizeKey' type='@' />
+  <constant name='NSMetadataItemFSCreationDateKey' type='@' />
+  <constant name='NSMetadataItemFSContentChangeDateKey' type='@' />
+  <constant name='NSMetadataItemIsUbiquitousKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemHasUnresolvedConflictsKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemIsDownloadedKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemIsDownloadingKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemIsUploadedKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemIsUploadingKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemPercentDownloadedKey' type='@' />
+  <constant name='NSMetadataUbiquitousItemPercentUploadedKey' type='@' />
+  <constant name='NSLinguisticTagSchemeTokenType' type='@' />
+  <constant name='NSLinguisticTagSchemeLexicalClass' type='@' />
+  <constant name='NSLinguisticTagSchemeNameType' type='@' />
+  <constant name='NSLinguisticTagSchemeNameTypeOrLexicalClass' type='@' />
+  <constant name='NSLinguisticTagSchemeLemma' type='@' />
+  <constant name='NSLinguisticTagSchemeLanguage' type='@' />
+  <constant name='NSLinguisticTagSchemeScriptNSLinguisticTagWord' type='@' />
+  <constant name='NSLinguisticTagPunctuation' type='@' />
+  <constant name='NSLinguisticTagWhitespace' type='@' />
+  <constant name='NSLinguisticTagOther' type='@' />
+  <constant name='NSLinguisticTagNoun' type='@' />
+  <constant name='NSLinguisticTagVerb' type='@' />
+  <constant name='NSLinguisticTagAdjective' type='@' />
+  <constant name='NSLinguisticTagAdverb' type='@' />
+  <constant name='NSLinguisticTagPronoun' type='@' />
+  <constant name='NSLinguisticTagDeterminer' type='@' />
+  <constant name='NSLinguisticTagParticle' type='@' />
+  <constant name='NSLinguisticTagPreposition' type='@' />
+  <constant name='NSLinguisticTagNumber' type='@' />
+  <constant name='NSLinguisticTagConjunction' type='@' />
+  <constant name='NSLinguisticTagInterjection' type='@' />
+  <constant name='NSLinguisticTagClassifier' type='@' />
+  <constant name='NSLinguisticTagIdiom' type='@' />
+  <constant name='NSLinguisticTagOtherWord' type='@' />
+  <constant name='NSLinguisticTagSentenceTerminator' type='@' />
+  <constant name='NSLinguisticTagOpenQuote' type='@' />
+  <constant name='NSLinguisticTagCloseQuote' type='@' />
+  <constant name='NSLinguisticTagOpenParenthesis' type='@' />
+  <constant name='NSLinguisticTagCloseParenthesis' type='@' />
+  <constant name='NSLinguisticTagWordJoiner' type='@' />
+  <constant name='NSLinguisticTagDash' type='@' />
+  <constant name='NSLinguisticTagOtherPunctuation' type='@' />
+  <constant name='NSLinguisticTagParagraphBreak' type='@' />
+  <constant name='NSLinguisticTagOtherWhitespace' type='@' />
+  <constant name='NSLinguisticTagPersonalName' type='@' />
+  <constant name='NSLinguisticTagPlaceName' type='@' />
+  <constant name='NSLinguisticTagOrganizationName' type='@' />
   <constant name='NSURLAuthenticationMethodClientCertificate' type='@'/>
   <constant name='NSURLAuthenticationMethodServerTrust' type='@'/>
   <constant name='NSURLErrorFailingURLErrorKey' type='@'/>
@@ -369,6 +424,66 @@
   <constant name='NSTextCheckingZIPKey' type='@' />
   <constant name='NSTextCheckingCountryKey' type='@' />
   <constant name='NSTextCheckingPhoneKey' type='@' />
+  <constant name='NSFileCoordinatorReadingWithoutChanges' value='1' />
+  <constant name='NSFileCoordinatorReadingResolvesSymbolicLink' value='2' />
+  <constant name='NSFileCoordinatorWritingForDeleting' value='1' />
+  <constant name='NSFileCoordinatorWritingForMoving' value='2' />
+  <constant name='NSFileCoordinatorWritingForMerging' value='4' />
+  <constant name='NSFileCoordinatorWritingForReplacing' value='8' />
+  <enum name='NSRegularExpressionCaseInsensitive' value='1' />
+  <enum name='NSRegularExpressionAllowCommentsAndWhitespace' value='2' />
+  <enum name='NSRegularExpressionIgnoreMetacharacters' value='4' />
+  <enum name='NSRegularExpressionDotMatchesLineSeparators' value='8' />
+  <enum name='NSRegularExpressionAnchorsMatchLines' value='16' />
+  <enum name='NSRegularExpressionUseUnixLineSeparators' value='32' />
+  <enum name='NSRegularExpressionUseUnicodeWordBoundaries' value='64' />
+  <enum name='NSMatchingReportProgress' value='1' />
+  <enum name='NSMatchingReportCompletion' value='2' />
+  <enum name='NSMatchingAnchored' value='4' />
+  <enum name='NSMatchingWithTransparentBounds' value='8' />
+  <enum name='NSMatchingWithoutAnchoringBounds' value='16' />
+  <enum name='NSMatchingProgress' value='1' />
+  <enum name='NSMatchingCompleted' value='2' />
+  <enum name='NSMatchingHitEnd' value='4' />
+  <enum name='NSMatchingRequiredEnd' value='8' />
+  <enum name='NSMatchingInternalError' value='16' />
+  <enum name='NSLinguisticTaggerOmitWords' value='1' />
+  <enum name='NSLinguisticTaggerOmitPunctuation' value='2' />
+  <enum name='NSLinguisticTaggerOmitWhitespace' value='4' />
+  <enum name='NSLinguisticTaggerOmitOther' value='8' />
+  <enum name='NSLinguisticTaggerJoinNames' value='16' />
+  <enum name='NSJSONReadingMutableContainers' value='1' />
+  <enum name='NSJSONReadingMutableLeaves' value='2' />
+  <enum name='NSJSONReadingAllowFragments' value='4' />
+  <enum name='NSJSONWritingPrettyPrinted' value='1' />
+  <enum name='NSAlignMinXInward' value='1' />
+  <enum name='NSAlignMinYInward' value='2' />
+  <enum name='NSAlignMaxXInward' value='4' />
+  <enum name='NSAlignMaxYInward' value='8' />
+  <enum name='NSAlignWidthInward' value='16' />
+  <enum name='NSAlignHeightInward' value='32' />
+
+  <enum name='NSAlignMinXOutward' value='256' />
+  <enum name='NSAlignMinYOutward' value='512' />
+  <enum name='NSAlignMaxXOutward' value='1024' />
+  <enum name='NSAlignMaxYOutward' value='2048' />
+  <enum name='NSAlignWidthOutward' value='4096' />
+  <enum name='NSAlignHeightOutward' value='8192' />
+
+  <enum name='NSAlignMinXNearest' value='65536' />
+  <enum name='NSAlignMinYNearest' value='131072' />
+  <enum name='NSAlignMaxXNearest' value='262144' />
+  <enum name='NSAlignMaxYNearest' value='524288' />
+  <enum name='NSAlignWidthNearest' value='1048576' />
+  <enum name='NSAlignHeightNearest' value='2097152' />
+
+  <enum name='NSAlignRectFlipped' value='9223372036854775808' />
+
+  <enum name='NSAlignAllEdgesInward' value='15' />
+  <enum name='NSAlignAllEdgesOutward' value='3840' />
+  <enum name='NSAlignAllEdgesNearest' value='983040' />
+  <enum name='NSFileVersionAddingByMoving' value='1' />
+  <enum name='NSFileVersionReplacingByMoving' value='1' />
   <enum name='NSFileWriteVolumeReadOnlyError' value='642' />
   <enum name='NSTextCheckingTypeOrthography' value='1' />
   <enum name='NSTextCheckingTypeSpelling' value='2' />
@@ -458,6 +573,7 @@
   <enum name='NSDeveloperApplicationDirectory' value='3' />
   <enum name='NSDeveloperDirectory' value='6' />
   <enum name='NSDiacriticInsensitivePredicateOption' value='2' />
+  <enum name='NSNormalizedPredicateOption' value='4' />
   <enum name='NSDiacriticInsensitiveSearch' value='128' />
   <enum name='NSDirectPredicateModifier' value='0' />
   <enum name='NSDocumentDirectory' value='9' />
@@ -553,6 +669,14 @@
   <enum name='NSFoundationVersionNumber10_5_4' value='677.19' />
   <enum name='NSFoundationVersionNumber10_5_5' value='677.21' />
   <enum name='NSFoundationVersionNumber10_5_6' value='677.22' />
+  <enum name='NSFoundationVersionNumber10_5_7' value='677.24' />
+  <enum name='NSFoundationVersionNumber10_5_8' value='677.26' />
+  <enum name='NSFoundationVersionNumber10_6' value='751.00' />
+  <enum name='NSFoundationVersionNumber10_6_1' value='751.00' />
+  <enum name='NSFoundationVersionNumber10_6_2' value='751.14' />
+  <enum name='NSFoundationVersionNumber10_6_3' value='751.21' />
+  <enum name='NSFoundationVersionNumber10_6_4' value='751.29' />
+  <enum name='NSFoundationVersionNumber10_6_5' value='751.42' />
   <enum name='NSFoundationVersionWithFileManagerResourceForkSupport' value='412' />
   <enum name='NSFunctionExpressionType' value='4' />
   <enum name='NSEnumerationConcurrent' value='1' />
@@ -765,7 +889,6 @@
   <enum name='NSSymbolStringEncoding' value='6' />
   <enum name='NSSystemDomainMask' value='8' />
   <enum name='NSTimeIntervalSince1970' value='978307200.0' />
-  <enum name='NSTimeIntervalSince1970' value='978307200.0' />
   <enum name='NSTimeZoneNameStyleGeneric' value='4' />
   <enum name='NSTimeZoneNameStyleShortGeneric' value='5' />
   <enum name='NSURLBookmarkCreationPreferFileIDResolution' value='256' />
@@ -846,6 +969,7 @@
   <enum name='NSUncachedRead' value='2' />
   <enum name='NSDataReadingMapped' value='1' />
   <enum name='NSDataReadingUncached' value='2' />
+  <enum name='NSDataReadingMappedAlways' value='4' />
   <enum name='NSDataWritingAtomic' value='1' />
   <enum name='NSUndefinedDateComponent' value='2147483647' value64='9223372036854775807' />
   <enum name='NSUndoCloseGroupingRunLoopOrdering' value='350000' />
@@ -863,6 +987,11 @@
   <enum name='NSWeekdayCalendarUnit' value='512' />
   <enum name='NSWeekdayOrdinalCalendarUnit' value='1024' />
   <enum name='NSQuarterCalendarUnit' value='2048' />
+  <enum name='NSWeekOfMonthCalendarUnit' value='4096' />
+  <enum name='NSWeekOfYearCalendarUnit' value='8192' />
+  <enum name='NSYearForWeekOfYearCalendarUnit' value='16384' />
+  <enum name='NSCalendarCalendarUnit' value='1048576' />
+  <enum name='NSTimeZoneCalendarUnit' value='2097152' />
   <enum name='NSWidthInsensitiveSearch' value='256' />
   <enum name='NSWindows95OperatingSystem' value='2' />
   <enum name='NSWindowsCP1250StringEncoding' value='15' />
@@ -1066,6 +1195,13 @@
     <arg type='^{_NSDecimal=}' />
     <arg type='^{_NSDecimal=}' />
     <arg type='^{_NSDecimal=}' />
+    <arg type='I' type64='Q' />
+  </function>
+  <function name='NSDecimalMultiplyByPowerOf10' >
+    <retval type='I' type64='Q' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='^{_NSDecimal=}' />
+    <arg type='h' />
     <arg type='I' type64='Q' />
   </function>
   <function name='NSDecimalSubtract' >
@@ -1304,6 +1440,11 @@
   <function name='NSIntegralRect'>
     <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
     <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+  </function>
+  <function name='NSIntegralRectWithOptions'>
+    <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
+    <arg type='Q' />
   </function>
   <function name='NSIntersectionRange'>
     <retval type='{_NSRange=II}' type64='{_NSRange=QQ}' />
@@ -2884,6 +3025,30 @@
 	  <method selector='fileHandleForUpdatingURL:error:' >
 		  <arg index='1' type_modifier='o' />
 	  </method>
+	  <method selector='readabilityHandler' >
+		  <retval block='true' >
+		    <retval type='v' />
+		    <arg type='@' />
+		  </retval>
+	  </method>
+	  <method selector='writeabilityHandler' >
+		  <retval block='true' >
+		    <retval type='v' />
+		    <arg type='@' />
+		  </retval>
+	  </method>
+	  <method selector='setReadabilityHandler' >
+		  <arg index='0' block='true' >
+		    <retval type='v' />
+		    <arg type='@' />
+		  </retval>
+	  </method>
+	  <method selector='setWriteabilityHandler' >
+		  <arg index='0' block='true' >
+		    <retval type='v' />
+		    <arg type='@' />
+		  </retval>
+	  </method>
 
     <method selector='initWithFileDescriptor:closeOnDealloc:'>
       <arg index='1' type='B' />
@@ -2920,6 +3085,15 @@
     </method>
     <method selector='createDirectoryAtPath:attributes:'>
       <retval type='B' />
+    </method>
+    <method selector='createDirectoryAtURL:withIntermediateDirectories:attributes:error:'>
+      <retval type='B' />
+      <arg index='1' type='B' />
+      <arg index='3' type_modifier='o' />
+    </method>
+    <method selector='createSymbolicLinkAtURL:withDestinationURL:error:'>
+      <retval type='B' />
+      <arg index='2' type_modifier='o' />
     </method>
     <method selector='createDirectoryAtPath:withIntermediateDirectories:attributes:error:'>
       <retval type='B' />
@@ -3026,6 +3200,26 @@
 	    <retval type='B'/>
 	    <arg index='4' type_modifier='o' />
 	    <arg index='5' type_modifier='o' />
+    </method>
+    <method selector='setUbiquitous:itemAtURL:destinationURL:error:' >
+      <retval type='B' />
+      <arg index='0' type='B' />
+      <arg index='3' type_modifier'o' />
+    </method>
+    <method selector='isUbiquitousItemAtURL:' >
+      <retval type='B' />
+    </method>
+    <method selector='startDownloadingUbiquitousItemAtURL:error:' >
+      <retval type='B' />
+      <arg index='1' type_modifier'o' />
+    </method>
+    <method selector='evictUbiquitousItemAtURL:error:' >
+      <retval type='B' />
+      <arg index='1' type_modifier'o' />
+    </method>
+    <method selector='URLForPublishingUbiquitousItemAtURL:expirationDate:error:' >
+      <arg index='1' type_modifier'o' />
+      <arg index='2' type_modifier'o' />
     </method>
   </class>
   <class name='NSFormatter'>
@@ -3199,6 +3393,29 @@
 			  <arg type='^B' type_modifier='o' />
 		  </arg>
 	  </method>
+	  <method selector='enumerateRangesUsingBlock:'>
+		  <arg index='0' block='true'>
+			  <retvtype='v' />
+	    		  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			  <arg type_modifier='o' type='^B' />
+		  </arg>
+	  </method>
+	  <method selector='enumerateRangesWithOptions:usingBlock:'>
+		  <arg index='1' block='true'>
+			  <retval type='v' />
+	    		  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			  <arg type_modifier='o' type='^B' />
+		  </arg>
+	  </method>
+	  <method selector='enumerateRangesInRange:options:usingBlock:'>
+		  <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+		  <arg index='2' block='true'>
+			  <retval type='v' />
+	    		  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			  <arg type_modifier='o' type='^B' />
+		  </arg>
+	  </method>
+
   </class>
   <class name='NSInputStream'>
     <method selector='getBuffer:length:' suggestion='Not supported at the moment' />
@@ -3535,6 +3752,46 @@
     </method>
   </class>
   <class name='NSObject'>
+	  <method selector='allowsWeakReference'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='retainWeakReference'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='relinquishPresentedItemToReader:'>
+		  <arg index='0' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@?' block='true'>
+				  <retval type='v' />
+			  </arg>
+		  </arg>
+	  </method>
+	  <method selector='relinquishPresentedItemToWriter:'>
+		  <arg index='0' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@?' block='true'>
+				  <retval type='v' />
+			  </arg>
+		  </arg>
+	  </method>
+	  <method selector='savePresentedItemChangesWithCompletionHandler:'>
+		  <arg index='0' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	  <method selector='accommodatePresentedItemDeletionWithCompletionHandler:'>
+		  <arg index='0' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	  <method selector='accommodatePresentedSubitemDeletionAtURL:completionHandler:'>
+		  <arg index='1' type='@?' block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
 	  <method selector='beginContentAccess'>
 		  <retval type='B'/>
 	  </method>
@@ -4353,8 +4610,14 @@
 	  <method selector='usesStrongWriteBarrier'>
 		  <retval type='B'/>
 	  </method>
+	  <method selector='setUsesStrongWriteBarrier:'>
+		  <arg index='0' type='B'/>
+	  </method>
 	  <method selector='usesWeakReadAndWriteBarriers'>
 		  <retval type='B'/>
+	  </method>
+	  <method selector='setUsesWeakReadAndWriteBarriers:'>
+		  <arg index='0' type='B'/>
 	  </method>
   </class>
   <class name='NSPointerArray'>
@@ -4459,6 +4722,12 @@
     </method>
   </class>
   <class name='NSProxy'>
+	  <method selector='allowsWeakReference'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='retainWeakReference'>
+		  <retval type='B' />
+	  </method>
     <method class_method='true' selector='respondsToSelector:'>
       <retval type='B' />
     </method>
@@ -4745,6 +5014,18 @@
     </method>
   </class>
   <class name='NSString'>
+	  <method selector='linguisticTagsInRange:scheme:options:orthography:tokenRanges:'>
+		  <arg index='4' type_modifier='o' />
+	  </method>
+	  <method selector='enumeratorLinguisticTagsInRange:scheme:options:orthography:usingBlock:'>
+		  <arg index='4' block='true'>
+			  <retval type='v'/>
+			  <arg type='@'>
+			  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+		          <arg type='^B' type_modifier='o' />
+		  </arg>
+	  </method>
 	  <method selector='enumerateSubstringsInRange:options:usingBlock:'>
 	      <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
 	      <arg index='2' block='true' >
@@ -5434,5 +5715,325 @@
     <method selector='shouldResolveExternalEntities'>
       <retval type='B' />
     </method>
+  </class>
+  <class name='NSFileCoordinator'>
+   <method selector='coordinateReadingItemAtURL:options:error:byAccessor:'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' block='true' >
+      <retval type='v' />
+      <arg type='@' />
+    </arg>
+   </method>
+   <method selector='coordinateWritingItemAtURL:options:error:byAccessor:'>
+    <arg index='2' type_modifier='o' />
+    <arg index='3' block='true' >
+      <retval type='v' />
+      <arg type='@' />
+    </arg>
+   </method>
+   <method selector='coordinateReadingItemAtURL:options:writingItemAtURL:options:error:byAccessor:'>
+    <arg index='4' type_modifier='o' />
+    <arg index='5' block='true' >
+      <retval type='v' />
+      <arg type='@' />
+    </arg>
+   </method>
+   <method selector='coordinateWritingItemAtURL:options:writingItemAtURL:options:error:byAccessor:'>
+    <arg index='4' type_modifier='o' />
+    <arg index='5' block='true' >
+      <retval type='v' />
+      <arg type='@' />
+    </arg>
+   </method>
+   <method selector='prepareForReadingItemsAtURLs:options:writingItemsAtURLs:options:error:byAccessor:'>
+     <arg index='4' type_modifier='o' />
+     <arg index='5' block='true' >
+       <retval type='v' />
+       <arg type='@?' block='true'>
+	  <retval type='v' />
+       </arg>
+    </arg>
+   </method>
+ </class>
+ <class name='NSFileVersions'>
+	 <method selector='removeOtherVersionsOfItemAtURL:error:'>
+		 <retval type='B' />
+		 <arg index='1' type_modifier='o' />
+	 </method>
+	 <method selector='removeAndReturnError:'>
+		 <retval type='B' />
+		 <arg index='0' type_modifier='o' />
+	 </method>
+	 <method selector='replaceItemAtURL:options:error:'>
+		 <arg index='2' type_modifier='o' />
+	 </method>
+	 <method selector='setDiscardable:'>
+		 <arg index='0' type='B' />
+	 </method>
+	 <method selector='isDiscardable'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='setResolved:'>
+		 <arg index='0' type='B' />
+	 </method>
+	 <method selector='isResolved'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='setConflict:'>
+		 <arg index='0' type='B' />
+	 </method>
+	 <method selector='isConflict'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='addVersionOfItemAtURL:withContentsOfURL:options:error:'>
+		<arg index='3' type_modifier='o' />
+	</method>
+ </class>
+ <class name='NSJSONSerialization'>
+	 <method selector='isValidJSONObject:'>
+		 <retval type='B' />
+	 </method>
+	 <method class_method='true' selector='dataWithJSONObject:options:error:'>
+		 <arg index='2' type_modifier='o' />
+	 </method>
+	 <method class_method='true' selector='JSONObjectWithData:options:error:'>
+		 <arg index='2' type_modifier='o' />
+	 </method>
+	 <method class_method='true' selector='writeJSONObject:toStream:options:error:'>
+		 <arg index='3' type_modifier='o' />
+	 </method>
+	 <method class_method='true' selector='JSONObjectWithStream:options:error:'>
+		 <arg index='2' type_modifier='o' />
+	 </method>
+ </class>
+ <class name='NSLinguisticTagger'>
+	 <method selector='orthographyAtIndex:effectiveRange:'>
+		 <arg index='1' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+	 </method>
+	 <method selector='enumerateTagsInRange:scheme:options:usingBlock:'>
+		 <arg index='3' block='true'>
+			 <retval type='v' />
+			 <arg type='@' />
+			 <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			 <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='tagAtIndex:scheme:tokenRange:sentenceRange:'>
+		 <arg index='2' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+		 <arg index='3' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+	 </method>
+	 <method selector='tagsInRange:scheme:options:tokenRanges:'>
+		 <arg index='3' type_modifier='o' />
+	 </method>
+	 <method selector='possibleTagsAtIndex:scheme:tokenRange:sentenceRange:scores:'>
+		 <arg index='2' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+		 <arg index='3' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' />
+		 <arg index='4' type_modifier='o' />
+	 </method>
+ </class>
+ <class name='NSOrderedSet'>
+	 <method selector='isEqualToOrderedSet:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='containsObject:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='intersectsOrderedSet:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='insersectsSet:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='isSubsetOfOrderedSet:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='isSubsetOfSet:'>
+		 <retval type='B' />
+	 </method>
+	 <method selector='enumerateObjectsUsingBlock:'>
+		 <arg index='0' block='true'>
+			 <retval type='v' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='enumerateObjectsWithOptions:usingBlock:'>
+		 <arg index='1' block='true'>
+			 <retval type='v' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='enumerateObjectsAtIndexes:options:usingBlock:'>
+		 <arg index='2' block='true'>
+			 <retval type='v' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexOfObjectPassingTest:'>
+		 <arg index='0' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexOfObjectWithOptions:passingTest:'>
+		 <arg index='1' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexOfObjectAtIndexes:options:passingTest:'>
+		 <arg index='2' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexesOfObjectsPassingTest:'>
+		 <arg index='0' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexesOfObjecstWithOptions:passingTest:'>
+		 <arg index='1' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexesOfObjectsAtIndexes:options:passingTest:'>
+		 <arg index='2' block='true'>
+			 <retval type='B' />
+			 <arg type='@' />
+			 <arg type='L' />
+			 <arg type_modifier='o' type='^B' />
+		 </arg>
+	 </method>
+	 <method selector='indexOfObject:inSortedRange:options:usingComparator:'>
+		  <arg index='3' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	 </method>
+	 <method selector='sortedArrayUsingComparator:'>
+		  <arg index='0' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	 </method>
+	 <method selector='sortedArrayWithOptions:usingComparator:'>
+		  <arg index='1' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	 </method>
+	 <method selector='orderedSetWithObjects:count:' class_method='true'>
+		 <arg index='0' c_array_length_in_arg='1' type_modifier='n' />
+	 </method>
+	 <method c_array_delimited_by_null='true' class_method='true' selector='orderedSetWithObjects:' variadic='true' />
+	 <method selector='initWithObjects:count:'>
+		 <arg index='0' c_array_length_in_arg='1' type_modifier='n' />
+	 </method>
+	 <method c_array_delimited_by_null='true' selector='initWithObjects:' variadic='true' />
+	 <method selector='orderedSetWithOrderedSet:range:copyItems:' class_method='true'>
+		 <arg index='2' type='B' />
+	 </method>
+	 <method selector='orderedSetWithOrderedSet:copyItems:' class_method='true'>
+		 <arg index='1' type='B' />
+	 </method>
+	 <method selector='orderedSetWithArray:range:copyItems:' class_method='true'>
+		 <arg index='2' type='B' />
+	 </method>
+	 <method selector='orderedSetWithArray:copyItems:' class_method='true'>
+		 <arg index='2' type='B' />
+	 </method>
+	 <method selector='orderedSetWithSet:copyItems:' class_method='true'>
+		 <arg index='1' type='B' />
+	 </method>
+	 <method selector='initWithOrderedSet:range:copyItems:'>
+		 <arg index='2' type='B' />
+	 </method>
+	 <method selector='initWithOrderedSet:copyItems:'>
+		 <arg index='1' type='B' />
+	 </method>
+	 <method selector='initWithArray:range:copyItems:'>
+		 <arg index='2' type='B' />
+	 </method>
+	 <method selector='initWithArray:copyItems:'>
+		 <arg index='1' type='B' />
+	 </method>
+	 <method selector='initWithSet:copyItems:'>
+		 <arg index='1' type='B' />
+	 </method>
+ </class>
+ <class name='NSMutableOrderedSet'>
+	 <method selector='addObjects:count:'>
+		 <arg index='0' c_array_length_in_arg='1' type_modifier='n' />
+	 </method>
+	 <method selector='replaceObjectsInRange:withObjects:count:'>
+		 <arg index='1' c_array_length_in_arg='2' type_modifier='n' />
+	 </method>
+	 <method selector='sortUsingComparator:'>
+		  <arg index='0' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	 <method selector='sortWithOptions:usingComparator:'>
+		  <arg index='1' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+	 <method selector='sortRange:options:usingComparator:'>
+		  <arg index='2' block='true' >
+			  <retval type='l'/>
+			  <arg type='@' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
+  </class>
+  <class name='NSRegularExpression'>
+	  <method selector='regularExpressionWithPattern:options:error:' class_method='true'>
+		  <arg index='2' type_modifier='o' />
+	  </method>
+	  <method selector='initWithPattern:options:error:' >
+		  <arg index='2' type_modifier='o' />
+	  </method>
+	  <method selector='enumerateMatchesInString:options:range:usingBlock:' >
+		  <arg index='3' block='true'>
+			  <retval type='v' />
+			  <arg type='@' />
+			  <arg type='I' type64='Q' />
+			  <arg type_modifier='o' type='B' />
+		  </arg>
+	  </method>
+  </class>
+  <class name='NSDataDetector'>
+	  <method selector='dataDetectorWithTypes:error:' class_method='true'>
+		  <arg index='1' type_modifier='o' />
+	  </method>
+	  <method selector='initWithTypes:error:'>
+		  <arg index='1' type_modifier='o' />
+	  </method>
   </class>
 </signatures>

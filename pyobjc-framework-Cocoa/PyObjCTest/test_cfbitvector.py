@@ -14,6 +14,7 @@ class TestBitVector (TestCase):
     def testGetTypeID(self):
         v = CFBitVectorGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCreation(self):
         bitset = CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 30)
         self.assertIsInstance(bitset, CFBitVectorRef)
@@ -35,6 +36,7 @@ class TestBitVector (TestCase):
         self.assertIsInstance(set3, CFBitVectorRef)
         self.assertEqual(CFBitVectorGetCount(set3) , 0)
         self.assertIsNot(set3, set)
+
     def testInspection(self):
         bitset = CFBitVectorCreate(None, [0x11, 0x22, 0x33, 0x44], 32)
 
@@ -96,16 +98,6 @@ class TestBitVector (TestCase):
         CFBitVectorSetAllBits(bitset, 0)
         bits = CFBitVectorGetBits(bitset, (0, 20), None)
         self.assertEqual(bits, b'\x00\x00\x00')
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

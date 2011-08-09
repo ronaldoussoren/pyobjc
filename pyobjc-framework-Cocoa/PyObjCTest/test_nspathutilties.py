@@ -34,6 +34,7 @@ class TestNSPathUtilities(TestCase):
         self.assertIsInstance(s, unicode)
         s = NSOpenStepRootDirectory()
         self.assertIsInstance(s, unicode)
+
     def testConstants(self):
         self.assertEqual(NSApplicationDirectory, 1)
         self.assertEqual(NSDemoApplicationDirectory, 2)

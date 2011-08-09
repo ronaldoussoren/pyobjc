@@ -11,6 +11,7 @@ class TestCharacterSet (TestCase):
     def testTypeId(self):
         v = CFCharacterSetGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCreation(self):
         set = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         self.assertIsInstance(set, CFCharacterSetRef)
@@ -31,6 +32,7 @@ class TestCharacterSet (TestCase):
         self.assertIsInstance(set, CFCharacterSetRef)
         set = CFCharacterSetCreateMutableCopy(None, set)
         self.assertIsInstance(set, CFCharacterSetRef)
+
     def testInspection(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
@@ -47,6 +49,7 @@ class TestCharacterSet (TestCase):
 
         data = CFCharacterSetCreateBitmapRepresentation(None, set)
         self.assertIsInstance(data, CFDataRef)
+
     def testInspectLongUnicode(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
@@ -82,7 +85,6 @@ class TestCharacterSet (TestCase):
         CFCharacterSetInvert(set)
         self.assertTrue(CFCharacterSetIsCharacterMember(set, u"9"))
         self.assertFalse(CFCharacterSetIsCharacterMember(set, u"e"))
-
 
     def testConstants(self):
         self.assertEqual(kCFCharacterSetControl, 1)

@@ -17,6 +17,7 @@ class TestNSHTTPCookie (TestCase):
         self.assertIsInstance(NSHTTPCookieDiscard, unicode)
         self.assertIsInstance(NSHTTPCookieMaximumAge, unicode)
         self.assertIsInstance(NSHTTPCookiePort, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSHTTPCookie.isSessionOnly)
         self.assertResultIsBOOL(NSHTTPCookie.isSecure)

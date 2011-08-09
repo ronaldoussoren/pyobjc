@@ -12,6 +12,7 @@ class TestData (TestCase):
             NSCFData = objc.lookUpClass('NSCFData')
 
         self.assertIs(CFDataRef, NSCFData)
+
     def testTypeID(self):
         v = CFDataGetTypeID()
         self.assertTrue(v, (int, long))
@@ -96,7 +97,6 @@ class TestData (TestCase):
         v = CFDataFind(data, src, (0, 11), 0)
         self.assertIsInstance(v, CFRange)
         self.assertEqual(v, (6, 3))
-
 
 if __name__ == "__main__":
     main()

@@ -12,9 +12,11 @@ except ImportError:
 class TestString (TestCase):
     def testType(self):
         self.assertIs(CFStringRef, NSCFString)
+
     def testTypeID(self):
         v = CFStringGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testNoPascalStrings(self):
         self.assertNotHasAttr(CoreFoundation, 'CFStringCreateWithPascalString')
         self.assertNotHasAttr(CoreFoundation, 'CFStringCreateWithPascalStringNoCopy')
@@ -374,19 +376,11 @@ class TestString (TestCase):
         v = CFStringGetMostCompatibleMacStringEncoding(kCFStringEncodingWindowsLatin1)
         self.assertEqual(v, kCFStringEncodingMacRoman)
 
-    
-
-        
-
-
-
-
-
-
     def testNoInlineBuffer(self):
         self.assertNotHasAttr(CoreFoundation, 'CFStringInlineBuffer')
         self.assertNotHasAttr(CoreFoundation, 'CFStringInitInlineBuffer')
         self.assertNotHasAttr(CoreFoundation, 'CFStringGetCharacterFromInlineBuffer')
+
     def testConstants(self):
         self.assertEqual(kCFStringEncodingInvalidId , 0xffffffff)
         self.assertEqual(kCFStringEncodingMacRoman , 0)
@@ -432,13 +426,16 @@ class TestString (TestCase):
         self.assertIsInstance(kCFStringTransformToXMLHex, unicode)
         self.assertIsInstance(kCFStringTransformToUnicodeName, unicode)
         self.assertIsInstance(kCFStringTransformStripDiacritics, unicode)
+
     def testNoPrivate(self):
         self.assertNotHasAttr(CoreFoundation, 'CFShow')
         self.assertNotHasAttr(CoreFoundation, 'CFShowStr')
         self.assertNotHasAttr(CoreFoundation, '__CFStringMakeConstantString')
+
     def testCFSTR(self):
         v = CFSTR(u"hello")
         self.assertIsInstance(v, unicode)
+
 class TestStringEncodingExt (TestCase):
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -573,6 +570,7 @@ class TestStringEncodingExt (TestCase):
         self.assertEqual(kCFStringEncodingEBCDIC_US , 0x0C01 )
         self.assertEqual(kCFStringEncodingEBCDIC_CP037 , 0x0C02 )
         self.assertEqual(kCFStringEncodingShiftJIS_X0213_00 , 0x0628 )
+
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.assertResultIsBOOL(CFStringIsSurrogateHighCharacter)
@@ -589,6 +587,20 @@ class TestStringEncodingExt (TestCase):
         self.assertEqual(len(chars), 2)
         self.assertEqual(chars[0], u'\uD801')
         self.assertEqual(chars[1], u'\uDC01')
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        loc = CFLocaleCopyCurrent()
+
+        self.assertArgIsOut(CFStringGetHyphenationLocationBeforeIndex, 5)
+        v, ch = CFStringGetHyphenationLocationBeforeIndex(u"hello world", 5, CFRange(0, 10), 0, loc, None)
+        self.assertIsInstance(v, (int, long))
+        self.assertIsInstance(ch, (int, long))
+
+        self.assertResultIsBool(CFStringIsHyphenationAvailableForLocale)
+        v = CFStringIsHyphenationAvailableForLocale(loc)
+        self.assertIsInstance(v, bool)
+
 
 
 

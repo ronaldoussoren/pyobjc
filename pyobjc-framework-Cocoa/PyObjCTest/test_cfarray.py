@@ -104,6 +104,7 @@ class TestCFArray (TestCase):
         self.assertEqual(cpy, [1,2,3,4])
         self.assertIsInstance(cpy, CFMutableArrayRef)
         self.assertIsNot(cpy, array )
+
     def testCounts(self):
         array = CFArrayCreate(None, [1,2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [1,2,3,4,4,2])
@@ -113,6 +114,7 @@ class TestCFArray (TestCase):
         self.assertEqual(CFArrayGetCountOfValue(array, (0,6), 4) , 2 )
         self.assertEqual(CFArrayGetCountOfValue(array, (0,6), 2) , 2 )
         self.assertEqual(CFArrayGetCountOfValue(array, (0,6), 3) , 1 )
+
     def testContains(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
         self.assertEqual(array, [u"a",2,3,4,4,2])
@@ -130,7 +132,6 @@ class TestCFArray (TestCase):
         self.assertEqual(CFArrayGetLastIndexOfValue(array, (0, 6), u"hello") , kCFNotFound )
         self.assertArgHasType(CFArrayGetFirstIndexOfValue, 2, b'@')
         self.assertArgHasType(CFArrayGetLastIndexOfValue, 2, b'@')
-
 
     def testGetting(self):
         array = CFArrayCreate(None, [u"a",2,3,4,4,2], 6, kCFTypeArrayCallBacks)
@@ -152,7 +153,6 @@ class TestCFArray (TestCase):
         self.assertIsInstance(array, NSArray)
         array = CFArrayCreateMutableCopy(None, 0, array)
 
-
         self.assertArgHasType(CFArrayAppendValue, 1, b'@')
         self.assertArgHasType(CFArrayInsertValueAtIndex, 2, b'@')
         self.assertArgHasType(CFArraySetValueAtIndex, 2, b'@')
@@ -169,7 +169,6 @@ class TestCFArray (TestCase):
         CFArraySetValueAtIndex(array, 2, u"two")
         self.assertEqual(array, [u"a",4, u"two",4,4,2,u"foo"])
 
-
         CFArrayExchangeValuesAtIndices(array, 1,2)
         self.assertEqual(array, [u"a",u"two",4,4,4,2,u"foo"])
 
@@ -180,7 +179,8 @@ class TestCFArray (TestCase):
 
         array2 = CFArrayCreate(None, [u'hello', u'earth'], 2, kCFTypeArrayCallBacks)
         CFArrayAppendArray(array, array2, (0,2))
-        self.assertEqual(array, [u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo', u'hello', u'earth'])
+        self.assertEqual(array, [
+            u"a",u"two",u'a', u'b', u'c', u'd', u'e', u'f', 2, u'foo', u'hello', u'earth'])
 
         CFArrayRemoveAllValues(array)
         self.assertEqual(array, [])

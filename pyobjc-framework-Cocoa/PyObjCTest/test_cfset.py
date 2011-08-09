@@ -8,6 +8,7 @@ class TestSet (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFSetGetTypeID(), (int, long))
+
     def testCreation(self):
         st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.assertIsInstance(st, CFSetRef)
@@ -20,6 +21,7 @@ class TestSet (TestCase):
         self.assertIsInstance(st, CFSetRef)
         cp = CFSetCreateCopy(None, st)
         self.assertIsInstance(st, CFSetRef)
+
     def testInspection(self):
         st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.assertIsInstance(st, CFSetRef)
@@ -52,6 +54,7 @@ class TestSet (TestCase):
         values = list(values)
         values.sort()
         self.assertEqual(values , [u'a', u'b', u'c'])
+
     def testApplying(self):
         st = CFSetCreate(None, [u"a", u"b", u"c"], 3, kCFTypeSetCallBacks)
         self.assertIsInstance(st, CFSetRef)
@@ -89,7 +92,6 @@ class TestSet (TestCase):
 
         self.assertArgHasType(CFSetReplaceValue, 1, b'@')
         CFSetReplaceValue(st, 'd')
-
 
 if __name__ == "__main__":
     main()

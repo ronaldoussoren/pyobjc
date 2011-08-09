@@ -28,6 +28,7 @@ class TestNSMethodSignature (TestCase):
         v = o.getArgumentTypeAtIndex_(3)
         self.assertEqual(v, b'o^i')
         self.assertIsInstance(v, bytes)
+
     def testMethods(self):
         self.assertResultHasType(NSMethodSignature.getArgumentTypeAtIndex_, b'^' + objc._C_CHAR_AS_TEXT)
         self.assertResultIsNullTerminated(NSMethodSignature.getArgumentTypeAtIndex_)

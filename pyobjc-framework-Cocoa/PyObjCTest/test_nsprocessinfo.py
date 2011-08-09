@@ -31,6 +31,22 @@ class TestNSProcessInfo (TestCase):
             pass
 
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBOOL(NSProcessInfo.setAutomaticTerminationSupportEnabled_, 0)
+        self.assertResultIsBOOL(NSProcessInfo.automaticTerminationSupportEnabled)
+
+        with NSDisabledAutomaticTermination:
+            pass
+
+        class TestException (Exception):
+            pass
+        try:
+            with NSDisabledAutomaticTermination:
+                raise TestException(1)
+
+        except TestException:
+            pass
 
 if __name__ == "__main__":
     main()

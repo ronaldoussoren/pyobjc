@@ -13,10 +13,10 @@ class TestAttributedString (TestCase):
         self.assertIs(CFAttributedStringRef, NSCFAttributedString )
         self.assertIs(CFMutableAttributedStringRef, NSCFAttributedString )
 
-
     def testTypeID(self):
         v = CFAttributedStringGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCreate(self):
         val = CFAttributedStringCreate(None, u"hello", {u'foo': 42})
         self.assertIsInstance(val, CFAttributedStringRef)
@@ -24,6 +24,7 @@ class TestAttributedString (TestCase):
         self.assertIsInstance(val, CFAttributedStringRef)
         val2 = CFAttributedStringCreateCopy(None, val)
         self.assertIs(val2, val)
+
     def testGetting(self):
         val = CFAttributedStringCreate(None, u"hello", {u'foo': 42, u'bar':'baz'})
         self.assertIsInstance(val, CFAttributedStringRef)
@@ -55,6 +56,7 @@ class TestAttributedString (TestCase):
         v, rng = CFAttributedStringGetAttributeAndLongestEffectiveRange(val, 1, u'bar', (0,5), objc.NULL)
         self.assertEqual(v , 'baz' )
         self.assertEqual(rng , objc.NULL )
+
     def testMutableCopy(self):
         val = CFAttributedStringCreateMutable(None, 0)
         self.assertIsInstance(val, CFAttributedStringRef)
@@ -91,6 +93,7 @@ class TestAttributedString (TestCase):
         rep = CFAttributedStringCreate(None, "dummy", {u'attrib': 99} )
         CFAttributedStringReplaceAttributedString(val, (1,3), rep)
         self.assertEqual(CFAttributedStringGetString(val) , u'Hdummyo')
+
     def testEditing(self):
         val = CFAttributedStringCreateMutable(None, 0)
         self.assertIsInstance(val, CFAttributedStringRef)

@@ -25,6 +25,15 @@ class TestNSCalendar (TestCase):
     def testConstants10_6(self):
         self.assertEqual( NSQuarterCalendarUnit, kCFCalendarUnitQuarter)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSWeekOfMonthCalendarUnit, kCFCalendarUnitWeekOfMonth)
+        self.assertEqual(NSWeekOfYearCalendarUnit, kCFCalendarUnitWeekOfYear)
+        self.assertEqual(NSYearForWeekOfYearCalendarUnit, kCFCalendarUnitYearForWeekOfYear)
+        self.assertEqual(NSCalendarCalendarUnit, (1 << 20))
+        self.assertEqual(NSTimeZoneCalendarUnit, (1 << 21))
+
+
     @min_os_level('10.5')
     def testMethods10_5(self):
         obj = NSCalendar.currentCalendar()

@@ -23,6 +23,7 @@ class TestURLAccess (TestCase):
         self.assertIsInstance( kCFURLFileOwnerID, unicode)
         self.assertIsInstance( kCFURLHTTPStatusCode, unicode)
         self.assertIsInstance( kCFURLHTTPStatusLine, unicode)
+
     def testFunctions(self):
         url = CFURLCreateWithFileSystemPath(None, __file__, kCFURLPOSIXPathStyle, False)
 
@@ -66,8 +67,5 @@ class TestURLAccess (TestCase):
         self.assertIsInstance(errorCode, (int, long))
         self.assertFalse(os.path.exists(__file__ + "TEST"))
 
-
-            
-                
 if __name__ == "__main__":
     main()

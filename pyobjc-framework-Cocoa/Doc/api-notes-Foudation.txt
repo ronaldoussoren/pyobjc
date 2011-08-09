@@ -1,6 +1,13 @@
 API Notes for the Foundation framework
 ======================================
 
+Introduction
+------------
+
+This document contains information about APIs that do not work, or work
+differently than expected. All other APIs are supported and can be accessed
+using the standard mechanisms described in the PyObjC Core documentation.
+
 ``NSFastEnumeration``
 ---------------------
 
@@ -32,6 +39,14 @@ API Notes for the Foundation framework
 * ``NSGetUncaughtExceptionHandler``, ``NSSetUncaughtExceptionHandler``
 
   These functions are not yet supported.
+
+``NSExpression``
+----------------
+
+* ``expressionWithFormat:``
+
+  This method is currently not supported because there is no API documentation,
+  which makes it impossible to wrap this method with a vararg signature.
 
 
 ``NSGarbageCollector``
@@ -108,6 +123,16 @@ OSX, but only has a real side effect on OSX 10.6 or later.
 Usage::
 
 	with NSDisabledSuddenTermination:
+	    # sudden termination is disabled here
+	    pass
+
+PyObjC defines a context named ``NSDisabledAutomaticTermination``. This can be used to 
+disable automatic termination for a block of code. The context works on all versions of
+OSX, but only has a real side effect on OSX 10.6 or later.
+
+Usage::
+
+	with NSDisabledAutomaticTermination("Updating status"):
 	    # sudden termination is disabled here
 	    pass
 	

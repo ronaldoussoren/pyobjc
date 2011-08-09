@@ -7,19 +7,6 @@ import Foundation
 import os
 
 class TestFoundation (TestCase):
-    def testClasses(self):
-        pass
-        # self.assert_( hasattr(Foundation, 'CLASSNAME') )
-        # self.assert_( isinstance(Foundation.CLASSNAME, objc.objc_class) )
-        # Tollfree CF-type:
-        # self.assert_( hasattr(Foundation, 'CLASSNAMERef') )
-        # self.assert_( Foundation.CLASSNAMERef is Foundation.CLASSNAME )
-
-        # Not-tollfree CF-type:
-        # self.assert_( hasattr(Foundation, 'CLASSNAMERef') )
-        # self.assert_( issubclass(Foundation.CLASSNAMERef, objc.lookUpClass('NSCFType')) )
-        # self.assert_( Foundation.CLASSNAMERef is not objc.lookUpClass('NSCFType') )
-
     def testValues(self):
         self.assert_( hasattr(Foundation, 'NSTimeIntervalSince1970') )
         self.assert_( isinstance(Foundation.NSTimeIntervalSince1970, float) )
@@ -31,21 +18,8 @@ class TestFoundation (TestCase):
         self.assert_( hasattr(Foundation, 'NSURLResponseUnknownLength') )
         self.assert_( isinstance(Foundation.NSURLResponseUnknownLength, (int, long)) )
 
-    def testVariables(self):
-        # Use this to test for global variables, (NSString*'s and the like)
-        pass
-
-        # self.assert_( hasattr(Foundation, 'CONSTANT') )
-        # self.assert_( isinstance(Foundation.CONSTANT, unicode) )
-
     def testFunctions(self):
         self.assert_( hasattr(Foundation, 'NSStringFromSelector') )
-
-    def testOpaque(self):
-        # Use this to test for opaque pointers
-        pass
-
-        # self.assert_( hasattr(Foundation, 'OPAQUE') )
 
     def testProtocols(self):
         self.assert_( hasattr(Foundation, 'protocols') )

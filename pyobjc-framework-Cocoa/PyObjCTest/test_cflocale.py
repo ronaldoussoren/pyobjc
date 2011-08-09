@@ -8,8 +8,8 @@ class TestLocale (TestCase):
 
     def testGetTypeID(self):
         self.assertIsInstance(CFLocaleGetTypeID(), (int, long))
-    def testInspection(self):
 
+    def testInspection(self):
         locale = CFLocaleGetSystem()
         self.assertIsInstance(locale, CFLocaleRef)
         locale = CFLocaleCopyCurrent()
@@ -56,8 +56,8 @@ class TestLocale (TestCase):
         if v is not None:
             self.assertIsInstance(v, unicode)
         self.assertEqual(v , u'Nederlands (Nederland)')
-    def testConstants(self):
 
+    def testConstants(self):
         self.assertIsInstance( kCFLocaleIdentifier, unicode)
         self.assertIsInstance( kCFLocaleLanguageCode, unicode)
         self.assertIsInstance( kCFLocaleCountryCode, unicode)
@@ -80,15 +80,18 @@ class TestLocale (TestCase):
         self.assertIsInstance( kCFIslamicCalendar, unicode)
         self.assertIsInstance( kCFIslamicCivilCalendar, unicode)
         self.assertIsInstance( kCFJapaneseCalendar, unicode)
+
     @min_os_level('10.5')
     def testFunctions10_5(self):
         codes = CFLocaleCopyCommonISOCurrencyCodes()
         self.assertIsInstance(codes, CFArrayRef)
         codes = CFLocaleCopyPreferredLanguages()
         self.assertIsInstance(codes, CFArrayRef)
+
     @min_os_level('10.5')
     def testConstants10_5(self):
         self.assertIsInstance( kCFLocaleCurrentLocaleDidChangeNotification, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(kCFLocaleLanguageDirectionUnknown, 0)
@@ -106,7 +109,6 @@ class TestLocale (TestCase):
         self.assertIsInstance(kCFPersianCalendar, unicode)
         self.assertIsInstance(kCFIndianCalendar, unicode)
         self.assertIsInstance(kCFISO8601Calendar, unicode)
-
 
     @min_os_level('10.6')
     def testFunctions10_6(self):

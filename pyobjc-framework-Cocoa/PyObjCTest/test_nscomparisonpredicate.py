@@ -6,6 +6,7 @@ class TestNSComparisonPredicate (TestCase):
     def testConstants(self):
         self.assertEqual(NSCaseInsensitivePredicateOption, 1)
         self.assertEqual(NSDiacriticInsensitivePredicateOption, 2)
+        self.assertEqual(NSNormalizedPredicateOption, 4)
 
         self.assertEqual(NSDirectPredicateModifier, 0)
         self.assertEqual(NSAllPredicateModifier, 1)

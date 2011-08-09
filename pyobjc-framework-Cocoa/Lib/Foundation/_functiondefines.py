@@ -59,3 +59,26 @@ class _OC_DisabledSuddenTermination (object):
 
 
 NSDisabledSuddenTermination = _OC_DisabledSuddenTermination()
+
+if hasattr(NSProcessInfo, 'disableSuddenTermination_'):
+    class NSDisabledAutomaticTermination (object):
+        """
+        Helper class to implement NSDisabledAutomaticTermination
+
+        Usage::
+
+            with NSDisabledAutomaticTermination:
+                pass
+
+        Inside the with block sudden termination is disabled.
+
+        This only has an effect on OSX 10.6 or later.
+        """
+        def __init__(self, reason):
+            self._reason = reason
+
+        def __enter__(self):
+            NSProcessInfo.processInfo().disableAutomaticTermination_(self._reason)
+
+        def __exit__(self, type, value, tb):
+            NSProcessInfo.processInfo().enableAutomaticTermination_(self._reason)

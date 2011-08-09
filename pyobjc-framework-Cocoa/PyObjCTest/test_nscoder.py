@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 import objc
 
 from Foundation import *
+import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass4
 
 try:
@@ -124,6 +125,8 @@ class TestPythonCoder(TestCase):
         self.assertResultHasType(NSCoder.decodeBytesForKey_returnedLength_, b'^v')
         self.assertResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
         self.assertArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
+
+        self.assertHasattr(Foundation, 'NXReadNSObjectFromCoder')
 
 
 if __name__ == '__main__':

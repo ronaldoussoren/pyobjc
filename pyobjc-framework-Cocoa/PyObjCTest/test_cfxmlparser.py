@@ -10,6 +10,7 @@ class TestXMLParser (TestCase):
 
     def testTypeID(self):
         self.assertIsInstance(CFXMLParserGetTypeID(), (int, long))
+
     def testConstants(self):
         self.assertEqual(kCFXMLParserValidateDocument , (1 << 0) )
         self.assertEqual(kCFXMLParserSkipMetaData , (1 << 1) )
@@ -41,5 +42,10 @@ class TestXMLParser (TestCase):
         self.assertIsInstance(kCFXMLTreeErrorLineNumber, unicode)
         self.assertIsInstance(kCFXMLTreeErrorLocation, unicode)
         self.assertIsInstance(kCFXMLTreeErrorStatusCode, unicode)
+
+    @expectedFailure
+    def testMissingWrappers(self):
+        self.fail("Missing manual wrappers for CFXMLParser (low prio)")
+
 if __name__ == "__main__":
     main()
