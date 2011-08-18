@@ -533,7 +533,7 @@ parse_printf_args(
 		Py_INCREF(encoded);
 
 	} else if (PyUnicode_Check(py_format)) {
-		encoded = PyUnicode_AsEncodedString(py_format, NULL, NULL);
+		encoded = PyUnicode_AsEncodedString(py_format, "utf-8", NULL);
 		if (encoded == NULL) {
 			return -1;
 		}

@@ -613,6 +613,10 @@ class TestPrintfFormat (TestCase):
         v = makeArrayWithFormat_("hello %s", b"world")
         self.assertEqual(list(v), [ "hello %s", "hello world"])
 
+        v = makeArrayWithFormat_(u"\xf1")
+        self.assertEqual(list(v), [ u"\xf1", u"\xf1"])
+
+
     def test_cformat(self):
 
         v = makeArrayWithCFormat_(b"%3d", 10)
