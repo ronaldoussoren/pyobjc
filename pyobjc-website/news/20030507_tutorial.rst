@@ -1,5 +1,0 @@
-Updated tutorial
-================
-      
-The tutorial included in the 0.9 release was not entirely up-to-date, please use the tutorial on this website.
-

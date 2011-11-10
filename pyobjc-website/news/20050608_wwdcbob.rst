@@ -1,6 +1,0 @@
-PyObjC sessions at WWDC '05
-===========================
-
-Bob Ippolito did a session about Python on Mac OS X, and more specifically
-PyObjC, at WWDC 2005. The web presence for that session is now up
-at: http://pythonmac.org/wwdc2005/

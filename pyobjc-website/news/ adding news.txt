@@ -1,5 +1,0 @@
-To add news to the website add a new file to this directory. The file
-should be named ``YYYYmmdd_suffix.rst``, ``YYYYmmdd`` is the date the 
-news item was added, ``suffix`` is an arbitrary suffix.
-
-The contents of the file should be a short bit of ReST formatted text. 

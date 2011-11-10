@@ -1,4 +1,0 @@
-Release 0.6.1
-=============
-
-Last release made that used a single dynamically loadable module named ``pyobjc``.

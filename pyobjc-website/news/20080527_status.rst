@@ -1,8 +1,0 @@
-A short status update
-=====================
-
-PyObjC development is pretty slow at the moment. I had hoped to release
-PyObjC 2.1 in March, but that was not to be.
-
-The trunk is slowly moving forward though, but (still) doesn't support
-OSX 10.4 at the moment. Fixing that is easy, but takes time.

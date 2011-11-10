@@ -1,9 +1,0 @@
-PyObjC 1.3.7 released
-=====================
-
-This version features support for Xcode 2.1, an initial port to Intel, wrappers
-for even more frameworks and several bugfixes.
-
-See `the NEWS file`__ for more information.
-
-.. __: /NEWS-1.3.7.html

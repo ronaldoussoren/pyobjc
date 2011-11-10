@@ -1,9 +1,0 @@
-PyObjC 1.3.6 released
-=====================
-
-Just after the release of PyObjC 1.3.5 we noticed a bug in the core that made
-most plugins unusable, and one of the examples was non-functional. See the `NEWS file`__
-
-.. __: /NEWS-1.3.6.html
-
-All users of PyObjC 1.3.5 are advised to update immediately.

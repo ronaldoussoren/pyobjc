@@ -1,9 +1,0 @@
-Initial release of web site
-===========================
-
-
-
-For the first time ever, the PyObjC module has a real web site (the start of one anyway).  The implementation 
-is largely a copy of the `Fink project's excellent site`__. The design and graphics were contributed by Jim Tittsler. The content was compiled from many sources-- Jim's work, Fink, the PyObjC source trees and some original-- by Bill Bumgarner.
-
-.. __: http://fink.sourceforge.net/

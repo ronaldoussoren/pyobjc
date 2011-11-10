@@ -1,6 +1,0 @@
-PyObjC 1.1 released
-===================
-
-It has been a long, long process, but PyObjC 1.1 is finally there.  See the `NEWS file`__ for details
-
-.. __: /NEWS-1.1.html

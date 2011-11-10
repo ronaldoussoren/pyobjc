@@ -1,5 +1,0 @@
-CVS snapshots
-=============
-
-We now have CVS snapshots available ([update: this is no longer relevant, link removed]. These
-  are automaticly generated snapshots of our CVS tree. They might not work, and need not even compile.
