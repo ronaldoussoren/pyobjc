@@ -124,10 +124,16 @@ class DgTestCase (unittest.TestCase):
         else:
             extra_link = ''
 
+        CFLAGS=get_config_var('CFLAGS')
+        if int(os.uname()[2].split('.')[0]) >= 11:
+            # Workaround for compile failure on OSX 10.7 
+            # and Xcode 4.2
+            CFLAGS=re.sub('\s+-isysroot\s+\S+\s+', ' ', CFLAGS)
+
         commandline='MACOSX_DEPLPOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),
                 get_config_var('CC'),
-                get_config_var('CFLAGS'), self.filename, ' '.join(libffiobjects),
+                CFLAGS, self.filename, ' '.join(libffiobjects),
 		extra_link)
 
         fp = os.popen(commandline)
