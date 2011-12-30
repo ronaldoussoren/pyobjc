@@ -7,6 +7,20 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- -[OC_PythonNumber compare:] calls super when the other value is
+  an NSNumber and the Python value can be represented using a basic C 
+  type.
+
+  This could slightly affect the results of comparing Python and
+  Cocoa numbers, and avoids unbounded recursion when comparing 
+  Python numbers with NSDecimalNumbers on OSX 10.7 or later.
+
+- Add implementations for methods from the NSComparisonMethods 
+  informal protocol to OC_PythonNumber
+
+- Add '__cmp__' method when the Objective-C class implements the
+  'compare:' selector.
+
 - Introduced a way to compile bridgesupport data and lazily load wrappers.
 
   Avoid using "from Cocoa import *" to get the most benefits from this,

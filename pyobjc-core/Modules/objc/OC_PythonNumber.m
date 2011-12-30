@@ -421,6 +421,27 @@
 
 - (NSComparisonResult)compare:(NSNumber *)aNumber
 {
+	/* Rely on -[NSNumber compare:] when the other value
+	 * is a number and we're not a python int that doesn't
+	 * fit into a 'long long'.
+	 *
+	 * In all other cases use Python's comparison semantics.
+	 */
+	if ([aNumber isKindOfClass:[NSNumber class]] && ![aNumber isMemberOfClass: [OC_PythonNumber class]]) {
+		if (PyLong_Check(value)) {
+			PY_LONG_LONG r;
+			r = PyLong_AsLongLong(value);
+			if (r == -1 && PyErr_Occurred()) {
+				PyErr_Print();
+				PyErr_Clear();
+			} else {
+			     return [super compare:aNumber];
+			}
+		} else {
+			return [super compare:aNumber];
+		}
+	} 
+
 	PyObjC_BEGIN_WITH_GIL
 		PyObject* other = PyObjC_IdToPython(aNumber);
 		if (other == NULL) {
@@ -446,28 +467,46 @@
 	PyObjC_END_WITH_GIL
 }
 
+
+#define COMPARE_METHOD(NAME, OPERATOR) \
+	-(BOOL)NAME:(NSObject*)aNumber \
+{ \
+	PyObjC_BEGIN_WITH_GIL \
+		PyObject* other = PyObjC_IdToPython(aNumber); \
+		if (other == NULL) { \
+			PyObjC_GIL_FORWARD_EXC(); \
+		} \
+ \
+		int r = PyObject_RichCompareBool(value, other, OPERATOR); \
+		Py_DECREF(other); \
+		if (r == -1) { \
+			PyObjC_GIL_FORWARD_EXC(); \
+		} \
+ \
+		if (r) { \
+			PyObjC_GIL_RETURN(YES); \
+		} else { \
+			PyObjC_GIL_RETURN(NO); \
+		} \
+ \
+	PyObjC_END_WITH_GIL \
+}
+
+COMPARE_METHOD(isEqualTo, Py_EQ)
+COMPARE_METHOD(isNotEqualTo, Py_NE)
+COMPARE_METHOD(isGreaterThan, Py_GT)
+COMPARE_METHOD(isGreaterThanOrEqualTo, Py_GE)
+COMPARE_METHOD(isLessThan, Py_LT)
+COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
+
+
 -(BOOL)isEqualToNumber:(NSNumber*)aNumber
 {
-	PyObjC_BEGIN_WITH_GIL
-		PyObject* other = PyObjC_IdToPython(aNumber);
-		if (other == NULL) {
-			PyObjC_GIL_FORWARD_EXC();
-		}
-
-		int r = PyObject_RichCompareBool(value, other, Py_EQ);
-		Py_DECREF(other);
-		if (r == -1) {
-			PyObjC_GIL_FORWARD_EXC();
-		}
-
-		if (r) {
-			PyObjC_GIL_RETURN(YES);
-		} else {
-			PyObjC_GIL_RETURN(NO);
-		}
-
-	PyObjC_END_WITH_GIL
+	return [self isEqualTo:aNumber];
 }
+
+
+
 
 #if 1
 

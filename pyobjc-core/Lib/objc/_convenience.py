@@ -283,6 +283,11 @@ CONVENIENCE_METHODS[b'hash'] = (
     ('__hash__', objc_hash),
 )
 
+if sys.version_info[0] == 2:
+    CONVENIENCE_METHODS[b'compare:'] = (
+        ('__cmp__', lambda self, other: bool(self.compare_(other))),
+    )
+
 CONVENIENCE_METHODS[b'isEqualTo:'] = (
     ('__eq__', lambda self, other: bool(self.isEqualTo_(other))),
 )
