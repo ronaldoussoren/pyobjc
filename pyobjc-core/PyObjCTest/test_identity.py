@@ -92,7 +92,7 @@ class ObjCRoundTrip (TestCase):
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
         self.assertTrue(isinstance(v, objc.formal_protocol))
 
-    if sys.maxint < 2 ** 32:
+    if sys.maxint < 2 ** 32 and os_release() < "10.7":
         def testObject(self):
             container = OC_TestIdentity.alloc().init()
             cls = objc.lookUpClass("Object")
@@ -194,7 +194,7 @@ class ObjCtoPython (TestCase):
         v = container.storedObject()
         self.assertFetchingTwice(container, "protocol")
 
-    if sys.maxint < 2**32:
+    if sys.maxint < 2 ** 32 and os_release() < "10.7":
         def testObject(self):
             container = OC_TestIdentity.alloc().init()
 
