@@ -7,6 +7,9 @@ class TestNSCollectionViewHelper (NSObject):
     def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(self, v, i, e, o): return 1
     def collectionView_validateDrop_proposedIndex_dropOperation_(self, v, d, i, o): return 1
     def collectionView_acceptDrop_index_dropOperation_(self, v, d, i, o): return 1
+    def collectionView_pasteboardWriterForItemAtIndex_(self, v, i): pass
+    def collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_(self, v, i, j, p): pass
+    def collectionView_draggingSession_endedAtPoint_draggingOperation_(self, a, b, c, d): pass
 
 
 class TestNSCollectionView (TestCase):
@@ -45,6 +48,14 @@ class TestNSCollectionView (TestCase):
             2, objc._C_NSInteger)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
             3, objc._C_NSInteger)
+
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_, 
+                2, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
+                2, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
+                3, objc._C_NSUInteger)
 
 
     @min_os_level('10.6')

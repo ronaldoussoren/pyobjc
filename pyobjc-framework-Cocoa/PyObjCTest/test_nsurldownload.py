@@ -7,6 +7,7 @@ class TestNSURLDownloadHelper (NSObject):
     def download_shouldDecodeSourceDataOfMIMEType_(self, a, b): return 1
     def download_canAuthenticateAgainstProtectionSpace_(self, a, b): return 1
     def downloadShouldUseCredentialStorage_(self, a): return 1
+    def download_willResumeWithResponse_fromByte_(self, a, b ,c): pass
 
 
 class TestNSURLDownload (TestCase):
@@ -23,6 +24,8 @@ class TestNSURLDownload (TestCase):
         self.assertResultIsBOOL(TestNSURLDownloadHelper.download_shouldDecodeSourceDataOfMIMEType_)
         self.assertResultIsBOOL(TestNSURLDownloadHelper.download_canAuthenticateAgainstProtectionSpace_)
         self.assertResultIsBOOL(TestNSURLDownloadHelper.downloadShouldUseCredentialStorage_)
+        self.assertArgHasType(TestNSURLDownloadHelper.download_willResumeWithResponse_fromByte_,
+                2, objc._C_LNG_LNG)
 
 if __name__ == "__main__":
     main()

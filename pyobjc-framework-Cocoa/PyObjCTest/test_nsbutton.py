@@ -13,6 +13,8 @@ class TestNSButton (TestCase):
         self.assertResultIsBOOL(NSButton.performKeyEquivalent_)
         self.assertResultIsBOOL(NSButton.allowsMixedState)
         self.assertArgIsBOOL(NSButton.setAllowsMixedState_, 0)
+        self.assertArgIsBOOL(NSButton.setShowsBorderOnlyWhileMouseInside, 0)
+        self.assertResultIsBOOL(NSButton.showsBorderOnlyWhileMouseInside)
 
 if __name__ == "__main__":
     main()

@@ -3,8 +3,9 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 class TestNSAnimationHelper (NSObject):
-    def animationShouldStart_(self, animation):
-        return 1
+    def animationShouldStart_(self, animation): return 1
+    def animation_valueForProgress_(self, a, b): return 1
+    def animation_didReachProgressMark_(self, a, b): return 1
 
 class TestNSAnimation (TestCase):
     def testConstants(self):
@@ -30,8 +31,15 @@ class TestNSAnimation (TestCase):
         self.assertIsInstance(NSAnimationTriggerOrderIn, unicode)
         self.assertIsInstance(NSAnimationTriggerOrderOut, unicode)
 
+    def testMethods(self):
+        self.assertResultIsBOOL(NSAnimation.isAnimating)
+
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
+
+        self.assertResultHasType(TestNSAnimationHelper.animation_valueForProgress_, objc._C_FLT)
+        self.assertArgHasType(TestNSAnimationHelper.animation_valueForProgress_, 1, objc._C_FLT)
+        self.assertArgHasType(TestNSAnimationHelper.animation_didReachProgressMark_, 1, objc._C_FLT)
 
 if __name__ == "__main__":
     main()

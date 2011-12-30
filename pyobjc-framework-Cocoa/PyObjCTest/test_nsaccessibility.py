@@ -48,6 +48,7 @@ class TestNSAccessibility (TestCase):
 
         v = NSAccessibilityPostNotification(b, "hello")
         self.assertIs(v, None)
+
     def testConstants(self):
         self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
         self.assertIsInstance(NSAccessibilityRoleAttribute, unicode)
@@ -335,6 +336,13 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityRatingIndicatorSubrole, unicode)
         self.assertIsInstance(NSAccessibilityContentListSubrole, unicode)
         self.assertIsInstance(NSAccessibilityDefinitionListSubrole, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSAccessibilityAutocorrectedTextAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityFullScreenButtonAttribute, unicode)
+        self.assertIsInstance(NSAccessibilityPopoverRole, unicode)
+        self.assertIsInstance(NSAccessibilityFullScreenButtonSubrole, unicode)
 
 if __name__ == "__main__":
     main()

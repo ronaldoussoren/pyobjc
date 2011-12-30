@@ -62,6 +62,7 @@ class TestNSCell(TestCase):
         self.assertArgIsBOOL(NSCell.setTruncatesLastVisibleLine_, 0)
         self.assertResultIsBOOL(NSCell.refusesFirstResponder)
         self.assertArgIsBOOL(NSCell.setRefusesFirstResponder_, 0)
+        self.assertResultIsBOOL(NSCell.acceptsFirstResponder)
         self.assertResultIsBOOL(NSCell.showsFirstResponder)
         self.assertArgIsBOOL(NSCell.setShowsFirstResponder_, 0)
         self.assertResultIsBOOL(NSCell.wantsNotificationForMarkedText)

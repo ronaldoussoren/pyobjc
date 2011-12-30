@@ -33,6 +33,7 @@ class TestNSZone (TestCase):
         self.assertNotHasAttr(Foundation, 'NSAllocateMemoryPages')
         self.assertNotHasAttr(Foundation, 'NSDeallocateMemoryPages')
         self.assertNotHasAttr(Foundation, 'NSCopyMemoryPages')
+
     def testConstants(self):
         self.assertEqual(NSScannedOption, (1<<0))
         self.assertEqual(NSCollectorDisabledOption, (1<<1))
@@ -46,6 +47,7 @@ class TestNSZone (TestCase):
         self.assertIs(v, o)
         v = NSMakeCollectable(None)
         self.assertIs(v, None)
+
     def testInfoFunctions(self):
         v = NSPageSize()
         self.assertIsInstance(v, (int, long))
@@ -57,6 +59,7 @@ class TestNSZone (TestCase):
         self.assertIsInstance(v, (int, long))
         v = NSRealMemoryAvailable()
         self.assertIsInstance(v, (int, long))
+
     def testZoneCreation(self):
         z = NSDefaultMallocZone()
         if z is not None:

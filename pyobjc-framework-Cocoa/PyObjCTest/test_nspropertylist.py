@@ -14,7 +14,7 @@ class TestNSPropertyList (TestCase):
         self.assertArgIsOut(NSPropertyListSerialization.propertyListWithData_options_format_error_, 3)
         self.assertArgIsOut(NSPropertyListSerialization.propertyListWithStream_options_format_error_, 3)
 
-    @min_os_lelve('10.6')
+    @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertEqual(NSPropertyListImmutable, kCFPropertyListImmutable)
         self.assertEqual(NSPropertyListMutableContainers, kCFPropertyListMutableContainers)

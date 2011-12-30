@@ -2821,7 +2821,7 @@
     <retval type='^{__CFRunLoopObserver=}' already_cfretained='true' />
     <arg type='^{__CFAllocator=}' />
     <arg type='L' type64='Q' />
-    <arg type='B' >
+    <arg type='B' />
     <arg type='L' type64='Q' />
     <arg type='@?' block='true'>
       <retval type='v' />
@@ -3092,7 +3092,7 @@
     <arg type='{_CFRange=ll}' type64='{_CFRange=ll}' />
     <arg type='L' type64='Q' />
     <arg type='^{__CFLocale=}' type64='^{__CFLocale=}' />
-    <arg type_modifier='o' type='^I'>
+    <arg type_modifier='o' type='^I' />
   </function>
   <function name='CFStringIsHyphenationAvailableForLocale'>
     <retval type='B' />

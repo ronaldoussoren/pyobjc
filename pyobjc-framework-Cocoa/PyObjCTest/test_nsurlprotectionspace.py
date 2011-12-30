@@ -12,6 +12,14 @@ class TestNSURLProtectionSpace (TestCase):
         self.assertIsInstance(NSURLAuthenticationMethodHTTPDigest, unicode)
         self.assertIsInstance(NSURLAuthenticationMethodHTMLForm, unicode)
 
+    @min_os_level('10.5')
+    def testConstants10_5(self):
+        self.assertIsInstance(NSURLProtectionSpaceHTTP, unicode)
+        self.assertIsInstance(NSURLProtectionSpaceHTTPS, unicode)
+        self.assertIsInstance(NSURLProtectionSpaceFTP, unicode)
+        self.assertIsInstance(NSURLAuthenticationMethodNTLM, unicode)
+        self.assertIsInstance(NSURLAuthenticationMethodNegotiate, unicode)
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSURLAuthenticationMethodClientCertificate, unicode)

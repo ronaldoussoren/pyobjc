@@ -52,10 +52,18 @@ class TestNSURLError (TestCase):
 
     @min_os_level('10.6')
     def testConstants10_6(self):
+        self.assertIsInstance(NSURLErrorFailingURLPeerTrustErrorKey, unicode)
         self.assertIsInstance(NSURLErrorFailingURLErrorKey, unicode)
         self.assertIsInstance(NSURLErrorFailingURLStringErrorKey, unicode)
 
         self.assertEqual(NSURLErrorClientCertificateRequired, -1206)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSURLErrorInternationalRoamingOff, kCFURLErrorInternationalRoamingOff)
+        self.assertEqual(NSURLErrorCallIsActive, kCFURLErrorCallIsActive)
+        self.assertEqual(NSURLErrorDataNotAllowed, kCFURLErrorDataNotAllowed)
+        self.assertEqual(NSURLErrorRequestBodyStreamExhausted, kCFURLErrorRequestBodyStreamExhausted)
 
 if __name__ == "__main__":
     main()

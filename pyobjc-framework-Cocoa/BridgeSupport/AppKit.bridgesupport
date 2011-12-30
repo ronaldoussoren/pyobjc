@@ -4,7 +4,13 @@
   <depends_on path='/System/Library/Frameworks/Foundation.framework/Foundation' />
   <depends_on path='/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices' />
   <opaque name='NSModalSession' type='^{_NSModalSession=}' type64='^{_NSModalSession=}' />
+  <constant name='NSApplicationLaunchRemoteNotificationKey' type='@' />
+  <constant name='NSApplicationLaunchIsDefaultLaunchKey' type='@' />
   <constant name='NSTextInputContextKeyboardSelectionDidChangeNotification' type='@' />
+  <constant name='NSAccessibilityAutocorrectedTextAttribute' type='@' />
+  <constant name='NSAccessibilityFullScreenButtonAttribute' type='@' />
+  <constant name='NSAccessibilityPopoverRole' type='@' />
+  <constant name='NSAccessibilityFullScreenButtonSubrole' type='@' />
   <constant name='NSWorkspaceDesktopImageScalingKey' type='@' />
   <constant name='NSWorkspaceDesktopImageAllowClippingKey' type='@' />
   <constant name='NSWorkspaceDesktopImageFillColorKey' type='@' />
@@ -78,7 +84,11 @@
   <constant name='NSImageNameStatusNone' type='@' />
   <constant name='NSManagerDocumentAttribute' type='@' />
   <constant name='NSWritingDirectionAttributeName' type='@' />
+  <constant name='NSVerticalGlyphFormAttributeName' type='@' />
+  <constant name='NSTextLayoutSectionOrientation' type='@' />
+  <constant name='NSTextLayoutSectionRange' type='@' />
   <constant name='NSFileTypeDocumentAttribute' type='@' />
+  <constant name='NSTextLayoutSectionsAttribute' type='@' />
   <constant name='NSCategoryDocumentAttribute' type='@' />
   <constant name='NSFileTypeDocumentOption' type='@' />
   <constant name='NSAccessibilityRelevanceIndicatorRole' type='@' />
@@ -1000,6 +1010,7 @@
   <constant name='NSPrintNoPresetsJobStyleHint' type='@' />
   <constant name='NSPrintAllPresetsJobStyleHint' type='@' />
   <enum name='NSTouchPhaseBegan' value='1' />
+  <enum name='NSInlineBezelStyle' value='15' />
   <enum name='NSTouchPhaseMoved' value='2' />
   <enum name='NSTouchPhaseStationary' value='4' />
   <enum name='NSTouchPhaseEnded' value='8' />
@@ -1086,6 +1097,7 @@
   <enum name='NSAppKitVersionNumber10_5' value='949' />
   <enum name='NSAppKitVersionNumber10_5_2' value='949.27' />
   <enum name='NSAppKitVersionNumber10_5_3' value='949.33' />
+  <enum name='NSAppKitVersionNumber10_6' value='1038' />
   <enum name='NSApplicationPresentationDefault' value='0' />
   <enum name='NSApplicationPresentationAutoHideDock' value='1' />
   <enum name='NSApplicationPresentationHideDock' value='2' />
@@ -1096,8 +1108,13 @@
   <enum name='NSApplicationPresentationDisableForceQuit' value='64' />
   <enum name='NSApplicationPresentationDisableSessionTermination' value='128' />
   <enum name='NSApplicationPresentationDisableHideApplication' value='256' />
+  <enum name='NSApplicationPresentationDisableMenuBarTransparency' value='512' />
+  <enum name='NSApplicationPresentationFullScreen' value='1024' />
+  <enum name='NSApplicationPresentationAutoHideToolbar' value='2048' />
   <enum name='NSUserInterfaceLayoutDirectionLeftToRight' value='0' />
   <enum name='NSUserInterfaceLayoutDirectionRightToLeft' value='1' />
+  <enum name='NSRemoteNotificationTypeNone' value='0' />
+  <enum name='NSRemoteNotificationTypeBadge' value='1' />
   <enum name='NSLayoutNotDone' value='0' />
   <enum name='NSLayoutDone' value='1' />
   <enum name='NSLayoutCantFit' value='2' />
@@ -1165,6 +1182,9 @@
   <enum name='NSAppKitVersionNumberWithContinuousScrollingBrowser' value='680.0' />
   <enum name='NSAppKitVersionNumberWithCursorSizeSupport' value='682.0' />
   <enum name='NSAppKitVersionNumberWithCustomSheetPosition' value='686.0' />
+  <enum name='NSAutosaveElsewhereOperation' value='3' />
+  <enum name='NSAutosaveInPlaceOperation' value='4' />
+  <enum name='NSChangeDiscardable' value='256' />
   <enum name='NSAppKitVersionNumberWithDirectionalTabs' value='631.0' />
   <enum name='NSAppKitVersionNumberWithPatternColorLeakFix' value='641.0' />
   <enum name='NSApplicationActivatedEventType' value='1' />
@@ -3208,6 +3228,18 @@
       <retval type='B' />
     </method>
   </class>
+  <class name='NSAnimationContext'>
+    <method selector='completionHandler'>
+      <retval block='true'>
+	      <retval type='v' />
+      </retval>
+    </method>
+    <method selector='setCompletionHandler_'>
+      <arg index='0' block='true'>
+	      <retval type='v' />
+      </arg>
+    </method>
+  </class>
   <class name='NSApplication'>
     <method selector='searchString:inUserInterfaceItemString:searchRange:foundRange:'>
       <retval type='B' />
@@ -3355,7 +3387,7 @@
       <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
     </method>
     <method selector='URLAtIndex:effectiveRange:'>
-      <arg index='1' type_modifier='o' />
+	    <arg index='1' type_modifier='o' type='^{_NSRange=II}' type64='^{_NSRange=QQ}'/>
     </method>
     <method selector='boundingRectWithSize:options:'>
       <retval type='{_NSRect={_NSPoint=ff}{_NSSize=ff}}' type64='{CGRect={CGPoint=dd}{CGSize=dd}}' />
@@ -6105,6 +6137,16 @@
 		  <retval type='B' />
 		  <arg index='2' type='i' type64='q' />
 		  <arg index='3' type='i' type64='q' />
+	  </method>
+	  <method selector='collectionView:pasteboardWriterForItemAtIndex:'>
+		  <arg index='1' type='i' type64='q' />
+	  </method>
+	  <method selector='collectionView:draggingSession:willBeginAtPoint:forItemsAtIndexes:'>
+      		<arg index='2' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+	  </method>
+	  <method selector='collectionView:draggingSession:endedAtPoint:dragOperation:'>
+      		<arg index='2' type='{_NSPoint=ff}' type64='{CGPoint=dd}' />
+	        <arg index='3' type='i' type64='q' />
 	  </method>
     <method selector='browser:isLeafItem:' >
 	    <retval type='B' />

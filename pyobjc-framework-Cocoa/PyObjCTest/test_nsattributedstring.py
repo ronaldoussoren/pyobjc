@@ -108,6 +108,8 @@ class TestNSAttributedString (TestCase):
 
     def testMethodsAppKit(self):
         self.assertResultIsBOOL(NSAttributedString.containsAttachments)
+        self.assertArgIsBOOL(NSAttributedString.nextWordFromIndex_forward, 1)
+        self.assertArgIsOut(NSAttributedString.URLAtIndex_effectiveRange_, 1)
 
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 3)
@@ -120,6 +122,7 @@ class TestNSAttributedString (TestCase):
         self.assertArgIsOut(NSAttributedString.initWithRTF_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithRTFD_documentAttributes_, 1)
         self.assertArgIsOut(NSAttributedString.initWithHTML_documentAttributes_, 1)
+        self.assertArgIsOut(NSAttributedString.initWithHTML_options_documentAttributes_, 2)
         self.assertArgIsOut(NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2)
         self.assertArgIsOut(NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1)
 
@@ -144,6 +147,18 @@ class TestNSAttributedString (TestCase):
     def testConstants10_6(self):
         self.assertEqual(NSAttributedStringEnumerationReverse, 1<<1)
         self.assertEqual(NSAttributedStringEnumerationLongestEffectiveRangeNotRequired, 1<<20)
+
+        self.assertIsInstance(NSWritingDirectionAttributeName, unicode)
+        self.assertIsInstance(NSFileTypeDocumentAttribute, unicode)
+        self.assertIsInstance(NSCategoryDocumentAttribute, unicode)
+        self.assertIsInstance(NSFileTypeDocumentOption, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSVerticalGlyphFormAttributeName, unicode)
+        self.assertIsInstance(NSTextLayoutSectionOrientation, unicode)
+        self.assertIsInstance(NSTextLayoutSectionRange, unicode)
+        self.assertIsInstance(NSTextLayoutSectionsAttribute, unicode)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

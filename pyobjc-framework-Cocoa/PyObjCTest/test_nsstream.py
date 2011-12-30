@@ -59,6 +59,14 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(NSStreamSocketSSLErrorDomain, unicode)
         self.assertIsInstance(NSStreamSOCKSErrorDomain, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSStreamNetworkServiceType, unicode)
+        self.assertIsInstance(NSStreamNetworkServiceTypeVoIP, unicode)
+        self.assertIsInstance(NSStreamNetworkServiceTypeVideo, unicode)
+        self.assertIsInstance(NSStreamNetworkServiceTypeBackground, unicode)
+        self.assertIsInstance(NSStreamNetworkServiceTypeVoice, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSStream.setProperty_forKey_)
 

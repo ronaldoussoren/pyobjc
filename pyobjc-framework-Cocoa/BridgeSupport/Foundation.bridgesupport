@@ -13,6 +13,58 @@
   <struct name='NSSwappedFloat' type='{_NSSwappedFloat="v"I}' type64='{_NSSwappedFloat="v"I}' />
   <opaque name='NSAppleEventManagerSuspensionID' type='^{__NSAppleEventManagerSuspension=}' type64='^{__NSAppleEventManagerSuspension=}' />
   <opaque name='NSZone*' type='^{_NSZone=}' type64='^{_NSZone=}' />
+  <constant name='NSUbiquitousKeyValueStoreDidChangeExternallyNotification' type='@' />
+  <constant name='NSUbiquitousKeyValueStoreChangeReasonKey' type='@' />
+  <constant name='NSUbiquitousKeyValueStoreChangedKeysKey' type='@' />
+  <constant name='NSURLFileResourceIdentifierKey' type='@' />
+  <constant name='NSURLVolumeIdentifierKey' type='@' />
+  <constant name='NSURLPreferredIOBlockSizeKey' type='@' />
+  <constant name='NSURLIsReadableKey' type='@' />
+  <constant name='NSURLIsWritableKey' type='@' />
+  <constant name='NSURLIsExecutableKey' type='@' />
+  <constant name='NSURLIsMountTriggerKey' type='@' />
+  <constant name='NSURLFileSecurityKey' type='@' />
+  <constant name='NSURLFileResourceTypeKey' type='@' />
+  <constant name='NSURLFileResourceTypeNamedPipe' type='@' />
+  <constant name='NSURLFileResourceTypeCharacterSpecial' type='@' />
+  <constant name='NSURLFileResourceTypeDirectory' type='@' />
+  <constant name='NSURLFileResourceTypeBlockSpecial' type='@' />
+  <constant name='NSURLFileResourceTypeRegular' type='@' />
+  <constant name='NSURLFileResourceTypeSymbolicLink' type='@' />
+  <constant name='NSURLFileResourceTypeSocket' type='@' />
+  <constant name='NSURLFileResourceTypeUnknown' type='@' />
+  <constant name='NSURLTotalFileSizeKey' type='@' />
+  <constant name='NSURLTotalFileAllocatedSizeKey' type='@' />
+  <constant name='NSURLVolumeSupportsRootDirectoryDatesKey' type='@' />
+  <constant name='NSURLVolumeSupportsVolumeSizesKey' type='@' />
+  <constant name='NSURLVolumeSupportsRenamingKey' type='@' />
+  <constant name='NSURLVolumeSupportsAdvisoryFileLockingKey' type='@' />
+  <constant name='NSURLVolumeSupportsExtendedSecurityKey' type='@' />
+  <constant name='NSURLVolumeIsBrowsableKey ' type='@' />
+  <constant name='NSURLVolumeMaximumFileSizeKey ' type='@' />
+  <constant name='NSURLVolumeIsEjectableKey' type='@' />
+  <constant name='NSURLVolumeIsRemovableKey' type='@' />
+  <constant name='NSURLVolumeIsInternalKey' type='@' />
+  <constant name='NSURLVolumeIsAutomountedKey' type='@' />
+  <constant name='NSURLVolumeIsLocalKey' type='@' />
+  <constant name='NSURLVolumeIsReadOnlyKey' type='@' />
+  <constant name='NSURLVolumeCreationDateKey' type='@' />
+  <constant name='NSURLVolumeURLForRemountingKey' type='@' />
+  <constant name='NSURLVolumeUUIDStringKey' type='@' />
+  <constant name='NSURLVolumeNameKey' type='@' />
+  <constant name='NSURLVolumeLocalizedNameKey' type='@' />
+  <constant name='NSURLIsUbiquitousItemKey' type='@' />
+  <constant name='NSURLUbiquitousItemHasUnresolvedConflictsKey' type='@' />
+  <constant name='NSURLUbiquitousItemIsDownloadedKey' type='@' />
+  <constant name='NSURLUbiquitousItemIsDownloadingKey' type='@' />
+  <constant name='NSURLUbiquitousItemIsUploadedKey' type='@' />
+  <constant name='NSURLUbiquitousItemIsUploadingKey' type='@' />
+  <constant name='NSURLUbiquitousItemPercentDownloadedKeyNSURLUbiquitousItemPercentUploadedKey' type='@' />
+  <constant name='NSStreamNetworkServiceType' type='@' />
+  <constant name='NSStreamNetworkServiceTypeVoIP' type='@' />
+  <constant name='NSStreamNetworkServiceTypeVideo' type='@' />
+  <constant name='NSStreamNetworkServiceTypeBackground' type='@' />
+  <constant name='NSStreamNetworkServiceTypeVoice' type='@' />
   <constant name='NSMetadataQueryLocalDocumentsScope' type='@' />
   <constant name='NSMetadataQueryUbiquitousDocumentsScope' type='@' />
   <constant name='NSMetadataQueryUbiquitousDataScope' type='@' />
@@ -379,7 +431,13 @@
   <constant name='NSURLErrorDomain' type='@' />
   <constant name='NSURLErrorKey' type='@' />
   <constant name='NSURLFileScheme' type='@' />
+  <constant name='NSURLKeysOfUnsetValuesKey' type='@' />
   <constant name='NSURLAuthenticationMethodServerTrust' type='@' />
+  <constant name='NSURLProtectionSpaceFTP' type='@' />
+  <constant name='NSURLProtectionSpaceHTTPS' type='@' />
+  <constant name='NSURLProtectionSpaceHTTP' type='@' />
+  <constant name='NSURLAuthenticationMethodNTLM' type='@' />
+  <constant name='NSURLAuthenticationMethodNegotiate' type='@' />
   <constant name='NSURLProtectionSpaceFTPProxy' type='@' />
   <constant name='NSURLProtectionSpaceHTTPProxy' type='@' />
   <constant name='NSURLProtectionSpaceHTTPSProxy' type='@' />
@@ -424,12 +482,28 @@
   <constant name='NSTextCheckingZIPKey' type='@' />
   <constant name='NSTextCheckingCountryKey' type='@' />
   <constant name='NSTextCheckingPhoneKey' type='@' />
-  <constant name='NSFileCoordinatorReadingWithoutChanges' value='1' />
-  <constant name='NSFileCoordinatorReadingResolvesSymbolicLink' value='2' />
-  <constant name='NSFileCoordinatorWritingForDeleting' value='1' />
-  <constant name='NSFileCoordinatorWritingForMoving' value='2' />
-  <constant name='NSFileCoordinatorWritingForMerging' value='4' />
-  <constant name='NSFileCoordinatorWritingForReplacing' value='8' />
+  <constant name='NSTextCheckingFlightKey' type='@' />
+  <constant name='NSTextCheckingAirlineKey' type='@' />
+  <constant name='NSUndoManagerGroupIsDiscardableKey' type='@' />
+  <constant name='NSUndoManagerDidCloseUndoGroupNotification' type='@' />
+  <enum name='NSUbiquitousKeyValueStoreServerChange' value='0' />
+  <enum name='NSUbiquitousKeyValueStoreInitialSyncChange' value='1' />
+  <enum name='NSUbiquitousKeyValueStoreQuotaViolationChange' value='2' />
+  <enum name='NSURLNetworkServiceTypeDefault' value='0' />
+  <enum name='NSURLNetworkServiceTypeVoIP' value='1' />
+  <enum name='NSURLNetworkServiceTypeVideo' value='2' />
+  <enum name='NSURLNetworkServiceTypeBackground' value='3' />
+  <enum name='NSURLNetworkServiceTypeVoice' value='4' />
+  <enum name='NSFileCoordinatorReadingWithoutChanges' value='1' />
+  <enum name='NSFileCoordinatorReadingResolvesSymbolicLink' value='2' />
+  <enum name='NSFileCoordinatorWritingForDeleting' value='1' />
+  <enum name='NSFileCoordinatorWritingForMoving' value='2' />
+  <enum name='NSFileCoordinatorWritingForMerging' value='4' />
+  <enum name='NSFileCoordinatorWritingForReplacing' value='8' />
+  <enum name='NSTextCheckingTypeRegularExpression' value='1024' />
+  <enum name='NSTextCheckingTypePhoneNumber' value='2048' />
+  <enum name='NSTextCheckingTypeTransitInformation' value='4096' />
+  <enum name='NSRegularExpressionSearch' value='1024' />
   <enum name='NSRegularExpressionCaseInsensitive' value='1' />
   <enum name='NSRegularExpressionAllowCommentsAndWhitespace' value='2' />
   <enum name='NSRegularExpressionIgnoreMetacharacters' value='4' />
@@ -1022,6 +1096,9 @@
   <enum name='NSXMLDocumentTidyHTML' value='512' />
   <enum name='NSXMLDocumentTidyXML' value='1024' />
   <enum name='NSXMLDocumentValidate' value='8192' />
+  <enum name='NSXMLNodeLoadExternalEntitiesAlways' value='16384' />
+  <enum name='NSXMLNodeLoadExternalEntitiesSameOriginOnly' value='32768' />
+  <enum name='NSXMLNodeLoadExternalEntitiesNever' value='524288' />
   <enum name='NSXMLDocumentXHTMLKind' value='1' />
   <enum name='NSXMLDocumentXInclude' value='65536' />
   <enum name='NSXMLDocumentXMLKind' value='0' />
@@ -1201,7 +1278,7 @@
     <retval type='I' type64='Q' />
     <arg type='^{_NSDecimal=}' />
     <arg type='^{_NSDecimal=}' />
-    <arg type='h' />
+    <arg type='s' />
     <arg type='I' type64='Q' />
   </function>
   <function name='NSDecimalSubtract' >
@@ -2228,6 +2305,15 @@
     <method selector='parserDidStartDocument:' type='v@:@' />
   </informal_protocol>
   <class name='NSTextCheckingResult'>
+      <method class_method='true' selector='regularExpressionCheckingResultWithRanges:count:regularExpression:'>
+        <arg index='0' type_modifier='n' type='^{_NSRange=II}' type64='^{_NSRange=QQ}' c_array_length_in_arg='1' />
+      </method>
+      <method class_method='true' selector='transitInformationCheckingResultWithRange:components:'>
+        <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      </method>
+      <method class_method='true' selector='phoneNumberCheckingResultWithRange:phoneNumber:'>
+        <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
+      </method>
       <method class_method='true' selector='orthographyCheckingResultWithRange:orthography:'>
         <arg index='0' type='{_NSRange=II}' type64='{_NSRange=QQ}' />
       </method>
@@ -3041,13 +3127,13 @@
 		  <arg index='0' block='true' >
 		    <retval type='v' />
 		    <arg type='@' />
-		  </retval>
+		  </arg>
 	  </method>
 	  <method selector='setWriteabilityHandler' >
 		  <arg index='0' block='true' >
 		    <retval type='v' />
 		    <arg type='@' />
-		  </retval>
+		  </arg>
 	  </method>
 
     <method selector='initWithFileDescriptor:closeOnDealloc:'>
@@ -3204,22 +3290,22 @@
     <method selector='setUbiquitous:itemAtURL:destinationURL:error:' >
       <retval type='B' />
       <arg index='0' type='B' />
-      <arg index='3' type_modifier'o' />
+      <arg index='3' type_modifier='o' />
     </method>
     <method selector='isUbiquitousItemAtURL:' >
       <retval type='B' />
     </method>
     <method selector='startDownloadingUbiquitousItemAtURL:error:' >
       <retval type='B' />
-      <arg index='1' type_modifier'o' />
+      <arg index='1' type_modifier='o' />
     </method>
     <method selector='evictUbiquitousItemAtURL:error:' >
       <retval type='B' />
-      <arg index='1' type_modifier'o' />
+      <arg index='1' type_modifier='o' />
     </method>
     <method selector='URLForPublishingUbiquitousItemAtURL:expirationDate:error:' >
-      <arg index='1' type_modifier'o' />
-      <arg index='2' type_modifier'o' />
+      <arg index='1' type_modifier='o' />
+      <arg index='2' type_modifier='o' />
     </method>
   </class>
   <class name='NSFormatter'>
@@ -3395,7 +3481,7 @@
 	  </method>
 	  <method selector='enumerateRangesUsingBlock:'>
 		  <arg index='0' block='true'>
-			  <retvtype='v' />
+			  <retval type='v' />
 	    		  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
 			  <arg type_modifier='o' type='^B' />
 		  </arg>
@@ -3631,6 +3717,9 @@
   </class>
   <class name='NSMutableURLRequest'>
     <method selector='setHTTPShouldHandleCookies:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setHTTPShouldUsePipelining:'>
       <arg index='0' type='B' />
     </method>
   </class>
@@ -5020,7 +5109,7 @@
 	  <method selector='enumeratorLinguisticTagsInRange:scheme:options:orthography:usingBlock:'>
 		  <arg index='4' block='true'>
 			  <retval type='v'/>
-			  <arg type='@'>
+			  <arg type='@' />
 			  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
 			  <arg type='{_NSRange=II}' type64='{_NSRange=QQ}' />
 		          <arg type='^B' type_modifier='o' />
@@ -5306,6 +5395,18 @@
     </method>
   </class>
   <class name='NSTask'>
+	  <method selector='terminationHandler'>
+		  <retval block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </retval>
+	  </method>
+	  <method selector='setTerminationHandler:'>
+		  <arg index='0' block='true' >
+			  <retval type='v' />
+			  <arg type='@' />
+		  </arg>
+	  </method>
     <method selector='isRunning'>
       <retval type='B' />
     </method>
@@ -5380,6 +5481,9 @@
     </method>
   </class>
   <class name='NSURL'>
+	  <method selector='URLByAppendingPathComponent:isDirectory:'>
+		  <arg index='1' type='B' />
+	  </method>
 	  <method selector='resourceValuesForKeys:error:'>
 		  <arg index='1' type_modifier='o' />
 	  </method>
@@ -5457,6 +5561,13 @@
       <arg index='1' type_modifier='o' />
       <arg index='2' type_modifier='o' />
     </method>
+    <method selector='sendAsynchronousRequest:queue:completionHandler:'>
+	    <arg index='2' block='true'>
+		    <retval type='v' />
+		    <arg type='@' />
+		    <arg type='@' />
+	    </arg>
+    </method>
   </class>
   <class name='NSURLCredential'>
     <method selector='hasPassword'>
@@ -5519,6 +5630,9 @@
     <method selector='HTTPShouldHandleCookies'>
       <retval type='B' />
     </method>
+    <method selector='HTTPShouldUsePipelining'>
+      <retval type='B' />
+    </method>
   </class>
   <class name='NSUnarchiver'>
     <method selector='isAtEnd'>
@@ -5526,6 +5640,12 @@
     </method>
   </class>
   <class name='NSUndoManager'>
+    <method selector='redoActionIsDiscardable'>
+      <retval type='B' />
+    </method>
+    <method selector='undoActionIsDiscardable'>
+      <retval type='B' />
+    </method>
     <method selector='canRedo'>
       <retval type='B' />
     </method>
@@ -5536,6 +5656,9 @@
       <retval type='B' />
     </method>
     <method selector='setGroupsByEvent:'>
+      <arg index='0' type='B' />
+    </method>
+    <method selector='setActionIsDiscardable:'>
       <arg index='0' type='B' />
     </method>
     <method selector='isRedoing'>
@@ -6036,4 +6159,16 @@
 		  <arg index='1' type_modifier='o' />
 	  </method>
   </class>
+  <class name='NSUbiquitousKeyValueStore'>
+	  <method selector='boolForKey:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='synchronize:'>
+		  <retval type='B' />
+	  </method>
+	  <method selector='setBool:forKey:'>
+		  <arg index='0' type='B' />
+	  </method>
+  </class>
+
 </signatures>

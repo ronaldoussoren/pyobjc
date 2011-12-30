@@ -29,6 +29,15 @@ class TestNSTextCheckingResult (TestCase):
         self.assertIsInstance(NSTextCheckingCountryKey, unicode)
         self.assertIsInstance(NSTextCheckingPhoneKey, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSTextCheckingTypeRegularExpression, 1 << 10)
+        self.assertEqual(NSTextCheckingTypePhoneNumber, 1 << 11)
+        self.assertEqual(NSTextCheckingTypeTransitInformation, 1 << 12)
+
+        self.assertIsInstance(NSTextCheckingAirlineKey, unicode)
+        self.assertIsInstance(NSTextCheckingFlightKey, unicode)
+
 
     @min_os_level('10.6')
     def testMethods(self):
@@ -46,7 +55,10 @@ class TestNSTextCheckingResult (TestCase):
         self.assertArgHasType(NSTextCheckingResult.replacementCheckingResultWithRange_replacementString_, 0, NSRange.__typestr__)
         self.assertArgHasType(NSTextCheckingResult.correctionCheckingResultWithRange_replacementString_, 0, NSRange.__typestr__)
 
-
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgHasType(NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_, 0, 'n^' + NSRange.__typestr__)
+        self.assertArgSizeInArg(NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_, 0, 1)
 
 if __name__ == "__main__":
     main()

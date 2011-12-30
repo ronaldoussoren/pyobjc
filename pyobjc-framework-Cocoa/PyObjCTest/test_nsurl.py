@@ -6,12 +6,16 @@ class TestNSURL (TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(NSURL.initFileURLWithPath_isDirectory_, 1)
         self.assertArgIsBOOL(NSURL.fileURLWithPath_isDirectory_, 1)
+        self.assertResultIsBOOL(NSURL.isFileURL)
 
         self.assertArgIsBOOL(NSURL.resourceDataUsingCache_, 0)
         self.assertArgIsBOOL(NSURL.loadResourceDataNotifyingClient_usingCache_, 1)
         self.assertResultIsBOOL(NSURL.setResourceData_)
         self.assertResultIsBOOL(NSURL.setProperty_forKey_)
         self.assertArgIsBOOL(NSURL.URLHandleUsingCache_, 0)
+
+    def testConstants(self):
+        self.assertIsInstance(NSURLFileScheme, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -66,9 +70,61 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLVolumeSupportsCaseSensitiveNamesKey, unicode)
         self.assertIsInstance(NSURLVolumeSupportsCasePreservedNamesKey, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSURLKeysOfUnsetValuesKey, unicode)
+
+        self.assertIsInstance(NSURLFileResourceIdentifierKey, unicode)
+        self.assertIsInstance(NSURLVolumeIdentifierKey, unicode)
+        self.assertIsInstance(NSURLPreferredIOBlockSizeKey, unicode)
+        self.assertIsInstance(NSURLIsReadableKey, unicode)
+        self.assertIsInstance(NSURLIsWritableKey, unicode)
+        self.assertIsInstance(NSURLIsExecutableKey, unicode)
+        self.assertIsInstance(NSURLIsMountTriggerKey, unicode)
+        self.assertIsInstance(NSURLFileSecurityKey, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeKey, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeNamedPipe, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeCharacterSpecial, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeDirectory, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeBlockSpecial, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeRegular, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeSymbolicLink, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeSocket, unicode)
+        self.assertIsInstance(NSURLFileResourceTypeUnknown, unicode)
+        self.assertIsInstance(NSURLTotalFileSizeKey, unicode)
+        self.assertIsInstance(NSURLTotalFileAllocatedSizeKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsRootDirectoryDatesKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsVolumeSizesKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsRenamingKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsAdvisoryFileLockingKey, unicode)
+        self.assertIsInstance(NSURLVolumeSupportsExtendedSecurityKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsBrowsableKey, unicode)
+        self.assertIsInstance(NSURLVolumeMaximumFileSizeKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsEjectableKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsRemovableKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsInternalKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsAutomountedKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsLocalKey, unicode)
+        self.assertIsInstance(NSURLVolumeIsReadOnlyKey, unicode)
+        self.assertIsInstance(NSURLVolumeCreationDateKey, unicode)
+        self.assertIsInstance(NSURLVolumeURLForRemountingKey, unicode)
+        self.assertIsInstance(NSURLVolumeUUIDStringKey, unicode)
+        self.assertIsInstance(NSURLVolumeNameKey, unicode)
+        self.assertIsInstance(NSURLVolumeLocalizedNameKey, unicode)
+        self.assertIsInstance(NSURLIsUbiquitousItemKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemHasUnresolvedConflictsKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemIsDownloadedKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemIsDownloadingKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemIsUploadedKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemIsUploadingKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemPercentDownloadedKey, unicode)
+        self.assertIsInstance(NSURLUbiquitousItemPercentUploadedKey, unicode)
+
 
     @min_os_level('10.6')
     def testMethods10_6(self):
+        self.assertArgIsBOOL(NSURL.URLByAppendingPathComponent_isDirectory_, 1)
+
         self.assertResultIsBOOL(NSURL.getResourceValue_forKey_error_)
         self.assertArgIsOut(NSURL.getResourceValue_forKey_error_, 0)
         self.assertArgIsOut(NSURL.getResourceValue_forKey_error_, 2)

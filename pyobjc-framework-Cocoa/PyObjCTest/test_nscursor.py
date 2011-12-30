@@ -9,5 +9,9 @@ class TestNSCursor (TestCase):
         self.assertResultIsBOOL(NSCursor.isSetOnMouseExited)
         self.assertResultIsBOOL(NSCursor.isSetOnMouseEntered)
 
+    def testConstants(self):
+        self.assertEqual(NSAppKitVersionNumberWithCursorSizeSupport, 682.0)
+
+
 if __name__ == "__main__":
     main()

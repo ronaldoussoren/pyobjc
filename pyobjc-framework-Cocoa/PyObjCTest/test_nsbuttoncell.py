@@ -37,6 +37,10 @@ class TestNSButtonCell (TestCase):
         self.assertEqual(NSGradientConvexStrong, 4)
 
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSInlineBezelStyle, 15)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSButtonCell.isOpaque)
         self.assertResultIsBOOL(NSButtonCell.isTransparent)
@@ -49,5 +53,6 @@ class TestNSButtonCell (TestCase):
         self.assertArgIsBOOL(NSButtonCell.setImageDimsWhenDisabled_, 0)
         self.assertResultIsBOOL(NSButtonCell.showsBorderOnlyWhileMouseInside)
         self.assertArgIsBOOL(NSButtonCell.setShowsBorderOnlyWhileMouseInside_, 0)
+
 if __name__ == "__main__":
     main()

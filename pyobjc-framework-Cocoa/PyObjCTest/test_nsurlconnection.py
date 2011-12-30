@@ -24,5 +24,11 @@ class TestNSURLConnection (TestCase):
         self.assertArgHasType(TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_, 3, objc._C_NSInteger)
 
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBlock(NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
+                2, b'v@@')
+
 if __name__ == "__main__":
     main()

@@ -52,5 +52,7 @@ class TestRegressions (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSSystemColorsDidChangeNotification, unicode)
 
+        self.assertEqual(NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
+
 if __name__ == "__main__":
     main()

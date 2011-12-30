@@ -8,6 +8,7 @@ class TestValueTrans (TestCase):
         self.assertIsInstance(NSIsNotNilTransformerName, unicode)
         self.assertIsInstance(NSUnarchiveFromDataTransformerName, unicode)
         self.assertIsInstance(NSKeyedUnarchiveFromDataTransformerName, unicode)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
 

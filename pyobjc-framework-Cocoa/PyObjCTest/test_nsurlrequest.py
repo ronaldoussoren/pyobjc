@@ -11,9 +11,17 @@ class TestNSURLRequest (TestCase):
         self.assertEqual(NSURLRequestReturnCacheDataDontLoad, 3)
         self.assertEqual(NSURLRequestReloadRevalidatingCacheData, 5)
 
+        self.assertEqual(NSURLNetworkServiceTypeDefault, 0)
+        self.assertEqual(NSURLNetworkServiceTypeVoIP, 1)
+        self.assertEqual(NSURLNetworkServiceTypeVideo, 2)
+        self.assertEqual(NSURLNetworkServiceTypeBackground, 3)
+        self.assertEqual(NSURLNetworkServiceTypeVoice, 4)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
+        self.assertResultIsBOOL(NSURLRequest.HTTPShouldUsePipelining)
         self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldHandleCookies_, 0)
+        self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldUsePipelining_, 0)
 
 if __name__ == "__main__":
     main()

@@ -7,7 +7,5 @@ class TestXMLDTD (TestCase):
         self.assertArgIsOut(NSXMLDTD.initWithContentsOfURL_options_error_, 2)
         self.assertArgIsOut(NSXMLDTD.initWithData_options_error_, 2)
 
-
-
 if __name__ == "__main__":
     main()

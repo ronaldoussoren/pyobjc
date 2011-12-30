@@ -1,7 +1,7 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSProxyHelper (object):
+class TestNSProxyHelper (NSObject):
     def allowsWeakReference(self): return 0
     def retainWeakReference(self): return 0
 

@@ -7,6 +7,11 @@ class TestNSTask (TestCase):
         self.assertResultIsBOOL(NSTask.resume)
         self.assertResultIsBOOL(NSTask.isRunning)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBlock(NSTask.setTerminationHandler_, 0, 'v@')
+        self.assertResultIsBlock(NSTask.terminationHandler, 'v@')
+
     def testConstants(self):
         self.assertIsInstance(NSTaskDidTerminateNotification, unicode)
 

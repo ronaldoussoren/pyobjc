@@ -42,6 +42,15 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_3_7, 743.33)
         self.assertEqual(NSAppKitVersionNumber10_3_9, 743.36)
         self.assertEqual(NSAppKitVersionNumber10_4, 824)
+        self.assertEqual(NSAppKitVersionNumber10_4_1, 824.1)
+        self.assertEqual(NSAppKitVersionNumber10_4_3, 824.23)
+        self.assertEqual(NSAppKitVersionNumber10_4_4,824.33)
+        self.assertEqual(NSAppKitVersionNumber10_4_7, 824.41)
+        self.assertEqual(NSAppKitVersionNumber10_5, 949)
+        self.assertEqual(NSAppKitVersionNumber10_5_2, 949.27)
+        self.assertEqual(NSAppKitVersionNumber10_5_3, 949.33)
+        self.assertEqual(NSAppKitVersionNumber10_6, 1038)
+
 
         self.assertIsInstance(NSModalPanelRunLoopMode, unicode)
         self.assertIsInstance(NSEventTrackingRunLoopMode, unicode)
@@ -178,9 +187,21 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSApplicationPresentationDisableForceQuit, (1 <<  6))
         self.assertEqual(NSApplicationPresentationDisableSessionTermination, (1 <<  7))
         self.assertEqual(NSApplicationPresentationDisableHideApplication, (1 <<  8))
+        self.assertEqual(NSApplicationPresentationDisableMenuBarTransparency, (1 <<  9))
 
         self.assertEqual(NSUserInterfaceLayoutDirectionLeftToRight, 0)
         self.assertEqual(NSUserInterfaceLayoutDirectionRightToLeft, 1)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSApplicationPresentationFullScreen, 1<<10)
+        self.assertEqual(NSApplicationPresentationAutoHideToolbar, 1<<11)
+        self.assertEqual(NSRemoteNotificationTypeNone, 0)
+        self.assertEqual(NSRemoteNotificationTypeBadge, 1)
+
+        self.assertIsInstance(NSApplicationLaunchRemoteNotificationKey, unicode)
+        self.assertIsInstance(NSApplicationLaunchIsDefaultLaunchKey, unicode)
+
 
     @min_os_level('10.6')
     def testMethods10_6(self):

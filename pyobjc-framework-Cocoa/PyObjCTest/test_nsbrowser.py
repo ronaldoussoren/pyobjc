@@ -17,6 +17,7 @@ class TestNSBrowserHelper (NSObject):
     def browser_shouldEditItem_(self, b, i): return 1
     def browser_numberOfRowsInColumn_(self, b, c): return 1
     def browser_createRowsForColumn_inMatrix_(self, b, c, m): return 1
+    def browser_selectionIndexesForProposedSelection_inColumn_(self, b, s, c): return 1
 
 class TestNSBrowser (TestCase):
     def testConstants(self):
@@ -35,6 +36,7 @@ class TestNSBrowser (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSBrowser.isLoaded)
         self.assertResultIsBOOL(NSBrowser.reusesColumns)
+        self.assertArgIsBOOL(NSBrowser.setReusesColumns_)
         self.assertResultIsBOOL(NSBrowser.hasHorizontalScroller)
         self.assertArgIsBOOL(NSBrowser.setHasHorizontalScroller_, 0)
         self.assertResultIsBOOL(NSBrowser.separatesColumns)
@@ -83,6 +85,8 @@ class TestNSBrowser (TestCase):
         self.assertArgIsOut(NSBrowser.getRow_column_forPoint_, 0)
         self.assertArgIsOut(NSBrowser.getRow_column_forPoint_, 1)
         self.assertArgIsBOOL(NSBrowser.editItemAtIndexPath_withEvent_select_, 2)
+
+        self.assertArgHasType(TestNSBrowserHelper.browser_selectionIndexesForProposedSelection_inColumn_, 2, objc._C_NSInteger)
 
     @min_os_level('10.6')
     def testDelegate10_6(self):

@@ -181,6 +181,9 @@ class TestPickle(TestCase):
         v.appendFormat_(" bar %s", b"baz")
         self.assertEqual(v.nsstring(), "hello bar baz")
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSRegularExpressionSearch, 1024)
 
     @min_os_level('10.5')
     def testConstants10_5(self):

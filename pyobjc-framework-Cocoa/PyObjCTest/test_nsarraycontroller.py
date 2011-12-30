@@ -26,6 +26,7 @@ class TestNSArrayControler (TestCase):
         self.assertResultIsBOOL(NSArrayController.removeSelectionIndexes_)
         self.assertResultIsBOOL(NSArrayController.setSelectedObjects_)
         self.assertResultIsBOOL(NSArrayController.addSelectedObjects_)
+        self.assertResultIsBOOL(NSArrayController.removeSelectedObjects_)
         self.assertResultIsBOOL(NSArrayController.canInsert)
         self.assertResultIsBOOL(NSArrayController.canSelectNext)
         self.assertResultIsBOOL(NSArrayController.canSelectPrevious)

@@ -48,5 +48,6 @@ class PythonListAsValue (TestCase):
         self.assertIsInstance(NSShortDateFormatString, unicode)
         self.assertIsInstance(NSPositiveCurrencyFormatString, unicode)
         self.assertIsInstance(NSNegativeCurrencyFormatString, unicode)
+
 if __name__ == "__main__":
     main()

@@ -16,6 +16,13 @@ class TestNSDocument (TestCase):
         self.assertEqual(NSSaveToOperation, 2)
         self.assertEqual(NSAutosaveOperation, 3)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSChangeDiscardable, 256)
+        self.assertEqual(NSAutosaveInPlaceOperation, 4)
+        self.assertEqual(NSAutosaveElsewhereOperation, 3)
+
+
     def testMethods(self):
         self.assertArgIsOut(NSDocument.initWithType_error_, 1)
         self.assertArgIsOut(NSDocument.initWithContentsOfURL_ofType_error_, 2)
