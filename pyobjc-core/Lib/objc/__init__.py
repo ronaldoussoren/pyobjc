@@ -24,8 +24,6 @@ def _update(g=globals()):
 _update()
 del _update
 
-#import objc._setup
-
 from objc._convenience import *
 from objc._bridgesupport import *
 
