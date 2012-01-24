@@ -240,6 +240,13 @@ def _leaks():
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 _nscftype = objc.lookUpClass('NSCFType')
 
+_typealias = {}
+if not is32Bit():
+    _typealias[objc._C_LNG] = objc._C_LNG
+    _typealias[objc._C_LNG_LNG] = objc._C_LNG
+    _typealias[objc._C_ULNG] = objc._C_ULNG
+    _typealias[objc._C_ULNG_LNG] = objc._C_ULNG
+
 class TestCase (_unittest.TestCase):
     """
     A version of TestCase that wraps every test into its own
@@ -389,7 +396,8 @@ class TestCase (_unittest.TestCase):
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
         type = info['retval']['type']
-        if type != tp and _typemap(type) != _typemap(tp):
+        if type != tp and _typemap(type) != _typemap(tp) \
+                and _typealias.get(type, type) != _typealias.get(tp, tp):
             self.fail(message or "result of %r is not of type %r, but %r"%(
                 method, tp, type))
         
