@@ -242,10 +242,12 @@ _nscftype = objc.lookUpClass('NSCFType')
 
 _typealias = {}
 if not is32Bit():
-    _typealias[objc._C_LNG] = objc._C_LNG
     _typealias[objc._C_LNG_LNG] = objc._C_LNG
-    _typealias[objc._C_ULNG] = objc._C_ULNG
     _typealias[objc._C_ULNG_LNG] = objc._C_ULNG
+
+else:
+    _typealias[objc._C_LNG] = objc._C_INT
+    _typealias[objc._C_ULNG] = objc._C_UINT
 
 class TestCase (_unittest.TestCase):
     """
