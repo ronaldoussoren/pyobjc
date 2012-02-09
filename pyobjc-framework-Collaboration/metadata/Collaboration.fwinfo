@@ -1,0 +1,125 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CBIdentity": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CSIdentity=}"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "identityWithCSIdentity:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{__CSIdentity=}"
+      }, 
+      "selector": "CSIdentity"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isHidden"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isMemberOfGroup:"
+     }
+    ]
+   }, 
+   "CBIdentityAuthority": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CSIdentityAuthority=}"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "identityAuthorityWithCSIdentityAuthority:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{__CSIdentityAuthority=}"
+      }, 
+      "selector": "CSIdentityAuthority"
+     }
+    ]
+   }, 
+   "CBIdentityPicker": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "3": {
+        "type_override": "^v"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "runModalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsMultipleSelection"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsMultipleSelection:"
+     }
+    ]
+   }, 
+   "CBUserIdentity": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{OpaqueSecCertificateRef=}"
+      }, 
+      "selector": "certificate"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "authenticateWithPassword:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEnabled"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
