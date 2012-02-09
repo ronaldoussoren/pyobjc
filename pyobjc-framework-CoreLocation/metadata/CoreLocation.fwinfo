@@ -1,0 +1,42 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CLLocation": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "{_CLLocationCoordinate2D=dd}"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithCoordinate:altitude:horizontalAccuracy:verticalAccuracy:timestamp:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "{_CLLocationCoordinate2D=dd}"
+      }, 
+      "selector": "coordinate"
+     }
+    ]
+   }, 
+   "CLLocationManager": {
+    "methods": [
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "locationServicesEnabled"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
