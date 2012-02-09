@@ -272,7 +272,6 @@ class TestABAddressBookC (TestCase):
 
         @objc.callbackFor(ABBeginLoadingImageDataForClient)
         def callback(imageData, tag, refcon):
-            print "done"
             r.append((imageData, tag, refcon))
 
         idx = ABBeginLoadingImageDataForClient(me, callback, 99)

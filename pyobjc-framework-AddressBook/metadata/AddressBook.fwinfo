@@ -1,0 +1,1378 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "ABAddressBookRef": {
+    "tollfree": "ABAddressBook"
+   }, 
+   "ABGroupRef": {
+    "tollfree": "ABGroup"
+   }, 
+   "ABMultiValueRef": {
+    "tollfree": "ABMultiValue"
+   }, 
+   "ABMutableMultiValueRef": {
+    "tollfree": "ABMutableMultiValue"
+   }, 
+   "ABPersonRef": {
+    "tollfree": "ABPerson"
+   }, 
+   "ABPickerRef": {
+    "comment": "no document as such, found by testing", 
+    "tollfree": "ABPeoplePickerView",
+    "typestr": "^{OpaqueABPicker}"
+   }, 
+   "ABSearchElementRef": {
+    "tollfree": "ABSearchElement"
+   }
+  }, 
+  "classes": {
+   "ABAddressBook": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "saveAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addRecord:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeRecord:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addRecord:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasUnsavedChanges"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeRecord:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "save"
+     }
+    ]
+   }, 
+   "ABGroup": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addMember:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addSubgroup:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeMember:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeSubgroup:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setDistributionIdentifier:forProperty:person:"
+     }
+    ]
+   }, 
+   "ABMutableMultiValue": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeValueAndLabelAtIndex:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "replaceLabelAtIndex:withLabel:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "replaceValueAtIndex:withValue:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setPrimaryIdentifier:"
+     }
+    ]
+   }, 
+   "ABPeoplePickerView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsGroupSelection"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsMultipleSelection"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "selectGroup:byExtendingSelection:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "selectIdentifier:forPerson:byExtendingSelection:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "selectRecord:byExtendingSelection:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsGroupSelection:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsMultipleSelection:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "v@:@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setGroupDoubleAction:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "v@:@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNameDoubleAction:"
+     }
+    ]
+   }, 
+   "ABPerson": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setImageData:"
+     }
+    ]
+   }, 
+   "ABPersonView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "editing"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEditing:"
+     }
+    ]
+   }, 
+   "ABRecord": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setValue:forProperty:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isReadOnly"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeValueForProperty:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setValue:forProperty:"
+     }
+    ]
+   }, 
+   "ABSearchElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "matchesRecord:"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldEnableActionForPerson:identifier:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {
+   "ABAddPropertiesAndTypes": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "ABAddRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABBeginLoadingImageDataForClient": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": [
+          "l", 
+          "q"
+         ]
+        }, 
+        "2": {
+         "typestr": "^v"
+        }
+       }, 
+       "retval": {
+        "typestr": "^v"
+       }
+      }, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "l", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "ABCopyArrayOfAllGroups": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABCopyArrayOfAllPeople": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABCopyArrayOfMatchingRecords": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABSearchElementRef=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABCopyArrayOfPropertiesForRecordType": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABCopyDefaultCountryCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABCopyLocalizedPropertyOrLabel": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABCopyRecordForUniqueId": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "ABCopyRecordTypeFromUniqueId": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABCreateFormattedAddressFromDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABGetMe": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__ABPerson=}"
+    }
+   }, 
+   "ABGetSharedAddressBook": {
+    "retval": {
+     "type_override": "^{__ABAddressBookRef=}"
+    }
+   }, 
+   "ABGroupAddGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }
+   }, 
+   "ABGroupAddMember": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }
+   }, 
+   "ABGroupCopyArrayOfAllMembers": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABGroupCopyArrayOfAllSubgroups": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABGroupCopyDistributionIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABGroupCopyParentGroups": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABGroupCreate": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABGroup=}"
+    }
+   }, 
+   "ABGroupCreateSearchElement": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABSearchElementRef=}"
+    }
+   }, 
+   "ABGroupRemoveGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }
+   }, 
+   "ABGroupRemoveMember": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }
+   }, 
+   "ABGroupSetDistributionIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABGroup=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABHasUnsavedChanges": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }
+   }, 
+   "ABMultiValueAdd": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "ABMultiValueCopyIdentifierAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABMultiValueCopyLabelAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABMultiValueCopyPrimaryIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABMultiValueCopyValueAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }
+   }, 
+   "ABMultiValueCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }
+   }, 
+   "ABMultiValueCreate": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABMultiValue=}"
+    }
+   }, 
+   "ABMultiValueCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABMultiValue=}"
+    }
+   }, 
+   "ABMultiValueCreateMutable": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABMultiValue=}"
+    }
+   }, 
+   "ABMultiValueCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABMultiValue=}"
+    }
+   }, 
+   "ABMultiValueIndexForIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABMultiValueInsert": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "ABMultiValuePropertyType": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }
+   }, 
+   "ABMultiValueRemove": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }
+   }, 
+   "ABMultiValueReplaceLabel": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABMultiValueReplaceValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }
+    }
+   }, 
+   "ABMultiValueSetPrimaryIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABMultiValue=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPersonCopyImageData": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "ABPersonCopyParentGroups": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPersonCopyVCardRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "ABPersonCreate": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABPerson=}"
+    }
+   }, 
+   "ABPersonCreateSearchElement": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABSearchElementRef=}"
+    }
+   }, 
+   "ABPersonCreateWithVCardRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABPerson=}"
+    }
+   }, 
+   "ABPersonSetImageData": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "ABPickerAddProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerChangeAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerClearSearchField": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerCopyColumnTitle": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABPickerCopyDisplayedProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABPickerCopyProperties": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPickerCopySelectedGroups": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPickerCopySelectedIdentifiers": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPickerCopySelectedRecords": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPickerCopySelectedValues": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "ABPickerCreate": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{OpaqueABPicker=}"
+    }
+   }, 
+   "ABPickerDeselectAll": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerDeselectGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }
+   }, 
+   "ABPickerDeselectIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerDeselectRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABPickerEditInAddressBook": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerGetAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerGetDelegate": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{OpaqueHIObjectRef=}"
+    }
+   }, 
+   "ABPickerGetFrame": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+      ]
+     }
+    }
+   }, 
+   "ABPickerIsVisible": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerRemoveProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerSelectGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABGroup=}"
+     }
+    }
+   }, 
+   "ABPickerSelectIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerSelectInAddressBook": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABPickerSelectRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABPickerSetColumnTitle": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerSetDelegate": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{OpaqueHIObjectRef=}"
+     }
+    }
+   }, 
+   "ABPickerSetDisplayedProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABPickerSetFrame": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }, 
+     "1": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+      ]
+     }
+    }
+   }, 
+   "ABPickerSetVisibility": {
+    "args": {
+     "0": {
+      "type_override": "^{OpaqueABPicker=}"
+     }
+    }
+   }, 
+   "ABRecordCopyRecordType": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABRecordCopyUniqueId": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ABRecordCopyValue": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABRecordCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "ABRecordIsReadOnly": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABRecordRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABRecordSetValue": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ABRemoveProperties": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "ABRemoveRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABSave": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }
+    }
+   }, 
+   "ABSearchElementCreateWithConjunction": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__ABSearchElementRef=}"
+    }
+   }, 
+   "ABSearchElementMatchesRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABSearchElementRef=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "ABSetMe": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__ABPerson=}"
+     }
+    }
+   }, 
+   "ABTypeOfProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__ABAddressBookRef=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
