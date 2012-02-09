@@ -16,6 +16,9 @@ setup(
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     packages = [ "Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools" ],
     namespace_packages = ['PyObjCTools'],
+    setup_requires = [
+        'pyobjc-core>=2.4a0',
+    ],
     install_requires = [ 
         'pyobjc-core>=2.4a0',
     ],

@@ -15,6 +15,9 @@ setup(
     version="2.4a0",
     description = "Wrappers for the framework WebKit on Mac OS X",
     packages = [ "WebKit", "JavaScriptCore" ],
+    setup_requires = [
+        'pyobjc-core>=2.4a0',
+    ],
     install_requires = [ 
         'pyobjc-core>=2.4a0',
         'pyobjc-framework-Cocoa>=2.4a0',
