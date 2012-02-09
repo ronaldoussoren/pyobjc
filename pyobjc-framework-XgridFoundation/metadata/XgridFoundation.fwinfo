@@ -1,0 +1,89 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "XGActionMonitor": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "actionDidFail"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "actionDidSucceed"
+     }
+    ]
+   }, 
+   "XGConnection": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isClosed"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isOpened"
+     }
+    ]
+   }, 
+   "XGFileDownload": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDestination:allowOverwrite:"
+     }
+    ]
+   }, 
+   "XGGrid": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isDefault"
+     }
+    ]
+   }, 
+   "XGResource": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isUpdated"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isUpdating"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
