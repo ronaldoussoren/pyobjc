@@ -1,0 +1,852 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSAtomicStore": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "load:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "save:"
+     }
+    ]
+   }, 
+   "NSEntityDescription": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isAbstract"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isKindOfEntity:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAbstract:"
+     }
+    ]
+   }, 
+   "NSEntityMigrationPolicy": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "beginEntityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "createDestinationInstancesForSourceInstance:entityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "endInstanceCreationForEntityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "createRelationshipsForDestinationInstance:entityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "endRelationshipCreationForEntityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "performCustomValidationForEntityMapping:manager:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "endEntityMapping:manager:error:"
+     }
+    ]
+   }, 
+   "NSFetchRequest": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "includesPendingChanges"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIncludesPendingChanges:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "returnsDistinctResults"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReturnsDistinctResults:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "includesPropertyValues"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "includesSubentities"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "returnsObjectsAsFaults"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIncludesPropertyValues:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIncludesSubentities:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReturnsObjectsAsFaults:"
+     }
+    ]
+   }, 
+   "NSFetchRequestExpression": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "expressionForFetch:context:countOnly:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isCountOnlyRequest"
+     }
+    ]
+   }, 
+   "NSIncrementalStore": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "loadMetadata:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "executeRequest:withContext:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "newValuesForObjectWithID:withContext:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "newValueForRelationship:forObjectWithID:withContext:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "obtainPermanentIDsForObjects:error:"
+     }
+    ]
+   }, 
+   "NSManagedObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "N"
+       }, 
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "validateValue:forKey:error:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "validateForDelete:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "validateForInsert:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "validateForUpdate:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "contextShouldIgnoreUnmodeledPropertyChanges"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasFaultForRelationshipNamed:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isDeleted"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isFault"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isInserted"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isUpdated"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^v"
+      }, 
+      "selector": "observationInfo"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^v"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setObservationInfo:"
+     }
+    ]
+   }, 
+   "NSManagedObjectContext": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "existingObjectWithID:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "executeFetchRequest:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "countForFetchRequest:error:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_override": "^v"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "observeValueForKeyPath:ofObject:change:context:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "save:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "obtainPermanentIDsForObjects:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasChanges"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "propagatesDeletesAtEndOfEvent"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "refreshObject:mergeChanges:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "retainsRegisteredObjects"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPropagatesDeletesAtEndOfEvent:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setRetainsRegisteredObjects:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "tryLock"
+     }
+    ]
+   }, 
+   "NSManagedObjectID": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isTemporaryID"
+     }
+    ]
+   }, 
+   "NSManagedObjectModel": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isConfiguration:compatibleWithStoreMetadata:"
+     }
+    ]
+   }, 
+   "NSMappingModel": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "inferredMappingModelForSourceModel:destinationModel:error:"
+     }
+    ]
+   }, 
+   "NSMergePolicy": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "resolveConflicts:error:"
+     }
+    ]
+   }, 
+   "NSMigrationManager": {
+    "methods": [
+     {
+      "args": {
+       "7": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:"
+     }
+    ]
+   }, 
+   "NSPersistentStore": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "metadataForPersistentStoreWithURL:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setMetadata:forPersistentStoreWithURL:error:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {}, 
+      "selector": "migrationManagerClass"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "loadMetadata:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "loadMetadata"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isReadOnly"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReadOnly:"
+     }
+    ]
+   }, 
+   "NSPersistentStoreCoordinator": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "registerStoreClass:forStoreType:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "metadataForPersistentStoreOfType:URL:error:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setMetadata:forPersistentStoreOfType:URL:error:"
+     }, 
+     {
+      "args": {
+       "5": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "importStoreWithIdentifier:fromExternalRecordsDirectory:toURL:options:withType:error:"
+     }, 
+     {
+      "args": {
+       "4": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "addPersistentStoreWithType:configuration:URL:options:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removePersistentStore:error:"
+     }, 
+     {
+      "args": {
+       "4": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "migratePersistentStore:toURL:options:withType:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "metadataForPersistentStoreWithURL:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "executeRequest:withContext:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setURL:forPersistentStore:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "tryLock"
+     }
+    ]
+   }, 
+   "NSPropertyDescription": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isIndexed"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isOptional"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isTransient"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIndexed:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setOptional:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setTransient:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isIndexedBySpotlight"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIndexedBySpotlight:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isStoredInExternalRecord"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setStoredInExternalRecord:"
+     }
+    ]
+   }, 
+   "NSRelationshipDescription": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isToMany"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
