@@ -12,5 +12,6 @@ syntax: glob
 *.egg-info
 *.dSYM
 *.pyc
+*.pyo
 unittest2-*.egg
 *.swp
