@@ -1,0 +1,167 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CalCalendar": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEditable"
+     }
+    ]
+   }, 
+   "CalCalendarItem": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasAlarm"
+     }
+    ]
+   }, 
+   "CalCalendarStore": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "saveCalendar:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeCalendar:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "saveEvent:span:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeEvent:span:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "saveTask:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeTask:error:"
+     }
+    ]
+   }, 
+   "CalEvent": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isAllDay"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIsAllDay:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isDetached"
+     }
+    ]
+   }, 
+   "CalRecurrenceEnd": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "usesEndDate"
+     }
+    ]
+   }, 
+   "CalTask": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isCompleted"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIsCompleted:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
