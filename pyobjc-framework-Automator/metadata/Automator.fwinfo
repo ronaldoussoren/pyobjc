@@ -1,0 +1,192 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "AMAction": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithContentsOfURL:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "runWithInput:fromAction:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "runWithInput:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "printf_format": true
+       }
+      }, 
+      "class_method": false, 
+      "selector": "logMessageWithLevel:format:", 
+      "variadic": true
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "ignoresInput"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isStopped"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithDefinition:fromArchive:"
+     }
+    ]
+   }, 
+   "AMBundleAction": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasView"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithDefinition:fromArchive:"
+     }
+    ]
+   }, 
+   "AMShellScriptAction": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "remapLineEndings"
+     }
+    ]
+   }, 
+   "AMWorkflow": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "runWorkflowAtURL:withInput:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithContentsOfURL:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "writeToURL:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "setValue:forVariableWithName:"
+     }
+    ]
+   }, 
+   "AMWorkflowController": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canRun"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRunning"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isPaused"
+     }
+    ]
+   }, 
+   "AMWorkflowView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEditable"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEditable:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
