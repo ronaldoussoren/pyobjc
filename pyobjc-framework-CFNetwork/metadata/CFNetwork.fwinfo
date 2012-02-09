@@ -1,0 +1,1466 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "CFHTTPAuthenticationRef": {
+    "gettypeid_func": "CFHTTPAuthenticationGetTypeID",
+    "typestr": "^{_CFHTTPAuthentication}"
+   }, 
+   "CFHTTPMessageRef": {
+    "gettypeid_func": "CFHTTPMessageGetTypeID"
+   }, 
+   "CFHostRef": {
+    "gettypeid_func": "CFHostGetTypeID"
+   }, 
+   "CFNetDiagnosticRef": {
+    "gettypeid_func": "CFNetDiagnosticGetTypeID"
+   }, 
+   "CFNetServiceBrowserRef": {
+    "gettypeid_func": "CFNetServiceBrowserGetTypeID"
+   }, 
+   "CFNetServiceMonitorRef": {
+    "gettypeid_func": "CFNetServiceMonitorGetTypeID"
+   }, 
+   "CFNetServiceRef": {
+    "gettypeid_func": "CFNetServiceGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "CFFTPCreateParsedResourceListing": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFDictionary}"
+     }
+    }
+   }, 
+   "CFHTTPAuthenticationAppliesToRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }
+   }, 
+   "CFHTTPAuthenticationCopyDomains": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFHTTPAuthenticationCopyMethod": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPAuthenticationCopyRealm": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPAuthenticationCreateFromResponse": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_CFHTTPAuthentication=}"
+    }
+   }, 
+   "CFHTTPAuthenticationIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFHTTPAuthenticationRequiresAccountDomain": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }
+   }, 
+   "CFHTTPAuthenticationRequiresOrderedRequests": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }
+   }, 
+   "CFHTTPAuthenticationRequiresUserNameAndPassword": {
+    "args": {
+     "0": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }
+    }
+   }, 
+   "CFHTTPMessageAddAuthentication": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "@"
+     }, 
+     "4": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFHTTPMessageAppendBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFHTTPMessageApplyCredentialDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFHTTPMessageApplyCredentials": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "^{_CFHTTPAuthentication=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "@"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFHTTPMessageCopyAllHeaderFields": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFHTTPMessageCopyBody": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFHTTPMessageCopyHeaderFieldValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPMessageCopyRequestMethod": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPMessageCopyRequestURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFHTTPMessageCopyResponseStatusLine": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPMessageCopySerializedMessage": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFHTTPMessageCopyVersion": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFHTTPMessageCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHTTPMessage=}"
+    }
+   }, 
+   "CFHTTPMessageCreateEmpty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHTTPMessage=}"
+    }
+   }, 
+   "CFHTTPMessageCreateRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHTTPMessage=}"
+    }
+   }, 
+   "CFHTTPMessageCreateResponse": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHTTPMessage=}"
+    }
+   }, 
+   "CFHTTPMessageGetResponseStatusCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }
+   }, 
+   "CFHTTPMessageIsHeaderComplete": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }
+   }, 
+   "CFHTTPMessageIsRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }
+   }, 
+   "CFHTTPMessageSetBody": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFHTTPMessageSetHeaderFieldValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFHTTPReadStreamSetProxy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFHTTPReadStreamSetRedirectsAutomatically": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFHostCancelInfoResolution": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }
+    }
+   }, 
+   "CFHostCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHost=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHost=}"
+    }
+   }, 
+   "CFHostCreateWithAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHost=}"
+    }
+   }, 
+   "CFHostCreateWithName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFHost=}"
+    }
+   }, 
+   "CFHostGetAddressing": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "type_override": "o^Z"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFHostGetNames": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "type_override": "o^Z"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFHostGetReachability": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "type_override": "o^Z"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFHostScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFHostSetClient": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFHost=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "i", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CFStreamError=li}", 
+          true
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "^{CFHostClientContext=l^v^?^?^?}"
+     }
+    }
+   }, 
+   "CFHostStartInfoResolution": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFHostUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetDiagnosticCopyNetworkStatusPassively": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetDiagnostic=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "CFNetDiagnosticCreateWithStreams": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetDiagnostic=}"
+    }
+   }, 
+   "CFNetDiagnosticCreateWithURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetDiagnostic=}"
+    }
+   }, 
+   "CFNetDiagnosticDiagnoseProblemInteractively": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetDiagnostic=}"
+     }
+    }
+   }, 
+   "CFNetDiagnosticSetName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetDiagnostic=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceBrowserCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFNetServiceBrowser=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "@", 
+          true
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CFStreamError=li}", 
+          true
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "^{CFNetServiceClientContext=l^v^?^?^?}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetServiceBrowser=}"
+    }
+   }, 
+   "CFNetServiceBrowserInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }
+    }
+   }, 
+   "CFNetServiceBrowserScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceBrowserSearchForDomains": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceBrowserSearchForServices": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceBrowserStopSearch": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceBrowserUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceBrowser=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceCancel": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }
+   }, 
+   "CFNetServiceCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetService=}"
+    }
+   }, 
+   "CFNetServiceCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetService=}"
+    }
+   }, 
+   "CFNetServiceCreateDictionaryWithTXTData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFNetServiceCreateTXTDataWithDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFNetServiceGetAddressing": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFNetServiceGetDomain": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFNetServiceGetName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFNetServiceGetPortNumber": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }
+   }, 
+   "CFNetServiceGetProtocolSpecificInformation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFNetServiceGetTXTData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFNetServiceGetTargetHost": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFNetServiceGetType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFNetServiceMonitorCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFNetServiceMonitor=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFNetService=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "i", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CFStreamError=li}", 
+          true
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": "^{CFNetServiceClientContext=l^v^?^?^?}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFNetServiceMonitor=}"
+    }
+   }, 
+   "CFNetServiceMonitorInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceMonitor=}"
+     }
+    }
+   }, 
+   "CFNetServiceMonitorScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceMonitor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceMonitorStart": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceMonitor=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceMonitorStop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceMonitor=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceMonitorUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetServiceMonitor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceRegister": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceRegisterWithOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceResolve": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceResolveWithTimeout": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFNetServiceScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceSetClient": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFNetService=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CFStreamError=li}", 
+          true
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "^{CFNetServiceClientContext=l^v^?^?^?}"
+     }
+    }
+   }, 
+   "CFNetServiceSetProtocolSpecificInformation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetServiceSetTXTData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFNetServiceUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNetworkCopyProxiesForAutoConfigurationScript": {
+    "args": {
+     "0": {
+      "type_override": "@"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFNetworkCopyProxiesForURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFNetworkCopySystemProxySettings": {
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary}"
+    }
+   }, 
+   "CFNetworkExecuteProxyAutoConfigurationScript": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFArray=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFError=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFNetworkExecuteProxyAutoConfigurationURL": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFArray=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFError=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFReadStreamCreateForHTTPRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFReadStream=}"
+    }
+   }, 
+   "CFReadStreamCreateForStreamedHTTPRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHTTPMessage=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFReadStream=}"
+    }
+   }, 
+   "CFReadStreamCreateWithFTPURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFReadStream=}"
+    }
+   }, 
+   "CFSocketStreamPairSetSecurityProtocol": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFSocketStreamSOCKSGetError": {
+    "args": {
+     "0": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFSocketStreamSOCKSGetErrorSubdomain": {
+    "args": {
+     "0": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_CFStreamError=ii}", 
+       "^{_CFStreamError=qi}"
+      ]
+     }
+    }
+   }, 
+   "CFStreamCreatePairWithSocketToCFHost": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFHost=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFStreamCreatePairWithSocketToNetService": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNetService=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFWriteStreamCreateWithFTPURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFWriteStream=}"
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
