@@ -27,6 +27,7 @@ _useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
 _leaksVerbose = True
 
 def _typemap(tp):
+    if tp is None: return None
     return tp.replace('_NSRect', 'CGRect').replace('_NSPoint', 'CGPoint').replace('_NSSize', 'CGSize')
 
 def sdkForPython(_cache=[]):
@@ -410,7 +411,8 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         type = info['arguments'][argno+offset]['type']
-        if type != tp and _typemap(type) != _typemap(tp):
+        if type != tp and _typemap(type) != _typemap(tp) \
+                and _typealias.get(type, type) != _typealias.get(tp, tp):
             self.fail(message or "arg %d of %s is not of type %r, but %r"%(
                 argno, method, tp, type))
 
