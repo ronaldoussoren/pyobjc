@@ -1,0 +1,181 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "PSClient": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addFeed:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeFeed:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isPrivate"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPrivate:"
+     }
+    ]
+   }, 
+   "PSEnclosure": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "download:"
+     }
+    ]
+   }, 
+   "PSEntry": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRead"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isFlagged"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isCurrent"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCurrent:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setFlagged:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setRead:"
+     }
+    ]
+   }, 
+   "PSFeed": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "refresh:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "XMLRepresentationWithEntries:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRefreshing"
+     }
+    ]
+   }, 
+   "PSFeedSettings": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "downloadsEnclosures"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "refreshesInBackground"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDownloadsEnclosures:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setRefreshesInBackground:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
