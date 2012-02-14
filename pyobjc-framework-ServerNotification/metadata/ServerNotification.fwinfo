@@ -1,0 +1,25 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSServerNotificationCenter": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "sel_of_type": "v@:@", 
+        "type_override": ":"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "addObserver:selector:name:object:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
