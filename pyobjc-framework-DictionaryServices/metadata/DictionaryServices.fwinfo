@@ -1,0 +1,49 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "DCSDictionaryRef": {
+    "gettypeid_func": "DCSDictionaryGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "DCSDictionaryGetTypeID": {
+     "comment": "Function not present in header files",
+     "args": {
+     },
+     "retval": {
+        "typestr": "l"
+     }
+   },
+   "DCSCopyTextDefinition": {
+    "args": {
+     "0": {
+      "type_override": "^{__DCSDictionary=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "DCSGetTermRangeInString": {
+    "args": {
+     "0": {
+      "type_override": "^{__DCSDictionary=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
