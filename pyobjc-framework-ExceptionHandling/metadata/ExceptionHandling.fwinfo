@@ -1,0 +1,29 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "exceptionHandler:shouldHandleException:mask:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "exceptionHandler:shouldLogException:mask:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
