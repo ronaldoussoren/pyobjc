@@ -1,0 +1,52 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "ScreenSaverView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasConfigureSheet"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithFrame:isPreview:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isAnimating"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isPreview"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "performGammaFade"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
