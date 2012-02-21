@@ -38,6 +38,17 @@ def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
 
         return bundle
 
+class GetAttrMap (object):
+    __slots__ = ('_container',)
+    def __init__(self, container):
+        self._container = container
+
+    def __getitem__(self, key):
+        try:
+            return getattr(self._container, key)
+        except AttributeError:
+            raise KeyError(key)
+
 class ObjCLazyModule (module):
 
     # Define slots for all attributes, that way they don't end up it __dict__.
@@ -68,6 +79,9 @@ class ObjCLazyModule (module):
         self.__enummap = metadict.get('enums')
         self.__funcmap = metadict.get('functions')
         self.__inlinelist = inline_list
+
+        self.__expressions = metadict.get('expressions')
+        self.__expressions_mapping = GetAttrMap(self)
 
         self.__load_cftypes(metadict.get('cftypes'))
 
@@ -157,6 +171,13 @@ class ObjCLazyModule (module):
                 except AttributeError:
                     pass
 
+        if self.__expressions:
+            for nm in self.__expressions:
+                try:
+                    getattr(self, nm)
+                except AttributeError:
+                    pass
+
 
         # Add all names that are already in our __dict__
         all.update(self.__dict__)
@@ -229,7 +250,13 @@ class ObjCLazyModule (module):
                     if name in d:
                         return d[name]
 
-
+        if self.__expressions:
+            if name in self.__expressions:
+                info = self.__expressions[name]
+                try:
+                    return eval(info, {}, self.__expressions_mapping)
+                except NameError:
+                    pass
 
         raise AttributeError(name)
 
