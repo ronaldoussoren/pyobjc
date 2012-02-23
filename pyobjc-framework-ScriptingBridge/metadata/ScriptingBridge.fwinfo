@@ -1,0 +1,92 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "r^{AEDesc=I^^{OpaqueAEDataStorageType}}"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "eventDidFail:withError:"
+     }
+    ]
+   }, 
+   "SBApplication": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "classForScriptingClass:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRunning"
+     }
+    ]
+   }, 
+   "SBElementArray": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "@@:"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "arrayByApplyingSelector:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "sel_of_type": "@@:@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "arrayByApplyingSelector:withObject:"
+     }
+    ]
+   }, 
+   "SBObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "propertyWithClass:code:"
+     }, 
+     {
+      "class_method": false, 
+      "selector": "sendEvent:id:parameters:", 
+      "variadic": true
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "SBApplicationDelegate": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "r^{AEDesc=I^^{OpaqueAEDataStorageType}}"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "eventDidFail:withError:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
