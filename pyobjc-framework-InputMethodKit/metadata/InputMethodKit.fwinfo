@@ -1,0 +1,237 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "IMKCandidates": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__TISInputSource=}"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setSelectionKeysKeylayout:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{__TISInputSource=}"
+      }, 
+      "selector": "selectionKeysKeylayout"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "dismissesAutomatically"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isVisible"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDismissesAutomatically:"
+     }
+    ]
+   }, 
+   "IMKInputController": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "doCommandBySelector:commandDictionary:"
+     }
+    ]
+   }, 
+   "IMKServer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}, 
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithName:controllerClass:delegateClass:"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "didCommandBySelector:client:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "1": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }, 
+       "2": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "3": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "handleEvent:client:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "inputText:client:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "inputText:key:modifiers:client:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "1": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }, 
+       "2": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "mouseMovedOnCharacterIndex:coordinate:withModifier:client:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "1": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }, 
+       "2": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "mouseUpOnCharacterIndex:coordinate:withModifier:client:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "IMKMouseHandling": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "1": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }, 
+       "2": {
+        "type_override": [
+         "I", 
+         "Q"
+        ]
+       }, 
+       "3": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "mouseDownOnCharacterIndex:coordinate:withModifier:continueTracking:client:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
