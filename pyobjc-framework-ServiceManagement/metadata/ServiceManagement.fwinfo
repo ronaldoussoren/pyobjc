@@ -1,0 +1,98 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "SMCopyAllJobDictionaries": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "SMJobBless": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{AuthorizationOpaqueRef=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "SMJobCopyDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "SMJobRemove": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{AuthorizationOpaqueRef=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "SMJobSubmit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "2": {
+      "type_override": "^{AuthorizationOpaqueRef=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "SMLoginItemSetEnabled": {
+    "args": {
+     "0": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
