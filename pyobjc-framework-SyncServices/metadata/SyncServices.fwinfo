@@ -1,0 +1,786 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "ISyncClient": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "sel_of_type": "v@:@@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setSyncAlertHandler:selector:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "formatsRelationships"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setFormatsRelationships:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canPullChangesForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canPushChangesForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEnabledForEntityName:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEnabled:forEntityNames:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShouldReplaceClientRecords:forEntityNames:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShouldSynchronize:withClientsOfType:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldReplaceClientRecordsForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldSynchronizeWithClientsOfType:"
+     }
+    ]
+   }, 
+   "ISyncManager": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "clientWithIdentifier:needsSyncing:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "registerSchemaWithBundlePath:"
+     }
+    ]
+   }, 
+   "ISyncRecordSnapshot": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "recordIdentifierForReference:isModified:"
+     }
+    ]
+   }, 
+   "ISyncSession": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "sel_of_type": "v@:@@"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "beginSessionInBackgroundWithClient:entityNames:target:selector:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "sel_of_type": "v@:@@"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "beginSessionInBackgroundWithClient:entityNames:target:selector:lastAnchors:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "sel_of_type": "v@:@@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "prepareToPullChangesInBackgroundForEntityNames:target:selector:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "clientLostRecordWithIdentifier:shouldReplaceOnNextSync:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isCancelled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "prepareToPullChangesForEntityNames:beforeDate:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldPullChangesForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldPushAllRecordsForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldPushChangesForEntityName:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldReplaceAllRecordsOnClientForEntityName:"
+     }
+    ]
+   }, 
+   "ISyncSessionDriver": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "startAsynchronousSync:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "handlesSyncAlerts"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setHandlesSyncAlerts:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sync"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changedRecordsForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changesForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "identifiersForRecordsToDeleteForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didRegisterClientAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willNegotiateAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didNegotiateAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willPushAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didPushAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willPullAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didPullAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willFinishSessionAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didReceiveSyncAlertAndReturnError:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }, 
+       "3": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }, 
+       "4": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "i"
+      }, 
+      "selector": "applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "deleteAllRecordsForEntityName:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "recordsForEntityName:moreComing:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEqual:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "persistentStoreCoordinator:willDeleteRecordWithIdentifier:inSyncSession:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "persistentStoreCoordinatorShouldStartSyncing:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldApplyRecord:withRecordIdentifier:"
+     }
+    ]
+   }, 
+   "NSPersistentStoreCoordinator": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "3": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "syncWithClient:inBackground:handler:error:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "ISyncSessionDriverDataSource": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "recordsForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }, 
+       "3": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }, 
+       "4": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "i"
+      }, 
+      "selector": "applyChange:forEntityName:remappedRecordIdentifier:formattedRecord:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "deleteAllRecordsForEntityName:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changedRecordsForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changesForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "identifiersForRecordsToDeleteForEntityName:moreComing:error:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {
+   "ISyncSessionDriverDataSourceOptionalMethods": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changedRecordsForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "changesForEntityName:moreComing:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^Z"
+       }, 
+       "2": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "identifiersForRecordsToDeleteForEntityName:moreComing:error:"
+     }
+    ]
+   }, 
+   "ISyncSessionDriverDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didRegisterClientAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willNegotiateAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didNegotiateAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willPushAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didPushAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willPullAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didPullAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:willFinishSessionAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o", 
+        "type_override": "^@"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "sessionDriver:didReceiveSyncAlertAndReturnError:"
+     }
+    ]
+   }
+  }
+ }
+}
