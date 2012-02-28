@@ -1,0 +1,128 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "getPixelBufferPixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CVBuffer=}"
+       }, 
+       "1": {
+        "type_modifier": "n"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "renderIntoPixelBuffer:forTime:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }, 
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "getOpenGLBufferContext:pixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CVBuffer=}"
+       }, 
+       "1": {
+        "type_modifier": "n"
+       }, 
+       "2": {
+        "type_modifier": "n"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "renderIntoOpenGLBuffer:onScreen:forTime:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {
+   "IMVideoDataSource": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "getPixelBufferPixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CVBuffer=}"
+       }, 
+       "1": {
+        "type_modifier": "n"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "renderIntoPixelBuffer:forTime:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }, 
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "getOpenGLBufferContext:pixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{__CVBuffer=}"
+       }, 
+       "1": {
+        "type_modifier": "n"
+       }, 
+       "2": {
+        "type_modifier": "n"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "renderIntoOpenGLBuffer:onScreen:forTime:"
+     }
+    ]
+   }
+  }
+ }
+}
