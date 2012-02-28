@@ -1,0 +1,288 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "cftypes": {
+    "ConstFSEventStreamRef": {
+    	"opaque": true,
+	"ignore": true
+    },
+    "FSEventStreamRef": {
+    	"opaque": true
+    }
+  },
+  "formal_protocols": {}, 
+  "functions": {
+   "FSEventStreamCopyDescription": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }, 
+    "retval": {
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "FSEventStreamCopyPathsBeingWatched": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "FSEventStreamCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__FSEventStream=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^Q", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": [
+       "^{FSEventStreamContext=i^v^?^?^?}", 
+       "^{FSEventStreamContext=q^v^?^?^?}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_retained": true, 
+     "type_override": "^{__FSEventStream=}"
+    }
+   }, 
+   "FSEventStreamCreateRelativeToDevice": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__FSEventStream=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^Q", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": [
+       "^{FSEventStreamContext=i^v^?^?^?}", 
+       "^{FSEventStreamContext=q^v^?^?^?}"
+      ]
+     }, 
+     "4": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_retained": true, 
+     "type_override": "^{__FSEventStream=}"
+    }
+   }, 
+   "FSEventStreamFlushAsync": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamFlushSync": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamGetDeviceBeingWatched": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamGetLatestEventId": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamRelease": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamRetain": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "FSEventStreamSetDispatchQueue": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "FSEventStreamShow": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamStart": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamStop": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }
+    }
+   }, 
+   "FSEventStreamUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__FSEventStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "FSEventsCopyUUIDForDevice": {
+    "retval": {
+     "already_retained": true, 
+     "type_override": "^{__CFUUID=}"
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
