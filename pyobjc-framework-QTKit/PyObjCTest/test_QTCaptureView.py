@@ -7,7 +7,7 @@ class TestQTCaptureView (TestCase):
         self.assertResultIsBOOL(QTCaptureView.preservesAspectRatio)
 
     def testProtocols(self):
-        self.assertIsInstance(protocols.QTCaptureViewDelegate, objc.informal_protocol)
+        self.assertIsInstance(protocols.QTCaptureView_Delegate, objc.informal_protocol)
 
 if __name__ == "__main__":
     main()

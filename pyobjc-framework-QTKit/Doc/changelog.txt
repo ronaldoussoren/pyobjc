@@ -1,0 +1,5 @@
+Changes in the QTKit wrappers
+=============================
+
+* 2.4.0 - The QuickTime #defines are not present at this time, they 
+  will be restored later.

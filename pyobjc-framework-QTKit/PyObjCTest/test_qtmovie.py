@@ -151,7 +151,7 @@ class TestQTMovie (TestCase):
         self.assertIsInstance(QTMovieChapterTargetTrackAttribute, unicode)
 
     def testInformalProtocols(self):
-        self.assertIsInstance(protocols.QTMovieDelegate, objc.informal_protocol)
+        self.assertIsInstance(protocols.QTMovie_Delegate, objc.informal_protocol)
         self.assertResultIsBOOL(TestQTMovieHelper.movie_linkToURL_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldLoadData_)
         self.assertResultIsBOOL(TestQTMovieHelper.movieShouldTask_)
@@ -193,10 +193,7 @@ class TestQTMovie (TestCase):
         self.assertArgIsOut(QTMovie.initWithDataReference_error_, 1)
         self.assertArgIsOut(QTMovie.initWithPasteboard_error_, 1)
         self.assertArgIsOut(QTMovie.initWithData_error_, 1)
-        if sys.maxint > 2**32:
-            self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{?={?=qqq}{?=qqq}}')
-        else:
-            self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{?={?=qll}{?=qll}}')
+        self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}')
         self.assertArgIsOut(QTMovie.initWithMovie_timeRange_error_, 2)
         self.assertArgIsOut(QTMovie.initWithAttributes_error_, 1)
         self.assertArgIsOut(QTMovie.movieWithTimeRange_error_, 1)

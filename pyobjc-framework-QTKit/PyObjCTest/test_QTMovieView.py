@@ -10,7 +10,7 @@ class TestQTMovieView (TestCase):
         self.assertIsInstance(QTMovieViewFillColorBinding, unicode)
 
     def testProtocols(self):
-        self.assertIsInstance(protocols.QTMovieViewDelegate, objc.informal_protocol)
+        self.assertIsInstance(protocols.QTMovieView_Delegate, objc.informal_protocol)
 
 
     def testMethods(self):

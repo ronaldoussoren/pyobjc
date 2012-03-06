@@ -1,0 +1,979 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "captureOutput:shouldChangeOutputFileAtURL:forConnections:dueToError:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "movie:linkToURL:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "movie:shouldContinueOperation:withPhase:atPercent:withAttributes:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "movieShouldLoadData:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "movieShouldTask:"
+     }
+    ]
+   }, 
+   "QTCaptureConnection": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "attributeIsReadOnly:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEnabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEnabled:"
+     }
+    ]
+   }, 
+   "QTCaptureDecompressedVideoOutput": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "outputVideoFrame:withSampleBuffer:fromConnection:"
+     }
+    ]
+   }, 
+   "QTCaptureDevice": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "open:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "attributeIsReadOnly:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasMediaType:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isConnected"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isInUseByAnotherApplication"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isOpen"
+     }
+    ]
+   }, 
+   "QTCaptureSession": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addInput:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "addOutput:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isRunning"
+     }
+    ]
+   }, 
+   "QTCaptureVideoPreviewOutput": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "visualContextForConnection:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setVisualContext:forConnection:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "outputVideoFrame:withSampleBuffer:fromConnection:"
+     }
+    ]
+   }, 
+   "QTCaptureView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "preservesAspectRatio"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPreservesAspectRatio:"
+     }
+    ]
+   }, 
+   "QTCompressionOptions": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEqualToCompressionOptions:"
+     }
+    ]
+   }, 
+   "QTDataReference": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "^*"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "dataReferenceWithDataRef:type:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^*"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithDataRef:type:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^*"
+      }, 
+      "selector": "dataRef"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^*"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDataRef:"
+     }
+    ]
+   }, 
+   "QTFormatDescription": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEqualToFormatDescription:"
+     }
+    ]
+   }, 
+   "QTMedia": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "^^{MediaType}"
+       }, 
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "mediaWithQuickTimeMedia:error:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^^{MediaType}"
+       }, 
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithQuickTimeMedia:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^^{MediaType}"
+      }, 
+      "selector": "quickTimeMedia"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasCharacteristic:"
+     }
+    ]
+   }, 
+   "QTMovie": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithFile:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithURL:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithDataReference:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithPasteboard:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithData:error:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^^{MovieType}"
+       }, 
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithQuickTimeMovie:disposeWhenDone:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieWithAttributes:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "movieNamed:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithFile:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithURL:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithDataReference:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithPasteboard:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithData:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithMovie:timeRange:error:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^^{MovieType}"
+       }, 
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithQuickTimeMovie:disposeWhenDone:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initWithAttributes:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "movieWithTimeRange:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initToWritableFile:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initToWritableData:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initToWritableDataReference:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "^v"
+      }, 
+      "selector": "frameImageAtTime:withAttributes:error:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "writeToFile:withAttributes:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^^{MovieType}"
+      }, 
+      "selector": "quickTimeMovie"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{ComponentInstanceRecord=[1l]}"
+      }, 
+      "selector": "quickTimeMovieController"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{OpaqueQTVisualContext=}"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setVisualContext:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{OpaqueQTVisualContext=}"
+      }, 
+      "selector": "visualContext"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "addChapters:withAttributes:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "attachToCurrentThread"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canInitWithDataReference:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canInitWithFile:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canInitWithPasteboard:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canInitWithURL:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canUpdateMovieFile"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "detachFromCurrentThread"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasChapters"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isIdling"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "muted"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "removeChapters"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIdling:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setMuted:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "updateMovieFile"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "writeToFile:withAttributes:"
+     }
+    ]
+   }, 
+   "QTMovieView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "areStepButtonsVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "areZoomButtonsVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isBackButtonVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isControllerVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isCustomButtonVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEditable"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isHotSpotButtonVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isTranslateButtonVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isVolumeButtonVisible"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "preservesAspectRatio"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setBackButtonVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setControllerVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCustomButtonVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEditable:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setHotSpotButtonVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPreservesAspectRatio:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShowsResizeIndicator:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setStepButtonsVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setTranslateButtonVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setVolumeButtonVisible:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setZoomButtonsVisible:"
+     }
+    ]
+   }, 
+   "QTSampleBuffer": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "bytesForAllSamples"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "audioBufferListWithOptions:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "getAudioStreamPacketDescriptions:inRange:"
+     }
+    ]
+   }, 
+   "QTTrack": {
+    "methods": [
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": true, 
+      "selector": "trackWithQuickTimeTrack:error:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithQuickTimeTrack:error:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "quickTimeTrack"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEnabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEnabled:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {
+   "QTGetTimeInterval": {
+    "args": {
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^d"
+     }
+    }
+   }, 
+   "QTGetTimeRecord": {
+    "args": {
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^{TimeRecord={wide=Ii}i^{TimeBaseRecord}}"
+     }
+    }
+   }
+  }, 
+  "informal_protocols": {
+   "QTCaptureDecompressedVideoOutput_Delegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:"
+     }
+    ]
+   }, 
+   "QTCaptureVideoPreviewOutput_Delegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "captureOutput:didOutputVideoFrame:withSampleBuffer:fromConnection:"
+     }
+    ]
+   }
+  }
+ }
+}
