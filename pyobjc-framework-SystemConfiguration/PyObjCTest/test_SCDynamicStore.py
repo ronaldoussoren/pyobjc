@@ -12,19 +12,25 @@ class TestSCDynamicStore (TestCase):
         self.assertFalse( hasattr(SystemConfiguration, 'SCDynamicStoreContext') )
 
     def testFunctions(self):
+        print 1
         n = SCDynamicStoreGetTypeID()
+        print 2
         self.assertTrue(isinstance(n, (int, long)))
+        print 3
 
 
         l = []
         info = object()
         def callback(store, changedKeys, info):
+            print "CALLBACK"
             l.append((store, changedKeys, info))
 
+        print 4
         st = SCDynamicStoreCreate(None, 
                 "pyobjc.test", 
                 callback, info)
         self.assertTrue(isinstance(st, SCDynamicStoreRef))
+        print 5
         
         st = SCDynamicStoreCreateWithOptions(None,
                 "pyobjc.test",
@@ -32,16 +38,22 @@ class TestSCDynamicStore (TestCase):
                 callback,
                 info)
         self.assertTrue(isinstance(st, SCDynamicStoreRef))
+        print 6
+        print st
 
 
         src = SCDynamicStoreCreateRunLoopSource(None, st, 0)
+        print 6, 2
         self.assertTrue(isinstance(src, CFRunLoopSourceRef))
+        print 6, 3
         del src
+        print 7
 
         v = SCDynamicStoreCopyKeyList(st, u'.*')
         self.assertTrue(isinstance(v, CFArrayRef))
         self.assertTrue(len(v) > 0)
         self.assertTrue(isinstance(v[0], unicode))
+        print 8
 
         r = SCDynamicStoreAddValue(st, "Setup:/PyObjC", { u"key":42 })
         self.assertTrue(r is True or r is False)
