@@ -1,0 +1,304 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "LSMMapRef": {
+    "gettypeid_func": "LSMMapGetTypeID"
+   }, 
+   "LSMResultRef": {
+    "gettypeid_func": "LSMResultGetTypeID"
+   }, 
+   "LSMTextRef": {
+    "gettypeid_func": "LSMTextGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "LSMMapAddCategory": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }
+   }, 
+   "LSMMapAddText": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMText=}"
+     }
+    }
+   }, 
+   "LSMMapAddTextWithWeight": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMText=}"
+     }
+    }
+   }, 
+   "LSMMapApplyClusters": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "LSMMapCompile": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }
+   }, 
+   "LSMMapCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__LSMMap=}"
+    }
+   }, 
+   "LSMMapCreateClusters": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "LSMMapCreateFromURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__LSMMap=}"
+    }
+   }, 
+   "LSMMapGetCategoryCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }
+   }, 
+   "LSMMapGetProperties": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "LSMMapSetProperties": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "LSMMapSetStopWords": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMText=}"
+     }
+    }
+   }, 
+   "LSMMapStartTraining": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }
+   }, 
+   "LSMMapWriteToStream": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMText=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "LSMMapWriteToURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }
+   }, 
+   "LSMResultCopyToken": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "LSMResultCopyTokenCluster": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "LSMResultCopyWord": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "LSMResultCopyWordCluster": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "LSMResultCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMMap=}"
+     }, 
+     "2": {
+      "type_override": "^{__LSMText=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__LSMResult=}"
+    }
+   }, 
+   "LSMResultGetCategory": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }
+   }, 
+   "LSMResultGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }
+   }, 
+   "LSMResultGetScore": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMResult=}"
+     }
+    }
+   }, 
+   "LSMTextAddToken": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMText=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "LSMTextAddWord": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMText=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "LSMTextAddWords": {
+    "args": {
+     "0": {
+      "type_override": "^{__LSMText=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "LSMTextCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__LSMMap=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__LSMText=}"
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
