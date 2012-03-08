@@ -34,7 +34,7 @@ class TestCTFont (TestCase):
         self.assertIsInstance(kCTFontSampleTextNameKey, unicode)
         self.assertIsInstance(kCTFontPostScriptCIDNameKey, unicode)
 
-        self.assertEqual(kCTFontNoFontType,  -1)
+        self.assertEqual(kCTFontNoFontType,  4294967295) # (uint32_t)-1
         self.assertEqual(kCTFontUserFontType,  0)
         self.assertEqual(kCTFontUserFixedPitchFontType,  1)
         self.assertEqual(kCTFontSystemFontType,  2)

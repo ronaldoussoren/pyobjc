@@ -39,7 +39,12 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(kCTParagraphStyleSpecifierParagraphSpacing, 11)
         self.assertEqual(kCTParagraphStyleSpecifierParagraphSpacingBefore, 12)
         self.assertEqual(kCTParagraphStyleSpecifierBaseWritingDirection, 13)
-        self.assertEqual(kCTParagraphStyleSpecifierCount, 14)
+
+        self.assertEqual(kCTParagraphStyleSpecifierMaximumLineSpacing, 14)
+        self.assertEqual(kCTParagraphStyleSpecifierMinimumLineSpacing, 15)
+        self.assertEqual(kCTParagraphStyleSpecifierLineSpacingAdjustment, 16)
+
+        self.assertEqual(kCTParagraphStyleSpecifierCount, 17)
 
     def testStructs(self):
         v = CTParagraphStyleSetting()
@@ -63,7 +68,7 @@ class TestCTParagraphStyle (TestCase):
 
         ok, v = CTParagraphStyleGetTabStops(style)
         self.assertTrue(ok)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
         self.assertTrue(len(v))
         self.assertIsInstance(v[0], CTTextTabRef)
 
@@ -124,7 +129,7 @@ class TestCTParagraphStyle (TestCase):
 
         ok, v = CTParagraphStyleGetTabStops(style)
         self.assertTrue(ok)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, NSArray)
         self.assertEqual(len(v), 2)
 
         ok, v = CTParagraphStyleGetValueForSpecifier(style,

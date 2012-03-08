@@ -1,0 +1,1783 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "CTFontCollectionRef": {
+    "gettypeid_func": "CTFontCollectionGetTypeID", 
+    "tollfree": "NSCTFontCollection"
+   }, 
+   "CTFontDescriptorRef": {
+    "gettypeid_func": "CTFontDescriptorGetTypeID", 
+    "tollfree": "NSCTFontDescriptor"
+   }, 
+   "CTFontRef": {
+    "gettypeid_func": "CTFontGetTypeID", 
+    "tollfree": "NSCTFont"
+   }, 
+   "CTFrameRef": {
+    "gettypeid_func": "CTFrameGetTypeID"
+   }, 
+   "CTFramesetterRef": {
+    "gettypeid_func": "CTFramesetterGetTypeID"
+   }, 
+   "CTGlyphInfoRef": {
+    "gettypeid_func": "CTGlyphInfoGetTypeID", 
+    "tollfree": "NSCTGlyphInfo"
+   }, 
+   "CTLineRef": {
+    "gettypeid_func": "CTLineGetTypeID"
+   }, 
+   "CTMutableFontCollectionRef": {
+    "ignore": true
+   }, 
+   "CTParagraphStyleRef": {
+    "gettypeid_func": "CTParagraphStyleGetTypeID"
+   }, 
+   "CTRunRef": {
+    "gettypeid_func": "CTRunGetTypeID"
+   }, 
+   "CTTextTabRef": {
+    "gettypeid_func": "CTTextTabGetTypeID"
+   }, 
+   "CTTypesetterRef": {
+    "gettypeid_func": "CTTypesetterGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "CTFontCollectionCopyExclusionDescriptors": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCopyFontAttribute": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCopyFontAttributes": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCopyQueryDescriptors": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCreateCopyWithFontDescriptors": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontCollection=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontCollection=}"
+    }
+   }, 
+   "CTFontCollectionCreateFromAvailableFonts": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontCollection=}"
+    }
+   }, 
+   "CTFontCollectionCreateMatchingFontDescriptors": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontCollection=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCollectionCreateMatchingFontDescriptorsForFamily": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCreateMatchingFontDescriptorsSortedWithCallback": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontCollection=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "^{__CTFontDescriptor=}"
+        }, 
+        "1": {
+         "typestr": "^{__CTFontDescriptor=}"
+        }, 
+        "2": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "i"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CTFontDescriptor=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CTFontDescriptor=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "l", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCollectionCreateMatchingFontDescriptorsWithOptions": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCreateMutableCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontCollectionCreateWithFontDescriptors": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontCollection=}"
+    }
+   }, 
+   "CTFontCollectionSetExclusionDescriptors": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CTFontCollectionSetQueryDescriptors": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CTFontCopyAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CTFontCopyAvailableTables": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCopyCharacterSet": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CTFontCopyDisplayName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopyFamilyName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopyFeatureSettings": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCopyFeatures": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCopyFontDescriptor": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontCopyFullName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopyGraphicsFont": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CTFontDescriptor}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{CGFont=}"
+    }
+   }, 
+   "CTFontCopyLocalizedName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopyName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopyPostScriptName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTFontCopySupportedLanguages": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCopyTable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CTFontCopyTraits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTFontCopyVariation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTFontCopyVariationAxes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontCreateCopyWithAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateCopyWithFamily": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateCopyWithSymbolicTraits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateForString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreatePathForGlyph": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{CGPath=}"
+    }
+   }, 
+   "CTFontCreateUIFontForLanguage": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithFontDescriptor": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithFontDescriptorAndOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithGraphicsFont": {
+    "args": {
+     "0": {
+      "type_override": "^{CGFont=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithNameAndOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithPlatformFont": {
+    "args": {
+     "2": {
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CGAffineTransform=ffffff}", 
+       "^{CGAffineTransform=dddddd}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontCreateWithQuickdrawInstance": {
+    "args": {
+     "0": {
+      "type_override": "*"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFont=}"
+    }
+   }, 
+   "CTFontDescriptorCopyAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CTFontDescriptorCopyAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTFontDescriptorCopyLocalizedAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "CTFontDescriptorCreateCopyWithAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDescriptorCreateCopyWithFeature": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumber=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDescriptorCreateCopyWithVariation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDescriptorCreateMatchingFontDescriptor": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDescriptorCreateMatchingFontDescriptors": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFontDescriptor=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFontDescriptorCreateWithAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDescriptorCreateWithNameAndSize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFontDescriptor=}"
+    }
+   }, 
+   "CTFontDrawGlyphs": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "4": {}
+    }
+   }, 
+   "CTFontGetAdvancesForGlyphs": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 4, 
+      "type_modifier": "n", 
+      "type_override": "^S"
+     }, 
+     "3": {
+      "c_array_length_in_arg": 4, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSSize=ff}", 
+       "^{CGSize=dd}"
+      ]
+     }
+    }
+   }, 
+   "CTFontGetAscent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetBoundingBox": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetBoundingRectsForGlyphs": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 4, 
+      "type_modifier": "n", 
+      "type_override": "^S"
+     }, 
+     "3": {
+      "c_array_length_in_arg": 4, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
+      ]
+     }
+    }
+   }, 
+   "CTFontGetCapHeight": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetDescent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetGlyphCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetGlyphWithName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CTFontGetGlyphsForCharacters": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "^T"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "o", 
+      "type_override": "^S"
+     }
+    }
+   }, 
+   "CTFontGetLeading": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetLigatureCaretPositions": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CTFontGetMatrix": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetPlatformFont": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CTFontDescriptor}"
+     }
+    }
+   }, 
+   "CTFontGetSize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetSlantAngle": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetStringEncoding": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetSymbolicTraits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetUnderlinePosition": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetUnderlineThickness": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetUnitsPerEm": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontGetVerticalTranslationsForGlyphs": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "^S"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSSize=ff}", 
+       "^{CGSize=dd}"
+      ]
+     }
+    }
+   }, 
+   "CTFontGetXHeight": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFont=}"
+     }
+    }
+   }, 
+   "CTFontManagerCompareFontFamilyNames": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CTFontManagerCopyAvailableFontFamilyNames": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontManagerCopyAvailableFontURLs": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontManagerCopyAvailablePostScriptNames": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontManagerCreateFontDescriptorsFromURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontManagerCreateFontRequestRunLoopSource": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTFontManagerEnableFontDescriptors": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTFontManagerGetAutoActivationSetting": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTFontManagerGetScopeForURL": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTFontManagerIsSupportedFont": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTFontManagerRegisterFontsForURL": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CTFontManagerRegisterFontsForURLs": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CTFontManagerRegisterGraphicsFont": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CTFontManagerSetAutoActivationSetting": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTFontManagerUnregisterFontsForURL": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CTFontManagerUnregisterFontsForURLs": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CTFontManagerUnregisterGraphicsFont": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CTFrameDraw": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }, 
+     "1": {
+      "type_override": "^{CGContext=}"
+     }
+    }
+   }, 
+   "CTFrameGetFrameAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTFrameGetLineOrigins": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSPoint=ff}", 
+       "^{CGPoint=dd}"
+      ]
+     }
+    }
+   }, 
+   "CTFrameGetLines": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTFrameGetPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{CGPath=}"
+    }
+   }, 
+   "CTFrameGetStringRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }
+    }
+   }, 
+   "CTFrameGetVisibleStringRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFrame=}"
+     }
+    }
+   }, 
+   "CTFramesetterCreateFrame": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFramesetter=}"
+     }, 
+     "2": {
+      "type_override": "^{CGPath=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFrame=}"
+    }
+   }, 
+   "CTFramesetterCreateWithAttributedString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTFramesetter=}"
+    }
+   }, 
+   "CTFramesetterGetTypesetter": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTFramesetter=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CTTypesetter=}"
+    }
+   }, 
+   "CTFramesetterSuggestFrameSizeWithConstraints": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTypesetter=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CTGlyphInfoCreateWithCharacterIdentifier": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTGlyphInfo=}"
+    }
+   }, 
+   "CTGlyphInfoCreateWithGlyph": {
+    "args": {
+     "1": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTGlyphInfo=}"
+    }
+   }, 
+   "CTGlyphInfoCreateWithGlyphName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CTFont=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTGlyphInfo=}"
+    }
+   }, 
+   "CTGlyphInfoGetCharacterCollection": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTGlyphInfo=}"
+     }
+    }
+   }, 
+   "CTGlyphInfoGetCharacterIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTGlyphInfo=}"
+     }
+    }
+   }, 
+   "CTGlyphInfoGetGlyphName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTGlyphInfo=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CTLineCreateJustifiedLine": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTLine=}"
+    }
+   }, 
+   "CTLineCreateTruncatedLine": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }, 
+     "3": {
+      "type_override": "^{__CTLine=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTLine=}"
+    }
+   }, 
+   "CTLineCreateWithAttributedString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTLine=}"
+    }
+   }, 
+   "CTLineDraw": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }, 
+     "1": {
+      "type_override": "^{CGContext=}"
+     }
+    }
+   }, 
+   "CTLineGetGlyphCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }
+   }, 
+   "CTLineGetGlyphRuns": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CTLineGetImageBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }, 
+     "1": {
+      "type_override": "^{CGContext=}"
+     }
+    }
+   }, 
+   "CTLineGetOffsetForStringIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^f", 
+       "^d"
+      ]
+     }
+    }
+   }, 
+   "CTLineGetPenOffsetForFlush": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }
+   }, 
+   "CTLineGetStringIndexForPosition": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }
+   }, 
+   "CTLineGetStringRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }
+   }, 
+   "CTLineGetTrailingWhitespaceWidth": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }
+    }
+   }, 
+   "CTLineGetTypographicBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTLine=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^f", 
+       "^d"
+      ]
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^f", 
+       "^d"
+      ]
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^f", 
+       "^d"
+      ]
+     }
+    }
+   }, 
+   "CTParagraphStyleCreate": {
+    "args": {
+     "0": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "n", 
+      "type_override": [
+       "^{CTParagraphStyleSetting=II^v}", 
+       "^{CTParagraphStyleSetting=IQ^v}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTParagraphStyle=}"
+    }
+   }, 
+   "CTParagraphStyleCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTParagraphStyle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTParagraphStyle=}"
+    }
+   }, 
+   "CTParagraphStyleGetValueForSpecifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTParagraphStyle=}"
+     }, 
+     "3": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CTRunDraw": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "1": {
+      "type_override": "^{CGContext=}"
+     }
+    }
+   }, 
+   "CTRunGetAdvances": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSSize=ff}", 
+       "^{CGSize=dd}"
+      ]
+     }
+    }
+   }, 
+   "CTRunGetAdvancesPtr": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CTRunGetAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTRunGetGlyphCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }
+   }, 
+   "CTRunGetGlyphs": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": "^S"
+     }
+    }
+   }, 
+   "CTRunGetGlyphsPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": "r^S"
+    }
+   }, 
+   "CTRunGetImageBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "1": {
+      "type_override": "^{CGContext=}"
+     }
+    }
+   }, 
+   "CTRunGetPositions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": [
+       "^{_NSPoint=ff}", 
+       "^{CGPoint=dd}"
+      ]
+     }
+    }
+   }, 
+   "CTRunGetPositionsPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": [
+      "r^{_NSPoint=ff}", 
+      "r^{CGPoint=dd}"
+     ]
+    }
+   }, 
+   "CTRunGetStatus": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }
+   }, 
+   "CTRunGetStringIndices": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }
+    }
+   }, 
+   "CTRunGetStringIndicesPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": [
+      "r^i", 
+      "r^q"
+     ]
+    }
+   }, 
+   "CTRunGetStringRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }
+   }, 
+   "CTRunGetTextMatrix": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }
+    }
+   }, 
+   "CTRunGetTypographicBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTRun=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^f"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^f"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^f"
+     }
+    }
+   }, 
+   "CTTextTabCreate": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTTextTab=}"
+    }
+   }, 
+   "CTTextTabGetAlignment": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTextTab=}"
+     }
+    }
+   }, 
+   "CTTextTabGetLocation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTextTab=}"
+     }
+    }
+   }, 
+   "CTTextTabGetOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTextTab=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CTTypesetterCreateLine": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTypesetter=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTLine=}"
+    }
+   }, 
+   "CTTypesetterCreateLineWithOffset": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CTTypesetterCreateWithAttributedString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTTypesetter=}"
+    }
+   }, 
+   "CTTypesetterCreateWithAttributedStringAndOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CTTypesetter=}"
+    }
+   }, 
+   "CTTypesetterSuggestClusterBreak": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTypesetter=}"
+     }
+    }
+   }, 
+   "CTTypesetterSuggestClusterBreakWithOffset": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CTTypesetterSuggestLineBreak": {
+    "args": {
+     "0": {
+      "type_override": "^{__CTTypesetter=}"
+     }
+    }
+   }, 
+   "CTTypesetterSuggestLineBreakWithOffset": {
+    "args": {
+     "0": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
