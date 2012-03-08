@@ -1,0 +1,753 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "cftypes": {
+    "ODContextRef": {
+       "gettypeid_func": "ODContextGetTypeID"
+    },
+    "ODQueryRef": {
+       "gettypeid_func": "ODQueryGetTypeID"
+    },
+    "ODNodeRef": {
+       "gettypeid_func": "ODNodeGetTypeID"
+    },
+    "ODSessionRef": {
+       "gettypeid_func": "ODSessionGetTypeID"
+    },
+    "ODRecordRef": {
+       "gettypeid_func": "ODRecordGetTypeID"
+    }
+  },
+  "functions": {
+   "ODNodeCopyDetails": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "ODNodeCopyRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODRecord=}"
+    }
+   }, 
+   "ODNodeCopySubnodeNames": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeCopySupportedAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeCopySupportedRecordTypes": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeCopyUnreachableSubnodeNames": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODNode=}"
+    }
+   }, 
+   "ODNodeCreateRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODRecord=}"
+    }
+   }, 
+   "ODNodeCreateWithName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODSessionRef=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODNode=}"
+    }
+   }, 
+   "ODNodeCreateWithNodeType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODSessionRef=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODNode=}"
+    }
+   }, 
+   "ODNodeCustomCall": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "ODNodeGetName": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ODNodeSetCredentials": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeSetCredentialsExtended": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "4": {
+      "type_override": "^^{__CFArray}"
+     }, 
+     "5": {
+      "type_override": "^^{_ODContext}"
+     }, 
+     "6": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODNodeSetCredentialsUsingKerberosCache": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODQueryCopyResults": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODQueryCreateWithNode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODNode=}"
+     }, 
+     "8": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODQuery=}"
+    }
+   }, 
+   "ODQueryCreateWithNodeType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "8": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODQuery=}"
+    }
+   }, 
+   "ODQueryScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ODQuerySetCallback": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__ODQuery=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "@", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFError=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "ODQuerySetDispatchQueue": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }, 
+     "1": {
+      "type_override": "^{dispatch_queue_s=}"
+     }
+    }
+   }, 
+   "ODQuerySynchronize": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }
+    }
+   }, 
+   "ODQueryUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODQuery=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "ODRecordAddMember": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordAddValue": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordChangePassword": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordContainsMember": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordCopyDetails": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "ODRecordCopyPasswordPolicy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "ODRecordCopyValues": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordDelete": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordGetRecordName": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ODRecordGetRecordType": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "ODRecordRemoveMember": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentials": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentialsExtended": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "4": {
+      "type_override": "^^{__CFArray}"
+     }, 
+     "5": {
+      "type_override": "^^{_ODContext}"
+     }, 
+     "6": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentialsUsingKerberosCache": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordSetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordSynchronize": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordVerifyPassword": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODRecordVerifyPasswordExtended": {
+    "args": {
+     "0": {
+      "type_override": "^{_ODRecord=}"
+     }, 
+     "3": {
+      "type_override": "^^{__CFArray}"
+     }, 
+     "4": {
+      "type_override": "^^{_ODContext}"
+     }, 
+     "5": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODSessionCopyNodeNames": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{_ODSessionRef=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "ODSessionCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{_ODSessionRef=}"
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

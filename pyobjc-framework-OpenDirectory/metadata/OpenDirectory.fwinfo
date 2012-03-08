@@ -1,0 +1,816 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "ODNode": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "nodeWithSession:type:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "nodeWithSession:name:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithSession:type:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithSession:name:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "subnodeNamesAndReturnError:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "unreachableSubnodeNamesAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "nodeDetailsForKeys:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "supportedRecordTypesAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "supportedAttributesForRecordType:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "setCredentialsWithRecordType:recordName:password:error:"
+     }, 
+     {
+      "args": {
+       "3": {}, 
+       "4": {}, 
+       "5": {}
+      }, 
+      "class_method": false, 
+      "selector": "setCredentialsWithRecordType:authenticationType:authenticationItems:continueItems:context:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "setCredentialsUsingKerberosCache:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "createRecordWithRecordType:name:attributes:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "recordWithRecordType:name:attributes:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "customCall:sendData:error:"
+     }
+    ]
+   }, 
+   "ODQuery": {
+    "methods": [
+     {
+      "args": {
+       "7": {}
+      }, 
+      "class_method": true, 
+      "selector": "queryWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:"
+     }, 
+     {
+      "args": {
+       "7": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "resultsAllowingPartial:error:"
+     }
+    ]
+   }, 
+   "ODRecord": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "setNodeCredentials:password:error:"
+     }, 
+     {
+      "args": {
+       "3": {}, 
+       "4": {}, 
+       "5": {}
+      }, 
+      "class_method": false, 
+      "selector": "setNodeCredentialsWithRecordType:authenticationType:authenticationItems:continueItems:context:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "setNodeCredentialsUsingKerberosCache:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "passwordPolicyAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "verifyPassword:error:"
+     }, 
+     {
+      "args": {
+       "2": {}, 
+       "3": {}, 
+       "4": {}
+      }, 
+      "class_method": false, 
+      "selector": "verifyExtendedWithAuthenticationType:authenticationItems:continueItems:context:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "changePassword:toPassword:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "synchronizeAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "recordDetailsForAttributes:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "valuesForAttribute:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "setValue:forAttribute:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeValuesForAttribute:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "addValue:toAttribute:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeValue:fromAttribute:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "deleteRecordAndReturnError:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "addMemberRecord:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeMemberRecord:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "isMemberRecord:error:"
+     }
+    ]
+   }, 
+   "ODSession": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": true, 
+      "selector": "sessionWithOptions:error:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithOptions:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "nodeNamesAndReturnError:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {
+   "ODNodeCopyDetails": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCopyRecord": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCopySubnodeNames": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeCopySupportedAttributes": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeCopySupportedRecordTypes": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeCopyUnreachableSubnodeNames": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeCreateCopy": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCreateRecord": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCreateWithName": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCreateWithNodeType": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODNodeCustomCall": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {}
+   }, 
+   "ODNodeGetName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "ODNodeSetCredentials": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeSetCredentialsExtended": {
+    "args": {
+     "0": {}, 
+     "4": {}, 
+     "5": {}, 
+     "6": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODNodeSetCredentialsUsingKerberosCache": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODQueryCopyResults": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODQueryCreateWithNode": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "8": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODQueryCreateWithNodeType": {
+    "args": {
+     "0": {}, 
+     "8": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODQueryScheduleWithRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "ODQuerySetCallback": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__ODQuery=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "@", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFError=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "2": {}
+    }
+   }, 
+   "ODQuerySetDispatchQueue": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "ODQuerySynchronize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "ODQueryUnscheduleFromRunLoop": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "ODRecordAddMember": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordAddValue": {
+    "args": {
+     "0": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordChangePassword": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordContainsMember": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordCopyDetails": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODRecordCopyPasswordPolicy": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "ODRecordCopyValues": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordDelete": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordGetRecordName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "ODRecordGetRecordType": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "ODRecordRemoveMember": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordRemoveValue": {
+    "args": {
+     "0": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentials": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentialsExtended": {
+    "args": {
+     "0": {}, 
+     "4": {}, 
+     "5": {}, 
+     "6": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordSetNodeCredentialsUsingKerberosCache": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordSetValue": {
+    "args": {
+     "0": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordSynchronize": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordVerifyPassword": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODRecordVerifyPasswordExtended": {
+    "args": {
+     "0": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODSessionCopyNodeNames": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "ODSessionCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
