@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from WebKit import *
 
 import sys
-UINT_MAX = -1
+UINT_MAX = cast_uint(-1)
 
 class TestWebUIDelegateHelper (NSObject):
     def webViewAreToolbarsVisible_(self, a): return 1
@@ -97,7 +97,7 @@ class TestWebUIDelegate (TestCase):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webView_shouldPerformAction_fromSender_)
         self.assertResultHasType(TestWebUIDelegateHelper.webView_dragDestinationActionMaskForDraggingInfo_, objc._C_NSUInteger)
         self.assertResultHasType(TestWebUIDelegateHelper.webView_dragSourceActionMaskForPoint_, objc._C_NSUInteger)
-        self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 1, objc._C_INT)
         self.assertArgHasType(TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_, 2, NSPoint.__typestr__)
         self.assertResultHasType(TestWebUIDelegateHelper.webViewHeaderHeight_, objc._C_FLT)
         self.assertResultHasType(TestWebUIDelegateHelper.webViewFooterHeight_, objc._C_FLT)

@@ -1,0 +1,2405 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "DOMAttr": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "specified"
+     }
+    ]
+   }, 
+   "DOMCSSStyleDeclaration": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isPropertyImplicit:"
+     }
+    ]
+   }, 
+   "DOMDocument": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "xmlStandalone"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setXmlStandalone:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "importNode:deep:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "createNodeIterator:whatToShow:filter:expandEntityReferences:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "createTreeWalker:whatToShow:filter:expandEntityReferences:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "execCommand:userInterface:value:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "execCommand:userInterface:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "execCommand:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "queryCommandEnabled:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "queryCommandIndeterm:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "queryCommandState:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "queryCommandSupported:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "createNodeIterator::::"
+     }, 
+     {
+      "args": {
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "createTreeWalker::::"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "getMatchedCSSRules:pseudoElement:authorOnly:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "importNode::"
+     }
+    ]
+   }, 
+   "DOMElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "contains:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasAttribute:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasAttributeNS::"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasAttributeNS:localName:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "scrollIntoView:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "scrollIntoViewIfNeeded:"
+     }
+    ]
+   }, 
+   "DOMEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initEvent:canBubbleArg:cancelableArg:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initEvent:::"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "returnValue"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReturnValue:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "cancelBubble"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCancelBubble:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "bubbles"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "cancelable"
+     }
+    ]
+   }, 
+   "DOMHTMLAreaElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "noHref"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNoHref:"
+     }
+    ]
+   }, 
+   "DOMHTMLButtonElement": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setWillValidate:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "willValidate"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "autofocus"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAutofocus:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }
+    ]
+   }, 
+   "DOMHTMLDListElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "compact"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCompact:"
+     }
+    ]
+   }, 
+   "DOMHTMLDirectoryElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "compact"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCompact:"
+     }
+    ]
+   }, 
+   "DOMHTMLElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isContentEditable"
+     }
+    ]
+   }, 
+   "DOMHTMLFrameElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "noResize"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNoResize:"
+     }
+    ]
+   }, 
+   "DOMHTMLHRElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "noShade"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNoShade:"
+     }
+    ]
+   }, 
+   "DOMHTMLImageElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "complete"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setComplete:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isMap"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIsMap:"
+     }
+    ]
+   }, 
+   "DOMHTMLInputElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "multiple"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setMultiple:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "willValidate"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "autofocus"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAutofocus:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "indeterminate"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIndeterminate:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "checked"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "defaultChecked"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "readOnly"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setChecked:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDefaultChecked:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReadOnly:"
+     }
+    ]
+   }, 
+   "DOMHTMLLinkElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }
+    ]
+   }, 
+   "DOMHTMLMenuElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "compact"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCompact:"
+     }
+    ]
+   }, 
+   "DOMHTMLOListElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "compact"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCompact:"
+     }
+    ]
+   }, 
+   "DOMHTMLObjectElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "declare"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDeclare:"
+     }
+    ]
+   }, 
+   "DOMHTMLOptGroupElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }
+    ]
+   }, 
+   "DOMHTMLOptionElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "defaultSelected"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "selected"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDefaultSelected:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setSelected:"
+     }
+    ]
+   }, 
+   "DOMHTMLPreElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "wrap"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setWrap:"
+     }
+    ]
+   }, 
+   "DOMHTMLScriptElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "defer"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDefer:"
+     }
+    ]
+   }, 
+   "DOMHTMLSelectElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "willValidate"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "autofocus"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAutofocus:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "multiple"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setMultiple:"
+     }
+    ]
+   }, 
+   "DOMHTMLStyleElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }
+    ]
+   }, 
+   "DOMHTMLTableCellElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "noWrap"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNoWrap:"
+     }
+    ]
+   }, 
+   "DOMHTMLTextAreaElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "willValidate"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "readOnly"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setReadOnly:"
+     }
+    ]
+   }, 
+   "DOMHTMLUListElement": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "compact"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setCompact:"
+     }
+    ]
+   }, 
+   "DOMImplementation": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasFeature::"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasFeature:version:"
+     }
+    ]
+   }, 
+   "DOMKeyboardEvent": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "getModifierState:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "ctrlKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shiftKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "altKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "altGraphKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "metaKey"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }, 
+       "6": {
+        "type_override": "Z"
+       }, 
+       "7": {
+        "type_override": "Z"
+       }, 
+       "8": {
+        "type_override": "Z"
+       }, 
+       "9": {
+        "type_override": "Z"
+       }, 
+       "10": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initKeyboardEvent:canBubble:cancelable:view:keyIdentifier:keyLocation:ctrlKey:altKey:shiftKey:metaKey:altGraphKey:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }, 
+       "6": {
+        "type_override": "Z"
+       }, 
+       "7": {
+        "type_override": "Z"
+       }, 
+       "8": {
+        "type_override": "Z"
+       }, 
+       "9": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initKeyboardEvent:canBubble:cancelable:view:keyIdentifier:keyLocation:ctrlKey:altKey:shiftKey:metaKey:"
+     }
+    ]
+   }, 
+   "DOMMouseEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }, 
+       "9": {
+        "type_override": "Z"
+       }, 
+       "10": {
+        "type_override": "Z"
+       }, 
+       "11": {
+        "type_override": "Z"
+       }, 
+       "12": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initMouseEvent:canBubble:cancelable:view:detail:screenX:screenY:clientX:clientY:ctrlKey:altKey:shiftKey:metaKey:button:relatedTarget:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "ctrlKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shiftKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "altKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "metaKey"
+     }
+    ]
+   }, 
+   "DOMMutationEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initMutationEvent:canBubble:cancelable:relatedNode:prevValue:newValue:attrName:attrChange:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initMutationEvent::::::::"
+     }
+    ]
+   }, 
+   "DOMNode": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "cloneNode:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isContentEditable"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setIsContentEditable:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasAttributes"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "hasChildNodes"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEqualNode:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isSameNode:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isSupported::"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isSupported:version:"
+     }
+    ]
+   }, 
+   "DOMNodeIterator": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "expandEntityReferences"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "pointerBeforeReferenceNode"
+     }
+    ]
+   }, 
+   "DOMOverflowEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initOverflowEvent:horizontalOverflow:verticalOverflow:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "horizontalOverflow"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "verticalOverflow"
+     }
+    ]
+   }, 
+   "DOMRange": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "collapse:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "collapsed"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isPointInRange:offset:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "intersectsNode:"
+     }
+    ]
+   }, 
+   "DOMStyleSheet": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "disabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDisabled:"
+     }
+    ]
+   }, 
+   "DOMTreeWalker": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "expandEntityReferences"
+     }
+    ]
+   }, 
+   "DOMUIEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initUIEvent:canBubble:cancelable:view:detail:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "initUIEvent:::::"
+     }
+    ]
+   }, 
+   "DOMWheelEvent": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "ctrlKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shiftKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "altKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "metaKey"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isHorizontal"
+     }
+    ]
+   }, 
+   "DOMXPathResult": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "booleanValue"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "invalidIteratorState"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_delimited_by_null": true, 
+        "type_override": "n^t"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "webScriptNameForKey:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "c_array_delimited_by_null": true, 
+        "type_override": "n^t"
+       }
+      }, 
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isKeyExcludedFromWebScript:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isSelectorExcludedFromWebScript:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{_jobject=}"
+       }, 
+       "1": {
+        "type_override": "Z"
+       }, 
+       "3": {
+        "type_override": "^{_jmethodID=}"
+       }, 
+       "4": {
+        "type_override": "^(jvalue=CcSsiqfd^{_jobject})"
+       }, 
+       "6": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{_jobject=}"
+      }, 
+      "selector": "webPlugInGetApplet"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "webScriptNameForSelector:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:doCommandBySelector:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": ":"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldPerformAction:fromSender:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "s"
+      }, 
+      "selector": "acceptNode:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "addEventListener:::"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "addEventListener:listener:useCapture:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canProvideDocumentSource"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "dispatchEvent:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "removeEventListener:listener:useCapture:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "removeEventListener:::"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }, 
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "searchFor:direction:caseSensitive:wrap:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setNeedsLayout:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "supportsTextEncoding"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webPlugInSetIsSelected:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webView:runOpenPanelForFileButtonWithResultListener:allowMultipleFiles:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:runJavaScriptConfirmPanelWithMessage:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:runBeforeUnloadConfirmPanelWithMessage:initiatedByFrame:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:runJavaScriptConfirmPanelWithMessage:initiatedByFrame:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webView:setResizable:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webView:setStatusBarVisible:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webView:setToolbarsVisible:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldApplyStyle:toElementsInDOMRange:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldBeginEditingInDOMRange:"
+     }, 
+     {
+      "args": {
+       "4": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldChangeSelectedDOMRange:toDOMRange:affinity:stillSelecting:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldChangeTypingStyle:toStyle:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldDeleteDOMRange:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldEndEditingInDOMRange:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldInsertNode:replacingDOMRange:givenAction:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:shouldInsertText:replacingDOMRange:givenAction:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webView:validateUserInterfaceItem:defaultValidation:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webViewAreToolbarsVisible:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webViewIsResizable:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "webViewIsStatusBarVisible:"
+     }
+    ]
+   }, 
+   "WebBackForwardList": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "containsItem:"
+     }
+    ]
+   }, 
+   "WebDataSource": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isLoading"
+     }
+    ]
+   }, 
+   "WebFrame": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{OpaqueJSContext=}"
+      }, 
+      "selector": "globalContext"
+     }
+    ]
+   }, 
+   "WebFrameView": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsScrolling"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canPrintHeadersAndFooters"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "documentViewShouldHandlePrint"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsScrolling:"
+     }
+    ]
+   }, 
+   "WebHistory": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "loadFromURL:error:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "saveToURL:error:"
+     }
+    ]
+   }, 
+   "WebPreferences": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsAnimatedImageLooping"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "allowsAnimatedImages"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "arePlugInsEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "autosaves"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isJavaEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isJavaScriptEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "javaScriptCanOpenWindowsAutomatically"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "loadsImagesAutomatically"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "privateBrowsingEnabled"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsAnimatedImageLooping:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAllowsAnimatedImages:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setAutosaves:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setJavaEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setJavaScriptCanOpenWindowsAutomatically:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setJavaScriptEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setLoadsImagesAutomatically:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPlugInsEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setPrivateBrowsingEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShouldPrintBackgrounds:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setTabsToLinks:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setUserStyleSheetEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setUsesPageCache:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldPrintBackgrounds"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "tabsToLinks"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "userStyleSheetEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "usesPageCache"
+     }
+    ]
+   }, 
+   "WebScriptObject": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{OpaqueJSValue=}"
+      }, 
+      "selector": "JSObject"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "throwException:"
+     }
+    ]
+   }, 
+   "WebView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": true, 
+      "selector": "registerViewClass:representationClass:forMIMEType:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canGoBack"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canGoForward"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canMakeTextLarger"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canMakeTextSmaller"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canMakeTextStandardSize"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canShowMIMEType:"
+     }, 
+     {
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "canShowMIMETypeAsHTML:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "drawsBackground"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "goBack"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "goForward"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "goToBackForwardItem:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isContinuousSpellCheckingEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isEditable"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isLoading"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "maintainsInactiveSelection"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldUpdateWhileOffscreen"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_override": "Z"
+       }, 
+       "2": {
+        "type_override": "Z"
+       }, 
+       "3": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "searchFor:direction:caseSensitive:wrap:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShouldUpdateWhileOffscreen:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setContinuousSpellCheckingEnabled:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setDrawsBackground:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setEditable:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setMaintainsBackForwardList:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setShouldCloseWithWindow:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "setSmartInsertDeleteEnabled:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "shouldCloseWithWindow"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "smartInsertDeleteEnabled"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "supportsTextEncoding"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {
+   "WebJavaPlugIn": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "^{_jobject=}"
+      }, 
+      "selector": "webPlugInGetApplet"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_override": "^{_jobject=}"
+       }, 
+       "1": {
+        "type_override": "Z"
+       }, 
+       "3": {
+        "type_override": "^{_jmethodID=}"
+       }, 
+       "4": {
+        "type_override": "^(jvalue=CcSsiqfd^{_jobject})"
+       }, 
+       "6": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "webPlugInCallJava:isStatic:returnType:method:arguments:callingURL:exceptionDescription:"
+     }
+    ]
+   }, 
+   "WebScripting": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "c_array_delimited_by_null": true, 
+        "type_override": "n^t"
+       }
+      }, 
+      "class_method": true, 
+      "selector": "webScriptNameForKey:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "c_array_delimited_by_null": true, 
+        "type_override": "n^t"
+       }
+      }, 
+      "class_method": true, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "isKeyExcludedFromWebScript:"
+     }
+    ]
+   }
+  }
+ }
+}

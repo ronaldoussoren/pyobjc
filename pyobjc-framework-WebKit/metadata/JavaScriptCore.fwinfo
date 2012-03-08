@@ -1,0 +1,648 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "JSCheckScriptSyntax": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "4": {}
+    }
+   }, 
+   "JSClassCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSClassRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSClassRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSContextGetGlobalObject": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSContextGetGroup": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSContextGroupCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSContextGroupRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSContextGroupRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSEvaluateScript": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "5": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSGarbageCollect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSGlobalContextCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSGlobalContextCreateInGroup": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSGlobalContextRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSGlobalContextRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectCallAsConstructor": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}, 
+     "4": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectCallAsFunction": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "4": {}, 
+     "5": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectCopyPropertyNames": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSObjectDeleteProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "JSObjectGetPrivate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectGetProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectGetPropertyAtIndex": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectGetPrototype": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectHasProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "JSObjectIsConstructor": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSObjectIsFunction": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSObjectMake": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeArray": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeConstructor": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{OpaqueJSContext=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{OpaqueJSValue=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "l", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^{OpaqueJSValue=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^{OpaqueJSValue=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{OpaqueJSValue=}", 
+         false
+        ]
+       }
+      }
+     }
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeDate": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeError": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeFunction": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": {}, 
+     "7": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeFunctionWithCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{OpaqueJSContext=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{OpaqueJSValue=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{OpaqueJSValue=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "l", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^{OpaqueJSValue=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^{OpaqueJSValue=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{OpaqueJSValue=}", 
+         false
+        ]
+       }
+      }
+     }
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectMakeRegExp": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSObjectSetPrivate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSObjectSetProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "5": {}
+    }
+   }, 
+   "JSObjectSetPropertyAtIndex": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}, 
+     "4": {}
+    }
+   }, 
+   "JSObjectSetPrototype": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "JSPropertyNameAccumulatorAddName": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSPropertyNameArrayGetCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSPropertyNameArrayGetNameAtIndex": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSPropertyNameArrayRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSPropertyNameArrayRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSStringCopyCFString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSStringCreateWithCFString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSStringCreateWithCharacters": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSStringCreateWithUTF8CString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSStringGetCharactersPtr": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSStringGetLength": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSStringGetMaximumUTF8CStringSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSStringGetUTF8CString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSStringIsEqual": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSStringIsEqualToUTF8CString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSStringRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "JSStringRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueCreateJSONString": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSValueGetType": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsBoolean": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsEqual": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "JSValueIsInstanceOfConstructor": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "JSValueIsNull": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsNumber": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsObject": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsObjectOfClass": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "JSValueIsStrictEqual": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "JSValueIsString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueIsUndefined": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueMakeBoolean": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueMakeFromJSONString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueMakeNull": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueMakeNumber": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueMakeString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueMakeUndefined": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueProtect": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueToBoolean": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "JSValueToNumber": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "JSValueToObject": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {}
+   }, 
+   "JSValueToStringCopy": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "JSValueUnprotect": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
