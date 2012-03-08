@@ -650,8 +650,8 @@
   <function name='SCNetworkConnectionCopyUserPreferences'>
     <retval type='B' />
     <arg type='^{__CFDictionary=}' />
-    <arg already_retained='true' type='^^{__CFString}' type_modifier='o' />
-    <arg already_retained='true' type='^^{__CFDictionary}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFString}' type_modifier='o' />
+    <arg already_cfretained='true' type='^^{__CFDictionary}' type_modifier='o' />
   </function>
   <function name='SCNetworkConnectionCreateWithServiceID'>
     <retval already_cfretained='true' type='^{__SCNetworkConnection=}' />
