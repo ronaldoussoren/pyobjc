@@ -81,6 +81,17 @@ def cast_int(value):
     else:
         return value
 
+def cast_uint(value):
+    """
+    Cast value to 32bit integer
+
+    Usage:
+        cast_int(1 << 31) == 2147483648
+
+    """
+    value = value & 0xffffffff
+    return value
+
 _os_release = None
 def os_release():
     """
