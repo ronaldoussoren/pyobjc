@@ -1,4 +1,5 @@
 build
+BridgeSupport
 dist
 .DS_Store
 __pycache__
