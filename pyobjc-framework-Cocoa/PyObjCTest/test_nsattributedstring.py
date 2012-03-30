@@ -108,7 +108,7 @@ class TestNSAttributedString (TestCase):
 
     def testMethodsAppKit(self):
         self.assertResultIsBOOL(NSAttributedString.containsAttachments)
-        self.assertArgIsBOOL(NSAttributedString.nextWordFromIndex_forward, 1)
+        self.assertArgIsBOOL(NSAttributedString.nextWordFromIndex_forward_, 1)
         self.assertArgIsOut(NSAttributedString.URLAtIndex_effectiveRange_, 1)
 
         self.assertArgIsOut(NSAttributedString.initWithURL_options_documentAttributes_error_, 2)

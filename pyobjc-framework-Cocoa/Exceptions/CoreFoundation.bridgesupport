@@ -1065,7 +1065,7 @@
     <arg c_array_length_in_arg='2' comment='Unicode string' index='1' type='r^T' type64='r^T' type_modifier='n' />
   </function>
   <function name='CFStringAppendFormat' variadic='true' >
-	  <arg index=2 printf_format='true' />
+	  <arg index='2' printf_format='true' />
   </function>
   <function ignore='true' name='CFStringAppendFormatAndArguments' />
   <function name='CFStringAppendPascalString' ignore='true' comment='Do not use from python'>

@@ -36,7 +36,7 @@ class TestNSBrowser (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSBrowser.isLoaded)
         self.assertResultIsBOOL(NSBrowser.reusesColumns)
-        self.assertArgIsBOOL(NSBrowser.setReusesColumns_)
+        self.assertArgIsBOOL(NSBrowser.setReusesColumns_, 0)
         self.assertResultIsBOOL(NSBrowser.hasHorizontalScroller)
         self.assertArgIsBOOL(NSBrowser.setHasHorizontalScroller_, 0)
         self.assertResultIsBOOL(NSBrowser.separatesColumns)

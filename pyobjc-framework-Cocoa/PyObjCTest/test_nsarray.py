@@ -438,7 +438,7 @@ class TestNSArray (TestCase):
         self.assertArgIsBOOL(NSArray.writeToURL_atomically_, 1)
 
         self.assertArgIsSEL(NSArray.makeObjectsPerformSelector_, 0, 'v@:')
-        self.assertArgIsSEL(NSArray.makeObjectsPerformSelector_withObject, 0, 'v@:@')
+        self.assertArgIsSEL(NSArray.makeObjectsPerformSelector_withObject_, 0, 'v@:@')
 
         self.assertArgIsBOOL(NSArray.initWithArray_copyItems_, 1)
 
@@ -459,7 +459,7 @@ class TestNSArray (TestCase):
         self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, b'l@@@', False)
         self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, b'@')
         
-        self.assertArgHasIsSEL(NSMutableArray.sortUsingSelector_, 0, b'i@:@')
+        self.assertArgIsSEL(NSMutableArray.sortUsingSelector_, 0, b'i@:@')
 
         self.assertIsNullTerminated(NSArray.arrayWithObjects_)
         self.assertIsNullTerminated(NSArray.initWithObjects_)

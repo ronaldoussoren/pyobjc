@@ -126,7 +126,7 @@ class TestPythonCoder(TestCase):
         self.assertResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
         self.assertArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
 
-        self.assertHasattr(Foundation, 'NXReadNSObjectFromCoder')
+        self.assertTrue(hasattr(Foundation, 'NXReadNSObjectFromCoder'))
 
 
 if __name__ == '__main__':

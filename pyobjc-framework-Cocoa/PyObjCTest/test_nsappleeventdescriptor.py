@@ -9,7 +9,7 @@ class TestAED (TestCase):
         self.assertArgSizeInArg(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1, 2)
         self.assertArgIsIn(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1)
 
-        self.assertResultIsBool(NSAppleEventDescriptor.booleanValue)
+        self.assertResultIsBOOL(NSAppleEventDescriptor.booleanValue)
 
 #    def testInitWithAEDescNoCopy(self):
 #        # The object will call AEDisposeDesc, meaning MacPython shouldn't

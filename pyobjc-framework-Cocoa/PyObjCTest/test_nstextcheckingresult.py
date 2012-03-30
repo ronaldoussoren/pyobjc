@@ -16,7 +16,7 @@ class TestNSTextCheckingResult (TestCase):
         self.assertEqual(NSTextCheckingTypeCorrection, 1 << 9)
 
         self.assertEqual(NSTextCheckingAllSystemTypes, 0xffffffff)
-        self.assertEqual(NSTextCheckingAllCustomTypes, 0xffffffff << 32)
+        self.assertEqual(NSTextCheckingAllCustomTypes, cast_longlong(0xffffffff << 32))
         self.assertEqual(NSTextCheckingAllTypes, (NSTextCheckingAllSystemTypes | NSTextCheckingAllCustomTypes))
 
         self.assertIsInstance(NSTextCheckingNameKey, unicode)

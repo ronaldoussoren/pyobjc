@@ -26,8 +26,8 @@ class TestNSPointerFunctions (TestCase):
         v = o.usesStrongWriteBarrier()
         self.assertTrue((v is True) or (v is False) )
 
-        self.assertArgIsBool(o.setUsesStrongWriteBarrier_, 0)
-        self.assertArgIsBool(o.setUsesWeakReadAndWriteBarriers_, 0)
+        self.assertArgIsBOOL(o.setUsesStrongWriteBarrier_, 0)
+        self.assertArgIsBOOL(o.setUsesWeakReadAndWriteBarriers_, 0)
 
         v = o.usesWeakReadAndWriteBarriers()
         self.assertTrue((v is True) or (v is False) )

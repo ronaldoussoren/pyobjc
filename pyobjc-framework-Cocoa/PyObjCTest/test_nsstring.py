@@ -187,7 +187,7 @@ class TestPickle(TestCase):
 
     @min_os_level('10.5')
     def testConstants10_5(self):
-        self.assertEqual(NSMaximumStringLength, sys.maxint-1)
+        self.assertEqual(NSMaximumStringLength, sys.maxint)
         self.assertEqual(NSDiacriticInsensitiveSearch, 128)
         self.assertEqual(NSWidthInsensitiveSearch, 256)
         self.assertEqual(NSForcedOrderingSearch, 512)
@@ -221,11 +221,11 @@ class TestPickle(TestCase):
         self.assertEqual(NSISO2022JPStringEncoding, 21)
         self.assertEqual(NSMacOSRomanStringEncoding, 30)
         self.assertEqual(NSUTF16StringEncoding, NSUnicodeStringEncoding)
-        self.assertEqual(NSUTF16BigEndianStringEncoding, cast_int(0x90000100))
-        self.assertEqual(NSUTF16LittleEndianStringEncoding, cast_int(0x94000100))
-        self.assertEqual(NSUTF32StringEncoding, cast_int(0x8c000100))
-        self.assertEqual(NSUTF32BigEndianStringEncoding, cast_int(0x98000100))
-        self.assertEqual(NSUTF32LittleEndianStringEncoding, cast_int(0x9c000100))
+        self.assertEqual(NSUTF16BigEndianStringEncoding, cast_uint(0x90000100))
+        self.assertEqual(NSUTF16LittleEndianStringEncoding, cast_uint(0x94000100))
+        self.assertEqual(NSUTF32StringEncoding, cast_uint(0x8c000100))
+        self.assertEqual(NSUTF32BigEndianStringEncoding, cast_uint(0x98000100))
+        self.assertEqual(NSUTF32LittleEndianStringEncoding, cast_uint(0x9c000100))
         self.assertEqual(NSStringEncodingConversionAllowLossy, 1)
         self.assertEqual(NSStringEncodingConversionExternalRepresentation, 2)
 

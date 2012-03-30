@@ -10,7 +10,7 @@ class TestNSTouch (TestCase):
         self.assertEqual(NSTouchPhaseEnded, 1 << 3)
         self.assertEqual(NSTouchPhaseCancelled, 1 << 4)
         self.assertEqual(NSTouchPhaseTouching, NSTouchPhaseBegan | NSTouchPhaseMoved | NSTouchPhaseStationary)
-        self.assertEqual(NSTouchPhaseAny, -1)
+        self.assertEqual(NSTouchPhaseAny, cast_uint(-1))
 
     @min_os_level('10.6')
     def testMethods(self):

@@ -12,25 +12,25 @@ class TestNSOrderedSet (TestCase):
         self.assertResultIsBOOL(NSOrderedSet.isSubsetOfSet_)
 
         self.assertArgIsBlock(NSOrderedSet.enumerateObjectsUsingBlock_, 0,
-                b'v@'+objc._C_UInteger + b'o^B')
+                b'v@'+objc._C_NSUInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.enumerateObjectsWithOptions_usingBlock_, 1,
                 b'v@'+objc._C_UInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.enumerateObjectsAtIndexes_options_usingBlock_, 2,
-                b'v@'+objc._C_UInteger + b'o^B')
+                b'v@'+objc._C_NSUInteger + b'o^B')
 
         self.assertArgIsBlock(NSOrderedSet.indexOfObjectPassingTest_, 0,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.indexOfObjectWithOptions_passingTest_, 1,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.indexOfObjectAtIndexes_options_passingTest_, 2,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
 
         self.assertArgIsBlock(NSOrderedSet.indexesOfObjectsPassingTest_, 0,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.indexesOfObjectsWithOptions_passingTest_, 1,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
         self.assertArgIsBlock(NSOrderedSet.indexesOfObjectsAtIndexes_options_passingTest_, 2,
-                b'B@'+objc._C_UInteger + b'o^B')
+                b'B@'+objc._C_NSUInteger + b'o^B')
 
         self.assertArgIsBlock(NSOrderedSet.indexOfObject_inSortedRange_options_usingComparitor_, 0,
                 objc._C_NSInteger + b'@@')
@@ -94,7 +94,7 @@ class TestNSOrderedSet (TestCase):
         self.assertTrue(obj.containsObject_(3))
         self.assertFalse(obj.containsObject_(4))
 
-        obj = NSMutableOrderedSet.orderedSet()
+        obj = NSMutableOrderedSet.alloc().init()
         obj.addObjects_(1,2,3)
         self.assertTrue(obj.containsObject_(1))
         self.assertTrue(obj.containsObject_(2))

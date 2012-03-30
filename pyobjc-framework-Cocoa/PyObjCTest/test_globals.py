@@ -39,6 +39,7 @@ class GlobalFunctionTest (TestCase):
                 Foundation.NSMakeRect(1, 2, 3, 4),
                 ((1.0, 2.0), (3.0, 4.0))
         )
+        self.assertIsInstance(Foundation.NSMakeRect(1, 2, 3, 4), Foundation.NSRect)
 
         self.assertRaises(ValueError, Foundation.NSMakeRect, 1.0, 2.0, 3.0, '4')
 

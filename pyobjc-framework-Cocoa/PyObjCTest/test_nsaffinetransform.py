@@ -189,10 +189,10 @@ class TestAffineTransform (TestCase):
         self.assertIsInstance(t, NSAffineTransformStruct)
         self.assertEqual(s, t)
 
-        v = transform.transformPoint((1,1))
+        v = transform.transformPoint_((1,1))
         self.assertIsInstance(v, NSPoint)
 
-        v = transform.transformSize((1,1))
+        v = transform.transformSize_((1,1))
         self.assertIsInstance(v, NSSize)
 
 

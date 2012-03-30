@@ -5064,7 +5064,7 @@
       <arg c_array_length_in_arg='2' index='1' type_modifier='n' />
     </method>
     <method comment='needs work' selector='showPackedGlyphs:length:glyphRange:atPoint:font:color:printingAdjustment:'>
-      <arg index='0' type='^t'c_array_delimited_by_null='true'  />
+      <arg index='0' type='^t' c_array_delimited_by_null='true' />
     </method>
     <method selector='temporaryAttribute:atCharacterIndex:effectiveRange:'>
       <arg index='2' type_modifier='o' />

@@ -4,7 +4,7 @@ from Foundation import *
 
 # HACK
 import Foundation
-NSZonePtr = getattr(Foundation, 'NSZone*')
+#NSZonePtr = getattr(Foundation, 'NSZone*')
 
 class TestNSZone (TestCase):
     def testWithZones(self):
@@ -63,6 +63,7 @@ class TestNSZone (TestCase):
     def testZoneCreation(self):
         z = NSDefaultMallocZone()
         if z is not None:
+            print type(z)
             self.assertIsInstance(z, NSZonePtr)
         z = NSCreateZone(5000, 100, True)
         self.assertIsInstance(z, NSZonePtr)
