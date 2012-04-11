@@ -12,6 +12,14 @@ Version 2.4  (or 3.0)
 
   NOTE: Support for 3.3 is very much work in progress right now, there have
   been changes for the new unicode representation, but more changes are required.
+
+  Known issues:
+
+  * metadata conflict error when explictly implementing a prototype
+
+  * one test failure w.r.t. unichar argument arrays
+
+  Futhermore there are two refcounting test failures in both 3.2 and 3.3
   
 
 - Add ``objc.setObjCPointerIsError`` and ``objc.getObjCPointerIsError``.
