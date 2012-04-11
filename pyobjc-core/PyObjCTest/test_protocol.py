@@ -44,7 +44,7 @@ class TestInformalProtocols(TestCase):
 
 
 
-if sys.maxint < 2 ** 32:
+if sys.maxsize < 2 ** 32:
     EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
 
     MyProtocol = objc.formal_protocol("MyProtocol", None, (

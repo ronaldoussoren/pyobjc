@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 
 import objc
@@ -45,8 +46,8 @@ class TestInstanceVariables(TestCase):
         self.assertIs(self.object.idVar, o)
         self.assertIs(self.object.idVar2, o)
 
-        self.object.idVar = u"hello"
-        self.assertEqual(self.object.idVar, u"hello")
+        self.object.idVar = "hello"
+        self.assertEqual(self.object.idVar, "hello")
 
     def testInt(self):
         # Check that we can set and query attributes of type 'int'
@@ -62,7 +63,7 @@ class TestInstanceVariables(TestCase):
 
         # Can't rely on this for doubles...
         #self.assertEqual(self.object.doubleVar, 0.0)
-        self.assertRaises(ValueError, lambda x: setattr(self.object, 'doubleVar', x), u"h")
+        self.assertRaises(ValueError, lambda x: setattr(self.object, 'doubleVar', x), "h")
         self.object.doubleVar = 42.0
         self.assertAlmostEqual(self.object.doubleVar, 42.0)
 

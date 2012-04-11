@@ -279,7 +279,7 @@ struct_mp_subscript(PyObject* self, PyObject* item)
 		PyObject* result;
 		PyObject* it;
 
-		if (PySlice_GetIndicesEx((PySliceObject*)item, 
+		if (PySlice_GetIndicesEx(item, 
 				struct_sq_length(self),
 				&start, &stop, &step, &slicelength) < 0) {
 			return NULL;
@@ -326,7 +326,7 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
 	} else if (PySlice_Check(item)) {
 		Py_ssize_t start, stop, step, slicelength;
 
-		if (PySlice_GetIndicesEx((PySliceObject*)item, 
+		if (PySlice_GetIndicesEx(item, 
 				struct_sq_length(self), &start, &stop,
 				&step, &slicelength) < 0) {
 			return -1;

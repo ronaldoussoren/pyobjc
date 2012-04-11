@@ -765,46 +765,46 @@ class TestByReference (TestCase):
         # All arguments present
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 3)
         self.assertEqual(y, 9)
         self.assertEqual(z, 10)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, 2, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 3)
         self.assertEqual(y, 9)
         self.assertEqual(z, 10)
 
         # Argument 1 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 11)
         self.assertEqual(z, 12)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(objc.NULL, None, 2, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 11)
         self.assertEqual(z, 12)
 
         # Argument 2 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, objc.NULL, 2, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, objc.NULL)
         self.assertEqual(z, 14)
 
         # Argument 3 is NULL
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 15)
         self.assertEqual(z, objc.NULL)
 
         r, y, z = OC_MetaDataTest.input_output_inputAndOutput_on_(1, None, objc.NULL, o)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 15)
         self.assertEqual(z, objc.NULL)
 

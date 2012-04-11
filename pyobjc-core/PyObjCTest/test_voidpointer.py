@@ -10,8 +10,8 @@ class TestVoidPointer (TestCase):
         o.setvalue_(523532)
         self.assertEqual(o.getvalue(), 523532)
 
-        o.setvalue_(sys.maxint + 1)
-        self.assertEqual(o.getvalue(), sys.maxint + 1)
+        o.setvalue_(sys.maxsize + 1)
+        self.assertEqual(o.getvalue(), sys.maxsize + 1)
 
 if __name__ == "__main__":
     main()

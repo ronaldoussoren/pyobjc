@@ -17,6 +17,8 @@ typedef struct
   char contents[1];
 } PyObjCPointer;
 
+extern int	PyObjCPointer_RaiseException;
+
 extern PyTypeObject PyObjCPointer_Type;
 
 #define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)

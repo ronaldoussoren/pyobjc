@@ -19,7 +19,6 @@ TODO:
 """
 from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
 from objc._objc import registerMetaDataForSelector
-from itertools import imap
 import sys
 
 __all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
@@ -27,6 +26,10 @@ __all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
 
 CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
+
+if sys.version_info[0] == 3:
+    # XXX: Temporary backward compatibily
+    xrange = range
 
 def addConvenienceForSelector(selector, methods):
     """
@@ -78,7 +81,7 @@ def _add_convenience_methods(super_class, name, type_dict):
 
     look_at_super = (super_class is not None and super_class.__name__ != 'Object')
 
-    for k, sel in type_dict.items():
+    for k, sel in list(type_dict.items()):
         if not isinstance(sel, selector):
             continue
 
@@ -131,7 +134,7 @@ def _add_convenience_methods(super_class, name, type_dict):
             def __getattr__(self, key):
                 try:
                     return self.__object.valueForKey_(key)
-                except KeyError, msg:
+                except KeyError as msg:
                     if hasattr(msg, '_pyobjc_info_') and msg._pyobjc_info_['name'] == 'NSUnknownKeyException':
                         raise AttributeError(key)
 
@@ -143,12 +146,12 @@ def _add_convenience_methods(super_class, name, type_dict):
                     super(kvc, self).__setattr__(key, value)
 
             def __getitem__(self, key):
-                if not isinstance(key, (str, unicode)):
+                if not isinstance(key, STR_TYPES):
                     raise TypeError("Key must be string")
                 return self.__object.valueForKey_(key)
 
             def __setitem__(self, key, value):
-                if not isinstance(key, (str, unicode)):
+                if not isinstance(key, STR_TYPES):
                     raise TypeError("Key must be string")
                 return self.__object.setValue_forKey_(value, key)
 
@@ -212,8 +215,8 @@ def update_setObject_forKey_(self, *args, **kwds):
             for key, value in other:
                 self[key] = value
 
-    for k, v in kwds.iteritems():
-        self[k] = v
+    for k in kwds:
+        self[k] = kwds[k]
 
 def setdefault_setObject_forKey_(self, key, dflt=None):
     try:
@@ -244,7 +247,7 @@ def popitem_setObject_forKey_(self):
         it = self.keyEnumerator()
         k = container_unwrap(it.nextObject(), StopIteration)
     except (StopIteration, IndexError):
-        raise KeyError, "popitem on an empty %s" % (type(self).__name__,)
+        raise KeyError("popitem on an empty %s" % (type(self).__name__,))
     else:
         result = (k, container_unwrap(self.objectForKey_(k), KeyError))
         self.removeObjectForKey_(k)
@@ -269,7 +272,7 @@ CONVENIENCE_METHODS[b'containsObject:'] = (
 
 
 
-def objc_hash(self, _max=sys.maxint, _const=((sys.maxint + 1L) * 2L)):
+def objc_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
     rval = self.hash()
     if rval > _max:
         rval -= _const
@@ -393,8 +396,8 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
             if ln == 0:
                 raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
             
-            if ln > sys.maxint:
-                ln = sys.maxint
+            if ln > sys.maxsize:
+                ln = sys.maxsize
 
             res = self.indexOfObject_inRange_(item, (start, ln))
             if res == NSNotFound:
@@ -416,6 +419,12 @@ CONVENIENCE_METHODS[b'insertObject:atIndex:'] = (
     ( 'insert', insert_insertObject_atIndex_),
 )
 
+if sys.version_info[0] == 2:
+    INT_TYPES = (int, long)
+
+else:
+    INT_TYPES = int
+
 def __getitem__objectAtIndex_(self, idx):
     if isinstance(idx, slice):
         start, stop, step = idx.indices(len(self))
@@ -425,7 +434,7 @@ def __getitem__objectAtIndex_(self, idx):
         #        return m((start, stop - start))
         return [self[i] for i in xrange(start, stop, step)]
     
-    elif not isinstance(idx, (int, long)):
+    elif not isinstance(idx, INT_TYPES):
         raise TypeError("index must be a number")
     
     if idx < 0:
@@ -454,9 +463,7 @@ def __delitem__removeObjectAtIndex_(self, idx):
             if m is not None:
                 m((start, stop - start))
                 return
-        r = range(start, stop, step)
-        r.sort()
-        r.reverse()
+        r = reversed(range(start, stop, step))
         for i in r:
             self.removeObjectAtIndex_(i)
         return
@@ -535,12 +542,11 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
                 toAssign = list(anObject)
             else:
                 toAssign = anObject
-            #for inIdx, outIdx in reversed(enumerate(reversed(range(start, stop, step)))):
             for inIdx, outIdx in enumerate(xrange(start, stop, step)): 
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
 
-    elif not isinstance(idx, (int, long)):
+    elif not isinstance(idx, INT_TYPES):
         raise TypeError("index is not an integer")
 
     else:
@@ -571,16 +577,7 @@ def dictItems(aDict):
     NSDictionary.items()
     """
     keys = aDict.allKeys()
-    return zip(keys, imap(aDict.__getitem__, keys))
-
-#CONVENIENCE_METHODS[b'allKeys'] = (
-#    ('keys', lambda self: self.allKeys()),
-#    ('items', lambda self: dictItems(self)),
-#)
-
-#CONVENIENCE_METHODS[b'allValues'] = (
-    #('values', lambda self: self.allValues()),
-#)
+    return zip(keys, map(aDict.__getitem__, keys))
 
 def itemsGenerator(aDict):
     for key in aDict:
@@ -594,14 +591,21 @@ def __iter__objectEnumerator_keyEnumerator(self):
 
 CONVENIENCE_METHODS[b'keyEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
-    ('iterkeys', lambda self: iter(self.keyEnumerator())),
-    ('iteritems', lambda self: itemsGenerator(self)),
+)
+if sys.version_info[0] == 2:
+    CONVENIENCE_METHODS[b'keyEnumerator'] += (
+        ('iterkeys', lambda self: iter(self.keyEnumerator())),
+        ('iteritems', lambda self: itemsGenerator(self)),
 )
 
 CONVENIENCE_METHODS[b'objectEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
-    ('itervalues', lambda self: iter(self.objectEnumerator())),
 )
+
+if sys.version_info[0] == 2:
+    CONVENIENCE_METHODS[b'objectEnumerator'] += (
+        ('itervalues', lambda self: iter(self.objectEnumerator())),
+    )
 
 CONVENIENCE_METHODS[b'reverseObjectEnumerator'] = (
     ('__reversed__', lambda self: iter(self.reverseObjectEnumerator())),
@@ -651,11 +655,6 @@ def fromkeys_dictionaryWithObjects_forKeys_(cls, keys, values=None):
         values = list(values)
     return cls.dictionaryWithObjects_forKeys_(values, keys)
 
-#CONVENIENCE_METHODS[b'dictionaryWithObjects:forKeys:'] = (
-    #('fromkeys',
-        #classmethod(fromkeys_dictionaryWithObjects_forKeys_)),
-#)
-
 if sys.version_info[0] == 3:
     def cmp(a, b):
         if a == b:
@@ -694,14 +693,14 @@ registerMetaDataForSelector(b"NSObject", b"sortUsingFunction:context:",
                         'callable': {
                             'reval': 'i',
                             'arguments': {
-                                0: { 'type': '@' },
-                                1: { 'type': '@' },
-                                2: { 'type': '@' },
+                                0: { 'type': b'@' },
+                                1: { 'type': b'@' },
+                                2: { 'type': b'@' },
                             }
                         },
                         'callable_retained': False,
                 },
-                3:  { 'type': '@' },
+                3:  { 'type': b'@' },
             },
         ))
 
@@ -1032,13 +1031,13 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         elif len(args) == 1:
             d = dict()
             if isinstance(args[0], collections.Mapping):
-                items = args[0].iteritems()
+                items = args[0].items()
             else:
                 items = args[0]
             for k , v in items:
                 d[container_wrap(k)] = container_wrap(v)
 
-            for k, v in kwds.iteritems():
+            for k, v in kwds.items():
                 d[container_wrap(k)] = container_wrap(v)
 
             return cls.dictionaryWithDictionary_(d)
@@ -1049,7 +1048,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
                         len(args)))
         if kwds:
             d = dict()
-            for k, v in kwds.iteritems():
+            for k, v in kwds.items():
                 d[container_wrap(k)] = container_wrap(v)
 
             return cls.dictionaryWithDictionary_(d)
@@ -1148,8 +1147,6 @@ def nsarray_mul(self, other):
             n <<= 1
             tmp = tmp.arrayByAddingObjectsFromArray_(tmp)
 
-    #for n in xrange(other):
-        #result.extend(self)
     return result
 
 
@@ -1158,7 +1155,7 @@ def nsarray_new(cls, sequence=None):
     if not sequence:
         return NSArray.array()
 
-    elif isinstance(sequence, (str, unicode)):
+    elif isinstance(sequence, STR_TYPES):
         return NSArray.arrayWithArray_(list(sequence))
 
     else:
@@ -1169,11 +1166,16 @@ def nsarray_new(cls, sequence=None):
 
         return NSArray.arrayWithArray_(sequence)
 
+if sys.version_info[0] == 2:
+    STR_TYPES=(str, unicode)
+else:
+    STR_TYPES=str
+
 def nsmutablearray_new(cls, sequence=None):
     if not sequence:
         return NSMutableArray.array()
 
-    elif isinstance(sequence, (str, unicode)):
+    elif isinstance(sequence, STR_TYPES):
         return NSMutableArray.arrayWithArray_(list(sequence))
 
     else:
@@ -1449,9 +1451,13 @@ class nsset__iter__ (object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         self._size -= 1
         return container_unwrap(self._enum.nextObject(), StopIteration)
+
+    next = __next__
+
+
 
 
 CLASS_METHODS['NSSet'] = (

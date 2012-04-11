@@ -35,13 +35,14 @@ if sys.version_info[0] == 2:
 
 import objc
 import types
+import sys
 
 if sys.version_info[0] == 2:
     from itertools import imap as map
     pass
 
 else:
-    basestr = str
+    basestring = str
 
 if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:forKey:'):
     SETVALUEFORKEY = 'setValue_forKey_'

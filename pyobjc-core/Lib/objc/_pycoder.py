@@ -10,16 +10,26 @@ This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
 """
+from __future__ import unicode_literals
 import sys
 import objc
 from types import *
-import copy_reg
+
+try:
+    import copyreg
+except ImportError:
+    # Python 2.x
+    import copy_reg as copyreg
 import copy
 
 from pickle import PicklingError, UnpicklingError, whichmodule
 
 if hasattr(sys, 'intern'):
     intern = sys.intern
+
+if sys.version_info[0] == 3:
+    unicode = str
+    long = int
 
 
 # FIXME: This requires manual wrappers from the Foundation bindings
@@ -46,17 +56,17 @@ def setupPythonObject():
     kOP_GLOBAL_EXT=13
     kOP_FLOAT_STR=14
 
-    kKIND = NSString.stringWithString_(u"kind")
-    kFUNC = NSString.stringWithString_(u"func")
-    kARGS = NSString.stringWithString_(u"args")
-    kLIST = NSString.stringWithString_(u"list")
-    kDICT = NSString.stringWithString_(u"dict")
-    kSTATE = NSString.stringWithString_(u"state")
-    kCLASS = NSString.stringWithString_(u"class")
-    kVALUE = NSString.stringWithString_(u"value")
-    kNAME = NSString.stringWithString_(u"name")
-    kMODULE = NSString.stringWithString_(u"module")
-    kCODE = NSString.stringWithString_(u"code")
+    kKIND = NSString.stringWithString_("kind")
+    kFUNC = NSString.stringWithString_("func")
+    kARGS = NSString.stringWithString_("args")
+    kLIST = NSString.stringWithString_("list")
+    kDICT = NSString.stringWithString_("dict")
+    kSTATE = NSString.stringWithString_("state")
+    kCLASS = NSString.stringWithString_("class")
+    kVALUE = NSString.stringWithString_("value")
+    kNAME = NSString.stringWithString_("name")
+    kMODULE = NSString.stringWithString_("module")
+    kCODE = NSString.stringWithString_("code")
 
     class _EmptyClass:
         pass
@@ -170,12 +180,15 @@ def setupPythonObject():
         encode_dispatch[int] = save_int
 
         def save_long(coder, obj):
+            encoded = unicode(repr(obj))
+            if encoded.endswith('L'):
+                encoded = encoded[:-1]
             if coder.allowsKeyedCoding():
                 coder.encodeInt_forKey_(kOP_LONG, kKIND)
-                coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
+                coder.encodeObject_forKey_(encoded, kVALUE)
             else:
                 coder.__pyobjc__encodeInt_(kOP_LONG)
-                coder.encodeObject_(unicode(repr(obj)))
+                coder.encodeObject_(encoded)
 
         encode_dispatch[long] = save_long
 
@@ -268,7 +281,7 @@ def setupPythonObject():
                     "Can't pickle %r: it's not the same object as %s.%s" %
                     (obj, module, name))
 
-        code = copy_reg._extension_registry.get((module, name))
+        code = copyreg._extension_registry.get((module, name))
 
         if coder.allowsKeyedCoding():
             if code:
@@ -367,10 +380,10 @@ def setupPythonObject():
         else:
             code = coder.__pyobjc__decodeInt()
         nil = []
-        obj = copy_reg._extension_cache.get(code, nil)
+        obj = copyreg._extension_cache.get(code, nil)
         if obj is not nil:
             return obj
-        key = copy_reg._inverted_registry.get(code)
+        key = copyreg._inverted_registry.get(code)
         if not key:
             raise ValueError("unregistered extension code %d" % code)
 
@@ -421,9 +434,9 @@ def setupPythonObject():
         if not instantiated:
             try:
                 value = cls(*initargs)
-            except TypeError, err:
-                raise TypeError, "in constructor for %s: %s" % (
-                    cls.__name__, str(err)), sys.exc_info()[2]
+            except TypeError as err:
+                raise TypeError("in constructor for %s: %s" % (
+                    cls.__name__, str(err)), sys.exc_info()[2])
 
             
         # We now have the object, but haven't set the correct
@@ -448,7 +461,8 @@ def setupPythonObject():
         if state:
             try:
                 inst_dict = value.__dict__
-                for k, v in state.iteritems():
+                for k in state:
+                    v = state[k]
                     if type(k) == str:
                         inst_dict[intern(k)] = v
                     else:
@@ -504,7 +518,8 @@ def setupPythonObject():
             try:
                 inst_dict = value.__dict__
 
-                for k, v in state.iteritems():
+                for k in state:
+                    v = state[k]
                     if type(k) == str:
                         inst_dict[intern(k)] = v
                     else:
@@ -549,8 +564,8 @@ def setupPythonObject():
             save_global(coder, self)
             return
 
-        # Check copy_reg.dispatch_table
-        reduce = copy_reg.dispatch_table.get(t)
+        # Check copyreg.dispatch_table
+        reduce = copyreg.dispatch_table.get(t)
         if reduce is not None:
             rv = reduce(self)
 

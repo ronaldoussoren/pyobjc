@@ -81,6 +81,20 @@ def cast_int(value):
     else:
         return value
 
+def cast_longlong(value):
+    """
+    Cast value to 64bit integer
+
+    Usage:
+        cast_longlong(1 << 63) == -1
+    """
+    value = value & 0xffffffffffffffff
+    if value & 0x8000000000000000:
+        value =   ~value + 1 & 0xffffffffffffffff
+        return -value
+    else:
+        return value
+
 def cast_uint(value):
     """
     Cast value to 32bit integer
@@ -90,6 +104,13 @@ def cast_uint(value):
 
     """
     value = value & 0xffffffff
+    return value
+
+def cast_ulonglong(value):
+    """
+    Cast value to 64bit integer
+    """
+    value = value & 0xffffffffffffffff
     return value
 
 _os_release = None
@@ -318,7 +339,7 @@ class TestCase (_unittest.TestCase):
     def assertResultIsNullTerminated(self, method, message = None):
         info = method.__metadata__()
         if not info['retval'].get('c_array_delimited_by_null'):
-            self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+            self.fail(message or "result of %r is not a nul-terminated array"%(method,))
 
     def assertIsNullTerminated(self, method, message = None):
         info = method.__metadata__()

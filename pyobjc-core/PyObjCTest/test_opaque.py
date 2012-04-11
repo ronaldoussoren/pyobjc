@@ -53,7 +53,10 @@ class TestFromC (TestCase):
         self.assertEqual( OC_OpaqueTest.getValueOf_(f), 99 )
 
         self.assertHasAttr(f, "__pointer__")
-        self.assertIsInstance(f.__pointer__, (int, long))
+        if sys.version_info[0] == 2:
+            self.assertIsInstance(f.__pointer__, (int, long))
+        else:
+            self.assertIsInstance(f.__pointer__, int)
 
         # NULL pointer is converted to None
         self.assertEqual(OC_OpaqueTest.nullFoo(), None)

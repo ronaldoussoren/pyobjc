@@ -6,7 +6,8 @@
 
 /* { dg-do run } */
 #include "ffitest.h"
-#include "float.h"
+
+#define DBL_EPSILON 1e-10
 
 static double dblit(float f)
 {

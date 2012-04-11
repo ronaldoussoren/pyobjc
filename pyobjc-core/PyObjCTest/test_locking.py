@@ -129,11 +129,6 @@ class TestLockingBasic (TestCase):
                 self.assertTrue(lst[idx+1].endswith(' b'))
 
 
-if sys.version_info[:2] >= (2, 5):
-    # Test using a with-statement, that will only work on 2.5 or later and will cause
-    # a compile error on earlier editions of python, hence and ugly exec statement.
-    exec """
-from __future__ import with_statement
 class TestLockingWithStatement (TestCase):
 
     def testBasicLocking(self):
@@ -159,8 +154,6 @@ class TestLockingWithStatement (TestCase):
         for idx in range(len(lst)):
             if lst[idx].endswith(' a'):
                 self.assertTrue(lst[idx+1].endswith(' b'))
-"""
-
 
 if __name__ == "__main__":
     main()

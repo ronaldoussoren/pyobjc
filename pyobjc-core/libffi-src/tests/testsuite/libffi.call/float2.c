@@ -8,7 +8,9 @@
 /* { dg-options -mlong-double-128 { target powerpc64*-*-* } } */
 
 #include "ffitest.h"
-#include "float.h"
+
+#define LDBL_EPSILON 1e-10
+
 
 static long double ldblit(float f)
 {

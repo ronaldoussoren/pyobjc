@@ -8,7 +8,7 @@ import os
 import plistlib
 
 # We need at least Python 2.5
-MIN_PYTHON = (2, 5)
+MIN_PYTHON = (2, 6)
 
 # FIXME: autodetect default values for USE_* variables:
 #  both should be false by default, unless
@@ -33,9 +33,9 @@ except ImportError:
     distribute_setup.use_setuptools()
 
 
-extra_args=dict(
-    use_2to3 = True,
-)
+#extra_args=dict(
+    #use_2to3 = True,
+#)
 
 def get_os_level():
     pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
@@ -280,11 +280,6 @@ class pyobjc_install_lib (install_lib.install_lib):
 
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
-        for ext in self.extensions:
-            if ext.name == "objc._objc":
-                ext.extra_compile_args.extend(xml2config('--cflags'))
-                ext.extra_link_args.extend(xml2config('--libs'))
-
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
@@ -376,18 +371,6 @@ CFLAGS.extend(['-isysroot', '/'])
 OBJC_LDFLAGS.extend(['-isysroot', '/'])
 
 
-# We're using xml2, check for the flags to use:
-def xml2config(arg):
-    import os, shlex
-    ln = os.popen('xml2-config %s'%(arg,), 'r').readline()
-    ln = ln.strip()
-
-    return shlex.split(ln)
-
-#CFLAGS.extend(xml2config('--cflags'))
-#OBJC_LDFLAGS.extend(xml2config('--libs'))
-
-
 
 CFLAGS.append('-Ibuild/codegen/')
 
@@ -476,6 +459,7 @@ Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
 Programming Language :: Python :: 3.1
 Programming Language :: Python :: 3.2
+Programming Language :: Python :: 3.3
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -507,5 +491,4 @@ dist = setup(
             "pyobjc-compile-brigesupport = PyObjCTools._BSCompiler:main",
         ],
     },
-    **extra_args
 )

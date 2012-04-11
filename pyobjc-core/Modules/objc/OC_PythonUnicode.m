@@ -162,11 +162,14 @@
 			length:(NSUInteger)length 
 		  freeWhenDone:(BOOL)flag
 {
-#ifndef PyObjC_UNICODE_FAST_PATH
-# error "Wide UNICODE builds are not supported at the moment"
-#endif
+	int byteorder = 0;
 	PyObjC_BEGIN_WITH_GIL
-		value = PyUnicode_FromUnicode((Py_UNICODE*)characters, length);
+		/* Decode as a UTF-16 string in native byteorder */
+		value = PyUnicode_DecodeUTF16(
+				(const char*)characters,
+				length * 2,
+				NULL,
+				&byteorder); 
 		if (value == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
@@ -180,22 +183,88 @@
 
 -initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
-#ifndef PyObjC_UNICODE_FAST_PATH
-# error "Wide UNICODE builds are not supported at the moment"
-#endif
+	char* py_encoding = NULL;
+	int byteorder = 0;
+
+	/* Detect some often used single-byte encodings that can be created in Python without
+	 * creating an intermediate object.
+	 */
+
+	switch (encoding) {
+	case NSASCIIStringEncoding: py_encoding = "ascii"; break;
+	case NSUTF8StringEncoding: py_encoding = "UTF-8"; break;
+	case NSISOLatin1StringEncoding: py_encoding = "latin1"; break;
+	}
+
+	if (py_encoding != NULL) {
+		PyObjC_BEGIN_WITH_GIL
+			value = PyUnicode_Decode(bytes, length, py_encoding, NULL);
+			if (value == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+		PyObjC_END_WITH_GIL
+		return self;
+	}
+
+	/* UTF-16 encodings can also be decoded without an intermediate object */
+	byteorder = 2;
+	switch (encoding) {
+	case NSASCIIStringEncoding: byteorder = 0; break;
+	case NSUTF8StringEncoding:  byteorder = -1; break;
+	case NSISOLatin1StringEncoding:  byteorder = 1; break;
+	}
+	if (byteorder != 2) {
+		PyObjC_BEGIN_WITH_GIL
+			/* Decode as a UTF-16 string in native byteorder */
+			value = PyUnicode_DecodeUTF16(
+					bytes,
+					length,
+					NULL,
+					&byteorder); 
+			if (value == NULL) {
+				PyObjC_GIL_FORWARD_EXC();
+			}
+
+		PyObjC_END_WITH_GIL;
+		return self;
+	}
+
+	/* And finally: first use the Cocoa decoder to create an NSString, copy the unichars into
+	 * a temporary buffer and use that to create a Python unicode string using the UTF16 decoder.
+	 *
+	 * This can be slightly optimized on systems where sizeof(Py_UNICODE) == sizeof(unichar), but
+	 * that's not worth the additional complexity and won't work on Python 3.3 or later anyway.
+	 */
+
 	NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 	Py_ssize_t charcount = [tmpval length];
 
+	/* NOTE: the malloc() call can be avoided when sizeof(unichar) == sizeof(Py_UNICODE) and
+	 * we're on python 3.2 or earlier. That's not worth the added complexity.
+	 */
+	unichar* chars = malloc(charcount*2);
+
+	if (chars == NULL) {
+		[self release];
+		return nil;
+	}
+	[tmpval getCharacters:chars];
+	[tmpval release];
 
 	PyObjC_BEGIN_WITH_GIL
-		value = PyUnicode_FromUnicode(NULL, charcount);
+		/* Decode as a UTF-16 string in native byteorder */
+		byteorder = 0;
+		value = PyUnicode_DecodeUTF16(
+				(const char*)chars,
+				length * 2,
+				NULL,
+				&byteorder); 
+		free(chars);
 		if (value == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}
-		[tmpval getCharacters:PyUnicode_AS_UNICODE(value)];
 
 	PyObjC_END_WITH_GIL;
-	[tmpval release];
 	return self;
 }
 

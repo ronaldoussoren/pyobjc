@@ -43,8 +43,8 @@ class _CategoryMeta(type):
             raise TypeError("Category name must be same as class name")
 
 
-        m = [ x[1] for x in methods.iteritems() if x[0] not in cls._IGNORENAMES  and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
-        vars = [ x for x in methods.iteritems() if x[0] not in cls._IGNORENAMES  and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
+        m = [ x[1] for x in methods.items() if x[0] not in cls._IGNORENAMES  and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
+        vars = [ x for x in methods.items() if x[0] not in cls._IGNORENAMES  and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))]
         for k, v in vars:
             if isinstance(v, ivar):
                 raise TypeError("Cannot add instance variables in a Category")
@@ -68,6 +68,6 @@ def Category(cls):
     in the class definition will be added to the existing class.
     """
     if not isinstance(cls, objc_class):
-        raise TypeError, "Category can only be used on Objective-C classes"
+        raise TypeError("Category can only be used on Objective-C classes")
     retval = _CategoryMeta._newSubclass('Category', (), dict(real_class=cls))
     return retval

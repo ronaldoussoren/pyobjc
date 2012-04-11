@@ -1,4 +1,5 @@
 from objc import _objc
+import sys
 
 __all__ = ['protocolNamed', 'ProtocolError']
 
@@ -12,7 +13,8 @@ def protocolNamed(name):
     equivalent of @protocol(name) in Objective-C.
     Raises objc.ProtocolError when the protocol does not exist.
     """
-    name = unicode(name)
+    if sys.version_info[0] == 2:
+        name = unicode(name)
     try:
         return PROTOCOL_CACHE[name]
     except KeyError:

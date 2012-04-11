@@ -7,11 +7,15 @@
 # - Add unittests that test for "real-world" scenarios (writing stuff
 #   to plists, ...)
 # - Implement the required functionality
+from __future__ import unicode_literals
 
 import sys, os
 import objc
 from PyObjCTest.identity import *
 from PyObjCTools.TestSupport import *
+
+if sys.version_info[0] == 3:
+    unicode = str
 
 class TestPythonRoundTrip (TestCase):
     # TODO: verify
@@ -38,7 +42,7 @@ class TestPythonRoundTrip (TestCase):
 
         container = OC_TestIdentity.alloc().init()
 
-        for v in ( u"Hello world", "Hello world" ):
+        for v in ( "Hello world", b"Hello world" ):
             container.setStoredObject_(v)
             self.assertTrue(v is container.storedObject(), repr(v))
 
@@ -47,7 +51,7 @@ class TestPythonRoundTrip (TestCase):
         # to fix (but not now)
         container = OC_TestIdentity.alloc().init()
 
-        for v in (99999, 99999L, 10.0):
+        for v in (99999, sys.maxsize * 3, 10.0):
             container.setStoredObject_(v)
             self.assertTrue(v is container.storedObject, repr(v))
 
@@ -92,7 +96,7 @@ class ObjCRoundTrip (TestCase):
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
         self.assertTrue(isinstance(v, objc.formal_protocol))
 
-    if sys.maxint < 2 ** 32 and os_release() < "10.7":
+    if sys.maxsize < 2 ** 32 and os_release() < "10.7":
         def testObject(self):
             container = OC_TestIdentity.alloc().init()
             cls = objc.lookUpClass("Object")
@@ -120,16 +124,16 @@ class ObjCRoundTrip (TestCase):
         v = container.storedObject()
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
-        if sys.maxint < 2 ** 32:
-            container.setStoredObjectToLongLong_(sys.maxint * 2)
+        if sys.maxsize < 2 ** 32:
+            container.setStoredObjectToLongLong_(sys.maxsize * 2)
             v = container.storedObject()
             self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
-        container.setStoredObjectToLongLong_(-sys.maxint)
+        container.setStoredObjectToLongLong_(-sys.maxsize)
         v = container.storedObject()
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
-        container.setStoredObjectToUnsignedLongLong_(sys.maxint * 2)
+        container.setStoredObjectToUnsignedLongLong_(sys.maxsize * 2)
         v = container.storedObject()
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
@@ -194,7 +198,7 @@ class ObjCtoPython (TestCase):
         v = container.storedObject()
         self.assertFetchingTwice(container, "protocol")
 
-    if sys.maxint < 2 ** 32 and os_release() < "10.7":
+    if sys.maxsize < 2 ** 32 and os_release() < "10.7":
         def testObject(self):
             container = OC_TestIdentity.alloc().init()
 
@@ -217,17 +221,17 @@ class ObjCtoPython (TestCase):
         container.setStoredObjectToUnsignedInteger_(40)
         self.assertFetchingTwice(container, "unsigned int 40")
 
-        container.setStoredObjectToUnsignedInteger_(sys.maxint * 2)
-        self.assertFetchingTwice(container, "unsigned int sys.maxint*2")
+        container.setStoredObjectToUnsignedInteger_(sys.maxsize * 2)
+        self.assertFetchingTwice(container, "unsigned int sys.maxsize*2")
 
-        container.setStoredObjectToLongLong_(sys.maxint * 2)
-        self.assertFetchingTwice(container, "long long sys.maxint*2")
+        container.setStoredObjectToLongLong_(sys.maxsize * 2)
+        self.assertFetchingTwice(container, "long long sys.maxsize*2")
 
-        container.setStoredObjectToLongLong_(-sys.maxint)
-        self.assertFetchingTwice(container, "long long -sys.maxint")
+        container.setStoredObjectToLongLong_(-sys.maxsize)
+        self.assertFetchingTwice(container, "long long -sys.maxsize")
 
-        container.setStoredObjectToUnsignedLongLong_(sys.maxint * 2)
-        self.assertFetchingTwice(container, "unsigned long long sys.maxint*2")
+        container.setStoredObjectToUnsignedLongLong_(sys.maxsize * 2)
+        self.assertFetchingTwice(container, "unsigned long long sys.maxsize*2")
 
         container.setStoredObjectToFloat_(10.0)
         self.assertFetchingTwice(container, "float")
@@ -266,7 +270,7 @@ class PythonToObjC (TestCase):
         # These get converted, not proxied
         container = OC_TestIdentity.alloc().init()
 
-        for v in ("hello world", u"a unicode string"):
+        for v in (b"hello world", "a unicode string"):
             container.setStoredObject_(v)
 
             self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
@@ -275,7 +279,7 @@ class PythonToObjC (TestCase):
         # These get converted, not proxied
         container = OC_TestIdentity.alloc().init()
 
-        for v in (1, 666666, 1L, 66666L, 1.0,):
+        for v in (1, 666666, sys.maxsize*3, 1.0,):
             container.setStoredObject_(v)
 
             self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
@@ -294,21 +298,21 @@ class TestSerializingDataStructures (TestCase):
     def testMakePlist(self):
         container = OC_TestIdentity.alloc().init()
 
-        value = [ 1, 2, 3, [ u"hello", [u"world", (u"in", 9 ) ], True, {u"aap":3}]]
+        value = [ 1, 2, 3, [ "hello", ["world", ("in", 9 ) ], True, {"aap":3}]]
         value.append(value[3])
 
         container.setStoredObject_(value)
-        container.writeStoredObjectToFile_(u"/tmp/pyPyObjCTest.identity")
+        container.writeStoredObjectToFile_("/tmp/pyPyObjCTest.identity")
 
         value = {
-            u"hello": [ 1, 2, 3],
-            u"world": {
-                u"nl": u"wereld",
-                u"de": u"Welt",
+            "hello": [ 1, 2, 3],
+            "world": {
+                "nl": "wereld",
+                "de": "Welt",
             }
         }
         container.setStoredObject_(value)
-        container.writeStoredObjectToFile_(u"/tmp/pyPyObjCTest.identity")
+        container.writeStoredObjectToFile_("/tmp/pyPyObjCTest.identity")
 
         
 

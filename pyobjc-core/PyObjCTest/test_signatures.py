@@ -8,30 +8,30 @@ class PyOCTestTypeStr(TestCase):
     def testSelectorSignatures(self):
 
         self.assertIsInstance(
-                objc.selector(lambda(x,y):1, signature=b"ii"),
+                objc.selector(lambda x,y:1, signature=b"ii"),
                 objc.selector
         )
         self.assertIsInstance(
-                objc.selector(lambda(x,y):1, argumentTypes="ii"),
+                objc.selector(lambda x,y:1, argumentTypes="ii"),
                 objc.selector
         )
         self.assertIsInstance(
-                objc.selector(lambda(x,y):1,
+                objc.selector(lambda x,y:1,
                     argumentTypes="ii", returnType="s"),
                 objc.selector
         )
 
-        self.assertRaises(ValueError, objc.selector, lambda (x,y):1,
+        self.assertRaises(ValueError, objc.selector, lambda x,y:1,
                 signature=b"FOOBAR")
 
-        self.assertRaises(TypeError, objc.selector, lambda(x,y):1,
+        self.assertRaises(TypeError, objc.selector, lambda x,y:1,
                 signature=b"@@", returnType="i")
-        self.assertRaises(TypeError, objc.selector, lambda(x,y):1,
+        self.assertRaises(TypeError, objc.selector, lambda x,y:1,
                 signature=b"@@", argumentTypes="ii")
 
-        self.assertRaises(ValueError, objc.selector, lambda(x,y):1,
+        self.assertRaises(ValueError, objc.selector, lambda x,y:1,
                 argumentTypes="iX")
-        self.assertRaises(ValueError, objc.selector, lambda(x,y):1,
+        self.assertRaises(ValueError, objc.selector, lambda x,y:1,
                 returnType="X")
 
     def testArgumentTypesPythonStyle(self):
@@ -101,7 +101,7 @@ class PyOCTestTypeStr(TestCase):
         self.assertEqual(objc._C_INOUT, b"N")
 
     def testNativeSignature(self):
-        s = objc.selector(lambda(x,y):1, signature=b"ii")
+        s = objc.selector(lambda x,y:1, signature=b"ii")
         self.assertEqual(s.native_signature, b"ii")
 
         self.assertRaises((TypeError, AttributeError), setattr, s, 'native_signature', b'v@:ii')

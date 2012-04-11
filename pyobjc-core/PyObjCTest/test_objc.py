@@ -1,8 +1,10 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
-import fnd as Foundation
-from PyObjCTest.fnd import NSObject, NSArray, NSAttributedString
+from . import fnd as Foundation
+from .fnd import NSObject, NSArray, NSAttributedString
+import sys
 
 
 class TestConstants(TestCase):
@@ -87,6 +89,7 @@ class TestPickle(TestCase):
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
 
+    @onlyIf(sys.version_info[0] == 2, "python 2.x test")
     def testCPicklePure(self):
         import cPickle as pickle
 
@@ -98,10 +101,10 @@ class TestPickle(TestCase):
 
 class TestDescription (TestCase):
     def testSimple(self):
-        TESTS   = [u'a'], u'hello', 2
-        a = NSArray.arrayWithArray_([u'a'])
-        EXPECTS = u'(a)', u'hello', u'2'
-        EXPECTS = repr(a), u'hello', u'2'
+        TESTS   = ['a'], 'hello', 2
+        a = NSArray.arrayWithArray_(['a'])
+        EXPECTS = '(a)', 'hello', '2'
+        EXPECTS = repr(a), 'hello', '2'
         for obj,expect in zip(TESTS, EXPECTS):
             self.assertEqual(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
 

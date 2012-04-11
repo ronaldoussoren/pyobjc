@@ -10,6 +10,9 @@ import sys
 NSSet = lookUpClass('NSSet')
 NSObject = lookUpClass('NSObject')
 
+if sys.version_info[0] == 2:
+    range = xrange
+
 
 def attrsetter(prop, name, copy):
     if copy:
@@ -299,7 +302,7 @@ class array_proxy (collections.MutableSequence):
         if isinstance(index, slice):
             result = NSMutableIndexSet.alloc().init()
             start, stop, step = index.indices(len(self._wrapped))
-            for i in xrange(start, stop, step):
+            for i in range(start, stop, step):
                 result.addIndex_(i)
 
             return result

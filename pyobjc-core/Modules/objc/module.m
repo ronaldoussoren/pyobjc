@@ -194,7 +194,7 @@ lookUpClass(PyObject* self __attribute__((__unused__)),
 	char* class_name = NULL;
 	Class objc_class;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s:lookUpClass",
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s",
 			keywords, &class_name)) {
 		return NULL;
 	}
@@ -473,6 +473,28 @@ static 	char* keywords[] = { "flag", NULL };
 }
 
 
+PyDoc_STRVAR(setObjCPointerIsError_doc,
+	"setObjCPointerIsError(bool) -> None\n"
+	"\n"
+	"If the argument is True PyObjC will raise an exception when it tries to wrap a C pointer it doesn't know about."
+);
+static PyObject* 
+setObjCPointerIsError(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "value", NULL };
+	PyObject* o;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
+			keywords, &o)) {
+		return NULL;
+	}
+
+	PyObjCPointer_RaiseException = PyObject_IsTrue(o);
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 PyDoc_STRVAR(setVerbose_doc,
 	"setVerbose(bool) -> None\n"
 	"\n"
@@ -533,6 +555,24 @@ static 	char* keywords[] = { NULL };
 	}
 
 	return PyBool_FromLong(PyObjC_VerboseLevel);
+}
+
+PyDoc_STRVAR(getObjCPointerIsError_doc,
+	"getObjCPointerIsError() -> bool\n"
+	"\n"
+	"Returns True if PyObjC raises an exception when it tries to wrap a pointer it doesn't know about."
+);
+static PyObject* 
+getObjCPointerIsError(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "",
+			keywords)) {
+		return NULL;
+	}
+
+	return PyBool_FromLong(PyObjCPointer_RaiseException);
 }
 
 
@@ -1885,9 +1925,11 @@ static PyMethodDef mod_methods[] = {
 	{ "_setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
 	{ "_getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
+	{ "setObjCPointerIsError", (PyCFunction)setObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, setObjCPointerIsError_doc },
 	{ "setUseKVOForSetattr", (PyCFunction)setUseKVOForSetattr, METH_VARARGS|METH_KEYWORDS, setUseKVOForSetattr_doc },
 	{ "setHideProtected", (PyCFunction)setHideProtected, METH_VARARGS|METH_KEYWORDS, setHideProtected_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
+	{ "getObjCPointerIsError", (PyCFunction)getObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, getObjCPointerIsError_doc },
 	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
 	{ "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
 #if PY_MAJOR_VERSION == 2

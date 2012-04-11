@@ -38,7 +38,7 @@ if sys.version_info[0] == 2:
         # one part of the effect of __slots__: don't allow setting of attributes.
         def __setattr__(self, attr, value):
             if attr != '__pyobjc_object__':
-                raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
+                raise AttributeError("'%s' object has no attribute '%s')"%(self.__class__.__name__, attr))
             self.__dict__['__pyobjc_object__'] = value
 
         def __reduce__(self):
@@ -64,7 +64,7 @@ else:
     class OC_PythonLong(int):
 
         def __new__(cls, obj, value):
-            self = long.__new__(cls, value)
+            self = int.__new__(cls, value)
             self.__pyobjc_object__ = obj
             return self
 
@@ -77,11 +77,15 @@ else:
         # one part of the effect of __slots__: don't allow setting of attributes.
         def __setattr__(self, attr, value):
             if attr != '__pyobjc_object__':
-                raise AttributeError, "'%s' object has no attribute '%s')"%(self.__class__.__name__, attr)
+                raise AttributeError("'%s' object has no attribute '%s')"%(self.__class__.__name__, attr))
             self.__dict__['__pyobjc_object__'] = value
 
-        def __reduce__(self):
-            return (long, (long(self),))
+        if sys.version_info[0] == 2:
+            def __reduce__(self):
+                return (long, (long(self),))
+        else:
+            def __reduce__(self):
+                return (int, (int(self),))
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')

@@ -4,11 +4,15 @@ Tests for the proxy of Python numbers
 NOTE: Decimal conversion is not tested, the required proxy is part of 
 the Foundation bindings :-(
 """
+from __future__ import unicode_literals
 import sys, os
 from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.pythonnumber import OC_TestNumber
 import objc
+
+if sys.version_info[0] == 3:
+    unicode = str
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
 try:
@@ -80,7 +84,7 @@ class TestNSNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
-        if sys.maxint == (2 ** 31) -1:
+        if sys.maxsize == (2 ** 31) -1:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
@@ -128,7 +132,7 @@ class TestNSNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
 
-        if sys.maxint == (2 ** 31) -1:
+        if sys.maxsize == (2 ** 31) -1:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551488)
@@ -180,7 +184,7 @@ class TestNSNumber (TestCase):
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithInt_(0))
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"0")
+        self.assertEqual(v, "0")
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(2**60))
         self.assertIsInstance(v, unicode)
@@ -192,7 +196,7 @@ class TestNSNumber (TestCase):
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithDouble_(264.0))
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"264")
+        self.assertEqual(v, "264")
 
 
 class TestPyNumber (TestCase):
@@ -251,7 +255,7 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
-        if sys.maxint == (2 ** 31) -1:
+        if sys.maxsize == (2 ** 31) -1:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
@@ -270,8 +274,11 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 40487)
 
     def testPythonLongConversions(self):
-        v = long(42)
-        self.assertIsInstance(v, long)
+        if sys.version_info[0] == 2:
+            v = long(42)
+            self.assertIsInstance(v, long)
+        else:
+            v = 42
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
@@ -289,8 +296,11 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
         # Negative values
-        v = long(-42)
-        self.assertIsInstance(v, long)
+        if sys.version_info[0] == 2:
+            v = long(-42)
+            self.assertIsInstance(v, long)
+        else:
+            v = -42
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), -42)
@@ -302,7 +312,7 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65494)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967254)
 
-        if sys.maxint == (2 ** 31) -1:
+        if sys.maxsize == (2 ** 31) -1:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967254)
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551574)
@@ -312,8 +322,11 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsDouble_(v), -42.0)
 
         # Overflow
-        v = long(892455)
-        self.assertIsInstance(v, long)
+        if sys.version_info[0] == 2:
+            v = long(892455)
+            self.assertIsInstance(v, long)
+        else:
+            v = 892455
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 39)
@@ -365,7 +378,7 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)
 
-        if sys.maxint == (2 ** 31) -1:
+        if sys.maxsize == (2 ** 31) -1:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4294967169)
         else:
             self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 18446744073709551489)
@@ -404,7 +417,8 @@ class TestPyNumber (TestCase):
 
         self.assertEqual(OC_TestNumber.compareA_andB_(0, 0), NSOrderedSame)
         self.assertEqual(OC_TestNumber.compareA_andB_(0, 0.0), NSOrderedSame)
-        self.assertEqual(OC_TestNumber.compareA_andB_(0, long(0)), NSOrderedSame)
+        if sys.version_info[0] == 2:
+            self.assertEqual(OC_TestNumber.compareA_andB_(0, long(0)), NSOrderedSame)
 
     def testNumberEqual(self):
         self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 1))
@@ -417,12 +431,13 @@ class TestPyNumber (TestCase):
 
         self.assertTrue(OC_TestNumber.number_isEqualTo_(0, 0))
         self.assertTrue(OC_TestNumber.number_isEqualTo_(0, 0.0))
-        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, long(0)))
+        if sys.version_info[0] == 2:
+            self.assertTrue(OC_TestNumber.number_isEqualTo_(0, long(0)))
 
     def testDescription(self):
         v = OC_TestNumber.numberDescription_(0)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"0")
+        self.assertEqual(v, "0")
 
         v = OC_TestNumber.numberDescription_(2**64)
         self.assertIsInstance(v, unicode)
@@ -434,15 +449,15 @@ class TestPyNumber (TestCase):
 
         v = OC_TestNumber.numberDescription_(264.0)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"264.0")
+        self.assertEqual(v, "264.0")
 
         v = OC_TestNumber.numberDescription_(False)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"0")
+        self.assertEqual(v, "0")
 
         v = OC_TestNumber.numberDescription_(True)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"1")
+        self.assertEqual(v, "1")
 
 class TestInteractions (TestCase):
     # Test interactions between Python and NSNumber numbers

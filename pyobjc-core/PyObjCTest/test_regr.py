@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 from PyObjCTest import structargs
 from PyObjCTest import testbndl
@@ -51,10 +52,13 @@ class TestRegressions(TestCase):
         # Check that we generate a warning for unitialized objects that
         # get deallocated
         import sys
-        import StringIO
+        if sys.version_info[0] == 2:
+            from StringIO import StringIO
+        else:
+            from io import StringIO
         warnings.filterwarnings('always',
             category=objc.UninitializedDeallocWarning)
-        sys.stderr = io = StringIO.StringIO()
+        sys.stderr = buf = StringIO()
         try:
             d = NSObject.alloc()
             del d
@@ -64,7 +68,7 @@ class TestRegressions(TestCase):
             sys.stderr = sys.__stderr__
 
         # A warning is three lines: location info, source code, empty line
-        self.assertEqual(len(io.getvalue().split('\n')), 3)
+        self.assertEqual(len(buf.getvalue().split('\n')), 3)
 
     def testOneWayMethods(self):
         # This one should be in test_methods*.py
@@ -107,7 +111,7 @@ class TestRegressions(TestCase):
 
         o = structargs.StructArgClass.alloc().init()
         v = o.compP_aRect_anOp_((1,2), ((3,4),(5,6)), 7)
-        self.assertEqual(v, u"aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
+        self.assertEqual(v, "aP:{1, 2} aR:{{3, 4}, {5, 6}} anO:7")
 
     def testInitialize(self):
         calls=[]

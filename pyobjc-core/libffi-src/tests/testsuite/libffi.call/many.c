@@ -7,7 +7,7 @@
 /* { dg-do run } */
 #include "ffitest.h"
 
-#include <float.h>
+#define FLT_EPSILON 1e-10
 
 static float many(float f1,
 		  float f2,

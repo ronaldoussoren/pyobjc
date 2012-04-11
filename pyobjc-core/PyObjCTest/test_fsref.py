@@ -1,24 +1,12 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
 
 from PyObjCTest.fsref import *
 
-"""
-@interface OC_TestFSRefHelper : NSObject
-{
-        }
-
--(FSRef)fsrefForPath:(NSString*)path;
--(NSString*)pathForFSRef:(in FSRef *)fsref;
--(void)getFSRef:(out FSRef*)fsref forPath:(NSString*)path;
--(NSString*)stringForFSRef:(FSRef)fsref;
-
-
-
-@end
-"""
-
-
+import sys
+if sys.version_info[0] == 3:
+    unicode = str
 
 class TestFSRef (TestCase):
     def testBasicInterface(self):
@@ -27,7 +15,7 @@ class TestFSRef (TestCase):
 
     def testResult(self):
         o = OC_TestFSRefHelper.alloc().init()
-        ref = o.fsrefForPath_(u"/Library")
+        ref = o.fsrefForPath_("/Library")
         self.assertIsInstance(ref, objc.FSRef)
 
         self.assertIsInstance(ref.data, bytes)
@@ -44,31 +32,31 @@ class TestFSRef (TestCase):
 
     def testArg(self):
         o = OC_TestFSRefHelper.alloc().init()
-        ref = o.fsrefForPath_(u"/Library")
+        ref = o.fsrefForPath_("/Library")
         self.assertIsInstance(ref, objc.FSRef)
 
         p = o.stringForFSRef_(ref)
         self.assertIsInstance(p, unicode)
-        self.assertEqual(p, u"/Library")
+        self.assertEqual(p, "/Library")
 
     def testInput(self):
         o = OC_TestFSRefHelper.alloc().init()
-        ref = o.fsrefForPath_(u"/Library")
+        ref = o.fsrefForPath_("/Library")
         self.assertIsInstance(ref, objc.FSRef)
 
         p = o.pathForFSRef_(ref)
         self.assertIsInstance(p, unicode)
-        self.assertEqual(p, u"/Library")
+        self.assertEqual(p, "/Library")
 
     def testOutput(self):
         o = OC_TestFSRefHelper.alloc().init()
-        ref = o.getFSRef_forPath_(None, u"/Library")
+        ref = o.getFSRef_forPath_(None, "/Library")
         self.assertIsInstance(ref, objc.FSRef)
 
         # Verify the fsref contents:
         p = o.stringForFSRef_(ref)
         self.assertIsInstance(p, unicode)
-        self.assertEqual(p, u"/Library")
+        self.assertEqual(p, "/Library")
 
 
 if __name__ == "__main__":

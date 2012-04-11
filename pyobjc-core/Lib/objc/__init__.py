@@ -19,8 +19,8 @@ def _update(g=globals()):
         import copy_reg
 
     import objc._objc as _objc
-    for k,v in _objc.__dict__.iteritems():
-        g.setdefault(k,v)
+    for k in _objc.__dict__:
+        g.setdefault(k, getattr(_objc, k))
 _update()
 del _update
 

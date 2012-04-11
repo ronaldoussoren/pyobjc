@@ -7,7 +7,8 @@
 /* { dg-do run { target i?86-*-cygwin* i?86-*-mingw* } } */
 
 #include "ffitest.h"
-#include <float.h>
+#define FLT_EPSILON 1e-10
+
 
 static float __attribute__((stdcall)) stdcall_many(float f1,
 						   float f2,

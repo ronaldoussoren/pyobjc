@@ -13,18 +13,18 @@ from objc._framework import infoForFramework
 
 # These are the defaults as per man dyld(1)
 #
-DEFAULT_FRAMEWORK_FALLBACK = u':'.join([
-    os.path.expanduser(u"~/Library/Frameworks"),
-    u"/Library/Frameworks",
-    u"/Network/Library/Frameworks",
-    u"/System/Library/Frameworks",
+DEFAULT_FRAMEWORK_FALLBACK = ':'.join([
+    os.path.expanduser("~/Library/Frameworks"),
+    "/Library/Frameworks",
+    "/Network/Library/Frameworks",
+    "/System/Library/Frameworks",
 ])
 
-DEFAULT_LIBRARY_FALLBACK = u':'.join([
-    os.path.expanduser(u"~/lib"),
-    u"/usr/local/lib",
-    u"/lib",
-    u"/usr/lib",
+DEFAULT_LIBRARY_FALLBACK = ':'.join([
+    os.path.expanduser("~/lib"),
+    "/usr/local/lib",
+    "/lib",
+    "/usr/lib",
 ])
 
 def ensure_unicode(s):
@@ -39,8 +39,8 @@ def injectSuffixes(iterator):
         return iterator
     def _inject(iterator=iterator,suffix=suffix):
         for path in iterator:
-            if path.endswith(u'.dylib'):
-                yield path[:-6] + suffix + u'.dylib'
+            if path.endswith('.dylib'):
+                yield path[:-6] + suffix + '.dylib'
             else:
                 yield path + suffix
             yield path
@@ -55,29 +55,29 @@ def dyld_framework(filename, framework_name, version=None):
     def _search():
         spath = ensure_unicode(os.environ.get('DYLD_FRAMEWORK_PATH', None))
         if spath is not None:
-            for path in spath.split(u':'):
+            for path in spath.split(':'):
                 if version:
                     yield os.path.join(
-                        path, framework_name + u'.framework',
-                        u'Versions', version, framework_name
+                        path, framework_name + '.framework',
+                        'Versions', version, framework_name
                     )
                 else:
                     yield os.path.join(
-                        path, framework_name + u'.framework', framework_name
+                        path, framework_name + '.framework', framework_name
                     )
         yield filename
         spath = ensure_unicode(os.environ.get(
             'DYLD_FALLBACK_FRAMEWORK_PATH', DEFAULT_FRAMEWORK_FALLBACK
         ))
-        for path in spath.split(u':'):
+        for path in spath.split(':'):
             if version:
                 yield os.path.join(
-                    path, framework_name + u'.framework', u'Versions',
+                    path, framework_name + '.framework', 'Versions',
                     version, framework_name
                 )
             else:
                 yield os.path.join(
-                    path, framework_name + u'.framework', framework_name
+                    path, framework_name + '.framework', framework_name
                 )
 
 
@@ -94,18 +94,18 @@ def dyld_library(filename, libname):
     def _search():
         spath = ensure_unicode(os.environ.get('DYLD_LIBRARY_PATH', None))
         if spath is not None:
-            for path in spath.split(u':'):
+            for path in spath.split(':'):
                 yield os.path.join(path, libname)
         yield filename
         spath = ensure_unicode(os.environ.get(
             'DYLD_FALLBACK_LIBRARY_PATH', DEFAULT_LIBRARY_FALLBACK
         ))
-        for path in spath.split(u':'):
+        for path in spath.split(':'):
             yield os.path.join(path, libname)
     for f in injectSuffixes(_search()):
         if os.path.exists(f):
             return f
-    raise ValueError, "dylib %s could not be found" % (filename,)
+    raise ValueError("dylib %s could not be found" %(filename,))
 
 # Python version upto (at least) 2.5 do not propertly convert unicode
 # arguments to os.readlink, the code below works around that.
@@ -144,4 +144,4 @@ def dyld_find(filename):
 
 def pathForFramework(path):
     fpath, name, version = infoForFramework(dyld_find(path))
-    return os.path.join(fpath, name + u'.framework')
+    return os.path.join(fpath, name + '.framework')

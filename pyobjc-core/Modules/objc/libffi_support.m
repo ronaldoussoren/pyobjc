@@ -3992,7 +3992,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 	if (rv != FFI_OK) {
 		PyMem_Free(cl_arg_types);
 		PyErr_Format(PyExc_RuntimeError,
-			"Cannot create FFI CIF: err=%d signature=%s", rv, PyObject_REPR(methinfo));
+			"Cannot create FFI CIF: err=%d", rv);
 		return NULL;
 	}
 

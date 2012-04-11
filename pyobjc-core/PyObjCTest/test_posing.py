@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
 import sys
@@ -10,7 +11,7 @@ import sys
 BaseName = 'NSAttributedString'
 BaseClass = objc.lookUpClass(BaseName)
 
-if sys.maxint >= 2 ** 32:
+if sys.maxsize >= 2 ** 32:
     # -poseAsClass: is not supported in 64-bit mode (the functionality is 
     # not present in the 64-bit runtime and will never be because it 
     # conflicts with new functionality such as non-fragile class layouts)
@@ -23,7 +24,7 @@ else:
             class PoseClass(BaseClass):
                 __slots__ = ()  # Don't add instance variables, not even __dict__
                 def testPosingMethod(self):
-                    return u"<PoseClass instance>"
+                    return "<PoseClass instance>"
 
 
             PoseClass.poseAsClass_(BaseClass)
@@ -31,7 +32,7 @@ else:
             # BaseClass still refers to the old class, if we look it up again
             # we get to see the new value. There's not much we can do about that.
             obj = objc.lookUpClass(BaseName).new()
-            self.assertEqual(obj.testPosingMethod(), u"<PoseClass instance>")
+            self.assertEqual(obj.testPosingMethod(), "<PoseClass instance>")
 
             # XXX: next assertion fails because the runtime seems to copy the
             # original class.

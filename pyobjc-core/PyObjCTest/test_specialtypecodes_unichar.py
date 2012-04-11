@@ -7,12 +7,18 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
+from __future__ import unicode_literals
 import weakref
 from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSObject
 
 from PyObjCTest.specialtypecodes import *
 import array
+
+import sys
+if sys.version_info[0] == 3:
+    unichr = chr
+    unicode = str
 
 def setupMetaData():
     objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"UniCharValue",
@@ -88,7 +94,7 @@ class TestTypeCode_UniChar (TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertEqual(o.UniCharValue(), u'a')
+        self.assertEqual(o.UniCharValue(), 'a')
         self.assertEqual(o.UniCharValue(), unichr(55))
         self.assertEqual(o.UniCharValue(), unichr(9243))
 
@@ -107,7 +113,7 @@ class TestTypeCode_UniChar (TestCase):
 
         v = o.UniCharString()
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, u"help");
+        self.assertEqual(v, "help");
 
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -115,27 +121,27 @@ class TestTypeCode_UniChar (TestCase):
         v = o.UniCharArg_andUniCharArg_(unichr(44), unichr(450))
         self.assertEqual(v, (unichr(44), unichr(450)))
 
-        v = o.UniCharArg_andUniCharArg_(u'a', u'b')
-        self.assertEqual(v, (u'a', u'b'))
+        v = o.UniCharArg_andUniCharArg_('a', 'b')
+        self.assertEqual(v, ('a', 'b'))
 
         v = o.UniCharArg_andUniCharArg_('a', 'b')
-        self.assertEqual(v, (u'a', u'b'))
+        self.assertEqual(v, ('a', 'b'))
 
         self.assertRaises(ValueError, o.UniCharArg_andUniCharArg_, 400, 401)
 
     def testStringArgument(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v = o.UniCharStringArg_(u"hello world")
-        self.assertEqual(v, u"hello world")
+        v = o.UniCharStringArg_("hello world")
+        self.assertEqual(v, "hello world")
         self.assertIsInstance(v, unicode)
 
         v = o.UniCharStringArg_("hello world")
-        self.assertEqual(v, u"hello world")
+        self.assertEqual(v, "hello world")
         self.assertIsInstance(v, unicode)
 
-        v = o.UniCharStringArg_([u'a', u'b'])
-        self.assertEqual(v, u"ab")
+        v = o.UniCharStringArg_(['a', 'b'])
+        self.assertEqual(v, "ab")
         self.assertIsInstance(v, unicode)
 
         self.assertRaises(ValueError,  o.UniCharStringArg_, [99, 100, 100, 0])
@@ -143,25 +149,31 @@ class TestTypeCode_UniChar (TestCase):
     def testFixedArrayIn(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v = o.UniCharArrayOf4In_(u"work")
-        self.assertEqual(v, u"work")
+        v = o.UniCharArrayOf4In_("work")
+        self.assertEqual(v, "work")
 
-        v = o.UniCharArrayOf4In_([u'a', u'b', u'c', u'd'])
-        self.assertEqual(v, u'abcd')
+        v = o.UniCharArrayOf4In_(['a', 'b', 'c', 'd'])
+        self.assertEqual(v, 'abcd')
 
-        a = array.array('h', [200, 300, 400, 500])
+        if sys.version_info[0] == 2:
+            a = array.array(b'h', [200, 300, 400, 500])
+        else:
+            a = array.array('h', [200, 300, 400, 500])
         v = o.UniCharArrayOf4In_(a)
-        self.assertEqual(v, u''.join([
+        self.assertEqual(v, ''.join([
             unichr(200), unichr(300), unichr(400), unichr(500)]))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.UniCharArrayOf4Out_(None)
-        self.assertEqual(v, u"boat")
+        self.assertEqual(v, "boat")
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        a = array.array('h', [0] * 4) 
+        if sys.version_info[0] == 2:
+            a = array.array(b'h', [0] * 4) 
+        else:
+            a = array.array('h', [0] * 4) 
         v = o.UniCharArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord('b'))
@@ -172,9 +184,9 @@ class TestTypeCode_UniChar (TestCase):
     def testFixedArrayInOut_(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v, w = o.UniCharArrayOf4InOut_(u"foot")
-        self.assertEqual(v, u"foot")
-        self.assertEqual(w, u"hand")
+        v, w = o.UniCharArrayOf4InOut_("foot")
+        self.assertEqual(v, "foot")
+        self.assertEqual(w, "hand")
 
 if __name__ == "__main__":
     main()

@@ -47,7 +47,8 @@ class funccall (object):
                 result.append(', ')
             result.append(repr(a))
 
-        for k, v in self._kwds.iteritems():
+        for k in self._kwds:
+            v = self.kwds[k]
             if result[-1] != '(':
                 result.append(', ')
             result.append(k)

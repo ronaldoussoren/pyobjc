@@ -392,12 +392,19 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 		doc = NULL;
 		if (!PyArg_ParseTuple(item, 
 #if PY_MAJOR_VERSION == 2
-					"O!s|SO:functionInfo tuple", &PyBaseString_Type, 
+					"O!s|O!O:functionInfo tuple", &PyBaseString_Type, 
 
 #else
-					"Uy|UO:functionInfo tuple", 
+					"Uy|O!O:functionInfo tuple", 
 #endif
-				&name, &signature, &doc, &meta)){
+				&name, &signature, 
+#if PY_MAJOR_VERSION == 2
+				&PyBaseString_Type,
+#else
+				&PyUnicode_Type,
+#endif
+
+				&doc, &meta)){
 			Py_DECREF(seq);
 			return NULL;
 		}

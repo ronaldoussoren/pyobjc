@@ -9,12 +9,17 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
+from __future__ import unicode_literals
 import objc
 from PyObjCTools.TestSupport import *
 
 from PyObjCTest.metadata import *
 import PyObjCTest.test_metadata # to get the right metadata
 import warnings
+
+import sys
+if sys.version_info[0] == 3:
+    unicode = str
 
 
 class TestArrayDefault (TestCase):
@@ -234,7 +239,7 @@ class TestArraysIn (TestCase):
 
         v = m(o, (b"hello", b"world", b"there"))
         self.assertEqual(len(v), 3)
-        self.assertEqual(list(v), [u"hello", u"world", u"there"])
+        self.assertEqual(list(v), ["hello", "world", "there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
         self.assertIsInstance(v[0], unicode)
 
@@ -395,46 +400,46 @@ class TestByReference (TestCase):
         # All arguments present
         r, y, z = m(o, 1, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 3)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 3)
         self.assertEqual(y, 3)
         self.assertEqual(z, -1)
 
         r, y, z = m(o, 1, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 3)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 3)
         self.assertEqual(y, 3)
         self.assertEqual(z, -1)
 
         # Argument 1 is NULL
         r, y, z = m(o, objc.NULL, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 40)
         self.assertEqual(z, -2)
 
         r, y, z = m(o, objc.NULL, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 40)
         self.assertEqual(z, -2)
 
         # Argument 2 is NULL
         r, y, z = m(o, 1, objc.NULL, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, objc.NULL)
         self.assertEqual(z, -1)
 
         # Argument 3 is NULL
         r, y, z = m(o, 1, None, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
 
         r, y, z = m(o, 1, None, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
 

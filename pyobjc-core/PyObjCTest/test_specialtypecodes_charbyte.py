@@ -7,12 +7,17 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
+from __future__ import unicode_literals
 import weakref, objc, sys
 from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSObject
 
 from PyObjCTest.specialtypecodes import *
 import array
+
+if sys.version_info[0] == 3:
+    unichr = chr
+    unicode = str
 
 def setupMetaData():
     objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"byteValue",
@@ -150,9 +155,12 @@ class TestTypeCode_byte (TestCase):
         v = o.byteArrayOf4In_([b'a', b'b', b'c', b'd'])
         self.assertEqual(v, 'abcd')
 
-        a = array.array('B', [200, 150, 80, 20])
+        if sys.version_info[0] == 2:
+            a = array.array(b'B', [200, 150, 80, 20])
+        else:
+            a = array.array('B', [200, 150, 80, 20])
         v = o.byteArrayOf4In_(a)
-        self.assertEqual(v, u''.join([
+        self.assertEqual(v, ''.join([
             unichr(200), unichr(150), unichr(80), unichr(20)]))
 
     def testFixedArrayOut(self):
@@ -162,7 +170,10 @@ class TestTypeCode_byte (TestCase):
         self.assertEqual(v, b"boat")
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        a = array.array('b', [0] * 4) 
+        if sys.version_info[0] == 2:
+            a = array.array(b'b', [0] * 4) 
+        else:
+            a = array.array('b', [0] * 4) 
         v = o.byteArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord('b'))

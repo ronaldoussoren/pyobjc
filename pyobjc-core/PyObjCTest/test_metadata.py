@@ -9,6 +9,7 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
+from __future__ import unicode_literals
 import objc
 from PyObjCTools.TestSupport import *
 import warnings
@@ -16,6 +17,17 @@ import array
 import sys
 
 from PyObjCTest.metadata import *
+
+if sys.version_info[0] == 3:
+    unicode = str
+
+make_array = array.array
+if sys.version_info[0] == 2:
+    def make_array(fmt, *args):
+        # With unicode_literals the first argument to make_array
+        # in the tests below is a unicode string and array.array
+        # in python2 doesn't grog that.
+        return array.array(fmt.encode('ascii'), *args)
 
 def setupMetaData():
     # Note to self: what we think of as the first argument of a method is 
@@ -370,14 +382,14 @@ class TestArraysOut (TestCase):
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
-        a = array.array('i', [0]* 4)
+        a = make_array('i', [0]* 4)
         v = o.fill4Tuple_(a);
         self.assertIs(a, v)
         self.assertEqual(list(a), [0, -1, -8, -27])
 
-        a = array.array('i', [0]* 5)
+        a = make_array('i', [0]* 5)
         self.assertRaises(ValueError, o.fill4Tuple_, a)
-        a = array.array('i', [0]* 3)
+        a = make_array('i', [0]* 3)
         self.assertRaises(ValueError, o.fill4Tuple_, a)
         
     def testNullTerminated(self):
@@ -423,7 +435,7 @@ class TestArraysOut (TestCase):
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
-        a = array.array('i', [0]* 10)
+        a = make_array('i', [0]* 10)
         v = o.fillArray_count_(a, 10);
         self.assertIs(a, v)
         self.assertEqual(list(a), [0, 1, 4, 9, 16, 25, 36, 49, 64, 81 ])
@@ -463,14 +475,14 @@ class TestArraysInOut (TestCase):
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
-        a = array.array('h', [1, 2, 3, 4])
+        a = make_array('h', [1, 2, 3, 4])
         v = o.reverse4Tuple_(a)
         self.assertIs(v, a)
         self.assertEqual(list(a), [4,3,2,1])
 
-        a = array.array('h', [1, 2, 3, 4, 5])
+        a = make_array('h', [1, 2, 3, 4, 5])
         self.assertRaises(ValueError, o.reverse4Tuple_, a)
-        a = array.array('h', [1, 2, 3])
+        a = make_array('h', [1, 2, 3])
         self.assertRaises(ValueError, o.reverse4Tuple_, a)
 
     def testNullTerminated(self):
@@ -533,7 +545,7 @@ class TestArraysInOut (TestCase):
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
 
-        a = array.array('f', [5.0, 7.0, 9.0, 11.0, 13.0])
+        a = make_array('f', [5.0, 7.0, 9.0, 11.0, 13.0])
         v = o.reverseArray_count_(a, 5)
         self.assertIs(a, v)
         self.assertEqual(list(a), [13.0, 11.0, 9.0, 7.0, 5.0])
@@ -550,6 +562,7 @@ class TestArraysInOut (TestCase):
         self.assertEqual(c, 2)
         self.assertEqual(len(v), 2)
         self.assertEqual(list(v),  [4, 3])
+
 
 class TestArraysIn (TestCase):
     def testFixedSize(self):
@@ -570,7 +583,7 @@ class TestArraysIn (TestCase):
         v = o.null4Tuple_(objc.NULL)
         self.assertIsNone(v)
 
-        a = array.array('d', [2.5, 3.5, 4.5, 5.5])
+        a = make_array('d', [2.5, 3.5, 4.5, 5.5])
         v = o.make4Tuple_(a)
         self.assertEqual(list(v), [2.5, 3.5, 4.5, 5.5])
 
@@ -579,7 +592,7 @@ class TestArraysIn (TestCase):
 
         v = o.makeStringArray_((b"hello", b"world", b"there"))
         self.assertEqual(len(v), 3)
-        self.assertEqual(list(v), [u"hello", u"world", u"there"])
+        self.assertEqual(list(v), ["hello", "world", "there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
         self.assertIsInstance(v[0], unicode)
 
@@ -627,7 +640,7 @@ class TestArraysIn (TestCase):
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1,2,3,4])
 
-        a = array.array('i', range(20))
+        a = make_array('i', range(20))
         v = o.makeIntArray_count_(a, 7)
         self.assertEqual(list(v), list(range(7)))
 
@@ -726,46 +739,46 @@ class TestByReference (TestCase):
         # All arguments present
         r, y, z = o.input_output_inputAndOutput_(1, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 3)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 3)
         self.assertEqual(y, 3)
         self.assertEqual(z, -1)
 
         r, y, z = o.input_output_inputAndOutput_(1, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 3)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 3)
         self.assertEqual(y, 3)
         self.assertEqual(z, -1)
 
         # Argument 1 is NULL
         r, y, z = o.input_output_inputAndOutput_(objc.NULL, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 40)
         self.assertEqual(z, -2)
 
         r, y, z = o.input_output_inputAndOutput_(objc.NULL, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 40)
         self.assertEqual(z, -2)
 
         # Argument 2 is NULL
         r, y, z = o.input_output_inputAndOutput_(1, objc.NULL, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, objc.NULL)
         self.assertEqual(z, -1)
 
         # Argument 3 is NULL
         r, y, z = o.input_output_inputAndOutput_(1, None, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
 
         r, y, z = o.input_output_inputAndOutput_(1, None, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(None, map(makeNum, r))), 2)
+        self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
 
@@ -782,8 +795,8 @@ class TestPrintfFormat (TestCase):
         v = o.makeArrayWithFormat_("hello %s", b"world")
         self.assertEqual(list(v), [ "hello %s", "hello world"])
 
-        v = o.makeArrayWithFormat_(u"hello %s", b"world")
-        self.assertEqual(list(v), [ "hello %s", u"hello world"])
+        v = o.makeArrayWithFormat_("hello %s", b"world")
+        self.assertEqual(list(v), [ "hello %s", "hello world"])
 
         self.assertRaises(ValueError, o.makeArrayWithFormat_, "%s")
 
@@ -810,7 +823,7 @@ class TestPrintfFormat (TestCase):
             ]:
 
                 v = o.makeArrayWithCFormat_(fmt, *args)
-                self.assertEqual(map(unicode, list(v)), [fmt.decode('latin'), (fmt.decode('latin')%args)[1:]] )
+                self.assertEqual(list(map(unicode, list(v))), [fmt.decode('latin'), (fmt.decode('latin')%args)[1:]] )
 
         # Insert thousands seperator, the one in the C locale is ''
         v = o.makeArrayWithCFormat_(b"%'d", 20000)
@@ -851,12 +864,12 @@ class TestPrintfFormat (TestCase):
 
         v = o.makeArrayWithCFormat_(b"%S", 'hello world')
         self.assertEqual(list(v), [ "%S", 'hello world'])
-        v = o.makeArrayWithCFormat_(b"%S", u'hello world')
+        v = o.makeArrayWithCFormat_(b"%S", 'hello world')
         self.assertEqual(list(v), [ "%S", 'hello world'])
 
         v = o.makeArrayWithCFormat_(b"%ls", 'hello world')
         self.assertEqual(list(v), [ "%ls", 'hello world'])
-        v = o.makeArrayWithCFormat_(b"%ls", u'hello world')
+        v = o.makeArrayWithCFormat_(b"%ls", 'hello world')
         self.assertEqual(list(v), [ "%ls", 'hello world'])
 
         TEST_TAB = [
@@ -1006,7 +1019,7 @@ class TestBuffers (TestCase):
         self.assertEqual(v.length(), len(b"hello\0world"))
         self.assertEqual(buffer_as_bytes(v), b"hello\0world")
 
-        a = array.array('b', b'foobar monday')
+        a = make_array('b', b'foobar monday')
         v = o.makeDataForBytes_count_(a, len(a))
         self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
@@ -1028,7 +1041,7 @@ class TestBuffers (TestCase):
         self.assertEqual(v.length(), len(b"hello\0world"))
         self.assertEqual(buffer_as_bytes(v), b"hello\0world")
 
-        a = array.array('b', b'foobar monday')
+        a = make_array('b', b'foobar monday')
         v = o.makeDataForBytes_count_(a, len(a))
         self.assertIsInstance(v, objc.lookUpClass("NSData"))
 
@@ -1053,7 +1066,7 @@ class TestBuffers (TestCase):
                 [ x+1 for x in input ],
                 [ x for x in v ])
 
-        input = array.array('b', b"hello\0world")
+        input = make_array('b', b"hello\0world")
         v = o.addOneToBytes_count_(input, len(input))
         self.assertIs(v, input)
         self.assertNotEqual(input[0:5], b"hello")
@@ -1086,7 +1099,7 @@ class TestBuffers (TestCase):
                 [ x+2 for x in input ],
                 [ x for x in v ])
 
-        input = array.array('b', b"hello\0world")
+        input = make_array('b', b"hello\0world")
         v = o.addOneToVoids_count_(input, len(input))
         self.assertIs(v, input)
         self.assertNotEqual(input[0:5], b"hello")
@@ -1105,7 +1118,7 @@ class TestBuffers (TestCase):
         v = o.fillBuffer_count_(None, 44);
         self.assertEqual(v, b'\xfe'*44);
 
-        a = array.array('b', b'0' * 44)
+        a = make_array('b', b'0' * 44)
         v = o.fillBuffer_count_(a, 44);
         self.assertEqual(buffer_as_bytes(v), b'\xfe'*44);
         self.assertIs(v, a)
@@ -1117,9 +1130,9 @@ class TestBuffers (TestCase):
         self.assertEqual(v, b'\xab'*44);
 
         if sys.version_info[0] == 2:
-            a = array.array('c', '0' * 44)
+            a = make_array('c', b'0' * 44)
         else:
-            a = array.array('b', (0,) * 44)
+            a = make_array('b', (0,) * 44)
         v = o.fillVoids_count_(a, 44);
         self.assertEqual(buffer_as_bytes(v), b'\xab'*44);
         self.assertIs(v, a)

@@ -245,10 +245,15 @@ class ObjCLazyModule (module):
                     return d[name]
 
                 if self.__inlinelist is not None:
-                    objc._loadFunctionList(
+                    try:
+                        objc._loadFunctionList(
                             self.__inlinelist, d, func_list, skip_undefined=False)
-                    if name in d:
-                        return d[name]
+                    except objc.error:
+                        pass
+
+                    else:
+                        if name in d:
+                            return d[name]
 
         if self.__expressions:
             if name in self.__expressions:

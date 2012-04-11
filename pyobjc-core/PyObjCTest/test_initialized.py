@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 from PyObjCTest.initialize import OC_TestInitialize
 
@@ -30,7 +31,7 @@ class TestInitializing (TestCase):
         self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEqual(s, u"hello")
+        self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
 
@@ -44,7 +45,7 @@ class TestInitializing (TestCase):
         self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEqual(s, u"hello")
+        self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
 
@@ -58,7 +59,7 @@ class TestInitializing (TestCase):
         self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEqual(s, u"hello")
+        self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
 
@@ -75,7 +76,7 @@ class TestInitializing (TestCase):
         self.assertEqual(v, start)
 
         s = o.dummy()
-        self.assertEqual(s, u"hello")
+        self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
 

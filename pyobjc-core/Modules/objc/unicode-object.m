@@ -204,6 +204,238 @@ PyTypeObject PyObjCUnicode_Type = {
 
 };
 
+
+#if PY_VERSION_HEX >= 0x03030000
+   /* 
+    * Python 3.3 introduced a new, more efficient representation
+    * for unicode objects. 
+    *
+    * This function cannot use the most efficient
+    * representation where the character data is stored in the same
+    * memory block as the object header because PyObjCUnicode adds
+    * more data to the object header, which PyUnicode does not
+    * expect.
+    *
+    * This function therefore creates a "legacy string, ready" (see
+    * unicodeobject.h in the python 3.3 source tree for more information)
+    *
+    *
+    * XXX: I'm not very happy about this implementation, it is too verbose
+    *      and seems to be even more fragile than the implementation for
+    *      older python versions.
+    */
+PyObject* 
+PyObjCUnicode_New(NSString* value)
+{
+	PyObjCUnicodeObject* result;
+        PyASCIIObject *ascii;
+        PyCompactUnicodeObject *compact;
+
+	NSInteger i, length;
+	unichar* volatile characters = NULL;
+	NSRange range;
+
+	PyObjC_DURING
+		length = [value length];
+		characters = PyObject_MALLOC(sizeof(unichar) * (length+1));
+		if (characters == NULL) {
+			PyErr_NoMemory();
+			NS_VALUERETURN(NULL, PyObject*);
+		}
+
+		range = NSMakeRange(0, length);
+
+		[value getCharacters: characters range: range];
+		characters[length] = 0;
+
+	PyObjC_HANDLER
+		if (characters) {
+			PyMem_Free(characters);
+			characters = NULL;
+		}
+		PyObjCErr_FromObjC(localException);
+		NS_VALUERETURN(NULL, PyObject*);
+	PyObjC_ENDHANDLER
+
+	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+	ascii = (PyASCIIObject*)result;
+	compact = (PyCompactUnicodeObject*)result;
+
+	ascii->hash = -1;
+	ascii->wstr = NULL;
+	ascii->length = length;
+
+	ascii->state.compact = 0;
+	ascii->state.ready = 1;
+	ascii->state.interned = SSTATE_NOT_INTERNED;
+
+	compact->utf8_length = 0;
+	compact->utf8 = NULL;
+	compact->wstr_length = 0;
+
+	result->base.data.any = NULL;
+
+	Py_UCS4 maxchar = 0;
+	int nr_surrogates = 0;
+	for (i = 0; i < length; i++) {
+		Py_UCS4 cur = (Py_UCS4)characters[i];
+		if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (
+			i < length - 1) && (
+			Py_UNICODE_IS_LOW_SURROGATE(characters[i+1]))) {
+			Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
+				characters[i],
+				characters[i+1]);
+			i++;
+			nr_surrogates++;
+			if (ch > maxchar) {
+				maxchar = ch;
+			}
+		} else if (cur > maxchar) {
+			maxchar = cur;
+		}
+	}
+	if (maxchar <= 128) {
+		ascii->state.ascii = 1; 
+		ascii->state.kind = PyUnicode_1BYTE_KIND;
+	} else if (maxchar <= 255) {
+		ascii->state.ascii = 0; 
+		ascii->state.kind = PyUnicode_1BYTE_KIND;
+	} else if (maxchar <= 0xFFFF) {
+		ascii->state.ascii = 0; 
+		ascii->state.kind = PyUnicode_2BYTE_KIND;
+	} else {
+		ascii->state.ascii = 0; 
+		ascii->state.kind = PyUnicode_4BYTE_KIND;
+	}
+
+	/* Create storage for the code points and copy the data */
+	result->base.data.any = NULL;
+	if (ascii->state.kind == PyUnicode_1BYTE_KIND) {
+		result->base.data.latin1 = PyObject_MALLOC(sizeof(Py_UCS1) * (length + 1 - nr_surrogates));
+		if (result->base.data.latin1 == NULL) {
+			Py_DECREF((PyObject*)result);
+			PyMem_Free(characters); characters = NULL;
+			PyErr_NoMemory();
+			return NULL;
+		}
+		Py_UCS1* latin1_cur = result->base.data.latin1;
+		for (i = 0; i < length; i++) {
+			if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (
+				i < length - 1) && (
+				Py_UNICODE_IS_LOW_SURROGATE(characters[i+1]))) {
+				Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
+					characters[i],
+					characters[i+1]);
+				*latin1_cur++ =  (Py_UCS1)ch;
+				i++;
+			} else {
+				*latin1_cur++ =  (Py_UCS1)characters[i];
+			}
+		}
+		*latin1_cur = 0;
+		ascii->length = length - nr_surrogates;
+		if (ascii->state.ascii) {
+			/* With ASCII representation the UTF8 representation is 
+			 * also known without further calculation, and MUST be
+			 * filled according to the spec
+			 */
+			compact->utf8_length = length - nr_surrogates;
+			compact->utf8 = (char*)result->base.data.latin1;
+		}
+
+	} else if (ascii->state.kind == PyUnicode_2BYTE_KIND) {
+		if (nr_surrogates == 0) {
+			/* No surrogates and 2BYTE_KIND, this means the unichar buffer 
+			 * can be reused as storage for the python unicode string
+			 */
+			ascii->length = length;
+			result->base.data.ucs2 = (Py_UCS2*)characters;
+			characters = NULL;
+
+		} else {
+			result->base.data.ucs2 = PyObject_MALLOC(sizeof(Py_UCS2) * (length + 1 - nr_surrogates));
+			if (result->base.data.ucs2 == NULL) {
+				Py_DECREF((PyObject*)result);
+				PyMem_Free(characters); characters = NULL;
+				PyErr_NoMemory();
+				return NULL;
+			}
+			Py_UCS2* ucs2_cur = result->base.data.ucs2;
+			for (i = 0; i < length; i++) {
+				if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (
+					i < length - 1) && (
+					Py_UNICODE_IS_LOW_SURROGATE(characters[i+1]))) {
+					Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
+						characters[i],
+						characters[i+1]);
+					*ucs2_cur++ =  (Py_UCS2)ch;
+					i++;
+				} else {
+					*ucs2_cur++ =  (Py_UCS2)characters[i];
+				}
+			}
+			ascii->length = length - nr_surrogates;
+			*ucs2_cur = 0;
+		}
+
+	} else { /* 4BYTE_KIND */
+		result->base.data.ucs4 = PyObject_MALLOC(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
+		if (result->base.data.ucs4 == NULL) {
+			Py_DECREF((PyObject*)result);
+			PyMem_Free(characters); characters = NULL;
+			PyErr_NoMemory();
+			return NULL;
+		}
+
+		Py_UCS4* ucs4_cur = result->base.data.ucs4;
+		for (i = 0; i < length; i++) {
+			if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (
+				i < length - 1) && (
+				Py_UNICODE_IS_LOW_SURROGATE(characters[i+1]))) {
+				Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(
+					characters[i],
+					characters[i+1]);
+
+				if (ch > 0x10ffff) {
+					/* Unicode spec has a maximum code point value and
+					 * Python 3.3 enforces this, keep surrogate pair 
+					 * to avoid an error.
+					 */
+					*ucs4_cur++ =  (Py_UCS4)characters[i];
+				} else {
+					*ucs4_cur++ =  (Py_UCS4)ch;
+					i++;
+				}
+			} else {
+				*ucs4_cur++ =  (Py_UCS4)characters[i];
+			}
+		}
+		*ucs4_cur = 0;
+		ascii->length = length - nr_surrogates;
+	}
+
+
+	if (characters != NULL) {
+		PyObject_DEL(characters); 
+		characters = NULL;
+	}
+
+
+#ifdef Py_DEBUG
+	/* Check that the unicode object is correct */
+	_PyUnicode_CheckConsistency((PyObject*)result, 1);
+#endif
+
+	/* Finally store PyUnicode specific data */
+	result->weakrefs = NULL;
+	result->py_nsstr = NULL;
+	result->nsstr = value;
+	CFRetain(value);
+
+	return (PyObject*)result;
+}
+
+#else /* Python 3.2 and before */
 PyObject* 
 PyObjCUnicode_New(NSString* value)
 {
@@ -309,6 +541,7 @@ PyObjCUnicode_New(NSString* value)
 
 	return (PyObject*)result;
 }
+#endif /* Python 3.2 and before */
 
 NSString*
 PyObjCUnicode_Extract(PyObject* value)

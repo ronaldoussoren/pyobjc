@@ -9,7 +9,7 @@ __all__ = ['infoForFramework']
 #   \2 - framework name
 #   \3 - framework version (optional)
 #
-FRAMEWORK_RE_STR = ur"""(^.*)(?:^|/)(\w+).framework(?:/(?:Versions/([^/]+)/)?\2)?$"""
+FRAMEWORK_RE_STR = r"""(^.*)(?:^|/)(\w+).framework(?:/(?:Versions/([^/]+)/)?\2)?$"""
 FRAMEWORK_RE = None
 
 def infoForFramework(filename):

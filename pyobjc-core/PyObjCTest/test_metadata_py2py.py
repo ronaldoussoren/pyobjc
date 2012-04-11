@@ -447,46 +447,46 @@ class TestByReference_AllArgs (TestCase):
         # All arguments present
         r, y, z = o.input_output_inputAndOutput_(1, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 3)
         self.assertEqual(y, 9)
         self.assertEqual(z, 10)
 
         r, y, z = o.input_output_inputAndOutput_(1, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 3)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 3)
         self.assertEqual(y, 9)
         self.assertEqual(z, 10)
 
         # Argument 1 is NULL
         r, y, z = o.input_output_inputAndOutput_(objc.NULL, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 11)
         self.assertEqual(z, 12)
 
         r, y, z = o.input_output_inputAndOutput_(objc.NULL, None, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 11)
         self.assertEqual(z, 12)
 
         # Argument 2 is NULL
         r, y, z = o.input_output_inputAndOutput_(1, objc.NULL, 2)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 13) # objc.NULL ...
         self.assertEqual(z, 14)
 
         # Argument 3 is NULL
         r, y, z = o.input_output_inputAndOutput_(1, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 15)
         self.assertEqual(z, 16) # objc.NULL ...
 
         r, y, z = o.input_output_inputAndOutput_(1, None, objc.NULL)
         self.assertEqual(len(r), 3)
-        self.assertEqual(len(filter(lambda x: x is not objc.NULL, r)), 2)
+        self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 15)
         self.assertEqual(z, 16) # , objc.NULL)
 

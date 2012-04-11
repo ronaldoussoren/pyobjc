@@ -132,7 +132,8 @@ class DgTestCase (unittest.TestCase):
 
         commandline='MACOSX_DEPLPOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),
-                get_config_var('CC'),
+                #get_config_var('CC'),
+                'clang',
                 CFLAGS, self.filename, ' '.join(libffiobjects),
 		extra_link)
 

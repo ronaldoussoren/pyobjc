@@ -14,6 +14,8 @@
 
 #include "pyobjc.h"
 
+int PyObjCPointer_RaiseException = 0;
+
 static void
 PyObjCPointer_dealloc (PyObject* _self)
 {
@@ -138,6 +140,11 @@ PyObjCPointer_New(void *p, const char *t)
 	const char *typeend = PyObjCRT_SkipTypeSpec (t);
 	PyObjCPointer *self;
 
+	if (PyObjCPointer_RaiseException) {
+		PyErr_Format(PyObjCExc_UnknownPointerError,
+			"pointer of type %s", t);
+		return NULL;
+	}
 	NSLog(@"PyObjCPointer created: at %p of type %s", p, t);
 
 	if (size == -1) {

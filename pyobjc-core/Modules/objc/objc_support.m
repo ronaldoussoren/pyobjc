@@ -1034,7 +1034,12 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 		return NULL;
 	}
 	if (*type == _C_UNICHAR) {
-		return PyUnicode_FromUnicode((Py_UNICODE*)datum, count);
+		int byteorder = 0;
+		return PyUnicode_DecodeUTF16(
+			(const char*)datum,
+			count * 2,
+			NULL,
+			&byteorder);
 	}
 
 	return  PyObjC_CArrayToPython2(type, datum, count, alreadyRetained, alreadyCFRetained);
@@ -1582,8 +1587,12 @@ pythonify_c_value (const char *type, void *datum)
 	switch (*type) {
 	case _C_UNICHAR:
 		{
-			Py_UNICODE	c  = (Py_UNICODE)(*(UniChar*)datum);
-			retobject = PyUnicode_FromUnicode(&c, 1);
+			int byteorder = 0;
+			retobject =  PyUnicode_DecodeUTF16(
+				(const char*)datum,
+				2,
+				NULL,
+				&byteorder);
 		}
 		break;
 
@@ -2214,8 +2223,11 @@ pythonify_c_return_value (const char *type, void *datum)
 
 	case _C_UNICHAR:
 		{
-			Py_UNICODE ch = *(int*)datum;
-			return PyUnicode_FromUnicode(&ch, 1);
+			int byteorder = 0;
+			unichar ch = *(int*)datum;
+			return PyUnicode_DecodeUTF16(
+					(const char*)&ch, 2, NULL, ^byteorder);
+																	                                &byteorder);
 		}
 
 	default:

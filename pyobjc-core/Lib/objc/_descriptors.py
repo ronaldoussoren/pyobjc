@@ -8,6 +8,8 @@ __all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'cal
 
 from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
 import sys, textwrap
+import warnings
+from inspect import getargspec
 
 #
 # Interface builder support.
@@ -37,8 +39,6 @@ def accessor(func, typeSignature=b'@'):
     Return an Objective-C method object that is conformant with key-value coding
     and key-value observing.
     """
-
-    from inspect import getargspec
     args, varargs, varkw, defaults = getargspec(func)
     funcName = func.__name__
     maxArgs = len(args)
@@ -78,7 +78,7 @@ def accessor(func, typeSignature=b'@'):
         return selector(func, signature=b"v@:" + typeSignature)
 
     elif selArgs == 1:
-        if typeSignature == b'@' and func.func_name.startswith('countOf'):
+        if typeSignature == b'@' and func.__name__.startswith('countOf'):
             typeSignature = 'i'
 
         return selector(func, signature=typeSignature + b"@:")
@@ -109,7 +109,6 @@ def namedSelector(name, signature=None):
     return _namedselector
 
 def namedselector(name, signature=None):
-    import warnings
     warnings.warn("use objc.namedSelector instead of objc.namedselector", stacklevel=2)
     return namedSelector(name, signature)
 
@@ -130,7 +129,6 @@ def typedAccessor(typeSignature):
     return _typedAccessor
 
 def Accessor(func):
-    import warnings
     warnings.warn(
         "Use objc.accessor instead of objc.Accessor", DeprecationWarning)
     return accessor(func)
@@ -229,8 +227,8 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
             ''' % dict(name=name, ivar=ivarName))
 
     if readwrite:
-        exec setter in classDict
+        exec(setter, globals(), classDict)
 
-    exec getter in classDict
+    exec(getter, globals(), classDict)
 
     classDict[ivarName] = ivar(type=type)

@@ -15,6 +15,13 @@ from test.test_set import PassThru, check_pass_thru
 test.test_set.empty_set = NSMutableSet()
 
 
+import sys
+if sys.version_info[0] == 3:
+    unicode = str
+    def xrange(*args):
+        return list(range(*args))
+
+
 
 
 class TestSet (test.test_set.TestJointOps, TestCase):
@@ -241,7 +248,7 @@ class TestOnlySetsTuple (test.test_set.TestOnlySetsTuple):
 class TestOnlySetsString (test.test_set.TestOnlySetsString):
     def setUp(self):
         def gen():
-            for i in xrange(0, 10, 2):
+            for i in range(0, 10, 2):
                 yield i
         self.set   = NSMutableSet((1, 2, 3))
         self.other = gen()

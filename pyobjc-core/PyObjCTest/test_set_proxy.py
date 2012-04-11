@@ -9,6 +9,9 @@ import objc
 
 import os
 
+if sys.version_info[0] == 3:
+    unicode = str
+
 onLeopard = int(os.uname()[2].split('.')[0]) >= 9
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")

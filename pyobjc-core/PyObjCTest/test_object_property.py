@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
 from PyObjCTest.fnd import *
@@ -166,7 +167,7 @@ class TestObjectProperty (TestCase):
                 if value == 1:
                     return (True, value, None)
                 else:
-                    return (False, 2, u"snake")
+                    return (False, 2, "snake")
 
 
         o = OCTestObjectProperty4.alloc().init()
@@ -185,7 +186,7 @@ class TestObjectProperty (TestCase):
                 9, 'p1', None)
         self.assertFalse(ok)
         self.assertEqual(value, 2)
-        self.assertEqual(error, u"snake")
+        self.assertEqual(error, "snake")
 
     def testNative(self):
         l = []
@@ -207,9 +208,9 @@ class TestObjectProperty (TestCase):
         o.setValue_forKey_(42, 'p1')
         self.assertEqual(o._p1, 42)
 
-        o._p1 = u"monkey"
+        o._p1 = "monkey"
         v = o.valueForKey_('p1')
-        self.assertEqual(v, u"monkey")
+        self.assertEqual(v, "monkey")
 
         self.assertEqual(l, ["set", "get"])
 

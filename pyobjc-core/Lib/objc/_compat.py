@@ -20,7 +20,7 @@ class Runtime:
         try:
             return objc.lookUpClass(name)
         except objc.nosuchclass_error:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def __eq__(self, other):
         return self is other

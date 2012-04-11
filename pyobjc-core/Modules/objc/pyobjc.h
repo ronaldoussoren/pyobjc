@@ -55,8 +55,16 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include <objc/objc-runtime.h>
 #include <objc/objc.h>
 
-// how do we make this dependent on sizeof(unichar)??
-#if Py_UNICODE_SIZE == 2
+/* Define PyObjC_UNICODE_FAST_PATH when
+ * 1) We're before Python 3.3, and
+ * 2) Py_UNICODE has the same size as unichar
+ *
+ * Python 3.3 has an optimized representation that
+ * makes it impossible to use the "fast path"
+ */
+#if PY_VERSION_HEX >= 0x03030000
+#undef PyObjC_UNICODE_FAST_PATH
+#elif Py_UNICODE_SIZE == 2
 #define PyObjC_UNICODE_FAST_PATH
 #else
 #error "Py_UNICODE_SIZE != 2 is not supported"

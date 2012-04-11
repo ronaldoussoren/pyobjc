@@ -15,6 +15,7 @@ PyObject* PyObjCExc_UnInitDeallocWarning;
 PyObject* PyObjCExc_ObjCRevivalWarning;
 PyObject* PyObjCExc_LockError;
 PyObject* PyObjCExc_BadPrototypeError;
+PyObject* PyObjCExc_UnknownPointerError;
 
 
 
@@ -34,6 +35,7 @@ PyObjCUtil_Init(PyObject* module)
 	NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning", PyExc_Warning);
 	NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
 	NEW_EXC(PyObjCExc_BadPrototypeError, "BadPrototypeError", PyObjCExc_Error);
+	NEW_EXC(PyObjCExc_UnknownPointerError, "UnknownPointerError", PyObjCExc_Error);
 
 	return 0;
 }
@@ -1031,11 +1033,8 @@ PyObjC_CArrayToPython(
 	}
 
 	if (*elementType == _C_UNICHAR) {
-#if defined(PyObjC_UNICODE_FAST_PATH)
-		result = PyUnicode_FromUnicode((Py_UNICODE*)array, size);
-#else
-#		error "Sorry, Wide Unicode builds not supported at the moment"	
-#endif			
+		int byteorder = 0;
+		result = PyUnicode_DecodeUTF16(array, size*2, NULL, &byteorder);
 		return result;
 	}
 
@@ -1147,11 +1146,8 @@ PyObjC_CArrayToPython2(
 		}
 	}
 	if (*elementType == _C_UNICHAR) {
-#if defined(PyObjC_UNICODE_FAST_PATH)
-		result = PyUnicode_FromUnicode((Py_UNICODE*)array, size);
-#else
-#		error "Sorry, Wide Unicode builds not supported at the moment"	
-#endif			
+		int byteorder = 0;
+		result = PyUnicode_DecodeUTF16(array, size*2, NULL, &byteorder);
 		return result;
 	}
 

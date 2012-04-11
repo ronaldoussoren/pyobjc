@@ -33,6 +33,7 @@ NOTES:
 - See also testbndl.m, the implementation there must be synchronized
   with this file.
 """
+from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
 import sys
@@ -95,7 +96,12 @@ def makeCFloat(value):
     C floats and doubles have a different representation, this function returns
     the result of converting a python float (== C double) to a C float and back.
     """
-    return struct.unpack('f',struct.pack('f', value))[0]
+    if sys.version_info[0] == 2:
+        struct_fmt = b'f'
+    else:
+        struct_fmt = 'f'
+
+    return struct.unpack(struct_fmt,struct.pack(struct_fmt, value))[0]
 
 
 class PyOCTestSimpleReturns(TestCase):
@@ -104,17 +110,17 @@ class PyOCTestSimpleReturns(TestCase):
     #
     def testClsLongLong(self):
         OC_TestClass1.clsReset()
-        self.assertEqual(OC_TestClass1.longlongClsFunc(), -(1L << 60))
+        self.assertEqual(OC_TestClass1.longlongClsFunc(), -(1 << 60))
         self.assertEqual(OC_TestClass1.longlongClsFunc(), -42)
         self.assertEqual(OC_TestClass1.longlongClsFunc(), 0)
         self.assertEqual(OC_TestClass1.longlongClsFunc(), 42)
-        self.assertEqual(OC_TestClass1.longlongClsFunc(), (1L << 60))
+        self.assertEqual(OC_TestClass1.longlongClsFunc(), (1 << 60))
 
     def testClsULongLong(self):
         OC_TestClass1.clsReset()
         self.assertEqual(OC_TestClass1.ulonglongClsFunc(), 0)
         self.assertEqual(OC_TestClass1.ulonglongClsFunc(), 42)
-        self.assertEqual(OC_TestClass1.ulonglongClsFunc(), (1L << 63))
+        self.assertEqual(OC_TestClass1.ulonglongClsFunc(), (1 << 63))
 
     def testClsLong(self):
         OC_TestClass1.clsReset()
@@ -204,18 +210,18 @@ class PyOCTestSimpleReturns(TestCase):
     def testLongLong(self):
         obj = OC_TestClass1.new()
         obj.reset()
-        self.assertEqual(obj.longlongFunc(), -(1L << 60))
+        self.assertEqual(obj.longlongFunc(), -(1 << 60))
         self.assertEqual(obj.longlongFunc(), -42)
         self.assertEqual(obj.longlongFunc(), 0)
         self.assertEqual(obj.longlongFunc(), 42)
-        self.assertEqual(obj.longlongFunc(), (1L << 60))
+        self.assertEqual(obj.longlongFunc(), (1 << 60))
 
     def testULongLong(self):
         obj = OC_TestClass1.new()
         obj.reset()
         self.assertEqual(obj.ulonglongFunc(), 0)
         self.assertEqual(obj.ulonglongFunc(), 42)
-        self.assertEqual(obj.ulonglongFunc(), (1L << 63))
+        self.assertEqual(obj.ulonglongFunc(), (1 << 63))
 
     def testLong(self):
         obj = OC_TestClass1.new()
@@ -333,29 +339,29 @@ class PyOCTestSimpleArguments(TestCase):
     def testLongLong(self):
         self.assertEqual(self.obj.longlongArg_(0), 0)
         self.assertEqual(self.obj.longlongArg_(10), 5)
-        self.assertEqual(self.obj.longlongArg_(10L), 5)
-        self.assertEqual(self.obj.longlongArg_(1L << 60), (1L << 59))
+        self.assertEqual(self.obj.longlongArg_(10), 5)
+        self.assertEqual(self.obj.longlongArg_(1 << 60), (1 << 59))
         self.assertEqual(self.obj.longlongArg_(-10), -5)
-        self.assertEqual(self.obj.longlongArg_(-10L), -5)
-        self.assertEqual(self.obj.longlongArg_(-1L << 60), -(1L << 59))
+        self.assertEqual(self.obj.longlongArg_(-10), -5)
+        self.assertEqual(self.obj.longlongArg_(-1 << 60), -(1 << 59))
 
         # TODO: Out of range values
 
     def testULongLong(self):
         self.assertEqual(self.obj.ulonglongArg_(0), 0)
         self.assertEqual(self.obj.ulonglongArg_(10), 5)
-        self.assertEqual(self.obj.ulonglongArg_(10L), 5)
-        self.assertEqual(self.obj.ulonglongArg_(1L << 60), (1L << 59))
+        self.assertEqual(self.obj.ulonglongArg_(10), 5)
+        self.assertEqual(self.obj.ulonglongArg_(1 << 60), (1 << 59))
 
         # TODO: Out of range values
 
     def testLong(self):
         self.assertEqual(self.obj.longArg_(0), 0)
         self.assertEqual(self.obj.longArg_(10), 5)
-        self.assertEqual(self.obj.longArg_(10L), 5)
+        self.assertEqual(self.obj.longArg_(10), 5)
         self.assertEqual(self.obj.longArg_(1 << 30), (1 << 29))
         self.assertEqual(self.obj.longArg_(-10), -5)
-        self.assertEqual(self.obj.longArg_(-10L), -5)
+        self.assertEqual(self.obj.longArg_(-10), -5)
         self.assertEqual(self.obj.longArg_(-1 << 30), -(1 << 29))
 
         # TODO: Out of range values
@@ -363,7 +369,7 @@ class PyOCTestSimpleArguments(TestCase):
     def testULong(self):
         self.assertEqual(self.obj.ulongArg_(0), 0)
         self.assertEqual(self.obj.ulongArg_(10), 5)
-        self.assertEqual(self.obj.ulongArg_(10L), 5)
+        self.assertEqual(self.obj.ulongArg_(10), 5)
         self.assertEqual(self.obj.ulongArg_(1 << 30), (1 << 29))
 
         # TODO: Out of range values
@@ -371,38 +377,38 @@ class PyOCTestSimpleArguments(TestCase):
     def testInt(self):
         self.assertEqual(self.obj.intArg_(0), 0)
         self.assertEqual(self.obj.intArg_(10), 5)
-        self.assertEqual(self.obj.intArg_(10L), 5)
+        self.assertEqual(self.obj.intArg_(10), 5)
         self.assertEqual(self.obj.intArg_(1 << 30), (1 << 29))
         self.assertEqual(self.obj.intArg_(-10), -5)
-        self.assertEqual(self.obj.intArg_(-10L), -5)
+        self.assertEqual(self.obj.intArg_(-10), -5)
         self.assertEqual(self.obj.intArg_(-1 << 30), -(1 << 29))
 
         self.assertEqual(self.obj.intArg_(10.0), 5)
 
-        self.assertRaises(ValueError, self.obj.intArg_, long(sys.maxint)+1)
-        self.assertRaises(ValueError, self.obj.intArg_, -long(sys.maxint)-2)
-        self.assertRaises(ValueError, self.obj.intArg_, -float(sys.maxint)-2)
+        self.assertRaises(ValueError, self.obj.intArg_, sys.maxsize+1)
+        self.assertRaises(ValueError, self.obj.intArg_, -sys.maxsize-2)
+        self.assertRaises(ValueError, self.obj.intArg_, -float(sys.maxsize)-2)
 
     def testUInt(self):
         self.assertEqual(self.obj.uintArg_(0), 0)
         self.assertEqual(self.obj.uintArg_(10), 5)
-        self.assertEqual(self.obj.uintArg_(10L), 5)
+        self.assertEqual(self.obj.uintArg_(10), 5)
         self.assertEqual(self.obj.uintArg_(1 << 30), (1 << 29))
 
         self.assertEqual(self.obj.uintArg_(10.0), 5)
 
         self.assertRaises(ValueError, self.obj.uintArg_, -5)
-        self.assertRaises(ValueError, self.obj.uintArg_, -5L)
-        self.assertRaises(ValueError, self.obj.uintArg_, 1+2*(long(sys.maxint)+1))
+        self.assertRaises(ValueError, self.obj.uintArg_, -5)
+        self.assertRaises(ValueError, self.obj.uintArg_, 1+2*(sys.maxsize+1))
 
 
     def testShort(self):
         self.assertEqual(self.obj.shortArg_(0), 0)
         self.assertEqual(self.obj.shortArg_(10), 5)
-        self.assertEqual(self.obj.shortArg_(10L), 5)
+        self.assertEqual(self.obj.shortArg_(10), 5)
         self.assertEqual(self.obj.shortArg_(1 << 14), (1 << 13))
         self.assertEqual(self.obj.shortArg_(-10), -5)
-        self.assertEqual(self.obj.shortArg_(-10L), -5)
+        self.assertEqual(self.obj.shortArg_(-10), -5)
         self.assertEqual(self.obj.shortArg_(-(1 << 14)), -(1 << 13))
 
         self.assertEqual(self.obj.shortArg_(10.0), 5)
@@ -410,13 +416,13 @@ class PyOCTestSimpleArguments(TestCase):
         # Out of range arguments, assumes a short is 16 bits
         self.assertRaises(ValueError, self.obj.shortArg_, -(1<<16)-1)
         self.assertRaises(ValueError, self.obj.shortArg_, 1<<16)
-        self.assertRaises(ValueError, self.obj.shortArg_, -(1L<<16)-1)
-        self.assertRaises(ValueError, self.obj.shortArg_, 1L<<16)
+        self.assertRaises(ValueError, self.obj.shortArg_, -(1<<16)-1)
+        self.assertRaises(ValueError, self.obj.shortArg_, 1<<16)
 
     def testUShort(self):
         self.assertEqual(self.obj.ushortArg_(0), 0)
         self.assertEqual(self.obj.ushortArg_(10), 5)
-        self.assertEqual(self.obj.ushortArg_(10L), 5)
+        self.assertEqual(self.obj.ushortArg_(10), 5)
         self.assertEqual(self.obj.ushortArg_(1 << 14), (1 << 13))
 
         self.assertEqual(self.obj.ushortArg_(10.0), 5)
@@ -425,15 +431,15 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertRaises(ValueError, self.obj.ushortArg_, -5)
         self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
         self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
-        self.assertRaises(ValueError, self.obj.ushortArg_, -5L)
-        self.assertRaises(ValueError, self.obj.ushortArg_, -(1L<<16)-1)
-        self.assertRaises(ValueError, self.obj.ushortArg_, 1L<<16)
+        self.assertRaises(ValueError, self.obj.ushortArg_, -5)
+        self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
+        self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
 
 
     def testChar(self):
         self.assertEqual(self.obj.charArg_(0), (0))
         self.assertEqual(self.obj.charArg_(10), (5))
-        self.assertEqual(self.obj.charArg_(10L), (5))
+        self.assertEqual(self.obj.charArg_(10), (5))
         self.assertEqual(self.obj.charArg_(1 << 6), (1 << 5))
         self.assertEqual(self.obj.charArg_(b'\x00'), 0x00)
         self.assertEqual(self.obj.charArg_(b'\x10'), int(ord(b'\x10')/2))
@@ -443,7 +449,7 @@ class PyOCTestSimpleArguments(TestCase):
     def testUChar(self):
         self.assertEqual(self.obj.ucharArg_(0), 0)
         self.assertEqual(self.obj.ucharArg_(10), 5)
-        self.assertEqual(self.obj.ucharArg_(10L), 5)
+        self.assertEqual(self.obj.ucharArg_(10), 5)
         self.assertEqual(self.obj.ucharArg_(1 << 7), (1 << 6))
         self.assertEqual(self.obj.ucharArg_(b'\x00'), 0)
         self.assertEqual(self.obj.ucharArg_(b'\x10'), int(ord(b'\x10')/2))
@@ -454,21 +460,21 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertRaises(ValueError, self.obj.ucharArg_, -5)
         self.assertRaises(ValueError, self.obj.ucharArg_, -256)
         self.assertRaises(ValueError, self.obj.ucharArg_, 256)
-        self.assertRaises(ValueError, self.obj.ucharArg_, -5L)
-        self.assertRaises(ValueError, self.obj.ucharArg_, -256L)
-        self.assertRaises(ValueError, self.obj.ucharArg_, 256L)
+        self.assertRaises(ValueError, self.obj.ucharArg_, -5)
+        self.assertRaises(ValueError, self.obj.ucharArg_, -256)
+        self.assertRaises(ValueError, self.obj.ucharArg_, 256)
 
     def testCharp(self):
         self.assertEqual(self.obj.charpArg_(b"hello world"), b'dlrow olleh')
 
-        self.assertRaises(ValueError, self.obj.charpArg_, 256L)
-        self.assertRaises(ValueError, self.obj.charpArg_, u"hello world")
+        self.assertRaises(ValueError, self.obj.charpArg_, 256)
+        self.assertRaises(ValueError, self.obj.charpArg_, "hello world")
 
     def testIDPython(self):
         # Test a Python object as the argument
-        s = self.obj.idArg_(u"hello")
+        s = self.obj.idArg_("hello")
         self.assertEqual(len(s), 1)
-        self.assertEqual(s[0], u"hello")
+        self.assertEqual(s[0], "hello")
 
     def testIDOC(self):
         # Test an Objective-C object as the argument
@@ -479,7 +485,7 @@ class PyOCTestSimpleArguments(TestCase):
         #o = c.hostWithAddress_('127.0.0.1')
 
         c = objc.lookUpClass("NSScanner")
-        o = c.scannerWithString_(u"hello world")
+        o = c.scannerWithString_("hello world")
         s = self.obj.idArg_(o)
         self.assertEqual(len(s), 1)
         self.assertIs(s[0], o)
@@ -487,7 +493,7 @@ class PyOCTestSimpleArguments(TestCase):
     def testStruct1(self):
         self.assertEqual(self.obj.dummyArg_((-1, 1)), (-2, 2))
 
-        self.assertRaises(TypeError, self.obj.dummyArg_, 256L)
+        self.assertRaises(TypeError, self.obj.dummyArg_, 256)
         self.assertRaises(ValueError, self.obj.dummyArg_, (-1,))
         self.assertRaises(ValueError, self.obj.dummyArg_, (-1,1,2))
 
@@ -626,11 +632,11 @@ class PyOCTestByReferenceArguments(TestCase):
 
     def testLongLongOut(self):
         self.obj.reset()
-        self.assertEqual(self.obj.passOutLongLong_(None), -(1L << 60))
+        self.assertEqual(self.obj.passOutLongLong_(None), -(1 << 60))
         self.assertEqual(self.obj.passOutLongLong_(None), -42)
         self.assertEqual(self.obj.passOutLongLong_(None), 0)
         self.assertEqual(self.obj.passOutLongLong_(None), 42)
-        self.assertEqual(self.obj.passOutLongLong_(None), (1L << 60))
+        self.assertEqual(self.obj.passOutLongLong_(None), (1 << 60))
 
     def testLongLongInOut(self):
         self.assertEqual(self.obj.passInOutLongLong_(10), 52)
@@ -644,7 +650,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.obj.reset()
         self.assertEqual(self.obj.passOutULongLong_(None), 0)
         self.assertEqual(self.obj.passOutULongLong_(None), 42)
-        self.assertEqual(self.obj.passOutULongLong_(None), (1L << 63))
+        self.assertEqual(self.obj.passOutULongLong_(None), (1 << 63))
 
     def testULongLongInOut(self):
         self.assertEqual(self.obj.passInOutULongLong_(10), 52)
@@ -726,14 +732,14 @@ SHORT_NUMBERS=[ -32768, -42, 0, 32767, 32768, "hello", None ]
 USHORT_NUMBERS=[ 0, 42, 65535, 65536, "hello", None ]
 INT_NUMBERS=[ -2147483648, -42, 0, 2147483647, 2147483648, "hello", None ]
 UINT_NUMBERS=[ 0, 42, 4294967295, 4294967296, "hello", None ]
-LONG_NUMBERS=[ -2147483648, -42, 0, 2147483647, sys.maxint+1, "hello", None ]
-ULONG_NUMBERS=[ 0, 42, 4294967295L, 2*(sys.maxint+1), "hello", None ]
-LONGLONG_NUMBERS=[ -9223372036854775808L, -42, 0, 42, 9223372036854775807L, 9223372036854775808L, "hello", None ]
-ULONGLONG_NUMBERS=[0, 42, 18446744073709551615L, 18446744073709551616L, "hello", None ]
+LONG_NUMBERS=[ -2147483648, -42, 0, 2147483647, sys.maxsize+1, "hello", None ]
+ULONG_NUMBERS=[ 0, 42, 4294967295, 2*(sys.maxsize+1), "hello", None ]
+LONGLONG_NUMBERS=[ -9223372036854775808, -42, 0, 42, 9223372036854775807, 9223372036854775808, "hello", None ]
+ULONGLONG_NUMBERS=[0, 42, 18446744073709551615, 18446744073709551616, "hello", None ]
 
 FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
 DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
-OBJECTS = [ u"hello", 1.0, range(4), lambda x: 10 ]
+OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
 DUMMY_OBJECTS = [ (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
 DUMMY2_OBJECTS = [ ((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
 POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
@@ -1249,16 +1255,16 @@ class OCPyTestSimpleArguments(TestCase):
     def testCLongLong(self):
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(0, self.ocobj), 0)
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(10, self.ocobj), 20)
-        self.assertEqual(self.obj.callInstanceLongLongArg_on_(1L << 60, self.ocobj), 1L << 61)
+        self.assertEqual(self.obj.callInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61)
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(-10, self.ocobj), -20)
-        self.assertEqual(self.obj.callInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
+        self.assertEqual(self.obj.callInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61))
 
     def testILongLong(self):
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(0, self.ocobj), 0)
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(10, self.ocobj), 20)
-        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(1L << 60, self.ocobj), 1L << 61)
+        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61)
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(-10, self.ocobj), -20)
-        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(-(1L << 60), self.ocobj), -(1L << 61))
+        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61))
 
 if __name__ == '__main__':
     main()

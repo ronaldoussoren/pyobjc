@@ -13,6 +13,9 @@ from  PyObjCTest import ctests
 names = [ x for x in dir (ctests) if not x.startswith('_') ]
 methods = {}
 
+def do_exec(value, locals, globals):
+
+    exec(value, locals, globals)
 
 def make_test(name):
     """
@@ -36,10 +39,10 @@ def make_test(name):
 
         return test_CheckNSInvoke
 
-    exec  """\
+    do_exec("""\
 def test_%s(self):
     meth()
-"""%(name,) in result
+"""%(name,), result, result)
 
     return result['test_%s'%(name,)]
 

@@ -7,6 +7,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- Updated Python support. With this release PyObjC supports Python 2.6 and later,
+  including Python 3.3 (which has a completely new representation for unicode strings)
+
+  NOTE: Support for 3.3 is very much work in progress right now, there have
+  been changes for the new unicode representation, but more changes are required.
+  
+
+- Add ``objc.setObjCPointerIsError`` and ``objc.getObjCPointerIsError``.
+  
+  By default PyObjC will create a ``PyObjCPointer`` object when it tries
+  to convert a pointer it doesn't know about to Python. These values are
+  fairly useless and obvious an indication that an API is wrapped improperly.
+
+  With ``objc.setObjCPointerIsError(True)`` you can tell the bridge to
+  raise an exception instead of creating these values.
+
 - -[OC_PythonNumber compare:] calls super when the other value is
   an NSNumber and the Python value can be represented using a basic C 
   type.
