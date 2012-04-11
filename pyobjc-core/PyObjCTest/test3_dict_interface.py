@@ -287,6 +287,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
         d = self.createDictionary(a=1, b=2)
         k = d.keys()
 
+
         self.assertIn('a', d)
         self.assertIn('b', d)
         self.assertIn('a', k)

@@ -12,6 +12,10 @@ NSMutableArray = objc.lookUpClass('NSMutableArray')
 class ArrayTests (seq_tests.CommonTest):
     type2test = NSArray
 
+    @onlyIf(0, "Not relevant for NSArray")
+    def test_pickle(self):
+        pass
+
     def test_constructors(self):
 
         self.assertEqual(NSArray(), ())
@@ -104,6 +108,14 @@ class ArrayTests (seq_tests.CommonTest):
 
 class MutableArrayTest (list_tests.CommonTest):
     type2test = NSMutableArray
+
+    @onlyIf(0, "test irrelevant for NSMutableArray")
+    def test_copy(self):
+        pass
+
+    @onlyIf(0, "Not relevant for NSArray")
+    def test_pickle(self):
+        pass
 
     def test_init(self):
         # Removed tests that are not relevant

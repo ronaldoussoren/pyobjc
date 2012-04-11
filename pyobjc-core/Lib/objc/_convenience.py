@@ -182,10 +182,16 @@ def get_objectForKey_(self, key, dflt=None):
 
 CONVENIENCE_METHODS[b'objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey_),
-    ('has_key', has_key_objectForKey_),
     ('get', get_objectForKey_),
     ('__contains__', has_key_objectForKey_),
 )
+if sys.version_info[0] == 2:
+    CONVENIENCE_METHODS[b'objectForKey:'] += (
+        ('has_key', has_key_objectForKey_),
+    )
+
+
+
 
 def __delitem__removeObjectForKey_(self, key):
     self.removeObjectForKey_(container_wrap(key))
@@ -266,8 +272,11 @@ CONVENIENCE_METHODS[b'count'] = (
     ('__len__', lambda self: self.count()),
 )
 
+def containsObject_has_key(self, elem):
+    return bool(self.containsObject_(container_wrap(elem)))
+
 CONVENIENCE_METHODS[b'containsObject:'] = (
-    ('__contains__', lambda self, elem: bool(self.containsObject_(container_wrap(elem)))),
+    ('__contains__', containsObject_has_key),
 )
 
 
@@ -829,7 +838,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
         return True
 
-    class nsdict_view (object):
+    class nsdict_view (collections.Set):
         __slots__ = ()
 
         def __eq__(self, other):
@@ -927,7 +936,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             result.symmetric_difference_update(other)
             return result
     
-    collections.Set.register(nsdict_view)
+    #collections.Set.register(nsdict_view)
 
     class nsdict_keys(nsdict_view):
         __slots__=('__value')
@@ -936,7 +945,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
         def __repr__(self):
             keys = list(self.__value)
-            keys.sort()
+            #keys.sort()
 
             return "<nsdict_keys({0})>".format(keys)
             
@@ -1081,6 +1090,22 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('keys', lambda self: nsdict_keys(self)),
             ('values', lambda self: nsdict_values(self)),
             ('items', lambda self: nsdict_items(self)),
+
+            # Explicitly add these methods, instead of relying
+            # on the selector based selection. 
+            #
+            # Primary reason: turns out at least the chosen
+            # implementation for __contains__ depends on dict
+            # iteration order, and one of the implementation doesn't 
+            # work for NSDictionary.
+            #
+            # In the slightly longer run all python API 
+            # implementations will be added explictly to 
+            # classes because of this, and because this allows
+            # for a faster implementation of method dispatch.
+            ('__getitem__', __getitem__objectForKey_),
+            ('get', get_objectForKey_),
+            ('__contains__', has_key_objectForKey_),
         )
 
         CLASS_METHODS['NSMutableDictionary'] = (
@@ -1096,6 +1121,10 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('keys', lambda self: self.allKeys()),
             ('items', lambda self: dictItems(self)),
             ('values', lambda self: self.allValues()),
+            ('__getitem__', __getitem__objectForKey_),
+            ('get', get_objectForKey_),
+            ('__contains__', has_key_objectForKey_),
+            ('has_key', has_key_objectForKey_),
         )
 
     CLASS_METHODS['NSDictionary'] += (
