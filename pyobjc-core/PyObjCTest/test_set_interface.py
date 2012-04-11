@@ -34,6 +34,7 @@ class TestSet (test.test_set.TestJointOps, TestCase):
     def test_do_not_rehash_dict_keys(self): pass
     def test_badcmp(self): pass
     def test_subclass_with_custom_hash(self): pass
+    def test_iterator_pickling(self): pass
 
     def test_deepcopy(self):
         # XXX: is it possible to get this to work?
@@ -135,6 +136,7 @@ class TestMutableSet (TestSet, test.test_set.TestSet):
     def test_init(self): pass
     def test_hash(self): pass
     def test_weakref(self): pass
+    def test_iterator_pickling(self): pass
 
 class TestBasicOpsEmpty (test.test_set.TestBasicOps):
     def setUp(self):

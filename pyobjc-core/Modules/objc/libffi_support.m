@@ -3447,14 +3447,10 @@ PyObjCFFI_BuildResult(
 							}
 
 							if (*resttype == _C_UNICHAR) {
-								v = PyUnicode_FromUnicode(NULL, count);
+								int byteorder = 0;
+								v = PyUnicode_DecodeUTF16(
+									arg, count*2, NULL, &byteorder);
 								if (!v) goto error_cleanup;
-
-								Py_ssize_t j;
-								Py_UNICODE* buffer = PyUnicode_AsUnicode(v);
-								for (j = 0; j < count; j++) {
-									buffer[j] = ((UniChar*)arg)[j];
-								}
 
 							} else {
 								v = PyObjC_CArrayToPython2(resttype, 
@@ -3501,14 +3497,10 @@ PyObjCFFI_BuildResult(
 							if (count == -1 && PyErr_Occurred()) goto error_cleanup;
 
 							if (*resttype == _C_UNICHAR) {
-								v = PyUnicode_FromUnicode(NULL, count);
+								int byteorder = 0;
+								v = PyUnicode_DecodeUTF16(
+									arg, count*2, NULL, &byteorder);
 								if (!v) goto error_cleanup;
-
-								Py_ssize_t j;
-								Py_UNICODE* buffer = PyUnicode_AsUnicode(v);
-								for (j = 0; j < count; j++) {
-									buffer[j] = ((UniChar*)arg)[j];
-								}
 
 							} else {
 								v = PyObjC_CArrayToPython2(

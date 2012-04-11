@@ -777,6 +777,22 @@ PyObjC_PythonToCArray(
 			return -1;
 		}
 
+#if PY_VERSION_HEX >= 0x03030000
+		*bufobj = _PyUnicode_EncodeUTF16(
+			pythonList, NULL, 
+#ifdef WORDS_BIGENDIAN
+			1
+#else
+			-1
+#endif
+		);
+		if (*bufobj == NULL) {
+			return -1;
+		}
+		*array = PyBytes_AsString(*bufobj);
+		return SHOULD_IGNORE;
+
+#else	/* Python before 3.3 */
 		if (writable) {
 			*array = PyMem_Malloc(*size * sizeof(UniChar));
 			memcpy(*array, PyUnicode_AsUnicode(pythonList), *size * sizeof(UniChar));
@@ -787,6 +803,7 @@ PyObjC_PythonToCArray(
 			Py_INCREF(pythonList);
 			return SHOULD_IGNORE;
 		}
+#endif  /* Python before 3.3 */
 #if PY_MAJOR_VERSION == 2
 	} else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {
 		PyObject* u = PyUnicode_Decode(
