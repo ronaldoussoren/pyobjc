@@ -789,8 +789,18 @@ PyObjC_PythonToCArray(
 		if (*bufobj == NULL) {
 			return -1;
 		}
-		*array = PyBytes_AsString(*bufobj);
-		return SHOULD_IGNORE;
+
+		/* XXX: Update API protocol to make the extra copy not necessary 
+		 * Cannot use the code at the end because 'buffer' is assumed to be
+		 * the value to return to the python caller.
+		 */
+		*array = PyMem_Malloc(PyBytes_Size(*bufobj));
+		memcpy(*array, PyBytes_AsString(*bufobj), PyBytes_Size(*bufobj));
+		Py_DECREF(*bufobj);
+		*bufobj = NULL;
+		return SHOULD_FREE;
+
+		/* *array = PyBytes_AsString(*bufobj); return SHOULD_IGNORE*/
 
 #else	/* Python before 3.3 */
 		if (writable) {

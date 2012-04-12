@@ -3445,8 +3445,9 @@ PyObjCFFI_BuildResult(
 							} else {
 								count = methinfo->argtype[i].arrayArg;
 							}
-
+							
 							if (*resttype == _C_UNICHAR) {
+								
 								int byteorder = 0;
 								v = PyUnicode_DecodeUTF16(
 									arg, count*2, NULL, &byteorder);
