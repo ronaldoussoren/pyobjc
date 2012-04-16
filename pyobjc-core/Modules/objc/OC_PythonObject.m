@@ -195,7 +195,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 	} else {
 		PyObjC_DURING
 			rval = [OC_PythonObject 
-				objectWithCoercedObject:argument];
+				objectWithCoercedPyObject:argument];
 
 			r = 0;
 
@@ -218,13 +218,13 @@ end:
 	if (likely(PyObjCObject_Check(obj))) {
 		instance = PyObjCObject_GetObject(obj);
 	} else {
-		instance = [[self alloc] initWithObject:obj];
+		instance = [[self alloc] initWithPyObject:obj];
 		[instance autorelease];
 	}
 	return instance;
 }
 
-+ objectWithCoercedObject:(PyObject *)obj
++ objectWithCoercedPyObject:(PyObject *)obj
 {
 	id instance;
 	PyObjC_BEGIN_WITH_GIL
@@ -309,7 +309,7 @@ end:
 		}
 
 		/* If all else fails use the generic proxy */
-		instance = [[self alloc] initWithObject:obj];
+		instance = [[self alloc] initWithPyObject:obj];
 	PyObjC_END_WITH_GIL
 	[instance autorelease];
 	return instance;
@@ -364,7 +364,7 @@ end:
 	return PyObject_CallFunctionObjArgs(convert, obj, NULL);
 }
 
-- initWithObject:(PyObject *) obj
+- initWithPyObject:(PyObject *) obj
 {
 	PyObjC_BEGIN_WITH_GIL
 		if (pyObject) {

@@ -47,8 +47,8 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 + depythonifyTable;
 + pythonifyStructTable;
 + (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(Py_ssize_t) length;
-+ objectWithCoercedObject:(PyObject *) obj;
-- initWithObject:(PyObject *) obj;
++ objectWithCoercedPyObject:(PyObject *) obj;
+- initWithPyObject:(PyObject *) obj;
 
 /*!
  * @method pyObject

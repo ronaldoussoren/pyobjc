@@ -218,7 +218,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	for (i = 0; i < len; i++) {
 		PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
 		SEL theSel = PyObjCSelector_GetSelector(sel);
-		char* theSignature = PyObjCSelector_Signature(sel);
+		const char* theSignature = PyObjCSelector_Signature(sel);
 
 		if (PyObjCSelector_GetFlags(sel)&PyObjCSelector_kCLASS_METHOD) {
 			c = &(theProtocol->class_methods->list[

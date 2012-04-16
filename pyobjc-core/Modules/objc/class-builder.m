@@ -1594,10 +1594,10 @@ free_ivars(id self, PyObject* volatile cls )
 		PyObject* clsDict; 
 		PyObject* clsValues;
 		PyObject* o;
-		volatile Py_ssize_t i;
-		Py_ssize_t len;
 
-		if (objcClass == nil) break;
+		if (objcClass == nil) {
+			break;
+		}
 
 
 		clsDict = PyObject_GetAttrString(cls, "__dict__");
@@ -1608,6 +1608,8 @@ free_ivars(id self, PyObject* volatile cls )
 		
 		/* Class.__dict__ is a dictproxy, which is not a dict and
 		 * therefore PyDict_Values doesn't work.
+		 *
+		 * XXX: PyMapping_Values?
 		 */
 		clsValues = PyObject_CallMethod(clsDict, "values", NULL);
 		Py_DECREF(clsDict);
@@ -1616,23 +1618,40 @@ free_ivars(id self, PyObject* volatile cls )
 			break;
 		}
 
-		len = PyList_Size(clsValues);
+		PyObject* iter = PyObject_GetIter(clsValues);
+		Py_DECREF(clsValues);
+		if (iter == NULL) {
+			PyErr_Clear();
+			continue;
+		}
+
+
+
 		/* Check type */
-		for (i = 0; i < len; i++) {
+		while ((o = PyIter_Next(iter)) != NULL) {
 			PyObjCInstanceVariable* iv;
 
-			o = PyList_GET_ITEM(clsValues, i);
-
-			if (o == NULL) continue;
-			if (!PyObjCInstanceVariable_Check(o)) continue;
+			if (!PyObjCInstanceVariable_Check(o)) {
+				Py_DECREF(o);
+				continue;
+			}
 		
 			iv = ((PyObjCInstanceVariable*)o);
 
-			if (iv->isOutlet) continue;
-			if (strcmp(iv->type, "@") != 0 && strcmp(iv->type, @encode(PyObject*)) != 0) continue;
+			if (iv->isOutlet) {
+				Py_DECREF(o);
+				continue;
+			}
+			if (strcmp(iv->type, "@") != 0 && strcmp(iv->type, @encode(PyObject*)) != 0) {
+				Py_DECREF(o);
+				continue;
+			}
 
 			var = class_getInstanceVariable(objcClass, iv->name);
-			if (var == NULL) continue;
+			if (var == NULL) {
+				Py_DECREF(o);
+				continue;
+			}
 
 			if (iv->isSlot) {
 				Py_XDECREF(*(PyObject**)(((char*)self) + 
@@ -1650,9 +1669,9 @@ free_ivars(id self, PyObject* volatile cls )
 				PyObjC_ENDHANDLER
 				*(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
 			}
+			Py_DECREF(o);
 		}
-
-		Py_DECREF(clsValues);
+		Py_DECREF(iter);
 
 		o = PyObject_GetAttrString(cls, "__bases__");
 		if (o == NULL) {

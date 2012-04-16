@@ -292,15 +292,15 @@ PyObjCErr_AsExc(void)
 	typerepr = PyObject_Str(exc_type);
 	userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
 	[userInfo setObject:
-		[[[OC_PythonObject alloc] initWithObject:exc_type] autorelease]
+		[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
 		forKey:@"__pyobjc_exc_type__"];
 	if (exc_value != NULL)
 		[userInfo setObject:
-			[[[OC_PythonObject alloc] initWithObject:exc_value] autorelease]
+			[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
 			forKey:@"__pyobjc_exc_value__"];
 	if (exc_traceback != NULL)
 		[userInfo setObject:
-			[[[OC_PythonObject alloc] initWithObject:exc_traceback] autorelease]
+			[[[OC_PythonObject alloc] initWithPyObject:exc_traceback] autorelease]
 			forKey:@"__pyobjc_exc_traceback__"];
 
 	val = [NSException 

@@ -842,7 +842,7 @@ parse_printf_args(
 					return -1;
 				}
 
-				if (PyUnicode_AsWideChar((PyUnicodeObject*)v, (wchar_t*)byref[curarg], sz)<0) {
+				if (PyUnicode_AsWideChar(v, (wchar_t*)byref[curarg], sz)<0) {
 					Py_DECREF(encoded);
 					return -1;
 				}

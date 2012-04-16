@@ -1382,7 +1382,7 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict, PyOb
 		/* We're depythonifying a list of strings, make sure the originals stay 
 		 * around long enough.
 		 */
-		[[[OC_PythonObject alloc] initWithObject:seq] autorelease];
+		[[[OC_PythonObject alloc] initWithPyObject:seq] autorelease];
 	}
 	Py_DECREF(seq);
 	return 0;
