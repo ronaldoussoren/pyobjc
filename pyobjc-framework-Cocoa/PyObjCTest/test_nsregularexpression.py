@@ -32,7 +32,7 @@ class TestNSRegularExpression (TestCase):
         self.assertArgIsOut(NSRegularExpression.initWithPattern_options_error_, 2)
 
         self.assertArgIsBlock(NSRegularExpression.enumerateMatchesInString_options_range_usingBlock_,
-                3, b'v@' + objc._C_NSUinteger + b'o^B')
+                3, b'v@' + objc._C_NSUInteger + b'o^B')
 
         self.assertArgIsOut(NSDataDetector.dataDetectorWithTypes_error_, 1)
         self.assertArgIsOut(NSDataDetector.initWithTypes_error_, 1)

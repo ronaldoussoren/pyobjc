@@ -13032,9 +13032,7 @@
     "variadic": true
    }, 
    "NSLogv": {
-    "args": {
-     "1": {}
-    }
+    "ignore": true
    }, 
    "NSMapGet": {
     "args": {

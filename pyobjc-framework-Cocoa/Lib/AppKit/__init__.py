@@ -46,3 +46,4 @@ try:
     mod.NSImageNameApplicationIcon
 except AttributeError:
     mod.NSImageNameApplicationIcon = u"NSApplicationIcon"
+

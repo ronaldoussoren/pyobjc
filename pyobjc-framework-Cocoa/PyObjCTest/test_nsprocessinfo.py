@@ -18,13 +18,13 @@ class TestNSProcessInfo (TestCase):
     def testNSDisabledSuddenTermination(self):
         # annoyingly we cannot easily test if this has an effect, but
         # this at least guards against typos.
-        with NSDisabledSuddenTermination:
+        with NSDisabledSuddenTermination():
             pass
 
         class TestException (Exception):
             pass
         try:
-            with NSDisabledSuddenTermination:
+            with NSDisabledSuddenTermination():
                 raise TestException(1)
 
         except TestException:
@@ -36,13 +36,13 @@ class TestNSProcessInfo (TestCase):
         self.assertArgIsBOOL(NSProcessInfo.setAutomaticTerminationSupportEnabled_, 0)
         self.assertResultIsBOOL(NSProcessInfo.automaticTerminationSupportEnabled)
 
-        with NSDisabledAutomaticTermination:
+        with NSDisabledAutomaticTermination("reason"):
             pass
 
         class TestException (Exception):
             pass
         try:
-            with NSDisabledAutomaticTermination:
+            with NSDisabledAutomaticTermination("reason"):
                 raise TestException(1)
 
         except TestException:

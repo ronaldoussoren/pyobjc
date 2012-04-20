@@ -15533,6 +15533,21 @@
     "methods": [
      {
       "args": {
+       "5": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "6": {
+        "type_override": "^v"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "beginSheetForDirectory:file:types:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "args": {
        "4": {
         "sel_of_type": [
          "v@:@i^v", 

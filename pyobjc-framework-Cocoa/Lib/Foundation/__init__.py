@@ -35,3 +35,16 @@ import Foundation._nsindexset
 import Foundation._functiondefines 
 for nm in dir(Foundation._functiondefines):
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))
+
+
+# XXX: This is suboptimal, could calculate this in the metadata
+# generator.
+import sys
+mod.NSIntegerMax = sys.maxsize
+mod.NSIntegerMin = - sys.maxsize - 1
+mod.NSUIntegerMax = (sys.maxsize * 2) + 1
+
+import Foundation._context
+for nm in dir(Foundation._context):
+    setattr(mod, nm, getattr(Foundation._context, nm))
+

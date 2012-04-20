@@ -17,4 +17,4 @@ sys.modules['Quartz.QuartzCore'] = mod = objc.ObjCLazyModule('Quartz.QuartzCore'
        '__doc__': __doc__,
        '__path__': __path__,
        'objc': objc,
-    }, ( Foundation,))
+    }, (Foundation,))
