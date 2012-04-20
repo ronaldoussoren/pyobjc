@@ -1,0 +1,9704 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "cftypes": {
+   "CFAllocatorRef": {
+    "gettypeid_func": "CFAllocatorGetTypeID"
+   }, 
+   "CFArrayRef": {
+    "gettypeid_func": "CFArrayGetTypeID", 
+    "tollfree": "__NSCFArray,NSCFArray"
+   }, 
+   "CFAttributedStringRef": {
+    "gettypeid_func": "CFAttributedStringGetTypeID", 
+    "tollfree": "__NSCFAttributedString,NSCFAttributedString"
+   }, 
+   "CFBagRef": {
+    "gettypeid_func": "CFBagGetTypeID"
+   }, 
+   "CFBinaryHeapRef": {
+    "gettypeid_func": "CFBinaryHeapGetTypeID"
+   }, 
+   "CFBitVectorRef": {
+    "gettypeid_func": "CFBitVectorGetTypeID"
+   }, 
+   "CFBooleanRef": {
+    "gettypeid_func": "CFBooleanGetTypeID", 
+    "tollfree": "__NSCFBoolean,NSCFBoolean"
+   }, 
+   "CFBundleRef": {
+    "gettypeid_func": "CFBundleGetTypeID"
+   }, 
+   "CFCalendarRef": {
+    "gettypeid_func": "CFCalendarGetTypeID", 
+    "tollfree": "__NSCFCalendar"
+   }, 
+   "CFCharacterSetRef": {
+    "gettypeid_func": "CFCharacterSetGetTypeID", 
+    "tollfree": "__NSCFCharacterSet,NSCFCharacterSet"
+   }, 
+   "CFDataRef": {
+    "gettypeid_func": "CFDataGetTypeID", 
+    "tollfree": "__NSCFData,NSCFData"
+   }, 
+   "CFDateFormatterRef": {
+    "gettypeid_func": "CFDateFormatterGetTypeID"
+   }, 
+   "CFDateRef": {
+    "gettypeid_func": "CFDateGetTypeID", 
+    "tollfree": "__NSCFDate,NSCFDate,__NSDate"
+   }, 
+   "CFDictionaryRef": {
+    "gettypeid_func": "CFDictionaryGetTypeID", 
+    "tollfree": "__NSCFDictionary,NSCFDictionary"
+   }, 
+   "CFErrorRef": {
+    "gettypeid_func": "CFErrorGetTypeID", 
+    "tollfree": "__NSCFError,NSCFError"
+   }, 
+   "CFFileDescriptorRef": {
+    "gettypeid_func": "CFFileDescriptorGetTypeID"
+   }, 
+   "CFFileSecurityRef": {
+    "gettypeid_func": "CFFileSecurityGetTypeID"
+   }, 
+   "CFLocaleRef": {
+    "gettypeid_func": "CFLocaleGetTypeID", 
+    "tollfree": "__NSCFLocale,NSCFLocale"
+   }, 
+   "CFMachPortRef": {
+    "gettypeid_func": "CFMachPortGetTypeID", 
+    "tollfree": "NSMachPort"
+   }, 
+   "CFMessagePortRef": {
+    "gettypeid_func": "CFMessagePortGetTypeID"
+   }, 
+   "CFMutableArrayRef": {
+    "gettypeid_func": "CFArrayGetTypeID", 
+    "tollfree": "NSMutableArray"
+   }, 
+   "CFMutableAttributedStringRef": {
+    "gettypeid_func": "CFAttributedStringGetTypeID", 
+    "tollfree": "__NSCFAttributedString,NSCFAttributedString"
+   }, 
+   "CFMutableBagRef": {
+    "gettypeid_func": "CFBagGetTypeID"
+   }, 
+   "CFMutableBitVectorRef": {
+    "gettypeid_func": "CFBitVectorGetTypeID"
+   }, 
+   "CFMutableCharacterSetRef": {
+    "gettypeid_func": "CFCharacterSetGetTypeID"
+   }, 
+   "CFMutableDataRef": {
+    "gettypeid_func": "CFDataGetTypeID", 
+    "tollfree": "NSMutableData"
+   }, 
+   "CFMutableDictionaryRef": {
+    "gettypeid_func": "CFDictionaryGetTypeID", 
+    "tollfree": "NSMutableDictionary"
+   }, 
+   "CFMutableSetRef": {
+    "gettypeid_func": "CFSetGetTypeID", 
+    "tollfree": "NSMutableSet"
+   }, 
+   "CFMutableStringRef": {
+    "gettypeid_func": "CFStringGetTypeID"
+   }, 
+   "CFNotificationCenterRef": {
+    "gettypeid_func": "CFNotificationCenterGetTypeID"
+   }, 
+   "CFNullRef": {
+    "gettypeid_func": "CFNullGetTypeID", 
+    "tollfree": "NSNull"
+   }, 
+   "CFNumberFormatterRef": {
+    "gettypeid_func": "CFNumberFormatterGetTypeID"
+   }, 
+   "CFNumberRef": {
+    "gettypeid_func": "CFNumberGetTypeID", 
+    "tollfree": "__NSCFNumber,NSCFNumber"
+   }, 
+   "CFPlugInInstanceRef": {
+    "gettypeid_func": "CFPlugInInstanceGetTypeID"
+   }, 
+   "CFPlugInRef": {
+    "comment": "CFPlugin", 
+    "gettypeid_func": "CFPlugInGetTypeID", 
+    "ignore": "true"
+   }, 
+   "CFPropertyListRef": {
+    "ignore": "true"
+   }, 
+   "CFReadStreamRef": {
+    "gettypeid_func": "CFReadStreamGetTypeID", 
+    "tollfree": "__NSCFInputStream,NSCFInputStream"
+   }, 
+   "CFRunLoopObserverRef": {
+    "gettypeid_func": "CFRunLoopObserverGetTypeID"
+   }, 
+   "CFRunLoopRef": {
+    "gettypeid_func": "CFRunLoopGetTypeID"
+   }, 
+   "CFRunLoopSourceRef": {
+    "gettypeid_func": "CFRunLoopSourceGetTypeID"
+   }, 
+   "CFRunLoopTimerRef": {
+    "gettypeid_func": "CFRunLoopTimerGetTypeID", 
+    "tollfree": "__NSCFTimer,NSCFTimer"
+   }, 
+   "CFSetRef": {
+    "gettypeid_func": "CFSetGetTypeID", 
+    "tollfree": "__NSCFSet,NSCFSet"
+   }, 
+   "CFSocketRef": {
+    "gettypeid_func": "CFSocketGetTypeID"
+   }, 
+   "CFStringRef": {
+    "gettypeid_func": "CFStringGetTypeID", 
+    "tollfree": "__NSCFString,NSCFString"
+   }, 
+   "CFStringTokenizerRef": {
+    "gettypeid_func": "CFStringTokenizerGetTypeID"
+   }, 
+   "CFTimeZoneRef": {
+    "gettypeid_func": "CFTimeZoneGetTypeID", 
+    "tollfree": "__NSCFTimeZone,__NSTimeZone"
+   }, 
+   "CFTreeRef": {
+    "gettypeid_func": "CFTreeGetTypeID"
+   }, 
+   "CFURLEnumeratorRef": {
+    "gettypeid_func": "CFURLEnumeratorGetTypeID"
+   }, 
+   "CFURLRef": {
+    "gettypeid_func": "CFURLGetTypeID", 
+    "tollfree": "NSURL"
+   }, 
+   "CFUUIDRef": {
+    "gettypeid_func": "CFUUIDGetTypeID"
+   }, 
+   "CFUserNotificationRef": {
+    "gettypeid_func": "CFUserNotificationGetTypeID"
+   }, 
+   "CFWriteStreamRef": {
+    "gettypeid_func": "CFWriteStreamGetTypeID", 
+    "tollfree": "__NSCFOutputStream,NSCFOutputStream"
+   }, 
+   "CFXMLNodeRef": {
+    "gettypeid_func": "CFXMLNodeGetTypeID"
+   }, 
+   "CFXMLParserRef": {
+    "gettypeid_func": "CFXMLParserGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "CFAbsoluteTimeAddGregorianUnits": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAbsoluteTimeGetDayOfWeek": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAbsoluteTimeGetDayOfYear": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAbsoluteTimeGetDifferenceAsGregorianUnits": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAbsoluteTimeGetGregorianDate": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAbsoluteTimeGetWeekOfYear": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFAllocatorAllocate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "type_override": "^v"
+    }
+   }, 
+   "CFAllocatorCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?^?^?^?^?}", 
+       "^{?=q^v^?^?^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFAllocatorDeallocate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFAllocatorGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?^?^?^?^?}", 
+       "^{?=q^v^?^?^?^?^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFAllocatorGetDefault": {
+    "retval": {
+     "type_override": "^{__CFAllocator=}"
+    }
+   }, 
+   "CFAllocatorGetPreferredSizeForSize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }
+   }, 
+   "CFAllocatorReallocate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "type_override": "^v"
+    }
+   }, 
+   "CFAllocatorSetDefault": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }
+   }, 
+   "CFArrayAppendArray": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFArrayAppendValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayApplyFunction": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayBSearchValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }, 
+        "2": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "l"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }
+       ], 
+       "retval": {
+        "typestr": "L"
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "4": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayContainsValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^@"
+     }, 
+     "3": {
+      "type_override": [
+       "r^{?=i^?^?^?^?}", 
+       "r^{?=q^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFArrayCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFArrayCreateMutable": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "r^{?=i^?^?^?^?}", 
+       "r^{?=q^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFArrayCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFArrayExchangeValuesAtIndices": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFArrayGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFArrayGetCountOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayGetFirstIndexOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayGetLastIndexOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayGetValueAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFArrayGetValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": "r^@"
+     }
+    }
+   }, 
+   "CFArrayInsertValueAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArrayRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFArrayRemoveValueAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFArrayReplaceValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "^@"
+     }
+    }
+   }, 
+   "CFArraySetValueAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFArraySortValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }, 
+        "2": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "l"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }
+       ], 
+       "retval": {
+        "typestr": "L"
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFAttributedStringBeginEditing": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFAttributedString=}"
+    }
+   }, 
+   "CFAttributedStringCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFAttributedString=}"
+    }
+   }, 
+   "CFAttributedStringCreateMutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFAttributedString=}"
+    }
+   }, 
+   "CFAttributedStringCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFAttributedString=}"
+    }
+   }, 
+   "CFAttributedStringCreateWithSubstring": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFAttributedString=}"
+    }
+   }, 
+   "CFAttributedStringEndEditing": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringGetAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFAttributedStringGetAttributeAndLongestEffectiveRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFAttributedStringGetAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFAttributedStringGetAttributesAndLongestEffectiveRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFAttributedStringGetLength": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringGetMutableString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFAttributedStringGetString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFAttributedStringRemoveAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringReplaceAttributedString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFAttributedString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringReplaceString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringSetAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFAttributedStringSetAttributes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAttributedString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFBagAddValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagApplyFunction": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagContainsValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "r^^v"
+     }, 
+     "3": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFBagCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFBag=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBag=}"
+    }
+   }, 
+   "CFBagCreateMutable": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFBagCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFBag=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBag=}"
+    }
+   }, 
+   "CFBagGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }
+    }
+   }, 
+   "CFBagGetCountOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFBagGetValueIfPresent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "r^@"
+     }
+    }
+   }, 
+   "CFBagGetValues": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFBagRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }
+    }
+   }, 
+   "CFBagRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagReplaceValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBagSetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBag=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBinaryHeapAddValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBinaryHeapApplyFunction": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBinaryHeapContainsValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBinaryHeapCreate": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "r^{?=i^?^?^?^?}", 
+       "r^{?=q^?^?^?^?}"
+      ]
+     }, 
+     "3": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFBinaryHeapCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBinaryHeap=}"
+    }
+   }, 
+   "CFBinaryHeapGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }
+    }
+   }, 
+   "CFBinaryHeapGetCountOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFBinaryHeapGetMinimum": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFBinaryHeapGetMinimumIfPresent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^@"
+     }
+    }
+   }, 
+   "CFBinaryHeapGetValues": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFBinaryHeapRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }
+    }
+   }, 
+   "CFBinaryHeapRemoveMinimumValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBinaryHeap=}"
+     }
+    }
+   }, 
+   "CFBitVectorContainsBit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_of_variable_length": true, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBitVector=}"
+    }
+   }, 
+   "CFBitVectorCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBitVector=}"
+    }
+   }, 
+   "CFBitVectorCreateMutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBitVector=}"
+    }
+   }, 
+   "CFBitVectorCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBitVector=}"
+    }
+   }, 
+   "CFBitVectorFlipBitAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorFlipBits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorGetBitAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorGetBits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }, 
+     "2": {
+      "c_array_of_variable_length": true, 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFBitVectorGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorGetCountOfBit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorGetFirstIndexOfBit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorGetLastIndexOfBit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorSetAllBits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorSetBitAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorSetBits": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBitVectorSetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBitVector=}"
+     }
+    }
+   }, 
+   "CFBooleanGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBoolean=}"
+     }
+    }
+   }, 
+   "CFBundleCloseBundleResourceMap": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFBundleCopyAuxiliaryExecutableURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyBuiltInPlugInsURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyBundleLocalizations": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyBundleURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyExecutableArchitectures": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyExecutableArchitecturesForURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyExecutableURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyInfoDictionaryForURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFBundleCopyInfoDictionaryInDirectory": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFBundleCopyLocalizationsForPreferences": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyLocalizationsForURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyLocalizedString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFBundleCopyPreferredLocalizationsFromArray": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyPrivateFrameworksURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyResourceURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyResourceURLForLocalization": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyResourceURLInDirectory": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopyResourceURLsOfType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyResourceURLsOfTypeForLocalization": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyResourceURLsOfTypeInDirectory": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleCopyResourcesDirectoryURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopySharedFrameworksURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopySharedSupportURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCopySupportFilesDirectoryURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFBundleCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFBundle=}"
+    }
+   }, 
+   "CFBundleCreateBundlesFromDirectory": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleGetAllBundles": {
+    "retval": {
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFBundleGetBundleWithIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFBundle=}"
+    }
+   }, 
+   "CFBundleGetDataPointerForName": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFBundleGetDataPointersForNames": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CFBundleGetDevelopmentRegion": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFBundleGetFunctionPointerForName": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFBundleGetFunctionPointersForNames": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CFBundleGetIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFBundleGetInfoDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFBundleGetLocalInfoDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFBundleGetMainBundle": {
+    "retval": {
+     "type_override": "^{__CFBundle=}"
+    }
+   }, 
+   "CFBundleGetPackageInfo": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }
+    }
+   }, 
+   "CFBundleGetPackageInfoInDirectory": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }
+    }
+   }, 
+   "CFBundleGetPlugIn": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFBundle=}"
+    }
+   }, 
+   "CFBundleGetValueForInfoDictionaryKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFBundleGetVersionNumber": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFBundleIsExecutableLoaded": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFBundleLoadExecutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFBundleLoadExecutableAndReturnError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFBundleOpenBundleResourceFiles": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^s", 
+       "^l"
+      ]
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^s", 
+       "^l"
+      ]
+     }
+    }
+   }, 
+   "CFBundleOpenBundleResourceMap": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFBundlePreflightExecutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFBundleUnloadExecutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFBundle=}"
+     }
+    }
+   }, 
+   "CFCalendarAddComponents": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_modifier": "N"
+     }, 
+     "3": {
+      "type_override": "r*"
+     }
+    }, 
+    "variadic": true
+   }, 
+   "CFCalendarComposeAbsoluteTime": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_modifier": "o"
+     }, 
+     "2": {
+      "type_override": "r*"
+     }
+    }, 
+    "variadic": true
+   }, 
+   "CFCalendarCopyCurrent": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCalendar=}"
+    }
+   }, 
+   "CFCalendarCopyLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFCalendarCopyTimeZone": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFCalendarCreateWithIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCalendar=}"
+    }
+   }, 
+   "CFCalendarDecomposeAbsoluteTime": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": "r*"
+     }
+    }, 
+    "variadic": true
+   }, 
+   "CFCalendarGetComponentDifference": {
+    "args": {
+     "0": {}, 
+     "4": {
+      "type_override": "r*"
+     }
+    }, 
+    "variadic": true
+   }, 
+   "CFCalendarGetFirstWeekday": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFCalendarGetMaximumRangeOfUnit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetMinimumDaysInFirstWeek": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetMinimumRangeOfUnit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetOrdinalityOfUnit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetRangeOfUnit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarGetTimeRangeOfUnit": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^d"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^d"
+     }
+    }
+   }, 
+   "CFCalendarSetFirstWeekday": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarSetLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFCalendarSetMinimumDaysInFirstWeek": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }
+    }
+   }, 
+   "CFCalendarSetTimeZone": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCalendar=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFCharacterSetAddCharactersInRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetAddCharactersInString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFCharacterSetCreateBitmapRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFCharacterSetCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateInvertedSet": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateMutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateWithBitmapRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateWithCharactersInRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetCreateWithCharactersInString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetGetPredefined": {
+    "retval": {
+     "type_override": "^{__CFCharacterSet=}"
+    }
+   }, 
+   "CFCharacterSetHasMemberInPlane": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetIntersect": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetInvert": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetIsCharacterMember": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetIsLongCharacterMember": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetIsSupersetOfSet": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetRemoveCharactersInRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCharacterSetRemoveCharactersInString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFCharacterSetUnion": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }
+    }
+   }, 
+   "CFCopyDescription": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFCopyTypeIDDescription": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFDataAppendBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFDataCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFDataCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFDataCreateMutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFDataCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFDataCreateWithBytesNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "3": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFDataDeleteBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFDataFind": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFDataGetBytePtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": "^v"
+    }
+   }, 
+   "CFDataGetBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFDataGetLength": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFDataGetMutableBytePtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": "^v"
+    }
+   }, 
+   "CFDataIncreaseLength": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFDataReplaceBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFDataSetLength": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFDateCompare": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDate=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDate=}"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFDateCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDate=}"
+    }
+   }, 
+   "CFDateFormatterCopyProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFDateFormatterCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDateFormatter=}"
+    }
+   }, 
+   "CFDateFormatterCreateDateFormatFromTemplate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFDateFormatterCreateDateFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "N", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDate=}"
+    }
+   }, 
+   "CFDateFormatterCreateStringWithAbsoluteTime": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDateFormatter=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFDateFormatterCreateStringWithDate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDate=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFDateFormatterGetAbsoluteTimeFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "N", 
+      "type_override": "^{_CFRange=ll}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^d"
+     }
+    }
+   }, 
+   "CFDateFormatterGetDateStyle": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }
+    }
+   }, 
+   "CFDateFormatterGetFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFDateFormatterGetLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFDateFormatterGetTimeStyle": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }
+    }
+   }, 
+   "CFDateFormatterSetFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFDateFormatterSetProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDateFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFDateGetAbsoluteTime": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDate=}"
+     }
+    }
+   }, 
+   "CFDateGetTimeIntervalSinceDate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDate=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDate=}"
+     }
+    }
+   }, 
+   "CFDictionaryAddValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryApplyFunction": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }, 
+        "2": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryContainsKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryContainsValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "r^@"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "r^@"
+     }, 
+     "4": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }, 
+     "5": {
+      "type_override": [
+       "r^{?=i^?^?^?^?}", 
+       "r^{?=q^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFDictionaryCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFDictionaryCreateMutable": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }, 
+     "3": {
+      "type_override": [
+       "r^{?=i^?^?^?^?}", 
+       "r^{?=q^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFDictionaryCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFDictionaryGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFDictionaryGetCountOfKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryGetCountOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryGetKeysAndValues": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CFDictionaryGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFDictionaryGetValueIfPresent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "r^@"
+     }
+    }
+   }, 
+   "CFDictionaryRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFDictionaryRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionaryReplaceValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFDictionarySetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFErrorCopyDescription": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFErrorCopyFailureReason": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFErrorCopyRecoverySuggestion": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFErrorCopyUserInfo": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFErrorCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFError=}"
+    }
+   }, 
+   "CFErrorCreateWithUserInfoKeysAndValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "c_array_length_in_arg": 5, 
+      "type_modifier": "n", 
+      "type_override": "^@"
+     }, 
+     "4": {
+      "c_array_length_in_arg": 5, 
+      "type_modifier": "n", 
+      "type_override": "^@"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFError=}"
+    }
+   }, 
+   "CFErrorGetCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }
+   }, 
+   "CFErrorGetDomain": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFError=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFFileDescriptorCreate": {
+    "args": {
+     "0": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFFileDescriptor=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "4": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFFileDescriptorCreateRunLoopSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFRunLoopSource=}"
+    }
+   }, 
+   "CFFileDescriptorDisableCallBacks": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }
+   }, 
+   "CFFileDescriptorEnableCallBacks": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }
+   }, 
+   "CFFileDescriptorGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFFileDescriptorGetNativeDescriptor": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }
+   }, 
+   "CFFileDescriptorInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }
+   }, 
+   "CFFileDescriptorIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileDescriptor=}"
+     }
+    }
+   }, 
+   "CFFileSecurityCopyAccessControlList": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^^{_acl=}"
+     }
+    }
+   }, 
+   "CFFileSecurityCopyGroupUUID": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFUUID=}"
+     }
+    }
+   }, 
+   "CFFileSecurityCopyOwnerUUID": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFUUID=}"
+     }
+    }
+   }, 
+   "CFFileSecurityCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFFileSecurity=}"
+    }
+   }, 
+   "CFFileSecurityCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFFileSecurity=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFFileSecurity=}"
+    }
+   }, 
+   "CFFileSecurityGetGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }
+    }
+   }, 
+   "CFFileSecurityGetMode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^S"
+     }
+    }
+   }, 
+   "CFFileSecurityGetOwner": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }
+    }
+   }, 
+   "CFFileSecuritySetAccessControlList": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_override": "^{_acl=}"
+     }
+    }
+   }, 
+   "CFFileSecuritySetGroup": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }
+    }
+   }, 
+   "CFFileSecuritySetGroupUUID": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFUUID=}"
+     }
+    }
+   }, 
+   "CFFileSecuritySetMode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }
+    }
+   }, 
+   "CFFileSecuritySetOwner": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }
+    }
+   }, 
+   "CFFileSecuritySetOwnerUUID": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFFileSecurity=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFUUID=}"
+     }
+    }
+   }, 
+   "CFGetAllocator": {
+    "retval": {
+     "type_override": "^{__CFAllocator=}"
+    }
+   }, 
+   "CFGregorianDateGetAbsoluteTime": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFLocaleCopyAvailableLocaleIdentifiers": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCopyCommonISOCurrencyCodes": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCopyCurrent": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFLocaleCopyDisplayNameForPropertyValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFLocale=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleCopyISOCountryCodes": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCopyISOCurrencyCodes": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCopyISOLanguageCodes": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCopyPreferredLanguages": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFLocaleCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFLocaleCreateCanonicalLanguageIdentifierFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleCreateCanonicalLocaleIdentifierFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleCreateComponentsFromLocaleIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFLocaleCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFLocaleCreateLocaleIdentifierFromComponents": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleGetIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFLocaleGetLanguageCharacterDirection": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFLocaleGetLanguageLineDirection": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFLocaleGetSystem": {
+    "retval": {
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFLocaleGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFLocale=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFMachPortCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFMachPort=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }, 
+     "3": {
+      "type_override": "^Z"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFMachPortCreateRunLoopSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFMachPort=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFRunLoopSource=}"
+    }
+   }, 
+   "CFMachPortCreateWithPort": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFMachPort=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }, 
+     "4": {
+      "type_override": "^Z"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFMachPortGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFMachPortGetInvalidationCallBack": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "callable": {
+      "arguments": {
+       "0": {
+        "typestr": "@"
+       }, 
+       "1": {
+        "typestr": "@"
+       }
+      }, 
+      "retval": {
+       "typestr": "v"
+      }
+     }, 
+     "type_override": "^?"
+    }
+   }, 
+   "CFMachPortGetPort": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMachPort=}"
+     }
+    }
+   }, 
+   "CFMachPortInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMachPort=}"
+     }
+    }
+   }, 
+   "CFMachPortIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMachPort=}"
+     }
+    }
+   }, 
+   "CFMachPortSetInvalidationCallBack": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFMachPort=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }
+    }
+   }, 
+   "CFMessagePortCreateLocal": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFMessagePort=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "i", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__CFData=}", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }, 
+     "4": {
+      "type_override": "^Z"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFMessagePortCreateRemote": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFMessagePort=}"
+    }
+   }, 
+   "CFMessagePortCreateRunLoopSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFRunLoopSource=}"
+    }
+   }, 
+   "CFMessagePortGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFMessagePortGetInvalidationCallBack": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }, 
+    "retval": {
+     "callable": {
+      "arguments": {
+       "0": {
+        "typestr": "@"
+       }, 
+       "1": {
+        "typestr": "^v"
+       }
+      }, 
+      "retval": {
+       "typestr": "v"
+      }
+     }, 
+     "type_override": "^?"
+    }
+   }, 
+   "CFMessagePortGetName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFMessagePortInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }
+   }, 
+   "CFMessagePortIsRemote": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }
+   }, 
+   "CFMessagePortIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }
+    }
+   }, 
+   "CFMessagePortSendRequest": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "5": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "6": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFData}"
+     }
+    }
+   }, 
+   "CFMessagePortSetDispatchQueue": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFMessagePortSetInvalidationCallBack": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "^v"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFMessagePort=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }
+    }
+   }, 
+   "CFMessagePortSetName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFMessagePort=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFNotificationCenterAddObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNotificationCenter=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }, 
+        "2": {
+         "typestr": "@"
+        }, 
+        "3": {
+         "typestr": "@"
+        }, 
+        "4": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFNotificationCenter=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFString=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFDictionary=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNotificationCenterGetDarwinNotifyCenter": {
+    "retval": {
+     "type_override": "^{__CFNotificationCenter=}"
+    }
+   }, 
+   "CFNotificationCenterGetDistributedCenter": {
+    "retval": {
+     "type_override": "^{__CFNotificationCenter=}"
+    }
+   }, 
+   "CFNotificationCenterGetLocalCenter": {
+    "retval": {
+     "type_override": "^{__CFNotificationCenter=}"
+    }
+   }, 
+   "CFNotificationCenterPostNotification": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNotificationCenter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFNotificationCenterPostNotificationWithOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNotificationCenter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "@"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFNotificationCenterRemoveEveryObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNotificationCenter=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNotificationCenterRemoveObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNotificationCenter=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFNumberCompare": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumber=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumber=}"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFNumberCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFNumber=}"
+    }
+   }, 
+   "CFNumberFormatterCopyProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFNumberFormatterCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFNumberFormatter=}"
+    }
+   }, 
+   "CFNumberFormatterCreateNumberFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "N", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFNumber=}"
+    }
+   }, 
+   "CFNumberFormatterCreateStringWithNumber": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFNumberFormatterCreateStringWithValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "3": {
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFNumberFormatterGetDecimalInfoForCurrencyCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^d"
+     }
+    }
+   }, 
+   "CFNumberFormatterGetFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFNumberFormatterGetLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFLocale=}"
+    }
+   }, 
+   "CFNumberFormatterGetStyle": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }
+    }
+   }, 
+   "CFNumberFormatterGetValueFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "N", 
+      "type_override": "^{_CFRange=ll}"
+     }, 
+     "4": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^@"
+     }
+    }
+   }, 
+   "CFNumberFormatterSetFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFNumberFormatterSetProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumberFormatter=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFNumberGetByteSize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }
+   }, 
+   "CFNumberGetType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }
+   }, 
+   "CFNumberGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumber=}"
+     }, 
+     "2": {
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFNumberIsFloatType": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFNumber=}"
+     }
+    }
+   }, 
+   "CFPlugInAddInstanceForFactory": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFPlugInCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CFPlugInFindFactoriesForPlugInType": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFPlugInFindFactoriesForPlugInTypeInPlugIn": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFPlugInGetBundle": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFPlugInInstanceCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CFPlugInInstanceCreateWithInstanceDataSize": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "3": {}, 
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFPlugInInstance=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFString=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "Z", 
+         true
+        ]
+       }
+      }
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CFPlugInInstanceGetFactoryName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFPlugInInstanceGetInstanceData": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CFPlugInInstanceGetInterfaceFunctionTable": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CFPlugInIsLoadOnDemand": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFPlugInRegisterFactoryFunction": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFAllocator=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFUUID=}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^v", 
+         false
+        ]
+       }
+      }
+     }
+    }
+   }, 
+   "CFPlugInRegisterFactoryFunctionByName": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CFPlugInRegisterPlugInType": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFPlugInRemoveInstanceForFactory": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFPlugInSetLoadOnDemand": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFPlugInUnregisterFactory": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFPlugInUnregisterPlugInType": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFPreferencesAddSuitePreferencesToApp": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesAppSynchronize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesAppValueIsForced": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesCopyAppValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesCopyApplicationList": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFPreferencesCopyKeyList": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFPreferencesCopyMultiple": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFPreferencesCopyValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesGetAppBooleanValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^Z"
+     }
+    }
+   }, 
+   "CFPreferencesGetAppIntegerValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^Z"
+     }
+    }
+   }, 
+   "CFPreferencesRemoveSuitePreferencesFromApp": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesSetAppValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesSetMultiple": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesSetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPreferencesSynchronize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFPropertyListCreateDeepCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateFromStream": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }, 
+     "5": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateFromXMLData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "3": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateWithData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^q"
+      ]
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateWithStream": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^q"
+      ]
+     }, 
+     "5": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFPropertyListCreateXMLData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFPropertyListWrite": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "4": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFPropertyListWriteToStream": {
+    "args": {
+     "1": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "3": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFString}"
+     }
+    }
+   }, 
+   "CFReadStreamClose": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFReadStreamCopyError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFError=}"
+    }
+   }, 
+   "CFReadStreamCopyProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFReadStreamCreateWithBytesNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "3": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFReadStream=}"
+    }
+   }, 
+   "CFReadStreamCreateWithFile": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFReadStream=}"
+    }
+   }, 
+   "CFReadStreamGetBuffer": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }
+    }, 
+    "retval": {
+     "c_array_length_in_arg": 2, 
+     "type_override": "^v"
+    }
+   }, 
+   "CFReadStreamGetError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFReadStreamGetStatus": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFReadStreamHasBytesAvailable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFReadStreamOpen": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }
+    }
+   }, 
+   "CFReadStreamRead": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "c_array_length_in_result": true, 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFReadStreamScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFReadStreamSetClient": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFReadStream=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFReadStreamSetProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFReadStreamUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFReadStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopAddCommonMode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopAddObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopAddSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopAddTimer": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopContainsObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopContainsSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopContainsTimer": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopCopyAllModes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFRunLoopCopyCurrentMode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFRunLoopGetCurrent": {
+    "retval": {
+     "type_override": "^{__CFRunLoop=}"
+    }
+   }, 
+   "CFRunLoopGetMain": {
+    "retval": {
+     "type_override": "^{__CFRunLoop=}"
+    }
+   }, 
+   "CFRunLoopGetNextTimerFireDate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopIsWaiting": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }
+   }, 
+   "CFRunLoopObserverCreate": {
+    "args": {
+     "0": {}, 
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFRunLoopObserver=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "5": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFRunLoopObserverCreateWithHandler": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFRunLoopObserver=}"
+    }
+   }, 
+   "CFRunLoopObserverDoesRepeat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }
+    }
+   }, 
+   "CFRunLoopObserverGetActivities": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }
+    }
+   }, 
+   "CFRunLoopObserverGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFRunLoopObserverGetOrder": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }
+    }
+   }, 
+   "CFRunLoopObserverInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }
+    }
+   }, 
+   "CFRunLoopObserverIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }
+    }
+   }, 
+   "CFRunLoopPerformBlock": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }
+   }, 
+   "CFRunLoopRemoveObserver": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopObserver=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopRemoveSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopRemoveTimer": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopRunInMode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFRunLoopSourceCreate": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "^{?=i^v^?^?^?^?^?^?^?^?}", 
+       "^{?=q^v^?^?^?^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFRunLoopSourceGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?^?^?^?^?^?}", 
+       "^{?=q^v^?^?^?^?^?^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFRunLoopSourceGetOrder": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }
+    }
+   }, 
+   "CFRunLoopSourceInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }
+    }
+   }, 
+   "CFRunLoopSourceIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }
+    }
+   }, 
+   "CFRunLoopSourceSignal": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopSource=}"
+     }
+    }
+   }, 
+   "CFRunLoopStop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerCreate": {
+    "args": {
+     "0": {}, 
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFRunLoopTimer=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "6": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFRunLoopTimerCreateWithHandler": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFRunLoopTimer=}"
+    }
+   }, 
+   "CFRunLoopTimerDoesRepeat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFRunLoopTimerGetInterval": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerGetNextFireDate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerGetOrder": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopTimerSetNextFireDate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoopTimer=}"
+     }
+    }
+   }, 
+   "CFRunLoopWakeUp": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFRunLoop=}"
+     }
+    }
+   }, 
+   "CFSetAddValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetApplyFunction": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetContainsValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "r^^v"
+     }, 
+     "3": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSetCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFSet=}"
+    }
+   }, 
+   "CFSetCreateMutable": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "type_override": [
+       "r^{?=i^?^?^?^?^?}", 
+       "r^{?=q^?^?^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSetCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFSet=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFSet=}"
+    }
+   }, 
+   "CFSetGetCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }
+    }
+   }, 
+   "CFSetGetCountOfValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetGetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFSetGetValueIfPresent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^@"
+     }
+    }
+   }, 
+   "CFSetGetValues": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CFSetRemoveAllValues": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }
+    }
+   }, 
+   "CFSetRemoveValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetReplaceValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFSetSetValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSet=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFShowStr": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CFSocketConnectToAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFSocketCopyAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFSocketCopyPeerAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFSocketCopyRegisteredSocketSignature": {
+    "args": {
+     "0": {
+      "type_modifier": "n"
+     }, 
+     "2": {}, 
+     "3": {
+      "type_modifier": "o"
+     }, 
+     "4": {
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CFSocketCopyRegisteredValue": {
+    "args": {
+     "0": {
+      "type_modifier": "n"
+     }, 
+     "2": {}, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^@"
+     }, 
+     "4": {
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CFSocketCreate": {
+    "args": {
+     "0": {}, 
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFSocket=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "6": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSocketCreateConnectedToSocketSignature": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "r^{?=iii^{__CFData}}"
+     }, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFSocket=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "4": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSocketCreateRunLoopSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFRunLoopSource=}"
+    }
+   }, 
+   "CFSocketCreateWithNative": {
+    "args": {
+     "0": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFSocket=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "4": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSocketCreateWithSocketSignature": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_modifier": "n"
+     }, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFSocket=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CFData=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "4": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFSocketDisableCallBacks": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketEnableCallBacks": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFSocketGetNative": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketGetSocketFlags": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketInvalidate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketIsValid": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketRegisterSocketSignature": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CFSocketRegisterValue": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CFSocketSendData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFSocketSetAddress": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFSocketSetSocketFlags": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFSocket=}"
+     }
+    }
+   }, 
+   "CFSocketUnregister": {
+    "args": {
+     "0": {
+      "type_modifier": "n"
+     }, 
+     "2": {}
+    }
+   }, 
+   "CFStreamCreateBoundPair": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "2": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFStreamCreatePairWithPeerSocketSignature": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_modifier": "n", 
+      "type_override": "^{_CFSocketSignature=iii^{__CFData=}}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFStreamCreatePairWithSocket": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFStreamCreatePairWithSocketToHost": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFReadStream}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFWriteStream}"
+     }
+    }
+   }, 
+   "CFStringAppend": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringAppendCString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }
+    }
+   }, 
+   "CFStringAppendCharacters": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "r^T"
+     }
+    }
+   }, 
+   "CFStringAppendFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "2": {
+      "printf_format": true, 
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "variadic": true
+   }, 
+   "CFStringAppendFormatAndArguments": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CFStringAppendPascalString": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "*"
+     }
+    }
+   }, 
+   "CFStringCapitalize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFStringCompare": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringCompareWithOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringCompareWithOptionsAndLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFStringConvertEncodingToIANACharSetName": {
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringConvertIANACharSetNameToEncoding": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringCreateArrayBySeparatingStrings": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFStringCreateArrayWithFindResults": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFStringCreateByCombiningStrings": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateExternalRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFStringCreateFromExternalRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateMutable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateMutableCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateMutableWithExternalCharactersNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "r^T"
+     }, 
+     "4": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithBytesNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "5": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithCString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithCStringNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }, 
+     "3": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithCharacters": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "r^T"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithCharactersNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "r^T"
+     }, 
+     "3": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithFileSystemRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringCreateWithFormat": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "2": {
+      "printf_format": true, 
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }, 
+    "variadic": true
+   }, 
+   "CFStringCreateWithFormatAndArguments": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CFStringCreateWithPascalString": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFStringCreateWithPascalStringNoCopy": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": "^v"
+     }, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFStringCreateWithSubstring": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringDelete": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringFind": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringFindAndReplace": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringFindCharacterFromSet": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFCharacterSet=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFStringFindWithOptions": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFStringFindWithOptionsAndLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFLocale=}"
+     }, 
+     "5": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFStringFold": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFStringGetBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "5": {
+      "c_array_length_in_arg": [
+       6, 
+       7
+      ], 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }, 
+     "7": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }
+    }
+   }, 
+   "CFStringGetCString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "o", 
+      "type_override": "^t"
+     }
+    }
+   }, 
+   "CFStringGetCStringPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "c_array_delimited_by_null": true, 
+     "type_override": "^t"
+    }
+   }, 
+   "CFStringGetCharacterAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetCharacterFromInlineBuffer": {
+    "args": {
+     "0": {
+      "type_override": [
+       "^{?=[64S]^{__CFString}^S{?=ii}ii}", 
+       "^{?=[64S]^{__CFString}^S{?=qq}qq}"
+      ]
+     }
+    }
+   }, 
+   "CFStringGetCharacters": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 1, 
+      "type_modifier": "o", 
+      "type_override": "r^T"
+     }
+    }
+   }, 
+   "CFStringGetCharactersPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": "r^T"
+    }
+   }, 
+   "CFStringGetDoubleValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetFastestEncoding": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetFileSystemRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "o", 
+      "type_override": "^t"
+     }
+    }
+   }, 
+   "CFStringGetHyphenationLocationBeforeIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFLocale=}"
+     }, 
+     "5": {
+      "type_modifier": "o", 
+      "type_override": "^I"
+     }
+    }
+   }, 
+   "CFStringGetIntValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetLength": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetLineBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }
+    }
+   }, 
+   "CFStringGetListOfAvailableEncodings": {
+    "retval": {
+     "c_array_of_variable_length": true, 
+     "type_override": "^I"
+    }
+   }, 
+   "CFStringGetMaximumSizeOfFileSystemRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetNameOfEncoding": {
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringGetParagraphBounds": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }, 
+     "4": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^i", 
+       "^l"
+      ]
+     }
+    }
+   }, 
+   "CFStringGetPascalString": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CFStringGetPascalStringPtr": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "c_array_of_variable_length": true
+    }
+   }, 
+   "CFStringGetRangeOfComposedCharactersAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetSmallestEncoding": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringGetSurrogatePairForLongCharacter": {
+    "args": {
+     "1": {
+      "c_array_of_fixed_length": 2, 
+      "type_modifier": "o", 
+      "type_override": "^T"
+     }
+    }
+   }, 
+   "CFStringHasPrefix": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringHasSuffix": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringInitInlineBuffer": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=[64S]^{__CFString}^S{?=ii}ii}", 
+       "^{?=[64S]^{__CFString}^S{?=qq}qq}"
+      ]
+     }
+    }
+   }, 
+   "CFStringInsert": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringIsHyphenationAvailableForLocale": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFStringLowercase": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFStringNormalize": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringPad": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringReplace": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringReplaceAll": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringSetExternalCharactersNoCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "n", 
+      "type_override": "r^T"
+     }
+    }
+   }, 
+   "CFStringTokenizerAdvanceToNextToken": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }
+    }
+   }, 
+   "CFStringTokenizerCopyBestStringLanguage": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFStringTokenizerCopyCurrentTokenAttribute": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }
+    }
+   }, 
+   "CFStringTokenizerCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFStringTokenizer=}"
+    }
+   }, 
+   "CFStringTokenizerGetCurrentSubTokens": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "c_array_length_in_result": true, 
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }, 
+     "3": {
+      "type_override": "^{__CFArray=}"
+     }
+    }
+   }, 
+   "CFStringTokenizerGetCurrentTokenRange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }
+    }
+   }, 
+   "CFStringTokenizerGoToTokenAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }
+    }
+   }, 
+   "CFStringTokenizerSetString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFStringTokenizer=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringTransform": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_modifier": "N", 
+      "type_override": "^{_CFRange=ll}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringTrim": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringTrimWhitespace": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFStringUppercase": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }
+   }, 
+   "CFTimeZoneCopyAbbreviation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFTimeZoneCopyAbbreviationDictionary": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFTimeZoneCopyDefault": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFTimeZoneCopyKnownNames": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFArray=}"
+    }
+   }, 
+   "CFTimeZoneCopyLocalizedName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFLocale=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFTimeZoneCopySystem": {
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFTimeZoneCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFTimeZoneCreateWithName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFTimeZoneCreateWithTimeIntervalFromGMT": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTimeZone=}"
+    }
+   }, 
+   "CFTimeZoneGetData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFTimeZoneGetDaylightSavingTimeOffset": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFTimeZoneGetName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFTimeZoneGetNextDaylightSavingTimeTransition": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFTimeZoneGetSecondsFromGMT": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFTimeZoneIsDaylightSavingTime": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFTimeZoneSetAbbreviationDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFTimeZoneSetDefault": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTimeZone=}"
+     }
+    }
+   }, 
+   "CFTreeAppendChild": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreeApplyFunctionToChildren": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFTreeCreate": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFTreeFindRoot": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFTreeGetChildAtIndex": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFTreeGetChildCount": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreeGetChildren": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "c_array_of_variable_length": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFTree}"
+     }
+    }
+   }, 
+   "CFTreeGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFTreeGetFirstChild": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFTreeGetNextSibling": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFTreeGetParent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFTreeInsertSibling": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreePrependChild": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreeRemove": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreeRemoveAllChildren": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }
+   }, 
+   "CFTreeSetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "r^{?=i^v^?^?^?}", 
+       "r^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFTreeSortChildren": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }, 
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "@"
+        }, 
+        "1": {
+         "typestr": "@"
+        }, 
+        "2": {
+         "typestr": "@"
+        }
+       }, 
+       "retval": {
+        "typestr": "l"
+       }
+      }, 
+      "callable_retained": false, 
+      "function": {
+       "args": [
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "@"
+        }
+       ], 
+       "retval": {
+        "typestr": "L"
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "2": {
+      "type_override": "@"
+     }
+    }
+   }, 
+   "CFURLCanBeDecomposed": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }
+   }, 
+   "CFURLClearResourcePropertyCache": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }
+   }, 
+   "CFURLClearResourcePropertyCacheForKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFURLCopyAbsoluteURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCopyFileSystemPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyFragment": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyHostName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyLastPathComponent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyNetLocation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyParameterString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyPassword": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyPathExtension": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyQueryString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyResourcePropertiesForKeys": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "@"
+    }
+   }, 
+   "CFURLCopyResourcePropertyForKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "type_modifier": "o", 
+      "type_override": "^@"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLCopyResourceSpecifier": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyScheme": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyStrictPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^Z"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCopyUserName": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCreateAbsoluteURLWithBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateBookmarkData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "5": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFURLCreateBookmarkDataFromAliasRecord": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFURLCreateBookmarkDataFromFile": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFURLCreateByResolvingBookmarkData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "5": {
+      "type_modifier": "o", 
+      "type_override": "^Z"
+     }, 
+     "6": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateCopyAppendingPathComponent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateCopyAppendingPathExtension": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateCopyDeletingLastPathComponent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateCopyDeletingPathExtension": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFURLCreateDataAndPropertiesFromResource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFData}"
+     }, 
+     "3": {
+      "already_retained": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFDictionary}"
+     }, 
+     "4": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "5": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }
+    }
+   }, 
+   "CFURLCreateFilePathURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateFileReferenceURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateFromFSRef": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_modifier": "n", 
+      "type_override": "^{FSRef=[80C]}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateFromFileSystemRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateFromFileSystemRepresentationRelativeToBase": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_delimited_by_null": true, 
+      "type_modifier": "n", 
+      "type_override": "^t"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreatePropertyFromResource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }
+    }
+   }, 
+   "CFURLCreateResourcePropertiesForKeysFromBookmarkData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFArray=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFURLCreateResourcePropertyForKeyFromBookmarkData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFData=}"
+     }
+    }
+   }, 
+   "CFURLCreateStringByAddingPercentEscapes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCreateStringByReplacingPercentEscapes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCreateStringByReplacingPercentEscapesUsingEncoding": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLCreateWithBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateWithFileSystemPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateWithFileSystemPathRelativeToBase": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLCreateWithString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLDestroyResource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }
+    }
+   }, 
+   "CFURLEnumeratorCreateForDirectoryURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURLEnumerator=}"
+    }
+   }, 
+   "CFURLEnumeratorCreateForMountedVolumes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFArray=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "type_override": "^{__CFURLEnumerator=}"
+    }
+   }, 
+   "CFURLEnumeratorGetDescendentLevel": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURLEnumerator=}"
+     }
+    }
+   }, 
+   "CFURLEnumeratorGetNextURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURLEnumerator=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFURL=}"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLEnumeratorGetSourceDidChange": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURLEnumerator=}"
+     }
+    }
+   }, 
+   "CFURLEnumeratorSkipDescendents": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURLEnumerator=}"
+     }
+    }
+   }, 
+   "CFURLGetBaseURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFURLGetByteRangeForComponent": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": "^{_CFRange=ll}"
+     }
+    }
+   }, 
+   "CFURLGetBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "c_array_length_in_result": true, 
+      "type_modifier": "o", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFURLGetFSRef": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_modifier": "o", 
+      "type_override": "^{FSRef=[80C]}"
+     }
+    }
+   }, 
+   "CFURLGetFileSystemRepresentation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "2": {
+      "c_array_length_in_arg": 3, 
+      "type_modifier": "o", 
+      "type_override": "^t"
+     }
+    }
+   }, 
+   "CFURLGetPortNumber": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }
+   }, 
+   "CFURLGetString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFURLHasDirectoryPath": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }
+    }
+   }, 
+   "CFURLResourceIsReachable": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLSetResourcePropertiesForKeys": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "@"
+     }, 
+     "2": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLSetResourcePropertyForKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLSetTemporaryResourcePropertyForKey": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFURLWriteBookmarkDataToFile": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o", 
+      "type_override": "^^{__CFError}"
+     }
+    }
+   }, 
+   "CFURLWriteDataAndPropertiesToResource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }
+    }
+   }, 
+   "CFUUIDCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFUUID=}"
+    }
+   }, 
+   "CFUUIDCreateFromString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFUUID=}"
+    }
+   }, 
+   "CFUUIDCreateFromUUIDBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFUUID=}"
+    }
+   }, 
+   "CFUUIDCreateString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFUUID=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFUUIDCreateWithBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFUUID=}"
+    }
+   }, 
+   "CFUUIDGetConstantUUIDWithBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFUUID=}"
+    }
+   }, 
+   "CFUUIDGetUUIDBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUUID=}"
+     }
+    }
+   }, 
+   "CFUserNotificationCancel": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUserNotification=}"
+     }
+    }
+   }, 
+   "CFUserNotificationCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "3": {
+      "type_modifier": "o", 
+      "type_override": "^i"
+     }, 
+     "4": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFUserNotification=}"
+    }
+   }, 
+   "CFUserNotificationCreateRunLoopSource": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFUserNotification=}"
+     }, 
+     "2": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "typestr": "^{__CFUserNotification=}"
+        }, 
+        "1": {
+         "typestr": [
+          "i", 
+          "q"
+         ]
+        }
+       }, 
+       "retval": {
+        "typestr": "v"
+       }
+      }, 
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFUserNotification=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFRunLoopSource=}"
+    }
+   }, 
+   "CFUserNotificationDisplayAlert": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "5": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "6": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "7": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "8": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "9": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "10": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^I", 
+       "^L"
+      ]
+     }
+    }
+   }, 
+   "CFUserNotificationDisplayNotice": {
+    "args": {
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "4": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "5": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "6": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "7": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFUserNotificationGetResponseDictionary": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUserNotification=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFDictionary=}"
+    }
+   }, 
+   "CFUserNotificationGetResponseValue": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUserNotification=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFUserNotificationReceiveResponse": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUserNotification=}"
+     }, 
+     "2": {
+      "type_modifier": "o", 
+      "type_override": [
+       "^I", 
+       "^L"
+      ]
+     }
+    }
+   }, 
+   "CFUserNotificationUpdate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFUserNotification=}"
+     }, 
+     "3": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }
+   }, 
+   "CFWriteStreamCanAcceptBytes": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFWriteStreamClose": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFWriteStreamCopyError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFError=}"
+    }
+   }, 
+   "CFWriteStreamCopyProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFWriteStreamCreateWithAllocatedBuffers": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFAllocator=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFWriteStream=}"
+    }
+   }, 
+   "CFWriteStreamCreateWithBuffer": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFWriteStream=}"
+    }
+   }, 
+   "CFWriteStreamCreateWithFile": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFWriteStream=}"
+    }
+   }, 
+   "CFWriteStreamGetError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFWriteStreamGetStatus": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFWriteStreamOpen": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }
+    }
+   }, 
+   "CFWriteStreamScheduleWithRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFWriteStreamSetClient": {
+    "args": {
+     "0": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CFWriteStream=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }, 
+      "type_override": "^?"
+     }, 
+     "3": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFWriteStreamSetProperty": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFWriteStreamUnscheduleFromRunLoop": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFRunLoop=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFWriteStreamWrite": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFWriteStream=}"
+     }, 
+     "1": {
+      "c_array_length_in_arg": 2, 
+      "type_modifier": "n", 
+      "type_override": "^v"
+     }
+    }
+   }, 
+   "CFXMLCreateStringByEscapingEntities": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFXMLCreateStringByUnescapingEntities": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFDictionary=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFXMLNodeCreate": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }, 
+     "3": {
+      "type_override": "^v"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFXMLNode=}"
+    }
+   }, 
+   "CFXMLNodeCreateCopy": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFXMLNode=}"
+    }
+   }, 
+   "CFXMLNodeGetInfoPtr": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^v"
+    }
+   }, 
+   "CFXMLNodeGetString": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFXMLNodeGetTypeCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }
+   }, 
+   "CFXMLNodeGetVersion": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }
+   }, 
+   "CFXMLParserAbort": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFString=}"
+     }
+    }
+   }, 
+   "CFXMLParserCopyErrorDescription": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFString=}"
+    }
+   }, 
+   "CFXMLParserCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "5": {
+      "type_override": [
+       "^{?=i^?^?^?^?^?}", 
+       "^{?=q^?^?^?^?^?}"
+      ]
+     }, 
+     "6": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFXMLParserCreateWithDataFromURL": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "4": {
+      "type_override": [
+       "^{?=i^?^?^?^?^?}", 
+       "^{?=q^?^?^?^?^?}"
+      ]
+     }, 
+     "5": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true
+    }
+   }, 
+   "CFXMLParserGetCallBacks": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^?^?^?^?^?}", 
+       "^{?=q^?^?^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFXMLParserGetContext": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "type_override": [
+       "^{?=i^v^?^?^?}", 
+       "^{?=q^v^?^?^?}"
+      ]
+     }
+    }
+   }, 
+   "CFXMLParserGetDocument": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "@"
+    }
+   }, 
+   "CFXMLParserGetLineNumber": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }
+   }, 
+   "CFXMLParserGetLocation": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }
+   }, 
+   "CFXMLParserGetSourceURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFURL=}"
+    }
+   }, 
+   "CFXMLParserGetStatusCode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }
+   }, 
+   "CFXMLParserParse": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFXMLParser=}"
+     }
+    }
+   }, 
+   "CFXMLTreeCreateFromData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFXMLTreeCreateFromDataWithError": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFData=}"
+     }, 
+     "2": {
+      "type_override": "^{__CFURL=}"
+     }, 
+     "5": {
+      "type_modifier": "o", 
+      "type_override": "^^{__CFDictionary}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFXMLTreeCreateWithDataFromURL": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFURL=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFXMLTreeCreateWithNode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFXMLNode=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFTree=}"
+    }
+   }, 
+   "CFXMLTreeCreateXMLData": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFAllocator=}"
+     }, 
+     "1": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true, 
+     "already_retained": true, 
+     "type_override": "^{__CFData=}"
+    }
+   }, 
+   "CFXMLTreeGetNode": {
+    "args": {
+     "0": {
+      "type_override": "^{__CFTree=}"
+     }
+    }, 
+    "retval": {
+     "type_override": "^{__CFXMLNode=}"
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

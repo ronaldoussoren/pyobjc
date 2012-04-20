@@ -11,7 +11,7 @@ class ContantTest (TestCase):
         self.assert_(isinstance(AppKit.NSFloatingWindowLevel, int))
 
     def testNSAnyEventMask(self):
-        self.assertEqual(AppKit.NSAnyEventMask, -1)
+        self.assertEqual(AppKit.NSAnyEventMask, cast_int(-1))
 
     def testNSViewFrameDidChangeNotification(self):
         self.assert_(hasattr(AppKit, 'NSViewFrameDidChangeNotification'))
@@ -19,7 +19,7 @@ class ContantTest (TestCase):
 
     def testNSUpArrowFunctionKey(self):
         self.assert_(hasattr(AppKit, 'NSUpArrowFunctionKey'))
-        self.assert_(isinstance(AppKit.NSUpArrowFunctionKey, unicode))
+        self.assertIsInstance(AppKit.NSUpArrowFunctionKey, unicode)
 
 if __name__ == "__main__":
     main()
