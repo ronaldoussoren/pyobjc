@@ -386,12 +386,24 @@ PyObjCClass_NewMetaClass(Class objc_class)
  * Note: This function creates new _classes_
  */
 
+static int
+class_init(PyObject *cls, PyObject *args, PyObject *kwds)
+{
+	if (kwds != NULL) {
+		if (PyDict_Check(kwds) && PyDict_Size(kwds) == 1) {
+			if (PyDict_GetItemString(kwds, "protocols") != NULL) {
+				return PyType_Type.tp_init(cls, args, NULL);
+			}
+		}
+	}
+	return PyType_Type.tp_init(cls, args, kwds);
+}
 
 static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)), 
 		PyObject* args, PyObject* kwds)
 {
-static	char* keywords[] = { "name", "bases", "dict", NULL };
+static	char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 	char* name;
 	PyObject* bases;
 	PyObject* dict;
@@ -415,10 +427,12 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 	PyObject* protectedMethods = NULL;
 	PyObject* hiddenSelectors = NULL;
 	PyObject* hiddenClassSelectors = NULL;
+	PyObject* arg_protocols = NULL;
 	BOOL      isCFProxyClass = NO;
+	int       r;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:__new__",
-			keywords, &name, &bases, &dict)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|O",
+			keywords, &name, &bases, &dict, &arg_protocols)) {
 		return NULL;
 	}
 
@@ -561,12 +575,63 @@ static	char* keywords[] = { "name", "bases", "dict", NULL };
 					"multiple objective-C bases");
 			return NULL;
 		} else if (PyObjCInformalProtocol_Check(v)) {
-			PyList_Append(protocols, v);
+			r = PyList_Append(protocols, v);
+			if (r == -1) {
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(protectedMethods);
+				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
+			}
 		} else if (PyObjCFormalProtocol_Check(v)) {
-			PyList_Append(protocols, v);
+			r = PyList_Append(protocols, v);
+			if (r == -1) {
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(protectedMethods);
+				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
+			}
 		} else {
-			PyList_Append(real_bases, v);
+			r = PyList_Append(real_bases, v);
+			if (r == -1) {
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(protectedMethods);
+				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
+			}
 		}
+	}
+
+	if (arg_protocols != NULL) {
+		PyObject* seq;
+		Py_ssize_t i, seqlen;
+
+		seq = PySequence_Fast(protocols, 
+			"'protocols' not a sequence?");
+		if (seq == NULL) {
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(protectedMethods);
+			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
+			return NULL;
+		}
+		seqlen = PySequence_Fast_GET_SIZE(seq);
+		for (i = 0; i < seqlen; i++) {
+			r = PyList_Append(protocols,
+				PySequence_Fast_GET_ITEM(seq, i));
+			if (r == -1) {
+				Py_DECREF(seq);
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(protectedMethods);
+				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
+			}
+		}
+		Py_DECREF(seq);
 	}
 
 	metadict = PyDict_New();
@@ -1471,7 +1536,7 @@ PyTypeObject PyObjCClass_Type = {
 	0,					/* tp_descr_get */
 	0,					/* tp_descr_set */
 	0,					/* tp_dictoffset */
-	0,					/* tp_init */
+	class_init,				/* tp_init */
 	0,					/* tp_alloc */
 	class_new,				/* tp_new */
 	0,		        		/* tp_free */

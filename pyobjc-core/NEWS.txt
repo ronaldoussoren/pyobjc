@@ -7,6 +7,22 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- In Python 3.x there is a new way to explicitly specify which (informal)
+  protocols a class conforms to::
+
+     class MyClass (NSObject, protocols=[Protocol1, Protocol2]):
+        pass
+
+  Python 2.x does not support this syntax, you can still use the
+  following code there::
+
+     class MyClass (NSObject, Protocol1, Protocol2):
+        pass
+
+  Note: The Python 2.x style works upto Python 3.2. In Python 3.3 and later
+  the Python 2.x style declaration no longer works due to changes in the
+  language.
+
 - Updated Python support. With this release PyObjC supports Python 2.6 and later,
   including Python 3.3 (which has a completely new representation for unicode strings)
 
