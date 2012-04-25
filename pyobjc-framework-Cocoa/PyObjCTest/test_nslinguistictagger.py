@@ -55,7 +55,7 @@ class TestNSLinguisticTagger (TestCase):
                 1, b'o^' + NSRange.__typestr__)
 
         self.assertArgIsBlock(NSLinguisticTagger.enumerateTagsInRange_scheme_options_usingBlock_,
-                3, b'v@' + NSRange.__typestr__ + NSRange.__typestr__ + b'o^B')
+                3, b'v@' + NSRange.__typestr__ + NSRange.__typestr__ + b'o^' + objc._C_NSBOOL)
 
         self.assertArgHasType(NSLinguisticTagger.tagAtIndex_scheme_tokenRange_sentenceRange_,
                 2, b'o^' + NSRange.__typestr__)
@@ -75,4 +75,7 @@ class TestNSLinguisticTagger (TestCase):
         self.assertArgIsOut(NSString.linguisticTagsInRange_scheme_options_orthography_tokenRanges_, 4)
 
         self.assertArgIsBlock(NSString.enumerateLinguisticTagsInRange_scheme_options_orthography_usingBlock_,
-                4, b'v@' + NSRange.__typestr__ + NSRange.__typestr__ + b'o^B')
+                4, b'v@' + NSRange.__typestr__ + NSRange.__typestr__ + b'o^' + objc._C_NSBOOL)
+
+if __name__ == "__main__":
+    main()

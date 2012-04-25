@@ -49,7 +49,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSOtherMouseDownMask, 1 << NSOtherMouseDown)
         self.assertEqual(NSOtherMouseUpMask, 1 << NSOtherMouseUp)
         self.assertEqual(NSOtherMouseDraggedMask, 1 << NSOtherMouseDragged)
-        self.assertEqual(NSAnyEventMask, -1)
+        self.assertEqual(NSAnyEventMask, NSUIntegerMax)
 
         self.assertEqual(NSAlphaShiftKeyMask, 1 << 16)
         self.assertEqual(NSShiftKeyMask, 1 << 17)
@@ -59,7 +59,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSNumericPadKeyMask, 1 << 21)
         self.assertEqual(NSHelpKeyMask, 1 << 22)
         self.assertEqual(NSFunctionKeyMask, 1 << 23)
-        self.assertEqual(NSDeviceIndependentModifierFlagsMask, -65536)
+        self.assertEqual(NSDeviceIndependentModifierFlagsMask, 0xffff0000)
         self.assertEqual(NSUnknownPointingDevice, 0)
         self.assertEqual(NSPenPointingDevice, 1)
         self.assertEqual(NSCursorPointingDevice, 2)

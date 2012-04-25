@@ -36,7 +36,7 @@ class TestNSDragging (TestCase):
         self.assertEqual(NSDragOperationAll_Obsolete, 15)
         self.assertEqual(NSDragOperationMove, 16)
         self.assertEqual(NSDragOperationDelete, 32)
-        self.assertEqual(NSDragOperationEvery, -1)
+        self.assertEqual(NSDragOperationEvery, NSUIntegerMax)
 
         self.assertEqual(NSDragOperationAll, NSDragOperationAll_Obsolete)
 

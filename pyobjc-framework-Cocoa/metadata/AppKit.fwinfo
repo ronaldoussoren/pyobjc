@@ -8856,7 +8856,7 @@
      {
       "args": {
        "0": {
-        "sel_of_type": "B@:@"
+        "sel_of_type": "Z@:@"
        }, 
        "2": {
         "type_override": "Z"
@@ -10217,7 +10217,7 @@
        }
       }, 
       "class_method": false, 
-      "selector": "collectionView:draggingSession:endedAtPoint:dragOperation:"
+      "selector": "collectionView:draggingSession:endedAtPoint:draggingOperation:"
      }, 
      {
       "class_method": false, 
@@ -24126,35 +24126,35 @@
     }
    }, 
    "NSAvailableWindowDepths": {
-    "retval": {}
+    "retval": { "c_array_delimited_by_null": true }
    }, 
    "NSBeginAlertSheet": {
     "args": {
-     "6": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "7": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "9": { "printf_format": true}
+     "6": {"sel_of_type": "v@:@i^v"},
+     "7": {"sel_of_type": "v@:@i^v"},
+     "9": {"printf_format": true}
     }, 
     "variadic": true
    }, 
    "NSBeginCriticalAlertSheet": {
     "args": {
-     "6": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "7": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "9": { "printf_format": true }
+     "6": {"sel_of_type": "v@:@i^v"},
+     "7": {"sel_of_type": "v@:@i^v"},
+     "9": {"printf_format": true}
     }, 
     "variadic": true
    }, 
    "NSBeginInformationalAlertSheet": {
     "args": {
-     "6": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "7": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] },
-     "9": { "printf_format": true }
+     "6": {"sel_of_type": "v@:@i^v"},
+     "7": {"sel_of_type": "v@:@i^v"},
+     "9": {"printf_format": true}
     }, 
     "variadic": true
    }, 
    "NSBestDepth": {
     "args": {
-     "4": {}
+     "4": { "type_modifier": "o"}
     }
    }, 
    "NSConvertGlyphsToPackedGlyphs": {
@@ -24165,160 +24165,148 @@
    }, 
    "NSCountWindows": {
     "args": {
-     "0": {}
+     "0": {"type_modifier": "o"}
     }
    }, 
    "NSCountWindowsForContext": {
     "args": {
-     "1": {}
+     "1": {"type_modifier": "o"}
     }
    }, 
    "NSDrawColorTiledRects": {
     "args": {
-     "2": {}, 
-     "3": {}
+     "2": {"type_modifier": "n", "c_array_length_in_arg": 4}, 
+     "3": {"type_modifier": "n", "c_array_length_in_arg": 4}
     }
    }, 
    "NSDrawTiledRects": {
     "args": {
-     "2": {}, 
-     "3": {}
+     "2": {"type_modifier": "n", "c_array_length_in_arg": 4}, 
+     "3": {"type_modifier": "n", "c_array_length_in_arg": 4}
     }
    }, 
    "NSGetAlertPanel": {
     "variadic": true,
     "args": {
-      "1": { "printf_format": true }
+       "1": { "printf_format": true }
     }
    }, 
    "NSGetCriticalAlertPanel": {
     "variadic": true,
     "args": {
-      "1": { "printf_format": true }
+       "1": { "printf_format": true }
     }
    }, 
    "NSGetInformationalAlertPanel": {
     "variadic": true,
     "args": {
-      "1": { "printf_format": true }
+       "1": { "printf_format": true }
     }
    }, 
    "NSGetWindowServerMemory": {
     "args": {
-     "1": {}, 
-     "2": {}, 
-     "3": {}
+     "1": {"type_modifier": "o"}, 
+     "2": {"type_modifier": "o"}, 
+     "3": {"type_modifier": "o"}
     }
    }, 
    "NSOpenGLGetOption": {
     "args": {
-     "1": {}
+     "1": {"type_modifier": "o"}
     }
    }, 
    "NSOpenGLGetVersion": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": {"type_modifier": "o"}, 
+     "1": {"type_modifier": "o"}
     }
    }, 
    "NSRectClipList": {
     "args": {
-     "0": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 1}
     }
    }, 
    "NSRectFillList": {
     "args": {
-     "0": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 1}
     }
    }, 
    "NSRectFillListUsingOperation": {
     "args": {
-     "0": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 1}
     }
    }, 
    "NSRectFillListWithColors": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 2}, 
+     "1": {"type_modifier": "n", "c_array_length_in_arg": 2}
     }
    }, 
    "NSRectFillListWithColorsUsingOperation": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 2}, 
+     "1": {"type_modifier": "n", "c_array_length_in_arg": 2}
     }
    }, 
    "NSRectFillListWithGrays": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": {"type_modifier": "n", "c_array_length_in_arg": 2}, 
+     "1": {"type_modifier": "n", "c_array_length_in_arg": 2}
     }
    }, 
    "NSRunAlertPanel": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSRunAlertPanelRelativeToWindow": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSRunCriticalAlertPanel": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSRunCriticalAlertPanelRelativeToWindow": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSRunInformationalAlertPanel": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSRunInformationalAlertPanelRelativeToWindow": {
     "variadic": true,
     "args": {
-       "1": { 
-         "printf_format": true
-       }
+      "1": { "printf_format": 1 }
     }
    }, 
    "NSShowAnimationEffect": {
     "args": {
-     "5": {}
+     "4": {"sel_of_type": "v@:^v"}
     }
    }, 
    "NSWindowList": {
     "args": {
-     "1": {}
+     "1": {"c_array_length_in_arg": 0, "type_modifier": "o"}
     }
    }, 
    "NSWindowListForContext": {
     "args": {
-     "2": {}
+     "2": {"c_array_length_in_arg": 1, "type_modifier": "o"}
     }
    }, 
    "_NSDictionaryOfVariableBindings": {
-    "variadic": true
+    "ignore": true
    }
   }, 
   "informal_protocols": {

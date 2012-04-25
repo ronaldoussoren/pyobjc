@@ -63,7 +63,6 @@ class TestNSZone (TestCase):
     def testZoneCreation(self):
         z = NSDefaultMallocZone()
         if z is not None:
-            print type(z)
             self.assertIsInstance(z, NSZonePtr)
         z = NSCreateZone(5000, 100, True)
         self.assertIsInstance(z, NSZonePtr)

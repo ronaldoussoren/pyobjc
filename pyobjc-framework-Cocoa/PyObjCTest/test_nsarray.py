@@ -498,9 +498,9 @@ class TestNSArray (TestCase):
 
 
         self.assertArgIsBlock(NSMutableArray.sortUsingComparator_,
-                0, b'l@@')
+                0, objc._C_NSInteger + b'@@')
         self.assertArgIsBlock(NSMutableArray.sortWithOptions_usingComparator_,
-                1, b'l@@')
+                1, objc._C_NSInteger + b'@@')
 
 
 

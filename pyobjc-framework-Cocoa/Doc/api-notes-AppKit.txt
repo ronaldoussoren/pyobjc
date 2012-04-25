@@ -96,3 +96,20 @@ Methods ``-initWithWindowRef:`` and ``-windowRef`` are not supported.
 
   This method is not yet supported. Support for this method requires a manual wrapper, which 
   has not been written yet.
+
+``NSDictionaryOfVariableBindings``
+----------------------------------
+
+This is a helper macro that cannot be implemented with the same interface in Python.
+
+Instead of::
+
+    NSDictionaryOfVariableBindings(button1, button2, nil)
+
+use::
+
+    { "button1": button1, "button2": button2 }
+
+
+Note: it is possible to implement this macro as a Python function with a slightly different
+API: pass the variable names as strings instead of identifiers.

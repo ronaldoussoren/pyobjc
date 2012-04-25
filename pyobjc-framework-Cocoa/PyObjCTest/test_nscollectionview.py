@@ -49,13 +49,13 @@ class TestNSCollectionView (TestCase):
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_acceptDrop_index_dropOperation_,
             3, objc._C_NSInteger)
 
-        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_, 
                 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
                 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
-                3, objc._C_NSUInteger)
+                3, objc._C_NSInteger)
 
 
     @min_os_level('10.6')

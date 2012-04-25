@@ -1131,6 +1131,20 @@ static int setup_nsdecimal(PyObject* m)
 		}
        	} 
 
+	/* FIXME: metadata generator generates the wrong signature for NSDecimal,
+	 * this is a workaround to get the right mapping anyway.
+	 */
+	if (PyObjCPointerWrapper_Register("^{_NSDecimal=iIIII[8S]}",
+			pythonify_nsdecimal,
+			depythonify_nsdecimal) < 0) {
+		return -1;
+	}
+
+	if (PyObjCPointerWrapper_Register("r^{_NSDecimal=iIIII[8S]}",
+			pythonify_nsdecimal,
+			depythonify_nsdecimal) < 0) {
+		return -1;
+	}
 
 	Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
 	Class classNSNumber = objc_lookUpClass("NSNumber");

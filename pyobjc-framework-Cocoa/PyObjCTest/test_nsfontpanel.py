@@ -22,9 +22,9 @@ class TestNSFontPanel (TestCase):
         self.assertEqual(NSFontPanelTextColorEffectModeMask, 1<< 10)
         self.assertEqual(NSFontPanelDocumentColorEffectModeMask, 1<<11)
         self.assertEqual(NSFontPanelShadowEffectModeMask, 1<<12)
-        self.assertEqual(NSFontPanelAllEffectsModeMask, cast_int(0XFFF00))
-        self.assertEqual(NSFontPanelStandardModesMask, cast_int(0xFFFF))
-        self.assertEqual(NSFontPanelAllModesMask, cast_int(0xFFFFFFFF))
+        self.assertEqual(NSFontPanelAllEffectsModeMask, (0XFFF00))
+        self.assertEqual(NSFontPanelStandardModesMask, (0xFFFF))
+        self.assertEqual(NSFontPanelAllModesMask, (0xFFFFFFFF))
 
     def testProtocols(self):
         self.assertResultHasType(TestNSFontPanelHelper.validModesForFontPanel_, objc._C_NSUInteger)

@@ -2,76 +2,24 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "externs": {
-    "NSIntHashCallBacks": {
+  "structs": {
+    "NSFastEnumerationState": {
       "ignore": true
+    }
+  },
+  "opaque": {
+    "NSZonePtr": {
+      "typestr": "^{_NSZone=}"
     },
-    "NSIntMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSIntMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSIntegerHashCallBacks": {
-       "ignore": true
-    },
-    "NSIntegerMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSIntegerMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSNonOwnedPointerHashCallBacks": {
-       "ignore": true
-    },
-    "NSNonOwnedPointerMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSNonOwnedPointerMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSNonOwnedPointerOrNullMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSNonRetainedObjectHashCallBacks": {
-       "ignore": true
-    },
-    "NSNonRetainedObjectMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSNonRetainedObjectMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSObjectHashCallBacks": {
-       "ignore": true
-    },
-    "NSObjectMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSObjectMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSOwnedObjectIdentityHashCallBacks": {
-       "ignore": true
-    },
-    "NSOwnedPointerHashCallBacks": {
-       "ignore": true
-    },
-    "NSOwnedPointerMapKeyCallBacks": {
-       "ignore": true
-    },
-    "NSOwnedPointerMapValueCallBacks": {
-       "ignore": true
-    },
-    "NSPointerToStructHashCallBacks": {
-       "ignore": true
+    "NSAppleEventManagerSuspensionID": {
+      "typestr": "^{__NSAppleEventManagerSuspension=}"
     }
   },
   "cftypes": {
-   "NSAppleEventManagerSuspensionID": {
-    "opaque": true
-   }
-  }, 
+    "NSAppleEventManagerSuspensionID": {
+      "ignore": true
+    }
+  },
   "classes": {
    "NSAffineTransform": {
     "methods": [
@@ -1764,7 +1712,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": "B@:@"
+        "sel_of_type": "Z@:@"
        }
       }, 
       "class_method": false, 
@@ -1773,7 +1721,7 @@
      {
       "args": {
        "2": {
-        "sel_of_type": "B@:@"
+        "sel_of_type": "Z@:@"
        }
       }, 
       "class_method": true, 
@@ -2832,12 +2780,12 @@
        "5": {
         "callable": {
          "arguments": {
-	  "0": {
+          "0": {
            "typestr": "^v"
-	  },
+          }, 
           "1": {
            "typestr": "@"
-          },
+          }, 
           "2": {
            "typestr": "@"
           }
@@ -2863,6 +2811,9 @@
            "typestr": "^v"
           }, 
           "1": {
+           "typestr": "@"
+          },
+          "2": {
            "typestr": "@"
           }
          }, 
@@ -3018,7 +2969,7 @@
        }
       }, 
       "class_method": false, 
-      "selector": "setReadabilityHandler"
+      "selector": "setReadabilityHandler:"
      }, 
      {
       "args": {
@@ -3039,7 +2990,7 @@
        }
       }, 
       "class_method": false, 
-      "selector": "setWriteabilityHandler"
+      "selector": "setWriteabilityHandler:"
      }, 
      {
       "args": {
@@ -3531,28 +3482,28 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": {"type_modifier": "o"}
       }, 
       "class_method": true, 
       "selector": "addVersionOfItemAtURL:withContentsOfURL:options:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": {"type_modifier": "o"}
       }, 
       "class_method": false, 
       "selector": "replaceItemAtURL:options:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": {"type_modifier": "o"}
       }, 
       "class_method": false, 
       "selector": "removeAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": {"type_modifier": "o"}
       }, 
       "class_method": true, 
       "selector": "removeOtherVersionsOfItemAtURL:error:"
@@ -4931,7 +4882,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -4955,7 +4909,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -5313,7 +5270,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -5337,7 +5297,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -5361,7 +5324,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -5510,6 +5476,9 @@
         "callable": {
          "arguments": {
           "0": {
+           "typestr": "^v"
+          }, 
+          "1": {
            "typestr": "@"
           }
          }, 
@@ -8115,7 +8084,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8143,7 +8115,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8171,7 +8146,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8199,7 +8177,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8227,7 +8208,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I","Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8255,7 +8239,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I","Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8283,7 +8270,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I","Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8311,7 +8301,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8339,7 +8332,10 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": ["I", "Q"]
+           "typestr": [
+            "I", 
+            "Q"
+           ]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8371,7 +8367,10 @@
           }
          }, 
          "retval": {
-          "typestr": ["i", "q"]
+          "typestr": [
+           "i", 
+           "q"
+          ]
          }
         }
        }
@@ -8516,7 +8515,7 @@
       }, 
       "class_method": false, 
       "selector": "initWithSet:copyItems:"
-     },
+     }, 
      {
       "args": {
        "1": {
@@ -8547,7 +8546,7 @@
       }, 
       "class_method": false, 
       "selector": "indexesOfObjectsWithOptions:passingTest:"
-     } 
+     }
     ]
    }, 
    "NSOutputStream": {
@@ -9328,8 +9327,7 @@
       "args": {
        "0": {
         "null_accepted": false, 
-        "type_modifier": "o", 
-        "type_override": "r^{?=b8b4b1b1b18[8S]}"
+        "type_modifier": "o"
        }
       }, 
       "class_method": false, 
@@ -11031,6 +11029,43 @@
        "type_override": "Z"
       }, 
       "selector": "writeToURL:atomically:"
+     }, 
+     {
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }, 
+          "1": {
+           "typestr": "@"
+          }, 
+          "2": {
+           "typestr": [
+            "{_NSRange=II}", 
+            "{_NSRange=QQ}"
+           ]
+          }, 
+          "3": {
+           "typestr": [
+            "{_NSRange=II}", 
+            "{_NSRange=QQ}"
+           ]
+          }, 
+          "4": {
+           "type_modifier": "o", 
+           "typestr": "^Z"
+          }
+         }, 
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }, 
+      "class_method": false, 
+      "selector": "enumerateLinguisticTagsInRange:scheme:options:orthography:usingBlock:"
      }
     ]
    }, 
@@ -12564,6 +12599,86 @@
     ]
    }
   }, 
+  "externs": {
+   "NSDebugEnabled": {
+     "ignore": true
+   },
+   "NSZombieEnabled": {
+     "ignore": true
+   },
+   "NSDeallocateZombies": {
+     "ignore": true
+   },
+   "NSHangOnUncaughtException": {
+     "ignore": true
+   },
+   "NSKeepAllocationStatistics": {
+     "ignore": true
+   },
+   "NSIntHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSIntMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSIntMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSIntegerHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSIntegerMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSIntegerMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonOwnedPointerHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonOwnedPointerMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonOwnedPointerMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonOwnedPointerOrNullMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonRetainedObjectHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonRetainedObjectMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSNonRetainedObjectMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSObjectHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSObjectMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSObjectMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSOwnedObjectIdentityHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSOwnedPointerHashCallBacks": {
+    "ignore": true
+   }, 
+   "NSOwnedPointerMapKeyCallBacks": {
+    "ignore": true
+   }, 
+   "NSOwnedPointerMapValueCallBacks": {
+    "ignore": true
+   }, 
+   "NSPointerToStructHashCallBacks": {
+    "ignore": true
+   }
+  }, 
   "formal_protocols": {
    "NSCopying": {
     "methods": [
@@ -12763,31 +12878,21 @@
    }, 
    "NSAllocateObject": {
     "args": {
-     "0": {
-      "type_override": "#"
-     }, 
-     "2": {
-      "type_override": "^{_NSZone=}"
-     }
+     "0": {}, 
+     "2": {}
     }
    }, 
    "NSClassFromString": {
-    "retval": {
-     "type_override": "#"
-    }
+    "retval": {}
    }, 
    "NSCopyHashTableWithZone": {
     "args": {
-     "1": {
-      "type_override": "^{_NSZone=}"
-     }
+     "1": {}
     }
    }, 
    "NSCopyMapTableWithZone": {
     "args": {
-     "1": {
-      "type_override": "^{_NSZone=}"
-     }
+     "1": {}
     }
    }, 
    "NSCopyMemoryPages": {
@@ -12795,29 +12900,22 @@
    }, 
    "NSCopyObject": {
     "args": {
-     "2": {
-      "type_override": "^{_NSZone=}"
-     }
+     "2": {}
     }
    }, 
    "NSCreateHashTableWithZone": {
     "args": {
-     "2": {
-      "type_override": "^{_NSZone=}"
-     }
+     "2": {}
     }
    }, 
    "NSCreateMapTableWithZone": {
     "args": {
-     "3": {
-      "type_override": "^{_NSZone=}"
-     }
+     "3": {}
     }
    }, 
    "NSCreateZone": {
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{_NSZone=}"
+     "already_cfretained": true
     }
    }, 
    "NSDeallocateMemoryPages": {
@@ -12825,160 +12923,90 @@
    }, 
    "NSDecimalAdd": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "2": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "NSDecimalCompact": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}
     }
    }, 
    "NSDecimalCompare": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalCopy": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalDivide": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "2": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "NSDecimalIsNotANumber": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}
     }
    }, 
    "NSDecimalMultiply": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "2": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "NSDecimalMultiplyByPowerOf10": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalNormalize": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalPower": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalRound": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "NSDecimalString": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}
     }
    }, 
    "NSDecimalSubtract": {
     "args": {
-     "0": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "1": {
-      "type_override": "^{_NSDecimal=}"
-     }, 
-     "2": {
-      "type_override": "^{_NSDecimal=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "NSDefaultMallocZone": {
-    "retval": {
-     "type_override": "^{_NSZone=}"
-    }
+    "retval": {}
    }, 
    "NSDivideRect": {
     "args": {
-     "1": {
-      "null_accepted": false, 
-      "type_modifier": "o", 
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
-     }, 
-     "2": {
-      "null_accepted": false, 
-      "type_modifier": "o", 
-      "type_override": [
-       "^{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
-       "^{CGRect={CGPoint=dd}{CGSize=dd}}"
-      ]
-     }
+     "1": {"type_modifier":"o"}, 
+     "2": {"type_modifier":"o"}
     }
    }, 
    "NSEndHashTableEnumeration": {
@@ -12991,32 +13019,16 @@
      "0": {}
     }
    }, 
+   "NSFrameAddress": {
+    "ignore": true
+   }, 
    "NSGetSizeAndAlignment": {
     "args": {
-     "0": {
-      "c_array_delimited_by_null": true, 
-      "type_modifier": "n", 
-      "type_override": "^t"
-     }, 
-     "1": {
-      "type_modifier": "o", 
-      "type_override": [
-       "^I", 
-       "^Q"
-      ]
-     }, 
-     "2": {
-      "type_modifier": "o", 
-      "type_override": [
-       "^I", 
-       "^Q"
-      ]
-     }
+     "0": { "c_array_delimited_by_null": true}, 
+     "1": { "type_modifier": "o"}, 
+     "2": { "type_modifier": "o"}
     }, 
-    "retval": {
-     "c_array_delimited_by_null": true, 
-     "type_override": "^t"
-    }
+    "retval": {}
    }, 
    "NSGetUncaughtExceptionHandler": {
     "retval": {}
@@ -13049,16 +13061,13 @@
     }
    }, 
    "NSLog": {
+    "variadic": true,
     "args": {
-     "0": {
-      "printf_format": true, 
-      "type_override": "@"
-     }
-    }, 
-    "variadic": true
+       "0": { "printf_format": true }
+    }
    }, 
    "NSLogv": {
-    "ignore": true
+     "ignore": true
    }, 
    "NSMapGet": {
     "args": {
@@ -13115,10 +13124,14 @@
    }, 
    "NSRecycleZone": {
     "args": {
-     "0": {
-      "type_override": "^{_NSZone=}"
-     }
+     "0": {}
     }
+   }, 
+   "NSReturnAddress": {
+    "ignore": true
+   }, 
+   "NSCountFrames": {
+    "ignore": true
    }, 
    "NSSetUncaughtExceptionHandler": {
     "args": {
@@ -13127,23 +13140,17 @@
    }, 
    "NSSetZoneName": {
     "args": {
-     "0": {
-      "type_override": "^{_NSZone=}"
-     }
+     "0": {}
     }
    }, 
    "NSShouldRetainWithZone": {
     "args": {
-     "1": {
-      "type_override": "^{_NSZone=}"
-     }
+     "1": {}
     }
    }, 
    "NSStringFromClass": {
     "args": {
-     "0": {
-      "type_override": "#"
-     }
+     "0": {}
     }
    }, 
    "NSZoneCalloc": {
@@ -13160,9 +13167,7 @@
    }, 
    "NSZoneName": {
     "args": {
-     "0": {
-      "type_override": "^{_NSZone=}"
-     }
+     "0": {}
     }
    }, 
    "NSZoneRealloc": {

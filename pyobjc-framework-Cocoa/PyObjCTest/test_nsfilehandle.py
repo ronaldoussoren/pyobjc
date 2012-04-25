@@ -27,8 +27,8 @@ class TestNSFileHandle (TestCase):
     def testMethods10_7(self):
         self.assertArgIsBlock(NSFileHandle.setReadabilityHandler_, 0, b'v@')
         self.assertArgIsBlock(NSFileHandle.setWriteabilityHandler_, 0, b'v@')
-        self.assertResultIsBlock(NSFileHandle.readabilityHandler_, b'v@')
-        self.assertResultIsBlock(NSFileHandle.writeabilityHandler_, b'v@')
+        self.assertResultIsBlock(NSFileHandle.readabilityHandler, b'v@')
+        self.assertResultIsBlock(NSFileHandle.writeabilityHandler, b'v@')
 
 
 if __name__ == "__main__":
