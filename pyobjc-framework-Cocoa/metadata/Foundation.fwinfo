@@ -4931,7 +4931,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -4955,7 +4955,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -5313,7 +5313,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -5337,7 +5337,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -5361,7 +5361,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -8115,7 +8115,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8143,7 +8143,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8171,7 +8171,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8199,7 +8199,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8227,7 +8227,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I","Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8255,7 +8255,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I","Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8283,7 +8283,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I","Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8311,7 +8311,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8339,7 +8339,7 @@
            "typestr": "@"
           }, 
           "2": {
-           "typestr": "L"
+           "typestr": ["I", "Q"]
           }, 
           "3": {
            "type_modifier": "o", 
@@ -8371,7 +8371,7 @@
           }
          }, 
          "retval": {
-          "typestr": "l"
+          "typestr": ["i", "q"]
          }
         }
        }
@@ -8456,7 +8456,7 @@
      }, 
      {
       "args": {
-       "2": {
+       "1": {
         "type_override": "Z"
        }
       }, 
@@ -8516,7 +8516,38 @@
       }, 
       "class_method": false, 
       "selector": "initWithSet:copyItems:"
-     }
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }, 
+          "1": {
+           "typestr": "@"
+          }, 
+          "2": {
+           "typestr": [
+            "I", 
+            "Q"
+           ]
+          }, 
+          "3": {
+           "type_modifier": "o", 
+           "typestr": "^Z"
+          }
+         }, 
+         "retval": {
+          "typestr": "Z"
+         }
+        }
+       }
+      }, 
+      "class_method": false, 
+      "selector": "indexesOfObjectsWithOptions:passingTest:"
+     } 
     ]
    }, 
    "NSOutputStream": {
@@ -9070,7 +9101,7 @@
           }, 
           "3": {
            "type_modifier": "o", 
-           "typestr": "Z"
+           "typestr": "^Z"
           }
          }, 
          "retval": {
@@ -12130,7 +12161,7 @@
         "type_override": "^t"
        }
       }, 
-      "class_method": true, 
+      "class_method": false, 
       "selector": "value:withObjCType:", 
       "suggestion": "use something else"
      }, 
@@ -12150,11 +12181,6 @@
        "type_override": "^v"
       }, 
       "selector": "pointerValue", 
-      "suggestion": "use something else"
-     }, 
-     {
-      "class_method": false, 
-      "selector": "value:withObjCType:", 
       "suggestion": "use something else"
      }, 
      {
