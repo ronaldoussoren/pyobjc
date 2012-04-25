@@ -55,6 +55,7 @@ class ObjCLazyModule (module):
     __slots__ = (
                 '_ObjCLazyModule__bundle', '_ObjCLazyModule__enummap', '_ObjCLazyModule__funcmap', 
                 '_ObjCLazyModule__parents', '_ObjCLazyModule__varmap', '_ObjCLazyModule__inlinelist',
+                '_ObjCLazyModule__aliases',
             )
 
     def __init__(self, name, frameworkIdentifier, frameworkPath, metadict, inline_list, initialdict={}, parents=()):
@@ -78,6 +79,7 @@ class ObjCLazyModule (module):
         self.__varmap_dct = metadict.get('constants_dict', {})
         self.__enummap = metadict.get('enums')
         self.__funcmap = metadict.get('functions')
+        self.__aliases = metadict.get('aliases')
         self.__inlinelist = inline_list
 
         self.__expressions = metadict.get('expressions')
@@ -178,6 +180,12 @@ class ObjCLazyModule (module):
                 except AttributeError:
                     pass
 
+        if self.__aliases:
+            for nm in self.__aliases:
+                try:
+                    getattr(self, nm)
+                except AttributeError:
+                    pass
 
         # Add all names that are already in our __dict__
         all.update(self.__dict__)
@@ -262,6 +270,11 @@ class ObjCLazyModule (module):
                     return eval(info, {}, self.__expressions_mapping)
                 except NameError:
                     pass
+
+        if self.__aliases:
+            if name in self.__aliases:
+                alias = self.__aliases[name]
+                return getattr(self, alias)
 
         raise AttributeError(name)
 
