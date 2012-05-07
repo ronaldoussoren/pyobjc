@@ -8,6 +8,21 @@
     }
   },
   "externs": {
+    "kCFPlugInDynamicRegistrationKey": {
+      "ignore": true
+    },
+    "kCFPlugInDynamicRegisterFunctionKey": {
+      "ignore": true
+    },
+    "kCFPlugInUnloadFunctionKey": {
+      "ignore": true
+    },
+    "kCFPlugInFactoriesKey": {
+      "ignore": true
+    },
+    "kCFPlugInTypesKey": {
+      "ignore": true
+    },
     "kCFLocaleCountryCodeKey": {
       "typestr": "@",
       "comment": "XXX: These should be in headers"
@@ -233,6 +248,12 @@
   "classes": {}, 
   "formal_protocols": {}, 
   "functions": {
+   "CFPlugInGetTypeID": {
+     "ignore": true
+   },
+   "CFPlugInCreate": {
+     "ignore": true
+   },
    "CFAllocatorAllocate": {
     "ignore": true
    }, 
@@ -2507,24 +2528,24 @@
    "CFNotificationCenterAddObserver": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_override": "@"}, 
      "2": {
       "function": {
        "args": [
         {
-         "typestr": "^{__CFNotificationCenter=}"
+         "typestr": "@"
         }, 
         {
          "typestr": "@"
         }, 
         {
-         "typestr": "^{__CFString=}"
+         "typestr": "@"
         }, 
         {
          "typestr": "@"
         }, 
         {
-         "typestr": "^{__CFDictionary=}"
+         "typestr": "@"
         }
        ], 
        "retval": {
@@ -2533,7 +2554,7 @@
       }
      }, 
      "3": { "type_override": "@" }, 
-     "4": {}
+     "4": { "type_override": "@" }
     }
    }, 
    "CFNotificationCenterGetDarwinNotifyCenter": {
@@ -2549,7 +2570,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
+     "2": { "type_override": "@"}, 
      "3": {}
     }
    }, 
@@ -2557,22 +2578,22 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
+     "2": { "type_override": "@"}, 
      "3": {}
     }
    }, 
    "CFNotificationCenterRemoveEveryObserver": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFNotificationCenterRemoveObserver": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_override": "@" }, 
      "2": {}, 
-     "3": {}
+     "3": { "type_override": "@" }
     }
    }, 
    "CFNumberCompare": {
@@ -2703,164 +2724,58 @@
     }
    }, 
    "CFPlugInAddInstanceForFactory": {
-    "args": {
-     "0": {}
-    }
-   }, 
-   "CFPlugInCreate": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    }, 
    "CFPlugInFindFactoriesForPlugInType": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFPlugInFindFactoriesForPlugInTypeInPlugIn": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFPlugInGetBundle": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFPlugInInstanceCreate": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    }, 
    "CFPlugInInstanceCreateWithInstanceDataSize": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^v"
-        }
-       ], 
-       "retval": {
-        "typestr": "v"
-       }
-      }
-     }, 
-     "3": {}, 
-     "4": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{__CFPlugInInstance=}"
-        }, 
-        {
-         "typestr": "^{__CFString=}"
-        }, 
-        {
-         "typestr": "^^v"
-        }
-       ], 
-       "retval": {
-        "typestr": "Z" 
-       }
-      }
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    }, 
    "CFPlugInInstanceGetFactoryName": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFPlugInInstanceGetInstanceData": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFPlugInInstanceGetInterfaceFunctionTable": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInIsLoadOnDemand": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInRegisterFactoryFunction": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "function": {
-       "args": [
-        {
-         "typestr": "^{__CFAllocator=}"
-        }, 
-        {
-         "typestr": "^{__CFUUID=}"
-        }
-       ], 
-       "retval": {
-        "typestr": "^v"
-       }
-      }
-     }
-    }
+    "ignore": true
    }, 
    "CFPlugInRegisterFactoryFunctionByName": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInRegisterPlugInType": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInRemoveInstanceForFactory": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInSetLoadOnDemand": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInUnregisterFactory": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFPlugInUnregisterPlugInType": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
+   }, 
+   "CFPlugInInstanceGetTypeID": {
+    "ignore": true
    }, 
    "CFPreferencesAddSuitePreferencesToApp": {
     "args": {
@@ -2927,7 +2842,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFPreferencesGetAppIntegerValue": {
@@ -3092,7 +3007,7 @@
    "CFReadStreamCreateWithBytesNoCopy": {
     "args": {
      "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
      "3": {}
     }, 
     "retval": {
@@ -3111,9 +3026,9 @@
    "CFReadStreamGetBuffer": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }, 
-    "retval": {}
+    "retval": { "c_array_length_in_arg": 2, "type_override": "^v" }
    }, 
    "CFReadStreamGetError": {
     "args": {
@@ -3138,7 +3053,7 @@
    "CFReadStreamRead": {
     "args": {
      "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "c_array_lenght_in_result": true, "type_modifier": "o" }
+     "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o", "type_override": "^v" }
     }
    }, 
    "CFReadStreamScheduleWithRunLoop": {
@@ -3515,13 +3430,14 @@
    "CFSetAddValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFSetApplyFunction": {
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
@@ -3542,7 +3458,7 @@
    "CFSetContainsValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFSetCreate": {
@@ -3596,9 +3512,9 @@
    "CFSetGetValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }, 
-    "retval": {}
+    "retval": { "type_override": "@"}
    }, 
    "CFSetGetValueIfPresent": {
     "args": {
@@ -3608,10 +3524,7 @@
     }
    }, 
    "CFSetGetValues": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFSetRemoveAllValues": {
     "args": {
@@ -3621,19 +3534,19 @@
    "CFSetRemoveValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFSetReplaceValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFSetSetValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFShowStr": {
@@ -3664,20 +3577,10 @@
     }
    }, 
    "CFSocketCopyRegisteredSocketSignature": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}
-    }
+    "ignore": true
    }, 
    "CFSocketCopyRegisteredValue": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}
-    }
+    "ignore": true
    }, 
    "CFSocketCreate": {
     "args": {
@@ -3859,17 +3762,10 @@
     }
    }, 
    "CFSocketRegisterSocketSignature": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}
-    }
+    "ignore": true
    }, 
    "CFSocketRegisterValue": {
-    "args": {
-     "0": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFSocketSendData": {
     "args": {
@@ -3890,16 +3786,13 @@
     }
    }, 
    "CFSocketUnregister": {
-    "args": {
-     "0": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFStreamCreateBoundPair": {
     "args": {
      "0": {}, 
-     "1": { "type_override": "o" }, 
-     "2": { "type_override": "o" }
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFStreamCreatePairWithPeerSocketSignature": {
@@ -5074,7 +4967,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFURLCreateResourcePropertiesForKeysFromBookmarkData": {
@@ -5315,7 +5208,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFUUIDCreate": {
@@ -5379,7 +5272,7 @@
    "CFUserNotificationCreate": {
     "args": {
      "0": {}, 
-     "3": {}, 
+     "3": { "type_modifier": "o" }, 
      "4": {}
     }, 
     "retval": {
@@ -5495,7 +5388,7 @@
    "CFWriteStreamCreateWithBuffer": {
     "args": {
      "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -5572,7 +5465,7 @@
    "CFWriteStreamWrite": {
     "args": {
      "0": {}, 
-     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }
    }, 
    "CFXMLCreateStringByEscapingEntities": {

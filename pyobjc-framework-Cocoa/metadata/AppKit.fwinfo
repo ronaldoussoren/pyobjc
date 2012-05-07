@@ -23721,6 +23721,16 @@
    }
   }, 
   "enum": {
+    "NSNormalWindowLevel": { "value": 0, "comment": "Aliases for values from CoreGraphics" },
+    "NSFloatingWindowLevel": { "value": 3 },
+    "NSSubmenuWindowLevel": { "value": 3 },
+    "NSTornOffMenuWindowLevel": { "value": 3 },
+    "NSMainMenuWindowLevel": { "value": 24 },
+    "NSStatusWindowLevel": { "value": 25 },
+    "NSDockWindowLevel": { "value": 20 },
+    "NSModalPanelWindowLevel": { "value": 8 },
+    "NSPopUpMenuWindowLevel": { "value": 101 },
+    "NSScreenSaverWindowLevel": { "value": 1000 },
    "NSAttachmentCharacter": {
     "type": "unicode"
    }

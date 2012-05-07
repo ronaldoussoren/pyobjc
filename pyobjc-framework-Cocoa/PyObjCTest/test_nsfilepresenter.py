@@ -2,8 +2,11 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 class Presenter (NSObject):
-    def relinquishPresentedItemToReader_(self, reader): pass
-    def relinquishPresentedItemToWriter_(self, reader): pass
+    def relinquishPresentedItemToReader_(self, a): pass
+    def relinquishPresentedItemToWriter_(self, a): pass
+    def savePresentedItemChangesWithCompletionHandler_(self, a): pass
+    def accommodatePresentedItemDeletionWithCompletionHandler_(self, a): pass
+    def accommodatePresentedSubitemDeletionAtURL_completionHandler_(self, a, b): pass
 
 class TestNSFilePresenter (TestCase):
     @min_os_level('10.7')

@@ -28,10 +28,10 @@ class TestFoundation (TestCase):
                 'NSArchiverCallback',
                 'NSClassDescriptionPrimitives',
                 'NSComparisonMethods',
-                'NSConnectionDelegateMethods',
+                #'NSConnectionDelegateMethods',
                 'NSCopyLinkMoveHandler',
                 'NSDelayedPerforming',
-                'NSDistantObjectRequestMethods',
+                #'NSDistantObjectRequestMethods',
                 'NSDistributedObjects',
                 'NSErrorRecoveryAttempting',
                 'NSKeyValueCoding',
@@ -39,7 +39,7 @@ class TestFoundation (TestCase):
                 'NSKeyValueObserverRegistration',
                 'NSKeyValueObserving',
                 'NSKeyValueObservingCustomization',
-                'NSKeyedArchiverDelegate',
+                #'NSKeyedArchiverDelegate',
                 'NSKeyedArchiverObjectSubstitution',
             ]:
 

@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    import CFNetwork
+except ImportError:
+    CFNetwork = None
+
 class TestNSURLError (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSURLErrorDomain, unicode)
@@ -59,11 +64,12 @@ class TestNSURLError (TestCase):
         self.assertEqual(NSURLErrorClientCertificateRequired, -1206)
 
     @min_os_level('10.7')
+    @onlyIf(CFNetwork is not None)
     def testConstants10_7(self):
-        self.assertEqual(NSURLErrorInternationalRoamingOff, kCFURLErrorInternationalRoamingOff)
-        self.assertEqual(NSURLErrorCallIsActive, kCFURLErrorCallIsActive)
-        self.assertEqual(NSURLErrorDataNotAllowed, kCFURLErrorDataNotAllowed)
-        self.assertEqual(NSURLErrorRequestBodyStreamExhausted, kCFURLErrorRequestBodyStreamExhausted)
+        self.assertEqual(NSURLErrorInternationalRoamingOff, CFNetwork.kCFURLErrorInternationalRoamingOff)
+        self.assertEqual(NSURLErrorCallIsActive, CFNetwork.kCFURLErrorCallIsActive)
+        self.assertEqual(NSURLErrorDataNotAllowed, CFNetwork.kCFURLErrorDataNotAllowed)
+        self.assertEqual(NSURLErrorRequestBodyStreamExhausted, CFNetwork.kCFURLErrorRequestBodyStreamExhausted)
 
 if __name__ == "__main__":
     main()

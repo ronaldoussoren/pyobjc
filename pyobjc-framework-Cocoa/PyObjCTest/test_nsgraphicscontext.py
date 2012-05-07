@@ -40,6 +40,7 @@ class TestNSGraphicsContext (TestCase):
         context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
         self.assertIsInstance(context, NSGraphicsContext)
         if Quartz is not None:
+            print "Quartz", Quartz
             port = context.graphicsPort()
             self.assertIsInstance(port, Quartz.CGContextRef)
 
