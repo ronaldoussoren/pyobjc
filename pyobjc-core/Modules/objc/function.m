@@ -373,6 +373,7 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
 	result->doc = NULL;
 	result->name = NULL;
 	result->module = NULL;
+	result->cif = NULL;
 
 	result->methinfo= PyObjCMethodSignature_WithMetaData(signature, meta, NO);
 	if (result->methinfo == NULL) {
