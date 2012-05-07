@@ -3067,7 +3067,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -3745,7 +3745,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classNamed:", 
@@ -3755,7 +3755,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "principalClass", 
@@ -5271,7 +5271,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -5296,7 +5296,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -17928,7 +17928,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -17947,7 +17947,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -17962,7 +17962,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -17977,7 +17977,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -18256,7 +18256,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {
@@ -18275,7 +18275,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {
@@ -18300,7 +18300,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForClassName:", 
@@ -18315,7 +18315,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForClassName:", 
@@ -26098,7 +26098,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "superclass", 
@@ -26108,7 +26108,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "class", 
@@ -26282,7 +26282,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -26353,7 +26353,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForCoder", 
@@ -26392,7 +26392,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -27252,7 +27252,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForKeyedArchiver", 
@@ -27287,7 +27287,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForKeyedUnarchiver", 
@@ -27580,7 +27580,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForArchiver", 
@@ -27605,7 +27605,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForPortCoder", 
@@ -27747,7 +27747,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {
@@ -31646,7 +31646,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "class", 
@@ -33017,7 +33017,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -33333,7 +33333,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -33356,11 +33356,11 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -41945,7 +41945,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -41966,7 +41966,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "URLHandleClassForURL:", 
@@ -42627,7 +42627,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -42642,7 +42642,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -44808,7 +44808,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "transformedValueClass", 
@@ -45531,13 +45531,13 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "replacementClassForClass:", 
@@ -50531,7 +50531,7 @@
       "class_method": false, 
       "required": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "unarchiver:cannotDecodeObjectOfClassName:originalClasses:", 
@@ -51081,7 +51081,7 @@
       "class_method": false, 
       "required": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "superclass", 
@@ -51092,7 +51092,7 @@
       "class_method": false, 
       "required": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "class", 
@@ -51194,7 +51194,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -51210,7 +51210,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -53111,7 +53111,7 @@
     "args": [
      {
       "name": "aClass", 
-      "typestr": "^{objc_class=}"
+      "typestr": "#"
      }, 
      {
       "name": "extraBytes", 
@@ -53134,7 +53134,7 @@
      }
     ], 
     "retval": {
-     "typestr": "^{objc_class=}"
+     "typestr": "#"
     }
    }, 
    "NSCompareHashTables": {
@@ -54977,7 +54977,7 @@
     "args": [
      {
       "name": "aClass", 
-      "typestr": "^{objc_class=}"
+      "typestr": "#"
      }
     ], 
     "retval": {
@@ -55606,7 +55606,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForArchiver", 
@@ -55723,7 +55723,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForCoder", 
@@ -56239,7 +56239,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -56277,7 +56277,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForPortCoder", 
@@ -56960,7 +56960,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForKeyedArchiver", 
@@ -57001,7 +57001,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "classForKeyedUnarchiver", 
@@ -57302,7 +57302,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {

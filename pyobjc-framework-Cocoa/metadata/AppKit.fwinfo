@@ -2,6 +2,38 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+    "NSPrintFaxJob": {
+      "typestr": "@"
+    },
+    "NSPrintFaxUseCoverSheet": {
+      "typestr": "@"
+    },
+    "NSPrintFaxTrimPageEnds": {
+      "typestr": "@"
+    },
+    "NSPrintFaxSendTime": {
+      "typestr": "@"
+    },
+    "NSPrintFaxReturnReceipt": {
+      "typestr": "@"
+    },
+    "NSPrintFaxReceiverNumbers": {
+      "typestr": "@"
+    },
+    "NSPrintFaxReceiverNames": {
+      "typestr": "@"
+    },
+    "NSPrintFaxModem": {
+      "typestr": "@"
+    },
+    "NSPrintFaxCoverSheetName": {
+      "typestr": "@"
+    },
+    "NSPrintFaxHighResolution": {
+      "typestr": "@"
+    }
+  },
   "cftypes": {
    "NSModalSession": {
     "opaque": true, 
@@ -693,7 +725,7 @@
        }
       }, 
       "class_method": false, 
-      "selector": "setCompletionHandler_"
+      "selector": "setCompletionHandler:"
      }
     ]
    }, 

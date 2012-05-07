@@ -256,6 +256,7 @@ class TestStream (TestCase):
 
     @onlyIf(onTheNetwork)
     def testSockets(self):
+        self.fail("SKIP")
         sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         sd.connect(('www.apple.com', 80))
 

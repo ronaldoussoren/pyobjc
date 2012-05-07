@@ -428,8 +428,6 @@ class TestString (TestCase):
         self.assertIsInstance(kCFStringTransformStripDiacritics, unicode)
 
     def testNoPrivate(self):
-        self.assertNotHasAttr(CoreFoundation, 'CFShow')
-        self.assertNotHasAttr(CoreFoundation, 'CFShowStr')
         self.assertNotHasAttr(CoreFoundation, '__CFStringMakeConstantString')
 
     def testCFSTR(self):
@@ -597,7 +595,7 @@ class TestStringEncodingExt (TestCase):
         self.assertIsInstance(v, (int, long))
         self.assertIsInstance(ch, (int, long))
 
-        self.assertResultIsBool(CFStringIsHyphenationAvailableForLocale)
+        self.assertResultIsBOOL(CFStringIsHyphenationAvailableForLocale)
         v = CFStringIsHyphenationAvailableForLocale(loc)
         self.assertIsInstance(v, bool)
 

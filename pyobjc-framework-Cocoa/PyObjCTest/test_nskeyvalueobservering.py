@@ -65,17 +65,17 @@ class TestNSKeyValueObserving (TestCase):
         self.assertEqual( m['arguments'][5]['type'], b'^v')
         
         o = NSOrderedSet.alloc().init()
-        m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v')
+        m = o.removeObserver_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][4]['type'], b'^v')
 
         o = NSSet.alloc().init()
-        m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v')
+        m = o.removeObserver_forKeyPath_context_.__metadata__()
+        self.assertEqual( m['arguments'][4]['type'], b'^v')
 
 
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSObject.automaticallyNotifiesObserversForKey)
+        self.assertResultIsBOOL(NSObject.automaticallyNotifiesObserversForKey_)
 
 if __name__ == "__main__":
     main()

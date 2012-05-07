@@ -2,7 +2,20 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+    "CFStringInlineBuffer": {
+      "ignore": true
+    }
+  },
   "externs": {
+    "kCFLocaleCountryCodeKey": {
+      "typestr": "@",
+      "comment": "XXX: These should be in headers"
+    },
+    "kCFLocaleLanguageCodeKey": {
+      "typestr": "@",
+      "comment": "XXX: These should be in headers"
+    },
     "kCFCopyStringBagCallBacks": {
       "ignore": true
     },
@@ -84,7 +97,8 @@
     "gettypeid_func": "CFFileDescriptorGetTypeID"
    }, 
    "CFFileSecurityRef": {
-    "gettypeid_func": "CFFileSecurityGetTypeID"
+    "gettypeid_func": "CFFileSecurityGetTypeID",
+    "tollfree": "__NSFileSecurity"
    }, 
    "CFLocaleRef": {
     "gettypeid_func": "CFLocaleGetTypeID", 
@@ -219,130 +233,53 @@
   "classes": {}, 
   "formal_protocols": {}, 
   "functions": {
-   "CFAbsoluteTimeAddGregorianUnits": {
-    "args": {
-     "1": {}
-    }
-   }, 
-   "CFAbsoluteTimeGetDayOfWeek": {
-    "args": {
-     "1": {}
-    }
-   }, 
-   "CFAbsoluteTimeGetDayOfYear": {
-    "args": {
-     "1": {}
-    }
-   }, 
-   "CFAbsoluteTimeGetDifferenceAsGregorianUnits": {
-    "args": {
-     "2": {}
-    }
-   }, 
-   "CFAbsoluteTimeGetGregorianDate": {
-    "args": {
-     "1": {}
-    }
-   }, 
-   "CFAbsoluteTimeGetWeekOfYear": {
-    "args": {
-     "1": {}
-    }
-   }, 
    "CFAllocatorAllocate": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFAllocatorCreate": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true
    }, 
    "CFAllocatorDeallocate": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFAllocatorGetContext": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
-   }, 
-   "CFAllocatorGetDefault": {
-    "retval": {}
-   }, 
-   "CFAllocatorGetPreferredSizeForSize": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFAllocatorReallocate": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {}
-   }, 
-   "CFAllocatorSetDefault": {
-    "args": {
-     "0": {}
-    }
-   }, 
-   "CFArrayAppendArray": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFArrayAppendValue": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
-   }, 
+     "args": {
+       "1": { "type_override": "@" }
+     }
+   },
    "CFArrayApplyFunction": {
     "args": {
-     "0": {}, 
      "2": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@" 
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "3": {}
+     "3": { "type_override": "@" }
     }
    }, 
    "CFArrayBSearchValues": {
     "args": {
      "0": {}, 
-     "2": {}, 
+     "2": { "type_override": "@"}, 
      "3": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
@@ -356,17 +293,16 @@
         }
        ], 
        "retval": {
-        "typestr": "L"
+        "typestr": "l"
        }
       }
      }, 
-     "4": {}
+     "4": {"type_override": "@"}
     }
    }, 
    "CFArrayContainsValue": {
     "args": {
-     "0": {}, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFArrayCreate": {
@@ -419,37 +355,37 @@
    "CFArrayGetCountOfValue": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFArrayGetFirstIndexOfValue": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFArrayGetLastIndexOfValue": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFArrayGetValueAtIndex": {
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "type_override": "@"}
    }, 
    "CFArrayGetValues": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "o", "type_override": "^@" }
     }
    }, 
    "CFArrayInsertValueAtIndex": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFArrayRemoveAllValues": {
@@ -465,19 +401,20 @@
    "CFArrayReplaceValues": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^@" }
     }
    }, 
    "CFArraySetValueAtIndex": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFArraySortValues": {
     "args": {
      "0": {}, 
      "2": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
@@ -491,11 +428,11 @@
         }
        ], 
        "retval": {
-        "typestr": "L"
+        "typestr": "l"
        }
       }
      }, 
-     "3": {}
+     "3": { "type_override": "@"}
     }
    }, 
    "CFAttributedStringBeginEditing": {
@@ -557,27 +494,27 @@
     "args": {
      "0": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFAttributedStringGetAttributeAndLongestEffectiveRange": {
     "args": {
      "0": {}, 
      "2": {}, 
-     "4": {}
+     "4": { "type_modifier": "o"}
     }
    }, 
    "CFAttributedStringGetAttributes": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }, 
     "retval": {}
    }, 
    "CFAttributedStringGetAttributesAndLongestEffectiveRange": {
     "args": {
      "0": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }, 
     "retval": {}
    }, 
@@ -631,43 +568,35 @@
    "CFBagAddValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBagApplyFunction": {
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFBagContainsValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBagCreate": {
@@ -715,27 +644,27 @@
    "CFBagGetCountOfValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBagGetValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }, 
-    "retval": {}
+    "retval": { "type_override": "@" }
    }, 
    "CFBagGetValueIfPresent": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@"}, 
+     "2": { "type_modifier": "o", "type_override": "^@"}
     }
    }, 
    "CFBagGetValues": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "^@", "type_modifier": "o", "c_array_of_variable_length": true }
     }
    }, 
    "CFBagRemoveAllValues": {
@@ -746,61 +675,53 @@
    "CFBagRemoveValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFBagReplaceValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBagSetValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBinaryHeapAddValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@"}
     }
    }, 
    "CFBinaryHeapApplyFunction": {
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@" 
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@"}
     }
    }, 
    "CFBinaryHeapContainsValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBinaryHeapCreate": {
@@ -830,19 +751,19 @@
    "CFBinaryHeapGetCountOfValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFBinaryHeapGetMinimum": {
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "type_override": "@"}
    }, 
    "CFBinaryHeapGetMinimumIfPresent": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o", "type_override": "^@" }
     }
    }, 
    "CFBinaryHeapGetValues": {
@@ -869,7 +790,7 @@
    "CFBitVectorCreate": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -919,7 +840,7 @@
    "CFBitVectorGetBits": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_of_variable_length": true, "type_modifier": "o" }
     }
    }, 
    "CFBitVectorGetCount": {
@@ -1215,18 +1136,10 @@
     "retval": {}
    }, 
    "CFBundleGetDataPointerForName": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFBundleGetDataPointersForNames": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFBundleGetDevelopmentRegion": {
     "args": {
@@ -1235,18 +1148,10 @@
     "retval": {}
    }, 
    "CFBundleGetFunctionPointerForName": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFBundleGetFunctionPointersForNames": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFBundleGetIdentifier": {
     "args": {
@@ -1272,15 +1177,15 @@
    "CFBundleGetPackageInfo": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFBundleGetPackageInfoInDirectory": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFBundleGetPlugIn": {
@@ -1323,8 +1228,8 @@
    "CFBundleOpenBundleResourceFiles": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFBundleOpenBundleResourceMap": {
@@ -1446,8 +1351,8 @@
    "CFCalendarGetTimeRangeOfUnit": {
     "args": {
      "0": {}, 
-     "3": {}, 
-     "4": {}
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFCalendarSetFirstWeekday": {
@@ -1617,14 +1522,13 @@
    }, 
    "CFDataAppendBytes": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }
    }, 
    "CFDataCreate": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -1659,7 +1563,7 @@
    "CFDataCreateWithBytesNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
      "3": {}
     }, 
     "retval": {
@@ -1681,12 +1585,12 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true, "type_override": "^v" }
    }, 
    "CFDataGetBytes": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "o", "type_override": "^v" }
     }
    }, 
    "CFDataGetLength": {
@@ -1698,7 +1602,7 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true, "type_override": "^v" }
    }, 
    "CFDataIncreaseLength": {
     "args": {
@@ -1708,7 +1612,7 @@
    "CFDataReplaceBytes": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^v" }
     }
    }, 
    "CFDataSetLength": {
@@ -1761,7 +1665,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "N" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -1790,8 +1694,8 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
-     "3": {}
+     "2": { "type_modifier": "N" }, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFDateFormatterGetDateStyle": {
@@ -1842,56 +1746,45 @@
    "CFDictionaryAddValue": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@" }, 
+     "2": { "type_override": "@" }
     }
    }, 
    "CFDictionaryApplyFunction": {
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFDictionaryContainsKey": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFDictionaryContainsValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFDictionaryCreate": {
@@ -1942,34 +1835,30 @@
    "CFDictionaryGetCountOfKey": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFDictionaryGetCountOfValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFDictionaryGetKeysAndValues": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
+    "ignore": true
    }, 
    "CFDictionaryGetValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }, 
-    "retval": {}
+    "retval": { "type_override": "@" }
    }, 
    "CFDictionaryGetValueIfPresent": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@" }, 
+     "2": { "type_modifier": "o", "type_override": "^@" }
     }
    }, 
    "CFDictionaryRemoveAllValues": {
@@ -1980,21 +1869,21 @@
    "CFDictionaryRemoveValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFDictionaryReplaceValue": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@" }, 
+     "2": { "type_override": "@" }
     }
    }, 
    "CFDictionarySetValue": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@" }, 
+     "2": { "type_override": "@" }
     }
    }, 
    "CFErrorCopyDescription": {
@@ -2043,8 +1932,8 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "3": {}, 
-     "4": {}
+     "3": { "c_array_length_in_arg": 5, "type_modifier": "n", "type_override": "^@" }, 
+     "4": { "c_array_length_in_arg": 5, "type_modifier": "n", "type_override": "^@" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -2068,29 +1957,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFFileDescriptor=}", 
-          false
-         ]
+         "typestr": "^{__CFFileDescriptor=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -2143,19 +2020,19 @@
    "CFFileSecurityCopyAccessControlList": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecurityCopyGroupUUID": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecurityCopyOwnerUUID": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecurityCreate": {
@@ -2178,19 +2055,19 @@
    "CFFileSecurityGetGroup": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecurityGetMode": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecurityGetOwner": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFFileSecuritySetAccessControlList": {
@@ -2386,35 +2263,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFMachPort=}", 
-          false
-         ]
+         "typestr": "^{__CFMachPort=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "q", 
-          false
-         ]
+         "typestr": "q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -2441,35 +2303,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFMachPort=}", 
-          false
-         ]
+         "typestr": "^{__CFMachPort=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "q", 
-          false
-         ]
+         "typestr": "q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -2514,23 +2361,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFMachPort=}", 
-          false
-         ]
+         "typestr": "^{__CFMachPort=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -2544,35 +2382,20 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFMessagePort=}", 
-          false
-         ]
+         "typestr": "^{__CFMessagePort=}"
         }, 
         {
-         "typestr": [
-          "i", 
-          false
-         ]
+         "typestr": "i"
         }, 
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "^{__CFData=}", 
-         false
-        ]
+        "typestr": "^{__CFData=}"
        }
       }
      }, 
@@ -2611,7 +2434,14 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": {
+       "function": {
+         "args": [
+	    { "typestr": "@" },
+	    { "typestr": "^v" }
+	 ]
+      }
+    }
    }, 
    "CFMessagePortGetName": {
     "args": {
@@ -2639,7 +2469,7 @@
      "0": {}, 
      "2": {}, 
      "5": {}, 
-     "6": {}
+     "6": { "type_modifier": "o"}
     }
    }, 
    "CFMessagePortSetDispatchQueue": {
@@ -2655,23 +2485,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFMessagePort=}", 
-          false
-         ]
+         "typestr": "^{__CFMessagePort=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -2691,45 +2512,27 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFNotificationCenter=}", 
-          false
-         ]
+         "typestr": "^{__CFNotificationCenter=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^{__CFString=}", 
-          false
-         ]
+         "typestr": "^{__CFString=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^{__CFDictionary=}", 
-          false
-         ]
+         "typestr": "^{__CFDictionary=}"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "3": {}, 
+     "3": { "type_override": "@" }, 
      "4": {}
     }
    }, 
@@ -2807,8 +2610,8 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "N" }, 
+     "4": {}
     }, 
     "retval": {
      "already_cfretained": true
@@ -2837,8 +2640,8 @@
    "CFNumberFormatterGetDecimalInfoForCurrencyCode": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFNumberFormatterGetFormat": {
@@ -2862,8 +2665,8 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
-     "4": {}
+     "2": { "type_modifier": "N" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFNumberFormatterSetFormat": {
@@ -2949,17 +2752,11 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -2968,29 +2765,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFPlugInInstance=}", 
-          false
-         ]
+         "typestr": "^{__CFPlugInInstance=}"
         }, 
         {
-         "typestr": [
-          "^{__CFString=}", 
-          false
-         ]
+         "typestr": "^{__CFString=}"
         }, 
         {
-         "typestr": [
-          "^^v", 
-          false
-         ]
+         "typestr": "^^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "Z", 
-         true
-        ]
+        "typestr": "Z" 
        }
       }
      }
@@ -3030,23 +2815,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFAllocator=}", 
-          false
-         ]
+         "typestr": "^{__CFAllocator=}"
         }, 
         {
-         "typestr": [
-          "^{__CFUUID=}", 
-          false
-         ]
+         "typestr": "^{__CFUUID=}"
         }
        ], 
        "retval": {
-        "typestr": [
-         "^v", 
-         false
-        ]
+        "typestr": "^v"
        }
       }
      }
@@ -3158,7 +2934,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFPreferencesRemoveSuitePreferencesFromApp": {
@@ -3200,6 +2976,7 @@
    "CFPropertyListCreateData": {
     "args": {
      "0": {}, 
+     "1": { "type_override": "@" },
      "4": {
       "already_cfretained": true, 
       "null_accepted": true, 
@@ -3219,39 +2996,47 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "4": {}, 
-     "5": {}
+     "4": { "type_modifier": "o" }, 
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CFPropertyListCreateFromXMLData": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFPropertyListCreateWithData": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "3": {}, 
+     "3": { "type_modifier": "o" }, 
      "4": {
       "already_cfretained": true, 
       "null_accepted": true, 
       "type_modifier": "o"
      }
+    },
+    "retval": {
+       "type_override": "@",
+       "already_cfretained": true
     }
    }, 
    "CFPropertyListCreateWithStream": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "4": {}, 
+     "4": { "type_modifier": "o" }, 
      "5": {
       "already_cfretained": true, 
       "null_accepted": true, 
       "type_modifier": "o"
      }
+    },
+    "retval": {
+       "type_override": "@",
+       "already_cfretained": true
     }
    }, 
    "CFPropertyListCreateXMLData": {
@@ -3264,6 +3049,7 @@
    }, 
    "CFPropertyListWrite": {
     "args": {
+     "0": { "type_override": "@" },
      "1": {}, 
      "4": {
       "already_cfretained": true, 
@@ -3272,10 +3058,16 @@
      }
     }
    }, 
+   "CFPropertyListIsValid": {
+     "args": {
+       "0": { "type_override": "@" }
+     }
+   },
    "CFPropertyListWriteToStream": {
     "args": {
+     "0": { "type_override": "@" },
      "1": {}, 
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFReadStreamClose": {
@@ -3300,7 +3092,7 @@
    "CFReadStreamCreateWithBytesNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }, 
      "3": {}
     }, 
     "retval": {
@@ -3346,7 +3138,7 @@
    "CFReadStreamRead": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "c_array_lenght_in_result": true, "type_modifier": "o" }
     }
    }, 
    "CFReadStreamScheduleWithRunLoop": {
@@ -3363,29 +3155,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFReadStream=}", 
-          false
-         ]
+         "typestr": "^{__CFReadStream=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -3493,29 +3273,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFRunLoopObserver=}", 
-          false
-         ]
+         "typestr": "^{__CFRunLoopObserver=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -3527,7 +3295,17 @@
    }, 
    "CFRunLoopObserverCreateWithHandler": {
     "args": {
-     "0": {}
+     "0": {},
+     "4": {
+        "function": {
+	  "retval": { "typestr": "v" },
+	  "args": [
+	     { "typestr": "^v" },
+	     { "typestr": "^{__CFRunLoopObserver=}" },
+	     { "typestr": ["I", "Q"] }
+	  ]
+       }
+     }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3566,7 +3344,17 @@
    }, 
    "CFRunLoopPerformBlock": {
     "args": {
-     "0": {}
+     "0": {},
+     "2": {
+       "function": {
+         "args": [
+	   { "typestr":  "^v" }
+	 ],
+	 "retval": {
+	   "typestr": "v"
+	 }
+       }
+     }
     }
    }, 
    "CFRunLoopRemoveObserver": {
@@ -3642,23 +3430,14 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFRunLoopTimer=}", 
-          false
-         ]
+         "typestr": "^{__CFRunLoopTimer=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -3670,7 +3449,18 @@
    }, 
    "CFRunLoopTimerCreateWithHandler": {
     "args": {
-     "0": {}
+     "0": {},
+     "5": {
+       "function": {
+          "args": [
+	     { "typestr": "^v" },
+	     { "typestr": "^{__CFRunLoopTimer=}" }
+	 ],
+	 "retval": {
+	    "typestr": "v"
+	 }
+      }
+     }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3735,27 +3525,18 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFSetContainsValue": {
@@ -3809,7 +3590,7 @@
    "CFSetGetCountOfValue": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "@" }
     }
    }, 
    "CFSetGetValue": {
@@ -3822,8 +3603,8 @@
    "CFSetGetValueIfPresent": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "@"}, 
+     "2": { "type_modifier": "o", "type_override": "^@" }
     }
    }, 
    "CFSetGetValues": {
@@ -3905,41 +3686,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFSocket=}", 
-          false
-         ]
+         "typestr": "^{__CFSocket=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -3957,41 +3720,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFSocket=}", 
-          false
-         ]
+         "typestr": "^{__CFSocket=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v" 
        }
       }
      }, 
@@ -4017,41 +3762,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFSocket=}", 
-          false
-         ]
+         "typestr": "^{__CFSocket=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v" 
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -4069,41 +3796,23 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFSocket=}", 
-          false
-         ]
+         "typestr": "^{__CFSocket=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -4189,31 +3898,31 @@
    "CFStreamCreateBoundPair": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_override": "o" }, 
+     "2": { "type_override": "o" }
     }
    }, 
    "CFStreamCreatePairWithPeerSocketSignature": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}
+     "1": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFStreamCreatePairWithSocket": {
     "args": {
      "0": {}, 
-     "2": {}, 
-     "3": {}
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CFStreamCreatePairWithSocketToHost": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "3": {}, 
-     "4": {}
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFStringAppend": {
@@ -4225,13 +3934,13 @@
    "CFStringAppendCString": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_override": "^t", "type_modifier": "n" }
     }
    }, 
    "CFStringAppendCharacters": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_override": "^T", "type_modifier": "n" }
     }
    }, 
    "CFStringAppendFormat": {
@@ -4245,18 +3954,12 @@
     "variadic": true
    }, 
    "CFStringAppendFormatAndArguments": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}
-    }
+    "ignore": true,
+    "comment": "va_list argument, use CFStringAppendFormat"
    }, 
    "CFStringAppendPascalString": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true,
+    "comment": "Use CFStringAppend"
    }, 
    "CFStringCapitalize": {
     "args": {
@@ -4368,7 +4071,7 @@
    "CFStringCreateMutableWithExternalCharactersNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^T"  }, 
      "4": {}
     }, 
     "retval": {
@@ -4378,7 +4081,7 @@
    "CFStringCreateWithBytes": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t"  }
     }, 
     "retval": {
      "already_cfretained": true
@@ -4387,7 +4090,7 @@
    "CFStringCreateWithBytesNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^t"  }, 
      "5": {}
     }, 
     "retval": {
@@ -4397,7 +4100,7 @@
    "CFStringCreateWithCString": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -4406,7 +4109,7 @@
    "CFStringCreateWithCStringNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }, 
      "3": {}
     }, 
     "retval": {
@@ -4416,7 +4119,7 @@
    "CFStringCreateWithCharacters": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -4425,7 +4128,7 @@
    "CFStringCreateWithCharactersNoCopy": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^T"}, 
      "3": {}
     }, 
     "retval": {
@@ -4435,7 +4138,7 @@
    "CFStringCreateWithFileSystemRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -4455,34 +4158,16 @@
     "variadic": true
    }, 
    "CFStringCreateWithFormatAndArguments": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true,
+    "comment": "va_list argument, use CFStringCreateWithFormat"
    }, 
    "CFStringCreateWithPascalString": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true,
+    "comment": "use CFStringCreate"
    }, 
    "CFStringCreateWithPascalStringNoCopy": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": {}
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
+    "ignore": true,
+    "comment": "use CFStringCreate"
    }, 
    "CFStringCreateWithSubstring": {
     "args": {
@@ -4515,14 +4200,14 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "4": {}
+     "4": { "type_modifier": "o"}
     }
    }, 
    "CFStringFindWithOptions": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "4": {}
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFStringFindWithOptionsAndLocale": {
@@ -4530,7 +4215,7 @@
      "0": {}, 
      "1": {}, 
      "4": {}, 
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CFStringFold": {
@@ -4542,21 +4227,21 @@
    "CFStringGetBytes": {
     "args": {
      "0": {}, 
-     "5": {}, 
-     "7": {}
+     "5": { "c_array_length_in_arg":[6,7], "type_modifier": "o", "type_override": "^t" }, 
+     "7": { "type_modifier": "o" }
     }
    }, 
    "CFStringGetCString": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "o", "type_override": "^t" }
     }
    }, 
    "CFStringGetCStringPtr": {
     "args": {
-     "0": {}
+     "0": { "type_override": "@"}
     }, 
-    "retval": {}
+    "retval": {"type_override": "^t", "c_array_delimited_by_null": true }
    }, 
    "CFStringGetCharacterAtIndex": {
     "args": {
@@ -4564,21 +4249,19 @@
     }
    }, 
    "CFStringGetCharacterFromInlineBuffer": {
-    "args": {
-     "0": {}
-    }
+    "ignore": true
    }, 
    "CFStringGetCharacters": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": 1, "type_override": "^T" }
     }
    }, 
    "CFStringGetCharactersPtr": {
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^T" }
    }, 
    "CFStringGetDoubleValue": {
     "args": {
@@ -4593,14 +4276,14 @@
    "CFStringGetFileSystemRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "o", "type_override": "^t" }
     }
    }, 
    "CFStringGetHyphenationLocationBeforeIndex": {
     "args": {
      "0": {}, 
      "4": {}, 
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CFStringGetIntValue": {
@@ -4616,13 +4299,13 @@
    "CFStringGetLineBounds": {
     "args": {
      "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFStringGetListOfAvailableEncodings": {
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CFStringGetMaximumSizeOfFileSystemRepresentation": {
     "args": {
@@ -4635,22 +4318,16 @@
    "CFStringGetParagraphBounds": {
     "args": {
      "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CFStringGetPascalString": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFStringGetPascalStringPtr": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
+    "ignore": true
    }, 
    "CFStringGetRangeOfComposedCharactersAtIndex": {
     "args": {
@@ -4664,7 +4341,8 @@
    }, 
    "CFStringGetSurrogatePairForLongCharacter": {
     "args": {
-     "1": {}
+     "0": {},
+     "1": { "type_modifier": "o", "c_array_of_fixed_length": 2 }
     }
    }, 
    "CFStringHasPrefix": {
@@ -4680,10 +4358,7 @@
     }
    }, 
    "CFStringInitInlineBuffer": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
+    "ignore": true
    }, 
    "CFStringInsert": {
     "args": {
@@ -4727,8 +4402,8 @@
    }, 
    "CFStringSetExternalCharactersNoCopy": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": {},
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n", "type_override": "^T" }
     }
    }, 
    "CFStringTokenizerAdvanceToNextToken": {
@@ -4762,7 +4437,7 @@
    "CFStringTokenizerGetCurrentSubTokens": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_result": true, "c_array_length_in_arg": 2, "type_modifier": "o" }, 
      "3": {}
     }
    }, 
@@ -4785,7 +4460,7 @@
    "CFStringTransform": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_modifier": "N" }, 
      "2": {}
     }
    }, 
@@ -4922,30 +4597,22 @@
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "@"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFTreeCreate": {
@@ -4977,7 +4644,7 @@
    "CFTreeGetChildren": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_of_variable_length": true, "type_modifier": "o" }
     }
    }, 
    "CFTreeGetContext": {
@@ -5036,6 +4703,7 @@
     "args": {
      "0": {}, 
      "1": {
+      "callable_retained": false,
       "function": {
        "args": [
         {
@@ -5049,11 +4717,11 @@
         }
        ], 
        "retval": {
-        "typestr": "L"
+        "typestr": "l"
        }
       }
      }, 
-     "2": {}
+     "2": { "type_override": "@" }
     }
    }, 
    "CFURLCanBeDecomposed": {
@@ -5181,7 +4849,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
+     "2": { "type_modifier": "o", "type_override": "^@", "already_cfretained": true }, 
      "3": {
       "already_cfretained": true, 
       "null_accepted": true, 
@@ -5208,7 +4876,7 @@
    "CFURLCopyStrictPath": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -5225,7 +4893,7 @@
    "CFURLCreateAbsoluteURLWithBytes": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
      "4": {}
     }, 
     "retval": {
@@ -5277,7 +4945,7 @@
      "1": {}, 
      "3": {}, 
      "4": {}, 
-     "5": {}, 
+     "5": { "type_modifier": "o" }, 
      "6": {
       "already_cfretained": true, 
       "null_accepted": true, 
@@ -5339,10 +5007,10 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}, 
-     "3": {}, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
      "4": {}, 
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CFURLCreateFilePathURL": {
@@ -5376,7 +5044,7 @@
    "CFURLCreateFromFSRef": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n", "type_override": "^{FSRef=[80C]}" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -5385,7 +5053,7 @@
    "CFURLCreateFromFileSystemRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -5394,7 +5062,7 @@
    "CFURLCreateFromFileSystemRepresentationRelativeToBase": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n", "type_override": "^t" }, 
      "4": {}
     }, 
     "retval": {
@@ -5460,7 +5128,7 @@
    "CFURLCreateWithBytes": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n", "type_override": "^v" }, 
      "4": {}
     }, 
     "retval": {
@@ -5499,7 +5167,7 @@
    "CFURLDestroyResource": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CFURLEnumeratorCreateForDirectoryURL": {
@@ -5529,7 +5197,7 @@
    "CFURLEnumeratorGetNextURL": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_modifier": "o" }, 
      "2": {
       "already_cfretained": true, 
       "null_accepted": true, 
@@ -5556,25 +5224,25 @@
    "CFURLGetByteRangeForComponent": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFURLGetBytes": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o" }
     }
    }, 
    "CFURLGetFSRef": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "^{FSRef=[80C]}", "type_modifier": "o" }
     }
    }, 
    "CFURLGetFileSystemRepresentation": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 3, "c_array_delimited_by_null": true, "type_modifier": "o", "type_override": "^t" }
     }
    }, 
    "CFURLGetPortNumber": {
@@ -5723,26 +5391,18 @@
      "0": {}, 
      "1": {}, 
      "2": {
+      "function_pointer_retained": true,
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFUserNotification=}", 
-          false
-         ]
+         "typestr": "^{__CFUserNotification=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": ["i", "q"]
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }
@@ -5761,7 +5421,7 @@
      "7": {}, 
      "8": {}, 
      "9": {}, 
-     "10": {}
+     "10": { "type_modifier": "o" }
     }
    }, 
    "CFUserNotificationDisplayNotice": {
@@ -5790,7 +5450,7 @@
    "CFUserNotificationReceiveResponse": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CFUserNotificationUpdate": {
@@ -5835,7 +5495,7 @@
    "CFWriteStreamCreateWithBuffer": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -5879,29 +5539,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFWriteStream=}", 
-          false
-         ]
+         "typestr": "^{__CFWriteStream=}"
         }, 
         {
-         "typestr": [
-          "Q", 
-          false
-         ]
+         "typestr": "Q"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v" 
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -5924,7 +5572,7 @@
    "CFWriteStreamWrite": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CFXMLCreateStringByEscapingEntities": {
@@ -6084,7 +5732,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "5": {}
+     "5": { "type_modifier": "o" }
     }, 
     "retval": {
      "already_cfretained": true

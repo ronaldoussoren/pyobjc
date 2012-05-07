@@ -96,9 +96,9 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_)
         self.assertArgIsOut(NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_, 2)
 
-        self.assertResultIsBOOL(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_)
-        self.assertArgIsBOOL(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_, 0)
-        self.assertArgIsOut(NSFileManager.setUbiquitous_itemAtRUL_destinationURL_error_, 3)
+        self.assertResultIsBOOL(NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_)
+        self.assertArgIsBOOL(NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 0)
+        self.assertArgIsOut(NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 3)
         self.assertResultIsBOOL(NSFileManager.isUbiquitousItemAtURL_)
 
         self.assertResultIsBOOL(NSFileManager.startDownloadingUbiquitousItemAtURL_error_)
@@ -107,8 +107,8 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.evictUbiquitousItemAtURL_error_)
         self.assertArgIsOut(NSFileManager.evictUbiquitousItemAtURL_error_, 1)
 
-        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error, 1)
-        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error, 2)
+        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 1)
+        self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 2)
 
     def testOutput(self):
         obj = NSFileManager.defaultManager()

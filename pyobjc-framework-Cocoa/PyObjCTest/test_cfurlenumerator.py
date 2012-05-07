@@ -35,24 +35,25 @@ class TestCFURLEnumerator (TestCase):
 
         CFURLEnumeratorSkipDescendents(ref)
 
-        self.assertResultIsBool(CFURLEnumeratorGetSourceDidChange)
+        self.assertResultIsBOOL(CFURLEnumeratorGetSourceDidChange)
         v = CFURLEnumeratorGetSourceDidChange(ref)
         self.assertIsInstance(v, bool)
 
 
     @min_os_level('10.6')
     def testConstants(self):
-        self.asertEqual(kCFURLEnumeratorDefaultBehavior, 0)
-        self.asertEqual(kCFURLEnumeratorDescendRecursively, 1<<0)
-        self.asertEqual(kCFURLEnumeratorSkipInvisibles, 1<<1)
-        self.asertEqual(kCFURLEnumeratorGenerateFileReferenceURLs, 1<<2)
-        self.asertEqual(kCFURLEnumeratorSkipPackageContents, 1<<3)
-        self.asertEqual(kCFURLEnumeratorIncludeDirectoriesPreOrder, 1<<4)
-        self.asertEqual(kCFURLEnumeratorIncludeDirectoriesPostOrder, 1<<5)
-        self.asertEqual(kCFURLEnumeratorSuccess, 1)
-        self.asertEqual(kCFURLEnumeratorEnd, 2)
-        self.asertEqual(kCFURLEnumeratorError, 3)
-        self.asertEqual(kCFURLEnumeratorDirectoryPostOrderSuccess, 4)
+        self.assertEqual(kCFURLEnumeratorDefaultBehavior, 0)
+        self.assertEqual(kCFURLEnumeratorDescendRecursively, 1<<0)
+        self.assertEqual(kCFURLEnumeratorSkipInvisibles, 1<<1)
+        self.assertEqual(kCFURLEnumeratorGenerateFileReferenceURLs, 1<<2)
+        self.assertEqual(kCFURLEnumeratorSkipPackageContents, 1<<3)
+        self.assertEqual(kCFURLEnumeratorIncludeDirectoriesPreOrder, 1<<4)
+        self.assertEqual(kCFURLEnumeratorIncludeDirectoriesPostOrder, 1<<5)
+        self.assertEqual(kCFURLEnumeratorSuccess, 1)
+        self.assertEqual(kCFURLEnumeratorEnd, 2)
+        self.assertEqual(kCFURLEnumeratorError, 3)
+        self.assertEqual(kCFURLEnumeratorDirectoryPostOrderSuccess, 4)
 
 
-
+if __name__ == "__main__":
+    main()

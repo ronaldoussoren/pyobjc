@@ -117,8 +117,8 @@ class TestNSObjectInteraction(TestCase):
 
     @min_os_level('10.7')
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSObjectHelper.allowsWeakReference)
-        self.assertResultIsBOOL(NSObjectHelper.retainWeakReference)
+        self.assertResultIsBOOL(TestNSObjectHelper.allowsWeakReference)
+        self.assertResultIsBOOL(TestNSObjectHelper.retainWeakReference)
 
 if __name__ == '__main__':
     main( )

@@ -241,7 +241,7 @@ class TestRunLoop (TestCase):
 
     @min_os_level('10.7')
     def testFunctions10_7(self):
-        self.assertArgIsBool(CFRunLoopObserverCreateWithHandler, 2)
+        self.assertArgIsBOOL(CFRunLoopObserverCreateWithHandler, 2)
         self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, "v^{__CFRunLoopObserver=}I")
 
         l = []
@@ -260,7 +260,7 @@ class TestRunLoop (TestCase):
         CFRunLoopRemoveObserver(rl, ref, runloop_mode)
 
 
-        self.assertIsNotEqual(l, [])
+        self.assertNotEqual(l, [])
         for a, b in l:
             self.assertEqual(a, ref)
             self.assertIsInstance(b, (int, long))
@@ -269,12 +269,12 @@ class TestRunLoop (TestCase):
         self.assertArgIsBlock(CFRunLoopTimerCreateWithHandler, 5, 'v^{__CFRunLoopTimer=}')
         l = []
         ref = CFRunLoopTimerCreateWithHandler(None, 
-                CFAbsoluteTimeGetCurrent() + 0.5, 0.0, 0, lambda x: l.append(x))
+                CFAbsoluteTimeGetCurrent() + 0.5, 0.0, 0, 0, lambda x: l.append(x))
         self.assertIsInstance(ref, CFRunLoopTimerRef)
 
         CFRunLoopAddTimer(rl, ref, runloop_mode)
         res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
-        CFRunLoopRemovetimer(rl, ref, runloop_mode)
+        CFRunLoopRemoveTimer(rl, ref, runloop_mode)
 
         self.assertNotEqual(l, [])
         for a in l:

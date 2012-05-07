@@ -1913,8 +1913,7 @@
        }
       }, 
       "class_method": true, 
-      "selector": "dataWithBytesNoCopy:length:freeWhenDone:", 
-      "suggestion": "Use +dataWithBytes:length: instead"
+      "selector": "dataWithBytesNoCopy:length:freeWhenDone:"
      }, 
      {
       "args": {
@@ -1966,8 +1965,7 @@
        }
       }, 
       "class_method": false, 
-      "selector": "initWithBytesNoCopy:length:freeWhenDone:", 
-      "suggestion": "Use -initWithBytes:length: instead"
+      "selector": "initWithBytesNoCopy:length:freeWhenDone:"
      }, 
      {
       "args": {
@@ -12600,6 +12598,9 @@
    }
   }, 
   "externs": {
+   "NSMetadataQueryLocalDocumentsScope": {
+     "typestr": "@"
+   },
    "NSDebugEnabled": {
      "ignore": true
    },
@@ -13024,11 +13025,11 @@
    }, 
    "NSGetSizeAndAlignment": {
     "args": {
-     "0": { "c_array_delimited_by_null": true}, 
+     "0": { "c_array_delimited_by_null": true, "type_modifier": "n"}, 
      "1": { "type_modifier": "o"}, 
      "2": { "type_modifier": "o"}
     }, 
-    "retval": {}
+    "retval": { "c_array_delimited_by_null": true }
    }, 
    "NSGetUncaughtExceptionHandler": {
     "retval": {}

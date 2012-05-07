@@ -3,6 +3,7 @@ from Foundation import *
 
 class Presenter (NSObject):
     def relinquishPresentedItemToReader_(self, reader): pass
+    def relinquishPresentedItemToWriter_(self, reader): pass
 
 class TestNSFilePresenter (TestCase):
     @min_os_level('10.7')

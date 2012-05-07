@@ -29,9 +29,9 @@ class TestSFileCoordinator (TestCase):
         self.assertArgIsBlock(Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
                 5, 'v@@')
 
-        self.assertArgIsOut(Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemAtURLs_options_error_byAccessor_, 4)
-        self.assertArgIsBlock(Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemAtURLs_options_error_byAccessor_,
-                5, 'v@@?') # FIXME: Cannot represent this completion handler!
+        self.assertArgIsOut(  Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_, 4)
+        self.assertArgIsBlock(Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,
+                5, 'v@?') # FIXME: Cannot represent this completion handler!
 
 if __name__ == "__main__":
     main()
