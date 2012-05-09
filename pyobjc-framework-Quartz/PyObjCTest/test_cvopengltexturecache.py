@@ -12,6 +12,7 @@ class TestCVOpenGLTextureCache (TestCase):
         self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeHighestQuality, unicode)
         self.assertIsInstance(kCVOpenGLTextureCacheChromaSamplingModeBestPerformance, unicode)
 
+    @expectedFailure
     def testFunctions(self):
 
         self.fail("Create CGLContext and CGLFormat")

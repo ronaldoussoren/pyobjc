@@ -31,7 +31,7 @@ class TestCVOpenGLBuffer (TestCase):
         self.assertIsInstance(v, CFDictionaryRef)
 
         # FIXME: actual test
-        self.assertArgHasType(CVOpenGLBufferAttach, 0, b'@')
+        self.assertArgHasType(CVOpenGLBufferAttach, 0, b'^{__CVBuffer=}')
 
 if __name__ == "__main__":
     main()

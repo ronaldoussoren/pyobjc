@@ -6,6 +6,7 @@ class TestCVOpenGLTexture (TestCase):
     def testTypes(self):
         self.assertIsCFType(CVOpenGLTextureRef)
 
+    @expectedFailure
     def testFunctions(self):
         self.assertIsInstance(CVOpenGLTextureGetTypeID(), (int, long))
 

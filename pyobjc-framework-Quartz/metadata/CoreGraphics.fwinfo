@@ -10,6 +10,9 @@
   "opaque": {
     "CGDisplayConfigRef": {
        "typestr": "^{_CGDisplayConfigRef=}"
+    },
+    "CGDirectPaletteRef": {
+       "typestr": "^{_CGDirectPaletteRef=}"
     }
   },
   "structs": {
@@ -2072,7 +2075,7 @@
      "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
      "3": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
      "4": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
-     "5": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CGGetDisplaysWithOpenGLDisplayMask": {
@@ -3475,9 +3478,9 @@
    }, 
    "CGSetDisplayTransferByByteTable": {
     "args": {
-     "2": { "type_modifier": "n" }, 
-     "3": { "type_modifier": "n" }, 
-     "4": { "type_modifier": "n" }
+     "2": { "type_modifier": "n", "type_override": "^z", "c_array_length_in_arg": 1 }, 
+     "3": { "type_modifier": "n", "type_override": "^z", "c_array_length_in_arg": 1 }, 
+     "4": { "type_modifier": "n", "type_override": "^z", "c_array_length_in_arg": 1 }
     }
    }, 
    "CGSetDisplayTransferByTable": {

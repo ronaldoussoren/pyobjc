@@ -227,12 +227,14 @@ class TestCGDirectDisplay (TestCase):
         self.assertIsInstance(v, (int, long))
 
         v = CGDisplayBaseAddress(CGMainDisplayID())
-        self.assertIsInstance(v, objc.varlist)
-        self.assertIsInstance(v[0], bytes)
+        if v is not objc.NULL:
+            self.assertIsInstance(v, objc.varlist)
+            self.assertIsInstance(v[0], bytes)
 
         v = CGDisplayAddressForPosition(CGMainDisplayID(), 100, 100)
-        self.assertIsInstance(v, objc.varlist)
-        self.assertIsInstance(v[0], str)
+        if v is not objc.NULL:
+            self.assertIsInstance(v, objc.varlist)
+            self.assertIsInstance(v[0], str)
 
         err = CGDisplayHideCursor(CGMainDisplayID())
         self.assertEqual(err, 0)

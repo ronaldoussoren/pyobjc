@@ -2,6 +2,17 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+    "CVSMPTETime": {
+       "fieldnames": [ "subframes", "subframeDivisor", "counter", "type", "flags", "hours", "minutes", "seconds", "frames" ]
+    },
+    "CVTime": {
+       "fieldnames": [ "timeValue", "timeScale", "flags" ]
+    },
+    "CVTimestamp": {
+       "fieldnames": [ "version", "videoTimeScale", "videoTime", "hostTime", "rateScalar", "videoRefreshPeriod", "smpteTime", "flags", "reserved"]
+    }
+  },
   "classes": {}, 
   "formal_protocols": {}, 
   "cftypes": {
@@ -9,20 +20,32 @@
       "gettypeid_func": "CVBufferGetTypeID"
     },
     "CVDisplayLinkRef": {
-      "gettypeid_func": "CVDisplayLinkGetTypeID"
+      "gettypeid_func": "CVDisplayLinkGetTypeID",
+      "typestr": "^{__CVDisplayLink=}"
     },
     "CVOpenGLBufferPoolRef": {
-      "gettypeid_func": "CVOpenGLBufferPoolGetTypeID"
+      "gettypeid_func": "CVOpenGLBufferPoolGetTypeID",
+      "typestr": "^{__CVOpenGLBufferPool=}"
     },
     "CVOpenGLTextureCacheRef": {
-      "gettypeid_func": "CVOpenGLTextureCacheGetTypeID"
+      "gettypeid_func": "CVOpenGLTextureCacheGetTypeID",
+      "typestr": "^{__CVOpenGLTextureCache=}"
     },
     "CVPixelBufferRef": {
-      "gettypeid_func": "CVPixelBufferGetTypeID"
+      "gettypeid_func": "CVPixelBufferGetTypeID",
+      "typestr": "^{__CVPixelBuffer=}"
     },
     "CVPixelBufferPoolRef": {
       "gettypeid_func": "CVPixelBufferPoolGetTypeID",
-      "typestr": "^{__CVPixelBuffer=}"
+      "typestr": "^{__CVPixelBufferPool=}"
+    },
+    "CVOpenGLTextureRef": {
+      "gettypeid_func": "CVOpenGLTextureGetTypeID",
+      "typestr": "^{__CVOpenGLTexture=}"
+    },
+    "CVOpenGLBufferRef": {
+      "gettypeid_func": "CVOpenGLBufferGetTypeID",
+      "typestr": "^{__CVOpenGLBuffer=}"
     }
   },
   "functions": {
@@ -161,8 +184,8 @@
       "function": {
        "args": [
         {
-         "typestr": "^{__CVDisplayLink=}"
-        }, 
+         "typestr": "@"
+        },
         {
          "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
 	 "type_modifier": "n"

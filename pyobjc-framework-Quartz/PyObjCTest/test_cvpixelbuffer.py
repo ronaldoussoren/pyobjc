@@ -141,6 +141,7 @@ class TestCVPixelBuffer (TestCase):
 
 
 
+    @expectedFailure
     def testManual(self):
         self.fail("CVPixelBufferCreate requires manual wrapper") 
         self.fail("CVPixelBufferCreateWithBytes requires manual wrapper")
@@ -179,9 +180,9 @@ class TestCVPixelBuffer (TestCase):
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        self.assertResultHasType(CVPixelBufferGetIOSurface, b'^{__IOSurfaceRef=}')
-        self.assertArgHasType(CVPixelBufferGetIOSurface, 0, b'^{__CVPixelBuffer=}')
-        self.assertArgHasType(CVPixelBufferCreateWithIOSurface, 1, b'^{__IOSurfaceRef=}')
+        self.assertResultHasType(CVPixelBufferGetIOSurface, b'^{__IOSurface=}')
+        self.assertArgHasType(CVPixelBufferGetIOSurface, 0, b'^{__CVBuffer=}')
+        self.assertArgHasType(CVPixelBufferCreateWithIOSurface, 1, b'^{__IOSurface=}')
         self.assertArgIsOut(CVPixelBufferCreateWithIOSurface, 3)
 
 

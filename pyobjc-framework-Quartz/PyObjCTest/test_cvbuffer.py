@@ -13,14 +13,6 @@ class TestCVBuffer (TestCase):
         self.assertEqual(kCVAttachmentMode_ShouldNotPropagate, 0)
         self.assertEqual(kCVAttachmentMode_ShouldPropagate, 1)
 
-    def testTypes(self):
-        try:
-            CVBufferRef
-
-            self.fail("CVBufferRef exists as a type")
-        except NameError:
-            pass
-
     def testFunctions(self):
         rv, buf = CVOpenGLBufferCreate(None, 100, 100, {"a":"b"}, None)
         self.assertEqual(rv, 0)
@@ -37,42 +29,42 @@ class TestCVBuffer (TestCase):
         ctx = object()
 
         self.assertArgHasType(CVBufferSetAttachment, 2, b'@')
-        self.assertArgHasType(CVBufferSetAttachment, 0,  b'@')
+        self.assertArgHasType(CVBufferSetAttachment, 0,  b'^{__CVBuffer=}')
         CVBufferSetAttachment(buf, u"pyobjc.test",  ctx, kCVAttachmentMode_ShouldPropagate)
 
-        self.assertArgHasType(CVBufferGetAttachment, 0,  b'@')
+        self.assertArgHasType(CVBufferGetAttachment, 0,  b'^{__CVBuffer=}')
         self.assertResultHasType(CVBufferGetAttachment, b'@')
         self.assertArgIsOut(CVBufferGetAttachment, 2)
         v, mode = CVBufferGetAttachment(buf, u"pyobjc.test", None)
         self.assertTrue(v is ctx)
         self.assertEqual(mode, kCVAttachmentMode_ShouldPropagate)
 
-        self.assertArgHasType(CVBufferGetAttachments, 0,  b'@')
+        self.assertArgHasType(CVBufferGetAttachments, 0,  b'^{__CVBuffer=}')
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertTrue("pyobjc.test" in v)
 
-        self.assertArgHasType(CVBufferSetAttachments, 0,  b'@')
+        self.assertArgHasType(CVBufferSetAttachments, 0,  b'^{__CVBuffer=}')
         CVBufferSetAttachments(buf, {
             "pyobjc.test2": 42,
             "pyobjc.test3": u"hello"
         }, kCVAttachmentMode_ShouldPropagate)
 
-        self.assertArgHasType(CVBufferPropagateAttachments, 0,  b'@')
-        self.assertArgHasType(CVBufferPropagateAttachments, 1,  b'@')
+        self.assertArgHasType(CVBufferPropagateAttachments, 0,  b'^{__CVBuffer=}')
+        self.assertArgHasType(CVBufferPropagateAttachments, 1,  b'^{__CVBuffer=}')
         CVBufferPropagateAttachments(buf, buf2)
 
         v = CVBufferGetAttachments(buf2, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertTrue("pyobjc.test2" in v)
 
-        self.assertArgHasType(CVBufferRemoveAttachment, 0,  b'@')
+        self.assertArgHasType(CVBufferRemoveAttachment, 0,  b'^{__CVBuffer=}')
         CVBufferRemoveAttachment(buf, "pyobjc.test")
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertFalse("pyobjc.test" in v)
 
-        self.assertArgHasType(CVBufferRemoveAllAttachments, 0,  b'@')
+        self.assertArgHasType(CVBufferRemoveAllAttachments, 0,  b'^{__CVBuffer=}')
         CVBufferRemoveAllAttachments(buf)
         v = CVBufferGetAttachments(buf, kCVAttachmentMode_ShouldPropagate)
         self.assertIsInstance(v, CFDictionaryRef)
