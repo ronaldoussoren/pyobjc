@@ -149,7 +149,7 @@ class TestCGDisplayConfiguration (TestCase):
         self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 1,
                         b'I')
         self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 2,
-                            b'^{CGDisplayMode}')
+                            b'^{CGDisplayMode=}')
         self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 3,
                                 b'^{__CFDictionary=}')
 

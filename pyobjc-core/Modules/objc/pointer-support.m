@@ -270,6 +270,19 @@ PyObjectPtr_Convert(PyObject* obj, void* pObj)
 	return 0;
 }
 
+static PyObject*
+class_new(void *obj)
+{
+	return pythonify_c_value("#", obj);
+}
+
+static int
+class_convert(PyObject* obj, void* pObj)
+{
+	return depythonify_c_value("#", obj, pObj);
+}
+
+
 #if PY_MAJOR_VERSION == 2
 
 static int dontClose(FILE* fp __attribute__((__unused__)))
@@ -361,6 +374,11 @@ PyObjCPointerWrapper_Init(void)
 	r = PyObjCPointerWrapper_Register(@encode(PyObject*),
 		PyObjectPtr_New, PyObjectPtr_Convert);
 	if (r == -1) return -1;
+
+	r = PyObjCPointerWrapper_Register("^{objc_class=}",
+		class_new, class_convert);
+	if (r == -1) return -1;
+
 
 #if PY_MAJOR_VERSION == 2
 	r = PyObjCPointerWrapper_Register(@encode(FILE*),

@@ -2,26 +2,106 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "struct": {
+  "expressions": {
+    "kCGDirectMainDisplay": {
+       "ignore": true
+    }
+  },
+  "opaque": {
+    "CGDisplayConfigRef": {
+       "typestr": "^{_CGDisplayConfigRef=}"
+    }
+  },
+  "structs": {
      "CGSize": {
-        "alias": "Foundation.NSSize"
+        "alias": "Foundation.NSSize",
+	"fieldnames": ["width", "height"]
      },
      "CGRect": {
-        "alias": "Foundation.NSRect"
+        "alias": "Foundation.NSRect",
+	"fieldnames": ["origin", "size"]
      },
      "CGPoint": {
-        "alias": "Foundation.NSPoint"
+        "alias": "Foundation.NSPoint",
+	"fieldnames": ["x", "y"]
+     },
+     "CGAffineTransform": {
+         "fieldnames": [ "a", "b", "c", "d", "tx", "ty" ]
+     },
+     "CGScreenUpdateMoveDelta": {
+         "fieldnames": [ "dX", "dY" ]
+     },
+     "CGEventTapInformation": {
+         "fieldnames": ["eventTapID", "tapPoint", "options", "eventsOfInterest", "tappingProcess", "processBeingTapped", "enabled", "minUsecLatency", "avgUsecLatency", "maxUsecLatency"]
+     },
+     "CGPathElement": {
+         "fieldnames": ["type", "points"]
      }
   },
   "cftypes": {
-   "CGEventRef": {
-    "gettypeid_func": "CGEventGetTypeID"
-   }, 
-   "CGEventSourceRef": {
-    "gettypeid_func": "CGEventSourceGetTypeID"
-   }, 
    "CGEventTapProxy": {
-    "gettypeid_func": "CGEventTapProxyGetTypeID"
+     "gettypeid_func": "CGEventTapProxyGetTypeID"
+   },
+   "CGDirectDisplay": {
+     "typestr": "^{CGDirectDisplay=}",
+     "gettypeid_func": "CGDirectDisplayGetTypeID"
+   },
+   "CGDisplayModeRef": {
+     "gettypeid_func": "CGDisplayModeGetTypeID", "typestr": "^{CGDisplayMode}"
+   },
+   "CGColorRef": {
+     "gettypeid_func": "CGColorGetTypeID", "typestr": "^{CGColor=}"
+   },
+   "CGColorSpaceRef": {
+     "gettypeid_func": "CGColorSpaceGetTypeID", "typestr": "^{CGColorSpace=}"
+   },
+   "CGContextRef": {
+     "gettypeid_func": "CGContextGetTypeID", "typestr": "^{CGContext=}"
+   },
+   "CGDataConsumerRef": {
+     "gettypeid_func": "CGDataConsumerGetTypeID", "typestr": "^{CGDataConsumer=}"
+   },
+   "CGDataProviderRef": {
+     "gettypeid_func": "CGDataProviderGetTypeID", "typestr": "^{CGDataProvider=}"
+   },
+   "CGEventRef": {
+     "gettypeid_func": "CGEventGetTypeID", "typestr": "^{__CGEvent=}"
+   },
+   "CGEventSourceRef": {
+     "gettypeid_func": "CGEventSourceGetTypeID", "typestr": "^{__CGEventSource=}"
+   },
+   "CGFontRef": {
+     "gettypeid_func": "CGFontGetTypeID", "typestr": "^{CGFont=}"
+   }, 
+   "CGFunctionRef": {
+     "gettypeid_func": "CGFunctionGetTypeID", "typestr": "^{CGFunction=}"
+   },
+   "CGGradientRef": {
+     "gettypeid_func": "CGGradientGetTypeID", "typestr": "^{CGGradient=}"
+   },
+   "CGImageRef": {
+     "gettypeid_func": "CGImageGetTypeID", "typestr": "^{CGImage=}"
+   },
+   "CGLayerRef": {
+     "gettypeid_func": "CGLayerGetTypeID", "typestr": "^{CGLayer=}"
+   },
+   "CGPDFDocumentRef": {
+     "gettypeid_func": "CGPDFDocumentGetTypeID", "typestr": "^{CGPDFDocument=}"
+   },
+   "CGPDFPageRef": {
+     "gettypeid_func": "CGPDFPageGetTypeID", "typestr": "^{CGPDFPage=}"
+   },
+   "CGPSConverterRef": {
+     "gettypeid_func": "CGPSConverterGetTypeID", "typestr": "^{CGPSConverter=}"
+   }, 
+   "CGPathRef": {
+     "gettypeid_func": "CGPathGetTypeID", "typestr": "^{CGPath=}"
+   },
+   "CGPatternRef": {
+     "gettypeid_func": "CGPatternGetTypeID", "typestr": "^{CGPattern=}"
+   },
+   "CGShadingRef": {
+     "gettypeid_func": "CGShadingGetTypeID", "typestr": "^{CGShading=}"
    }
   }, 
   "classes": {}, 
@@ -442,7 +522,7 @@
    "CGContextAddLines": {
     "args": {
      "0": {}, 
-     "1": { "c_array_length_arg": 2, "type_modifier": "n" }
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextAddPath": {
@@ -662,7 +742,7 @@
    "CGContextFillRects": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextFlush": {
@@ -764,7 +844,7 @@
    "CGContextSelectFont": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
     }
    }, 
    "CGContextSetAllowsAntialiasing": {
@@ -1014,13 +1094,13 @@
    "CGContextShowText": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    }, 
    "CGContextShowTextAtPoint": {
     "args": {
      "0": {}, 
-     "3": {}
+     "3": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    }, 
    "CGContextStrokeEllipseInRect": {
@@ -1533,7 +1613,7 @@
    }, 
    "CGEventPostToPSN": {
     "args": {
-     "0": { "type_modifier": "n" }, 
+     "0": { "type_modifier": "n", "type_override": "^{ProcessSerialNumber=II}" }, 
      "1": {}
     }
    }, 
@@ -1679,7 +1759,7 @@
    }, 
    "CGEventTapCreateForPSN": {
     "args": {
-     "0": { "type_modifier": "n" }, 
+     "0": { "type_modifier": "n", "type_override": "^{ProcessSerialNumber=II}" }, 
      "4": {
       "function": {
        "args": [
@@ -1821,7 +1901,7 @@
      "0": {}, 
      "1": {}, 
      "3": { "c_array_length_in_arg": 4, "type_modifier": "n" },
-     "5": { "c_array_fixed_length": 256, "type_modifier": "n", "type_override": "^S"  }
+     "5": { "c_array_fixed_length": 256, "type_modifier": "n"  }
     }, 
     "retval": {
      "already_cfretained": true

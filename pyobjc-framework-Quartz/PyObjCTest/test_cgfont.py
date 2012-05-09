@@ -106,7 +106,7 @@ class TestCGFont (TestCase):
         # the function.
         #self.fail('CGFontCreateWithPlatformFont')
         self.assertArgHasType(CGFontCreateWithPlatformFont, 0,
-                objc._C_UINT)
+                objc._C_PTR + objc._C_VOID)
         self.assertResultIsCFRetained(CGFontCreateWithPlatformFont)
 
 

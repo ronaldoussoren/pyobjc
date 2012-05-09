@@ -48,7 +48,10 @@
      {
       "class_method": false, 
       "selector": "logMessage:", 
-      "variadic": true
+      "variadic": true,
+      "args": {
+         "0": { "printf_format": true }
+      }
      }, 
      {
       "class_method": false, 

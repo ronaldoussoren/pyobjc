@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+    "CATransform3D": {
+      "fieldnames": [ "m11", "m12", "m13", "m14", "m21", "m22", "m23", "m24", "m31", "m32", "m33", "m34", "m41", "m42", "m43", "m44" ]
+    }
+  },
   "classes": {
    "CAEmitterCell": {
     "methods": [],
@@ -63,7 +68,7 @@
       "args": {
        "0": {}, 
        "1": {}, 
-       "3": {}
+       "3": { "type_modifier": "n" }
       }, 
       "class_method": false, 
       "selector": "canDrawInCGLContext:pixelFormat:forLayerTime:displayTime:"
@@ -72,7 +77,7 @@
       "args": {
        "0": {}, 
        "1": {}, 
-       "3": {}
+       "3": { "type_modifier": "n" }
       }, 
       "class_method": false, 
       "selector": "drawInCGLContext:pixelFormat:forLayerTime:displayTime:"
@@ -110,14 +115,14 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_override": "^{_CGLContextObject=}" }
       }, 
       "class_method": true, 
       "selector": "rendererWithCGLContext:options:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       }, 
       "class_method": false, 
       "selector": "beginFrameAtTime:timeStamp:"
@@ -177,7 +182,7 @@
      }, 
      {
       "class_method": false, 
-      "retval": {}, 
+      "retval": { "c_array_of_variable_length": true }, 
       "selector": "components"
      }, 
      {
@@ -236,7 +241,7 @@
      }, 
      {
       "args": {
-       "1": {}, 
+       "1": { "type_modifier": "o", "c_array_of_variable_length": true }, 
        "5": {}
       }, 
       "class_method": false, 
@@ -257,12 +262,14 @@
      {
       "class_method": false, 
       "selector": "apply:", 
-      "variadic": true
+      "variadic": true,
+      "c_array_delimited_by_null": true
      }, 
      {
       "class_method": true, 
       "selector": "filterWithName:keysAndValues:", 
-      "variadic": true
+      "variadic": true,
+      "c_array_delimited_by_null": true
      }
     ]
    }, 
@@ -452,12 +459,14 @@
      {
       "class_method": true, 
       "selector": "samplerWithImage:keysAndValues:", 
-      "variadic": true
+      "variadic": true,
+      "c_array_delimited_by_null": true
      }, 
      {
       "class_method": false, 
       "selector": "initWithImage:keysAndValues:", 
-      "variadic": true
+      "variadic": true,
+      "c_array_delimited_by_null": true
      }
     ]
    }, 
@@ -465,14 +474,14 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "c_array_length_in_arg": 1, "type_modifier": "n" }
       }, 
       "class_method": true, 
       "selector": "vectorWithValues:count:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "c_array_length_in_arg": 1, "type_modifier": "n" }
       }, 
       "class_method": false, 
       "selector": "initWithValues:count:"
@@ -483,7 +492,7 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "c_array_of_variable_length": true, "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "provideImageData:bytesPerRow:origin::size::userInfo:"
@@ -496,6 +505,42 @@
       "selector": "drawLayer:inContext:"
      }
     ]
+   },
+   "CATransaction": {
+     "methods": [
+       {
+        "selector": "completionBlock",
+	"class_method": false,
+        "retval": {
+	   "function": {
+	      "args": [
+	         {
+		   "typestr": "^v"
+		 }
+	      ],
+	      "retval": {
+	         "typestr": "v"
+	      }
+	   }
+	}
+      }
+    ]
+   },
+   "CIKernel": {
+     "methods": [
+       {
+         "selector": "setROISelector:",
+	 "class_method": false,
+	 "args": {
+	   "0": {
+	      "sel_of_type": [
+	        "{CGRect={CGPoint=ff}{CGSize=ff}}@:i{CGRect={CGPoint=ff}{CGSize=ff}}@",
+		"{CGRect={CGPoint=dd}{CGSize=dd}}@:i{CGRect={CGPoint=dd}{CGSize=dd}}@"
+	       ]
+	   }
+         }
+       }
+     ]
    }
   }, 
   "formal_protocols": {

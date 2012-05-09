@@ -7,8 +7,8 @@ class TestCGRemoteOperation (TestCase):
         self.assertEqual(CGEventNoErr, kCGErrorSuccess)
 
         self.assertEqual(kCGScreenUpdateOperationRefresh, 0)
-        self.assertEqual(kCGScreenUpdateOperationMove, cast_int(1 << 0))
-        self.assertEqual(kCGScreenUpdateOperationReducedDirtyRectangleCount, cast_int(1 << 31))
+        self.assertEqual(kCGScreenUpdateOperationMove, (1 << 0))
+        self.assertEqual(kCGScreenUpdateOperationReducedDirtyRectangleCount, (1 << 31))
 
         self.assertEqual(kCGEventFilterMaskPermitLocalMouseEvents, 1)
         self.assertEqual(kCGEventFilterMaskPermitLocalKeyboardEvents, 2)

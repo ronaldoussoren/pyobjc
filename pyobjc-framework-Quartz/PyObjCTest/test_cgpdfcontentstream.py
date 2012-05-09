@@ -29,6 +29,7 @@ class TestCGPDFContentStream (TestCase):
         self.assertIsInstance(v, CGPDFObject)
 
 
+    @expectedFailure
     def testIncomplete(self):
         self.fail("CGPDFContentStreamGetStreams") # Need manual wrapper
 

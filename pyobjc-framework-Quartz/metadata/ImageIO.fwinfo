@@ -4,6 +4,14 @@
  "definitions": {
   "classes": {}, 
   "formal_protocols": {}, 
+  "cftypes": {
+    "CGImageDestionationRef": {
+      "gettypeid_func": "CGImageDestinationGetTypeID", "typestr": "^{CGImageDestination=}"
+    },
+    "CGImageSourceRef": {
+      "gettypeid_func": "CGImageSourceGetTypeID", "typestr": "^{CGImageSource=}"
+    }
+  },
   "functions": {
    "CGImageDestinationAddImage": {
     "args": {

@@ -60,6 +60,10 @@ def _load(mod):
         return (1 << eventType)
     mod.CGEventMaskBit = CGEventMaskBit
 
+    mod.kCGColorSpaceUserGray = "kCGColorSpaceUserGray"
+    mod.kCGColorSpaceUserRGB  = "kCGColorSpaceUserRGB"
+    mod.kCGColorSpaceUserCMYK = "kCGColorSpaceUserCMYK"
+
 
     # Some pseudo-constants
     mod.kCGBaseWindowLevel = mod.CGWindowLevelForKey(mod.kCGBaseWindowLevelKey)
@@ -85,5 +89,7 @@ def _load(mod):
     mod.kCGMaximumWindowLevel = mod.CGWindowLevelForKey(mod.kCGMaximumWindowLevelKey)
 
     mod.CGSetLocalEventsFilterDuringSupressionState = mod.CGSetLocalEventsFilterDuringSuppressionState
+
+    mod.kCGAnyInputEventType = 0xffffffff
 
 _load(mod)
