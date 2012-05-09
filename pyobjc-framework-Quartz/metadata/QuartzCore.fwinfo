@@ -1,0 +1,540 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "CAEmitterCell": {
+    "methods": [],
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "color"
+     }
+    ]
+   }, 
+   "CAKeyframeAnimation": {
+    "methods": [],
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "path"
+     }
+    ]
+   }, 
+   "CALayer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "drawInContext:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "renderInContext:"
+     }
+    ], 
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "backgroundColor"
+     }, 
+     {
+      "attributes": [], 
+      "name": "borderColor"
+     }, 
+     {
+      "attributes": [], 
+      "name": "shadowColor"
+     }, 
+     {
+      "attributes": [], 
+      "name": "shadowPath"
+     }
+    ]
+   }, 
+   "CAOpenGLLayer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}, 
+       "1": {}, 
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "canDrawInCGLContext:pixelFormat:forLayerTime:displayTime:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}, 
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "drawInCGLContext:pixelFormat:forLayerTime:displayTime:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "copyCGLPixelFormatForDisplayMask:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "releaseCGLPixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "copyCGLContextForPixelFormat:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "releaseCGLContext:"
+     }
+    ]
+   }, 
+   "CARenderer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "rendererWithCGLContext:options:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "beginFrameAtTime:timeStamp:"
+     }
+    ]
+   }, 
+   "CAReplicatorLayer": {
+    "methods": [],
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "instanceColor"
+     }
+    ]
+   }, 
+   "CAShapeLayer": {
+    "methods": [],
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "path"
+     }, 
+     {
+      "attributes": [], 
+      "name": "fillColor"
+     }, 
+     {
+      "attributes": [], 
+      "name": "strokeColor"
+     }
+    ]
+   }, 
+   "CATextLayer": {
+    "methods": [],
+    "properties": [
+     {
+      "attributes": [], 
+      "name": "foregroundColor"
+     }
+    ]
+   }, 
+   "CIColor": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "colorWithCGColor:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGColor:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "components"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "colorSpace"
+     }
+    ]
+   }, 
+   "CIContext": {
+    "methods": [
+     {
+      "args": {
+       "0": {}, 
+       "1": {}, 
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "contextWithCGLContext:pixelFormat:colorSpace:options:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}
+      }, 
+      "class_method": true, 
+      "selector": "contextWithCGLContext:pixelFormat:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "contextWithCGContext:options:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "createCGImage:fromRect:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "createCGImage:fromRect:format:colorSpace:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "createCGLayerWithSize:info:"
+     }, 
+     {
+      "args": {
+       "1": {}, 
+       "5": {}
+      }, 
+      "class_method": false, 
+      "selector": "render:toBitmap:rowBytes:bounds:format:colorSpace:"
+     }, 
+     {
+      "args": {
+       "1": {}, 
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "render:toIOSurface:bounds:colorSpace:"
+     }
+    ]
+   }, 
+   "CIFilter": {
+    "methods": [
+     {
+      "class_method": false, 
+      "selector": "apply:", 
+      "variadic": true
+     }, 
+     {
+      "class_method": true, 
+      "selector": "filterWithName:keysAndValues:", 
+      "variadic": true
+     }
+    ]
+   }, 
+   "CIImage": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCGImage:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCGImage:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCGLayer:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCGLayer:options:"
+     }, 
+     {
+      "args": {
+       "4": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithBitmapData:bytesPerRow:size:format:colorSpace:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithTexture:size:flipped:colorSpace:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCVImageBuffer:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithCVImageBuffer:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithIOSurface:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithIOSurface:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGImage:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGImage:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGLayer:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGLayer:options:"
+     }, 
+     {
+      "args": {
+       "4": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithBitmapData:bytesPerRow:size:format:colorSpace:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithTexture:size:flipped:colorSpace:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithIOSurface:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithIOSurface:options:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCVImageBuffer:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCVImageBuffer:options:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "colorSpace"
+     }, 
+     {
+      "args": {
+       "4": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageWithImageProvider:size::format:colorSpace:options:"
+     }, 
+     {
+      "args": {
+       "4": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithImageProvider:size::format:colorSpace:options:"
+     }
+    ]
+   }, 
+   "CIImageAccumulator": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": true, 
+      "selector": "imageAccumulatorWithExtent:format:colorSpace:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithExtent:format:colorSpace:"
+     }
+    ]
+   }, 
+   "CISampler": {
+    "methods": [
+     {
+      "class_method": true, 
+      "selector": "samplerWithImage:keysAndValues:", 
+      "variadic": true
+     }, 
+     {
+      "class_method": false, 
+      "selector": "initWithImage:keysAndValues:", 
+      "variadic": true
+     }
+    ]
+   }, 
+   "CIVector": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "vectorWithValues:count:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithValues:count:"
+     }
+    ]
+   }, 
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "provideImageData:bytesPerRow:origin::size::userInfo:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "drawLayer:inContext:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "CIPlugInRegistration": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "load:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {
+   "CALayerDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "drawLayer:inContext:"
+     }
+    ]
+   }, 
+   "CIImageProvider": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "provideImageData:bytesPerRow:origin::size::userInfo:"
+     }
+    ]
+   }
+  }
+ }
+}

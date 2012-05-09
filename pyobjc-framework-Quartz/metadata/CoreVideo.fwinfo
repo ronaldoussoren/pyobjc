@@ -1,0 +1,650 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "cftypes": {
+    "CVBufferRef": {
+      "gettypeid_func": "CVBufferGetTypeID"
+    },
+    "CVDisplayLinkRef": {
+      "gettypeid_func": "CVDisplayLinkGetTypeID"
+    },
+    "CVOpenGLBufferPoolRef": {
+      "gettypeid_func": "CVOpenGLBufferPoolGetTypeID"
+    },
+    "CVOpenGLTextureCacheRef": {
+      "gettypeid_func": "CVOpenGLTextureCacheGetTypeID"
+    },
+    "CVPixelBufferRef": {
+      "gettypeid_func": "CVPixelBufferGetTypeID"
+    },
+    "CVPixelBufferPoolRef": {
+      "gettypeid_func": "CVPixelBufferPoolGetTypeID",
+      "typestr": "^{__CVPixelBuffer=}"
+    }
+  },
+  "functions": {
+   "CVBufferGetAttachment": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CVBufferGetAttachments": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVBufferPropagateAttachments": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CVBufferRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVBufferRemoveAllAttachments": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVBufferRemoveAttachment": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CVBufferRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVBufferSetAttachment": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CVBufferSetAttachments": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CVDisplayLinkCreateWithActiveCGDisplays": {
+    "args": {
+     "0": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVDisplayLinkCreateWithCGDisplay": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVDisplayLinkCreateWithCGDisplays": {
+    "args": {
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVDisplayLinkCreateWithOpenGLDisplayMask": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVDisplayLinkGetActualOutputVideoRefreshPeriod": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkGetCurrentCGDisplay": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkGetCurrentTime": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CVDisplayLinkGetNominalOutputVideoRefreshPeriod": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkGetOutputVideoLatency": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkIsRunning": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVDisplayLinkSetCurrentCGDisplay": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CVDisplayLinkSetOutputCallback": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__CVDisplayLink=}"
+        }, 
+        {
+         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
+	 "type_modifier": "n"
+        }, 
+        {
+         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
+	 "type_modifier": "N"
+        }, 
+        {
+         "typestr": "Q"
+        }, 
+        {
+         "typestr": "^Q",
+	 "type_modifier": "o"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "i"
+       }
+      }
+     }, 
+     "2": {}
+    }
+   }, 
+   "CVDisplayLinkStart": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkStop": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVDisplayLinkTranslateTime": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CVImageBufferGetCleanRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVImageBufferGetColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVImageBufferGetDisplaySize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVImageBufferGetEncodedSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLBufferAttach": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CVOpenGLBufferCreate": {
+    "args": {
+     "0": {}, 
+     "3": {}, 
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVOpenGLBufferGetAttributes": {
+    "args": {
+     "0": { "type_override": "@" }
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLBufferPoolCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVOpenGLBufferPoolCreateOpenGLBuffer": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVOpenGLBufferPoolGetAttributes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLBufferPoolGetOpenGLBufferAttributes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLBufferPoolRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLBufferPoolRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLBufferRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLBufferRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLTextureCacheCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVOpenGLTextureCacheCreateTextureFromImage": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_override": "@" }, 
+     "3": {}, 
+     "4": { "type_modifier": "o", "already_cfretained": true, "type_override": "^@" }
+    }
+   }, 
+   "CVOpenGLTextureCacheFlush": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureCacheRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureCacheRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVOpenGLTextureGetCleanTexCoords": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureGetName": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureGetTarget": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureIsFlipped": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVOpenGLTextureRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferCreate": {
+    "args": {
+     "0": {}, 
+     "4": {}, 
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferCreateResolvedAttributesDictionary": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferCreateWithBytes": {
+    "args": {
+     "0": {}, 
+     "4": {}, 
+     "6": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "7": {}, 
+     "8": {}, 
+     "9": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferCreateWithIOSurface": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferCreateWithPlanarBytes": {
+    "args": {
+     "0": {}, 
+     "4": {}, 
+     "7": {}, 
+     "8": {}, 
+     "9": {}, 
+     "10": {}, 
+     "11": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "12": {}, 
+     "13": {}, 
+     "14": {}
+    }
+   }, 
+   "CVPixelBufferFillExtendedPixels": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetBaseAddress": {
+    "comment": "fixme",
+    "args": {
+     "0": {}
+    }, 
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CVPixelBufferGetBaseAddressOfPlane": {
+    "comment": "fixme",
+    "args": {
+     "0": {}
+    }, 
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CVPixelBufferGetBytesPerRow": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetBytesPerRowOfPlane": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetDataSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetExtendedPixels": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
+    }
+   }, 
+   "CVPixelBufferGetHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetHeightOfPlane": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetIOSurface": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferGetPixelFormatType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetPlaneCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferGetWidthOfPlane": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferIsPlanar": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferLockBaseAddress": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferPoolCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferPoolCreatePixelBuffer": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "CVPixelBufferPoolCreatePixelBufferWithAuxAttributes": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CVPixelBufferPoolGetAttributes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferPoolGetPixelBufferAttributes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferPoolRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferPoolRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelBufferRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CVPixelBufferUnlockBaseAddress": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CVPixelFormatDescriptionCreateWithPixelFormatType": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType": {
+    "args": {
+     "0": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

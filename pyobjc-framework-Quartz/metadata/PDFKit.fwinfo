@@ -1,0 +1,69 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "classForPage"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "classForAnnotationClass:"
+     }
+    ]
+   }, 
+   "PDFDocument": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "documentRef"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "pageClass"
+     }
+    ]
+   }, 
+   "PDFPage": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "pageRef"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {
+   "PDFDocumentDelegate": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "classForPage"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "classForAnnotationClass:"
+     }
+    ]
+   }
+  }
+ }
+}

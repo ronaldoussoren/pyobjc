@@ -1,0 +1,190 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "QCPlugIn": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": true, 
+      "selector": "registerPlugInClass:"
+     }
+    ]
+   }, 
+   "QCRenderer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithComposition:colorSpace:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "1": {}, 
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "initWithCGLContext:pixelFormat:colorSpace:composition:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "initOffScreenWithSize:colorSpace:composition:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "QCPlugInContext": {
+    "methods": [
+     {
+      "class_method": false, 
+      "selector": "logMessage:", 
+      "variadic": true
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "colorSpace"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "CGLContextObj"
+     }, 
+     {
+      "args": {
+       "3": {}, 
+       "5": {}, 
+       "6": {}, 
+       "7": {}
+      }, 
+      "class_method": false, 
+      "selector": "outputImageProviderFromBufferWithPixelFormat:pixelsWide:pixelsHigh:baseAddress:bytesPerRow:releaseCallback:releaseContext:colorSpace:shouldColorMatch:"
+     }, 
+     {
+      "args": {
+       "5": {}, 
+       "6": {}, 
+       "7": {}
+      }, 
+      "class_method": false, 
+      "selector": "outputImageProviderFromTextureWithPixelFormat:pixelsWide:pixelsHigh:name:flipped:releaseCallback:releaseContext:colorSpace:shouldColorMatch:"
+     }
+    ]
+   }, 
+   "QCPlugInInputImageSource": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "imageColorSpace"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "lockBufferRepresentationWithPixelFormat:colorSpace:forBounds:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "bufferColorSpace"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "bufferBaseAddress"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "lockTextureRepresentationWithColorSpace:forBounds:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "textureColorSpace"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "textureMatrix"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "bindTextureRepresentationToCGLContext:textureUnit:normalizeCoordinates:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "unbindTextureRepresentationFromCGLContext:textureUnit:"
+     }
+    ]
+   }, 
+   "QCPlugInOutputImageProvider": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "imageColorSpace"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "renderToBuffer:withBytesPerRow:pixelFormat:forBounds:"
+     }, 
+     {
+      "args": {
+       "0": {}, 
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "copyRenderedTextureForCGLContext:pixelFormat:bounds:isFlipped:"
+     }, 
+     {
+      "args": {
+       "1": {}
+      }, 
+      "class_method": false, 
+      "selector": "releaseRenderedTexture:forCGLContext:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "canRenderWithCGLContext:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "renderWithCGLContext:forBounds:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}

@@ -1,0 +1,22 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {
+   "QLPreviewPanelDelegate": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "previewPanel:transitionImageForPreviewItem:contentRect:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}

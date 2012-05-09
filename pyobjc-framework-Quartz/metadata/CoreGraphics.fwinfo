@@ -1,0 +1,3536 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "struct": {
+     "CGSize": {
+        "alias": "Foundation.NSSize"
+     },
+     "CGRect": {
+        "alias": "Foundation.NSRect"
+     },
+     "CGPoint": {
+        "alias": "Foundation.NSPoint"
+     }
+  },
+  "cftypes": {
+   "CGEventRef": {
+    "gettypeid_func": "CGEventGetTypeID"
+   }, 
+   "CGEventSourceRef": {
+    "gettypeid_func": "CGEventSourceGetTypeID"
+   }, 
+   "CGEventTapProxy": {
+    "gettypeid_func": "CGEventTapProxyGetTypeID"
+   }
+  }, 
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "functions": {
+   "CGAcquireDisplayFadeReservation": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGBeginDisplayConfiguration": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   }, 
+   "CGBitmapContextCreate": {
+    "args": {
+     "0": {}, 
+     "5": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGBitmapContextCreateImage": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGBitmapContextCreateWithData": {
+    "args": {
+     "0": {}, 
+     "5": {}, 
+     "7": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "8": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGBitmapContextGetAlphaInfo": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetBitmapInfo": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetBitsPerComponent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetBitsPerPixel": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetBytesPerRow": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGBitmapContextGetData": {
+    "args": {
+     "0": { "c_array_of_variable_length": true }
+    }, 
+    "retval": {}
+   }, 
+   "CGBitmapContextGetHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGBitmapContextGetWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGCancelDisplayConfiguration": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorCreate": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateCopyWithAlpha": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateGenericCMYK": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateGenericGray": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateGenericRGB": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorCreateWithPattern": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorEqualToColor": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGColorGetAlpha": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorGetColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGColorGetComponents": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CGColorGetConstantColor": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGColorGetNumberOfComponents": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorGetPattern": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGColorRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGColorSpaceCopyICCProfile": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCopyName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateCalibratedGray": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateCalibratedRGB": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateDeviceCMYK": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateDeviceGray": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateDeviceRGB": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateICCBased": {
+    "args": {
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }, 
+     "2": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateIndexed": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateLab": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreatePattern": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateWithICCProfile": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateWithName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceCreateWithPlatformColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGColorSpaceGetBaseColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGColorSpaceGetColorTable": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "o" }
+    }
+   }, 
+   "CGColorSpaceGetColorTableCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorSpaceGetModel": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorSpaceGetNumberOfComponents": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorSpaceRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGColorSpaceRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGCompleteDisplayConfiguration": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGConfigureDisplayFadeEffect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGConfigureDisplayMirrorOfDisplay": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGConfigureDisplayMode": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGConfigureDisplayOrigin": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGConfigureDisplayStereoOperation": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGConfigureDisplayWithDisplayMode": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CGContextAddArc": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddArcToPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddCurveToPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddEllipseInRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddLineToPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddLines": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_arg": 2, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextAddPath": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextAddQuadCurveToPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextAddRects": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextBeginPage": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGContextBeginPath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextBeginTransparencyLayer": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextBeginTransparencyLayerWithRect": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextClearRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextClip": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextClipToMask": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextClipToRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextClipToRects": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextClosePath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConcatCTM": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertPointToDeviceSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertPointToUserSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertRectToDeviceSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertRectToUserSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertSizeToDeviceSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextConvertSizeToUserSpace": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextCopyPath": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGContextDrawImage": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextDrawLayerAtPoint": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextDrawLayerInRect": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextDrawLinearGradient": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextDrawPDFDocument": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextDrawPDFPage": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextDrawPath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextDrawRadialGradient": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextDrawShading": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextDrawTiledImage": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "CGContextEOClip": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextEOFillPath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextEndPage": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextEndTransparencyLayer": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextFillEllipseInRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextFillPath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextFillRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextFillRects": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextFlush": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetCTM": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetClipBoundingBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetInterpolationQuality": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetPathBoundingBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetPathCurrentPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetTextMatrix": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetTextPosition": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextGetUserSpaceToDeviceSpaceTransform": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextIsPathEmpty": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextMoveToPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextPathContainsPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextReplacePathWithStrokedPath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextRestoreGState": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGContextRotateCTM": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSaveGState": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextScaleCTM": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSelectFont": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetAllowsAntialiasing": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetAllowsFontSmoothing": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetAllowsFontSubpixelPositioning": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetAllowsFontSubpixelQuantization": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetAlpha": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetBlendMode": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetCMYKFillColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetCMYKStrokeColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetCharacterSpacing": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetFillColor": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextSetFillColorSpace": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetFillColorWithColor": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetFillPattern": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextSetFlatness": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetFont": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetFontSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetGrayFillColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetGrayStrokeColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetInterpolationQuality": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetLineCap": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetLineDash": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextSetLineJoin": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetLineWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetMiterLimit": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetPatternPhase": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetRGBFillColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetRGBStrokeColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetRenderingIntent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetShadow": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetShadowWithColor": {
+    "args": {
+     "0": {}, 
+     "3": {}
+    }
+   }, 
+   "CGContextSetShouldAntialias": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetShouldSmoothFonts": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetShouldSubpixelPositionFonts": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetShouldSubpixelQuantizeFonts": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetStrokeColor": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextSetStrokeColorSpace": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetStrokeColorWithColor": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextSetStrokePattern": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextSetTextDrawingMode": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetTextMatrix": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSetTextPosition": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextShowGlyphs": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextShowGlyphsAtPoint": {
+    "args": {
+     "0": {}, 
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextShowGlyphsAtPositions": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextShowGlyphsWithAdvances": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextShowText": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGContextShowTextAtPoint": {
+    "args": {
+     "0": {}, 
+     "3": {}
+    }
+   }, 
+   "CGContextStrokeEllipseInRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextStrokeLineSegments": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
+    }
+   }, 
+   "CGContextStrokePath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextStrokeRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextStrokeRectWithWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextSynchronize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGContextTranslateCTM": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDataConsumerCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataConsumerCreateWithCFData": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataConsumerCreateWithURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataConsumerRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDataConsumerRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGDataProviderCopyData": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateDirect": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateDirectAccess": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateSequential": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateWithCFData": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateWithData": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateWithFilename": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderCreateWithURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDataProviderRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDataProviderRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGDisplayAddressForPosition": {
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CGDisplayAvailableModes": {
+    "retval": {}
+   }, 
+   "CGDisplayBaseAddress": {
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CGDisplayBestModeForParameters": {
+    "args": {
+     "4": { "type_modifier": "o" }
+    }, 
+    "retval": {}
+   }, 
+   "CGDisplayBestModeForParametersAndRefreshRate": {
+    "args": {
+     "5": { "type_modifier": "o" }
+    }, 
+    "retval": {}
+   }, 
+   "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
+    "args": {
+     "5": {}, 
+     "6": { "type_modifier": "o" }
+    }, 
+    "retval": {}
+   }, 
+   "CGDisplayCopyAllDisplayModes": {
+    "args": {
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayCopyColorSpace": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayCopyDisplayMode": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayCreateImage": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayCreateImageForRect": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayCurrentMode": {
+    "retval": {}
+   }, 
+   "CGDisplayGetDrawingContext": {
+    "retval": {}
+   }, 
+   "CGDisplayModeCopyPixelEncoding": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGDisplayModeGetHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeGetIODisplayModeID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeGetIOFlags": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeGetRefreshRate": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeGetWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeIsUsableForDesktopGUI": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGDisplayModeRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGDisplayRegisterReconfigurationCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGDisplayRemoveReconfigurationCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGDisplaySetDisplayMode": {
+    "args": {
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CGDisplaySetPalette": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "CGDisplaySwitchToMode": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "CGEventCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateData": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateFromData": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateKeyboardEvent": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateMouseEvent": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventCreateScrollWheelEvent": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }, 
+    "variadic": true,
+    "c_array_length_in_arg": 2
+   }, 
+   "CGEventCreateSourceFromEvent": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventGetDoubleValueField": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetFlags": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetIntegerValueField": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetLocation": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetTimestamp": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventGetUnflippedLocation": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventKeyboardGetUnicodeString": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "c_array_length_in_arg": [1,2], "type_modifier": "o" }
+    }
+   }, 
+   "CGEventKeyboardSetUnicodeString": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "n" }
+    }
+   }, 
+   "CGEventPost": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "CGEventPostToPSN": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": {}
+    }
+   }, 
+   "CGEventSetDoubleValueField": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSetFlags": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSetIntegerValueField": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSetLocation": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSetSource": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGEventSetTimestamp": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSetType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventSourceGetKeyboardType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceGetLocalEventsFilterDuringSuppressionState": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceGetLocalEventsSuppressionInterval": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceGetPixelsPerLine": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceGetSourceStateID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceGetUserData": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceSetKeyboardType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceSetLocalEventsFilterDuringSuppressionState": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceSetLocalEventsSuppressionInterval": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceSetPixelsPerLine": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventSourceSetUserData": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventTapCreate": {
+    "args": {
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CGEventTapProxy=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CGEvent=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__CGEvent=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "5": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventTapCreateForPSN": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{__CGEventTapProxy=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{__CGEvent=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "^{__CGEvent=}", 
+         false
+        ]
+       }
+      }
+     }, 
+     "5": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGEventTapEnable": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventTapIsEnabled": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGEventTapPostEvent": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGFontCanCreatePostScriptSubset": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontCopyFullName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyGlyphNameForGlyph": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyPostScriptName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyTableForTag": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyTableTags": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyVariationAxes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCopyVariations": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreateCopyWithVariations": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreatePostScriptEncoding": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreatePostScriptSubset": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" },
+     "5": { "c_array_fixed_length": 256, "type_modifier": "n", "type_override": "^S"  }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreateWithDataProvider": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreateWithFontName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontCreateWithPlatformFont": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFontGetAscent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetCapHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetDescent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetFontBBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetGlyphAdvances": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }, 
+     "3": { "c_array_length_in_arg": 2, "type_modifier": "o" }
+    }
+   }, 
+   "CGFontGetGlyphBBoxes": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }, 
+     "3": { "c_array_length_in_arg": 2, "type_modifier": "o" }
+    }
+   }, 
+   "CGFontGetGlyphWithGlyphName": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGFontGetItalicAngle": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetLeading": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetNumberOfGlyphs": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetStemV": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetUnitsPerEm": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontGetXHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFontRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGFunctionCreate": {
+    "args": {
+     "0": {}, 
+     "2": {}, 
+     "4": {}, 
+     "5": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGFunctionRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGFunctionRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGGLContextCreate": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGGLContextUpdateViewportSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGGetActiveDisplayList": {
+    "args": {
+     "1": { "type_modifier": "o", "c_array_length_in_arg": [0, 2] }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetDisplayTransferByFormula": {
+    "args": {
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }, 
+     "5": { "type_modifier": "o" }, 
+     "6": { "type_modifier": "o" }, 
+     "7": { "type_modifier": "o" }, 
+     "8": { "type_modifier": "o" }, 
+     "9": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetDisplayTransferByTable": {
+    "args": {
+     "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "3": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "4": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "5": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }
+    }
+   }, 
+   "CGGetDisplaysWithOpenGLDisplayMask": {
+    "args": {
+     "2": { "c_array_length_in_arg": [1,3], "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetDisplaysWithPoint": {
+    "args": {
+     "2": { "c_array_length_in_arg": [1,3], "type_modifier": "o"}, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetDisplaysWithRect": {
+    "args": {
+     "2": { "c_array_length_in_arg": [1,3], "type_modifier": "o"}, 
+     "3": { "type_modifier": "o"}
+    }
+   }, 
+   "CGGetEventTapList": {
+    "args": {
+     "1": { "c_array_length_in_arg": [0,2], "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetLastMouseDelta": {
+    "args": {
+     "0": { "type_modifier": "o" }, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGetOnlineDisplayList": {
+    "args": {
+     "1": { "c_array_length_in_arg": [0,2], "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGGradientCreateWithColorComponents": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGGradientCreateWithColors": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGGradientRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGGradientRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGImageCreate": {
+    "args": {
+     "5": {}, 
+     "7": {}, 
+     "8": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateCopyWithColorSpace": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateWithImageInRect": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateWithJPEGDataProvider": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateWithMask": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateWithMaskingColors": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageCreateWithPNGDataProvider": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageGetAlphaInfo": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetBitmapInfo": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetBitsPerComponent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetBitsPerPixel": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetBytesPerRow": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetColorSpace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGImageGetDataProvider": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGImageGetDecode": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": { "c_array_of_variable_length": true }
+   }, 
+   "CGImageGetHeight": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetRenderingIntent": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetShouldInterpolate": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageGetWidth": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageIsMask": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageMaskCreate": {
+    "args": {
+     "5": {}, 
+     "6": { "c_array_of_variable_length": true, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGLayerCreateWithContext": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGLayerGetContext": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGLayerGetSize": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGLayerRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGLayerRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFArrayGetArray": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetBoolean": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o", "type_modifier": "o"  }
+    }
+   }, 
+   "CGPDFArrayGetCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFArrayGetDictionary": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetInteger": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetName": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetNull": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFArrayGetNumber": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetObject": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetStream": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFArrayGetString": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFContentStreamCreateWithPage": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFContentStreamCreateWithStream": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFContentStreamGetResource": {
+    "args": {
+     "0": {}, 
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n" }, 
+     "2": { "c_array_delimited_by_null": true, "type_modifier": "n" }
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFContentStreamGetStreams": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFContentStreamRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFContentStreamRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFContextAddDestinationAtPoint": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFContextAddDocumentMetadata": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFContextBeginPage": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFContextClose": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFContextCreate": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFContextCreateWithURL": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFContextEndPage": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFContextSetDestinationForRect": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFContextSetURLForRect": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFDictionaryApplyFunction": {
+    "args": {
+     "0": {}, 
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^c", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^(CGPDFObject=)", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "2": {}
+    }
+   }, 
+   "CGPDFDictionaryGetArray": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetBoolean": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDictionaryGetDictionary": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetInteger": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetName": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetNumber": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetObject": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetStream": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDictionaryGetString": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDocumentAllowsCopying": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentAllowsPrinting": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentCreateWithProvider": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFDocumentCreateWithURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFDocumentGetArtBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetBleedBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetCatalog": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFDocumentGetCropBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetID": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFDocumentGetInfo": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFDocumentGetMediaBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetNumberOfPages": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetPage": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFDocumentGetRotationAngle": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetTrimBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentGetVersion": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFDocumentIsEncrypted": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentIsUnlocked": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFDocumentRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFDocumentUnlockWithPassword": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPDFObjectGetType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFObjectGetValue": {
+    "comment": "users will have to use 'unpack' theirselfes",
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o", "c_array_of_variable_length": true }
+    }
+   }, 
+   "CGPDFOperatorTableCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFOperatorTableRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFOperatorTableRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFOperatorTableSetCallback": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^{CGPDFScanner=}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }
+    }
+   }, 
+   "CGPDFPageGetBoxRect": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFPageGetDictionary": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFPageGetDocument": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFPageGetDrawingTransform": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFPageGetPageNumber": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFPageGetRotationAngle": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFPageRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFPageRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFScannerCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFScannerGetContentStream": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFScannerPopArray": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopBoolean": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopDictionary": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopInteger": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopName": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopNumber": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopObject": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopStream": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerPopString": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPDFScannerRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFScannerRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFScannerScan": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPDFStreamCopyData": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFStreamGetDictionary": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFStringCopyDate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFStringCopyTextString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPDFStringGetBytePtr": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPDFStringGetLength": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPSConverterAbort": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPSConverterConvert": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CGPSConverterCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPSConverterIsConverting": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPaletteCreateCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateDefaultColorPalette": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateFromPaletteBlendedWithColor": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateWithByteSamples": {
+    "args": {
+     "0": { "c_array_length_in_arg": 1, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateWithCapacity": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateWithDisplay": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteCreateWithSamples": {
+    "args": {
+     "0": { "c_array_length_in_arg": 1, "type_modifier": "n" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPaletteGetColorAtIndex": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPaletteGetIndexForColor": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPaletteGetNumberOfSamples": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPaletteIsEqualToPalette": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPaletteRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPaletteSetColorAtIndex": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathAddArc": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddArcToPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddCurveToPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddEllipseInRect": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddLineToPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddLines": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddPath": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddQuadCurveToPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddRect": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddRects": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }, 
+     "2": { "c_array_length_in_arg":3, "type_modifier": "n" }
+    }
+   }, 
+   "CGPathAddRelativeArc": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPathApply": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CGPathElement=i^{CGPoint=dd}}", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }
+    }
+   }, 
+   "CGPathCloseSubpath": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathContainsPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathCreateCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateCopyByDashingPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateCopyByStrokingPath": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateCopyByTransformingPath": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateMutable": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateMutableCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateMutableCopyByTransformingPath": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateWithEllipseInRect": {
+    "args": {
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathCreateWithRect": {
+    "args": {
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPathEqualToPath": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "CGPathGetBoundingBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathGetCurrentPoint": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathGetPathBoundingBox": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathIsEmpty": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathIsRect": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPathMoveToPoint": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "n" }
+    }
+   }, 
+   "CGPathRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPathRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPatternCreate": {
+    "args": {
+     "0": {}, 
+     "7": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPatternRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGPatternRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGPointCreateDictionaryRepresentation": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGPointMakeWithDictionaryRepresentation": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGPostMouseEvent": {
+    "c_array_length_in_arg": 2,
+    "variadic": true
+   }, 
+   "CGPostScrollWheelEvent": {
+    "c_array_length_in_arg": 0,
+    "variadic": true
+   }, 
+   "CGRectCreateDictionaryRepresentation": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGRectDivide": {
+    "args": {
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "CGRectMakeWithDictionaryRepresentation": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGRegisterScreenRefreshCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CGRect={CGPoint=dd}{CGSize=dd}}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGReleaseScreenRefreshRects": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGScreenRegisterMoveCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "{CGScreenUpdateMoveDelta=ii}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CGRect={CGPoint=dd}{CGSize=dd}}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGScreenUnregisterMoveCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "{CGScreenUpdateMoveDelta=ii}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "L", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CGRect={CGPoint=dd}{CGSize=dd}}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGSessionCopyCurrentDictionary": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGSetDisplayTransferByByteTable": {
+    "args": {
+     "2": { "type_modifier": "n" }, 
+     "3": { "type_modifier": "n" }, 
+     "4": { "type_modifier": "n" }
+    }
+   }, 
+   "CGSetDisplayTransferByTable": {
+    "args": {
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "4": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+    }
+   }, 
+   "CGShadingCreateAxial": {
+    "args": {
+     "0": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGShadingCreateRadial": {
+    "args": {
+     "0": {}, 
+     "5": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGShadingRelease": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGShadingRetain": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "CGSizeCreateDictionaryRepresentation": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGSizeMakeWithDictionaryRepresentation": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "CGUnregisterScreenRefreshCallback": {
+    "args": {
+     "0": {
+      "function": {
+       "args": [
+        {
+         "typestr": [
+          "I", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^{CGRect={CGPoint=dd}{CGSize=dd}}", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
+        }
+       ], 
+       "retval": {
+        "typestr": [
+         "v", 
+         false
+        ]
+       }
+      }
+     }, 
+     "1": {}
+    }
+   }, 
+   "CGWaitForScreenRefreshRects": {
+    "args": {
+     "0": { "c_array_length_in_arg": 1, "type_modifier": "o" },
+     "1": { "type_modifier": "o" } 
+    }
+   }, 
+   "CGWaitForScreenUpdateRects": {
+    "args": {
+     "1": { "type_modifier": "o" }, 
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "o" }, 
+     "3": {}, 
+     "4": {}
+    }
+   }, 
+   "CGWindowListCopyWindowInfo": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGWindowListCreate": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGWindowListCreateDescriptionFromArray": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGWindowListCreateImage": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGWindowListCreateImageFromArray": {
+    "args": {
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGWindowServerCFMachPort": {
+    "retval": {}
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

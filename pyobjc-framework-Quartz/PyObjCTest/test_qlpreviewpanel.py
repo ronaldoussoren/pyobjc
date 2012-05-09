@@ -30,7 +30,7 @@ class TestQLPreviewPanel (TestCase):
         self.assertResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
 
         self.assertResultHasType(TestQLPreviewPanelHelper.previewPanel_sourceFrameOnScreenForPreviewItem_, NSRect.__typestr__)
-        self.assertArgHasType(TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_, 2, NSRect.__typestr__)
+        self.assertArgHasType(TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_, 2, objc._C_PTR + NSRect.__typestr__)
 
 if __name__ == "__main__":
     main()

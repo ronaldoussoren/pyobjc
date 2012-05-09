@@ -1,0 +1,110 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "IKFilterBrowserPanel": {
+    "methods": [
+     {
+      "args": {
+       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] }
+      }, 
+      "class_method": false, 
+      "selector": "beginWithOptions:modelessDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "args": {
+       "3": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] }
+      }, 
+      "class_method": false, 
+      "selector": "beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   }, 
+   "IKImagePicker": {
+    "methods": [
+     {
+      "args": {
+       "1": { "sel_of_type": ["v@:@I^v", "v@:@Q^v"] }
+      }, 
+      "class_method": false, 
+      "selector": "beginImagePickerWithDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "args": {
+       "2": { "sel_of_type": [ "v@:@I^v", "v@:@Q^v" ] }
+      }, 
+      "class_method": false, 
+      "selector": "beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   }, 
+   "IKImageView": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setImage:imageProperties:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "image"
+     }
+    ]
+   }, 
+   "IKPictureTaker": {
+    "methods": [
+     {
+      "args": {
+       "1": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+      }, 
+      "class_method": false, 
+      "selector": "beginPictureTakerWithDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "args": {
+       "2": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+      }, 
+      "class_method": false, 
+      "selector": "beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
+     }, 
+     {
+      "args": {
+       "2": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+      }, 
+      "class_method": false, 
+      "selector": "popUpRecentsMenuForView:withDelegate:didEndSelector:contextInfo:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {
+   "IKImageEditPanelDataSource": {
+    "methods": [
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "image"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "setImage:imageProperties:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {}, 
+      "selector": "thumbnailWithMaximumSize:"
+     }
+    ]
+   }
+  }, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
