@@ -8,6 +8,7 @@ to all framework wrappers.
 __all__ = ('setup', 'Extension', 'Command')
 
 import sys
+from pkg_resources import Distribution
 
 try:
     import setuptools
@@ -16,16 +17,10 @@ except ImportError:
     import distribute_setup
     distribute_setup.use_setuptools()
 
-from pkg_resources import Distribution
-
 from setuptools.command import test
 from setuptools.command import build_py
-from distutils.core import Command
 
 from distutils import log
-
-from fnmatch import fnmatch
-
 
 extra_args=dict(
     use_2to3 = True,
@@ -43,62 +38,20 @@ class oc_build_py (build_py.build_py):
             self.packages = p
 
 
-def recursiveGlob(root, pathPattern):
-    """
-    Recursively look for files matching 'pathPattern'. Return a list
-    of matching files/directories.
-    """
-    result = []
+from pkg_resources import working_set, normalize_path, add_activation_listener, require
 
-    for rootpath, dirnames, filenames in os.walk(root):
-        for fn in filenames:
-            if fnmatch(fn, pathPattern):
-                result.append(os.path.join(rootpath, fn))
-    return result
-        
-
-def importExternalTestCases(unittest, 
-        pathPattern="test_*.py", root=".", package=None):
-    """
-    Import all unittests in the PyObjC tree starting at 'root'
-    """
-
-    testFiles = recursiveGlob(root, pathPattern)
-    testModules = map(lambda x:x[len(root)+1:-3].replace('/', '.'), testFiles)
-    if package is not None:
-        testModules = [(package + '.' + m) for m in testModules]
-
-    suites = []
-   
-    for modName in testModules:
-        try:
-            module = __import__(modName)
-        except ImportError:
-            print("SKIP %s: %s"%(modName, sys.exc_info()[1]))
-            continue
-
-        if '.' in modName:
-            for elem in modName.split('.')[1:]:
-                module = getattr(module, elem)
-
-        s = unittest.defaultTestLoader.loadTestsFromModule(module)
-        suites.append(s)
-
-    return unittest.TestSuite(suites)
-
-
-
-
-class oc_test (Command):
+class oc_test (test.test):
     description = "run test suite"
     user_options = [
         ('verbosity=', None, "print what tests are run"),
     ]
 
     def initialize_options(self):
+        test.test.initialize_options(self)
         self.verbosity='1'
 
     def finalize_options(self):
+        test.test.finalize_options(self)
         if isinstance(self.verbosity, str):
             self.verbosity = int(self.verbosity)
 
@@ -117,6 +70,10 @@ class oc_test (Command):
             log.info("removing installed %r from sys.path before testing"%(
                 dirname,))
             sys.path.remove(dirname)
+
+        from pkg_resources import add_activation_listener
+        add_activation_listener(lambda dist: dist.activate())
+        working_set.__init__()
 
     def add_project_to_sys_path(self):
         from pkg_resources import normalize_path, add_activation_listener
@@ -145,6 +102,9 @@ class oc_test (Command):
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
 
+        if 'PyObjCTools' in sys.modules:
+            del sys.modules['PyObjCTools']
+
 
         ei_cmd = self.get_finalized_command('egg_info')
         sys.path.insert(0, normalize_path(ei_cmd.egg_base))
@@ -166,16 +126,22 @@ class oc_test (Command):
         import unittest
 
         # Ensure that build directory is on sys.path (py3k)
+        import sys
 
         self.cleanup_environment()
         self.add_project_to_sys_path()
 
+        import PyObjCTools.TestSupport as modo
+
+        from pkg_resources import EntryPoint
+        loader_ep = EntryPoint.parse("x="+self.test_loader)
+        loader_class = loader_ep.load(require=False)
+
         try:
             meta = self.distribution.metadata
             name = meta.get_name()
-            test_pkg = 'PyObjCTest'
-            suite = importExternalTestCases(unittest, 
-                    "test_*.py", test_pkg, test_pkg)
+            test_pkg = name + "_tests"
+            suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
@@ -375,7 +341,14 @@ def setup(
         cmdclass['test'] = oc_test
         cmdclass['build_py'] = oc_build_py
 
-
+    plat_name = "MacOS X"
+    plat_versions = []
+    if min_os_level is not None:
+        plat_versions.append(">=%s"%(min_os_level,))
+    if max_os_level is not None:
+        plat_versions.append("<=%s"%(min_os_level,))
+    if plat_versions:
+        plat_name += " (%s)"%(", ".join(plat_versions),)
 
     _setup(
         cmdclass=cmdclass, 
@@ -383,12 +356,13 @@ def setup(
         author='Ronald Oussoren',
         author_email='pyobjc-dev@lists.sourceforge.net',
         url='http://pyobjc.sourceforge.net',
-        platforms = [ "MacOS X" ],
+        platforms = [ plat_name ],
         package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
         dependency_links = [],
         package_data = { '': ['*.bridgesupport'] },
         test_suite='PyObjCTest',
         zip_safe = False,
+        license = 'MIT License',
         **k
     ) 
 

@@ -341,7 +341,14 @@ def setup(
         cmdclass['test'] = oc_test
         cmdclass['build_py'] = oc_build_py
 
-
+    plat_name = "MacOS X"
+    plat_versions = []
+    if min_os_level is not None:
+        plat_versions.append(">=%s"%(min_os_level,))
+    if max_os_level is not None:
+        plat_versions.append("<=%s"%(min_os_level,))
+    if plat_versions:
+        plat_name += " (%s)"%(", ".join(plat_versions),)
 
     _setup(
         cmdclass=cmdclass, 
@@ -349,12 +356,13 @@ def setup(
         author='Ronald Oussoren',
         author_email='pyobjc-dev@lists.sourceforge.net',
         url='http://pyobjc.sourceforge.net',
-        platforms = [ "MacOS X" ],
+        platforms = [ plat_name ],
         package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
         dependency_links = [],
         package_data = { '': ['*.bridgesupport'] },
         test_suite='PyObjCTest',
         zip_safe = False,
+        license = 'MIT License',
         **k
     ) 
 
