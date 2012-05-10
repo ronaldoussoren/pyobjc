@@ -203,13 +203,6 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCStarRating, unicode)
 
 
-    @min_os_level('10.5')
-    @expectedFailure
-    def testConstants10_5_missing(self):
-        self.assertIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
-        self.assertIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
-        self.assertIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
-        self.assertIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
@@ -281,10 +274,13 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyExifAuxFlashCompensation, unicode)
         self.assertIsInstance(kCGImagePropertyExifAuxOwnerName, unicode)
         self.assertIsInstance(kCGImagePropertyExifAuxFirmware, unicode)
+        self.assertIsInstance(kCGImagePropertyMakerMinoltaDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyMakerFujiDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyMakerOlympusDictionary, unicode)
+        self.assertIsInstance(kCGImagePropertyMakerPentaxDictionary, unicode)
 
 
     @min_os_level('10.6')
-    @expectedFailure
     def testConstants10_6(self):
         self.assertIsInstance(kCGImagePropertyIPTCCreatorContactInfo, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCRightsUsageTerms, unicode)

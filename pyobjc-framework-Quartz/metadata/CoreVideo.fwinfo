@@ -11,6 +11,18 @@
     },
     "CVTimestamp": {
        "fieldnames": [ "version", "videoTimeScale", "videoTime", "hostTime", "rateScalar", "videoRefreshPeriod", "smpteTime", "flags", "reserved"]
+    },
+    "CVFillExtendedPixelsCallBackData": {
+      "ignore": true
+    },
+    "CVPlanarComponentInfo": {
+      "fieldnames": ["offset", "rowBytes"]
+    },
+    "CVPlanarPixelBufferInfo": {
+      "fieldnames": ["componentInfo"]
+    },
+    "CVPlanarPixelBufferInfo_YCbCrPlanar": {
+      "fieldnames": ["componentInfoY", "componentInfoCb", "componentInfoCr"]
     }
   },
   "classes": {}, 

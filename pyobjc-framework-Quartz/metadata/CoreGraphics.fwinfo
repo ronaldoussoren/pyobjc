@@ -13,6 +13,15 @@
     },
     "CGDirectPaletteRef": {
        "typestr": "^{_CGDirectPaletteRef=}"
+    },
+    "CGPDFContentStreamRef": {
+      "typestr": "^{CGPDFContentStream=}"
+    },
+    "CGPDFArrayRef": {
+      "typestr": "^{CGPDFArray=}"
+    },
+    "CGPDFObject": {
+      "typestr": "^{CGPDFObject=}"
     }
   },
   "structs": {
@@ -39,6 +48,12 @@
      },
      "CGPathElement": {
          "fieldnames": ["type", "points"]
+     },
+     "CGDeviceColor": {
+         "fieldnames": ["red", "green", "blue" ]
+     },
+     "CGDeviceByteColor": {
+         "fieldnames": ["red", "green", "blue" ]
      }
   },
   "cftypes": {
@@ -204,9 +219,9 @@
    }, 
    "CGBitmapContextGetData": {
     "args": {
-     "0": { "c_array_of_variable_length": true }
+     "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CGBitmapContextGetHeight": {
     "args": {
@@ -2384,7 +2399,7 @@
    "CGPDFArrayGetObject": {
     "args": {
      "0": {}, 
-     "2": { "type_modifier": "o" }
+     "2": { "type_modifier": "o", "type_override": "^{CGPDFObject=}" }
     }
    }, 
    "CGPDFArrayGetStream": {
@@ -2423,7 +2438,7 @@
      "1": { "c_array_delimited_by_null": true, "type_modifier": "n" }, 
      "2": { "c_array_delimited_by_null": true, "type_modifier": "n" }
     }, 
-    "retval": {}
+    "retval": { "type_override": "^{CGPDFObject=}"}
    }, 
    "CGPDFContentStreamGetStreams": {
     "args": {
@@ -2509,29 +2524,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^c", 
-          false
-         ]
+         "typestr": "^c"
         }, 
         {
-         "typestr": [
-          "^(CGPDFObject=)", 
-          false
-         ]
+         "typestr": "^{CGPDFObject=}"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }
      }, 
@@ -2589,7 +2592,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_modifier": "o" }
+     "2": { "type_modifier": "o", "type_modifier": "^{CGPDFObject=}" }
     }
    }, 
    "CGPDFDictionaryGetStream": {
@@ -2727,13 +2730,13 @@
    }, 
    "CGPDFObjectGetType": {
     "args": {
-     "0": {}
+     "0": {"type_overide": "^{CGPDFObject=}"}
     }
    }, 
    "CGPDFObjectGetValue": {
     "comment": "users will have to use 'unpack' theirselfes",
     "args": {
-     "0": {}, 
+     "0": { "type_overide": "^{CGPDFObject=}"}, 
      "2": { "type_modifier": "o", "c_array_of_variable_length": true }
     }
    }, 
@@ -2881,7 +2884,7 @@
    "CGPDFScannerPopObject": {
     "args": {
      "0": {}, 
-     "1": { "type_modifier": "o" }
+     "1": { "type_modifier": "o", "type_override": "^^{CGPDFObject}" }
     }
    }, 
    "CGPDFScannerPopStream": {

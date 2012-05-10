@@ -4,7 +4,7 @@ from Quartz import *
 from CoreFoundation import CFArrayRef
 from Foundation import NSMutableData
 
-import sys
+import sys, os
 
 if sys.version_info[0] != 2:
     def buffer(value):
@@ -51,8 +51,11 @@ class TestCGImageDestination (TestCase):
 
         CGImageDestinationAddImage(dest, img, None)
 
+        image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif"
+        if not os.path.exists(image_path):
+            image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.png"
         url = CFURLCreateWithFileSystemPath(None,
-            "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif", 
+            image_path,
             kCFURLPOSIXPathStyle, False)
 
         isrc = CGImageSourceCreateWithURL(url, None)
@@ -60,6 +63,7 @@ class TestCGImageDestination (TestCase):
 
         self.assertResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
         v = CGImageDestinationFinalize(dest)
+        self.assertIsInstance(v, bool)
         self.assertTrue(v is True)
 
         dta = NSMutableData.alloc().init()

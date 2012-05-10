@@ -110,7 +110,8 @@ class TestCGFont (TestCase):
         self.assertResultIsCFRetained(CGFontCreateWithPlatformFont)
 
 
-        data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
+        #data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
+        data = open('/Library/Fonts/Courier New.ttf', 'rb').read()
         self.assertResultIsCFRetained(CGFontCreateWithDataProvider)
         font = CGFontCreateWithDataProvider(
                 CGDataProviderCreateWithCFData(buffer(data))
@@ -158,10 +159,11 @@ class TestCGFont (TestCase):
 
         self.assertResultIsCFRetained(CGFontCreatePostScriptSubset)
         psfont = CGFontCreatePostScriptSubset(
-                font, "pybobjc-characters",
-                kCGFontPostScriptFormatType42,
+                font, "pyobjc-characters",
+                 kCGFontPostScriptFormatType42,
                 glyphs, len(glyphs), None)
-        self.assertIsInstance(psfont, CFDataRef)
+        if psfont is not None:
+            self.assertIsInstance(psfont, CFDataRef)
 
 
         self.assertResultIsCFRetained(CGFontCreatePostScriptEncoding)

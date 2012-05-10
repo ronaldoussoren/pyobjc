@@ -506,12 +506,12 @@ class TestCase (_unittest.TestCase):
         info = method.__metadata__()
         type = info['retval']['type']
         if type != b'@?':
-            self.fail(message or "result of %s is not of type block"%(
-                method))
+            self.fail(message or "result of %s is not of type block: %s"%(
+                method, type))
 
         st = info['retval'].get('callable')
         if st is None:
-            self.fail(message or "result of %s is not of type block"%(
+            self.fail(message or "result of %s is not of type block: no callable specified"%(
                 method))
 
         iface = st['retval']['type']

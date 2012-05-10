@@ -1,15 +1,23 @@
 
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
+import os
 
 class TestCGPDFContentStream (TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGPDFContentStreamRef)
 
     def testFunctions(self):
+        if os.path.exists("/Library/Documentation//Applications/iWeb/Acknowledgements.pdf"):
+            pdf_path = "/Library/Documentation//Applications/iWeb/Acknowledgements.pdf"
+        elif os.path.exists("/Library/Documentation/Applications/iMovie/Acknowledgements.pdf"):
+            pdf_path = "/Library/Documentation/Applications/iMovie/Acknowledgements.pdf"
+        else:
+            self.fail("No test PDF file found")
+
         doc = CGPDFDocumentCreateWithURL(
                 CFURLCreateWithFileSystemPath(None,
-                    "/Library/Documentation/Applications/iMovie/Acknowledgements.pdf",
+                    pdf_path,
                     kCFURLPOSIXPathStyle, False))
         self.assertIsInstance(doc, CGPDFDocumentRef)
 

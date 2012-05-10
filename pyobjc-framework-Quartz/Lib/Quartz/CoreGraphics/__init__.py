@@ -26,6 +26,17 @@ def _load(mod):
     import Quartz
     Quartz.CoreGraphics = mod
 
+    # XXX: CGFLOAT_MIN is a #define for FLT_MIN or DBL_MIN, which isn't detected properly
+    # by the metadata script.
+    import sys
+
+    if sys.maxsize > 1 <<32:
+        mod.CGFLOAT_MIN=1.1754943508222875e-38
+        mod.CGFLOAT_MAX=3.4028234663852886e+38
+    else:
+        mod.CGFLOAT_MIN=2.2250738585072014e-308
+        mod.CGFLOAT_MAX=1.7976931348623157e+308
+
     import Quartz.CoreGraphics._callbacks as m
     for nm in dir(m):
         if nm.startswith('_'): continue
@@ -91,5 +102,6 @@ def _load(mod):
     mod.CGSetLocalEventsFilterDuringSupressionState = mod.CGSetLocalEventsFilterDuringSuppressionState
 
     mod.kCGAnyInputEventType = 0xffffffff
+
 
 _load(mod)

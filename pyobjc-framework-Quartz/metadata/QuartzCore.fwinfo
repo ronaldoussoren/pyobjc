@@ -512,16 +512,34 @@
         "selector": "completionBlock",
 	"class_method": false,
         "retval": {
-	   "function": {
-	      "args": [
-	         {
-		   "typestr": "^v"
+	   "callable": {
+	      "arguments": {
+	         "0": {
+		   "type": "^v"
 		 }
-	      ],
+	      },
 	      "retval": {
-	         "typestr": "v"
+	         "type": "v"
 	      }
 	   }
+	}
+      },
+      {
+        "selector": "setCompletionBlock:",
+	"class_method": false,
+        "args": {
+	   "0": {
+	     "callable": {
+	      "arguments": {
+	         "0": {
+		   "typestr": "^v"
+		 }
+	      },
+	      "retval": {
+	         "type": "v"
+	      }
+	   }
+	 }
 	}
       }
     ]

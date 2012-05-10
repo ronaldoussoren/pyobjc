@@ -5,7 +5,7 @@
   "classes": {}, 
   "formal_protocols": {}, 
   "cftypes": {
-    "CGImageDestionationRef": {
+    "CGImageDestinationRef": {
       "gettypeid_func": "CGImageDestinationGetTypeID", "typestr": "^{CGImageDestination=}"
     },
     "CGImageSourceRef": {
