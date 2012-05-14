@@ -11,7 +11,7 @@ except ImportError:
 
 class TestString (TestCase):
     def testType(self):
-        self.assertIs(CFStringRef, NSCFString)
+        self.assertTrue(issubclass(CFStringRef, NSString))
 
     def testTypeID(self):
         v = CFStringGetTypeID()

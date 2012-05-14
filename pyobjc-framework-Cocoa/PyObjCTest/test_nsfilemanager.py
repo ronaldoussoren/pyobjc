@@ -87,6 +87,13 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.removeItemAtURL_error_)
         self.assertArgIsOut(NSFileManager.removeItemAtURL_error_, 1)
 
+        self.assertArgIsBlock(NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_, 3, objc._C_NSBOOL + b'@@')
+
+        self.assertResultIsBOOL(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_)
+        self.assertArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 4)
+        self.assertArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 5)
+
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_)
@@ -224,11 +231,6 @@ class TestNSFileManager (TestCase):
         self.assertResultIsBOOL(NSFileManager.removeItemAtPath_error_)
         self.assertArgIsOut(NSFileManager.removeItemAtPath_error_, 1)
 
-        self.assertArgIsBlock(NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_, 3, objc._C_NSBOOL + b'@@')
-
-        self.assertResultIsBOOL(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_)
-        self.assertArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 4)
-        self.assertArgIsOut(NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_, 5)
 
     def testMethods(self):
         self.assertArgIsBOOL(NSFileManager.fileAttributesAtPath_traverseLink_, 1)
