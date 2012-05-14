@@ -102,7 +102,7 @@
    }, 
    "CFDictionaryRef": {
     "gettypeid_func": "CFDictionaryGetTypeID", 
-    "tollfree": "__NSCFDictionary,NSCFDictionary"
+    "tollfree": "NSDictionary"
    }, 
    "CFErrorRef": {
     "gettypeid_func": "CFErrorGetTypeID", 
@@ -202,21 +202,21 @@
    }, 
    "CFSetRef": {
     "gettypeid_func": "CFSetGetTypeID", 
-    "tollfree": "__NSCFSet,NSCFSet"
+    "tollfree": "NSSet"
    }, 
    "CFSocketRef": {
     "gettypeid_func": "CFSocketGetTypeID"
    }, 
    "CFStringRef": {
     "gettypeid_func": "CFStringGetTypeID", 
-    "tollfree": "__NSCFString,NSCFString"
+    "tollfree": "NSString"
    }, 
    "CFStringTokenizerRef": {
     "gettypeid_func": "CFStringTokenizerGetTypeID"
    }, 
    "CFTimeZoneRef": {
     "gettypeid_func": "CFTimeZoneGetTypeID", 
-    "tollfree": "__NSCFTimeZone,__NSTimeZone"
+    "tollfree": "NSTimeZone"
    }, 
    "CFTreeRef": {
     "gettypeid_func": "CFTreeGetTypeID"
