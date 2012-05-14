@@ -24172,24 +24172,24 @@
    }, 
    "NSBeginAlertSheet": {
     "args": {
-     "6": {"sel_of_type": "v@:@i^v"},
-     "7": {"sel_of_type": "v@:@i^v"},
+     "6": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
+     "7": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
      "9": {"printf_format": true}
     }, 
     "variadic": true
    }, 
    "NSBeginCriticalAlertSheet": {
     "args": {
-     "6": {"sel_of_type": "v@:@i^v"},
-     "7": {"sel_of_type": "v@:@i^v"},
+     "6": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
+     "7": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
      "9": {"printf_format": true}
     }, 
     "variadic": true
    }, 
    "NSBeginInformationalAlertSheet": {
     "args": {
-     "6": {"sel_of_type": "v@:@i^v"},
-     "7": {"sel_of_type": "v@:@i^v"},
+     "6": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
+     "7": {"sel_of_type": ["v@:@i^v", "v@:@q^v"]},
      "9": {"printf_format": true}
     }, 
     "variadic": true

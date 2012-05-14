@@ -242,7 +242,7 @@ class TestRunLoop (TestCase):
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.assertArgIsBOOL(CFRunLoopObserverCreateWithHandler, 2)
-        self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, "v^{__CFRunLoopObserver=}I")
+        self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, "v^{__CFRunLoopObserver=}" + objc._C_NSUInteger)
 
         l = []
         def record(observer, activity):

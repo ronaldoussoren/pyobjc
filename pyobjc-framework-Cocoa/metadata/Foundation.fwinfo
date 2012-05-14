@@ -1,4 +1,4 @@
-# objective.metada exceptions file, see its document
+# objectiv.metada exceptions file, see its document
 # for information on how to update this file.
 {
  "definitions": {
@@ -6894,7 +6894,7 @@
         "type_override": ":"
        }, 
        "1": {
-        "type_override": "I"
+        "type_override": ["I", "Q"]
        }
       }, 
       "class_method": false, 

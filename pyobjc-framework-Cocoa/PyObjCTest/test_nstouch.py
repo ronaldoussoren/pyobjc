@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
+import sys
 
 class TestNSTouch (TestCase):
     @min_os_level('10.6')
@@ -10,7 +11,10 @@ class TestNSTouch (TestCase):
         self.assertEqual(NSTouchPhaseEnded, 1 << 3)
         self.assertEqual(NSTouchPhaseCancelled, 1 << 4)
         self.assertEqual(NSTouchPhaseTouching, NSTouchPhaseBegan | NSTouchPhaseMoved | NSTouchPhaseStationary)
-        self.assertEqual(NSTouchPhaseAny, cast_uint(-1))
+        if sys.maxsize >= 2**32:
+            self.assertEqual(NSTouchPhaseAny, 0xffffffffffffffff)
+        else:
+            self.assertEqual(NSTouchPhaseAny, 0xffffffff)
 
     @min_os_level('10.6')
     def testMethods(self):
