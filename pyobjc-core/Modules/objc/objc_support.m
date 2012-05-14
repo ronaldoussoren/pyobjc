@@ -2226,8 +2226,8 @@ pythonify_c_return_value (const char *type, void *datum)
 			int byteorder = 0;
 			unichar ch = *(int*)datum;
 			return PyUnicode_DecodeUTF16(
-					(const char*)&ch, 2, NULL, ^byteorder);
-																	                                &byteorder);
+					(const char*)&ch, 2, NULL, 
+					&byteorder);
 		}
 
 	default:
