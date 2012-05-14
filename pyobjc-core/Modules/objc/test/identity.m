@@ -124,7 +124,7 @@
 }
 -(void)setStoredObjectAnInstanceOfClassic:(Class)cls
 {
-	[self setStoredClassicObject:[[cls new] autorelease]];
+	[self setStoredClassicObject:[[cls alloc] init]];
 }
 
 -(void)writeStoredObjectToFile:(NSString*)fname
