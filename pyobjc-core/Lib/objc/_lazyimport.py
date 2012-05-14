@@ -295,10 +295,13 @@ class ObjCLazyModule (module):
                     else:
                         tollfree = nm
                         break
-                v = objc.registerCFSignature(name, type, None, tollfree)
-                if v is not None:
-                    self.__dict__[name] = v
-                    continue
+                try:
+                    v = objc.registerCFSignature(name, type, None, tollfree)
+                    if v is not None:
+                        self.__dict__[name] = v
+                        continue
+                except objc.nosuchclass_error:
+                    pass
 
             try:
                 func = getattr(self, gettypeid_func)
@@ -323,7 +326,10 @@ class ObjCLazyModule (module):
                         tollfree = nm
                         break
 
-                v = objc.registerCFSignature(name, type, func(), tollfree)
+                try:
+                    v = objc.registerCFSignature(name, type, func(), tollfree)
+                except objc.nosuchclass_error:
+                    v = objc.registerCFSignature(name, type, func())
             else:
                 v = objc.registerCFSignature(name, type, func())
             if v is not None:

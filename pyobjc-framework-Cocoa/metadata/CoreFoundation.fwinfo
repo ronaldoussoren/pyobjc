@@ -59,7 +59,7 @@
    }, 
    "CFArrayRef": {
     "gettypeid_func": "CFArrayGetTypeID", 
-    "tollfree": "__NSCFArray,NSCFArray"
+    "tollfree": "NSArray"
    }, 
    "CFAttributedStringRef": {
     "gettypeid_func": "CFAttributedStringGetTypeID", 
@@ -83,7 +83,7 @@
    }, 
    "CFCalendarRef": {
     "gettypeid_func": "CFCalendarGetTypeID", 
-    "tollfree": "__NSCFCalendar"
+    "tollfree": "__NSCFCalendar,NSCFCalendar"
    }, 
    "CFCharacterSetRef": {
     "gettypeid_func": "CFCharacterSetGetTypeID", 

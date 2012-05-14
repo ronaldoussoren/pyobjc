@@ -181,7 +181,6 @@ class TestString (TestCase):
         self.assertRaises((TypeError, ValueError),
                 CFStringCreateWithFileSystemRepresentation, None, u"/tmp")
 
-
         r = CFStringCompareWithOptionsAndLocale(
                 u"aas", u"noot", 
                 CFRange(0, 3),
