@@ -11,6 +11,8 @@ class OC_AssocSneakyCopy (NSObject):
         return "<copy!>"
 
 class TestAssocations (TestCase):
+
+    @min_os_level("10.6")
     def testKeysAreIdentityBased(self):
         o = NSObject.alloc().init()
 
@@ -26,6 +28,7 @@ class TestAssocations (TestCase):
         self.assertEqual(objc.getAssociatedObject(o, key1), "foo")
         self.assertEqual(objc.getAssociatedObject(o, key2), None)
 
+    @min_os_level("10.6")
     def testGetSet(self):
         o = NSObject.alloc().init()
 
@@ -36,6 +39,7 @@ class TestAssocations (TestCase):
         objc.setAssociatedObject(o, key1, None)
         self.assertEqual(objc.getAssociatedObject(o, key1), None)
 
+    @min_os_level("10.6")
     def testClearing(self):
 
         o = NSObject.alloc().init()
@@ -58,6 +62,7 @@ class TestAssocations (TestCase):
         self.assertEqual(objc.getAssociatedObject(o, key1), None)
         self.assertEqual(objc.getAssociatedObject(o, key2), None)
 
+    @min_os_level("10.6")
     def testPolicy(self):
         o = NSObject.alloc().init()
         key1 = "key1"

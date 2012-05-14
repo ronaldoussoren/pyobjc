@@ -487,6 +487,15 @@ if int(os.uname()[2].split('.')[0]) >= 9:
         @onlyIf(0, "python unittest not relevant for archiving")
         def test_int_pickling_efficiency(self): pass
 
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_negative_32b_binunicode(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_negative_32b_binput(self): pass
+
+        @onlyIf(0, "python unittest not relevant for archiving")
+        def test_negative_32b_binbytes(self): pass
+
 
     #
     # Disable testing of plain Archiving for now, need full support

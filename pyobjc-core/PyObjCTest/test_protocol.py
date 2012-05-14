@@ -37,7 +37,7 @@ class TestInformalProtocols(TestCase):
         self.assertRaises(TypeError, self.doIncompleteClass)
 
 
-    @onlyIf(sys.version_info[:2] < (3,3), "not valid for python 3.3 and later")
+    @onlyIf(sys.version_info[:2] < (3,2), "not valid for python 3.3 and later")
     def testOptional(self):
         class ProtoClass3 (NSObject, MyProto):
             def testMethod(self):
@@ -45,7 +45,7 @@ class TestInformalProtocols(TestCase):
 
 
 
-if sys.maxsize < 2 ** 32:
+if sys.maxsize < 2 ** 32 and sys.version_info[0] == 2:
     EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
 
     MyProtocol = objc.formal_protocol("MyProtocol", None, (
