@@ -129,12 +129,10 @@ class DgTestCase (unittest.TestCase):
             # Workaround for compile failure on OSX 10.7 
             # and Xcode 4.2
             CFLAGS=re.sub('\s+-isysroot\s+\S+\s+', ' ', CFLAGS)
-            CC='clang'
 
-        else:
-            CC=get_config_var('CC')
+        CC=get_config_var('CC')
 
-        commandline='MACOSX_DEPLPOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
+        commandline='MACOSX_DEPLOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),
                 CC,
                 CFLAGS, self.filename, ' '.join(libffiobjects),
