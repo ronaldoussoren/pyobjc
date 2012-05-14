@@ -104,8 +104,11 @@ class TestCFSocketStream (TestCase):
         self.assertIsInstance(rd, CFReadStreamRef)
         self.assertIsInstance(wr, CFWriteStreamRef)
 
-
-
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
+        self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
+        self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
 
 if __name__ == "__main__":
     main()

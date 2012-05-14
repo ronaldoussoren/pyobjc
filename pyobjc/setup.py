@@ -59,12 +59,31 @@ REQUIRES_10_6=[
         'pyobjc-framework-ServiceManagement=='+VERSION,
 ]
 
+REQUIRES_10_7=[
+]
+
+REQUIRES_10_8=[
+        'pyobjc-framework-Accounts=='+VERSION,
+        'pyobjc-framework-AudioVideoBridging=='+VERSION,
+        'pyobjc-framework-EventKit=='+VERSION,
+        'pyobjc-framework-GLKit=='+VERSION,
+        'pyobjc-framework-GameKit=='+VERSION,
+        'pyobjc-framework-MediaToolbox=='+VERSION,
+        'pyobjc-framework-SceneKit=='+VERSION,
+        'pyobjc-framework-Social=='+VERSION,
+        'pyobjc-framework-VideoToolbox=='+VERSION,
+]
+
 import platform
 rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
 if rel >= (10, 5):
     REQUIRES.extend(REQUIRES_10_5)
 if rel >= (10, 6):
     REQUIRES.extend(REQUIRES_10_6)
+if rel >= (10, 7):
+    REQUIRES.extend(REQUIRES_10_7)
+if rel >= (10, 8):
+    REQUIRES.extend(REQUIRES_10_8)
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""

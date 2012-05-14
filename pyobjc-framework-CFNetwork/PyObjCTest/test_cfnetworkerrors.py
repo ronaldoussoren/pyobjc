@@ -104,5 +104,9 @@ class TestCFNetwork (TestCase):
         self.assertEqual(kCFErrorHTTPBadProxyCredentials, 307)
         self.assertEqual(kCFErrorPACFileError, 308)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(kCFStreamErrorHTTPSProxyFailureUnexpectedResponseToCONNECTMethod, 311)
+
 if __name__ == "__main__":
     main()

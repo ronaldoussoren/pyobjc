@@ -48,3 +48,15 @@ import objc._pycoder as _pycoder
 # bugtracker
 import atexit
 atexit.register(recycleAutoreleasePool)
+
+def _resolve_name(name):
+    if '.' not in name:
+        raise ValueError(name)
+
+    module, name = name.rsplit('.', 1)
+    m = __import__(module)
+    for k in module.split('.')[1:]:
+        m = getattr(m, k)
+
+    return getattr(m, name)
+

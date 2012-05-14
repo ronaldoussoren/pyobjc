@@ -119,6 +119,5 @@ class TestCFHTTPMessage (TestCase):
         v = CFHTTPMessageCopyResponseStatusLine(resp)
         self.assertIsInstance(v, unicode)
 
-
 if __name__ == "__main__":
     main()
