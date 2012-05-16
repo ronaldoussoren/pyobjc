@@ -9372,8 +9372,7 @@
      {
       "args": {
        "0": {
-        "null_accepted": false, 
-        "type_modifier": "o"
+        "null_accepted": false
        }
       }, 
       "class_method": false, 
