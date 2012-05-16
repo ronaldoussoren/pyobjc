@@ -1,0 +1,708 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "structs": {
+    "LSApplicationParameters": {
+       "fieldnames": [ "version", "flags", "application", "asyncLaunchRefCon", "environment", "argv", "initialEvent" ]
+    },
+    "LSItemInfoRecord": {
+       "fieldnames": [ "flags", "filetype", "creator", "extension", "iconFileName", "kindID" ]
+    }
+  },
+  "opaque": {
+    "IconRef": { "typestr": "^{OpaqueIconRef=}" }
+  },
+  "cftypes": {
+    "LSSharedFileListItemRef": { "typestr": "^{OpaqueLSSharedFileListItemRef=}", "gettypeid_func": "LSSharedFileListItemGetTypeID" },
+    "LSSharedFileListRef": { "typestr": "^{OpaqueLSSharedFileListRef=}", "gettypeid_func": "LSSharedFileListGetTypeID" }
+  },
+  "externs": {
+     "kLSSharedFileListItemBeforeFirst": {
+        "magic_cookie": true
+     },
+     "kLSSharedFileListItemLast": {
+        "magic_cookie": true
+     }
+  },
+  "functions": {
+	"LSSharedFileListItemGetTypeID": {
+		"args": [
+		],
+		"retval": {
+			"typestr": ["L", "Q"]
+		}
+	},
+	"LSSharedFileListGetTypeID": {
+		"args": [
+		],
+		"retval": {
+			"typestr": ["L", "Q"]
+		}
+	},
+
+   "_LSCopyAllApplicationURLs": {
+      "retval": {
+        "typestr": "v"
+      },
+      "args": {
+         "0": { "typestr": "^@", "already_retained": true, "type_modifier": "o"  }
+      }
+   },
+   "AcquireIconRef": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CompositeIconRef": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "GetCustomIconsEnabled": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRef": {
+    "args": {
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromComponent": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromFile": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromFileInfo": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "4": { "type_modifier": "n", "null_accepted": true }, 
+     "6": { "type_modifier": "o" }, 
+     "7": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromFolder": {
+    "args": {
+     "5": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromIconFamilyPtr": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefFromTypeInfo": {
+    "args": {
+     "2": {}, 
+     "3": {}, 
+     "5": { "type_modifier": "o" }
+    }
+   }, 
+   "GetIconRefOwners": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "IsDataAvailableInIconRef": {
+    "args": {
+     "1": {}
+    }
+   }, 
+   "IsIconRefComposite": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "IsValidIconRef": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSCanRefAcceptItem": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "n" }, 
+     "4": { "type_modifier": "o" }
+    }
+   }, 
+   "LSCanURLAcceptURL": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "4": { "type_modifier": "o" }
+    }
+   }, 
+   "LSCopyAllHandlersForURLScheme": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSCopyAllRoleHandlersForContentType": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSCopyApplicationForMIMEType": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyApplicationURLsForURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSCopyDefaultHandlerForURLScheme": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSCopyDefaultRoleHandlerForContentType": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSCopyDisplayNameForRef": {
+    "args": {
+     "0": { "type_modifier": "n"}, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyDisplayNameForURL": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyItemAttribute": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": {}, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyItemAttributes": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": {}, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "LSCopyItemInfoForRef": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "LSCopyItemInfoForURL": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "LSCopyKindStringForMIMEType": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyKindStringForRef": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "o", "already_cfretained": true  }
+    }
+   }, 
+   "LSCopyKindStringForTypeInfo": {
+    "args": {
+     "2": {}, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSCopyKindStringForURL": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSFindApplicationForInfo": {
+    "args": {
+     "1": {}, 
+     "2": {}, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSGetApplicationForInfo": {
+    "args": {
+     "2": {}, 
+     "4": { "type_modifier": "o" }, 
+     "5": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSGetApplicationForItem": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSGetApplicationForURL": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSGetExtensionInfo": {
+    "args": {
+     "1": { "type_override": "^T", "type_modifier": "n", "c_array_length_in_arg": 0 }, 
+     "2": { "type_modifier": "o" }
+    }
+   }, 
+   "LSGetHandlerOptionsForContentType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSOpenApplication": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "LSOpenCFURLRef": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSOpenFSRef": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "LSOpenFromRefSpec": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "o" }
+    }
+   }, 
+   "LSOpenFromURLSpec": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   }, 
+   "LSOpenItemsWithRole": {
+    "args": {
+     "0": { "c_array_length_in_arg": 1, "type_modifier": "n" }, 
+     "3": { "type_modifier": "n" }, 
+     "4": { "type_modifier": "n" }, 
+     "5": { "type_modifier": "o", "c_array_length_in_arg": 6 }
+    }
+   }, 
+   "LSOpenURLsWithRole": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "n" }, 
+     "3": { "type_modifier": "n" }, 
+     "4": { "type_modifier": "o", "c_array_length_in_arg": 5 }
+    }
+   }, 
+   "LSRegisterFSRef": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   }, 
+   "LSRegisterURL": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSetDefaultHandlerForURLScheme": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSetDefaultRoleHandlerForContentType": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "LSSetExtensionHiddenForRef": {
+    "args": {
+     "0": { "type_modifier": "n" }
+    }
+   }, 
+   "LSSetExtensionHiddenForURL": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSetHandlerOptionsForContentType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSetItemAttribute": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "2": {},
+     "3": { "type_override": "@" }
+    }
+   }, 
+   "LSSharedFileListAddObserver": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "callable_retained": true,
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueLSSharedFileListRef=}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "LSSharedFileListCopyProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSharedFileListCopySnapshot": {
+    "args": {
+     "0": {}, 
+     "1": { "type_modifier": "o" }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSSharedFileListCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSSharedFileListGetSeedValue": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSharedFileListInsertItemFSRef": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": {}, 
+     "6": {}
+    }, 
+    "retval": {}
+   }, 
+   "LSSharedFileListInsertItemURL": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {}, 
+     "5": {}, 
+     "6": {}
+    }, 
+    "retval": { "already_cfretained": true }
+   }, 
+   "LSSharedFileListItemCopyDisplayName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSSharedFileListItemCopyIconRef": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "LSSharedFileListItemCopyProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSharedFileListItemGetID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSharedFileListItemMove": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "LSSharedFileListItemRemove": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSharedFileListItemResolve": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o", "already_cfretained": true }, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "LSSharedFileListItemSetProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSharedFileListRemoveAllItems": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "LSSharedFileListRemoveObserver": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{OpaqueLSSharedFileListRef=}"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     }, 
+     "4": {}
+    }
+   }, 
+   "LSSharedFileListSetAuthorization": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "LSSharedFileListSetProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "OverrideIconRef": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "OverrideIconRefFromResource": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "ReadIconFile": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "ReadIconFromFSRef": {
+    "args": {
+     "0": { "type_modifier": "n" }, 
+     "1": {}
+    }
+   }, 
+   "RegisterIconRefFromFSRef": {
+    "args": {
+     "2": { "type_modifier": "n" }, 
+     "3": {}
+    }
+   }, 
+   "RegisterIconRefFromIconFamily": {
+    "args": {
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "RegisterIconRefFromIconFile": {
+    "args": {
+     "2": {}, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "RegisterIconRefFromResource": {
+    "args": {
+     "2": {}, 
+     "4": {}
+    }
+   }, 
+   "ReleaseIconRef": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "RemoveIconRefOverride": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "UTCreateStringForOSType": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTGetOSTypeFromString": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "UTTypeConformsTo": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "UTTypeCopyDeclaration": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeCopyDeclaringBundleURL": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeCopyDescription": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeCopyPreferredTagWithClass": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeCreateAllIdentifiersForTag": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeCreatePreferredIdentifierForTag": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "UTTypeEqual": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "UpdateIconRef": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "WriteIconFile": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}

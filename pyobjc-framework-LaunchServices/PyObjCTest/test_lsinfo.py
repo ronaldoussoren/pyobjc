@@ -49,7 +49,7 @@ class TestLSInfo (TestCase):
         self.assertEqual(kLSRequestAllFlags, 0x00000010)
         self.assertEqual(kLSRequestIconAndKind, 0x00000020)
         self.assertEqual(kLSRequestExtensionFlagsOnly, 0x00000040)
-        self.assertEqual(kLSRequestAllInfo, cast_int(0xFFFFFFFF))
+        self.assertEqual(kLSRequestAllInfo, 0xFFFFFFFF)
         self.assertEqual(kLSItemInfoIsPlainFile, 0x00000001)
         self.assertEqual(kLSItemInfoIsPackage, 0x00000002)
         self.assertEqual(kLSItemInfoIsApplication, 0x00000004)
