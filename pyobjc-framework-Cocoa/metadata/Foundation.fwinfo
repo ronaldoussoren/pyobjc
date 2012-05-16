@@ -47,10 +47,63 @@
     "NSURLErrorInternationalRoamingOff": { "value":-1018 },
     "NSURLErrorCallIsActive": { "value": -1019 },
     "NSURLErrorDataNotAllowed": { "value": -1020 },
-    "NSURLErrorRequestBodyStreamExhausted": { "value": -1021 }
-
+    "NSURLErrorRequestBodyStreamExhausted": { "value": -1021 },
+    "NSObjCNoType": {
+      "ignore": true
+    },
+    "NSObjCVoidType": {
+      "ignore": true
+    },
+    "NSObjCCharType": {
+      "ignore": true
+    },
+    "NSObjCShortType": {
+      "ignore": true
+    },
+    "NSObjCLongType": {
+      "ignore": true
+    },
+    "NSObjCLonglongType": {
+      "ignore": true
+    },
+    "NSObjCFloatType": {
+      "ignore": true
+    },
+    "NSObjCDoubleType": {
+      "ignore": true
+    },
+    "NSObjCBoolType": {
+      "ignore": true
+    },
+    "NSObjCSelectorType": {
+      "ignore": true
+    },
+    "NSObjCObjectType": {
+      "ignore": true
+    },
+    "NSObjCStructType": {
+      "ignore": true
+    },
+    "NSObjCPointerType": {
+      "ignore": true
+    },
+    "NSObjCStringType": {
+      "ignore": true
+    },
+    "NSObjCArrayType": {
+      "ignore": true
+    },
+    "NSObjCUnionType": {
+      "ignore": true
+    },
+    "NSObjCBitfield": {
+      "ignore": true
+    }
   },
   "structs": {
+    "NSObjCValue": {
+      "ignore": true
+    },
     "NSFastEnumerationState": {
       "ignore": true
     }
@@ -12918,6 +12971,20 @@
    }
   }, 
   "functions": {
+   "NSJavaClassesFromPath": {
+     "args": {
+        "3": {
+	  "type_modifier": "o"
+	}
+      }
+   },
+   "NSJavaClassesForBundle": {
+     "args": {
+        "2": {
+	  "type_modifier": "o"
+	}
+      }
+   },
    "NSAllocateCollectable": {
     "ignore": true
    }, 
