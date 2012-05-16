@@ -654,7 +654,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -760,7 +760,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -787,7 +787,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1247,7 +1247,7 @@
         }, 
         {
          "typestr": [
-          "^{CFStreamError=ll}", 
+          "^{_CFStreamError=ll}", 
           true
          ]
         }, 
@@ -1289,7 +1289,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1423,7 +1423,7 @@
         }, 
         {
          "typestr": [
-          "^{CFStreamError=ll}", 
+          "^{_CFStreamError=ll}", 
           true
          ]
         }, 
@@ -1506,7 +1506,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1529,7 +1529,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1544,7 +1544,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1796,7 +1796,7 @@
         }, 
         {
          "typestr": [
-          "^{CFStreamError=ll}", 
+          "^{_CFStreamError=ll}", 
           true
          ]
         }, 
@@ -1879,7 +1879,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1894,7 +1894,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1928,7 +1928,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1947,7 +1947,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1962,7 +1962,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -1981,7 +1981,7 @@
      }, 
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "retval": {
@@ -2024,7 +2024,7 @@
         }, 
         {
          "typestr": [
-          "^{CFStreamError=ll}", 
+          "^{_CFStreamError=ll}", 
           true
          ]
         }, 
@@ -2331,7 +2331,7 @@
     "args": [
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "inline": true, 
@@ -2343,7 +2343,7 @@
     "args": [
      {
       "name": "error", 
-      "typestr": "^{CFStreamError=ll}"
+      "typestr": "^{_CFStreamError=ll}"
      }
     ], 
     "inline": true, 

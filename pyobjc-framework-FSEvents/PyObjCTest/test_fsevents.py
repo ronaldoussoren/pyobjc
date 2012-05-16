@@ -60,7 +60,11 @@ class TestFSEvents (TestCase):
             v = FSEventStreamCopyPathsBeingWatched(ref)
             self.assertIsInstance(v, CFArrayRef)
             self.assertEqual(len(v), 2)
-            self.assertEqual(v, [os.path.realpath("/etc")[1:], os.path.realpath("/tmp")[1:]])
+
+            self.assertIn(v, [
+                    [os.path.realpath("/etc")[1:], os.path.realpath("/tmp")[1:]],
+                    [os.path.realpath("/etc"), os.path.realpath("/tmp")],
+                ])
 
             v = FSEventsGetCurrentEventId()
             self.assertIsInstance(v, (int, long))

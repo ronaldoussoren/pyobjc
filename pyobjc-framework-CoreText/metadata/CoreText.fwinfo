@@ -136,8 +136,8 @@
       "type_override": "^{__CTFontCollection=}"
      }, 
      "1": {
-      "callable": {
-       "arguments": {
+      "function": {
+       "args": {
         "0": {
          "typestr": "^{__CTFontDescriptor=}"
         }, 
@@ -152,36 +152,7 @@
         "typestr": "i"
        }
       }, 
-      "callable_retained": false, 
-      "function": {
-       "args": [
-        {
-         "typestr": [
-          "^{__CTFontDescriptor=}", 
-          false
-         ]
-        }, 
-        {
-         "typestr": [
-          "^{__CTFontDescriptor=}", 
-          false
-         ]
-        }, 
-        {
-         "typestr": [
-          "^v", 
-          false
-         ]
-        }
-       ], 
-       "retval": {
-        "typestr": [
-         "l", 
-         false
-        ]
-       }
-      }, 
-      "type_override": "^?"
+      "callable_retained": false
      }, 
      "2": {
       "type_override": "@"
@@ -1524,6 +1495,7 @@
     }
    }, 
    "CTRunGetAdvancesPtr": {
+    "ignore": true,
     "args": {
      "0": {}
     }, 

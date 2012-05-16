@@ -26,11 +26,11 @@ class TestCTStringAttributes (TestCase):
     def testConstants10_5(self):
         self.assertIsInstance(kCTForegroundColorFromContextAttributeName, unicode)
         self.assertIsInstance(kCTSuperscriptAttributeName, unicode)
-        self.assertIsInstance(kCTUnderlineColorAttributeName, unicode)
         self.assertIsInstance(kCTCharacterShapeAttributeName, unicode)
 
     @min_os_level('10.6')
     def testConstants10_6(self):
+        self.assertIsInstance(kCTUnderlineColorAttributeName, unicode)
         self.assertIsInstance(kCTStrokeWidthAttributeName, unicode)
         self.assertIsInstance(kCTStrokeColorAttributeName, unicode)
 

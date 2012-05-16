@@ -37,7 +37,7 @@ class TestIMAVManager (TestCase):
         self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
 
         self.assertArgIsOut(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0)
-        self.assertArgHasType(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, b'o^I')
+        self.assertArgHasType(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, b'o^' + objc._C_NSUInteger)
 
         self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_)
         self.assertArgIsIn(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_, 1)

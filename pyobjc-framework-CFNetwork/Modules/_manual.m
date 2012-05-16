@@ -98,7 +98,7 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
 #ifdef __LP64__
 	PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=qi}", (void*)error);
 #else
-	PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=ii}", (void*)error);
+	PyObject* py_error = PyObjC_ObjCToPython("{_CFStreamError=ll}", (void*)error);
 #endif
 	if (py_error == NULL) {
 		Py_DECREF(py_host);
@@ -120,7 +120,7 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
 }
 
 
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1005
   /* This function is available on 10.5 or later, but the prototype isn't in the headers on 10.5 */
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__unused__)),
@@ -307,7 +307,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)),
 
 
 static PyMethodDef mod_methods[] = {
-#if PyObjC_BUILD_RELEASE >= 1006
+#if PyObjC_BUILD_RELEASE >= 1005
 	{
 		"CFNetworkExecuteProxyAutoConfigurationScript",
 		(PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript,

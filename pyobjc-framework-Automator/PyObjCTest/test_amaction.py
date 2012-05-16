@@ -16,6 +16,9 @@ class TestAMAction (TestCase):
 
     def testMethods(self):
         self.assertArgIsOut(AMAction.runWithInput_fromAction_error_, 2)
+
+    @min_os_level("10.6")
+    def testMethods10_6(self):
         self.assertResultIsBOOL(AMAction.isStopped)
 
     def testConstants(self):

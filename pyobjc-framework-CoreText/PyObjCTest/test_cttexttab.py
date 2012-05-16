@@ -12,7 +12,9 @@ class TestCTTextTab (TestCase):
     def testFunctions(self):
         self.assertIsInstance(CTTextTabGetTypeID(), (int, long))
 
-        tab = CTTextTabCreate(kCTCenterTextAlignment, 10.5, { u"key": u"value" })
+        tab = CTTextTabCreate(kCTCenterTextAlignment, 10.5, { 
+            kCTTabColumnTerminatorsAttributeName: CFCharacterSetCreateWithCharactersInString(None, u".")
+        })
         self.assertIsInstance(tab, CTTextTabRef)
 
         v = CTTextTabGetAlignment(tab)
