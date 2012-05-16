@@ -278,6 +278,13 @@ class ObjCLazyModule (module):
         if self.__aliases:
             if name in self.__aliases:
                 alias = self.__aliases[name]
+                if alias == 'ULONG_MAX':
+                    return (sys.maxsize * 2) + 1
+                elif alias == 'LONG_MAX':
+                    return sys.maxsize
+                elif alias == 'LONG_MIN':
+                    return -sys.maxsize-1
+
                 return getattr(self, alias)
 
         raise AttributeError(name)
