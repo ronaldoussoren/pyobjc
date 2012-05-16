@@ -126,6 +126,8 @@ class TestCFBundle (TestCase):
         url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "Dutch");
         if url is None:
             url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "nl");
+        if url is None:
+            url = CFBundleCopyResourceURLForLocalization(bundle, "Formatter", "strings", None, "en");
         self.assertIsInstance(url, CFURLRef)
 
         array = CFBundleCopyResourceURLsOfTypeForLocalization(bundle, "strings", None, "Dutch")

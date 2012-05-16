@@ -19,8 +19,11 @@ class TestNSURLRequest (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
-        self.assertResultIsBOOL(NSURLRequest.HTTPShouldUsePipelining)
         self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldHandleCookies_, 0)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSURLRequest.HTTPShouldUsePipelining)
         self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldUsePipelining_, 0)
 
 if __name__ == "__main__":

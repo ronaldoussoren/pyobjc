@@ -9,7 +9,7 @@ class TestNSTextInputContext (TestCase):
         self.assertArgIsBOOL(NSTextInputContext.setAcceptsGlyphInfo_, 0)
         self.assertResultIsBOOL(NSTextInputContext.handleEvent_)
 
-    @min_os_level('10.5')
+    @min_os_level('10.6')
     def testConstants(self):
         self.assertIsInstance(NSTextInputContextKeyboardSelectionDidChangeNotification, unicode)
 

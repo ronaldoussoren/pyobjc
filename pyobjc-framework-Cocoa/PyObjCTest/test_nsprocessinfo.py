@@ -15,6 +15,7 @@ class TestNSProcessInfo (TestCase):
         self.assertEqual(NSSunOSOperatingSystem, 6)
         self.assertEqual(NSOSF1OperatingSystem, 7)
 
+    @min_os_level('10.6')
     def testNSDisabledSuddenTermination(self):
         # annoyingly we cannot easily test if this has an effect, but
         # this at least guards against typos.
