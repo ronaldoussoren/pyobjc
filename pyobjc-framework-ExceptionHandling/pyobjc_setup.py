@@ -22,11 +22,6 @@ from setuptools.command import build_py
 
 from distutils import log
 
-extra_args=dict(
-    use_2to3 = True,
-)
-
-
 class oc_build_py (build_py.build_py):
     def build_packages(self):
         log.info("overriding build_packages to copy PyObjCTest")
@@ -79,25 +74,10 @@ class oc_test (test.test):
         from pkg_resources import normalize_path, add_activation_listener
         from pkg_resources import working_set, require
 
-        if getattr(self.distribution, 'use_2to3', False):
-
-            # Using 2to3, cannot do this inplace:
-            self.reinitialize_command('build_py', inplace=0)
-            self.run_command('build_py')
-            bpy_cmd = self.get_finalized_command("build_py")
-            build_path = normalize_path(bpy_cmd.build_lib)
-
-            self.reinitialize_command('egg_info', egg_base=build_path)
-            self.run_command('egg_info')
-
-            self.reinitialize_command('build_ext', inplace=0)
-            self.run_command('build_ext')
-
-        else:
-            self.reinitialize_command('egg_info')
-            self.run_command('egg_info')
-            self.reinitialize_command('build_ext', inplace=1)
-            self.run_command('build_ext')
+        self.reinitialize_command('egg_info')
+        self.run_command('egg_info')
+        self.reinitialize_command('build_ext', inplace=1)
+        self.run_command('build_ext')
         
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
@@ -291,7 +271,6 @@ def setup(
 
 
     k = kwds.copy()
-    k.update(extra_args)
 
     os_level = get_os_level()
     os_compatible = True
@@ -318,11 +297,11 @@ def setup(
                     msg = "This distribution is only supported on MacOSX versions %s upto and including %s"%(
                             min_os_level, max_os_level)
                 else:
-                    msg = "This distribution is only support on MacOSX >= %s"%(min_os_level,)
+                    msg = "This distribution is only supported on MacOSX >= %s"%(min_os_level,)
             elif max_os_level != None:
-                    msg = "This distribution is only support on MacOSX <= %s"%(max_os_level,)
+                    msg = "This distribution is only supported on MacOSX <= %s"%(max_os_level,)
             else:
-                    msg = "This distribution is only support on MacOSX"
+                    msg = "This distribution is only supported on MacOSX"
 
             class subcommand (base_class):
                 def run(self):

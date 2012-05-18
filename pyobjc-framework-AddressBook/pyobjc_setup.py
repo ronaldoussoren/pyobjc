@@ -297,11 +297,11 @@ def setup(
                     msg = "This distribution is only supported on MacOSX versions %s upto and including %s"%(
                             min_os_level, max_os_level)
                 else:
-                    msg = "This distribution is only support on MacOSX >= %s"%(min_os_level,)
+                    msg = "This distribution is only supported on MacOSX >= %s"%(min_os_level,)
             elif max_os_level != None:
-                    msg = "This distribution is only support on MacOSX <= %s"%(max_os_level,)
+                    msg = "This distribution is only supported on MacOSX <= %s"%(max_os_level,)
             else:
-                    msg = "This distribution is only support on MacOSX"
+                    msg = "This distribution is only supported on MacOSX"
 
             class subcommand (base_class):
                 def run(self):
