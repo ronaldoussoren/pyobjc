@@ -31,7 +31,7 @@
      }, 
      {
       "name": "range", 
-      "typestr": "{_CFRange=ll}"
+      "typestr": "{_CFRange=qq}"
      }
     ], 
     "retval": {
@@ -54,7 +54,7 @@
      }
     ], 
     "retval": {
-     "typestr": "{_CFRange=ll}"
+     "typestr": "{_CFRange=qq}"
     }
    }
   }, 
