@@ -1065,7 +1065,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 	char* docstr = NULL;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-				"s"Py_ARG_BYTES"|s", 
+				"s"Py_ARG_BYTES"|z", 
 				keywords, 
 				&name, &typestr, &docstr)) {
 		return NULL;
@@ -1132,7 +1132,7 @@ registerStructAlias(PyObject* self __attribute__((__unused__)),
 
 
 PyDoc_STRVAR(createStructType_doc,
-	"createStructType(name, typestr, fieldnames, doc) -> type\n"
+	"createStructType(name, typestr, fieldnames, doc, pack) -> type\n"
 	"\n"
 	"Return a wrapper type for structs of the given type. The wrapper will \n"
 	"registered with PyObjC and will be used to wrap structs of the given type.\n"
@@ -1142,7 +1142,7 @@ static PyObject*
 createStructType(PyObject* self __attribute__((__unused__)),
 		PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
+static char* keywords[] = { "name", "typestr", "fieldnames", "doc", "pack", NULL };
 	char* name;
 	char* typestr;
 	PyObject* pyfieldnames;
@@ -1151,11 +1151,12 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
 	char** fieldnames = NULL;
 	Py_ssize_t i;
 	Py_ssize_t field_count;
+	Py_ssize_t pack = -1;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-				"s"Py_ARG_BYTES"O|s", 
+				"s"Py_ARG_BYTES"O|s" Py_ARG_SIZE_T , 
 				keywords, 
-				&name, &typestr, &pyfieldnames, &docstr)) {
+				&name, &typestr, &pyfieldnames, &docstr, &pack)) {
 		return NULL;
 	}
 
@@ -1213,7 +1214,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", NULL };
 
 
 	retval = PyObjC_RegisterStructType(typestr, name, docstr, NULL,
-			field_count, (const char**)fieldnames);
+			field_count, (const char**)fieldnames, pack);
 	if (retval == NULL) goto error_cleanup;
 	Py_DECREF(pyfieldnames);
 

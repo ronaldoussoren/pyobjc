@@ -29,6 +29,7 @@
  * @param tpinit     Optional __init__ method for the type
  * @param numFields  Number of fields in the type
  * @param fieldnames Field names, there should be exactly numFields names.
+ * @param pack       Value of 'pragma pack', use -1 for default packing
  * @result Returns a newly allocated type or NULL
  * @discussion
  *    The name, doc and fieldnames should be pointers to static strings,
@@ -45,7 +46,8 @@ PyObject* PyObjC_MakeStructType(
 	initproc tpinit,
 	Py_ssize_t numFields,
 	const char** fieldnames,
-	const char* typestr);
+	const char* typestr,
+	Py_ssize_t pack);
 
 
 /*!
@@ -57,6 +59,7 @@ PyObject* PyObjC_MakeStructType(
  * @param tpinit     Optional __init__ method for the type
  * @param numFields  Number of fields in the type
  * @param fieldnames Field names, there should be exactly numFields names.
+ * @param pack       Value of 'pragma pack', use -1 for default packing
  * @result Returns a newly allocated type or NULL
  * @discussion
  *    This function calls PyObjC_MakeStructType(name, doc, tpinit, numFields, 
@@ -71,7 +74,8 @@ PyObject* PyObjC_RegisterStructType(
 	const char* doc,
 	initproc tpinit,
 	Py_ssize_t numFields,
-	const char** fieldnames);
+	const char** fieldnames,
+	Py_ssize_t pack);
 
 /*!
  * @function PyObjC_CreateRegisteredStruct
@@ -90,7 +94,7 @@ PyObject* PyObjC_RegisterStructType(
  *     The returned instance is uninitialized, all fields are NULL. The 
  *     __init__ method has not been called.
  */     
-PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature);
+PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature, Py_ssize_t* pack);
 
 int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
 

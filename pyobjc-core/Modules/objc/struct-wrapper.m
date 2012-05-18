@@ -547,7 +547,7 @@ static int set_defaults(PyObject* self, const char* typestr)
 			break;
 
 		case _C_STRUCT_B:
-			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr, NULL);
+			v = PyObjC_CreateRegisteredStruct(typestr, next-typestr, NULL, NULL);
 			if (v != NULL) {
 				/* call init */
 				r = Py_TYPE(v)->tp_init(v, NULL, NULL);
@@ -950,11 +950,16 @@ done:
 	return cur;
 }
 
+struct StructTypeObject {
+	PyTypeObject     base;
+	Py_ssize_t       pack; 		/* struct packing, -1 for default packing */
+};
 
 /*
  * A template for the type object
  */
-static PyTypeObject StructTemplate_Type = {
+static struct StructTypeObject StructTemplate_Type = {
+    {
 	PyVarObject_HEAD_INIT(NULL, 0)
 	"objc.StructTemplate",			/* tp_name */
 	sizeof (PyObject*),			/* tp_basicsize */
@@ -1010,7 +1015,8 @@ static PyTypeObject StructTemplate_Type = {
 #if PY_VERSION_HEX >= 0x02060000
 	, 0                                     /* tp_version_tag */
 #endif
-
+    },
+    -1
 };
 
 PyObject* 
@@ -1020,9 +1026,10 @@ PyObjC_MakeStructType(
 		initproc tpinit,
 		Py_ssize_t numFields,
 		const char** fieldnames,
-		const char* typestr)
+		const char* typestr,
+		Py_ssize_t pack)
 {
-	PyTypeObject* result;
+	struct StructTypeObject* result;
 	PyMemberDef* members;
 	Py_ssize_t i;
 
@@ -1040,7 +1047,7 @@ PyObjC_MakeStructType(
 	}
 	members[numFields].name = NULL;
 
-	result = PyMem_Malloc(sizeof(PyTypeObject));
+	result = PyMem_Malloc(sizeof(struct StructTypeObject));
 	if (result == NULL) {
 		PyMem_Free(members);
 		PyErr_NoMemory();
@@ -1048,29 +1055,31 @@ PyObjC_MakeStructType(
 	}
 
 	*result = StructTemplate_Type;
-	result->tp_name = (char*)name;
-	result->tp_doc = (char*)doc;
-	result->tp_dict = PyDict_New();
-	if (result->tp_dict == NULL) {
+	result->base.tp_name = (char*)name;
+	result->base.tp_doc = (char*)doc;
+	result->base.tp_dict = PyDict_New();
+	if (result->base.tp_dict == NULL) {
 		PyMem_Free(members);
 		PyMem_Free(result);
 		return NULL;
 	}
 	Py_REFCNT(result) = 1;
-	result->tp_members = members;
-	result->tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
+	result->base.tp_members = members;
+	result->base.tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
 	if (tpinit) {
-		result->tp_init = tpinit;
+		result->base.tp_init = tpinit;
 	} else {
-		result->tp_init = make_init(typestr);
-		if (result->tp_init == NULL) {
+		result->base.tp_init = make_init(typestr);
+		if (result->base.tp_init == NULL) {
 			PyMem_Free(members);
 			PyMem_Free(result);
 			return NULL;
 		}
 	}
 
-	if (PyType_Ready(result) == -1) {
+	result->pack = pack;
+
+	if (PyType_Ready((PyTypeObject*)result) == -1) {
 		/* Is freeing save? */
 		PyMem_Free(result);
 		PyMem_Free(members);
@@ -1086,7 +1095,7 @@ PyObjC_MakeStructType(
 static PyObject* structRegistry = NULL;
 
 PyObject* 
-PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_encoding)
+PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_encoding, Py_ssize_t* ppack)
 {
 	PyTypeObject* type;
 	PyObject* result;
@@ -1094,6 +1103,10 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 	PyMemberDef* member;
 
 	if (structRegistry == NULL) return NULL;
+
+	if (ppack != NULL) {
+		*ppack = -1;
+	}
 
 	v = PyText_FromStringAndSize(signature, len);
 	type = (PyTypeObject*)PyDict_GetItem(structRegistry, v);
@@ -1130,6 +1143,9 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char*
 			*objc_encoding = signature;
 		}
 	}
+	if (ppack != NULL) {
+		*ppack = ((struct StructTypeObject*)type)->pack;
+	}
 	return result;
 }
 
@@ -1141,7 +1157,8 @@ PyObjC_RegisterStructType(
 		const char* doc,
 		initproc tpinit,
 		Py_ssize_t numFields,
-		const char** fieldnames)
+		const char** fieldnames,
+		Py_ssize_t pack)
 {
 	PyObject* structType;
 	PyObject* v;
@@ -1238,7 +1255,7 @@ PyObjC_RegisterStructType(
 
 
 	structType = PyObjC_MakeStructType(name, doc, tpinit, 
-				numFields, fieldnames, signature);
+				numFields, fieldnames, signature, pack);
 	if (structType == NULL) {
 		if (freeNames) {
 			int i;
@@ -1262,6 +1279,25 @@ PyObjC_RegisterStructType(
 	if (r == -1) {
 		Py_DECREF(structType);
 		return NULL;
+	}
+
+	if (pack != -1) {
+		/* Store custom struct packing as an attribute of the type
+		 * object, to be able to  fetch it when depythonifying the object.
+		 *
+		 * XXX: Need a cleaner method for doing this.
+		 */
+		v = Py_BuildValue(Py_ARG_SIZE_T, pack);
+		if (v == NULL) {
+			Py_DECREF(structType);
+			return NULL;
+		}
+		r = PyDict_SetItemString(((PyTypeObject*)structType)->tp_dict, "__struct_pack__", v);
+		Py_DECREF(v);
+		if (v == NULL) {
+			Py_DECREF(structType);
+			return NULL;
+		}
 	}
 
 	if (structRegistry == NULL) {

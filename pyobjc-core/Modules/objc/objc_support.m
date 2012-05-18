@@ -1105,6 +1105,7 @@ pythonify_c_struct (const char *type, void *datum)
 	const char* type_end = PyObjCRT_SkipTypeSpec(type);
 	const char* type_real_start = type;
 	Py_ssize_t type_real_length = type_end - type_start;
+	Py_ssize_t pack;
 
 	/* Hacked up support for socket addresses */
 	if (strncmp(type, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)-1)) == 0) {
@@ -1136,7 +1137,7 @@ pythonify_c_struct (const char *type, void *datum)
 	haveTuple = 0;
 	const char* oc_typestr = NULL;
 	ret = PyObjC_CreateRegisteredStruct(type_start, 
-			type_end-type_start, &oc_typestr);
+			type_end-type_start, &oc_typestr, &pack);
 	if (ret == NULL) {
 		int nitems;
 
@@ -1185,6 +1186,9 @@ pythonify_c_struct (const char *type, void *datum)
 			have_align = 1;
 		} else {
 			align = PyObjC_EmbeddedAlignOfType(item);
+		}
+		if (pack != -1 && pack < align) {
+			align = pack;
 		}
 
 		offset = ROUND(offset, align);
@@ -1491,11 +1495,28 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 	Py_ssize_t align;
 	const char *type;
 	PyObject* seq;
+	Py_ssize_t pack;
 
 	/* Hacked in support for sockaddr structs */
 	if (strncmp(types, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)-1)) == 0) {
 		return PyObjC_SockAddrFromPython(arg, datum);
 	}
+
+	/* Extract struck packing value, need better way to fetch this */
+	pack = -1;
+	if (!PyList_Check(arg) && !PyTuple_Check(arg)) {
+		seq = PyObject_GetAttrString(arg, "__struct_pack__");
+		if (seq == NULL) {
+			PyErr_Clear();
+		} else {
+			pack = PyNumber_AsSsize_t(seq, NULL);
+			if (PyErr_Occurred()) {
+				return -1;
+			}
+			Py_DECREF(seq);
+		}
+	}
+
 
 	if (IS_FSREF(types)) {
 		if (PyObjC_encode_fsref(arg, datum) == 0) {
@@ -1555,6 +1576,9 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
 			have_align = 1;
 		} else {
 			align = PyObjC_EmbeddedAlignOfType(type);
+		}
+		if (pack != -1 && pack < align) {
+			align = pack;
 		}
 
 		offset = ROUND(offset, align);

@@ -7,6 +7,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- There is now limited support for packed struct definitions. This 
+  requires that the struct is wrapped using ``objc.createStructType``.
+
+  Struct packing is not described in the encoding string for a 
+  structure, which is why special support is needed.
+
 - objc.registerStructAlias now returns the alias type instead of ``None``
 
 - In Python 3.x there is a new way to explicitly specify which (informal)
