@@ -1154,7 +1154,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", "pack", NULL
 	Py_ssize_t pack = -1;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-				"s"Py_ARG_BYTES"O|s" Py_ARG_SIZE_T , 
+				"s"Py_ARG_BYTES"O|z" Py_ARG_SIZE_T , 
 				keywords, 
 				&name, &typestr, &pyfieldnames, &docstr, &pack)) {
 		return NULL;
