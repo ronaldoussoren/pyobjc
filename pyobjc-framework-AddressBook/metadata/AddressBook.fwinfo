@@ -392,29 +392,17 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{__CFData=}", 
-          false
-         ]
+         "typestr": "^{__CFData=}"
         }, 
         {
-         "typestr": [
-          "l", 
-          false
-         ]
+         "typestr": "l"
         }, 
         {
-         "typestr": [
-          "^v", 
-          false
-         ]
+         "typestr": "^v"
         }
        ], 
        "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
+        "typestr": "v"
        }
       }, 
       "type_override": "^?"
