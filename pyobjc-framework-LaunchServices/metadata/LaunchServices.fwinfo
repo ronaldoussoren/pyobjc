@@ -9,7 +9,15 @@
        "fieldnames": [ "version", "flags", "application", "asyncLaunchRefCon", "environment", "argv", "initialEvent" ]
     },
     "LSItemInfoRecord": {
-       "fieldnames": [ "flags", "filetype", "creator", "extension", "iconFileName", "kindID" ]
+       "pack": 2,
+       "fieldnames": [  [ "flags", "filetype", "creator", "extension", "iconFileName", "kindID" ],
+       			[ "flags", "filetype", "creator", "extension" ] ]
+    },
+    "LSLaunchFSRefSpec": {
+       "pack": 2
+    },
+    "LSLaunchFSRefSpec": {
+       "pack": 2
     }
   },
   "opaque": {
