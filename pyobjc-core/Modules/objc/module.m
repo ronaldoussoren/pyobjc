@@ -1293,7 +1293,13 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
 
 	} else {
 		PyObject* v = PyInt_FromLong(typeId);
-		int r = PyDict_SetItemString(PyObjC_TypeStr2CFTypeID, encoding, v);
+		int r;
+
+		if (v == NULL) {
+			return NULL;
+		}
+
+		r = PyDict_SetItemString(PyObjC_TypeStr2CFTypeID, encoding, v);
 		Py_DECREF(v);
 		if (r == -1) {
 			return NULL;
