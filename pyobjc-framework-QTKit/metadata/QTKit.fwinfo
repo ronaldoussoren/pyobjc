@@ -40,6 +40,11 @@
      }, 
      {
       "class_method": false, 
+      "args": {
+         "2": {
+	    "type_override": "i"
+	}
+      },
       "retval": {
        "type_override": "Z"
       }, 
