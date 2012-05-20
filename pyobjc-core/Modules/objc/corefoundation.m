@@ -108,10 +108,11 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 		}
 	}
 	if (typeID == 0) {
-		/* Partially registered type, just wrap is a
+		/* Partially registered type, just wrap as a
 		 * a plain CFTypeRef
 		 */
-		return NULL;
+		Py_INCREF(PyObjC_NSCFTypeClass);
+		return PyObjC_NSCFTypeClass;
 	}
 
 	PyObject* cf = PyLong_FromUnsignedLongLong(typeID);
