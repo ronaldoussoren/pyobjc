@@ -8,6 +8,7 @@ __all__ = ('ObjCLazyModule',)
 
 import sys
 import re
+import struct
 
 from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
@@ -238,7 +239,10 @@ class ObjCLazyModule (module):
             if m is not None:
                 val = m.group(1)
 
-                if '.' in val:
+                if val.startswith("'"):
+                    val, = struct.unpack('>l', val[1:-1])
+
+                elif '.' in val:
                     val = float(val)
                 else:
                     val = int(val)
