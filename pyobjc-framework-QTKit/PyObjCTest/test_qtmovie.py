@@ -193,7 +193,7 @@ class TestQTMovie (TestCase):
         self.assertArgIsOut(QTMovie.initWithDataReference_error_, 1)
         self.assertArgIsOut(QTMovie.initWithPasteboard_error_, 1)
         self.assertArgIsOut(QTMovie.initWithData_error_, 1)
-        self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}')
+        self.assertArgHasType(QTMovie.initWithMovie_timeRange_error_, 1, QTTimeRange.__typestr__) #b'{_QTTimeRange={_QTTime=qll}{_QTTime=qll}}')
         self.assertArgIsOut(QTMovie.initWithMovie_timeRange_error_, 2)
         self.assertArgIsOut(QTMovie.initWithAttributes_error_, 1)
         self.assertArgIsOut(QTMovie.movieWithTimeRange_error_, 1)
