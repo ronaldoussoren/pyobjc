@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from WebKit import *
+import Cocoa
 
 try:
     import Quartz
@@ -15,7 +16,8 @@ class TestCarbonUtils (TestCase):
 
         WebInitForCarbon()
 
-        img = NSImage.imageNamed_('NSHelpCursor')
+        #img = NSImage.imageNamed_('NSHelpCursor')
+        img = NSImage.imageNamed_(Cocoa.NSImageNameUserAccounts)
         self.assertIsInstance(img, NSImage)
 
         ref = WebConvertNSImageToCGImageRef(img)
