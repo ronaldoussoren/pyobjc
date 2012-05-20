@@ -2,6 +2,11 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "aliases": {
+    "QTKIT_VERSION_MAX_ALLOWED": {
+       "ignore": true
+    }
+  },
   "classes": {
    "NSObject": {
     "methods": [
