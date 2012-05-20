@@ -56,7 +56,7 @@ class TestSKSearch (TestCase):
         ctx = 10
 
         res = SKSearchResultsCreateWithQuery(
-                grp, u"apache", kSKSearchRequiredRanked, 2, ctx, callback)
+                grp, u"copyright", kSKSearchRequiredRanked, 2, ctx, callback)
         self.assertIsInstance(res, SKSearchResultsRef)
 
         res = SKSearchResultsCreateWithDocuments(

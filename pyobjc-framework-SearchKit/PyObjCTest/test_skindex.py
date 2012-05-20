@@ -104,16 +104,18 @@ class TestSKIndex (TestCase):
         self.assertArgIsBOOL(SKIndexAddDocumentWithText, 3)
 
 
+        fn = u"/Library/Documentation/Acknowledgements.rtf"
+        if not os.path.exists(fn):
+            fn = u"/Library/Documentation/AirPort Acknowledgements.rtf"
+
         doc = SKDocumentCreateWithURL(
                 CFURLCreateWithFileSystemPath(
-                    None, u"/Library/Documentation/Acknowledgements.rtf",
+                    None, fn,
                     kCFURLPOSIXPathStyle, False))
-
 
         v = SKIndexAddDocumentWithText(ref, 
                 doc, "hello world", True)
         self.failUnless(v)
-
 
         self.assertResultIsBOOL(SKIndexAddDocument)
         self.assertArgIsBOOL(SKIndexAddDocument, 3)
@@ -135,11 +137,8 @@ class TestSKIndex (TestCase):
         v = SKIndexCopyDocumentForDocumentID(ref, v)
         self.failUnless(v is doc)
 
-        v = SKIndexRenameDocument(ref, doc, "osx-acks.rtf")
-        self.failUnless(v is True)
-
-        v = SKIndexMoveDocument(ref, doc, None)
-        self.failUnless(v is True)
+        r = SKIndexFlush(ref)
+        self.assertIs(r, True)
 
         self.assertResultIsCFRetained(SKIndexDocumentIteratorCreate)
         it = SKIndexDocumentIteratorCreate(ref, None)
@@ -158,9 +157,12 @@ class TestSKIndex (TestCase):
         v = SKIndexGetDocumentTermCount(ref, docID)
         self.assertIsInstance(v, (int, long))
 
+
         v = SKIndexCopyTermIDArrayForDocumentID(ref, docID)
         self.assertIsInstance(v, CFArrayRef)
-        tID = v[0]
+
+        tID =  SKIndexGetMaximumTermID(ref) - 1
+
 
         v = SKIndexGetDocumentTermFrequency(ref, docID, tID)
         self.assertIsInstance(v, (int, long))
@@ -172,15 +174,21 @@ class TestSKIndex (TestCase):
         self.assertIsInstance(v, (int, long))
 
         v = SKIndexCopyDocumentIDArrayForTermID(ref, tID)
-        self.assertIsInstance(v, CFArrayRef)
+        self.assertIsInstance(v, (CFArrayRef, type(None)))
 
         v = SKIndexCopyTermStringForTermID(ref, tID)
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, (unicode, type(None)))
 
         v = SKIndexGetTermIDForTermString(ref, v)
         self.assertIsInstance(v, (int, long))
 
         SKLoadDefaultExtractorPlugIns()
+
+        v = SKIndexRenameDocument(ref, doc, "osx-acks.rtf")
+        self.failUnless(v is True)
+
+        v = SKIndexMoveDocument(ref, doc, None)
+        self.failUnless(v is True)
 
         v = SKIndexRemoveDocument(ref, doc)
         self.failUnless(v)
