@@ -97,8 +97,8 @@ class ClassInfo:
     def merge(self, other):
         assert self.name == other.name
         if self.super != other.super:
-            raise NibLoaderError, \
-                    "Incompatible superclass for %s" % self.name
+            raise NibLoaderError(
+                    "Incompatible superclass for %s" % self.name)
         self.nibs = mergeLists(self.nibs, other.nibs)
         self.outlets = mergeLists(self.outlets, other.outlets)
         self.actions = mergeLists(self.actions, other.actions)
@@ -146,7 +146,7 @@ class NibInfo(object):
             self._extractClassesFromNibFromBundle(nibName, bundle)
         else:
             if nibName is not None or bundle is not None:
-                raise ValueError, ("Can't specify 'nibName' or "
+                raise ValueError("Can't specify 'nibName' or "
                     "'bundle' when specifying 'path'")
             self._extractClassesFromNibFromPath(path)
 
@@ -159,7 +159,7 @@ class NibInfo(object):
             resType = "nib"
         path = bundle.pathForResource_ofType_(nibName, resType)
         if not path:
-            raise NibLoaderError, ("Could not find nib named '%s' "
+            raise NibLoaderError("Could not find nib named '%s' "
                     "in bundle '%s'" % (nibName, bundle))
         self._extractClassesFromNibFromPath(path)
 
@@ -171,11 +171,11 @@ class NibInfo(object):
         nibInfo = NSDictionary.dictionaryWithContentsOfFile_(
                 os.path.join(path, 'classes.nib'))
         if nibInfo is None:
-            raise NibLoaderError, "Invalid NIB file [%s]" % path
+            raise NibLoaderError("Invalid NIB file [%s]" % path)
         if not nibInfo.has_key('IBVersion'):
-            raise NibLoaderError, "Invalid NIB info"
+            raise NibLoaderError("Invalid NIB info")
         if nibInfo['IBVersion'] != '1':
-            raise NibLoaderError, "Unsupported NIB version"
+            raise NibLoaderError("Unsupported NIB version")
         for rawClsInfo in nibInfo['IBClasses']:
             self._addClass(nibName, rawClsInfo)
         self.parsedNibs[path] = 1
@@ -205,14 +205,14 @@ class NibInfo(object):
         """
         clsInfo = self.classes.get(name)
         if clsInfo is None:
-            raise NibLoaderError, ("No class named '%s' found in "
+            raise NibLoaderError("No class named '%s' found in "
                     "nibs" % name)
 
         try:
             superClass = objc.lookUpClass(clsInfo.super)
         except objc.nosuchclass_error:
-            raise NibLoaderError, ("Superclass '%s' for '%s' not "
-                    "found." % (clsInfo.super, name))
+            raise NibLoaderError(("Superclass '%s' for '%s' not "
+                    "found." % (clsInfo.super, name)))
         bases = (superClass,) + bases
         metaClass = superClass.__class__
 
@@ -421,13 +421,13 @@ NibLoader.py [-th] nib1 [...nibN]
 
 def usage(msg, code):
     if msg:
-        print msg
-    print commandline_doc
+        print(msg)
+    print(commandline_doc)
     sys.exit(code)
 
 def test(*nibFiles):
     for path in nibFiles:
-        print "Loading", path
+        print("Loading %s"%(path,))
         extractClasses(path=path)
     print
     classNames = _nibInfo.keys()
@@ -438,12 +438,12 @@ def test(*nibFiles):
             # class <className>(AutoBaseClass):
             #     pass
             cls = type(className.encode('ascii'), (AutoBaseClass,), {})
-        except NibLoaderError, why:
-            print "*** Failed class: %s; NibLoaderError: %s" % (
-                    className, why[0])
+        except NibLoaderError as why:
+            print("*** Failed class: %s; NibLoaderError: %s" % (
+                    className, why[0]))
         else:
-            print "Created class: %s, superclass: %s" % (cls.__name__,
-                    cls.__bases__[0].__name__)
+            print("Created class: %s, superclass: %s" % (cls.__name__,
+                    cls.__bases__[0].__name__))
 
 def printTemplate(*nibFiles):
     for path in nibFiles:
@@ -455,7 +455,7 @@ def commandline():
 
     try:
         opts, nibFiles = getopt.getopt(sys.argv[1:], "th")
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage(msg, 1)
 
     doTest = 0
