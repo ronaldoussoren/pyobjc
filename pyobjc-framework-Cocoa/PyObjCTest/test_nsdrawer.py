@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSDrawerHelper (NSObject):
     def drawerShouldOpen_(self, sender): return 1
     def drawerShouldClose_(self, sender): return 1

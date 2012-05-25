@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSFontDescriptor (TestCase):
     def testConstants(self):
         self.assertEqual(NSFontUnknownClass, (0 << 28))

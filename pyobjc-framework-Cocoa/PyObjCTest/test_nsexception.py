@@ -4,10 +4,15 @@ import objc
 from Foundation import *
 import Foundation
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSExceptionInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
-            a = NSException.alloc().initWithName_reason_userInfo_( u"Bogus", u"A bad reason", { u"foo" : u"bar" } )
+            a = NSException.alloc().initWithName_reason_userInfo_( b"Bogus".decode('ascii'), b"A bad reason".decode('ascii'), { b"foo".decode('ascii') : b"bar".decode('ascii') } )
 
     def testFormat(self):
         try:
@@ -16,7 +21,7 @@ class TestNSExceptionInteraction(TestCase):
         except TypeError:
             raise
 
-        except objc.error, e:
+        except objc.error as e:
             self.assertEqual(e._pyobjc_info_['name'], 'ExceptionName')
             self.assertEqual(e._pyobjc_info_['reason'], 'Format: hello 42')
 

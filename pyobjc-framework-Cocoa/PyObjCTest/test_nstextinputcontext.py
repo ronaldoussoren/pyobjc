@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 class TestNSTextInputContext (TestCase):
     @min_os_level('10.6')

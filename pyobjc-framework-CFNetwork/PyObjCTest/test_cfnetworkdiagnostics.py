@@ -1,6 +1,16 @@
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCFNetwork (TestCase):
     def testTypes(self):
         # XXX: CFNetDiagnosticsRef is not actually a proper type
@@ -19,7 +29,7 @@ class TestCFNetwork (TestCase):
     def testFuncdtions(self):
         self.assertResultIsCFRetained(CFNetDiagnosticCreateWithStreams)
 
-        host = CFHostCreateWithName(None, u"www.apple.com")
+        host = CFHostCreateWithName(None, "www.apple.com")
         rd, wr = CFStreamCreatePairWithSocketToCFHost(None, host, 80, None, None)
         self.assertIsInstance(rd, CFReadStreamRef)
         self.assertIsInstance(wr, CFWriteStreamRef)
@@ -28,10 +38,10 @@ class TestCFNetwork (TestCase):
         self.assertIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
 
         self.assertResultIsCFRetained(CFNetDiagnosticCreateWithURL)
-        ref = CFNetDiagnosticCreateWithURL(None, CFURLCreateWithString(None, u"http://www.apple.com/", None))
+        ref = CFNetDiagnosticCreateWithURL(None, CFURLCreateWithString(None, "http://www.apple.com/", None))
         self.assertIsInstance(ref, objc.objc_object) #CFNetDiagnosticRef)
 
-        CFNetDiagnosticSetName(ref, u"hello world")
+        CFNetDiagnosticSetName(ref, "hello world")
 
         sts = CFNetDiagnosticDiagnoseProblemInteractively(ref)
         self.assertIsInstance(sts, (int, long))

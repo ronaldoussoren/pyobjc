@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCalRecurrenceRule (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CalRecurrenceEnd.usesEndDate)

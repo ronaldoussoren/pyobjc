@@ -5,6 +5,12 @@ FIXME: None of these tests actually use the filedescriptor
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 
 class TestFileDescriptor (TestCase):
     def testTypes(self):

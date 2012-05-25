@@ -24,6 +24,7 @@ This is needed because the InterfaceBuilderKit framework won't load otherwise.
 from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
+    max_os_level='10.6',
     name='pyobjc-framework-InterfaceBuilderKit',
     version="2.4a0",
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",

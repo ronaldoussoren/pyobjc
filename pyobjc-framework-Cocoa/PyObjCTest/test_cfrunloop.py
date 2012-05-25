@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import CoreFoundation
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestRunLoop (TestCase):
 
     def testTypes(self):
@@ -108,7 +119,7 @@ class TestRunLoop (TestCase):
         self.assertNotEqual(len(state) , 0 )
         for item in state:
             self.assertIs(item[0], observer)
-            self.assertIsIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
+            self.assertIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
             self.assertIs(item[2], data)
         CFRunLoopRemoveObserver(rl, observer, runloop_mode)
         self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
@@ -242,7 +253,7 @@ class TestRunLoop (TestCase):
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.assertArgIsBOOL(CFRunLoopObserverCreateWithHandler, 2)
-        self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, "v^{__CFRunLoopObserver=}" + objc._C_NSUInteger)
+        self.assertArgIsBlock(CFRunLoopObserverCreateWithHandler, 4, b"v^{__CFRunLoopObserver=}" + objc._C_NSUInteger)
 
         l = []
         def record(observer, activity):
@@ -266,7 +277,7 @@ class TestRunLoop (TestCase):
             self.assertIsInstance(b, (int, long))
 
 
-        self.assertArgIsBlock(CFRunLoopTimerCreateWithHandler, 5, 'v^{__CFRunLoopTimer=}')
+        self.assertArgIsBlock(CFRunLoopTimerCreateWithHandler, 5, b'v^{__CFRunLoopTimer=}')
         l = []
         ref = CFRunLoopTimerCreateWithHandler(None, 
                 CFAbsoluteTimeGetCurrent() + 0.5, 0.0, 0, 0, lambda x: l.append(x))

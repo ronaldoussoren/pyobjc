@@ -2,6 +2,22 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 
 class TestError (TestCase):
 
@@ -21,7 +37,7 @@ class TestError (TestCase):
     @min_os_level('10.5')
     def testCreation(self):
         userInfo = {
-                u'foo': u'bar',
+                b'foo'.decode('ascii'): b'bar'.decode('ascii'),
         }
         err = CFErrorCreate(None, kCFErrorDomainPOSIX, 42,  userInfo)
         self.assertIsInstance(err, CFErrorRef)
@@ -29,8 +45,8 @@ class TestError (TestCase):
         dct = CFErrorCopyUserInfo(err)
         self.assertEqual(dct, userInfo)
 
-        keys = [ u"key1", u"key2"]
-        values = [ u"value1", u"value2"]
+        keys = [ b"key1".decode('ascii'), b"key2".decode('ascii')]
+        values = [ b"value1".decode('ascii'), b"value2".decode('ascii')]
 
         keys = [ NSString.stringWithString_(v) for v in keys ]
         values = [ NSString.stringWithString_(v) for v in values ]
@@ -42,12 +58,12 @@ class TestError (TestCase):
         err = CFErrorCreateWithUserInfoKeysAndValues(None, kCFErrorDomainPOSIX, 42, keys, values, 2)
         self.assertIsInstance(err, CFErrorRef)
         dct = CFErrorCopyUserInfo(err)
-        self.assertEqual(dct, {u'key1': u'value1', u'key2':u'value2'})
+        self.assertEqual(dct, {b'key1'.decode('ascii'): b'value1'.decode('ascii'), b'key2'.decode('ascii'):b'value2'.decode('ascii')})
 
     @min_os_level('10.5')
     def testInspection(self):
         userInfo = {
-                u'foo': u'bar',
+                b'foo'.decode('ascii'): b'bar'.decode('ascii'),
                 kCFErrorLocalizedFailureReasonKey: "failure reason",
                 kCFErrorLocalizedRecoverySuggestionKey: 'recovery suggestion',
         }
@@ -62,17 +78,17 @@ class TestError (TestCase):
 
         self.assertResultIsCFRetained(CFErrorCopyDescription)
         v = CFErrorCopyDescription(err)
-        self.assertIsIn(v, (
-            u'Operation could not be completed. failure reason',
-            u'The operation couldn\u2019t be completed. failure reason'))
+        self.assertIn(v, (
+            b'Operation could not be completed. failure reason'.decode('ascii'),
+            b'The operation couldn%st be completed. failure reason'.decode('ascii')%(unichr(0x2019),)))
 
         self.assertResultIsCFRetained(CFErrorCopyFailureReason)
         v = CFErrorCopyFailureReason(err)
-        self.assertEqual(v, u'failure reason')
+        self.assertEqual(v, b'failure reason'.decode('ascii'))
 
         self.assertResultIsCFRetained(CFErrorCopyRecoverySuggestion)
         v = CFErrorCopyRecoverySuggestion(err)
-        self.assertEqual(v, u'recovery suggestion')
+        self.assertEqual(v, b'recovery suggestion'.decode('ascii'))
 
     @min_os_level('10.5')
     def testConstants(self):

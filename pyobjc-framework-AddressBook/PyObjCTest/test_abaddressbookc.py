@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 _C_ABAddressBookRef = b'^{__ABAddressBookRef=}'
 _C_ABMultiValueRef = b'^{__ABMultiValue=}'
 _C_ABPersonRef = b'^{__ABPerson=}'
@@ -47,7 +57,7 @@ class TestABAddressBookC (TestCase):
         self.assertArgHasType(ABSetMe, 1, _C_ABPersonRef)
 
         name = ABCopyRecordTypeFromUniqueId(ref, ABRecordCopyUniqueId(me))
-        self.assertEqual(name, u'ABPerson')
+        self.assertEqual(name, 'ABPerson')
 
         self.assertResultHasType(ABAddPropertiesAndTypes, objc._C_CFIndex)
         self.assertArgHasType(ABAddPropertiesAndTypes, 0, _C_ABAddressBookRef)

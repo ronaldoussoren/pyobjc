@@ -561,7 +561,7 @@ call_NSCoder_encodeBytes_length_(
 
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, "t#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
 		return NULL;
 	}
 
@@ -1006,7 +1006,7 @@ call_NSCoder_encodeBytes_length_forKey_(
 	id     		key;
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, "t#O&", &bytes, &size, 
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size, 
 			PyObjCObject_Convert, &key)) {
 		return NULL;
 	}

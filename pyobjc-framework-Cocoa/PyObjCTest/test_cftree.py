@@ -1,6 +1,12 @@
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 import sys
 if sys.version_info[0] == 3:
     def cmp(a, b):
@@ -22,9 +28,9 @@ class TestCFTree (TestCase):
         context = object()
         tree = CFTreeCreate(None, context)
 
-        self.assert_(isinstance(tree, CFTreeRef))
+        self.assertIsInstance(tree, CFTreeRef)
 
-        self.assert_(CFTreeGetContext(tree, None) is context)
+        self.assertTrue(CFTreeGetContext(tree, None) is context)
         CFTreeSetContext(tree, 42)
         self.assertEqual(CFTreeGetContext(tree, None), 42)
 
@@ -124,9 +130,7 @@ class TestCFTree (TestCase):
         CFTreeSortChildren(root, compare, None)
         CFTreeApplyFunctionToChildren(root, applyFunc, after)
 
-        before.sort()
-        before.reverse()
-        self.assertEqual(before, after)
+        self.assertItemsEqual(before, after)
 
         CFTreeRemoveAllChildren(root)
         self.assertEqual(CFTreeGetChildCount(root), 0)

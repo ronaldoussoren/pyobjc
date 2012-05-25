@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 class TestNSTextHelper (NSObject):
     def textShouldBeginEditing_(self, t): return 1
     def textShouldEndEditing_(self, t): return 1

@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
     bytes
 except NameError:
     bytes = str

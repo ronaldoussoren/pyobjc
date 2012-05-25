@@ -486,9 +486,4 @@ dist = setup(
     license = 'MIT License',
     download_url = 'http://pyobjc.sourceforge.net/software/index.php',
     zip_safe = False,
-    entry_points = {
-        "console_scripts": [
-            "pyobjc-compile-brigesupport = PyObjCTools._BSCompiler:main",
-        ],
-    },
 )

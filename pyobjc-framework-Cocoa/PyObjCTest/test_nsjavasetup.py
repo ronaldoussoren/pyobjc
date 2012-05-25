@@ -3,6 +3,11 @@ import os
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSJavaSetup (TestCase):
     @max_os_level('10.5')
     def testConstants(self):

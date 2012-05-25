@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 import os
 from CoreFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestPreferences (TestCase):
     def testGetting(self):
@@ -20,7 +31,7 @@ class TestPreferences (TestCase):
         self.assertIsInstance(v, unicode)
         v = CFPreferencesCopyMultiple(None, "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(v, CFDictionaryRef)
-        v = CFPreferencesCopyMultiple([u"AutoFocus", u"WindowCloseAction"], "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        v = CFPreferencesCopyMultiple([b"AutoFocus".decode('ascii'), b"WindowCloseAction".decode('ascii')], "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertResultIsBOOL(CFPreferencesAppValueIsForced)
         v = CFPreferencesAppValueIsForced("AutoFocus", "com.apple.Terminal")
@@ -70,11 +81,11 @@ class TestPreferences (TestCase):
         self.assertResultIsCFRetained(CFPreferencesCopyApplicationList)
         apps = CFPreferencesCopyApplicationList(kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(apps, CFArrayRef)
-        self.assertIsIn(u"com.apple.AddressBook", apps)
+        self.assertIsIn(b"com.apple.AddressBook".decode('ascii'), apps)
         self.assertResultIsCFRetained(CFPreferencesCopyKeyList)
-        keys = CFPreferencesCopyKeyList(u"com.apple.AddressBook", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+        keys = CFPreferencesCopyKeyList(b"com.apple.AddressBook".decode('ascii'), kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(keys, CFArrayRef)
-        self.assertIsIn(u"ABNameSorting", keys)
+        self.assertIsIn(b"ABNameSorting".decode('ascii'), keys)
 
     def testConstants(self):
         self.assertIsInstance(kCFPreferencesAnyApplication, unicode)

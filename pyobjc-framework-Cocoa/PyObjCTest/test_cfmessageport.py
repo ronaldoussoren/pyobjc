@@ -2,6 +2,12 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestMessagePort (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFMessagePortRef)
@@ -28,22 +34,22 @@ class TestMessagePort (TestCase):
 
         def callout(port, messageid, data, info):
             pass
-        port, shouldFree = CFMessagePortCreateLocal(None, u"name", callout, context, None)
+        port, shouldFree = CFMessagePortCreateLocal(None, b"name".decode('ascii'), callout, context, None)
         self.assertIsInstance(port, CFMessagePortRef)
         self.assertIs(shouldFree is True or shouldFree, False)
         self.assertFalse(CFMessagePortIsRemote(port))
         ctx = CFMessagePortGetContext(port, None)
         self.assertIs(ctx, context)
 
-        port2 = CFMessagePortCreateRemote(None, u"name")
+        port2 = CFMessagePortCreateRemote(None, b"name".decode('ascii'))
         self.assertIsInstance(port2, CFMessagePortRef)
         self.assertResultIsBOOL(CFMessagePortIsRemote)
         self.assertTrue(CFMessagePortIsRemote(port2))
-        self.assertTrue(CFMessagePortGetName(port2), u"name")
+        self.assertTrue(CFMessagePortGetName(port2), b"name".decode('ascii'))
 
 
         CFMessagePortSetName(port2, "newname")
-        self.assertTrue(CFMessagePortGetName(port2), u"newname")
+        self.assertTrue(CFMessagePortGetName(port2), b"newname".decode('ascii'))
 
         cb = CFMessagePortGetInvalidationCallBack(port)
         self.assertIs(cb, None)
@@ -77,11 +83,10 @@ class TestMessagePort (TestCase):
         # FIXME: Crash on Tiger
         context = []
         def callout(port, messageid, data, info):
-            print "callout"
             info.append((port, messageid, data))
             return buffer("hello world")
 
-        port, shouldFree = CFMessagePortCreateLocal(None, u"pyobjc.test", callout, context, None)
+        port, shouldFree = CFMessagePortCreateLocal(None, b"pyobjc.test".decode('ascii'), callout, context, None)
         self.assertIsInstance(port, CFMessagePortRef)
 
         self.assertArgIsOut(CFMessagePortSendRequest, 6)

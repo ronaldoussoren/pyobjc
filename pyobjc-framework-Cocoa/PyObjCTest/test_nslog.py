@@ -5,7 +5,7 @@ import Foundation
 
 class TestNSLog (TestCase):
     def _redirect(self):
-        fd = os.open('pyobjc-test-nslog.txt', os.O_RDWR|os.O_CREAT, 0666)
+        fd = os.open('pyobjc-test-nslog.txt', os.O_RDWR|os.O_CREAT, 0o666)
         self.real_stderr = os.dup(2)
         os.dup2(fd, 2)
         os.close(fd)

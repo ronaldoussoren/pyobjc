@@ -2,6 +2,16 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 
 class TestCharacterSet (TestCase):
     def testTypes(self):
@@ -17,7 +27,7 @@ class TestCharacterSet (TestCase):
         self.assertIsInstance(set, CFCharacterSetRef)
         set = CFCharacterSetCreateWithCharactersInRange(None, (ord('A'), ord('Z')-ord('A')))
         self.assertIsInstance(set, CFCharacterSetRef)
-        set = CFCharacterSetCreateWithCharactersInString(None, u"abcdefABCDEF0123456789")
+        set = CFCharacterSetCreateWithCharactersInString(None, b"abcdefABCDEF0123456789".decode('latin1'))
         self.assertIsInstance(set, CFCharacterSetRef)
         bytes = b"0123" * (8192//4)
         if sys.version_info[0] == 2:
@@ -36,7 +46,7 @@ class TestCharacterSet (TestCase):
     def testInspection(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
-        set = CFCharacterSetCreateWithCharactersInString(None, u"abcdef")
+        set = CFCharacterSetCreateWithCharactersInString(None, b"abcdef".decode('latin1'))
 
         self.assertTrue(CFCharacterSetIsSupersetOfSet(letters, set))
         self.assertFalse(CFCharacterSetIsSupersetOfSet(digits, set))
@@ -44,8 +54,8 @@ class TestCharacterSet (TestCase):
         self.assertTrue(CFCharacterSetHasMemberInPlane(digits, 0))
         self.assertFalse(CFCharacterSetHasMemberInPlane(digits, 4))
 
-        self.assertTrue(CFCharacterSetIsCharacterMember(letters, u'A'))    
-        self.assertFalse(CFCharacterSetIsCharacterMember(letters, u'9'))    
+        self.assertTrue(CFCharacterSetIsCharacterMember(letters, b'A'.decode('latin1')))    
+        self.assertFalse(CFCharacterSetIsCharacterMember(letters, b'9'.decode('latin1')))    
 
         data = CFCharacterSetCreateBitmapRepresentation(None, set)
         self.assertIsInstance(data, CFDataRef)
@@ -53,11 +63,11 @@ class TestCharacterSet (TestCase):
     def testInspectLongUnicode(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
-        self.assertTrue(CFCharacterSetIsLongCharacterMember(letters, ord(u'A')))    
-        self.assertFalse(CFCharacterSetIsLongCharacterMember(letters, ord(u'9')))    
+        self.assertTrue(CFCharacterSetIsLongCharacterMember(letters, ord(b'A'.decode('latin1'))))    
+        self.assertFalse(CFCharacterSetIsLongCharacterMember(letters, ord(b'9'.decode('latin1'))))    
 
     def testMutation(self):
-        set = CFCharacterSetCreateWithCharactersInString(None, u"abcdef")
+        set = CFCharacterSetCreateWithCharactersInString(None, b"abcdef".decode('latin1'))
         set = CFCharacterSetCreateMutableCopy(None, set)
 
         self.assertFalse(CFCharacterSetIsCharacterMember(set, unichr(4)))
@@ -67,24 +77,24 @@ class TestCharacterSet (TestCase):
         CFCharacterSetRemoveCharactersInRange(set, (4, 2))
         self.assertFalse(CFCharacterSetIsCharacterMember(set, unichr(4)))
 
-        self.assertFalse(CFCharacterSetIsCharacterMember(set, u"5"))
-        CFCharacterSetAddCharactersInString(set, u"012345")
-        self.assertTrue(CFCharacterSetIsCharacterMember(set, u"5"))
+        self.assertFalse(CFCharacterSetIsCharacterMember(set, b"5".decode('latin1')))
+        CFCharacterSetAddCharactersInString(set, b"012345".decode('latin1'))
+        self.assertTrue(CFCharacterSetIsCharacterMember(set, b"5".decode('latin1')))
 
-        self.assertTrue(CFCharacterSetIsCharacterMember(set, u"a"))
-        CFCharacterSetRemoveCharactersInString(set, u"ab")
-        self.assertFalse(CFCharacterSetIsCharacterMember(set, u"a"))
+        self.assertTrue(CFCharacterSetIsCharacterMember(set, b"a".decode('latin1')))
+        CFCharacterSetRemoveCharactersInString(set, b"ab".decode('latin1'))
+        self.assertFalse(CFCharacterSetIsCharacterMember(set, b"a".decode('latin1')))
 
-        self.assertFalse(CFCharacterSetIsCharacterMember(set, u"9"))
+        self.assertFalse(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
         CFCharacterSetUnion(set, CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit))
-        self.assertTrue(CFCharacterSetIsCharacterMember(set, u"9"))
+        self.assertTrue(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
     
         CFCharacterSetIntersect(set, CFCharacterSetGetPredefined(kCFCharacterSetLetter))
-        self.assertFalse(CFCharacterSetIsCharacterMember(set, u"9"))
+        self.assertFalse(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
 
         CFCharacterSetInvert(set)
-        self.assertTrue(CFCharacterSetIsCharacterMember(set, u"9"))
-        self.assertFalse(CFCharacterSetIsCharacterMember(set, u"e"))
+        self.assertTrue(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
+        self.assertFalse(CFCharacterSetIsCharacterMember(set, b"e".decode('latin1')))
 
     def testConstants(self):
         self.assertEqual(kCFCharacterSetControl, 1)

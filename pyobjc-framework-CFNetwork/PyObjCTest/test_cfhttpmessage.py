@@ -2,6 +2,16 @@ from CFNetwork import *
 from PyObjCTools.TestSupport import *
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 if sys.version_info[0] != 2:
     def buffer(value):
         return value.encode('latin1')
@@ -76,12 +86,12 @@ class TestCFHTTPMessage (TestCase):
         self.assertIsInstance(v, CFDictionaryRef)
 
         self.assertResultIsCFRetained(CFHTTPMessageCopyHeaderFieldValue)
-        v = CFHTTPMessageCopyHeaderFieldValue(req, u"X-Python")
+        v = CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
         self.assertTrue(v is None)
 
-        CFHTTPMessageSetHeaderFieldValue(req, u"X-Python", u"Rocks")
-        v = CFHTTPMessageCopyHeaderFieldValue(req, u"X-Python")
-        self.assertEqual(v, u"Rocks")
+        CFHTTPMessageSetHeaderFieldValue(req, "X-Python", "Rocks")
+        v = CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
+        self.assertEqual(v, "Rocks")
 
         self.assertResultIsBOOL(CFHTTPMessageAppendBytes)
         self.assertArgHasType(CFHTTPMessageAppendBytes, 1, b'n^v')
@@ -109,7 +119,7 @@ class TestCFHTTPMessage (TestCase):
 
         self.assertResultIsBOOL(CFHTTPMessageAddAuthentication)
         self.assertArgIsBOOL(CFHTTPMessageAddAuthentication, 5)
-        v = CFHTTPMessageAddAuthentication(req, resp, u"ronald", u"secret", kCFHTTPAuthenticationSchemeBasic, False)
+        v = CFHTTPMessageAddAuthentication(req, resp, "ronald", "secret", kCFHTTPAuthenticationSchemeBasic, False)
         self.assertIsInstance(v, bool)
 
         v = CFHTTPMessageGetResponseStatusCode(resp)

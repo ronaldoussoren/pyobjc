@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestABPeoplePickerC (TestCase):
     def testConstants(self):
         self.assertEqual(kABPickerSingleValueSelection, 1 << 0)
@@ -68,10 +78,10 @@ class TestABPeoplePickerC (TestCase):
         # doesn't actually remove. See radar #7999195.
         #self.assertEqual(tuple(v), (kABLastNameProperty,))
 
-        ABPickerSetColumnTitle(ref, u"Achternaam", kABLastNameProperty)
+        ABPickerSetColumnTitle(ref, "Achternaam", kABLastNameProperty)
         v = ABPickerCopyColumnTitle(ref, kABLastNameProperty)
         self.assertResultIsCFRetained(ABPickerCopyColumnTitle)
-        self.assertEqual(v, u"Achternaam")
+        self.assertEqual(v, "Achternaam")
 
         ABPickerSetDisplayedProperty(ref, kABLastNameProperty)
         v = ABPickerCopyDisplayedProperty(ref)
@@ -103,7 +113,7 @@ class TestABPeoplePickerC (TestCase):
         ABPickerSelectIdentifier(ref, usr, "Last", False) #ABRecordCopyUniqueId(usr), False)
         self.assertArgHasType(ABPickerSelectIdentifier, 3, objc._C_BOOL)
 
-        ABPickerDeselectIdentifier(ref, usr, u"Last")
+        ABPickerDeselectIdentifier(ref, usr, "Last")
 
         ABPickerDeselectGroup(ref, grp)
         ABPickerDeselectRecord(ref, usr)

@@ -2,6 +2,16 @@ from CFNetwork import *
 from PyObjCTools.TestSupport import *
 from Foundation import NSString
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestCFFTPStream (TestCase):
 
     def testTypes(self):

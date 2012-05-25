@@ -10,7 +10,7 @@ class TestNSScannerUsage(TestCase):
         self.assert_ (abs (val1 - val2) < 0.00001, message)
 
     def testUsage(self):
-        obj = NSScanner.scannerWithString_(u"1.2 2.4")
+        obj = NSScanner.scannerWithString_(b"1.2 2.4".decode('ascii'))
 
         didConvert, value = obj.scanDouble_(None)
         self.assert_(didConvert)
@@ -20,32 +20,32 @@ class TestNSScannerUsage(TestCase):
         self.assert_(didConvert)
         self.assertAlmostEquals(value, 2.4)
 
-        obj = NSScanner.scannerWithString_(u"abcd1234 efgh")
+        obj = NSScanner.scannerWithString_(b"abcd1234 efgh".decode('ascii'))
 
         didConvert, value = obj.scanCharactersFromSet_intoString_(
                 NSCharacterSet.lowercaseLetterCharacterSet(), None)
         self.assert_(didConvert)
-        self.assertEqual(value, u"abcd")
+        self.assertEqual(value, b"abcd".decode('ascii'))
 
         didConvert, value = obj.scanInt_(None)
         self.assert_(didConvert)
         self.assertEqual(value, 1234)
 
-        obj = NSScanner.scannerWithString_(u"1234 efgh")
+        obj = NSScanner.scannerWithString_(b"1234 efgh".decode('ascii'))
 
         didConvert, value = obj.scanLongLong_(None)
         self.assert_(didConvert)
         self.assertEqual(value, 1234)
 
-        didConvert, value = obj.scanString_intoString_(u"efgh", None)
+        didConvert, value = obj.scanString_intoString_(b"efgh".decode('ascii'), None)
         self.assert_(didConvert)
-        self.assertEqual(value, u"efgh")
+        self.assertEqual(value, b"efgh".decode('ascii'))
 
-        obj = NSScanner.scannerWithString_(u"1234 efgh")
+        obj = NSScanner.scannerWithString_(b"1234 efgh".decode('ascii'))
         didConvert, value = obj.scanUpToCharactersFromSet_intoString_(
                 NSCharacterSet.lowercaseLetterCharacterSet(), None)
         self.assert_(didConvert)
-        self.assertEqual(value, u"1234 ")
+        self.assertEqual(value, b"1234 ".decode('ascii'))
 
     def testMethods(self):
         self.assertArgIsBOOL(NSScanner.setCaseSensitive_, 0)

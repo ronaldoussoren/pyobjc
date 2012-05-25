@@ -5,7 +5,7 @@ from CoreData import *
 class TestNSManagedObject (TestCase):
     def testMethods(self):
         descr = NSEntityDescription.alloc().init()
-        descr.setName_(u'Name')
+        descr.setName_(b'Name'.decode('ascii'))
         o = NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(descr, None)
 
         self.assertResultIsBOOL(o.isInserted)

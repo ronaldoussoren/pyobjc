@@ -42,12 +42,12 @@ class TestNSCoderUsage(TestCase):
         newObj = archiver.decodeObject()
 
         self.assertEqual(newObj.intVal, 2)
-        self.assertAlmostEquals(newObj.dblVal, 2.0)
+        self.assertAlmostEqual(newObj.dblVal, 2.0)
         self.assertEqual(len(newObj.dblArray), 4)
-        self.assertAlmostEquals(newObj.dblArray[0], 1.0)
-        self.assertAlmostEquals(newObj.dblArray[1], 2.0)
-        self.assertAlmostEquals(newObj.dblArray[2], 3.0)
-        self.assertAlmostEquals(newObj.dblArray[3], 4.0)
+        self.assertAlmostEqual(newObj.dblArray[0], 1.0)
+        self.assertAlmostEqual(newObj.dblArray[1], 2.0)
+        self.assertAlmostEqual(newObj.dblArray[2], 3.0)
+        self.assertAlmostEqual(newObj.dblArray[3], 4.0)
         self.assertEqual(newObj.decodedBytes[0], b"hello")
         self.assertEqual(newObj.decodedBytes[1], 5)
 

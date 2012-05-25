@@ -5,6 +5,17 @@ import struct
 import Foundation
 import os
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class GlobalFunctionTest (TestCase):
     if sys.platform == 'darwin':
         def testNSFileTypeForHFSTypeCode(self):

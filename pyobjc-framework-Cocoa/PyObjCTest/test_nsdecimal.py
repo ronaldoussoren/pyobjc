@@ -7,6 +7,11 @@ import operator
 import objc
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
 if 0:
     class TestNSDecimal (TestCase):
         def testConstants(self):
@@ -25,35 +30,35 @@ if 0:
             self.assertEqual(NSDecimalNoScale, (2**15)-1)
 
         def testCreation(self):
-            o = NSDecimal(u"1.25")
+            o = NSDecimal(b"1.25".decode('ascii'))
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"1.25")
+            self.assertEqual(str(o), b"1.25".decode('ascii'))
 
             o = NSDecimal(12345, -2, objc.YES)
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"-123.45")
+            self.assertEqual(str(o), b"-123.45".decode('ascii'))
 
             o = NSDecimal()
             self.assert_(isinstance(o, NSDecimal))
-            self.assert_(str(o) in (u"0", u"0.0"))
+            self.assert_(str(o) in (b"0".decode('ascii'), b"0.0".decode('ascii')))
 
             o = NSDecimal(1234)
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"1234")
+            self.assertEqual(str(o), b"1234".decode('ascii'))
 
             o = NSDecimal(-1234)
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"-1234")
+            self.assertEqual(str(o), b"-1234".decode('ascii'))
 
             o = NSDecimal(long(1234))
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"1234")
+            self.assertEqual(str(o), b"1234".decode('ascii'))
 
             o = NSDecimal(long(-1234))
             self.assert_(isinstance(o, NSDecimal))
-            self.assertEqual(str(o), u"-1234")
+            self.assertEqual(str(o), b"-1234".decode('ascii'))
 
-            o = NSDecimal(1L << 64 - 1)
+            o = NSDecimal(1 << 64 - 1)
 
             # Explicit conversion is supported, but might not do
             # what a naive user expects...
@@ -61,13 +66,13 @@ if 0:
             self.assert_(isinstance(o, NSDecimal))
             self.assertEqual(str(o), repr(1.1))
 
-            self.assertRaises(OverflowError, NSDecimal, 1L << 128)
-            self.assertRaises(OverflowError, NSDecimal, -1L << 128)
+            self.assertRaises(OverflowError, NSDecimal, 1 << 128)
+            self.assertRaises(OverflowError, NSDecimal, -1 << 128)
 
         def testFunction(self):
-            o = NSDecimal(u"1.5")
+            o = NSDecimal(b"1.5".decode('ascii'))
             p = NSDecimal(12345, -2, objc.YES)
-            r = NSDecimal(u"-121.95")
+            r = NSDecimal(b"-121.95".decode('ascii'))
             q = NSDecimal()
 
             NSDecimalAdd(q, o, p, NSRoundPlain)
@@ -97,12 +102,12 @@ if 0:
             self.assertEqual(str(v), '3.375')
 
             t = NSDecimalString(v, None)
-            self.assertEqual(t, u'3.375')
+            self.assertEqual(t, b'3.375'.decode('ascii'))
 
         def testCompare(self):
-            small = NSDecimal(u"1")
-            small2 = NSDecimal(u"1")
-            large = NSDecimal(u"42")
+            small = NSDecimal(b"1".decode('ascii'))
+            small2 = NSDecimal(b"1".decode('ascii'))
+            large = NSDecimal(b"42".decode('ascii'))
 
             self.assert_(small == small2)
             self.assert_(not (small == large))
@@ -121,10 +126,10 @@ if 0:
             self.assert_(not(small >= large))
 
         def testConversion(self):
-            o = NSDecimal(u"1234.44")
+            o = NSDecimal(b"1234.44".decode('ascii'))
             self.assertEqual(o.as_int(), 1234)
 
-            o = NSDecimal(u"1.5")
+            o = NSDecimal(b"1.5".decode('ascii'))
             self.assertEqual(o.as_float(), 1.5)
 
             self.assertRaises(TypeError, int, o)
@@ -141,22 +146,22 @@ if 0:
 
     class TestNSDecimalNumber (TestCase):
         def testCreation1(self):
-            o = NSDecimalNumber.decimalNumberWithString_(u"1.1234")
-            self.assertEqual(o.description(), u"1.1234")
+            o = NSDecimalNumber.decimalNumberWithString_(b"1.1234".decode('ascii'))
+            self.assertEqual(o.description(), b"1.1234".decode('ascii'))
 
             p = o.decimalValue()
             self.assert_(isinstance(p, NSDecimal))
-            self.assertEqual(str(p), u"1.1234")
+            self.assertEqual(str(p), b"1.1234".decode('ascii'))
 
         def testCreation2(self):
-            p = NSDecimal(u"1.1234")
+            p = NSDecimal(b"1.1234".decode('ascii'))
             o = NSDecimalNumber.decimalNumberWithDecimal_(p)
-            self.assertEqual(o.description(), u"1.1234")
+            self.assertEqual(o.description(), b"1.1234".decode('ascii'))
 
         def testCreation3(self):
-            p = NSDecimal(u"1.1234")
+            p = NSDecimal(b"1.1234".decode('ascii'))
             o = NSDecimalNumber.alloc().initWithDecimal_(p)
-            self.assertEqual(o.description(), u"1.1234")
+            self.assertEqual(o.description(), b"1.1234".decode('ascii'))
 
     class NSDecimalOperators (TestCase):
         def testCoerce(self):
@@ -189,8 +194,8 @@ if 0:
             self.assertRaises(TypeError, coerce, r, 1.0)
             self.assertRaises(TypeError, coerce, "1.0", r)
             self.assertRaises(TypeError, coerce, r, "1.0")
-            self.assertRaises(TypeError, coerce, u"1.0", r)
-            self.assertRaises(TypeError, coerce, r, u"1.0")
+            self.assertRaises(TypeError, coerce, b"1.0".decode('ascii'), r)
+            self.assertRaises(TypeError, coerce, r, b"1.0".decode('ascii'))
             self.assertRaises(TypeError, coerce, (), r)
             self.assertRaises(TypeError, coerce, r, ())
 
@@ -210,7 +215,7 @@ if 0:
             self.assertEqual(o+P, r)
             self.assertEqual(O+p, r)
             self.assertEqual(o+2, r)
-            self.assertEqual(o+2L, r)
+            self.assertEqual(o+long(2), r)
             self.assertEqual(p+1, r)
             self.assertEqual(1+p, r)
 
@@ -218,8 +223,8 @@ if 0:
             self.assertRaises(TypeError, operator.add, 1.2, o)
             self.assertRaises(TypeError, operator.add, o, "1.2")
             self.assertRaises(TypeError, operator.add, "1.2", o)
-            self.assertRaises(TypeError, operator.add, o, u"1.2")
-            self.assertRaises(TypeError, operator.add, u"1.2", o)
+            self.assertRaises(TypeError, operator.add, o, b"1.2".decode('ascii'))
+            self.assertRaises(TypeError, operator.add, b"1.2".decode('ascii'), o)
             self.assertRaises(TypeError, operator.add, o, [])
             self.assertRaises(TypeError, operator.add, [], o)
 
@@ -239,7 +244,7 @@ if 0:
             self.assertEqual(O-p, r)
             self.assertEqual(o-P, r)
             self.assertEqual(o-2, r)
-            self.assertEqual(o-2L, r)
+            self.assertEqual(o-long(2), r)
             self.assertEqual(1-p, r)
             self.assertEqual(1-p, r)
 
@@ -247,8 +252,8 @@ if 0:
             self.assertRaises(TypeError, operator.sub, 1.2, o)
             self.assertRaises(TypeError, operator.sub, o, "1.2")
             self.assertRaises(TypeError, operator.sub, "1.2", o)
-            self.assertRaises(TypeError, operator.sub, o, u"1.2")
-            self.assertRaises(TypeError, operator.sub, u"1.2", o)
+            self.assertRaises(TypeError, operator.sub, o, b"1.2".decode('ascii'))
+            self.assertRaises(TypeError, operator.sub, b"1.2".decode('ascii'), o)
             self.assertRaises(TypeError, operator.sub, o, ())
             self.assertRaises(TypeError, operator.sub, (), o)
 
@@ -267,7 +272,7 @@ if 0:
             self.assertEqual(O*p, r)
             self.assertEqual(o*P, r)
             self.assertEqual(o*3, r)
-            self.assertEqual(o*3L, r)
+            self.assertEqual(o*long(3), r)
             self.assertEqual(2*p, r)
             self.assertEqual(2*p, r)
 
@@ -292,7 +297,7 @@ if 0:
             self.assertEqual(O/p, r)
             self.assertEqual(o/P, r)
             self.assertEqual(o/3, r)
-            self.assertEqual(o/3L, r)
+            self.assertEqual(o/long(3), r)
             self.assertEqual(2/p, r)
             self.assertEqual(2/p, r)
 
@@ -367,14 +372,14 @@ if 0:
             self.assertEqual(o, r)
 
             o = NSDecimal(1)
-            o += 2L
+            o += long(2)
             self.assertEqual(o, r)
 
             o = 1
             o += p
             self.assertEqual(o, r)
 
-            o = 1L
+            o = long(1)
             o += p
             self.assertEqual(o, r)
 
@@ -450,14 +455,14 @@ if 0:
             self.assertEqual(o, r)
 
             o = NSDecimal(2)
-            o *= 3L
+            o *= long(3)
             self.assertEqual(o, r)
 
             o = 2
             o *= p
             self.assertEqual(o, r)
 
-            o = 2L
+            o = long(2)
             o *= p
             self.assertEqual(o, r)
 
@@ -484,14 +489,14 @@ if 0:
             self.assertEqual(o, r)
 
             o = NSDecimal(2)
-            o /= 3L
+            o /= long(3)
             self.assertEqual(o, r)
 
             o = 2
             o /= p
             self.assertEqual(o, r)
 
-            o = 2L
+            o = long(2)
             o /= p
             self.assertEqual(o, r)
 
@@ -504,7 +509,7 @@ if 0:
             NSDecimalAdd(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
             self.assertEqual((o+p), r)
             self.assertEqual((o+2), r)
-            self.assertEqual((o+2L), r)
+            self.assertEqual((o+long(2)), r)
             self.assertEqual((1+p), r)
             self.assertEqual((1+p), r)
 
@@ -522,7 +527,7 @@ if 0:
             NSDecimalSubtract(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
             self.assertEqual((o-p), r)
             self.assertEqual((o-2), r)
-            self.assertEqual((o-2L), r)
+            self.assertEqual((o-long(2)), r)
             self.assertEqual((1-p), r)
             self.assertEqual((1-p), r)
 
@@ -537,7 +542,7 @@ if 0:
             NSDecimalMultiply(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
             self.assertEqual((o*p), r)
             self.assertEqual((o*3), r)
-            self.assertEqual((o*3L), r)
+            self.assertEqual((o*long(3)), r)
             self.assertEqual((2*p), r)
             self.assertEqual((2*p), r)
 
@@ -552,7 +557,7 @@ if 0:
             NSDecimalDivide(r, o.decimalValue(), p.decimalValue(), NSRoundPlain)
             self.assertEqual((o/p), r)
             self.assertEqual((o/3), r)
-            self.assertEqual((o/3L), r)
+            self.assertEqual((o/long(3)), r)
             self.assertEqual((2/p), r)
             self.assertEqual((2/p), r)
 

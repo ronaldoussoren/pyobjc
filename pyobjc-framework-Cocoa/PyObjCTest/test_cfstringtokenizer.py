@@ -2,12 +2,18 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestStringTokenizer (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFStringTokenizerRef)
 
     def testFunctions(self):
-        s = u"Spring eens over een boom"
+        s = b"Spring eens over een boom".decode('ascii')
         v = CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
         self.assertEqual(v, 'nl')
 
@@ -33,7 +39,7 @@ class TestStringTokenizer (TestCase):
         self.assertResultIsCFRetained(CFStringTokenizerCopyCurrentTokenAttribute)
         v = CFStringTokenizerCopyCurrentTokenAttribute(tok, kCFStringTokenizerAttributeLanguage)
         self.assertIs(v, None)
-        s = u"A dog jumped over a log. And then some more."
+        s = b"A dog jumped over a log. And then some more.".decode('ascii')
         CFStringTokenizerSetString(tok, s, (0, len(s)))
 
         subref = []
@@ -48,15 +54,15 @@ class TestStringTokenizer (TestCase):
         self.assertEqual(kCFStringTokenizerUnitParagraph                      , 2 )
         self.assertEqual(kCFStringTokenizerUnitLineBreak                      , 3 )
         self.assertEqual(kCFStringTokenizerUnitWordBoundary                   , 4 )
-        self.assertEqual(kCFStringTokenizerAttributeLatinTranscription        , 1L << 16 )
-        self.assertEqual(kCFStringTokenizerAttributeLanguage                  , 1L << 17 )
+        self.assertEqual(kCFStringTokenizerAttributeLatinTranscription        , 1 << 16 )
+        self.assertEqual(kCFStringTokenizerAttributeLanguage                  , 1 << 17 )
         self.assertEqual(kCFStringTokenizerTokenNone                          , 0 )
         self.assertEqual(kCFStringTokenizerTokenNormal                        , 1 )
-        self.assertEqual(kCFStringTokenizerTokenHasSubTokensMask              , 1L << 1 )
-        self.assertEqual(kCFStringTokenizerTokenHasDerivedSubTokensMask       , 1L << 2 )
-        self.assertEqual(kCFStringTokenizerTokenHasHasNumbersMask             , 1L << 3 )
-        self.assertEqual(kCFStringTokenizerTokenHasNonLettersMask             , 1L << 4 )
-        self.assertEqual(kCFStringTokenizerTokenIsCJWordMask                  , 1L << 5 )
+        self.assertEqual(kCFStringTokenizerTokenHasSubTokensMask              , 1 << 1 )
+        self.assertEqual(kCFStringTokenizerTokenHasDerivedSubTokensMask       , 1 << 2 )
+        self.assertEqual(kCFStringTokenizerTokenHasHasNumbersMask             , 1 << 3 )
+        self.assertEqual(kCFStringTokenizerTokenHasNonLettersMask             , 1 << 4 )
+        self.assertEqual(kCFStringTokenizerTokenIsCJWordMask                  , 1 << 5 )
 
 if __name__ == "__main__":
     main()

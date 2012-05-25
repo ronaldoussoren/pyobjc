@@ -15,23 +15,23 @@ class TestSFileCoordinator (TestCase):
     def testMethods(self):
         self.assertArgIsOut(Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_error_byAccessor_, 2)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_error_byAccessor_,
-                3, 'v@')
+                3, b'v@')
 
         self.assertArgIsOut(Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_error_byAccessor_, 2)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_error_byAccessor_,
-                3, 'v@')
+                3, b'v@')
 
         self.assertArgIsOut(Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_, 4)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
-                5, 'v@@')
+                5, b'v@@')
 
         self.assertArgIsOut(Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_, 4)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
-                5, 'v@@')
+                5, b'v@@')
 
         self.assertArgIsOut(  Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_, 4)
         self.assertArgIsBlock(Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,
-                5, 'v@?') # FIXME: Cannot represent this completion handler!
+                5, b'v@?') # FIXME: Cannot represent this completion handler!
 
 if __name__ == "__main__":
     main()

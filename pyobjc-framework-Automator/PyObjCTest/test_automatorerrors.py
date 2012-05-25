@@ -2,10 +2,17 @@
 from PyObjCTools.TestSupport import *
 from Automator import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestAutomatorErrors (TestCase):
     def testConstants(self):
-        self.assertEqual(AMAutomatorErrorDomain, u"com.apple.Automator")
-        self.assertEqual(AMActionErrorKey, u"AMActionErrorKey")
+        self.assertEqual(AMAutomatorErrorDomain, "com.apple.Automator")
+        self.assertEqual(AMActionErrorKey, "AMActionErrorKey")
+        self.assertIsInstance(AMAutomatorErrorDomain, unicode)
+        self.assertIsInstance(AMActionErrorKey, unicode)
 
         self.assertEqual(AMWorkflowNewerVersionError, -100)
         self.assertEqual(AMWorkflowPropertyListInvalidError, -101)

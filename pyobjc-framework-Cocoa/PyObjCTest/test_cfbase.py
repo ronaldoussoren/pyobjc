@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import CoreFoundation
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestBase (TestCase):
     def testConstants(self):
@@ -124,7 +135,7 @@ class TestBase (TestCase):
 
         v = CFCopyTypeIDDescription(CFAllocatorGetTypeID())
         self.assertIsInstance(v, unicode)
-        obj = CFURLCreateWithString(None, u"http://www.apple.com/", None)
+        obj = CFURLCreateWithString(None, b"http://www.apple.com/".decode('ascii'), None)
         i = CFGetRetainCount(obj)
         self.assertIsInstance(i, (int, long))
         CFRetain(obj)

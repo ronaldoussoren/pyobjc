@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSRuleEditorHelper (NSObject):
     def ruleEditor_numberOfChildrenForCriterion_withRowType_(self, ed, cr, rt): return 1
     def ruleEditor_child_forCriterion_withRowType_(self, ed, ch, cr, rt): return 1

@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 import AppKit
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSImageHelper (NSObject):
     def image_didLoadRepresentation_withStatus_(self, i, r, s): pass
     def image_didLoadPartOfRepresentation_withValidRows_(self, i, r, c): pass

@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSTask (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSTask.suspend)
@@ -9,8 +14,8 @@ class TestNSTask (TestCase):
 
     @min_os_level('10.7')
     def testMethods10_7(self):
-        self.assertArgIsBlock(NSTask.setTerminationHandler_, 0, 'v@')
-        self.assertResultIsBlock(NSTask.terminationHandler, 'v@')
+        self.assertArgIsBlock(NSTask.setTerminationHandler_, 0, b'v@')
+        self.assertResultIsBlock(NSTask.terminationHandler, b'v@')
 
     def testConstants(self):
         self.assertIsInstance(NSTaskDidTerminateNotification, unicode)

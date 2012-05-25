@@ -6,6 +6,12 @@ from PyObjCTools.TestSupport import *
 import Foundation
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestFoundation (TestCase):
     def testValues(self):
         self.assert_( hasattr(Foundation, 'NSTimeIntervalSince1970') )

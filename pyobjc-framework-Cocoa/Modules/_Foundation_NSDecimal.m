@@ -484,6 +484,9 @@ static PyObject* decimal_add(PyObject* left, PyObject* right)
 	NSDecimal  result;
 	NSCalculationError err;
 
+	NSLog(@"decimal_add %@ %@", NSDecimalString(&Decimal_Value(left), NULL),
+			NSDecimalString(&Decimal_Value(right), NULL));
+
 	err = NSDecimalAdd(&result, 
 			&Decimal_Value(left), 
 			&Decimal_Value(right),

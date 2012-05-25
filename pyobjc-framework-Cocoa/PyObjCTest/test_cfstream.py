@@ -2,7 +2,17 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import errno, time, os, socket, sys
 
-from test_cfsocket import onTheNetwork
+from .test_cfsocket import onTheNetwork
+
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
 
 
 class TestStream (TestCase):
@@ -99,7 +109,7 @@ class TestStream (TestCase):
 
         self.assertResultIsCFRetained(CFReadStreamCreateWithFile)
         stream = CFReadStreamCreateWithFile(None, 
-                    CFURLCreateWithString(None, u"file:///etc/shells", None))
+                    CFURLCreateWithString(None, b"file:///etc/shells".decode('ascii'), None))
         self.assertIsInstance(stream, CFReadStreamRef)
         r = CFReadStreamOpen(stream)
         self.assertIs(r, True)
@@ -207,7 +217,7 @@ class TestStream (TestCase):
 
 
         stream = CFWriteStreamCreateWithFile(None, 
-                CFURLCreateWithString(None, u"file:///tmp/pyobjc.test.txt", None))
+                CFURLCreateWithString(None, b"file:///tmp/pyobjc.test.txt".decode('ascii'), None))
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
         self.assertIs(r, True)

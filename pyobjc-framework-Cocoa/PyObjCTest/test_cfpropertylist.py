@@ -2,9 +2,15 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestPropertyList (TestCase):
     def testFunctions(self):
-        dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
+        dta = CFPropertyListCreateXMLData(None, {b"key".decode('ascii'): 42, b"key2".decode('ascii'): 1})
         self.assertIsInstance(dta, CFDataRef)
         self.assertArgIsOut(CFPropertyListCreateFromXMLData, 3)
         v, err = CFPropertyListCreateFromXMLData(None, dta, 0, None)
@@ -14,13 +20,13 @@ class TestPropertyList (TestCase):
         self.assertIsIn('key2', v)
         self.assertEqual(v['key'] , 42)
         self.assertEqual(v['key2'] , True)
-        v = CFPropertyListCreateDeepCopy(None, {u"key": 42, u"key2": True}, 0)
+        v = CFPropertyListCreateDeepCopy(None, {b"key".decode('ascii'): 42, b"key2".decode('ascii'): True}, 0)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertIsIn('key', v)
         self.assertIsIn('key2', v)
         self.assertEqual(v['key'] , 42)
         self.assertEqual(v['key2'] , True)
-        valid = CFPropertyListIsValid({u"key": 42, u"key2": True}, kCFPropertyListBinaryFormat_v1_0)
+        valid = CFPropertyListIsValid({b"key".decode('ascii'): 42, b"key2".decode('ascii'): True}, kCFPropertyListBinaryFormat_v1_0)
         self.assertIs(valid, True)
 
     def testStreams(self):
@@ -28,7 +34,7 @@ class TestPropertyList (TestCase):
         r = CFWriteStreamOpen(stream)
         self.assertTrue(r)
 
-        value = {u'key1': 42, u'key2': 1}
+        value = {b'key1'.decode('ascii'): 42, b'key2'.decode('ascii'): 1}
 
         self.assertArgIsOut(CFPropertyListWriteToStream, 3)
         rval, errorString = CFPropertyListWriteToStream(value, stream, 
@@ -73,7 +79,7 @@ class TestPropertyList (TestCase):
 
     @min_os_level('10.6')
     def testFunctions10_6(self):
-        dta = CFPropertyListCreateXMLData(None, {u"key": 42, u"key2": 1})
+        dta = CFPropertyListCreateXMLData(None, {b"key".decode('ascii'): 42, b"key2".decode('ascii'): 1})
         self.assertIsInstance(dta, CFDataRef)
         bytes = CFDataGetBytes(dta, (0, CFDataGetLength(dta)), None)
         self.assertIsNot(bytes, None)

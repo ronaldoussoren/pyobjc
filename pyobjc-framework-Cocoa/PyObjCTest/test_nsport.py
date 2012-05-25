@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class NSPortHelper (NSPort):
     def sendBeforeDate_components_from_reserved_(self, a, b, c, d): pass
     def sendBeforeDate_msgid_components_from_reserved_(self, a, b, c, d, e): pass

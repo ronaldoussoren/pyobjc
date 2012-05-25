@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSSoundHelper (NSObject):
     def sound_didFinishPlaying_(self, s, p): pass
 

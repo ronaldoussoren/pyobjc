@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSAnimationHelper (NSObject):
     def animationShouldStart_(self, animation): return 1
     def animation_valueForProgress_(self, a, b): return 1

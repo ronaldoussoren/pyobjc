@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestABGlobals (TestCase):
     @min_os_level('10.7')
     def testConstants10_7(self):
@@ -48,13 +53,13 @@ class TestABGlobals (TestCase):
         self.assertIsInstance(kABAIMMobileMeLabel, unicode)
 
     def testConstants(self):
-        self.assertEqual(kABShowAsMask, 07)
-        self.assertEqual(kABShowAsPerson, 00)
-        self.assertEqual(kABShowAsCompany, 01)
-        self.assertEqual(kABNameOrderingMask, 070)
-        self.assertEqual(kABDefaultNameOrdering, 0)
-        self.assertEqual(kABFirstNameFirst, 040)
-        self.assertEqual(kABLastNameFirst, 020)
+        self.assertEqual(kABShowAsMask, 0o7)
+        self.assertEqual(kABShowAsPerson, 0o0)
+        self.assertEqual(kABShowAsCompany, 0o1)
+        self.assertEqual(kABNameOrderingMask, 0o70)
+        self.assertEqual(kABDefaultNameOrdering, 0o0)
+        self.assertEqual(kABFirstNameFirst, 0o40)
+        self.assertEqual(kABLastNameFirst, 0o20)
 
 
         self.assertIsInstance(kABUIDProperty, unicode)

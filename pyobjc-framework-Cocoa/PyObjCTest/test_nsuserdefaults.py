@@ -1,13 +1,18 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class PythonListAsValue (TestCase):
 
     def testSettingPythonList(self):
         defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject_forKey_([u'a', u'b', u'c'], u'randomKey')
+        defaults.setObject_forKey_([b'a'.decode('ascii'), b'b'.decode('ascii'), b'c'.decode('ascii')], b'randomKey'.decode('ascii'))
 
-        self.assertEqual(defaults.arrayForKey_(u'randomKey'), [u'a', u'b', u'c'])
+        self.assertEqual(defaults.arrayForKey_(b'randomKey'.decode('ascii')), [b'a'.decode('ascii'), b'b'.decode('ascii'), b'c'.decode('ascii')])
 
     def testMethods(self):
         self.assertResultIsBOOL(NSUserDefaults.boolForKey_)

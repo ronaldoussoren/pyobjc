@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSHTTPCookieStorage (TestCase):
     def testConstants(self):
         self.assertEqual(NSHTTPCookieAcceptPolicyAlways, 0)

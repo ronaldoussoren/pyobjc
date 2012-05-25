@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSRunLoop (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSRunLoop.runMode_beforeDate_)

@@ -2,6 +2,11 @@ from Foundation import *
 import Foundation
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestEAManager (TestCase):
     def testContants(self):
         self.assertIsInstance(NSAppleEventManagerWillProcessFirstEventNotification, unicode)

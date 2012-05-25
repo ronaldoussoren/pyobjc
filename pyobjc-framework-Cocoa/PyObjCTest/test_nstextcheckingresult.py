@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSTextCheckingResult (TestCase):
     @min_os_level('10.6')
     def testConstants(self):
@@ -57,7 +62,7 @@ class TestNSTextCheckingResult (TestCase):
 
     @min_os_level('10.7')
     def testMethods10_7(self):
-        self.assertArgHasType(NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_, 0, 'n^' + NSRange.__typestr__)
+        self.assertArgHasType(NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_, 0, b'n^' + NSRange.__typestr__)
         self.assertArgSizeInArg(NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_, 0, 1)
 
 if __name__ == "__main__":

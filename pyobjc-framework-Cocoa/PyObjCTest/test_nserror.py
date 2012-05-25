@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSErrorHelper (NSObject):
     def attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_(self, a, b, c, d, e): pass
     def attemptRecoveryFromError_optionIndex_(self, a, b): return 1

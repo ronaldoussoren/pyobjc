@@ -5,32 +5,37 @@ import sys
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSString(TestCase):
     def testClassTree(self):
-        self.assert_(issubclass(objc.pyobjc_unicode, unicode))
+        self.assertTrue(issubclass(objc.pyobjc_unicode, unicode))
 
     def testCompare(self):
-        self.assert_(
-            NSString.localizedCaseInsensitiveCompare_(u'foo',u'bar') == 1,
-            u"NSString doesn't compare correctly")
-        self.assert_(
-            NSString.localizedCaseInsensitiveCompare_(u'foo',u'Foo') == 0,
-            u"NSString doesn't compare correctly")
+        self.assertTrue(
+            NSString.localizedCaseInsensitiveCompare_(b'foo'.decode('ascii'),b'bar'.decode('ascii')) == 1,
+            b"NSString doesn'.decode('ascii')t compare correctly")
+        self.assertTrue(
+            NSString.localizedCaseInsensitiveCompare_(b'foo'.decode('ascii'),b'Foo'.decode('ascii')) == 0,
+            b"NSString doesn'.decode('ascii')t compare correctly")
 
     def testFormatting(self):
         # The test on instances is slightly more verbose to avoid warnings
-        obj = NSString.alloc().initWithFormat_(u"foo %d", 42)
-        self.assertEqual(obj, u"foo 42")
+        obj = NSString.alloc().initWithFormat_(b"foo %d".decode('ascii'), 42)
+        self.assertEqual(obj, b"foo 42".decode('ascii'))
 
-        obj = NSString.alloc().initWithFormat_locale_(u"foo %d", {}, 42)
-        self.assertEqual(obj, u"foo 42")
+        obj = NSString.alloc().initWithFormat_locale_(b"foo %d".decode('ascii'), {}, 42)
+        self.assertEqual(obj, b"foo 42".decode('ascii'))
 
 
     def testGetCString(self):
         # Custom wrappers
-        v = NSString.stringWithString_(u"hello world")
+        v = NSString.stringWithString_(b"hello world".decode('ascii'))
         
-        self.assertEqual(v, u"hello world")
+        self.assertEqual(v, b"hello world".decode('ascii'))
 
         x = v.getCString_maxLength_(None, 16)
         self.assertEqual(x, b"hello world")
@@ -45,18 +50,18 @@ class TestNSString(TestCase):
 
 class TestNSStringBridging(TestCase):
     def setUp(self):
-        self.nsUniString = NSString.stringWithString_(u"unifoo")
-        self.pyUniString = u"unifoo"
+        self.nsUniString = NSString.stringWithString_(b"unifoo".decode('ascii'))
+        self.pyUniString = b"unifoo".decode('ascii')
 
     def testBasicComparison(self):
-        self.assertEqual(u"unifoo", NSString.stringWithString_(u"unifoo"))
+        self.assertEqual(b"unifoo".decode('ascii'), NSString.stringWithString_(b"unifoo".decode('ascii')))
 
-        u = u'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'
+        u = b'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'.decode('latin1')
         self.assertEqual(u, NSString.stringWithString_(u));
 
     def testTypesAndClasses(self):
-        self.assert_(isinstance(self.nsUniString, unicode))
-        self.assert_(isinstance(self.pyUniString, unicode))
+        self.assertIsInstance(self.nsUniString, unicode)
+        self.assertIsInstance(self.pyUniString, unicode)
 
     @onlyPython2
     def testStrConversion(self):
@@ -64,8 +69,8 @@ class TestNSStringBridging(TestCase):
         objc.setStrBridgeEnabled(True)
         try:
             v = NSString.stringWithString_("hello2")
-            self.assert_(isinstance(v, objc.pyobjc_unicode))
-            self.assertEqual(v, u"hello2")
+            self.assertIsInstance(v, objc.pyobjc_unicode)
+            self.assertEqual(v, b"hello2".decode('ascii'))
 
 
             self.assertRaises(UnicodeError, unicode, "\xff")
@@ -93,9 +98,9 @@ class TestNSStringBridging(TestCase):
             objc.setStrBridgeEnabled(curEnabledFlag)
 
     def testNSStringMethodAccess(self):
-        self.assert_(isinstance(self.nsUniString, objc.pyobjc_unicode))
+        self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
         v = self.nsUniString.stringByAppendingString_
-        self.assert_(isinstance(v, objc.selector))
+        self.assertIsInstance(v, objc.selector)
 
 class TestMutable(TestCase):
     def testSync(self):
@@ -103,12 +108,12 @@ class TestMutable(TestCase):
         Test that python and ObjC string representation are not
         automaticly synchronized.
         """
-        pyStr = NSMutableString.stringWithString_(u"hello")
+        pyStr = NSMutableString.stringWithString_(b"hello".decode('ascii'))
         ocStr= pyStr.nsstring()
-        self.assertEqual(pyStr, u"hello")
-        self.assert_(isinstance(ocStr, NSMutableString))
-        ocStr.appendString_(u" world")
-        self.assertEqual(pyStr, u"hello")
+        self.assertEqual(pyStr, b"hello".decode('ascii'))
+        self.assertIsInstance(ocStr, NSMutableString)
+        ocStr.appendString_(b" world".decode('ascii'))
+        self.assertEqual(pyStr, b"hello".decode('ascii'))
 
 class TestPickle(TestCase):
     """
@@ -127,16 +132,17 @@ class TestPickle(TestCase):
 
         s = pickle.dumps(self.strVal, 0)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
         s = pickle.dumps(self.strVal, 1)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
         s = pickle.dumps(self.strVal, 2)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
+    @onlyPython2
     def testCPickle(self):
         """
         Check that ObjC-strings pickle as unicode strings
@@ -145,24 +151,24 @@ class TestPickle(TestCase):
 
         s = pickle.dumps(self.strVal, 0)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
         s = pickle.dumps(self.strVal, 1)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
         s = pickle.dumps(self.strVal, 2)
         v = pickle.loads(s)
-        self.assertEqual(type(v), types.UnicodeType)
+        self.assertEqual(type(v), unicode)
 
     def testFormat(self):
         v = self.strVal
 
-        d = v.stringByAppendingFormat_(u"hello")
-        self.assertEqual(d, v + u'hello')
+        d = v.stringByAppendingFormat_(b"hello".decode('ascii'))
+        self.assertEqual(d, v + b'hello'.decode('ascii'))
 
-        d = v.stringByAppendingFormat_(u"hello %s %d", b"world", 101)
-        self.assertEqual(d, v + u'hello world 101')
+        d = v.stringByAppendingFormat_(b"hello %s %d".decode('ascii'), b"world", 101)
+        self.assertEqual(d, v + b'hello world 101'.decode('ascii'))
 
         v = NSString.alloc().initWithFormat_("%s %d %s", b"a", 44, b"cc")
         self.assertEqual(v, "a 44 cc")
@@ -187,7 +193,7 @@ class TestPickle(TestCase):
 
     @min_os_level('10.5')
     def testConstants10_5(self):
-        self.assertEqual(NSMaximumStringLength, sys.maxint)
+        self.assertEqual(NSMaximumStringLength, sys.maxsize)
         self.assertEqual(NSDiacriticInsensitiveSearch, 128)
         self.assertEqual(NSWidthInsensitiveSearch, 256)
         self.assertEqual(NSForcedOrderingSearch, 512)

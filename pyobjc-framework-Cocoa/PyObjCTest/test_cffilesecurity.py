@@ -1,6 +1,12 @@
 from PyObjCTools.TestSupport import *
 import CoreFoundation
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestCFFileSecurity (TestCase):
     @min_os_level('10.7')
     def testTypes(self):
@@ -60,11 +66,11 @@ class TestCFFileSecurity (TestCase):
         self.assertTrue(ok)
         self.assertEqual(v, 999)
 
-        ok = CoreFoundation.CFFileSecuritySetMode(security, 0444)
+        ok = CoreFoundation.CFFileSecuritySetMode(security, 0o444)
         self.assertTrue(ok)
         ok, v = CoreFoundation.CFFileSecurityGetMode(security, None)
         self.assertTrue(ok)
-        self.assertEqual(v, 0444)
+        self.assertEqual(v, 0o444)
 
     @expectedFailure
     @min_os_level('10.7') 

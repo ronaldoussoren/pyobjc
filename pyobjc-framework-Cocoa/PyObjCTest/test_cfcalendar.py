@@ -2,6 +2,12 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import datetime
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestCFCalendarVariadic (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFCalendarRef)
@@ -137,7 +143,7 @@ class TestCFCalendarVariadic (TestCase):
     def testMutation(self):
         cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
 
-        loc = CFLocaleCreate(None, u"mr_IN")
+        loc = CFLocaleCreate(None, b"mr_IN".decode('latin1'))
         self.assertIsInstance(loc, CFLocaleRef)
         id1 = CFLocaleGetIdentifier(loc)
 
@@ -151,14 +157,14 @@ class TestCFCalendarVariadic (TestCase):
 
         self.assertEqual(new_id , id1)
         self.assertNotEqual(orig_id , id1)
-        tz = CFTimeZoneCreateWithName(None, u"Pacific/Wallis", True)
+        tz = CFTimeZoneCreateWithName(None, b"Pacific/Wallis".decode('latin1'), True)
         self.assertIsInstance(tz, CFTimeZoneRef)
         orig_zone = CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(orig_zone, CFTimeZoneRef)
         CFCalendarSetTimeZone(cal, tz)
         new_zone = CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(new_zone, CFTimeZoneRef)
-        self.assertEqual(CFTimeZoneGetName(new_zone) , u'Pacific/Wallis' )
+        self.assertEqual(CFTimeZoneGetName(new_zone) , b'Pacific/Wallis'.decode('latin1') )
         weekday = CFCalendarGetFirstWeekday(cal)
         weekday = weekday + 2 % 7
         CFCalendarSetFirstWeekday(cal, weekday)

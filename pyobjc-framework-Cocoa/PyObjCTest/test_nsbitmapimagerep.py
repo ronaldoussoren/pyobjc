@@ -6,6 +6,17 @@ import sys
 from objc import YES, NO
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestNSBitmapImageRep(TestCase):
     def testInstantiation(self):
         # widthxheight RGB 24bpp image
@@ -14,10 +25,10 @@ class TestNSBitmapImageRep(TestCase):
         dataPlanes = (None, None, None, None, None)
         dataPlanes = None
         i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
-        self.assert_(i1)
+        self.assertTrue(i1)
 
         i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
-        self.assert_(i2)
+        self.assertTrue(i2)
 
     def testPixelFormat(self):
         width = 16
@@ -66,14 +77,20 @@ class TestNSBitmapImageRep(TestCase):
 
         # test planar, pre-made buffer
         i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
-        self.assert_(i1)
+        self.assertTrue(i1)
 
         singlePlane = objc.allocateBuffer(width*height*3)
         for i in range(0, width*height):
             si = i * 3
-            singlePlane[si] = rPlane[i]
-            singlePlane[si+1] = gPlane[i]
-            singlePlane[si+2] = bPlane[i]
+            if sys.version_info[0] == 2:
+                singlePlane[si] = rPlane[i]
+                singlePlane[si+1] = gPlane[i]
+                singlePlane[si+2] = bPlane[i]
+            else:
+                singlePlane[si] = ord(rPlane[i])
+                singlePlane[si+1] = ord(gPlane[i])
+                singlePlane[si+2] = ord(bPlane[i])
+
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
         i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
@@ -88,11 +105,11 @@ class TestNSBitmapImageRep(TestCase):
         i3 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
 
         r,g,b,a,o = i3.getBitmapDataPlanes_()
-        self.assert_(r)
-        self.assert_(g)
-        self.assert_(b)
-        self.assert_(not a)
-        self.assert_(not o)
+        self.assertTrue(r)
+        self.assertTrue(g)
+        self.assertTrue(b)
+        self.assertTrue(not a)
+        self.assertTrue(not o)
 
         self.assertEqual(len(r), len(rPlane))
         self.assertEqual(len(g), len(gPlane))
@@ -110,7 +127,7 @@ class TestNSBitmapImageRep(TestCase):
         except NameError:
             self.assertEqual(bitmapData, singlePlane)
         else:
-            self.assertEquals(bitmapData.tobytes(),
+            self.assertEqual(bitmapData.tobytes(),
                 singlePlane)
         
         a = array.array('L', [255]*4)

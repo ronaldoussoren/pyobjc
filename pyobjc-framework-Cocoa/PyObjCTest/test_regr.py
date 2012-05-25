@@ -9,13 +9,13 @@ class TestRegr (TestCase):
     def testFSRepr(self):
         fm = Foundation.NSFileManager.defaultManager()
         self.assertRaises(TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var")
-        self.assertEqual(u"/var", fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4))
+        self.assertEqual(b"/var".decode('ascii'), fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4))
 
     def testThreadHang(self):
 
         # Temporarily redirect stderr to a file, this allows us to check
         # that NSLog actually wrote some text.
-        fp = os.open('/tmp/pyobjc-thread.txt', os.O_RDWR|os.O_CREAT, 0666)
+        fp = os.open('/tmp/pyobjc-thread.txt', os.O_RDWR|os.O_CREAT, 0o666)
         dupped = os.dup(2)
         os.dup2(fp, 2)
 
@@ -32,7 +32,7 @@ class TestRegr (TestCase):
                 def run(self):
                     pool = NSAutoreleasePool.alloc().init()
                     aList.append("before")
-                    NSLog(u"does this print?")
+                    NSLog(b"does this print?".decode('ascii'))
                     aList.append("after")
 
             o = ThreadHangObject.alloc().init()

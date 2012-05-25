@@ -4,7 +4,7 @@
 
 import objc, sys
 
-if sys.maxint > 2 ** 32:
+if sys.maxsize > 2 ** 32:
     def sel32or64(a, b): return b
 else:
     def sel32or64(a, b): return a
@@ -23,58 +23,58 @@ cftypes=[('ABAddressBookRef', b'^{__ABAddressBookRef=}', None, 'ABAddressBook'),
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r('ABAddressBook', b'addRecord:', {'retval': {'type': 'Z'}})
-    r('ABAddressBook', b'addRecord:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
-    r('ABAddressBook', b'hasUnsavedChanges', {'retval': {'type': 'Z'}})
-    r('ABAddressBook', b'removeRecord:', {'retval': {'type': 'Z'}})
-    r('ABAddressBook', b'removeRecord:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
-    r('ABAddressBook', b'save', {'retval': {'type': 'Z'}})
-    r('ABAddressBook', b'saveAndReturnError:', {'retval': {'type': 'Z'}, 'arguments': {2: {'type_modifier': b'o'}}})
-    r('ABGroup', b'addMember:', {'retval': {'type': 'Z'}})
-    r('ABGroup', b'addSubgroup:', {'retval': {'type': 'Z'}})
-    r('ABGroup', b'removeMember:', {'retval': {'type': 'Z'}})
-    r('ABGroup', b'removeSubgroup:', {'retval': {'type': 'Z'}})
-    r('ABGroup', b'setDistributionIdentifier:forProperty:person:', {'retval': {'type': 'Z'}})
-    r('ABMutableMultiValue', b'removeValueAndLabelAtIndex:', {'retval': {'type': 'Z'}})
-    r('ABMutableMultiValue', b'replaceLabelAtIndex:withLabel:', {'retval': {'type': 'Z'}})
-    r('ABMutableMultiValue', b'replaceValueAtIndex:withValue:', {'retval': {'type': 'Z'}})
-    r('ABMutableMultiValue', b'setPrimaryIdentifier:', {'retval': {'type': 'Z'}})
-    r('ABPeoplePickerView', b'allowsGroupSelection', {'retval': {'type': 'Z'}})
-    r('ABPeoplePickerView', b'allowsMultipleSelection', {'retval': {'type': 'Z'}})
-    r('ABPeoplePickerView', b'selectGroup:byExtendingSelection:', {'arguments': {3: {'type': 'Z'}}})
-    r('ABPeoplePickerView', b'selectIdentifier:forPerson:byExtendingSelection:', {'arguments': {4: {'type': 'Z'}}})
-    r('ABPeoplePickerView', b'selectRecord:byExtendingSelection:', {'arguments': {3: {'type': 'Z'}}})
-    r('ABPeoplePickerView', b'setAllowsGroupSelection:', {'arguments': {2: {'type': 'Z'}}})
-    r('ABPeoplePickerView', b'setAllowsMultipleSelection:', {'arguments': {2: {'type': 'Z'}}})
-    r('ABPeoplePickerView', b'setGroupDoubleAction:', {'arguments': {2: {'sel_of_type': b'v@:@'}}})
-    r('ABPeoplePickerView', b'setNameDoubleAction:', {'arguments': {2: {'sel_of_type': b'v@:@'}}})
-    r('ABPerson', b'setImageData:', {'retval': {'type': 'Z'}})
-    r('ABPersonView', b'editing', {'retval': {'type': 'Z'}})
-    r('ABPersonView', b'setEditing:', {'arguments': {2: {'type': 'Z'}}})
-    r('ABRecord', b'isReadOnly', {'retval': {'type': 'Z'}})
-    r('ABRecord', b'removeValueForProperty:', {'retval': {'type': 'Z'}})
-    r('ABRecord', b'setValue:forProperty:', {'retval': {'type': 'Z'}})
-    r('ABRecord', b'setValue:forProperty:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
-    r('ABSearchElement', b'matchesRecord:', {'retval': {'type': 'Z'}})
-    r('NSObject', b'shouldEnableActionForPerson:identifier:', {'retval': {'type': 'Z'}})
+    r(b'ABAddressBook', b'addRecord:', {'retval': {'type': 'Z'}})
+    r(b'ABAddressBook', b'addRecord:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
+    r(b'ABAddressBook', b'hasUnsavedChanges', {'retval': {'type': 'Z'}})
+    r(b'ABAddressBook', b'removeRecord:', {'retval': {'type': 'Z'}})
+    r(b'ABAddressBook', b'removeRecord:error:', {'retval': {'type': 'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
+    r(b'ABAddressBook', b'save', {'retval': {'type': 'Z'}})
+    r(b'ABAddressBook', b'saveAndReturnError:', {'retval': {'type': 'Z'}, 'arguments': {2: {'type_modifier': b'o'}}})
+    r(b'ABGroup', b'addMember:', {'retval': {'type': 'Z'}})
+    r(b'ABGroup', b'addSubgroup:', {'retval': {'type': 'Z'}})
+    r(b'ABGroup', b'removeMember:', {'retval': {'type': 'Z'}})
+    r(b'ABGroup', b'removeSubgroup:', {'retval': {'type': 'Z'}})
+    r(b'ABGroup', b'setDistributionIdentifier:forProperty:person:', {'retval': {'type': 'Z'}})
+    r(b'ABMutableMultiValue', b'removeValueAndLabelAtIndex:', {'retval': {'type': 'Z'}})
+    r(b'ABMutableMultiValue', b'replaceLabelAtIndex:withLabel:', {'retval': {'type': 'Z'}})
+    r(b'ABMutableMultiValue', b'replaceValueAtIndex:withValue:', {'retval': {'type': 'Z'}})
+    r(b'ABMutableMultiValue', b'setPrimaryIdentifier:', {'retval': {'type': 'Z'}})
+    r(b'ABPeoplePickerView', b'allowsGroupSelection', {'retval': {'type': 'Z'}})
+    r(b'ABPeoplePickerView', b'allowsMultipleSelection', {'retval': {'type': 'Z'}})
+    r(b'ABPeoplePickerView', b'selectGroup:byExtendingSelection:', {'arguments': {3: {'type': 'Z'}}})
+    r(b'ABPeoplePickerView', b'selectIdentifier:forPerson:byExtendingSelection:', {'arguments': {4: {'type': 'Z'}}})
+    r(b'ABPeoplePickerView', b'selectRecord:byExtendingSelection:', {'arguments': {3: {'type': 'Z'}}})
+    r(b'ABPeoplePickerView', b'setAllowsGroupSelection:', {'arguments': {2: {'type': 'Z'}}})
+    r(b'ABPeoplePickerView', b'setAllowsMultipleSelection:', {'arguments': {2: {'type': 'Z'}}})
+    r(b'ABPeoplePickerView', b'setGroupDoubleAction:', {'arguments': {2: {'sel_of_type': b'v@:@'}}})
+    r(b'ABPeoplePickerView', b'setNameDoubleAction:', {'arguments': {2: {'sel_of_type': b'v@:@'}}})
+    r(b'ABPerson', b'setImageData:', {'retval': {'type': 'Z'}})
+    r(b'ABPersonView', b'editing', {'retval': {'type': 'Z'}})
+    r(b'ABPersonView', b'setEditing:', {'arguments': {2: {'type': 'Z'}}})
+    r(b'ABRecord', b'isReadOnly', {'retval': {'type': 'Z'}})
+    r(b'ABRecord', b'removeValueForProperty:', {'retval': {'type': 'Z'}})
+    r(b'ABRecord', b'setValue:forProperty:', {'retval': {'type': 'Z'}})
+    r(b'ABRecord', b'setValue:forProperty:error:', {'retval': {'type': 'Z'}, 'arguments': {4: {'type_modifier': b'o'}}})
+    r(b'ABSearchElement', b'matchesRecord:', {'retval': {'type': 'Z'}})
+    r(b'NSObject', b'shouldEnableActionForPerson:identifier:', {'retval': {'type': 'Z'}})
 finally:
     objc._updatingMetadata(False)
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r('NSObject', b'consumeImageData:forTag:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': sel32or64(b'i', b'l')}}})
+    r(b'NSObject', b'consumeImageData:forTag:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': sel32or64(b'i', b'l')}}})
 finally:
     objc._updatingMetadata(False)
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r('NSObject', b'actionProperty', {'retval': {'type': b'@'}})
-    r('NSObject', b'performActionForPerson:identifier:', {'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r('NSObject', b'shouldEnableActionForPerson:identifier:', {'retval': {'type': 'Z'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r('NSObject', b'titleForPerson:identifier:', {'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
+    r(b'NSObject', b'actionProperty', {'retval': {'type': b'@'}})
+    r(b'NSObject', b'performActionForPerson:identifier:', {'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
+    r(b'NSObject', b'shouldEnableActionForPerson:identifier:', {'retval': {'type': 'Z'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
+    r(b'NSObject', b'titleForPerson:identifier:', {'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
 finally:
     objc._updatingMetadata(False)
-protocols={'ABActionDelegate': objc.informal_protocol('ABActionDelegate', [objc.selector(None, 'shouldEnableActionForPerson:identifier:', b'Z@:@@', isRequired=False), objc.selector(None, 'actionProperty', b'@@:', isRequired=False), objc.selector(None, 'performActionForPerson:identifier:', b'v@:@@', isRequired=False), objc.selector(None, 'titleForPerson:identifier:', b'@@:@@', isRequired=False)])}
+protocols={'ABActionDelegate': objc.informal_protocol('ABActionDelegate', [objc.selector(None, b'shouldEnableActionForPerson:identifier:', b'Z@:@@', isRequired=False), objc.selector(None, b'actionProperty', b'@@:', isRequired=False), objc.selector(None, b'performActionForPerson:identifier:', b'v@:@@', isRequired=False), objc.selector(None, b'titleForPerson:identifier:', b'@@:@@', isRequired=False)])}
 expressions = {}
 
 # END OF FILE

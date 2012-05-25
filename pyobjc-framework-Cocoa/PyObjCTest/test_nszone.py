@@ -6,6 +6,12 @@ from Foundation import *
 import Foundation
 #NSZonePtr = getattr(Foundation, 'NSZone*')
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestNSZone (TestCase):
     def testWithZones(self):
         obj = NSObject.allocWithZone_(None).init()
@@ -66,9 +72,9 @@ class TestNSZone (TestCase):
             self.assertIsInstance(z, NSZonePtr)
         z = NSCreateZone(5000, 100, True)
         self.assertIsInstance(z, NSZonePtr)
-        NSSetZoneName(z, u"Hello World")
+        NSSetZoneName(z, b"Hello World".decode('ascii'))
         nm = NSZoneName(z)
-        self.assertEqual(nm, u"Hello World")
+        self.assertEqual(nm, b"Hello World".decode('ascii'))
 
         NSRecycleZone(z); z = None
 

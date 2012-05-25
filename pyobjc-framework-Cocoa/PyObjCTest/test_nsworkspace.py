@@ -4,6 +4,11 @@ import os
 
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 class TestNSWorkspace(TestCase):
     def testInfoForFile(self):
@@ -11,12 +16,12 @@ class TestNSWorkspace(TestCase):
 
         # A method with 2 output parameters, this means the result
         # is a tuple with 3 elements (return value, param1, param2)
-        res = ws.getInfoForFile_application_type_(u'/', None, None)
+        res = ws.getInfoForFile_application_type_(b'/'.decode('ascii'), None, None)
         self.assert_(isinstance(res, tuple))
         self.assert_(len(res) == 3)
         self.assert_(res[0] == 1)
-        self.assert_(res[1] == u'/System/Library/CoreServices/Finder.app')
-        self.assert_(res[2] == u'')
+        self.assert_(res[1] == b'/System/Library/CoreServices/Finder.app'.decode('ascii'))
+        self.assert_(res[2] == b''.decode('ascii'))
 
     def testConstants(self):
         self.assertEqual(NSWorkspaceLaunchAndPrint, 2)

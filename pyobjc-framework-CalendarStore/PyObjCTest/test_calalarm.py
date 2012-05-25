@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCalAlarm (TestCase):
     def testConstants(self):
         self.assertIsInstance(CalAlarmActionDisplay, unicode)

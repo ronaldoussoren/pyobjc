@@ -3,6 +3,12 @@ import time
 from CoreFoundation import *
 
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestDate (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFDateRef)

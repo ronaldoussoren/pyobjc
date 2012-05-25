@@ -4,6 +4,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSKeyValueCodingHelper (NSObject):
     def validateValue_forKey_error_(self, a, b, c): return 1
     def validateValue_forKeyPath_error_(self, a, b, c): return 1

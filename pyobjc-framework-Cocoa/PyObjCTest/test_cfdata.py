@@ -3,6 +3,12 @@ from CoreFoundation import *
 from Foundation import NSCFData
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
+
 
 class TestData (TestCase):
     def testTypes(self):

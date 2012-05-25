@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSHelpManager (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSContextHelpModeDidActivateNotification, unicode)

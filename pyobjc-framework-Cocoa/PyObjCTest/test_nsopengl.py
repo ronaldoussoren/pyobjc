@@ -2,6 +2,12 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestNSOpenGL (TestCase):
     def testConstants(self):
         self.assertEqual(NSOpenGLGOFormatCacheSize, 501)

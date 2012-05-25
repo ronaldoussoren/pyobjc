@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 class TestNSTextAttachmentHelper (NSObject):
     def drawWithFrame_inView_(self, fr, vi): pass
     def wantsToTrackMouse(self): return 1

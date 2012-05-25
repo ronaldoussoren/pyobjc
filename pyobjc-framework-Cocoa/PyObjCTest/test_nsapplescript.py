@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestAE (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSAppleScriptErrorMessage, unicode)

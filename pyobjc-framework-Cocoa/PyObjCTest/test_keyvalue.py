@@ -19,16 +19,16 @@ class KeyValueClass1 (NSObject):
     def init(self):
         self = super(KeyValueClass1, self).init()
         self.key3 = 3
-        self._key4 = u"4"
-        self.__private = u"private"
+        self._key4 = b"4".decode('ascii')
+        self.__private = b"private".decode('ascii')
         return self
 
     def addMultiple(self):
         self.multiple = KeyValueClass1.alloc().init()
         self.multiple.level2 = KeyValueClass1.alloc().init()
         self.multiple.level2.level3 = KeyValueClass1.alloc().init()
-        self.multiple.level2.level3.keyA = u"hello"
-        self.multiple.level2.level3.keyB = u"world"
+        self.multiple.level2.level3.keyA = b"hello".decode('ascii')
+        self.multiple.level2.level3.keyB = b"world".decode('ascii')
 
     def getKey1(self):
         return 1
@@ -43,7 +43,7 @@ class KeyValueClass1 (NSObject):
         self.key5 = value * 5
 
     def keyRaisingValueError(self):
-        raise ValueError, "42"
+        raise ValueError("42")
 
     def keyRaisingNSUnknownKeyException(self):
         return self.valueForKey_("thisKeyDoesNotExist")
@@ -58,17 +58,17 @@ class KeyValueClass1Explicit (NSObject):
     def init(self):
         self = super(KeyValueClass1Explicit, self).init()
         self._values = {}
-        self._values[u'key3'] = 3
-        self._values[u'key4'] = u"4"
-        self._values['_private'] = u"private"
+        self._values[b'key3'.decode('ascii')] = 3
+        self._values[b'key4'.decode('ascii')] = b"4".decode('ascii')
+        self._values['_private'] = b"private".decode('ascii')
         return self
 
     def addMultiple(self):
         self._values["multiple"] = KeyValueClass1Explicit.alloc().init()
         self._values["multiple"]._values["level2"] = KeyValueClass1Explicit.alloc().init()
         self._values["multiple"]._values["level2"]._values["level3"] = KeyValueClass1Explicit.alloc().init()
-        self._values["multiple"]._values["level2"]._values["level3"]._values["keyA"] = u"hello"
-        self._values["multiple"]._values["level2"]._values["level3"]._values["keyB"] = u"world"
+        self._values["multiple"]._values["level2"]._values["level3"]._values["keyA"] = b"hello".decode('ascii')
+        self._values["multiple"]._values["level2"]._values["level3"]._values["keyB"] = b"world".decode('ascii')
 
     def valueForKey_(self, key):
         if key == "key1":
@@ -101,7 +101,7 @@ class KeyValueClass4 (NSObject):
 
     def init(self):
         self = super(KeyValueClass4, self).init()
-        self.foo = u"foobar"
+        self.foo = b"foobar".decode('ascii')
         return self
 
     # Definition for property 'bar'. Use odd names for the methods
@@ -114,13 +114,13 @@ class KeyValueClass4 (NSObject):
 
     bar = property(read_bar, write_bar)
 
-    roprop = property(lambda self: u"read-only")
+    roprop = property(lambda self: b"read-only".decode('ascii'))
 
 class KVOClass(NSObject):
     def automaticallyNotifiesObserversForKey_(self, aKey):
         return objc.NO
 
-    def test(self): return u"test"
+    def test(self): return b"test".decode('ascii')
 
 
 class KeyValueObserver (NSObject):
@@ -138,197 +138,197 @@ class PyKeyValueCoding (TestCase):
         # Private instance variables ('anObject.__value') are not accessible using
         # key-value coding.
         o = KeyValueClass1.alloc().init()
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, u"private")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, b"private".decode('ascii'))
 
     def testValueForKey(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key1".decode('ascii')), 1)
 
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key2"), 2)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key3"), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key4"), "4")
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"multiple"), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key2".decode('ascii')), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key3".decode('ascii')), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key4".decode('ascii')), "4")
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"multiple".decode('ascii')), o.multiple)
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, u"nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, b"nokey".decode('ascii'))
 
         self.assertRaises(ValueError, STUB.keyValue_forObject_key_, 0, o,
-                u"keyRaisingValueError")
+                b"keyRaisingValueError".decode('ascii'))
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o,
-                u"keyRaisingNSUnknownKeyException")
+                b"keyRaisingNSUnknownKeyException".decode('ascii'))
         self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o,
-                u"keyReturningSameSelector")
+                b"keyReturningSameSelector".decode('ascii'))
 
-        obj = STUB.keyValue_forObject_key_( 0, o, u"keyReturningOtherSelector")
+        obj = STUB.keyValue_forObject_key_( 0, o, b"keyReturningOtherSelector".decode('ascii'))
         self.assertIsInstance(obj, objc.selector)
         self.assertEqual(obj.selector, b"getKey1")
         self.assertIs(obj.self, o )
     def testValueForKey2(self):
         o = KeyValueClass4.alloc().init()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"foo"), u"foobar")
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"bar"), u"foobarfoobar")
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"roprop"), u"read-only")
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"foo".decode('ascii')), b"foobar".decode('ascii'))
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"bar".decode('ascii')), b"foobarfoobar".decode('ascii'))
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"roprop".decode('ascii')), b"read-only".decode('ascii'))
 
 
     def testStoredValueForKey(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key1"), 1)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key2"), 2)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key3"), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key4"), "4")
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"multiple"), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key1".decode('ascii')), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key2".decode('ascii')), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key3".decode('ascii')), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key4".decode('ascii')), "4")
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"multiple".decode('ascii')), o.multiple)
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, u"nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, b"nokey".decode('ascii'))
 
     def testStoredValueForKey2(self):
         o = KeyValueClass4.alloc().init()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"foo"), u"foobar")
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"bar"), u"foobarfoobar")
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"roprop"), u"read-only")
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"foo".decode('ascii')), b"foobar".decode('ascii'))
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"bar".decode('ascii')), b"foobarfoobar".decode('ascii'))
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"roprop".decode('ascii')), b"read-only".decode('ascii'))
 
     def testValueForKeyPath(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple"), o.multiple)
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2"), o.multiple.level2)
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2.level3.keyA"),
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple".decode('ascii')), o.multiple)
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2".decode('ascii')), o.multiple.level2)
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2.level3.keyA".decode('ascii')),
             o.multiple.level2.level3.keyA)
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2.level3.keyB"),
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2.level3.keyB".decode('ascii')),
             o.multiple.level2.level3.keyB)
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, u"multiple.level2.nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, b"multiple.level2.nokey".decode('ascii'))
 
     @max_os_level('10.5')
     def testValuesForKeys(self):
         o = KeyValueClass1.alloc().init()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(3, o, [u"key1", u"key2", u"key3", u"key4"]), { u"key1":1, u"key2":2, u"key3": 3, u"key4": u"4"} )
+        self.assertEqual(STUB.keyValue_forObject_key_(3, o, [b"key1".decode('ascii'), b"key2".decode('ascii'), b"key3".decode('ascii'), b"key4".decode('ascii')]), { b"key1".decode('ascii'):1, b"key2".decode('ascii'):2, b"key3".decode('ascii'): 3, b"key4".decode('ascii'): b"4".decode('ascii')} )
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 3, o, [u"key1", u"key3", u"nosuchkey"])
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 3, o, [b"key1".decode('ascii'), b"key3".decode('ascii'), b"nosuchkey".decode('ascii')])
 
     @max_os_level('10.5')
     def testTakeValueForKey(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key3', u'drie')
-        self.assertEqual(o.key3, u"drie")
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+        self.assertEqual(o.key3, b"drie".decode('ascii'))
 
-        self.assertEqual(o._key4, u"4")
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key4', u'vier')
-        self.assert_(not hasattr(o, u"key4"))
-        self.assertEqual(o._key4, u"viervierviervier")
+        self.assertEqual(o._key4, b"4".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
+        self.assert_(not hasattr(o, b"key4".decode('ascii')))
+        self.assertEqual(o._key4, b"viervierviervier".decode('ascii'))
 
         o.key5 = 1
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key5', u'V')
-        self.assertEqual(o.key5, u"VVVVV")
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
+        self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, u'key9'))
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
-        self.assertEqual(o.key9, u'IX')
+        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
+        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
     def testTakeValueForKey2(self):
         o = KeyValueClass4.alloc().init()
 
-        self.assertEqual(o.foo, u"foobar")
-        STUB.setKeyValue_forObject_key_value_(0, o, u'foo', u'FOO')
-        self.assertEqual(o.foo, u"FOO")
+        self.assertEqual(o.foo, b"foobar".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(0, o, b'foo'.decode('ascii'), b'FOO'.decode('ascii'))
+        self.assertEqual(o.foo, b"FOO".decode('ascii'))
 
-        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 0, o, u'key9', u'IX')
+        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 0, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
 
 
     def testTakeStoredValueForKey(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key3', u'drie')
-        self.assertEqual(o.key3, u"drie")
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+        self.assertEqual(o.key3, b"drie".decode('ascii'))
 
-        self.assertEqual(o._key4, u"4")
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key4', u'vier')
-        self.assertEqual(o._key4, u"viervierviervier")
+        self.assertEqual(o._key4, b"4".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
+        self.assertEqual(o._key4, b"viervierviervier".decode('ascii'))
 
         o.key5 = 1
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key5', u'V')
-        self.assertEqual(o.key5, u"VVVVV")
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
+        self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, u'key9'))
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key9', u'IX')
-        self.assert_(hasattr(o, u'key9'))
-        self.assertEqual(o.key9, u'IX')
+        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
+        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     def testStoredTakeValueForKey2(self):
         o = KeyValueClass4.alloc().init()
 
-        self.assertEqual(o.foo, u"foobar")
-        STUB.setKeyValue_forObject_key_value_(2, o, u'foo', u'FOO')
-        self.assertEqual(o.foo, u"FOO")
+        self.assertEqual(o.foo, b"foobar".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(2, o, b'foo'.decode('ascii'), b'FOO'.decode('ascii'))
+        self.assertEqual(o.foo, b"FOO".decode('ascii'))
 
-        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, u'key9', u'IX')
-        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, u'roprop', u'IX')
+        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
+        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 2, o, b'roprop'.decode('ascii'), b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass1.alloc().init()
 
         self.assertEqual(o.key3, 3)
-        self.assertEqual(o._key4, u"4")
+        self.assertEqual(o._key4, b"4".decode('ascii'))
         o.key5 = 1
-        self.assert_(not hasattr(o, u'key9'))
+        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
 
         STUB.setKeyValue_forObject_key_value_(3, o, None,
             {
-                u'key3': u'drie',
-                u'key4': u'vier',
-                u'key5': u'V',
-                u'key9': u'IX',
+                b'key3'.decode('ascii'): b'drie'.decode('ascii'),
+                b'key4'.decode('ascii'): b'vier'.decode('ascii'),
+                b'key5'.decode('ascii'): b'V'.decode('ascii'),
+                b'key9'.decode('ascii'): b'IX'.decode('ascii'),
             })
 
-        self.assertEqual(o.key3, u"drie")
-        self.assertEqual(o._key4, u"viervierviervier")
-        self.assertEqual(o.key5, u"VVVVV")
-        self.assert_(hasattr(o, u'key9'))
-        self.assertEqual(o.key9, u'IX')
+        self.assertEqual(o.key3, b"drie".decode('ascii'))
+        self.assertEqual(o._key4, b"viervierviervier".decode('ascii'))
+        self.assertEqual(o.key5, b"VVVVV".decode('ascii'))
+        self.assert_(hasattr(o, b'key9'.decode('ascii')))
+        self.assertEqual(o.key9, b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
     def testTakeValuesFromDictionary2(self):
         o = KeyValueClass4.alloc().init()
 
-        self.assertEqual(o.foo, u"foobar")
-        STUB.setKeyValue_forObject_key_value_(3, o, None, { u'foo': u'FOO' })
-        self.assertEqual(o.foo, u"FOO")
+        self.assertEqual(o.foo, b"foobar".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(3, o, None, { b'foo'.decode('ascii'): b'FOO'.decode('ascii') })
+        self.assertEqual(o.foo, b"FOO".decode('ascii'))
 
-        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { u'key9':  u'IX' })
-        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { u'roprop':  u'IX' })
+        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { b'key9'.decode('ascii'):  b'IX'.decode('ascii') })
+        self.assertRaises(KeyError, STUB.setKeyValue_forObject_key_value_, 3, o, None, { b'roprop'.decode('ascii'):  b'IX'.decode('ascii') })
 
     @max_os_level('10.5')
     def testTakeValueForKeyPath(self):
         o = KeyValueClass1.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(o.multiple.level2.level3.keyA, u"hello")
-        self.assertEqual(o.multiple.level2.level3.keyB, u"world")
+        self.assertEqual(o.multiple.level2.level3.keyA, b"hello".decode('ascii'))
+        self.assertEqual(o.multiple.level2.level3.keyB, b"world".decode('ascii'))
 
-        STUB.setKeyValue_forObject_key_value_(1, o, u"multiple.level2.level3.keyA", u"KeyAValue")
-        self.assertEqual(o.multiple.level2.level3.keyA, u"KeyAValue")
+        STUB.setKeyValue_forObject_key_value_(1, o, b"multiple.level2.level3.keyA".decode('ascii'), b"KeyAValue".decode('ascii'))
+        self.assertEqual(o.multiple.level2.level3.keyA, b"KeyAValue".decode('ascii'))
 
-        STUB.setKeyValue_forObject_key_value_(1, o, u"multiple.level2.level3.keyB", 9.999)
+        STUB.setKeyValue_forObject_key_value_(1, o, b"multiple.level2.level3.keyB".decode('ascii'), 9.999)
         self.assertEqual(o.multiple.level2.level3.keyB, 9.999)
 
-    if hasattr(NSObject, u"willChangeValueForKey_"):
+    if hasattr(NSObject, b"willChangeValueForKey_".decode('ascii')):
         # NSKeyValueObserving is only available on Panther and beyond
         def testKVO1(self):
             o = KVOClass.alloc().init()
-            o.addObserver_forKeyPath_options_context_(self, u"test", 0, None)
-            o.removeObserver_forKeyPath_(self, u"test")
+            o.addObserver_forKeyPath_options_context_(self, b"test".decode('ascii'), 0, None)
+            o.removeObserver_forKeyPath_(self, b"test".decode('ascii'))
 
         def testKVO2(self):
             """
@@ -339,20 +339,20 @@ class PyKeyValueCoding (TestCase):
 
             o = KeyValueClass1.alloc().init()
 
-            o.addObserver_forKeyPath_options_context_(observer, u"key3", 0, 0)
+            o.addObserver_forKeyPath_options_context_(observer, b"key3".decode('ascii'), 0, 0)
             try:
-                STUB.setKeyValue_forObject_key_value_(2, o, u'key3', u'drie')
-                self.assertEqual(o.key3, u"drie")
+                STUB.setKeyValue_forObject_key_value_(2, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+                self.assertEqual(o.key3, b"drie".decode('ascii'))
 
                 self.assertEqual(len(observer.observed), 1)
 
                 keyPath, object, change = observer.observed[0]
-                self.assertEqual(keyPath, u"key3")
+                self.assertEqual(keyPath, b"key3".decode('ascii'))
                 self.assert_(object is o)
                 self.assertEqual(change, {NSKeyValueChangeKindKey: 1 })
 
             finally:
-                o.removeObserver_forKeyPath_(observer, u'key3')
+                o.removeObserver_forKeyPath_(observer, b'key3'.decode('ascii'))
 
         def testKVO3(self):
             """
@@ -362,29 +362,29 @@ class PyKeyValueCoding (TestCase):
             self.assertEqual(observer.observed, [])
 
             o = KeyValueClass1.alloc().init()
-            STUB.setKeyValue_forObject_key_value_(2, o, u'key3', u'three')
+            STUB.setKeyValue_forObject_key_value_(2, o, b'key3'.decode('ascii'), b'three'.decode('ascii'))
 
-            o.addObserver_forKeyPath_options_context_(observer, u"key3",
+            o.addObserver_forKeyPath_options_context_(observer, b"key3".decode('ascii'),
                     NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld,
                     0)
             try:
-                STUB.setKeyValue_forObject_key_value_(2, o, u'key3', u'drie')
-                self.assertEqual(o.key3, u"drie")
+                STUB.setKeyValue_forObject_key_value_(2, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+                self.assertEqual(o.key3, b"drie".decode('ascii'))
 
                 self.assertEqual(len(observer.observed), 1)
 
                 keyPath, object, change = observer.observed[0]
-                self.assertEqual(keyPath, u"key3")
+                self.assertEqual(keyPath, b"key3".decode('ascii'))
                 self.assert_(object is o)
                 self.assertEqual(change,
                     {
                         NSKeyValueChangeKindKey:1,
-                        NSKeyValueChangeNewKey:u'drie',
-                        NSKeyValueChangeOldKey:u'three'
+                        NSKeyValueChangeNewKey:b'drie'.decode('ascii'),
+                        NSKeyValueChangeOldKey:b'three'.decode('ascii')
                     })
 
             finally:
-                o.removeObserver_forKeyPath_(observer, u'key3')
+                o.removeObserver_forKeyPath_(observer, b'key3'.decode('ascii'))
 
 class PyKeyValueCodingExplicit (TestCase):
 
@@ -392,125 +392,125 @@ class PyKeyValueCodingExplicit (TestCase):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key1"), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key1".decode('ascii')), 1)
 
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key2"), 2)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key3"), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"key4"), "4")
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, u"multiple"), o._values['multiple'])
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key2".decode('ascii')), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key3".decode('ascii')), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key4".decode('ascii')), "4")
+        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"multiple".decode('ascii')), o._values['multiple'])
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, u"nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 0, o, b"nokey".decode('ascii'))
 
     def testStoredValueForKey(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key1"), 1)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key2"), 2)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key3"), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"key4"), "4")
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, u"multiple"), o._values['multiple'])
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key1".decode('ascii')), 1)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key2".decode('ascii')), 2)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key3".decode('ascii')), 3)
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key4".decode('ascii')), "4")
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"multiple".decode('ascii')), o._values['multiple'])
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, u"nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 2, o, b"nokey".decode('ascii'))
 
     def testValueForKeyPath(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple"), o._values['multiple'])
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2"), o._values['multiple']._values['level2'])
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2.level3.keyA"),
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple".decode('ascii')), o._values['multiple'])
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2".decode('ascii')), o._values['multiple']._values['level2'])
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2.level3.keyA".decode('ascii')),
             o._values['multiple']._values['level2']._values['level3']._values['keyA'])
-        self.assertEqual(STUB.keyValue_forObject_key_(1, o, u"multiple.level2.level3.keyB"),
+        self.assertEqual(STUB.keyValue_forObject_key_(1, o, b"multiple.level2.level3.keyB".decode('ascii')),
             o._values['multiple']._values['level2']._values['level3']._values['keyB'])
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, u"multiple.level2.nokey")
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 1, o, b"multiple.level2.nokey".decode('ascii'))
 
     @max_os_level('10.5')
     def testValuesForKeys(self):
         o = KeyValueClass1Explicit.alloc().init()
 
-        self.assertEqual(STUB.keyValue_forObject_key_(3, o, [u"key1", u"key2", u"key3", u"key4"]), { u"key1":1, u"key2":2, u"key3": 3, u"key4": u"4"} )
+        self.assertEqual(STUB.keyValue_forObject_key_(3, o, [b"key1".decode('ascii'), b"key2".decode('ascii'), b"key3".decode('ascii'), b"key4".decode('ascii')]), { b"key1".decode('ascii'):1, b"key2".decode('ascii'):2, b"key3".decode('ascii'): 3, b"key4".decode('ascii'): b"4".decode('ascii')} )
 
-        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 3, o, [u"key1", u"key3", u"nosuchkey"])
+        self.assertRaises(KeyError, STUB.keyValue_forObject_key_, 3, o, [b"key1".decode('ascii'), b"key3".decode('ascii'), b"nosuchkey".decode('ascii')])
 
     def testTakeValueForKey(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values['key3'], 3)
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key3', u'drie')
-        self.assertEqual(o._values['key3'], u"drie")
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+        self.assertEqual(o._values['key3'], b"drie".decode('ascii'))
 
-        self.assertEqual(o._values['key4'], u"4")
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key4', u'vier')
-        self.assert_(not hasattr(o, u"key4"))
-        self.assertEqual(o._values['key4'], u"viervierviervier")
+        self.assertEqual(o._values['key4'], b"4".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
+        self.assert_(not hasattr(o, b"key4".decode('ascii')))
+        self.assertEqual(o._values['key4'], b"viervierviervier".decode('ascii'))
 
         o._values['key5'] = 1
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key5', u'V')
-        self.assertEqual(o._values['key5'], u"VVVVV")
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
+        self.assertEqual(o._values['key5'], b"VVVVV".decode('ascii'))
 
-        self.assert_(not hasattr(o, u'key9'))
+        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
         self.assert_('key9' not in o._values)
-        STUB.setKeyValue_forObject_key_value_(0, o, u'key9', u'IX')
-        self.assert_(not hasattr(o, u'key9'))
+        STUB.setKeyValue_forObject_key_value_(0, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
+        self.assert_(not hasattr(o, b'key9'.decode('ascii')))
         self.assert_('key9' in o._values)
-        self.assertEqual(o._values['key9'], u'IX')
+        self.assertEqual(o._values['key9'], b'IX'.decode('ascii'))
 
     def testTakeStoredValueForKey(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values['key3'], 3)
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key3', u'drie')
-        self.assertEqual(o._values['key3'], u"drie")
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key3'.decode('ascii'), b'drie'.decode('ascii'))
+        self.assertEqual(o._values['key3'], b"drie".decode('ascii'))
 
-        self.assertEqual(o._values['key4'], u"4")
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key4', u'vier')
-        self.assertEqual(o._values['key4'], u"viervierviervier")
+        self.assertEqual(o._values['key4'], b"4".decode('ascii'))
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key4'.decode('ascii'), b'vier'.decode('ascii'))
+        self.assertEqual(o._values['key4'], b"viervierviervier".decode('ascii'))
 
         o.key5 = 1
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key5', u'V')
-        self.assertEqual(o._values['key5'], u"VVVVV")
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key5'.decode('ascii'), b'V'.decode('ascii'))
+        self.assertEqual(o._values['key5'], b"VVVVV".decode('ascii'))
 
         self.assert_('key9' not in o._values)
-        STUB.setKeyValue_forObject_key_value_(2, o, u'key9', u'IX')
+        STUB.setKeyValue_forObject_key_value_(2, o, b'key9'.decode('ascii'), b'IX'.decode('ascii'))
         self.assert_('key9' in o._values)
-        self.assertEqual(o._values['key9'], u'IX')
+        self.assertEqual(o._values['key9'], b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
     def testTakeValuesFromDictionary(self):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values['key3'], 3)
-        self.assertEqual(o._values['key4'], u"4")
+        self.assertEqual(o._values['key4'], b"4".decode('ascii'))
         o._values['key5'] = 1
         self.assert_('key9' not in o._values)
 
         STUB.setKeyValue_forObject_key_value_(3, o, None,
             {
-                u'key3': u'drie',
-                u'key4': u'vier',
-                u'key5': u'V',
-                u'key9': u'IX',
+                b'key3'.decode('ascii'): b'drie'.decode('ascii'),
+                b'key4'.decode('ascii'): b'vier'.decode('ascii'),
+                b'key5'.decode('ascii'): b'V'.decode('ascii'),
+                b'key9'.decode('ascii'): b'IX'.decode('ascii'),
             })
 
-        self.assertEqual(o._values['key3'], u"drie")
-        self.assertEqual(o._values['key4'], u"viervierviervier")
-        self.assertEqual(o._values['key5'], u"VVVVV")
-        self.assertEqual(o._values['key9'], u'IX')
+        self.assertEqual(o._values['key3'], b"drie".decode('ascii'))
+        self.assertEqual(o._values['key4'], b"viervierviervier".decode('ascii'))
+        self.assertEqual(o._values['key5'], b"VVVVV".decode('ascii'))
+        self.assertEqual(o._values['key9'], b'IX'.decode('ascii'))
 
     @max_os_level('10.5')
     def testTakeValueForKeyPath(self):
         o = KeyValueClass1Explicit.alloc().init()
         o.addMultiple()
 
-        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyA'], u"hello")
-        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyB'], u"world")
+        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyA'], b"hello".decode('ascii'))
+        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyB'], b"world".decode('ascii'))
 
-        STUB.setKeyValue_forObject_key_value_(1, o, u"multiple.level2.level3.keyA", u"KeyAValue")
-        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyA'], u"KeyAValue")
+        STUB.setKeyValue_forObject_key_value_(1, o, b"multiple.level2.level3.keyA".decode('ascii'), b"KeyAValue".decode('ascii'))
+        self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyA'], b"KeyAValue".decode('ascii'))
 
-        STUB.setKeyValue_forObject_key_value_(1, o, u"multiple.level2.level3.keyB", 9.999)
+        STUB.setKeyValue_forObject_key_value_(1, o, b"multiple.level2.level3.keyB".decode('ascii'), 9.999)
         self.assertEqual(o._values['multiple']._values['level2']._values['level3']._values['keyB'], 9.999)
 
 
@@ -522,18 +522,18 @@ class TestBaseExceptions (TestCase):
     def testValueForKey(self):
         o = NSObject.alloc().init()
 
-        self.assertRaises(KeyError, o.valueForKey_, u"unknownKey")
+        self.assertRaises(KeyError, o.valueForKey_, b"unknownKey".decode('ascii'))
 
     def testStoredValueForKey(self):
         o = NSObject.alloc().init()
 
-        self.assertRaises(KeyError, o.storedValueForKey_, u"unknownKey")
+        self.assertRaises(KeyError, o.storedValueForKey_, b"unknownKey".decode('ascii'))
 
     def testTakeStoredValue(self):
         o = NSObject.alloc().init()
 
         self.assertRaises(KeyError,
-            o.takeStoredValue_forKey_, u"value", u"unknownKey")
+            o.takeStoredValue_forKey_, b"value".decode('ascii'), b"unknownKey".decode('ascii'))
 
 
 

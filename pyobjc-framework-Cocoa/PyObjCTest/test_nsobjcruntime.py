@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 import sys
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestNSObjCRuntime (TestCase):
     def testConstants(self):
@@ -64,7 +75,7 @@ class TestNSObjCRuntime (TestCase):
         self.assertIsInstance(NSIntegerMax, (int, long))
         self.assertIsInstance(NSIntegerMin, (int, long))
         self.assertIsInstance(NSUIntegerMax, (int, long))
-        if sys.maxint > 2 ** 32:
+        if sys.maxsize > 2 ** 32:
             self.assertEqual(NSIntegerMax, 2 ** 63 -1)
             self.assertEqual(NSIntegerMin, -(2 ** 63))
             self.assertEqual(NSUIntegerMax, 2**64-1)
@@ -105,7 +116,7 @@ class TestNSObjCRuntime (TestCase):
         self.assertIsInstance(v, unicode)
         self.assertEqual(v, 'description')
 
-        v = NSSelectorFromString(u"description")
+        v = NSSelectorFromString(b"description".decode('ascii'))
         self.assertIsInstance(v, str)
         self.assertEqual(v, 'description')
 

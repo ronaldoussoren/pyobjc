@@ -3,6 +3,12 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 import Foundation
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestNSInvocation (TestCase):
     def test_dummy(self):
         value = NSMutableArray.arrayWithArray_([1, 2, 3])
@@ -19,9 +25,9 @@ class TestNSInvocation (TestCase):
         invocation = NSInvocation.invocationWithMethodSignature_(value.methodSignatureForSelector_('addObject:'))
         invocation.setSelector_('addObject:')
         invocation.setTarget_(value)
-        invocation.setArgument_atIndex_(u"hello", 2)
+        invocation.setArgument_atIndex_(b"hello".decode('ascii'), 2)
         v = invocation.getArgument_atIndex_(None, 2)
-        self.assertEqual(v, u"hello")
+        self.assertEqual(v, b"hello".decode('ascii'))
         invocation.invoke()
 
         self.assertEqual(value.count(), 4)

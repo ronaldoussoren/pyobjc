@@ -54,6 +54,9 @@
      },
      "CGDeviceByteColor": {
          "fieldnames": ["red", "green", "blue" ]
+     },
+     "CGDataProviderDirectCallbacks": {
+         "ignore": true
      }
   },
   "cftypes": {

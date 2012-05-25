@@ -3,22 +3,27 @@ import objc
 
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSCell(TestCase):
     def testUnicode(self):
-        u = u'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'
+        u = b'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'.decode('latin1')
         cell = NSCell.alloc().initTextCell_(u)
         cell.setStringValue_(u)
         self.assertEqual(cell.stringValue(), u)
 
     def testInt(self):
         i = 17
-        cell = NSCell.alloc().initTextCell_(u"")
+        cell = NSCell.alloc().initTextCell_(b"".decode('ascii'))
         cell.setIntValue_(i)
         self.assertEqual(cell.intValue(), i)
 
     def testFloat(self):
         f = 3.125
-        cell = NSCell.alloc().initTextCell_(u"")
+        cell = NSCell.alloc().initTextCell_(b"".decode('ascii'))
         cell.setFloatValue_(f)
         self.assertEqual(cell.floatValue(), f)
 

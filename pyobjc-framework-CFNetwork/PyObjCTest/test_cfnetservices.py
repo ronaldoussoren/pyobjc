@@ -8,6 +8,16 @@ if sys.version_info[0] != 2:
         return value.encode('latin1')
 
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCFNetServices (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFNetServiceRef)
@@ -40,7 +50,7 @@ class TestCFNetServices (TestCase):
         self.assertIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(CFNetServiceCreate)
-        serv = CFNetServiceCreate(None, u"pyobjc.local", u"ssh", u"pyobjc.test.local", 9999)
+        serv = CFNetServiceCreate(None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999)
         self.assertIsInstance(serv, CFNetServiceRef)
 
         self.assertResultIsCFRetained(CFNetServiceCreateCopy)

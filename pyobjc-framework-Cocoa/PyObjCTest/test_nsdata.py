@@ -112,7 +112,7 @@ class TestNSData(TestCase):
 
         try:
             bytesValue[3] = b'\xAE'
-        except TypeError, r:
+        except TypeError as r:
             if str(r).find('buffer is read-only') == 0:
                 pass
             elif str(r).find('cannot modify read-only memory') == 0:
@@ -130,7 +130,7 @@ class TestNSData(TestCase):
 
         try:
             mutableBytes[2:10] = otherBytes[1:5].tostring()
-        except (TypeError, ValueError), r:
+        except (TypeError, ValueError) as r:
             if str(r).find('right operand length must match slice length') == 0:
                 pass
             elif 'cannot modify size of memoryview object' in str(r):
@@ -142,7 +142,7 @@ class TestNSData(TestCase):
         # Test data of different lengths.
         #
         # Data of different lengths may be stored in different subclasses within the class cluster.
-        testFactor = range(1, 64) + [ 1000, 10000, 1000000]
+        testFactor = list(range(1, 64)) + [ 1000, 10000, 1000000]
         for aFactor in testFactor:
             bigRawBytes = b"1234567890" * aFactor
 
@@ -179,6 +179,7 @@ class TestNSData(TestCase):
                 url, 0, None)
         self.assertIs(b2, None)
         self.assertIsInstance(err, NSError)
+
 class MyData (NSData):
     def dataWithBytes_length_(self, bytes, length):
         return ("data", bytes, length)
@@ -224,7 +225,7 @@ class MyData5(NSData):
         return self
 
     def bytes(self):
-        raise ValueError, "No bytes available"
+        raise ValueError("No bytes available")
 
     def length(self):
         return -1
@@ -271,7 +272,7 @@ class TestBuffer(TestCase):
         a = array.array('b', b'foo')
         m = NSMutableData.dataWithData_(a)
         self.assertEqual(a.tostring(), m[:])
-        self.assert_(objc.repythonify(a) is a)
+        self.assertTrue(objc.repythonify(a) is a)
         a.fromstring(m)
         self.assertEqual(a.tostring(), b'foofoo')
         m.appendData_(a)
@@ -286,7 +287,7 @@ class TestBuffer(TestCase):
             b = buffer('foo')
         m = NSMutableData.dataWithData_(b)
         self.assertEqual(b[:], m[:])
-        self.assert_(objc.repythonify(b) is b)
+        self.assertTrue(objc.repythonify(b) is b)
         self.assertEqual(buffer(m)[:], m[:])
 
 

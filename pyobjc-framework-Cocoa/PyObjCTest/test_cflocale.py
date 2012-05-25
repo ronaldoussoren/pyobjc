@@ -1,6 +1,17 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestLocale (TestCase):
     def testTypes(self):
@@ -55,7 +66,7 @@ class TestLocale (TestCase):
         v = CFLocaleCopyDisplayNameForPropertyValue(locale, kCFLocaleIdentifier, "nl_NL")
         if v is not None:
             self.assertIsInstance(v, unicode)
-        self.assertEqual(v , u'Nederlands (Nederland)')
+        self.assertEqual(v , b'Nederlands (Nederland)'.decode('ascii'))
 
     def testConstants(self):
         self.assertIsInstance( kCFLocaleIdentifier, unicode)

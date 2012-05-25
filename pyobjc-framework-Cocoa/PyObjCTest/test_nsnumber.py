@@ -5,9 +5,15 @@ import sys
 import operator
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
+
 from Foundation import *
 
-PLIST=u"""\
+PLIST=b"""\
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -18,7 +24,7 @@ PLIST=u"""\
 \t<integer>1</integer>
 </dict>
 </plist>
-"""
+""".decode('latin1')
 
 def stripDocType(val):
     """
@@ -26,8 +32,8 @@ def stripDocType(val):
     on MacOS X 10.1 are slightly different from the ones on MacOS X 10.2 (
     different DOCTYPE and version).
     """
-    r =  re.sub(u'<!DOCTYPE [^>]*>', u'<!DOCTYPE>', val)
-    return r.replace(u'version="0.9"', u'version="1.0"')
+    r =  re.sub(b'<!DOCTYPE [^>]*>'.decode('ascii'), b'<!DOCTYPE>'.decode('ascii'), val)
+    return r.replace(b'version="0.9"'.decode('ascii'), b'version="1.0"'.decode('ascii'))
 
 
 class TestNSNumber( TestCase ):
@@ -82,8 +88,8 @@ class TestNSNumber( TestCase ):
         Xs = list(range(10, 40, 3))
         Ys = list(range(-12, 44, 5))
 
-        self.assert_(0 not in Ys)
-        self.assert_(0 not in Xs)
+        self.assertTrue(0 not in Ys)
+        self.assertTrue(0 not in Xs)
 
         for x in Xs:
             for y in Ys:
@@ -125,38 +131,38 @@ class TestNSNumber( TestCase ):
         #
 
         n = NSNumber.numberWithInt_(10)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithUnsignedInt_(10)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithLong_(10)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithUnsignedLong_(10)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
-        n = NSNumber.numberWithLongLong_(2**32 * 1024L)
-        self.assertEqual(n, 2**32 * 1024L)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        n = NSNumber.numberWithLongLong_(2**32 * 1024)
+        self.assertEqual(n, 2**32 * 1024)
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithUnsignedLongLong_(2**32 + 100)
         self.assertEqual(n, 2**32 + 100)
-        self.assert_(isinstance(n, (int, long)))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, (int, long))
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithFloat_(10)
-        self.assert_(isinstance(n, float))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, float)
+        self.assertIsInstance(n, NSNumber)
 
         n = NSNumber.numberWithDouble_(10)
-        self.assert_(isinstance(n, float))
-        self.assert_(isinstance(n, NSNumber))
+        self.assertIsInstance(n, float)
+        self.assertIsInstance(n, NSNumber)
 
 
 if objc.platform == 'MACOSX':
@@ -171,13 +177,13 @@ if objc.platform == 'MACOSX':
             d = NSMutableDictionary.dictionary()
 
             # Python 2.3 only...
-            d[u'plain'] = 1
-            d[u'bool'] = objc.YES
+            d[b'plain'.decode('ascii')] = 1
+            d[b'bool'.decode('ascii')] = objc.YES
 
             self.assertEqual(d.writeToFile_atomically_(
-                u"/tmp/pyobjctest.plist", 0), 1)
+                b"/tmp/pyobjctest.plist".decode('ascii'), 0), 1)
 
-            fd = open(u'/tmp/pyobjctest.plist', 'rb')
+            fd = open(b'/tmp/pyobjctest.plist'.decode('ascii'), 'rb')
             data = fd.read().decode('utf8')
             fd.close()
 
@@ -186,13 +192,13 @@ if objc.platform == 'MACOSX':
         def testPropertyList2(self):
             d = NSMutableDictionary.dictionary()
 
-            d[u'plain'] = NSNumber.numberWithLong_(1)
-            d[u'bool'] = NSNumber.numberWithBool_(1)
+            d[b'plain'.decode('ascii')] = NSNumber.numberWithLong_(1)
+            d[b'bool'.decode('ascii')] = NSNumber.numberWithBool_(1)
 
             self.assertEqual(d.writeToFile_atomically_(
-                u"/tmp/pyobjctest.plist", 0), 1)
+                b"/tmp/pyobjctest.plist".decode('ascii'), 0), 1)
 
-            fd = open(u'/tmp/pyobjctest.plist', 'rb')
+            fd = open(b'/tmp/pyobjctest.plist'.decode('ascii'), 'rb')
             data = fd.read().decode('utf8')
             fd.close()
 
@@ -200,22 +206,29 @@ if objc.platform == 'MACOSX':
 
 class TestDecimalNumber (TestCase):
     def testProxy (self):
-        one = NSDecimalNumber.decimalNumberWithString_(u"1.00")
-        self.assert_(isinstance(one, NSDecimalNumber))
+        one = NSDecimalNumber.decimalNumberWithString_(b"1.00".decode('ascii'))
+        self.assertIsInstance(one, NSDecimalNumber)
 
-        two = NSDecimalNumber.decimalNumberWithString_(u"2.00")
-        self.assert_(isinstance(two, NSDecimalNumber))
+        two = NSDecimalNumber.decimalNumberWithString_(b"2.00".decode('ascii'))
+        self.assertIsInstance(two, NSDecimalNumber)
 
-        three = NSDecimalNumber.decimalNumberWithString_(u"3.00")
-        self.assert_(isinstance(three, NSDecimalNumber))
+        three = NSDecimalNumber.decimalNumberWithString_(b"3.00".decode('ascii'))
+        self.assertIsInstance(three, NSDecimalNumber)
 
-        six = NSDecimalNumber.decimalNumberWithString_(u"6.00")
-        self.assert_(isinstance(six, NSDecimalNumber))
+        six = NSDecimalNumber.decimalNumberWithString_(b"6.00".decode('ascii'))
+        self.assertIsInstance(six, NSDecimalNumber)
 
-        one_half = NSDecimalNumber.decimalNumberWithString_(u"0.50")
-        self.assert_(isinstance(one_half, NSDecimalNumber))
+        one_half = NSDecimalNumber.decimalNumberWithString_(b"0.50".decode('ascii'))
+        self.assertIsInstance(one_half, NSDecimalNumber)
 
         
+        print (one, two, three)
+        print (type(one), type(two))
+        print (one.decimalValue())
+        print (two.decimalValue())
+        print (two.decimalValue() + one.decimalValue())
+        print (NSDecimalNumber.decimalNumberWithDecimal_(two.decimalValue() + one.decimalValue()))
+        print (one, two, three)
         self.assertEqual(one + two, three)
         self.assertEqual(three - one, two)
         self.assertEqual(three * two, six)

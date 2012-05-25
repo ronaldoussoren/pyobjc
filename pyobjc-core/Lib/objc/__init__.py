@@ -55,8 +55,11 @@ def _resolve_name(name):
 
     module, name = name.rsplit('.', 1)
     m = __import__(module)
+    print (module, module.split('.')[1:])
     for k in module.split('.')[1:]:
+        print (k)
         m = getattr(m, k)
 
+    print (m, name)
     return getattr(m, name)
 

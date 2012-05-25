@@ -10,6 +10,15 @@ FIXME:
 import objc 
 import sys
 
+if sys.version_info[0] == 2:
+    exec("""\
+def _raise(exc_type, exc_value, exc_trace):
+    raise exc_type, exc_value, exc_trace
+""")
+else:
+    def _raise(exc_type, exc_value, exc_trace):
+        raise exc_type(exc_value).with_traceback(exc_trace)
+
 NSObject = objc.lookUpClass('NSObject')
 
 class NSObject (objc.Category(NSObject)):
@@ -140,7 +149,7 @@ class NSObject (objc.Category(NSObject)):
             return result
         else:
             exc_type, exc_value, exc_trace = result
-            raise exc_type, exc_value, exc_trace
+            _raise(exc_type, exc_value, exc_trace)
 
     @objc.namedSelector(b"pyobjc_performSelectorOnMainThread:withObject:")
     def pyobjc_performSelectorOnMainThread_withObject_(
@@ -155,7 +164,7 @@ class NSObject (objc.Category(NSObject)):
             return result
         else:
             exc_type, exc_value, exc_trace = result
-            raise exc_type, exc_value, exc_trace
+            _raise(exc_type, exc_value, exc_trace)
 
     if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
         # These methods require Leopard, don't define them if the 
@@ -174,7 +183,7 @@ class NSObject (objc.Category(NSObject)):
                 return result
             else:
                 exc_type, exc_value, exc_trace = result
-                raise exc_type, exc_value, exc_trace
+                _raise(exc_type, exc_value, exc_trace)
 
         @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:")
         def pyobjc_performSelector_onThread_withObject_(
@@ -189,7 +198,7 @@ class NSObject (objc.Category(NSObject)):
                 return result
             else:
                 exc_type, exc_value, exc_trace = result
-                raise exc_type, exc_value, exc_trace
+                _raise(exc_type, exc_value, exc_trace)
 
 
 del NSObject

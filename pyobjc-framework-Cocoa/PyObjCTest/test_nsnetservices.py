@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSNetServicesHelper (NSObject):
     def netServiceBrowser_didFindDomain_moreComing_(self, a, b, c): pass
     def netServiceBrowser_didFindService_moreComing_(self, a, b, c): pass

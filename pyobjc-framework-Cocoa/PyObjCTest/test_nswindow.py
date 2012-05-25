@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
     from Quartz.CoreGraphics import *
     have_Quartz = 1
 except ImportError:

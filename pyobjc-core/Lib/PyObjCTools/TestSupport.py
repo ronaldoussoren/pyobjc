@@ -28,7 +28,7 @@ _leaksVerbose = True
 
 def _typemap(tp):
     if tp is None: return None
-    return tp.replace('_NSRect', 'CGRect').replace('_NSPoint', 'CGPoint').replace('_NSSize', 'CGSize')
+    return tp.replace(b'_NSRect', b'CGRect').replace(b'_NSPoint', b'CGPoint').replace(b'_NSSize', b'CGSize')
 
 def sdkForPython(_cache=[]):
     """
@@ -289,6 +289,10 @@ class TestCase (_unittest.TestCase):
 
     This also adds a number of useful assertion methods
     """
+
+    if not hasattr(_unittest.TestCase, 'assertItemsEqual'):
+        def assertItemsEqual(self, seq1, seq2, message=None):
+            self.assertEqual(set(seq1), set(seq2), message)
 
     def assertGreaterThan(self, value, test, message = None):
         if not (value > test):

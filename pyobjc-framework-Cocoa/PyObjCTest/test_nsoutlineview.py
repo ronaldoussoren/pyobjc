@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSOutlineViewHelper (NSObject):
     def outlineView_sizeToFitWidthOfColumn_(self, v, c): return 1
     def outlineView_shouldReorderColumn_toColumn_(self, v, c1, c2): return 1

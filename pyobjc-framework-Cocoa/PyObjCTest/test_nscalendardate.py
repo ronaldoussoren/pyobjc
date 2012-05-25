@@ -4,7 +4,7 @@ from Foundation import *
 class TestNSCalendarDate (TestCase):
     def testOutput(self):
         obj = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
-                2008, 12, 05, 14, 15, 16, NSTimeZone.systemTimeZone())
+                2008, 12, 5, 14, 15, 16, NSTimeZone.systemTimeZone())
         obj2 = NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
                 2007, 9, 8, 19, 12, 10, NSTimeZone.systemTimeZone())
 

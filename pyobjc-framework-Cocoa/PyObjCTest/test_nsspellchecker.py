@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSSpellChecker (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSSpellChecker.sharedSpellCheckerExists)

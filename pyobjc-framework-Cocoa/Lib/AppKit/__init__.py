@@ -11,6 +11,7 @@ import Foundation
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
 
+
 sys.modules['AppKit'] = mod = objc.ObjCLazyModule('AppKit',
         "com.apple.AppKit", objc.pathForFramework("/System/Library/Frameworks/AppKit.framework"),
         _metadata.__dict__, _inline_list_, {
@@ -31,6 +32,10 @@ for nm in dir(AppKit._AppKit):
     setattr(mod, nm, getattr(AppKit._AppKit, nm))
 
 # Fix types for a number of character constants
+try:
+    unichr
+except NameError:
+    unichr = chr
 mod.NSEnterCharacter = unichr(mod.NSEnterCharacter)
 mod.NSBackspaceCharacter = unichr(mod.NSBackspaceCharacter)
 mod.NSTabCharacter = unichr(mod.NSTabCharacter)
@@ -125,5 +130,5 @@ for nm in [
 try:
     mod.NSImageNameApplicationIcon
 except AttributeError:
-    mod.NSImageNameApplicationIcon = u"NSApplicationIcon"
+    mod.NSImageNameApplicationIcon = "NSApplicationIcon"
 

@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestDateFormatter (TestCase):
     def testTypeID(self):
         self.assertIsInstance(CFDateGetTypeID(), (int, long))
@@ -95,10 +106,10 @@ class TestDateFormatter (TestCase):
         self.assertResultIsCFRetained(CFDateFormatterCopyProperty)
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterCalendarName)
         self.assertIsInstance(v, unicode)
-        CFDateFormatterSetProperty(fmt, kCFDateFormatterCalendarName, u"gregorian")
+        CFDateFormatterSetProperty(fmt, kCFDateFormatterCalendarName, b"gregorian".decode('latin1'))
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterCalendarName)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v , u"gregorian")
+        self.assertEqual(v , b"gregorian".decode('latin1'))
         v = CFDateFormatterCopyProperty(fmt, kCFDateFormatterIsLenient)
         self.assertTrue(v is True or v is False)
         CFDateFormatterSetProperty(fmt, kCFDateFormatterIsLenient, True)

@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 class TestNSKeyedArchiver (TestCase):
     def testConstants(self):
@@ -10,7 +15,7 @@ class TestNSKeyedArchiver (TestCase):
 
     def testOutput(self):
         o = NSKeyedUnarchiver.alloc().initForReadingWithData_(
-                NSKeyedArchiver.archivedDataWithRootObject_(u"foobar"))
+                NSKeyedArchiver.archivedDataWithRootObject_(b"foobar".decode('ascii')))
         self.assertIsInstance(o, NSKeyedUnarchiver)
         m = o.decodeBytesForKey_returnedLength_.__metadata__()
         self.assertEqual(m['retval']['type'], b'^v')

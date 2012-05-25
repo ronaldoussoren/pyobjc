@@ -2,6 +2,12 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestNSCharacterSet (TestCase):
     def testConstants(self):
         self.assertEqual( NSOpenStepUnicodeReservedBase, 0xF400 )

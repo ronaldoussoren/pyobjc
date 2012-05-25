@@ -1,6 +1,17 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestNumberFormatter (TestCase):
     def testTypes(self):
@@ -24,20 +35,20 @@ class TestNumberFormatter (TestCase):
         self.assertEqual(v2 , v[:-2])
         v = CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v , u'42.5')
-        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, u"42.0a", (0, 5), 0)
+        self.assertEqual(v , b'42.5'.decode('ascii'))
+        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), 0)
         self.assertEqual(num , 42.0)
         self.assertEqual(rng , (0, 4))
-        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, u"42.0a", (0, 5), kCFNumberFormatterParseIntegersOnly)
+        num, rng = CFNumberFormatterCreateNumberFromString(None, fmt, b"42.0a".decode('ascii'), (0, 5), kCFNumberFormatterParseIntegersOnly)
         self.assertEqual(num , 42)
         self.assertEqual(rng , (0, 2))
         v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
         self.assertIsInstance(v, unicode)
-        CFNumberFormatterSetProperty(fmt, kCFNumberFormatterCurrencyCode, u"HFL")
+        CFNumberFormatterSetProperty(fmt, kCFNumberFormatterCurrencyCode, b"HFL".decode('ascii'))
 
         self.assertResultIsCFRetained(CFNumberFormatterCopyProperty)
         v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
-        self.assertEqual(v , u"HFL")
+        self.assertEqual(v , b"HFL".decode('ascii'))
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 1)
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 2)
         ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode("EUR", None, None)

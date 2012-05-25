@@ -3,6 +3,17 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 import objc
 
+try:
+    long
+except NameError:
+    long = int
+
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSViewHelper (NSObject):
     def view_stringForToolTip_point_userData_(self, a, b, c, d): return 1
 

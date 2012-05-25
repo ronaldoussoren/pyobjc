@@ -4,6 +4,17 @@ from CoreFoundation import *
 from Foundation import NSDictionary, NSString, NSMutableDictionary
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestTimeZone (TestCase):
     def testTypes(self):
@@ -47,14 +58,14 @@ class TestTimeZone (TestCase):
         # rewritten als plan Objective-C.
         map = CFTimeZoneCopyAbbreviationDictionary()
         newmap = map.mutableCopy()
-        newmap[u'AAA'] = u'Europe/Amsterdam'
+        newmap[b'AAA'.decode('ascii')] = b'Europe/Amsterdam'.decode('ascii')
 
         v = CFTimeZoneSetAbbreviationDictionary(newmap)
         self.assertIs(v, None)
         try:
             map2 = CFTimeZoneCopyAbbreviationDictionary()
             self.assertIsInstance(map2, CFDictionaryRef)
-            self.assertEqual(map2[u'AAA'] , u'Europe/Amsterdam' )
+            self.assertEqual(map2[b'AAA'.decode('ascii')] , b'Europe/Amsterdam'.decode('ascii') )
         finally:
             CFTimeZoneSetAbbreviationDictionary(map)
 
@@ -62,7 +73,7 @@ class TestTimeZone (TestCase):
         data = open('/usr/share/zoneinfo/posixrules', 'rb').read()
         if sys.version_info[0] == 2:
             data = buffer(data)
-        zone = CFTimeZoneCreate(None, u"Europe/Amsterdam", data)
+        zone = CFTimeZoneCreate(None, b"Europe/Amsterdam".decode('ascii'), data)
         self.assertIsInstance(zone, CFTimeZoneRef)
         self.assertResultIsCFRetained(CFTimeZoneCreateWithTimeIntervalFromGMT)
         zone = CFTimeZoneCreateWithTimeIntervalFromGMT(None, 3600)
@@ -73,7 +84,7 @@ class TestTimeZone (TestCase):
         zone = CFTimeZoneCreateWithName(None, "Europe/Amsterdam", True)
         self.assertIsInstance(zone, CFTimeZoneRef)
         name = CFTimeZoneGetName(zone)
-        self.assertEqual(name, u"Europe/Amsterdam")
+        self.assertEqual(name, b"Europe/Amsterdam".decode('ascii'))
 
         data = CFTimeZoneGetData(zone)
         self.assertIsInstance(data, CFDataRef)

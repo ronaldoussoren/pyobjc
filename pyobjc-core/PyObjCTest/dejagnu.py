@@ -131,6 +131,7 @@ class DgTestCase (unittest.TestCase):
             CFLAGS=re.sub('\s+-isysroot\s+\S+\s+', ' ', CFLAGS)
 
         CC=get_config_var('CC')
+        CC += " -v"
 
         commandline='MACOSX_DEPLOYMENT_TARGET=%s %s %s -g -DMACOSX -Ilibffi-src/include -Ilibffi-src/powerpc -o /tmp/test.bin %s %s %s 2>&1'%(
                 get_config_var('MACOSX_DEPLOYMENT_TARGET'),

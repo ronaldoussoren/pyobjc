@@ -1,6 +1,11 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSDate (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSDate.isEqualToDate_)

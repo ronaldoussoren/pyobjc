@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSLocale (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSCurrentLocaleDidChangeNotification, unicode)

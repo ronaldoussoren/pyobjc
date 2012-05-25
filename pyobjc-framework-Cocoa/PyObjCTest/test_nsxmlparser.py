@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSXMLParser (TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLParserInternalError, 1)

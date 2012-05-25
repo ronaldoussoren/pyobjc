@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSTableViewHelper (NSObject):
     def numberOfRowsInTableView_(self, tv): return 1
     def tableView_objectValueForTableColumn_row_(self, tv, c, r): return 1

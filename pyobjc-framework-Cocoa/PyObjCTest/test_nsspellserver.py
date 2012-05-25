@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSSpellServerHelper (NSObject):
     def spellServer_findMisspelledWordInString_language_wordCount_countOnly_(self, a, b, c, d, e): return 1
     def spellServer_suggestGuessesForWord_inLanguage_(self, a, b, c): return 1

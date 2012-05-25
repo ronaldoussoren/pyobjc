@@ -1,6 +1,16 @@
 from PyObjCTools.TestSupport import *
 from CFNetwork import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 class TestCFSocketStream (TestCase):
     @min_os_level('10.7')
@@ -86,7 +96,7 @@ class TestCFSocketStream (TestCase):
         self.assertArgIsOut(CFStreamCreatePairWithSocketToCFHost, 3)
         self.assertArgIsOut(CFStreamCreatePairWithSocketToCFHost, 4)
 
-        host = CFHostCreateWithName(None, u"connect.apple.com")
+        host = CFHostCreateWithName(None, "connect.apple.com")
         rd, wr = CFStreamCreatePairWithSocketToCFHost(None, host, 443, None, None)
         self.assertIsInstance(rd, CFReadStreamRef)
         self.assertIsInstance(wr, CFWriteStreamRef)
@@ -99,7 +109,7 @@ class TestCFSocketStream (TestCase):
         self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 3)
         self.assertArgIsOut(CFStreamCreatePairWithSocketToNetService, 2)
         self.assertArgIsOut(CFStreamCreatePairWithSocketToNetService, 3)
-        service = CFNetServiceCreate(None, u"pyobjc.local", u"ssh", u"pyobjc.test.local", 9999)
+        service = CFNetServiceCreate(None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999)
         rd, wr = CFStreamCreatePairWithSocketToNetService(None, service, None, None)
         self.assertIsInstance(rd, CFReadStreamRef)
         self.assertIsInstance(wr, CFWriteStreamRef)

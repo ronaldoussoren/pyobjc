@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSPrintInfo (TestCase):
     def testConstants(self):
         self.assertEqual(NSPortraitOrientation, 0)

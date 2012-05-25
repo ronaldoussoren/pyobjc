@@ -1,6 +1,12 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestCFBag (TestCase):
 
     def testCreation(self):
@@ -46,47 +52,47 @@ class TestCFBag (TestCase):
         self.assertIsNot(bag3, bag )
 
     def testInspect(self):
-        bag = CFBagCreate(None, [u"Hello", 42, u"World", 42, u"a", u"a", u"a"], 7)
+        bag = CFBagCreate(None, [b"Hello".decode('ascii'), 42, b"World".decode('ascii'), 42, b"a".decode('ascii'), b"a".decode('ascii'), b"a".decode('ascii')], 7)
         self.assertIsInstance(bag, CFBagRef)
         self.assertEqual(CFBagGetCount(bag) , 7)
-        self.assertEqual(CFBagGetCountOfValue(bag, u"Hello") , 1)
+        self.assertEqual(CFBagGetCountOfValue(bag, b"Hello".decode('ascii')) , 1)
         self.assertEqual(CFBagGetCountOfValue(bag, 42) , 2)
-        self.assertEqual(CFBagGetCountOfValue(bag, u"a") , 3)
-        self.assertTrue(CFBagContainsValue(bag, u"a") )
-        self.assertFalse(CFBagContainsValue(bag, u"b") )
+        self.assertEqual(CFBagGetCountOfValue(bag, b"a".decode('ascii')) , 3)
+        self.assertTrue(CFBagContainsValue(bag, b"a".decode('ascii')) )
+        self.assertFalse(CFBagContainsValue(bag, b"b".decode('ascii')) )
 
-        v = CFBagGetValue(bag, u"b")
+        v = CFBagGetValue(bag, b"b".decode('ascii'))
         self.assertIs(v, None)
-        v = CFBagGetValue(bag, u"a")
-        self.assertEqual(v , u"a")
-        exists, value = CFBagGetValueIfPresent(bag, u"a", None)
+        v = CFBagGetValue(bag, b"a".decode('ascii'))
+        self.assertEqual(v , b"a".decode('ascii'))
+        exists, value = CFBagGetValueIfPresent(bag, b"a".decode('ascii'), None)
         self.assertTrue( exists )
-        self.assertEqual(value , u"a" )
-        exists, value = CFBagGetValueIfPresent(bag, u"b", None)
+        self.assertEqual(value , b"a".decode('ascii') )
+        exists, value = CFBagGetValueIfPresent(bag, b"b".decode('ascii'), None)
         self.assertFalse( exists )
         self.assertIs(value, None )
         values = set(CFBagGetValues(bag))
-        l = set([u"Hello", 42, u"World", 42, u"a", u"a", u"a"])
+        l = set([b"Hello".decode('ascii'), 42, b"World".decode('ascii'), 42, b"a".decode('ascii'), b"a".decode('ascii'), b"a".decode('ascii')])
         self.assertEqual(values , l )
 
     def testMutation(self):
         bag = CFBagCreateMutable(None, 0)
         self.assertEqual(CFBagGetCount(bag) , 0)
-        CFBagAddValue(bag, u"hello")
+        CFBagAddValue(bag, b"hello".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 1)
-        CFBagAddValue(bag, u"hello")
+        CFBagAddValue(bag, b"hello".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 2)
-        CFBagReplaceValue(bag, u"hello")
+        CFBagReplaceValue(bag, b"hello".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 2)
-        CFBagReplaceValue(bag, u"world")
+        CFBagReplaceValue(bag, b"world".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 2)
-        CFBagSetValue(bag, u"world")
+        CFBagSetValue(bag, b"world".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 3)
-        CFBagSetValue(bag, u"world")
+        CFBagSetValue(bag, b"world".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 3)
-        CFBagRemoveValue(bag, u"hello")
+        CFBagRemoveValue(bag, b"hello".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 2)
-        CFBagRemoveValue(bag, u"hello")
+        CFBagRemoveValue(bag, b"hello".decode('ascii'))
         self.assertEqual(CFBagGetCount(bag) , 1)
         CFBagRemoveAllValues(bag)
         self.assertEqual(CFBagGetCount(bag) , 0)

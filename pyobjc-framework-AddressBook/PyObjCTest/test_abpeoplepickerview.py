@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestABPeoplePickerView (TestCase):
     def testConstants(self):
         self.assertEqual(ABNoValueSelection, 0)
@@ -23,8 +28,8 @@ class TestABPeoplePickerView (TestCase):
         self.assertResultIsBOOL(ABPeoplePickerView.allowsMultipleSelection)
         self.assertArgIsBOOL(ABPeoplePickerView.setAllowsMultipleSelection_, 0)
 
-        self.assertArgIsSEL(ABPeoplePickerView.setGroupDoubleAction_, 0, 'v@:@')
-        self.assertArgIsSEL(ABPeoplePickerView.setNameDoubleAction_, 0, 'v@:@')
+        self.assertArgIsSEL(ABPeoplePickerView.setGroupDoubleAction_, 0, b'v@:@')
+        self.assertArgIsSEL(ABPeoplePickerView.setNameDoubleAction_, 0, b'v@:@')
 
 
 

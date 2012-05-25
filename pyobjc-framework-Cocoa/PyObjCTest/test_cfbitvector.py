@@ -1,6 +1,12 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 def byte2bits(val):
     result = []
     for i in range(7, -1, -1):

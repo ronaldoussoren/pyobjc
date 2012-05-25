@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSParagraphStyle (TestCase):
     def testConstants(self):
         self.assertEqual(NSLeftTabStopType, 0)

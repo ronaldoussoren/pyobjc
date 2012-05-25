@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSConnectionHelper (NSObject):
     def makeNewConnection_sender_(self, a, b): return 1
     def connection_shouldMakeNewConnection_(self, a, b): return 1

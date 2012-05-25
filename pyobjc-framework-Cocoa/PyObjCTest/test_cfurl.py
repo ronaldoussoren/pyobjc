@@ -4,6 +4,17 @@ from CoreFoundation import *
 import os
 from Foundation import NSURL
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestURL (TestCase):
     def testTypes(self):
@@ -49,7 +60,7 @@ class TestURL (TestCase):
         self.assertEqual(val, url.replace(b' ', b'%20'))
 
     def testCreateWithString(self):
-        url = u"http://www.omroep.nl/"
+        url = b"http://www.omroep.nl/".decode('ascii')
 
         ref = CFURLCreateWithString(None, url, None)
         self.assertIsInstance(ref, CFURLRef)
@@ -61,7 +72,7 @@ class TestURL (TestCase):
         self.assertIsInstance(ref2, CFURLRef)
 
     def testCreateAbsolute(self):
-        url = u"http://www.omroep.nl/sport/"
+        url = b"http://www.omroep.nl/sport/".decode('ascii')
         baseref = CFURLCreateWithString(None, url, None)
 
         self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, b'n^v')
@@ -70,42 +81,42 @@ class TestURL (TestCase):
         self.assertIsInstance(ref, CFURLRef)
 
         strval =  CFURLGetString(ref)
-        self.assertEqual(strval, u"http://www.omroep.nl/sport/socker")
+        self.assertEqual(strval, b"http://www.omroep.nl/sport/socker".decode('ascii'))
 
         relpath = b"../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True)
         self.assertIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
-        self.assertEqual(strval, u"http://www.omroep.nl/dummy")
+        self.assertEqual(strval, b"http://www.omroep.nl/dummy".decode('ascii'))
 
         relpath = b"../../../dummy"
         ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False)
         self.assertIsInstance(ref, CFURLRef)
         strval =  CFURLGetString(ref)
-        self.assertEqual(strval, u"http://www.omroep.nl/../../dummy")
+        self.assertEqual(strval, b"http://www.omroep.nl/../../dummy".decode('ascii'))
 
 
     def testCopyAbs(self):
         # CFURLCopyAbsoluteURL
-        base = CFURLCreateWithString(None, u"http://www.omroep.nl/", None)
+        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode('ascii'), None)
         self.assertIsInstance(base, CFURLRef)
 
-        ref = CFURLCreateWithString(None, u"/sport", base)
+        ref = CFURLCreateWithString(None, b"/sport".decode('ascii'), base)
         self.assertIsInstance(ref, CFURLRef)
 
-        self.assertEqual(CFURLGetString(ref) , u"/sport" )
+        self.assertEqual(CFURLGetString(ref) , b"/sport".decode('ascii') )
         abs = CFURLCopyAbsoluteURL(ref)
         self.assertIsInstance(abs, CFURLRef)
-        self.assertEqual(CFURLGetString(abs) , u"http://www.omroep.nl/sport" )
+        self.assertEqual(CFURLGetString(abs) , b"http://www.omroep.nl/sport".decode('ascii') )
 
     def testPaths(self):
         url = CFURLCreateWithFileSystemPath(None,
-                u"/tmp/", kCFURLPOSIXPathStyle, True)
+                b"/tmp/".decode('ascii'), kCFURLPOSIXPathStyle, True)
         self.assertIsInstance(url, CFURLRef)
         self.assertTrue(CFURLHasDirectoryPath(url))
 
         url = CFURLCreateWithFileSystemPath(None,
-                u"/etc/hosts", kCFURLPOSIXPathStyle, False)
+                b"/etc/hosts".decode('ascii'), kCFURLPOSIXPathStyle, False)
         self.assertIsInstance(url, CFURLRef)
         self.assertFalse(CFURLHasDirectoryPath(url))
 
@@ -118,19 +129,19 @@ class TestURL (TestCase):
         self.assertIsInstance(url, CFURLRef)
         self.assertRaises((ValueError, TypeError),
             CFURLCreateFromFileSystemRepresentation, None,
-                u"/tmp/", 4, True)
+                b"/tmp/".decode('ascii'), 4, True)
 
         base = CFURLCreateWithFileSystemPath(None,
-                u"/tmp", kCFURLPOSIXPathStyle, True)
+                b"/tmp".decode('ascii'), kCFURLPOSIXPathStyle, True)
         self.assertIsInstance(base, CFURLRef)
 
         self.assertArgIsBOOL(CFURLCreateWithFileSystemPathRelativeToBase, 3)
         url = CFURLCreateWithFileSystemPathRelativeToBase(None,
-                u"filename", kCFURLPOSIXPathStyle, True, base)
+                b"filename".decode('ascii'), kCFURLPOSIXPathStyle, True, base)
         self.assertIsInstance(url, CFURLRef)
 
         strval =  CFURLGetString(url)
-        self.assertEqual(strval, u"filename/")
+        self.assertEqual(strval, b"filename/".decode('ascii'))
 
 
         self.assertArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
@@ -138,42 +149,42 @@ class TestURL (TestCase):
                 b"filename2", 9, False, base)
         self.assertIsInstance(url, CFURLRef)
         strval =  CFURLGetString(url)
-        self.assertEqual(strval, u"filename2")
+        self.assertEqual(strval, b"filename2".decode('ascii'))
 
         ok, strval = CFURLGetFileSystemRepresentation(url, True, None, 100)
         self.assertTrue(ok)
 
         # Unfortunately metadata doesn't allow describing what we actually need
         if b'\0' in strval:
-            strval = strval[:strval.index('\0')]
-        self.assertEqual(strval, u"/tmp/filename2")
+            strval = strval[:strval.index(b'\0')]
+        self.assertEqual(strval, b"/tmp/filename2")
 
     def testParts(self):
-        base = CFURLCreateWithString(None, u"http://www.omroep.nl/", None)
+        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode('ascii'), None)
         self.assertIsInstance(base, CFURLRef)
 
-        ref = CFURLCreateWithString(None, u"/sport", base)
+        ref = CFURLCreateWithString(None, b"/sport".decode('ascii'), base)
         self.assertIsInstance(ref, CFURLRef)
 
         self.assertEqual(CFURLGetBaseURL(base), None)
         self.assertEqual(CFURLGetBaseURL(ref), base)
-        self.assert_(CFURLCanBeDecomposed(ref) is True)
+        self.assertTrue(CFURLCanBeDecomposed(ref) is True)
 
-        self.assertEqual(CFURLCopyScheme(ref), u"http")
-        self.assertEqual(CFURLCopyNetLocation(ref), u"www.omroep.nl")
-        self.assertEqual(CFURLCopyPath(ref), u"/sport")
+        self.assertEqual(CFURLCopyScheme(ref), b"http".decode('ascii'))
+        self.assertEqual(CFURLCopyNetLocation(ref), b"www.omroep.nl".decode('ascii'))
+        self.assertEqual(CFURLCopyPath(ref), b"/sport".decode('ascii'))
 
         path, isDir = CFURLCopyStrictPath(ref, None)
-        self.assertEqual(path, u"sport")
+        self.assertEqual(path, b"sport".decode('ascii'))
         self.assertEqual(isDir, True)
 
         path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
-        self.assertEqual(path, u"/sport")
+        self.assertEqual(path, b"/sport".decode('ascii'))
 
         path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
-        self.assertEqual(path, u"/sport")
+        self.assertEqual(path, b"/sport".decode('ascii'))
         path = CFURLCopyFileSystemPath(ref, kCFURLWindowsPathStyle)
-        self.assertEqual(path, u"\\sport")
+        self.assertEqual(path, b"\\sport".decode('ascii'))
 
         self.assertFalse(CFURLHasDirectoryPath(ref))
 
@@ -186,12 +197,12 @@ class TestURL (TestCase):
         v =  CFURLGetPortNumber(ref)
         self.assertEqual(v, -1)
 
-        ref = CFURLCreateWithString(None, u"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor", None)
+        ref = CFURLCreateWithString(None, b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor".decode('ascii'), None)
         v =  CFURLGetPortNumber(ref)
         self.assertEqual(v, 42)
 
         v = CFURLCopyResourceSpecifier(ref)
-        self.assertEqual(v, u"?qs=1#anchor")
+        self.assertEqual(v, b"?qs=1#anchor".decode('ascii'))
 
         v = CFURLCopyUserName(ref)
         self.assertEqual(v, "ronald")
@@ -226,7 +237,7 @@ class TestURL (TestCase):
         
 
     def testUpdating(self):
-        base = CFURLCreateWithString(None, u"http://www.omroep.nl/sport", None)
+        base = CFURLCreateWithString(None, b"http://www.omroep.nl/sport".decode('ascii'), None)
         self.assertIsInstance(base, CFURLRef)
 
         url = CFURLCreateCopyAppendingPathComponent(None, base, "soccer", True)
@@ -251,7 +262,7 @@ class TestURL (TestCase):
         self.assertEqual(strval, "http://www.omroep.nl/sport")
 
     def testStringEncoding(self):
-        base = u"http://www.omroep.nl/sport%20en%20%73%70el"
+        base = b"http://www.omroep.nl/sport%20en%20%73%70el".decode('ascii')
 
         strval = CFURLCreateStringByReplacingPercentEscapes(None, base, objc.NULL)
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20%73%70el")
@@ -266,13 +277,13 @@ class TestURL (TestCase):
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
         
-        base = u"http://www.omroep.nl/sport en spel"
+        base = b"http://www.omroep.nl/sport en spel".decode('ascii')
         strval = CFURLCreateStringByAddingPercentEscapes(None, base, "", "",
                 kCFStringEncodingISOLatin1)
-        self.assertEqual(strval, u"http://www.omroep.nl/sport%20en%20spel")
+        self.assertEqual(strval, b"http://www.omroep.nl/sport%20en%20spel".decode('ascii'))
         strval = CFURLCreateStringByAddingPercentEscapes(None, base, " ", "s",
                 kCFStringEncodingISOLatin1)
-        self.assertEqual(strval, u"http://www.omroep.nl/%73port en %73pel")
+        self.assertEqual(strval, b"http://www.omroep.nl/%73port en %73pel".decode('ascii'))
 
     def testFSRef(self):
         ref = CFURLCreateWithFileSystemPath(None, os.getcwd(), kCFURLPOSIXPathStyle, True)
@@ -310,7 +321,7 @@ class TestURL (TestCase):
         fp.close()
         try:
             baseURL = CFURLCreateWithFileSystemPath(None,
-                os.path.realpath(u"/tmp/pyobjc.test"), 
+                os.path.realpath(b"/tmp/pyobjc.test".decode('ascii')), 
                 kCFURLPOSIXPathStyle, False)
             self.assertIsInstance(baseURL, CFURLRef)
 
@@ -352,10 +363,10 @@ class TestURL (TestCase):
             self.assertIsInstance(v, bool)
             self.assertEqual(err, None)
 
-            CFURLSetTemporaryResourcePropertyForKey(url, "pyobjc.test", u"hello")
+            CFURLSetTemporaryResourcePropertyForKey(url, "pyobjc.test", b"hello".decode('ascii'))
             ok, v, err = CFURLCopyResourcePropertyForKey(url, "pyobjc.test", None, None)
             self.assertTrue(ok)
-            self.assertEqual(v, u"hello")
+            self.assertEqual(v, b"hello".decode('ascii'))
 
             ok, cur, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
             self.assertTrue(ok)
@@ -397,7 +408,7 @@ class TestURL (TestCase):
             self.assertIsInstance(v, unicode)
 
             refURL = CFURLCreateWithFileSystemPath(None,
-                u"/tmp/pyobjc.test.2", kCFURLPOSIXPathStyle, False)
+                b"/tmp/pyobjc.test.2".decode('ascii'), kCFURLPOSIXPathStyle, False)
             ok, err = CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
             self.assertTrue(ok)
             self.assertIs(err, None)

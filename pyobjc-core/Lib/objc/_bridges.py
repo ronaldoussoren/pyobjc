@@ -1,6 +1,7 @@
 from objc._objc import *
 from objc import _objc
 import struct
+import sys
 
 __all__ = [ 'registerListType', 'registerMappingType' ]
 
@@ -35,5 +36,12 @@ def _bridgePythonTypes():
             OC_PythonObject.pythonifyStructTable().update(BRIDGED_STRUCTURES)
     except AttributeError:
         pass
+
+if sys.version_info[0] > 2:
+    registerListType(type(range(1)))
+
+else:
+    registerListType(xrange)
+
 
 _bridgePythonTypes()

@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSKeyValueBindingHelper (NSObject):
     def commitEditingWithDelegate_didCommitSelector_contextInfo_(self, d, s, i):
         return None

@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSTextViewHelper (NSObject):
     def textView_clickedOnLink_atIndex_(self, tv, a, b): return 1
     def textView_clickedOnCell_inRect_atIndex_(self, tv, a, b, c): return 1

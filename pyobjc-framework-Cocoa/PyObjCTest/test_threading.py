@@ -41,10 +41,10 @@ class ThreadingTest (TestCase):
         myObj = PyObjCTestThreadRunnerString.alloc().init()
 
         NSThread.detachNewThreadSelector_toTarget_withObject_(
-                'run:', myObj, u"hello world")
+                'run:', myObj, b"hello world".decode('ascii'))
 
         time.sleep(2)
-        self.assertEqual(myObj.storage[0], u"hello world")
+        self.assertEqual(myObj.storage[0], b"hello world".decode('ascii'))
 
     def testNSObject(self):
 
@@ -65,7 +65,7 @@ class ThreadingTest (TestCase):
             lst2.append(i*2)
 
         time.sleep(2)
-        self.assertEqual(lst, range(100))
+        self.assertEqual(lst, list(range(100)))
 
     def testPyObject(self):
         import os
@@ -94,7 +94,7 @@ class ThreadingTest (TestCase):
                 lst2.append(i*2)
 
             time.sleep(2)
-            self.assertEqual(lst, range(100))
+            self.assertEqual(lst, list(range(100)))
 
         finally:
             os.dup2(dupped, 2)

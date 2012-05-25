@@ -19,7 +19,7 @@ sys.modules['Foundation'] = mod = objc.ObjCLazyModule('Foundation',
             'objc': objc,
             'YES': objc.YES,
             'NO': objc.NO,
-            'NSMaximumStringLength': sys.maxint - 1,
+            'NSMaximumStringLength': sys.maxsize - 1,
             '__path__': __path__,
         }, (CoreFoundation,))
 

@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 import Foundation
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSBundle (TestCase):
     def testOutput(self):
         obj = NSBundle.mainBundle()

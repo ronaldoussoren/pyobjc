@@ -756,11 +756,21 @@ NSDecimalNumber = lookUpClass('NSDecimalNumber')
 def _makeD(v):
     if isinstance(v, NSDecimalNumber):
         return v
+
+    print ("makeD(%r of %r)"%(v, type(v)))
     return NSDecimalNumber.decimalNumberWithDecimal_(v)
 
+def decimal__add__(self, other):
+    print ("decimal__add__(%r, %r)"%(self, other))
+    return _makeD(self.decimalValue() + other)
+
+def decimal__radd__(self, other):
+    print ("decimal__radd__(%r, %r)"%(self, other))
+    return _makeD(other + self.decimalValue())
+
 CLASS_METHODS['NSDecimalNumber'] = (
-    ('__add__', lambda self, other: _makeD(self.decimalValue() + other)),
-    ('__radd__', lambda self, other: _makeD(other + self.decimalValue())),
+    ('__add__', decimal__add__),
+    ('__radd__', decimal__radd__),
     ('__sub__', lambda self, other: _makeD(self.decimalValue() - other)),
     ('__rsub__', lambda self, other: _makeD(other - self.decimalValue())),
     ('__mul__', lambda self, other: _makeD(self.decimalValue() * other)),

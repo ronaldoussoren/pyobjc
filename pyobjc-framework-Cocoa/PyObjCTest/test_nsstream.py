@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSStreamHelper (NSObject):
     def stream_handleEvent_(self, a, b): pass
 
@@ -11,7 +16,7 @@ class TestNSStreamUsage(TestCase):
 
         # Try to create a connection to the IPP port on the local host
         inputStream, outputStream = NSStream.getStreamsToHost_port_inputStream_outputStream_(
-                NSHost.hostWithAddress_(u"127.0.0.1"), 
+                NSHost.hostWithAddress_(b"127.0.0.1".decode('ascii')), 
                 631, # IPP port
                 None,
                 None

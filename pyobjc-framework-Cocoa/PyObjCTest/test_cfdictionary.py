@@ -2,6 +2,12 @@ from CoreFoundation import *
 from Foundation import NSDictionary, NSMutableDictionary, NSCFDictionary
 from PyObjCTools.TestSupport import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestCFDictionary (TestCase):
 
     def testCreation(self):
@@ -40,16 +46,16 @@ class TestCFDictionary (TestCase):
         self.assertEqual(len(context) , 4)
         self.assertEqual(context,
                 [
-                    (u'aap', u'monkey'),
-                    (u'mies', u'missy'),
-                    (u'noot', u'nut'),
-                    (u'wim', u'john')
+                    (b'aap'.decode('ascii'), b'monkey'.decode('ascii')),
+                    (b'mies'.decode('ascii'), b'missy'.decode('ascii')),
+                    (b'noot'.decode('ascii'), b'nut'.decode('ascii')),
+                    (b'wim'.decode('ascii'), b'john'.decode('ascii'))
                 ])
 
     def testTypeID(self):
         self.assertIsInstance(CFDictionaryGetTypeID(), (int, long))
     def testCreation(self):
-        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 43], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
+        dct = CFDictionaryCreate(None, [b"key1".decode('ascii'), b"key2".decode('ascii')], [42, 43], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.assertIsInstance(dct, CFDictionaryRef)
         dct = CFDictionaryCreateCopy(None, dct)
         self.assertIsInstance(dct, CFDictionaryRef)
@@ -58,20 +64,20 @@ class TestCFDictionary (TestCase):
         dct = CFDictionaryCreateMutableCopy(None, 0, dct)
         self.assertIsInstance(dct, CFDictionaryRef)
     def testInspection(self):
-        dct = CFDictionaryCreate(None, [u"key1", u"key2"], [42, 42], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
+        dct = CFDictionaryCreate(None, [b"key1".decode('ascii'), b"key2".decode('ascii')], [42, 42], 2, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.assertIsInstance(dct, CFDictionaryRef)
         self.assertEqual(CFDictionaryGetCount(dct) , 2)
-        self.assertEqual(CFDictionaryGetCountOfKey(dct, u"key1") , 1)
-        self.assertEqual(CFDictionaryGetCountOfKey(dct, u"key3") , 0)
+        self.assertEqual(CFDictionaryGetCountOfKey(dct, b"key1".decode('ascii')) , 1)
+        self.assertEqual(CFDictionaryGetCountOfKey(dct, b"key3".decode('ascii')) , 0)
         self.assertEqual(CFDictionaryGetCountOfValue(dct, 42) , 2)
         self.assertEqual(CFDictionaryGetCountOfValue(dct, 44) , 0)
         self.assertResultHasType(CFDictionaryContainsKey, objc._C_NSBOOL)
-        self.assertTrue(CFDictionaryContainsKey(dct, u"key1"))
-        self.assertFalse(CFDictionaryContainsKey(dct, u"key3"))
+        self.assertTrue(CFDictionaryContainsKey(dct, b"key1".decode('ascii')))
+        self.assertFalse(CFDictionaryContainsKey(dct, b"key3".decode('ascii')))
 
         self.assertResultHasType(CFDictionaryContainsValue, objc._C_NSBOOL)
         self.assertTrue(CFDictionaryContainsValue(dct, 42))
-        self.assertFalse(CFDictionaryContainsValue(dct, u"key3"))
+        self.assertFalse(CFDictionaryContainsValue(dct, b"key3".decode('ascii')))
 
         self.assertEqual(CFDictionaryGetValue(dct, "key2") , 42)
         self.assertIs(CFDictionaryGetValue(dct, "key3"), None)
@@ -91,27 +97,27 @@ class TestCFDictionary (TestCase):
     def testMutation(self):
         dct = CFDictionaryCreateMutable(None, 0, kCFTypeDictionaryKeyCallBacks, kCFTypeDictionaryValueCallBacks)
         self.assertEqual(CFDictionaryGetCount(dct) , 0)
-        CFDictionaryAddValue(dct, u"key1", u"value1")
+        CFDictionaryAddValue(dct, b"key1".decode('ascii'), b"value1".decode('ascii'))
         self.assertEqual(CFDictionaryGetCount(dct) , 1)
-        self.assertTrue(CFDictionaryContainsKey(dct, u"key1"))
+        self.assertTrue(CFDictionaryContainsKey(dct, b"key1".decode('ascii')))
 
-        CFDictionarySetValue(dct, u"key2", u"value2")
+        CFDictionarySetValue(dct, b"key2".decode('ascii'), b"value2".decode('ascii'))
         self.assertEqual(CFDictionaryGetCount(dct) , 2)
-        self.assertTrue(CFDictionaryContainsKey(dct, u"key2"))
+        self.assertTrue(CFDictionaryContainsKey(dct, b"key2".decode('ascii')))
 
-        CFDictionaryReplaceValue(dct, u"key2", u"value2b")
+        CFDictionaryReplaceValue(dct, b"key2".decode('ascii'), b"value2b".decode('ascii'))
         self.assertEqual(CFDictionaryGetCount(dct) , 2)
-        self.assertTrue(CFDictionaryContainsKey(dct, u"key2"))
-        self.assertEqual(CFDictionaryGetValue(dct, "key2") , u"value2b")
-        CFDictionaryReplaceValue(dct, u"key3", u"value2b")
+        self.assertTrue(CFDictionaryContainsKey(dct, b"key2".decode('ascii')))
+        self.assertEqual(CFDictionaryGetValue(dct, "key2") , b"value2b".decode('ascii'))
+        CFDictionaryReplaceValue(dct, b"key3".decode('ascii'), b"value2b".decode('ascii'))
         self.assertEqual(CFDictionaryGetCount(dct) , 2)
-        self.assertFalse(CFDictionaryContainsKey(dct, u"key3"))
+        self.assertFalse(CFDictionaryContainsKey(dct, b"key3".decode('ascii')))
 
-        CFDictionaryRemoveValue(dct, u"key1")
-        self.assertFalse(CFDictionaryContainsKey(dct, u"key1"))
+        CFDictionaryRemoveValue(dct, b"key1".decode('ascii'))
+        self.assertFalse(CFDictionaryContainsKey(dct, b"key1".decode('ascii')))
 
         CFDictionaryRemoveAllValues(dct)
-        self.assertFalse(CFDictionaryContainsKey(dct, u"key2"))
+        self.assertFalse(CFDictionaryContainsKey(dct, b"key2".decode('ascii')))
         self.assertEqual(CFDictionaryGetCount(dct) , 0)
 if __name__ == "__main__":
     main()

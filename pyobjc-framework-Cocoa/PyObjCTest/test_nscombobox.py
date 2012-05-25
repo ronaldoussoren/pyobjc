@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSComboBox (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSComboBoxWillPopUpNotification, unicode)

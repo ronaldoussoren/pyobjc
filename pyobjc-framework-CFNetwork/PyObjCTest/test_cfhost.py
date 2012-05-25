@@ -7,6 +7,11 @@ if sys.version_info[0] != 2:
     def buffer(value):
         return value.encode('latin1')
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCFHost (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFHostRef)
@@ -22,7 +27,7 @@ class TestCFHost (TestCase):
         self.assertIsInstance(CFHostGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(CFHostCreateWithName)
-        v = CFHostCreateWithName(None, u"www.python.org")
+        v = CFHostCreateWithName(None, b"www.python.org".decode("latin1"))
         self.assertIsInstance(v, CFHostRef)
 
         try:
@@ -74,7 +79,7 @@ class TestCFHost (TestCase):
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
-        host = CFHostCreateWithName(None, u"localhost")
+        host = CFHostCreateWithName(None, b"localhost".decode('latin1'))
         CFHostSetClient(host, callback, ctx)
 
         rl = CFRunLoopGetCurrent()

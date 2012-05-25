@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSScreen (TestCase):
     def testMethods(self):
         m = NSScreen.supportedWindowDepths.__metadata__()

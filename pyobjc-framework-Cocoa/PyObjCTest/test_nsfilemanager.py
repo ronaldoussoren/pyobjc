@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSFileManagerHelper (NSObject):
     def fileManager_shouldProceedAfterError_(self, a, b): return 1
     def fileManager_willProcessPath_(self, a, b): pass

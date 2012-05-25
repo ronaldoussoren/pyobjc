@@ -309,8 +309,14 @@ def setup(
 
             return subcommand
 
+        class no_test (oc_test):
+            def run(self):
+                print("WARNING: %s"%(msg,))
+                print()
+                print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': msg }\n")
+
         cmdclass['build'] = create_command_subclass(build.build)
-        cmdclass['test'] = create_command_subclass(oc_test)
+        cmdclass['test'] = oc_test
         cmdclass['install'] = create_command_subclass(pyobjc_install_lib)
         cmdclass['develop'] = create_command_subclass(develop.develop)
         cmdclass['build_py'] = create_command_subclass(oc_build_py)

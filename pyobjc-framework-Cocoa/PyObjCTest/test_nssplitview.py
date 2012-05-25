@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSSplitViewHelper (NSObject):
     def splitView_canCollapseSubview_(self, sp, sv): return 1
     def splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_(self, sp, sv, i): return 1

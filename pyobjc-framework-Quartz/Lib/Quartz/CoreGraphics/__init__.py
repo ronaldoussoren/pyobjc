@@ -7,6 +7,7 @@ documentation for details on how to use these functions and classes.
 import sys
 import objc
 import CoreFoundation
+import Foundation
 
 from Quartz.CoreGraphics import _metadata
 from Quartz.CoreGraphics._inlines import _inline_list_

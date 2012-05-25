@@ -25,9 +25,9 @@ class SimpleImage:
         self.rowCount = bitmap.pixelsHigh()
 
         if bitmap.isPlanar():
-            raise ValueError, "Planar image!"
+            raise ValueError("Planar image!")
         if (bitmap.bitsPerPixel() % 8) != 0:
-            raise ValueError, "bits per pixel isn't multiple of 8"
+            raise ValueError("bits per pixel isn't multiple of 8")
 
     def width(self):
         return self.bitmap.pixelsWide()
@@ -63,7 +63,7 @@ class RectTest (TestCase):
         self.image = NSImage.alloc().initWithSize_((100, 100))
 
     def makeArray(self, points):
-        if sys.maxint > 2 ** 32:
+        if sys.maxsize > 2 ** 32:
             code = 'd'
         else:
             code = 'f'
@@ -92,20 +92,29 @@ class RectTest (TestCase):
         ]
 
         # Check black points
+        if sys.version_info[0] == 2:
+            def getPixel(img, x, y):
+                return img.getPixel(x, y)
+
+        else:
+            def getPixel(img, x, y):
+                value = img.getPixel(x, y)
+                return bytes(value)
+
         for ((x, y), (h, w)) in points:
             for ox in range(w):
                 for oy in range(h):
                     allpoints.remove((x+ox, y+oy))
                     self.assertEqual(
-                        img.getPixel(x+ox, y+oy),
-                        '\x00\x00\x00\xff',
+                        getPixel(img, x+ox, y+oy),
+                        b'\x00\x00\x00\xff',
                         'Black pixel at %d,%d'%(x+ox, y+oy))
 
         # And white points
         for x, y in allpoints:
             self.assertEqual(
-                img.getPixel(x, y),
-                '\x00\x00\x00\x00',
+                getPixel(img, x, y),
+                b'\x00\x00\x00\x00',
                 'White pixel at %d,%d'%(x, y))
 
 

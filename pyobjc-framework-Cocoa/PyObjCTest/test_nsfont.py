@@ -6,6 +6,17 @@ from AppKit import *
 
 import os
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestNSFont(TestCase):
     def matrixEquals(self, value1, value2):
         self.assertEqual(len(value1), len(value2))

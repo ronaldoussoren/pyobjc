@@ -2,6 +2,12 @@ from PyObjCTools.TestSupport import *
 import sys
 from CoreFoundation import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestCFNumber (TestCase):
     def testCFNumberGetValue(self):
         number = 42
@@ -168,7 +174,7 @@ class TestCFNumber (TestCase):
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)
 
-        if sys.maxint >= 2**32:
+        if sys.maxsize >= 2**32:
             self.assertEqual(v , 8)
         else:
             self.assertEqual(v , 4)

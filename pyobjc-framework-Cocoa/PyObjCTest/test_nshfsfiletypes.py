@@ -3,6 +3,17 @@ import os
 
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestNSHFSFileTypes (TestCase):
     def testFunctions(self):
@@ -10,7 +21,7 @@ class TestNSHFSFileTypes (TestCase):
         self.assertIsInstance(v, (int, long))
         w = NSFileTypeForHFSTypeCode(v)
         self.assertIsInstance(w, unicode)
-        self.assertEqual(w, u"'rtfd'")
+        self.assertEqual(w, b"'rtfd'".decode('latin1'))
            
         fname = '/Library/Documentation/Acknowledgements.rtf'
         if not os.path.exists(fname):

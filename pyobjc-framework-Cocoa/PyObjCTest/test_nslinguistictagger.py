@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSLinguisticTagger (TestCase):
     @min_os_level('10.7')
     def testConstants(self):

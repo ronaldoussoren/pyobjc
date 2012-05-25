@@ -69,15 +69,15 @@ class TestNSDictionarySubclassing(TestCase):
 
 class TestNSDictionaryInteraction(TestCase):
     def testMethods(self):
-        for nm in dir(types.DictType):
+        for nm in dir(dict):
             if nm.startswith('__'):
                 continue
 
-            if isinstance(getattr(types.DictType, nm), (types.BuiltinFunctionType, types.FunctionType)):
+            if isinstance(getattr(dict, nm), (types.BuiltinFunctionType, types.FunctionType)):
                 # Skip class methods, that needs more work in the core
                 continue
 
-            self.assert_(hasattr(NSMutableDictionary, nm), "NSMutableDictionary has no method '%s'"%(nm,))
+            self.assertTrue(hasattr(NSMutableDictionary, nm), "NSMutableDictionary has no method '%s'"%(nm,))
 
     def testRepeatedAllocInit(self):
         for i in range(1,1000):
@@ -85,47 +85,47 @@ class TestNSDictionaryInteraction(TestCase):
 
     def testBasicInteraction(self):
         d = NSMutableDictionary.dictionary()
-        d[u'a'] = u"foo"
-        d[u'b'] = u"bar"
+        d[b'a'.decode('ascii')] = b"foo".decode('ascii')
+        d[b'b'.decode('ascii')] = b"bar".decode('ascii')
 
-        self.assertEqual(d[u'a'], u"foo", "Failed to retrieve the same thing that was put into the dict.")
+        self.assertEqual(d[b'a'.decode('ascii')], b"foo".decode('ascii'), "Failed to retrieve the same thing that was put into the dict.")
         try:
-            d[u'c']
+            d[b'c'.decode('ascii')]
             self.fail("Should have raised...")
         except KeyError:
             pass
 
     def testPythonIteraction(self):
         d = NSMutableDictionary.dictionary()
-        d[u'a'] = u"foo"
-        d[u'b'] = u"bar"
+        d[b'a'.decode('ascii')] = b"foo".decode('ascii')
+        d[b'b'.decode('ascii')] = b"bar".decode('ascii')
 
         k = list(d.keys())
         k.sort()
-        self.assert_(k == [u'a', u'b'])
+        self.assertTrue(k == [b'a'.decode('ascii'), b'b'.decode('ascii')])
 
         k = list(d.values())
         k.sort()
-        self.assert_(k == [u'bar', u'foo'])
+        self.assertTrue(k == [b'bar'.decode('ascii'), b'foo'.decode('ascii')])
 
         k = list(d.items())
         k.sort()
-        self.assert_(k == [(u'a', u'foo'), (u'b', u'bar') ])
+        self.assertTrue(k == [(b'a'.decode('ascii'), b'foo'.decode('ascii')), (b'b'.decode('ascii'), b'bar'.decode('ascii')) ])
 
 
     def testIn(self):
         d = NSMutableDictionary.dictionary()
-        d[u'a'] = u"foo"
-        d[u'b'] = u"bar"
-        d[1] = u"baz"
-        d[0] = u"bob"
+        d[b'a'.decode('ascii')] = b"foo".decode('ascii')
+        d[b'b'.decode('ascii')] = b"bar".decode('ascii')
+        d[1] = b"baz".decode('ascii')
+        d[0] = b"bob".decode('ascii')
         # d[-1] = None -- this fails because the bridge doesn't proxy py(None) to objc(NSNull)... not sure if it should
 
-        self.assert_( u'a' in d )
-        self.assert_( 1 in d )
-        # self.assert_( -1 in d )
-        # self.assert_( d[-1] is None )
-        self.assert_( u'q' not in d )
+        self.assertTrue( b'a'.decode('ascii') in d )
+        self.assertTrue( 1 in d )
+        # self.assertTrue( -1 in d )
+        # self.assertTrue( d[-1] is None )
+        self.assertTrue( b'q'.decode('ascii') not in d )
 
         for k in d.allKeys():
             self.assertEqual( d.objectForKey_( k ), d[k] )
@@ -133,54 +133,54 @@ class TestNSDictionaryInteraction(TestCase):
         for k in d:
             self.assertEqual( d.objectForKey_( k ), d[k] )
 
-        del d[u'a']
-        self.assert_( u'a' not in d )
+        del d[b'a'.decode('ascii')]
+        self.assertTrue( b'a'.decode('ascii') not in d )
 
     def test_varargConstruction(self):
-        u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
-        v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
-        w = NSDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
-        x = NSDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
-        y = NSDictionary.dictionaryWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
-        z = NSDictionary.alloc().initWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
+        u = NSDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii')])
+        v = NSDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii')])
+        w = NSDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii'), b'five'.decode('ascii')], 4)
+        x = NSDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii'), b'five'.decode('ascii')], 4)
+        y = NSDictionary.dictionaryWithObjectsAndKeys_(1, b'one'.decode('ascii'), 2, b'two'.decode('ascii'), 3, b'three'.decode('ascii'), 4, b'four'.decode('ascii'), None)
+        z = NSDictionary.alloc().initWithObjectsAndKeys_(1, b'one'.decode('ascii'), 2, b'two'.decode('ascii'), 3, b'three'.decode('ascii'), 4, b'four'.decode('ascii'), None)
 
-        self.assert_(len(u) == 4)
-        self.assert_(len(v) == 4)
-        self.assert_(len(w) == 4)
-        self.assert_(len(x) == 4)
-        self.assert_(len(y) == 4)
-        self.assert_(len(z) == 4)
+        self.assertEqual(len(u), 4)
+        self.assertEqual(len(v), 4)
+        self.assertEqual(len(w), 4)
+        self.assertEqual(len(x), 4)
+        self.assertEqual(len(y), 4)
+        self.assertEqual(len(z), 4)
 
-        self.assert_(u[u'one'] == 1)
-        self.assert_(v[u'two'] == 2)
-        self.assert_(w[u'three'] == 3)
-        self.assert_(x[u'one'] == 1)
-        self.assert_(y[u'two'] == 2)
-        self.assert_(z[u'four'] == 4)
+        self.assertEqual(u[b'one'.decode('ascii')], 1)
+        self.assertEqual(v[b'two'.decode('ascii')], 2)
+        self.assertEqual(w[b'three'.decode('ascii')], 3)
+        self.assertEqual(x[b'one'.decode('ascii')], 1)
+        self.assertEqual(y[b'two'.decode('ascii')], 2)
+        self.assertEqual(z[b'four'.decode('ascii')], 4)
 
     def test_varargConstruction2(self):
-        u = NSMutableDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
-        v = NSMutableDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [u'one', u'two', u'three', u'four'])
-        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
-        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [u'one', u'two', u'three', u'four', u'five'], 4)
+        u = NSMutableDictionary.dictionaryWithObjects_forKeys_([1,2,3,4], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii')])
+        v = NSMutableDictionary.alloc().initWithObjects_forKeys_([1,2,3,4], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii')])
+        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_([1,2,3,4,5], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii'), b'five'.decode('ascii')], 4)
+        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_([1,2,3,4,5], [b'one'.decode('ascii'), b'two'.decode('ascii'), b'three'.decode('ascii'), b'four'.decode('ascii'), b'five'.decode('ascii')], 4)
 
         #self.assertRaises(TypeError, NSMutableDictionary.dictionaryWithObjectsAndKeys_, 1, 'one', 2, 'two', None)
-        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
-        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(1, u'one', 2, u'two', 3, u'three', 4, u'four', None)
+        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(1, b'one'.decode('ascii'), 2, b'two'.decode('ascii'), 3, b'three'.decode('ascii'), 4, b'four'.decode('ascii'), None)
+        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(1, b'one'.decode('ascii'), 2, b'two'.decode('ascii'), 3, b'three'.decode('ascii'), 4, b'four'.decode('ascii'), None)
 
-        self.assert_(len(u) == 4)
-        self.assert_(len(v) == 4)
-        self.assert_(len(w) == 4)
-        self.assert_(len(x) == 4)
-        #self.assert_(len(y) == 4)
-        #self.assert_(len(z) == 4)
+        self.assertEqual(len(u), 4)
+        self.assertEqual(len(v), 4)
+        self.assertEqual(len(w), 4)
+        self.assertEqual(len(x), 4)
+        #self.assertEqual(len(y), 4)
+        #self.assertEqual(len(z), 4)
 
-        self.assert_(u[u'one'] == 1)
-        self.assert_(v[u'two'] == 2)
-        self.assert_(w[u'three'] == 3)
-        self.assert_(x[u'one'] == 1)
-        #self.assert_(y[u'two'] == 2)
-        #self.assert_(z[u'four'] == 4)
+        self.assertEqual(u[b'one'.decode('ascii')], 1)
+        self.assertEqual(v[b'two'.decode('ascii')], 2)
+        self.assertEqual(w[b'three'.decode('ascii')], 3)
+        self.assertEqual(x[b'one'.decode('ascii')], 1)
+        #self.assertEqual(y[b'two'.decode('ascii')], 2)
+        #self.assertEqual(z[b'four'.decode('ascii')], 4)
 
 
 class MyDictionaryBase (NSDictionary):
@@ -204,14 +204,14 @@ class MyDictionary1 (MyDictionaryBase):
 
 class MyDictionary2 (MyDictionaryBase):
     def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
-        if not self is MyDictionary2: raise AssertionError, self
+        if not self is MyDictionary2: raise AssertionError(self)
         return (objects, keys, count)
 
 class TestSubclassing (TestCase):
     def testInitWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary1, 1)
 
-        self.assert_(isinstance(o, MyDictionary1))
+        self.assertIsInstance(o, MyDictionary1)
         self.assertEqual(o._count, 4)
         self.assertEqual(len(o._keys), 4)
         self.assertEqual(len(o._objects), 4)
@@ -219,7 +219,7 @@ class TestSubclassing (TestCase):
     def testDictWithObjects(self):
         o = PyObjC_TestClass3.makeDictFromClass_method_(MyDictionary2, 0)
 
-        self.assert_(isinstance(o, tuple))
+        self.assertIsInstance(o, tuple)
         self.assertEqual(o[2], 4)
         self.assertEqual(len(o[1]), 4)
         self.assertEqual(len(o[0]), 4)
@@ -230,26 +230,26 @@ class TestVariadic (TestCase):
                 42, 'a',
                 43, 'b')
         self.assertEqual(o, {'a':42, 'b':43})
-        self.assert_(isinstance(o, NSDictionary))
+        self.assertIsInstance(o, NSDictionary)
 
         o = NSMutableDictionary.dictionaryWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
         self.assertEqual(o, {'a':42, 'b':43})
-        self.assert_(isinstance(o, NSMutableDictionary))
+        self.assertIsInstance(o, NSMutableDictionary)
 
     def testInitWithObjectsAndKeys(self):
         o = NSDictionary.alloc().initWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
         self.assertEqual(o, {'a':42, 'b':43})
-        self.assert_(isinstance(o, NSDictionary))
+        self.assertIsInstance(o, NSDictionary)
 
         o = NSMutableDictionary.alloc().initWithObjectsAndKeys_(
                 42, 'a',
                 43, 'b')
         self.assertEqual(o, {'a':42, 'b':43})
-        self.assert_(isinstance(o, NSMutableDictionary))
+        self.assertIsInstance(o, NSMutableDictionary)
 
 
 class TestNSDictionary (TestCase):

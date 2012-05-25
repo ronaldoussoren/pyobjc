@@ -3,6 +3,11 @@ from AppKit import *
 import array
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestRegressions (TestCase):
     def testQualifiersInSignature(self):
         NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
@@ -42,7 +47,7 @@ class TestRegressions (TestCase):
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        if sys.maxint > 2**32:
+        if sys.maxsize > 2**32:
             a = array.array('d', [0] * 6)
         else:
             a = array.array('f', [0] * 6)

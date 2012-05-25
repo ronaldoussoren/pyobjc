@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSBrowserHelper (NSObject):
     def browser_selectCellWithString_inColumn_(self, b, c, s): return 1
     def browser_selectRow_inColumn_(self, b, r, c): return 1

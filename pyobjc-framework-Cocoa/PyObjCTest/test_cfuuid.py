@@ -2,6 +2,17 @@ from PyObjCTools.TestSupport import *
 import re
 from CoreFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 
 class TestCFUUIDAPI (TestCase):
     def testTypes(self):
@@ -28,20 +39,20 @@ class TestCFUUIDAPI (TestCase):
         self.assertIsInstance(uuid, CFUUIDRef)
         self.assertResultIsCFRetained(CFUUIDCreateString)
         text = CFUUIDCreateString(None, uuid)
-        self.assertEqual(text , u'01020304-0506-0708-090A-0B0C0D0E0F10')
+        self.assertEqual(text , b'01020304-0506-0708-090A-0B0C0D0E0F10'.decode('ascii'))
         self.assertRaises(ValueError, CFUUIDCreateWithBytes, None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 300)
         self.assertRaises(ValueError, CFUUIDCreateWithBytes, None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 300, 16)
 
     def testCreateFromString(self):
         self.assertResultIsCFRetained(CFUUIDCreateFromString)
-        uuid1 = CFUUIDCreateFromString(None, u'01020304-0506-0708-090A-0B0C0D0E0F10')
+        uuid1 = CFUUIDCreateFromString(None, b'01020304-0506-0708-090A-0B0C0D0E0F10'.decode('ascii'))
         self.assertIsNot(uuid1, None)
         self.assertIsInstance(uuid1, CFUUIDRef)
         text = CFUUIDCreateString(None, uuid1)
-        self.assertEqual(text , u'01020304-0506-0708-090A-0B0C0D0E0F10')
-        uuid2 = CFUUIDCreateFromString(None, u'01020304-0506-0708-090A-0B0C0D0E0F10')
+        self.assertEqual(text , b'01020304-0506-0708-090A-0B0C0D0E0F10'.decode('ascii'))
+        uuid2 = CFUUIDCreateFromString(None, b'01020304-0506-0708-090A-0B0C0D0E0F10'.decode('ascii'))
         text = CFUUIDCreateString(None, uuid2)
-        self.assertEqual(text , u'01020304-0506-0708-090A-0B0C0D0E0F10')
+        self.assertEqual(text , b'01020304-0506-0708-090A-0B0C0D0E0F10'.decode('ascii'))
         # CFUUID interns values
         self.assertIs(uuid1, uuid2)
 
@@ -95,7 +106,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertIsNot(uuid, None)
         self.assertIsInstance(uuid, CFUUIDRef)
         text = CFUUIDCreateString(None, uuid)
-        self.assertEqual(text , u'10111213-1415-1617-1819-1A1B1C1D1E1F' )
+        self.assertEqual(text , b'10111213-1415-1617-1819-1A1B1C1D1E1F'.decode('ascii') )
 
     def testStructs(self):
         o = CFUUIDBytes()

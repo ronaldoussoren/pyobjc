@@ -1,6 +1,11 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestArchiver (TestCase):
     def testConstants(self):
         self.assertIsInstance(NSInconsistentArchiveException, unicode)

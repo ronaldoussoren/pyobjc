@@ -2,6 +2,12 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
+try:
+    long
+except NameError:
+    long = int
+
+
 class TestNSObjectHelper (NSObject):
     def copyWithZone_(self, zn): return None
     def mutableCopyWithZone_(self, zn): return None

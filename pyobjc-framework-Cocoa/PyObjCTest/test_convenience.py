@@ -18,7 +18,7 @@ class OC_TestConveniences(NSObject):
 class TestConveniences(TestCase):
 
     def testHash(self):
-        for hashValue in (0, sys.maxint, sys.maxint + 1L, 0xFFFFFFFFL):
+        for hashValue in (0, sys.maxsize, sys.maxsize + 1, 0xFFFFFFFF):
             expect = struct.unpack('l', struct.pack('L', hashValue))[0]
             # Python can't hash to -1.  Surprise! :)
             if expect == -1:

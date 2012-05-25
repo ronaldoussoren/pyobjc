@@ -1,6 +1,17 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestUserNotification (TestCase):
     def testTypes(self):
         self.assertIsCFType(CFUserNotificationRef)
@@ -11,12 +22,12 @@ class TestUserNotification (TestCase):
 
     def testCreation(self):
         runloop_mode = kCFRunLoopDefaultMode
-        runloop_mode = u"pyobjctest.cfusernotificaton"
+        runloop_mode = b"pyobjctest.cfusernotificaton".decode('ascii')
 
         rl = CFRunLoopGetCurrent()
 
         infoDict = {
-                kCFUserNotificationAlertHeaderKey: u"Alert Header",
+                kCFUserNotificationAlertHeaderKey: b"Alert Header".decode('ascii'),
                 kCFUserNotificationProgressIndicatorValueKey: True,
                 kCFUserNotificationDefaultButtonTitleKey: "Cancel"
         }
