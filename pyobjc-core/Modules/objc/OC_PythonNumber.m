@@ -294,7 +294,19 @@
 #endif
 		} else if (PyFloat_Check(value)) {
 			double temp = PyFloat_AsDouble(value);
-			result =  (unsigned long long)temp;
+			if (temp < 0) {
+				/* Conversion of negative numbers to
+				 * unsigned long long is undefined behaviour,
+				 * the code below seems to get the behaviour
+				 * we'd like: casting to unsigned long long
+				 * behaves simular to casting a signed integer
+				 * to undefined.
+				 */
+				long long t = (long long)temp;
+				result = (unsigned long long)t;
+			} else {
+				result =  (unsigned long long)temp;
+			}
 			PyObjC_GIL_RETURN(result);
 		}
 	PyObjC_END_WITH_GIL
