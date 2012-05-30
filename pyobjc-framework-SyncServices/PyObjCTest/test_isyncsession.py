@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestISyncSession (TestCase):
     @min_os_level('10.5')
     def testMethods10_5(self):

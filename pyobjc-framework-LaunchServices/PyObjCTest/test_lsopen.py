@@ -101,7 +101,7 @@ class TestLSOpen (TestCase):
                 application = objc.FSRef.from_pathname('/Applications/Utilities/Terminal.app'),
                 asyncLaunchRefCon = None,
                 environment = None,
-                argv = [u"Terminal"],
+                argv = [b"Terminal".decode('latin1')],
                 initialEvent = None,
             )
         

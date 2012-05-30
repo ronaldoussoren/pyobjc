@@ -6,6 +6,16 @@ from PyObjCTools.TestSupport import *
 import unittest
 import SearchKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSearchKit (TestCase):
     def testClasses(self):
         self.assert_( hasattr(SearchKit, 'SKDocumentRef') )

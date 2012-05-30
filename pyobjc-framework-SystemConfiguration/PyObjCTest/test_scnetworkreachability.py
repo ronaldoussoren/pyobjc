@@ -39,7 +39,6 @@ class TestSCNetworkReachability (TestCase):
         l = []
         def callout(ref, flags, ctx):
             l.append([ref, flags, ctx])
-            print flags
         ctx = object()
         v = SCNetworkReachabilitySetCallback(ref, callout, ctx)
         self.assertTrue(v is True)

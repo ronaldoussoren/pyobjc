@@ -6,13 +6,13 @@ from SystemConfiguration import *
 class TestDHCPClientPreferences (TestCase):
     def testFunctions(self):
         self.assertRaises(ValueError, DHCPClientPreferencesSetApplicationOptions, 
-                u"org.pyobjc.TestSuite", [9, 10, 0], 4)
+                b"org.pyobjc.TestSuite".decode('latin1'), [9, 10, 0], 4)
 
         r = DHCPClientPreferencesSetApplicationOptions( 
-                u"org.pyobjc.TestSuite", [9, 10, 0, 9], 4)
+                b"org.pyobjc.TestSuite".decode('latin1'), [9, 10, 0, 9], 4)
         self.assertTrue(r is True or r is False)
 
-        r, count = DHCPClientPreferencesCopyApplicationOptions(u"com.apple.SystemPreferences", None)
+        r, count = DHCPClientPreferencesCopyApplicationOptions(b"com.apple.SystemPreferences".decode('latin1'), None)
         self.assertTrue(r is objc.NULL)
         self.assertTrue(count == 0)
 

@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTGlyphInfo (TestCase):
     def testTypes(self):
         self.assertIsInstance(CTGlyphInfoRef, objc.objc_class)

@@ -73,6 +73,9 @@ REQUIRES_10_8=[
         'pyobjc-framework-Social=='+VERSION,
         'pyobjc-framework-VideoToolbox=='+VERSION,
 ]
+DEL_REQUIRES_10_8=[
+        'pyobjc-framework-XgridFoundation=',
+]
 
 import platform
 rel = tuple(map(int, platform.mac_ver()[0].split('.')[:2]))
@@ -84,6 +87,11 @@ if rel >= (10, 7):
     REQUIRES.extend(REQUIRES_10_7)
 if rel >= (10, 8):
     REQUIRES.extend(REQUIRES_10_8)
+    for name in DEL_REQUIRES_10_8:
+        for line in REQUIRES:
+            if line.startswith(name):
+                REQUIRES.remove(line)
+                continue
 
 # Some PiPy stuff
 LONG_DESCRIPTION="""

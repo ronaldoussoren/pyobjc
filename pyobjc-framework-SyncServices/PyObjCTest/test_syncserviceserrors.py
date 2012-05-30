@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from SyncServices import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestSyncServicesErrors (TestCase):
     @min_os_level('10.5')
     def testConstants(self):

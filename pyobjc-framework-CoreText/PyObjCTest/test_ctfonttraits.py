@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCTFontTraits (TestCase):
 
     def testConstants(self):

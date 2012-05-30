@@ -5,6 +5,11 @@ from Quartz import *
 
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTLine (TestCase):
     def testTypes(self):
         self.assertIsInstance(CTLineRef, objc.objc_class)

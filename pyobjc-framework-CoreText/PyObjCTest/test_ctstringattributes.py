@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCTStringAttributes (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCTFontAttributeName, unicode)

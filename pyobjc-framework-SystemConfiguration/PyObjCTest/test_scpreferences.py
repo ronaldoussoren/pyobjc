@@ -40,7 +40,6 @@ class TestSCPreferences (TestCase):
         l = []
         def callback(ref, key, ctx):
             l.append([ref, key, ctx])
-            print key
         ctx = object()
 
         v = SCPreferencesSetCallback(ref, callback, ctx)

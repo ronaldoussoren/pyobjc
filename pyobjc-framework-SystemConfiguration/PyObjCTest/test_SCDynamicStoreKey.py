@@ -7,7 +7,7 @@ class TestSCDynamicStoreKey (TestCase):
 
         r = SCDynamicStoreKeyCreate(None, "Setup:/%s/%d", b"PyObjC", 9)
         self.assertTrue(isinstance(r, unicode))
-        self.assertEquals(r, u"Setup:/PyObjC/9")
+        self.assertEquals(r, b"Setup:/PyObjC/9".decode('latin1'))
 
         r = SCDynamicStoreKeyCreateNetworkGlobalEntity(None,
                 kSCDynamicStoreDomainSetup, kSCEntNetDNS)

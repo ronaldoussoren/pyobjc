@@ -374,6 +374,7 @@ class TestPyNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsInt_(v), -127)
         self.assertEqual(OC_TestNumber.numberAsLong_(v), -127)
         self.assertEqual(OC_TestNumber.numberAsLongLong_(v), -127)
+
         self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 129)
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4294967169)

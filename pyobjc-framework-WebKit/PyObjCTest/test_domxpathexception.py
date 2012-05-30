@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestDOMXPathException (TestCase):
     def testConstants(self):
         self.assertIsInstance(DOMXPathException, unicode)

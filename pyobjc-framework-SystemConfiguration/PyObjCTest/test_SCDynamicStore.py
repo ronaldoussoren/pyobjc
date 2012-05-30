@@ -37,15 +37,15 @@ class TestSCDynamicStore (TestCase):
         self.assertTrue(isinstance(src, CFRunLoopSourceRef))
         del src
 
-        v = SCDynamicStoreCopyKeyList(st, u'.*')
+        v = SCDynamicStoreCopyKeyList(st, b'.*'.decode('latin1'))
         self.assertTrue(isinstance(v, CFArrayRef))
         self.assertTrue(len(v) > 0)
         self.assertTrue(isinstance(v[0], unicode))
 
-        r = SCDynamicStoreAddValue(st, "Setup:/PyObjC", { u"key":42 })
+        r = SCDynamicStoreAddValue(st, "Setup:/PyObjC", { b"key".decode('latin1'):42 })
         self.assertTrue(r is True or r is False)
 
-        r = SCDynamicStoreAddTemporaryValue(st, "Setup:/PyObjC", { u"key":42 })
+        r = SCDynamicStoreAddTemporaryValue(st, "Setup:/PyObjC", { b"key".decode('latin1'):42 })
         self.assertTrue(r is True or r is False)
 
         v = SCDynamicStoreCopyValue(st, "Setup:/")
@@ -54,12 +54,12 @@ class TestSCDynamicStore (TestCase):
         v = SCDynamicStoreCopyMultiple(st, None, ['.*'])
         self.assertTrue(isinstance(v, CFDictionaryRef))
 
-        r = SCDynamicStoreSetValue(st, "Setup:/PyObjC", { u"key":42 })
+        r = SCDynamicStoreSetValue(st, "Setup:/PyObjC", { b"key".decode('latin1'):42 })
         self.assertTrue(r is True or r is False)
 
         r = SCDynamicStoreSetMultiple(st, 
                 {
-                    'Setup:/PyObjC2': { u"key": 42},
+                    'Setup:/PyObjC2': { b"key".decode('latin1'): 42},
                 },
                 ['Setup:/PyObjC'],
                 ['System:/'])
@@ -89,7 +89,7 @@ class TestSCDynamicStore (TestCase):
             l.append((store, changedKeys, info))
 
         st = SCDynamicStoreCreate(None, 
-                u"pyobjc.test", 
+                b"pyobjc.test".decode('latin1'), 
                 callback, info)
 
         SCDynamicStoreSetNotificationKeys(st, None, ['.*'])

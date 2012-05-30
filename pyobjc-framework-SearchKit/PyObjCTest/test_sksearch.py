@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import *
 from SearchKit import *
 from Foundation import NSMutableData
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSKSearch (TestCase):
     def testTypes(self):
         self.assertIsInstance(SKSearchGroupRef, objc.objc_class)
@@ -31,11 +41,11 @@ class TestSKSearch (TestCase):
         self.assertIsInstance(index, SKIndexRef)
         doc = SKDocumentCreateWithURL(
             CFURLCreateWithFileSystemPath(
-            None, u"/Library/Documentation/Acknowledgements.rtf",
+            None, b"/Library/Documentation/Acknowledgements.rtf".decode('latin1'),
             kCFURLPOSIXPathStyle, False))
         doc2 = SKDocumentCreateWithURL(
             CFURLCreateWithFileSystemPath(
-            None, u"/Library/Documentation/iPod/Acknowledgements.rtf",
+            None, b"/Library/Documentation/iPod/Acknowledgements.rtf".decode('latin1'),
             kCFURLPOSIXPathStyle, False))
         SKIndexAddDocumentWithText(index, doc, "copyright and licenses", True)
         SKIndexAddDocumentWithText(index, doc2, "copyright and licenses for iPod", True)
@@ -56,7 +66,7 @@ class TestSKSearch (TestCase):
         ctx = 10
 
         res = SKSearchResultsCreateWithQuery(
-                grp, u"copyright", kSKSearchRequiredRanked, 2, ctx, callback)
+                grp, b"copyright".decode('latin1'), kSKSearchRequiredRanked, 2, ctx, callback)
         self.assertIsInstance(res, SKSearchResultsRef)
 
         res = SKSearchResultsCreateWithDocuments(

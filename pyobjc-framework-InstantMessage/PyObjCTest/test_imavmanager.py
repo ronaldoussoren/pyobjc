@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from InstantMessage import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestIMAVManagerHelper (NSObject):
     def getPixelBufferPixelFormat_(self, _):
         return 10

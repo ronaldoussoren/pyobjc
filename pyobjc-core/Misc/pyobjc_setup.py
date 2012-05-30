@@ -299,17 +299,18 @@ def setup(
         cmdclass = cmdclass.copy()
 
     if not os_compatible:
-        def create_command_subclass(base_class):
-            if min_os_level != None:
-                if max_os_level != None:
-                    msg = "This distribution is only supported on MacOSX versions %s upto and including %s"%(
-                            min_os_level, max_os_level)
-                else:
-                    msg = "This distribution is only supported on MacOSX >= %s"%(min_os_level,)
-            elif max_os_level != None:
-                    msg = "This distribution is only supported on MacOSX <= %s"%(max_os_level,)
+        if min_os_level != None:
+            if max_os_level != None:
+                msg = "This distribution is only supported on MacOSX versions %s upto and including %s"%(
+                        min_os_level, max_os_level)
             else:
-                    msg = "This distribution is only supported on MacOSX"
+                msg = "This distribution is only supported on MacOSX >= %s"%(min_os_level,)
+        elif max_os_level != None:
+            msg = "This distribution is only supported on MacOSX <= %s"%(max_os_level,)
+        else:
+            msg = "This distribution is only supported on MacOSX"
+
+        def create_command_subclass(base_class):
 
             class subcommand (base_class):
                 def run(self):
@@ -319,13 +320,13 @@ def setup(
 
         class no_test (oc_test):
             def run(self):
-                print("WARNING: %s"%(msg,))
-                print()
+                print("WARNING: %s\n"%(msg,))
                 print("SUMMARY: {'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': msg }\n")
 
         cmdclass['build'] = create_command_subclass(build.build)
-        cmdclass['test'] = oc_test
-        cmdclass['install'] = create_command_subclass(pyobjc_install_lib)
+        cmdclass['test'] = no_test
+        cmdclass['install'] = create_command_subclass(install.install)
+        cmdclass['install_lib'] = create_command_subclass(pyobjc_install_lib)
         cmdclass['develop'] = create_command_subclass(develop.develop)
         cmdclass['build_py'] = create_command_subclass(oc_build_py)
     else:

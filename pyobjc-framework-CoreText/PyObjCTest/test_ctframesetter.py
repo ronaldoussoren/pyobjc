@@ -8,6 +8,11 @@ except ImportError:
     CGSize = None, None
 
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTFramesetter (TestCase):
 
     def testTypes(self):

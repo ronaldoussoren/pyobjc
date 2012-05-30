@@ -9,7 +9,8 @@
 	"ignore": true
     },
     "FSEventStreamRef": {
-    	"opaque": true
+    	"opaque": true,
+	"typestr": "^{__FSEventStream=}"
     }
   },
   "formal_protocols": {}, 

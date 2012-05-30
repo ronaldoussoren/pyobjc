@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import *
 
 from CoreText import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCoreText (TestCase):
     def testConstants(self):
         self.assertEqual(kCTVersionNumber10_5, 0x00020000)

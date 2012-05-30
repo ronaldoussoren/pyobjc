@@ -11,8 +11,8 @@ class TestAutomatorErrors (TestCase):
     def testConstants(self):
         self.assertEqual(AMAutomatorErrorDomain, "com.apple.Automator")
         self.assertEqual(AMActionErrorKey, "AMActionErrorKey")
-        self.assertIsInstance(AMAutomatorErrorDomain, unicode)
-        self.assertIsInstance(AMActionErrorKey, unicode)
+        self.assertIsInstance(AMAutomatorErrorDomain, (str, unicode))
+        self.assertIsInstance(AMActionErrorKey, (str, unicode))
 
         self.assertEqual(AMWorkflowNewerVersionError, -100)
         self.assertEqual(AMWorkflowPropertyListInvalidError, -101)

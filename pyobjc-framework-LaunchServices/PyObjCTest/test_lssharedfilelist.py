@@ -57,12 +57,12 @@ class TestLSSharedFileList (TestCase):
 
         self.assertResultIsCFRetained(LSSharedFileListCopyProperty)
         self.assertResultHasType(LSSharedFileListCopyProperty, b'@')
-        v = LSSharedFileListCopyProperty(lst, u"pyobjc.name")
+        v = LSSharedFileListCopyProperty(lst, b"pyobjc.name".decode('latin1'))
 
-        v = LSSharedFileListSetProperty(lst, u"pyobjc.name", u"value")
+        v = LSSharedFileListSetProperty(lst, b"pyobjc.name".decode('latin1'), u"value")
         self.assertIsInstance(v, (int, long))
-        v = LSSharedFileListCopyProperty(lst, u"pyobjc.name")
-        self.assertEqual(v, u"value")
+        v = LSSharedFileListCopyProperty(lst, b"pyobjc.name".decode('latin1'))
+        self.assertEqual(v, b"value".decode('latin1'))
 
         self.assertArgIsOut(LSSharedFileListCopySnapshot, 1)
         v, seed = LSSharedFileListCopySnapshot(lst, None)
@@ -70,7 +70,7 @@ class TestLSSharedFileList (TestCase):
         self.assertIsInstance(seed, (int,long))
 
         self.assertResultIsCFRetained(LSSharedFileListInsertItemURL)
-        item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, u"PyObjC.Test", None, 
+        item = LSSharedFileListInsertItemURL(lst, kLSSharedFileListItemLast, b"PyObjC.Test".decode('latin1'), None, 
                 CFURLCreateWithString(None, "file:///etc/hosts", None), {}, [])
         self.assertIsInstance(item, LSSharedFileListItemRef)
 
@@ -93,11 +93,11 @@ class TestLSSharedFileList (TestCase):
         if url is not None:
             self.assertIsInstance(url, CFURLRef)
 
-        v = LSSharedFileListItemSetProperty(item, u"pyobjc.name", u"pyobjc.test")
+        v = LSSharedFileListItemSetProperty(item, b"pyobjc.name".decode('latin1'), u"pyobjc.test")
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSSharedFileListItemCopyProperty)
-        v = LSSharedFileListItemCopyProperty(item, u"pyobjc.name")
+        v = LSSharedFileListItemCopyProperty(item, b"pyobjc.name".decode('latin1'))
         if v is not None:
             self.assertEqual(v, "pyobjc.test")
 

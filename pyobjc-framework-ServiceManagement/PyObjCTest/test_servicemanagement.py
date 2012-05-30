@@ -19,7 +19,7 @@ class TestServiceManagement (TestCase):
         self.assertArgHasType(SMJobCopyDictionary, 0, b'^{__CFString=}')
         self.assertArgHasType(SMJobCopyDictionary, 1, b'^{__CFString=}')
         self.assertResultIsCFRetained(SMJobCopyDictionary)
-        v = SMJobCopyDictionary(kSMDomainUserLaunchd, u'com.apple.Dock.agent')
+        v = SMJobCopyDictionary(kSMDomainUserLaunchd, b'com.apple.Dock.agent'.decode('latin1'))
         self.assertIsInstance(v, NSDictionary)
 
         self.assertResultHasType(SMCopyAllJobDictionaries, b'^{__CFArray=}')

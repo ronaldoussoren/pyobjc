@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from SearchKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSKSummary (TestCase):
     def testTypes(self):
         self.assertIsInstance(SKSummaryRef, objc.objc_class)
@@ -9,7 +19,7 @@ class TestSKSummary (TestCase):
     def testFunctions(self):
         self.assertIsInstance(SKSummaryGetTypeID(), (int, long))
 
-        ref = SKSummaryCreateWithString(u"hello world.  and you too.")
+        ref = SKSummaryCreateWithString(b"hello world.  and you too.".decode('latin1'))
         self.assertIsInstance(ref, SKSummaryRef)
 
         v = SKSummaryGetSentenceCount(ref)

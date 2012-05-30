@@ -5,6 +5,11 @@ import objc
 from PyObjCTools.TestSupport import *
 import ScreenSaver
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestScreenSaver (TestCase):
     def testClasses(self):
         self.assertHasAttr(ScreenSaver, 'ScreenSaverDefaults')

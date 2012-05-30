@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import *
 from CoreText import *
 from Quartz import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTFont (TestCase):
     def testTypes(self):
         self.assertIsInstance(CTFontRef, objc.objc_class)

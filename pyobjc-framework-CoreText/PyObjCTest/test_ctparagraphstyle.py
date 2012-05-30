@@ -4,6 +4,11 @@ from CoreText import *
 from Foundation import NSArray
 import struct, sys
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTParagraphStyle (TestCase):
     def testTypes(self):
         self.assertIsCFType(CTParagraphStyleRef)

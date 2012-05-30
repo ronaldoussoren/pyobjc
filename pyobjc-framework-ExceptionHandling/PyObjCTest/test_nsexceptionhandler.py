@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from ExceptionHandling import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSExceptionHandlerHelper (NSObject):
     def exceptionHandler_shouldLogException_mask_(self, h, e, m):
         return False

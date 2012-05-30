@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestDOMException (TestCase):
     def testConstants(self):
         self.assertEqual(DOM_INDEX_SIZE_ERR, 1)

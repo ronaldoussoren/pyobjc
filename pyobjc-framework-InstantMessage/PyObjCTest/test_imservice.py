@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from InstantMessage import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestIMService (TestCase):
     def testConstants(self):
         self.assertIsInstance(IMServiceStatusChangedNotification, unicode)

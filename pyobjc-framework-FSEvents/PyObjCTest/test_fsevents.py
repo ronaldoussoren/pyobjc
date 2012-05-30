@@ -6,6 +6,16 @@ from FSEvents import *
 from PyObjCTools.TestSupport import *
 import os, time
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestFSEvents (TestCase):
 
     def testValues(self):

@@ -27,12 +27,12 @@ class TestSCNetworkConnection (TestCase):
         self.assertEqual(kSCNetworkConnectionPPPSuspended,  12)
         self.assertEqual(kSCNetworkConnectionPPPWaitingForRedial,  13)
 
-        self.assertEqual(kSCNetworkConnectionBytesIn, u"BytesIn")
-        self.assertEqual(kSCNetworkConnectionBytesOut, u"BytesOut")
-        self.assertEqual(kSCNetworkConnectionPacketsIn, u"PacketsIn")
-        self.assertEqual(kSCNetworkConnectionPacketsOut, u"PacketsOut")
-        self.assertEqual(kSCNetworkConnectionErrorsIn, u"ErrorsIn")
-        self.assertEqual(kSCNetworkConnectionErrorsOut, u"ErrorsOut")
+        self.assertEqual(kSCNetworkConnectionBytesIn, b"BytesIn".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionBytesOut, b"BytesOut".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionPacketsIn, b"PacketsIn".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionPacketsOut, b"PacketsOut".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionErrorsIn, b"ErrorsIn".decode('latin1'))
+        self.assertEqual(kSCNetworkConnectionErrorsOut, b"ErrorsOut".decode('latin1'))
 
     def testFunctions(self):
         v = SCNetworkConnectionGetTypeID()

@@ -11,6 +11,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 
 setup(
+    max_os_level='10.8',
     name='pyobjc-framework-XgridFoundation',
     version="2.4a0",
     description = "Wrappers for the framework XgridFoundation on Mac OS X",

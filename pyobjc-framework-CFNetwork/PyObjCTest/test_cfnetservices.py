@@ -50,7 +50,7 @@ class TestCFNetServices (TestCase):
         self.assertIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(CFNetServiceCreate)
-        serv = CFNetServiceCreate(None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999)
+        serv = CFNetServiceCreate(None, b"pyobjc.local".decode('latin1'), b"ssh".decode('latin1'), b"pyobjc.test.local".decode('latin1'), 9999)
         self.assertIsInstance(serv, CFNetServiceRef)
 
         self.assertResultIsCFRetained(CFNetServiceCreateCopy)

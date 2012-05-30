@@ -4,6 +4,11 @@ from CoreText import *
 from Foundation import NSDictionary
 from Quartz import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCTRun (TestCase):
     def testTypes(self):
         self.assertIsCFType(CTRunRef)

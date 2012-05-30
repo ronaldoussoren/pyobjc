@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from SearchKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSKDocument (TestCase):
     def testTypes(self):
         self.assertIsCFType(SKDocumentRef)
@@ -12,7 +22,7 @@ class TestSKDocument (TestCase):
         self.assertResultIsCFRetained(SKDocumentCreateWithURL)
         ref = SKDocumentCreateWithURL(
                     CFURLCreateWithFileSystemPath(
-                        None, u"/Library/Documentation/Acknowledgements.rtf",
+                        None, b"/Library/Documentation/Acknowledgements.rtf".decode('latin1'),
                         kCFURLPOSIXPathStyle, False))
         self.assertIsInstance(ref, SKDocumentRef)
 

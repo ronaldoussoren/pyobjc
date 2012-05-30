@@ -285,7 +285,7 @@ class TestLSInfo (TestCase):
         self.assertIsInstance(value, bool)
 
 
-        ok = LSSetItemAttribute(ref, kLSRolesAll, kLSItemRoleHandlerDisplayName, u"foo")
+        ok = LSSetItemAttribute(ref, kLSRolesAll, kLSItemRoleHandlerDisplayName, b"foo".decode('latin1'))
         self.assertIsInstance(ok, (int, long))
 
 

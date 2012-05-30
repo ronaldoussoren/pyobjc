@@ -4,6 +4,16 @@ from SearchKit import *
 from Foundation import NSMutableData
 import os
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSKIndex (TestCase):
     def testTypes(self):
         self.assertIsCFType(SKIndexRef)
@@ -28,7 +38,7 @@ class TestSKIndex (TestCase):
         self.assertResultIsCFRetained(SKIndexCreateWithURL)
         try:
             url = CFURLCreateWithFileSystemPath(
-                        None, u"/tmp/pyobjc.test.index",
+                        None, b"/tmp/pyobjc.test.index".decode('latin1'),
                         kCFURLPOSIXPathStyle, False)
             self.assertIsInstance(url, CFURLRef)
             ref = SKIndexCreateWithURL(
@@ -104,9 +114,9 @@ class TestSKIndex (TestCase):
         self.assertArgIsBOOL(SKIndexAddDocumentWithText, 3)
 
 
-        fn = u"/Library/Documentation/Acknowledgements.rtf"
+        fn = b"/Library/Documentation/Acknowledgements.rtf".decode('latin1')
         if not os.path.exists(fn):
-            fn = u"/Library/Documentation/AirPort Acknowledgements.rtf"
+            fn = b"/Library/Documentation/AirPort Acknowledgements.rtf".decode('latin1')
 
         doc = SKDocumentCreateWithURL(
                 CFURLCreateWithFileSystemPath(

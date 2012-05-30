@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestWebPreferences (TestCase):
     def testConstants(self):
         self.assertEqual(WebCacheModelDocumentViewer, 0)

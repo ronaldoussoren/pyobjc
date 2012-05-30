@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import *
 from LatentSemanticMapping import *
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestLatentSemanticMapping (TestCase):
     def testConstants(self):
         self.assertEqual(kLSMMapOutOfState, -6640)
@@ -63,7 +73,7 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapGetProperties(map)
         self.assertIsInstance(v, CFDictionaryRef)
 
-        LSMMapSetProperties(map, {u"key": u"value"})
+        LSMMapSetProperties(map, {b"key".decode('latin1'): b"value".decode('latin1')})
         v = LSMMapGetProperties(map)
         self.assertIsInstance(v, CFDictionaryRef)
 
