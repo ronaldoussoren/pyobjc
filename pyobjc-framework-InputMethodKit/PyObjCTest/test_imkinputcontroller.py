@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 from InputMethodKit import *
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestIMKInputControllerHelper (NSObject):
     def inputText_key_modifiers_client_(self, s, k, m, snd):
         return True

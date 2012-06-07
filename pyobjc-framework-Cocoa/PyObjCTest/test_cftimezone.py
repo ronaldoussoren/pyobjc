@@ -70,7 +70,8 @@ class TestTimeZone (TestCase):
             CFTimeZoneSetAbbreviationDictionary(map)
 
     def testZoneObject(self):
-        data = open('/usr/share/zoneinfo/posixrules', 'rb').read()
+        with open('/usr/share/zoneinfo/posixrules', 'rb') as fp:
+            data = fp.read()
         if sys.version_info[0] == 2:
             data = buffer(data)
         zone = CFTimeZoneCreate(None, b"Europe/Amsterdam".decode('ascii'), data)

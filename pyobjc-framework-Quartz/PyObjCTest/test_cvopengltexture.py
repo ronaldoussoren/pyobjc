@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCVOpenGLTexture (TestCase):
     def testTypes(self):
         self.assertIsCFType(CVOpenGLTextureRef)

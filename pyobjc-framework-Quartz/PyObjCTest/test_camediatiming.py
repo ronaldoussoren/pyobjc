@@ -2,8 +2,15 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 if os_release() >= '10.5':
-    class TestCAMediaTimingHelper (NSObject, objc.protocolNamed('CAMediaTiming')):
+    class TestCAMediaTimingHelper (NSObject):
+        __pyobjc_protocols__ = [objc.protocolNamed('CAMediaTiming')]
+
         def beginTime(self): return 1
         def setBeginTime_(self, v): pass
         def duration(self): return 1

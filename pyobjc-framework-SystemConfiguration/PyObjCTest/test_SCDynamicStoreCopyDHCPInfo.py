@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 
 from SystemConfiguration import *
+from Foundation import NSData, NSDate
 import os
 
 class TestSCDynamicStoreCopyDHCPInfo (TestCase):
@@ -12,11 +13,13 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
         self.assertTrue(isinstance(st, SCDynamicStoreRef))
 
         have_ip = False
-        ip = os.popen("ifconfig en0 | grep inet", "r").read()
+        with os.popen("ifconfig en0 | grep inet", "r") as fp:
+            ip = fp.read()
         if ip.strip():
             have_ip = True
         else:
-            ip = os.popen("ifconfig en1 | grep inet", "r").read()
+            with os.popen("ifconfig en1 | grep inet", "r") as fp:
+                ip = fp.read()
             if ip.strip():
                 have_ip = True
 
@@ -27,10 +30,10 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
             self.assertIsInstance(info, CFDictionaryRef)
 
             r = DHCPInfoGetOptionData(info,  1)
-            self.assertTrue(r is None or isinstance(r, CFDataRef))
+            self.assertTrue(r is None or isinstance(r, NSData))
 
             r = DHCPInfoGetLeaseStartTime(info)
-            self.assertTrue(r is None or isinstance(r, CFDateRef))
+            self.assertTrue(r is None or isinstance(r, NSDate))
 
 if __name__ == "__main__":
     main()

@@ -4,6 +4,16 @@ from Quartz.CoreGraphics import *
 import array
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 if sys.version_info[0] != 2:
     def buffer(value):
         if isinstance(value, bytes):
@@ -31,9 +41,9 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceGenericRGB, unicode)
         self.assertIsInstance(kCGColorSpaceGenericCMYK, unicode)
 
-        self.assertIsInstance(kCGColorSpaceUserGray, basestring)
-        self.assertIsInstance(kCGColorSpaceUserRGB, basestring)
-        self.assertIsInstance(kCGColorSpaceUserCMYK, basestring)
+        self.assertIsInstance(kCGColorSpaceUserGray, (str, unicode))
+        self.assertIsInstance(kCGColorSpaceUserRGB, (str, unicode))
+        self.assertIsInstance(kCGColorSpaceUserCMYK, (str, unicode))
 
     @min_os_level('10.5')
     def testConstants10_5(self):
@@ -102,7 +112,8 @@ class TestCGColorSpace (TestCase):
         v = CGColorSpaceCopyICCProfile(csp)
         self.assertIsInstance(v, CFDataRef)
 
-        data = open('/Library/ColorSync/Profiles/WebSafeColors.icc', 'rb').read()
+        with open('/Library/ColorSync/Profiles/WebSafeColors.icc', 'rb') as fp:
+            data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         spc = CGColorSpaceCreateICCBased(3, [0.0, 255.0, 0.0, 255.0, 0.0, 255.0],
                 provider, CGColorSpaceCreateDeviceRGB())

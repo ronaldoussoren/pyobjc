@@ -1582,20 +1582,13 @@
    }, 
    "CTRunGetStatus": {
     "args": {
-     "0": {
-      "type_override": "^{__CTRun=}"
-     }
     }
    }, 
    "CTRunGetStringIndices": {
     "args": {
-     "0": {
-      "type_override": "^{__CTRun=}"
-     }, 
      "2": {
       "c_array_length_in_arg": 1, 
-      "type_modifier": "o", 
-      "type_override": "^i"
+      "type_modifier": "o"
      }
     }
    }, 
@@ -1633,16 +1626,13 @@
       "type_override": "^{__CTRun=}"
      }, 
      "2": {
-      "type_modifier": "o", 
-      "type_override": "^f"
+      "type_modifier": "o"
      }, 
      "3": {
-      "type_modifier": "o", 
-      "type_override": "^f"
+      "type_modifier": "o"
      }, 
      "4": {
-      "type_modifier": "o", 
-      "type_override": "^f"
+      "type_modifier": "o"
      }
     }
    }, 

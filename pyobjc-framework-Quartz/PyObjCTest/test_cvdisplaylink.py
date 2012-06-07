@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCVDisplayLink (TestCase):
     def testTypes(self):
         self.assertIsCFType(CVDisplayLinkRef)

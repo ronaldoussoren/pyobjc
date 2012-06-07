@@ -4,6 +4,11 @@ from Quartz import *
 import Quartz
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGFunction (TestCase):
     def testFunctions(self):
         values = []

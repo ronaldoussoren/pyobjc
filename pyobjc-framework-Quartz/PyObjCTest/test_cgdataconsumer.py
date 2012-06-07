@@ -5,6 +5,11 @@ import Quartz
 from Foundation import NSMutableData
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGDataConsumer (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGDataConsumerRef)
@@ -35,7 +40,7 @@ class TestCGDataConsumer (TestCase):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
         def putBytes(info, buffer, bufsize):
-            self.assertIsInstance(buffer, str)
+            self.assertIsInstance(buffer, bytes)
             self.assertEqual(len(buffer), bufsize)
             info.append(buffer)
             return bufsize
@@ -60,8 +65,8 @@ class TestCGDataConsumer (TestCase):
         del ctx
         del consumer
 
-        self.failIfEqual(len(output), 0)
-        self.failIfEqual(len(released), 0)
+        self.assertNotEqual(len(output), 0)
+        self.assertNotEqual(len(released), 0)
 
 
 if __name__ == "__main__":

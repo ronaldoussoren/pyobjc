@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
 class TestCVOpenGLBuffer (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVOpenGLBufferWidth, unicode)

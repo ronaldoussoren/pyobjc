@@ -66,8 +66,6 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #undef PyObjC_UNICODE_FAST_PATH
 #elif Py_UNICODE_SIZE == 2
 #define PyObjC_UNICODE_FAST_PATH
-#else
-#error "Py_UNICODE_SIZE != 2 is not supported"
 #endif
 
 #include "objc-runtime-compat.h"

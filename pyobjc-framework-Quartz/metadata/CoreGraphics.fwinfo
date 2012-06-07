@@ -7,6 +7,32 @@
        "ignore": true
     }
   },
+  "literals": {
+	"kCGSessionConsoleSetKey": { "unicode": true },
+	"kCGSessionLoginDoneKey": { "unicode": true },
+	"kCGSessionOnConsoleKey": { "unicode": true },
+	"kCGSessionUserIDKey": { "unicode": true },
+	"kCGSessionUserNameKey": { "unicode": true },
+	"kCGDisplayBitsPerPixel": { "unicode": true },
+	"kCGDisplayBitsPerSample": { "unicode": true },
+	"kCGDisplayBytesPerRow": { "unicode": true },
+	"kCGDisplayHeight": { "unicode": true },
+	"kCGDisplayIOFlags": { "unicode": true },
+	"kCGDisplayMode": { "unicode": true },
+	"kCGDisplayModeIsInterlaced": { "unicode": true },
+	"kCGDisplayModeIsSafeForHardware": { "unicode": true },
+	"kCGDisplayModeIsStretched": { "unicode": true },
+	"kCGDisplayModeIsTelevisionOutput": { "unicode": true },
+	"kCGDisplayModeUsableForDesktopGUI": { "unicode": true },
+	"kCGDisplayRefreshRate": { "unicode": true },
+	"kCGDisplaySamplesPerPixel": { "unicode": true },
+	"kCGDisplayWidth": { "unicode": true },
+	"kCGIODisplayModeID": { "unicode": true },
+	"kCGNotifyEventTapAdded": { "unicode": true },
+	"kCGNotifyEventTapRemoved": { "unicode": true },
+	"kCGNotifyGUIConsoleSessionChanged": { "unicode": false },
+	"kCGNotifyGUISessionUserChanged": { "unicode": false }
+  },
   "opaque": {
     "CGDisplayConfigRef": {
        "typestr": "^{_CGDisplayConfigRef=}"

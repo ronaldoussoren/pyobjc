@@ -147,7 +147,7 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontTableOptionExcludeSynthetic, (1 << 0))
 
     def testFunctions(self):
-        font = CTFontCreateWithName(u"Optima Bold",
+        font = CTFontCreateWithName(b"Optima Bold".decode('latin1'),
                 14,
                 None)
         self.assertIsInstance(font, CTFontRef)
@@ -190,7 +190,7 @@ class TestCTFont (TestCase):
         self.assertResultIsCFRetained(CTFontCreateCopyWithFamily)
 
         font2 = CTFontCreateForString(
-                font, u"hello world", CFRange(1, 4))
+                font, b"hello world".decode('latin1'), CFRange(1, 4))
         self.assertIsInstance(font2, CTFontRef)
         self.assertResultIsCFRetained(CTFontCreateForString)
 
@@ -244,7 +244,7 @@ class TestCTFont (TestCase):
 
         self.assertArgIsOut(CTFontGetGlyphsForCharacters, 2)
         v, gl = CTFontGetGlyphsForCharacters(font,
-                u"hello", None, 5)
+                b"hello".decode('latin1'), None, 5)
 
         self.assertTrue(v is True)
         self.assertIsInstance(gl, tuple)
@@ -367,12 +367,12 @@ class TestCTFont (TestCase):
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.assertResultIsCFRetained(CTFontCreateWithNameAndOptions)
-        v = CTFontCreateWithNameAndOptions(u"Times", 15, None, 0)
+        v = CTFontCreateWithNameAndOptions(b"Times".decode('latin1'), 15, None, 0)
         self.assertIsInstance(v, CTFontRef)
 
 
         descr = CTFontDescriptorCreateWithNameAndSize(
-                u"Courier", 14.0)
+                b"Courier".decode('latin1'), 14.0)
         self.assertNotEqual(descr, None)
 
         # FIXME: this crashes the interpreter, without a clear reason

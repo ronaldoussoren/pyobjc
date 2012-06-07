@@ -4,12 +4,19 @@ from LaunchServices import *
 import sys
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestLSOpen (TestCase):
     def setUp(self):
         self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')
         fp = open(self.path, 'w')
         fp.write('test contents')
         fp.close()
+
+        self.bpath = self.path.encode('utf-8')
 
     def tearDown(self):
         if os.path.exists(self.path):
@@ -51,7 +58,7 @@ class TestLSOpen (TestCase):
 
 
     def testFunctions(self):
-        url = CFURLCreateFromFileSystemRepresentation(None, self.path, len(self.path), True)
+        url = CFURLCreateFromFileSystemRepresentation(None, self.bpath, len(self.bpath), True)
 
         self.assertArgIsOut(LSOpenCFURLRef, 1)
         ok, u = LSOpenCFURLRef(url, None)

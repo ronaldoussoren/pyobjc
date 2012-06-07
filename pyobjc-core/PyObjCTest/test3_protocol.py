@@ -22,7 +22,7 @@ MyProto = objc.informal_protocol("MyProto", (
 
 class Test3InformalProtocols(TestCase):
     def testOptional(self):
-        class ProtoClass3 (NSObject, protocols=MyProto):
+        class ProtoClass3 (NSObject, protocols=[MyProto]):
             def testMethod(self):
                 pass
 
@@ -85,7 +85,7 @@ if sys.maxsize < 2 ** 32:
 
                 self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
-                class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
+                class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, protocols=[OC_TestProtocol]):
                         def method2_(self, v): pass
 
                 self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
@@ -103,7 +103,7 @@ if sys.maxsize < 2 ** 32:
             try:
                 class MyClassImplementingAnotherObject(NSObject, protocols=[anObject]):
                         pass
-                self.fail()
+                self.fail("Can create class that implements an object???")
             except TypeError: 
                 pass
 

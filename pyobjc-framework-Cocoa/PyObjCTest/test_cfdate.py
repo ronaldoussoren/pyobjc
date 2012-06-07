@@ -54,7 +54,7 @@ class TestDate (TestCase):
     def testCreation(self):
         now = CFAbsoluteTimeGetCurrent()
         dt = CFDateCreate(None, now)
-        self.assertIsInstance(dt, CFDateRef)
+        self.assertIsInstance(dt, NSDate)
 
     def testInspection(self):
         now = CFAbsoluteTimeGetCurrent()

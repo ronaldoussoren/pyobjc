@@ -314,7 +314,7 @@ if sys.platform != 'darwin':
     print("")
     raise SystemExit("ObjC runtime not found")
 
-from distutils.sysconfig import get_config_var
+from distutils.sysconfig import get_config_var, get_config_vars
 
 CFLAGS=[ ]
 
@@ -358,7 +358,8 @@ CFLAGS.extend([
 ## in registers. 
 if '-O0' in get_config_var('CFLAGS'):
     print ("Change -O0 to -O1")
-    CFLAGS.append('-O1')
+    vars = get_config_vars()
+    vars['CFLAGS'] = vars['CFLAGS'].replace('-O0', '-O1')
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 

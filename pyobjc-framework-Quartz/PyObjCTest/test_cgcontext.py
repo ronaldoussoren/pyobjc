@@ -6,6 +6,11 @@ import Quartz
 import os
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
 if sys.version_info[0] != 2:
     def buffer(value):
         if isinstance(value, bytes):
@@ -93,7 +98,10 @@ class TestCGContext (TestCase):
             if not os.path.exists(fn):
                 fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
 
-            provider = CGDataProviderCreateWithCFData(buffer(open(fn, 'rb').read()))
+            with open(fn, 'rb') as fp:
+                data = fp.read()
+
+            provider = CGDataProviderCreateWithCFData(buffer(data))
             image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
             self.assertIsInstance(image, CGImageRef)
 
@@ -395,7 +403,9 @@ class TestCGContext (TestCase):
             if not os.path.exists(fn):
                 fn = '/System/Library/Automator/Apply ColorSync Profile to Images.action/Contents/Resources/A-1075-normal.jpg'
 
-            provider = CGDataProviderCreateWithCFData(buffer(open(fn, 'rb').read()))
+            with open(fn, 'rb') as fp:
+                data = fp.read()
+            provider = CGDataProviderCreateWithCFData(buffer(data))
             image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
             self.assertIsInstance(image, CGImageRef)
 
@@ -414,30 +424,30 @@ class TestCGContext (TestCase):
                 os.unlink("/tmp/pyobjc.test.pdf")
 
     def testGlyphFunctions(self):
-        self.assertArgHasType(CGContextShowGlyphsAtPositions, 1, 'n^S')
+        self.assertArgHasType(CGContextShowGlyphsAtPositions, 1, b'n^S')
         self.assertArgSizeInArg(CGContextShowGlyphsAtPositions, 1, 3)
-        self.assertArgHasType(CGContextShowGlyphsAtPositions, 2, 'n^' + CGPoint.__typestr__)
+        self.assertArgHasType(CGContextShowGlyphsAtPositions, 2, b'n^' + CGPoint.__typestr__)
         self.assertArgSizeInArg(CGContextShowGlyphsAtPositions, 2, 3)
 
-        self.assertArgHasType(CGContextShowGlyphs, 1, 'n^S')
+        self.assertArgHasType(CGContextShowGlyphs, 1, b'n^S')
         self.assertArgSizeInArg(CGContextShowGlyphs, 1, 2)
 
         self.assertArgHasType(CGContextShowGlyphsAtPoint, 1, objc._C_CGFloat)
         self.assertArgHasType(CGContextShowGlyphsAtPoint, 2, objc._C_CGFloat)
-        self.assertArgHasType(CGContextShowGlyphsAtPoint, 3, 'n^S')
+        self.assertArgHasType(CGContextShowGlyphsAtPoint, 3, b'n^S')
         self.assertArgSizeInArg(CGContextShowGlyphsAtPoint, 3, 4)
 
-        self.assertArgHasType(CGContextShowGlyphsWithAdvances, 1, 'n^S')
+        self.assertArgHasType(CGContextShowGlyphsWithAdvances, 1, b'n^S')
         self.assertArgSizeInArg(CGContextShowGlyphsWithAdvances, 1, 3)
-        self.assertArgHasType(CGContextShowGlyphsWithAdvances, 2, 'n^' + CGSize.__typestr__)
+        self.assertArgHasType(CGContextShowGlyphsWithAdvances, 2, b'n^' + CGSize.__typestr__)
         self.assertArgSizeInArg(CGContextShowGlyphsWithAdvances, 2, 3)
 
-        self.assertArgHasType(CGContextDrawPDFPage, 0, '^{CGContext=}')
-        self.assertArgHasType(CGContextDrawPDFPage, 1, '^{CGPDFPage=}')
+        self.assertArgHasType(CGContextDrawPDFPage, 0, b'^{CGContext=}')
+        self.assertArgHasType(CGContextDrawPDFPage, 1, b'^{CGPDFPage=}')
 
-        self.assertArgHasType(CGContextDrawPDFDocument, 0, '^{CGContext=}')
+        self.assertArgHasType(CGContextDrawPDFDocument, 0, b'^{CGContext=}')
         self.assertArgHasType(CGContextDrawPDFDocument, 1, CGRect.__typestr__)
-        self.assertArgHasType(CGContextDrawPDFDocument, 2, '^{CGPDFDocument=}')
+        self.assertArgHasType(CGContextDrawPDFDocument, 2, b'^{CGPDFDocument=}')
         self.assertArgHasType(CGContextDrawPDFDocument, 3, objc._C_INT)
 
 

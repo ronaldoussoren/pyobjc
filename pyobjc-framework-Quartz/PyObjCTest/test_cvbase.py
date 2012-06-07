@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCVBase (TestCase):
     def testStructs(self):
         v = CVSMPTETime()

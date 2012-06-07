@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzComposer import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestQCRendererHelper (NSObject):
     def setValue_forInputKey_(self, v, k): return 1
 

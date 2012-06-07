@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCIFilterGenerator (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIFilterGeneratorExportedKey, unicode)

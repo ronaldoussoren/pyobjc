@@ -1,6 +1,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCIContext (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIContextOutputColorSpace, unicode)

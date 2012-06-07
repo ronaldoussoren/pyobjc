@@ -24,7 +24,12 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 	PyGILState_STATE   state = PyGILState_Ensure();
 
 	PyObject* result = PyObject_CallFunction(
-			PyTuple_GET_ITEM(info, 0), "Os#l",
+			PyTuple_GET_ITEM(info, 0), 
+#if PY_VERSION_MAJOR == 2
+			"Os#l",
+#else
+			"Oy#l",
+#endif
 			PyTuple_GET_ITEM(info, 2), buffer, count, count);
 	if (result == NULL) {
 		PyObjCErr_ToObjCWithGILState(&state);

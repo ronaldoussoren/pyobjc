@@ -57,7 +57,7 @@ static const char gCFRangeEncoding[1024] = { 0 };
 #    error "Need FFI_CLOSURES!"
 #endif
 
-#if 0 /* Usefull during debugging, only used in the debugger */
+#if 1 /* These are only usefull from the debugger, leaving them enabled is harmless */
 static void describe_ffitype(ffi_type* type)
 {
 	switch (type->type) {
@@ -94,6 +94,7 @@ static void describe_ffitype(ffi_type* type)
 	}
 }
 
+static void describe_cif(ffi_cif* cif) __attribute__((__unused__));
 static void describe_cif(ffi_cif* cif)
 {
 	size_t i;
@@ -425,10 +426,12 @@ arg_signature_to_ffi_type(const char* argtype)
 	 * based on analysis of the calling conventions.
 	 */
 	switch (*argtype) {
+#if 0
 	case _C_CHR: return &ffi_type_sint;
 	case _C_UCHR: return &ffi_type_uint;
 	case _C_SHT: return &ffi_type_sint;
 	case _C_USHT: return &ffi_type_uint;
+#endif
 	default: return signature_to_ffi_type(argtype);
 	}
 }
@@ -4024,7 +4027,6 @@ PyObjCFFI_MakeClosure(
 		return NULL;
 	}
 
-
 	/* And finally create the actual closure */
 	/*cl = PyMem_Malloc(sizeof(*cl));*/
 	cl = PyObjC_malloc_closure();
@@ -4033,6 +4035,10 @@ PyObjCFFI_MakeClosure(
 		/*PyErr_NoMemory();*/
 		return NULL;
 	}
+
+	/*printf("create closure for cif\n");
+	describe_cif(cif);
+	printf("\n\n");*/
 
 	rv = ffi_prep_closure(cl, cif, func, userdata);
 	if (rv != FFI_OK) {

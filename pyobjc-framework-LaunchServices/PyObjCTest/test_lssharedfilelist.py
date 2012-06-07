@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from LaunchServices import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestLSSharedFileList (TestCase):
     def testTypes(self):
         self.assertIsCFType(LSSharedFileListRef)
@@ -59,7 +69,7 @@ class TestLSSharedFileList (TestCase):
         self.assertResultHasType(LSSharedFileListCopyProperty, b'@')
         v = LSSharedFileListCopyProperty(lst, b"pyobjc.name".decode('latin1'))
 
-        v = LSSharedFileListSetProperty(lst, b"pyobjc.name".decode('latin1'), u"value")
+        v = LSSharedFileListSetProperty(lst, b"pyobjc.name".decode('latin1'), b"value".decode('latin1'))
         self.assertIsInstance(v, (int, long))
         v = LSSharedFileListCopyProperty(lst, b"pyobjc.name".decode('latin1'))
         self.assertEqual(v, b"value".decode('latin1'))
@@ -93,7 +103,7 @@ class TestLSSharedFileList (TestCase):
         if url is not None:
             self.assertIsInstance(url, CFURLRef)
 
-        v = LSSharedFileListItemSetProperty(item, b"pyobjc.name".decode('latin1'), u"pyobjc.test")
+        v = LSSharedFileListItemSetProperty(item, b"pyobjc.name".decode('latin1'), b"pyobjc.test".decode('latin1'))
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSSharedFileListItemCopyProperty)

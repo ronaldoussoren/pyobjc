@@ -31,7 +31,7 @@ class TestCTFrame (TestCase):
         self.assertIsInstance(v, (int, long))
 
         setter = CTFramesetterCreateWithAttributedString(
-                CFAttributedStringCreate(None, u"hello", None))
+                CFAttributedStringCreate(None, b"hello".decode('latin1'), None))
         self.assertIsInstance(setter, CTFramesetterRef)
 
         path = CGPathCreateMutable()

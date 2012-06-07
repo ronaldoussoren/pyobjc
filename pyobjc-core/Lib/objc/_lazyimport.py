@@ -240,7 +240,12 @@ class ObjCLazyModule (module):
                 val = m.group(1)
 
                 if val.startswith("'"):
-                    val, = struct.unpack('>l', val[1:-1])
+                    if isinstance(val, bytes):
+                        # Python 2.x
+                        val, = struct.unpack('>l', val[1:-1])
+                    else:
+                        # Python 3.x
+                        val, = struct.unpack('>l', val[1:-1].encode('latin1'))
 
                 elif '.' in val:
                     val = float(val)

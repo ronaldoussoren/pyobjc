@@ -4,12 +4,24 @@ from LaunchServices import *
 import sys
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestLSInfo (TestCase):
     def setUp(self):
         self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')
         fp = open(self.path, 'w')
         fp.write('test contents')
         fp.close()
+
+        self.bpath = self.path.encode('utf-8')
 
     def tearDown(self):
         if os.path.exists(self.path):
@@ -97,7 +109,7 @@ class TestLSInfo (TestCase):
         self.assertHasAttr(v, 'filetype')
         self.assertHasAttr(v, 'creator')
         self.assertHasAttr(v, 'extension')
-        if sys.maxint < 2 ** 32:
+        if sys.maxsize < 2 ** 32:
             self.assertHasAttr(v, 'iconFileName')
             self.assertHasAttr(v, 'kindID')
         else:
@@ -108,7 +120,7 @@ class TestLSInfo (TestCase):
         LSInit(kLSInitializeDefaults)
         LSTerm()
 
-        url = CFURLCreateFromFileSystemRepresentation(None, self.path, len(self.path), True)
+        url = CFURLCreateFromFileSystemRepresentation(None, self.bpath, len(self.bpath), True)
         self.assertIsInstance(url, CFURLRef)
 
         ok, info = LSCopyItemInfoForURL(url, kLSRequestExtension|kLSRequestTypeCreator, None)
@@ -279,7 +291,7 @@ class TestLSInfo (TestCase):
         ok = LSRegisterFSRef(ref, False)
         self.assertIsInstance(ok, (int, long))
 
-        self.assertArgHasType(LSCopyItemAttribute, 3, 'o^@')
+        self.assertArgHasType(LSCopyItemAttribute, 3, b'o^@')
         ok, value = LSCopyItemAttribute(ref, kLSRolesAll, kLSItemExtensionIsHidden, None)
         self.assertEquals(ok, 0)
         self.assertIsInstance(value, bool)

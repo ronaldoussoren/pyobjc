@@ -757,15 +757,12 @@ def _makeD(v):
     if isinstance(v, NSDecimalNumber):
         return v
 
-    print ("makeD(%r of %r)"%(v, type(v)))
     return NSDecimalNumber.decimalNumberWithDecimal_(v)
 
 def decimal__add__(self, other):
-    print ("decimal__add__(%r, %r)"%(self, other))
     return _makeD(self.decimalValue() + other)
 
 def decimal__radd__(self, other):
-    print ("decimal__radd__(%r, %r)"%(self, other))
     return _makeD(other + self.decimalValue())
 
 CLASS_METHODS['NSDecimalNumber'] = (
@@ -777,11 +774,16 @@ CLASS_METHODS['NSDecimalNumber'] = (
     ('__rmul__', lambda self, other: _makeD(other * self.decimalValue())),
     ('__div__', lambda self, other: _makeD(self.decimalValue() / other)),
     ('__rdiv__', lambda self, other: _makeD(other / self.decimalValue())),
+    ('__truediv__', lambda self, other: _makeD(self.decimalValue() / other)),
+    ('__rtruediv__', lambda self, other: _makeD(other / self.decimalValue())),
+    ('__floordiv__', lambda self, other: _makeD(self.decimalValue() // other)),
+    ('__rfloordiv__', lambda self, other: _makeD(other // self.decimalValue())),
     ('__mod__', lambda self, other: _makeD(self.decimalValue() % other)),
     ('__rmod__', lambda self, other: _makeD(other % self.decimalValue())),
     ('__neg__', lambda self: _makeD(-(self.decimalValue()))),
     ('__pos__', lambda self: _makeD(+(self.decimalValue()))),
     ('__abs__', lambda self: _makeD(abs(self.decimalValue()))),
+    ('__round__', lambda self, n=0 : _makeD(round(self.decimalValue(), n))),
 )
 
 def NSData__getslice__(self, i, j):

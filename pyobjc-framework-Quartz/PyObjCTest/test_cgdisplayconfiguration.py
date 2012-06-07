@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGDisplayConfiguration (TestCase):
 
     def testTypes(self):

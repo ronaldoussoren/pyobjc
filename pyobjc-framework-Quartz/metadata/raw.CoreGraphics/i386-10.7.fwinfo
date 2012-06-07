@@ -760,7 +760,7 @@
     "args": [
      {
       "name": "connected", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -1697,11 +1697,11 @@
      }, 
      {
       "name": "stereo", 
-      "typestr": "Z"
+      "typestr": "i"
      }, 
      {
       "name": "forceBlueLine", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -3775,7 +3775,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGCursorIsVisible": {
@@ -3786,7 +3786,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDataConsumerCreate": {
@@ -4109,7 +4109,7 @@
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^Z"
+      "typestr": "^i"
      }
     ], 
     "retval": {
@@ -4140,7 +4140,7 @@
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^Z"
+      "typestr": "^i"
      }
     ], 
     "retval": {
@@ -4175,7 +4175,7 @@
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^Z"
+      "typestr": "^i"
      }
     ], 
     "retval": {
@@ -4201,7 +4201,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayCapture": {
@@ -4341,7 +4341,7 @@
      }, 
      {
       "name": "synchronous", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -4356,7 +4356,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayGammaTableCapacity": {
@@ -4422,7 +4422,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsAlwaysInMirrorSet": {
@@ -4433,7 +4433,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsAsleep": {
@@ -4444,7 +4444,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsBuiltin": {
@@ -4455,7 +4455,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsCaptured": {
@@ -4466,7 +4466,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsInHWMirrorSet": {
@@ -4477,7 +4477,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsInMirrorSet": {
@@ -4488,7 +4488,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsMain": {
@@ -4499,7 +4499,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsOnline": {
@@ -4510,7 +4510,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayIsStereo": {
@@ -4521,7 +4521,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayMirrorsDisplay": {
@@ -4888,11 +4888,11 @@
      }, 
      {
       "name": "stereo", 
-      "typestr": "Z"
+      "typestr": "i"
      }, 
      {
       "name": "forceBlueLine", 
-      "typestr": "Z"
+      "typestr": "i"
      }, 
      {
       "name": "option", 
@@ -4948,7 +4948,7 @@
      }
     ], 
     "retval": {
-     "typestr": "Z"
+     "typestr": "i"
     }
    }, 
    "CGDisplayVendorNumber": {
@@ -4985,7 +4985,7 @@
     "args": [
      {
       "name": "combineState", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -7030,7 +7030,7 @@
     "args": [
      {
       "name": "inhibit", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -9664,7 +9664,7 @@
      }, 
      {
       "name": "keyDown", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {
@@ -9679,7 +9679,7 @@
      }, 
      {
       "name": "updateMouseCursorPosition", 
-      "typestr": "Z"
+      "typestr": "i"
      }, 
      {
       "name": "buttonCount", 
@@ -9687,7 +9687,7 @@
      }, 
      {
       "name": "mouseButtonDown", 
-      "typestr": "Z"
+      "typestr": "i"
      }
     ], 
     "retval": {

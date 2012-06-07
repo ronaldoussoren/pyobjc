@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 from SystemConfiguration import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestSCDynamicStoreKey (TestCase):
     def testFunctions(self):
 

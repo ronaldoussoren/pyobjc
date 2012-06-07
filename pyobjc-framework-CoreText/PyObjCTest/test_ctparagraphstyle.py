@@ -102,7 +102,7 @@ class TestCTParagraphStyle (TestCase):
         self.assertEqual(len(v), sizeof_CTWritingDirection)
 
         # And now the hard part: create a CTParagraphStyle with custom options
-        if sys.maxint > 2**32:
+        if sys.maxsize > 2**32:
             float_pack = "d"
         else:
             float_pack = "f"
@@ -127,7 +127,7 @@ class TestCTParagraphStyle (TestCase):
                 CTParagraphStyleSetting(
                     spec=kCTParagraphStyleSpecifierBaseWritingDirection,
                     valueSize=sizeof_CTWritingDirection,
-                    value=chr(kCTWritingDirectionRightToLeft)),
+                    value=chr(kCTWritingDirectionRightToLeft).encode('latin1')),
         )
         style = CTParagraphStyleCreate(options, len(options))
         self.assertIsInstance(style, CTParagraphStyleRef);
@@ -140,13 +140,13 @@ class TestCTParagraphStyle (TestCase):
         ok, v = CTParagraphStyleGetValueForSpecifier(style,
                 kCTParagraphStyleSpecifierBaseWritingDirection, sizeof_CTWritingDirection, None)
         self.assertTrue(ok)
-        self.assertIsInstance(v, str)
-        self.assertEqual(v, chr(kCTWritingDirectionRightToLeft))
+        self.assertIsInstance(v, bytes)
+        self.assertEqual(v, chr(kCTWritingDirectionRightToLeft).encode('latin1'))
 
         ok, v = CTParagraphStyleGetValueForSpecifier(style,
                 kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof_CGFloat, None)
         self.assertTrue(ok)
-        self.assertIsInstance(v, str)
+        self.assertIsInstance(v, bytes)
         self.assertEqual(v, struct.pack(float_pack, 10.5))
 
 if __name__ == "__main__":

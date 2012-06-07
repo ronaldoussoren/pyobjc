@@ -5,6 +5,16 @@ import objc
 from PyObjCTools.TestSupport import *
 import LaunchServices
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestLaunchServices (TestCase):
     def testValues(self):
         # Use this to test for a number of enum and #define values

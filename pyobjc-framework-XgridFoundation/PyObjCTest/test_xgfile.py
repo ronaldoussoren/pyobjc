@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestXGFile (TestCase):
     def testConstants(self):
         self.assertEqual(XGFileTypeNone, 0)

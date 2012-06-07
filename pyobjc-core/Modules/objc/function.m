@@ -109,7 +109,6 @@ static PyObject* func_repr(PyObject* _self)
 }
 
 
-
 static PyObject* 
 func_call(PyObject* s, PyObject* args, PyObject* kwds)
 {

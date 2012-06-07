@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCVPixelBuffer (TestCase):
     def testConstants(self):
         self.assertEqual(kCVPixelFormatType_1Monochrome, 0x00000001)
@@ -97,14 +107,14 @@ class TestCVPixelBuffer (TestCase):
         self.assertResultIsVariableSize(CVPixelBufferGetBaseAddress)
         v = CVPixelBufferGetBaseAddress(buf)
         self.assertIsInstance(v, objc.varlist)
-        self.assertIsInstance(v[0], str)
+        self.assertIsInstance(v[0], bytes)
 
         self.assertResultHasType(CVPixelBufferGetBaseAddressOfPlane, b'^v')
         self.assertResultIsVariableSize(CVPixelBufferGetBaseAddressOfPlane)
         v = CVPixelBufferGetBaseAddressOfPlane(buf, 0)
         if v is not objc.NULL:
             self.assertIsInstance(v, objc.varlist)
-            self.assertIsInstance(v[0], str)
+            self.assertIsInstance(v[0], bytes)
 
         rv = CVPixelBufferUnlockBaseAddress(buf, 0)
         self.assertEqual(rv, 0)

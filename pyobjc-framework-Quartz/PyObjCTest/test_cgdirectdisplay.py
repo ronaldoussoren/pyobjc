@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCGDirectDisplay (TestCase):
 
     def testConstants(self):
@@ -268,11 +278,11 @@ class TestCGDirectDisplay (TestCase):
         self.assertResultHasType(CGSetDisplayTransferByByteTable, objc._C_INT)
         self.assertArgHasType(CGSetDisplayTransferByByteTable, 0, objc._C_UINT)
         self.assertArgHasType(CGSetDisplayTransferByByteTable, 1, objc._C_UINT)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 2, 'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(CGSetDisplayTransferByByteTable, 2, b'n^' + objc._C_CHAR_AS_INT)
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 2, 1)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 3, 'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(CGSetDisplayTransferByByteTable, 3, b'n^' + objc._C_CHAR_AS_INT)
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 3, 1)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 4, 'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(CGSetDisplayTransferByByteTable, 4, b'n^' + objc._C_CHAR_AS_INT)
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 4, 1)
 
     @min_os_level('10.6')

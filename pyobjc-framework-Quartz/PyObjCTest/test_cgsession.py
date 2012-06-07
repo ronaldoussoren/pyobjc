@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
 class TestCGSession (TestCase):
 
     def testConstants(self):

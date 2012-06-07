@@ -222,17 +222,13 @@ class TestDecimalNumber (TestCase):
         self.assertIsInstance(one_half, NSDecimalNumber)
 
         
-        print (one, two, three)
-        print (type(one), type(two))
-        print (one.decimalValue())
-        print (two.decimalValue())
-        print (two.decimalValue() + one.decimalValue())
-        print (NSDecimalNumber.decimalNumberWithDecimal_(two.decimalValue() + one.decimalValue()))
-        print (one, two, three)
         self.assertEqual(one + two, three)
         self.assertEqual(three - one, two)
         self.assertEqual(three * two, six)
         self.assertEqual(one / two, one_half)
+        self.assertEqual(three // two, one)
+        self.assertEqual(round(three / two), one)
+        self.assertEqual(round(one / two, 1), one_half)
 
 
 

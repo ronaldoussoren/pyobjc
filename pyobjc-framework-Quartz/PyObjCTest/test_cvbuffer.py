@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCVBuffer (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVBufferPropagatedAttachmentsKey, unicode)
@@ -30,12 +35,12 @@ class TestCVBuffer (TestCase):
 
         self.assertArgHasType(CVBufferSetAttachment, 2, b'@')
         self.assertArgHasType(CVBufferSetAttachment, 0,  b'^{__CVBuffer=}')
-        CVBufferSetAttachment(buf, u"pyobjc.test",  ctx, kCVAttachmentMode_ShouldPropagate)
+        CVBufferSetAttachment(buf, b"pyobjc.test".decode('latin1'),  ctx, kCVAttachmentMode_ShouldPropagate)
 
         self.assertArgHasType(CVBufferGetAttachment, 0,  b'^{__CVBuffer=}')
         self.assertResultHasType(CVBufferGetAttachment, b'@')
         self.assertArgIsOut(CVBufferGetAttachment, 2)
-        v, mode = CVBufferGetAttachment(buf, u"pyobjc.test", None)
+        v, mode = CVBufferGetAttachment(buf, b"pyobjc.test".decode('latin1'), None)
         self.assertTrue(v is ctx)
         self.assertEqual(mode, kCVAttachmentMode_ShouldPropagate)
 
@@ -47,7 +52,7 @@ class TestCVBuffer (TestCase):
         self.assertArgHasType(CVBufferSetAttachments, 0,  b'^{__CVBuffer=}')
         CVBufferSetAttachments(buf, {
             "pyobjc.test2": 42,
-            "pyobjc.test3": u"hello"
+            "pyobjc.test3": b"hello".decode('latin1')
         }, kCVAttachmentMode_ShouldPropagate)
 
         self.assertArgHasType(CVBufferPropagateAttachments, 0,  b'^{__CVBuffer=}')

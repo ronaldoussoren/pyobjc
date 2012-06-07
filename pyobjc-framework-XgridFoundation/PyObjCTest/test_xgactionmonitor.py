@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestXGActionMonitor (TestCase):
     def testConstants(self):
         self.assertEqual(XGResourceActionNone, 0)

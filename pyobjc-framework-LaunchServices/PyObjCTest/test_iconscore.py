@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from LaunchServices import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestIconsCore (TestCase):
     def testConstants(self):
         self.assertEqual(kGenericDocumentIconResource, -4000)

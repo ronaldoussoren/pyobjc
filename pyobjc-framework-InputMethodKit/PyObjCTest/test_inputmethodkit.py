@@ -5,6 +5,16 @@ import objc
 import unittest
 import InputMethodKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestInputMethodKit (unittest.TestCase):
     def testClasses(self):
 

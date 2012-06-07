@@ -29,14 +29,14 @@ class TestCTGlyphInfo (TestCase):
         v = CTGlyphInfoGetTypeID()
         self.assertIsInstance(v, (int, long))
 
-        font = CTFontCreateWithName(u"Optima Bold", 14, None)
+        font = CTFontCreateWithName(b"Optima Bold".decode('latin1'), 14, None)
         self.assertIsInstance(font, CTFontRef)
 
         self.assertResultIsCFRetained(CTGlyphInfoCreateWithGlyphName)
         info = v = CTGlyphInfoCreateWithGlyphName(
-                u"copyright",
+                b"copyright".decode('latin1'),
                 font,
-                u"(c)")
+                b"(c)".decode('latin1'))
         self.assertIsInstance(v, CTGlyphInfoRef)
 
         self.assertResultIsCFRetained(CTGlyphInfoCreateWithGlyph)

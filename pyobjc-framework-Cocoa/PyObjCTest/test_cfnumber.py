@@ -174,7 +174,7 @@ class TestCFNumber (TestCase):
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)
 
-        if sys.maxsize >= 2**32:
+        if sys.maxsize > 2**32:
             self.assertEqual(v , 8)
         else:
             self.assertEqual(v , 4)

@@ -112,13 +112,32 @@
 	       sizeof(unichar) * aRange.length);
 }
 
+#if 0 /* Experimantal support for private APIs. Should not be necessary */
+
+-(const char*)_fastCStringContents:(BOOL)nullTerminated
+{
+	return NULL;
+}
+
+-(const UniChar*)_fastCharacterContents
+{
+	return PyUnicode_AS_UNICODE(value);
+}
+
+-(CFStringEncoding)_fastestEncodingInCFStringEncoding
+{
+	return kCFStringEncodingUTF8;
+}
+#endif
+
+
 #else /* !PyObjC_UNICODE_FAST_PATH */
 
 -(id)__realObject__
 {
 	if (!realObject) {
 		PyObjC_BEGIN_WITH_GIL
-			PyObject* utf8 = PyUnicode_AsEncodedString(value, NULL, NULL);
+			PyObject* utf8 = PyUnicode_AsUTF8String(value);
 			if (!utf8) {
 				NSLog(@"failed to encode unicode string to byte string");
 				PyErr_Clear();
@@ -148,6 +167,23 @@
 {
 	[((NSString *)[self __realObject__]) getCharacters:buffer range:aRange];
 }
+
+#if 0 /* Experimantal support for private APIs. Should not be necessary */
+-(const char*)_fastCStringContents:(BOOL)nullTerminated
+{
+	return [[self __realObject__] _fastCStringContents:nullTerminated];
+}
+
+-(const UniChar*)_fastCharacterContents
+{
+	return [[self __realObject__] _fastCharacterContents];
+}
+
+-(CFStringEncoding)_fastestEncodingInCFStringEncoding
+{
+	return [[self __realObject__] _fastestEncodingInCFStringEncoding];
+}
+#endif
 
 
 #endif /* PyObjC_UNICODE_FAST_PATH */

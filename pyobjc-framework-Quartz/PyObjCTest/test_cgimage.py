@@ -5,6 +5,11 @@ import sys
 
 import sys
 
+try:
+    long
+except NameError:
+    long = int
+
 if sys.version_info[0] != 2:
     def buffer(value):
         if isinstance(value, bytes):
@@ -63,15 +68,17 @@ class TestCGImage (TestCase):
         v = CGImageCreateCopy(image)
         self.assertIsInstance(v, CGImageRef)
 
-        provider = CGDataProviderCreateWithCFData(buffer(
-            open('/System/Library/CoreServices/DefaultDesktop.jpg', 'rb').read()))
+        with open('/System/Library/CoreServices/DefaultDesktop.jpg', 'rb') as fp:
+            data = fp.read()
+        provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithJPEGDataProvider)
         self.assertArgHasType(CGImageCreateWithJPEGDataProvider, 2, objc._C_BOOL)
         v = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
         self.assertIsInstance(v, CGImageRef)
 
-        provider = CGDataProviderCreateWithCFData(buffer(
-            open('/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png', 'rb').read()))
+        with open('/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png', 'rb') as fp:
+            data = fp.read()
+        provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithPNGDataProvider)
         self.assertArgHasType(CGImageCreateWithPNGDataProvider, 2, objc._C_BOOL)
         v = CGImageCreateWithPNGDataProvider(provider, None, True, kCGRenderingIntentDefault)

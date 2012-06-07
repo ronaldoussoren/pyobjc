@@ -3,6 +3,16 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSCNetworkConfiguration (TestCase):
 
     def testTypes(self):

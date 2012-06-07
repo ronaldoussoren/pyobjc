@@ -284,7 +284,7 @@ class TestRunLoop (TestCase):
         self.assertIsInstance(ref, CFRunLoopTimerRef)
 
         CFRunLoopAddTimer(rl, ref, runloop_mode)
-        res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
+        res = CFRunLoopRunInMode(runloop_mode, 4.0, True)
         CFRunLoopRemoveTimer(rl, ref, runloop_mode)
 
         self.assertNotEqual(l, [])

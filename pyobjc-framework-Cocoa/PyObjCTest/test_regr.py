@@ -43,8 +43,9 @@ class TestRegr (TestCase):
             os.close(fp)
             os.dup2(dupped, 2)
 
-        data = open('/tmp/pyobjc-thread.txt', 'r').read()
-        self.assert_('does this print?' in data)
+        with open('/tmp/pyobjc-thread.txt', 'r') as fp:
+            data = fp.read()
+        self.assertTrue('does this print?' in data)
 
         self.assertEqual(aList, ["before", "after"])
 

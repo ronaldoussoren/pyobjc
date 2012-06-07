@@ -69,13 +69,13 @@ class TestCTFontDescriptor (TestCase):
         self.assertResultIsCFRetained(CTFontDescriptorCreateWithAttributes)
         v = CTFontDescriptorCreateWithAttributes(
                 {
-                    kCTFontNameAttribute: u"Optima Bold",
-                    kCTFontSizeAttribute: u"23.4",
+                    kCTFontNameAttribute: b"Optima Bold".decode('latin1'),
+                    kCTFontSizeAttribute: b"23.4".decode('latin1'),
                 })
         self.assertIsInstance(v, CTFontDescriptorRef)
 
         self.assertResultIsCFRetained(CTFontDescriptorCreateWithNameAndSize)
-        v = CTFontDescriptorCreateWithNameAndSize(u"Optima Bold", 15.0)
+        v = CTFontDescriptorCreateWithNameAndSize(b"Optima Bold".decode('latin1'), 15.0)
         self.assertIsInstance(v, CTFontDescriptorRef)
         descriptor = v
 
@@ -107,7 +107,7 @@ class TestCTFontDescriptor (TestCase):
 
         self.assertResultIsCFRetained(CTFontDescriptorCopyAttribute)
         v = CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute)
-        self.assertEqual(v, u"Optima Bold")
+        self.assertEqual(v, b"Optima Bold".decode('latin1'))
 
         self.assertResultIsCFRetained(CTFontDescriptorCopyLocalizedAttribute)
         self.assertArgIsOut(CTFontDescriptorCopyLocalizedAttribute, 2)

@@ -5,6 +5,16 @@ import objc
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSystemConfiguration (TestCase):
     def testConstants(self):
         self.assertEqual(kSCStatusOK,  0)

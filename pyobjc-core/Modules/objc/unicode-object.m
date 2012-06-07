@@ -509,14 +509,17 @@ PyObjCUnicode_New(NSString* value)
 	PyObjC_ENDHANDLER
 
 	result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
-	PyUnicode_AS_UNICODE(result) = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
+	Py_UNICODE* tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
+	tptr[0] = tptr[length] = 0;
+	result->base.str = tptr;
 	if (PyUnicode_AS_UNICODE(result) == NULL) {
 		Py_DECREF((PyObject*)result);
 		PyMem_Free(characters); characters = NULL;
 		PyErr_NoMemory();
 		return NULL;
 	}
-	PyUnicode_GET_SIZE(result) = length;
+	/*PyUnicode_GET_SIZE(result) = length;*/
+	result->base.length = length;
 	for (i = 0; i < length; i++) {
 		PyUnicode_AS_UNICODE(result)[i] = (Py_UNICODE)(characters[i]);
 	}

@@ -36,7 +36,11 @@ class TestNotificationCenter (TestCase):
         self.assertArgIsFunction(CFNotificationCenterAddObserver, 2, b'v@@@@@', True)
         self.assertArgHasType(CFNotificationCenterAddObserver, 4, b'@')
 
-        CFNotificationCenterAddObserver(ref, b"object".decode('ascii'), observe, b"pyobjc.test".decode('ascii'), ref, CFNotificationSuspensionBehaviorDeliverImmediately)
+        args = {}
+        args["object"] = b"object".decode('ascii')
+        args["pyobjc.test"] = b"pyobjc.test".decode('ascii')
+
+        CFNotificationCenterAddObserver(ref, args["object"], observe, args["pyobjc.test"], ref, CFNotificationSuspensionBehaviorDeliverImmediately)
 
         CFNotificationCenterPostNotificationWithOptions(ref, b"pyobjc.test".decode('ascii'), ref, {b"name".decode('ascii'):b"value".decode('ascii')},  kCFNotificationPostToAllSessions)
         self.assertEqual(len(notifications) , 1)
@@ -56,18 +60,19 @@ class TestNotificationCenter (TestCase):
         self.assertEqual(info[4] , {b"name2".decode('ascii'):b"value2".decode('ascii')})
         self.assertArgHasType(CFNotificationCenterRemoveObserver, 1, b'@')
         self.assertArgHasType(CFNotificationCenterRemoveObserver, 3, b'@')
-        CFNotificationCenterRemoveObserver(ref, b"object".decode('ascii'), b"pyobjc.test".decode('ascii'), ref)
+        CFNotificationCenterRemoveObserver(ref, args["object"], args["pyobjc.test"], ref)
 
         self.assertArgHasType(CFNotificationCenterPostNotificationWithOptions, 2, b'@') 
         CFNotificationCenterPostNotificationWithOptions(ref, b"pyobjc.test".decode('ascii'), ref, {b"name".decode('ascii'):b"value".decode('ascii')},  kCFNotificationPostToAllSessions)
         self.assertEqual(len(notifications) , 2)
-        CFNotificationCenterAddObserver(ref, b"object".decode('ascii'), observe, b"pyobjc.test".decode('ascii'), ref, CFNotificationSuspensionBehaviorDeliverImmediately)
+
+        CFNotificationCenterAddObserver(ref, args["object"], observe, args["pyobjc.test"], ref, CFNotificationSuspensionBehaviorDeliverImmediately)
 
         self.assertArgHasType(CFNotificationCenterPostNotification, 2, b'@')
         self.assertArgIsBOOL(CFNotificationCenterPostNotification, 4)
         CFNotificationCenterPostNotification(ref, b"pyobjc.test".decode('ascii'), ref, {b"name2".decode('ascii'):b"value2".decode('ascii')},  True)
         self.assertEqual(len(notifications) , 3)
-        CFNotificationCenterRemoveEveryObserver(ref, b"object".decode('ascii'))
+        CFNotificationCenterRemoveEveryObserver(ref, args["object"])
         CFNotificationCenterPostNotification(ref, b"pyobjc.test".decode('ascii'), ref, {b"name2".decode('ascii'):b"value2".decode('ascii')},  True)
         self.assertEqual(len(notifications) , 3)
 

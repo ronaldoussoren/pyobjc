@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestQTTime (TestCase):
     def testConstants(self):
         self.assertEqual(kQTTimeIsIndefinite, 1)

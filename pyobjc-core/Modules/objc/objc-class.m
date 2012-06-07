@@ -608,7 +608,7 @@ static	char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 		PyObject* seq;
 		Py_ssize_t i, seqlen;
 
-		seq = PySequence_Fast(protocols, 
+		seq = PySequence_Fast(arg_protocols, 
 			"'protocols' not a sequence?");
 		if (seq == NULL) {
 			Py_DECREF(protocols);
@@ -620,16 +620,85 @@ static	char* keywords[] = { "name", "bases", "dict", "protocols", NULL };
 		}
 		seqlen = PySequence_Fast_GET_SIZE(seq);
 		for (i = 0; i < seqlen; i++) {
-			r = PyList_Append(protocols,
-				PySequence_Fast_GET_ITEM(seq, i));
-			if (r == -1) {
+			if (
+				PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
+			     || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
+				r = PyList_Append(protocols,
+					PySequence_Fast_GET_ITEM(seq, i));
+				if (r == -1) {
+					Py_DECREF(seq);
+					Py_DECREF(protocols);
+					Py_DECREF(real_bases);
+					Py_DECREF(protectedMethods);
+					Py_DECREF(hiddenSelectors);
+					Py_DECREF(hiddenClassSelectors);
+					return NULL;
+				}
+			} else {
+				PyErr_Format(PyExc_TypeError, 
+					"protocols list contains object that isn't an Objective-C protocol, but type %s",
+					Py_TYPE(PySequence_Fast_GET_ITEM(seq, i))->tp_name);
 				Py_DECREF(seq);
 				Py_DECREF(protocols);
 				Py_DECREF(real_bases);
 				Py_DECREF(protectedMethods);
 				Py_DECREF(hiddenSelectors);
 				Py_DECREF(hiddenClassSelectors);
+				return NULL;
 			}
+
+		}
+		Py_DECREF(seq);
+	}
+
+	/* Also look for '__pyobjc_protocols__' in the class dictionary,
+	 * makes it possible to write code that works in Python 2 as well
+	 * as python 3.
+	 */
+	arg_protocols = PyDict_GetItemString(dict, "__pyobjc_protocols__");
+	if (arg_protocols != NULL) {
+		PyObject* seq;
+		Py_ssize_t i, seqlen;
+
+		seq = PySequence_Fast(arg_protocols, 
+			"'__pyobjc_protocols__' not a sequence?");
+		if (seq == NULL) {
+			Py_DECREF(protocols);
+			Py_DECREF(real_bases);
+			Py_DECREF(protectedMethods);
+			Py_DECREF(hiddenSelectors);
+			Py_DECREF(hiddenClassSelectors);
+			return NULL;
+		}
+		seqlen = PySequence_Fast_GET_SIZE(seq);
+		for (i = 0; i < seqlen; i++) {
+			if (
+				PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
+			     || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
+				r = PyList_Append(protocols,
+					PySequence_Fast_GET_ITEM(seq, i));
+				if (r == -1) {
+					Py_DECREF(seq);
+					Py_DECREF(protocols);
+					Py_DECREF(real_bases);
+					Py_DECREF(protectedMethods);
+					Py_DECREF(hiddenSelectors);
+					Py_DECREF(hiddenClassSelectors);
+					return NULL;
+				}
+			} else {
+				PyErr_Format(PyExc_TypeError, 
+					"protocols list contains object that isn't an Objective-C protocol, but type %s",
+					Py_TYPE(PySequence_Fast_GET_ITEM(seq, i))->tp_name);
+				Py_DECREF(seq);
+				Py_DECREF(protocols);
+				Py_DECREF(real_bases);
+				Py_DECREF(protectedMethods);
+				Py_DECREF(hiddenSelectors);
+				Py_DECREF(hiddenClassSelectors);
+				return NULL;
+			}
+
 		}
 		Py_DECREF(seq);
 	}

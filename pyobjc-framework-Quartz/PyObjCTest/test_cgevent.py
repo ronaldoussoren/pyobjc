@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGEvent (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGEventRef)
@@ -61,28 +66,28 @@ class TestCGEvent (TestCase):
 
         CGEventSetDoubleValueField(evt, kCGMouseEventPressure, 42.5)
 
-        self.assertArgHasType(CGEventTapEnable, 0, '^{__CFMachPort=}')
+        self.assertArgHasType(CGEventTapEnable, 0, b'^{__CFMachPort=}')
         self.assertArgHasType(CGEventTapEnable, 1, objc._C_BOOL)
 
         self.assertResultHasType(CGEventTapIsEnabled, objc._C_BOOL)
-        self.assertArgHasType(CGEventTapIsEnabled, 0, '^{__CFMachPort=}')
+        self.assertArgHasType(CGEventTapIsEnabled, 0, b'^{__CFMachPort=}')
 
-        self.assertArgHasType(CGEventTapPostEvent, 0, '^{__CGEventTapProxy=}')
-        self.assertArgHasType(CGEventTapPostEvent, 1, '^{__CGEvent=}')
+        self.assertArgHasType(CGEventTapPostEvent, 0, b'^{__CGEventTapProxy=}')
+        self.assertArgHasType(CGEventTapPostEvent, 1, b'^{__CGEvent=}')
 
         self.assertResultHasType(CGGetEventTapList, objc._C_INT)
         self.assertArgHasType(CGGetEventTapList, 0, objc._C_UINT)
-        self.assertArgHasType(CGGetEventTapList, 1, 'o^' + CGEventTapInformation.__typestr__)
+        self.assertArgHasType(CGGetEventTapList, 1, b'o^' + CGEventTapInformation.__typestr__)
         self.assertArgSizeInArg(CGGetEventTapList, 1, (0, 2))
-        self.assertArgHasType(CGGetEventTapList, 2, 'o^' + objc._C_UINT)
+        self.assertArgHasType(CGGetEventTapList, 2, b'o^' + objc._C_UINT)
 
         self.assertResultHasType(CGEventPost, objc._C_VOID)
         self.assertArgHasType(CGEventPost, 0, objc._C_UINT)
-        self.assertArgHasType(CGEventPost, 1, '^{__CGEvent=}')
+        self.assertArgHasType(CGEventPost, 1, b'^{__CGEvent=}')
 
         self.assertResultHasType(CGEventPostToPSN, objc._C_VOID)
-        self.assertArgHasType(CGEventPostToPSN, 0, 'n^{ProcessSerialNumber=II}')
-        self.assertArgHasType(CGEventPostToPSN, 1, '^{__CGEvent=}')
+        self.assertArgHasType(CGEventPostToPSN, 0, b'n^{ProcessSerialNumber=II}')
+        self.assertArgHasType(CGEventPostToPSN, 1, b'^{__CGEvent=}')
 
 
     @expectedFailure

@@ -33,16 +33,19 @@ static PyObject* decimal_add(PyObject* left, PyObject* right);
 static PyObject* decimal_subtract(PyObject* left, PyObject* right);
 static PyObject* decimal_multiply(PyObject* left, PyObject* right);
 static PyObject* decimal_divide(PyObject* left, PyObject* right);
+static PyObject* decimal_floordivide(PyObject* left, PyObject* right);
 static PyObject* decimal_power(PyObject* left, PyObject* right, PyObject* power);
 static int decimal_nonzero(PyObject* self);
 static int decimal_coerce(PyObject** l, PyObject** r);
 static PyObject* decimal_inplace_add(PyObject* left, PyObject* right);
 static PyObject* decimal_inplace_subtract(PyObject* left, PyObject* right);
 static PyObject* decimal_inplace_multiply(PyObject* left, PyObject* right);
+static PyObject* decimal_inplace_floordivide(PyObject* left, PyObject* right);
 static PyObject* decimal_inplace_divide(PyObject* left, PyObject* right);
 static PyObject* decimal_positive(PyObject* self);
 static PyObject* decimal_negative(PyObject* self);
 static PyObject* decimal_absolute(PyObject* self);
+static PyObject* decimal_round(PyObject* self, PyObject* args, PyObject* kwds);
 
 static PyNumberMethods decimal_asnumber = {
 	decimal_add,			/* nb_add */
@@ -88,9 +91,9 @@ static PyNumberMethods decimal_asnumber = {
 	NULL,				/* nb_inplace_and */
 	NULL,				/* nb_inplace_xor */
 	NULL,				/* nb_inplace_or */
-	NULL,				/* nb_floor_divide */
+	decimal_floordivide,		/* nb_floor_divide */
 	decimal_divide,			/* nb_true_divide */
-	NULL,				/* nb_inplace_floor_divide */
+	decimal_inplace_floordivide,	/* nb_inplace_floor_divide */
 	decimal_inplace_divide		/* nb_inplace_true_divide */
 #if (PY_VERSION_HEX >= 0x02050000)
 	,NULL				/* nb_index */
@@ -139,6 +142,12 @@ static PyMethodDef decimal_methods[] = {
 		(PyCFunction)decimal_asfloat,
 		METH_NOARGS,
 		"Convert decimal to a Python float"
+	},
+	{
+		"__round__",
+		(PyCFunction)decimal_round,
+		METH_VARARGS|METH_KEYWORDS,
+		NULL
 	},
 	{
 		NULL,
@@ -484,8 +493,13 @@ static PyObject* decimal_add(PyObject* left, PyObject* right)
 	NSDecimal  result;
 	NSCalculationError err;
 
-	NSLog(@"decimal_add %@ %@", NSDecimalString(&Decimal_Value(left), NULL),
-			NSDecimalString(&Decimal_Value(right), NULL));
+#if PY_MAJOR_VERSION == 3
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		Py_INCREF(Py_NotImplemented);
+		return Py_NotImplemented;
+	}
+#endif
 
 	err = NSDecimalAdd(&result, 
 			&Decimal_Value(left), 
@@ -508,6 +522,14 @@ static PyObject* decimal_subtract(PyObject* left, PyObject* right)
 	NSDecimal  result;
 	NSCalculationError err;
 
+#if PY_MAJOR_VERSION == 3
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		Py_INCREF(Py_NotImplemented);
+		return Py_NotImplemented;
+	}
+#endif
+
 	err = NSDecimalSubtract(&result, 
 			&Decimal_Value(left), 
 			&Decimal_Value(right),
@@ -528,6 +550,14 @@ static PyObject* decimal_multiply(PyObject* left, PyObject* right)
 {
 	NSDecimal  result;
 	NSCalculationError err;
+
+#if PY_MAJOR_VERSION == 3
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		Py_INCREF(Py_NotImplemented);
+		return Py_NotImplemented;
+	}
+#endif
 
 	err = NSDecimalMultiply(&result, 
 			&Decimal_Value(left), 
@@ -550,6 +580,14 @@ static PyObject* decimal_divide(PyObject* left, PyObject* right)
 	NSDecimal  result;
 	NSCalculationError err;
 
+#if PY_MAJOR_VERSION == 3
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		Py_INCREF(Py_NotImplemented);
+		return Py_NotImplemented;
+	}
+#endif
+
 	err = NSDecimalDivide(&result, 
 			&Decimal_Value(left), 
 			&Decimal_Value(right),
@@ -564,6 +602,35 @@ static PyObject* decimal_divide(PyObject* left, PyObject* right)
 		NSDecimalCompact(&result);
 		return Decimal_New(&result);
 	}
+}
+
+static PyObject* decimal_floordivide(PyObject* left, PyObject* right)
+{
+	NSDecimal  result, result2;
+	NSCalculationError err;
+
+#if PY_MAJOR_VERSION == 3
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		Py_INCREF(Py_NotImplemented);
+		return Py_NotImplemented;
+	}
+#endif
+	err = NSDecimalDivide(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} 
+
+	NSDecimalRound(&result2, &result, 0, NSRoundDown);
+	NSDecimalCompact(&result2);
+	return Decimal_New(&result2);
 }
 
 static PyObject* decimal_inplace_add(PyObject* left, PyObject* right)
@@ -698,6 +765,41 @@ static PyObject* decimal_inplace_divide(PyObject* left, PyObject* right)
 	}
 }
 
+static PyObject* decimal_inplace_floordivide(PyObject* left, PyObject* right)
+{
+	NSDecimal  result, result2;
+	NSCalculationError err;
+	int r = decimal_coerce(&left, &right);
+	if (r == 1) {
+		PyErr_Format(PyExc_TypeError,
+			"unsupported operand type(s) for /=: '%s' and '%s'",
+			left->ob_type->tp_name,
+			right->ob_type->tp_name);
+		return NULL;
+	}
+
+	err = NSDecimalDivide(&result, 
+			&Decimal_Value(left), 
+			&Decimal_Value(right),
+			NSRoundPlain);
+	if (err == NSCalculationOverflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
+		return NULL;
+	} else if (err == NSCalculationUnderflow) {
+		Py_DECREF(left); Py_DECREF(right);
+		PyErr_SetString(PyExc_OverflowError, "Numeric underflow");
+		return NULL;
+	} 
+	Py_DECREF(right);
+
+	NSDecimalRound(&result2, &result, 0, NSRoundDown);
+	NSDecimalCompact(&result2);
+
+	Decimal_Value(left) = result2;
+	return left;
+}
+
 static int decimal_nonzero(PyObject* self)
 {
 	NSDecimal zero;
@@ -769,6 +871,21 @@ static PyObject* decimal_absolute(PyObject* self)
 		NSDecimalCompact(&result);
 		return Decimal_New(&result);
 	}
+}
+
+static PyObject* decimal_round(PyObject* self, PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "digits", NULL };
+	Py_ssize_t digits = 0;
+	NSDecimal  result;
+	
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|" Py_ARG_SIZE_T, keywords, &digits)) {
+		return NULL;
+	}
+
+	NSDecimalRound(&result, &Decimal_Value(self), digits, NSRoundDown);
+	NSDecimalCompact(&result);
+	return Decimal_New(&result);
 }
 
 static int decimal_coerce(PyObject** l, PyObject** r)

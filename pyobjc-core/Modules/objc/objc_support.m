@@ -2091,7 +2091,7 @@ const char* type, PyObject* argument, void* datum)
 	PyObjC_Assert(argument != NULL, -1);
 	PyObjC_Assert(datum != NULL, -1);
 
-#ifdef __ppc__
+#if defined(__ppc__) || defined(__i386__)
 	long long temp;
 	unsigned long long utemp;
 	int       r;

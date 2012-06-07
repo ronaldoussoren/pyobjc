@@ -7,6 +7,15 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- Codebase should work again when Python using ``--enable-unicode=ucs4``.
+
+- BUG: Avoid crashes in calculating with NSDecimal values in Python 3
+
+- Implement '//' operator for NSDecimal and NSDecimalNumber. 
+
+- Implement support for the ``round`` builtin in NSDecimal and
+  NSDecimalNumber
+
 - There is now limited support for packed struct definitions. This 
   requires that the struct is wrapped using ``objc.createStructType``.
 
@@ -30,6 +39,13 @@ Version 2.4  (or 3.0)
   Note: The Python 2.x style works upto Python 3.2. In Python 3.3 and later
   the Python 2.x style declaration no longer works due to changes in the
   language.
+
+- It is also possible to specify the protocols that a class conforms to using
+  a "__pyobjc_protocols__" attribute in the class body.  This has the same
+  interface as the "protocols" keyword argument in Python 3.x.
+
+  This is primarily meant to be used by code that needs to work in Python 2 
+  as well as Python 3.
 
 - Updated Python support. With this release PyObjC supports Python 2.6 and later,
   including Python 3.3 (which has a completely new representation for unicode strings)

@@ -92,7 +92,8 @@ class NSLogTest (TestCase):
     def stopCaptureStderr(self):
         os.dup2(self.realStderr, 2)
         self.capturedStderr.close()
-        data = open("/tmp/stderr.$$", "rb").read()
+        with open("/tmp/stderr.$$", "rb") as fp:
+            data = fp.read()
         return data
 
     def testLogging(self):

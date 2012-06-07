@@ -1,6 +1,11 @@
 from Quartz import *
 from PyObjCTools.TestSupport import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCAGradientLayer (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):

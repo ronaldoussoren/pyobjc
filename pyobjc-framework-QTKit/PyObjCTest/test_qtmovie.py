@@ -3,6 +3,11 @@ from PyObjCTools.TestSupport import *
 from QTKit import *
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestQTMovieHelper (NSObject):
     def movie_linkToURL_(self, m, u):
         return True

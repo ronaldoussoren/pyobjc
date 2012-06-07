@@ -4,6 +4,11 @@ from Quartz import *
 import Quartz
 import os
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGLayer (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGLayerRef)

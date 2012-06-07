@@ -24,12 +24,14 @@ class TestCTLine (TestCase):
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(CTLineCreateWithAttributedString)
-        token = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, u"-", None))
+        astr = CFAttributedStringCreate(None, b"-".decode('latin1'), None)
+        self.assertTrue(astr is not None)
+        token = CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(token, CTLineRef)
 
-        line = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, u"hello world", None))
+        astr = CFAttributedStringCreate(None, b"hello world".decode('latin1'), None)
+        self.assertTrue(astr is not None)
+        line = CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(line, CTLineRef)
 
         self.assertResultIsCFRetained(CTLineCreateTruncatedLine)

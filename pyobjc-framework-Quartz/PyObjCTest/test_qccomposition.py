@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzComposer import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestQCComposition (TestCase):
 
     def testConstants(self):

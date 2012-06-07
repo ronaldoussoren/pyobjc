@@ -2,6 +2,16 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCGColor (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGColorRef)

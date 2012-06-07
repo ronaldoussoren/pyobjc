@@ -3,9 +3,14 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import array
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGBitmapContext (TestCase):
     def testFunctions(self):
-        bytes_val = array.array('B', (0 for i in xrange(100*80*4)))
+        bytes_val = array.array('B', (0 for i in range(100*80*4)))
         self.assertIsInstance(bytes_val, array.array)
         self.assertEqual(len(bytes_val), 100*80*4)
         ctx = CGBitmapContextCreate(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast)
@@ -35,7 +40,7 @@ class TestCGBitmapContext (TestCase):
 
 
     def testFunctions106_(self):
-        bytes_val = array.array('B', (0 for i in xrange(100*80*4)))
+        bytes_val = array.array('B', (0 for i in range(100*80*4)))
         ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, None, None)
         self.assertIsInstance(ctx, CGContextRef)
         del ctx

@@ -242,7 +242,8 @@ class TestStream (TestCase):
         self.assertResultIsBOOL(CFWriteStreamSetProperty)
         CFWriteStreamSetProperty(stream, kCFStreamPropertyFileCurrentOffset, 0)
 
-        data = open('/tmp/pyobjc.test.txt', 'rb').read()
+        with open('/tmp/pyobjc.test.txt', 'rb') as fp:
+            data = fp.read()
         self.assertEqual(data, b'0123456789ABCDE')
         os.unlink('/tmp/pyobjc.test.txt')
 
@@ -266,23 +267,23 @@ class TestStream (TestCase):
 
     @onlyIf(onTheNetwork)
     def testSockets(self):
-        sd = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-        sd.connect(('www.apple.com', 80))
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sd:
+            sd.connect(('www.apple.com', 80))
 
-        self.assertArgIsOut(CFStreamCreatePairWithSocket, 2)
-        self.assertArgIsOut(CFStreamCreatePairWithSocket, 3)
-        readStream, writeStream = CFStreamCreatePairWithSocket(None,
-                sd.fileno(), None, None)
+            self.assertArgIsOut(CFStreamCreatePairWithSocket, 2)
+            self.assertArgIsOut(CFStreamCreatePairWithSocket, 3)
+            readStream, writeStream = CFStreamCreatePairWithSocket(None,
+                    sd.fileno(), None, None)
 
-        status = CFReadStreamGetStatus(readStream)
-        self.assertIsInstance(status, (int, long))
-        self.assertEqual(status, kCFStreamStatusNotOpen)
+            status = CFReadStreamGetStatus(readStream)
+            self.assertIsInstance(status, (int, long))
+            self.assertEqual(status, kCFStreamStatusNotOpen)
 
-        status = CFWriteStreamGetStatus(writeStream)
-        self.assertIsInstance(status, (int, long))
-        self.assertEqual(status, kCFStreamStatusNotOpen)
+            status = CFWriteStreamGetStatus(writeStream)
+            self.assertIsInstance(status, (int, long))
+            self.assertEqual(status, kCFStreamStatusNotOpen)
 
-        del readStream, writeStream, sd
+            del readStream, writeStream, sd
 
         self.assertArgIsOut(CFStreamCreatePairWithSocketToHost, 3)
         self.assertArgIsOut(CFStreamCreatePairWithSocketToHost, 4)

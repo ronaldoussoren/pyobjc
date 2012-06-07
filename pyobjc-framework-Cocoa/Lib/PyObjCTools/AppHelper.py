@@ -33,7 +33,8 @@ class PyObjCAppHelperCaller(NSObject):
         self.performSelector_withObject_afterDelay_(
             self.callAfter_, None, delay)
     
-    def call_(self, (func, args, kwargs)):
+    def call_(self, func_args_kwargs):
+        (func, args, kwargs) = func_args_kwargs
         func(*args, **kwargs)
 
 
@@ -77,13 +78,13 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
 
     def addRunLoopStopper_toRunLoop_(cls, runLoopStopper, runLoop):
         if runLoop in cls.singletons:
-            raise ValueError, "Stopper already registered for this runLoop"
+            raise ValueError("Stopper already registered for this runLoop")
         cls.singletons[runLoop] = runLoopStopper
     addRunLoopStopper_toRunLoop_ = classmethod(addRunLoopStopper_toRunLoop_)
         
     def removeRunLoopStopperFromRunLoop_(cls, runLoop):
         if runLoop not in cls.singletons:
-            raise ValueError, "Stopper not registered for this runLoop"
+            raise ValueError("Stopper not registered for this runLoop")
         del cls.singletons[runLoop]
     removeRunLoopStopperFromRunLoop_ = classmethod(removeRunLoopStopperFromRunLoop_)
         
@@ -244,11 +245,11 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
                 if isinstance(e, objc.error):
                     NSLog("%@", unicode(str(e), 'utf-8', 'replace'))
                 elif not unexpectedErrorAlert():
-                    NSLog("%@", u"An exception has occured:")
+                    NSLog("%@", "An exception has occured:")
                     traceback.print_exc()
                     sys.exit(0)
                 else:
-                    NSLog("%@", u"An exception has occured:")
+                    NSLog("%@", "An exception has occured:")
                     traceback.print_exc()
             else:
                 break

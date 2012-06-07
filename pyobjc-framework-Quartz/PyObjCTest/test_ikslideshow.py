@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestIKSlideShowHelper (NSObject):
     def slideshowItemAtIndex_(self, idx): return None
     def nameOfSlideshowItemAtIndex_(self, idx): return None

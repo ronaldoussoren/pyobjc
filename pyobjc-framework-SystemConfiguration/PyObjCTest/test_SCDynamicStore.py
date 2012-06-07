@@ -4,6 +4,16 @@ from SystemConfiguration import *
 import SystemConfiguration
 import os
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+try:
+    long
+except NameError:
+    long = int
+
 class TestSCDynamicStore (TestCase):
     def testTypes(self):
         self.assertTrue(isinstance(SCDynamicStoreRef, objc.objc_class))

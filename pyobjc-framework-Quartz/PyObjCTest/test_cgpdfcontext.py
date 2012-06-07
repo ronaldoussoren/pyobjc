@@ -4,6 +4,11 @@ from Quartz import *
 import Quartz
 from Foundation import NSMutableData
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCGPDFContext (TestCase):
     @min_os_level('10.5')
     def testFunctions10_5(self):

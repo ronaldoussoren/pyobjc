@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestCISampler (TestCase):
     def testMethods(self):
         self.assertIsNullTerminated(CISampler.samplerWithImage_keysAndValues_)

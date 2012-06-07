@@ -4,6 +4,16 @@ from Quartz.CoreGraphics import *
 
 import sys
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
 if sys.version_info[0] != 2:
     def buffer(value):
         if isinstance(value, bytes):
@@ -111,7 +121,8 @@ class TestCGFont (TestCase):
 
 
         #data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
-        data = open('/Library/Fonts/Courier New.ttf', 'rb').read()
+        with open('/Library/Fonts/Courier New.ttf', 'rb') as fp:
+            data = fp.read()
         self.assertResultIsCFRetained(CGFontCreateWithDataProvider)
         font = CGFontCreateWithDataProvider(
                 CGDataProviderCreateWithCFData(buffer(data))

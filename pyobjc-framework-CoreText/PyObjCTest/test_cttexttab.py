@@ -23,7 +23,7 @@ class TestCTTextTab (TestCase):
         self.assertIsInstance(CTTextTabGetTypeID(), (int, long))
 
         tab = CTTextTabCreate(kCTCenterTextAlignment, 10.5, { 
-            kCTTabColumnTerminatorsAttributeName: CFCharacterSetCreateWithCharactersInString(None, u".")
+            kCTTabColumnTerminatorsAttributeName: CFCharacterSetCreateWithCharactersInString(None, b".".decode('latin1'))
         })
         self.assertIsInstance(tab, CTTextTabRef)
 

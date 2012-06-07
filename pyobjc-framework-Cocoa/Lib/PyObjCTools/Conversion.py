@@ -26,7 +26,7 @@ PYTHON_TYPES = (
 )
 
 DECIMAL_LOCALE = NSDictionary.dictionaryWithObject_forKey_(
-    u'.', 'NSDecimalSeparator')
+    '.', 'NSDecimalSeparator')
 
 def toPythonDecimal(aNSDecimalNumber):
     """

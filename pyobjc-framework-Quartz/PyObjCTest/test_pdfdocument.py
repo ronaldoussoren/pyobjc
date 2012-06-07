@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestPDFDocument (TestCase):
     def testConstants(self):
         self.assertEqual(kPDFPrintPageScaleNone, 0)

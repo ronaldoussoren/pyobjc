@@ -4,6 +4,16 @@ from Quartz import *
 from CoreFoundation import CFArrayRef
 from Foundation import NSMutableData
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
+
+try:
+    long
+except NameError:
+    long = int
 import sys, os
 
 if sys.version_info[0] != 2:
@@ -42,7 +52,7 @@ class TestCGImageDestination (TestCase):
         dest = CGImageDestinationCreateWithURL(url, "public.tiff", 2, None)
         self.assertIsInstance(dest, CGImageDestinationRef)
 
-        CGImageDestinationSetProperties(dest, {u'key': u'value'})
+        CGImageDestinationSetProperties(dest, {b'key'.decode('latin1'): b'value'.decode('latin1')})
 
         provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
         img = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), 

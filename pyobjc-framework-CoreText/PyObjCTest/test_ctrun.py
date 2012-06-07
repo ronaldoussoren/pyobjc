@@ -23,7 +23,7 @@ class TestCTRun (TestCase):
         self.assertIsInstance(CTRunGetTypeID(), (int, long))
 
         line = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, u"hello world", None))
+                CFAttributedStringCreate(None, b"hello world".decode('latin1'), None))
         self.assertIsInstance(line, CTLineRef)
 
         run = CTLineGetGlyphRuns(line)[0]
@@ -96,7 +96,7 @@ class TestCTRun (TestCase):
         self.assertArgSizeInArg(CTRunGetAdvances, 2, 1)
 
         line = CTLineCreateWithAttributedString(
-                CFAttributedStringCreate(None, u"hello world", None))
+                CFAttributedStringCreate(None, b"hello world".decode('latin1'), None))
         self.assertIsInstance(line, CTLineRef)
 
         run = CTLineGetGlyphRuns(line)[0]
@@ -105,7 +105,7 @@ class TestCTRun (TestCase):
         r = CTRunGetAdvances(run, CFRange(1, 3), None)
         self.assertIsInstance(r, (list, tuple))
         self.assertEquals(len(r), 3)
-        for i in xrange(3):
+        for i in range(3):
             self.assertIsInstance(r[i], CGSize)
 
 

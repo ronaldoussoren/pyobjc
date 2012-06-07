@@ -72,7 +72,7 @@ class TestDateFormatter (TestCase):
         self.assertIsInstance(locale, CFLocaleRef)
 
         date = CFDateCreate(None, CFAbsoluteTimeGetCurrent())
-        self.assertIsInstance(date, CFDateRef)
+        self.assertIsInstance(date, NSDate)
 
         self.assertResultIsCFRetained(CFDateFormatterCreate)
         fmt = CFDateFormatterCreate(None, locale, kCFDateFormatterShortStyle, kCFDateFormatterLongStyle) 
@@ -97,7 +97,7 @@ class TestDateFormatter (TestCase):
         v = CFDateFormatterCreateStringWithAbsoluteTime(None, fmt, CFAbsoluteTimeGetCurrent())
         self.assertIsInstance(v, unicode)
         dt, rng = CFDateFormatterCreateDateFromString(None, fmt, v, (0, len(v)))
-        self.assertIsInstance(dt, CFDateRef)
+        self.assertIsInstance(dt, NSDate)
         self.assertIsInstance(rng, CFRange)
         ok, rng, abstime = CFDateFormatterGetAbsoluteTimeFromString(fmt, v, (0, len(v)), None)
         self.assertIs(ok, True)

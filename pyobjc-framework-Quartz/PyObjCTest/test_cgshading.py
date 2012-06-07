@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGShading (TestCase):
     def testTypes(self):
         self.assertIsCFType(CGShadingRef)

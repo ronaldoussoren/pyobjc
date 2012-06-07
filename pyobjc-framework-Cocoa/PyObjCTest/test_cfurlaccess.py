@@ -69,7 +69,8 @@ class TestURLAccess (TestCase):
         self.assertTrue(ok)
         self.assertIsInstance(errorCode, (int, long))
         self.assertTrue(os.path.exists(__file__ + "TEST"))
-        data = open(__file__ + "TEST", 'r').read()
+        with open(__file__ + "TEST", 'r') as fp:
+            data = fp.read()
         self.assertEqual(data , 'foobar')
         self.assertResultIsBOOL(CFURLDestroyResource)
         self.assertArgIsOut(CFURLDestroyResource, 1)

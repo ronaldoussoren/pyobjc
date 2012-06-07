@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
+try:
+    long
+except NameError:
+    long = int
+
 class TestCGWindowLevel (TestCase):
     def testConstants(self):
         self.assertEqual(kCGBaseWindowLevelKey, 0)
