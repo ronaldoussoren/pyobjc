@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 import time
 from CoreFoundation import *
+from Foundation import NSDate
 
 
 try:
@@ -60,7 +61,7 @@ class TestDate (TestCase):
         now = CFAbsoluteTimeGetCurrent()
         nowtm = time.localtime()
         dt = CFDateCreate(None, now)
-        self.assertIsInstance(dt, CFDateRef)
+        self.assertIsInstance(dt, NSDate)
         self.assertEqual(CFDateGetAbsoluteTime(dt) , now)
         dt2 = CFDateCreate(None, now + 1000)
         self.assertEqual(CFDateGetTimeIntervalSinceDate(dt2, dt) , 1000)

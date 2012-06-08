@@ -28,8 +28,8 @@
 	"kCGDisplaySamplesPerPixel": { "unicode": true },
 	"kCGDisplayWidth": { "unicode": true },
 	"kCGIODisplayModeID": { "unicode": true },
-	"kCGNotifyEventTapAdded": { "unicode": true },
-	"kCGNotifyEventTapRemoved": { "unicode": true },
+	"kCGNotifyEventTapAdded": { "unicode": false },
+	"kCGNotifyEventTapRemoved": { "unicode": false },
 	"kCGNotifyGUIConsoleSessionChanged": { "unicode": false },
 	"kCGNotifyGUISessionUserChanged": { "unicode": false }
   },

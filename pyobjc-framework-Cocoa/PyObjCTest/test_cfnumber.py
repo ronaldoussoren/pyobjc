@@ -13,80 +13,80 @@ class TestCFNumber (TestCase):
         number = 42
 
         ok, v = CFNumberGetValue(number, kCFNumberSInt8Type, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberSInt16Type, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberSInt32Type, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberSInt64Type, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberCharType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberShortType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberIntType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberLongType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberLongLongType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberCFIndexType, None);
-        self.assert_(ok)
-        self.assert_(isinstance(v, (int, long)))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, (int, long)))
         self.assertEqual(v, 42)
 
         ok, v = CFNumberGetValue(number, kCFNumberFloat32Type, None)
-        self.assert_(ok)
-        self.assert_(isinstance(v, float))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
         ok, v = CFNumberGetValue(number, kCFNumberFloat64Type, None)
-        self.assert_(ok)
-        self.assert_(isinstance(v, float))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
         ok, v = CFNumberGetValue(number, kCFNumberFloatType, None)
-        self.assert_(ok)
-        self.assert_(isinstance(v, float))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
         ok, v = CFNumberGetValue(number, kCFNumberDoubleType, None)
-        self.assert_(ok)
-        self.assert_(isinstance(v, float))
+        self.assertTrue(ok)
+        self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
         ## Don't test this, the wrapper shouldn't range-check 
         ## arguments and CFNumberGetValue will crash when the
         ## number type is invalid
         #ok, v = CFNumberGetValue(number, kCFNumberMaxType+2)
-        #self.assert_(not ok)
+        #self.asssertFalse(ok)
 
     def testBoolean(self):
         self.assertIsInstance(CFBooleanGetTypeID(), (int, long))
@@ -169,15 +169,16 @@ class TestCFNumber (TestCase):
 
     def testNumberTypes(self):
         v = CFNumberGetType(44)
-        self.assertIsIn(v, (kCFNumberLongLongType, kCFNumberLongType))
+        self.assertIn(v, (kCFNumberLongLongType, kCFNumberLongType))
         v = CFNumberGetType(2.5)
         self.assertEqual(v , kCFNumberDoubleType)
         v = CFNumberGetByteSize(44)
 
-        if sys.maxsize > 2**32:
+        if sys.maxsize > 2**32 or sys.version_info[0] > 2:
             self.assertEqual(v , 8)
         else:
             self.assertEqual(v , 4)
+
         v = CFNumberGetByteSize(44.0)
         self.assertEqual(v , 8)
         self.assertFalse(CFNumberIsFloatType(44))

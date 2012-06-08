@@ -136,6 +136,10 @@ static const char new_cif_signature[]     = { _C_PTR, _C_VOID, _C_PTR, _C_VOID, 
 static  ffi_cif* convert_cif = NULL;
 static  ffi_cif* new_cif = NULL;
 
+	/* 
+	 * XXX: This code is questionable, should use same approach as in struct-wrapper.m 
+	 */
+
 	PyHeapTypeObject* newType = NULL;
 	PyObjCPointerWrapper_ToPythonFunc from_c = NULL;
 	PyObjCPointerWrapper_FromPythonFunc to_c = NULL;
@@ -203,6 +207,16 @@ static  ffi_cif* new_cif = NULL;
 	}
 
 	newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
+
+
+#if PY_VERSION_HEX >= 0x03030000
+	newType->ht_qualname = PyText_FromString(name);
+	if (newType->ht_qualname == NULL) {
+		PyMem_Free(newType);
+		PyErr_NoMemory();
+		return NULL;
+	}
+#endif
 
 	v = PyDict_New();
 	if (v == NULL) {

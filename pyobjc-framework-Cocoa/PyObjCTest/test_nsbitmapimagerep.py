@@ -87,9 +87,14 @@ class TestNSBitmapImageRep(TestCase):
                 singlePlane[si+1] = gPlane[i]
                 singlePlane[si+2] = bPlane[i]
             else:
-                singlePlane[si] = ord(rPlane[i])
-                singlePlane[si+1] = ord(gPlane[i])
-                singlePlane[si+2] = ord(bPlane[i])
+                def as_byte(v):
+                    if isinstance(v, int):
+                        return v
+                    else:
+                        return ord(v)
+                singlePlane[si] = as_byte(rPlane[i])
+                singlePlane[si+1] = as_byte(gPlane[i])
+                singlePlane[si+2] = as_byte(bPlane[i])
 
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer

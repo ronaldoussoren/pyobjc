@@ -1,6 +1,12 @@
 
 from PyObjCTools.TestSupport import *
 from InputMethodKit import *
+import InputMethodKit
+
+try:
+    unicode
+except NameError:
+    unicode = str
 
 class TestIMKServer (TestCase):
     @min_os_level('10.6')
@@ -12,9 +18,9 @@ class TestIMKServer (TestCase):
         # NOTE: I have no idea if the tests will pass there, this
         # is just to avoid false negatives on 10.5
         # See also: Radar #6783035
-        self.assertIsIn('IMKDelegateClass', globals())
+        self.assertTrue(hasattr(InputMethodKit, 'IMKDelegateClass'))
         self.assertIsInstance(IMKDelegateClass, unicode)
-        self.assertIsIn('IMKControllerClass', globals())
+        self.assertTrue(hasattr(InputMethodKit, 'IMKControllerClass'))
         self.assertIsInstance(IMKControllerClass, unicode)
 
 

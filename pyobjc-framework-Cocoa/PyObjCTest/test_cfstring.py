@@ -103,27 +103,33 @@ class TestString (TestCase):
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, b"foobar".decode('ascii'))
 
-        b = array.array('u', b"hello world".decode('latin1'))
-        s = CFStringCreateMutableWithExternalCharactersNoCopy(
-                None, b, len(b), len(b), kCFAllocatorNull)
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"hello world".decode('ascii'))
+        if sys.version_info[:2] < (3,3):
+            # See issue15035 on Python's tracker. There currently is
+            # no array format code for UCS2 storage (Python 3.3 or later)
+            # Therefore these tests can only work for earlier versions
+            # of Python.
 
-        b[0] = b'H'.decode('ascii')
+            b = array.array('u', b"hello world".decode('latin1'))
+            s = CFStringCreateMutableWithExternalCharactersNoCopy(
+                    None, b, len(b), len(b), kCFAllocatorNull)
+            self.assertIsInstance(s, objc.pyobjc_unicode)
+            self.assertEqual(s, b"hello world".decode('ascii'))
+
+            b[0] = b'H'.decode('ascii')
 
 
-        # The objc_unicode proxy is immutable
-        self.assertEqual(s, b"hello world".decode('ascii'))
+            # The objc_unicode proxy is immutable
+            self.assertEqual(s, b"hello world".decode('ascii'))
 
-        # The changed string can be accessed directly though:
-        s = s.nsstring()
-        self.assertEqual(s, b"Hello world".decode('ascii'))
+            # The changed string can be accessed directly though:
+            s = s.nsstring()
+            self.assertEqual(s, b"Hello world".decode('ascii'))
 
-        b2 = array.array('u', b" ".decode('ascii') * 40)
-        CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
-        self.assertEqual(s, ' ' * len(b))
-        b2[0] = b'X'.decode('ascii')
-        self.assertEqual(s, 'X' + (' ' * (len(b)-1)))
+            b2 = array.array('u', b" ".decode('ascii') * 40)
+            CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
+            self.assertEqual(s, ' ' * len(b))
+            b2[0] = b'X'.decode('ascii')
+            self.assertEqual(s, 'X' + (' ' * (len(b)-1)))
 
     def testFunctions(self):
         v = CFStringGetLength(b"bla bla".decode('ascii'))
@@ -326,11 +332,20 @@ class TestString (TestCase):
         self.assertEqual(s, b"abc".decode('ascii'))
 
         CFStringReplaceAll(s, b"aHelloaaa".decode('ascii'))
-        CFStringTrim(s, b'a'.decode('ascii'))
+        trim_chars = b'a'.decode('ascii')
+
+        # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString
+        trim_chars = CFStringCreateWithCString(None, b"a", kCFStringEncodingASCII)
+        CFStringTrim(s, trim_chars)
         self.assertEqual(s, b"Hello".decode('ascii'))
 
+        # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString
         CFStringReplaceAll(s, b"* * * *abc * ".decode('ascii'))
-        CFStringTrim(s, b'* '.decode('ascii'))
+        trim_chars = b'* '.decode('ascii')
+
+        
+        trim_chars = CFStringCreateWithCString(None, b"* ", kCFStringEncodingASCII)
+        CFStringTrim(s, trim_chars)
         self.assertEqual(s, b"*abc ".decode('ascii'))
         
         
@@ -602,9 +617,22 @@ class TestStringEncodingExt (TestCase):
         self.assertResultIsBOOL(CFStringGetSurrogatePairForLongCharacter)
         ok, chars = CFStringGetSurrogatePairForLongCharacter(v, None)
         self.assertTrue(ok)
-        self.assertEqual(len(chars), 2)
-        self.assertEqual(chars[0], unichr(0xD801))
-        self.assertEqual(chars[1], unichr(0xDC01))
+
+        if sys.version_info[:2] < (3,3) == 65535:
+            # ucs2 build of python 3.2 or earlier:
+            self.assertEqual(len(chars), 2)
+            self.assertEqual(chars[0], unichr(0xD801))
+            self.assertEqual(chars[1], unichr(0xDC01))
+
+        else:
+            # ucs4 build of python 3.2 or earlier; or 
+            # python 3.3
+            #
+            # In both cases this function is useless because
+            # Python can represent unicode codepoints without using
+            # surrogate pairs, and will do so when converting 
+            # an array of UCS2 codepoints to a Pytho unicode object
+            pass
 
     @min_os_level('10.7')
     def testFunctions10_7(self):

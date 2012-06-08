@@ -6,17 +6,31 @@ import sys
 from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass3
 
-rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
-otherBytes = array.array('b')
-otherBytes.fromstring('12345678901234567890' * 5)
 
 if sys.version_info[0] == 3:
     buffer = memoryview
+    def array_frombytes(a, b):
+        return a.frombytes(b)
+
+    def array_tobytes(a):
+        return a.tobytes()
+
+else:
+    def array_frombytes(a, b):
+        return a.fromstring(b)
+
+    def array_tobytes(a):
+        return a.tostring()
 
 try:
     memoryview
 except NameError:
     memoryview = None
+
+
+rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
+otherBytes = array.array('B')
+array_frombytes(otherBytes, b'12345678901234567890' * 5)
 
 class TestNSData(TestCase):
     def testMethods(self):
@@ -105,10 +119,10 @@ class TestNSData(TestCase):
         self.assertEqual(len(bytesValue), len(rawBytes), "bytes() and rawBytes not equal length.")
 
         if sys.version_info[:2] <= (2,6):
-            self.assertEquals(buffer(rawBytes), bytesValue)
+            self.assertEqual(buffer(rawBytes), bytesValue)
 
         else:
-            self.assertEquals(rawBytes, bytesValue)
+            self.assertEqual(rawBytes, bytesValue)
 
         try:
             bytesValue[3] = b'\xAE'
@@ -125,15 +139,20 @@ class TestNSData(TestCase):
         mutableData = NSMutableData.dataWithBytes_length_(rawBytes, len(rawBytes))
         mutableBytes = mutableData.mutableBytes()
         for i in range(0, len(mutableBytes)):
-            mutableBytes[i] = otherBytes[i:i+1].tostring()
-        mutableBytes[1:8] = otherBytes[1:8].tostring()
+            if sys.version_info[:2] >= (3,3):
+                mutableBytes[i] = array_tobytes(otherBytes[i:i+1])[0]
+            else:
+                mutableBytes[i] = array_tobytes(otherBytes[i:i+1])
+        mutableBytes[1:8] = array_tobytes(otherBytes[1:8])
 
         try:
-            mutableBytes[2:10] = otherBytes[1:5].tostring()
+            mutableBytes[2:10] = array_tobytes(otherBytes[1:5])
         except (TypeError, ValueError) as r:
             if str(r).find('right operand length must match slice length') == 0:
                 pass
             elif 'cannot modify size of memoryview object' in str(r):
+                pass
+            elif 'ndarray assignment: lvalue and rvalue have different structures' in str(r):
                 pass
             else:
                 raise
@@ -271,10 +290,10 @@ class TestBuffer(TestCase):
     def testArray(self):
         a = array.array('b', b'foo')
         m = NSMutableData.dataWithData_(a)
-        self.assertEqual(a.tostring(), m[:])
+        self.assertEqual(array_tobytes(a), m[:])
         self.assertTrue(objc.repythonify(a) is a)
-        a.fromstring(m)
-        self.assertEqual(a.tostring(), b'foofoo')
+        array_frombytes(a, m)
+        self.assertEqual(array_tobytes(a), b'foofoo')
         m.appendData_(a)
         self.assertEqual(m[:], b'foofoofoo')
         m[3:6] = b'bar'
@@ -301,7 +320,7 @@ class TestRegressions (TestCase):
             input_str = str(input)
 
         buf = NSData.dataWithData_(input)
-        self.assertEquals(str(buf), input_str)
+        self.assertEqual(str(buf), input_str)
 
 
 if __name__ == '__main__':

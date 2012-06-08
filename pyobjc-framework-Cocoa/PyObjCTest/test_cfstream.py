@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 import errno, time, os, socket, sys
+import contextlib
 
 from .test_cfsocket import onTheNetwork
 
@@ -267,7 +268,7 @@ class TestStream (TestCase):
 
     @onlyIf(onTheNetwork)
     def testSockets(self):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sd:
+        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
             sd.connect(('www.apple.com', 80))
 
             self.assertArgIsOut(CFStreamCreatePairWithSocket, 2)
