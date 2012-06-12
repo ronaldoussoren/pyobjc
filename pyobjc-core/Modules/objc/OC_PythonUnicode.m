@@ -58,17 +58,9 @@
 	/* FIXME3: Should switch to __weak on OSX 10.7 or later, that should
 	 * fix this issue without a performance penalty.
 	 */
-#if 0
-	if ([self retainCount] == 1) {
-#endif
-		PyObjC_BEGIN_WITH_GIL
-			[super release];
-		PyObjC_END_WITH_GIL
-#if 0
-	} else {
+	PyObjC_BEGIN_WITH_GIL
 		[super release];
-	}
-#endif
+	PyObjC_END_WITH_GIL
 }
 
 -(void)dealloc
@@ -93,43 +85,35 @@
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
+	Py_ssize_t offset;
 	if (anIndex > PY_SSIZE_T_MAX) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
 	if (anIndex >= (NSUInteger)PyUnicode_GET_SIZE(value)) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
-	return PyUnicode_AS_UNICODE(value)[anIndex];
+
+	offset = (Py_ssize_t)anIndex;
+	unichar ch = PyUnicode_AS_UNICODE(value)[offset];
+	return ch;
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
+	Py_ssize_t offset;
+	size_t length;
+
 	if (aRange.location + aRange.length > (NSUInteger)PyUnicode_GET_SIZE(value)) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
+
+	offset = (Py_ssize_t)(aRange.location);
+	length = (size_t)aRange.length;
+
 	memcpy(buffer, 
-	       PyUnicode_AS_UNICODE(value) + aRange.location, 
-	       sizeof(unichar) * aRange.length);
+	       (PyUnicode_AS_UNICODE(value)) + offset,
+	       2 * length);
 }
-
-#if 0 /* Experimantal support for private APIs. Should not be necessary */
-
--(const char*)_fastCStringContents:(BOOL)nullTerminated
-{
-	return NULL;
-}
-
--(const UniChar*)_fastCharacterContents
-{
-	return PyUnicode_AS_UNICODE(value);
-}
-
--(CFStringEncoding)_fastestEncodingInCFStringEncoding
-{
-	return kCFStringEncodingUTF8;
-}
-#endif
-
 
 #else /* !PyObjC_UNICODE_FAST_PATH */
 
@@ -160,31 +144,15 @@
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
-	return [((NSString *)[self __realObject__]) characterAtIndex:anIndex];
+
+	unichar ch = [((NSString *)[self __realObject__]) characterAtIndex:anIndex];
+	return ch;
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
 	[((NSString *)[self __realObject__]) getCharacters:buffer range:aRange];
 }
-
-#if 0 /* Experimantal support for private APIs. Should not be necessary */
--(const char*)_fastCStringContents:(BOOL)nullTerminated
-{
-	return [[self __realObject__] _fastCStringContents:nullTerminated];
-}
-
--(const UniChar*)_fastCharacterContents
-{
-	return [[self __realObject__] _fastCharacterContents];
-}
-
--(CFStringEncoding)_fastestEncodingInCFStringEncoding
-{
-	return [[self __realObject__] _fastestEncodingInCFStringEncoding];
-}
-#endif
-
 
 #endif /* PyObjC_UNICODE_FAST_PATH */
 

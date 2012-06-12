@@ -133,12 +133,15 @@
 			length:(NSUInteger)length 
 		  freeWhenDone:(BOOL)flag
 {
-#ifndef PyObjC_UNICODE_FAST_PATH
-# error "Wide UNICODE builds are not supported at the moment"
-#endif
 	PyObjC_BEGIN_WITH_GIL
+		int byteorder = 0;
 		PyObject* v;
-		v = PyUnicode_FromUnicode((Py_UNICODE*)characters, length);
+		/* Decode as a UTF-16 string in native byteorder */
+		v = PyUnicode_DecodeUTF16(
+			(const char*)characters,
+			length * 2,
+			NULL,
+			&byteorder);
 		if (v == NULL) {
 			PyObjC_GIL_FORWARD_EXC();
 		}

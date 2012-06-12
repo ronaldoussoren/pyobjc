@@ -68,6 +68,15 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_UNICODE_FAST_PATH
 #endif
 
+/* 
+ * XXX: disable the fast path for
+ * unicode strings due to unexplained
+ * test failures.
+ */
+#ifdef PyObjC_UNICODE_FAST_PATH
+#undef PyObjC_UNICODE_FAST_PATH
+#endif
+
 #include "objc-runtime-compat.h"
 #include "proxy-registry.h"
 #include "objc_support.h"
