@@ -335,8 +335,10 @@ class TestString (TestCase):
         trim_chars = b'a'.decode('ascii')
 
         # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString
-        trim_chars = CFStringCreateWithCString(None, b"a", kCFStringEncodingASCII)
+        #trim_chars = CFStringCreateWithCString(None, b"a", kCFStringEncodingASCII)
+        print >>sys.stderr, ("@@@@@@@ BEFORE TRIM @@@@@@")
         CFStringTrim(s, trim_chars)
+        print >>sys.stderr, ("@@@@@@@ AFTER TRIM @@@@@@")
         self.assertEqual(s, b"Hello".decode('ascii'))
 
         # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString

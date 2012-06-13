@@ -73,8 +73,10 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
  * unicode strings due to unexplained
  * test failures.
  */
+#if 0
 #ifdef PyObjC_UNICODE_FAST_PATH
 #undef PyObjC_UNICODE_FAST_PATH
+#endif
 #endif
 
 #include "objc-runtime-compat.h"

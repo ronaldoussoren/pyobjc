@@ -43,12 +43,12 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 }
 
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
-+ objectWithPythonObject:(PyObject *) obj;
-+ depythonifyTable;
-+ pythonifyStructTable;
++ (id <NSObject>)objectWithPythonObject:(PyObject *) obj;
++ (id)depythonifyTable;
++ (id)pythonifyStructTable;
 + (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(Py_ssize_t) length;
-+ objectWithCoercedPyObject:(PyObject *) obj;
-- initWithPyObject:(PyObject *) obj;
++ (id <NSObject>)objectWithCoercedPyObject:(PyObject *) obj;
+- (id)initWithPyObject:(PyObject *) obj;
 
 /*!
  * @method pyObject
@@ -78,10 +78,10 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 /* Key-Value Coding support */
 + (BOOL)useStoredAccessor;
 + (BOOL)accessInstanceVariablesDirectly;
-- valueForKey:(NSString*) key;
+- (id)valueForKey:(NSString*) key;
 - (NSDictionary*) valuesForKeys: (NSArray*)keys;
-- valueForKeyPath: (NSString*) keyPath;
-- storedValueForKey: (NSString*) key;
+- (id)valueForKeyPath: (NSString*) keyPath;
+- (id)storedValueForKey: (NSString*) key;
 - (void)takeValue: value forKey: (NSString*) key;
 - (void)setValue: value forKey: (NSString*) key;
 - (void)setValue: value forKeyPath: (NSString*) key;
@@ -96,8 +96,8 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- initWithCoder:(NSCoder*)coder;
-+classFallbacksForKeyedArchiver;
+- (id)initWithCoder:(NSCoder*)coder;
++ (id)classFallbacksForKeyedArchiver;
 -(NSObject*)replacementObjectForArchiver:(NSObject*)archiver;
 -(NSObject*)replacementObjectForKeyedArchiver:(NSObject*)archiver;
 -(NSObject*)replacementObjectForCoder:(NSObject*)archiver;

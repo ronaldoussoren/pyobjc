@@ -17,9 +17,12 @@
 @interface OC_PythonUnicode : NSString
 {
 	PyObject* value;
-#ifndef PyObjC_UNICODE_FAST_PATH
 	id realObject;
-#endif /* !PyObjC_UNICODE_FAST_PATH */
+
+	/* Cache IMPs for proxied methods, for slightly better efficiency */
+	NSUInteger (*imp_length)(id, SEL);
+	unichar (*imp_charAtIndex)(id, SEL, NSUInteger);
+	void (*imp_getCharacters)(id, SEL, unichar*, NSRange);
 }
 
 /*!
@@ -30,7 +33,7 @@
  *
  * Caller must own the GIL.
  */
-+ unicodeWithPythonObject:(PyObject*)value;
++(id)unicodeWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -40,7 +43,7 @@
  *
  * Caller must own the GIL.
  */
-- initWithPythonObject:(PyObject*)value;
+-(id)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
@@ -53,14 +56,6 @@
  * @result Returns a new reference to the wrapped Python unicode.
  */
 -(PyObject*)__pyobjc_PythonObject__;
-
-#ifndef PyObjC_UNICODE_FAST_PATH
-/*!
- * @abstract Access the NSString* representing the unicode
- * @result Returns a backing NSString* object
- */
--(id)__realObject__;
-#endif /* !PyObjC_UNICODE_FAST_PATH */
 
 /*
  * Primitive NSString methods

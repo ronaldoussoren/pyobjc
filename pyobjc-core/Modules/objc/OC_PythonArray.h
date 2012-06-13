@@ -31,7 +31,7 @@
  *
  * Caller must own the GIL
  */
-+ depythonifyObject:(PyObject*)object;
++(OC_PythonArray*)depythonifyObject:(PyObject*)object;
 
 
 /*!
@@ -42,7 +42,7 @@
  *
  * Caller must own the GIL.
  */
-+ arrayWithPythonObject:(PyObject*)value;
++(OC_PythonArray*)arrayWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -136,6 +136,6 @@
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- initWithCoder:(NSCoder*)coder;
+- (id)initWithCoder:(NSCoder*)coder;
 
 @end

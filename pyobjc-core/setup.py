@@ -346,7 +346,8 @@ CFLAGS.extend([
 #    "-Wno-long-long",
     "-W",
 
-
+    "-fcatch-undefined-behavior",
+    "-Wno-missing-method-return-type", # XXX
     "-Wno-import",
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, get_os_level().split('.')))),
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros

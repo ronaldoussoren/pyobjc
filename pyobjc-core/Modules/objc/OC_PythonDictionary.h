@@ -35,7 +35,7 @@
  *
  * Caller must own the GIL
  */
-+ depythonifyObject:(PyObject*)object;
++(OC_PythonDictionary*)depythonifyObject:(PyObject*)object;
 
 
 /*!
@@ -46,7 +46,7 @@
  *
  * The caller must own the GIL.
  */
-+ dictionaryWithPythonObject:(PyObject*)value;
++(OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -58,7 +58,7 @@
  *
  *    The caller must own the GIL.
  */
-- initWithPythonObject:(PyObject*)value;
+-(OC_PythonDictionary*)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
@@ -115,6 +115,6 @@
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- initWithCoder:(NSCoder*)coder;
+-(id)initWithCoder:(NSCoder*)coder;
 
 @end /* interface OC_PythonDictionary */

@@ -118,11 +118,20 @@ typedef int Py_ssize_t;
 #define Py_ARG_BYTES "z"
 #endif
 
+/* Cast a PyObject* to the type expected by the 2.x C API. 
+ * This is a macro because the cast is not necessary for the 3.x C API)
+ */
+#define UNICODE_CAST(item)  ((PyUnicodeObject*)(item))
+#define SLICE_CAST(item)	   ((PySliceObject*)(item))
+
 #else
 
 #ifndef Py_ARG_BYTES
 #define Py_ARG_BYTES "y"
 #endif
+
+#define UNICODE_CAST(item)	(item)
+#define SLICE_CAST(item)	(item)
 
 #endif
 

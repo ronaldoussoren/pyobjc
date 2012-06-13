@@ -35,7 +35,7 @@
 	rc = FSPathMakeRef((UInt8*)[path UTF8String],
 		&fsref, &isDirectory);
 	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %d", rc];
+		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
 	}
 
 	return fsref;
@@ -48,7 +48,7 @@
 
 	rc = FSRefMakePath(fsref, buffer, sizeof(buffer));
 	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %d", rc];
+		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
 	}
 
 	return [NSString stringWithUTF8String: (char*)buffer];
@@ -62,7 +62,7 @@
 	rc = FSPathMakeRef((UInt8*)[path UTF8String],
 		fsref, &isDirectory);
 	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %d", rc];
+		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
 	}
 }
 

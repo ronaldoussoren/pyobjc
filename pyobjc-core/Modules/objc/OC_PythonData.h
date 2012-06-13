@@ -37,7 +37,7 @@
  *
  * Caller must own the GIL.
  */
-+ dataWithPythonObject:(PyObject*)value;
++(OC_PythonData*)dataWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -47,7 +47,7 @@
  *
  * Caller must own the GIL.
  */
-- initWithPythonObject:(PyObject*)value;
+-(OC_PythonData*)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc

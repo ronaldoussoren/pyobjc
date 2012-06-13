@@ -212,7 +212,7 @@ end:
 	return r;
 }
 
-+ objectWithPythonObject:(PyObject *) obj
++(id <NSObject>)objectWithPythonObject:(PyObject *) obj
 {
 	id instance;
 	if (likely(PyObjCObject_Check(obj))) {
@@ -224,7 +224,7 @@ end:
 	return instance;
 }
 
-+ objectWithCoercedPyObject:(PyObject *)obj
++(id <NSObject>)objectWithCoercedPyObject:(PyObject *)obj
 {
 	id instance;
 	PyObjC_BEGIN_WITH_GIL
@@ -315,7 +315,7 @@ end:
 	return instance;
 }
 
-+ depythonifyTable
++(id)depythonifyTable
 {
 	PyObjC_BEGIN_WITH_GIL
 		if (OC_PythonObject_DepythonifyTable == NULL) {
@@ -330,7 +330,7 @@ end:
 	PyObjC_END_WITH_GIL
 }
 
-+ pythonifyStructTable
++(id)pythonifyStructTable
 {
 	PyObjC_BEGIN_WITH_GIL
 		if (OC_PythonObject_PythonifyStructTable == NULL) {
@@ -345,7 +345,7 @@ end:
 	PyObjC_END_WITH_GIL
 }
 
-+ (PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(Py_ssize_t)length
++(PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(Py_ssize_t)length
 {
 	if (OC_PythonObject_PythonifyStructTable == NULL) {
 		Py_INCREF(obj);
@@ -364,7 +364,7 @@ end:
 	return PyObject_CallFunctionObjArgs(convert, obj, NULL);
 }
 
-- initWithPyObject:(PyObject *) obj
+-(id)initWithPyObject:(PyObject *) obj
 {
 	PyObjC_BEGIN_WITH_GIL
 		if (pyObject) {
@@ -390,7 +390,7 @@ end:
         
 
 
-- (void)dealloc
+-(void)dealloc
 {
 	PyObjC_BEGIN_WITH_GIL
 		PyObjC_UnregisterObjCProxy(pyObject, self);
@@ -401,7 +401,7 @@ end:
 	[super dealloc];
 }
 
--copyWithZone:(NSZone*)zone
+-(id)copyWithZone:(NSZone*)zone
 {
 	(void)zone;
 	NSObject* result = nil;
@@ -430,18 +430,18 @@ end:
 	return result;
 }
 
--copy
+-(id)copy
 {
 	return [self copyWithZone:NULL];
 }
 
 /* Undocumented method used by NSLog, this seems to work. */
-- (NSString*) _copyDescription
+-(NSString*) _copyDescription
 {
 	return [[self description] copy];
 }
 
-- (NSString*) description
+-(NSString*) description
 {
 	PyObject *repr;
 
@@ -495,7 +495,7 @@ end:
 	return @"a python object";
 }
   
-- (void) doesNotRecognizeSelector:(SEL) aSelector
+-(void)doesNotRecognizeSelector:(SEL) aSelector
 {
 	[NSException raise:NSInvalidArgumentException
 				format:@"%@ does not recognize -%s",
@@ -569,7 +569,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 }
 
 
-- (BOOL) respondsToSelector:(SEL) aSelector
+-(BOOL)respondsToSelector:(SEL) aSelector
 {
 	PyObject *m;
 	Method* methods;
@@ -629,7 +629,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return nil;
 }
 
-- (NSMethodSignature *) methodSignatureForSelector:(SEL) sel
+-(NSMethodSignature *) methodSignatureForSelector:(SEL) sel
 {
 	/* We can't call our superclass implementation, NSProxy just raises
 	 * an exception.
@@ -684,7 +684,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return [NSMethodSignature signatureWithObjCTypes:encoding];
 }
 
-- (BOOL) _forwardNative:(NSInvocation*) invocation
+-(BOOL)_forwardNative:(NSInvocation*) invocation
 {
 	/* XXX: This should use libffi to call call native methods of this
 	 *      class. The implementation below works good enough for
@@ -809,7 +809,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	return NO;
 }
 
-- (void) forwardInvocation:(NSInvocation *) invocation
+-(void)forwardInvocation:(NSInvocation *) invocation
 {
 	/* XXX: Needs cleanup */
 	NSMethodSignature* msign = [invocation methodSignature];
@@ -914,26 +914,18 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 }
 
 
-- (PyObject *)  pyObject
+-(PyObject *)pyObject
 {
 	return pyObject;
 }
 
-- (PyObject *)  __pyobjc_PythonObject__
+-(PyObject *)__pyobjc_PythonObject__
 {
 	PyObjC_BEGIN_WITH_GIL
-#if 1
 		if (pyObject == NULL) {
-#if 1
 			PyObject* r = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
 			PyObjC_GIL_RETURN(r);
-#else
-			Py_INCREF(Py_None);
-			PyObjC_GIL_RETURN(Py_None);
-#endif
-		} else 
-#endif
-		{
+		} else {
 			Py_XINCREF(pyObject);
 			PyObjC_GIL_RETURN(pyObject);
 		}
@@ -1012,7 +1004,7 @@ getModuleFunction(char* modname, char* funcname)
 /*
  *  Call PyObjCTools.KeyValueCoding.getKey to get the value for a key
  */
-- valueForKey:(NSString*) key
+-(id)valueForKey:(NSString*) key
 {
 static  PyObject* getKeyFunc = NULL;
 
@@ -1053,7 +1045,7 @@ static  PyObject* getKeyFunc = NULL;
 	return res;
 }
 
-- storedValueForKey: (NSString*) key
+-(id)storedValueForKey: (NSString*) key
 {
 	return [self valueForKey: key];
 }
@@ -1062,12 +1054,12 @@ static  PyObject* getKeyFunc = NULL;
 /* Calls PyObjCTools.KeyValueCoding.setKey to set the key */
 
 /* This is the 10.2 flavour of this method, deprecated in 10.3 */
-- (void)takeValue: value forKey: (NSString*) key
+-(void)takeValue: value forKey: (NSString*) key
 {
 	[self setValue: value forKey: key];
 }
 
-- (void)setValue: value forKey: (NSString*) key
+-(void)setValue: value forKey: (NSString*) key
 {
 static  PyObject* setKeyFunc = NULL;
 
@@ -1110,12 +1102,12 @@ static  PyObject* setKeyFunc = NULL;
 	PyObjC_END_WITH_GIL
 }
 
-- (void)takeStoredValue: value forKey: (NSString*) key
+-(void)takeStoredValue: value forKey: (NSString*) key
 {
 	[self takeValue: value forKey: key];
 }
 
-- (NSDictionary*) valuesForKeys: (NSArray*)keys
+-(NSDictionary*)valuesForKeys: (NSArray*)keys
 {
 	NSMutableDictionary* result;
 	NSEnumerator* enumerator;
@@ -1132,7 +1124,7 @@ static  PyObject* setKeyFunc = NULL;
 	return result;
 }
 
-- valueForKeyPath: (NSString*) keyPath
+-(id)valueForKeyPath: (NSString*) keyPath
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	NSEnumerator* enumerator = [elems objectEnumerator];
@@ -1148,12 +1140,12 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 /* takeValue:forKeyPath: was deprecated in 10.3, and is the right way on 10.2 */
-- (void)takeValue: value forKeyPath: (NSString*)keyPath
+-(void)takeValue: value forKeyPath: (NSString*)keyPath
 {
 	[self setValue: value forKeyPath: keyPath];
 }
 	
-- (void)setValue: value forKeyPath: (NSString*) keyPath
+-(void)setValue: value forKeyPath: (NSString*) keyPath
 {
 	NSArray* elems = [keyPath componentsSeparatedByString:@"."];
 	id target;
@@ -1169,12 +1161,12 @@ static  PyObject* setKeyFunc = NULL;
 	[target takeValue: value forKey: [elems objectAtIndex: len-1]];
 }
 
-- (void)takeValuesFromDictionary: (NSDictionary*) aDictionary
+-(void)takeValuesFromDictionary: (NSDictionary*) aDictionary
 {
 	[self setValuesForKeysWithDictionary: aDictionary];
 }
 
-- (void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary
+-(void)setValuesForKeysWithDictionary: (NSDictionary*) aDictionary
 {
 	NSEnumerator* enumerator = [aDictionary keyEnumerator];
 	id aKey;
@@ -1186,31 +1178,31 @@ static  PyObject* setKeyFunc = NULL;
 	}
 }
 
-- (void)unableToSetNilForKey: (NSString*) key
+-(void)unableToSetNilForKey: (NSString*) key
 {
 	[NSException 
 		raise: NSUnknownKeyException 
 		format: @"cannot set Nil for key: %@", key];
 }
 
-- (void)handleQueryWithUnboundKey: (NSString*) key
+-(void)handleQueryWithUnboundKey: (NSString*) key
 {
 	[self valueForUndefinedKey: key];
 }
 
-- (void)valueForUndefinedKey: (NSString*)key
+-(void)valueForUndefinedKey: (NSString*)key
 {
 	[NSException 
 		raise: NSUnknownKeyException
 		format: @"query for unknown key: %@", key];
 }
 
-- (void)handleTakeValue: value forUnboundKey: (NSString*) key
+-(void)handleTakeValue: value forUnboundKey: (NSString*) key
 {
 	[self setValue: value forUndefinedKey: key];
 }
 
-- (void)setValue: value forUndefinedKey: (NSString*) key
+-(void)setValue: value forUndefinedKey: (NSString*) key
 {
 	[NSException 
 		raise: NSUnknownKeyException 
@@ -1218,19 +1210,19 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+-(void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
 {
 	NSLog(@"*** Ignoring *** %@ for '%@' (of %@ with %#lx in %p).\n", NSStringFromSelector(_cmd), keyPath, observer, (long)options, context);
 	return;
 }
-- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
+-(void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath
 {
 	NSLog(@"*** Ignoring *** %@ for '%@' (of %@).", NSStringFromSelector(_cmd), keyPath, observer);
 }
 #endif
 
 /* NSObject protocol */
-- (NSUInteger)hash
+-(NSUInteger)hash
 {
     PyObjC_BEGIN_WITH_GIL
         int rval;
@@ -1243,7 +1235,7 @@ static  PyObject* setKeyFunc = NULL;
     PyObjC_END_WITH_GIL
 }
 
-- (BOOL)isEqual:(id)anObject
+-(BOOL)isEqual:(id)anObject
 {
     if (anObject == nil) {
         return NO;
@@ -1272,7 +1264,7 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 /* NSObject methods */
-- (NSComparisonResult)compare:(id)other
+-(NSComparisonResult)compare:(id)other
 {
     if (other == nil) {
         [NSException raise: NSInvalidArgumentException
@@ -1311,7 +1303,7 @@ static  PyObject* setKeyFunc = NULL;
 /*
  * Support of the NSCoding protocol
  */
-- (void)encodeWithCoder:(NSCoder*)coder
+-(void)encodeWithCoder:(NSCoder*)coder
 {
 	PyObjC_encodeWithCoder(pyObject, coder);
 }
@@ -1327,7 +1319,7 @@ static  PyObject* setKeyFunc = NULL;
 	pyObject = value;
 }
 
-- initWithCoder:(NSCoder*)coder
+-(id)initWithCoder:(NSCoder*)coder
 {
 	pyObject = NULL;
 
@@ -1442,7 +1434,7 @@ static  PyObject* setKeyFunc = NULL;
  * Luckily that's kind of easy, we know the entiry class hierarcy and also
  * know there are no subclasses.
  */
-- (BOOL)isKindOfClass:(Class)aClass
+-(BOOL)isKindOfClass:(Class)aClass
 {
 	if (aClass == [NSProxy class] || aClass == [OC_PythonObject class]) {
 		return YES;
@@ -1488,7 +1480,7 @@ static  PyObject* setKeyFunc = NULL;
 }
 
 
-+classFallbacksForKeyedArchiver
++(id)classFallbacksForKeyedArchiver
 {
 	return nil;
 }

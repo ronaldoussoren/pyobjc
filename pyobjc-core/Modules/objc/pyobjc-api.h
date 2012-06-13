@@ -290,7 +290,7 @@ struct pyobjc_api {
 	PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
 
 	/* PyObjC_RegisterStructType */
-	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, Py_ssize_t, const char**);
+	PyObject* (*register_struct)(const char*, const char*, const char*, initproc, Py_ssize_t, const char**, Py_ssize_t);
 
 	/* PyObjCIMP_Type */
 	PyTypeObject* imp_type;

@@ -8,7 +8,7 @@
 	OC_PythonUnicode* res;
 
 	res = [[OC_PythonUnicode alloc] initWithPythonObject:v];
-	[res autorelease];
+//	[res autorelease];
 	return res;
 }
 
@@ -69,6 +69,8 @@
 		PyObjC_UnregisterObjCProxy(value, self);
 #ifndef PyObjC_UNICODE_FAST_PATH
 		[realObject release];
+#else
+		[realObject release];
 #endif /* !PyObjC_UNICODE_FAST_PATH */
 		Py_XDECREF(value);
 	PyObjC_END_WITH_GIL
@@ -76,7 +78,10 @@
 	[super dealloc];
 }
 
-#ifdef PyObjC_UNICODE_FAST_PATH
+/*
+ * XXX: The code below should work for PyObjC_UNICODE_FAST_PATH 
+ * but causes failures on 64-bit builds on OSX 10.7
+ *
 
 -(NSUInteger)length
 {
@@ -85,7 +90,6 @@
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
-	Py_ssize_t offset;
 	if (anIndex > PY_SSIZE_T_MAX) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
@@ -93,29 +97,94 @@
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
 
-	offset = (Py_ssize_t)anIndex;
-	unichar ch = PyUnicode_AS_UNICODE(value)[offset];
-	return ch;
+	return (unichar)PyUnicode_AS_UNICODE(value)[anIndex];
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
-	Py_ssize_t offset;
-	size_t length;
-
 	if (aRange.location + aRange.length > (NSUInteger)PyUnicode_GET_SIZE(value)) {
 		[NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
 	}
 
-	offset = (Py_ssize_t)(aRange.location);
-	length = (size_t)aRange.length;
-
-	memcpy(buffer, 
-	       (PyUnicode_AS_UNICODE(value)) + offset,
-	       2 * length);
+	memmove(buffer, 
+	       (PyUnicode_AS_UNICODE(value)) + aRange.location,
+	       sizeof(unichar) * aRange.length);
 }
 
-#else /* !PyObjC_UNICODE_FAST_PATH */
+*/
+
+
+#if PY_VERSION_HEX >= 0x03030000
+
+-(id)__realObject__
+{
+	if (!realObject) {
+		switch (PyUnicode_KIND(value)) {
+		case PyUnicode_1BYTE_KIND:
+			if (PyUnicode_IS_ASCII(value)) {
+				realObject = [[NSString alloc]
+					initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
+					       length:(NSUInteger)PyUnicode_GET_SIZE(value)
+					     encoding:NSASCIIStringEncoding
+					 freeWhenDone:NO];
+			} else {
+				realObject = [[NSString alloc]
+					initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
+					       length:(NSUInteger)PyUnicode_GET_SIZE(value)
+					     encoding:NSISOLatin1StringEncoding
+					 freeWhenDone:NO];
+			
+			}
+			break;
+
+		case PyUnicode_2BYTE_KIND:
+			realObject = [[NSString alloc]
+				initWithCharactersNoCopy:PyUnicode_2BYTE_DATA(value)
+				       length:(NSUInteger)PyUnicode_GET_SIZE(value)
+				 freeWhenDone:NO];
+			break;
+
+		case PyUnicode_WCHAR_KIND:
+			/* wchar_t representation, treat same
+			 * as UCS4 strings
+			 */
+		case PyUnicode_4BYTE_KIND:
+			PyObjC_BEGIN_WITH_GIL
+				PyObject* utf8 = PyUnicode_AsUTF8String(value);
+				if (!utf8) {
+					NSLog(@"failed to encode unicode string to byte string");
+					PyErr_Clear();
+				} else {
+					realObject = [[NSString alloc]
+						initWithBytes:PyBytes_AS_STRING(utf8)
+						       length:(NSUInteger)PyBytes_GET_SIZE(utf8)
+						     encoding:NSUTF8StringEncoding];
+					Py_DECREF(utf8);
+				}
+			PyObjC_END_WITH_GIL
+		}
+	}
+	return realObject;
+}
+
+#elif defined(PyObjC_UNICODE_FAST_PATH)
+
+-(id)__realObject__
+{
+	if (!realObject) {
+		realObject = [[NSString alloc]
+			initWithCharactersNoCopy:PyUnicode_AS_UNICODE(value)
+			       length:(NSUInteger)PyUnicode_GET_SIZE(value)
+			 freeWhenDone:NO];
+	}
+	return realObject;
+}
+
+#else // !PyObjC_UNICODE_FAST_PATH */
+
+/* XXX: Add __realObject__ implementation tuned for Python 3.3 (choose right
+ *      NSString constructor based on unicode representation size
+ */
 
 -(id)__realObject__
 {
@@ -136,25 +205,40 @@
 	}
 	return realObject;
 }
-	
+#endif	
+
 -(NSUInteger)length
 {
-	return [((NSString *)[self __realObject__]) length];
+	if (!imp_length) {
+		[self __realObject__];
+		imp_length = (__typeof__(imp_length))([realObject methodForSelector:@selector(length)]);
+	}
+	if (!imp_length) abort();
+	if (!realObject) abort();
+	return imp_length(realObject, @selector(length));
 }
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
-
-	unichar ch = [((NSString *)[self __realObject__]) characterAtIndex:anIndex];
-	return ch;
+	if (!imp_charAtIndex) {
+		[self __realObject__];
+		imp_charAtIndex = (__typeof__(imp_charAtIndex))([realObject methodForSelector:@selector(characterAtIndex:)]);
+	}
+	if (!imp_charAtIndex) abort();
+	if (!realObject) abort();
+	return imp_charAtIndex(realObject, @selector(characterAtIndex:), anIndex);
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
-	[((NSString *)[self __realObject__]) getCharacters:buffer range:aRange];
+	if (!imp_getCharacters) {
+		[self __realObject__];
+		imp_getCharacters = (__typeof__(imp_getCharacters))([realObject methodForSelector:@selector(getCharacters:range:)]);
+	}
+	if (!imp_getCharacters) abort();
+	if (!realObject) abort();
+	imp_getCharacters(realObject, @selector(getCharacters:range:), buffer, aRange);
 }
-
-#endif /* PyObjC_UNICODE_FAST_PATH */
 
 /*
  * NSCoding support 
@@ -368,9 +452,6 @@
 	}
 }
 
-#if 1
-
-
 -(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver 
 {
 	(void)(archiver);
@@ -423,6 +504,5 @@
 	return [NSArray arrayWithObject:@"NSString"];
 }
 
-#endif
 
 @end /* implementation OC_PythonUnicode */

@@ -8,7 +8,7 @@
 
 static NSString* addSomeUnicode(NSString* input)
 {
-	return [NSString stringWithFormat:@"%@%C%C", input, 0x1234, 0x2049];
+	return [NSString stringWithFormat:@"%@%C%C", input, (short)0x1234, (short)0x2049];
 }
 
 @interface PyObjCTestExceptions : NSObject

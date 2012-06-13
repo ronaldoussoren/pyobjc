@@ -387,7 +387,8 @@ PyObjCUnsupportedMethod_IMP(
 {
 	[NSException raise:NSInvalidArgumentException
 		format:@"Implementing %s from Python is not supported for %@",
-			*(id*)args[0], sel_getName(*(SEL*)args[1])];
+			sel_getName(*(SEL*)args[1]),
+			*(id*)args[0]]; 
 }
 
 PyObject* 

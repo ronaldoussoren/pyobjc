@@ -22,7 +22,7 @@
 	NSObject<NSCopying>* tmp;
 	NSObject* retval;
 
-	tmp = (NSObject*)[[aClass alloc] init];
+	tmp = (NSObject<NSCopying>*)[[aClass alloc] init];
 	[tmp modify];
 
 	retval = [tmp copyWithZone:nil];
