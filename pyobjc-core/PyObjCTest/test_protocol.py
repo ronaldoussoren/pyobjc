@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 import objc
 import warnings
 import sys
+import platform
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
@@ -45,7 +46,7 @@ class TestInformalProtocols(TestCase):
 
 
 
-if sys.maxsize < 2 ** 32 and sys.version_info[0] == 2:
+if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_info[0] == 2:
     EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
 
     MyProtocol = objc.formal_protocol("MyProtocol", None, (

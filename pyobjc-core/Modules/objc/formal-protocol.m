@@ -9,20 +9,6 @@
  */
 #include "pyobjc.h"
 
-/*
- * FIXME: Looking in the Protocol structure is a rather crude hack, especially with the Objective-C 2.0
- * runtime API. Too bad there is no real API for doing what we want...
- */
-struct Protocol_struct {
-#ifndef __OBJC2__
-	@defs(Protocol);
-#else
-	char *protocol_name;
-	struct objc_protocol_list *protocol_list;
-	struct objc_method_description_list *instance_methods, *class_methods;
-#endif
-};
-
 PyDoc_STRVAR(proto_cls_doc,
 "objc.formal_protocol(name, supers, selector_list)\n"
 "\n"
@@ -91,13 +77,8 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	PyObject* selectors;
 	Py_ssize_t i, len;
 
-#ifndef __LP64__
 	PyObjCFormalProtocol* result = NULL;
-	Py_ssize_t numInstance = 0;
-	Py_ssize_t numClass = 0;
-	struct Protocol_struct* theProtocol = NULL;
-	struct objc_method_description* c;
-#endif
+	Protocol* theProtocol;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:formal_protocol",
 			keywords, &name, &supers, &selectors)) { 
@@ -127,92 +108,40 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 		return NULL;
 	}
 
-#ifdef __LP64__
-	/* Radar #5272299: the objective-C 2.0 runtime API doesn't have an interface for constructing new 
-	 * formal protocols. We can kind-of fake this for now in 32-bit mode, but that won't work in 64-bit
-	 * mode due to additional flexibility in that mode (which in itself is a good thing).
-	 */
-	Py_DECREF(selectors);
-	PyErr_SetString(PyObjCExc_Error, "The Objective-C 2.0 runtime API doesn't allow creation of formal protocols");
-	return NULL;
-
-#else
-	/*
-	 * The code below isn't actually supported on the ObjC 2.0 runtime, but happens to work
-	 * in 32-bit mode. Radar #5272299 asks for a formal API to do this.
-	 */
-
-
 	len = PySequence_Fast_GET_SIZE(selectors);
 	for (i = 0; i < len; i++) {
 		PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
-		if (sel == NULL || !PyObjCSelector_Check(sel)) {
-			PyErr_SetString(PyExc_TypeError,
-				"selectors need to be a sequence of selectors");
+		if (!PyObjCSelector_Check(sel)) {
+			PyErr_SetString(PyExc_TypeError, "Selectors is not a list of selectors");
 			Py_DECREF(supers);
-			Py_DECREF(selectors);
 			return NULL;
-		}
-		if (PyObjCSelector_GetFlags(sel)&PyObjCSelector_kCLASS_METHOD) {
-			numClass++;
-		} else {
-			numInstance++;
 		}
 	}
 
-	theProtocol = (struct Protocol_struct*)NSAllocateObject([Protocol class], 0, NULL);
+
+	if (objc_allocateProtocol == NULL) {
+		/* Protocol creation API is new in OSX 10.7, can will be weak-linked when
+		 * building on OSX 10.7 with a 10.6 deployment target.
+		 */
+		Py_DECREF(selectors);
+		PyErr_SetString(PyObjCExc_Error, "Cannot create formal protocols on this platform");
+		return NULL;
+	}
+
+	theProtocol = objc_allocateProtocol(name);
 	if (theProtocol == NULL) {
 		PyErr_NoMemory();
 		goto error;
 	}
 
-
-	theProtocol->protocol_name = strdup(name);
-	if (theProtocol->protocol_name == NULL) {
-		PyErr_NoMemory();
-		goto error;
-	}
-
-	if (supers == Py_None) {
-		theProtocol->protocol_list = NULL;
-	} else {
+	if (supers != Py_None) {
 		len = PySequence_Fast_GET_SIZE(supers);
-		theProtocol->protocol_list = malloc(
-			sizeof(struct objc_protocol_list) +
-			(1+len) * sizeof(Protocol*));
-		theProtocol->protocol_list->next = NULL;
-		theProtocol->protocol_list->count = len;
 		for (i = 0; i < len; i++) {
 			PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
-			theProtocol->protocol_list->list[i] =
-				PyObjCFormalProtocol_GetProtocol(v);
-			if (theProtocol->protocol_list->list[i] == NULL) {
-				goto error;
-			}
+			protocol_addProtocol(theProtocol, PyObjCFormalProtocol_GetProtocol(v));
 		}
-		theProtocol->protocol_list->list[i] = NULL;
 	}
 
-	if (numInstance != 0) {
-		theProtocol->instance_methods = malloc(
-			sizeof(struct objc_method_description_list) +
-			(1+numInstance)  * sizeof(struct objc_method_description));
-		if (theProtocol->instance_methods == NULL) {
-			PyErr_NoMemory();
-			goto error;
-		}
-		theProtocol->instance_methods->count = 0;
-	}
-	if (numClass != 0) {
-		theProtocol->class_methods = malloc(
-			sizeof(struct objc_method_description_list) + 
-			(1+numClass)  * sizeof(struct objc_method_description));
-		if (theProtocol->class_methods == NULL) {
-			PyErr_NoMemory();
-			goto error;
-		}
-		theProtocol->class_methods->count = 0;
-	}
 
 	len = PySequence_Fast_GET_SIZE(selectors);
 	for (i = 0; i < len; i++) {
@@ -220,35 +149,10 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 		SEL theSel = PyObjCSelector_GetSelector(sel);
 		const char* theSignature = PyObjCSelector_Signature(sel);
 
-		if (PyObjCSelector_GetFlags(sel)&PyObjCSelector_kCLASS_METHOD) {
-			c = &(theProtocol->class_methods->list[
-				theProtocol->class_methods->count++]);
-			c->name = theSel;
-			c->types = strdup(theSignature);
-			if (c->types == NULL) goto error;
-		} else {
-			c = &(theProtocol->instance_methods->list[
-				theProtocol->instance_methods->count++]);
-			c->name = theSel;
-			c->types = strdup(theSignature);
-			if (c->types == NULL) goto error;
-		}
+		protocol_addMethodDescription(theProtocol, theSel, theSignature, PyObjCSelector_Required(sel), !PyObjCSelector_IsClassMethod(sel));
 	}
 
-	if (theProtocol->instance_methods) {
-		c = &(theProtocol->instance_methods->list[
-			theProtocol->instance_methods->count]);
-		c->name = NULL;
-		c->types = NULL;
-	}
-
-	if (theProtocol->class_methods) {
-		c = &(theProtocol->class_methods->list[
-			theProtocol->class_methods->count]);
-		c->name = NULL;
-		c->types = NULL;
-	}
-
+	objc_registerProtocol(theProtocol);
 
 	result = (PyObjCFormalProtocol*)PyObject_New(
 			PyObjCFormalProtocol, &PyObjCFormalProtocol_Type);
@@ -257,7 +161,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	Py_DECREF(selectors);
 	Py_DECREF(supers);
 
-	result->objc = (Protocol*)theProtocol;
+	result->objc = theProtocol;
 	PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
 	return (PyObject*)result;
 
@@ -265,38 +169,7 @@ error:
 	Py_DECREF(selectors);
 	Py_DECREF(supers);
 
-	if (theProtocol == NULL) return NULL;
-
-	if (theProtocol->protocol_name != NULL) {
-		free(theProtocol->protocol_name);
-	}
-
-	if (theProtocol->protocol_list != NULL) {
-		free(theProtocol->protocol_list);
-	}
-
-	if (theProtocol->instance_methods != NULL) {
-		for (i = 0; i < theProtocol->instance_methods->count; i++) {
-			c = theProtocol->instance_methods->list + i;
-			if (c->name) {
-				free(c->name);
-			}
-		}
-		free(theProtocol->instance_methods);
-	}
-
-	if (theProtocol->class_methods != NULL) {
-		for (i = 0; i < theProtocol->class_methods->count; i++) {
-			c = theProtocol->class_methods->list + i;
-			if (c->name) {
-				free(c->name);
-			}
-		}
-		free(theProtocol->class_methods);
-	}
 	return NULL;
-
-#endif /* !__LP64__ */
 }
 
 static PyObject*
@@ -373,7 +246,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 #endif
 	} else {
-		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of %s",
+		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
 				Py_TYPE(sel)->tp_name);
 		return NULL;
 	}
@@ -430,7 +303,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 #endif
 	} else {
-		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of %s",
+		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
 				Py_TYPE(sel)->tp_name);
 		return NULL;
 	}
@@ -777,7 +650,7 @@ Protocol* PyObjCFormalProtocol_GetProtocol(PyObject* object)
 
 	if (!PyObjCFormalProtocol_Check(self)) {
 		PyErr_Format(PyExc_TypeError, 
-			"Expecting objc.formal_protocol, got %s",
+			"Expecting objc.formal_protocol, got instance of '%s'",
 			Py_TYPE(self)->tp_name);
 		return NULL;
 	}

@@ -825,88 +825,6 @@ ptrdiff_t    (*PyObjC_ivar_getOffset)(Ivar) = NULL;
 
 
 
-void PyObjC_SetupRuntimeCompat(void)
-{
-#ifdef NO_OBJC2_RUNTIME
-	/* 
-	 * Don't use ObjC 2.0 runtime (compiling on 10.4 or earlier), always
-	 * use the compat implementation.
-	 */
-	PyObjC_class_addMethodList  = compat_class_addMethodList;
-	PyObjC_methodlist_magic     = compat_methodlist_magic;
-	PyObjC_objc_disposeClassPair   = compat_objc_disposeClassPair;
-	PyObjC_preclass_addMethod   = compat_preclass_addMethod;
-	PyObjC_preclass_addIvar     = compat_preclass_addIvar;
-	PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
-
-#   define SETUP(funcname) \
-		PyObjC_##funcname = compat_##funcname
-
-#else
-	if (class_addMethod) {
-		PyObjC_class_addMethodList = objc20_class_addMethodList;
-		PyObjC_preclass_addMethod  = class_addMethod;
-		PyObjC_preclass_addIvar    = class_addIvar;
-		PyObjC_preclass_addProtocol= class_addProtocol;
-	} else {
-		PyObjC_class_addMethodList = compat_class_addMethodList;
-		PyObjC_preclass_addMethod  = compat_preclass_addMethod;
-		PyObjC_preclass_addIvar    = compat_preclass_addIvar;
-		PyObjC_preclass_addProtocol= compat_preclass_addProtocol;
-	}
-
-
-	if (class_copyMethodList) {
-		PyObjC_methodlist_magic = objc20_methodlist_magic;
-	} else {
-		PyObjC_methodlist_magic = compat_methodlist_magic;
-	}
-
-#   define SETUP(funcname) \
-	if ((funcname) == NULL) { \
-		PyObjC_##funcname = compat_##funcname; \
-	} else { \
-		PyObjC_##funcname = funcname; \
-	} 
-#endif
-	SETUP(protocol_getName);
-	SETUP(protocol_conformsToProtocol);
-	SETUP(protocol_copyMethodDescriptionList);
-	SETUP(protocol_copyProtocolList);
-	SETUP(protocol_getMethodDescription);
-
-	SETUP(objc_allocateClassPair);
-	SETUP(objc_registerClassPair);
-	SETUP(objc_disposeClassPair);
-	SETUP(objc_copyProtocolList);
-
-	SETUP(object_getClass);
-	SETUP(object_setClass);
-	SETUP(object_getClassName);
-	SETUP(object_getIvar);
-	SETUP(object_setIvar);
-
-	SETUP(class_getSuperclass);
-	SETUP(class_addMethod);
-	SETUP(class_copyIvarList);
-	SETUP(class_copyProtocolList);
-	SETUP(class_copyMethodList);
-	SETUP(class_getName);
-	SETUP(class_isMetaClass);
-
-	SETUP(method_getName);
-	SETUP(method_getTypeEncoding);
-	SETUP(method_getImplementation);
-	SETUP(method_setImplementation);
-
-	SETUP(sel_isEqual);
-
-	SETUP(ivar_getName);
-	SETUP(ivar_getTypeEncoding);
-	SETUP(ivar_getOffset);
-#undef SETUP
-
-}
 
 #else
 
@@ -1005,3 +923,245 @@ size_t PyObjC_methodlist_magic(Class cls)
 	
 
 #endif
+
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
+Protocol* (*PyObjC_objc_allocateProtocol)(const char *) = NULL;
+void (*PyObjC_objc_registerProtocol)(Protocol*) = NULL;
+void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL, BOOL) = NULL;
+void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*) = NULL;
+
+#ifndef __LP64__
+struct Protocol_struct {
+	char *protocol_name;
+	struct objc_protocol_list *protocol_list;
+	struct objc_method_description_list *instance_methods, *class_methods;
+	struct objc_method_description_list *optional_instance_methods, *optional_class_methods;
+	void *instance_properties;
+};
+
+static Protocol* compat_objc_allocateProtocol(const char *name)
+{
+	struct Protocol_struct* result;
+
+	result = (struct Protocol_struct*)NSAllocateObject([Protocol class], 0, NULL);
+	if (result == NULL) {
+		return NULL;
+	}
+	result->protocol_name = strdup(name);
+	if (result->protocol_name == NULL) {
+		/* Leaking object */
+		return NULL;
+	}
+	result->protocol_list = NULL;
+	result->instance_methods = NULL;
+	result->class_methods = NULL;
+	result->optional_instance_methods = NULL;
+	result->optional_class_methods = NULL;
+	result->instance_properties = NULL;
+	return (Protocol*)result;
+}
+
+static void compat_objc_registerProtocol(Protocol* proto __attribute__((__unused__)))
+{
+	/* Don't know how to register a new protocol in classic
+	 * runtime. Luckily we don't actually need this.
+	 */
+}
+
+static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const char* types, BOOL required, BOOL instance_method)
+{
+	struct Protocol_struct* proto_struct = (struct Protocol_struct*)proto;
+	struct objc_method_description_list** plist;
+
+	if (!instance_method) {
+		if (required) {
+			plist = &(proto_struct->class_methods);
+		} else {
+			plist = &(proto_struct->optional_class_methods);
+		}
+	} else {
+		if (required) {
+			plist = &(proto_struct->instance_methods);
+		} else {
+			plist = &(proto_struct->optional_instance_methods);
+		}
+	}
+
+	if (*plist == NULL) {
+		*plist = malloc(sizeof(struct objc_method_description_list) + (2*sizeof(struct objc_method_description)));
+		if (*plist == NULL) {
+			/* Cannot report errors */
+			abort();
+		}
+		(*plist)->count = 0;
+	} else {
+		*plist = realloc(*plist, sizeof(struct objc_method_description_list) + (2+((*plist)->count)*sizeof(struct objc_method_description)));
+	}
+	(*plist)->list[(*plist)->count].name = sel;
+	(*plist)->list[(*plist)->count].types = strdup(types);
+	if ((*plist)->list[(*plist)->count].types == NULL) {
+		/* Cannot report errors */
+		abort();
+	}
+
+	(*plist)->list[(*plist)->count+1].name = NULL;
+	(*plist)->list[(*plist)->count+1].types = NULL;
+	(*plist)->count++;
+}
+
+static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
+{
+	struct Protocol_struct* proto_struct = (struct Protocol_struct*)proto;
+
+	if (proto_struct->protocol_list == NULL) {
+		proto_struct->protocol_list = malloc(sizeof(struct objc_protocol_list) + 2*sizeof(Protocol*));
+		if (proto_struct->protocol_list == NULL) {
+			/* Cannot report an error! */
+			abort();
+		}
+		proto_struct->protocol_list->next = NULL;
+		proto_struct->protocol_list->count = 0;
+	} else {
+		proto_struct->protocol_list = realloc(proto_struct->protocol_list,
+				sizeof(struct objc_protocol_list) + (2+proto_struct->protocol_list->count)*sizeof(Protocol*));
+		if (proto_struct->protocol_list == NULL) {
+			/* Cannot report an error! */
+			abort();
+		}
+	}
+	proto_struct->protocol_list->list[proto_struct->protocol_list->count] = newProto;
+	proto_struct->protocol_list->list[proto_struct->protocol_list->count+1] = NULL;
+	proto_struct->protocol_list->count++;
+}
+
+#endif
+#endif
+
+
+void PyObjC_SetupRuntimeCompat(void)
+{
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)  && !defined(__OBJC2__)
+
+#ifdef NO_OBJC2_RUNTIME
+	/* 
+	 * Don't use ObjC 2.0 runtime (compiling on 10.4 or earlier), always
+	 * use the compat implementation.
+	 */
+	PyObjC_class_addMethodList  = compat_class_addMethodList;
+	PyObjC_methodlist_magic     = compat_methodlist_magic;
+	PyObjC_objc_disposeClassPair   = compat_objc_disposeClassPair;
+	PyObjC_preclass_addMethod   = compat_preclass_addMethod;
+	PyObjC_preclass_addIvar     = compat_preclass_addIvar;
+	PyObjC_preclass_addProtocol = compat_preclass_addProtocol;
+
+#   define SETUP(funcname) \
+		PyObjC_##funcname = compat_##funcname
+
+#else
+	if (class_addMethod) {
+		PyObjC_class_addMethodList = objc20_class_addMethodList;
+		PyObjC_preclass_addMethod  = class_addMethod;
+		PyObjC_preclass_addIvar    = class_addIvar;
+		PyObjC_preclass_addProtocol= class_addProtocol;
+	} else {
+		PyObjC_class_addMethodList = compat_class_addMethodList;
+		PyObjC_preclass_addMethod  = compat_preclass_addMethod;
+		PyObjC_preclass_addIvar    = compat_preclass_addIvar;
+		PyObjC_preclass_addProtocol= compat_preclass_addProtocol;
+	}
+
+
+	if (class_copyMethodList) {
+		PyObjC_methodlist_magic = objc20_methodlist_magic;
+	} else {
+		PyObjC_methodlist_magic = compat_methodlist_magic;
+	}
+
+#   define SETUP(funcname) \
+	if ((funcname) == NULL) { \
+		PyObjC_##funcname = compat_##funcname; \
+	} else { \
+		PyObjC_##funcname = funcname; \
+	} 
+#endif
+	SETUP(protocol_getName);
+	SETUP(protocol_conformsToProtocol);
+	SETUP(protocol_copyMethodDescriptionList);
+	SETUP(protocol_copyProtocolList);
+	SETUP(protocol_getMethodDescription);
+
+	SETUP(objc_allocateClassPair);
+	SETUP(objc_registerClassPair);
+	SETUP(objc_disposeClassPair);
+	SETUP(objc_copyProtocolList);
+
+	SETUP(object_getClass);
+	SETUP(object_setClass);
+	SETUP(object_getClassName);
+	SETUP(object_getIvar);
+	SETUP(object_setIvar);
+
+	SETUP(class_getSuperclass);
+	SETUP(class_addMethod);
+	SETUP(class_copyIvarList);
+	SETUP(class_copyProtocolList);
+	SETUP(class_copyMethodList);
+	SETUP(class_getName);
+	SETUP(class_isMetaClass);
+
+	SETUP(method_getName);
+	SETUP(method_getTypeEncoding);
+	SETUP(method_getImplementation);
+	SETUP(method_setImplementation);
+
+	SETUP(sel_isEqual);
+
+	SETUP(ivar_getName);
+	SETUP(ivar_getTypeEncoding);
+	SETUP(ivar_getOffset);
+#endif /* MIN_REQUIRED < 10.5 && !OBJC2 */
+
+
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
+	/* Compat definitions for protocol creation
+	 *
+	 * - Runtime APIs were introduced in OSX 10.7
+	 * - Compat functions can only be implemented for 32-bit runtime
+	 */
+
+#if PyObjC_BUILD_RELEASE < 1007
+	
+#ifndef __LP64__
+	PyObjC_objc_allocateProtocol = compat_objc_allocateProtocol;
+	PyObjC_objc_registerProtocol = compat_objc_registerProtocol;
+	PyObjC_protocol_addMethodDescription = compat_protocol_addMethodDescription;
+	PyObjC_protocol_addProtocol = compat_protocol_addProtocol;
+#endif
+
+#ifdef SETUP 
+#undef SETUP
+#endif
+
+#elif defined(__LP64__)
+	PyObjC_objc_allocateProtocol = objc_allocateProtocol;
+	PyObjC_objc_registerProtocol = objc_registerProtocol;
+	PyObjC_protocol_addMethodDescription = protocol_addMethodDescription;
+	PyObjC_protocol_addProtocol = protocol_addProtocol;
+
+#else
+#   define SETUP(funcname) \
+	if ((funcname) == NULL) { \
+		PyObjC_##funcname = compat_##funcname; \
+	} else { \
+		PyObjC_##funcname = funcname; \
+	} 
+	SETUP(objc_allocateProtocol);
+	SETUP(objc_registerProtocol);
+	SETUP(protocol_addMethodDescription);
+	SETUP(protocol_addProtocol);
+#endif
+
+#endif
+
+#undef SETUP
+}

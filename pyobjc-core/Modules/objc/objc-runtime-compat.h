@@ -76,7 +76,6 @@ BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
 #define preclass_addMethod		PyObjC_preclass_addMethod
 #define preclass_addProtocol		PyObjC_preclass_addProtocol
 
-extern void PyObjC_SetupRuntimeCompat(void);
 
 extern BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*);
 extern BOOL (*PyObjC_preclass_addIvar)(Class cls, 
@@ -195,7 +194,6 @@ extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 #define preclass_addMethod		class_addMethod
 #define preclass_addProtocol		class_addProtocol
 
-static inline void PyObjC_SetupRuntimeCompat(void) { }
 extern BOOL PyObjC_class_addMethodList(Class class, 
 		struct PyObjC_method* list, unsigned int count);
 
@@ -207,5 +205,22 @@ extern size_t PyObjC_methodlist_magic(Class cls);
 
 #endif
 
+
+#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
+extern Protocol* (*PyObjC_objc_allocateProtocol)(const char *);
+extern void (*PyObjC_objc_registerProtocol)(Protocol*);
+extern void (*PyObjC_protocol_addMethodDescription)(Protocol*, SEL, const char*, BOOL, BOOL);
+extern void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*);
+
+#ifndef PYOBJC_COMPAT_IMPL
+#define objc_allocateProtocol	PyObjC_objc_allocateProtocol
+#define objc_registerProtocol	PyObjC_objc_registerProtocol
+#define protocol_addMethodDescription	PyObjC_protocol_addMethodDescription
+#define protocol_addProtocol	PyObjC_protocol_addProtocol
+#endif
+
+#endif
+
+extern void PyObjC_SetupRuntimeCompat(void);
 
 #endif /* PyObjC_RUNTIME_COMPAT */
