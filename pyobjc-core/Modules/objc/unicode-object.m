@@ -462,6 +462,7 @@ PyObjCUnicode_New(NSString* value)
 
 #ifdef PyObjC_UNICODE_FAST_PATH
 	Py_ssize_t length = [value length];
+	NSRange range;
 
 	if (length < 0) {
 		PyErr_SetString(PyExc_SystemError, "string with negative length");
@@ -479,7 +480,8 @@ PyObjCUnicode_New(NSString* value)
 		PyErr_NoMemory();
 		return NULL;
 	}
-	[value getCharacters:(unichar *)PyUnicode_AS_UNICODE(result)];
+	range = NSMakeRange(0, length);
+	[value getCharacters:(unichar *)PyUnicode_AS_UNICODE(result) range:range];
 	/*PyUnicode_GET_SIZE(result) = length;*/
 	result->base.length = length;
 #else
