@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- Workaround for bug in pip that resulted in pyobjc-core not being pip
+  installable.  Patch by Marc Abramowitz.
+
 - Creating new formal protocols now uses the new runtime API that was
   introduced in OSX 10.7. Because of this it is now possible to create
   new formal protocols in 64-bit code (when running on OSX 10.7 or later)
