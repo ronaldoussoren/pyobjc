@@ -11,6 +11,11 @@ import Foundation
 
 from AddressBook import _metadata
 
+objc.addConvenienceForClass("ABAbstractAccountConfiguration", (
+    ('__setitem__', ABAbstractAccountConfiguration__setitem__),
+    ('__getitem__', ABAbstractAccountConfiguration__getitem__),
+))
+
 sys.modules['AddressBook'] = mod = objc.ObjCLazyModule(
     "AddressBook",
     "com.apple.AddressBook.framework",

@@ -20,23 +20,26 @@ TODO:
 from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
 from objc._objc import registerMetaDataForSelector
 import sys
+import warnings
 
 __all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
 
 
-CONVENIENCE_METHODS = {}
+_CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
 
 if sys.version_info[0] == 3:
     # XXX: Temporary backward compatibily
     xrange = range
 
+
 def addConvenienceForSelector(selector, methods):
     """
     Add the list with methods to every class that has a selector with the
     given name.
     """
-    CONVENIENCE_METHODS[selector] = methods
+    warning.warn("addConvenienceForSelector is on the way out", DeprecationWarning)
+    _CONVENIENCE_METHODS[selector] = methods
 
 def addConvenienceForClass(classname, methods):
     """
@@ -59,7 +62,7 @@ def _add_convenience_methods(super_class, name, type_dict):
     Add additional methods to the type-dict of subclass 'name' of
     'super_class'.
 
-    CONVENIENCE_METHODS is a global variable containing a mapping from
+    _CONVENIENCE_METHODS is a global variable containing a mapping from
     an Objective-C selector to a Python method name and implementation.
 
     CLASS_METHODS is a global variable containing a mapping from
@@ -91,8 +94,8 @@ def _add_convenience_methods(super_class, name, type_dict):
 
         sel = sel.selector
 
-        if sel in CONVENIENCE_METHODS:
-            v = CONVENIENCE_METHODS[sel]
+        if sel in _CONVENIENCE_METHODS:
+            v = _CONVENIENCE_METHODS[sel]
             for nm, value in v:
                 if nm in type_dict and isinstance(type_dict[nm], selector):
 
@@ -180,13 +183,13 @@ def get_objectForKey_(self, key, dflt=None):
         res = dflt
     return res
 
-CONVENIENCE_METHODS[b'objectForKey:'] = (
+_CONVENIENCE_METHODS[b'objectForKey:'] = (
     ('__getitem__', __getitem__objectForKey_),
     ('get', get_objectForKey_),
     ('__contains__', has_key_objectForKey_),
 )
 if sys.version_info[0] == 2:
-    CONVENIENCE_METHODS[b'objectForKey:'] += (
+    _CONVENIENCE_METHODS[b'objectForKey:'] += (
         ('has_key', has_key_objectForKey_),
     )
 
@@ -196,7 +199,7 @@ if sys.version_info[0] == 2:
 def __delitem__removeObjectForKey_(self, key):
     self.removeObjectForKey_(container_wrap(key))
 
-CONVENIENCE_METHODS[b'removeObjectForKey:'] = (
+_CONVENIENCE_METHODS[b'removeObjectForKey:'] = (
     ('__delitem__', __delitem__removeObjectForKey_),
 )
 
@@ -259,7 +262,7 @@ def popitem_setObject_forKey_(self):
         self.removeObjectForKey_(k)
         return result
 
-CONVENIENCE_METHODS[b'setObject:forKey:'] = (
+_CONVENIENCE_METHODS[b'setObject:forKey:'] = (
     ('__setitem__', __setitem__setObject_forKey_),
     ('update', update_setObject_forKey_),
     ('setdefault', setdefault_setObject_forKey_),
@@ -268,20 +271,20 @@ CONVENIENCE_METHODS[b'setObject:forKey:'] = (
 )
 
 
-CONVENIENCE_METHODS[b'count'] = (
+_CONVENIENCE_METHODS[b'count'] = (
     ('__len__', lambda self: self.count()),
 )
 
 def containsObject_has_key(self, elem):
     return bool(self.containsObject_(container_wrap(elem)))
 
-CONVENIENCE_METHODS[b'containsObject:'] = (
+_CONVENIENCE_METHODS[b'containsObject:'] = (
     ('__contains__', containsObject_has_key),
 )
 
 
 
-def objc_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
+def nsobject_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
     rval = self.hash()
     if rval > _max:
         rval -= _const
@@ -291,48 +294,63 @@ def objc_hash(self, _max=sys.maxsize, _const=((sys.maxsize + 1) * 2)):
         if rval == -1:
             rval = -2
     return int(rval)
-CONVENIENCE_METHODS[b'hash'] = (
-    ('__hash__', objc_hash),
+
+def nsobject__eq__(self, other):
+    return bool(self.isEqualTo_(other))
+
+def nsobject__ne__(self, other):
+    return bool(self.isNotEqualTo_(other))
+
+def nsobject__gt__(self, other):
+    return bool(self.isGreaterThan_(other))
+
+def nsobject__ge__(self, other):
+    return bool(self.isGreaterThanOrEqualTo_(other))
+
+def nsobject__lt__(self, other):
+    return bool(self.isLessThan_(other))
+
+def nsobject__le__(self, other):
+    return bool(self.isLessThanOrEqualTo_(other))
+
+CLASS_METHODS["NSObject"] = (
+    ('__hash__', nsobject_hash),
+    ('__eq__', nsobject__eq__),
+    ('__ne__', nsobject__ne__),
+    ('__gt__', nsobject__gt__),
+    ('__ge__', nsobject__ge__),
+    ('__lt__', nsobject__lt__),
+    ('__le__', nsobject__le__),
 )
 
 if sys.version_info[0] == 2:
-    CONVENIENCE_METHODS[b'compare:'] = (
-        ('__cmp__', lambda self, other: bool(self.compare_(other))),
+    def nsobject__cmp__(self, other):
+        try:
+            func = self.compare_
+
+        except AttributeError:
+            if self < other:
+                return -1
+            elif self > other:
+                return 1
+            else:
+                return 0
+
+        else:
+            return func(other)
+
+    CLASS_OBJECTS["NSObject"] += (
+        ("__cmp__", nsobject__cmp__),
     )
 
-CONVENIENCE_METHODS[b'isEqualTo:'] = (
-    ('__eq__', lambda self, other: bool(self.isEqualTo_(other))),
-)
 
-CONVENIENCE_METHODS[b'isEqual:'] = (
-    ('__eq__', lambda self, other: bool(self.isEqual_(other))),
-)
 
-CONVENIENCE_METHODS[b'isGreaterThan:'] = (
-    ('__gt__', lambda self, other: bool(self.isGreaterThan_(other))),
-)
 
-CONVENIENCE_METHODS[b'isGreaterThanOrEqualTo:'] = (
-    ('__ge__', lambda self, other: bool(self.isGreaterThanOrEqualTo_(other))),
-)
-
-CONVENIENCE_METHODS[b'isLessThan:'] = (
-    ('__lt__', lambda self, other: bool(self.isLessThan_(other))),
-)
-
-CONVENIENCE_METHODS[b'isLessThanOrEqualTo:'] = (
-    ('__le__', lambda self, other: bool(self.isLessThanOrEqualTo_(other))),
-)
-
-CONVENIENCE_METHODS[b'isNotEqualTo:'] = (
-    ('__ne__', lambda self, other: bool(self.isNotEqualTo_(other))),
-)
-
-CONVENIENCE_METHODS[b'length'] = (
+_CONVENIENCE_METHODS[b'length'] = (
     ('__len__', lambda self: self.length()),
 )
 
-CONVENIENCE_METHODS[b'addObject:'] = (
+_CONVENIENCE_METHODS[b'addObject:'] = (
     ('append', lambda self, item: self.addObject_(container_wrap(item))),
 )
 
@@ -344,7 +362,7 @@ def reverse_exchangeObjectAtIndex_withObjectAtIndex_(self):
         begin += 1
         end -= 1
 
-CONVENIENCE_METHODS[b'exchangeObjectAtIndex:withObjectAtIndex:'] = (
+_CONVENIENCE_METHODS[b'exchangeObjectAtIndex:withObjectAtIndex:'] = (
     ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
 )
 
@@ -357,7 +375,7 @@ def ensureArray(anArray):
 def extend_addObjectsFromArray_(self, anArray):
     self.addObjectsFromArray_(ensureArray(anArray))
 
-CONVENIENCE_METHODS[b'addObjectsFromArray:'] = (
+_CONVENIENCE_METHODS[b'addObjectsFromArray:'] = (
     ('extend', extend_addObjectsFromArray_),
 )
 
@@ -413,7 +431,7 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
                 raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
     return res
 
-CONVENIENCE_METHODS[b'indexOfObject:inRange:'] = (
+_CONVENIENCE_METHODS[b'indexOfObject:inRange:'] = (
     ('index', index_indexOfObject_inRange_),
 )
 
@@ -424,7 +442,7 @@ def insert_insertObject_atIndex_(self, idx, item):
             raise IndexError("list index out of range")
     self.insertObject_atIndex_(container_wrap(item), idx)
 
-CONVENIENCE_METHODS[b'insertObject:atIndex:'] = (
+_CONVENIENCE_METHODS[b'insertObject:atIndex:'] = (
     ( 'insert', insert_insertObject_atIndex_),
 )
 
@@ -457,7 +475,7 @@ def __getslice__objectAtIndex_(self, i, j):
     i = max(i, 0); j = max(j, 0)
     return __getitem__objectAtIndex_(self, slice(i, j))
 
-CONVENIENCE_METHODS[b'objectAtIndex:'] = (
+_CONVENIENCE_METHODS[b'objectAtIndex:'] = (
     ('__getitem__', __getitem__objectAtIndex_),
     ('__getslice__', __getslice__objectAtIndex_),
 )
@@ -504,7 +522,7 @@ def remove_removeObjectAtIndex_(self, obj):
     idx = self.index(obj)
     self.removeObjectAtIndex_(idx)
 
-CONVENIENCE_METHODS[b'removeObjectAtIndex:'] = (
+_CONVENIENCE_METHODS[b'removeObjectAtIndex:'] = (
     ('remove', remove_removeObjectAtIndex_),
     ('pop', pop_removeObjectAtIndex_),
     ('__delitem__', __delitem__removeObjectAtIndex_),
@@ -572,7 +590,7 @@ def __setslice__replaceObjectAtIndex_withObject_(self, i, j, seq):
     j = max(j, 0)
     __setitem__replaceObjectAtIndex_withObject_(self, slice(i, j), seq)
 
-CONVENIENCE_METHODS[b'replaceObjectAtIndex:withObject:'] = (
+_CONVENIENCE_METHODS[b'replaceObjectAtIndex:withObject:'] = (
     ('__setitem__', __setitem__replaceObjectAtIndex_withObject_),
     ('__setslice__', __setslice__replaceObjectAtIndex_withObject_),
 )
@@ -598,37 +616,37 @@ def __iter__objectEnumerator_keyEnumerator(self):
         meth = self.objectEnumerator
     return iter(meth())
 
-CONVENIENCE_METHODS[b'keyEnumerator'] = (
+_CONVENIENCE_METHODS[b'keyEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
 )
 if sys.version_info[0] == 2:
-    CONVENIENCE_METHODS[b'keyEnumerator'] += (
+    _CONVENIENCE_METHODS[b'keyEnumerator'] += (
         ('iterkeys', lambda self: iter(self.keyEnumerator())),
         ('iteritems', lambda self: itemsGenerator(self)),
 )
 
-CONVENIENCE_METHODS[b'objectEnumerator'] = (
+_CONVENIENCE_METHODS[b'objectEnumerator'] = (
     ('__iter__', __iter__objectEnumerator_keyEnumerator),
 )
 
 if sys.version_info[0] == 2:
-    CONVENIENCE_METHODS[b'objectEnumerator'] += (
+    _CONVENIENCE_METHODS[b'objectEnumerator'] += (
         ('itervalues', lambda self: iter(self.objectEnumerator())),
     )
 
-CONVENIENCE_METHODS[b'reverseObjectEnumerator'] = (
+_CONVENIENCE_METHODS[b'reverseObjectEnumerator'] = (
     ('__reversed__', lambda self: iter(self.reverseObjectEnumerator())),
 )
 
-CONVENIENCE_METHODS[b'removeAllObjects'] = (
+_CONVENIENCE_METHODS[b'removeAllObjects'] = (
     ('clear', lambda self: self.removeAllObjects()),
 )
 
-CONVENIENCE_METHODS[b'dictionaryWithDictionary:'] = (
+_CONVENIENCE_METHODS[b'dictionaryWithDictionary:'] = (
     ('copy', lambda self: type(self).dictionaryWithDictionary_(self)),
 )
 
-CONVENIENCE_METHODS[b'nextObject'] = (
+_CONVENIENCE_METHODS[b'nextObject'] = (
     ('__iter__', enumeratorGenerator),
 )
 
@@ -714,15 +732,15 @@ registerMetaDataForSelector(b"NSObject", b"sortUsingFunction:context:",
         ))
 
 
-CONVENIENCE_METHODS[b'sortUsingFunction:context:'] = (
+_CONVENIENCE_METHODS[b'sortUsingFunction:context:'] = (
     ('sort', sort),
 )
 
-CONVENIENCE_METHODS[b'hasPrefix:'] = (
+_CONVENIENCE_METHODS[b'hasPrefix:'] = (
     ('startswith', lambda self, pfx: self.hasPrefix_(pfx)),
 )
 
-CONVENIENCE_METHODS[b'hasSuffix:'] = (
+_CONVENIENCE_METHODS[b'hasSuffix:'] = (
     ('endswith', lambda self, pfx: self.hasSuffix_(pfx)),
 )
 
@@ -731,7 +749,7 @@ def __copy__(self):
     if hasattr(self, 'mutableCopy'):
         return self.mutableCopyWithZone_(None)
     return self.copyWithZone_(None)
-CONVENIENCE_METHODS[b'copyWithZone:'] = (
+_CONVENIENCE_METHODS[b'copyWithZone:'] = (
     ('__copy__', __copy__),
 )
 
@@ -743,7 +761,7 @@ CONVENIENCE_METHODS[b'copyWithZone:'] = (
 #   result = NSKeyedUnarchiver.unarchiveObjectWithData_(buf)
 #   return result
 #
-#CONVENIENCE_METHODS['encodeWithCoder:'] = (
+#_CONVENIENCE_METHODS['encodeWithCoder:'] = (
 #   ('__deepcopy__', coder_deepcopy ),
 #)
 
