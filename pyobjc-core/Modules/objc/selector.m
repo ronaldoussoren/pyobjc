@@ -799,7 +799,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 	}
 
 	if (Object_class == nil) {
-		Object_class = [Object class];
+		Object_class = objc_getClass("Object");
 	}
 
 	if (name[0] == '_' && name[1] == '_') {
@@ -841,7 +841,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 				methsig = [cls instanceMethodSignatureForSelector:sel];
 				retval = PyObjCSelector_NewNative(cls, sel, 
 					PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
-			} else if ((cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
+			} else if ((Object_class != nil) && (cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
 				retval = PyObjCSelector_NewNative(cls, sel, 
 					PyObjC_NSMethodSignatureToTypeString(
 						methsig, buf, sizeof(buf)), 1);

@@ -908,6 +908,7 @@ size_t PyObjC_methodlist_magic(Class cls)
 }
 @end
 
+#if PyObjC_BUILD_RELEASE < 1008
 @implementation Object (NSOBjectCompat)
 - self
 {
@@ -920,6 +921,7 @@ size_t PyObjC_methodlist_magic(Class cls)
 	abort();
 }
 @end
+#endif
 	
 
 #endif

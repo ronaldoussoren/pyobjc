@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
- * Copyright (c) 2002-2008 Ronald Oussoren
+ * Copyright (c) 2002-2012 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -177,6 +177,8 @@
 
 @end /* PyObjCSupport */
 
+
+#if PyObjC_BUILD_RELEASE < 1008
 @interface Object (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
@@ -212,6 +214,7 @@
 }
 
 @end /* PyObjCSupport */
+#endif
 
 @interface NSString (PyObjCSupport)
 -(PyObject*)__pyobjc_PythonObject__;
