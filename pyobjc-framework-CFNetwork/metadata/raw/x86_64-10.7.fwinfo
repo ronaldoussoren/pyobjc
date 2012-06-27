@@ -391,7 +391,7 @@
     "typestr": "i"
    }, 
    "kCFStreamErrorDomainWinSock": {
-    "typestr": "l"
+    "typestr": "q"
    }, 
    "kCFStreamNetworkServiceType": {
     "typestr": "^{__CFString=}"
@@ -587,7 +587,7 @@
      }, 
      {
       "name": "bufferLength", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "parsed", 
@@ -595,7 +595,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CFHTTPAuthenticationAppliesToRequest": {
@@ -673,7 +673,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFHTTPAuthenticationIsValid": {
@@ -767,7 +767,7 @@
      }, 
      {
       "name": "numBytes", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -989,7 +989,7 @@
      }, 
      {
       "name": "statusCode", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "statusDescription", 
@@ -1012,7 +1012,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CFHTTPMessageGetTypeID": {
@@ -1023,7 +1023,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFHTTPMessageIsHeaderComplete": {
@@ -1094,7 +1094,7 @@
      }, 
      {
       "name": "proxyPort", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1232,7 +1232,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFHostScheduleWithRunLoop": {
@@ -1300,7 +1300,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFHostClientContext=}"
+      "typestr": "^{CFHostClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1358,7 +1358,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CFNetDiagnosticCreateWithStreams": {
@@ -1405,7 +1405,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CFNetDiagnosticSetName": {
@@ -1441,7 +1441,7 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
@@ -1476,7 +1476,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFHostClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1491,7 +1491,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFNetServiceBrowserInvalidate": {
@@ -1783,7 +1783,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFNetServiceMonitorCreate": {
@@ -1849,7 +1849,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFHostClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1864,7 +1864,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CFNetServiceMonitorInvalidate": {
@@ -1973,7 +1973,7 @@
      }, 
      {
       "name": "options", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "error", 
@@ -2077,7 +2077,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFHostClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2228,7 +2228,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFStreamClientContext=l^v^?^?^?}"
+      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2279,7 +2279,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFStreamClientContext=l^v^?^?^?}"
+      "typestr": "^{_CFStreamClientContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2456,12 +2456,12 @@
    "CFHostClientContext": {
     "fieldnames": [], 
     "special": false, 
-    "typestr": "{CFHostClientContext=}"
+    "typestr": "{CFHostClientContext=q^v^?^?^?}"
    }, 
    "CFNetServiceClientContext": {
     "fieldnames": [], 
     "special": false, 
-    "typestr": "{CFNetServiceClientContext=}"
+    "typestr": "{CFNetServiceClientContext=q^v^?^?^?}"
    }
   }
  }, 

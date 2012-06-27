@@ -1270,7 +1270,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFHostClientContext=}"
+      "typestr": "^{CFHostClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1446,7 +1446,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFNetServiceClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1819,7 +1819,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFNetServiceClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2047,7 +2047,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFNetServiceClientContext=}"
+      "typestr": "^{CFNetServiceClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2198,7 +2198,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFStreamClientContext=l^v^?^?^?}"
+      "typestr": "^{_CFStreamClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2249,7 +2249,7 @@
      }, 
      {
       "name": "clientContext", 
-      "typestr": "^{CFStreamClientContext=l^v^?^?^?}"
+      "typestr": "^{_CFStreamClientContext=l^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2426,12 +2426,12 @@
    "CFHostClientContext": {
     "fieldnames": [], 
     "special": false, 
-    "typestr": "{CFHostClientContext=}"
+    "typestr": "{CFHostClientContext=l^v^?^?^?}"
    }, 
    "CFNetServiceClientContext": {
     "fieldnames": [], 
     "special": false, 
-    "typestr": "{CFNetServiceClientContext=}"
+    "typestr": "{CFNetServiceClientContext=l^v^?^?^?}"
    }
   }
  }, 

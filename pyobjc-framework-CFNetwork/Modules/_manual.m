@@ -2,6 +2,9 @@
 #include "pyobjc-api.h"
 
 #import <CoreServices/CoreServices.h>
+#if PyObjC_BUILD_RELEASE > 1008
+#import <CFNetwork/CFNetwork.h>
+#endif
 
 static const void* 
 mod_retain(const void* info) 
