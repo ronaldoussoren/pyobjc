@@ -92,5 +92,24 @@ class TestCTLine (TestCase):
         if os.path.exists("/tmp/pyobjc.test.pdf"):
             os.unlink("/tmp/pyobjc.test.pdf")
 
+    @min_os_level("10.8")
+    def testConstants10_8(self):
+        self.assertEqual(kCTLineBoundsExcludeTypographicLeading, 1 << 0)
+        self.assertEqual(kCTLineBoundsExcludeTypographicShifts, 1 << 1)
+        self.assertEqual(kCTLineBoundsUseHangingPunctuation, 1 << 2)
+        self.assertEqual(kCTLineBoundsUseGlyphPathBounds, 1 << 3)
+        self.assertEqual(kCTLineBoundsUseOpticalBounds, 1 << 4)
+
+    @min_os_level("10.8")
+    def testFunctions10_8(self):
+        astr = CFAttributedStringCreate(None, b"-".decode('latin1'), None)
+        self.assertTrue(astr is not None)
+
+        token = CTLineCreateWithAttributedString(astr)
+        self.assertIsInstance(token, CTLineRef)
+
+        r = CTLineGetBoundsWithOptions(token, kCTLineBoundsExcludeTypographicLeading)
+        self.assertIsInstance(r, CGRect)
+
 if __name__ == "__main__":
     main()

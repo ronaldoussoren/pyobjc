@@ -39,6 +39,13 @@ class TestCTStringAttributes (TestCase):
         self.assertIsInstance(kCTStrokeWidthAttributeName, unicode)
         self.assertIsInstance(kCTStrokeColorAttributeName, unicode)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCTBaselineClassAttributeName, unicode)
+        self.assertIsInstance(kCTBaselineInfoAttributeName, unicode)
+        self.assertIsInstance(kCTBaselineReferenceInfoAttributeName, unicode)
+        self.assertIsInstance(kCTWritingDirectionAttributeName, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -39,5 +39,17 @@ class TestCTFontTraits (TestCase):
         self.assertEqual(kCTFontScriptsClass, cast_uint(10 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontSymbolicClass, cast_uint(12 << kCTFontClassMaskShift))
 
+    @min_os_level("10.7")
+    def testConstants10_7(self):
+        self.assertEqual(kCTFontTraitColorGlyphs, 1<<13)
+        self.assertEqual(kCTFontTraitComposite, 1<<14)
+
+        self.assertEqual(kCTFontColorGlyphsTrait, kCTFontTraitColorGlyphs)
+
+    @min_os_level("10.8")
+    def testConstants10_8(self):
+        self.assertEqual(kCTFontCompositeTrait, kCTFontTraitComposite)
+
+
 if __name__ == "__main__":
     main()

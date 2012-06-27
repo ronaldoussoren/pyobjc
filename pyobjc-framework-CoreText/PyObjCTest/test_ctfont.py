@@ -23,6 +23,20 @@ class TestCTFont (TestCase):
         self.assertEqual(kCTFontOptionsPreventAutoActivation, 1 << 0)
         self.assertEqual(kCTFontOptionsPreferSystemFont, 1 << 2)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCTBaselineClassHanging, unicode)
+        self.assertIsInstance(kCTBaselineClassIdeographicCentered, unicode)
+        self.assertIsInstance(kCTBaselineClassIdeographicHigh, unicode)
+        self.assertIsInstance(kCTBaselineClassIdeographicLow, unicode)
+        self.assertIsInstance(kCTBaselineClassMath, unicode)
+        self.assertIsInstance(kCTBaselineClassRoman, unicode)
+        self.assertIsInstance(kCTBaselineOriginalFont, unicode)
+        self.assertIsInstance(kCTBaselineReferenceFont, unicode)
+        self.assertIsInstance(kCTBaselineReferenceFont, unicode)
+
+        self.assertEqual(kCTFontTableAnkr, fourcc(b'ankr'))
+
 
     def testConstants(self):
         self.assertIsInstance(kCTFontCopyrightNameKey, unicode)
@@ -382,6 +396,13 @@ class TestCTFont (TestCase):
         v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
         self.assertIsInstance(v, CTFontRef)
 
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.fail("CTFontDrawGlyphs")
+
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        self.fail("CTFontGetOpticalBoundsForGlyps")
 
 if __name__ == "__main__":
     main()
