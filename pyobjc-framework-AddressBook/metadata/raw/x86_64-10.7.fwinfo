@@ -273,7 +273,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "defaultNameOrdering", 
@@ -429,7 +429,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "addPropertiesAndTypes:", 
@@ -444,7 +444,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "removeProperties:", 
@@ -469,7 +469,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "typeOfProperty:", 
@@ -494,7 +494,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -599,7 +599,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "propertyType", 
@@ -1162,7 +1162,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "addPropertiesAndTypes:", 
@@ -1177,7 +1177,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "removeProperties:", 
@@ -1202,7 +1202,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "typeOfProperty:", 
@@ -1227,7 +1227,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -1298,7 +1298,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "beginLoadingImageDataForClient:", 
@@ -1307,7 +1307,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -1483,7 +1483,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -2034,7 +2034,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -2069,7 +2069,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABAddRecord": {
@@ -2104,7 +2104,7 @@
         }, 
         {
          "typestr": [
-          "l", 
+          "q", 
           false
          ]
         }, 
@@ -2131,14 +2131,14 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABCancelLoadingImageDataForTag": {
     "args": [
      {
       "name": "tag", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2414,7 +2414,7 @@
      }, 
      {
       "name": "comparison", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2528,7 +2528,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2544,7 +2544,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2572,7 +2572,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2587,7 +2587,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABMultiValueCreate": {
@@ -2650,7 +2650,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABMultiValueInsert": {
@@ -2669,7 +2669,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "outIdentifier", 
@@ -2688,7 +2688,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABMultiValueRemove": {
@@ -2699,7 +2699,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2718,7 +2718,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2737,7 +2737,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2828,7 +2828,7 @@
      }, 
      {
       "name": "comparison", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -3409,7 +3409,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "ABRemoveRecord": {
@@ -3443,7 +3443,7 @@
     "args": [
      {
       "name": "conjunction", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "childrenSearchElement", 
@@ -3500,7 +3500,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }
   }, 
