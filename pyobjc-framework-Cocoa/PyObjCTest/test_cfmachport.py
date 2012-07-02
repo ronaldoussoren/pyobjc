@@ -3,6 +3,7 @@ FIXME: None of these tests actually use the MachPort
 """
 from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+import Foundation
 
 
 try:
@@ -30,7 +31,7 @@ class TestMachPort (TestCase):
         #self.assertIsInstance(port, CFMachPortRef)
         #self.assertIs(shouldFree is True or shouldFree, False)
         port, shouldFree = CFMachPortCreate(None, callout, context, None)
-        self.assertIsInstance(port, CFMachPortRef)
+        self.assertIsInstance(port, Foundation.NSMachPort)
         self.assertIs(shouldFree is True or shouldFree, False)
         idx = CFMachPortGetPort(port)
         self.assertIsInstance(idx, (int, long))
