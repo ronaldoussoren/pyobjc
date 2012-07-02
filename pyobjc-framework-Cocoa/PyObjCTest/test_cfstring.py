@@ -334,17 +334,13 @@ class TestString (TestCase):
         CFStringReplaceAll(s, b"aHelloaaa".decode('ascii'))
         trim_chars = b'a'.decode('ascii')
 
-        # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString
-        #trim_chars = CFStringCreateWithCString(None, b"a", kCFStringEncodingASCII)
-        print >>sys.stderr, ("@@@@@@@ BEFORE TRIM @@@@@@")
+        #print s
         CFStringTrim(s, trim_chars)
-        print >>sys.stderr, ("@@@@@@@ AFTER TRIM @@@@@@")
+        #print s
         self.assertEqual(s, b"Hello".decode('ascii'))
 
-        # XXX: CoreFoundation API regularly fails when second argument is a non-Apple NSString
         CFStringReplaceAll(s, b"* * * *abc * ".decode('ascii'))
         trim_chars = b'* '.decode('ascii')
-
         
         trim_chars = CFStringCreateWithCString(None, b"* ", kCFStringEncodingASCII)
         CFStringTrim(s, trim_chars)

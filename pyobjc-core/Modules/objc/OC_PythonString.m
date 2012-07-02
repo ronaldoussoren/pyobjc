@@ -5,7 +5,7 @@
 
 @implementation OC_PythonString 
 
-+ stringWithPythonObject:(PyObject*)v
++ (instancetype)stringWithPythonObject:(PyObject*)v
 {
 	OC_PythonString* res;
 
@@ -14,7 +14,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	Py_INCREF(v);
 	Py_XDECREF(value);
@@ -161,7 +161,7 @@
 	return self;
 }
 
--initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+-(id)initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 
@@ -192,7 +192,7 @@
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
 	int v;
 	
@@ -327,7 +327,7 @@
 /* Ensure that we can be unarchived as a generic string by pure ObjC
  * code.
  */
-+classFallbacksForKeyedArchiver
++(NSArray*)classFallbacksForKeyedArchiver
 {
 	return [NSArray arrayWithObject:@"NSString"];
 }

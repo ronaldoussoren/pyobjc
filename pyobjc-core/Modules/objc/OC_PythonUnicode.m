@@ -3,7 +3,7 @@
 
 @implementation OC_PythonUnicode 
 
-+ unicodeWithPythonObject:(PyObject*)v
++ (instancetype)unicodeWithPythonObject:(PyObject*)v
 {
 	OC_PythonUnicode* res;
 
@@ -12,7 +12,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	Py_INCREF(v);
 	Py_XDECREF(value);
@@ -67,12 +67,16 @@
 {
 	PyObjC_BEGIN_WITH_GIL
 		PyObjC_UnregisterObjCProxy(value, self);
-#ifndef PyObjC_UNICODE_FAST_PATH
 		[realObject release];
-#else
-		[realObject release];
-#endif /* !PyObjC_UNICODE_FAST_PATH */
-		Py_XDECREF(value);
+		realObject = nil;
+		Py_CLEAR(value);
+
+#ifdef PyObjC_STR_CACHE_IMP
+		imp_length = 0xDEADBEEF;
+		imp_charAtIndex = 0xDEADBEEF;
+		imp_getCharacters = 0xDEADBEEF;
+#endif /* PyObjC_STR_CACHE_IMP */
+
 	PyObjC_END_WITH_GIL
 
 	[super dealloc];
@@ -209,6 +213,7 @@
 
 -(NSUInteger)length
 {
+#ifdef PyObjC_STR_CACHE_IMP
 	if (!imp_length) {
 		[self __realObject__];
 		imp_length = (__typeof__(imp_length))([realObject methodForSelector:@selector(length)]);
@@ -216,10 +221,16 @@
 	if (!imp_length) abort();
 	if (!realObject) abort();
 	return imp_length(realObject, @selector(length));
+
+#else /* !PyObjC_STR_CACHE_IMP */
+	return [[self __realObject__] length];
+
+#endif /* !PyObjC_STR_CACHE_IMP */
 }
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
+#ifdef PyObjC_STR_CACHE_IMP
 	if (!imp_charAtIndex) {
 		[self __realObject__];
 		imp_charAtIndex = (__typeof__(imp_charAtIndex))([realObject methodForSelector:@selector(characterAtIndex:)]);
@@ -227,10 +238,16 @@
 	if (!imp_charAtIndex) abort();
 	if (!realObject) abort();
 	return imp_charAtIndex(realObject, @selector(characterAtIndex:), anIndex);
+
+#else /* !PyObjC_STR_CACHE_IMP */
+	return [[self __realObject__] characterAtIndex:anIndex];
+
+#endif /* !PyObjC_STR_CACHE_IMP */
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
+#ifdef PyObjC_STR_CACHE_IMP
 	if (!imp_getCharacters) {
 		[self __realObject__];
 		imp_getCharacters = (__typeof__(imp_getCharacters))([realObject methodForSelector:@selector(getCharacters:range:)]);
@@ -238,6 +255,16 @@
 	if (!imp_getCharacters) abort();
 	if (!realObject) abort();
 	imp_getCharacters(realObject, @selector(getCharacters:range:), buffer, aRange);
+
+#else	/* !PyObjC_STR_CACHE_IMP */
+	return [[self __realObject__] getCharacters:buffer range:aRange];
+
+#endif
+}
+
+-(void)getCharacters:(unichar*)buffer
+{
+	return [[self __realObject__] getCharacters:buffer];
 }
 
 /*
@@ -269,7 +296,7 @@
 	return self;
 }
 
--initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+-(id)initWithBytes:(void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	char* py_encoding = NULL;
 	int byteorder = 0;
@@ -367,7 +394,7 @@
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+-(id)initWithCoder:(NSCoder*)coder
 {
 	int ver;
 	if ([coder allowsKeyedCoding]) {
@@ -499,7 +526,7 @@
 /* Ensure that we can be unarchived as a generic string by pure ObjC
  * code.
  */
-+classFallbacksForKeyedArchiver
++(NSArray*)classFallbacksForKeyedArchiver
 {
 	return [NSArray arrayWithObject:@"NSString"];
 }

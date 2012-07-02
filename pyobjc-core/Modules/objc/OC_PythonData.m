@@ -3,7 +3,7 @@
 
 @implementation OC_PythonData 
 
-+ dataWithPythonObject:(PyObject*)v
++ (instancetype)dataWithPythonObject:(PyObject*)v
 {
 	OC_PythonData* res;
 
@@ -12,7 +12,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;

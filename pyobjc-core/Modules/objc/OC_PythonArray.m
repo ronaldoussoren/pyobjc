@@ -5,7 +5,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonArray 
 
-+ depythonifyObject:(PyObject*)object
++ (instancetype)depythonifyObject:(PyObject*)object
 {
 	Py_ssize_t i, len;
 	
@@ -29,7 +29,7 @@ static PyObject* mapTypes = NULL;
 	return nil;
 }
 
-+ depythonifyTable
++ (id)depythonifyTable
 {
 	NSObject* result; 
 
@@ -51,7 +51,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ arrayWithPythonObject:(PyObject*)v
++ (instancetype)arrayWithPythonObject:(PyObject*)v
 {
 	OC_PythonArray* res;
 
@@ -60,7 +60,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -121,7 +121,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
--objectAtIndex:(NSUInteger)idx
+-(id)objectAtIndex:(NSUInteger)idx
 {
 	PyObject* v;
 	id result;

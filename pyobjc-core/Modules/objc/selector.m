@@ -864,24 +864,34 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
 		object = PyObjCObject_GetObject(self);
 
-		if (nil != (methsig = [object methodSignatureForSelector:sel])){
-			PyObjCNativeSelector* res;
+		NS_DURING
+			if (nil != (methsig = [object methodSignatureForSelector:sel])){
+				PyObjCNativeSelector* res;
 
-			res =  (PyObjCNativeSelector*)PyObjCSelector_NewNative(
-				object_getClass(object), sel, 
-				PyObjC_NSMethodSignatureToTypeString(methsig, 
-					buf, sizeof(buf)), 0);
-			if (res != NULL) {
-				/* Bind the method to self */
-				res->sel_self = self;
-				Py_INCREF(res->sel_self);
+				res =  (PyObjCNativeSelector*)PyObjCSelector_NewNative(
+					object_getClass(object), sel, 
+					PyObjC_NSMethodSignatureToTypeString(methsig, 
+						buf, sizeof(buf)), 0);
+				if (res != NULL) {
+					/* Bind the method to self */
+					res->sel_self = self;
+					Py_INCREF(res->sel_self);
+				}
+				retval = (PyObject*)res;
+			} else {
+				PyErr_Format(PyExc_AttributeError,
+					"No attribute %s", name);
+				retval = NULL;
 			}
-			return (PyObject*)res;
-		} else {
+
+		NS_HANDLER
 			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
-			return NULL;
-		}
+			retval = NULL;
+
+		NS_ENDHANDLER
+
+		return retval;
 	} else {
 		PyErr_SetString(PyExc_RuntimeError,
 			"PyObjCSelector_FindNative called on plain "

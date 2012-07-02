@@ -18,7 +18,6 @@ from .testbndl import DBL_MAX, DBL_MIN, DBL_EPSILON
 from .testbndl import FLT_MAX, FLT_MIN, FLT_EPSILON
 import objc
 import array, sys
-from warnings import filterwarnings
 
 
 
@@ -185,7 +184,7 @@ class TestNumbers (TestCase):
             self.assertEqual(ULLONG_MAX, pyObjCPy(objc._C_ULNG_LNG, long(ULLONG_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, float(0)))
 
-        with filterwarnings('error', DeprecationWarning):
+        with filterWarnings('error', DeprecationWarning):
             try:
                 pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100)
             except DeprecationWarning:
@@ -194,7 +193,7 @@ class TestNumbers (TestCase):
             else:
                 self.fail("No deprecation warning")
 
-        with filterwarnings('ignore', DeprecationWarning):
+        with filterWarnings('ignore', DeprecationWarning):
             self.assertEqual(-LLONG_MIN+100, pyObjCPy(objc._C_ULNG_LNG, LLONG_MIN+100))
 
         #self.assertRaises(ValueError, pyObjCPy, objc._C_ULNG_LNG, LLONG_MIN)

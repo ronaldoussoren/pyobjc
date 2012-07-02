@@ -7,9 +7,9 @@
 	NSDate*   oc_value;
 }
 
-+ depythonifyObject:(PyObject*)object;
-+ dateWithPythonObject:(PyObject*)value;
-- initWithPythonObject:(PyObject*)value;
++ (instancetype)depythonifyObject:(PyObject*)object;
++ (instancetype)dateWithPythonObject:(PyObject*)value;
+- (id)initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
 -(PyObject*)__pyobjc_PythonObject__;
 
@@ -22,6 +22,6 @@
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- initWithCoder:(NSCoder*)coder;
+- (id)initWithCoder:(NSCoder*)coder;
 
 @end

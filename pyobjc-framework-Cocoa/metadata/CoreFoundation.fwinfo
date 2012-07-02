@@ -248,6 +248,12 @@
   "classes": {}, 
   "formal_protocols": {}, 
   "functions": {
+   "_CFAutoreleasePoolPrintPools": {
+     "args": {},
+     "retval": {
+        "typestr": "v"
+     }
+   },
    "CFPlugInGetTypeID": {
      "ignore": true
    },

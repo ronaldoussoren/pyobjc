@@ -28,7 +28,7 @@
  *
  * Caller must own the GIL.
  */
-+ stringWithPythonObject:(PyObject*)value;
++ (instancetype)stringWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -38,7 +38,7 @@
  *
  * Caller must own the GIL.
  */
-- initWithPythonObject:(PyObject*)value;
+- (id)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc

@@ -19,8 +19,8 @@ static PyObject* mapTypes = NULL;
 	BOOL valid;
 	Py_ssize_t pos;
 }
-+ enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
-- initWithWrappedDictionary:(OC_PythonDictionary*)value;
++ (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
+- (id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
 -(void)dealloc;
 
 -(id)nextObject;
@@ -31,12 +31,12 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonDictionaryEnumerator
 
-+enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
++(instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
 {
 	return [[[self alloc] initWithWrappedDictionary:v] autorelease];
 }
 
--initWithWrappedDictionary:(OC_PythonDictionary*)v
+-(id)initWithWrappedDictionary:(OC_PythonDictionary*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -68,7 +68,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonDictionary 
 
-+ depythonifyObject:(PyObject*)object
++ (instancetype)depythonifyObject:(PyObject*)object
 {
 	Py_ssize_t i, len;
 	
@@ -86,13 +86,13 @@ static PyObject* mapTypes = NULL;
 		if (!r) continue;
 
 		/* Instance of this type should be pythonifyed as a sequence */
-		return [OC_PythonArray arrayWithPythonObject:object];
+		return [OC_PythonDictionary dictionaryWithPythonObject:object];
 	}
 
 	return NULL;
 }
 
-+ depythonifyTable
++ (id)depythonifyTable
 {
 	NSObject* result; 
 
@@ -114,7 +114,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+dictionaryWithPythonObject:(PyObject*)v
++(instancetype)dictionaryWithPythonObject:(PyObject*)v
 {
 	OC_PythonDictionary* res = 
 		[[OC_PythonDictionary alloc] initWithPythonObject:v];
@@ -122,7 +122,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
--initWithPythonObject:(PyObject*)v
+-(id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -200,7 +200,7 @@ static PyObject* mapTypes = NULL;
 	return 0;
 }
 
--objectForKey:key
+-(id)objectForKey:key
 {
 	PyObject* v;
 	PyObject* k;
@@ -374,7 +374,7 @@ static PyObject* mapTypes = NULL;
 }
 
 
-- initWithObjects:(NSObject**)objects 
+- (id)initWithObjects:(NSObject**)objects 
 	  forKeys:(NSObject**)keys 
 	    count:(NSUInteger)count
 {
@@ -431,7 +431,7 @@ static PyObject* mapTypes = NULL;
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
 	int code;
 	if ([coder allowsKeyedCoding]) {

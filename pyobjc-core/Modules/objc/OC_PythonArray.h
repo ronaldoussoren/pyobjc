@@ -52,7 +52,7 @@
  *
  * Caller must own the GIL.
  */
-- initWithPythonObject:(PyObject*)value;
+- (id)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
