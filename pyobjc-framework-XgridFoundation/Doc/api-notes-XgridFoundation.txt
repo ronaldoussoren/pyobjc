@@ -1,4 +1,8 @@
 API Notes for the XgridFoundation framework
 ===========================================
 
-PyObjC's bindings for the XgridFoundation framwork are complete.
+PyObjC's bindings for the XgridFoundation framework are complete.
+
+.. note:: 
+
+   The XgridFoundation framework is not present in OSX 10.8 or later.
