@@ -7,6 +7,7 @@ documentation for details on how to use these functions and classes.
 
 import sys
 import objc
+import os
 import CoreFoundation
 
 from CFNetwork import _metadata
@@ -17,9 +18,14 @@ def CFSocketStreamSOCKSGetError(err):
 def CFSocketStreamSOCKSGetErrorSubdomain(err):
     return (err.error >> 16) & 0xFFFF
 
+frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
+if not os.path.exists(frameworkPath):
+    frameworkPath = "/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"
+
+
 sys.modules['CFNetwork'] = mod = objc.ObjCLazyModule(
     "CFNetwork", "com.apple.CFNetwork",
-    objc.pathForFramework("/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"),
+    objc.pathForFramework(frameworkPath),
     _metadata.__dict__, None, {
         '__doc__': __doc__,
         'objc': objc,
