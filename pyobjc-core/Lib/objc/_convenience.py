@@ -38,7 +38,7 @@ def addConvenienceForSelector(selector, methods):
     Add the list with methods to every class that has a selector with the
     given name.
     """
-    warning.warn("addConvenienceForSelector is on the way out", DeprecationWarning)
+    warnings.warn("addConvenienceForSelector is on the way out", DeprecationWarning)
     _CONVENIENCE_METHODS[selector] = methods
 
 def addConvenienceForClass(classname, methods):
