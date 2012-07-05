@@ -187,7 +187,8 @@ class oc_test (test.test):
 from setuptools.command import egg_info
 
 def write_header(cmd, basename, filename):
-    data = open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU').read()
+    with open(os.path.join('Modules/objc/', os.path.basename(basename)), 'rU') as fp:
+        data = fp.read()
     if not cmd.dry_run:
         if not os.path.exists(os.path.dirname(filename)):
             os.makedirs(os.path.dirname(filename))
