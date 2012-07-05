@@ -1,0 +1,64 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "EKEventStore": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "saveCalendar:commit:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeCalendar:commit:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "saveEvent:span:commit:error:"
+     }, 
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeEvent:span:commit:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "saveReminder:commit:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "removeReminder:commit:error:"
+     }, 
+     {
+      "args": {
+       "0": {}
+      }, 
+      "class_method": false, 
+      "selector": "commit:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
