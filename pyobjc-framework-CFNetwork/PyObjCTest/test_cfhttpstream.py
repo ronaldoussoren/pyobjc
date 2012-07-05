@@ -46,9 +46,9 @@ class TestCFHTTPStream (TestCase):
        v = CFReadStreamCreateForHTTPRequest(None, req)
        self.assertIsInstance(v, CFReadStreamRef)
 
-       fp = open("/dev/null", "w")
-       fd_2 = os.dup(2)
-       os.dup2(fp.fileno(), 2)
+       with open("/dev/null", "w") as fp:
+           fd_2 = os.dup(2)
+           os.dup2(fp.fileno(), 2)
 
        try:
            # Avoid deprecation messages from CFNetwork
