@@ -1,0 +1,451 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {}, 
+  "formal_protocols": {}, 
+  "cftypes": {
+    "SKDocumentRef": { "typestr": "@", "gettypeid_func": "SKDocumentGetTypeID" },
+    "SKIndexDocumentIteratorRef": { "gettypeid_func": "SKIndexDocumentIteratorGetTypeID", "typestr": "^{__SKIndexDocumentIterator=}" },
+    "SKIndexRef": { "gettypeid_func": "SKIndexGetTypeID", "typestr": "^{__SKIndex=}" },
+    "SKSearchGroupRef": { "gettypeid_func": "SKSearchGroupGetTypeID", "typestr": "^{__SKSearchGroup=}" },
+    "SKSearchResultsRef": { "gettypeid_func": "SKSearchResultsGetTypeID", "typestr": "^{__SKSearchResults=}" },
+    "SKSummaryRef": { "gettypeid_func": "SKSummaryGetTypeID", "typestr": "^{__SKSummary=}" },
+    "SKSearchRef": { "gettypeid_func": "SKSearchGetTypeID", "typestr": "^{__SKSearch=}" }
+  },
+  "functions": {
+   "SKDocumentCopyURL": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKDocumentCreate": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "SKDocumentCreateWithURL": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKDocumentGetName": {
+    "retval": {}
+   }, 
+   "SKDocumentGetSchemeName": {
+    "retval": {}
+   }, 
+   "SKIndexAddDocument": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "SKIndexAddDocumentWithText": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "SKIndexClose": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexCompact": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexCopyDocumentForDocumentID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexCopyDocumentIDArrayForTermID": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexCopyDocumentProperties": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexCopyDocumentRefsForDocumentIDs": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "SKIndexCopyDocumentURLsForDocumentIDs": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "3": { "already_cfretained": true, "type_modifier": "o", "c_array_length_in_arg": 1 }
+    }
+   }, 
+   "SKIndexCopyInfoForDocumentIDs": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "n" }, 
+     "3": { "already_cfretained": true, "c_array_length_in_arg": 1, "type_modifier": "o" }, 
+     "4": { "c_array_length_in_arg": 1, "type_modifier": "o" }
+    }
+   }, 
+   "SKIndexCopyTermIDArrayForDocumentID": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexCopyTermStringForTermID": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexCreateWithMutableData": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexCreateWithURL": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexDocumentIteratorCopyNext": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexDocumentIteratorCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKIndexFlush": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetAnalysisProperties": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {}
+   }, 
+   "SKIndexGetDocumentCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetDocumentID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetDocumentState": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetDocumentTermCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetDocumentTermFrequency": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetIndexType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetMaximumBytesBeforeFlush": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetMaximumDocumentID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetMaximumTermID": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetTermDocumentCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexGetTermIDForTermString": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }
+   }, 
+   "SKIndexMoveDocument": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexOpenWithData": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "SKIndexOpenWithMutableData": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "SKIndexOpenWithURL": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {}
+   }, 
+   "SKIndexRemoveDocument": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKIndexRenameDocument": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "SKIndexSetDocumentProperties": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }
+   }, 
+   "SKIndexSetMaximumBytesBeforeFlush": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKSearchCancel": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKSearchCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchFindMatches": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_length_in_arg": [1,5], "type_modifier": "o" }, 
+     "3": { "c_array_length_in_arg": [1,5], "type_modifier": "o" }, 
+     "5": { "type_modifier": "o" }
+    }
+   }, 
+   "SKSearchGroupCopyIndexes": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchGroupCreate": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchResultsCopyMatchingTerms": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchResultsCreateWithDocuments": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "3": {}, 
+     "4": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__SKIndex=}"
+        }, 
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "Z"
+       }
+      }
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchResultsCreateWithQuery": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "4": {}, 
+     "5": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{__SKIndex=}"
+        }, 
+        {
+         "typestr": "@"
+        }, 
+        {
+         "typestr": "^v"
+        }
+       ], 
+       "retval": {
+        "typestr": "Z"
+       }
+      }
+     }
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSearchResultsGetCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKSearchResultsGetInfoInRange": {
+    "args": {
+     "0": {}, 
+     "2": { "c_array_length_in_arg": 1, "c_array_length_in_result": true, "type_modifier": "o" }, 
+     "3": { "c_array_length_in_arg": 1, "c_array_length_in_result": true, "type_modifier": "o" }, 
+     "4": { "c_array_length_in_arg": 1, "c_array_length_in_result": true, "type_modifier": "o" }
+    }
+   }, 
+   "SKSummaryCopyParagraphAtIndex": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSummaryCopyParagraphSummaryString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSummaryCopySentenceAtIndex": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSummaryCopySentenceSummaryString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSummaryCreateWithString": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "SKSummaryGetParagraphCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKSummaryGetParagraphSummaryInfo": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }
+    }
+   }, 
+   "SKSummaryGetSentenceCount": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "SKSummaryGetSentenceSummaryInfo": {
+    "args": {
+     "0": {}, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
+    }
+   }
+  }, 
+  "informal_protocols": {}
+ }
+}
