@@ -7,6 +7,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- ``objc.addConvenienceForSelector`` is deprecated, primarily to make 
+  it possible to restructure the pyobjc internals.
+
 - Workaround for bug in pip that resulted in pyobjc-core not being pip
   installable.  Patch by Marc Abramowitz.
 
