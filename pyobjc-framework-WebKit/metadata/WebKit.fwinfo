@@ -1169,6 +1169,13 @@
    "DOMNode": {
     "methods": [
      {
+      "class_method": false, 
+      "retval": {
+       "type_override": "Z"
+      }, 
+      "selector": "contains:"
+     }, 
+     {
       "args": {
        "0": {
         "type_override": "Z"
