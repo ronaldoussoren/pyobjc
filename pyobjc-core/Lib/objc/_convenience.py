@@ -329,6 +329,7 @@ if sys.version_info[0] == 2:
             func = self.compare_
 
         except AttributeError:
+            return NotImplemented
             if self < other:
                 return -1
             elif self > other:
@@ -339,7 +340,7 @@ if sys.version_info[0] == 2:
         else:
             return func(other)
 
-    CLASS_OBJECTS["NSObject"] += (
+    CLASS_METHODS["NSObject"] += (
         ("__cmp__", nsobject__cmp__),
     )
 
