@@ -13,7 +13,7 @@ from Accounts import _metadata
 
 sys.modules['Accounts'] = mod = objc.ObjCLazyModule(
     "Accounts",
-    "com.apple.Accounts.framework",
+    "com.apple.Accounts",
     objc.pathForFramework("/System/Library/Frameworks/Accounts.framework"),
     _metadata.__dict__, None, {
         '__doc__': __doc__,

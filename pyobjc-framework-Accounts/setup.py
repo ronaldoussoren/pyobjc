@@ -1,7 +1,5 @@
 ''' 
-Wrappers for the "AddressBook" framework on MacOS X. The Address Book is
-a centralized database for contact and other information for people. Appliations
-that make use of the AddressBook framework all use the same database.
+Wrappers for the "Accounts" framework on MacOS X. 
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
