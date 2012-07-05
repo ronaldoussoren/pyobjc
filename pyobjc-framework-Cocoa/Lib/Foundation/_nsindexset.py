@@ -13,12 +13,8 @@ def __add__(self, value):
     return self.indexPathByAddingIndex_(value)
 
 
-objc.addConvenienceForSelector(b'length', [
+objc.addConvenienceForClass("NSIndexPath", [
     ('__len__', __len__),
-])
-objc.addConvenienceForSelector(b'indexAtPosition:', [
     ('__getitem__', __getitem__),
-])
-objc.addConvenienceForSelector(b'indexPathByAddingIndex:', [
     ('__add__', __add__),
 ])
