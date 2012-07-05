@@ -2,12 +2,12 @@
 
 @implementation OC_PythonEnumerator
 
-+enumeratorWithPythonObject:(PyObject*)object
++(instancetype)enumeratorWithPythonObject:(PyObject*)object
 {
 	return [[[self alloc] initWithPythonObject:object] autorelease];
 }
 
--initWithPythonObject:(PyObject*)object
+-(id)initWithPythonObject:(PyObject*)object
 {
 	self = [super init];
 	if (self == nil) return nil;
@@ -26,7 +26,7 @@
 	[super dealloc];
 }
 
--nextObject
+-(id)nextObject
 {
 	if (!valid) {
 		return nil;
@@ -60,7 +60,7 @@
 	return result;
 }
 
--allObjects
+-(NSArray*)allObjects
 {
 	NSMutableArray* array;
 	NSObject* cur;

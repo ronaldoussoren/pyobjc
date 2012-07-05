@@ -19,10 +19,12 @@
 	PyObject* value;
 	id realObject;
 
+#ifdef PyObjC_STR_CACHE_IMP
 	/* Cache IMPs for proxied methods, for slightly better efficiency */
 	NSUInteger (*imp_length)(id, SEL);
 	unichar (*imp_charAtIndex)(id, SEL, NSUInteger);
 	void (*imp_getCharacters)(id, SEL, unichar*, NSRange);
+#endif /* PyObjC_STR_CACHE_IMP */
 }
 
 /*!

@@ -7,6 +7,9 @@
 #include "pyobjc-api.h"
 
 #import <ApplicationServices/ApplicationServices.h>
+#if PyObjC_BUILD_RELEASE > 1008
+#import <CoreGraphics/CoreGraphics.h>
+#endif
 
 
 /* 
@@ -222,6 +225,8 @@ m_CGDataProviderGetBytesCallback(
 	return c_result;
 }
 
+#if PyObjC_BUILD_RELEASE < 1008
+
 static void 
 m_CGDataProviderSkipBytesCallback(void* _info, size_t count)
 {
@@ -238,6 +243,8 @@ m_CGDataProviderSkipBytesCallback(void* _info, size_t count)
 
 	PyGILState_Release(state);
 }
+
+#endif
 
 static void 
 m_CGDataProviderRewindCallback(void* _info)
@@ -278,13 +285,16 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 	PyGILState_Release(state);
 }
 
+#if PyObjC_BUILD_RELEASE < 1008
 static CGDataProviderCallbacks m_CGDataProviderCallbacks = {
 	m_CGDataProviderGetBytesCallback, 	/*  getBytes */
 	m_CGDataProviderSkipBytesCallback,	/*  skipBytes */
 	m_CGDataProviderRewindCallback,		/*  rewind */
 	m_CGDataProviderReleaseInfoCallback	/*  releaseProvider */
 };
+#endif /* PyObjC_BUILD_RELEASE < 1008 */
 
+#if PyObjC_BUILD_RELEASE < 1008
 static const void*
 m_CGDataProviderGetBytePointerCallback(void* _info)
 {
@@ -411,6 +421,7 @@ static CGDataProviderDirectAccessCallbacks m_CGDataProviderDirectAccessCallbacks
 	m_CGDataProviderGetBytesAtOffsetCallback,	/* getBytes */
 	m_CGDataProviderReleaseInfoCallback		/* releaseProvider */
 };
+#endif /* PyObjC_BUILD_RELEASE < 1008 */
 
 
 
@@ -524,6 +535,7 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 #endif
 
 
+#if PyObjC_BUILD_RELEASE < 1008
 PyDoc_STRVAR(doc_CGDataProviderCreate,
 	"CGDataConsumerCreate(info, (getBytes, skipBytes, rewind, releaseProvider)) -> object\n"
 	"\n"
@@ -677,6 +689,7 @@ m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)),
 	CGDataProviderRelease(result);
 	return retval;
 }
+#endif
 
 /*
  * CGDataProviderCreateWithData
@@ -2038,6 +2051,7 @@ static PyMethodDef mod_methods[] = {
 		doc_CGDataConsumerCreate
 	},
 
+#if PyObjC_BUILD_RELEASE < 1008
 	{
 		"CGDataProviderCreate",
 		(PyCFunction)m_CGDataProviderCreate,
@@ -2051,6 +2065,7 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS,
 		doc_CGDataProviderCreateDirectAccess
 	},
+#endif
 
 #if PyObjC_BUILD_RELEASE >= 1005
 

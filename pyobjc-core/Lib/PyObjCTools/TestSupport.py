@@ -487,7 +487,11 @@ class TestCase (_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        type = info['arguments'][argno+offset]['type']
+        try:
+            type = info['arguments'][argno+offset]['type']
+        except IndexError:
+            self.fail("arg %d of %s does not exist"%(argno, method))
+
         if type != b'@?':
             self.fail(message or "arg %d of %s is not of type block: %s"%(
                 argno, method, type))

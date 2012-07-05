@@ -2,3 +2,8 @@ API Notes for the Message framework
 ===================================
 
 The PyObjC bindings for the Message framework are complete.
+
+.. note::
+
+   This framework is only available for 32-bit code, and
+   is deprecated.

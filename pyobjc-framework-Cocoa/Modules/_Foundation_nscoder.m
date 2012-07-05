@@ -1,3 +1,12 @@
+
+#if PY_MAJOR_VERSION == 2
+#  define BYTES_ARG "s"
+
+#else
+#  define BYTES_ARG "y"
+
+#endif
+
 static PyObject* 
 call_NSCoder_encodeValueOfObjCType_at_(
 	PyObject* method, PyObject* self, PyObject* arguments)
@@ -8,9 +17,10 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	int    size;
 	int err;
 	struct objc_super super;
+	Py_ssize_t typestr_len;
 
 	if  (
-		!PyArg_ParseTuple(arguments, Py_ARG_BYTES "O", &typestr, &value)) {
+		!PyArg_ParseTuple(arguments, BYTES_ARG "#O", &typestr, &typestr_len, &value)) {
 		return NULL;
 	}
 
@@ -134,7 +144,9 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	int    size;
 	int err;
 	struct objc_super super;
-	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES Py_ARG_NSUInteger "O", &typestr, &count, &value)) {
+	Py_ssize_t typestr_len;
+
+	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
 		return NULL;
 	}
 
@@ -283,11 +295,11 @@ call_NSCoder_decodeValueOfObjCType_at_(
 	char* typestr;
 	PyObject* value;
 	void*     buf;
-	Py_ssize_t    size;
+	Py_ssize_t    size, typestr_len;
 	struct objc_super super;
 	PyObject* py_buf;
 
-	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "O", &typestr, &py_buf)) {
+	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#O", &typestr, &typestr_len, &py_buf)) {
 		return NULL;
 	}
 
@@ -406,7 +418,9 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	void*     buf;
 	int    size;
 	struct objc_super super;
-	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES Py_ARG_NSUInteger "O", &typestr, &count, &py_buf)) {
+	Py_ssize_t typestr_len;
+
+	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &py_buf)) {
 		return NULL;
 	}
 
@@ -561,12 +575,13 @@ call_NSCoder_encodeBytes_length_(
 
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
+	if  (!PyArg_ParseTuple(arguments, BYTES_ARG"#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
 		return NULL;
 	}
 
 	if (length > size) {
-		PyErr_SetString(PyExc_ValueError, "length > len(buf)");
+		PyErr_Format(PyExc_ValueError, "length %" PY_FORMAT_SIZE_T "d > len(buf) %" PY_FORMAT_SIZE_T "d",
+			length, size);
 		return NULL;
 	}
 
@@ -1006,7 +1021,7 @@ call_NSCoder_encodeBytes_length_forKey_(
 	id     		key;
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size, 
+	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#O&", &bytes, &size, 
 			PyObjCObject_Convert, &key)) {
 		return NULL;
 	}

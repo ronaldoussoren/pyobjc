@@ -902,14 +902,15 @@ size_t PyObjC_methodlist_magic(Class cls)
 #if defined(__x86_64__)
 
 @implementation Protocol (NSOBjectCompat)
-- self
+- (id)self
 {
 	return self;
 }
 @end
 
+#if PyObjC_BUILD_RELEASE < 1008
 @implementation Object (NSOBjectCompat)
-- self
+- (id)self
 {
 	return self;
 }
@@ -920,6 +921,7 @@ size_t PyObjC_methodlist_magic(Class cls)
 	abort();
 }
 @end
+#endif
 	
 
 #endif

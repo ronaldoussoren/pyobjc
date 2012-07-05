@@ -5,7 +5,7 @@
 	BOOL      valid;
 }
 
-+enumeratorWithPythonObject:(PyObject*)object;
--initWithPythonObject:(PyObject*)object;
++(instancetype)enumeratorWithPythonObject:(PyObject*)object;
+-(id)initWithPythonObject:(PyObject*)object;
 
 @end

@@ -15,3 +15,8 @@ API Notes for the CoreGraphics framework
 
    This functions are not yet supported.
 
+
+* ``CGDataProviderCreate``, ``CGDataProviderCreateDirectAccess``
+
+  These functions are not available when you build PyObjC on OSX 10.8,
+  even when you run on earlier releases of OSX.

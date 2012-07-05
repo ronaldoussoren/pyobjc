@@ -2,7 +2,7 @@
 
 @implementation OC_PythonNumber
 
-+ numberWithPythonObject:(PyObject*)v
++ (instancetype)numberWithPythonObject:(PyObject*)v
 {
 	OC_PythonNumber* res;
 
@@ -11,7 +11,7 @@
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -384,7 +384,7 @@
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
 	if (PyObjC_Decoder != NULL) {
 		PyObjC_BEGIN_WITH_GIL

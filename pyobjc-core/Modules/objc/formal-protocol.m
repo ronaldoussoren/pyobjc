@@ -149,7 +149,8 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 		SEL theSel = PyObjCSelector_GetSelector(sel);
 		const char* theSignature = PyObjCSelector_Signature(sel);
 
-		protocol_addMethodDescription(theProtocol, theSel, theSignature, PyObjCSelector_Required(sel), !PyObjCSelector_IsClassMethod(sel));
+		protocol_addMethodDescription(theProtocol, theSel, theSignature, 
+				PyObjCSelector_Required(sel), !PyObjCSelector_IsClassMethod(sel));
 	}
 
 	objc_registerProtocol(theProtocol);

@@ -5,7 +5,7 @@ static PyObject* datetime_types = NULL;
 
 @implementation OC_PythonDate 
 
-+ depythonifyObject:(PyObject*)object
++ (instancetype)depythonifyObject:(PyObject*)object
 {
 	if (datetime_types == NULL) {
 		/* Initialize the mapping table, don't worry about
@@ -47,7 +47,7 @@ static PyObject* datetime_types = NULL;
 	return nil;
 }
 
-+ dateWithPythonObject:(PyObject*)v
++ (instancetype)dateWithPythonObject:(PyObject*)v
 {
 	OC_PythonDate* res;
 
@@ -56,7 +56,7 @@ static PyObject* datetime_types = NULL;
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -123,7 +123,7 @@ static PyObject* datetime_types = NULL;
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+-(id)initWithCoder:(NSCoder*)coder
 {
 	value = NULL;
 

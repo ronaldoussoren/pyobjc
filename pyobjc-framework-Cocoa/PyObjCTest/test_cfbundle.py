@@ -1,5 +1,6 @@
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
+import Foundation
 
 
 try:
@@ -112,7 +113,7 @@ class TestCFBundle (TestCase):
         self.assertIsInstance(bundle2, CFBundleRef)
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", None)
         self.assertIsInstance(url, CFURLRef)
-        url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", "dummy")
+        url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", "helloworld.lproj")
         self.assertIs(url, None)
         array = CFBundleCopyResourceURLsOfType(bundle, "strings", None)
         self.assertIsNot(array, None)

@@ -52,8 +52,8 @@ class TestPreferences (TestCase):
 
         ok = CFPreferencesAppSynchronize("PyObjCTest")
         self.assertTrue(ok)
-        self.assertTrue(os.path.exists(prefsFn))
-        os.unlink(prefsFn)
+        listing = os.listdir(os.path.dirname(prefsFn))
+        self.assertTrue([fn for fn in listing if fn.startswith(os.path.basename(prefsFn))])
 
         CFPreferencesSetValue("PyObjCTestValue2", "value2", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         v = CFPreferencesCopyValue("PyObjCTestValue2", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
@@ -74,9 +74,10 @@ class TestPreferences (TestCase):
         if os.path.exists(prefsFn):
             os.unlink(prefsFn)
         ok = CFPreferencesSynchronize("PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
+
         self.assertTrue(ok)
-        self.assertTrue(os.path.exists(prefsFn))
-        os.unlink(prefsFn)
+        listing = os.listdir(os.path.dirname(prefsFn))
+        self.assertTrue([fn for fn in listing if fn.startswith(os.path.basename(prefsFn))])
 
         self.assertResultIsCFRetained(CFPreferencesCopyApplicationList)
         apps = CFPreferencesCopyApplicationList(kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
@@ -85,7 +86,7 @@ class TestPreferences (TestCase):
         self.assertResultIsCFRetained(CFPreferencesCopyKeyList)
         keys = CFPreferencesCopyKeyList(b"com.apple.AddressBook".decode('ascii'), kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(keys, CFArrayRef)
-        self.assertIsIn(b"ABNameSorting".decode('ascii'), keys)
+        self.assertIsIn(b"ABVersion".decode('ascii'), keys)
 
     def testConstants(self):
         self.assertIsInstance(kCFPreferencesAnyApplication, unicode)

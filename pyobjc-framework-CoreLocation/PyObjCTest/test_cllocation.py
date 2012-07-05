@@ -23,6 +23,11 @@ class TestCLLocation (TestCase):
         self.assertIsInstance(kCLLocationAccuracyKilometer, float)
         self.assertIsInstance(kCLLocationAccuracyThreeKilometers, float)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCLLocationAccuracyBestForNavigation, float)
+        self.assertIsInstance(kCLLocationCoordinate2DInvalid, CLLocationCoordinate2D)
+
     @min_os_level('10.6')
     def testMethods(self):
         self.assertResultHasType(CLLocation.coordinate, CLLocationCoordinate2D.__typestr__)
@@ -31,6 +36,15 @@ class TestCLLocation (TestCase):
         self.assertArgHasType(CLLocation.initWithCoordinate_altitude_horizontalAccuracy_verticalAccuracy_timestamp_, 0,
                 CLLocationCoordinate2D.__typestr__)
 
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.assertResultIsBOOL(CLLocationCoordinate2DIsValid)
+        self.assertFalse(CLLocationCoordinate2DIsValid(kCLLocationCoordinate2DInvalid))
+        
+        loc = CLLocationCoordinate2DMake(0.0, 0.0)
+        self.assertIsInstance(loc, CLLocationCoordinate2D)
+
+        self.assertTrue(CLLocationCoordinate2DIsValid(loc))
 
 if __name__ == "__main__":
     main()

@@ -85,6 +85,10 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_7 1070
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_8
+#define MAC_OS_X_VERSION_10_8 1080
+#endif
+
 
 /* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX,
  * compensate.
@@ -214,5 +218,14 @@ extern void      PyObjC_ClearIntern(void);
 extern PyObject* PyObjC_InternValue(PyObject* orig);
 extern PyObject* PyObjC_IntFromString(char* v, char**pend, int base);
 extern PyObject* PyObjC_IntFromLong(long v);
+
+
+#ifndef __has_feature
+#  define __has_feature(x) 0
+#endif
+
+#if !__has_feature(objc_instancetype)
+#  define instancetype id
+#endif
 
 #endif /* PyObjC_COMPAT_H */

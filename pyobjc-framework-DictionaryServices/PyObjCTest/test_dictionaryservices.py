@@ -25,7 +25,7 @@ class TestDictionaryServices (TestCase):
         self.assertIsInstance(r, CFRange)
         self.assertEqual(r, (4, 5))
 
-        r = DCSCopyTextDefinition(None, b"the hello world program".decode('latin1'), r)
+        r = DCSCopyTextDefinition(None, b"program".decode('latin1'), r)
         self.assertIsInstance(r, unicode)
 
         v = DCSDictionaryGetTypeID()

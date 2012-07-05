@@ -137,7 +137,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
  * must create the things and this is the only way to do it...
  */
 @interface NSMethodSignature (WarningKiller)
-	+signatureWithObjCTypes:(const char*)types;
+	+(instancetype)signatureWithObjCTypes:(const char*)types;
 @end /* interface NSMethodSignature */
 
 

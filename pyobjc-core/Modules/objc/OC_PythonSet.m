@@ -6,7 +6,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonSet
 
-+ depythonifyObject:(PyObject*)object
++ (instancetype)depythonifyObject:(PyObject*)object
 {
 	Py_ssize_t i, len;
 	
@@ -30,7 +30,7 @@ static PyObject* mapTypes = NULL;
 	return NULL;
 }
 
-+ depythonifyTable
++ (id)depythonifyTable
 {
 	NSObject* result; 
 
@@ -52,7 +52,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ setWithPythonObject:(PyObject*)v
++ (instancetype)setWithPythonObject:(PyObject*)v
 {
 	OC_PythonSet* res;
 
@@ -61,7 +61,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
-- initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;
@@ -132,7 +132,7 @@ static PyObject* mapTypes = NULL;
 	value = v;
 }
 
-- initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
 	if (PyObjC_Decoder != NULL) {
 		PyObjC_BEGIN_WITH_GIL

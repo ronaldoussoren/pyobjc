@@ -799,7 +799,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 	}
 
 	if (Object_class == nil) {
-		Object_class = [Object class];
+		Object_class = objc_getClass("Object");
 	}
 
 	if (name[0] == '_' && name[1] == '_') {
@@ -841,7 +841,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 				methsig = [cls instanceMethodSignatureForSelector:sel];
 				retval = PyObjCSelector_NewNative(cls, sel, 
 					PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
-			} else if ((cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
+			} else if ((Object_class != nil) && (cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
 				retval = PyObjCSelector_NewNative(cls, sel, 
 					PyObjC_NSMethodSignatureToTypeString(
 						methsig, buf, sizeof(buf)), 1);
@@ -864,24 +864,34 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
 		object = PyObjCObject_GetObject(self);
 
-		if (nil != (methsig = [object methodSignatureForSelector:sel])){
-			PyObjCNativeSelector* res;
+		NS_DURING
+			if (nil != (methsig = [object methodSignatureForSelector:sel])){
+				PyObjCNativeSelector* res;
 
-			res =  (PyObjCNativeSelector*)PyObjCSelector_NewNative(
-				object_getClass(object), sel, 
-				PyObjC_NSMethodSignatureToTypeString(methsig, 
-					buf, sizeof(buf)), 0);
-			if (res != NULL) {
-				/* Bind the method to self */
-				res->sel_self = self;
-				Py_INCREF(res->sel_self);
+				res =  (PyObjCNativeSelector*)PyObjCSelector_NewNative(
+					object_getClass(object), sel, 
+					PyObjC_NSMethodSignatureToTypeString(methsig, 
+						buf, sizeof(buf)), 0);
+				if (res != NULL) {
+					/* Bind the method to self */
+					res->sel_self = self;
+					Py_INCREF(res->sel_self);
+				}
+				retval = (PyObject*)res;
+			} else {
+				PyErr_Format(PyExc_AttributeError,
+					"No attribute %s", name);
+				retval = NULL;
 			}
-			return (PyObject*)res;
-		} else {
+
+		NS_HANDLER
 			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
-			return NULL;
-		}
+			retval = NULL;
+
+		NS_ENDHANDLER
+
+		return retval;
 	} else {
 		PyErr_SetString(PyExc_RuntimeError,
 			"PyObjCSelector_FindNative called on plain "

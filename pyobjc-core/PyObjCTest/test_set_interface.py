@@ -126,7 +126,8 @@ class TestMutableSet (TestSet, test.test_set.TestSet):
     basetype = NSMutableSet
 
     def test_copy(self):
-        dup = self.s.copy()
+        #dup = self.s.copy()
+        dup = self.s.mutableCopy()
         self.assertEqual(self.s, dup)
         self.assertNotEqual(id(self.s), id(dup))
         #self.assertEqual(type(dup), self.basetype)

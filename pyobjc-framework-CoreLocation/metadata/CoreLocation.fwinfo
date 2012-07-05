@@ -2,7 +2,79 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+    "kCLErrorGeocodeFoundNoResult": { "ignore": true },
+    "kCLErrorGeocodeCanceled": { "ignore": true }
+  },
   "classes": {
+   "CLGeocoder": {
+     "methods": [
+        {
+	  "selector": "geocodeAddressDictionary:completionHandler:",
+	  "class_method": false,
+	  "args": {
+	     "1": {
+	        "callable": {
+		   "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "@" },
+		      "2": { "typestr": "@" }
+		   },
+		   "retval": { "typestr": "v" }
+		}
+	     }
+	  }
+	},
+        {
+	  "selector": "geocodeAddressString:completionHandler:",
+	  "class_method": false,
+	  "args": {
+	     "1": {
+	        "callable": {
+		   "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "@" },
+		      "2": { "typestr": "@" }
+		   },
+		   "retval": { "typestr": "v" }
+		}
+	     }
+	  }
+	},
+	{
+          "selector": "geocodeAddressString:inRegion:completionHandler:",
+	  "class_method": false,
+	  "args": {
+	     "2": {
+	        "callable": {
+		   "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "@" },
+		      "2": { "typestr": "@" }
+		   },
+		   "retval": { "typestr": "v" }
+		}
+	     }
+	  }
+	},
+        {
+	  "selector": "reverseGeocodeLocation:completionHandler:",
+	  "class_method": false,
+	  "args": {
+	     "1": {
+	        "callable": {
+		   "arguments": {
+		      "0": { "typestr": "^v" },
+		      "1": { "typestr": "@" },
+		      "2": { "typestr": "@" }
+		   },
+		   "retval": { "typestr": "v" }
+		}
+	     }
+	  }
+	}
+     ]
+   },
    "CLLocation": {
     "methods": [
      {
