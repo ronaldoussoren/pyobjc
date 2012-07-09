@@ -21,6 +21,16 @@ class TestCFFileSecurity (TestCase):
     def testConstants(self):
         self.fail("kCFFileSecurityRemoveACL")
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(kCFFileSecurityClearOwner, 1<<0)
+        self.assertEqual(kCFFileSecurityClearGroup, 1<<1)
+        self.assertEqual(kCFFileSecurityClearMode, 1<<2)
+        self.assertEqual(kCFFileSecurityClearOwnerUUID, 1<<3)
+        self.assertEqual(kCFFileSecurityClearGroupUUID, 1<<4)
+        self.assertEqual(kCFFileSecurityClearAccessControlList, 1<<5)
+
+
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.assertResultIsCFRetained(CoreFoundation.CFFileSecurityCreate)
@@ -77,6 +87,14 @@ class TestCFFileSecurity (TestCase):
     def testFunctionsUnwrapped(self):
         # There are no usable wrappers for sys/acl.h at this time
         self.fail("ACL Handling")
+
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        security = CoreFoundation.CFFileSecurityCreate(None)
+        self.assertIsInstance(v, CoreFoundation.CFFileSecurityRef)
+
+        CoreFoundation.CFFileSecurityClearProperties(security, CoreFoundation.kCFFileSecurityClearGroup)
+        
 
 if __name__ == "__main__":
     main()

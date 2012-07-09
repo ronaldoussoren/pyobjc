@@ -57,7 +57,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKSpanThisEvent, 0)
             self.assertEqual(EventKit.EKSpanFutureEvents, 1)
 
-            self.assertIsInstance(EKAlarmTypeDisplay, unicode)
+            self.assertIsInstance(EventKit.EKEventStoreChangedNotification, unicode)
 
 if __name__ == '__main__':
     main()

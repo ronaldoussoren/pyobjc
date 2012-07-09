@@ -49,7 +49,7 @@
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o"}
       }, 
       "class_method": false, 
       "selector": "commit:"

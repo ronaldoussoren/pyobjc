@@ -427,6 +427,20 @@ class TestURL (TestCase):
             if os.path.exists('/tmp/pyobjc.test.2'):
                 os.unlink('/tmp/pyobjc.test.2')
 
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        self.assertResultIsBOOL(CFURLStartAccessingSecurityScopedResource)
+        self.assertResultIsBOOL(CFURLStopAccessingSecurityScopedResource)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCFURLPathKey, unicode)
+
+        self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
+        self.assertEqual(kCFBookmarkResolutionWithSecurityScope, 1 << 10)
+
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(kCFURLNameKey, unicode)

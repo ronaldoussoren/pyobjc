@@ -6,10 +6,10 @@ if hasattr(Foundation, 'NSMachPort'):
     class TestNSMachPort(TestCase):
         def testAlloc(self):
             obj = Foundation.NSMachPort.alloc()
-            self.assert_(obj is not None)
+            self.assertIsNot(obj, None)
 
             obj = obj.init()
-            self.assert_(obj is not None)
+            self.assertIsNot(obj, None)
 
 if __name__ == '__main__':
     main( )
