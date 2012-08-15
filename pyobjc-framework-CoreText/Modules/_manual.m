@@ -101,7 +101,6 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
 	} 
 
 	result = Py_BuildValue("NN", PyBool_FromLong(b), PyObjC_IdToPython((NSObject*)output));
-	CFRelease(output);
 	return result;
 }
 
@@ -123,8 +122,12 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 
 	if (py_settings == Py_None) {
 		/* Handle simple case */
+		if (len != 0) {
+			PyErr_SetString(PyExc_ValueError, "settings list is 'None', length is not 0");
+			return NULL;
+		}
 		PyObjC_DURING
-			style = CTParagraphStyleCreate(NULL, len);
+			style = CTParagraphStyleCreate(NULL, 0);
 
 		PyObjC_HANDLER
 			style = NULL;
@@ -139,8 +142,13 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 			return Py_None;
 		}
 
+		CFShow(style);
+		printf("refcount: %d\n", (int)[(NSObject*)style retainCount]);
+
 		result = PyObjC_ObjCToPython(@encode(CTParagraphStyleRef), &style);
+		printf("refcount: %d\n", (int)[(NSObject*)style retainCount]);
 		CFRelease(style);
+		printf("refcount: %d\n", (int)[(NSObject*)style retainCount]);
 		return result;
 	}
 
