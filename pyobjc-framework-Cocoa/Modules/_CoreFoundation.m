@@ -60,6 +60,16 @@ PyObjC_MODULE_INIT(_CoreFoundation)
 		PyObjC_INITERROR();
 	}
 
+	/* Some C functions aren't available at runtime (e.g. when compiling on
+	 * OS X 10.5 but running on 10.4), so we use "#pragma weak" to weakly
+	 * link the functions, then we remove the corresponding Python wrappers
+	 * at runtime when we detect that the underlying C functions aren't
+	 * available.  It's a bit gross, but it's probably worse to try to
+	 * mimic Py_InitModule*, which is "a bit of a hack" according to its
+	 * source code.
+	 */
+	COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE
+
 	if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
 
 	PyObjC_INITDONE();
