@@ -16,7 +16,7 @@
 @end
 
 @implementation OC_TestVoidPointer
--init 
+-(instancetype)init 
 {
 	self = [super init];
 	if (self) {

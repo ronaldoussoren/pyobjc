@@ -1473,25 +1473,21 @@ static 	char buf[1024];
 @interface PyObjC_TestClass3 : NSObject
 {
 }
-+createAHostWithAddress:(NSString*)address;
-+copyValue:source;
-#if 0
-+newDataWithBytes:(Class)cls method:(int)i;
-+makeDictFromClass:(Class)cls method:(int)i;
-#endif
-+getBytes:(NSData*)data;
-+keyValue:(int)idx forObject: value key: id;
++(NSHost*)createAHostWithAddress:(NSString*)address;
++(id)copyValue:(id<NSCopying>)source;
++(NSData*)getBytes:(NSData*)data;
++(id)keyValue:(int)idx forObject: value key: id;
 +(void)setKeyValue:(int)idx forObject: object key: key value: value;
 @end
 
 @implementation PyObjC_TestClass3
 
-+createAHostWithAddress:(NSString*)address
++(NSHost*)createAHostWithAddress:(NSString*)address
 {
 	return [NSHost hostWithAddress:address];
 }
 
-+getBytes:(NSData*)data
++(NSData*)getBytes:(NSData*)data
 {
 	const void* bytes = [data bytes];
 
@@ -1502,48 +1498,7 @@ static 	char buf[1024];
 	}
 }
 
-#if 0
-+newDataWithBytes:(Class)cls method:(int)i
-{
-	if (i == 0) {
-		return [cls dataWithBytes:"hello world" length:sizeof("hello world")-1];
-	} else {
-		id o = [cls alloc];
-		return [o initWithBytes:"hello world" length:sizeof("hello world")-1];
-	}
-}
-#endif
-
-#if 0
-+makeDictFromClass:(Class)cls method:(int)i
-{
-	id objects[4];
-	id keys[4];
-
-	objects[0] = [[NSObject alloc] init];
-	objects[1] = [[NSObject alloc] init];
-	objects[2] = [[NSObject alloc] init];
-	objects[3] = [[NSObject alloc] init];
-
-	keys[0] = [[NSObject alloc] init];
-	keys[1] = [[NSObject alloc] init];
-	keys[2] = [[NSObject alloc] init];
-	keys[3] = [[NSObject alloc] init];
-
-	if (i == 0) {
-		return [cls 
-				dictionaryWithObjects:objects 
-				forKeys:keys count:4];
-	} else {
-		return [[cls alloc] 
-				initWithObjects:objects 
-				forKeys:keys count:4];
-	}
-}
-#endif
-
-
-+copyValue:source
++(id)copyValue:(NSObject<NSCopying>*)source
 {
 	id theCopy;
 	id pool;
@@ -1561,7 +1516,7 @@ static 	char buf[1024];
 	return theCopy;
 }
 
-+keyValue:(int)idx forObject: object key: key
++(id)keyValue:(int)idx forObject: object key: key
 {
 	switch (idx) {
 	case 0: return [object valueForKey: key];
@@ -1621,7 +1576,7 @@ static 	char buf[1024];
 @end
 
 @interface NSObject (IKnowWhatImDoing)
-- call;
+- (id)call;
 @end
 
 @implementation PyObjC_TestClass4
@@ -1712,7 +1667,7 @@ static 	char buf[1024];
 @end
 
 @implementation PyObjCTest_KVBaseClass
-- init
+- (instancetype)init
 {
     self = [super init];
     if (!self) return nil;
@@ -1750,7 +1705,7 @@ static 	char buf[1024];
 @end
 
 @implementation PyObjCTest_KVPathClass
-- init
+- (instancetype)init
 {
     self = [super init];
     if (!self) return nil;
@@ -1778,15 +1733,15 @@ static 	char buf[1024];
 	NSString* key;
 	id value;
 }
--initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
--getValue;
+-(instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
+-(id)getValue;
 -(void)dealloc;
 -(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
 @end
 
 @implementation PyObjCTest_KeyValueObserver
 
--initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
+-(instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)aKey
 {
 	self = [super init];
 	if (self == nil) return nil;
@@ -1822,7 +1777,7 @@ static 	char buf[1024];
 	[super dealloc];
 }
 
--getValue
+-(id)getValue
 {
 	return value;
 }

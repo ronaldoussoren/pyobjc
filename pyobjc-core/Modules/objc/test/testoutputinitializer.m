@@ -17,12 +17,12 @@
     int _priv;
 }
 
--initWithBooleanOutput:(BOOL *)outBool;
+-(instancetype)initWithBooleanOutput:(BOOL *)outBool;
 -(BOOL)isInitialized;
 @end
 
 @implementation PyObjC_TestOutputInitializer
--initWithBooleanOutput:(BOOL *)outBool
+-(instancetype)initWithBooleanOutput:(BOOL *)outBool
 {
     self = [self init];
     *outBool = YES;

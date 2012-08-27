@@ -46,6 +46,11 @@
 
 #define FAIL_IF(expr) do { if ((expr)) goto error; } while(0)
 
+#pragma GCC diagnostic push
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
 static inline void
 unittest_assert_failed(const char* file, int line, char* msg, ...)
 {
@@ -57,6 +62,9 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 	va_end(ap);
 	PyErr_Format(PyExc_AssertionError, "%s:%d %s", file, line, buf);
 }
+
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 
 #define ASSERT(expr) \
 	do { \

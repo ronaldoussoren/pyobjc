@@ -5,17 +5,17 @@
 
 @interface PyObjCTest_Protected : NSObject
 {}
--publicMethod;
--_protectedMethod;
+-(id)publicMethod;
+-(id)_protectedMethod;
 @end
 
 @implementation PyObjCTest_Protected 
--publicMethod
+-(id)publicMethod
 {
 	return nil;
 }
 
--_protectedMethod
+-(id)_protectedMethod
 {
 	return nil;
 }
@@ -80,4 +80,3 @@ initprotected(void)
 	}
 	INITDONE();
 }
-

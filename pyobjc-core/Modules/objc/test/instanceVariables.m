@@ -17,12 +17,12 @@
 	PyObject* pyValue;
 	NSObject* objValue;
 }
--init;
+-(instancetype)init;
 -(void)dealloc;
 @end
 
 @implementation ClassWithVariables
--init
+-(instancetype)init
 {
 	self = [super init];
 	if (self == nil) return nil;

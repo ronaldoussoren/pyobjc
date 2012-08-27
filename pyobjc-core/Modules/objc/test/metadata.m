@@ -673,6 +673,11 @@ static void use_id(id x __attribute__((__unused__))) { };
 			NULL];
 }
 
+#pragma GCC diagnostic push
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
 -(NSArray*)makeArrayWithCFormat:(char*)fmt, ...
 {
 	va_list ap;
@@ -687,6 +692,8 @@ static void use_id(id x __attribute__((__unused__))) { };
 			[NSString stringWithUTF8String:buffer], 
 			NULL];
 }
+#pragma GCC diagnostic pop
+#pragma clang diagnostic pop
 
 -(NSArray*)makeArrayWithArguments:(id)arg, ...
 {

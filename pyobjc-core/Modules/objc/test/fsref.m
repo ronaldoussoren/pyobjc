@@ -4,6 +4,9 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 #import <CoreServices/CoreServices.h>
 
 #import <Foundation/Foundation.h>
