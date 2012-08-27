@@ -3,6 +3,7 @@ import array
 from CoreFoundation import *
 import CoreFoundation
 import sys
+import AppKit
 
 try:
     unicode
@@ -609,8 +610,10 @@ class TestStringEncodingExt (TestCase):
         self.assertFalse(CFStringIsSurrogateHighCharacter(unichr(0x0600)))
         self.assertTrue(CFStringIsSurrogateLowCharacter(unichr(0xDC00)))
         self.assertFalse(CFStringIsSurrogateLowCharacter(unichr(0x0600)))
-        v = CFStringGetLongCharacterForSurrogatePair(unichr(0xD801), unichr(0xDC01))
-        self.assertEqual(v, ((1 << 10) | 1) + 0x0010000)
+        v = CFStringGetLongCharacterForSurrogatePair(
+                unichr(0xD801), unichr(0xDC01))
+        #self.assertEqual(v, ((1 << 10) | 1) + 0x0010000)
+        self.assertEqual(v, 66561)
 
         self.assertResultIsBOOL(CFStringGetSurrogatePairForLongCharacter)
         ok, chars = CFStringGetSurrogatePairForLongCharacter(v, None)
