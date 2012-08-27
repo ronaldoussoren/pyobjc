@@ -396,10 +396,12 @@ class TestCTFont (TestCase):
         v = CTFontCreateWithFontDescriptorAndOptions(descr, 14.0, None, 0)
         self.assertIsInstance(v, CTFontRef)
 
+    @expectedFailure
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.fail("CTFontDrawGlyphs")
 
+    @expectedFailure
     @min_os_level('10.8')
     def testFunctions10_8(self):
         self.fail("CTFontGetOpticalBoundsForGlyps")

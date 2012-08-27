@@ -25,6 +25,7 @@ class TestCTFontManager (TestCase):
         self.assertIsInstance(kCTFontManagerRegisteredFontsChangedNotification, unicode)
 
 
+    @expectedFailure
     @min_os_level('10.6')
     def testFunctions10_6(self):
         self.fail("CTFontManagerCopyAvailablePostScriptNames")
@@ -43,12 +44,14 @@ class TestCTFontManager (TestCase):
         self.fail("CTFontManagerSetAutoActivationSetting")
         self.fail("CTFontManagerGetAutoActivationSetting")
 
+    @expectedFailure
     @min_os_level('10.7')
     def testFunctions10_7(self):
         self.fail("CTFontManagerCreateFontDescriptorFromData")
 
 
 
+    @expectedFailure
     @min_os_level('10.8')
     def testFunctions10_8(self):
         self.fail("CTFontManagerCreateFontDescriptorFromData")
