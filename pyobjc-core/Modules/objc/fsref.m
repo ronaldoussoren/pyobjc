@@ -4,6 +4,9 @@
 #include "pyobjc.h"
 #import <CoreServices/CoreServices.h>
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 
 #if USE_TOOLBOX_OBJECT_GLUE
 #include "pymactoolbox.h"
