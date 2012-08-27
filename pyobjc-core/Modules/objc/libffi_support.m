@@ -331,7 +331,7 @@ static const char ulong_type[] = { _C_ULNG, 0 };
 	switch (*argtype) {
 	case _C_CHR: case _C_SHT: case _C_UNICHAR:
 		return signature_to_ffi_type(long_type);
-	case _C_UCHR: case _C_USHT: //case _C_UNICHAR:
+	case _C_UCHR: case _C_USHT: 
 		return signature_to_ffi_type(ulong_type);
 #ifdef _C_BOOL
 	case _C_BOOL: return signature_to_ffi_type(long_type);
@@ -372,7 +372,7 @@ signature_to_ffi_type(const char* argtype)
 	case _C_NSBOOL: return &ffi_type_schar;
 	case _C_UCHR: return &ffi_type_uchar;
 	case _C_SHT: return &ffi_type_sshort;
-	case _C_UNICHAR: return &ffi_type_sshort;
+	case _C_UNICHAR: return &ffi_type_ushort;
 	case _C_USHT: return &ffi_type_ushort;
 	case _C_INT: return &ffi_type_sint;
 	case _C_UINT: return &ffi_type_uint;
