@@ -16,14 +16,14 @@ else:
     from PyObjCTest.protocol import OC_TestProtocol
 
 
-MyProto = objc.informal_protocol("MyProto", (
+MyProto3 = objc.informal_protocol("MyProto3", (
     objc.selector(None, selector=b"testMethod", signature=b"I@:", isRequired=1),
     objc.selector(None, selector=b"testMethod2:", signature=b"v@:i", isRequired=0)
 ))
 
 class Test3InformalProtocols(TestCase):
     def testOptional(self):
-        class ProtoClass3 (NSObject, protocols=[MyProto]):
+        class ProtoClass3 (NSObject, protocols=[MyProto3]):
             def testMethod(self):
                 pass
 
@@ -31,19 +31,20 @@ class Test3InformalProtocols(TestCase):
 
 
 if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
-    EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
+    EmptyProtocol3 = objc.formal_protocol("EmptyProtocol3", None, ())
 
-    MyProtocol = objc.formal_protocol("MyProtocol", None, (
+
+    MyProtocol3 = objc.formal_protocol("MyProtocol3", None, (
         objc.selector(None, selector=b"protoMethod", signature=b"I@:"),
         objc.selector(None, selector=b"anotherProto:with:", signature=b"v@:ii"),
     ))
 
-    MyOtherProtocol = objc.formal_protocol("MyOtherProtocol", 
-            (MyProtocol,), [
+    MyOtherProtocol3 = objc.formal_protocol("MyOtherProtocol3", 
+            (MyProtocol3,), [
                 objc.selector(None, selector=b"yetAnother:", signature=b"i@:I")
             ])
 
-    MyClassProtocol = objc.formal_protocol("MyClassProtocol", None, [
+    MyClassProtocol3 = objc.formal_protocol("MyClassProtocol3", None, [
         objc.selector(None, selector=b"anAnotherOne:", signature=b"i@:i"),
         objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ])
@@ -140,19 +141,19 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
 
         def testMethodInfo(self):
             self.assertEqual(
-                    MyProtocol.descriptionForInstanceMethod_("protoMethod"),
+                    MyProtocol3.descriptionForInstanceMethod_("protoMethod"),
                         ("protoMethod", "I@:"))
 
             self.assertEqual(
-                    MyProtocol.descriptionForInstanceMethod_("nosuchmethod"),
+                    MyProtocol3.descriptionForInstanceMethod_("nosuchmethod"),
                         None)
 
             self.assertEqual(
-                    MyClassProtocol.descriptionForClassMethod_("aClassOne:"),
+                    MyClassProtocol3.descriptionForClassMethod_("aClassOne:"),
                         ("aClassOne:", "@@:i"))
 
             self.assertEqual(
-                    MyClassProtocol.descriptionForClassMethod_("nosuchmethod"),
+                    MyClassProtocol3.descriptionForClassMethod_("nosuchmethod"),
                         None)
 
 

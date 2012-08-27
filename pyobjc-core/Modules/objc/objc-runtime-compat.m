@@ -1123,6 +1123,10 @@ void PyObjC_SetupRuntimeCompat(void)
 	SETUP(ivar_getOffset);
 #endif /* MIN_REQUIRED < 10.5 && !OBJC2 */
 
+#ifdef SETUP 
+#undef SETUP
+#endif
+
 
 #if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
 	/* Compat definitions for protocol creation
@@ -1140,9 +1144,6 @@ void PyObjC_SetupRuntimeCompat(void)
 	PyObjC_protocol_addProtocol = compat_protocol_addProtocol;
 #endif
 
-#ifdef SETUP 
-#undef SETUP
-#endif
 
 #elif defined(__LP64__)
 	PyObjC_objc_allocateProtocol = objc_allocateProtocol;
