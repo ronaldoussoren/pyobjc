@@ -21,6 +21,7 @@ typedef struct s { int i; char b; } struct_s;
 
 #if (PyObjC_BUILD_RELEASE >= 1005) 
 
+#pragma message "Ignore warnings about properties in this file."
 @property int prop1;
 @property float prop2;
 @property struct_s prop3;
