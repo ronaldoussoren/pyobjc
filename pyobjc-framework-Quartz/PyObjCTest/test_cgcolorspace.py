@@ -119,7 +119,7 @@ class TestCGColorSpace (TestCase):
                 provider, CGColorSpaceCreateDeviceRGB())
         self.assertIsInstance(spc, CGColorSpaceRef)
         
-        dta= CGColorSpaceCopyICCProfile(spc)
+        dta= CGColorSpaceCopyICCProfile(csp)
         self.assertIsInstance(dta, CFDataRef)
 
         spc = CGColorSpaceCreateIndexed(CGColorSpaceCreateDeviceRGB(), 10,
