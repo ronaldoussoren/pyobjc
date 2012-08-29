@@ -70,7 +70,7 @@ REQUIRES_10_8=[
         'pyobjc-framework-GameKit=='+VERSION,
         'pyobjc-framework-MediaToolbox=='+VERSION,
         'pyobjc-framework-SceneKit=='+VERSION,
-#        'pyobjc-framework-Social=='+VERSION,
+        'pyobjc-framework-Social=='+VERSION,
         'pyobjc-framework-VideoToolbox=='+VERSION,
 ]
 DEL_REQUIRES_10_8=[
