@@ -19,8 +19,8 @@ if sys.maxsize > 2**32:
             self.assertResultIsBOOL(EventKit.EKEventStore.commit_)
             self.assertArgIsOut(EventKit.EKEventStore.commit_, 0)
 
-            self.assertArgIsBlock(EventKit.EKEventStore.enumerateEventsMatchingPredicate_usingBlock_, 1, 'v@o^B')
-            self.assertArgIsBlock(EventKit.EKEventStore.fetchRemindersMatchingPredicate_completion_, 1, 'v@')
+            self.assertArgIsBlock(EventKit.EKEventStore.enumerateEventsMatchingPredicate_usingBlock_, 1, b'v@o^B')
+            self.assertArgIsBlock(EventKit.EKEventStore.fetchRemindersMatchingPredicate_completion_, 1, b'v@')
 
             self.assertResultIsBOOL(EventKit.EKEventStore.removeCalendar_commit_error_)
             self.assertArgIsBOOL(EventKit.EKEventStore.removeCalendar_commit_error_, 1)
