@@ -11,8 +11,11 @@ Exported functions:
 
 __all__ = ( 'runEventLoop', 'runConsoleEventLoop', 'stopEventLoop', 'endSheetMethod', 'callAfter', 'callLater' )
 
-from AppKit import *
-from Foundation import *
+from AppKit import (NSApp, NSRunAlertPanel, NSApplicationMain,
+                    NSApplicationDidFinishLaunchingNotification)
+from Foundation import (NSObject, NSRunLoop, NSTimer, NSDefaultRunLoopMode,
+                        NSNotificationCenter, NSLog, NSAutoreleasePool)
+
 import os
 import sys
 import traceback
