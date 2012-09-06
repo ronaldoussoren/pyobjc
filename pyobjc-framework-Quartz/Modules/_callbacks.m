@@ -28,13 +28,15 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 
 	PyObject* result = PyObject_CallFunction(
 			PyTuple_GET_ITEM(info, 0), 
-#if PY_VERSION_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
 			"Os#l",
 #else
 			"Oy#l",
 #endif
-			PyTuple_GET_ITEM(info, 2), buffer, count, count);
+			PyTuple_GET_ITEM(info, 2), buffer, (Py_ssize_t)count, (Py_ssize_t)count);
 	if (result == NULL) {
+		printf("%s\n", PyObject_REPR(PyTuple_GET_ITEM(info, 2)));
+		printf("%p\n", buffer);
 		PyObjCErr_ToObjCWithGILState(&state);
 	}
 
@@ -703,7 +705,7 @@ m_releaseData(void* _info, const void* data, size_t size)
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-#if PY_VERSION_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
 	tag = PyInt_AsLong(PyTuple_GET_ITEM(info, 2));
 #else
 	tag = PyLong_AsLong(PyTuple_GET_ITEM(info, 2));
@@ -802,7 +804,7 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
 
 	PyGILState_STATE   state = PyGILState_Ensure();
 
-#if PY_VERSION_MAJOR == 2
+#if PY_MAJOR_VERSION == 2
 	domdim = PyInt_AsLong(PyTuple_GET_ITEM(info, 2));
 	rangedim = PyInt_AsLong(PyTuple_GET_ITEM(info, 3));
 #else

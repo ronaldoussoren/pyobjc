@@ -21,12 +21,13 @@ class TestDictionaryServices (TestCase):
 
     
     def testFunctions(self):
-        r = DCSGetTermRangeInString(None, b"the hello world program".decode('latin1'), 5)
+        txt = b"the hello world program".decode('latin1')
+        r = DCSGetTermRangeInString(None, txt, 5)
         self.assertIsInstance(r, CFRange)
         self.assertEqual(r, (4, 5))
 
-        r = DCSCopyTextDefinition(None, b"program".decode('latin1'), r)
-        self.assertIsInstance(r, unicode)
+        r = DCSCopyTextDefinition(None, txt, r)
+        self.assertIsInstance(r, (unicode, type(None)))
 
         v = DCSDictionaryGetTypeID()
         self.assertIsInstance(v, (int, long))

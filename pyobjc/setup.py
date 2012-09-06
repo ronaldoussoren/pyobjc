@@ -64,7 +64,7 @@ REQUIRES_10_7=[
 
 REQUIRES_10_8=[
         'pyobjc-framework-Accounts=='+VERSION,
-        'pyobjc-framework-AudioVideoBridging=='+VERSION,
+#        'pyobjc-framework-AudioVideoBridging=='+VERSION,
         'pyobjc-framework-EventKit=='+VERSION,
         'pyobjc-framework-GLKit=='+VERSION,
         'pyobjc-framework-GameKit=='+VERSION,

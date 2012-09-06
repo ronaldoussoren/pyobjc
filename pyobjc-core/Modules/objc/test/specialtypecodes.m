@@ -36,7 +36,7 @@ static UniChar gUniCharValues[] = { 'a', 55, 9243, 'b' };
 static char gTextCharValues[] = { 'a', 55, 'z' };
 static char gNumCharValues[] = { 1, 2, 3, 4 };
 
--init 
+-(instancetype)init 
 {
 	[super init];
 	_idx = 0;

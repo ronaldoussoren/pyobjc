@@ -376,6 +376,11 @@ static NSArray* makeArrayWithFormat_(NSString* fmt, ...)
 			NULL];
 }
 
+#pragma GCC   diagnostic push
+#pragma clang   diagnostic push
+#pragma GCC   diagnostic ignored "-Wformat-nonliteral"
+#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
 static NSArray* makeArrayWithCFormat_(char* fmt, ...)
 {
 	va_list ap;
@@ -390,6 +395,9 @@ static NSArray* makeArrayWithCFormat_(char* fmt, ...)
 			[NSString stringWithUTF8String:buffer], 
 			NULL];
 }
+
+#pragma GCC   diagnostic pop
+#pragma clang   diagnostic pop
 
 static int maybeFillArray_(int* data)
 {       

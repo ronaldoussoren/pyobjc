@@ -8,12 +8,14 @@
 	OC_PythonUnicode* res;
 
 	res = [[OC_PythonUnicode alloc] initWithPythonObject:v];
-//	[res autorelease];
+	[res autorelease];
 	return res;
 }
 
 - (id)initWithPythonObject:(PyObject*)v
 {
+	self = [super init];
+	if (unlikely(self == nil)) return nil;
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
@@ -185,10 +187,6 @@
 }
 
 #else // !PyObjC_UNICODE_FAST_PATH */
-
-/* XXX: Add __realObject__ implementation tuned for Python 3.3 (choose right
- *      NSString constructor based on unicode representation size
- */
 
 -(id)__realObject__
 {

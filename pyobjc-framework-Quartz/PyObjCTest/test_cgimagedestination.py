@@ -64,6 +64,8 @@ class TestCGImageDestination (TestCase):
         image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/bullet.tif"
         if not os.path.exists(image_path):
             image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.png"
+        if not os.path.exists(image_path):
+            image_path = "/System/Library//ColorSync/Calibrators/Display Calibrator.app/Contents/Resources/brightness.tiff"
         url = CFURLCreateWithFileSystemPath(None,
             image_path,
             kCFURLPOSIXPathStyle, False)
@@ -74,7 +76,7 @@ class TestCGImageDestination (TestCase):
         self.assertResultHasType(CGImageDestinationFinalize, objc._C_BOOL)
         v = CGImageDestinationFinalize(dest)
         self.assertIsInstance(v, bool)
-        self.assertTrue(v is True)
+        self.assertIs(v, True)
 
         dta = NSMutableData.alloc().init()
         cons = CGDataConsumerCreateWithCFData(dta)

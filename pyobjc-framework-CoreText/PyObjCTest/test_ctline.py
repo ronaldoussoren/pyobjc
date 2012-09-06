@@ -39,7 +39,7 @@ class TestCTLine (TestCase):
         self.assertIsInstance(v, CTLineRef)
 
         self.assertResultIsCFRetained(CTLineCreateJustifiedLine)
-        v = CTLineCreateJustifiedLine(line, 0.75, 50.0)
+        v = CTLineCreateJustifiedLine(line, 2.0, 123.0)
         self.assertIsInstance(v, CTLineRef)
 
         v = CTLineGetGlyphCount(line)

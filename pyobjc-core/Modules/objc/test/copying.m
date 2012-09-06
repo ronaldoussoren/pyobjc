@@ -11,7 +11,7 @@
 @end
 
 @interface OC_CopyHelper : NSObject
-{ }
+{}
 +(NSObject<NSCopying>*)doCopySetup:(Class)aClass;
 +(NSObject*)newObjectOfClass:(Class)aClass;
 @end
@@ -20,7 +20,7 @@
 +(NSObject<NSCopying>*)doCopySetup:(Class)aClass
 {
 	NSObject<NSCopying>* tmp;
-	NSObject* retval;
+	NSObject<NSCopying>* retval;
 
 	tmp = (NSObject<NSCopying>*)[[aClass alloc] init];
 	[tmp modify];
@@ -29,6 +29,7 @@
 	[tmp release];
 	return [retval autorelease];
 }
+
 +(NSObject*)newObjectOfClass:(Class)aClass
 {
 	return [[aClass alloc] init];
@@ -39,20 +40,20 @@
 {
 	int intVal;
 }
--init;
--initWithInt:(int)intVal;
+-(instancetype)init;
+-(instancetype)initWithInt:(int)intVal;
 -(int)intVal;
 -(void)setIntVal:(int)val;
--copyWithZone:(NSZone*)zone;
+-(instancetype)copyWithZone:(NSZone*)zone;
 @end
 
 @implementation OC_CopyBase
--init
+-(instancetype)init
 {
 	return [self initWithInt:0];
 }
 
--initWithInt:(int)value
+-(instancetype)initWithInt:(int)value
 {
 	self = [super init];
 	if (self == nil) return nil;
@@ -71,7 +72,10 @@
 	intVal = val;
 }
 
--copyWithZone:(NSZone*)zone
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
+-(instancetype)copyWithZone:(NSZone*)zone
 {
 	return NSCopyObject(self, 0, zone);
 	

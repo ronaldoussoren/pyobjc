@@ -808,7 +808,22 @@ PyObjCClassObject PyObjCObject_Type = {
      },			/* as_buffer */
      0,					/* name */
      0,					/* slots */
+#else /* Python 3 */
+     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 
+     }, /* as_number */
+     { 0,0,0
+     }, /* as_mapping */
+     { 0,0,0,0,0,0,0,0,0,0
+     }, /* as_sequence */
+     { 0,0
+     }, /* as_buffer */
+     0, 0 /* ht_name, ht_slots */
+#if PY_VERSION_HEX >= 0x03030000
+     , 0, 0 /* ht_qualname, ht_cached_keys */
 #endif
+
+
+#endif /* Python 3 */
    }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 

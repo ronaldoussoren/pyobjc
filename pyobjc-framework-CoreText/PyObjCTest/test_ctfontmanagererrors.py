@@ -9,8 +9,8 @@ except NameError:
 class TestCTFontManagerErrors (TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstancE(kCTFontManagerErrorDomain, unicode)
-        self.assertIsInstancE(kCTFontManagerErrorFontURLsKey, unicode)
+        self.assertIsInstance(kCTFontManagerErrorDomain, unicode)
+        self.assertIsInstance(kCTFontManagerErrorFontURLsKey, unicode)
 
         self.assertEqual(kCTFontManagerErrorFileNotFound, 101)
         self.assertEqual(kCTFontManagerErrorInsufficientPermissions, 102)

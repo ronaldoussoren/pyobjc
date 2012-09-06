@@ -695,7 +695,7 @@
        ], 
        "retval": {
         "typestr": [
-         "l", 
+         "q", 
          false
         ]
        }
@@ -1564,7 +1564,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1613,7 +1613,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1650,7 +1650,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTFontGetGlyphWithName": {
@@ -1684,7 +1684,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1718,11 +1718,11 @@
      }, 
      {
       "name": "maxPositions", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTFontGetMatrix": {
@@ -1855,7 +1855,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1889,7 +1889,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTFontManagerCopyAvailableFontFamilyNames": {
@@ -1944,7 +1944,7 @@
     "args": [
      {
       "name": "sourceOrder", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "block": {
@@ -2538,7 +2538,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTLineGetGlyphRuns": {
@@ -2575,7 +2575,7 @@
      }, 
      {
       "name": "charIndex", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "secondaryOffset", 
@@ -2617,7 +2617,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTLineGetStringRange": {
@@ -2680,11 +2680,11 @@
     "args": [
      {
       "name": "settings", 
-      "typestr": "^{CTParagraphStyleSetting=IL^v}"
+      "typestr": "^{CTParagraphStyleSetting=IQ^v}"
      }, 
      {
       "name": "settingCount", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -2806,7 +2806,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTRunGetGlyphs": {
@@ -2911,7 +2911,7 @@
      }, 
      {
       "name": "buffer", 
-      "typestr": "^l"
+      "typestr": "^q"
      }
     ], 
     "retval": {
@@ -2926,7 +2926,7 @@
      }
     ], 
     "retval": {
-     "typestr": "^l"
+     "typestr": "^q"
     }
    }, 
    "CTRunGetStringRange": {
@@ -3136,7 +3136,7 @@
      }, 
      {
       "name": "startIndex", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "width", 
@@ -3144,7 +3144,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTTypesetterSuggestClusterBreakWithOffset": {
@@ -3155,7 +3155,7 @@
      }, 
      {
       "name": "startIndex", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "width", 
@@ -3167,7 +3167,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTTypesetterSuggestLineBreak": {
@@ -3178,7 +3178,7 @@
      }, 
      {
       "name": "startIndex", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "width", 
@@ -3186,7 +3186,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "CTTypesetterSuggestLineBreakWithOffset": {
@@ -3197,7 +3197,7 @@
      }, 
      {
       "name": "startIndex", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "width", 
@@ -3209,7 +3209,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }
   }, 
@@ -3223,7 +3223,7 @@
      "value"
     ], 
     "special": false, 
-    "typestr": "{CTParagraphStyleSetting=IL^v}"
+    "typestr": "{CTParagraphStyleSetting=IQ^v}"
    }
   }
  }, 

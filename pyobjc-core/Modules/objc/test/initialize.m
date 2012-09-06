@@ -12,10 +12,10 @@ static int numUninitialized = 0;
 {
 	int       isInitialized;
 }
--init;
--retain;
+-(instancetype)init;
+-(instancetype)retain;
 -(void)release;
--autorelease;
+-(instancetype)autorelease;
 -(int)isInitialized;
 +(int)numUninitialized;
 -(id)dummy;
@@ -28,7 +28,7 @@ static int numUninitialized = 0;
 
 @implementation OC_TestInitialize 
 
--init
+-(instancetype)init
 {
 	self = [super init];
 	if (!self) return self;
@@ -37,7 +37,7 @@ static int numUninitialized = 0;
 	return self;
 }
 
--retain
+-(instancetype)retain
 {
 	if (!isInitialized) {
 		numUninitialized ++;
@@ -53,7 +53,7 @@ static int numUninitialized = 0;
 	[super release];
 }
 
--(id)autorelease
+-(instancetype)autorelease
 {
 	if (!isInitialized) {
 		numUninitialized ++;

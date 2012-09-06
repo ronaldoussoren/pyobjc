@@ -1658,7 +1658,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "i"
     }
    }, 
    "CTFontManagerCopyAvailableFontFamilyNames": {

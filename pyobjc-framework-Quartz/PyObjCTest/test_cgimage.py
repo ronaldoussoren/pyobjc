@@ -2,6 +2,7 @@
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import sys
+import os
 
 import sys
 
@@ -76,7 +77,12 @@ class TestCGImage (TestCase):
         v = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
         self.assertIsInstance(v, CGImageRef)
 
-        with open('/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png', 'rb') as fp:
+        fname = '/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png'
+        if not os.path.exists(fname):
+            fname = '/System/Library//Frameworks/Automator.framework/Versions/A/Resources/GearActionDisabled.png'
+        if not os.path.exists(fname):
+            self.fail("test image doesn't exist")
+        with open(fname, 'rb') as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithPNGDataProvider)

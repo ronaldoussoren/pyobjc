@@ -10,10 +10,11 @@ General guidelines for use:
   and AppKit will swallow most of them.  This means that you should never
   use this module in a release build.
 
-- Typical use involves only calling installDebuggingHandler or
-  installVerboseDebuggingHandler.  It may be removed at any time by calling
+- Typical use involves only calling installExceptionHandler or
+  installVerboseExceptionHandler.  It may be removed at any time by calling
   removeDebuggingHandler.
 """
+from __future__ import print_function
 
 from Foundation import NSObject, NSLog
 import objc
@@ -29,21 +30,21 @@ EVERYTHINGMASK = NSLogAndHandleEveryExceptionMask
 
 __all__ = [
     'LOGSTACKTRACE', 'DEFAULTVERBOSITY', 'DEFAULTMASK', 'EVERYTHINGMASK',
-    'installDebuggingHandler', 'installVerboseDebuggingHandler',
-    'installPythonExceptionHandler', 'removeDebuggingHandler',
+    'installExceptionHandler', 'installVerboseExceptionHandler',
+    'installPythonExceptionHandler', 'removeExceptionHandler',
     'handlerInstalled',
 ]
 
 def isPythonException(exception):
-    return (exception.userInfo() or {}).get(u'__pyobjc_exc_type__') is not None
+    return (exception.userInfo() or {}).get('__pyobjc_exc_type__') is not None
 
 def nsLogPythonException(exception):
     userInfo = exception.userInfo()
-    NSLog(u'*** Python exception discarded!\n' +
+    NSLog('%@', '*** Python exception discarded!\n' +
         ''.join(traceback.format_exception(
-        userInfo[u'__pyobjc_exc_type__'],
-        userInfo[u'__pyobjc_exc_value__'],
-        userInfo[u'__pyobjc_exc_traceback__'],
+        userInfo['__pyobjc_exc_type__'],
+        userInfo['__pyobjc_exc_value__'],
+        userInfo['__pyobjc_exc_traceback__'],
     )).decode('utf8'))
     # we logged it, so don't log it for us
     return False
@@ -56,10 +57,10 @@ def nsLogObjCException(exception):
     pipe = os.popen('/usr/bin/atos -p %d %s' % (os.getpid(), stack))
     stacktrace = pipe.readlines()
     stacktrace.reverse()
-    NSLog(u"%@", u"*** ObjC exception '%s' (reason: '%s') discarded\n" % (
+    NSLog("%@", "*** ObjC exception '%s' (reason: '%s') discarded\n" % (
             exception.name(), exception.reason(),
         ) +
-        u'Stack trace (most recent call last):\n' +
+        'Stack trace (most recent call last):\n' +
         ''.join([('  '+line) for line in stacktrace]).decode('utf8')
     )
     return False
@@ -68,13 +69,14 @@ LOGSTACKTRACE = 1 << 0
 DEFAULTVERBOSITY = 0
 
 class PyObjCDebuggingDelegate(NSObject):
-    verbosity = objc.ivar('verbosity', 'i')
+    verbosity = objc.ivar('verbosity', b'i')
     
     def initWithVerbosity_(self, verbosity):
         self = self.init()
         self.verbosity = verbosity
         return self
 
+    @objc.typedSelector(b'c@:@@I')
     def exceptionHandler_shouldLogException_mask_(self, sender, exception, aMask):
         try:
             if isPythonException(exception):
@@ -86,14 +88,14 @@ class PyObjCDebuggingDelegate(NSObject):
             else:
                 return False
         except:
-            print >>sys.stderr, "*** Exception occurred during exception handler ***"
+            print("*** Exception occurred during exception handler ***",
+                    file=sys.stderr)
             traceback.print_exc(sys.stderr)
             return True
-    exceptionHandler_shouldLogException_mask_ = objc.selector(exceptionHandler_shouldLogException_mask_, signature='c@:@@I')
 
+    @objc.typedSelector(b'c@:@@I')
     def exceptionHandler_shouldHandleException_mask_(self, sender, exception, aMask):
         return False
-    exceptionHandler_shouldHandleException_mask_ = objc.selector(exceptionHandler_shouldHandleException_mask_, signature='c@:@@I')
 
 def installExceptionHandler(verbosity=DEFAULTVERBOSITY, mask=DEFAULTMASK):
     """

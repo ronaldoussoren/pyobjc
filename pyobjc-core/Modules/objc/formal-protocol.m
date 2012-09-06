@@ -147,10 +147,16 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	for (i = 0; i < len; i++) {
 		PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
 		SEL theSel = PyObjCSelector_GetSelector(sel);
-		const char* theSignature = PyObjCSelector_Signature(sel);
-
-		protocol_addMethodDescription(theProtocol, theSel, theSignature, 
-				PyObjCSelector_Required(sel), !PyObjCSelector_IsClassMethod(sel));
+		const char* theSignature = strdup(PyObjCSelector_Signature(sel));
+		if (theSignature == NULL) {
+			goto error;
+		}
+		protocol_addMethodDescription(
+			theProtocol, 
+			theSel, 
+			theSignature, 
+			(BOOL)PyObjCSelector_Required(sel), 
+			(BOOL)!PyObjCSelector_IsClassMethod(sel));
 	}
 
 	objc_registerProtocol(theProtocol);

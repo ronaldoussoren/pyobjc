@@ -3,46 +3,101 @@
 {
  "definitions": {
   "classes": {
+   "EKCalendarItem": {
+    "methods": [
+     {
+       "args": {},
+       "retval": { "type": "Z" },
+       "class_method": false,
+       "selector": "isAllDay"
+     }
+    ]
+   },
    "EKEventStore": {
     "methods": [
      {
+       "args": {
+         "1": {
+	   "callable": {
+	      "arguments": {
+	        "0": {
+	          "typestr": "^v"
+		},
+	        "1": {
+	          "typestr": "@"
+		}
+	      },
+	      "retval": {
+	        "typestr": "v"
+	      }
+	   }
+	 }
+       },
+       "class_method": false,
+       "selector": "fetchRemindersMatchingPredicate:completion:"
+     },
+     {
+       "args": {
+         "1": {
+	   "callable": {
+	      "arguments": {
+	        "0": {
+	          "typestr": "^v"
+		},
+	        "1": {
+	          "typestr": "@"
+		},
+	        "2": {
+	          "typestr": "o^B"
+		}
+	      },
+	      "retval": {
+	        "typestr": "v"
+	      }
+	   }
+	 }
+       },
+       "class_method": false,
+       "selector": "enumerateEventsMatchingPredicate:usingBlock:"
+     },
+     {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "saveCalendar:commit:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeCalendar:commit:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "saveEvent:span:commit:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeEvent:span:commit:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "saveReminder:commit:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeReminder:commit:error:"

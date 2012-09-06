@@ -110,6 +110,10 @@ use::
 
     { "button1": button1, "button2": button2 }
 
+or::
 
-Note: it is possible to implement this macro as a Python function with a slightly different
-API: pass the variable names as strings instead of identifiers.
+    AppKit.NSDictionaryOfVariableBindings("button1", "button2")
+
+The first alternative is preferable because it is cleaner Python code, and
+the implementation of ``NSDictionaryOfVariableBindings`` has to use an
+unstable API of CPython.

@@ -11,12 +11,25 @@ import Foundation
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
 
+def NSDictionaryOfVariableBindings(*names):
+    """
+    Return a dictionary with the given names and there values.
+    """
+    import sys
+    variables = sys._getframe(1).f_locals
+
+    return {
+        nm: variables[nm] 
+        for nm in names 
+    }
+
 
 sys.modules['AppKit'] = mod = objc.ObjCLazyModule('AppKit',
         "com.apple.AppKit", objc.pathForFramework("/System/Library/Frameworks/AppKit.framework"),
         _metadata.__dict__, _inline_list_, {
             '__doc__': __doc__,
             'objc': objc,
+            'NSDictionaryOfVariableBindings': NSDictionaryOfVariableBindings,
             '__path__': __path__,
         }, (Foundation,))
 

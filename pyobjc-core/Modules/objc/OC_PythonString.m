@@ -16,6 +16,8 @@
 
 - (id)initWithPythonObject:(PyObject*)v
 {
+	self = [super init];
+	if (unlikely(self == nil)) return nil;
 	Py_INCREF(v);
 	Py_XDECREF(value);
 	value = v;
