@@ -221,6 +221,15 @@ extern void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*);
 
 #endif
 
+/* 
+ * XXX: Override protocol_getMethodDescription. This is a crude hack that's added because
+ * protocol_getMethodDescription sometimes gives the wrong answer (test_protocols.py).
+ * I haven't found the root cause for this yet, it may or may not be a problem with PyObjC.
+ */
+extern struct objc_method_description PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod);
+#define protocol_getMethodDescription PyObjC_protocol_getMethodDescription
+
+
 extern void PyObjC_SetupRuntimeCompat(void);
 
 #endif /* PyObjC_RUNTIME_COMPAT */

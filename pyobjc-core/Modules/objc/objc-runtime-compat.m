@@ -1039,6 +1039,43 @@ static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
 #endif
 #endif
 
+#undef protocol_getMethodDescription
+struct objc_method_description 
+PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
+{
+	struct objc_method_description  result = protocol_getMethodDescription(p, aSel, isRequiredMethod, isInstanceMethod);
+	if (result.name != NULL) {
+		return result;
+	}
+
+	{
+		/* This code should not be necessary.... 
+		 * 
+		 * for some reason the protocols created by PyObjC don't always work, without this
+		 * function test_protocol.py sometimes (but not always!) fails.
+		 */
+
+		struct objc_method_description* methods;
+		unsigned int count, i;
+		methods = protocol_copyMethodDescriptionList(p, isRequiredMethod, isInstanceMethod, &count);
+		if (methods == NULL) {
+			return result;
+		}
+
+		for (i = 0; i < count; i++) {
+			if (sel_isEqual(methods[i].name, aSel)) {
+				result = methods[i];
+				free(methods);
+				return result;
+			}
+		}
+		free(methods);
+		return result;
+
+	}
+}
+
+
 
 void PyObjC_SetupRuntimeCompat(void)
 {

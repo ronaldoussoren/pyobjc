@@ -67,6 +67,18 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
     if OC_TestProtocol is not None:
 
         class TestFormalOCProtocols(TestCase):
+            def testMethodInfo(self):
+                actual = OC_TestProtocol.instanceMethods()
+                actual.sort(key=lambda item: item['selector'])
+                expected = [
+                    {'required': True, 'selector': b'method1', 'typestr': b'i16@0:8'},
+                    {'required': True, 'selector': b'method2:', 'typestr': b'v20@0:8i16'}
+                ]
+                self.assertEqual(actual, expected)
+                self.assertEqual(OC_TestProtocol.classMethods(), [])
+
+                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i16@0:8"))
+                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v20@0:8i16"))
             
             def testImplementFormalProtocol(self):
 
@@ -219,20 +231,31 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
                 ])
 
         def testMethodInfo(self):
+            self.assertEqual(MyProtocol.instanceMethods(), [
+                {'typestr': b'I@:', 'required': True, 'selector': b'protoMethod'}, 
+                {'typestr': b'v@:ii', 'required': True, 'selector': b'anotherProto:with:'},
+            ])
+            self.assertEqual(MyProtocol.classMethods(), [
+            ])
             self.assertEqual(
-                    MyProtocol.descriptionForInstanceMethod_("protoMethod"),
+                    MyProtocol.descriptionForInstanceMethod_(b"protoMethod"),
                         ("protoMethod", "I@:"))
 
             self.assertEqual(
-                    MyProtocol.descriptionForInstanceMethod_("nosuchmethod"),
+                    MyProtocol.descriptionForInstanceMethod_(b"nosuchmethod"),
                         None)
 
+            self.assertEqual(MyClassProtocol.classMethods(), [
+                {'required': True, 'selector': 'aClassOne:', 'typestr': '@@:i'}
+            ])
+            self.assertEqual(MyProtocol.classMethods(), [
+            ])
             self.assertEqual(
-                    MyClassProtocol.descriptionForClassMethod_("aClassOne:"),
+                    MyClassProtocol.descriptionForClassMethod_(b"aClassOne:"),
                         ("aClassOne:", "@@:i"))
 
             self.assertEqual(
-                    MyClassProtocol.descriptionForClassMethod_("nosuchmethod"),
+                    MyClassProtocol.descriptionForClassMethod_(b"nosuchmethod"),
                         None)
 
 

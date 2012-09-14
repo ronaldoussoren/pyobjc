@@ -147,7 +147,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 	for (i = 0; i < len; i++) {
 		PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
 		SEL theSel = PyObjCSelector_GetSelector(sel);
-		const char* theSignature = strdup(PyObjCSelector_Signature(sel));
+		const char* theSignature = PyObjCSelector_Signature(sel);
 		if (theSignature == NULL) {
 			goto error;
 		}
@@ -156,7 +156,7 @@ static	char*	keywords[] = { "name", "supers", "selectors", NULL };
 			theSel, 
 			theSignature, 
 			(BOOL)PyObjCSelector_Required(sel), 
-			(BOOL)!PyObjCSelector_IsClassMethod(sel));
+			PyObjCSelector_IsClassMethod(sel)?NO:YES);
 	}
 
 	objc_registerProtocol(theProtocol);
@@ -217,6 +217,98 @@ proto_conformsTo_(PyObject* object, PyObject* args)
 	}
 }
 
+static int
+append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isInstance)
+{
+	struct objc_method_description * methods;
+	unsigned int method_count, i;
+
+	methods = protocol_copyMethodDescriptionList(protocol, isRequired, isInstance, &method_count);
+	if (!methods) {
+		return 0;
+	}
+
+	for (i = 0; i < method_count; i++) {
+		PyObject* item = Py_BuildValue(
+#if PY_MAJOR_VERSION == 2
+			"{sssssO}",
+#else
+			"{sysysO}",
+#endif
+			"selector", sel_getName(methods[i].name),
+			"typestr",  methods[i].types,
+			"required", isRequired?Py_True:Py_False);
+		if (item == NULL) {
+			free(methods);
+			return -1;
+		}
+		if (PyList_Append(lst, item) < 0) {
+			Py_DECREF(item);
+			free(methods);
+			return -1;
+		}
+		Py_DECREF(item);
+	}
+
+	free(methods);
+	return 0;
+}
+
+
+static PyObject* 
+instanceMethods(PyObject* object)
+{
+	PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;	
+	int r;
+
+	PyObject* result = PyList_New(0);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	r = append_method_list(result, self->objc, YES, YES);
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	r = append_method_list(result, self->objc, NO, YES);
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	return result;
+
+}
+
+static PyObject* 
+classMethods(PyObject* object)
+{
+	PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;	
+	int r;
+
+	PyObject* result = PyList_New(0);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	r = append_method_list(result, self->objc, YES, NO);
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	r = append_method_list(result, self->objc, NO, NO);
+	if (r == -1) {
+		Py_DECREF(result);
+		return NULL;
+	}
+
+	return result;
+
+}
+
 static PyObject*
 descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 {
@@ -226,6 +318,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 
 	if (PyObjCSelector_Check(sel)) {
 		aSelector = PyObjCSelector_GetSelector(sel);
+#if PY_MAJOR_VERSION == 2
 	} else if (PyUnicode_Check(sel)) {
 		PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
 		if (bytes == NULL) {
@@ -241,7 +334,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 		Py_DECREF(bytes);
 
-#if PY_MAJOR_VERSION == 2
+#endif
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {
@@ -251,7 +344,6 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		}
 
 		aSelector = sel_getUid(s);
-#endif
 	} else {
 		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
 				Py_TYPE(sel)->tp_name);
@@ -283,6 +375,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 
 	if (PyObjCSelector_Check(sel)) {
 		aSelector = PyObjCSelector_GetSelector(sel);
+#if PY_MAJOR_VERSION == 2
 	} else if (PyUnicode_Check(sel)) {
 		PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
 		if (bytes == NULL) {
@@ -298,7 +391,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		aSelector = sel_getUid(s);
 		Py_DECREF(bytes);
 
-#if PY_MAJOR_VERSION == 2
+#endif
 	} else if (PyString_Check(sel)) {
 		char* s = PyString_AsString(sel);
 		if (*s == '\0') {
@@ -308,7 +401,6 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		}
 
 		aSelector = sel_getUid(s);
-#endif
 	} else {
 		PyErr_Format(PyExc_TypeError, "expecting a SEL, got instance of '%s'",
 				Py_TYPE(sel)->tp_name);
@@ -353,6 +445,18 @@ static PyMethodDef proto_methods[] = {
 		(PyCFunction)descriptionForClassMethod_,
 		METH_O,
 		"Description for a class method in the protocol"
+	},
+	{
+		"instanceMethods",
+		(PyCFunction)instanceMethods,
+		METH_NOARGS,
+		"List of instance methods in this protocol"
+	},
+	{
+		"classMethods",
+		(PyCFunction)classMethods,
+		METH_NOARGS,
+		"List of class methods in this protocol"
 	},
 	{ 0, 0, 0, 0 }
 };
