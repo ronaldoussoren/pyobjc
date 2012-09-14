@@ -1314,9 +1314,11 @@ static  PyObject* setKeyFunc = NULL;
  */
 -(void)pyobjcSetValue:(NSObject*)other
 {
-	PyObject* value = PyObjC_IdToPython(other);
-	Py_XDECREF(pyObject);
-	pyObject = value;
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* value = PyObjC_IdToPython(other);
+		Py_XDECREF(pyObject);
+		pyObject = value;
+	PyObjC_END_WITH_GIL
 }
 
 -(id)initWithCoder:(NSCoder*)coder

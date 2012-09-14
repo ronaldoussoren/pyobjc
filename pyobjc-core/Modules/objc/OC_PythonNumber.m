@@ -379,9 +379,11 @@
  */
 -(void)pyobjcSetValue:(NSObject*)other
 {
-	PyObject* v = PyObjC_IdToPython(other);
-	Py_XDECREF(value);
-	value = v;
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* v = PyObjC_IdToPython(other);
+		Py_XDECREF(value);
+		value = v;
+	PyObjC_END_WITH_GIL
 }
 
 - (id)initWithCoder:(NSCoder*)coder

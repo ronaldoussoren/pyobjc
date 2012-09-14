@@ -394,9 +394,11 @@ static PyObject* mapTypes = NULL;
  */
 -(void)pyobjcSetValue:(NSObject*)other
 {
-	PyObject* v = PyObjC_IdToPython(other);
-	Py_XDECREF(value);
-	value = v;
+	PyObjC_BEGIN_WITH_GIL
+		PyObject* v = PyObjC_IdToPython(other);
+		Py_XDECREF(value);
+		value = v;
+	PyObjC_END_WITH_GIL
 }
 
 -(id)initWithCoder:(NSCoder*)coder
@@ -404,6 +406,7 @@ static PyObject* mapTypes = NULL;
 	PyObject* t;
 	int code;
         int size;
+
 	if ([coder allowsKeyedCoding]) {
 		code = [coder decodeInt32ForKey:@"pytype"];
 	} else {
@@ -496,8 +499,8 @@ static PyObject* mapTypes = NULL;
 				if (proxy == NULL) {
 					PyObjC_RegisterObjCProxy(value, self);
 				} else {
-					[self release];
 					[proxy retain];
+					[self release];
 					self = (OC_PythonArray*)proxy;
 				}
 

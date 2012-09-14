@@ -7,6 +7,8 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+- Fix crash when unarchiving a Python object. 
+
 - Add missing calls to ``[super init]`` in the implementation of
   OC_PythonUnicode and OC_PythonString (the ObjC proxies for python's
   unicode and str types)
