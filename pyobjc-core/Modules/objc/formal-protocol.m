@@ -229,6 +229,8 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
 	}
 
 	for (i = 0; i < method_count; i++) {
+		char buf[512];
+		PyObjCRT_SimplifySignature(methods[i].types, buf, sizeof(buf));
 		PyObject* item = Py_BuildValue(
 #if PY_MAJOR_VERSION == 2
 			"{sssssO}",
@@ -236,7 +238,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
 			"{sysysO}",
 #endif
 			"selector", sel_getName(methods[i].name),
-			"typestr",  methods[i].types,
+			"typestr",  buf,
 			"required", isRequired?Py_True:Py_False);
 		if (item == NULL) {
 			free(methods);
@@ -335,8 +337,8 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		Py_DECREF(bytes);
 
 #endif
-	} else if (PyString_Check(sel)) {
-		char* s = PyString_AsString(sel);
+	} else if (PyBytes_Check(sel)) {
+		char* s = PyBytes_AsString(sel);
 		if (*s == '\0') {
 			PyErr_SetString(PyExc_ValueError, 
 					"empty selector name");
@@ -360,9 +362,16 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 		return Py_None;
 
 	} else {
-		return Py_BuildValue("(ss)",
-				sel_getName(descr.name),
-				descr.types);
+		char buf[512];
+		PyObjCRT_SimplifySignature(descr.types, buf, sizeof(buf));
+		return Py_BuildValue(
+#if PY_MAJOR_VERSION == 2
+			"(ss)",
+#else
+			"(yy)",
+#endif
+			sel_getName(descr.name),
+			buf);
 	}
 }
 
@@ -392,8 +401,8 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		Py_DECREF(bytes);
 
 #endif
-	} else if (PyString_Check(sel)) {
-		char* s = PyString_AsString(sel);
+	} else if (PyBytes_Check(sel)) {
+		char* s = PyBytes_AsString(sel);
 		if (*s == '\0') {
 			PyErr_SetString(PyExc_ValueError, 
 					"empty selector name");
@@ -415,9 +424,16 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 		Py_INCREF(Py_None);
 		return Py_None;
 	} else {
-		return Py_BuildValue("(ss)",
+		char buf[256];
+		PyObjCRT_SimplifySignature(descr.types, buf, sizeof(buf));
+		return Py_BuildValue(
+#if PY_MAJOR_VERSION == 2
+			"(ss)",
+#else
+			"(yy)",
+#endif
 			sel_getName(descr.name),
-			descr.types);
+			buf);
 	}
 }
 

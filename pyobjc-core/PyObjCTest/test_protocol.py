@@ -71,14 +71,14 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
                 actual = OC_TestProtocol.instanceMethods()
                 actual.sort(key=lambda item: item['selector'])
                 expected = [
-                    {'required': True, 'selector': b'method1', 'typestr': b'i16@0:8'},
-                    {'required': True, 'selector': b'method2:', 'typestr': b'v20@0:8i16'}
+                    {'required': True, 'selector': b'method1', 'typestr': b'i@:'},
+                    {'required': True, 'selector': b'method2:', 'typestr': b'v@:i'}
                 ]
                 self.assertEqual(actual, expected)
                 self.assertEqual(OC_TestProtocol.classMethods(), [])
 
-                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i16@0:8"))
-                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v20@0:8i16"))
+                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i@:"))
+                self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v@:i"))
             
             def testImplementFormalProtocol(self):
 

@@ -140,20 +140,31 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
                 ])
 
         def testMethodInfo(self):
+            self.assertEqual(MyProtocol3.instanceMethods(), [
+                {'typestr': b'I@:', 'required': True, 'selector': b'protoMethod'},
+                {'typestr': b'v@:ii', 'required': True, 'selector': b'anotherProto:with:'},
+            ])
+            self.assertEqual(MyProtocol3.classMethods(), [
+            ])
             self.assertEqual(
-                    MyProtocol3.descriptionForInstanceMethod_("protoMethod"),
-                        ("protoMethod", "I@:"))
+                    MyProtocol3.descriptionForInstanceMethod_(b"protoMethod"),
+                        (b"protoMethod", b"I@:"))
 
             self.assertEqual(
-                    MyProtocol3.descriptionForInstanceMethod_("nosuchmethod"),
+                    MyProtocol3.descriptionForInstanceMethod_(b"nosuchmethod"),
                         None)
 
+            self.assertEqual(MyClassProtocol3.classMethods(), [
+                {'required': True, 'selector': b'aClassOne:', 'typestr': b'@@:i'}
+            ])
+            self.assertEqual(MyProtocol3.classMethods(), [
+            ])
             self.assertEqual(
-                    MyClassProtocol3.descriptionForClassMethod_("aClassOne:"),
-                        ("aClassOne:", "@@:i"))
+                    MyClassProtocol3.descriptionForClassMethod_(b"aClassOne:"),
+                        (b"aClassOne:", b"@@:i"))
 
             self.assertEqual(
-                    MyClassProtocol3.descriptionForClassMethod_("nosuchmethod"),
+                    MyClassProtocol3.descriptionForClassMethod_(b"nosuchmethod"),
                         None)
 
 

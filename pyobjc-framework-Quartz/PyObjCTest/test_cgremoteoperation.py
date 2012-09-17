@@ -99,8 +99,11 @@ class TestCGRemoteOperation (TestCase):
         v = CGAssociateMouseAndMouseCursorPosition(0)
         self.assertEqual(v, 0)
 
+        # For some reason there are 2 NSMachPort classes on OSX 10.8
+        classes = tuple([cls for cls in objc.getClassList() if cls.__name__ == 'NSMachPort'])
+
         v = CGWindowServerCFMachPort()
-        self.assertIsInstance(v, CFMachPortRef)
+        self.assertIsInstance(v, classes)
 
         self.assertTrue(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
 
