@@ -1,10 +1,11 @@
 from PyObjCTools.TestSupport import *
 import sys
-import Social
 
 SLRequestHandler = b'v@@@'
 
 if sys.maxsize > 2**32:
+    import Social
+
     class TestSLRequest (TestCase):
         @min_os_level("10.8")
         def testConstants(self):
