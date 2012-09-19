@@ -1277,8 +1277,14 @@
    }
   }, 
   "literals": {
-   "AMActionErrorKey": "AMActionErrorKey", 
-   "AMAutomatorErrorDomain": "com.apple.Automator"
+   "AMActionErrorKey": {
+   	"unicode": true,
+	"value": "AMActionErrorKey"
+   },
+   "AMAutomatorErrorDomain": {
+      "unicode": true,
+      "value": "com.apple.Automator"
+   }
   }, 
   "structs": {}
  }, 
