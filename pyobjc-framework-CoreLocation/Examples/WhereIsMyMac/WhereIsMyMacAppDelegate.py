@@ -11,12 +11,14 @@ copy-right:
 //  appreciated but not required.
 """
 
-from Cocoa import *
+import objc
+import Cocoa
+import CoreLocation
 import WebKit
 from CoreLocation import *
 import math
 
-class WhereIsMyMacAppDelegate (NSObject):
+class WhereIsMyMacAppDelegate (Cocoa.NSObject):
     window = objc.ivar()
     webView = objc.IBOutlet()
     locationManager = objc.ivar()
@@ -26,7 +28,7 @@ class WhereIsMyMacAppDelegate (NSObject):
 
 
     def applicationDidFinishLaunching_(self, notification):
-	self.locationManager = CLLocationManager.alloc().init()
+	self.locationManager = CoreLocation.CLLocationManager.alloc().init()
 	self.locationManager.setDelegate_(self)
 	self.locationManager.startUpdatingLocation()
 
@@ -49,14 +51,14 @@ class WhereIsMyMacAppDelegate (NSObject):
     def openInDefaultBrowser_(self, sender):
 	currentLocation = locationManager.location()
 	
-	externalBrowserURL = NSURL.URLWithString_(
+	externalBrowserURL = Cocoa.NSURL.URLWithString_(
 		u"http://maps.google.com/maps?ll=%f,%f&amp;spn=%f,%f"%(
                     currentLocation.coordinate.latitude,
                     currentLocation.coordinate.longitude,
                     WhereIsMyMacAppDelegate.latitudeRangeForLocation_(currentLocation),
                     WhereIsMyMacAppDelegate.longitudeRangeForLocation_(currentLocation)))
 
-	NSWorkspace.sharedWorkspace.openURL_(externalBrowserURL)
+	Cocoa.NSWorkspace.sharedWorkspace.openURL_(externalBrowserURL)
 
     def locationManager_didUpdateToLocation_fromLocation_(self, 
             manager, newLocation, oldLocation):
@@ -73,7 +75,7 @@ class WhereIsMyMacAppDelegate (NSObject):
 
 	# Load the HTML for displaying the Google map from a file and replace the
 	# format placeholders with our location data
-        path = NSBundle.mainBundle().pathForResource_ofType_(u"HTMLFormatString", u"html")
+        path = Cocoa.NSBundle.mainBundle().pathForResource_ofType_(u"HTMLFormatString", u"html")
         htmlString = open(path, 'r').read() % (
 		newLocation.coordinate().latitude,
 		newLocation.coordinate().longitude,
@@ -88,7 +90,7 @@ class WhereIsMyMacAppDelegate (NSObject):
 
     def locationManager_didFailWithError_(self, manager, error):
 	self.webView.mainFrame.loadHTMLString_baseURL_(
-                NSLocalizedString(u"Location manager failed with error: %s", nil) % (
+                Cocoa.NSLocalizedString(u"Location manager failed with error: %s", nil) % (
                     error.localizedDescription()), None)
 	self.locationLabel.setStringValue_(u"")
 	self.accuracyLabel.setStringValue_(u"")
