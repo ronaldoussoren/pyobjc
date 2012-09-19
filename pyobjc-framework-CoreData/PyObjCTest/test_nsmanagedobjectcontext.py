@@ -52,6 +52,10 @@ class TestNSManagedObjectContext (TestCase):
     def testMethods10_6(self):
         self.assertArgIsOut(NSManagedObjectContext.existingObjectWithID_error_, 1)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBlock(NSManagedObjectContext.performBlock_, 0, b'v')
+        self.assertArgIsBlock(NSManagedObjectContext.performBlockAndWait_, 0, b'v')
 
 
 if __name__ == "__main__":

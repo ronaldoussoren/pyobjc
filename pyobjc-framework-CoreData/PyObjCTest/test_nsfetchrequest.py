@@ -30,5 +30,10 @@ class TestNSFetchRequest (TestCase):
         self.assertResultIsBOOL(NSFetchRequest.returnsDistinctResults)
         self.assertArgIsBOOL(NSFetchRequest.setReturnsDistinctResults_, 0)
 
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSFetchRequest.shouldRefreshRefetchedObjects)
+        self.assertArgIsBOOL(NSFetchRequest.setShouldRefreshRefetchedObjects_, 0)
+
 if __name__ == "__main__":
     main()

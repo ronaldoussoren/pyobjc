@@ -50,6 +50,16 @@ class TestNSPersistentStoreCoordinator (TestCase):
         self.assertIsInstance(NSModelPathKey, unicode)
         self.assertIsInstance(NSObjectURIKey, unicode)
 
+    @min_os_level("10.7")
+    def testConstants10_7(self):
+        self.assertIsInstance(NSPersistentStoreUbiquitousContentNameKey, unicode)
+        self.assertIsInstance(NSPersistentStoreUbiquitousContentURLKey, unicode)
+        self.assertIsInstance(NSPersistentStoreDidImportUbiquitousContentChangesNotification, unicode)
+
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertArgIsOut(NSPersistentStoreCoordinator.executeRequest_withContext_error_, 2)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsOut(NSPersistentStoreCoordinator.importStoreWithIdentifier_fromExternalRecordsDirectory_toURL_options_withType_error_, 5)

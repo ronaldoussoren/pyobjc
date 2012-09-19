@@ -24,6 +24,11 @@ class TestNSAttributeDescription (TestCase):
     def testConstants10_6(self):
         self.assertEqual(NSObjectIDAttributeType, 2000)
 
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSAttributeDescription.allowsExternalBinaryDataStorage)
+        self.assertArgIsBOOL(NSAttributeDescription.setAllowsExternalBinaryDataStorage_, 0)
+
 
 if __name__ == "__main__":
     main()

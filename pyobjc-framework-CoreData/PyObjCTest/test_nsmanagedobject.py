@@ -38,6 +38,10 @@ class TestNSManagedObject (TestCase):
         self.assertEqual(NSSnapshotEventRefresh, 1 << 5)
         self.assertEqual(NSSnapshotEventMergePolicy, 1 << 6)
 
+    @min_os_level("10.7")
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSManagedObject.hasChanges)
+
 
 if __name__ == "__main__":
     main()

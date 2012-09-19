@@ -254,35 +254,35 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "loadMetadata:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "executeRequest:withContext:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "newValuesForObjectWithID:withContext:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "newValueForRelationship:forObjectWithID:withContext:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "obtainPermanentIDsForObjects:error:"
@@ -404,6 +404,38 @@
    }, 
    "NSManagedObjectContext": {
     "methods": [
+     {
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "performBlockAndWait:"
+     },
+     {
+      "args": {
+        "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" }
+	    },
+	    "retval": {
+	      "typestr": "v"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "performBlock:"
+     },
      {
       "args": {
        "1": {
@@ -560,7 +592,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o"}
       }, 
       "class_method": false, 
       "selector": "resolveConflicts:error:"
@@ -608,7 +640,7 @@
      }, 
      {
       "class_method": true, 
-      "retval": {}, 
+      "retval": { "type_modifier": "o" }, 
       "selector": "migrationManagerClass"
      }, 
      {
@@ -728,7 +760,7 @@
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "executeRequest:withContext:error:"
