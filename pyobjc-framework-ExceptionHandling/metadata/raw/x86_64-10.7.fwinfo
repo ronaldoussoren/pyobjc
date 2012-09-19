@@ -25,7 +25,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -41,7 +41,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "exceptionHandlingMask", 
@@ -50,7 +50,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -66,7 +66,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "exceptionHangingMask", 
@@ -116,7 +116,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -139,7 +139,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -215,7 +215,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -238,7 +238,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
