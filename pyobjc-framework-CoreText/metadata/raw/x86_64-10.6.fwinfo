@@ -614,7 +614,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTFontCopyAttribute": {
@@ -1037,7 +1037,7 @@
      }, 
      {
       "name": "options", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -1105,7 +1105,7 @@
      }, 
      {
       "name": "options", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -1333,7 +1333,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTFontGetAdvancesForGlyphs": {
@@ -1572,7 +1572,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTFontGetUnderlinePosition": {
@@ -1978,7 +1978,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTFrameGetVisibleStringRange": {
@@ -2036,7 +2036,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTFramesetterGetTypesetter": {
@@ -2189,7 +2189,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTLineCreateJustifiedLine": {
@@ -2383,7 +2383,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTLineGetTypographicBounds": {
@@ -2413,7 +2413,7 @@
     "args": [
      {
       "name": "settings", 
-      "typestr": "^{CTParagraphStyleSetting=IQ^v}"
+      "typestr": "^{CTParagraphStyleSetting=iQ^v}"
      }, 
      {
       "name": "settingCount", 
@@ -2445,7 +2445,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTParagraphStyleGetValueForSpecifier": {
@@ -2460,7 +2460,7 @@
      }, 
      {
       "name": "valueBufferSize", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "valueBuffer", 
@@ -2692,7 +2692,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTRunGetTypographicBounds": {
@@ -2783,7 +2783,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTTypesetterCreateLine": {
@@ -2838,7 +2838,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CTTypesetterSuggestClusterBreak": {
@@ -2890,7 +2890,7 @@
      "value"
     ], 
     "special": false, 
-    "typestr": "{CTParagraphStyleSetting=IQ^v}"
+    "typestr": "{CTParagraphStyleSetting=iQ^v}"
    }
   }
  }, 

@@ -2680,7 +2680,7 @@
     "args": [
      {
       "name": "settings", 
-      "typestr": "^{CTParagraphStyleSetting=IL^v}"
+      "typestr": "^{CTParagraphStyleSetting=iL^v}"
      }, 
      {
       "name": "settingCount", 
@@ -3223,7 +3223,7 @@
      "value"
     ], 
     "special": false, 
-    "typestr": "{CTParagraphStyleSetting=IL^v}"
+    "typestr": "{CTParagraphStyleSetting=iL^v}"
    }
   }
  }, 
