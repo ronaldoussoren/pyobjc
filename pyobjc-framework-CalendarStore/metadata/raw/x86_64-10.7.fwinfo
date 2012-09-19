@@ -789,7 +789,7 @@
        "readonly"
       ], 
       "name": "dayOfTheWeek", 
-      "typestr": "L", 
+      "typestr": "Q", 
       "typestr_special": false
      }, 
      {
@@ -827,7 +827,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -863,7 +863,7 @@
        "readonly"
       ], 
       "name": "occurrenceCount", 
-      "typestr": "L", 
+      "typestr": "Q", 
       "typestr_special": false
      }
     ], 
@@ -878,7 +878,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -897,7 +897,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -916,7 +916,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -939,7 +939,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -958,7 +958,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -981,11 +981,11 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1008,7 +1008,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1027,7 +1027,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1050,11 +1050,11 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1102,7 +1102,7 @@
        "readonly"
       ], 
       "name": "recurrenceInterval", 
-      "typestr": "L", 
+      "typestr": "Q", 
       "typestr_special": false
      }, 
      {
@@ -1110,7 +1110,7 @@
        "readonly"
       ], 
       "name": "firstDayOfTheWeek", 
-      "typestr": "L", 
+      "typestr": "Q", 
       "typestr_special": false
      }, 
      {
@@ -1178,7 +1178,7 @@
      {
       "attributes": [], 
       "name": "priority", 
-      "typestr": "L", 
+      "typestr": "Q", 
       "typestr_special": false
      }, 
      {
@@ -1270,7 +1270,7 @@
     "typestr": "@"
    }, 
    "CalDefaultRecurrenceInterval": {
-    "typestr": "L"
+    "typestr": "Q"
    }, 
    "CalDeletedRecordsKey": {
     "typestr": "@"
