@@ -31,7 +31,7 @@
    "kFSEventStreamEventFlagRootChanged": 32, 
    "kFSEventStreamEventFlagUnmount": 128, 
    "kFSEventStreamEventFlagUserDropped": 2, 
-   "kFSEventStreamEventIdSinceNow": -1
+   "kFSEventStreamEventIdSinceNow": 18446744073709551615
   }, 
   "expressions": {}, 
   "externs": {}, 

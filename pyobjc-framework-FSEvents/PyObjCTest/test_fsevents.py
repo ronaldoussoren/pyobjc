@@ -40,7 +40,7 @@ class TestFSEvents (TestCase):
 
         self.assertHasAttr(FSEvents, 'kFSEventStreamEventIdSinceNow')
         self.assertIsInstance(FSEvents.kFSEventStreamEventIdSinceNow, (int, long))
-        self.assertEquals(FSEvents.kFSEventStreamEventIdSinceNow, -1)
+        self.assertEquals(FSEvents.kFSEventStreamEventIdSinceNow, 18446744073709551615)
 
 
 
