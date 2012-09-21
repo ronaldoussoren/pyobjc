@@ -535,16 +535,16 @@
   }, 
   "informal_protocols": {}, 
   "literals": {
-   "kLSMAlgorithmDense": "LSMAlgorithmDense", 
-   "kLSMAlgorithmKey": "LSMAlgorithm", 
-   "kLSMAlgorithmSparse": "LSMAlgorithmSparse", 
-   "kLSMDimensionKey": "LSMDimension", 
-   "kLSMIterationsKey": "LSMIterations", 
-   "kLSMPrecisionDouble": "LSMPrecisionDouble", 
-   "kLSMPrecisionFloat": "LSMPrecisionFloat", 
-   "kLSMPrecisionKey": "LSMPrecision", 
-   "kLSMSweepAgeKey": "LSMSweepAge", 
-   "kLSMSweepCutoffKey": "LSMSweepCutoff"
+   "kLSMAlgorithmDense": { "value": "LSMAlgorithmDense", "unicode": true }, 
+   "kLSMAlgorithmKey": { "value": "LSMAlgorithm", "unicode": true }, 
+   "kLSMAlgorithmSparse": { "value": "LSMAlgorithmSparse", "unicode": true }, 
+   "kLSMDimensionKey": { "value": "LSMDimension", "unicode": true }, 
+   "kLSMIterationsKey": { "value": "LSMIterations", "unicode": true }, 
+   "kLSMPrecisionDouble": { "value": "LSMPrecisionDouble", "unicode": true }, 
+   "kLSMPrecisionFloat": { "value": "LSMPrecisionFloat", "unicode": true }, 
+   "kLSMPrecisionKey": { "value": "LSMPrecision", "unicode": true }, 
+   "kLSMSweepAgeKey": { "value": "LSMSweepAge", "unicode": true }, 
+   "kLSMSweepCutoffKey": { "value": "LSMSweepCutoff", "unicode": true }
   }, 
   "structs": {}
  }, 

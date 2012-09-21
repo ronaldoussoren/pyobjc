@@ -136,7 +136,7 @@
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -160,11 +160,11 @@
      }, 
      {
       "name": "numClusters", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -184,7 +184,7 @@
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -200,7 +200,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "LSMMapGetProperties": {
@@ -222,7 +222,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "LSMMapSetProperties": {
@@ -282,7 +282,7 @@
      }, 
      {
       "name": "options", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -301,7 +301,7 @@
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -316,7 +316,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -332,7 +332,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -348,7 +348,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -364,7 +364,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -388,11 +388,11 @@
      }, 
      {
       "name": "numResults", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -408,7 +408,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -423,7 +423,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "LSMResultGetScore": {
@@ -434,7 +434,7 @@
      }, 
      {
       "name": "n", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -449,7 +449,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "LSMTextAddToken": {
@@ -498,7 +498,7 @@
      }, 
      {
       "name": "flags", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -529,22 +529,22 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }
   }, 
   "informal_protocols": {}, 
   "literals": {
-   "kLSMAlgorithmDense": "LSMAlgorithmDense", 
-   "kLSMAlgorithmKey": "LSMAlgorithm", 
-   "kLSMAlgorithmSparse": "LSMAlgorithmSparse", 
-   "kLSMDimensionKey": "LSMDimension", 
-   "kLSMIterationsKey": "LSMIterations", 
-   "kLSMPrecisionDouble": "LSMPrecisionDouble", 
-   "kLSMPrecisionFloat": "LSMPrecisionFloat", 
-   "kLSMPrecisionKey": "LSMPrecision", 
-   "kLSMSweepAgeKey": "LSMSweepAge", 
-   "kLSMSweepCutoffKey": "LSMSweepCutoff"
+   "kLSMAlgorithmDense": { "unicode": true, "value": "LSMAlgorithmDense" }, 
+   "kLSMAlgorithmKey": { "unicode": true, "value": "LSMAlgorithm" }, 
+   "kLSMAlgorithmSparse": { "unicode": true, "value": "LSMAlgorithmSparse" }, 
+   "kLSMDimensionKey": { "unicode": true, "value": "LSMDimension" }, 
+   "kLSMIterationsKey": { "unicode": true, "value": "LSMIterations" }, 
+   "kLSMPrecisionDouble": { "unicode": true, "value": "LSMPrecisionDouble" }, 
+   "kLSMPrecisionFloat": { "unicode": true, "value": "LSMPrecisionFloat" }, 
+   "kLSMPrecisionKey": { "unicode": true, "value": "LSMPrecision" }, 
+   "kLSMSweepAgeKey": { "unicode": true, "value": "LSMSweepAge" }, 
+   "kLSMSweepCutoffKey": { "unicode": true, "value": "LSMSweepCutoff" }
   }, 
   "structs": {}
  }, 

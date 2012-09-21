@@ -18,284 +18,183 @@
   "functions": {
    "LSMMapAddCategory": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}
     }
    }, 
    "LSMMapAddText": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMText=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMMapAddTextWithWeight": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMText=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMMapApplyClusters": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFArray=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMMapCompile": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}
     }
    }, 
    "LSMMapCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }
+     "0": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__LSMMap=}"
+     "already_cfretained": true
     }
    }, 
    "LSMMapCreateClusters": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "2": {
-      "type_override": "^{__CFArray=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    }, 
    "LSMMapCreateFromURL": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFURL=}"
-     }
+     "0": {}, 
+     "1": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__LSMMap=}"
+     "already_cfretained": true
     }
    }, 
    "LSMMapGetCategoryCount": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}
     }
    }, 
    "LSMMapGetProperties": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}
     }, 
-    "retval": {
-     "type_override": "^{__CFDictionary=}"
-    }
+    "retval": {}
    }, 
    "LSMMapSetProperties": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFDictionary=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMMapSetStopWords": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMText=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMMapStartTraining": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}
     }
    }, 
    "LSMMapWriteToStream": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMText=}"
-     }, 
-     "2": {
-      "type_override": "^{__CFWriteStream=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "LSMMapWriteToURL": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFURL=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMResultCopyToken": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__CFData=}"
+     "already_cfretained": true
     }
    }, 
    "LSMResultCopyTokenCluster": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    }, 
    "LSMResultCopyWord": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__CFString=}"
+     "already_cfretained": true
     }
    }, 
    "LSMResultCopyWordCluster": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__CFArray=}"
+     "already_cfretained": true
     }
    }, 
    "LSMResultCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMMap=}"
-     }, 
-     "2": {
-      "type_override": "^{__LSMText=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__LSMResult=}"
+     "already_cfretained": true
     }
    }, 
    "LSMResultGetCategory": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }
    }, 
    "LSMResultGetCount": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }
    }, 
    "LSMResultGetScore": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMResult=}"
-     }
+     "0": {}
     }
    }, 
    "LSMTextAddToken": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMText=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFData=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMTextAddWord": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMText=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFString=}"
-     }
+     "0": {}, 
+     "1": {}
     }
    }, 
    "LSMTextAddWords": {
     "args": {
-     "0": {
-      "type_override": "^{__LSMText=}"
-     }, 
-     "1": {
-      "type_override": "^{__CFString=}"
-     }, 
-     "2": {
-      "type_override": "^{__CFLocale=}"
-     }
+     "0": {}, 
+     "1": {}, 
+     "2": {}
     }
    }, 
    "LSMTextCreate": {
     "args": {
-     "0": {
-      "type_override": "^{__CFAllocator=}"
-     }, 
-     "1": {
-      "type_override": "^{__LSMMap=}"
-     }
+     "0": {}, 
+     "1": {}
     }, 
     "retval": {
-     "already_cfretained": true, 
-     "type_override": "^{__LSMText=}"
+     "already_cfretained": true
     }
    }
   }, 
