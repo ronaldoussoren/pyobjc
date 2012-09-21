@@ -19,7 +19,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -38,11 +38,11 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -58,7 +58,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "panelType", 
@@ -67,7 +67,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -82,7 +82,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -307,7 +307,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "selectedCandidate", 
@@ -355,11 +355,11 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -374,7 +374,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -404,7 +404,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -419,7 +419,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
@@ -450,7 +450,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "candidateStringIdentifier:", 
@@ -469,13 +469,13 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "candidateIdentifierAtLineNumber:", 
@@ -484,13 +484,13 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "lineNumberForCandidateWithIdentifier:", 
@@ -596,7 +596,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -856,11 +856,11 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1042,7 +1042,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1050,7 +1050,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1074,7 +1074,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1082,7 +1082,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1102,7 +1102,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1110,7 +1110,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -1168,7 +1168,7 @@
      {
       "args": [
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -1192,7 +1192,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -1235,7 +1235,7 @@
       "class_method": false, 
       "required": true, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "recognizedEvents:", 
@@ -1274,11 +1274,11 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
