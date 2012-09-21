@@ -971,15 +971,15 @@
     "args": [
      {
       "name": "status", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "compareTo", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }
   }, 
@@ -990,7 +990,7 @@
      {
       "args": [
        {
-        "typestr": "^Q", 
+        "typestr": "^I", 
         "typestr_special": false
        }
       ], 
