@@ -1020,7 +1020,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "ODNodeCopyDetails": {
@@ -1273,7 +1273,7 @@
      }, 
      {
       "name": "inCustomCode", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "inSendData", 
@@ -1310,7 +1310,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "ODNodeSetCredentials": {
@@ -1458,7 +1458,7 @@
      }, 
      {
       "name": "inMaxResults", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "already_cfretained": true, 
@@ -1505,7 +1505,7 @@
      }, 
      {
       "name": "inMaxResults", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "already_cfretained": true, 
@@ -1528,7 +1528,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "ODQueryScheduleWithRunLoop": {
@@ -1861,7 +1861,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "ODRecordRemoveMember": {
@@ -2152,7 +2152,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }
   }, 

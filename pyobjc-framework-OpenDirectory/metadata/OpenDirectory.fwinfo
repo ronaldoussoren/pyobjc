@@ -2,112 +2,119 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "cftypes" : {
+    "ODContextRef": { "ignore": true },
+    "ODNodeRef": { "ignore": true },
+    "ODQueryRef": { "ignore": true },
+    "ODRecordRef": { "ignore": true },
+    "ODSessionRef": { "ignore": true }
+  },
   "classes": {
    "ODNode": {
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "nodeWithSession:type:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "nodeWithSession:name:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "initWithSession:type:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "initWithSession:name:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "subnodeNamesAndReturnError:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "unreachableSubnodeNamesAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "nodeDetailsForKeys:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "supportedRecordTypesAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "supportedAttributesForRecordType:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setCredentialsWithRecordType:recordName:password:error:"
      }, 
      {
       "args": {
-       "3": {}, 
-       "4": {}, 
-       "5": {}
+       "3": { "type_modifier": "o" }, 
+       "4": { "type_modifier": "o" }, 
+       "5": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setCredentialsWithRecordType:authenticationType:authenticationItems:continueItems:context:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setCredentialsUsingKerberosCache:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "createRecordWithRecordType:name:attributes:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "recordWithRecordType:name:attributes:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "customCall:sendData:error:"
@@ -118,21 +125,21 @@
     "methods": [
      {
       "args": {
-       "7": {}
+       "7": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "queryWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:"
      }, 
      {
       "args": {
-       "7": {}
+       "7": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "initWithNode:forRecordTypes:attribute:matchType:queryValues:returnAttributes:maximumResults:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "resultsAllowingPartial:error:"
@@ -143,130 +150,130 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setNodeCredentials:password:error:"
      }, 
      {
       "args": {
-       "3": {}, 
-       "4": {}, 
-       "5": {}
+       "3": { "type_modifier": "o" }, 
+       "4": { "type_modifier": "o" }, 
+       "5": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setNodeCredentialsWithRecordType:authenticationType:authenticationItems:continueItems:context:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setNodeCredentialsUsingKerberosCache:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "passwordPolicyAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "verifyPassword:error:"
      }, 
      {
       "args": {
-       "2": {}, 
-       "3": {}, 
-       "4": {}
+       "2": { "type_modifier": "o" }, 
+       "3": { "type_modifier": "o" }, 
+       "4": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "verifyExtendedWithAuthenticationType:authenticationItems:continueItems:context:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "changePassword:toPassword:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "synchronizeAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "recordDetailsForAttributes:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "valuesForAttribute:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "setValue:forAttribute:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeValuesForAttribute:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "addValue:toAttribute:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeValue:fromAttribute:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "deleteRecordAndReturnError:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "addMemberRecord:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "removeMemberRecord:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "isMemberRecord:error:"
@@ -277,21 +284,21 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "sessionWithOptions:error:"
      }, 
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "initWithOptions:error:"
      }, 
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o" }
       }, 
       "class_method": false, 
       "selector": "nodeNamesAndReturnError:"
@@ -301,515 +308,461 @@
   }, 
   "formal_protocols": {}, 
   "functions": {
-   "ODNodeCopyDetails": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCopyRecord": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCopySubnodeNames": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeCopySupportedAttributes": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeCopySupportedRecordTypes": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeCopyUnreachableSubnodeNames": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeCreateCopy": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCreateRecord": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCreateWithName": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCreateWithNodeType": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODNodeCustomCall": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {}
-   }, 
-   "ODNodeGetName": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
-   }, 
-   "ODNodeSetCredentials": {
-    "args": {
-     "0": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeSetCredentialsExtended": {
-    "args": {
-     "0": {}, 
-     "4": {}, 
-     "5": {}, 
-     "6": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODNodeSetCredentialsUsingKerberosCache": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODQueryCopyResults": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODQueryCreateWithNode": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "8": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODQueryCreateWithNodeType": {
-    "args": {
-     "0": {}, 
-     "8": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODQueryScheduleWithRunLoop": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
-   }, 
-   "ODQuerySetCallback": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "function": {
-       "args": [
-        {
-         "typestr": [
-          "^{__ODQuery=}", 
-          false
-         ]
-        }, 
-        {
-         "typestr": [
-          "@", 
-          false
-         ]
-        }, 
-        {
-         "typestr": [
-          "^{__CFError=}", 
-          false
-         ]
-        }, 
-        {
-         "typestr": [
-          "^v", 
-          false
-         ]
-        }
-       ], 
-       "retval": {
-        "typestr": [
-         "v", 
-         false
-        ]
-       }
-      }
-     }, 
-     "2": {}
-    }
-   }, 
-   "ODQuerySetDispatchQueue": {
-    "args": {
-     "0": {}, 
-     "1": {}
-    }
-   }, 
-   "ODQuerySynchronize": {
-    "args": {
-     "0": {}
-    }
-   }, 
-   "ODQueryUnscheduleFromRunLoop": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}
-    }
-   }, 
-   "ODRecordAddMember": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordAddValue": {
-    "args": {
-     "0": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordChangePassword": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordContainsMember": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordCopyDetails": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODRecordCopyPasswordPolicy": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }, 
-   "ODRecordCopyValues": {
-    "args": {
-     "0": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordDelete": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordGetRecordName": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
-   }, 
-   "ODRecordGetRecordType": {
-    "args": {
-     "0": {}
-    }, 
-    "retval": {}
-   }, 
-   "ODRecordRemoveMember": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordRemoveValue": {
-    "args": {
-     "0": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordSetNodeCredentials": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordSetNodeCredentialsExtended": {
-    "args": {
-     "0": {}, 
-     "4": {}, 
-     "5": {}, 
-     "6": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordSetNodeCredentialsUsingKerberosCache": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordSetValue": {
-    "args": {
-     "0": {}, 
-     "3": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordSynchronize": {
-    "args": {
-     "0": {}, 
-     "1": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordVerifyPassword": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODRecordVerifyPasswordExtended": {
-    "args": {
-     "0": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODSessionCopyNodeNames": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }
-   }, 
-   "ODSessionCreate": {
-    "args": {
-     "0": {}, 
-     "1": {}, 
-     "2": {
-      "already_cfretained": true, 
-      "null_accepted": true, 
-      "type_modifier": "o"
-     }
-    }, 
-    "retval": {
-     "already_cfretained": true
-    }
-   }
+   "ODNodeCopyDetails": { "ignore": true },
+   "ODNodeCopyRecord": { "ignore": true },
+   "ODNodeCopySubnodeNames": { "ignore": true },
+   "ODNodeCopySupportedAttributes": { "ignore": true },
+   "ODNodeCopySupportedRecordTypes": { "ignore": true },
+   "ODNodeCopyUnreachableSubnodeNames": { "ignore": true },
+   "ODNodeCreateCopy": { "ignore": true },
+   "ODNodeCreateRecord": { "ignore": true },
+   "ODNodeCreateWithName": { "ignore": true },
+   "ODNodeCreateWithNodeType": { "ignore": true },
+   "ODNodeCustomCall": { "ignore": true },
+   "ODNodeGetName": { "ignore": true },
+   "ODNodeSetCredentials": { "ignore": true },
+   "ODNodeSetCredentialsExtended": { "ignore": true },
+   "ODNodeSetCredentialsUsingKerberosCache": { "ignore": true },
+   "ODQueryCopyResults": { "ignore": true },
+   "ODQueryCreateWithNode": { "ignore": true },
+   "ODQueryCreateWithNodeType": { "ignore": true },
+   "ODQueryScheduleWithRunLoop": { "ignore": true },
+   "ODQuerySetCallback": { "ignore": true },
+   "ODQuerySetDispatchQueue": { "ignore": true },
+   "ODQuerySynchronize": { "ignore": true },
+   "ODQueryUnscheduleFromRunLoop": { "ignore": true },
+   "ODRecordAddMember": { "ignore": true },
+   "ODRecordAddValue": { "ignore": true },
+   "ODRecordChangePassword": { "ignore": true },
+   "ODRecordContainsMember": { "ignore": true },
+   "ODRecordCopyDetails": { "ignore": true },
+   "ODRecordCopyPasswordPolicy": { "ignore": true },
+   "ODRecordCopyValues": { "ignore": true },
+   "ODRecordDelete": { "ignore": true },
+   "ODRecordGetRecordName": { "ignore": true },
+   "ODRecordGetRecordType": { "ignore": true },
+   "ODRecordRemoveMember": { "ignore": true },
+   "ODRecordRemoveValue": { "ignore": true },
+   "ODRecordSetNodeCredentials": { "ignore": true },
+   "ODRecordSetNodeCredentialsExtended": { "ignore": true },
+   "ODRecordSetNodeCredentialsUsingKerberosCache": { "ignore": true },
+   "ODRecordSetValue": { "ignore": true },
+   "ODRecordSynchronize": { "ignore": true },
+   "ODRecordVerifyPassword": { "ignore": true },
+   "ODRecordVerifyPasswordExtended": { "ignore": true },
+   "ODSessionCopyNodeNames": { "ignore": true },
+   "ODSessionCreate": { "ignore": true },
+   "ODRecordGetTypeID": { "ignore": true },
+   "ODQueryGetTypeID": { "ignore": true },
+   "ODContextGetTypeID": { "ignore": true },
+   "ODSessionGetTypeID": { "ignore": true },
+   "ODNodeGetTypeID": { "ignore": true }
+  }, 
+  "enum": {
+   "kODErrorCredentialsAccountDisabled": { "ignore": true },
+   "kODErrorCredentialsAccountExpired": { "ignore": true },
+   "kODErrorCredentialsAccountInactive": { "ignore": true },
+   "kODErrorCredentialsAccountNotFound": { "ignore": true },
+   "kODErrorCredentialsContactMaster": { "ignore": true },
+   "kODErrorCredentialsInvalid": { "ignore": true },
+   "kODErrorCredentialsInvalidComputer": { "ignore": true },
+   "kODErrorCredentialsInvalidLogonHours": { "ignore": true },
+   "kODErrorCredentialsMethodNotSupported": { "ignore": true },
+   "kODErrorCredentialsNotAuthorized": { "ignore": true },
+   "kODErrorCredentialsOperationFailed": { "ignore": true },
+   "kODErrorCredentialsParameterError": { "ignore": true },
+   "kODErrorCredentialsPasswordChangeRequired": { "ignore": true },
+   "kODErrorCredentialsPasswordChangeTooSoon": { "ignore": true },
+   "kODErrorCredentialsPasswordExpired": { "ignore": true },
+   "kODErrorCredentialsPasswordNeedsDigit": { "ignore": true },
+   "kODErrorCredentialsPasswordNeedsLetter": { "ignore": true },
+   "kODErrorCredentialsPasswordQualityFailed": { "ignore": true },
+   "kODErrorCredentialsPasswordTooLong": { "ignore": true },
+   "kODErrorCredentialsPasswordTooShort": { "ignore": true },
+   "kODErrorCredentialsPasswordUnrecoverable": { "ignore": true },
+   "kODErrorCredentialsServerCommunicationError": { "ignore": true },
+   "kODErrorCredentialsServerError": { "ignore": true },
+   "kODErrorCredentialsServerNotFound": { "ignore": true },
+   "kODErrorCredentialsServerTimeout": { "ignore": true },
+   "kODErrorCredentialsServerUnreachable": { "ignore": true },
+   "kODErrorDaemonError": { "ignore": true },
+   "kODErrorNodeConnectionFailed": { "ignore": true },
+   "kODErrorNodeDisabled": { "ignore": true },
+   "kODErrorNodeUnknownHost": { "ignore": true },
+   "kODErrorNodeUnknownName": { "ignore": true },
+   "kODErrorNodeUnknownType": { "ignore": true },
+   "kODErrorPluginError": { "ignore": true },
+   "kODErrorPluginOperationNotSupported": { "ignore": true },
+   "kODErrorPluginOperationTimeout": { "ignore": true },
+   "kODErrorQueryInvalidMatchType": { "ignore": true },
+   "kODErrorQuerySynchronize": { "ignore": true },
+   "kODErrorQueryTimeout": { "ignore": true },
+   "kODErrorQueryUnsupportedMatchType": { "ignore": true },
+   "kODErrorRecordAlreadyExists": { "ignore": true },
+   "kODErrorRecordAttributeNotFound": { "ignore": true },
+   "kODErrorRecordAttributeUnknownType": { "ignore": true },
+   "kODErrorRecordAttributeValueNotFound": { "ignore": true },
+   "kODErrorRecordAttributeValueSchemaError": { "ignore": true },
+   "kODErrorRecordInvalidType": { "ignore": true },
+   "kODErrorRecordNoLongerExists": { "ignore": true },
+   "kODErrorRecordParameterError": { "ignore": true },
+   "kODErrorRecordPermissionError": { "ignore": true },
+   "kODErrorRecordReadOnlyNode": { "ignore": true },
+   "kODErrorRecordTypeDisabled": { "ignore": true },
+   "kODErrorSessionDaemonNotRunning": { "ignore": true },
+   "kODErrorSessionDaemonRefused": { "ignore": true },
+   "kODErrorSessionLocalOnlyDaemonInUse": { "ignore": true },
+   "kODErrorSessionNormalDaemonInUse": { "ignore": true },
+   "kODErrorSessionProxyCommunicationError": { "ignore": true },
+   "kODErrorSessionProxyIPUnreachable": { "ignore": true },
+   "kODErrorSessionProxyUnknownHost": { "ignore": true },
+   "kODErrorSessionProxyVersionMismatch": { "ignore": true },
+   "kODErrorSuccess": { "ignore": true },
+   "kODMatchAny": { "ignore": true },
+   "kODMatchBeginsWith": { "ignore": true },
+   "kODMatchContains": { "ignore": true },
+   "kODMatchEndsWith": { "ignore": true },
+   "kODMatchEqualTo": { "ignore": true },
+   "kODMatchGreaterThan": { "ignore": true },
+   "kODMatchInsensitiveBeginsWith": { "ignore": true },
+   "kODMatchInsensitiveContains": { "ignore": true },
+   "kODMatchInsensitiveEndsWith": { "ignore": true },
+   "kODMatchInsensitiveEqualTo": { "ignore": true },
+   "kODMatchLessThan": { "ignore": true },
+   "kODNodeTypeAuthentication": { "ignore": true },
+   "kODNodeTypeConfigure": { "ignore": true },
+   "kODNodeTypeContacts": { "ignore": true },
+   "kODNodeTypeLocalNodes": { "ignore": true },
+   "kODNodeTypeNetwork": { "ignore": true }
+  }, 
+  "externs": {
+   "kODAttributeTypeAccessControlEntry": { "ignore": true },
+   "kODAttributeTypeAddressLine1": { "ignore": true },
+   "kODAttributeTypeAddressLine2": { "ignore": true },
+   "kODAttributeTypeAddressLine3": { "ignore": true },
+   "kODAttributeTypeAdminLimits": { "ignore": true },
+   "kODAttributeTypeAdvertisedServices": { "ignore": true },
+   "kODAttributeTypeAlias": { "ignore": true },
+   "kODAttributeTypeAllAttributes": { "ignore": true },
+   "kODAttributeTypeAllTypes": { "ignore": true },
+   "kODAttributeTypeAltSecurityIdentities": { "ignore": true },
+   "kODAttributeTypeAreaCode": { "ignore": true },
+   "kODAttributeTypeAttrListRefCount": { "ignore": true },
+   "kODAttributeTypeAttrListRefs": { "ignore": true },
+   "kODAttributeTypeAttrListValueRefCount": { "ignore": true },
+   "kODAttributeTypeAttrListValueRefs": { "ignore": true },
+   "kODAttributeTypeAuthCredential": { "ignore": true },
+   "kODAttributeTypeAuthMethod": { "ignore": true },
+   "kODAttributeTypeAuthenticationAuthority": { "ignore": true },
+   "kODAttributeTypeAuthenticationHint": { "ignore": true },
+   "kODAttributeTypeAuthorityRevocationList": { "ignore": true },
+   "kODAttributeTypeAutomaticSearchPath": { "ignore": true },
+   "kODAttributeTypeAutomountInformation": { "ignore": true },
+   "kODAttributeTypeBirthday": { "ignore": true },
+   "kODAttributeTypeBootParams": { "ignore": true },
+   "kODAttributeTypeBuildVersion": { "ignore": true },
+   "kODAttributeTypeBuilding": { "ignore": true },
+   "kODAttributeTypeCACertificate": { "ignore": true },
+   "kODAttributeTypeCapacity": { "ignore": true },
+   "kODAttributeTypeCertificateRevocationList": { "ignore": true },
+   "kODAttributeTypeCity": { "ignore": true },
+   "kODAttributeTypeComment": { "ignore": true },
+   "kODAttributeTypeCompany": { "ignore": true },
+   "kODAttributeTypeComputers": { "ignore": true },
+   "kODAttributeTypeConfigAvailable": { "ignore": true },
+   "kODAttributeTypeConfigFile": { "ignore": true },
+   "kODAttributeTypeContactGUID": { "ignore": true },
+   "kODAttributeTypeContactPerson": { "ignore": true },
+   "kODAttributeTypeCopyTimestamp": { "ignore": true },
+   "kODAttributeTypeCoreFWVersion": { "ignore": true },
+   "kODAttributeTypeCountry": { "ignore": true },
+   "kODAttributeTypeCreationTimestamp": { "ignore": true },
+   "kODAttributeTypeCrossCertificatePair": { "ignore": true },
+   "kODAttributeTypeCustomSearchPath": { "ignore": true },
+   "kODAttributeTypeDNSDomain": { "ignore": true },
+   "kODAttributeTypeDNSName": { "ignore": true },
+   "kODAttributeTypeDNSNameServer": { "ignore": true },
+   "kODAttributeTypeDataStamp": { "ignore": true },
+   "kODAttributeTypeDateRecordCreated": { "ignore": true },
+   "kODAttributeTypeDepartment": { "ignore": true },
+   "kODAttributeTypeDirRefCount": { "ignore": true },
+   "kODAttributeTypeDirRefs": { "ignore": true },
+   "kODAttributeTypeEMailAddress": { "ignore": true },
+   "kODAttributeTypeEMailContacts": { "ignore": true },
+   "kODAttributeTypeENetAddress": { "ignore": true },
+   "kODAttributeTypeExpire": { "ignore": true },
+   "kODAttributeTypeFWVersion": { "ignore": true },
+   "kODAttributeTypeFaxNumber": { "ignore": true },
+   "kODAttributeTypeFirstName": { "ignore": true },
+   "kODAttributeTypeFullName": { "ignore": true },
+   "kODAttributeTypeFunctionalState": { "ignore": true },
+   "kODAttributeTypeGUID": { "ignore": true },
+   "kODAttributeTypeGroup": { "ignore": true },
+   "kODAttributeTypeGroupMembers": { "ignore": true },
+   "kODAttributeTypeGroupMembership": { "ignore": true },
+   "kODAttributeTypeGroupServices": { "ignore": true },
+   "kODAttributeTypeHTML": { "ignore": true },
+   "kODAttributeTypeHardwareUUID": { "ignore": true },
+   "kODAttributeTypeHomeDirectory": { "ignore": true },
+   "kODAttributeTypeHomeDirectoryQuota": { "ignore": true },
+   "kODAttributeTypeHomeDirectorySoftQuota": { "ignore": true },
+   "kODAttributeTypeHomeLocOwner": { "ignore": true },
+   "kODAttributeTypeHomePhoneNumber": { "ignore": true },
+   "kODAttributeTypeIMHandle": { "ignore": true },
+   "kODAttributeTypeIPAddress": { "ignore": true },
+   "kODAttributeTypeIPAddressAndENetAddress": { "ignore": true },
+   "kODAttributeTypeIPv6Address": { "ignore": true },
+   "kODAttributeTypeInternetAlias": { "ignore": true },
+   "kODAttributeTypeJPEGPhoto": { "ignore": true },
+   "kODAttributeTypeJobTitle": { "ignore": true },
+   "kODAttributeTypeKDCAuthKey": { "ignore": true },
+   "kODAttributeTypeKDCConfigData": { "ignore": true },
+   "kODAttributeTypeKerberosRealm": { "ignore": true },
+   "kODAttributeTypeKerberosServices": { "ignore": true },
+   "kODAttributeTypeKeywords": { "ignore": true },
+   "kODAttributeTypeLDAPReadReplicas": { "ignore": true },
+   "kODAttributeTypeLDAPSearchBaseSuffix": { "ignore": true },
+   "kODAttributeTypeLDAPWriteReplicas": { "ignore": true },
+   "kODAttributeTypeLastName": { "ignore": true },
+   "kODAttributeTypeLocalOnlySearchPath": { "ignore": true },
+   "kODAttributeTypeLocaleRelay": { "ignore": true },
+   "kODAttributeTypeLocaleSubnets": { "ignore": true },
+   "kODAttributeTypeLocation": { "ignore": true },
+   "kODAttributeTypeMCXFlags": { "ignore": true },
+   "kODAttributeTypeMCXSettings": { "ignore": true },
+   "kODAttributeTypeMIME": { "ignore": true },
+   "kODAttributeTypeMailAttribute": { "ignore": true },
+   "kODAttributeTypeMapCoordinates": { "ignore": true },
+   "kODAttributeTypeMapGUID": { "ignore": true },
+   "kODAttributeTypeMapURI": { "ignore": true },
+   "kODAttributeTypeMetaAmbiguousName": { "ignore": true },
+   "kODAttributeTypeMetaAugmentedAttributes": { "ignore": true },
+   "kODAttributeTypeMetaAutomountMap": { "ignore": true },
+   "kODAttributeTypeMetaNodeLocation": { "ignore": true },
+   "kODAttributeTypeMetaRecordName": { "ignore": true }, 
+   "kODAttributeTypeMiddleName": { "ignore": true },
+   "kODAttributeTypeMobileNumber": { "ignore": true },
+   "kODAttributeTypeModificationTimestamp": { "ignore": true },
+   "kODAttributeTypeNFSHomeDirectory": { "ignore": true },
+   "kODAttributeTypeNTDomainComputerAccount": { "ignore": true },
+   "kODAttributeTypeNamePrefix": { "ignore": true },
+   "kODAttributeTypeNameSuffix": { "ignore": true },
+   "kODAttributeTypeNativeOnly": { "ignore": true },
+   "kODAttributeTypeNestedGroups": { "ignore": true },
+   "kODAttributeTypeNetGroupTriplet": { "ignore": true },
+   "kODAttributeTypeNetGroups": { "ignore": true },
+   "kODAttributeTypeNetworkInterfaces": { "ignore": true },
+   "kODAttributeTypeNetworkNumber": { "ignore": true },
+   "kODAttributeTypeNickName": { "ignore": true },
+   "kODAttributeTypeNodeOptions": { "ignore": true },
+   "kODAttributeTypeNodePath": { "ignore": true },
+   "kODAttributeTypeNodeRefCount": { "ignore": true },
+   "kODAttributeTypeNodeRefs": { "ignore": true },
+   "kODAttributeTypeNote": { "ignore": true },
+   "kODAttributeTypeNumTableList": { "ignore": true },
+   "kODAttributeTypeOperatingSystem": { "ignore": true },
+   "kODAttributeTypeOperatingSystemVersion": { "ignore": true },
+   "kODAttributeTypeOrganizationInfo": { "ignore": true },
+   "kODAttributeTypeOrganizationName": { "ignore": true },
+   "kODAttributeTypeOriginalHomeDirectory": { "ignore": true },
+   "kODAttributeTypeOriginalNFSHomeDirectory": { "ignore": true },
+   "kODAttributeTypeOriginalNodeName": { "ignore": true },
+   "kODAttributeTypeOwner": { "ignore": true },
+   "kODAttributeTypeOwnerGUID": { "ignore": true },
+   "kODAttributeTypePGPPublicKey": { "ignore": true },
+   "kODAttributeTypePIDValue": { "ignore": true },
+   "kODAttributeTypePagerNumber": { "ignore": true },
+   "kODAttributeTypeParentLocales": { "ignore": true },
+   "kODAttributeTypePassword": { "ignore": true },
+   "kODAttributeTypePasswordPlus": { "ignore": true },
+   "kODAttributeTypePasswordPolicyOptions": { "ignore": true },
+   "kODAttributeTypePasswordServerList": { "ignore": true },
+   "kODAttributeTypePasswordServerLocation": { "ignore": true },
+   "kODAttributeTypePhoneContacts": { "ignore": true },
+   "kODAttributeTypePhoneNumber": { "ignore": true },
+   "kODAttributeTypePicture": { "ignore": true },
+   "kODAttributeTypePlugInInfo": { "ignore": true },
+   "kODAttributeTypePluginIndex": { "ignore": true },
+   "kODAttributeTypePort": { "ignore": true },
+   "kODAttributeTypePostalAddress": { "ignore": true },
+   "kODAttributeTypePostalAddressContacts": { "ignore": true },
+   "kODAttributeTypePostalCode": { "ignore": true },
+   "kODAttributeTypePresetUserIsAdmin": { "ignore": true },
+   "kODAttributeTypePrimaryComputerGUID": { "ignore": true },
+   "kODAttributeTypePrimaryComputerList": { "ignore": true },
+   "kODAttributeTypePrimaryGroupID": { "ignore": true },
+   "kODAttributeTypePrimaryLocale": { "ignore": true },
+   "kODAttributeTypePrimaryNTDomain": { "ignore": true },
+   "kODAttributeTypePrintServiceInfoText": { "ignore": true },
+   "kODAttributeTypePrintServiceInfoXML": { "ignore": true },
+   "kODAttributeTypePrintServiceUserData": { "ignore": true },
+   "kODAttributeTypePrinter1284DeviceID": { "ignore": true },
+   "kODAttributeTypePrinterLPRHost": { "ignore": true },
+   "kODAttributeTypePrinterLPRQueue": { "ignore": true },
+   "kODAttributeTypePrinterMakeAndModel": { "ignore": true },
+   "kODAttributeTypePrinterType": { "ignore": true },
+   "kODAttributeTypePrinterURI": { "ignore": true },
+   "kODAttributeTypePrinterXRISupported": { "ignore": true },
+   "kODAttributeTypeProcessName": { "ignore": true },
+   "kODAttributeTypeProtocolNumber": { "ignore": true },
+   "kODAttributeTypeProtocols": { "ignore": true },
+   "kODAttributeTypePwdAgingPolicy": { "ignore": true },
+   "kODAttributeTypeRPCNumber": { "ignore": true },
+   "kODAttributeTypeReadOnlyNode": { "ignore": true },
+   "kODAttributeTypeRealUserID": { "ignore": true },
+   "kODAttributeTypeRecRefCount": { "ignore": true },
+   "kODAttributeTypeRecRefs": { "ignore": true },
+   "kODAttributeTypeRecordName": { "ignore": true },
+   "kODAttributeTypeRecordType": { "ignore": true },
+   "kODAttributeTypeRelationships": { "ignore": true },
+   "kODAttributeTypeRelativeDNPrefix": { "ignore": true },
+   "kODAttributeTypeResourceInfo": { "ignore": true },
+   "kODAttributeTypeResourceType": { "ignore": true },
+   "kODAttributeTypeSMBAcctFlags": { "ignore": true },
+   "kODAttributeTypeSMBGroupRID": { "ignore": true },
+   "kODAttributeTypeSMBHome": { "ignore": true },
+   "kODAttributeTypeSMBHomeDrive": { "ignore": true },
+   "kODAttributeTypeSMBKickoffTime": { "ignore": true },
+   "kODAttributeTypeSMBLogoffTime": { "ignore": true },
+   "kODAttributeTypeSMBLogonTime": { "ignore": true },
+   "kODAttributeTypeSMBPWDLastSet": { "ignore": true },
+   "kODAttributeTypeSMBPrimaryGroupSID": { "ignore": true },
+   "kODAttributeTypeSMBProfilePath": { "ignore": true },
+   "kODAttributeTypeSMBRID": { "ignore": true },
+   "kODAttributeTypeSMBSID": { "ignore": true },
+   "kODAttributeTypeSMBScriptPath": { "ignore": true },
+   "kODAttributeTypeSMBUserWorkstations": { "ignore": true },
+   "kODAttributeTypeSchema": { "ignore": true },
+   "kODAttributeTypeSearchPath": { "ignore": true },
+   "kODAttributeTypeSearchPolicy": { "ignore": true },
+   "kODAttributeTypeServiceType": { "ignore": true },
+   "kODAttributeTypeServicesLocator": { "ignore": true },
+   "kODAttributeTypeSetupAdvertising": { "ignore": true },
+   "kODAttributeTypeSetupAutoRegister": { "ignore": true },
+   "kODAttributeTypeSetupLocation": { "ignore": true },
+   "kODAttributeTypeSetupOccupation": { "ignore": true },
+   "kODAttributeTypeStandardOnly": { "ignore": true },
+   "kODAttributeTypeState": { "ignore": true },
+   "kODAttributeTypeStreet": { "ignore": true },
+   "kODAttributeTypeSubNodes": { "ignore": true },
+   "kODAttributeTypeTimePackage": { "ignore": true },
+   "kODAttributeTypeTimeToLive": { "ignore": true },
+   "kODAttributeTypeTotalRefCount": { "ignore": true },
+   "kODAttributeTypeTotalSize": { "ignore": true },
+   "kODAttributeTypeTrustInformation": { "ignore": true },
+   "kODAttributeTypeURL": { "ignore": true },
+   "kODAttributeTypeUniqueID": { "ignore": true },
+   "kODAttributeTypeUserCertificate": { "ignore": true },
+   "kODAttributeTypeUserPKCS12Data": { "ignore": true },
+   "kODAttributeTypeUserSMIMECertificate": { "ignore": true },
+   "kODAttributeTypeUserShell": { "ignore": true },
+   "kODAttributeTypeVFSDumpFreq": { "ignore": true },
+   "kODAttributeTypeVFSLinkDir": { "ignore": true },
+   "kODAttributeTypeVFSOpts": { "ignore": true },
+   "kODAttributeTypeVFSPassNo": { "ignore": true },
+   "kODAttributeTypeVFSType": { "ignore": true },
+   "kODAttributeTypeVersion": { "ignore": true },
+   "kODAttributeTypeWeblogURI": { "ignore": true },
+   "kODAttributeTypeXMLPlist": { "ignore": true },
+   "kODAuthenticationType2WayRandom": { "ignore": true },
+   "kODAuthenticationType2WayRandomChangePasswd": { "ignore": true },
+   "kODAuthenticationTypeAPOP": { "ignore": true },
+   "kODAuthenticationTypeCRAM_MD5": { "ignore": true },
+   "kODAuthenticationTypeChangePasswd": { "ignore": true },
+   "kODAuthenticationTypeClearText": { "ignore": true },
+   "kODAuthenticationTypeCrypt": { "ignore": true },
+   "kODAuthenticationTypeDIGEST_MD5": { "ignore": true },
+   "kODAuthenticationTypeDeleteUser": { "ignore": true },
+   "kODAuthenticationTypeGetEffectivePolicy": { "ignore": true },
+   "kODAuthenticationTypeGetGlobalPolicy": { "ignore": true },
+   "kODAuthenticationTypeGetKerberosPrincipal": { "ignore": true },
+   "kODAuthenticationTypeGetPolicy": { "ignore": true },
+   "kODAuthenticationTypeGetUserData": { "ignore": true },
+   "kODAuthenticationTypeGetUserName": { "ignore": true },
+   "kODAuthenticationTypeKerberosTickets": { "ignore": true },
+   "kODAuthenticationTypeMPPEMasterKeys": { "ignore": true },
+   "kODAuthenticationTypeMSCHAP2": { "ignore": true },
+   "kODAuthenticationTypeNTLMv2": { "ignore": true },
+   "kODAuthenticationTypeNTLMv2WithSessionKey": { "ignore": true },
+   "kODAuthenticationTypeNewUser": { "ignore": true },
+   "kODAuthenticationTypeNewUserWithPolicy": { "ignore": true },
+   "kODAuthenticationTypeNodeNativeClearTextOK": { "ignore": true },
+   "kODAuthenticationTypeNodeNativeNoClearText": { "ignore": true },
+   "kODAuthenticationTypeReadSecureHash": { "ignore": true },
+   "kODAuthenticationTypeSMBNTv2UserSessionKey": { "ignore": true },
+   "kODAuthenticationTypeSMBWorkstationCredentialSessionKey": { "ignore": true },
+   "kODAuthenticationTypeSMB_LM_Key": { "ignore": true },
+   "kODAuthenticationTypeSMB_NT_Key": { "ignore": true },
+   "kODAuthenticationTypeSMB_NT_UserSessionKey": { "ignore": true },
+   "kODAuthenticationTypeSMB_NT_WithUserSessionKey": { "ignore": true },
+   "kODAuthenticationTypeSecureHash": { "ignore": true },
+   "kODAuthenticationTypeSetCertificateHashAsCurrent": { "ignore": true },
+   "kODAuthenticationTypeSetGlobalPolicy": { "ignore": true },
+   "kODAuthenticationTypeSetLMHash": { "ignore": true },
+   "kODAuthenticationTypeSetNTHash": { "ignore": true },
+   "kODAuthenticationTypeSetPassword": { "ignore": true },
+   "kODAuthenticationTypeSetPasswordAsCurrent": { "ignore": true },
+   "kODAuthenticationTypeSetPolicy": { "ignore": true },
+   "kODAuthenticationTypeSetPolicyAsCurrent": { "ignore": true },
+   "kODAuthenticationTypeSetUserData": { "ignore": true },
+   "kODAuthenticationTypeSetUserName": { "ignore": true },
+   "kODAuthenticationTypeSetWorkstationPassword": { "ignore": true },
+   "kODAuthenticationTypeWithAuthorizationRef": { "ignore": true },
+   "kODAuthenticationTypeWriteSecureHash": { "ignore": true },
+   "kODErrorDomainFramework": { "ignore": true },
+   "kODNodeOptionsQuerySkippedSubnode": { "ignore": true },
+   "kODRecordTypeAFPServer": { "ignore": true },
+   "kODRecordTypeAliases": { "ignore": true },
+   "kODRecordTypeAttributeTypes": { "ignore": true },
+   "kODRecordTypeAugments": { "ignore": true },
+   "kODRecordTypeAutoServerSetup": { "ignore": true },
+   "kODRecordTypeAutomount": { "ignore": true },
+   "kODRecordTypeAutomountMap": { "ignore": true },
+   "kODRecordTypeBootp": { "ignore": true },
+   "kODRecordTypeCertificateAuthorities": { "ignore": true },
+   "kODRecordTypeComputerGroups": { "ignore": true },
+   "kODRecordTypeComputerLists": { "ignore": true },
+   "kODRecordTypeComputers": { "ignore": true },
+   "kODRecordTypeConfiguration": { "ignore": true },
+   "kODRecordTypeEthernets": { "ignore": true },
+   "kODRecordTypeFTPServer": { "ignore": true },
+   "kODRecordTypeFileMakerServers": { "ignore": true },
+   "kODRecordTypeGroups": { "ignore": true },
+   "kODRecordTypeHostServices": { "ignore": true },
+   "kODRecordTypeHosts": { "ignore": true },
+   "kODRecordTypeLDAPServer": { "ignore": true },
+   "kODRecordTypeLocations": { "ignore": true },
+   "kODRecordTypeMounts": { "ignore": true },
+   "kODRecordTypeNFS": { "ignore": true },
+   "kODRecordTypeNetDomains": { "ignore": true },
+   "kODRecordTypeNetGroups": { "ignore": true },
+   "kODRecordTypeNetworks": { "ignore": true },
+   "kODRecordTypePeople": { "ignore": true },
+   "kODRecordTypePresetComputerGroups": { "ignore": true },
+   "kODRecordTypePresetComputerLists": { "ignore": true },
+   "kODRecordTypePresetComputers": { "ignore": true },
+   "kODRecordTypePresetGroups": { "ignore": true },
+   "kODRecordTypePresetUsers": { "ignore": true },
+   "kODRecordTypePrintService": { "ignore": true },
+   "kODRecordTypePrintServiceUser": { "ignore": true },
+   "kODRecordTypePrinters": { "ignore": true },
+   "kODRecordTypeProtocols": { "ignore": true },
+   "kODRecordTypeQTSServer": { "ignore": true },
+   "kODRecordTypeQueryInformation": { "ignore": true },
+   "kODRecordTypeRPC": { "ignore": true },
+   "kODRecordTypeRecordTypes": { "ignore": true },
+   "kODRecordTypeResources": { "ignore": true },
+   "kODRecordTypeSMBServer": { "ignore": true },
+   "kODRecordTypeServer": { "ignore": true },
+   "kODRecordTypeServices": { "ignore": true },
+   "kODRecordTypeSharePoints": { "ignore": true },
+   "kODRecordTypeUsers": { "ignore": true },
+   "kODRecordTypeWebServer": { "ignore": true },
+   "kODSessionDefault": { "ignore": true },
+   "kODSessionProxyAddress": { "ignore": true },
+   "kODSessionProxyPassword": { "ignore": true },
+   "kODSessionProxyPort": { "ignore": true },
+   "kODSessionProxyUsername": { "ignore": true }
   }, 
   "informal_protocols": {}
  }

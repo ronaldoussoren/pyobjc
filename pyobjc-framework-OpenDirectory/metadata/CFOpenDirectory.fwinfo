@@ -621,10 +621,12 @@
       "type_override": "^{_ODRecord=}"
      }, 
      "4": {
-      "type_override": "^^{__CFArray}"
+      "type_override": "^^{__CFArray}",
+      "type_modifier": "o"
      }, 
      "5": {
-      "type_override": "^^{_ODContext}"
+      "type_override": "^^{_ODContext}",
+      "type_modifier": "o"
      }, 
      "6": {
       "already_cfretained": true, 
@@ -698,9 +700,11 @@
       "type_override": "^{_ODRecord=}"
      }, 
      "3": {
+      "type_modifier": "o",
       "type_override": "^^{__CFArray}"
      }, 
      "4": {
+      "type_modifier": "o",
       "type_override": "^^{_ODContext}"
      }, 
      "5": {
