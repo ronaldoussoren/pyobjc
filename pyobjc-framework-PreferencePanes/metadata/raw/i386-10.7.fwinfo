@@ -312,9 +312,9 @@
   "functions": {}, 
   "informal_protocols": {}, 
   "literals": {
-   "kNSPrefPaneHelpMenuAnchorKey": "anchor", 
-   "kNSPrefPaneHelpMenuInfoPListKey": "NSPrefPaneHelpAnchors", 
-   "kNSPrefPaneHelpMenuTitleKey": "title"
+   "kNSPrefPaneHelpMenuAnchorKey": { "unicode": true, "value": "anchor" }, 
+   "kNSPrefPaneHelpMenuInfoPListKey": { "unicode": true, "value": "NSPrefPaneHelpAnchors" }, 
+   "kNSPrefPaneHelpMenuTitleKey": { "unicode": true, "value": "title" }
   }, 
   "structs": {}
  }, 

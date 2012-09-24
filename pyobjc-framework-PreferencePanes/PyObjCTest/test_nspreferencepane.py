@@ -20,6 +20,12 @@ class TestNSPreferencePane (TestCase):
         self.assertEqual(kNSPrefPaneHelpMenuTitleKey, "title")
         self.assertEqual(kNSPrefPaneHelpMenuAnchorKey, "anchor")
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSPrefPaneHelpMenuInfoPListKey, unicode)
+        self.assertIsInstance(NSPrefPaneHelpMenuTitleKey, unicode)
+        self.assertIsInstance(NSPrefPaneHelpMenuAnchorKey, unicode)
+
     def testClasses(self):
         self.assertArgIsBOOL(NSPreferencePane.replyToShouldUnselect_, 0)
         self.assertResultIsBOOL(NSPreferencePane.autoSaveTextFields)
