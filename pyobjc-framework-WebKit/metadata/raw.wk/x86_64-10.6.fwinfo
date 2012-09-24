@@ -13812,7 +13812,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {
@@ -14717,7 +14717,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -15272,7 +15272,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -15366,7 +15366,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "webView:dragDestinationActionMaskForDraggingInfo:", 
@@ -15408,7 +15408,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "webView:dragSourceActionMaskForPoint:", 
@@ -15958,7 +15958,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -15974,7 +15974,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "pageCacheSize", 
@@ -17540,7 +17540,7 @@
      {
       "args": [
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -17556,7 +17556,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "cacheModel", 
@@ -19006,7 +19006,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -19032,7 +19032,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "selectionAffinity", 
@@ -19152,7 +19152,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "l", 
+       "typestr": "q", 
        "typestr_special": false
       }, 
       "selector": "spellCheckerDocumentTag", 
@@ -21511,7 +21511,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "l", 
+        "typestr": "q", 
         "typestr_special": false
        }, 
        {
@@ -22182,7 +22182,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }
       ], 
@@ -22276,7 +22276,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "webView:dragDestinationActionMaskForDraggingInfo:", 
@@ -22318,7 +22318,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "L", 
+       "typestr": "Q", 
        "typestr_special": false
       }, 
       "selector": "webView:dragSourceActionMaskForPoint:", 
@@ -22665,7 +22665,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "L", 
+        "typestr": "Q", 
         "typestr_special": false
        }, 
        {

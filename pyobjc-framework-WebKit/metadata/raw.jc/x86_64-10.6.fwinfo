@@ -317,7 +317,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -348,7 +348,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -550,7 +550,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -592,7 +592,7 @@
         }, 
         {
          "typestr": [
-          "l", 
+          "q", 
           false
          ]
         }, 
@@ -632,7 +632,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -655,7 +655,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -742,7 +742,7 @@
         }, 
         {
          "typestr": [
-          "l", 
+          "q", 
           false
          ]
         }, 
@@ -782,7 +782,7 @@
      }, 
      {
       "name": "argumentCount", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "arguments", 
@@ -912,7 +912,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "JSPropertyNameArrayGetNameAtIndex": {
@@ -923,7 +923,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -988,7 +988,7 @@
      }, 
      {
       "name": "numChars", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1027,7 +1027,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "JSStringGetMaximumUTF8CStringSize": {
@@ -1038,7 +1038,7 @@
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "JSStringGetUTF8CString": {
@@ -1053,11 +1053,11 @@
      }, 
      {
       "name": "bufferSize", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
-     "typestr": "l"
+     "typestr": "q"
     }
    }, 
    "JSStringIsEqual": {

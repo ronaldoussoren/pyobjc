@@ -2,6 +2,16 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+    "DOM_WEBKIT_KEYFRAMES_RULE": { "value": 7 },
+    "DOM_WEBKIT_KEYFRAME_RULE": { "value": 8 }
+  },
+  "aliases": {
+    "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": { "ignore": true },
+    "AVAILABLE_AFTER_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
+    "AVAILABLE_IN_WEBKIT_VERSION_4_0": { "ignore": true },
+    "AVAILABLE_IN_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true }
+  },
   "classes": {
    "DOMAttr": {
     "methods": [

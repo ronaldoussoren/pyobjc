@@ -15,8 +15,8 @@ class TestDOMCSSRule (TestCase):
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(DOM_VARIABLES_RULE, 7)
-        self.assertEqual(DOM_WEBKIT_KEYFRAMES_RULE, 8)
-        self.assertEqual(DOM_WEBKIT_KEYFRAME_RULE, 9)
+        self.assertEqual(DOM_WEBKIT_KEYFRAMES_RULE, 7)
+        self.assertEqual(DOM_WEBKIT_KEYFRAME_RULE, 8)
 
 
 
