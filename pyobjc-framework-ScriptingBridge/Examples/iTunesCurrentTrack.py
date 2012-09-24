@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from ScriptingBridge import *
+from ScriptingBridge import SBApplication
 
 iTunes = SBApplication.applicationWithBundleIdentifier_("com.apple.iTunes")
 
