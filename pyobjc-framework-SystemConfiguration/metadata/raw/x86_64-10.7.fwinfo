@@ -1076,7 +1076,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "^l"
+      "typestr": "^q"
      }
     ], 
     "retval": {
@@ -1096,7 +1096,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1289,7 +1289,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCCopyLastError": {
@@ -1538,7 +1538,7 @@
      }, 
      {
       "name": "context", 
-      "typestr": "^{_SCDynamicStoreContext=l^v^?^?^?}"
+      "typestr": "^{_SCDynamicStoreContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1558,7 +1558,7 @@
      }, 
      {
       "name": "order", 
-      "typestr": "l"
+      "typestr": "q"
      }
     ], 
     "retval": {
@@ -1614,7 +1614,7 @@
      }, 
      {
       "name": "context", 
-      "typestr": "^{_SCDynamicStoreContext=l^v^?^?^?}"
+      "typestr": "^{_SCDynamicStoreContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -1630,7 +1630,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCDynamicStoreKeyCreate": {
@@ -2068,7 +2068,7 @@
      }, 
      {
       "name": "context", 
-      "typestr": "^{_SCNetworkConnectionContext=l^v^?^?^?}"
+      "typestr": "^{_SCNetworkConnectionContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2095,7 +2095,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkConnectionScheduleWithRunLoop": {
@@ -2415,7 +2415,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkInterfaceRefreshConfiguration": {
@@ -2538,7 +2538,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkProtocolSetConfiguration": {
@@ -2646,7 +2646,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkReachabilityScheduleWithRunLoop": {
@@ -2708,7 +2708,7 @@
      }, 
      {
       "name": "context", 
-      "typestr": "^{_SCNetworkReachabilityContext=l^v^?^?^?}"
+      "typestr": "^{_SCNetworkReachabilityContext=q^v^?^?^?}"
      }
     ], 
     "retval": {
@@ -2899,7 +2899,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkServiceRemove": {
@@ -3093,7 +3093,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCNetworkSetRemove": {
@@ -3279,7 +3279,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "SCPreferencesGetValue": {
@@ -3485,7 +3485,7 @@
      }, 
      {
       "name": "context", 
-      "typestr": "^{_SCPreferencesContext=l^v^?^?^?}"
+      "typestr": "^{_SCPreferencesContext=q^v^?^?^?}"
      }
     ], 
     "retval": {

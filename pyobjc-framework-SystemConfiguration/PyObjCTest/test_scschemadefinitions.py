@@ -287,5 +287,10 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCPropUsersConsoleUserUID, unicode)
         self.assertIsInstance(kSCPropUsersConsoleUserGID, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kSCValNetIPv6ConfigMethodLinkLocal, unicode)
+        self.assertIsInstance(kSCPropNetProxiesProxyAutoConfigJavaScript, unicode)
+
 if __name__ == "__main__":
     main()

@@ -35,5 +35,12 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
             r = DHCPInfoGetLeaseStartTime(info)
             self.assertTrue(r is None or isinstance(r, NSDate))
 
+        if os_release() >= '10.8':
+            DHCPInfoGetLeaseExpirationTime
+
+            if info:
+                r = DHCPInfoGetLeaseExpirationTime(info)
+                self.assertTrue(r is None or isinstance(r, NSDate))
+
 if __name__ == "__main__":
     main()
