@@ -15,6 +15,7 @@ if sys.maxsize >= 2**32:
         @min_os_level("10.8")
         def testConstants(self):
             self.assertIsInstance(Social.SLServiceTypeTwitter, unicode)
+            self.assertIsInstance(Social.SLServiceTypeFacebook, unicode)
             self.assertIsInstance(Social.SLServiceTypeSinaWeibo, unicode)
 
 if __name__ == "__main__":
