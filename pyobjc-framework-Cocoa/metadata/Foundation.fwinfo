@@ -122,6 +122,17 @@
     }
   },
   "classes": {
+   "NSUUID": {
+    "methods": [
+      {
+       "args": {
+          "0": { "type_modifier": "o" }
+       },
+       "class_method": false,
+       "selector": "getUUIDBytes:"
+      }
+     ]
+   },
    "NSAffineTransform": {
     "methods": [
      {

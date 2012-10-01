@@ -43,6 +43,9 @@ class TestNSOutlineViewHelper (NSObject):
     def outlineView_shouldCollapseItem_(self, ov, it): return 1
     def outlineView_willDisplayOutlineCell_forTableColumn_item_(self, ov, c, tc, i): pass
 
+    def outlineView_draggingSession_willBeginAtPoint_(self, a, b, c): pass
+    def outlineView_draggingSession_endedAtPoint_(self, a, b, c): pass
+
 
 
 class TestNSOutlineView (TestCase):
@@ -108,6 +111,11 @@ class TestNSOutlineView (TestCase):
         self.assertArgHasType(TestNSOutlineViewHelper.outlineView_shouldReorderColumn_toColumn_, 2, objc._C_NSInteger)
 
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_shouldShowOutlineCellForItem_)
+
+    @min_os_level('10.7')
+    def testProtocols10_7(self):
+        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_draggingSession_willBeginAtPoint_, 2, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSOutlineViewHelper.outlineView_draggingSession_endedAtPoint_, 2, NSPoint.__typestr__)
 
 
 if __name__ == "__main__":

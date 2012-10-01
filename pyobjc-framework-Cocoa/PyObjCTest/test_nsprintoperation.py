@@ -16,6 +16,11 @@ class TestNSPrintOperation (TestCase):
 
         self.assertIsInstance(NSPrintOperationExistsException, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSPrintRenderingQualityBest, 0)
+        self.assertEqual(NSPrintRenderingQualityResponsive, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSPrintOperation.isCopyingOperation)
         self.assertResultIsBOOL(NSPrintOperation.showsPrintPanel)

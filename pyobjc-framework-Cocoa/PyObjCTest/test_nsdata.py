@@ -66,6 +66,10 @@ class TestNSData(TestCase):
     def testConstants10_7(self):
         self.assertEqual(NSDataReadingMappedAlways, 1<<3)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSDataWritingWithoutOverwriting, 1<<1)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultHasType(NSData.rangeOfData_options_range_, NSRange.__typestr__)

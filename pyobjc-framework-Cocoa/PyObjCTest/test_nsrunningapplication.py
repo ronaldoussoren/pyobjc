@@ -23,6 +23,10 @@ class TestNSRunningApplication (TestCase):
         self.assertResultIsBOOL(NSRunningApplication.terminate)
         self.assertResultIsBOOL(NSRunningApplication.forceTerminate)
 
+    @min_os_level('10.7')
+    def testMethods(self):
+        self.assertResultIsBOOL(NSRunningApplication.ownsMenuBar)
+
 
 if __name__ == "__main__":
     main()

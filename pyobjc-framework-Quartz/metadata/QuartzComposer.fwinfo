@@ -46,12 +46,14 @@
    "QCPlugInContext": {
     "methods": [
      {
+      "args": {
+       "0": {
+        "printf_format": true
+       }
+      }, 
       "class_method": false, 
       "selector": "logMessage:", 
-      "variadic": true,
-      "args": {
-         "0": { "printf_format": true }
-      }
+      "variadic": true
      }, 
      {
       "class_method": false, 

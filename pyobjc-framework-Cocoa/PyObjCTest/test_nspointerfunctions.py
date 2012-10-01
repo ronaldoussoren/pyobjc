@@ -20,6 +20,10 @@ class TestNSPointerFunctions (TestCase):
 
         self.assertEqual(NSPointerFunctionsCopyIn, (1 << 16))
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSPointerFunctionsWeakMemory, 5<<0)
+
     def testPropType(self):
         o = NSPointerFunctions.alloc().initWithOptions_(0)
 

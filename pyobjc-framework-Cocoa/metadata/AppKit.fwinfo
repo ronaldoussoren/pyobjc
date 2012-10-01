@@ -695,6 +695,29 @@
     "methods": [
      {
       "class_method": false, 
+      "args": {
+       "0": {
+         "callable": {
+          "arguments": { 
+	    "0": { "typestr": "^v" },
+           "1": { "typestr": "@" }
+	  }, 
+          "retval": { "typestr": "v" }
+	}
+       },
+       "1": {
+         "callable": {
+          "arguments": {
+	   "0": { "typestr": "^v"}
+          }, 
+          "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "selector": "runAnimationGroup:completionHandler:"
+     },
+     {
+      "class_method": false, 
       "retval": {
        "callable": {
         "arguments": {
@@ -2597,6 +2620,16 @@
       }, 
       "selector": "loadNibFile:externalNameTable:withZone:"
      }, 
+     {
+      "class_method": true, 
+      "args": {
+        "2": { "type_modifier": "o" }
+      }, 
+      "retval": {
+        "type_override": "Z"
+      },
+      "selector": "loadNibNamed:owner:topLevelObjects:"
+     },
      {
       "class_method": true, 
       "retval": {
@@ -5317,6 +5350,57 @@
      }
     ]
    }, 
+   "NSDraggingSession": {
+     "methods": [
+       {
+         "args": {
+	    "4": {
+	      "callable": {
+	        "arguments": {
+		   "0": { "typestr": "^v" },
+		   "1": { "typestr": "@" },
+		   "2": { "typestr": ["i", "q"] },
+		   "3": { "typestr": "o^Z" }
+		},
+		"retval": { "typestr": "v" }
+              }		
+	    }
+	 },
+         "class_method": false,
+	 "selector": "enumerateDraggingItemsWithOptions:forView:classes:searchOptions:usingBlock:"
+       }
+     ]
+   },
+   "NSDraggingItem": {
+     "methods": [
+       {
+         "retval": {
+	     "callable": {
+               "arguments": { 
+	         "0": { "typestr": "^v" }
+	       }, 
+               "retval": { "typestr": "@" }
+	     }
+	 },
+         "class_method": false,
+         "selector": "imageComponentsProvider"
+       },
+       {
+         "args": {
+	   "0": {
+	     "callable": {
+               "arguments": { 
+	         "0": { "typestr": "^v" }
+	       }, 
+               "retval": { "typestr": "@" }
+	     }
+	   }
+	 },
+         "class_method": false,
+         "selector": "setImageComponentsProvider:"
+       }
+     ]
+   },
    "NSDrawer": {
     "methods": [
      {
@@ -9990,6 +10074,15 @@
        }
       }, 
       "class_method": false, 
+      "selector": "instantiateWithOwner:topLevelObjects:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
       "retval": {
        "type_override": "Z"
       }, 
@@ -14493,6 +14586,35 @@
      }
     ]
    }, 
+   "NSSharingService": {
+    "methods": [
+     {
+      "args": {
+        "3": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" }
+	    },
+	    "retval": { "typestr": "v" }
+	  }
+        }
+      },
+      "class_method": false,
+      "selector": "initWithTitle:image:alternateImage:handler:"
+     }
+    ]
+   },
+   "NSPopover": {
+    "methods": [
+     {
+      "args": { 
+        "0": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "setShown:"
+     }
+    ]
+   },
    "NSPopUpButton": {
     "methods": [
      {
@@ -24414,6 +24536,36 @@
    }
   }, 
   "structs": {
+   "_VFlags": {
+    "ignore": true
+   }, 
+   "_NSThreadPrivate": {
+    "ignore": true
+   }, 
+   "NSTypesetterGlyphInfo": {
+    "ignore": true
+   }, 
+   "_TvFlags": {
+    "ignore": true
+   }, 
+   "_NSProgressIndicatorThreadInfo": {
+    "ignore": true
+   }, 
+   "_BCFlags2": {
+    "ignore": true
+   }, 
+   "_MVFlags": {
+    "ignore": true
+   }, 
+   "_MFlags": {
+    "ignore": true
+   }, 
+   "_Brflags": {
+    "ignore": true
+   }, 
+   "_CFlags": {
+    "ignore": true
+   }, 
    "_BCFlags": {
     "ignore": true
    }, 

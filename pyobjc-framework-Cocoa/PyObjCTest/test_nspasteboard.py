@@ -37,6 +37,10 @@ class TestNSPasteboard (TestCase):
     def testConstants10_5(self):
         self.assertIsInstance(NSMultipleTextSelectionPboardType, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSPasteboardTypeTextFinderOptions, unicode)
+
     def testFunctions(self):
         tp = v = NSCreateFilenamePboardType("test/jpeg")
         self.assertIsInstance(v, unicode)

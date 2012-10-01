@@ -42,6 +42,10 @@ class TestNSCalendar (TestCase):
         self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1)
         self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2)
 
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSDateComponents.isLeapMonth)
+        self.assertArgIsBOOL(NSDateComponents.setLeapMonth_, 0)
 
 if __name__ == "__main__":
     main()

@@ -21,11 +21,25 @@ class TestNSScroller (TestCase):
         self.assertEqual(NSScrollerIncrementArrow, 0)
         self.assertEqual(NSScrollerDecrementArrow, 1)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSScrollerStyleLegacy, 0)
+        self.assertEqual(NSScrollerStyleOverlay, 1)
+
+        self.assertEqual(NSScrollerKnobStyleDefault, 0)
+        self.assertEqual(NSScrollerKnobStyleDark, 1)
+        self.assertEqual(NSScrollerKnobStyleLight, 2)
+
+        self.assertIsInstance(NSPreferredScrollerStyleDidChangeNotification, unicode)
+
     def testMethods(self):
         self.assertArgIsBOOL(NSScroller.drawArrow_highlight_, 1)
         self.assertArgIsBOOL(NSScroller.drawKnobSlotInRect_highlight_, 1)
         self.assertArgIsBOOL(NSScroller.highlight_, 0)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSScroller.isCompatibleWithOverlayScrollers)
 
 if __name__ == "__main__":
     main()

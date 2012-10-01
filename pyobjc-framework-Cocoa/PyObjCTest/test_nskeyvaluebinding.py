@@ -11,6 +11,8 @@ class TestNSKeyValueBindingHelper (NSObject):
     def commitEditingWithDelegate_didCommitSelector_contextInfo_(self, d, s, i):
         return None
 
+    def commitEditingAndReturnError_(self, v): return 1
+
     def commitEditing(self): return 1
 
 
@@ -134,16 +136,26 @@ class TestNSKeyValueBinding (TestCase):
         self.assertIsInstance(NSTransparentBinding, unicode)
         self.assertIsInstance(NSContentPlacementTagBindingOption, unicode)
 
+    @min_os_level("10.7")
+    def testConstants10_7(self):
+        self.assertIsInstance(NSPositioningRectBinding, unicode)
+
     def testFunctions(self):
         o = NSObject.alloc().init()
         self.assertIs(NSIsControllerMarker(o), False)
         self.assertIs(NSIsControllerMarker(NSMultipleValuesMarker), True)
+
     def testMethods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
         self.assertEqual(m['arguments'][3]['sel_of_type'], b'v@:@Z^v')
 
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditingAndReturnError_)
+        self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
 
 
 

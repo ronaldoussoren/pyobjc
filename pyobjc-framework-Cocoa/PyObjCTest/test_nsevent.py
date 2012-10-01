@@ -173,7 +173,28 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventMaskBeginGesture, 1 << 19)
         self.assertEqual(NSEventMaskEndGesture, 1 << 20)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSEventPhaseNone, 0)
+        self.assertEqual(NSEventPhaseBegan, 1)
+        self.assertEqual(NSEventPhaseStationary, 2)
+        self.assertEqual(NSEventPhaseChanged, 4)
+        self.assertEqual(NSEventPhaseEnded, 8)
+        self.assertEqual(NSEventPhaseCancelled, 16)
+        self.assertEqual(NSEventPhaseMayBegin, 32)
 
+        self.assertEqual(NSEventGestureAxisNone, 0)
+        self.assertEqual(NSEventGestureAxisHorizontal, 1)
+        self.assertEqual(NSEventGestureAxisVertical, 2)
+
+        self.assertEqual(NSEventSwipeTrackingLockDirection, 1)
+        self.assertEqual(NSEventSwipeTrackingClampGestureAmount, 2)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSEventTypeSmartMagnify, 32)
+        self.assertEqual(NSEventTypeQuickLook, 33)
+        self.assertEqual(NSEventMaskSmartMagnify, 1<<32)
 
     def testFunctions(self):
         v = NSEventMaskFromType(NSLeftMouseDown)
@@ -201,6 +222,14 @@ class TestNSEvent (TestCase):
     def testMethods10_6(self):
         self.assertArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b'v@')
         self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b'v@')
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSEvent.hasPreciseScrollingDeltas)
+        self.assertResultIsBOOL(NSEvent.isDirectionInvertedFromDevice)
+        self.assertResultIsBOOL(NSEvent.isSwipeTrackingFromScrollEventsEnabled)
+
+        self.assertResultIsBlock(NSEvent.trackSwipeEventWithOptions_dampenAmountThresholdMin_max_usingHandler_, 3, b'v' + objc._C_CGFloat + objc._C_NSUInteger + objc._C_NSBOOL + b'o^' + objc._C_NSBOOL)
 
 if __name__ == "__main__":
     main()

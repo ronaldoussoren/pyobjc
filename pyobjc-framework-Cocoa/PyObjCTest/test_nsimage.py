@@ -129,6 +129,18 @@ class TestNSImage (TestCase):
         self.assertArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 0, NSRect.__typestr__)
         self.assertArgHasType(NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_, 1, NSRect.__typestr__)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSImage.matchesOnlyOnBestFittingAxis)
+        self.assertArgIsBOOL(NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(NSImage.imageWithSize_flipped_drawingHandler_, 1)
+        self.assertArgIsBlock(NSImage.imageWithSize_flipped_drawingHandler_, 2,
+                objc._C_NSBOOL + NSRect.__typestr__)
+
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(NSImageHintCTM, unicode)
@@ -148,6 +160,10 @@ class TestNSImage (TestCase):
         self.assertIsInstance(NSImageNameStatusPartiallyAvailable, unicode)
         self.assertIsInstance(NSImageNameStatusUnavailable, unicode)
         self.assertIsInstance(NSImageNameStatusNone, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSImageNameShareTemplate, unicode)
 
 if __name__ == "__main__":
     main()

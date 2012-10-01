@@ -8,6 +8,7 @@ except NameError:
     unicode = str
 
 class TestNSTextViewHelper (NSObject):
+    def textView_URLForContentsOfTextAttachment_atIndex_(self, a, b, c): pass
     def textView_clickedOnLink_atIndex_(self, tv, a, b): return 1
     def textView_clickedOnCell_inRect_atIndex_(self, tv, a, b, c): return 1
     def textView_doubleClickedOnCell_inRect_atIndex_(self, tv, a, b, c): return 1
@@ -122,6 +123,15 @@ class TestNSTextView (TestCase):
         self.assertArgIsOut(NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 2)
         self.assertArgIsOut(NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 3)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSTextView.usesInspectorBar)
+        self.assertArgIsBOOL(NSTextView.setUsesInspectorBar_, 0)
+        self.assertResultIsBOOL(NSTextView.usesFindBar)
+        self.assertArgIsBOOL(NSTextView.setUsesFindBar_, 0)
+        self.assertResultIsBOOL(NSTextView.isIncrementalSearchingEnabled)
+        self.assertArgIsBOOL(NSTextView.setIncrementalSearchingEnabled_, 0)
+
     @min_os_level('10.5')
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSTextView.displaysLinkToolTips)
@@ -190,6 +200,9 @@ class TestNSTextView (TestCase):
         self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 2, objc._C_NSInteger)
         self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 6, objc._C_NSInteger)
 
+    @min_os_level('10.7')
+    def testProtocols10_7(self):
+        self.assertArgHasType(TestNSTextViewHelper.textView_URLForContentsOfTextAttachment_atIndex_, 2, objc._C_NSUInteger)
 
 
 

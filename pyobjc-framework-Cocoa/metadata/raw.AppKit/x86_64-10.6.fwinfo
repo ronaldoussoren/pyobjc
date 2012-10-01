@@ -6019,7 +6019,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "cellClass", 
@@ -6073,7 +6073,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -6089,7 +6089,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "matrixClass", 
@@ -6098,7 +6098,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -15331,7 +15331,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -15347,7 +15347,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "cellClass", 
@@ -20160,7 +20160,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "documentClassForType:", 
@@ -23225,7 +23225,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -23240,7 +23240,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -27154,7 +27154,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -27169,7 +27169,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -27200,7 +27200,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "imageRepClassForFileType:", 
@@ -27215,7 +27215,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "imageRepClassForPasteboardType:", 
@@ -27230,7 +27230,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "imageRepClassForType:", 
@@ -27245,7 +27245,7 @@
       ], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "imageRepClassForData:", 
@@ -30868,7 +30868,7 @@
         "typestr_special": false
        }, 
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }, 
        {
@@ -30891,7 +30891,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -30907,7 +30907,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "cellClass", 
@@ -35922,7 +35922,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "valueClassForBinding:", 
@@ -36306,7 +36306,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -36322,7 +36322,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "objectClass", 
@@ -39524,7 +39524,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "pathComponentCellClass", 
@@ -46475,7 +46475,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -46491,7 +46491,7 @@
       "args": [], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "rowClass", 
@@ -48844,7 +48844,7 @@
      {
       "args": [
        {
-        "typestr": "^{objc_class=}", 
+        "typestr": "#", 
         "typestr_special": false
        }
       ], 
@@ -48860,7 +48860,7 @@
       "args": [], 
       "class_method": true, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "rulerViewClass", 
@@ -89502,7 +89502,7 @@
       ], 
       "class_method": false, 
       "retval": {
-       "typestr": "^{objc_class=}", 
+       "typestr": "#", 
        "typestr_special": false
       }, 
       "selector": "valueClassForBinding:", 

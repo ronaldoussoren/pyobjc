@@ -109,7 +109,13 @@ class TestNSObjCRuntime (TestCase):
         self.assertEqual(NSSortConcurrent, 1<<0)
         self.assertEqual(NSSortStable, 1<<4)
 
-
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSFoundationVersionNumber10_7, 833.10)
+        self.assertEqual(NSFoundationVersionNumber10_7_1, 833.10)
+        self.assertEqual(NSFoundationVersionNumber10_7_2, 833.20)
+        self.assertEqual(NSFoundationVersionNumber10_7_3, 833.24)
+        self.assertEqual(NSFoundationVersionNumber10_7_4, 833.25)
 
     def testSelectorAccess(self):
         v = NSStringFromSelector('description')

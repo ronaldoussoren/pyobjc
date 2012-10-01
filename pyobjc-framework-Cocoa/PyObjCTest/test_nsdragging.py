@@ -3,6 +3,21 @@ from PyObjCTools.TestSupport import *
 from AppKit import *
 
 class TestNSDraggingHelper (NSObject):
+    def draggingFormation(self): return 1
+    def setDraggingFormation(self, v): return 1
+    def animatesToDestination(self): return 1
+    def setAnimatesToDestination(self, v): return 1
+    def numberOfValidItemsForDrop(self): return 1
+    def setNumberOfValidItemsForDrop(self, v): return 1
+    def enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_(self, a, b, c, d, e): return 1
+    def draggingSession_sourceOperationMaskForDraggingContext_(self, a, b): return 1
+    def draggingSession_willBeginAtPoint_(self, a, b): pass
+    def draggingSession_movedToPoint_(self, a, b): pass
+    def draggingSession_endedAtPoint_operation_(self, a, b, c): pass
+    def ignoreModifierKeysForDraggingSession_(self, a): return 1
+
+
+
     def draggingSourceOperationMask(self): return 1
     def draggingLocation(self): return 1
     def draggedImageLocation(self): return 1
@@ -40,6 +55,20 @@ class TestNSDragging (TestCase):
 
         self.assertEqual(NSDragOperationAll, NSDragOperationAll_Obsolete)
 
+    @min_os_level('10.7')
+    def testConstant10_7(self):
+        self.assertEqual(NSDraggingFormationDefault, 0)
+        self.assertEqual(NSDraggingFormationNone, 1)
+        self.assertEqual(NSDraggingFormationPile, 2)
+        self.assertEqual(NSDraggingFormationList, 3)
+        self.assertEqual(NSDraggingFormationStack, 4)
+
+        self.assertEqual(NSDraggingContextOutsideApplication, 0)
+        self.assertEqual(NSDraggingContextWithinApplication, 1)
+
+        self.assertEqual(NSDraggingItemEnumerationClearNonenumeratedImages, 1<<16)
+
+
     def testProtocols(self):
         self.assertResultHasType(TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger)
         self.assertResultHasType(TestNSDraggingHelper.draggingLocation, NSPoint.__typestr__)
@@ -62,6 +91,28 @@ class TestNSDragging (TestCase):
         self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysWhileDragging)
         self.assertArgHasType(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 1, NSPoint.__typestr__)
         self.assertArgIsBOOL(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 2)
+
+    @min_os_level('10.7')
+    def testProtocols10_7(self):
+        self.assertResultHasType(TestNSDraggingHelper.animatesToDestination, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSDraggingHelper.setAnimatesToDestination_, 0, objc._C_NSUInteger)
+
+        self.assertResultIsBOOL(TestNSDraggingHelper.animatesToDestination)
+        self.assertArgIsBOOL(TestNSDraggingHelper.setAnimatesToDestination_, 0)
+
+        self.assertResultHasType(TestNSDraggingHelper.numberOfValidItemsForDrop, objc._C_NSUInteger)
+        self.assertArgHasType(TestNSDraggingHelper.setNumberOfValidItemsForDrop_, 0, objc._C_NSUInteger)
+
+
+        self.assertArgHasType(TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_, 0, objc._C_NSUInteger)
+        self.assertArgIsBlock(TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_, 4, b'v@' + objc._C_NSInteger + b'o^' + objc._C_NSBOOL)
+
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_willBeginAtPoint_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_movedToPoint_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_endedAtPoint_operation_, 1, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSDraggingHelper.draggingSession_endedAtPoint_operation_, 2, objc._C_NSUInteger)
+
+        self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysForDraggingSession)
 
 if __name__ == "__main__":
     main()

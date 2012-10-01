@@ -7,14 +7,26 @@
     "methods": [
      {
       "args": {
-       "2": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] }
+       "2": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "3": {}
       }, 
       "class_method": false, 
       "selector": "beginWithOptions:modelessDelegate:didEndSelector:contextInfo:"
      }, 
      {
       "args": {
-       "3": { "sel_of_type": ["v@:@i^v", "v@:@q^v"] }
+       "3": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "4": {}
       }, 
       "class_method": false, 
       "selector": "beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
@@ -25,14 +37,24 @@
     "methods": [
      {
       "args": {
-       "1": { "sel_of_type": ["v@:@I^v", "v@:@Q^v"] }
+       "1": {
+        "sel_of_type": [
+         "v@:@I^v", 
+         "v@:@Q^v"
+        ]
+       }
       }, 
       "class_method": false, 
       "selector": "beginImagePickerWithDelegate:didEndSelector:contextInfo:"
      }, 
      {
       "args": {
-       "2": { "sel_of_type": [ "v@:@I^v", "v@:@Q^v" ] }
+       "2": {
+        "sel_of_type": [
+         "v@:@I^v", 
+         "v@:@Q^v"
+        ]
+       }
       }, 
       "class_method": false, 
       "selector": "beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
@@ -59,21 +81,39 @@
     "methods": [
      {
       "args": {
-       "1": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+       "1": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "2": {}
       }, 
       "class_method": false, 
       "selector": "beginPictureTakerWithDelegate:didEndSelector:contextInfo:"
      }, 
      {
       "args": {
-       "2": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+       "2": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "3": {}
       }, 
       "class_method": false, 
       "selector": "beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
      }, 
      {
       "args": {
-       "2": { "sel_of_type": [ "v@:@i^v", "v@:@q^v" ] }
+       "2": {
+        "sel_of_type": [
+         "v@:@i^v", 
+         "v@:@q^v"
+        ]
+       }, 
+       "3": {}
       }, 
       "class_method": false, 
       "selector": "popUpRecentsMenuForView:withDelegate:didEndSelector:contextInfo:"

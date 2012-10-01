@@ -30,6 +30,21 @@ class TestNSDocumentController (TestCase):
         self.assertArgIsBOOL(NSDocumentController.setShouldCreateUI_, 0)
         self.assertResultIsBOOL(NSDocumentController.shouldCreateUI)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBOOL(NSDocumentController.openDocumentWithContentsOfURL_display_completionHandler_, 1)
+        self.assertArgIsBlock(NSDocumentController.openDocumentWithContentsOfURL_display_completionHandler_, 2, b'v@')
+        self.assertArgIsBOOL(NSDocumentController.reopenDocumentForURL_withContentsOfURL_display_completionHandler_, 2)
+        self.assertArgIsBlock(NSDocumentController.reopenDocumentForURL_withContentsOfURL_display_completionHandler_, 3, b'v@' + objc._C_NSBOOL + b'@')
+        self.assertArgIsBOOL(NSDocumentController.duplicateDocumentWithContentsOfURL_copying_displayName_error_, 1)
+        self.assertArgIsOut(NSDocumentController.duplicateDocumentWithContentsOfURL_copying_displayName_error_, 3)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertArgIsBlock(NSDocumentController.beginOpenPanelWithCompletionHandler_, 0, b'v@')
+        self.assertArgIsBlock(NSDocumentController.beginOpenPanel_forTypes_completionHandler_, 2, b'v' + objc._C_NSInteger)
+
+
 
 if __name__ == "__main__":
     main()

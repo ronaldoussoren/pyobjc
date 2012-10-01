@@ -63,6 +63,12 @@ class TestNSOpenGL (TestCase):
     def testConstants10_5(self):
         self.assertEqual(NSOpenGLPFAAllowOfflineRenderers, 96)
 
+    @min_os_level("10.7")
+    def testConstants10_7(self):
+        self.assertEqual(NSOpenGLPFAOpenGLProfile, 99)
+        self.assertEqual(NSOpenGLProfileVersionLegacy, 0x1000)
+        self.assertEqual(NSOpenGLProfileVersion3_2Core, 0x3200)
+
 
     def testFunctions(self):
         major, minor = NSOpenGLGetVersion(None, None)

@@ -125,6 +125,10 @@ class TestNSURL (TestCase):
         self.assertIsInstance(NSURLUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemPercentUploadedKey, unicode)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSURLIsExcludedFromBackupKey, unicode)
+        self.assertIsInstance(NSURLPathKey, unicode)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

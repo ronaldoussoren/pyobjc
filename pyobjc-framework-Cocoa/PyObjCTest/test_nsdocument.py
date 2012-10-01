@@ -21,6 +21,10 @@ class TestNSDocument (TestCase):
         self.assertEqual(NSChangeDiscardable, 256)
         self.assertEqual(NSAutosaveInPlaceOperation, 4)
         self.assertEqual(NSAutosaveElsewhereOperation, 3)
+        
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSAutosaveAsOperation, 5)
 
 
     def testMethods(self):
@@ -97,6 +101,54 @@ class TestNSDocument (TestCase):
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSDocument.canConcurrentlyReadDocumentsOfType_)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBOOL(NSDocument.performActivityWithSynchronousWaiting_usingBlock_, 0)
+        self.assertArgIsBlock(NSDocument.performActivityWithSynchronousWaiting_usingBlock_, 1, b'v')
+        self.assertArgIsBlock(NSDocument.continueActivityUsingBlock_, 0, b'v')
+        self.assertArgIsBlock(NSDocument.continueAsynchronousWorkOnMainThreadUsingBlock_, 0, b'v')
+        self.assertArgIsBlock(NSDocument.performSynchronousFileAccessUsingBlock_, 0, b'v')
+
+        self.assertArgIsBlock(NSDocument.performAsynchronousFileAccessUsingBlock_, 0, b'v@?') #FIXME: block has a block argument 
+
+        self.assertResultIsBOOL(NSDocument.isEntireFileLoaded)
+        self.assertResultIsBOOL(NSDocument.autosavingIsImplicitlyCancellable)
+
+        self.assertArgIsBlock(NSDocument.saveToURL_ofType_forSaveOperation_completionHandler_, 3, b'v@')
+        self.assertResultIsBOOL(NSDocument.canAsynchronouslyWriteToURL_ofType_forSaveOperation)
+        self.assertResultIsBOOL(NSDocument.checkAutosavingSafetyAndReturnError_)
+        self.assertArgIsOut(NSDocument.checkAutosavingSafetyAndReturnError_, 0)
+        self.assertArgIsBOOL(NSDocument.autosaveWithImplicitCancellability_completionHandler_, 0)
+        self.assertArgIsBlock(NSDocument.autosaveWithImplicitCancellability_completionHandler_, 1, b'v@')
+        
+        self.assertResultIsBOOL(NSDocument.autosavesInPlace)
+        self.assertResultIsBOOL(NSDocument.preservesVersions)
+
+        self.assertArgIsSEL(NSDocument.duplicateDocumentWithDelegate_didDuplicateSelector_contextInfo_, 1, b'v@' + objc._C_NSBOOL + b'^v')
+        self.assertArgIsOut(NSDocument.duplicateAndReturnError_, 0)
+        self.assertResultIsBOOL(NSDocument.isInViewingMode)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(NSDocument.setDraft_, 0)
+        self.assertResultIsBOOL(NSDocument.isDraft)
+        self.assertResultIsBOOL(NSDocument.autosavesDrafts)
+
+        self.assertArgIsBlock(NSDocument.moveDocumentWithCompletionHandler_, 0,
+                b'v' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDocument.moveToURL_completionHandler_, 1,
+                b'v' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDocument.lockDocumentWithCompletionHandler_, 0,
+                b'v' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDocument.lockWithCompletionHandler_, 0,
+                b'v@')
+        self.assertArgIsBlock(NSDocument.unlockDocumentWithCompletionHandler_, 0,
+                b'v' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSDocument.unlockWithCompletionHandler_, 0,
+                b'v@')
+        self.assertResultIsBOOL(NSDocument.isLocked)
+        self.assertResultIsBOOL(NSDocument.usesUbiquitousStorage)
 
 if __name__ == "__main__":
     main()

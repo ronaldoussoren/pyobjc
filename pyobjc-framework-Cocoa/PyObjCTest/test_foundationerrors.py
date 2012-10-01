@@ -47,6 +47,18 @@ class FoundationErrorsTest (TestCase):
         self.assertEqual(NSPropertyListErrorMinimum, 3840)
         self.assertEqual(NSPropertyListErrorMaximum, 4095)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSFileWriteFileExistsError, 516)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSFeatureUnsupportedError, 3328)
+        self.assertEqual(NSXPCConnectionInterrupted, 4097)
+        self.assertEqual(NSXPCConnectionInvalid, 4099)
+        self.assertEqual(NSXPCConnectionReplyInvalid, 4101)
+        self.assertEqual(NSXPCConnectionErrorMinimum, 4096)
+        self.assertEqual(NSXPCConnectionErrorMaximum, 4224)
 
 if __name__ == "__main__":
     main()

@@ -13,6 +13,11 @@ except ImportError:
     have_Quartz = 0
 
 class TestNSWindowHelper (NSObject):
+    def window_willUseFullScreenContentSize_(self, a, b): pass
+    def window_willUseFullScreenPresentationOptions_(self, a, b): pass
+    def window_startCustomAnimationToEnterFullScreenWithDuration_(self, a, b): pass
+    def window_startCustomAnimationToExitFullScreenWithDuration_(self, a, b): pass
+    def window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_(self, a, b, c): pass
     def windowShouldClose_(self, w): return 1
     def windowWillResize_toSize_(self, w, a): return 1
     def windowWillUseStandardFrame_defaultFrame_(self, w, a): return 1
@@ -94,6 +99,31 @@ class TestNSWindow (TestCase):
 
         self.assertIsInstance(NSWindowWillStartLiveResizeNotification, unicode)
         self.assertIsInstance(NSWindowDidEndLiveResizeNotification, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSFullScreenWindowMask, 1<<14)
+        self.assertEqual(NSWindowCollectionBehaviorFullScreenPrimary, 1<<7)
+        self.assertEqual(NSWindowCollectionBehaviorFullScreenAuxiliary, 1<<8)
+        self.assertEqual(NSWindowAnimationBehaviorDefault, 0)
+        self.assertEqual(NSWindowAnimationBehaviorNone, 2)
+        self.assertEqual(NSWindowAnimationBehaviorDocumentWindow, 3)
+        self.assertEqual(NSWindowAnimationBehaviorUtilityWindow, 4)
+        self.assertEqual(NSWindowAnimationBehaviorAlertPanel, 5)
+        self.assertEqual(NSWindowDocumentVersionsButton, 6)
+        self.assertEqual(NSWindowFullScreenButton, 7)
+
+        self.assertIsInstance(NSWindowDidChangeBackingPropertiesNotification, unicode)
+        self.assertIsInstance(NSBackingPropertyOldScaleFactorKey, unicode)
+        self.assertIsInstance(NSBackingPropertyOldColorSpaceKey, unicode)
+        self.assertIsInstance(NSWindowWillEnterFullScreenNotification, unicode)
+        self.assertIsInstance(NSWindowDidEnterFullScreenNotification, unicode)
+        self.assertIsInstance(NSWindowWillExitFullScreenNotification, unicode)
+        self.assertIsInstance(NSWindowDidExitFullScreenNotification, unicode)
+        self.assertIsInstance(NSWindowWillEnterVersionBrowserNotification, unicode)
+        self.assertIsInstance(NSWindowDidEnterVersionBrowserNotification, unicode)
+        self.assertIsInstance(NSWindowWillExitVersionBrowserNotification, unicode)
+        self.assertIsInstance(NSWindowDidExitVersionBrowserNotification, unicode)
 
     @onlyIf(have_Quartz)
     def testMagicConstants(self):
@@ -212,6 +242,18 @@ class TestNSWindow (TestCase):
         self.assertResultIsBOOL(TestNSWindowHelper.window_shouldPopUpDocumentPathMenu_)
         self.assertResultIsBOOL(TestNSWindowHelper.window_shouldDragDocumentWithEvent_from_withPasteboard_)
         self.assertArgHasType(TestNSWindowHelper.window_shouldDragDocumentWithEvent_from_withPasteboard_, 2, NSPoint.__typestr__)
+
+    @min_os_level('10.7')
+    def testProtocols10_7(self):
+        self.assertArgHasType(TestNSWindowHelper.window_willUseFullScreenContentSize_, 1, NSSize.__typestr__)
+        self.assertArgHasType(TestNSWindowHelper.window_willUseFullScreenPresentationOptions_, 1, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSWindowHelper.window_willUseFullScreenPresentationOptions_, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSWindowHelper.window_startCustomAnimationToEnterFullScreenWithDuration_, objc._C_DBL)
+        self.assertResultHasType(TestNSWindowHelper.window_startCustomAnimationToExitFullScreenWithDuration_, objc._C_DBL)
+        self.assertResultHasType(TestNSWindowHelper.window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_, NSSize.__typestr__)
+        self.assertArgHasType(TestNSWindowHelper.window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_, 1, NSSize.__typestr__)
+        self.assertArgHasType(TestNSWindowHelper.window_willResizeForVersionBrowserWithMaxPreferredSize_maxAllowedSize_, 2, NSSize.__typestr__)
+
 
 if __name__ == "__main__":
     main()

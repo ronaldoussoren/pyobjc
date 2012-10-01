@@ -187,6 +187,7 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSAppKitVersionNumber10_5, 949)
         self.assertEqual(NSAppKitVersionNumber10_5_2, 949.27)
         self.assertEqual(NSAppKitVersionNumber10_5_3, 949.33)
+        self.assertEqual(NSAppKitVersionNumber10_5_3, 949.33)
 
         self.assertEqual(NSApplicationPresentationDefault, 0)
         self.assertEqual(NSApplicationPresentationAutoHideDock, (1 <<  0))
@@ -210,9 +211,20 @@ class TestNSApplication (TestCase):
         self.assertEqual(NSRemoteNotificationTypeNone, 0)
         self.assertEqual(NSRemoteNotificationTypeBadge, 1)
 
+        self.assertEqual(NSAppKitVersionNumber10_7, 1138)
+        self.assertEqual(NSAppKitVersionNumber10_7_2, 1138.23)
+
         self.assertIsInstance(NSApplicationLaunchRemoteNotificationKey, unicode)
         self.assertIsInstance(NSApplicationLaunchIsDefaultLaunchKey, unicode)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSApplicationLaunchUserNotificationKey, unicode)
+        self.assertIsInstance(NSTextAlternativesAttributeName, unicode)
+        self.assertIsInstance(NSUsesScreenFontsDocumentAttribute, unicode)
+
+        self.assertEqual(NSRemoteNotificationTypeSound, 2)
+        self.assertEqual(NSRemoteNotificationTypeAlert, 4)
 
     @min_os_level('10.6')
     def testMethods10_6(self):

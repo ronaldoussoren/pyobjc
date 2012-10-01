@@ -8,6 +8,14 @@ except NameError:
     unicode = str
 
 class TestNSTableViewHelper (NSObject):
+    def tableView_viewForTableColumn_row_(self, a, b, c): pass
+    def tableView_rowViewForRow_(self, a, b): pass
+    def tableView_didAddRowView_forRow_(self, a, b, c): pass
+    def tableView_didRemoveRowView_forRow_(self, a, b, c): pass
+    def tableView_pastboardWriterForRow_(self, a, b): pass
+    def tableView_draggingSession_willBeginAtPoint_forRowIndexes_(self, a, b, c, d): pass
+    def tableView_draggingSession_endedAtPoint_operation_(self, a, b, c, d): pass
+
     def numberOfRowsInTableView_(self, tv): return 1
     def tableView_objectValueForTableColumn_row_(self, tv, c, r): return 1
     def tableView_setObjectValue_forTableColumn_row_(self, o, tv, c, r): pass
@@ -68,6 +76,27 @@ class TestNSTableView (TestCase):
         self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
         self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleSourceList, 1)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1<<3)
+        self.assertEqual(NSTableViewRowSizeStyleDefault, -1)
+        self.assertEqual(NSTableViewRowSizeStyleCustom, 0)
+        self.assertEqual(NSTableViewRowSizeStyleSmall, 1)
+        self.assertEqual(NSTableViewRowSizeStyleMedium, 2)
+        self.assertEqual(NSTableViewRowSizeStyleLarge, 3)
+
+        self.assertEqual(NSTableViewAnimationEffectNone, 0)
+        self.assertEqual(NSTableViewAnimationEffectFade, 1)
+        self.assertEqual(NSTableViewAnimationEffectGap, 2)
+        self.assertEqual(NSTableViewAnimationSlideUp, 0x10)
+        self.assertEqual(NSTableViewAnimationSlideDown, 0x20)
+        self.assertEqual(NSTableViewAnimationSlideLeft, 0x30)
+        self.assertEqual(NSTableViewAnimationSlideRight, 0x40)
+
+        self.assertIsInstance(NSTableViewRowViewKey, unicode)
+
+        self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1<<3)
+
     def testMethods(self):
         self.assertArgIsBOOL(NSTableView.setAllowsColumnReordering_, 0)
         self.assertResultIsBOOL(NSTableView.allowsColumnReordering)
@@ -120,6 +149,15 @@ class TestNSTableView (TestCase):
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSTableView.shouldFocusCell_atColumn_row_)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBOOL(NSTableView.viewAtColumn_row_makeIfNecessary_, 2)
+        self.assertArgIsBOOL(NSTableView.rowViewAtRow_makeIfNecessary_, 1)
+
+        self.assertArgIsBlock(NSTableView.enumerateAvailableRowViewsUsingBlock_, 0, b'v@' + objc._C_NSInteger)
+
+        self.assertResultIsBOOL(NSTableView.floatsGroupRows)
+        self.assertArgIsBOOL(NSTableView.setFloatsGroupRows_, 0)
 
     def testProtocols(self):
         self.assertResultHasType(TestNSTableViewHelper.numberOfRowsInTableView_, objc._C_NSInteger)
@@ -166,6 +204,17 @@ class TestNSTableView (TestCase):
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_)
         self.assertArgHasType(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_shouldReorderColumn_toColumn_, 2, objc._C_NSInteger)
+
+    @min_os_level('10.7')
+    def testProtococols10_7(self):
+        self.assertArgHasType(TestNSTableViewHelper.tableView_viewForTableColumn_row_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_rowViewForRow_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_didAddRowView_forRow_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_didRemoveRowView_forRow_, 2, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_pastboardWriterForRow_, 1, objc._C_NSInteger)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_, 2, NSPoint.__typestr__)
+        self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_endedAtPoint_operation_, 2, NSPoint.__typestr__)
+        
 
 if __name__ == "__main__":
     main()

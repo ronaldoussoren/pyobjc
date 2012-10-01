@@ -4,7 +4,10 @@
 
 
 static PyObjC_function_map function_map[] = {
-	{"NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType },
+#if PyObjC_BUILD_RELEASE >= 1008
+	{ "NSEdgeInsetsMake", (PyObjC_Function_Pointer)&NSEdgeInsetsMake },
+#endif
+	{ "NSEventMaskFromType", (PyObjC_Function_Pointer)&NSEventMaskFromType },
     { 0, 0 }
 };
 

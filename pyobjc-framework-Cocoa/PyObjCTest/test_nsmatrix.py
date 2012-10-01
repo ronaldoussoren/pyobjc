@@ -58,7 +58,10 @@ class TestNSMatrix (TestCase):
         self.assertResultIsBOOL(NSMatrix.tabKeyTraversesCells)
 
 
-
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(NSMatrix.setAutorecalculatesCellSize_, 0)
+        self.assertResultIsBOOL(NSMatrix.autorecalculatesCellSize)
 
 if __name__ == "__main__":
     main()

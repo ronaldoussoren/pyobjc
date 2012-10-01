@@ -2,16 +2,18 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "cftypes": {
+   "CGImageDestinationRef": {
+    "gettypeid_func": "CGImageDestinationGetTypeID", 
+    "typestr": "^{CGImageDestination=}"
+   }, 
+   "CGImageSourceRef": {
+    "gettypeid_func": "CGImageSourceGetTypeID", 
+    "typestr": "^{CGImageSource=}"
+   }
+  }, 
   "classes": {}, 
   "formal_protocols": {}, 
-  "cftypes": {
-    "CGImageDestinationRef": {
-      "gettypeid_func": "CGImageDestinationGetTypeID", "typestr": "^{CGImageDestination=}"
-    },
-    "CGImageSourceRef": {
-      "gettypeid_func": "CGImageSourceGetTypeID", "typestr": "^{CGImageSource=}"
-    }
-  },
   "functions": {
    "CGImageDestinationAddImage": {
     "args": {
@@ -20,11 +22,31 @@
      "2": {}
     }
    }, 
+   "CGImageDestinationAddImageAndMetadata": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
    "CGImageDestinationAddImageFromSource": {
     "args": {
      "0": {}, 
      "1": {}, 
      "3": {}
+    }
+   }, 
+   "CGImageDestinationCopyImageSource": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
     }
    }, 
    "CGImageDestinationCopyTypeIdentifiers": {
@@ -71,6 +93,183 @@
     "args": {
      "0": {}, 
      "1": {}
+    }
+   }, 
+   "CGImageMetadataCopyStringValueWithPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCopyTagMatchingImageProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCopyTagWithPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCopyTags": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCreateFromXMPData": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCreateMutable": {
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCreateMutableCopy": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataCreateXMPData": {
+    "args": {
+     "0": {}, 
+     "1": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataEnumerateTagsUsingBlock": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CGImageMetadataRegisterNamespaceForPrefix": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {
+      "already_cfretained": true, 
+      "null_accepted": true, 
+      "type_modifier": "o"
+     }
+    }
+   }, 
+   "CGImageMetadataRemoveTagWithPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CGImageMetadataSetTagWithPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}, 
+     "3": {}
+    }
+   }, 
+   "CGImageMetadataSetValueMatchingImageProperty": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CGImageMetadataSetValueWithPath": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CGImageMetadataTagCopyName": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataTagCopyNamespace": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataTagCopyPrefix": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataTagCopyQualifiers": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataTagCopyValue": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageMetadataTagCreate": {
+    "args": {
+     "0": {}, 
+     "1": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
+    }
+   }, 
+   "CGImageMetadataTagGetType": {
+    "args": {
+     "0": {}
+    }
+   }, 
+   "CGImageSourceCopyMetadataAtIndex": {
+    "args": {
+     "0": {}, 
+     "2": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
     }
    }, 
    "CGImageSourceCopyProperties": {

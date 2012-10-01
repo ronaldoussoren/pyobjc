@@ -77,6 +77,11 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(NSPreferencePanesDirectory, 22)
         self.assertEqual(NSItemReplacementDirectory, 99)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSApplicationScriptsDirectory, 23)
+        self.assertEqual(NSTrashDirectory, 102)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSString.isAbsolutePath)
         self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)

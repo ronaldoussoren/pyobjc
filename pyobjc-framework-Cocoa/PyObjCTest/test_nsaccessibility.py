@@ -349,5 +349,9 @@ class TestNSAccessibility (TestCase):
         self.assertIsInstance(NSAccessibilityPopoverRole, unicode)
         self.assertIsInstance(NSAccessibilityFullScreenButtonSubrole, unicode)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSAccessibilityExtrasMenuBarAttribute, unicode)
+
 if __name__ == "__main__":
     main()

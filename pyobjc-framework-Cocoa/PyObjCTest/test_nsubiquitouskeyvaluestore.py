@@ -23,5 +23,9 @@ class TestNSUbiquitousKeyValueStore (TestCase):
         self.assertEqual(NSUbiquitousKeyValueStoreInitialSyncChange, 1)
         self.assertEqual(NSUbiquitousKeyValueStoreQuotaViolationChange, 2)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertEqual(NSUbiquitousKeyValueStoreAccountChange, 3)
+
 if __name__ ==  "__main__":
     main()

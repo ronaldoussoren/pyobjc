@@ -128,6 +128,9 @@ class TestPythonCoder(TestCase):
 
         self.assertTrue(hasattr(Foundation, 'NXReadNSObjectFromCoder'))
 
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSCoder.requiresSecureCoding)
 
 if __name__ == '__main__':
     main( )

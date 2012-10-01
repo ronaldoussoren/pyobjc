@@ -2,70 +2,47 @@
 # for information on how to update this file.
 {
  "definitions": {
-  "structs": {
-    "CVSMPTETime": {
-       "fieldnames": [ "subframes", "subframeDivisor", "counter", "type", "flags", "hours", "minutes", "seconds", "frames" ]
-    },
-    "CVTime": {
-       "fieldnames": [ "timeValue", "timeScale", "flags" ]
-    },
-    "CVTimestamp": {
-       "fieldnames": [ "version", "videoTimeScale", "videoTime", "hostTime", "rateScalar", "videoRefreshPeriod", "smpteTime", "flags", "reserved"]
-    },
-    "CVFillExtendedPixelsCallBackData": {
-      "ignore": true
-    },
-    "CVPlanarComponentInfo": {
-      "fieldnames": ["offset", "rowBytes"]
-    },
-    "CVPlanarPixelBufferInfo": {
-      "fieldnames": ["componentInfo"]
-    },
-    "CVPlanarPixelBufferInfo_YCbCrPlanar": {
-      "fieldnames": ["componentInfoY", "componentInfoCb", "componentInfoCr"]
-    }
-  },
+  "cftypes": {
+   "CVBufferRef": {
+    "gettypeid_func": "CVBufferGetTypeID"
+   }, 
+   "CVDisplayLinkRef": {
+    "gettypeid_func": "CVDisplayLinkGetTypeID", 
+    "typestr": "^{__CVDisplayLink=}"
+   }, 
+   "CVOpenGLBufferPoolRef": {
+    "gettypeid_func": "CVOpenGLBufferPoolGetTypeID", 
+    "typestr": "^{__CVOpenGLBufferPool=}"
+   }, 
+   "CVOpenGLBufferRef": {
+    "gettypeid_func": "CVOpenGLBufferGetTypeID", 
+    "typestr": "^{__CVOpenGLBuffer=}"
+   }, 
+   "CVOpenGLTextureCacheRef": {
+    "gettypeid_func": "CVOpenGLTextureCacheGetTypeID", 
+    "typestr": "^{__CVOpenGLTextureCache=}"
+   }, 
+   "CVOpenGLTextureRef": {
+    "gettypeid_func": "CVOpenGLTextureGetTypeID", 
+    "typestr": "^{__CVOpenGLTexture=}"
+   }, 
+   "CVPixelBufferPoolRef": {
+    "gettypeid_func": "CVPixelBufferPoolGetTypeID", 
+    "typestr": "^{__CVPixelBufferPool=}"
+   }, 
+   "CVPixelBufferRef": {
+    "gettypeid_func": "CVPixelBufferGetTypeID", 
+    "typestr": "^{__CVPixelBuffer=}"
+   }
+  }, 
   "classes": {}, 
   "formal_protocols": {}, 
-  "cftypes": {
-    "CVBufferRef": {
-      "gettypeid_func": "CVBufferGetTypeID"
-    },
-    "CVDisplayLinkRef": {
-      "gettypeid_func": "CVDisplayLinkGetTypeID",
-      "typestr": "^{__CVDisplayLink=}"
-    },
-    "CVOpenGLBufferPoolRef": {
-      "gettypeid_func": "CVOpenGLBufferPoolGetTypeID",
-      "typestr": "^{__CVOpenGLBufferPool=}"
-    },
-    "CVOpenGLTextureCacheRef": {
-      "gettypeid_func": "CVOpenGLTextureCacheGetTypeID",
-      "typestr": "^{__CVOpenGLTextureCache=}"
-    },
-    "CVPixelBufferRef": {
-      "gettypeid_func": "CVPixelBufferGetTypeID",
-      "typestr": "^{__CVPixelBuffer=}"
-    },
-    "CVPixelBufferPoolRef": {
-      "gettypeid_func": "CVPixelBufferPoolGetTypeID",
-      "typestr": "^{__CVPixelBufferPool=}"
-    },
-    "CVOpenGLTextureRef": {
-      "gettypeid_func": "CVOpenGLTextureGetTypeID",
-      "typestr": "^{__CVOpenGLTexture=}"
-    },
-    "CVOpenGLBufferRef": {
-      "gettypeid_func": "CVOpenGLBufferGetTypeID",
-      "typestr": "^{__CVOpenGLBuffer=}"
-    }
-  },
   "functions": {
    "CVBufferGetAttachment": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_modifier": "o" }
+     "2": {}
     }
    }, 
    "CVBufferGetAttachments": {
@@ -116,23 +93,23 @@
    }, 
    "CVDisplayLinkCreateWithActiveCGDisplays": {
     "args": {
-     "0": { "type_modifier": "o", "already_cfretained": true }
+     "0": {}
     }
    }, 
    "CVDisplayLinkCreateWithCGDisplay": {
     "args": {
-     "1": { "type_modifier": "o", "already_cfretained": true }
+     "1": {}
     }
    }, 
    "CVDisplayLinkCreateWithCGDisplays": {
     "args": {
-     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
-     "2": { "type_modifier": "o", "already_cfretained": true }
+     "0": {}, 
+     "2": {}
     }
    }, 
    "CVDisplayLinkCreateWithOpenGLDisplayMask": {
     "args": {
-     "1": { "type_modifier": "o", "already_cfretained": true }
+     "1": {}
     }
    }, 
    "CVDisplayLinkGetActualOutputVideoRefreshPeriod": {
@@ -148,7 +125,7 @@
    "CVDisplayLinkGetCurrentTime": {
     "args": {
      "0": {}, 
-     "1": { "type_modifier": "o" }
+     "1": {}
     }
    }, 
    "CVDisplayLinkGetNominalOutputVideoRefreshPeriod": {
@@ -196,29 +173,47 @@
       "function": {
        "args": [
         {
-         "typestr": "@"
-        },
-        {
-         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
-	 "type_modifier": "n"
+         "typestr": [
+          "^{__CVDisplayLink=}", 
+          false
+         ]
         }, 
         {
-         "typestr": "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
-	 "type_modifier": "N"
+         "typestr": [
+          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
+          true
+         ]
         }, 
         {
-         "typestr": "Q"
+         "typestr": [
+          "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
+          true
+         ]
         }, 
         {
-         "typestr": "^Q",
-	 "type_modifier": "o"
+         "typestr": [
+          "Q", 
+          false
+         ]
         }, 
         {
-         "typestr": "^v"
+         "typestr": [
+          "^Q", 
+          false
+         ]
+        }, 
+        {
+         "typestr": [
+          "^v", 
+          false
+         ]
         }
        ], 
        "retval": {
-        "typestr": "i"
+        "typestr": [
+         "i", 
+         false
+        ]
        }
       }
      }, 
@@ -238,8 +233,16 @@
    "CVDisplayLinkTranslateTime": {
     "args": {
      "0": {}, 
-     "1": { "type_modifier": "n" }, 
-     "2": { "type_modifier": "o" }
+     "1": {}, 
+     "2": {}
+    }
+   }, 
+   "CVImageBufferCreateColorSpaceFromAttachments": {
+    "args": {
+     "0": {}
+    }, 
+    "retval": {
+     "already_cfretained": true
     }
    }, 
    "CVImageBufferGetCleanRect": {
@@ -263,6 +266,11 @@
      "0": {}
     }
    }, 
+   "CVImageBufferIsFlipped": {
+    "args": {
+     "0": {}
+    }
+   }, 
    "CVOpenGLBufferAttach": {
     "args": {
      "0": {}, 
@@ -273,12 +281,12 @@
     "args": {
      "0": {}, 
      "3": {}, 
-     "4": { "type_modifier": "o", "already_cfretained": true }
+     "4": {}
     }
    }, 
    "CVOpenGLBufferGetAttributes": {
     "args": {
-     "0": { "type_override": "@" }
+     "0": {}
     }, 
     "retval": {}
    }, 
@@ -287,14 +295,14 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": { "type_modifier": "o", "already_cfretained": true }
+     "3": {}
     }
    }, 
    "CVOpenGLBufferPoolCreateOpenGLBuffer": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_modifier": "o", "already_cfretained": true }
+     "2": {}
     }
    }, 
    "CVOpenGLBufferPoolGetAttributes": {
@@ -338,16 +346,16 @@
      "2": {}, 
      "3": {}, 
      "4": {}, 
-     "5": { "type_modifier": "o", "already_cfretained": true }
+     "5": {}
     }
    }, 
    "CVOpenGLTextureCacheCreateTextureFromImage": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_override": "@" }, 
+     "2": {}, 
      "3": {}, 
-     "4": { "type_modifier": "o", "already_cfretained": true, "type_override": "^@" }
+     "4": {}
     }
    }, 
    "CVOpenGLTextureCacheFlush": {
@@ -401,14 +409,14 @@
     "args": {
      "0": {}, 
      "4": {}, 
-     "5": { "type_modifier": "o", "already_cfretained": true }
+     "5": {}
     }
    }, 
    "CVPixelBufferCreateResolvedAttributesDictionary": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_modifier": "o", "already_cfretained": true }
+     "2": {}
     }
    }, 
    "CVPixelBufferCreateWithBytes": {
@@ -441,7 +449,7 @@
      }, 
      "7": {}, 
      "8": {}, 
-     "9": { "type_modifier": "o", "already_cfretained": true }
+     "9": {}
     }
    }, 
    "CVPixelBufferCreateWithIOSurface": {
@@ -449,7 +457,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": { "type_modifier": "o", "already_cfretained": true }
+     "3": {}
     }
    }, 
    "CVPixelBufferCreateWithPlanarBytes": {
@@ -477,13 +485,13 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
@@ -513,18 +521,16 @@
     }
    }, 
    "CVPixelBufferGetBaseAddress": {
-    "comment": "fixme",
     "args": {
      "0": {}
     }, 
-    "retval": { "c_array_of_variable_length": true }
+    "retval": {}
    }, 
    "CVPixelBufferGetBaseAddressOfPlane": {
-    "comment": "fixme",
     "args": {
      "0": {}
     }, 
-    "retval": { "c_array_of_variable_length": true }
+    "retval": {}
    }, 
    "CVPixelBufferGetBytesPerRow": {
     "args": {
@@ -544,10 +550,10 @@
    "CVPixelBufferGetExtendedPixels": {
     "args": {
      "0": {}, 
-     "1": { "type_modifier": "o" }, 
-     "2": { "type_modifier": "o" }, 
-     "3": { "type_modifier": "o" }, 
-     "4": { "type_modifier": "o" }
+     "1": {}, 
+     "2": {}, 
+     "3": {}, 
+     "4": {}
     }
    }, 
    "CVPixelBufferGetHeight": {
@@ -601,14 +607,14 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": { "type_modifier": "o", "already_cfretained": true }
+     "3": {}
     }
    }, 
    "CVPixelBufferPoolCreatePixelBuffer": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": { "type_modifier": "o", "already_cfretained": true }
+     "2": {}
     }
    }, 
    "CVPixelBufferPoolCreatePixelBufferWithAuxAttributes": {
@@ -680,6 +686,62 @@
     }
    }
   }, 
-  "informal_protocols": {}
+  "informal_protocols": {}, 
+  "structs": {
+   "CVFillExtendedPixelsCallBackData": {
+    "ignore": true
+   }, 
+   "CVPlanarComponentInfo": {
+    "fieldnames": [
+     "offset", 
+     "rowBytes"
+    ]
+   }, 
+   "CVPlanarPixelBufferInfo": {
+    "fieldnames": [
+     "componentInfo"
+    ]
+   }, 
+   "CVPlanarPixelBufferInfo_YCbCrPlanar": {
+    "fieldnames": [
+     "componentInfoY", 
+     "componentInfoCb", 
+     "componentInfoCr"
+    ]
+   }, 
+   "CVSMPTETime": {
+    "fieldnames": [
+     "subframes", 
+     "subframeDivisor", 
+     "counter", 
+     "type", 
+     "flags", 
+     "hours", 
+     "minutes", 
+     "seconds", 
+     "frames"
+    ]
+   }, 
+   "CVTime": {
+    "fieldnames": [
+     "timeValue", 
+     "timeScale", 
+     "flags"
+    ]
+   }, 
+   "CVTimestamp": {
+    "fieldnames": [
+     "version", 
+     "videoTimeScale", 
+     "videoTime", 
+     "hostTime", 
+     "rateScalar", 
+     "videoRefreshPeriod", 
+     "smpteTime", 
+     "flags", 
+     "reserved"
+    ]
+   }
+  }
  }
 }

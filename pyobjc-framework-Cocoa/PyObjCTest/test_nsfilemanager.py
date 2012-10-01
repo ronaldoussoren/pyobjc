@@ -77,6 +77,10 @@ class TestNSFileManager (TestCase):
         self.assertEqual(NSFileManagerItemReplacementUsingNewMetadataOnly, 1<<0)
         self.assertEqual(NSFileManagerItemReplacementWithoutDeletingBackupItem, 1<<1)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSUbiquityIdentityDidChangeNotification, unicode)
+
     @min_os_level('10.6')
     def testMethods10_6(self):
         self.assertArgIsOut(NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_, 3)
@@ -121,6 +125,11 @@ class TestNSFileManager (TestCase):
 
         self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 1)
         self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 2)
+
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSFileManager.trashItemAtURL_resultingItemURL_error_)
+        self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 1)
+        self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 2)
 
     def testOutput(self):
         obj = NSFileManager.defaultManager()

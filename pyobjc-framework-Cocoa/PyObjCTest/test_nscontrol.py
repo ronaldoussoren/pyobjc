@@ -15,6 +15,11 @@ class TestNSControlHelper (NSObject):
     def control_textView_doCommandBySelector_(self, c, t, com): return 1
 
 class TestNSControl (TestCase):
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSControl.allowsExpansionToolTips)
+        self.assertArgIsBOOL(NSControl.setAllowsExpansionToolTips_, 0)
+
     def testMethods(self):
         self.assertResultIsBOOL(NSControl.ignoresMultiClick)
         self.assertArgIsBOOL(NSControl.setIgnoresMultiClick_, 0)

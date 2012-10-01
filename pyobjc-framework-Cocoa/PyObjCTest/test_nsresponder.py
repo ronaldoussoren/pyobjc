@@ -17,6 +17,12 @@ class TestNSResponder (TestCase):
         self.assertArgHasType(NSResponder.presentError_modalForWindow_delegate_didPresentSelector_contextInfo_, 4, b'^v')
         self.assertResultIsBOOL(NSResponder.presentError_)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSResponder.wantsScrollEventsForSwipeTrackingOnAxis_)
+        self.assertResultIsBOOL(NSResponder.wantsForwardedScrollEventsForAxis_)
+        self.assertArgIsSEL(NSResponder.supplementalTargetForAction_sender_, 0, b'v@:@')
+        self.assertResultIsBOOL(NSResponder.validateProposedFirstResponder_forEvent_)
 
 if __name__ == "__main__":
     main()

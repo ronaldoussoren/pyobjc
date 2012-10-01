@@ -42,6 +42,14 @@ class TestNSSpellChecker (TestCase):
         self.assertResultIsBOOL(NSSpellChecker.automaticallyIdentifiesLanguages)
         self.assertArgIsBOOL(NSSpellChecker.setAutomaticallyIdentifiesLanguages_, 0)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertArgIsBlock(
+                NSSpellChecker.showCorrectionIndicatorOfType_primaryString_alternativeStrings_forStringInRect_view_completionHandler_,
+                5, b'v@')
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextReplacementEnabled)
+        self.assertResultIsBOOL(NSSpellChecker.isAutomaticSpellingCorrectionEnabled)
+
 
     @min_os_level('10.6')
     def testConstants10_6(self):
@@ -53,6 +61,13 @@ class TestNSSpellChecker (TestCase):
         self.assertIsInstance(NSTextCheckingDocumentURLKey, unicode)
         self.assertIsInstance(NSTextCheckingDocumentTitleKey, unicode)
         self.assertIsInstance(NSTextCheckingDocumentAuthorKey, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(NSTextCheckingRegularExpressionsKey, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticSpellingCorrectionNotification, unicode)
+        self.assertIsInstance(NSSpellCheckerDidChangeAutomaticTextReplacementNotification, unicode)
+
 
 
 

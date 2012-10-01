@@ -167,6 +167,15 @@ class TestHeader (TestCase):
         self.assertArgIsBlock(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 3, 
                 NSPoint.__typestr__ + NSRange.__typestr__)
 
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSView.layer_shouldInheritContentsScale_fromWindow_)
+        self.assertResultIsBOOL(NSView.isDrawingFindIndicator)
+
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertResultIsBOOL(NSView.wantsUpdateLayer)
+
 
     def testProtocol(self):
         self.assertArgHasType(TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__)

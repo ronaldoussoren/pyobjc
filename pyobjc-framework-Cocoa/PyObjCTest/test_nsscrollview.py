@@ -26,6 +26,28 @@ class TesNSScrollView (TestCase):
         self.assertResultIsBOOL(NSScrollView.hasVerticalRuler)
         self.assertArgIsBOOL(NSScrollView.setHasVerticalRuler_, 0)
 
+    @min_os_level('10.8')
+    def testMethods10_8(self):
+        self.assertArgIsBOOL(NSScrollView.setAllowsMagnification_, 0)
+        self.assertResultIsBOOL(NSScrollView.allowsMagnification, 0)
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(NSScrollViewWillStartLiveMagnifyNotification, unicode)
+        self.assertIsInstance(NSScrollViewDidEndLiveMagnifyNotification, unicode)
+
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(NSScrollElasticityAutomatic, 0)
+        self.assertEqual(NSScrollElasticityNone, 1)
+        self.assertEqual(NSScrollElasticityAllowed, 2)
+        self.assertEqual(NSScrollViewFindBarPositionAboveHorizontalRuler, 0)
+        self.assertEqual(NSScrollViewFindBarPositionAboveContent, 1)
+        self.assertEqual(NSScrollViewFindBarPositionBelowContent, 2)
+
+    @min_os_level('10.7')
+    def testMethods10_7(self):
+        self.assertResultIsBOOL(NSScrollView.usesPredominantAxisScrolling)
+        self.assertArgIsBOOL(NSScrollView.setUsesPredominantAxisScrolling_, 0)
 if __name__ == "__main__":
     main()
