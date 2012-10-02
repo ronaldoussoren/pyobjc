@@ -133,7 +133,7 @@ class oc_test (test.test):
                 fails=len(result.failures),
                 errors=len(result.errors),
                 xfails=len(getattr(result, 'expectedFailures', [])),
-                xpass=len(getattr(result, 'expectedSuccesses', [])),
+                xpass=len(getattr(result, 'unexpectedSuccesses', [])),
                 skip=len(getattr(result, 'skipped', [])),
             )
             print("SUMMARY: %s"%(summary,))
