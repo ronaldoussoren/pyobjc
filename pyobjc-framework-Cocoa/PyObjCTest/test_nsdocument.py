@@ -116,7 +116,7 @@ class TestNSDocument (TestCase):
         self.assertResultIsBOOL(NSDocument.autosavingIsImplicitlyCancellable)
 
         self.assertArgIsBlock(NSDocument.saveToURL_ofType_forSaveOperation_completionHandler_, 3, b'v@')
-        self.assertResultIsBOOL(NSDocument.canAsynchronouslyWriteToURL_ofType_forSaveOperation)
+        self.assertResultIsBOOL(NSDocument.canAsynchronouslyWriteToURL_ofType_forSaveOperation_)
         self.assertResultIsBOOL(NSDocument.checkAutosavingSafetyAndReturnError_)
         self.assertArgIsOut(NSDocument.checkAutosavingSafetyAndReturnError_, 0)
         self.assertArgIsBOOL(NSDocument.autosaveWithImplicitCancellability_completionHandler_, 0)

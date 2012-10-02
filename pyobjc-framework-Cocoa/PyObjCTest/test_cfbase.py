@@ -15,7 +15,6 @@ except NameError:
 
 
 class TestBase (TestCase):
-    @expectedFailure
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertEqual(kCFCoreFoundationVersionNumber10_6_6, 550.42)

@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class FindHelper (AppKit.NSObject):
     def isSelectable(self): pass
     def allowsMultipleSelection(self): pass
@@ -12,7 +17,7 @@ class FindHelper (AppKit.NSObject):
     def shouldReplaceCharactersInRanges_withStrings_(self, a, b): pass
     def contentViewAtIndex_effectiveCharacterRange_(self, a, b): pass
     def drawCharactersInRange_forContentView_(self, a, b): pass
-    def isFindBarVisible(self): pass
+    def isFindBarVisible(self): return 1
     def setFindBarVisible_(self, a): pass
 
 class TestNSTextFinder (TestCase):
@@ -68,7 +73,7 @@ class TestNSTextFinder (TestCase):
         self.assertArgHasType(FindHelper.drawCharactersInRange_forContentView_, 0, AppKit.NSRange.__typestr__)
         
         self.assertResultIsBOOL(FindHelper.isFindBarVisible)
-        self.assertArgIsBOOL(FindHelper.setFindBarVisible_)
+        self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)
 
 
 if __name__ == "__main__":

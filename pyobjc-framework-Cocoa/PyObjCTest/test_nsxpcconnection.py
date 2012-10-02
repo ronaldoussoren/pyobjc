@@ -13,7 +13,7 @@ class TestNSXPCConnection (TestCase):
 
     @min_os_level('10.8')
     def testProtocol10_8(self):
-        self.assertArgIsBlock(XPCHelper.remoteObjectProxyWithErrorHandler_, 0, 'v@')
+        self.assertArgIsBlock(XPCHelper.remoteObjectProxyWithErrorHandler_, 0, b'v@')
         self.assertResultIsBOOL(XPCHelper.listener_shouldAcceptNewConnection_)
 
     @min_os_level('10.8')

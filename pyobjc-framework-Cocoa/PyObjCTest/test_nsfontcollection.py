@@ -29,11 +29,11 @@ class TestNSFontCollection (TestCase):
     def testMethods10_7(self):
         self.assertResultIsBOOL(AppKit.NSFontCollection.showFontCollection_withName_visibility_error_)
         self.assertArgIsOut(AppKit.NSFontCollection.showFontCollection_withName_visibility_error_, 3)
-        self.assertResultIsBOOL(AppKit.NSFontCollection.hideFontCollection_withName_visibility_error_)
-        self.assertArgIsOut(AppKit.NSFontCollection.hideFontCollection_withName_visibility_error_, 3)
+        self.assertResultIsBOOL(AppKit.NSFontCollection.hideFontCollectionWithName_visibility_error_)
+        self.assertArgIsOut(AppKit.NSFontCollection.hideFontCollectionWithName_visibility_error_, 2)
 
         self.assertResultIsBOOL(AppKit.NSFontCollection.renameFontCollectionWithName_visibility_toName_error_)
-        self.assertArgIsOut(AppKit.NSFontCollection.renameFontCollectionWithName_visibility_toName_error_, 4)
+        self.assertArgIsOut(AppKit.NSFontCollection.renameFontCollectionWithName_visibility_toName_error_, 3)
 
 if __name__ == "__main__":
     main()

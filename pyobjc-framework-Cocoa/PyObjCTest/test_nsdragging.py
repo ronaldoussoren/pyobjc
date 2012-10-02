@@ -6,9 +6,9 @@ class TestNSDraggingHelper (NSObject):
     def draggingFormation(self): return 1
     def setDraggingFormation(self, v): return 1
     def animatesToDestination(self): return 1
-    def setAnimatesToDestination(self, v): return 1
+    def setAnimatesToDestination_(self, v): return 1
     def numberOfValidItemsForDrop(self): return 1
-    def setNumberOfValidItemsForDrop(self, v): return 1
+    def setNumberOfValidItemsForDrop_(self, v): return 1
     def enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_(self, a, b, c, d, e): return 1
     def draggingSession_sourceOperationMaskForDraggingContext_(self, a, b): return 1
     def draggingSession_willBeginAtPoint_(self, a, b): pass
@@ -94,14 +94,14 @@ class TestNSDragging (TestCase):
 
     @min_os_level('10.7')
     def testProtocols10_7(self):
-        self.assertResultHasType(TestNSDraggingHelper.animatesToDestination, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSDraggingHelper.setAnimatesToDestination_, 0, objc._C_NSUInteger)
+        self.assertResultIsBOOL(TestNSDraggingHelper.animatesToDestination)
+        self.assertArgIsBOOL(TestNSDraggingHelper.setAnimatesToDestination_, 0)
 
         self.assertResultIsBOOL(TestNSDraggingHelper.animatesToDestination)
         self.assertArgIsBOOL(TestNSDraggingHelper.setAnimatesToDestination_, 0)
 
-        self.assertResultHasType(TestNSDraggingHelper.numberOfValidItemsForDrop, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSDraggingHelper.setNumberOfValidItemsForDrop_, 0, objc._C_NSUInteger)
+        self.assertResultHasType(TestNSDraggingHelper.numberOfValidItemsForDrop, objc._C_NSInteger)
+        self.assertArgHasType(TestNSDraggingHelper.setNumberOfValidItemsForDrop_, 0, objc._C_NSInteger)
 
 
         self.assertArgHasType(TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_, 0, objc._C_NSUInteger)
@@ -112,7 +112,7 @@ class TestNSDragging (TestCase):
         self.assertArgHasType(TestNSDraggingHelper.draggingSession_endedAtPoint_operation_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestNSDraggingHelper.draggingSession_endedAtPoint_operation_, 2, objc._C_NSUInteger)
 
-        self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysForDraggingSession)
+        self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysForDraggingSession_)
 
 if __name__ == "__main__":
     main()

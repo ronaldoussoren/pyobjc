@@ -2,12 +2,18 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class RestorationHelper (AppKit.NSObject):
     def restoreWindowWithIdentifier_state_completionHandler_(self, a, b, c): pass
 
 
 class TestNSWindowRestoration (TestCase):
     @min_os_level('10.7')
+    @expectedFailure
     def testProtocol10_7(self):
         self.assertArgIsBlock(RestorationHelper.restoreWindowWithIdentifier_state_completionHandler_, 2, b'v@@')
 

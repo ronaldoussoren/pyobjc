@@ -14,7 +14,7 @@ class TestNSCustomImageRep (TestCase):
                 NSCustomImageRep.initWithSize_flipped_drawingHandler_, 2,
                 objc._C_NSBOOL + NSRect.__typestr__)
         self.assertResultIsBlock(
-                NSCustomImageRep.flipped_drawingHandler,
+                NSCustomImageRep.drawingHandler,
                 objc._C_NSBOOL + NSRect.__typestr__)
 
 

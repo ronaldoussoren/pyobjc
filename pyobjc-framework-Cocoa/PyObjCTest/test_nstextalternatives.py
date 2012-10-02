@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 class TestNSTextAlternatives (TestCase):
     @min_os_level('10.8')

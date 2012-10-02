@@ -22,10 +22,11 @@ class TestNSUserNotification (TestCase):
 
     @min_os_level('10.8')
     def testMethods10_8(self):
-        self.assertResultIsBOOL(Foundation.NSUserNotification.isPresented)
-        self.assertResultIsBOOL(Foundation.NSUserNotification.isRemote)
-        self.assertResultIsBOOL(Foundation.NSUserNotification.hasActionButton)
-        self.assertArgIsBOOL(Foundation.NSUserNotification.setHasActionButton_, 0)
+        obj = Foundation.NSUserNotification.alloc().init()
+        self.assertResultIsBOOL(obj.isPresented)
+        self.assertResultIsBOOL(obj.isRemote)
+        self.assertResultIsBOOL(obj.hasActionButton)
+        self.assertArgIsBOOL(obj.setHasActionButton_, 0)
 
     @min_os_level('10.8')
     def testProtocol10_8(self):

@@ -2,6 +2,11 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class TestNSScroller (TestCase):
     def testConstants(self):
         self.assertEqual(NSScrollerArrowsMaxEnd, 0)

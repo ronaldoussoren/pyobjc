@@ -122,6 +122,58 @@
     }
   },
   "classes": {
+   "NSXPCConnection": {
+    "methods": [
+     {
+       "retval": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "class_method": false,
+       "selector": "invalidationHandler"
+     },
+     {
+       "args": { "0": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }},
+       "class_method": false,
+       "selector": "setInvalidationHandler:"
+     },
+     {
+       "retval": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "class_method": false,
+       "selector": "interruptionHandler"
+     },
+     {
+       "args": { "0": {
+        "callable": {
+	 "arguments": {
+	   "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }},
+       "class_method": false,
+       "selector": "setInterruptionHandler:"
+     }
+    ]
+   },
    "NSUUID": {
     "methods": [
       {
@@ -3117,6 +3169,18 @@
     "methods": [
      {
       "args": {
+       "1": {
+        "type_modifier": "o"
+       },
+       "2": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "trashItemAtURL:resultingItemURL:error:"
+     }, 
+     {
+      "args": {
        "3": {
         "type_modifier": "o"
        }
@@ -5845,6 +5909,28 @@
    }, 
    "NSObject": {
     "methods": [
+     {
+      "args": {
+       "0": { "type_override": "o" }
+      },
+      "class_method": false,
+      "selector": "commitEditingAndReturnError:"
+     },
+     {
+       "args": {
+         "0": { 
+	  "callable": {
+	    "arguments": {
+	     "0": { "typestr": "^v" },
+	     "1": { "typestr": "@" }
+	    },
+	    "retval": { "typestr": "v" }
+	  }
+	 }
+       },
+       "class_method": false,
+       "selector": "remoteObjectProxyWithErrorHandler:"
+     },
      {
       "args": {
        "0": {}
@@ -12197,6 +12283,90 @@
      }
     ]
    }, 
+   "NSUserUnixTask": {
+    "methods": [
+     {
+      "args": {
+       "1": { 
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "executeWithArguments:completionHandler:"
+     }
+    ]
+   },
+   "NSUserAppleScriptTask": {
+    "methods": [
+     {
+      "args": {
+       "1": { 
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "executeWithAppleEvent:completionHandler:"
+     }
+    ]
+   },
+   "NSUserAutomatorTask": {
+    "methods": [
+     {
+      "args": {
+       "1": { 
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "executeWithInput:completionHandler:"
+     }
+    ]
+   },
+   "NSUserScriptTask": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithURL:error:"
+     },
+     {
+      "args": {
+       "0": { 
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "executeWithCompletionHandler:"
+     }
+    ]
+   },
    "NSUserDefaults": {
     "methods": [
      {

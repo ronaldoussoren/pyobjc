@@ -21,8 +21,8 @@ class TestCFFileSecurity (TestCase):
     def testConstants(self):
         self.fail("kCFFileSecurityRemoveACL")
 
-    @expectedFailure
     @min_os_level('10.8')
+    @expectedFailure
     def testConstants10_8(self):
         self.assertEqual(kCFFileSecurityClearOwner, 1<<0)
         self.assertEqual(kCFFileSecurityClearGroup, 1<<1)
@@ -83,13 +83,12 @@ class TestCFFileSecurity (TestCase):
         self.assertTrue(ok)
         self.assertEqual(v, 0o444)
 
-    @expectedFailure
     @min_os_level('10.7') 
+    @expectedFailure
     def testFunctionsUnwrapped(self):
         # There are no usable wrappers for sys/acl.h at this time
         self.fail("ACL Handling")
 
-    @expectedFailure
     @min_os_level('10.8')
     def testFunctions10_8(self):
         security = CoreFoundation.CFFileSecurityCreate(None)

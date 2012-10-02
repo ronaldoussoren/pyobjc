@@ -229,7 +229,7 @@ class TestNSEvent (TestCase):
         self.assertResultIsBOOL(NSEvent.isDirectionInvertedFromDevice)
         self.assertResultIsBOOL(NSEvent.isSwipeTrackingFromScrollEventsEnabled)
 
-        self.assertResultIsBlock(NSEvent.trackSwipeEventWithOptions_dampenAmountThresholdMin_max_usingHandler_, 3, b'v' + objc._C_CGFloat + objc._C_NSUInteger + objc._C_NSBOOL + b'o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(NSEvent.trackSwipeEventWithOptions_dampenAmountThresholdMin_max_usingHandler_, 3, b'v' + objc._C_CGFloat + objc._C_NSUInteger + objc._C_NSBOOL + b'o^' + objc._C_NSBOOL)
 
 if __name__ == "__main__":
     main()

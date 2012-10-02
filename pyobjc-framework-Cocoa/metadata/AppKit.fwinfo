@@ -755,6 +755,22 @@
    "NSApplication": {
     "methods": [
      {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "restoreWindowWithIdentifier:state:completionHandler:"
+     },
+     {
       "class_method": false, 
       "retval": {}, 
       "selector": "beginModalSessionForWindow:"
@@ -4549,6 +4565,40 @@
    "NSCustomImageRep": {
     "methods": [
      {
+      "retval": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [
+		"{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+		"{CGRect={CGPoint=dd}{CGSize=dd}}"
+	  ] }
+	 },
+	 "retval": {"typestr": "Z" }
+	}
+      },
+      "class_method": false,
+      "selector": "drawingHandler"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [
+		"{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+		"{CGRect={CGPoint=dd}{CGSize=dd}}"
+	  ] }
+	 },
+	 "retval": {"typestr": "Z" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "initWithSize:flipped:drawingHandler:"
+     },
+     {
       "args": {
        "0": {
         "sel_of_type": "v@:@"
@@ -4635,6 +4685,20 @@
     "methods": [
      {
       "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "performActivityWithSynchronousWaiting:usingBlock:"
+     }, 
+     {
+      "args": {
        "0": {
         "type_override": "Z"
        }
@@ -4663,6 +4727,239 @@
    }, 
    "NSDocument": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "performSynchronousFileAccessUsingBlock:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "autosaveWithImplicitCancellability:completionHandler:"
+     }, 
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "saveToURL:ofType:forSaveOperation:completionHandler:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { 
+	   "typestr": "@?",
+	   "callable": {
+	    "arguments": {
+	     "0": { "typestr": "^v" }
+	    },
+	    "retval": { "typestr": "v" }
+	   }
+	  }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "performAsynchronousFileAccessUsingBlock:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "unlockWithCompletionHandler:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "lockWithCompletionHandler:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "unlockDocumentWithCompletionHandler:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "continueAsynchronousWorkOnMainThreadUsingBlock:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "continueActivityUsingBlock:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "performActivityWithSynchronousWaiting:usingBlock:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "moveDocumentWithCompletionHandler:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "lockDocumentWithCompletionHandler:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }, 
+      "class_method": false, 
+      "selector": "moveToURL:completionHandler:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "restoreDocumentWindowWithIdentifier:state:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "checkAutosavingSafetyAndReturnError:"
+     }, 
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "duplicateAndReturnError:"
+     }, 
      {
       "args": {
        "1": {
@@ -4812,6 +5109,18 @@
       }, 
       "class_method": false, 
       "selector": "saveDocumentWithDelegate:didSaveSelector:contextInfo:"
+     }, 
+     {
+      "args": {
+       "1": {
+        "sel_of_type": "v@Z^v"
+       }, 
+       "2": {
+        "type_override": "^v"
+       }
+      }, 
+      "class_method": false, 
+      "selector": "duplicateDocumentWithDelegate:didDuplicateSelector:contextInfo:"
      }, 
      {
       "args": {
@@ -5163,6 +5472,68 @@
     "methods": [
      {
       "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": ["i", "q"] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "beginOpenPanel:forTypes:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "beginOpenPanelWithCompletionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "openDocumentWithContentsOfURL:display:completionHandler:"
+     },
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "Z" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "reopenDocumentForURL:withContentsOfURL:display:completionHandler:"
+     },
+     {
+      "args": {
        "0": {
         "type_override": "Z"
        }, 
@@ -5279,7 +5650,7 @@
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o"}
       }, 
       "class_method": false, 
       "selector": "duplicateDocumentWithContentsOfURL:copying:displayName:error:"
@@ -5499,6 +5870,24 @@
    }, 
    "NSEvent": {
     "methods": [
+     {
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": ["f", "d"] },
+	  "2": { "typestr": ["I", "Q"] },
+	  "3": { "typestr": "Z" },
+	  "4": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "trackSwipeEventWithOptions:dampenAmountThresholdMin:max:usingHandler:"
+     },
      {
       "class_method": false, 
       "retval": {
@@ -6028,21 +6417,21 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "showFontCollection:withName:visibility:error:"
      }, 
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "hideFontCollectionWithName:visibility:error:"
      }, 
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "o" }
       }, 
       "class_method": true, 
       "selector": "renameFontCollectionWithName:visibility:toName:error:"
@@ -6539,6 +6928,24 @@
    }, 
    "NSImage": {
     "methods": [
+     {
+      "args": {
+       "2": { 
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": [
+		 "{_NSRect={_NSPoint=ff}{_NSSize=ff}}", 
+		 "{CGRect={CGPoint=dd}{CGSize=dd}}"
+	  ]}
+	 },
+	 "retval": { "typestr": "Z" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "imageWithSize:flipped:drawingHandler:"
+     },
      {
       "args": {
        "0": {
@@ -7327,6 +7734,14 @@
       "class_method": false, 
       "selector": "invalidateGlyphsForCharacterRange:changeInLength:actualCharacterRange:"
      }, 
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": true,
+      "selector": "showCGGlyphs:positions:count:font:matrix:attributes:inContext:"
+     },
      {
       "args": {
        "0": {
@@ -10099,6 +10514,84 @@
    }, 
    "NSObject": {
     "methods": [
+       {
+         "args": {
+	    "4": {
+	      "callable": {
+	        "arguments": {
+		   "0": { "typestr": "^v" },
+		   "1": { "typestr": "@" },
+		   "2": { "typestr": ["i", "q"] },
+		   "3": { "typestr": "o^Z" }
+		},
+		"retval": { "typestr": "v" }
+              }		
+	    }
+	 },
+         "class_method": false,
+	 "selector": "enumerateDraggingItemsWithOptions:forView:classes:searchOptions:usingBlock:"
+       },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isEditable"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "isSelectable"
+     },
+     {
+      "class_method": false,
+      "args": { 
+       "0": { "type_override": ["I", "Q"] },
+       "1": { "type_override": [
+         "o^{_NSRange=II}", 
+         "o^{_NSRange=QQ}"
+        ]
+	},
+	"2": { "type_override": "o^Z" }
+      },
+      "selector": "stringAtIndex:effectiveRange:endswithSearchBoundary:"
+     },
+     {
+      "args": {
+       "1": { "type_override": [
+         "o^{_NSRange=II}", 
+         "o^{_NSRange=QQ}"
+        ]
+	}
+      },
+      "class_method": false,
+      "selector": "contentViewAtIndex:effectiveCharacterRange:"
+     },
+     {
+      "retval": { "type_override": "Z" },
+      "class_method": false,
+      "selector": "isFindBarVisible"
+     },
+     {
+      "args": {"0": { "type_override": "Z" } },
+      "class_method": false,
+      "selector": "setFindBarVisible:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "restoreWindowWithIdentifier:state:completionHandler:"
+     },
      {
       "args": {
        "1": {
@@ -12028,6 +12521,30 @@
      }, 
      {
       "args": {
+       "2": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }
+      }, 
+      "class_method": false, 
+      "selector": "outlineView:draggingSession:willBeginAtPoint:"
+     }, 
+     {
+      "args": {
+       "2": {
+        "type_override": [
+         "{_NSPoint=ff}", 
+         "{CGPoint=dd}"
+        ]
+       }
+      }, 
+      "class_method": false, 
+      "selector": "outlineView:draggingSession:endedAtPoint:"
+     }, 
+     {
+      "args": {
        "1": {
         "type_override": [
          "i", 
@@ -12769,6 +13286,11 @@
       }, 
       "selector": "tabView:shouldSelectTabViewItem:"
      }, 
+     {
+      "class_method": false,
+      "args": { "1": { "type_override": ["i", "q"]} },
+      "selector": "tableView:pastboardWriterForRow:"
+     },
      {
       "args": {
        "1": {
@@ -15297,6 +15819,13 @@
     "methods": [
      {
       "args": {
+       "0": { "sel_of_type": "v@:@" }
+      },
+      "class_method": false,
+      "selector": "supplementalTargetForAction:sender:"
+     },
+     {
+      "args": {
        "3": {
         "sel_of_type": "v@:Z^v"
        }, 
@@ -16917,6 +17446,21 @@
     "methods": [
      {
       "args": {
+       "5": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "showCorrectionIndicatorOfType:primaryString:alternativeStrings:forStringInRect:view:completionHandler:"
+     },
+     {
+      "args": {
        "3": {
         "type_override": "Z"
        }, 
@@ -17575,6 +18119,22 @@
    }, 
    "NSTableView": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": ["i", "q"] }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateAvailableRowViewsUsingBlock:"
+     },
      {
       "args": {
        "3": {
