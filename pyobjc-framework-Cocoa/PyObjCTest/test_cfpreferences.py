@@ -86,7 +86,7 @@ class TestPreferences (TestCase):
         self.assertResultIsCFRetained(CFPreferencesCopyKeyList)
         keys = CFPreferencesCopyKeyList(b"com.apple.AddressBook".decode('ascii'), kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(keys, CFArrayRef)
-        self.assertIsIn(b"ABVersion".decode('ascii'), keys)
+        self.assertTrue(b"ABVersion".decode('ascii') in keys or b"ABNameDisplay".decode('ascii') in keys)
 
     def testConstants(self):
         self.assertIsInstance(kCFPreferencesAnyApplication, unicode)

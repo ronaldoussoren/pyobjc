@@ -126,6 +126,7 @@ class TestNSFileManager (TestCase):
         self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 1)
         self.assertArgIsOut(NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 2)
 
+    @min_os_level('10.8')
     def testMethods10_8(self):
         self.assertResultIsBOOL(NSFileManager.trashItemAtURL_resultingItemURL_error_)
         self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 1)
