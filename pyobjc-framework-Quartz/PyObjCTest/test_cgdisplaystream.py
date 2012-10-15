@@ -1,4 +1,4 @@
-from PyObjCTest.TestSupport import *
+from PyObjCTools.TestSupport import *
 
 import Quartz
 
@@ -69,12 +69,5 @@ class TestCGDisplayStream (TestCase):
 
         Quartz.CGDisplayStreamGetRunLoopSource # XXX
 
-
-
-
-
-
-
-
 if __name__ == "__main__":
-    unittest.main()
+    main()
