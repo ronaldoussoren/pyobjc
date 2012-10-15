@@ -322,7 +322,7 @@ CFLAGS=[ ]
 # Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
 # assertions. 
 CFLAGS.extend([
-    "-fdiagnostics-show-option",
+    #"-fdiagnostics-show-option",
     
     # Use this to analyze with clang
     #"--analyze",

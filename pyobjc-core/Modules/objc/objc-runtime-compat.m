@@ -1039,6 +1039,7 @@ static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
 #endif
 #endif
 
+#if !((MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5) &&!defined(__OBJC2__))
 #undef protocol_getMethodDescription
 struct objc_method_description 
 PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMethod, BOOL isInstanceMethod)
@@ -1074,6 +1075,7 @@ PyObjC_protocol_getMethodDescription(Protocol *p, SEL aSel, BOOL isRequiredMetho
 
 	}
 }
+#endif
 
 
 
