@@ -10,6 +10,17 @@ except NameError:
     unicode = str
 
 class TestCGPDFContext (TestCase):
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        consumer = CGDataConsumerCreateWithCFData(data)
+        context = CGPDFContextCreate(consumer, None, None)
+
+        metadata = b'''<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><?xpacket end='w'?>'''
+        CGPDFContextAddDocumentMetadata(context,
+                NSMutableData.dataWithBytes_length_(metadata, len(metadata)))
+
+
     @min_os_level('10.5')
     def testFunctions10_5(self):
         # Note actual test is in the function below this one.

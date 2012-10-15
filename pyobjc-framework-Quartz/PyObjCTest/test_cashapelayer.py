@@ -14,7 +14,7 @@ class TestCAShapeLayer (TestCase):
         self.assertIsInstance(kCAFillRuleEvenOdd, unicode)
         self.assertIsInstance(kCALineJoinMiter, unicode)
         self.assertIsInstance(kCALineJoinRound, unicode)
-        self.assertIsInstance(kCALineJoinRound, unicode)
+        self.assertIsInstance(kCALineJoinBevel, unicode)
         self.assertIsInstance(kCALineCapButt, unicode)
         self.assertIsInstance(kCALineCapRound, unicode)
         self.assertIsInstance(kCALineCapSquare, unicode)

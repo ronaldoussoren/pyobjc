@@ -125,8 +125,54 @@ class TestCGPath (TestCase):
         CGPathApply(path, info, applier)
         self.failIfEqual(l[0], 0)
 
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
+        path = CGPathCreateMutable()
+        self.assertIsInstance(path, CGPathRef)
 
+        transform = CGAffineTransformIdentity
+        CGPathMoveToPoint(path, transform, 10, 30)
+        CGPathAddLineToPoint(path, transform, 10, 30)
 
+        r = CGPathGetPathBoundingBox(path)
+        self.assertIsInstance(r, CGRect)
+
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        path = CGPathCreateMutable()
+        self.assertIsInstance(path, CGPathRef)
+
+        transform = CGAffineTransformIdentity
+        CGPathMoveToPoint(path, transform, 10, 30)
+        CGPathAddLineToPoint(path, transform, 10, 30)
+
+        self.assertResultIsCFRetained(CGPathCreateCopyByTransformingPath)
+        path2 = CGPathCreateCopyByTransformingPath(path, transform)
+        self.assertIsInstance(path2, CGPathRef)
+
+        self.assertResultIsCFRetained(CGPathCreateMutableCopyByTransformingPath)
+        path3 = CGPathCreateCopyByTransformingPath(path, transform)
+        self.assertIsInstance(path3, CGPathRef)
+
+        self.assertResultIsCFRetained(CGPathCreateWithEllipseInRect)
+        path = CGPathCreateWithEllipseInRect(CGRect(CGPoint(0, 0), CGSize(10, 20)), transform)
+        self.assertIsInstance(path, CGPathRef)
+
+        self.assertResultIsCFRetained(CGPathCreateCopyByDashingPath)
+        self.assertArgSizeInArg(CGPathCreateCopyByDashingPath, 3, 4)
+        path2 = CGPathCreateCopyByDashingPath(path, transform, 2.5, [2.0, 3.0, 4.0], 3)
+        self.assertIsInstance(path2, CGPathRef)
+
+        self.assertResultIsCFRetained(CGPathCreateCopyByStrokingPath)
+        path2 = CGPathCreateCopyByStrokingPath(path, transform, 4, kCGLineCapButt, kCGLineJoinRound, 1.0)
+        self.assertIsInstance(path2, CGPathRef)
+
+        path = CGPathCreateMutable()
+        self.assertIsInstance(path, CGPathRef)
+
+        transform = CGAffineTransformIdentity
+        CGPathMoveToPoint(path, transform, 10, 30)
+        CGPathAddRelativeArc(path, transform, 80, 90, 22.5, 33.0, 5.0)
 
     def testConstants(self):
         self.assertEqual(kCGPathElementMoveToPoint, 0)

@@ -48,6 +48,12 @@ class TestPDFView (TestCase):
         self.assertIsInstance(PDFViewDisplayModeChangedNotification, unicode)
         self.assertIsInstance(PDFViewDisplayBoxChangedNotification, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertEqual(kPDFInterpolationQualityNone, 0)
+        self.assertEqual(kPDFInterpolationQualityLow, 1)
+        self.assertEqual(kPDFInterpolationQualityHigh, 2)
+
     def testMethods(self):
         self.assertResultIsBOOL(PDFView.canGoToFirstPage)
         self.assertResultIsBOOL(PDFView.canGoToLastPage)

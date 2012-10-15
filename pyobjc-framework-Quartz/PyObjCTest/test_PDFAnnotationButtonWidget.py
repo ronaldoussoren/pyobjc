@@ -14,5 +14,9 @@ class TestPDFAnnotationButtonWidget (TestCase):
         self.assertResultIsBOOL(PDFAnnotationButtonWidget.isHighlighted)
         self.assertResultIsBOOL(PDFAnnotationButtonWidget.allowsToggleToOff)
 
+    @min_os_level('10.6')
+    def testMethods10_6(self):
+        self.assertArgIsBOOL(PDFAnnotationButtonWidget.setAllowsToggleToOff_, 0)
+
 if __name__ == "__main__":
     main()

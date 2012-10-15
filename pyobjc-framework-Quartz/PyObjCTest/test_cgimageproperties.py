@@ -299,6 +299,22 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCContactInfoPhones, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCContactInfoWebURLs, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(kCGImagePropertyExifCameraOwnerName, unicode)
+        self.assertIsInstance(kCGImagePropertyExifBodySerialNumber, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensSpecification, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensMake, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
+        self.assertIsInstance(kCGImagePropertyGIFUnclampedDelayTime, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGAuthor, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGCopyright, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGCreationTime, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGDescription, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGModificationTime, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGSoftware, unicode)
+        self.assertIsInstance(kCGImagePropertyPNGTitle, unicode)
 
 if __name__ == "__main__":
     main()

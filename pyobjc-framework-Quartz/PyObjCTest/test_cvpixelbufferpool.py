@@ -21,6 +21,11 @@ class TestCVPixelBufferPool (TestCase):
         self.assertIsInstance(kCVPixelBufferPoolMinimumBufferCountKey, unicode)
         self.assertIsInstance(kCVPixelBufferPoolMaximumBufferAgeKey, unicode)
 
+    @min_os_level('10.7')
+    def testContants10_7(self):
+        self.assertIsInstance(kCVPixelBufferPoolAllocationThresholdKey, unicode)
+        self.assertIsInstance(kCVPixelBufferPoolFreeBufferNotification, unicode)
+
     def testFunctions(self):
         self.assertIsInstance(CVPixelBufferPoolGetTypeID(), (int, long))
 
@@ -53,6 +58,10 @@ class TestCVPixelBufferPool (TestCase):
         self.assertEqual(rv, 0)
         self.assertIsInstance(image, CVPixelBufferRef)
 
+    @min_os_level('10.7')
+    def testFunctions10_7(self):
+        self.assertArgIsOut(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
+        self.assertArgIsCFRetained(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
 
 
 if __name__ == "__main__":

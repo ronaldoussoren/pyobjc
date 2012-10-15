@@ -15,6 +15,22 @@ except NameError:
 
 class TestCGDirectDisplay (TestCase):
 
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCGDisplayShowDuplicateLowResolutionModes, unicode)
+
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        mainID = CGMainDisplayID()
+        mode = CGDisplayCopyDisplayMode(mainID)
+        self.assertIsInstance(mode, CGDisplayModeRef)
+
+        w = CGDisplayModeGetPixelWidth(mode)
+        self.assertIsInstance(w, (int, long))
+
+        h = CGDisplayModeGetPixelHeight(mode)
+        self.assertIsInstance(h, (int, long))
+
     def testConstants(self):
         self.assertEqual(kCGNullDirectDisplay, 0)
 

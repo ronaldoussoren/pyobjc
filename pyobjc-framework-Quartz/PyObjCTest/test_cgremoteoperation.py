@@ -107,6 +107,9 @@ class TestCGRemoteOperation (TestCase):
 
         self.assertTrue(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
 
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        self.assertResultIsCFRetained(CGWindowServerCreateServerPort)
 
     @expectedFailure
     def testMissing(self):

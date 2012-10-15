@@ -44,6 +44,10 @@ class TestPDFDocument (TestCase):
         self.assertResultIsBOOL(PDFDocument.writeToURL_withOptions_)
         self.assertResultIsBOOL(PDFDocument.isFinding)
 
+    @min_os_level('10.7')
+    def testMethods(self):
+        self.assertArgIsBOOL(PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2)
+
     def testProtocols(self):
         self.assertIsInstance(protocols.PDFDocumentNotifications, objc.informal_protocol)
         self.assertIsInstance(protocols.PDFDocumentDelegate, objc.informal_protocol)

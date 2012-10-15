@@ -70,5 +70,21 @@ class TestCVImageBuffer (TestCase):
         self.assertIsInstance(kCVImageBufferChromaSubsampling_411, unicode)
         self.assertIsInstance(kCVImageBufferColorPrimariesKey, unicode)
 
+    @min_os_level('10.6')
+    def testConstants10_6(self):
+        self.assertIsInstance(kCVImageBufferICCProfileKey, unicode)
+        self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_240M_1995, unicode)
+        self.assertIsInstance(kCVImageBufferTransferFunction_UseGamma, unicode)
+        self.assertIsInstance(kCVImageBufferTransferFunction_EBU_3213, unicode)
+        self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_C, unicode)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCVImageBufferColorPrimaries_P22, unicode)
+
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        self.assertResultIsCFRetained(CVImageBufferCreateColorSpaceFromAttachments)
+
 if __name__ == "__main__":
     main()

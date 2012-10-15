@@ -43,6 +43,10 @@ class TestCAAnimation (TestCase):
         self.assertIsInstance(kCAAnimationRotateAuto, unicode)
         self.assertIsInstance(kCAAnimationRotateAutoReverse, unicode)
 
+    @min_os_level('10.7')
+    def testConstants10_5(self):
+        self.assertIsInstance(kCAAnimationCubic, unicode)
+        self.assertIsInstance(kCAAnimationCubicPaced, unicode)
 
 
 if __name__ == "__main__":

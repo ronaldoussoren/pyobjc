@@ -39,7 +39,8 @@ class TestCGBitmapContext (TestCase):
         self.assertIsInstance(img, CGImageRef)
 
 
-    def testFunctions106_(self):
+    @min_os_level('10.6')
+    def testFunctions10_6(self):
         bytes_val = array.array('B', (0 for i in range(100*80*4)))
         ctx = CGBitmapContextCreateWithData(bytes_val, 100, 80, 8, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast, None, None)
         self.assertIsInstance(ctx, CGContextRef)

@@ -9,11 +9,11 @@ try:
 except NameError:
     unicode = str
 
-
 try:
     long
 except NameError:
     long = int
+
 import sys, os
 
 if sys.version_info[0] != 2:
@@ -84,6 +84,23 @@ class TestCGImageDestination (TestCase):
         self.assertResultIsCFRetained(CGImageDestinationCreateWithDataConsumer)
         c = CGImageDestinationCreateWithDataConsumer(cons, 'public.tiff', 1, None)
         self.assertIsInstance(c, CGImageDestinationRef)
+
+    @min_os_level('10.8')
+    def testConstants10_8(self):
+        self.assertIsInstance(kCGImageDestinationMetadata, unicode)
+        self.assertIsInstance(kCGImageDestinationMergeMetadata, unicode)
+        self.assertIsInstance(kCGImageMetadataShouldExcludeXMP, unicode)
+        self.assertIsInstance(kCGImageDestinationDateTime, unicode)
+        self.assertIsInstance(kCGImageDestinationOrientation, unicode)
+
+    @min_os_level('10.8')
+    def testFunctions10_8(self):
+        CGImageDestinationAddImageAndMetadata
+        self.assertResultHasType(CGImageDestinationCopyImageSource, objc._C_BOOL)
+        self.assertArgIsOut(CGImageDestinationCopyImageSource, 3)
+
+
+
 
 if __name__ == "__main__":
     main()

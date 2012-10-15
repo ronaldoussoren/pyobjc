@@ -32,6 +32,10 @@ class TestQCPlugIn (TestCase):
         self.assertEqual(kQCPlugInTimeModeIdle, 1)
         self.assertEqual(kQCPlugInTimeModeTimeBase, 2)
 
+    @min_os_level('10.7')
+    def testConstants10_7(self):
+        self.assertIsInstance(QCPlugInAttributeCategoriesKey, unicode)
+        self.assertIsInstance(QCPlugInAttributeExamplesKey, unicode)
 
 
     def testConstants(self):
