@@ -2,6 +2,11 @@ from PyObjCTools.TestSupport import *
 
 import AppKit
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class PopoverHelper (AppKit.NSObject):
     def popoverShouldClose_(self, a): return 1
 
