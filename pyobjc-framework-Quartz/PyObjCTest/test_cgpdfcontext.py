@@ -13,6 +13,7 @@ class TestCGPDFContext (TestCase):
 
     @min_os_level('10.7')
     def testFunctions10_7(self):
+        data = NSMutableData.data()
         consumer = CGDataConsumerCreateWithCFData(data)
         context = CGPDFContextCreate(consumer, None, None)
 

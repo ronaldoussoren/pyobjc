@@ -301,12 +301,6 @@ class TestCGImageProperties (TestCase):
 
     @min_os_level('10.7')
     def testConstants10_7(self):
-        self.assertIsInstance(kCGImagePropertyExifCameraOwnerName, unicode)
-        self.assertIsInstance(kCGImagePropertyExifBodySerialNumber, unicode)
-        self.assertIsInstance(kCGImagePropertyExifLensSpecification, unicode)
-        self.assertIsInstance(kCGImagePropertyExifLensMake, unicode)
-        self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
-        self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
         self.assertIsInstance(kCGImagePropertyGIFUnclampedDelayTime, unicode)
         self.assertIsInstance(kCGImagePropertyPNGAuthor, unicode)
         self.assertIsInstance(kCGImagePropertyPNGCopyright, unicode)
@@ -315,6 +309,18 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyPNGModificationTime, unicode)
         self.assertIsInstance(kCGImagePropertyPNGSoftware, unicode)
         self.assertIsInstance(kCGImagePropertyPNGTitle, unicode)
+
+    @min_os_level('10.7')
+    @expectedFailure
+    def testConstants10_7_broken(self):
+        # The constants in this testcase are defined in headers and documentation,
+        # but aren't exported by the framework...
+        self.assertIsInstance(kCGImagePropertyExifCameraOwnerName, unicode)
+        self.assertIsInstance(kCGImagePropertyExifBodySerialNumber, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensSpecification, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensMake, unicode)
+        self.assertIsInstance(kCGImagePropertyExifLensModel, unicode)
+        #self.assertIsInstance(kCGImagePropertyExifLensSerialNumber, unicode)
 
 if __name__ == "__main__":
     main()

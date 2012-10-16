@@ -10,6 +10,14 @@
    "CGImageSourceRef": {
     "gettypeid_func": "CGImageSourceGetTypeID", 
     "typestr": "^{CGImageSource=}"
+   },
+   "CGImageMetadataRef": {
+    "gettypeid_func": "CGImageMetadataGetTypeID", 
+    "typestr": "^{CGImageMetadata=}"
+   },
+   "CGImageMetadataTagRef": {
+    "gettypeid_func": "CGImageMetadataTagGetTypeID", 
+    "typestr": "^{CGImageMetadataTag=}"
    }
   }, 
   "classes": {}, 
@@ -167,7 +175,15 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": {},
+     "3": { "callable": {
+       "arguments": {
+         "0": { "type": "^v"  },
+	 "1": { "type": "@" },
+	 "2": { "type": "@" }
+       },
+       "retval": { "typestr": "B" }
+     }}
     }
    }, 
    "CGImageMetadataRegisterNamespaceForPrefix": {

@@ -624,7 +624,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "l"
+      "typestr": "q"
      }, 
      {
       "name": "displayLinkOut", 
@@ -719,7 +719,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVDisplayLinkIsRunning": {
@@ -995,11 +995,11 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "attributes", 
@@ -1034,7 +1034,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVOpenGLBufferPoolCreate": {
@@ -1111,7 +1111,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVOpenGLBufferPoolRelease": {
@@ -1241,7 +1241,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVOpenGLTextureCacheRelease": {
@@ -1323,7 +1323,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVOpenGLTextureIsFlipped": {
@@ -1367,11 +1367,11 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "pixelFormatType", 
@@ -1419,11 +1419,11 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "pixelFormatType", 
@@ -1435,7 +1435,7 @@
      }, 
      {
       "name": "bytesPerRow", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "function": {
@@ -1513,11 +1513,11 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "pixelFormatType", 
@@ -1529,11 +1529,11 @@
      }, 
      {
       "name": "dataSize", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "numberOfPlanes", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "planeBaseAddress", 
@@ -1541,15 +1541,15 @@
      }, 
      {
       "name": "planeWidth", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "planeHeight", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "planeBytesPerRow", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "function": {
@@ -1568,13 +1568,13 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
@@ -1643,7 +1643,7 @@
      }, 
      {
       "name": "planeIndex", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -1658,7 +1658,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetBytesPerRowOfPlane": {
@@ -1669,11 +1669,11 @@
      }, 
      {
       "name": "planeIndex", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetDataSize": {
@@ -1684,7 +1684,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetExtendedPixels": {
@@ -1695,19 +1695,19 @@
      }, 
      {
       "name": "extraColumnsOnLeft", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "extraColumnsOnRight", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "extraRowsOnTop", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "extraRowsOnBottom", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }
     ], 
     "retval": {
@@ -1722,7 +1722,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetHeightOfPlane": {
@@ -1733,11 +1733,11 @@
      }, 
      {
       "name": "planeIndex", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetIOSurface": {
@@ -1770,7 +1770,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetTypeID": {
@@ -1781,7 +1781,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetWidth": {
@@ -1792,7 +1792,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferGetWidthOfPlane": {
@@ -1803,11 +1803,11 @@
      }, 
      {
       "name": "planeIndex", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferIsPlanar": {
@@ -1934,7 +1934,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CVPixelBufferPoolRelease": {

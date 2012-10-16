@@ -7,6 +7,14 @@
     "gettypeid_func": "CGColorGetTypeID", 
     "typestr": "^{CGColor=}"
    }, 
+   "CGDisplayStreamRef": {
+    "gettypeid_func": "CGDisplayStreamGetTypeID", 
+    "typestr": "^{CGDisplayStream=}"
+   }, 
+   "CGDisplayStreamUpdateRef": {
+    "gettypeid_func": "CGDisplayStreamUpdateGetTypeID", 
+    "typestr": "^{CGDisplayStreamUpdate=}"
+   }, 
    "CGColorSpaceRef": {
     "gettypeid_func": "CGColorSpaceGetTypeID", 
     "typestr": "^{CGColorSpace=}"
@@ -1296,20 +1304,20 @@
    }, 
    "CGDisplayBestModeForParameters": {
     "args": {
-     "4": {}
+     "4": { "type_modifier": "o" }
     }, 
     "retval": {}
    }, 
    "CGDisplayBestModeForParametersAndRefreshRate": {
     "args": {
-     "5": {}
+     "5": { "type_modifier": "o" }
     }, 
     "retval": {}
    }, 
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
     "args": {
      "5": {}, 
-     "6": {}
+     "6": { "type_modifier": "o" }
     }, 
     "retval": {}
    }, 
@@ -1489,7 +1497,16 @@
    }, 
    "CGDisplayStreamCreate": {
     "args": {
-     "4": {}
+     "5": { "callable": {
+       "arguments": {
+         "0": {"type": "^v" },
+         "1": {"type": "I" },
+         "2": {"type": "Q" },
+         "3": {"type": "@" },
+         "4": {"type": "@" }
+       },
+       "retval": { "typestr": "v" }
+     }}
     }, 
     "retval": {
      "already_cfretained": true
@@ -1497,7 +1514,16 @@
    }, 
    "CGDisplayStreamCreateWithDispatchQueue": {
     "args": {
-     "4": {}
+     "6": { "callable": {
+       "arguments": {
+         "0": {"type": "^v" },
+         "1": {"type": "I" },
+         "2": {"type": "Q" },
+         "3": {"type": "@" },
+         "4": {"type": "@" }
+       },
+       "retval": { "typestr": "v" }
+     }}
     }, 
     "retval": {
      "already_cfretained": true
@@ -1536,16 +1562,16 @@
    "CGDisplayStreamUpdateGetMovedRectsDelta": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGDisplayStreamUpdateGetRects": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }, 
-    "retval": {}
+    "retval": { "c_array_length_in_arg": 2 }
    }, 
    "CGDisplaySwitchToMode": {
     "args": {
@@ -2110,47 +2136,47 @@
    }, 
    "CGGetActiveDisplayList": {
     "args": {
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o", "c_array_length_in_arg": [0, 2]}, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGGetDisplayTransferByFormula": {
     "args": {
-     "1": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": {}, 
-     "6": {}, 
-     "7": {}, 
-     "8": {}, 
-     "9": {}
+     "1": { "type_modifier": "o"}, 
+     "2": { "type_modifier": "o"}, 
+     "3": { "type_modifier": "o"}, 
+     "4": { "type_modifier": "o"}, 
+     "5": { "type_modifier": "o"}, 
+     "6": { "type_modifier": "o"}, 
+     "7": { "type_modifier": "o"}, 
+     "8": { "type_modifier": "o"}, 
+     "9": { "type_modifier": "o"}
     }
    }, 
    "CGGetDisplayTransferByTable": {
     "args": {
-     "2": {}, 
-     "3": {}, 
-     "4": {}, 
-     "5": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "3": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "4": { "type_modifier": "o", "c_array_length_in_arg": [1, 5] }, 
+     "5": { "type_modifier": "o" }
     }
    }, 
    "CGGetDisplaysWithOpenGLDisplayMask": {
     "args": {
-     "2": {}, 
-     "3": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 3]}, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CGGetDisplaysWithPoint": {
     "args": {
-     "2": {}, 
-     "3": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 3]}, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CGGetDisplaysWithRect": {
     "args": {
-     "2": {}, 
-     "3": {}
+     "2": { "type_modifier": "o", "c_array_length_in_arg": [1, 3]}, 
+     "3": { "type_modifier": "o" }
     }
    }, 
    "CGGetEventTapList": {
@@ -2161,14 +2187,14 @@
    }, 
    "CGGetLastMouseDelta": {
     "args": {
-     "0": {}, 
-     "1": {}
+     "0": { "type_modifier": "o" }, 
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CGGetOnlineDisplayList": {
     "args": {
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o", "c_array_length_in_arg": [0, 2]}, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGGradientCreateWithColorComponents": {
@@ -2525,7 +2551,7 @@
    "CGPDFContextCreate": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_modifier": "n" }, 
      "2": {}
     }, 
     "retval": {
@@ -2535,7 +2561,7 @@
    "CGPDFContextCreateWithURL": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_modifier": "n" }, 
      "2": {}
     }, 
     "retval": {
@@ -3119,70 +3145,70 @@
    "CGPathAddArc": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathAddArcToPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathAddCurveToPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathAddEllipseInRect": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathAddLineToPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n" }
     }
    }, 
    "CGPathAddLines": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    }, 
    "CGPathAddPath": {
     "args": {
      "0": {}, 
-     "1": {}, 
+     "1": { "type_modifier": "n" }, 
      "2": {}
     }
    }, 
    "CGPathAddQuadCurveToPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathAddRect": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n" }
     }
    }, 
    "CGPathAddRects": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n"},
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    }, 
    "CGPathAddRelativeArc": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathApply": {
@@ -3223,7 +3249,7 @@
    "CGPathContainsPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathCreateCopy": {
@@ -3237,8 +3263,8 @@
    "CGPathCreateCopyByDashingPath": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "3": {}
+     "1": { "type_modifier": "n" }, 
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3247,7 +3273,7 @@
    "CGPathCreateCopyByStrokingPath": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -3256,7 +3282,7 @@
    "CGPathCreateCopyByTransformingPath": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -3278,7 +3304,7 @@
    "CGPathCreateMutableCopyByTransformingPath": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -3286,7 +3312,7 @@
    }, 
    "CGPathCreateWithEllipseInRect": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "n"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -3294,7 +3320,7 @@
    }, 
    "CGPathCreateWithRect": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "n"}
     }, 
     "retval": {
      "already_cfretained": true
@@ -3329,13 +3355,13 @@
    "CGPathIsRect": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CGPathMoveToPoint": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGPathRelease": {
@@ -3381,10 +3407,12 @@
     }
    }, 
    "CGPostMouseEvent": {
-    "variadic": true
+    "variadic": true,
+    "c_array_length_in_arg": 2
    }, 
    "CGPostScrollWheelEvent": {
-    "variadic": true
+    "variadic": true,
+    "c_array_length_in_arg": 0
    }, 
    "CGRectCreateDictionaryRepresentation": {
     "retval": {
@@ -3532,16 +3560,16 @@
    }, 
    "CGSetDisplayTransferByByteTable": {
     "args": {
-     "2": {}, 
-     "3": {}, 
-     "4": {}
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^z" }, 
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^z" }, 
+     "4": { "type_modifier": "n", "c_array_length_in_arg": 1, "type_override": "^z" }
     }
    }, 
    "CGSetDisplayTransferByTable": {
     "args": {
-     "2": {}, 
-     "3": {}, 
-     "4": {}
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "4": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     }
    }, 
    "CGShadingCreateAxial": {

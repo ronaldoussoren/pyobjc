@@ -32,14 +32,14 @@ class TestCGImageMetadata (TestCase):
         self.assertIsInstance(m2, Quartz.CGImageMetadataRef)
 
         self.assertResultIsCFRetained(Quartz.CGImageMetadataTagCreate)
-        self.assertArgHasType(Quartz.CGImageMetadataTagCopyValue, 4, objc._C_ID)
+        self.assertResultHasType(Quartz.CGImageMetadataTagCopyValue, objc._C_ID)
         t = Quartz.CGImageMetadataTagCreate(
                 Quartz.kCGImageMetadataNamespaceExif,
                 Quartz.kCGImageMetadataPrefixExif,
                 "name",
-                kCGImageMetadataTypeString,
+                Quartz.kCGImageMetadataTypeString,
                 "value")
-        self.assertIsInstance(t, CGImageMetadataTagRef)
+        self.assertIsInstance(t, Quartz.CGImageMetadataTagRef)
 
         self.assertResultIsCFRetained(Quartz.CGImageMetadataTagCopyNamespace)
         self.assertResultIsCFRetained(Quartz.CGImageMetadataTagCopyPrefix)
@@ -58,7 +58,7 @@ class TestCGImageMetadata (TestCase):
         self.assertResultHasType(Quartz.CGImageMetadataRemoveTagWithPath, objc._C_BOOL)
 
         CGImageMetadataTagBlock = objc._C_BOOL + b'@@'
-        self.assertArgIsBlock(CGImageMetadataEnumerateTagsUsingBlock, 3, CGImageMetadataTagBlock)
+        self.assertArgIsBlock(Quartz.CGImageMetadataEnumerateTagsUsingBlock, 3, CGImageMetadataTagBlock)
 
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyTagMatchingImageProperty)
         self.assertResultHasType(Quartz.CGImageMetadataSetValueMatchingImageProperty, objc._C_BOOL)

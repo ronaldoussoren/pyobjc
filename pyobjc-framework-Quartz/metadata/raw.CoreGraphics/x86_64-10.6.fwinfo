@@ -757,7 +757,7 @@
     "args": [
      {
       "name": "connected", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -783,19 +783,19 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerComponent", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bytesPerRow", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "space", 
@@ -831,19 +831,19 @@
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerComponent", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bytesPerRow", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "space", 
@@ -919,7 +919,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGBitmapContextGetBitsPerPixel": {
@@ -930,7 +930,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGBitmapContextGetBytesPerRow": {
@@ -941,7 +941,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGBitmapContextGetColorSpace": {
@@ -974,7 +974,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGBitmapContextGetWidth": {
@@ -985,7 +985,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGCancelDisplayConfiguration": {
@@ -1220,7 +1220,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGColorGetPattern": {
@@ -1242,7 +1242,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGColorRelease": {
@@ -1375,7 +1375,7 @@
     "args": [
      {
       "name": "nComponents", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "range", 
@@ -1403,7 +1403,7 @@
      }, 
      {
       "name": "lastIndex", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "colorTable", 
@@ -1517,7 +1517,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGColorSpaceGetModel": {
@@ -1539,7 +1539,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGColorSpaceGetTypeID": {
@@ -1550,7 +1550,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGColorSpaceRelease": {
@@ -1694,11 +1694,11 @@
      }, 
      {
       "name": "stereo", 
-      "typestr": "i"
+      "typestr": "I"
      }, 
      {
       "name": "forceBlueLine", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -1875,7 +1875,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -1951,7 +1951,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -2090,7 +2090,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -2528,7 +2528,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -2631,7 +2631,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGContextGetUserSpaceToDeviceSpaceTransform": {
@@ -3166,7 +3166,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3529,7 +3529,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3556,7 +3556,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3579,7 +3579,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3602,7 +3602,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3621,7 +3621,7 @@
      }, 
      {
       "name": "length", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3648,7 +3648,7 @@
      }, 
      {
       "name": "length", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3682,7 +3682,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -3772,7 +3772,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGCursorIsVisible": {
@@ -3783,7 +3783,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDataConsumerCreate": {
@@ -3834,7 +3834,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDataConsumerRelease": {
@@ -3915,7 +3915,7 @@
      }, 
      {
       "name": "size", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "callbacks", 
@@ -3967,7 +3967,7 @@
      }, 
      {
       "name": "size", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "function": {
@@ -3986,7 +3986,7 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }
@@ -4039,7 +4039,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDataProviderRelease": {
@@ -4124,19 +4124,19 @@
      }, 
      {
       "name": "bitsPerPixel", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^i"
+      "typestr": "^I"
      }
     ], 
     "retval": {
@@ -4151,15 +4151,15 @@
      }, 
      {
       "name": "bitsPerPixel", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "refreshRate", 
@@ -4167,7 +4167,7 @@
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^i"
+      "typestr": "^I"
      }
     ], 
     "retval": {
@@ -4182,15 +4182,15 @@
      }, 
      {
       "name": "bitsPerPixel", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "refreshRate", 
@@ -4202,7 +4202,7 @@
      }, 
      {
       "name": "exactMatch", 
-      "typestr": "^i"
+      "typestr": "^I"
      }
     ], 
     "retval": {
@@ -4217,7 +4217,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayBitsPerSample": {
@@ -4228,7 +4228,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayBounds": {
@@ -4250,7 +4250,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayCanSetPalette": {
@@ -4261,7 +4261,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayCapture": {
@@ -4401,7 +4401,7 @@
      }, 
      {
       "name": "synchronous", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -4416,7 +4416,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayGammaTableCapacity": {
@@ -4482,7 +4482,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsAlwaysInMirrorSet": {
@@ -4493,7 +4493,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsAsleep": {
@@ -4504,7 +4504,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsBuiltin": {
@@ -4515,7 +4515,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsCaptured": {
@@ -4526,7 +4526,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsInHWMirrorSet": {
@@ -4537,7 +4537,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsInMirrorSet": {
@@ -4548,7 +4548,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsMain": {
@@ -4559,7 +4559,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsOnline": {
@@ -4570,7 +4570,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayIsStereo": {
@@ -4581,7 +4581,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayMirrorsDisplay": {
@@ -4615,7 +4615,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayModeGetIODisplayModeID": {
@@ -4659,7 +4659,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayModeGetWidth": {
@@ -4670,7 +4670,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayModeIsUsableForDesktopGUI": {
@@ -4740,7 +4740,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayPixelsWide": {
@@ -4751,7 +4751,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayPrimaryDisplay": {
@@ -4892,7 +4892,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGDisplayScreenSize": {
@@ -4959,11 +4959,11 @@
      }, 
      {
       "name": "stereo", 
-      "typestr": "i"
+      "typestr": "I"
      }, 
      {
       "name": "forceBlueLine", 
-      "typestr": "i"
+      "typestr": "I"
      }, 
      {
       "name": "option", 
@@ -5019,7 +5019,7 @@
      }
     ], 
     "retval": {
-     "typestr": "i"
+     "typestr": "I"
     }
    }, 
    "CGDisplayVendorNumber": {
@@ -5056,7 +5056,7 @@
     "args": [
      {
       "name": "combineState", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -5282,7 +5282,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGEventGetUnflippedLocation": {
@@ -5304,11 +5304,11 @@
      }, 
      {
       "name": "maxStringLength", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "actualStringLength", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "unicodeString", 
@@ -5327,7 +5327,7 @@
      }, 
      {
       "name": "stringLength", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "unicodeString", 
@@ -5601,7 +5601,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGEventSourceGetUserData": {
@@ -6057,7 +6057,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "encoding", 
@@ -6161,7 +6161,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "advances", 
@@ -6184,7 +6184,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bboxes", 
@@ -6240,7 +6240,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGFontGetStemV": {
@@ -6262,7 +6262,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGFontGetUnitsPerEm": {
@@ -6317,7 +6317,7 @@
      }, 
      {
       "name": "domainDimension", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "domain", 
@@ -6325,7 +6325,7 @@
      }, 
      {
       "name": "rangeDimension", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "range", 
@@ -6349,7 +6349,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGFunctionRelease": {
@@ -6644,7 +6644,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -6680,7 +6680,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGGradientRelease": {
@@ -6709,23 +6709,23 @@
     "args": [
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerComponent", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerPixel", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bytesPerRow", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "space", 
@@ -6911,7 +6911,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageGetBitsPerPixel": {
@@ -6922,7 +6922,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageGetBytesPerRow": {
@@ -6933,7 +6933,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageGetColorSpace": {
@@ -6977,7 +6977,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageGetRenderingIntent": {
@@ -7010,7 +7010,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageGetWidth": {
@@ -7021,7 +7021,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageIsMask": {
@@ -7039,23 +7039,23 @@
     "args": [
      {
       "name": "width", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "height", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerComponent", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bitsPerPixel", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "bytesPerRow", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "provider", 
@@ -7101,7 +7101,7 @@
     "args": [
      {
       "name": "inhibit", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -7158,7 +7158,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGLayerRelease": {
@@ -7213,7 +7213,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7232,7 +7232,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7251,7 +7251,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFArrayGetDictionary": {
@@ -7262,7 +7262,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7281,11 +7281,11 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
-      "typestr": "^l"
+      "typestr": "^q"
      }
     ], 
     "retval": {
@@ -7300,7 +7300,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7319,7 +7319,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -7334,7 +7334,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7353,7 +7353,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7372,7 +7372,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7391,7 +7391,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "value", 
@@ -7713,7 +7713,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFDictionaryGetDictionary": {
@@ -7747,7 +7747,7 @@
      }, 
      {
       "name": "value", 
-      "typestr": "^l"
+      "typestr": "^q"
      }
     ], 
     "retval": {
@@ -7997,7 +7997,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFDocumentGetPage": {
@@ -8008,7 +8008,7 @@
      }, 
      {
       "name": "pageNumber", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -8053,7 +8053,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFDocumentGetVersion": {
@@ -8311,7 +8311,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFPageGetRotationAngle": {
@@ -8333,7 +8333,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPDFPageRelease": {
@@ -8442,7 +8442,7 @@
      }, 
      {
       "name": "value", 
-      "typestr": "^l"
+      "typestr": "^q"
      }
     ], 
     "retval": {
@@ -8627,7 +8627,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPSConverterAbort": {
@@ -8692,7 +8692,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPSConverterIsConverting": {
@@ -9063,7 +9063,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -9155,7 +9155,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -9329,7 +9329,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPathIsEmpty": {
@@ -9451,7 +9451,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGPatternRelease": {
@@ -9561,7 +9561,7 @@
      }, 
      {
       "name": "keyDown", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -9576,7 +9576,7 @@
      }, 
      {
       "name": "updateMouseCursorPosition", 
-      "typestr": "i"
+      "typestr": "I"
      }, 
      {
       "name": "buttonCount", 
@@ -9584,7 +9584,7 @@
      }, 
      {
       "name": "mouseButtonDown", 
-      "typestr": "i"
+      "typestr": "I"
      }
     ], 
     "retval": {
@@ -10072,7 +10072,7 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
@@ -10121,7 +10121,7 @@
         }, 
         {
          "typestr": [
-          "L", 
+          "Q", 
           false
          ]
         }, 
@@ -10376,7 +10376,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGShadingRelease": {
@@ -10570,7 +10570,7 @@
      }, 
      {
       "name": "rectCount", 
-      "typestr": "^L"
+      "typestr": "^Q"
      }, 
      {
       "name": "delta", 

@@ -915,7 +915,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "properties", 
@@ -950,7 +950,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -974,7 +974,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -998,7 +998,7 @@
      }, 
      {
       "name": "count", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -1029,7 +1029,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageDestinationSetProperties": {
@@ -1071,7 +1071,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -1103,7 +1103,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -1135,7 +1135,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }, 
      {
       "name": "options", 
@@ -1203,7 +1203,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageSourceGetStatus": {
@@ -1225,7 +1225,7 @@
      }, 
      {
       "name": "index", 
-      "typestr": "L"
+      "typestr": "Q"
      }
     ], 
     "retval": {
@@ -1251,7 +1251,7 @@
      }
     ], 
     "retval": {
-     "typestr": "L"
+     "typestr": "Q"
     }
    }, 
    "CGImageSourceUpdateData": {

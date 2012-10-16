@@ -179,8 +179,10 @@ class TestCGDirectDisplay (TestCase):
         for i in range(9):
             self.assertIsInstance(v[i+1], float)
 
+
         v = CGSetDisplayTransferByFormula(CGMainDisplayID(), *v[1:])
         self.assertEqual(v, 0)
+
 
         tablen = CGDisplayGammaTableCapacity(CGMainDisplayID())
         self.assertIsInstance(tablen, (int, long))
@@ -191,6 +193,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertIsInstance(count, (int, long))
         self.assertEqual(err, 0)
         self.failIfEqual(count, 0)
+
 
         err = CGSetDisplayTransferByTable(CGMainDisplayID(), count,
                 red, green, blue)

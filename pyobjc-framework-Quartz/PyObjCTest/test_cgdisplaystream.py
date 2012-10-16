@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-CGDisplayStreamFrameAvailableHandler = b'v@Q@@'
+CGDisplayStreamFrameAvailableHandler = b'vIQ@@'
 
 try:
     long

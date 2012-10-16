@@ -607,14 +607,14 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVPixelBufferPoolCreatePixelBuffer": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVPixelBufferPoolCreatePixelBufferWithAuxAttributes": {
@@ -622,7 +622,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVPixelBufferPoolGetAttributes": {
