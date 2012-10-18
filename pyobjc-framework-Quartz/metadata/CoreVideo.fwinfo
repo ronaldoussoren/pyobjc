@@ -416,7 +416,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true  }
     }
    }, 
    "CVPixelBufferCreateWithBytes": {
@@ -457,7 +457,7 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVPixelBufferCreateWithPlanarBytes": {
@@ -524,13 +524,13 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CVPixelBufferGetBaseAddressOfPlane": {
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CVPixelBufferGetBytesPerRow": {
     "args": {

@@ -366,7 +366,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         if not info['arguments'][argno+offset].get('c_array_of_variable_length'):
-            self.fail(message or "argument %d of %r is not a variable sized array"%(argno, method))
+            self.fail(message or "argument %d of %r is not a variable sized array"%(method,))
 
     def assertResultIsVariableSize(self, method, message = None):
         info = method.__metadata__()
