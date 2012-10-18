@@ -93,23 +93,23 @@
    }, 
    "CVDisplayLinkCreateWithActiveCGDisplays": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVDisplayLinkCreateWithCGDisplay": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVDisplayLinkCreateWithCGDisplays": {
     "args": {
-     "0": {}, 
-     "2": {}
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }, 
+     "2": { "type_modifier": "o", "already_cfretained": true  }
     }
    }, 
    "CVDisplayLinkCreateWithOpenGLDisplayMask": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVDisplayLinkGetActualOutputVideoRefreshPeriod": {
@@ -125,7 +125,7 @@
    "CVDisplayLinkGetCurrentTime": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CVDisplayLinkGetNominalOutputVideoRefreshPeriod": {
@@ -182,13 +182,15 @@
          "typestr": [
           "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
           true
-         ]
+         ],
+	 "type_modifier": "n"
         }, 
         {
          "typestr": [
           "^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}", 
           true
-         ]
+         ],
+	 "type_modifier": "N"
         }, 
         {
          "typestr": [
@@ -200,7 +202,8 @@
          "typestr": [
           "^Q", 
           false
-         ]
+         ],
+	 "type_modifier": "o"
         }, 
         {
          "typestr": [
@@ -233,8 +236,8 @@
    "CVDisplayLinkTranslateTime": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CVImageBufferCreateColorSpaceFromAttachments": {
@@ -281,7 +284,7 @@
     "args": {
      "0": {}, 
      "3": {}, 
-     "4": {}
+     "4": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVOpenGLBufferGetAttributes": {
@@ -295,14 +298,14 @@
      "0": {}, 
      "1": {}, 
      "2": {}, 
-     "3": {}
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    }, 
    "CVOpenGLBufferPoolCreateOpenGLBuffer": {
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "o", "already_cfretained": true}
     }
    }, 
    "CVOpenGLBufferPoolGetAttributes": {

@@ -51,7 +51,7 @@ class TestCVDisplayLink (TestCase):
         v = CVDisplayLinkGetCurrentCGDisplay(link)
         self.assertEqual(v, mainID)
 
-        self.assertArgIsFunction(CVDisplayLinkSetOutputCallback, 1, b'i@n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v', True)
+        self.assertArgIsFunction(CVDisplayLinkSetOutputCallback, 1, b'i^{__CVDisplayLink=}n^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}N^{_CVTimeStamp=IiqQdq{CVSMPTETime=ssIIIssss}QQ}Qo^Q^v', True)
         self.assertArgHasType(CVDisplayLinkSetOutputCallback, 2, b'^v')
 
         @objc.callbackFor(CVDisplayLinkSetOutputCallback)
