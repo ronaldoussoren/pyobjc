@@ -550,10 +550,10 @@
    "CVPixelBufferGetExtendedPixels": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}, 
-     "3": {}, 
-     "4": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }, 
+     "3": { "type_modifier": "o" }, 
+     "4": { "type_modifier": "o" }
     }
    }, 
    "CVPixelBufferGetHeight": {
