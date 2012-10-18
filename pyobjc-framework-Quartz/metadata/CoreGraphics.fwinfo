@@ -199,7 +199,7 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CGBitmapContextGetHeight": {
     "args": {
@@ -260,7 +260,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "n", "c_array_of_variable_length": true }
     }, 
     "retval": {
      "already_cfretained": true
@@ -2422,13 +2422,13 @@
    "CGPDFArrayGetArray": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetBoolean": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetCount": {
@@ -2439,19 +2439,19 @@
    "CGPDFArrayGetDictionary": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetInteger": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetName": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetNull": {
@@ -2462,25 +2462,25 @@
    "CGPDFArrayGetNumber": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetObject": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetStream": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFArrayGetString": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGPDFContentStreamCreateWithPage": {
@@ -2504,8 +2504,8 @@
    "CGPDFContentStreamGetResource": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_delimited_by_null": true }, 
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true }
     }, 
     "retval": {}
    }, 
