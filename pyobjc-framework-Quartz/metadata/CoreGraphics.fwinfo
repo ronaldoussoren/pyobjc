@@ -105,12 +105,12 @@
   "functions": {
    "CGAcquireDisplayFadeReservation": {
     "args": {
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CGBeginDisplayConfiguration": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "o" }
     }
    }, 
    "CGBitmapContextCreate": {
@@ -219,7 +219,7 @@
    "CGColorCreate": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_of_variable_length": true, "type_modifier": "n" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -287,7 +287,7 @@
     "args": {
      "0": {}
     }, 
-    "retval": {}
+    "retval": { "c_array_of_variable_length": true }
    }, 
    "CGColorGetConstantColor": {
     "args": {
@@ -360,7 +360,7 @@
    }, 
    "CGColorSpaceCreateICCBased": {
     "args": {
-     "1": {}, 
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true }, 
      "2": {}, 
      "3": {}
     }, 
@@ -371,7 +371,7 @@
    "CGColorSpaceCreateIndexed": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
     }, 
     "retval": {
      "already_cfretained": true
@@ -423,7 +423,7 @@
    "CGColorSpaceGetColorTable": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o", "c_array_of_variable_length": true }
     }
    }, 
    "CGColorSpaceGetColorTableCount": {
@@ -518,7 +518,7 @@
    "CGContextAddLines": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextAddPath": {
@@ -540,13 +540,13 @@
    "CGContextAddRects": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2}
     }
    }, 
    "CGContextBeginPage": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n"}
     }
    }, 
    "CGContextBeginPath": {
@@ -590,7 +590,7 @@
    "CGContextClipToRects": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextClosePath": {
@@ -738,7 +738,7 @@
    "CGContextFillRects": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextFlush": {
@@ -840,7 +840,7 @@
    "CGContextSelectFont": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_modifier": "n"  }
     }
    }, 
    "CGContextSetAllowsAntialiasing": {
@@ -891,7 +891,7 @@
    "CGContextSetFillColor": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
    }, 
    "CGContextSetFillColorSpace": {
@@ -910,7 +910,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
    }, 
    "CGContextSetFlatness": {
@@ -952,7 +952,7 @@
    "CGContextSetLineDash": {
     "args": {
      "0": {}, 
-     "2": {}
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n" }
     }
    }, 
    "CGContextSetLineJoin": {
@@ -1024,7 +1024,7 @@
    "CGContextSetStrokeColor": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_of_variable_length": true }
     }
    }, 
    "CGContextSetStrokeColorSpace": {
@@ -1043,7 +1043,7 @@
     "args": {
      "0": {}, 
      "1": {}, 
-     "2": {}
+     "2": { "c_array_of_variable_length": true, "type_modifier": "n" }
     }
    }, 
    "CGContextSetTextDrawingMode": {
@@ -1064,39 +1064,39 @@
    "CGContextShowGlyphs": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextShowGlyphsAtPoint": {
     "args": {
      "0": {}, 
-     "3": {}
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
     }
    }, 
    "CGContextShowGlyphsAtPositions": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 3 }, 
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
     }
    }, 
    "CGContextShowGlyphsWithAdvances": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "n" , "c_array_length_in_arg": 3 }, 
+     "2": { "type_modifier": "n" , "c_array_length_in_arg": 3 }
     }
    }, 
    "CGContextShowText": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextShowTextAtPoint": {
     "args": {
      "0": {}, 
-     "3": {}
+     "3": { "c_array_length_in_arg": 4, "type_modifier": "n" }
     }
    }, 
    "CGContextStrokeEllipseInRect": {
@@ -1107,7 +1107,7 @@
    "CGContextStrokeLineSegments": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "type_modifier": "n" }
     }
    }, 
    "CGContextStrokePath": {
@@ -1635,7 +1635,8 @@
     "retval": {
      "already_cfretained": true
     }, 
-    "variadic": true
+    "variadic": true,
+    "c_array_length_in_arg": 2
    }, 
    "CGEventCreateSourceFromEvent": {
     "args": {
@@ -1700,7 +1701,7 @@
    }, 
    "CGEventPostToPSN": {
     "args": {
-     "0": {}, 
+     "0": { "type_override": "^{ProcessSerialNumber=II}", "type_modifier": "n"  },
      "1": {}
     }
    }, 
@@ -2181,8 +2182,8 @@
    }, 
    "CGGetEventTapList": {
     "args": {
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o", "c_array_length_in_arg": [0, 2] }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGGetLastMouseDelta": {
@@ -2200,8 +2201,8 @@
    "CGGradientCreateWithColorComponents": {
     "args": {
      "0": {}, 
-     "1": {}, 
-     "2": {}
+     "1": { "c_array_length_in_arg": 3, "type_modifier": "n" },
+     "2": { "c_array_length_in_arg": 3, "type_modifier": "n"  }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3087,7 +3088,7 @@
    }, 
    "CGPaletteCreateWithByteSamples": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3105,7 +3106,7 @@
    }, 
    "CGPaletteCreateWithSamples": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
     }, 
     "retval": {
      "already_cfretained": true
@@ -3403,7 +3404,7 @@
    "CGPointMakeWithDictionaryRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CGPostMouseEvent": {
@@ -3421,14 +3422,14 @@
    }, 
    "CGRectDivide": {
     "args": {
-     "1": {}, 
-     "2": {}
+     "1": { "type_modifier": "o" }, 
+     "2": { "type_modifier": "o" }
     }
    }, 
    "CGRectMakeWithDictionaryRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o" }
     }
    }, 
    "CGRegisterScreenRefreshCallback": {
@@ -3609,7 +3610,7 @@
    "CGSizeMakeWithDictionaryRepresentation": {
     "args": {
      "0": {}, 
-     "1": {}
+     "1": { "type_modifier": "o"}
     }
    }, 
    "CGUnregisterScreenRefreshCallback": {
