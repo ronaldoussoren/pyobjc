@@ -2,6 +2,17 @@
 # for information on how to update this file.
 {
  "definitions": {
+  "literals": {
+    "kSCNetworkConnectionBytesIn": { "unicode": true },
+    "kSCNetworkConnectionBytesIn": { "unicode": true },
+    "kSCNetworkConnectionBytesOut": { "unicode": true },
+    "kSCNetworkConnectionErrorsIn": { "unicode": true },
+    "kSCNetworkConnectionErrorsOut": { "unicode": true },
+    "kSCNetworkConnectionPacketsIn": { "unicode": true },
+    "kSCNetworkConnectionPacketsOut": { "unicode": true },
+    "kSCNetworkConnectionSelectionOptionOnDemandHostName": { "unicode": true },
+    "kSCNetworkConnectionSelectionOptionOnDemandRetry": { "unicode": true }
+  },
   "cftypes": {
    "SCBondStatusRef": {
     "gettypeid_func": "SCBondStatusGetTypeID"
