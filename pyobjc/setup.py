@@ -13,9 +13,13 @@ import os
 
 VERSION="2.4a0"
 
-# NOTE: This list of requirements is split into sections for 10.4
-# and 10.5 to make it possible to install PyObjC from source on all
-# supported platforms.
+# Note 1: the requires list is split into a number
+# of lists because not all framework wrappers can
+# be used on all OSX releases. 
+#
+# Note 2: this package will not work correctly when
+# packaged into an egg file because of this.
+
 REQUIRES=[
         'pyobjc-core=='+VERSION,
         'pyobjc-framework-AddressBook=='+VERSION,
@@ -40,6 +44,7 @@ REQUIRES=[
         'pyobjc-framework-WebKit=='+VERSION,
         'pyobjc-framework-XgridFoundation=='+VERSION,
 ]
+
 REQUIRES_10_5=[
         'pyobjc-framework-CalendarStore=='+VERSION,
         'pyobjc-framework-Collaboration=='+VERSION,
