@@ -7,6 +7,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 2.4  (or 3.0)
 ---------------------
 
+.. note::
+
+   Sadly enough this changelog is incomplete.
+
 - Fix crash when unarchiving a Python object. 
 
 - Add missing calls to ``[super init]`` in the implementation of
