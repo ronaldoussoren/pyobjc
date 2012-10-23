@@ -1,10 +1,8 @@
 build
-BridgeSupport
 dist
 .DS_Store
 __pycache__
 autom4te.cache
-sdists
 
 syntax: glob
 *.so
