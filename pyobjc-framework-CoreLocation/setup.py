@@ -13,14 +13,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.6',
     name='pyobjc-framework-CoreLocation',
-    version="2.4a0",
+    version="2.4",
     description = "Wrappers for the framework CoreLocation on Mac OS X",
     packages = [ "CoreLocation" ],
     setup_requires = [
-        'pyobjc-core>=2.4a0',
+        'pyobjc-core>=2.4',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.4a0',
-        'pyobjc-framework-Cocoa>=2.4a0',
+        'pyobjc-core>=2.4',
+        'pyobjc-framework-Cocoa>=2.4',
     ],
 )

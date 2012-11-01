@@ -4,8 +4,8 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.4  (or 3.0)
----------------------
+Version 2.4
+-----------
 
 .. note::
 

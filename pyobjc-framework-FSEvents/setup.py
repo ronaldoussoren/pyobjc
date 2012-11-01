@@ -13,15 +13,15 @@ from pyobjc_setup import setup, Extension
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-FSEvents',
-    version="2.4a0",
+    version="2.4",
     description = "Wrappers for the framework FSEvents on Mac OS X",
     packages = [ "FSEvents" ],
     setup_requires = [
-        'pyobjc-core>=2.4a0',
+        'pyobjc-core>=2.4',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.4a0',
-        'pyobjc-framework-Cocoa>=2.4a0',
+        'pyobjc-core>=2.4',
+        'pyobjc-framework-Cocoa>=2.4',
     ],
     ext_modules = [
         Extension("FSEvents._callbacks",
