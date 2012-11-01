@@ -1,6 +1,5 @@
-==========================
-API Notes for FSEvents API
-==========================
+API Notes: FSEvents framework
+=============================
 
 The FSEvents package contains wrappers for the FSEvents API's, which are
 part of Carbon and not a standalone framework.

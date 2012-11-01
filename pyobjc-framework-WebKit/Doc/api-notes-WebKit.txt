@@ -1,5 +1,5 @@
-API Notes for framework WebKit
-==============================
+API Notes: WebKit framework
+===========================
 
 * Carbon integration functions are not supported.
 

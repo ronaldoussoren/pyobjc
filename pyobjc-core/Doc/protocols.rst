@@ -56,8 +56,10 @@ Unlike informal protocols, it is necessary to explicitly declare
 conformance to formal protocols.  However, all formal protocols in Cocoa
 are also described using ``objc.informal_protocol`` objects.
 
-XXX: is this necessary? we could also use the same strategy as for informal
-protocols, and drop the informal_protocol wrappers for formal protocols.
+.. todo::
+
+   Is this necessary? we could also use the same strategy as for informal
+   protocols, and drop the informal_protocol wrappers for formal protocols.
 
 In python 2.x declaring conformance to a formal protocol is done by using 
 the formal protocol as a mix-in, and by implementing its methods:
@@ -89,8 +91,6 @@ a keyword argument:
 		def unlock(self):
 			pass
 
-XXX: Change this example when the pyobjc_classMethods hack is no longer necessary.
-
 The class now formally implements the ``NSLocking`` protocol, this can be
 verified using the Objective-C introspection methods:
 
@@ -102,4 +102,6 @@ verified using the Objective-C introspection methods:
 This is useful for API's that require (and check) the implementation of formal
 protocols.
 
-XXX: might also be useful for Distributed Objects, create an example
+.. todo::
+
+   This might also be useful for Distributed Objects and XPC, create examples

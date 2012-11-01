@@ -1,5 +1,4 @@
-===========================
-PyObjC support for "Blocks"
+PyObjC support for "blocks"
 ===========================
 
 Introduction
@@ -60,27 +59,8 @@ Metadata for blocks
 -------------------
 
 The current implementation of blocks doesn't allow for full introspection, which means
-that PyObjC must be taught about the signatures of blocks. This section how that
-is done, but note that you only have to do this for your own code that defines methods 
-that have block arguments or return values. The PyObjC wrappers for the various frameworks
-already contain the required metadata. 
+that PyObjC must be taught about the signatures of blocks. 
 
-FIXME: The last two sentences aren't very clear.
+.. todo::
 
-This metadata is an extension to the "bridgesupport" format as defined by Apple.
-
-If an argument or return value is a block the metadata should contain an "block_pointer"
-attribute, with a value of "true". The element then has subelements describing the 
-signature of block (excluding the implicit block parameter). 
-
-As an example:
-
-.. sourcecode:: xml
-
-   <arg index="0" block_pointer="true">
-      <retval type="v" />
-      <arg type="@" />
-      <arg type="B" />
-   </arg>
-
-This metadata describes an argument that is a block of type ``(void(^)(id,BOOL)``.
+   Refer to the metadata documentation (which doesn't really exist at the moment)

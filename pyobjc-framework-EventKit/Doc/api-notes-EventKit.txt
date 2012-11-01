@@ -1,8 +1,8 @@
-API notes for Accounts
-======================
+API notes: EventKit framework
+=============================
 
-The entire "Accounts" framework on MacOSX 10.8 (or later) is available from Python.
+The entire "EventKit" framework on MacOSX 10.8 (or later) is available from Python.
 
 .. note:: 
 
-   The Accounts framework is only available in 64-bit applications.
+   The EventKit framework is only available in 64-bit applications.

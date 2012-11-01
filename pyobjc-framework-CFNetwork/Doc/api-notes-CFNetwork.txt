@@ -1,6 +1,5 @@
-=====================================
-API Notes for the framework CFNetwork
-=====================================
+API Notes: CFNetwork framework
+==============================
 
 * ``CFNetworkExecuteProxyAutoConfigurationScript`` and ``CFNetworkExecuteProxyAutoConfigurationURL``
 

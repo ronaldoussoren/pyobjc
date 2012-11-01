@@ -1,6 +1,5 @@
-======================================
-API Notes for framework LaunchServices
-======================================
+API Notes: LaunchServices framework
+===================================
 
 This file documents where functionality in the LaunchServices wrappers does
 not match the behaviour that is described in Apple's documentation for

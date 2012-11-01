@@ -58,6 +58,13 @@ supports the wrappers for these types in ``Carbon.File``.
         NOTE: This method is only available when ``Carbon`` support is
         enabled in the Python build.
     
-    NOTE: ``Carbon.File.FSSpec`` instances can be used as the argument
-    of functions that have an ``FSSpec`` structure as one of their
-    arguments.
+    .. note:: 
+
+       ``Carbon.File.FSSpec`` instances can be used as the argument
+       of functions that have an ``FSSpec`` structure as one of their
+       arguments.
+
+    .. note::
+
+       "FSSpec" is a deprecated type in Apple's APIs. The type is not 
+       availble for 64-bit code, and shouldn't be used for new development.

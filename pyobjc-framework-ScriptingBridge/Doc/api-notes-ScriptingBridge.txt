@@ -1,5 +1,5 @@
-API Notes for the ScriptingBridge framework
-===========================================
+API Notes: ScriptingBridge framework
+====================================
 
 The PyObjC bindings for the ScriptingBridge framework are
 complete.

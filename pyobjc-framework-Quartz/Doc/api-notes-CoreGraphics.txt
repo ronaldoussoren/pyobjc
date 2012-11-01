@@ -1,5 +1,5 @@
-API Notes for the CoreGraphics framework
-========================================
+API Notes: CoreGraphics framework
+=================================
 
 * ``CGColorSpaceCreateWithPlatformColorSpace``,
   ``CGColorSpaceCreateWithPlatformColorSpace``.

@@ -1,5 +1,5 @@
-API Notes for the OpenDirectory and CFOpenDirectory frameworks
-==============================================================
+API Notes: OpenDirectory and CFOpenDirectory frameworks
+=======================================================
 
 Both the OpenDirectory framework and the embedded CFOpenDirectory framework are fully wrapped
 and can be used as described in the generic PyObjC documentation.

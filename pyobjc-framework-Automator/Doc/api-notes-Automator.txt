@@ -1,4 +1,4 @@
-API Notes for the Automator framework
-=====================================
+API Notes: Automator framework
+==============================
 
 The Automator framework is wrapped completely by PyObjC.

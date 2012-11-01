@@ -1,6 +1,5 @@
-============================
-API Notes for Foundation
-============================
+API Notes: Foundation framework
+===============================
 
 Introduction
 ------------

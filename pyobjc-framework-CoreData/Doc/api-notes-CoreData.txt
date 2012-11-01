@@ -1,6 +1,5 @@
-======================
-API Notes for CoreData
-======================
+API Notes: CoreData framework
+=============================
 
 * class ``NSManagedObject``
 

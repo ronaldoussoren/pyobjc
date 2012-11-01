@@ -1,6 +1,5 @@
-=================================
-API Notes for Key-Value Observing
-=================================
+Key-Value Observing and Python
+==============================
 
 Key-Value Coding and Key-Value Observing are supported by PyObjC. Key-Value
 Observing is only supported for Cocoa objects though, because it is technically 

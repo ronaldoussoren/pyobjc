@@ -1,5 +1,5 @@
-API Notes for framework LatentSemanticMapping
-=============================================
+API Notes: LatentSemanticMapping framework
+==========================================
 
 All functions in this framework are mapped, however the unittests
 for this framework wrapper cause crashes in the Python interpreter.
