@@ -60,7 +60,7 @@ The ``setup.py`` for a framework wrapper should defer most work to
    )
 
 The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but 
-dynamicly fetches that at build time.
+dynamicly fetch that at build time.
 
 Documentation
 -------------
