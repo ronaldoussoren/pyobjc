@@ -13,14 +13,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.6',
     name='pyobjc-framework-ServiceManagement',
-    version="2.4",
+    version="2.5.0b1",
     description = "Wrappers for the framework ServiceManagement on Mac OS X",
     packages = [ "ServiceManagement" ],
     setup_requires = [
-        'pyobjc-core>=2.4',
+        'pyobjc-core>=2.5.0b1',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.4',
-        'pyobjc-framework-Cocoa>=2.4',
+        'pyobjc-core>=2.5.0b1',
+        'pyobjc-framework-Cocoa>=2.5.0b1',
     ],
 )
