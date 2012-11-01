@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+import subprocess
+import os
+import sys
+
+TOPDIR=os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))
+
+def main():
+    names = ['pyobjc', 'pyobjc-core']
+    for nm in os.listdir(TOPDIR):
+        if nm.startswith('pyobjc-framework-'):
+            names.append(nm)
+
+    # First create an sdist in all directories, this
+    # is just for checking that this works.
+    failed = []
+    for nm in names:
+        status = subprocess.call([
+            'python', 'setup.py', 'sdist'],
+            cwd=os.path.join(TOPDIR), nm)
+
+        if status != 0:
+            print("WARNING: Building sdist for {} failed".format(nm))
+            failed.append(nm)
+
+    if failed:
+        print("Aborting because some sdists cannot be created")
+        for nm in failed:
+            print(" *", nm)
+        sys.exit(1)
+
+    # Then perform the actual upload. The 'register' command
+    # is present to avoid problems with new framework wrappers.
+    failed = []
+    for nm in names:
+        status = subprocess.call([
+            'python', 'setup.py', 'sdist', 'register', 'upload'],
+            cwd=os.path.join(TOPDIR), nm)
+
+        if status != 0:
+            print("WARNING: Uploading {} failed".format(nm))
+            failed.append(nm)
+
+    if failed:
+        print("Some sdists cannot be uploaded")
+        for nm in failed:
+            print(" *", nm)
+        sys.exit(1)
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
