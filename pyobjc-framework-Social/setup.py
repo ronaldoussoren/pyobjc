@@ -13,15 +13,15 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-Social',
-    version="2.4",
+    version="2.4.1b1",
     description = "Wrappers for the framework Accounts on Mac OS X",
     packages = [ "Social" ],
     setup_requires = [
-        'pyobjc-core>=2.4',
+        'pyobjc-core>=2.4.1b1',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.4',
-        'pyobjc-framework-Cocoa>=2.4',
+        'pyobjc-core>=2.4.1b1',
+        'pyobjc-framework-Cocoa>=2.4.1b1',
     ],
     min_os_level="10.8",
 )

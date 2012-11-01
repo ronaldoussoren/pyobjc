@@ -13,14 +13,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.6',
     name='pyobjc-framework-ServerNotification',
-    version="2.4",
+    version="2.4.1b1",
     description = "Wrappers for the framework ServerNotification on Mac OS X",
     packages = [ "ServerNotification" ],
     setup_requires = [
-        'pyobjc-core>=2.4',
+        'pyobjc-core>=2.4.1b1',
     ],
     install_requires = [ 
-        'pyobjc-core>=2.4',
-        'pyobjc-framework-Cocoa>=2.4',
+        'pyobjc-core>=2.4.1b1',
+        'pyobjc-framework-Cocoa>=2.4.1b1',
     ],
 )
