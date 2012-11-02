@@ -19,6 +19,13 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
             ))
 
 
+#
+# The rest of this file contains support for bridgesupport
+# XML files.
+#
+# TODO: parseBridgeSupport (and its support class) is a 
+#       basic port from C, check if it can be simplified.
+
 DEFAULT_SUGGESTION="don't use this method"
 BOOLEAN_ATTRIBUTES=[
     "already_retained",
@@ -48,8 +55,9 @@ else:
 class _BridgeSupportParser (object):
     TAG_MAP={}
 
-    def __init__(self, xmldata):
+    def __init__(self, xmldata, frameworkName):
         self.values = {}
+        self.frameworkName = frameworkName
         self.func_aliases = []
         self.functions = []
         self.process_data(xmldata)
@@ -392,7 +400,36 @@ class _BridgeSupportParser (object):
         self.func_aliases.append((name, original))
 
     def do_informal_protocol(self, node):
-        pass
+        name = self.attribute_string(node, "name", None)
+        if not name:
+            return
+
+
+        method_list = []
+        for method in node:
+            sel_name = attribute_string(method, "selector", None)
+            typestr  = attribute_string(method, "type", "type64")
+            is_class = attribute_bool(method, "classmethod", None, False)
+
+            if not sel_name or not typestr:
+                continue
+
+            typestr = as_bytes(self.typestr2typestr(typestr))
+            sel = objc.selector(None, selector=as_bytes(sel_name), 
+                    signature=as_bytes(typestr), isClassMethod=is_class)
+            method_list.append(sel)
+
+        if method_list:
+            proto = objc.informal_protocol(name, method_list)
+            if "protocols" not in self.values:
+                mod_name = "%s.protocols"%(self.frameworkName,)
+                m = self.values["protocols"] = type(objc)(mod_name)
+                sys.modules[mod_name] = m
+
+            else:
+                m = self.values["protocols"]
+
+            setattr(m, name, proto)
 
     def do_null_const(self, node):
         name = self.attribute_string(node, "name", None)
@@ -469,20 +506,24 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
     objc._updatingMetadata(True)
     try:
-        prs = _BridgeSupportParser(xmldata)
+        prs = _BridgeSupportParser(xmldata, frameworkName)
 
         globals.update(prs.values)
         if prs.functions:
-            if bundle is None:
+            if bundle is None and inlineTab is None:
                 raise objc.error("Cannot load bundle functions without bundle argument")
-            objc.loadBundleFunctions(bundle, globals, prs.functions)
+
+            if bundle is not None:
+                objc.loadBundleFunctions(bundle, globals, prs.functions)
+
+            if inlineTab is not None:
+                objc._loadFunctionList(inlineTab, globals, prs.functions)
 
         for name, orig in prs.func_aliases:
             try:
                 globals[name] = globals[orig]
             except KeyError:
                 pass
-
 
     finally:
         objc._updatingMetadata(False)

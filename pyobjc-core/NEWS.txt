@@ -9,13 +9,15 @@ Version 2.5
 
 - Issue #22: Reimplement support for bridgesupport files
 
-  This reintroduces ``objc.parseBridgeSupport`` and ``objc.initFrameworkWrapper``,
-  both are reimplemented in Python (previous version used C code)
+  This reintroduces ``objc.parseBridgeSupport`` and 
+  ``objc.initFrameworkWrapper``, both are reimplemented in Python 
+  (previous version used C code)
 
   .. note::
 
-     The implementation is currently not complete and barely tested, both will
-     change soon
+     The implementation is currently barely tested and therefore likely
+     contains bugs.
+
 
 Version 2.4
 -----------
