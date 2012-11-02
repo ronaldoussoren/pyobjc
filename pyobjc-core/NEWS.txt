@@ -4,6 +4,19 @@ PyObjC NEWS
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.5
+-----------
+
+- Issue #22: Reimplement support for bridgesupport files
+
+  This reintroduces ``objc.parseBridgeSupport`` and ``objc.initFrameworkWrapper``,
+  both are reimplemented in Python (previous version used C code)
+
+  .. note::
+
+     The implementation is currently not complete and barely tested, both will
+     change soon
+
 Version 2.4
 -----------
 
