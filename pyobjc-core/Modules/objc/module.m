@@ -143,9 +143,8 @@ PyObject *kwds)
 PyDoc_STRVAR(setStrBridgeEnabled_doc,
   "setStrBridgeEnabled(bool)\n"
   "\n"
-  "False disables the transparent str bridge (default) \n"
-  "True enables the transparent str bridge, note that \n"
-  "this is discouraged.");
+  "False disables the transparent str bridge (not default) \n"
+  "True enables the transparent str bridge\n");
 
 static PyObject*
 setStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
@@ -632,10 +631,11 @@ currentBundle(PyObject* self __attribute__((__unused__)))
 
 PyDoc_STRVAR(loadBundle_doc,
 	"loadBundle(module_name, module_globals, bundle_path=None, "
-	"bundle_identifier=None) -> bundle\n"
+	"bundle_identifier=None, scan_classes=True) -> bundle\n"
 	"\n"
 	"Load the bundle identified by 'bundle_path' or 'bundle_identifier' \n"
 	"and add the classes in the bundle to the 'module_globals'.\n"
+	"If 'scan_classes' is False the function won't add classes to 'module_globals'"
 	"\n"
 	"If 'bundle_identifier' is specified the right bundle is located\n"
 	"using NSBundle's +bundleWithIdentifier:.\n"
@@ -710,22 +710,6 @@ static	Py_ssize_t	curClassCount = -1;
 	if (scanClasses != NULL && !PyObject_IsTrue(scanClasses)) {
 		return pythonify_c_value(@encode(NSBundle*), &bundle);
 	}
-
-#if 0
-	Py_ssize_t newClassCount = PyObjC_ClassCount();
-	if (newClassCount == curClassCount) {
-		/* Make use of the structure of wrapper modules to avoid
-		 * scanning the class list when nothing has changed. 
-		 *
-		 * Bundle wrappers first 'from Dependency import *' and then
-		 * load the wrapped framework. When that framework doesn't
-		 * define new classes we don't actually have to add classes
-		 * to the global dict.
-		 */
-		return pythonify_c_value(@encode(NSBundle*), &bundle);
-	}
-#endif
-
 
 	class_list = PyObjC_GetClassList();
 	if (class_list == NULL) {	
@@ -809,9 +793,11 @@ static  char* keywords[] = { "signature", NULL };
 		}
 
 		if (PyList_Append(result, str) == -1) {
+			Py_DECREF(str);
 			Py_DECREF(result);
 			return NULL;
 		}
+		Py_DECREF(str);
 
 		signature = end;
 	}	
@@ -822,38 +808,81 @@ static  char* keywords[] = { "signature", NULL };
 }
 
 
-PyDoc_STRVAR(objc_splitStruct_doc,
-	"_splitStruct(signature) -> fieldnames, types\n"
+PyDoc_STRVAR(objc_splitStructSignature_doc,
+	"splitStructSignature(signature) -> structname, fields\n"
 	"\n"
 	"Split a struct signature string into a list of items."
 );
 static PyObject*
-objc_splitStruct(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+objc_splitStructSignature(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
 static  char* keywords[] = { "signature", NULL };
 	const char* signature;
 	const char* end;
-	PyObject* result;
-	PyObject* tuple;
-
-	/* XXX */
+	PyObject* structname;
+	PyObject* fields;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwds, 
-			"s:splitStruct",
+			Py_ARG_BYTES,
 			keywords, &signature)) {
 		return NULL;
 	}
 
-	result = PyList_New(0);
-	if (result == NULL) return NULL;
+	if (signature[0] != _C_STRUCT_B) {
+		PyErr_SetString(PyExc_ValueError, "not a struct encoding");
+		return NULL;
+	}
+
+	signature += 1;
+	end = signature;
+	while (*end && *end != _C_STRUCT_E && *end++ != '=');
+	if (end == signature+1) {
+		structname = Py_None;
+		Py_INCREF(structname);
+	} else {
+		structname = PyText_FromStringAndSize(signature, end-signature-1);
+		if (structname == NULL) {
+			return NULL;
+		}
+	}
+	if (*end == '=') {
+		signature = end+1;
+	} else {
+		signature = end;
+	}
+
+	fields = PyList_New(0);
+	if (fields == NULL) return NULL;
 	
-	while (signature && *signature != 0) {
+	while (signature && *signature != _C_STRUCT_E && *signature != 0) {
 		PyObject* str;
+		PyObject* item;
+		PyObject* name;
 		const char* t;
+
+		if (*signature == '"') {
+			signature ++;
+			end = signature;
+			while (*end && *end != '"') {
+				end ++;
+			}
+			name = PyText_FromStringAndSize(signature, end-signature);
+			if (name == NULL) {
+				Py_DECREF(structname);
+				Py_DECREF(fields);
+				return NULL;
+			}
+			signature = end + 1;
+		} else {
+			name = Py_None;
+			Py_INCREF(name);
+		}
 
 		end = PyObjCRT_SkipTypeSpec(signature);
 		if (end == NULL) {
-			Py_DECREF(result);
+			Py_DECREF(structname);
+			Py_DECREF(name);
+			Py_DECREF(fields);
 			return NULL;
 		}
 
@@ -863,23 +892,44 @@ static  char* keywords[] = { "signature", NULL };
 		}
 		t ++;
 
-		str = PyText_FromStringAndSize(signature, t - signature);
+		str = PyBytes_FromStringAndSize(signature, t - signature);
 		if (str == NULL) {
-			Py_DECREF(result);
+			Py_DECREF(structname);
+			Py_DECREF(name);
+			Py_DECREF(fields);
 			return NULL;
 		}
 
-		if (PyList_Append(result, str) == -1) {
-			Py_DECREF(result);
+		item = Py_BuildValue("NN", name, str);
+		if (item == NULL) {
+			Py_DECREF(fields);
 			return NULL;
 		}
+
+		if (PyList_Append(fields, item) == -1) {
+			Py_DECREF(fields);
+			Py_DECREF(item);
+			Py_DECREF(structname);
+			return NULL;
+		}
+		Py_DECREF(item);
 
 		signature = end;
 	}	
+	if (signature && *signature != _C_STRUCT_E) {
+		Py_DECREF(structname);
+		Py_DECREF(fields);
+		PyErr_SetString(PyExc_ValueError, "Value is not a complete struct signature");
+		return NULL;
+	}
+	if (signature && signature[1]) {
+		Py_DECREF(structname);
+		Py_DECREF(fields);
+		PyErr_SetString(PyExc_ValueError, "Additional text at end of signature");
+		return NULL;
+	}
 
-	tuple = PyList_AsTuple(result);
-	Py_DECREF(result);
-	return tuple;
+	return Py_BuildValue("NN", structname, fields);
 }
 
 PyDoc_STRVAR(PyObjC_loadBundleVariables_doc, 
@@ -906,15 +956,15 @@ PyDoc_STRVAR(PyObjC_loadBundleFunctions_doc,
 	"The signature is the Objective-C type specifier for the function \n"
 	"signature.");
 PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
-	"PRIVATE!\n"
-	"_loadFunctionList(list, module_globals, functionInfo, "
+	"loadFunctionList(list, module_globals, functionInfo, "
 	"skip_undefined=True)\n"
 	"\n"
-	"Load the specified functions. List should be a CObject contains\n"
-	"print an array of { char*, funcion } \"tuples\".");
+	"Load the specified functions. List should be a capsule object containing\n"
+	"an array of { char*, funcion } structs.");
 	
 
 
+#if PY_MAJOR_VERSION == 2
 PyDoc_STRVAR(objc_CFToObject_doc,
 	"CFToObject(cfObject) -> objCObject\n"
 	"\n"
@@ -933,6 +983,12 @@ static  char* keywords[] = { "value", 0 };
 			&argument)) {
 		return NULL;
 	}
+
+	if (PyErr_WarnEx(PyExc_DeprecationWarning, 
+		"MacPython CF support is no longer supported and will be removed in PyObjC 3.0", 0) < 0) {
+		return NULL;
+	}
+
 
 	res = PyObjC_CFTypeToID(argument);
 	if (res == 0) {
@@ -962,6 +1018,11 @@ static char* keywords[] = { "value", 0 };
 		return NULL;
 	}
 
+	if (PyErr_WarnEx(PyExc_DeprecationWarning, 
+		"MacPython CF support is no longer supported and will be removed in PyObjC 3.0", 0) < 0) {
+		return NULL;
+	}
+
 	if (!PyObjCObject_Check(argument)) {
 		PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
 		return NULL;
@@ -969,13 +1030,13 @@ static char* keywords[] = { "value", 0 };
 
 	return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
 }
+#endif /* PY_MAJOR_VERSION == 2 */
 
 
 PyDoc_STRVAR(protocolsForProcess_doc,
 	"protocolsForProcess() -> [Protocols]\n"
 	"\n"
-	"Returns a list of Protocol objects that the class claims\n"
-	"to implement directly."
+	"Returns a list of Protocol objects that are present in the process"
 );
 static PyObject*
 protocolsForProcess(PyObject* self __attribute__((__unused__)))
@@ -1081,7 +1142,7 @@ PyDoc_STRVAR(registerMetaData_doc,
 static PyObject*
 registerMetaData(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "class", "selector", "metadata", NULL };
+static char* keywords[] = { "class_", "selector", "metadata", NULL };
 
 	PyObject* class_name;
 	PyObject* selector;
@@ -1405,41 +1466,6 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 	PyErr_Format(PyObjCExc_LockError, "objc_sync_exit failed: %d", rv);
 	return NULL;
 }
-
-#if 0
-PyDoc_STRVAR(parseBridgeSupport_doc,
- "parseBridgeSupport(xmldata, globals, framework [, dylib_path] [, inlineTab]) -> None\n"
- "\n"
- "Process the XML bridgesupport data. Constants and functions will be added\n"
- "to the `globals` dictionary. If `dylib_path` is present and not None it is\n"
- "the filesystem path for a dylib containing static inline definitions.");
-static PyObject*
-parseBridgeSupport(PyObject* self __attribute__((__unused__)),
-		PyObject* args, PyObject* kwds)
-{
-	static char* keywords[] = { "xmldata", "globals", "framework", "dylib_path", "inlineTab", NULL };
-	char* data;
-	Py_ssize_t datalen;
-	PyObject* globalDict;
-	const char* framework;
-	const char* dylibPath = NULL;
-	PyObject* inlineTab = NULL;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s#O!s|zO", keywords, 
-			&data, &datalen, &PyDict_Type, &globalDict, 
-			&framework, &dylibPath, &inlineTab)) {
-		return NULL;
-	}
-
-	int r = PyObjC_ProcessXML(data, datalen, globalDict, dylibPath, framework, inlineTab);
-	if (r == -1) {
-		return NULL;
-	}
-
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-#endif
 
 
 PyDoc_STRVAR(_makeClosure_doc,
@@ -1906,10 +1932,10 @@ static PyMethodDef mod_methods[] = {
 	  objc_splitSignature_doc
 	},
 	{
-	  "splitStruct",
-	  (PyCFunction)objc_splitStruct,
+	  "splitStructSignature",
+	  (PyCFunction)objc_splitStructSignature,
 	  METH_VARARGS|METH_KEYWORDS,
-	  objc_splitStruct_doc,
+	  objc_splitStructSignature_doc,
 	},
 	{
 	  "lookUpClass",
@@ -1948,15 +1974,17 @@ static PyMethodDef mod_methods[] = {
 	{ "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
 	{ "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
 	{ "registerCFSignature", (PyCFunction)registerCFSignature, METH_VARARGS|METH_KEYWORDS, registerCFSignature_doc },
+#if PY_MAJOR_VERSION == 2
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
 	{ "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
+#endif
 	{ "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
 	{ "loadSpecialVar", (PyCFunction)PyObjC_loadSpecialVar,
 		METH_VARARGS|METH_KEYWORDS, NULL },
 	{ "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
-	{ "_loadFunctionList", (PyCFunction)PyObjC_loadFunctionList,
+	{ "loadFunctionList", (PyCFunction)PyObjC_loadFunctionList,
 		METH_VARARGS|METH_KEYWORDS, PyObjC_loadFunctionList_doc },
 	{ "listInstanceVariables", (PyCFunction)PyObjCIvar_Info, 
 		METH_O, PyObjCIvar_Info_doc },
@@ -1981,14 +2009,6 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS, "private function" },
 	{ "_sockaddrToPython", (PyCFunction)PyObjC_SockAddrToPython,
 		METH_VARARGS, "private function" },
-#if 0
-	{ "parseBridgeSupport", (PyCFunction)parseBridgeSupport,
-		METH_VARARGS|METH_KEYWORDS, parseBridgeSupport_doc },
-	{ "_setSetupCFClasses", (PyCFunction)PyObjC_SetSetupCFClasses, 
-		METH_O, "private function" },
-	{ "_setStructConvenience", (PyCFunction)PyObjC_SetStructConvenience, 
-		METH_O, "private function" },
-#endif
 	{ "_ivar_dict", (PyCFunction)ivar_dict, METH_NOARGS, "private functions" },
 
 	{ "_objc_sync_enter", (PyCFunction)PyObjC_objc_sync_enter,
@@ -2164,12 +2184,6 @@ PyObjC_MODULE_INIT(_objc)
 	if (PyObjCCFType_Setup() == -1) {
 		PyObjC_INITERROR();
 	}
-
-#if 0
-	if (PyObjCXML_Init() == -1) {
-		PyObjC_INITERROR();
-	}
-#endif
 
 	m = PyObjC_MODULE_CREATE(_objc);
 	if (m == 0) {

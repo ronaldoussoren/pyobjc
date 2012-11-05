@@ -59,7 +59,7 @@ class ObjCLazyModule (module):
                 '_ObjCLazyModule__aliases',
             )
 
-    def __init__(self, name, frameworkIdentifier, frameworkPath, metadict, inline_list, initialdict={}, parents=()):
+    def __init__(self, name, frameworkIdentifier, frameworkPath, metadict, inline_list=None, initialdict={}, parents=()):
         super(ObjCLazyModule, self).__init__(name)
 
         if frameworkIdentifier is not None or frameworkPath is not None:
@@ -267,7 +267,7 @@ class ObjCLazyModule (module):
 
                 if self.__inlinelist is not None:
                     try:
-                        objc._loadFunctionList(
+                        objc.loadFunctionList(
                             self.__inlinelist, d, func_list, skip_undefined=False)
                     except objc.error:
                         pass

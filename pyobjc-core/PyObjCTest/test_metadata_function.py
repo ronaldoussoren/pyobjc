@@ -256,7 +256,7 @@ _FunctionTable = [
             })),
 ]
 
-objc._loadFunctionList(function_list, globals(),  _FunctionTable, False)
+objc.loadFunctionList(function_list, globals(),  _FunctionTable, False)
 
 class TestExists (TestCase):
     def testFunctionsExists(self):

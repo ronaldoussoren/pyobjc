@@ -357,7 +357,7 @@ class TestCase (_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         if not info['arguments'][argno+offset].get('c_array_delimited_by_null'):
-            self.fail(message or "argument %d of %r is not a nul-terminated array"%(argno, method))
+            self.fail(message or "argument %d of %r is not a null-terminated array"%(argno, method))
 
     def assertArgIsVariableSize(self, method, argno, message = None):
         if isinstance(method, objc.selector):

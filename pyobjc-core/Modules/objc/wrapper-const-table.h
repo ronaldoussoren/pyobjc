@@ -132,21 +132,6 @@ static inline int add_NSUInteger(PyObject*d, char* name, NSUInteger value)
 	return 0;
 }
 #endif
-#if 0
-static inline int add_NSInteger(PyObject*d, char* name, NSInteger value)
-{
-	int res;
-	PyObject* v;
-
-	v = PyObjC_ObjCToPython(@encode(NSUInteger), &value);
-	if (v == NULL) return -1;
-
-	res = PyDict_SetItemString(d, name, v);
-	Py_DECREF(v);
-	if (res < 0) return -1;
-	return 0;
-}
-#endif
 
 static inline int register_ints(PyObject* d, struct inttable* table)
 {

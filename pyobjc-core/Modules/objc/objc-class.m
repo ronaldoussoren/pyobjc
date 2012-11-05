@@ -1879,23 +1879,6 @@ PyObjCClass_New(Class objc_class)
 	 * Support the buffer protocol in the wrappers for NSData and
 	 * NSMutableData, the only two classes where this makes sense.
 	 */
-#if 0
-	if (strcmp(className, "_NSZombie_") == 0) {
-		/* pass */
-	} else if (strcmp(className, "nil") == 0) {
-		/* pass */
-	} else if ([objc_class isSubclassOfClass:[NSMutableData class]]) {
-	/*} else if (strcmp(className, "NSMutableData") == 0) {*/
-		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
-	} else if ([objc_class isSubclassOfClass:[NSData class]]) {
-	/*if (strcmp(className, "NSData") == 0) { */
-		((PyTypeObject *)result)->tp_as_buffer = &nsdata_as_buffer;
-	} else if (strcmp(className, "NSBlock") == 0) {
-		((PyTypeObject *)result)->tp_basicsize = sizeof(PyObjCBlockObject);
-		PyType_Modified((PyTypeObject*)result);
-		PyType_Ready((PyTypeObject *)result);
-	}
-#else
 	if (strcmp(className, "NSMutableData") == 0) {
 		((PyTypeObject *)result)->tp_as_buffer = &nsmutabledata_as_buffer;
 #if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION >= 6
@@ -1915,8 +1898,6 @@ PyObjCClass_New(Class objc_class)
 		PyType_Modified((PyTypeObject*)result);
 		PyType_Ready((PyTypeObject *)result);
 	}
-#endif
-
 
 	var = class_getInstanceVariable(objc_class, "__dict__");
 	if (var != NULL) {

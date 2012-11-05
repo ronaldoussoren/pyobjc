@@ -160,28 +160,6 @@ PyObjCErr_FromObjC(NSException* localException)
 		PyDict_SetItemString(dict, "userInfo", Py_None);
 	}
 
-#if 0	
-	/* build the description as a NSString to maintain the highest 
-	 * fidelity.
-	 * This code is disabled because the base exception class doesn't
-	 * like unicode arguments, that will wreak havoc when converting the
-	 * exception to text, which in turn makes it impossible to find out
-	 * what the exception actually was without poking in the PyObjC
-	 * specific fields.
-	 */
-	NSString* description = [NSString stringWithFormat:@"%@ - %@",
-			[localException name], [localException reason]];
-	if (description == nil) {
-		PyErr_SetString(exception, "<<<UNKNOWN REASON>>>");
-	} else {
-		buf = pythonify_c_value(@encode(NSObject*), &description);
-		if (buf == NULL) {
-			Py_DECREF(dict);
-			PyGILState_Release(state);
-			return;
-		}
-	}
-#else
 	if ([[localException reason] UTF8String]) {
 		 buf = PyText_FromFormat("%s - %s", 
 		       [[localException name] UTF8String],
@@ -191,7 +169,6 @@ PyObjCErr_FromObjC(NSException* localException)
 		       [[localException name] UTF8String]);
 	}
 	PyErr_SetObject(exception, buf);
-#endif
 	PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
 	if (!exc_value || !PyObject_IsInstance(exc_value, exc_type)) {
 		PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);

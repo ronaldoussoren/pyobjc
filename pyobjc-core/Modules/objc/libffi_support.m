@@ -426,12 +426,6 @@ arg_signature_to_ffi_type(const char* argtype)
 	 * based on analysis of the calling conventions.
 	 */
 	switch (*argtype) {
-#if 0
-	case _C_CHR: return &ffi_type_sint;
-	case _C_UCHR: return &ffi_type_uint;
-	case _C_SHT: return &ffi_type_sint;
-	case _C_USHT: return &ffi_type_uint;
-#endif
 	default: return signature_to_ffi_type(argtype);
 	}
 }

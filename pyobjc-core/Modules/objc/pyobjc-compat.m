@@ -495,58 +495,6 @@ void	  PyObjC_ClearIntern(void)
 PyObject* PyObjC_InternValue(PyObject* orig)
 {
 	return orig;
-
-#if 0
-	PyObject* v;
-	PyObject* key;
-	
-	if (orig == NULL) {
-		return NULL;
-	}
-
-	if (intern_mapping == NULL) {
-		intern_mapping = PyDict_New();
-		if (intern_mapping == NULL) {
-			Py_DECREF(orig);
-			return NULL;
-		}
-	}
-
-	if (PyList_Check(orig)) {
-		key = PyList_AsTuple(orig);
-		if (key == NULL) {
-			Py_DECREF(orig);
-			return NULL;
-		}
-	} else if (PyDict_Check(orig)) {
-		/* This is not ideal, but should help reduce the amount of noise */
-		key = PyObject_Repr(orig);
-		if (key == NULL) {
-			Py_DECREF(orig);
-			return NULL;
-		}
-
-	} else {
-		key = orig;
-		Py_INCREF(key);
-	}
-
-	v = PyDict_GetItem(intern_mapping, key);
-	if (v == NULL) {
-		int r = PyDict_SetItem(intern_mapping, key, orig);
-		Py_DECREF(key);
-		if (r == -1) {
-			Py_DECREF(orig);
-			return NULL;
-		}
-		v = orig;
-	} else {
-		Py_DECREF(key);
-		Py_INCREF(v);
-		Py_DECREF(orig);
-	}
-	return v;
-#endif
 }
 
 PyObject* PyObjC_IntFromString(char* v, char**pend, int base)

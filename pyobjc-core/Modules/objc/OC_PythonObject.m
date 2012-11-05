@@ -1510,47 +1510,6 @@ static CFTypeID _NSObjectTypeID;
 @end /* OC_PythonObject class implementation */
 
 
-#if 0
-/*
- * Generic implementation of the core of initWithCoder,
- * returns a reference to a new proxy object.
- *
- * NOTE: an implementation of initWithCoder will have to
- * release self and retain (and then return) the result of 
- * this function.
- */
-NSObject* PyObjC_decodeWithCoder(NSCoder* coder)
-{
-	PyObject* pyObject = NULL;
-	NSObject* result = nil;
-
-	if (PyObjC_Decoder != NULL) {
-		PyObjC_BEGIN_WITH_GIL
-			PyObject* cdr = PyObjC_IdToPython(coder);
-			if (cdr == NULL) {
-				PyObjC_GIL_FORWARD_EXC();
-			}
-
-			pyObject = PyObject_CallFunction(PyObjC_Decoder, "O", cdr);
-			Py_DECREF(cdr);
-			if (pyObject == NULL) {
-				PyObjC_GIL_FORWARD_EXC();
-			}
-
-			result = PyObjC_PythonToId(pyObject);
-			Py_DECREF(pyObject);
-
-		PyObjC_END_WITH_GIL
-		return result;
-	} else {
-		[NSException raise:NSInvalidArgumentException
-				format:@"decoding Python objects is not supported"];
-		return nil;
-
-	}
-}
-#endif
-
 void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 {
 	if (PyObjC_Encoder != NULL) {

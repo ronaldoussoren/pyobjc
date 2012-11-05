@@ -84,7 +84,7 @@ class _BridgeSupportParser (object):
             elif item == objc._C_NSBOOL:
                 result.append(objc._C_BOOL)
 
-            elif item.startswith(objc._C_STRUCT_B) or item.startswith(objc._C_STRUCT_E):
+            elif item.startswith(objc._C_STRUCT_B) or item.startswith(objc._C_UNION_B):
                 m = re.match(r'.([^=]*=)?(.*).$', item)
                 result.append(item[0])
                 result.append(m.group(0) or '')
@@ -269,13 +269,10 @@ class _BridgeSupportParser (object):
         if typestr.startswith(objc._C_STRUCT_B):
             # Look for structs with embbeded function pointers
             # and ignore those
-            idx = typestr.find('=')
-            if idx == -1:
-                idx = typestr.find('?')
-            else:
-                idx = typestr.find('?', idx)
-            if idx != -1:
-                return
+            nm, fields = objc.splitStructSignature(as_bytes(typestr))
+            for nm, tp in fields:
+                if tp == b'?':
+                    return
 
         magic = self.attribute_bool(node, "magic_cookie", None, False)
         try:
@@ -517,7 +514,7 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
                 objc.loadBundleFunctions(bundle, globals, prs.functions)
 
             if inlineTab is not None:
-                objc._loadFunctionList(inlineTab, globals, prs.functions)
+                objc.loadFunctionList(inlineTab, globals, prs.functions)
 
         for name, orig in prs.func_aliases:
             try:

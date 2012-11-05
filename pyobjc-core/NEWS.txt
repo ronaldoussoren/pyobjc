@@ -18,6 +18,26 @@ Version 2.5
      The implementation is currently barely tested and therefore likely
      contains bugs.
 
+- Add explicit deprecation warnings to ``objc.CFToObject`` and
+  ``objc.ObjectToCF``. Both functions barely function at all and will
+  be removed with PyObjC 3.0.
+
+- ``objc.CFToObject`` and ``objc.ObjectToCF`` are no longer available
+  when using Python 3.x, the APIs are used for MacPython support and
+  that part of the standard library is not available with Python 3.x.
+
+- ``objc.splitStruct`` is renamed to ``objc.splitStructSignature`` 
+  and now actually works. The old name is temporarily available as
+  an alias.
+
+- Fix refcounting leak in ``objc.splitSignature``.
+
+- ``objc._loadFunctionList`` is renamed to ``objc.loadFunctionList``
+  and is fully documented. The old name is temporarily available as
+  an alias.
+
+- Improved documentation
+
 
 Version 2.4
 -----------

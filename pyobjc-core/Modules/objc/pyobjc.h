@@ -118,7 +118,6 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include "bundle-variables.h"
 #include "function.h"
 #include "varlist.h"
-#include "parsexml.h"
 #include "objc_super.h"
 #include "fsref.h"
 #include "fsspec.h"

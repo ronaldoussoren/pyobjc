@@ -881,18 +881,6 @@ size_t PyObjC_methodlist_magic(Class cls)
 	unsigned int count;
 
 	methods = class_copyMethodList(cls, &count);
-#if 0
-	unsigned int i;
-	size_t result;
-	result = 0;
-	for (i = 0; i < count; i++) {
-		result = (1000003*result) ^ ((size_t)(
-				method_getImplementation(methods[i])) >> 3);
-	}
-	result = result | (count << 16);
-	free(methods);
-	return result;
-#endif
 	free(methods);
 	return (size_t)count;
 }

@@ -256,9 +256,6 @@ easily creating new Cocoa-Python projects.
 
 PyObjC also supports full introspection of Objective-C classes and
 direct invocation of Objective-C APIs from the interactive interpreter.
-
-PyObjC requires MacOS X 10.4 or later.  This beta release requires
-MacOS X 10.5.
 """
 
 from setuptools import setup, Extension, find_packages

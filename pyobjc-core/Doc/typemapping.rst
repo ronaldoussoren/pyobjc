@@ -97,7 +97,7 @@ tuples of the right arity to pass values to a function.
 The framework wrappers also provide wrapper types that provide a nicer interface,
 those wrappers can be used with indexed access (like tuples), but also have named
 attributes. The wrapper types are mutable, and are comparible with mutable 
-:function:`namedtuple <collections.namedtuple>` objects.
+:func:`namedtuple <collections.namedtuple>` objects.
 
 Unions
 ......

@@ -1,4 +1,4 @@
-__all__ = ['runtime', 'pluginBundle', 'registerPlugin']
+__all__ = ['runtime', 'pluginBundle', 'registerPlugin', 'splitStruct']
 import warnings
 
 class Runtime:
@@ -56,3 +56,13 @@ def pluginBundle(pluginName):
     warnings.warn("Deprecated: use currentBundle()", DeprecationWarning)
     from Foundation import NSBundle
     return NSBundle.bundleWithPath_(_PLUGINS[pluginName])
+
+def splitStruct(value):
+    warnings.warn("Deprecated: use splitStructSignature()", DeprecationWarning)
+    import objc
+    return objc.splitStructSignature()
+
+def _loadFunctionList(*args, **kwds):
+    warnings.warn("Deprecated: use loadFunctionList()", DeprecationWarning)
+    import objc
+    objc.loadFunctionList(*args, **kwds)
