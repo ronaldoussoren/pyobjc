@@ -1,6 +1,9 @@
 API Notes: CoreLocation framework
 =================================
 
+API Notes
+---------
+
 The entire CoreLocation framework is supported
 
 * ``kCLErrorGeocodeFoundNoResult``, ``kCLErrorGeocodeCanceled``

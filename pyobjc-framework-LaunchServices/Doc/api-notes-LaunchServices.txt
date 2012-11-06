@@ -1,16 +1,14 @@
 API Notes: LaunchServices framework
 ===================================
 
-This file documents where functionality in the LaunchServices wrappers does
-not match the behaviour that is described in Apple's documentation for
-(Objective-)C code.  Any API not mentioned here should work correctly, using
-the mapping described in PyObjC's documentation for pass-by-reference APIs.
-
 .. note::
 
    The LaunchServices bindings are fairly new and are not yet fully complete,
    there are likely problems with these bindings that are not described in this
    file.
+
+API Notes
+---------
 
 * ``LSSharedFileListSetAuthorization``
 

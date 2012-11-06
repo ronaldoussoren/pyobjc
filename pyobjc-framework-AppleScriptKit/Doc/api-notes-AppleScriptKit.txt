@@ -1,4 +1,7 @@
 API Notes: AppleScriptKit framework
 ===================================
 
+API Notes
+---------
+
 The AppleScriptKit framework is wrapped completely by PyObjC.

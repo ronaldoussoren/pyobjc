@@ -1,4 +1,7 @@
 API Notes: ScreenSaver framework
 ================================
 
+API Notes
+---------
+
 The PyObjC bindings for the ScreenSaver framework are complete.

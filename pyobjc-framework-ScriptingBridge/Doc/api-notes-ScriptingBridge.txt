@@ -1,8 +1,6 @@
 API Notes: ScriptingBridge framework
 ====================================
 
-The PyObjC bindings for the ScriptingBridge framework are
-complete.
 
 Basic usage
 -----------
@@ -19,3 +17,11 @@ In Python you can just as easy create a dynamic proxy object::
 This can then be used to call "AppleScript" methods, like this::
 
 	print iTunes.currentTrack().name()
+
+
+API Notes
+---------
+
+The PyObjC bindings for the ScriptingBridge framework are
+complete.
+

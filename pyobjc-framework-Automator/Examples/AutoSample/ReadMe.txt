@@ -1,5 +1,5 @@
 Overview
-========
+--------
 
 This sample displays a single window containing a list of workflows and a read only ``AMWorkflowView``.  The workflows listed are the ones found in the Application's resources in the folder::
 
@@ -12,7 +12,7 @@ When a click is received on the name of a workflow in the ``NSTableView``, the w
 When a double-click is received on the name of a workflow in the ``NSTableView`` (or, when the "run" button is pressed), the selected workflow is displayed in the ``AMWorkflowView`` on the right hand side of the window and it is run.
 
 Initialization Details
-======================
+----------------------
 
 All of the setup for this sample is performed in the ``-awakeFromNib`` method.  The important features to note there are as follows:
 
@@ -39,7 +39,7 @@ All of these releationships have been set up by control-dragging between objects
 
 
 ``AMWorkflowController`` delegate methods
-==========================================
+-----------------------------------------
 
 We implement two ``AMWorkflowController`` delegate methods in this sample.  Namely, ``workflowControllerWillRun:`` and ``workflowControllerDidRun:``.  The first method is called just before a workflow being managed by the ``AMWorkflowController`` is run and the second is called just after it finishes running.  
 
@@ -49,7 +49,7 @@ We use these methods to display the progress bar and to set the internal ``runni
 
 
 Running a workflow
-==================
+------------------
 
 We have set the ``run`` method on the ``AMWorkflowController`` as the target action for the run button.  Bindings based on the ``runningWorkflow`` flag control the availability of this button (by controlling its enabled state) for starting a new workflow.
 
@@ -59,6 +59,6 @@ We have set the ``stop`` method on the ``AMWorkflowController`` as the target ac
 
 
 Where to next?
-==============
+--------------
 
 Documentation for Automator ``AMWorkflowController`` and ``AMWorkflow`` can be found in the developer documentation.

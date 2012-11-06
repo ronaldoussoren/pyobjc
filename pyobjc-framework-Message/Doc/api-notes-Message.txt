@@ -1,6 +1,9 @@
 API Notes: Message framework
 ============================
 
+API Notes
+---------
+
 The PyObjC bindings for the Message framework are complete.
 
 .. note::

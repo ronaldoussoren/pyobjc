@@ -1,13 +1,16 @@
 API notes: AddressBook framework
 ================================
 
+API Notes
+---------
+
 Plugin API
-----------
+..........
 
 The C API for creating plugin bundles is not supported. Use the Objective-C API instead.
 
 ABPeoplePicker C API
---------------------
+....................
 
 ``ABPickerSetDelegate`` and ``ABPickerGetDelegate`` use an API that isn't 
 wrapped by PyObjC.

@@ -1,4 +1,7 @@
 API Notes: SyncServices framework
 =================================
 
+API Notes
+---------
+
 PyObjC's bindings for the SyncServices framework are complete.

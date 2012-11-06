@@ -1,11 +1,15 @@
-===========
-PyObjC NEWS
-===========
+What's new in PyObjC
+====================
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.5
------------
+Version 2.5b1
+-------------
+
+.. note::
+
+   Version 2.5 is currently in development and hasn't been released
+   yet.
 
 - Issue #22: Reimplement support for bridgesupport files
 
@@ -142,7 +146,7 @@ Version 2.4
 
 - Introduced a way to compile bridgesupport data and lazily load wrappers.
 
-  Avoid using "from Cocoa import *" to get the most benefits from this,
+  Avoid using "from Cocoa import \*" to get the most benefits from this,
   use either "import Cocoa" or "from Cocoa import NSObject".
 
 - ``objc.initFrameworkWrapper`` is now deprecated, switch to the new
@@ -308,9 +312,9 @@ Version 2.3
   in Apple's frameworks.
 
 - The PyObjCTest testsuite now supports version-specific tests: for
-  Python 2.x it will load modules whose name starts with 'test2_' and for
-  Python 3.x those starting with 'test3_'. For both versions it will
-  load test modules whose name starts with 'test_' as well.
+  Python 2.x it will load modules whose name starts with 'test2\_' and for
+  Python 3.x those starting with 'test3\_'. For both versions it will
+  load test modules whose name starts with 'test\_' as well.
 
 - Renamed the assertion functions in ``PyObjCTools.TestSupport``, added
   ``assertFoo`` methods and deprecated the ``failIfFoo`` and ``failUnlessFoo``

@@ -1,4 +1,7 @@
 API Notes: InputMethodKit framework
 ===================================
 
+API Notes
+---------
+
 All API's in the InputMethodKit are wrapped by PyObjC.

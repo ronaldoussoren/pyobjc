@@ -1,6 +1,9 @@
 API notes: EventKit framework
 =============================
 
+API Notes
+---------
+
 The entire "EventKit" framework on MacOSX 10.8 (or later) is available from Python.
 
 .. note:: 

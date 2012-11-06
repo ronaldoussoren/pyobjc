@@ -1,11 +1,14 @@
 API Notes: OpenDirectory and CFOpenDirectory frameworks
 =======================================================
 
+API Notes
+---------
+
 Both the OpenDirectory framework and the embedded CFOpenDirectory framework are fully wrapped
 and can be used as described in the generic PyObjC documentation.
 
 ODQuerySetCallback
-------------------
+..................
 
 The callback function is stored by the framework, the callable can therefore not be
 a generic callable, but must be a callable that is annotated using the ``objc.callbackFor``

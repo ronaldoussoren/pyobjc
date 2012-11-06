@@ -1,4 +1,7 @@
 API Notes: PubSub framework
 ===========================
 
+API Notes
+---------
+
 The PyObjC bindings for the PubSub framework are complete.

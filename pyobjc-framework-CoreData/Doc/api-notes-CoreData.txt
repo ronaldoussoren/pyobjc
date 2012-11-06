@@ -1,12 +1,6 @@
 API Notes: CoreData framework
 =============================
 
-* class ``NSManagedObject``
-
-  The methods ``setObservationInfo:`` and ``observationInfo`` cannot be
-  used from Python.
-
-
 Compatibility information
 -------------------------
 
@@ -14,3 +8,14 @@ When you're running on MacOSX 10.4 PyObjC will automaticly translate
 Python attribute access in KVO access to the underlying ``NSManagedObject``.
 This functionality no longer works on MacOSX 10.5, you have to use proper
 KVO methods to access properties to be compatible with both OSX 10.4 and 10.5.
+
+
+API Notes
+---------
+
+* class ``NSManagedObject``
+
+  The methods ``setObservationInfo:`` and ``observationInfo`` cannot be
+  used from Python.
+
+

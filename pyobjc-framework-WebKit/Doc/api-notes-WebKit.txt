@@ -1,6 +1,9 @@
 API Notes: WebKit framework
 ===========================
 
+API Notes
+---------
+
 * Carbon integration functions are not supported.
 
   The relevant functions are: ``HIWebViewCreate``, ``HIWebViewCreateWithClass``

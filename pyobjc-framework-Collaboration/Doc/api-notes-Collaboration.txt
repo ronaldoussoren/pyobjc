@@ -1,4 +1,7 @@
 API Notes: Collaboration framework
 ==================================
 
+API Notes
+---------
+
 The Collaboration framework wrappers for PyObjC are complete.

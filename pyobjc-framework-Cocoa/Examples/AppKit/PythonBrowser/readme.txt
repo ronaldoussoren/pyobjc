@@ -1,5 +1,4 @@
-a module and/or demo program implementing a Python object browser
-=================================================================
+A module and/or demo program implementing a Python object browser
 
 It can be used in two ways:
 1) as a standalone demo app that shows how to use the NSOutlineView class

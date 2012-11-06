@@ -1,4 +1,7 @@
 API Notes: InstantMessage framework
 ===================================
 
+API Notes
+---------
+
 All API's in the InstantMessage framework are wrapped by PyObjC.

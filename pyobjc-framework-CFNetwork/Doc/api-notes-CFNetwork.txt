@@ -1,6 +1,9 @@
 API Notes: CFNetwork framework
 ==============================
 
+API Notes
+---------
+
 * ``CFNetworkExecuteProxyAutoConfigurationScript`` and ``CFNetworkExecuteProxyAutoConfigurationURL``
 
   The ``context`` argument can be an arbitrary Python object.

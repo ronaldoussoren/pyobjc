@@ -1,6 +1,9 @@
 API notes: Accounts framework
 =============================
 
+API Notes
+---------
+
 The entire "Accounts" framework on MacOSX 10.8 (or later) is available from Python.
 
 .. note:: 

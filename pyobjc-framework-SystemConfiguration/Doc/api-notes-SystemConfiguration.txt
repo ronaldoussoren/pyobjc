@@ -1,22 +1,27 @@
 API Notes: SystemConfiguration framework
 ========================================
 
-callbacks
+API Notes
 ---------
+
+callbacks
+.........
 
 There are several APIs that have a callback function and context structure in the
 (Objective-)C API. In all cases an arbitrary object can be passed as the context, 
 PyObjC will wrap that in the proper context structure for you.
 
+
 SCDynamicStore
---------------
+...............
 
 The ``context`` argument for ``SCDynamicStoreCreate`` is an arbitrary python object,
 not a ``SCDynamicStoreContext`` structure as it is in C. The bridge will manage that
 context structure for you.
 
+
 SCNetworkCheckReachabilityByAddress
------------------------------------
+...................................
 
 The ``address`` argument should have a value that can also be used with the Python socket
 APIs (that is, a ``(host, port)`` tuple for IPv4 adresses or 

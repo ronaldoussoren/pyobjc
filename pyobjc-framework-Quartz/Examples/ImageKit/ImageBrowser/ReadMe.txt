@@ -1,6 +1,3 @@
-ImageBrowser
-============
-
 This sample demonstrates the ImageKit ``ImageBrowser`` in a basic Cocoa 
 application. It uses IB to create a window an ``ImageBrowser`` and a zoom 
 slider. 

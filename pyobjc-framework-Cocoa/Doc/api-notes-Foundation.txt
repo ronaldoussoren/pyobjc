@@ -1,14 +1,11 @@
 API Notes: Foundation framework
 ===============================
 
-Introduction
-------------
-
-This document describes where the wrappers for Foundation API are different
-from the default straightforward translation of method/function interfaces.
+API Notes
+---------
 
 NSAppleEventDescriptor, NSAppleEventManager
--------------------------------------------
+...........................................
 
 These classes are barely supported, interaction with the lowlevel AppleEvent
 machinery is not tested at all and probably doens't work.
@@ -18,8 +15,9 @@ class.
 
 .. _`appscript library`: http://appscript.sourceforge.net/
 
+
 NSCoder
--------
+.......
 
 * ``-encodeValuesOfObjCTypes:``: Use the basic encoding methods instead
 
@@ -27,7 +25,7 @@ NSCoder
 
 
 NSData, NSMutableData
----------------------
+......................
 
 * ``-getBytes:``: Use ``-bytes`` instead.
 
@@ -44,15 +42,17 @@ NSData, NSMutableData
   Use ``buffer(value)`` instead, those will automaticly be bridged to an instance of a 
   ``NSData`` subclass.
 
+
 ``NSDictionary``
-----------------
+................
 
 * ``-getObjects:andKeys:``
 
    This method is not supported.
 
+
 NSDebug
--------
+.......
 
 * ``NSDebugEnabled``, ``NSZombieEnabled``, ``NSDeallocateZombies``,
   ``NSHangOnUncaughtException``, ``NSKeepAllocationStatistics``: These values are not available 
@@ -61,8 +61,9 @@ NSDebug
 * ``NSIsFreedObject``, ``NSFrameAddress``, ``NSReturnAddress``, ``NSCountFrames``:
    These functions are not available from Python.
 
+
 NSException
------------
+...........
 
 * ``NSSetUncaughtExceptionHandler`` is not supported 
 
@@ -72,15 +73,16 @@ NSException
 
 
 NSGarbageCollector
-------------------
+..................
 
 PyObjC does not fully support running with the garbage collector enabled at the moment. 
 
 * ``disableCollectorForPointer:``, ``enableCollectorForPointer:``: These API's are not
   supported at all.
 
+
 NSGeometry
------------
+...........
 
 * ``NSZeroPoint``, ``NSZeroSize``, ``NSZeroRect``: these are mutable. Do not use them
   to initialize a variable that you'll modify later on, use the default contructor instead.
@@ -102,8 +104,9 @@ NSGeometry
 * The CoreGraphics types ``CGPoint``, ``CGSize`` and ``CGRect`` are interchangeable with
   their Foundation counterparts, there is no need to explicitly convert between them.
 
+
 NSInvocation
-------------
+............
 
 * Struct ``NSObjCValue`` and related constants (such as ``NSObjCNoType``) are not available in
   Python.
@@ -124,36 +127,42 @@ NSInvocation
   This limitation should be fine for most usecases of ``NSInvocation``, please let us know if you
   run into cases where this limitation is a problem.
 
+
 NSMapTable
-----------
+..........
 
 * Using ``NSMapTableObjectPointerPersonality`` is not supported. Trying to access values in
   a maptable with this personality for the keys or values will crash your program.
 
+
 Generic Macros
---------------
+..............
 
 * The function/macros ``MIN``, ``MAX`` and ``ABS`` are not available in Python. Use the
   regular python functions ``min``, ``max`` and ``abs`` instead.
 
+
 NSPointerArray
---------------
+..............
 
 This class is only useable when the array is configured for Object use.
 
+
 NSPointerFunctions
-------------------
+...................
 
 Accessing the actual function properties (such as ``hashFunction``) is not supported.
 
+
 NSMachPort delegate
--------------------
+...................
 
 Implementing or calling ``handleMachMessage:`` is not supported. The argument is mapped on
 a plain python integer, accessing the actual Mach message buffer is not possible.
 
+
 ``NSUUID``
-----------
+..........
 
 The method ``initWithUUIDBytes:`` has an argument of type bytes with length 16. 
 

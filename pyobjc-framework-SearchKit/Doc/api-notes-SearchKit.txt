@@ -1,6 +1,10 @@
 API Notes: SearchKit framework
 ==============================
 
+API Notes
+---------
+
+
 SKIndexClose
 ............
 

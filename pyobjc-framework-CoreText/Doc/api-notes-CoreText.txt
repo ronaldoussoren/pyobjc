@@ -1,6 +1,9 @@
 API Notes: CoreText framework
 =============================
 
+API Notes
+---------
+
 * ``CTFontCreateWithQuickdrawInstance``
 
   This function is not supported by PyObjC.

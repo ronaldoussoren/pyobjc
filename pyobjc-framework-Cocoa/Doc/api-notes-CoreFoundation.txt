@@ -1,18 +1,12 @@
 API Notes: CoreFoundation framework
 ===================================
 
-Introduction
-------------
+.. warning::
 
-This document describes where the wrappers for CoreFoundation API are different
-from the default straightforward translation of method/function interfaces.
+   Incorrect usage of CoreFoundation API's will often cause crashes of the Python interpreter. This is
+   caused by the way CoreFoundation is implemented and it is not possible work create nice Python exceptions
+   when this happens. The same crashes also happen when for incorrect usage in C programs.
 
-WARNING
--------
-
-Incorrect usage of CoreFoundation API's will often cause crashes of the Python interpreter. This is
-caused by the way CoreFoundation is implemented and it is not possible work create nice Python exceptions
-when this happens. The same crashes also happen when for incorrect usage in C programs.
 
 Containers
 ----------
@@ -21,6 +15,7 @@ Container datastructures, such as ``CFArray`` and ``CFTree``, are only
 supported when the contain only ``CFTypeRef`` values even when the actual
 C API supports arbitrary pointer values.
 
+
 Toll-free bridging
 ------------------
 
@@ -28,11 +23,12 @@ Toll-free bridging applies to Python as well, and is more convenient than
 in Objective-C because you don't have to cast between a CoreFoundation type
 and an Objective-C class.
 
-
+API Notes
+---------
 
 
 CFArrayRef
-----------
+..........
 
 This type is only supported when the ``callbacks`` are 
 ``kCFTypeArrayCallBacks``, accessing other ``CFArray`` values from Python is 
@@ -53,7 +49,7 @@ Note that all ``CFArrayRef`` instances are instances of ``NSArray`` or
 
 
 CFBagRef
---------
+........
 
 This type is only supported when the ``callbacks`` are 
 ``kCFTypeBagCallBacks``, accessing other ``CFBag`` values from Python is not
@@ -67,8 +63,9 @@ supported.
 * The ``context`` argument for ``CFBagApplyFunction`` can be an arbitrary
   Python object.
 
+
 CFBinaryHeapRef
----------------
+...............
 
 The ``CFBinaryHeap`` wrappers assume that values are instances of CoreFoundation
 types or Objective-C classes.
@@ -87,7 +84,7 @@ types or Objective-C classes.
 
 
 CFBundle
---------
+........
 
 * ``CFBundleGetFunctionPointerForName``, 
   ``CFBundleGetFunctionPointersForNames``,
@@ -97,7 +94,7 @@ CFBundle
   PyObjC documentation for details).
 
 CFData
-------
+......
 
 * ``CFDataGetBytePtr``, ``CFDataGetMutableBytePtr``: these functions return
   an ``objc.varlist`` of bytes. A varlist doesn't implement the buffer 
@@ -105,7 +102,7 @@ CFData
   the buffer when you're using ``CFDataGetMutableBytePtr``).
 
 CFDictionary
-------------
+............
 
 * ``CFDictionaryCreate``, ``CFDictionaryCreateMutable``: the callback
   arguments are must be ``kCFTypeDictionaryKeyCallBacks`` and
@@ -117,7 +114,7 @@ CFDictionary
   arbitrary Python object.
 
 CFFileDescriptor
-----------------
+................
 
 * The ``context`` argument for ``CFFileDescriptorCreate`` is a python object,
   the ``CFFileDescriptorContext`` is automaticly added by the bridge.
@@ -130,10 +127,12 @@ CFFileDescriptor
   objects that weren't created in Python code.
 
 CFMachPort
-----------
+..........
 
-NOTE: the current bindings for the CFMachPort API are probably useless, as 
-there doesn't seem to be a proper binding of the low-level API's.
+.. note::
+
+   The current bindings for the CFMachPort API are probably useless, as 
+   there doesn't seem to be a proper binding of the low-level API's.
 
 * The ``context`` argument for ``CFMachPortCreate``  and 
   ``CFMachPortCreateWithPort`` is a python object, the 
@@ -143,11 +142,13 @@ there doesn't seem to be a proper binding of the low-level API's.
   used in ``CFMachPortContext``, not a ``CFMachPortContext``
   structure.
   
-  NOTE: This means it is unsafe to call ``CFMachPortContext`` on
-  objects that weren't created in Python code.
+  .. note:: 
+  
+     This means it is unsafe to call ``CFMachPortContext`` on
+     objects that weren't created in Python code.
 
 CFMessagePort
--------------
+.............
 
 * ``CFMessagePortSetDispatchQueue``: not supported yet because there
   are no wrappers for dispatch_queue_t yet.
@@ -158,7 +159,7 @@ CFMessagePort
   ports, remote ports don't have a context).
 
 CFNumber
---------
+........
 
 Note that Python numbers are automaticly translated to/from Objective-C
 numbers (NSNumber, which toll-free bridged to CFNumber). This means the
@@ -167,7 +168,7 @@ CFNumber functions should almost never be necessary.
 That said, all CFNumber API's do actually work.
 
 CFNumberFormatter
------------------
+.................
 
 * ``CFNumberFormatterCreateStringWithValue``: this function is not 
   supported at the moment, use ``CFNumberFormatterCreateStringWithNumber``
@@ -177,17 +178,21 @@ CFNumberFormatter
   supported at the moment, use ``CFNumberFormatterCreateNumberFromString``
   instead.
 
-NOTE: Both function require a manual wrapper to support, implementations are
-welcome.
+.. note::
+
+   Both function require a manual wrapper to support, implementations are
+   welcome.
+
 
 CFPlugin
---------
+........
 
 The ``CFPlugin`` API's are not supported at the moment. Likewise for the 
 COM interface support in CoreFoundation.
 
+
 CFRunLoopSource
----------------
+...............
 
 The 'context' argument for ``CFRunLoopSourceCreate`` should be a tuple. The first
 element of the tuple is ``0``, the other elements are: a ``schedule`` callback,
@@ -200,21 +205,23 @@ The ``CFRunLoopSourceGetContext`` returns this tuple, and will raise an exceptio
 when the context was not set from Python (that is, when asking for the context of
 a runloop source that was created in C code).
 
+
 CFRunLoopTimer
---------------
+..............
 
 The ``context`` argument of ``CFRunLoopTimerCreate`` can be an arbitrary python
 object. This object is returned by ``CFRunLoopTimerGetContext``.
 
+
 CFRunLoopObserver
------------------
+.................
 
 The ``context`` argument of ``CFRunLoopObserverCreate`` can be an arbitrary python
 object. This object is returned by ``CFRunLoopObserverGetContext``.
 
 
 CFSet
------
+.....
 
 * ``CFSetCreate``, ``CFSetCreateMutable``: the ``callbacks`` argument is
   a magic argument in Python, not a collection of function pointers. It
@@ -222,8 +229,9 @@ CFSet
 
 * ``CFSetApplyFunction``: The ``context`` argument can be an arbitrary object.
 
+
 CFSocket
---------
+........
 
 The socket context is an arbitrary object, not a callback structure. This has
 several effects:
@@ -239,13 +247,14 @@ several effects:
 
 
 CFStream
---------
+........
 
 * You can use any Python object as the client context for ``CFReadStreamSetClient`` 
   and ``CFWriteStreamSetClient``. Use ``objc.NULL`` to remove a client.
 
+
 CFString
---------
+........
 
 * The 'Pascal String' API's are not supported (that is,
   ``CFStringAppendPascalString``, ``CFStringCreateWithPascalString``,
@@ -257,14 +266,15 @@ CFString
 
 
 CFTree
-------
+......
 
 * The ``context`` attribute (that is ``context`` argument for
   ``CFTreeCreate`` and ``CFTreeGetContext``) can be an arbitrary python
   object, it is not a ``CFTreeContext`` structure as in C.
 
+
 CFXMLParser, CFXMLNode
-----------------------
+......................
 
 * These API's are not supported for now. The ``Create`` functions need
   manual wrappers, which haven't been written yet. There are also no
