@@ -30,7 +30,7 @@ Objective-C programmer, some of them will seem strange or even
 that PyObjC works is quite compliant with the `Zen of Python`_
 (``import this``).  In fact, Ronald is Dutch ;)
 
-.. _`Zen of Python`: http://www.python.org/peps/pep-0020.html
+.. _`Zen of Python`: http://www.python.org/peps/pep-020.html
 
 With no further ado, here are the three most important things you
 *must* know before embarking on any PyObjC voyage:
@@ -680,14 +680,12 @@ The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t. 
 reference counting.
 
-It turns out that Cocoa uses a primitive form of `weak references`_.  Those 
-are not true `weak references`_ as in Python, but use-cases where an object 
+It turns out that Cocoa uses a primitive form of :mod:`weak references <weakref>`.  Those 
+are not true :mod:`weak references <weakref>` as in Python, but use-cases where an object 
 stores a reference to another object without increasing the reference count
 for that other object.  The bridge cannot solve the issues this introduces
 for you, which means that you get hard crashes when you're not careful when
-dealing with those `weak references`_.
-
-.. _`weak references`: http://www.python.org/doc/current/lib/module-weakref.html
+dealing with those :mod:`weak references <weakref>`.
 
 The basic rule to deal with weak references is: make sure objects stays
 alive as long as someone might have a weak reference to them.  Due to the way
@@ -743,9 +741,9 @@ instead of Python lists for instance variables that will be observed and contain
 a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 ``dict``).
 
-.. _`Cocoa Bindings`: http://developer.apple.com/documentation/Cocoa/Conceptual/CocoaBindings/
-.. _`Key-Value Coding`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueCoding/
-.. _`Key-Value Observing`: http://developer.apple.com/documentation/Cocoa/Conceptual/KeyValueObserving/
+.. _`Cocoa Bindings`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
+.. _`Key-Value Coding`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueCoding/Articles/KeyValueCoding.html
+.. _`Key-Value Observing`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
 NOTE: Key-Value Observing is not supported for "pure" python objects, that
 is instances of classes that don't inherit from ``NSObject``. Adding such 
@@ -875,19 +873,15 @@ More information on Cocoa programming can be found at:
 
 * `Cocoa examples at the Apple developer website`_
 
-* `stepwise.com`_
-
 * Your local bookstore or library
 
 .. _`PyObjC Example index`: ../Examples/00ReadMe.html
 
-..  _`Cocoa libraries`: http://developer.apple.com/referencelibrary/API_Fundamentals/Cocoa-api-date.html
+..  _`Cocoa libraries`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html#//apple_ref/doc/uid/TP40002974
 
-..  _`Cocoa documentation at the Apple developer website`: http://developer.apple.com/documentation/Cocoa/Cocoa.html
+..  _`Cocoa documentation at the Apple developer website`: https://developer.apple.com/library/mac/navigation/index.html#section=Frameworks&topic=Cocoa%20Layer
 
-.. _`Cocoa examples at the Apple developer website`: http://developer.apple.com/samplecode/Cocoa/index.html
-
-.. _`stepwise.com`: http://www.stepwise.com/
+.. _`Cocoa examples at the Apple developer website`: https://developer.apple.com/library/mac/navigation/index.html#section=Resource%20Types&topic=Sample%20Code
 
 Notes on specific tasks
 -----------------------

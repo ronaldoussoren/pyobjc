@@ -28,7 +28,7 @@ preferably by prefixing names with ``PyObjC`` or ``pyobjc``.  This should make
 it clear to users where they should look for documentation of an item: The
 Apple documentation or ours.
 
-.. _`PEP 8`: http://www.python.org/peps/pep-0008.txt
+.. _`PEP 8`: http://www.python.org/peps/pep-008.txt
 
 C code
 ------
@@ -102,4 +102,4 @@ in the DocUtils source tree.
         
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 
-.. _`PEP 7`: http://www.python.org/peps/pep-0007.txt
+.. _`PEP 7`: http://www.python.org/peps/pep-007.txt
