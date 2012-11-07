@@ -28,6 +28,12 @@ to ensure you'll get all relevant definitions.
 API Notes
 ---------
 
+API Extensions
+..............
+
+See :doc:`/api/coregraphics-context-managers` for some extensions to the API
+in the CoreGraphics framework.
+
 Callbacks
 .........
 

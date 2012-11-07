@@ -1,12 +1,16 @@
-=================================================
-API Description for ``PyObjCTools.FndCategories``
-=================================================
+====================================================
+API Description for :mod:`PyObjCTools.FndCategories`
+====================================================
+
+.. module:: PyObjCTools.FndCategories
+   :synopsis: Useful categories on classes from Foundation
+
 
 Introduction
 ------------
 
-The module ``PyObjCTools.FndCategories`` defines a number of categories on
-classes from the ``Foundation`` framework. These categories introduce
+The module :mod:`PyObjCTools.FndCategories` defines a number of categories on
+classes from the *Foundation* framework. These categories introduce
 new methods that aren't present in that framework.
 
 To use these new methods use the following code somewhere in your program::
@@ -16,17 +20,17 @@ To use these new methods use the following code somewhere in your program::
        import PyObjCTools.FndCategories
 
 
-Additional methods on ``NSAffineTransform``
--------------------------------------------
+Additional methods on :class:`NSAffineTransform`
+-------------------------------------------------
 
-This module defines a number of new methods for ``NSAffineTransform``:
+.. class:: NSAffineTransform
 
-* ``rotateByDegrees_atPoint_(angle, point)``
+   .. method:: rotateByDegrees_atPoint_(angle, point)
 
-  This is simular to ``rotateByDegrees_`` but rotates around ``point`` instead
-  of the origin.
+      This is simular to ``rotateByDegrees_`` but rotates around ``point`` instead
+      of the origin.
 
-* ``rotateByRadians_atPoint_(angle, point)``
+   .. method:: rotateByRadians_atPoint_(angle, point)
 
-  This is simular to ``rotateByRadians_`` but rotates around ``point`` instead
-  of the origin.
+      This is simular to ``rotateByRadians_`` but rotates around ``point`` instead
+      of the origin.

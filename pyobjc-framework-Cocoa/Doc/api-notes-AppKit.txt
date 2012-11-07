@@ -4,6 +4,12 @@ API Notes: AppKit framework
 API Notes
 ---------
 
+API Extensions
+...............
+
+See :doc:`/api/module-PyObjCTools.AppCategories` for same extensions for
+the APIs from the AppKit framework.
+
 ``NSColorSpace``
 ................
 

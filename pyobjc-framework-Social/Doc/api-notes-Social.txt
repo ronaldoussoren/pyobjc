@@ -1,4 +1,4 @@
-API notes: Social framework
+API Notes: Social framework
 ===========================
 
 API Notes

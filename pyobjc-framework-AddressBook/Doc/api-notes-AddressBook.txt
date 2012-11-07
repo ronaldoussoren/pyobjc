@@ -1,4 +1,4 @@
-API notes: AddressBook framework
+API Notes: AddressBook framework
 ================================
 
 API Notes

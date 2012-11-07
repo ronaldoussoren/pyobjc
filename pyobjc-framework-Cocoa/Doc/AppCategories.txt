@@ -1,12 +1,16 @@
-=================================================
-API Description for ``PyObjCTools.AppCategories``
-=================================================
+====================================================
+API Description for :mod:`PyObjCTools.AppCategories`
+====================================================
+
+.. module:: PyObjCTools.AppCategories
+   :synopsis: Useful categories on classes from AppKit
+
 
 Introduction
 ------------
 
-The module ``PyObjCTools.AppCategories`` defines a number of categories on
-classes from the ``AppKit`` framework. These categories introduce
+The module :mod:`PyObjCTools.AppCategories` defines a number of categories on
+classes from the *AppKit* framework. These categories introduce
 new methods that aren't present in that framework.
 
 To use these new methods use the following code somewhere in your program:
@@ -21,20 +25,20 @@ Additional methods on ``NSGraphicsContext``
 
 This module defines a method for ``NSGraphicsContext``:
 
-* ``savedGraphicsState``
+.. method:: NSGraphicsContext.savedGraphicsState
 
-  This is a Python context-manager for use with the ``with`` statement.
+   This is a Python context-manager for use with the ``with`` statement.
 
-  Usage:
+   Usage:
 
-    .. sourcecode:: python
+   .. sourcecode:: python
 
       with NSGraphicsContext.savedGraphicsState():
           pass
 
-  This is equivalent to:
+   This is equivalent to:
 
-    .. sourcecode:: python
+   .. sourcecode:: python
 
       NSGraphicsContext.saveGraphicsState()
       try:
@@ -46,7 +50,7 @@ This module defines a method for ``NSGraphicsContext``:
 Context-manager for ``NSAnimationContext``
 ------------------------------------------
 
-Class ``NSAnimationContext`` can be used as the context for a ``with`` 
+Class :c:type:`NSAnimationContext` can be used as the context for a ``with`` 
 statement:
 
     .. sourcecode:: python

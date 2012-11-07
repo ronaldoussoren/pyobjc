@@ -1,4 +1,4 @@
-API notes: EventKit framework
+API Notes: EventKit framework
 =============================
 
 API Notes

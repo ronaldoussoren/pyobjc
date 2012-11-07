@@ -4,6 +4,12 @@ API Notes: Foundation framework
 API Notes
 ---------
 
+API additions
+.............
+
+See :doc:`/api/module-PyObjCTools.FndCategories` for some API extensions
+for the Foundation framework.
+
 NSAppleEventDescriptor, NSAppleEventManager
 ...........................................
 
