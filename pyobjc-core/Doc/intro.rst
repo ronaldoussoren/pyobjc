@@ -27,10 +27,8 @@ When dealing with the Objective-C runtime, there are certain patterns
 you need to learn when writing Python code.  If you're not already an
 Objective-C programmer, some of them will seem strange or even
 "un-pythonic" at first.  However, you will get used to it, and the way
-that PyObjC works is quite compliant with the `Zen of Python`_
-(``import this``).  In fact, Ronald is Dutch ;)
-
-.. _`Zen of Python`: http://www.python.org/peps/pep-020.html
+that PyObjC works is quite compliant with the :pep:`20` (the Zen of Python,
+``import this``).  In fact, Ronald is Dutch ;)
 
 With no further ado, here are the three most important things you
 *must* know before embarking on any PyObjC voyage:

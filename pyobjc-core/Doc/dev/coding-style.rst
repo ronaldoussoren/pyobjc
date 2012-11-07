@@ -20,7 +20,7 @@ code.
 Python code
 -----------
 
-The coding style for core Python is used (see `PEP 8`_).  For consistency with
+The coding style for core Python is used (see :pep:`8`).  For consistency with
 Cocoa we use mixed-case identifiers (like ``lookUpClass``).
 
 PyObjC extensions to Apple frameworks should be clearly marked as such, 
@@ -28,12 +28,10 @@ preferably by prefixing names with ``PyObjC`` or ``pyobjc``.  This should make
 it clear to users where they should look for documentation of an item: The
 Apple documentation or ours.
 
-.. _`PEP 8`: http://www.python.org/peps/pep-008.txt
-
 C code
 ------
 
-The coding style for core Python is used (see `PEP 7`_).  We use ``PyObjC`` 
+The coding style for core Python is used (see :pep:`7`).  We use ``PyObjC`` 
 instead of ``Py`` as the prefix for globally visible symbols.
 
 All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as
@@ -101,5 +99,3 @@ in the DocUtils source tree.
     any other ReST markup.
         
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
-
-.. _`PEP 7`: http://www.python.org/peps/pep-007.txt

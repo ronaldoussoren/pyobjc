@@ -98,7 +98,7 @@ You can also just make up the signature, which is quite easy once you get the
 hang of it.  The signature for this method is 'v@:^@@'.  See `Type Encodings`_
 for the list of valid encoding characters for the Apple Objective-C runtime.
 
-.. _`Type Encodings`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/RuntimeOverview/chapter_4_section_6.html
+.. _`Type Encodings`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1
 
 Let's say the first argument is an output parameter.  Output parameters are 
 denoted in the signature string using the character 'o' before the actual

@@ -432,7 +432,7 @@ Version 2.2 (2009-11-24)
     such as an ``NSArray``, and there are no direct references to the block from
     Python.
 
-.. __: http://llvm.org/svn/llvm-project/cfe/trunk/docs/Block-ABI-Apple.txt
+.. __: http://clang.llvm.org/docs/Block-ABI-Apple.txt
 
 - ``objc.inject`` is no longer support. This was code that had no real relation
   to the rest of PyObjC and was only working in 32-bit mode with little reason

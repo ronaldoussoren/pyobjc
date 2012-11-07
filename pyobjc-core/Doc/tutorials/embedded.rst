@@ -165,7 +165,7 @@ There a several projects that improve upon the built-in AppleScript support
 (or to be more precise "application scripting support").  One of those is
 `AppScript`_.
 
-.. _`AppScript`: http://freespace.virgin.net/hamish.sanderson/appscript.html
+.. _`AppScript`: http://appscript.sourceforge.net
 
 When you have this module installed you can replace the contents of
 ``ITunesCommuncation.py`` with ``ITunesCommunication_AppScript.py``,
