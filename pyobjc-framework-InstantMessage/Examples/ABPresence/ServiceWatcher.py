@@ -7,19 +7,19 @@ kStatusImagesChanged = u"StatusImagesChanged"
 
 class ServiceWatcher (NSObject):
     def startMonitoring(self):
-	nCenter = IMService.notificationCenter()
+        nCenter = IMService.notificationCenter()
 
-	nCenter.addObserver_selector_name_object_(
+        nCenter.addObserver_selector_name_object_(
                 self, 'imPersonStatusChangedNotification:',
                 IMPersonStatusChangedNotification, None)
-	
-	nCenter.addObserver_selector_name_object_(
+        
+        nCenter.addObserver_selector_name_object_(
                 self, 'imStatusImagesChangedAppearanceNotification:',
                 IMStatusImagesChangedAppearanceNotification, None)
 
     def stopMonitoring(self):
-	nCenter = IMService.notificationCenter()
-	nCenter.removeObserver_(self)
+        nCenter = IMService.notificationCenter()
+        nCenter.removeObserver_(self)
 
     def awakeFromNib(self):
         self.startMonitoring()
@@ -30,10 +30,10 @@ class ServiceWatcher (NSObject):
     # information dictionary will always contain an 
     # IMPersonScreenNameKey and an IMPersonStatusKey, and no others.
     def imPersonStatusChangedNotification_(self, notification):
-	service = notification.object()
-	userInfo = notification.userInfo()
-	screenName = userInfo[IMPersonScreenNameKey]
-	abPersons = service.peopleWithScreenName_(screenName)
+        service = notification.object()
+        userInfo = notification.userInfo()
+        screenName = userInfo[IMPersonScreenNameKey]
+        abPersons = service.peopleWithScreenName_(screenName)
 
         center = NSNotificationCenter.defaultCenter()
         for person in abPersons:
