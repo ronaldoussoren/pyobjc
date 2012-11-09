@@ -13,6 +13,9 @@ Version 2.4.1
   Fix is based on a patch by "Kentzo" with further updates and tests by
   Ronald.
 
+- Rename ReadMe.txt to README.txt to work around misfeature in the 
+  sdist command in distutils.
+
 Version 2.4
 -----------
 
