@@ -53,13 +53,27 @@ else:
         return value.decode('ascii')
 
 class _BridgeSupportParser (object):
+    """
+    Parser for the bridge support file format. 
+
+    Instances of this class will not update the bridge state,
+    this makes it easier to test the class.
+    """
     TAG_MAP={}
 
     def __init__(self, xmldata, frameworkName):
-        self.values = {}
         self.frameworkName = frameworkName
+
+        self.cftypes = []
+        self.constants = []
         self.func_aliases = []
         self.functions = []
+        self.informal_protocols = []
+        self.meta = {}
+        self.opaque = []
+        self.structs = []
+        self.values = {}
+
         self.process_data(xmldata)
 
     def process_data(self, xmldata):
@@ -85,28 +99,28 @@ class _BridgeSupportParser (object):
                 result.append(objc._C_BOOL)
 
             elif item.startswith(objc._C_STRUCT_B) or item.startswith(objc._C_UNION_B):
-                m = re.match(r'.([^=]*=)?(.*).$', item)
-                result.append(item[0])
-                result.append(m.group(0) or '')
-                fields = m.group(1)
-                if fields.startswith('"'):
-                    for idx, value in enumerate(re.split('("[^"]*")', fields))[1:]:
-                        if idx % 2 == 0:
-                            # name
-                            result.append(value)
-                        else:
-                            result.append(self.typestr2typestr(value))
-                else:
-                    for value in objc.splitSignature(fields):
-                        result.append(self.typestr2typestr(fields))
+                # unions and structs have the same structure
+                start, stop = item[:1], item[-1:]
 
-                result.append(item[-1])
+                name, fields = objc.splitStructSignature(objc._C_STRUCT_B + as_bytes(item[1:-1]) + objc._C_STRUCT_E)
+                result.append(start)
+                result.append(name)
+                result.append(b'=')
+                for nm, tp in fields:
+                    if nm is not None:
+                        result.append(b'"')
+                        result.append(nm)
+                        result.append(b'"')
+                    
+                    result.append(as_bytes(self.typestr2typestr(tp)))
+                result.append(stop)
+
 
             elif item.startswith(objc._C_ARY_B):
                 m = re.match(r'^.(\d*)(.*).$', item)
                 result.append(objc._C_ARY_B)
-                item.append(m.group(1))
-                item.append(self.typestr2typestr(m.group(2)))
+                result.append(m.group(1))
+                result.append(self.typestr2typestr(m.group(2)))
                 result.append(objc._C_ARY_E)
 
             else:
@@ -244,17 +258,21 @@ class _BridgeSupportParser (object):
         typestr = as_bytes(self.typestr2typestr(typestr))
 
         if tollfree:
-            objc.registerCFSignature(name, typestr, None, tollfree)
+            self.cftypes.append((name, typestr, None, tollfree))
+
         else:
+            if funcname is None:
+                funcname = name[:-3] + 'GetTypeID'
+
             try:
-                dll = ctypes.cdll(None)
+                dll = ctypes.CDLL(None)
                 gettypeid = getattr(dll, funcname)
                 gettypeid.restype = ctypes.c_long
             except AttributeError:
                 objc.registerCFSignature(name, typestr, None, "NSCFType")
                 return
 
-            objc.registerCFSignature(name, gettypeid(), typeId)
+            self.cftypes.append((name, gettypeid(), typeId))
 
 
     def do_constant(self, node):
@@ -275,12 +293,7 @@ class _BridgeSupportParser (object):
                     return
 
         magic = self.attribute_bool(node, "magic_cookie", None, False)
-        try:
-            value = objc._loadConstant(name, typestr, magic)
-        except AttributeError:
-            return
-
-        self.values[name] = value
+        self.constants.append((name, typestr, magic))
 
 
     def do_class(self, node):
@@ -324,8 +337,7 @@ class _BridgeSupportParser (object):
                     _, meta = self.xml_to_arg(al, True, False)
                     metadata['retval'] = meta
 
-
-            objc.registerMetaDataForSelector(as_bytes(class_name), bytes(sel_name), metadata)
+            self.meta[(as_bytes(class_name), as_bytes(sel_name))] = metadata
 
 
     def do_enum(self, node):
@@ -375,12 +387,13 @@ class _BridgeSupportParser (object):
 
         for al in node:
             if al.tag == "arg":
-                _, d = self.xml_to_arg(node, False, False)
+                _, d = self.xml_to_arg(al, False, False)
                 siglist.append(d["type"])
 
                 arguments[len(siglist)-2] = d
+
             elif al.tag == "retval":
-                _, d = self.xml_to_arg(node, False, False)
+                _, d = self.xml_to_arg(al, False, False)
                 siglist[0] = d["type"]
                 meta["retval"] = d
 
@@ -401,12 +414,11 @@ class _BridgeSupportParser (object):
         if not name:
             return
 
-
         method_list = []
         for method in node:
-            sel_name = attribute_string(method, "selector", None)
-            typestr  = attribute_string(method, "type", "type64")
-            is_class = attribute_bool(method, "classmethod", None, False)
+            sel_name = self.attribute_string(method, "selector", None)
+            typestr  = self.attribute_string(method, "type", "type64")
+            is_class = self.attribute_bool(method, "classmethod", None, False)
 
             if not sel_name or not typestr:
                 continue
@@ -417,16 +429,7 @@ class _BridgeSupportParser (object):
             method_list.append(sel)
 
         if method_list:
-            proto = objc.informal_protocol(name, method_list)
-            if "protocols" not in self.values:
-                mod_name = "%s.protocols"%(self.frameworkName,)
-                m = self.values["protocols"] = type(objc)(mod_name)
-                sys.modules[mod_name] = m
-
-            else:
-                m = self.values["protocols"]
-
-            setattr(m, name, proto)
+            self.informal_protocols.append((name, method_list))
 
     def do_null_const(self, node):
         name = self.attribute_string(node, "name", None)
@@ -444,7 +447,7 @@ class _BridgeSupportParser (object):
 
         typestr = as_bytes(self.typestr2typestr(typestr))
 
-        self.values[name] = objc.createOpaquePointerType(name, typestr)
+        self.opaque.append((name, typestr))
 
 
     def do_struct(self, node):
@@ -455,7 +458,11 @@ class _BridgeSupportParser (object):
         if not name or not typestr:
             return
 
-        typestr = as_bytes(self.typestr2typestr(typestr))
+        try:
+            typestr = as_bytes(self.typestr2typestr(typestr))
+        except:
+            print name, typestr
+            raise
 
         if alias:
             try:
@@ -469,15 +476,13 @@ class _BridgeSupportParser (object):
                 objc.registerStructAlias(typestr, value)
                 _structConvenience(name, value)
 
-        self.values[name] = value = objc.createStructType(name, typestr, None)
-        _structConvenience(name, value)
-        # XXX: new metadata should also use structConvenience!
+        self.structs.append((name, typestr))
 
 
     def do_string_constant(self, node):
         name  = self.attribute_string(node, "name", None)
         value = self.attribute_string(node, "value", "value64")
-        nsstring = self.attribute_string(node, "nsstring", None, False)
+        nsstring = self.attribute_bool(node, "nsstring", None, False)
 
         if not name or not value:
             return
@@ -506,6 +511,47 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
         prs = _BridgeSupportParser(xmldata, frameworkName)
 
         globals.update(prs.values)
+        for entry in prs.cftypes:
+            if len(entry) == 4:
+                tp = objc.registerCFSignature(*entry)
+            else:
+                tp = objc.registerCFSignature(*entry)
+
+            globals[entry[0]] = tp
+
+        for name, typestr, magic in prs.constants:
+            try:
+                value = objc._loadConstant(name, typestr, magic)
+            except AttributeError:
+                return
+
+            globals[name] = value
+
+        for class_name, sel_name in prs.meta:
+            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name)])
+
+        for name, typestr in prs.opaque:
+            globals[name] = objc.createOpaquePointerType(name, typestr)
+
+        for name, typestr in prs.structs:
+            globals[name] = value = objc.createStructType(name, typestr, None)
+            _structConvenience(name, value)
+            # XXX: new metadata should also use structConvenience!
+
+        for name, method_list in prs.informal_protocols:
+            proto = objc.informal_protocol(name, method_list)
+
+            # XXX: protocols submodule should be deprecated
+            if "protocols" not in globals:
+                mod_name = "%s.protocols"%(self.frameworkName,)
+                m = protocols["protocols"] = type(objc)(mod_name)
+                sys.modules[mod_name] = m
+
+            else:
+                m = globals["protocols"]
+
+            setattr(m, name, proto)
+
         if prs.functions:
             if bundle is None and inlineTab is None:
                 raise objc.error("Cannot load bundle functions without bundle argument")
