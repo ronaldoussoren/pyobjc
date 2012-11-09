@@ -43,6 +43,17 @@ Version 2.5b1
 - Improved documentation
 
 
+
+Version 2.4.1
+-------------
+
+- Fix for issue 3585235 on SourceForge: the threading helper category on
+  NSObject didn't work due to a typo (defined in the Cocoa bindings)
+
+  Fix is based on a patch by "Kentzo" with further updates and tests by
+  Ronald.
+
+
 Version 2.4
 -----------
 
