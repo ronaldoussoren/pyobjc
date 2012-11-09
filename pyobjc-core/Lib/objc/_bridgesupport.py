@@ -269,10 +269,10 @@ class _BridgeSupportParser (object):
                 gettypeid = getattr(dll, funcname)
                 gettypeid.restype = ctypes.c_long
             except AttributeError:
-                objc.registerCFSignature(name, typestr, None, "NSCFType")
+                self.cftypes.append((name, typestr, None, "NSCFType"))
                 return
 
-            self.cftypes.append((name, gettypeid(), typeId))
+            self.cftypes.append((name, gettypeid(), typestr))
 
 
     def do_constant(self, node):
@@ -353,8 +353,23 @@ class _BridgeSupportParser (object):
         if not name or not value:
             return
 
-        if '.' in value:
+        if value.lower() in ('+inf', '-inf', 'nan'):
             value = float(value)
+
+        elif '.' in value:
+            if value.endswith('f') or value.endswith('F'):
+                value = value[:-1]
+            if value.endswith('l') or value.endswith('L'):
+                value = value[:-1]
+            if value.startswith('0x') or value.startswith('0X'):
+                try:
+                    value = float.fromhex(value)
+                except:
+                    print value
+                    raise
+
+            else:
+                value = float(value)
 
         else:
             value = int(value, 10)
@@ -458,6 +473,13 @@ class _BridgeSupportParser (object):
         if not name or not typestr:
             return
 
+        # Apple's bridgesupport files contain nice encoding like this:
+        # {tag="field"a"NSImage"}, that is not only are field names encoded
+        # but also class names. This is obviously completely undocumented,
+        # and not backward compatible (and it is not easily possible to detect
+        # if class names are present.
+        typestr = re.sub(r'@"[^"]*"', '@', typestr)
+
         try:
             typestr = as_bytes(self.typestr2typestr(typestr))
         except:
@@ -512,10 +534,7 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
         globals.update(prs.values)
         for entry in prs.cftypes:
-            if len(entry) == 4:
-                tp = objc.registerCFSignature(*entry)
-            else:
-                tp = objc.registerCFSignature(*entry)
+            tp = objc.registerCFSignature(*entry)
 
             globals[entry[0]] = tp
 

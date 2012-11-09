@@ -121,11 +121,6 @@ class SplitSignatureTest (TestCase):
         self.assertEqual(objc.splitStructSignature(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
         self.assertEqual(objc.splitStructSignature(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 
-    def testRegressions(self):
-        sig = b'{HIViewContentInfo="contentType"s"u"(?="iconRef"^{OpaqueIconRef}"iconTypeAndCreator"{HITypeAndCreator="type"I"creator"I}"imageRef"^{CGImage}"imageResource"^{__CFString}"imageFile"^{__CFURL}"nsImage"@"NSImage")}'
-        self.assertEqual(objc.splitSignature(sig), [sig])
-
-
 
 if __name__ == "__main__":
     main()

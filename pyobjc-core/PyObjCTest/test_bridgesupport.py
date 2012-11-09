@@ -46,16 +46,16 @@ class TestSystemBridgeSupport (TestCase):
         print framework_name
         prs = bridgesupport._BridgeSupportParser(xmldata, framework_name)
 
-        for item in prs.ctypes:
+        for item in prs.cftypes:
             # XXX: validate items
             pass
 
-        for name, typestr, magic in pfs.constants:
+        for name, typestr, magic in prs.constants:
             self.assertIsInstance(name, basestring)
             self.assertIsInstance(typestr, bytes)
             self.assertIsInstance(magic, bool)
 
-            self.assertEqual(len(objc.splitSig(typestr)), 1)
+            self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name, orig in prs.func_aliases:
             self.assertIsInstance(name, basestring)
@@ -78,13 +78,13 @@ class TestSystemBridgeSupport (TestCase):
             self.assertIsInstance(name, basestring)
             self.assertIsInstance(typestr, bytes)
 
-            self.assertEqual(len(objc.splitSig(typestr)), 1)
+            self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name, typestr in prs.structs:
             self.assertIsInstance(name, basestring)
             self.assertIsInstance(typestr, bytes)
 
-            self.assertEqual(len(objc.splitSig(typestr)), 1)
+            self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         # XXX: Is there anything to do w.r.t. validating prs.values? 
         prs.values
