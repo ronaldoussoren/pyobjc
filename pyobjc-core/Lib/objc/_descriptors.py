@@ -11,12 +11,7 @@ import sys, textwrap
 import warnings
 from inspect import getargspec
 
-if sys.maxsize > 2**32:
-
-    _C_NSRange = "{_NSRange=QQ}"
-
-else:
-    _C_NSRange = "{_NSRange=II}"
+_C_NSRange = ["{_NSRange=II}", "{_NSRange=QQ}"][sys.maxsize > 2**32]
 
 #
 # Interface builder support.
@@ -60,16 +55,14 @@ def accessor(func, typeSignature=b'@'):
         raise TypeError('%s can not be an accessor because it accepts varargs or varkw' % (funcName,))
 
     if not (minArgs <= selArgs <= maxArgs):
-        if selArgs == 3 and (minArgs <= 2 <= maxArgs) and funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature=b'Z@:N^@o^@')
-        elif minArgs == maxArgs:
+        if minArgs == maxArgs:
             raise TypeError('%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, maxArgs, selArgs))
         else:
             raise TypeError('%s expected to take between %d and %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, minArgs, maxArgs, selArgs))
     
     if selArgs == 3:
         if funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature=objc._C_NSBOOL + b'@:N^@o^@')
+            return selector(func, signature=_C_NSBOOL + b'@:N^@o^@')
 
         if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
             return selector(func, signature=b'v@:' + typeSignature + _C_NSUInteger)
@@ -82,14 +75,8 @@ def accessor(func, typeSignature=b'@'):
         elif funcName.startswith('insert') and funcName.endswith('_atIndexes_'):
             return selector(func, signature=b'v@:@@') 
 
-        elif funcName.startswith('replaceObjects_in') and funcName.endswith('AtIndexes_'):
-            return selector(func, signature=b'v@:@@') 
-
         elif funcName.startswith('replace') and 'AtIndexes_with' in funcName:
             return selector(func, signature=b'v@:@@') 
-
-        elif funcName.startswith('replaceObject_in') and funcName.endswith('AtIndex_'):
-            return selector(func, signature=b'v@:' + typeSignature + _C_NSUInteger) 
 
         # pass through to "too many arguments"
 
@@ -122,7 +109,7 @@ def accessor(func, typeSignature=b'@'):
 
         return selector(func, signature=typeSignature + b"@:")
 
-    raise TypeError("%s takes too many arguments to be an accessor" % (funcName,))
+    raise TypeError("%s not recognized as an accessor" % (funcName,))
 
 
 def typedSelector(signature):

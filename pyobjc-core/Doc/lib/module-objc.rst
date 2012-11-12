@@ -1299,80 +1299,85 @@ Descriptors
    with a short description and notes. The `Apple documentation for Key-Value Coding`_ 
    contains more information.
 
-   ============== ============================ ===================================
-   Name           Description                  Notes
-   ============== ============================ ===================================
-   <property>     Getter for a basic property. 
-   -------------- ---------------------------- -----------------------------------
-   is<Property>   Likewise, for a boolean      PyObjC won't automaticly set the
-                  property.                    correct property type, use
-                                               :func:`typeAccessor` instead of
-                                               :func:`accessor`.
-   -------------- ---------------------------- -----------------------------------
-   set<Property>_ Setter for a basic property
-   -------------- ---------------------------- -----------------------------------
-   countOf<Property> Returns the number of
-                     items in a indexed 
-                     accessor, or unordered
-                     accessor
-   -------------- ---------------------------- -----------------------------------
-   objectIn<Property>AtIndex\_ Returns the
-                     object at a specific index
-                     for an indexed accessor
-   -------------- ---------------------------- -----------------------------------
-   <property>AtIndexes\_ Returns an array of    Note: don't use this with
-                     object values at specific :func:`typedAccessor`.
-                     indexes for an indexed    
-                     accessor. The argument    
-                     is an :c:type`NSIndexSet`.
-   -------------- ---------------------------- -----------------------------------
+   ============================================== =================================== =========================================
+   Name                                           Description                         Notes
+   ============================================== =================================== =========================================
+   <property>                                     Getter for a basic property. 
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   is<Property>                                   Likewise, for a boolean             PyObjC won't automaticly set the
+                                                  property.                           correct property type, use
+                                                                                      :func:`typeAccessor` instead of
+                                                                                      :func:`accessor`.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   set<Property>_                                 Setter for a basic property
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   countOf<Property>                              Returns the number of
+                                                  items in a indexed 
+                                                  property, or unordered
+                                                  property
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   objectIn<Property>AtIndex\_                    Returns the object at a specific 
+                                                  index for an indexed property
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   <property>AtIndexes\_                          Returns an array of                 Don't use this with
+                                                  object values at specific           :func:`typedAccessor`.
+                                                  indexes for an indexed    
+                                                  property. The argument    
+                                                  is an :c:type`NSIndexSet`.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
    get<Property>_range_                           Optimized accessor                  Not supported by PyObjC, don't use
-   -------------- ---------------------------- -----------------------------------
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
    insertObject_in<Property>AtIndex\_             Add an object to an indexed 
-                                                  accessor at a specific index.
-   -------------- ---------------------------- -----------------------------------
-   insert<Property>_atIndexes_                    Insert the values from a list of   Note: don't use this with 
-                                                  at specific indices. The           :func:`typedAccessor`.
+                                                  property at a specific index.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   insert<Property>_atIndexes_                    Insert the values from a list of    Don't use this with 
+                                                  at specific indices. The            :func:`typedAccessor`.
                                                   arguments are an :c:type:`NSArray` 
                                                   and an :c:type:`NSIndexSet`.
-   -------------- ---------------------------- -----------------------------------
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
    removeObjectFrom<Property>AtIndex\_            Remove the value
                                                   at a specific index of an
-                                                  indexed accessor.
-   -------------- ---------------------------- -----------------------------------
+                                                  indexed property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
    remove<Property>AtIndexes\_                    Remove the values at specific
-                                                  indices of an indexed accessor. The 
+                                                  indices of an indexed property. The 
                                                   argument is an :c:type`NSIndexSet`.
-   -------------- ---------------------------- -----------------------------------
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
    replaceObjectIn<Property>AtIndex_withObject\_  Replace the value at a specific
-                                                   index of an indexed accessor.
-   -------------- ---------------------------- -----------------------------------
-   replace<Property>AtIndexes_with<Property>_     Replace the values at specific
-                                                  indices of an indexed accessor.
-   -------------- ---------------------------- -----------------------------------
-   enumeratorOf<Property> Returns an :c:type:`NSEnumerator`
-                          for an unordered accessor.
-   -------------- ---------------------------- -----------------------------------
-   memberOf<Property>_ Returns True if the value is
-                       a member of an unordered accessor
-   -------------- ---------------------------- -----------------------------------
-   add<Property>Object\_ Insert a specific object in
-                       an unordered accessor
-   -------------- ---------------------------- -----------------------------------
-   add<Property>_       Add a set of new values
-                        to an unordered property.
-   -------------- ---------------------------- -----------------------------------
-   remove<Property>Object\_ Remove an object
-                         from an unordered property.
-   -------------- ---------------------------- -----------------------------------
-   remove<Property>_      Remove a set of objects
-                          from an unordered property.
-   -------------- ---------------------------- -----------------------------------
-   intersect<Property>_   Remove all objects from
-                          an unorderd property that
-                          aren't in the set argument.
-   ============== ============================ ===================================
+                                                  index of an indexed property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   replace<Property>AtIndexes_with<Property>_     Replace the values at specific      Don't use with :func:`typedAccessor`
+                                                  indices of an indexed property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   enumeratorOf<Property>                         Returns an :c:type:`NSEnumerator`
+                                                  for an unordered property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   memberOf<Property>_                            Returns True if the value is
+                                                  a member of an unordered property
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   add<Property>Object\_                          Insert a specific object in
+                                                  an unordered property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   add<Property>_                                 Add a set of new values
+                                                  to an unordered property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   remove<Property>Object\_                       Remove an object
+                                                  from an unordered property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   remove<Property>_                              Remove a set of objects
+                                                  from an unordered property.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   intersect<Property>_                           Remove all objects from
+                                                  an unorderd property that
+                                                  are not in the set argument.
+   ---------------------------------------------- ----------------------------------- -----------------------------------------
+   validate<Property>_error_                      Validate the new value of a         For typed accessor's the value 
+                                                  property                            is wrapped in an :c:type:`NSValue`
+                                                                                      (but numbers and booleans are automaticly 
+                                                                                      unwrapped by the bridge)
+   ============================================== =================================== =========================================
 
+   PyObjC provides another mechanism for defining properties: :class:`object_property`.
 
    .. versionchanged:: 2.5
       Added support for unordered properties. Also fixed some issues for 64-bit
@@ -1392,7 +1397,7 @@ Descriptors
       When you use a typed accessor you must also implement "setNilValueForKey_",
       as described in `the Apple documentation for Key-Value Coding`_
 
-.. function:: typedSelector
+.. function:: typedSelector(signature)
 
    Use this decorator to explicitly set the type signature for a method.
 
@@ -1412,26 +1417,67 @@ Descriptors
    of deducing it from the Python name. You can optionally set the method
    signature as well.
 
-.. function:: callbackFor(callable, argIndex=-1)
+.. function:: callbackFor(callable[, argIndex=])
 
    Use this decorator to tell that this function is the callback for
    an (Objective-C) API.
 
-   TODO: further describe
+   Usage:
 
-.. function:: selectorFor
+   .. code-block:: python
+
+       @objc.callbackFor(NSArray.sortedArrayUsingFunction_context_)
+       def compare(left, right, context):
+           return 1
+
+   This tells the bridge that 'compare' is used as the sort function
+   for NSArray, and ensures that the function will get the correct
+   Objective-C signature.
+
+.. function:: selectorFor(callable[, argIndex])
 
    Decorator to tell that this is the "callback" selector for another 
    API.
 
-   TODO: further describe
+   Usage:
 
-.. function:: synthesize
+   .. code-block:: python
 
-   Use this to synthesize a property with getter and setter methods.
+      @objc.selectorFor(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_) 
+      def sheetDidEnd_returnCode_contextInfo_(self, sheet, returnCode, info): 
+          pass 
+      
+  This will tell the bridge that this method is used as the end method
+  for a sheet API, and will ensure that the method is registered with
+  the correct Objective-C signature.
 
-   TODO: futher describe
+  You only *have* to use this API when the Objective-C API can store
+  the callback function for later usage. For other functions the
+  bridge can create a temporary callback stub.
 
+.. function:: synthesize(name[, copy[, readwrite[, type[, ivarName]]]])
+
+   :param name:  name of the property
+   :param copy:  if false (default) values are stored as is, otherwise
+                 new values are copied.
+   :param readwrite: If true (default) the property is read-write
+   :param type:  an encoded type for the property, defaults to 
+                 :data:`_C_ID`.
+   :param iVarName: Name of the instance variable used to store
+                    the value. Default to the name of the property
+                    prefixed by and underscore.
+
+   This synthensizes a getter, and if necessary, setter method with
+   the correct signature. The getter and setter provide access to
+   an instance variable.
+
+   This can be used when specific semantics are required (such as
+   copying values before storing them).
+
+   The class :class:`object_property` provides simular features with
+   a nicer python interface: with that calss the property behaves
+   itself like a property for python code, with this function you
+   still have to call accessor methods in your code.
 
 Interacting with ``@synchronized`` blocks
 -----------------------------------------
