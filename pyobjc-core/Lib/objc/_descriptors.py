@@ -4,12 +4,19 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod' ]
 
-from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID
+from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL
 import sys, textwrap
 import warnings
 from inspect import getargspec
+
+if sys.maxsize > 2**32:
+
+    _C_NSRange = "{_NSRange=QQ}"
+
+else:
+    _C_NSRange = "{_NSRange=II}"
 
 #
 # Interface builder support.
@@ -29,9 +36,13 @@ def IBAction(func):
     Return an Objective-C method object that can be used as an action
     in Interface Builder.
     """
+    if func is None:
+        raise TypeError("IBAction argument must be a callable")
     return selector(func, signature=b"v@:@")
 
 def instancemethod(func):
+    if func is None:
+        raise TypeError("instancemethod argument must be a callable")
     return selector(func, isClassMethod=False)
 
 def accessor(func, typeSignature=b'@'):
@@ -58,28 +69,56 @@ def accessor(func, typeSignature=b'@'):
     
     if selArgs == 3:
         if funcName.startswith('validate') and funcName.endswith('_error_'):
-            return selector(func, signature=b'Z@:N^@o^@')
+            return selector(func, signature=objc._C_NSBOOL + b'@:N^@o^@')
 
         if funcName.startswith('insertObject_in') and funcName.endswith('AtIndex_'):
-            return selector(func, signature=b'v@:@i')
+            return selector(func, signature=b'v@:' + typeSignature + _C_NSUInteger)
         elif funcName.startswith('replaceObjectIn') and funcName.endswith('AtIndex_withObject_'):
-            return selector(func, signature=b'v@:i@')
-        
+            return selector(func, signature=b'v@:' + _C_NSUInteger + typeSignature)
+
+        elif funcName.startswith('get') and funcName.endswith('_range_'):
+            return selector(func, signature=b'v@:o^@' + _C_NSRange) 
+
+        elif funcName.startswith('insert') and funcName.endswith('_atIndexes_'):
+            return selector(func, signature=b'v@:@@') 
+
+        elif funcName.startswith('replaceObjects_in') and funcName.endswith('AtIndexes_'):
+            return selector(func, signature=b'v@:@@') 
+
+        elif funcName.startswith('replace') and 'AtIndexes_with' in funcName:
+            return selector(func, signature=b'v@:@@') 
+
+        elif funcName.startswith('replaceObject_in') and funcName.endswith('AtIndex_'):
+            return selector(func, signature=b'v@:' + typeSignature + _C_NSUInteger) 
+
         # pass through to "too many arguments"
 
     elif selArgs == 2:
         if funcName.startswith('objectIn') and funcName.endswith('AtIndex_'):
-            return selector(func, signature=b'@@:i')
+            return selector(func, signature=typeSignature + b'@:' + _C_NSUInteger)
         elif funcName.startswith('removeObjectFrom') and funcName.endswith('AtIndex_'):
-            return selector(func, signature=b'v@:i')
-        elif funcName.startswith('get') and funcName.endswith('_range_'):
-            return selector(func, signature=b'@@:{_NSRange=ii}')
+            return selector(func, signature=b'v@:' + _C_NSUInteger)
+        elif funcName.startswith('remove') and funcName.endswith('AtIndexes_'):
+            return selector(func, signature=b"v@:@")
+        elif funcName.endswith('AtIndexes_'):
+            return selector(func, signature=b"@@:@")
+        elif funcName.startswith('memberOf'):
+            return selector(func, signature=_C_NSBOOL + b"@:" + typeSignature)
+        elif funcName.startswith('add') and funcName.endswith('Object_'):
+            return selector(func, signature=b"v@:" + typeSignature)
+        elif funcName.startswith('add'):
+            return selector(func, signature=b"v@:@")
+        elif funcName.startswith('intersect'):
+            return selector(func, signature=b"v@:@")
 
         return selector(func, signature=b"v@:" + typeSignature)
 
     elif selArgs == 1:
-        if typeSignature == b'@' and func.__name__.startswith('countOf'):
-            typeSignature = 'i'
+        if funcName.startswith('countOf'):
+            typeSignature = _C_NSUInteger
+        elif funcName.startswith('enumerator'):
+            typeSignature = b"@"
+
 
         return selector(func, signature=typeSignature + b"@:")
 
@@ -88,12 +127,14 @@ def accessor(func, typeSignature=b'@'):
 
 def typedSelector(signature):
     def _typedSelector(func):
+        if func is None:
+            raise TypeError("typedSelector() function argument must be a callable")
         return selector(func, signature=signature)
     return _typedSelector
 
 def namedSelector(name, signature=None):
     """
-    Python 2.4 decorator for overriding the Objective-C SEL for a method, usage:
+    Decorator for overriding the Objective-C SEL for a method, usage:
 
         @namedSelector("foo:bar:")
         def foobar(self, foo, bar):
@@ -101,9 +142,13 @@ def namedSelector(name, signature=None):
     """
     if signature is not None:
         def _namedselector(func):
+            if func is None:
+                raise TypeError("IBAction argument must be a callable")
             return selector(func, selector=name, signature=signature)
     else:
         def _namedselector(func):
+            if func is None:
+                raise TypeError("IBAction argument must be a callable")
             return selector(func, selector=name)
 
     return _namedselector
@@ -114,7 +159,7 @@ def namedselector(name, signature=None):
 
 def typedAccessor(typeSignature):
     """
-    Python 2.4 decorator for creating a typed accessor, usage:
+    Decorator for creating a typed accessor, usage:
         
         @typedAccessor('i')
         def someIntegerAccessor(self):

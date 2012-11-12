@@ -1245,9 +1245,10 @@ Descriptors
       The IBOutlet function is recognized by Interface Builder when it
       reads Python code.
 
-.. function:: IBAction
+.. function:: IBAction(function)
 
-   Mark an method as an action for use in Interface Builder. 
+   Mark an method as an action for use in Interface Builder.  Raises
+   :exc:`TypeError` when the argument is not a function.
    
    Usage:
 
@@ -1279,6 +1280,11 @@ Descriptors
            def alloc(self): 
                pass
 
+   .. note::
+
+      There is no function named *objc.classmethod*, use 
+      :func:`classmethod <__builtin__.classmethod>` to explictly mark a function
+      as a class method.
 
 
 .. function:: accessor
@@ -1286,12 +1292,105 @@ Descriptors
    Use this decorator on the definition of accessor methods to ensure
    that it gets the right method signature in the Objective-C runtime.
 
+   The conventions for accessor names that can be used with Key-Value Coding
+   is described in `the Apple documentation for Key-Value Coding`_
+
+   The table below describes the convention for methods for a property named '<property>',
+   with a short description and notes. The `Apple documentation for Key-Value Coding`_ 
+   contains more information.
+
+   ============== ============================ ===================================
+   Name           Description                  Notes
+   ============== ============================ ===================================
+   <property>     Getter for a basic property. 
+   -------------- ---------------------------- -----------------------------------
+   is<Property>   Likewise, for a boolean      PyObjC won't automaticly set the
+                  property.                    correct property type, use
+                                               :func:`typeAccessor` instead of
+                                               :func:`accessor`.
+   -------------- ---------------------------- -----------------------------------
+   set<Property>_ Setter for a basic property
+   -------------- ---------------------------- -----------------------------------
+   countOf<Property> Returns the number of
+                     items in a indexed 
+                     accessor, or unordered
+                     accessor
+   -------------- ---------------------------- -----------------------------------
+   objectIn<Property>AtIndex\_ Returns the
+                     object at a specific index
+                     for an indexed accessor
+   -------------- ---------------------------- -----------------------------------
+   <property>AtIndexes\_ Returns an array of    Note: don't use this with
+                     object values at specific :func:`typedAccessor`.
+                     indexes for an indexed    
+                     accessor. The argument    
+                     is an :c:type`NSIndexSet`.
+   -------------- ---------------------------- -----------------------------------
+   get<Property>_range_                           Optimized accessor                  Not supported by PyObjC, don't use
+   -------------- ---------------------------- -----------------------------------
+   insertObject_in<Property>AtIndex\_             Add an object to an indexed 
+                                                  accessor at a specific index.
+   -------------- ---------------------------- -----------------------------------
+   insert<Property>_atIndexes_                    Insert the values from a list of   Note: don't use this with 
+                                                  at specific indices. The           :func:`typedAccessor`.
+                                                  arguments are an :c:type:`NSArray` 
+                                                  and an :c:type:`NSIndexSet`.
+   -------------- ---------------------------- -----------------------------------
+   removeObjectFrom<Property>AtIndex\_            Remove the value
+                                                  at a specific index of an
+                                                  indexed accessor.
+   -------------- ---------------------------- -----------------------------------
+   remove<Property>AtIndexes\_                    Remove the values at specific
+                                                  indices of an indexed accessor. The 
+                                                  argument is an :c:type`NSIndexSet`.
+   -------------- ---------------------------- -----------------------------------
+   replaceObjectIn<Property>AtIndex_withObject\_  Replace the value at a specific
+                                                   index of an indexed accessor.
+   -------------- ---------------------------- -----------------------------------
+   replace<Property>AtIndexes_with<Property>_     Replace the values at specific
+                                                  indices of an indexed accessor.
+   -------------- ---------------------------- -----------------------------------
+   enumeratorOf<Property> Returns an :c:type:`NSEnumerator`
+                          for an unordered accessor.
+   -------------- ---------------------------- -----------------------------------
+   memberOf<Property>_ Returns True if the value is
+                       a member of an unordered accessor
+   -------------- ---------------------------- -----------------------------------
+   add<Property>Object\_ Insert a specific object in
+                       an unordered accessor
+   -------------- ---------------------------- -----------------------------------
+   add<Property>_       Add a set of new values
+                        to an unordered property.
+   -------------- ---------------------------- -----------------------------------
+   remove<Property>Object\_ Remove an object
+                         from an unordered property.
+   -------------- ---------------------------- -----------------------------------
+   remove<Property>_      Remove a set of objects
+                          from an unordered property.
+   -------------- ---------------------------- -----------------------------------
+   intersect<Property>_   Remove all objects from
+                          an unorderd property that
+                          aren't in the set argument.
+   ============== ============================ ===================================
+
+
+   .. versionchanged:: 2.5
+      Added support for unordered properties. Also fixed some issues for 64-bit
+      builds.
+
+.. _`the Apple documentation for Key-Value Coding`: http://developer.apple.com/library/ios/#documentation/cocoa/conceptual/KeyValueCoding/Articles/AccessorConventions.html
+
 .. function:: typedAccessor(valueType)
 
    Use this decorator on the definition of accessor methods to ensure
    that it gets the right method signature in the Objective-C runtime.
 
    The *valueType* is the encoded string for a single value.
+
+   .. note:: 
+
+      When you use a typed accessor you must also implement "setNilValueForKey_",
+      as described in `the Apple documentation for Key-Value Coding`_
 
 .. function:: typedSelector
 
@@ -1305,6 +1404,8 @@ Descriptors
         def makeUnsignedIntegerOfDouble_(self, d):
            return d
    
+
+
 .. function:: namedSelector(name [, signature])
 
    Use this decorator to explictly set the Objective-C method name instead

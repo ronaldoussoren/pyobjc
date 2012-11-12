@@ -37,5 +37,9 @@ class TestSynthesize (TestCase):
         obj.setSomeTitle_(v)
         self.assertEqual(obj.someTitle(), 42)
 
+    def testFailures(self):
+        self.assertRaises(ValueError, objc.synthesize, '')
+        self.assertRaises(ValueError, objc.synthesize, None)
+
 if __name__ == "__main__":
     main()

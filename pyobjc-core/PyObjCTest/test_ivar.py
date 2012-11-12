@@ -235,7 +235,24 @@ class TestAllInstanceVariables (TestCase):
     
         o.var2 = 4
         self.assertIsInstance(o.var2, float)
-    
+
+    def testNamedOutlet(self):
+        class NamedOutlet (NSObject):
+            outlet1 = objc.IBOutlet()
+            outlet2 = objc.IBOutlet("my_outlet")
+
+        all_outlets = {}
+
+        for name, tp in objc.listInstanceVariables(NamedOutlet):
+            all_outlets[name] = tp
+
+        self.assertEqual(all_outlets['outlet1'], objc._C_ID)
+        self.assertEqual(all_outlets['my_outlet'], objc._C_ID)
+
+        o = NamedOutlet.alloc().init()
+        self.assertTrue(hasattr(o, 'outlet1'))
+        self.assertTrue(hasattr(o, 'outlet2'))
+
 
 if __name__ == '__main__':
     main()

@@ -31,6 +31,15 @@ Version 2.5b1
 
     myLocation = objc.ivar(typer=NSPoint.__typestr__)
 
+- :func:`objc.IBAction` now raises TypeError when the argument is :data:`None`.
+
+- :func:`objc.instancemethod` is now actually exported by the :mod:`objc` package.
+
+- :func:`objc.accessor` and :func:`objc.typedAccessor` were not 64-bit safe.
+
+- :func:`objc.accessor` and :func:`objc.typedAccessor` didn't support the entire
+  set of KVC accessors.
+
 - Added :func:`objc.createStructAlias`, and deprecated 
   :func:`objc.registerStructAlias`. The new function has a "name" argument
   and can register types with the :class:`objc.ivar` type (see previous item)
