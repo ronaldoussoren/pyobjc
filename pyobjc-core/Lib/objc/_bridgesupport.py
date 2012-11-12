@@ -28,8 +28,8 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 # TODO: parseBridgeSupport (and its support class) is a 
 #       basic port from C, check if it can be simplified.
 
-DEFAULT_SUGGESTION="don't use this method"
-BOOLEAN_ATTRIBUTES=[
+_DEFAULT_SUGGESTION="don't use this method"
+_BOOLEAN_ATTRIBUTES=[
     "already_retained",
     "already_cfretained",
     "c_array_length_in_result",
@@ -41,17 +41,23 @@ BOOLEAN_ATTRIBUTES=[
 
 
 if sys.version_info[0] == 2:
-    def as_bytes(value):
+    _unicode = unicode
+
+    def _as_bytes(value):
         return value
 
-    def as_string(value):
+    def _as_string(value):
         return value
 
 else:
-    def as_bytes(value):
+    _unicode = str
+
+    def _as_bytes(value):
+        if isinstance(value, bytes):
+            return value
         return value.encode('ascii')
 
-    def as_string(value):
+    def _as_string(value):
         return value.decode('ascii')
 
 class _BridgeSupportParser (object):
@@ -92,8 +98,10 @@ class _BridgeSupportParser (object):
             method(node)
 
     def typestr2typestr(self, typestr):
+        typestr = _as_bytes(typestr)
+
         result = []
-        for item in objc.splitSignature(as_bytes(typestr)):
+        for item in objc.splitSignature(typestr):
             if item == objc._C_BOOL:
                 result.append(objc._C_NSBOOL)
 
@@ -104,22 +112,22 @@ class _BridgeSupportParser (object):
                 # unions and structs have the same structure
                 start, stop = item[:1], item[-1:]
 
-                name, fields = objc.splitStructSignature(objc._C_STRUCT_B + as_bytes(item[1:-1]) + objc._C_STRUCT_E)
+                name, fields = objc.splitStructSignature(objc._C_STRUCT_B + _as_bytes(item[1:-1]) + objc._C_STRUCT_E)
                 result.append(start)
-                result.append(name)
+                result.append(_as_bytes(name))
                 result.append(b'=')
                 for nm, tp in fields:
                     if nm is not None:
                         result.append(b'"')
-                        result.append(nm)
+                        result.append(_as_bytes(nm))
                         result.append(b'"')
                     
-                    result.append(as_bytes(self.typestr2typestr(tp)))
+                    result.append(self.typestr2typestr(tp))
                 result.append(stop)
 
 
             elif item.startswith(objc._C_ARY_B):
-                m = re.match(r'^.(\d*)(.*).$', item)
+                m = re.match(b'^.(\d*)(.*).$', item)
                 result.append(objc._C_ARY_B)
                 result.append(m.group(1))
                 result.append(self.typestr2typestr(m.group(2)))
@@ -129,7 +137,7 @@ class _BridgeSupportParser (object):
                 result.append(item)
 
         result = b''.join(result)
-        return as_string(result)
+        return result
 
 
     if sys.maxsize > 2**32:
@@ -177,23 +185,23 @@ class _BridgeSupportParser (object):
 
         s = self.attribute_string(node, "type", "type64")
         if s:
-            s = as_bytes(self.typestr2typestr(s))
+            s = self.typestr2typestr(s)
             result["type"] = s
 
         s = self.attribute_string(node, "type_modifier", None)
         if s:
-            result["type_modifier"] = as_bytes(s)
+            result["type_modifier"] = _as_bytes(s)
 
         s = self.attribute_string(node, "sel_of_type", "sel_of_type64")
         if s:
-            s = as_bytes(self.typestr2typestr(s))
+            s = self.typestr2typestr(s)
             result["sel_of_type"] = s
 
         s = self.attribute_string(node, "c_array_of_fixed_length", None)
         if s:
             result["c_array_of_fixed_length"] = int(s)
 
-        for attr in BOOLEAN_ATTRIBUTES:
+        for attr in _BOOLEAN_ATTRIBUTES:
             s = self.attribute_bool(node, attr, None, False)
             if s:
                 result[attr] = True
@@ -257,7 +265,7 @@ class _BridgeSupportParser (object):
         if not name or not typestr:
             return
 
-        typestr = as_bytes(self.typestr2typestr(typestr))
+        typestr = self.typestr2typestr(typestr)
 
         if tollfree:
             self.cftypes.append((name, typestr, None, tollfree))
@@ -284,12 +292,12 @@ class _BridgeSupportParser (object):
         if name is None or not typestr:
             return
 
-        typestr = as_bytes(self.typestr2typestr(typestr))
+        typestr = self.typestr2typestr(typestr)
 
         if typestr.startswith(objc._C_STRUCT_B):
             # Look for structs with embbeded function pointers
             # and ignore those
-            nm, fields = objc.splitStructSignature(as_bytes(typestr))
+            nm, fields = objc.splitStructSignature(_as_bytes(typestr))
             for nm, tp in fields:
                 if tp == b'?':
                     return
@@ -307,7 +315,7 @@ class _BridgeSupportParser (object):
             if method.tag != "method":
                 continue
 
-            sel_name = as_bytes(self.attribute_string(method, "selector", None))
+            sel_name = _as_bytes(self.attribute_string(method, "selector", None))
             variadic = self.attribute_bool(  method, "variadic", None, False)
             c_array  = self.attribute_bool(  method, "c_array_delimited_by_null", None, False)
             c_length = self.attribute_string(method, "c_array_length_in_arg", None)
@@ -317,7 +325,7 @@ class _BridgeSupportParser (object):
             if ignore:
                 suggestion = self.attribute_string(method, "suggestion", None)
                 if not suggestion:
-                    suggestion = DEFAULT_SUGGESTION
+                    suggestion = _DEFAULT_SUGGESTION
 
                 metadata['suggestion'] = suggestion
             metadata['variadic'] = variadic
@@ -339,7 +347,7 @@ class _BridgeSupportParser (object):
                     _, meta = self.xml_to_arg(al, True, False)
                     metadata['retval'] = meta
 
-            self.meta[(as_bytes(class_name), as_bytes(sel_name))] = metadata
+            self.meta[(_as_bytes(class_name), _as_bytes(sel_name))] = metadata
 
 
     def do_enum(self, node):
@@ -364,11 +372,7 @@ class _BridgeSupportParser (object):
             if value.endswith('l') or value.endswith('L'):
                 value = value[:-1]
             if value.startswith('0x') or value.startswith('0X'):
-                try:
-                    value = float.fromhex(value)
-                except:
-                    print value
-                    raise
+                value = float.fromhex(value)
 
             else:
                 value = float(value)
@@ -440,9 +444,9 @@ class _BridgeSupportParser (object):
             if not sel_name or not typestr:
                 continue
 
-            typestr = as_bytes(self.typestr2typestr(typestr))
-            sel = objc.selector(None, selector=as_bytes(sel_name), 
-                    signature=as_bytes(typestr), isClassMethod=is_class)
+            typestr = self.typestr2typestr(typestr)
+            sel = objc.selector(None, selector=_as_bytes(sel_name), 
+                    signature=_as_bytes(typestr), isClassMethod=is_class)
             method_list.append(sel)
 
         if method_list:
@@ -462,7 +466,7 @@ class _BridgeSupportParser (object):
         if name is None or not typestr:
             return
 
-        typestr = as_bytes(self.typestr2typestr(typestr))
+        typestr = self.typestr2typestr(typestr)
 
         self.opaque.append((name, typestr))
 
@@ -482,11 +486,7 @@ class _BridgeSupportParser (object):
         # if class names are present.
         typestr = re.sub(r'@"[^"]*"', '@', typestr)
 
-        try:
-            typestr = as_bytes(self.typestr2typestr(typestr))
-        except:
-            print name, typestr
-            raise
+        typestr = self.typestr2typestr(typestr)
 
         if alias:
             try:
@@ -513,11 +513,28 @@ class _BridgeSupportParser (object):
 
         if sys.version_info[0] == 2:
             if nsstring:
-                value = value.decode('utf-8')
-
+                if not isinstance(value, unicode):
+                    value = value.decode('utf-8')
+            else:
+                if not isinstance(value, bytes):
+                    try:
+                        value = value.encode('latin1')
+                    except UnicodeError as e:
+                        warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
+                        return
         else:
             if not nsstring:
-                value = value.encode('latin1')
+                try:
+                    value = value.encode('latin1')
+                except UnicodeError as e:
+                    warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
+                    return
+
+        if nsstring:
+            assert isinstance(value, _unicode)
+        else:
+            assert isinstance(value, bytes)
+
 
         self.values[name] = value
 
@@ -803,7 +820,7 @@ objc.createStructType = createStructType
 _orig_registerStructAlias = objc.registerStructAlias
 @functools.wraps(objc.registerStructAlias)
 def registerStructAlias(typestr, structType):
-    warning.warn(DeprecationWarning, "use createStructAlias instead")
+    warning.warn("use createStructAlias instead", DeprecationWarning)
     return _orig_registerStructAlias(typestr, structType)
 
 def createStructAlias(name, typestr, structType):
