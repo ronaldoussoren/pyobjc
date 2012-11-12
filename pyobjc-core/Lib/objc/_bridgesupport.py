@@ -272,7 +272,7 @@ class _BridgeSupportParser (object):
                 self.cftypes.append((name, typestr, None, "NSCFType"))
                 return
 
-            self.cftypes.append((name, gettypeid(), typestr))
+            self.cftypes.append((name, typestr, gettypeid()))
 
 
     def do_constant(self, node):
