@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 import ctypes
 import objc
 import re
+import warnings
+import functools
 
 from objc import registerMetaDataForSelector, error
 
@@ -786,3 +788,28 @@ _structConvenience("BOOL", objc._C_NSBOOL)
 _structConvenience("UniChar", objc._C_UNICHAR)
 _structConvenience("char_text", objc._C_CHAR_AS_TEXT)
 _structConvenience("char_int", objc._C_CHAR_AS_INT)
+
+_orig_createStructType = objc.createStructType
+
+@functools.wraps(objc.createStructType)
+def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
+    result = _orig_createStructType(name, typestr, fieldnames, doc, pack)
+    _structConvenience(name, result)
+    return result
+
+objc.createStructType = createStructType
+
+
+_orig_registerStructAlias = objc.registerStructAlias
+@functools.wraps(objc.registerStructAlias)
+def registerStructAlias(typestr, structType):
+    warning.warn(DeprecationWarning, "use createStructAlias instead")
+    return _orig_registerStructAlias(typestr, structType)
+
+def createStructAlias(name, typestr, structType):
+    result = _orig_registerStructAlias(typestr, structType)
+    _structConvenience(name, result)
+    return result
+
+objc.createStructAlias = createStructAlias
+objc.registerStructAlias = registerStructAlias

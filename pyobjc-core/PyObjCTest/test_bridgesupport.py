@@ -198,7 +198,6 @@ class TestSystemBridgeSupport (TestCase):
             self.assertEqual(set(meta.keys()) - {"arguments", "retval", "variadic", "suggestion" }, set())
 
     def assert_valid_bridgesupport(self, framework_name, xmldata):
-        print framework_name
         prs = bridgesupport._BridgeSupportParser(xmldata, framework_name)
 
         for item in prs.cftypes:

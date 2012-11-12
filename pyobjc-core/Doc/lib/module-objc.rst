@@ -510,6 +510,9 @@ Framework wrappers
    Create a type to wrap structs with a given name and type signature, this
    type will be used by the bridge to convert values of this structure to Python.
 
+   This also adds a class method named *name* to :class:`objc.ivar`. This class
+   method creates a new instance variable with the struct type as its type.
+
    * *name* is a string with the name of the structure, for example "NSPoint".
 
    * *typestr* is the encoded type of the structure and can optionally 
@@ -523,10 +526,27 @@ Framework wrappers
    * *pack* can be used to specify the value of "#pragma pack" for the structure
      (default is to use the default platform packing for structures).
 
+   .. versionchanged:: 2.5
+      The function creates a class method on :class:`objc.ivar`.
+
 .. function:: registerStructAlias(typestr, structType)
 
    Tell the brige that structures with encoding *typestr* should also be 
    coverted to Python using *structType* (a type created using :func:`createStructType`).
+
+   .. deprecated:: 2.5
+      Use :func:`createStructAlias` instead.
+
+.. function:: createStructAlias(name, typestr, structType)
+
+   Tell the brige that structures with encoding *typestr* should also be 
+   coverted to Python using *structType* (a type created using 
+   :func:`createStructType`).
+
+   This also adds a class method named *name* to :class:`objc.ivar`. This class
+   method creates a new instance variable with the struct type as its type.
+
+   .. versionadded: 2.5
 
 .. function:: registerMetaDataForSelector(class\_, selector, metadata)
 

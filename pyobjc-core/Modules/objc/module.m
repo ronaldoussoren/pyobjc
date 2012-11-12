@@ -1187,6 +1187,7 @@ registerStructAlias(PyObject* self __attribute__((__unused__)),
 	if (PyObjC_RegisterStructAlias(typestr, structType) == -1) {
 		return NULL;
 	}
+
 	Py_INCREF(structType);
 	return structType;
 }
