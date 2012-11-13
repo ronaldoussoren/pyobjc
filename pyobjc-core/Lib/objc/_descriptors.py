@@ -141,7 +141,7 @@ def namedSelector(name, signature=None):
     return _namedselector
 
 def namedselector(name, signature=None):
-    warnings.warn("use objc.namedSelector instead of objc.namedselector", stacklevel=2)
+    warnings.warn("use objc.namedSelector instead of objc.namedselector", DeprecationWarning, stacklevel=2)
     return namedSelector(name, signature)
 
 def typedAccessor(typeSignature):
