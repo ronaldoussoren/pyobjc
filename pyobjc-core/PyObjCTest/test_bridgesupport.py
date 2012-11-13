@@ -34,12 +34,13 @@ class TestSystemBridgeSupport (TestCase):
             yield item
 
     def test_system_bridgesupport(self):
-        # Check that all system bridgesupport files can be processed correctly
-        for fn in self.iter_system_bridgesupport_files():
-            with open(fn, 'r') as fp:
-                xmldata = fp.read()
+        with filterWarnings("ignore", RuntimeWarning):
+            # Check that all system bridgesupport files can be processed correctly
+            for fn in self.iter_system_bridgesupport_files():
+                with open(fn, 'r') as fp:
+                    xmldata = fp.read()
 
-            self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
 
 
