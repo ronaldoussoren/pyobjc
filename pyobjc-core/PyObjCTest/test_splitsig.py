@@ -121,6 +121,13 @@ class SplitSignatureTest (TestCase):
         self.assertEqual(objc.splitStructSignature(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
         self.assertEqual(objc.splitStructSignature(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 
+    def testSplitStruct(self):
+        self.assertRaises(ValueError, objc.splitStruct, objc._C_ID)
+        self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd")
+        self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd}d")
+        
+        self.assertEqual(objc.splitStruct(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
+        self.assertEqual(objc.splitStruct(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 
 if __name__ == "__main__":
     main()

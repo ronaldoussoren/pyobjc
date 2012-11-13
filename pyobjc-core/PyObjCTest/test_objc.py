@@ -26,6 +26,18 @@ class TestObjCRuntime (TestCase):
         import warnings
         del warnings.filters[0]
 
+    def testClasses(self):
+        classes = objc.runtime.__objc_classes__
+        for cls in classes:
+            self.assertIsInstance(cls, objc.objc_class)
+
+    def testKind(self):
+        self.assertEqual(objc.runtime.__kind__, "python")
+
+    def testRepr(self):
+        self.assertEqual(repr(objc.runtime), "objc.runtime")
+
+
     def testRuntimeNoSuchClassErrorRaised(self):
         try:
             objc.runtime.ThisClassReallyShouldNotExist

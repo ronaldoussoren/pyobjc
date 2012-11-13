@@ -22,9 +22,6 @@ class Runtime:
         except objc.nosuchclass_error:
             raise AttributeError(name)
 
-    def __eq__(self, other):
-        return self is other
-
     def __repr__(self):
         return "objc.runtime"
 
@@ -60,7 +57,7 @@ def pluginBundle(pluginName):
 def splitStruct(value):
     warnings.warn("Deprecated: use splitStructSignature()", DeprecationWarning)
     import objc
-    return objc.splitStructSignature()
+    return objc.splitStructSignature(value)
 
 def _loadFunctionList(*args, **kwds):
     warnings.warn("Deprecated: use loadFunctionList()", DeprecationWarning)
