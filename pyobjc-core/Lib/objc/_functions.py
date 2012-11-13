@@ -15,7 +15,7 @@ def signature(signature, **kw):
             return 0
     """
     import warnings
-    warnings.warn("Usage objc.typedSelector instead of objc.signature")
+    warnings.warn("Usage objc.typedSelector instead of objc.signature", DeprecationWarning)
     from objc._objc import selector
     kw['signature'] = signature
     def makeSignature(func):
