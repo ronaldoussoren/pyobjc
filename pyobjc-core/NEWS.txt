@@ -78,6 +78,9 @@ Version 2.5b1
 Version 2.4.1
 -------------
 
+- Cocoa wrappers: fix metadata for ``copy``, ``mutableCopy``, 
+  ``copyWithZone:`` and ``mutableCopyWithZone:``
+
 - Fix for issue 3585235 on SourceForge: the threading helper category on
   NSObject didn't work due to a typo (defined in the Cocoa bindings)
 

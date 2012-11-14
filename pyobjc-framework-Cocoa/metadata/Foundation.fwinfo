@@ -1,4 +1,4 @@
-# objectiv.metada exceptions file, see its document
+# objective.metada exceptions file, see its document
 # for information on how to update this file.
 {
  "definitions": {
@@ -5944,6 +5944,9 @@
         "type_override": "^{_NSZone=}"
        }
       }, 
+      "retval": {
+        "already_retained": true
+      },
       "class_method": true, 
       "selector": "copyWithZone:"
      }, 
@@ -5955,7 +5958,8 @@
       }, 
       "class_method": true, 
       "retval": {
-       "type_override": "@"
+       "type_override": "@",
+       "already_retained": true
       }, 
       "selector": "mutableCopyWithZone:"
      }, 
@@ -6587,9 +6591,18 @@
       }, 
       "class_method": false, 
       "retval": {
-       "type_override": "@"
+       "type_override": "@",
+       "already_retained": true
       }, 
       "selector": "mutableCopyWithZone:"
+     }, 
+     {
+      "class_method": false, 
+      "retval": {
+       "type_override": "@",
+       "already_retained": true
+      }, 
+      "selector": "mutableCopy"
      }, 
      {
       "class_method": false, 
@@ -6900,8 +6913,18 @@
         "type_override": "^{_NSZone=}"
        }
       }, 
+      "retval": {
+        "already_retained": true
+      },
       "class_method": false, 
       "selector": "copyWithZone:"
+     }, 
+     {
+      "retval": {
+        "already_retained": true
+      },
+      "class_method": false, 
+      "selector": "copy"
      }, 
      {
       "args": {
@@ -12970,6 +12993,9 @@
         "type_override": "^{_NSZone=}"
        }
       }, 
+      "retval": {
+        "already_retained": true
+      },
       "class_method": false, 
       "selector": "copyWithZone:"
      }
@@ -13032,7 +13058,8 @@
       }, 
       "class_method": false, 
       "retval": {
-       "type_override": "@"
+       "type_override": "@",
+       "already_retained": true
       }, 
       "selector": "mutableCopyWithZone:"
      }

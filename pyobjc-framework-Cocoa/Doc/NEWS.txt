@@ -10,6 +10,9 @@ Version 2.4.1
   Fix is based on a patch by "Kentzo" with further updates and tests by
   Ronald.
 
+* Fix metadata for ``copyWithZone:``, ``copy``, ``mutableCopyWithZone:``
+  and ``mutableCopy``.
+
 Version 2.4
 -----------
 
