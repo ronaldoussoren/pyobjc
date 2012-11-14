@@ -11,7 +11,7 @@ import sys, textwrap
 import warnings
 from inspect import getargspec
 
-_C_NSRange = ["{_NSRange=II}", "{_NSRange=QQ}"][sys.maxsize > 2**32]
+_C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2**32]
 
 #
 # Interface builder support.

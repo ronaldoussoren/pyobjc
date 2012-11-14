@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 
 import objc
+import sys
 
 try:
     from  Foundation import NSRange

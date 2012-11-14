@@ -487,7 +487,7 @@ static PyMethodDef struct_methods[] = {
 	{
 		"_replace", 
 		(PyCFunction)struct_replace,
-		METH_KEYWORDS, 
+		METH_VARARGS|METH_KEYWORDS, 
 		NULL
 	}, 
 	{ NULL, NULL, 0, NULL }

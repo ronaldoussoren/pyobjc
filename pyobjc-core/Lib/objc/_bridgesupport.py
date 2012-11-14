@@ -16,9 +16,9 @@ from objc import registerMetaDataForSelector, error
 
 for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCopyWithZone:'):
     registerMetaDataForSelector(b'NSObject', method,
-            dict(
-                retval=dict(already_retained=True),
-            ))
+            {
+                'retval': { 'already_retained': True },
+            })
 
 
 #
