@@ -19,11 +19,58 @@ class TestStructs (TestCase):
         self.assertIsInstance(tp, type)
         self.assertEqual(tp.__typestr__, b"{_FooStruct=ffff}")
 
+        self.assertEqual(tp._fields, ("a", "b", "c", "d"))
+
         o = tp()
         self.assertHasAttr(o, 'a')
         self.assertHasAttr(o, 'b')
         self.assertHasAttr(o, 'c')
         self.assertHasAttr(o, 'd')
+
+
+
+    def testNamedTupleAPI(self):
+        Point = objc.createStructType("OCPoint", b"{_OCPoint=dd}", ["x", "y"])
+        Line  = objc.createStructType("OCLine",  b"{_OCLine={_OCPoint=dd}{_OCPoint=dd}}d", ["start", "stop", "width"])
+
+        self.assertEqual(Point._fields, ("x", "y"))
+        self.assertEqual(Line._fields, ("start", "stop", "width"))
+
+        p = Point(3, 4)
+        self.assertEqual(p.x, 3.0)
+        self.assertEqual(p.y, 4.0)
+
+        self.assertEqual(p._asdict(), {"x": 3.0, "y": 4.0})
+
+        p2 = p._replace(y=5)
+        self.assertEqual(p.x, 3.0)
+        self.assertEqual(p.y, 4.0)
+        self.assertEqual(p2.x, 3.0)
+        self.assertEqual(p2.y, 5)
+
+        l = Line(Point(1,2), Point(8,9), 7)
+        self.assertEqual(l.start.x, 1.0)
+        self.assertEqual(l.start.y, 2.0)
+        self.assertEqual(l.stop.x, 8.0)
+        self.assertEqual(l.stop.y, 9.0)
+        self.assertEqual(l.width, 7.0)
+
+        self.assertEqual(l._asdict(), 
+            {"start": Point(1,2), "stop":Point(8,9), "width": 7.0})
+
+        l2 = l._replace(stop=Point(3,4), width=0.5)
+        self.assertEqual(l.start.x, 1.0)
+        self.assertEqual(l.start.y, 2.0)
+        self.assertEqual(l.stop.x, 8.0)
+        self.assertEqual(l.stop.y, 9.0)
+        self.assertEqual(l.width, 7.0)
+
+        self.assertEqual(l2.start.x, 1.0)
+        self.assertEqual(l2.start.y, 2.0)
+        self.assertEqual(l2.stop.x, 3.0)
+        self.assertEqual(l2.stop.y, 4.0)
+        self.assertEqual(l2.width, 0.5)
+    
 
     def testCreateImplicit(self):
         tp = objc.createStructType("BarStruct", b'{_BarStruct="e"f"f"f"g"f"h"f}', None)
@@ -35,6 +82,8 @@ class TestStructs (TestCase):
         self.assertHasAttr(o, 'f')
         self.assertHasAttr(o, 'g')
         self.assertHasAttr(o, 'h')
+
+        self.assertEqual(tp._fields, ("e", "f", "g", "h"))
 
         self.assertRaises(ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None) 
         self.assertRaises(ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None) 

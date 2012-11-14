@@ -262,6 +262,70 @@ struct_copy(PyObject* self)
 }
 
 static PyObject*
+struct_replace(PyObject* self, PyObject* args, PyObject* kwds)
+{
+	/* XXX: This is a fairly inefficient implementation, first
+	 * perform a deep copy, then replace attributes. The deep copy
+	 * provides the nicest transition path to read-only structs: 
+	 * the result of _replace is completely independent of the original.
+	 */
+	PyObject* result;
+	Py_ssize_t pos = 0;
+	PyObject* key;
+	PyObject* value;
+
+	if (args && PySequence_Length(args) != 0) {
+		PyErr_SetString(PyExc_TypeError,
+		 	"_replace called with positional arguments");
+		return NULL;
+	}
+
+	result = struct_copy(self);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	while (PyDict_Next(kwds, &pos, &key, &value)) {
+		int r = PyObject_SetAttr(result, key, value);
+		if (r == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+	}
+
+	return result;
+}
+
+static PyObject*
+struct_asdict(PyObject* self)
+{
+	PyObject* result;
+	PyMemberDef* member = Py_TYPE(self)->tp_members;
+	int r;
+	
+	result = PyDict_New();
+	if (result == NULL) {
+		return NULL;
+	}
+
+	while (member && member->name) {
+		if (member->type != T_OBJECT) {
+			member++;
+			continue;
+		}
+		PyObject* t = GET_FIELD(self, member);
+		r = PyDict_SetItemString(result, member->name, t);
+		if (r == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+		member++;
+	}
+
+	return result;
+}
+
+static PyObject*
 struct_mp_subscript(PyObject* self, PyObject* item)
 {
 	if (PyIndex_Check(item)) {
@@ -413,6 +477,19 @@ static PyMethodDef struct_methods[] = {
 		METH_NOARGS,
 		NULL,
 	},
+	/* NamedTuple interface */
+	{
+		"_asdict", 
+		(PyCFunction)struct_asdict,
+		METH_NOARGS, 
+		NULL
+	}, 
+	{
+		"_replace", 
+		(PyCFunction)struct_replace,
+		METH_KEYWORDS, 
+		NULL
+	}, 
 	{ NULL, NULL, 0, NULL }
 };
 
@@ -1031,24 +1108,40 @@ PyObjC_MakeStructType(
 {
 	struct StructTypeObject* result;
 	PyMemberDef* members;
+	PyObject* fields;
 	Py_ssize_t i;
+
+	fields = PyTuple_New(numFields);
+	if (fields == NULL) {
+		return NULL;
+	}
 
 	members = PyMem_Malloc(sizeof(PyMemberDef) * (numFields+1));
 	if (members == NULL) {
+		Py_DECREF(fields);
 		PyErr_NoMemory();
 		return NULL;
 	}
 	for (i = 0; i < numFields; i++) {
+		PyObject* nm = PyText_FromString(fieldnames[i]);
+		if (nm == NULL) {
+			Py_DECREF(fields);
+			PyMem_Free(members);
+			return NULL;
+		}
+		PyTuple_SET_ITEM(fields, i, nm); nm = NULL;
 		members[i].name = (char*)fieldnames[i];
 		members[i].type = T_OBJECT;
 		members[i].offset = sizeof(PyObject) + i*sizeof(PyObject*);
 		members[i].flags = 0; /* A read-write field */
 		members[i].doc = NULL;
+		
 	}
 	members[numFields].name = NULL;
 
 	result = PyMem_Malloc(sizeof(struct StructTypeObject));
 	if (result == NULL) {
+		Py_DECREF(fields);
 		PyMem_Free(members);
 		PyErr_NoMemory();
 		return NULL;
@@ -1059,6 +1152,7 @@ PyObjC_MakeStructType(
 	result->base.tp_doc = (char*)doc;
 	result->base.tp_dict = PyDict_New();
 	if (result->base.tp_dict == NULL) {
+		Py_DECREF(fields);
 		PyMem_Free(members);
 		PyMem_Free(result);
 		return NULL;
@@ -1066,6 +1160,14 @@ PyObjC_MakeStructType(
 	Py_REFCNT(result) = 1;
 	result->base.tp_members = members;
 	result->base.tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
+	if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields)==-1){
+		Py_DECREF(fields);
+		PyMem_Free(members);
+		PyMem_Free(result);
+		return NULL;
+	}
+	Py_CLEAR(fields);
+
 	if (tpinit) {
 		result->base.tp_init = tpinit;
 	} else {
@@ -1076,6 +1178,8 @@ PyObjC_MakeStructType(
 			return NULL;
 		}
 	}
+
+	/* XXX: Add _fields to tp_dict (NamedTuple interface */
 
 	result->pack = pack;
 

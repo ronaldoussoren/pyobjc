@@ -526,8 +526,43 @@ Framework wrappers
    * *pack* can be used to specify the value of "#pragma pack" for the structure
      (default is to use the default platform packing for structures).
 
+
+   The created type behaves itself simular to a mutable :func:`namedtuple <collections.namedtuple>`,
+   that is items can be accessed both using attribute access and using the sequence interface.
+
+   An example::
+
+      Point = objc.createStructType("Point", b"{Point=dd}", ["x", "y"])
+
+      p = Point(3.0, 4.0)
+
+      # Set the X field in two ways:
+      p.x = 5
+      p[0] = 6
+
+   The generated type als has a number of methods:
+
+   * *_asdict()*:  Returns a dict that maps from field names to attribute values
+
+   * *_replace(**kwds)*: Return a copy of the struct and replace attribute values with values from the keyword arguments
+
+   * *copy()*: Return a copy of the struct. If an attribute is another struct that attribute gets copied as well, other attributes
+     are not copied. That is, struct types are deep copied other types are shallow copied.
+
+   And the following attributes are present:
+
+   * *_fields*: A list of field names
+
+   * *__typestr__*: The Objective-C type encoding for the struct (without embedded field names)
+
+
    .. versionchanged:: 2.5
       The function creates a class method on :class:`objc.ivar`.
+
+   .. versionchanged:: 2.5
+      The type now implements the "_asdict" and "_replace" methods that
+      are also present on :func:`collections.namedtuple` types. The
+      attribute "_fields" was added as well.
 
 .. function:: registerStructAlias(typestr, structType)
 

@@ -40,6 +40,15 @@ Version 2.5b1
 - :func:`objc.accessor` and :func:`objc.typedAccessor` didn't support the entire
   set of KVC accessors.
 
+- Add methods "_asdict" and "_replace" and field "_fields" to the struct wrapper
+  types. These new attributes mirror the :class:`collections.namedtuple` interface.
+
+  .. note::
+
+     In the long run I'd like to make struct wrappers immutable to allow using
+     them as dictionary keys. This is a first step in that direction and makes
+     it possible to verify that immutable struct wrappers are useable.
+
 - Added :func:`objc.createStructAlias`, and deprecated 
   :func:`objc.registerStructAlias`. The new function has a "name" argument
   and can register types with the :class:`objc.ivar` type (see previous item)
