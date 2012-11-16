@@ -122,7 +122,6 @@ class TestNSApplication (TestCase):
         self.assertIsInstance(pboard, NSPasteboard)
         self.assertIsInstance(NSPerformService("help", pboard), bool)
 
-        objc.setVerbose(1)
         v = TestNSApplicationHelper.alloc().init()
         NSRegisterServicesProvider("foobar", v)
         NSUnregisterServicesProvider("foobar")
