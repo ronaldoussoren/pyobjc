@@ -48,6 +48,8 @@ import objc._pycoder as _pycoder
 import atexit
 atexit.register(recycleAutoreleasePool)
 
+
+# Helper function for new-style metadata modules
 def _resolve_name(name):
     if '.' not in name:
         raise ValueError(name)

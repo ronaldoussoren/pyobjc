@@ -120,5 +120,20 @@ class TestDescription (TestCase):
         for obj,expect in zip(TESTS, EXPECTS):
             self.assertEqual(expect, PyObjC_TestClass4.fetchObjectDescription_(obj))
 
+class TestPrivate (TestCase):
+    def test_resolve_name(self):
+        resolve = objc._resolve_name
+
+        self.assertRaises(ValueError, resolve, "sys")
+
+        self.assertIs(resolve("sys.path"), sys.path)
+
+        v = resolve("distutils.command.sdist.show_formats")
+        
+        from distutils.command.sdist import show_formats
+        self.assertIs(v, show_formats)
+
+        self.assertRaises(AttributeError, resolve, "distutils.command.sdist.dont_show_formats")
+        self.assertRaises(AttributeError, resolve, "sys.does_not_exist")
 if __name__ == '__main__':
     main()

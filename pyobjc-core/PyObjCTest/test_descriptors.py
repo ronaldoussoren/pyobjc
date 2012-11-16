@@ -644,6 +644,29 @@ class TestBasicDescriptors (TestCase):
             def validateObject_error_(self, a, b, c=1):
                 pass
 
+    def test_signature(self):
+
+        @objc.signature(b"d@:ii")
+        def myMethod_arg_(self, a, b):
+            pass
+
+        self.assertIsInstance(myMethod_arg_, objc.selector)
+        self.assertEqual(myMethod_arg_.signature, b'd@:ii')
+        self.assertEqual(myMethod_arg_.selector, b'myMethod:arg:')
+
+        @objc.signature('q@:@q', selector=b'foo:bar:')
+        def method(self, a, b):
+            pass
+
+        self.assertIsInstance(method, objc.selector)
+        self.assertEqual(method.signature, b'q@:@q')
+        self.assertEqual(method.selector, b'foo:bar:')
+
+
+
+
+
+        
 
 if __name__ == "__main__":
     main()
