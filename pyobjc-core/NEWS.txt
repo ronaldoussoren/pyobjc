@@ -71,6 +71,13 @@ Version 2.5b1
   and is fully documented. The old name is temporarily available as
   an alias.
 
+- Move (deprected) decorator "signature" from objc._functions to objc._descriptors,
+  and remove the former module.
+
+  .. note:: 
+     The names op submodules of objc are implementation details, don't import
+     them directly.
+
 - Improved documentation
 
 

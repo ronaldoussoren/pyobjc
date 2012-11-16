@@ -4,7 +4,7 @@ Python <-> Objective-C bridge (PyObjC)
 This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 
-__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod' ]
+__all__ = ['IBOutlet', 'IBAction', 'accessor', 'Accessor', 'typedAccessor', 'callbackFor', 'selectorFor', 'synthesize', 'namedselector', 'typedSelector', 'namedSelector', 'instancemethod', 'signature' ]
 
 from objc._objc import ivar, selector, _makeClosure, selector, _C_SEL, _C_ID, _C_NSUInteger, _C_NSBOOL
 import sys, textwrap
@@ -264,3 +264,21 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
     exec(getter, globals(), classDict)
 
     classDict[ivarName] = ivar(type=type)
+
+
+def signature(signature, **kw):
+    """
+    A Python method decorator that allows easy specification
+    of Objective-C selectors.
+
+    Usage::
+        
+        @objc.signature('i@:if')
+        def methodWithX_andY_(self, x, y):
+            return 0
+    """
+    warnings.warn("Usage objc.typedSelector instead of objc.signature", DeprecationWarning)
+    kw['signature'] = signature
+    def makeSignature(func):
+        return selector(func, **kw)
+    return makeSignature

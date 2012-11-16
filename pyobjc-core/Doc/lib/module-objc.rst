@@ -1235,14 +1235,13 @@ arbitrary value, in Python this must be an integer.
 PyObjC provides a :data:`context` object that can be used to allocate
 unique integers and map those to objects.
 
-(NOTE: The markup below here is probably incorrect)
-
 .. function:: context.register(value)
 
    Add a value to the context registry.
 
    :param value: An arbitrary object
    :return: A unique integer that's suitable to be used as a context pointer
+            (the handle).
 
 .. function:: context.unregister(value):
 
@@ -1251,7 +1250,7 @@ unique integers and map those to objects.
 
    :param value: An object in the context registry
 
-.. function:: context.get
+.. function:: context.get(handle)
 
    Retrieve an object from the registry given the return value from
    :func:`context.register`.
