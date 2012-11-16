@@ -43,6 +43,55 @@ class PurePython:
         return "<pure-py>"
 
 class TestFromObjCSuperToObjCClass(TestCase):
+    def testClassAddMethod(self):
+        import objc._category as mod
+
+        orig_classAddMethods = mod.classAddMethods
+        try:
+            l = []
+            def classAddMethods(cls, values):
+                self.assertIsInstance(cls, objc.objc_class)
+                for item in values:
+                    self.assertIsInstance(item, objc.selector)
+                l.append((cls, values))
+
+            mod.classAddMethods = classAddMethods
+
+            def my_python_description(self):
+                return "foo the bar"
+
+            objc.classAddMethod(NSObject, b"python_description", my_python_description)
+            self.assertEqual(len(l), 1)
+            self.assertIs(l[0][0], NSObject)
+            self.assertEqual(len(l[0][1]), 1)
+            m = l[0][1][0]
+            self.assertIsInstance(m, objc.selector)
+            self.assertIs(m.callable, my_python_description)
+            self.assertEqual(m.selector, b"python_description")
+            self.assertEqual(m.signature, b"@@:")
+
+            @objc.typedSelector(b"q@:")
+            def myAction(self):
+                return 1
+
+            l[:] = []
+            objc.classAddMethod(NSObject, b"value",  myAction)
+            self.assertIs(l[0][0], NSObject)
+            self.assertEqual(len(l[0][1]), 1)
+            m = l[0][1][0]
+            self.assertIsInstance(m, objc.selector)
+            self.assertIs(m.callable, myAction.callable)
+            self.assertEqual(m.selector, b"value")
+            self.assertEqual(m.signature, b"q@:")
+
+            
+            # Cannot add native selectors:
+            self.assertRaises(AttributeError, objc.classAddMethod, NSObject, b"descriptionAlias", NSObject.description)
+
+        finally:
+            mod.classAddMethods = orig_classAddMethods
+
+
     def testBasicBehavior(self):
         anInstance = Methods.new()
         self.assertEqual(anInstance.description(), "<methods>")
@@ -251,6 +300,19 @@ class TestCategory (TestCase):
         self.assertTrue(o.categoryMethod())
         self.assertTrue(not o.categoryMethod2())
         self.assertEqual(Methods.anotherClassMethod(), "hello")
+
+    def testNoInstanceVariables(self):
+        global Methods
+
+        try:
+            class Methods(objc.Category(Methods)):
+                outlet = objc.IBOutlet()
+
+        except TypeError:
+            pass
+
+        else:
+            self.fail("Can add instance variable in a category")
 
     def testObjCClassCategory(self):
         NSObject = objc.lookUpClass('NSObject')

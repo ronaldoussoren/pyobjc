@@ -288,7 +288,13 @@ Dynamic modification of classes
 
 .. function:: classAddMethod(cls, name, method)
 
-   Adds function *method* as selector *name* to the given class.
+   Adds function *method* as selector *name* to the given class. When *method*
+   is a selector the signature and class-method-ness are copied from the selector.
+
+   .. note::
+
+      Adding a selector that's defined in Objective-C to another class will raise
+      an exception.
 
 .. class:: Category
 
