@@ -21,29 +21,32 @@ class OC_PythonFloat(float):
     def __reduce__(self):
         return (float, (float(self),))
 
+base_class = int if sys.version_info[0] >= 3 else long
+
+class OC_PythonLong(base_class):
+
+    def __new__(cls, obj, value):
+        self = base_class.__new__(cls, value)
+        self.__pyobjc_object__ = obj
+        return self
+
+    __class__ = property(lambda self: self.__pyobjc_object__.__class__)
+
+    def __getattr__(self, attr):
+        return getattr(self.__pyobjc_object__, attr)
+
+    # The long type doesn't support __slots__ on subclasses, fake
+    # one part of the effect of __slots__: don't allow setting of attributes.
+    def __setattr__(self, attr, value):
+        if attr != '__pyobjc_object__':
+            raise AttributeError("'%s' object has no attribute '%s')"%(self.__class__.__name__, attr))
+        self.__dict__['__pyobjc_object__'] = value
+
+    def __reduce__(self):
+        return (base_class, (base_class(self),))
+
+
 if sys.version_info[0] == 2:
-    class OC_PythonLong(long):
-
-        def __new__(cls, obj, value):
-            self = long.__new__(cls, value)
-            self.__pyobjc_object__ = obj
-            return self
-
-        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
-
-        def __getattr__(self, attr):
-            return getattr(self.__pyobjc_object__, attr)
-
-        # The long type doesn't support __slots__ on subclasses, fake
-        # one part of the effect of __slots__: don't allow setting of attributes.
-        def __setattr__(self, attr, value):
-            if attr != '__pyobjc_object__':
-                raise AttributeError("'%s' object has no attribute '%s')"%(self.__class__.__name__, attr))
-            self.__dict__['__pyobjc_object__'] = value
-
-        def __reduce__(self):
-            return (long, (long(self),))
-
     class OC_PythonInt(int):
         __slots__=('__pyobjc_object__',)
 
@@ -60,32 +63,6 @@ if sys.version_info[0] == 2:
         def __reduce__(self):
             return (int, (int(self),))
 
-else:
-    class OC_PythonLong(int):
-
-        def __new__(cls, obj, value):
-            self = int.__new__(cls, value)
-            self.__pyobjc_object__ = obj
-            return self
-
-        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
-
-        def __getattr__(self, attr):
-            return getattr(self.__pyobjc_object__, attr)
-
-        # The long type doesn't support __slots__ on subclasses, fake
-        # one part of the effect of __slots__: don't allow setting of attributes.
-        def __setattr__(self, attr, value):
-            if attr != '__pyobjc_object__':
-                raise AttributeError("'%s' object has no attribute '%s')"%(self.__class__.__name__, attr))
-            self.__dict__['__pyobjc_object__'] = value
-
-        if sys.version_info[0] == 2:
-            def __reduce__(self):
-                return (long, (long(self),))
-        else:
-            def __reduce__(self):
-                return (int, (int(self),))
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')
@@ -94,18 +71,14 @@ Foundation = None
 def numberWrapper(obj):
     if isinstance(obj, NSDecimalNumber):
         return obj
-        # ensure that NSDecimal is around
-        global Foundation
-        if Foundation is None:
-            import Foundation
-        # return NSDecimal
-        return Foundation.NSDecimal(obj)
+
     try:
         tp = obj.objCType()
     except AttributeError:
         import warnings
-        warnings.warn(RuntimeWarning, "NSNumber instance doesn't implement objCType? %r" % (obj,))
+        warnings.warn("NSNumber instance doesn't implement objCType? %r" % (obj,), RuntimeWarning)
         return obj
+
     if tp in b'qQLfd':
         if tp == b'q':
             return OC_PythonLong(obj, obj.longLongValue())
@@ -115,7 +88,7 @@ def numberWrapper(obj):
             return OC_PythonFloat(obj, obj.doubleValue())
     elif sys.version_info[0] == 2:
         return OC_PythonInt(obj, obj.longValue())
-    else:
+    else: # pragma: no cover (py3k)
         return OC_PythonLong(obj, obj.longValue())
 
 _objc._setNSNumberWrapper(numberWrapper)

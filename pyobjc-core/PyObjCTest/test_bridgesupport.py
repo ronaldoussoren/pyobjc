@@ -4,6 +4,9 @@ import objc._bridgesupport as bridgesupport
 import os
 import re
 
+import xml.etree.ElementTree as ET 
+
+
 try:
     basestring
 except NameError:
@@ -15,6 +18,11 @@ except NameError:
     long = int
 
 IDENTIFIER=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+
+class TestXMLFile (TestCase):
+    def testInvalidToplevel(self):
+        self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, '<signatures2></signatures2>', 'Cocoa')
+        self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, '<signatures2></signatures>', 'Cocoa')
 
 class TestSystemBridgeSupport (TestCase):
 

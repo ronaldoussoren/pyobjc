@@ -46,19 +46,14 @@ if sys.version_info[0] == 2:
     def _as_bytes(value):
         return value
 
-    def _as_string(value):
-        return value
+else: # pragma: no cover (py3k)
 
-else:
     _unicode = str
 
     def _as_bytes(value):
         if isinstance(value, bytes):
             return value
         return value.encode('ascii')
-
-    def _as_string(value):
-        return value.decode('ascii')
 
 class _BridgeSupportParser (object):
     """

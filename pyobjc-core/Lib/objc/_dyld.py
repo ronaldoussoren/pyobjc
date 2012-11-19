@@ -33,7 +33,7 @@ def ensure_unicode(s):
         return unicode(s, 'utf8')
     return s
 
-def injectSuffixes(iterator):
+def inject_suffixes(iterator):
     suffix = ensure_unicode(os.environ.get('DYLD_IMAGE_SUFFIX', None))
     if suffix is None:
         return iterator
@@ -81,7 +81,7 @@ def dyld_framework(filename, framework_name, version=None):
                 )
 
 
-    for f in injectSuffixes(_search()):
+    for f in inject_suffixes(_search()):
         if os.path.exists(f):
             return f
     # raise ..
@@ -102,39 +102,15 @@ def dyld_library(filename, libname):
         ))
         for path in spath.split(':'):
             yield os.path.join(path, libname)
-    for f in injectSuffixes(_search()):
+    for f in inject_suffixes(_search()):
         if os.path.exists(f):
             return f
     raise ValueError("dylib %s could not be found" %(filename,))
 
-# Python version upto (at least) 2.5 do not propertly convert unicode
-# arguments to os.readlink, the code below works around that.
-if sys.version_info[:3] >= (2,6,0):
-    _realpath = os.path.realpath
-
-else:
-    def _realpath(path):
-        """
-        Unicode-safe version of os.path.realpath.
-        """
-        if isinstance(path, unicode):
-            fsenc = sys.getfilesystemencoding()
-            return os.path.realpath(path.encode(fsenc)).decode(fsenc)
-
-        return os.path.realpath(path)
-
 
 def dyld_find(filename):
     """Generic way to locate a dyld framework or dyld"""
-    # if they passed in a framework directory, not a mach-o file
-    # then go ahead and look where one would expect to find the mach-o
-#    filename = ensure_unicode(filename)
-#    if os.path.isdir(filename):
-#        filename = os.path.join(
-#            filename,
-#            os.path.basename(filename)[:-len(os.path.splitext(filename)[-1])]
-#        )
-    filename = _realpath(filename)
+    filename = os.path.realpath(filename)
     res = infoForFramework(filename)
     if res:
         framework_loc, framework_name, version = res

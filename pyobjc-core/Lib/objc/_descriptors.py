@@ -210,7 +210,10 @@ def selectorFor(callable, argIndex=-1):
             raise ValueError("No selector argument with type information")
 
     else:
-        signature = callable.__metadata__().arguments[idx]['type_of_sel']
+        try:
+            signature = callable.__metadata__()['arguments'][argIndex]['sel_of_type']
+        except (IndexError, KeyError):
+            raise ValueError("Not a selector argument with type information")
 
     def addSignature(function): 
         return selector(function, signature=signature)

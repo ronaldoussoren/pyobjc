@@ -78,8 +78,38 @@ Version 2.5b1
      The names op submodules of objc are implementation details, don't import
      them directly.
 
-- Improved documentation
+- The optional argument for the decorator :func:`objc.selectorFor` was broken
 
+- The :class:`PyObjCTools.KeyValueCoding.kvc` wrapper `__setattr__` wrapper 
+  incorrectly set attributes on itself as well as on the wrapped object (the latter
+  using Key-Value Coding)
+
+- Renamed (private) function injectSuffixes to inject_suffixes to match the
+  other code in objc._dyld.
+
+- Slight restructuring of objc._pythonify to reduce code duplication between the
+  python 2.x and python 3.x cases. 
+
+- Removed deprecated methods from PyObjCTools.TestSupport
+
+- :class:`collections.Sequence` objects are now automaticly proxied as NSArray 
+  instances
+
+- :class:`collections.Mapping` objects are now automaticly proxies as NSDictionary
+  instances
+
+- Removed some objects and functions from objc._bridges that weren't public
+  and weren't used by PyObjC itself:
+
+  - *BRIDGED_STRUCTURES*: mapping of python type to proxy class
+  - *BRIDGED_STRUCTURES2*: mapping of python type to proxy class (not used at all)
+  - *BRIDGED_TYPES*: mapping of python type to proxy class
+  - *_bridgePythonTypes*: uses BRIDGED_STRUCTURES and BRIDGED_TYPES to update bridge data
+
+  *_bridgePythonTypes* was called unconditionally, but never did anything because
+  the data structures were empty and no code adds anything to them.
+
+- Improved documentation
 
 
 Version 2.4.1

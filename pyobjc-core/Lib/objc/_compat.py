@@ -1,4 +1,4 @@
-__all__ = ['runtime', 'pluginBundle', 'registerPlugin', 'splitStruct']
+__all__ = ['runtime', 'pluginBundle', 'registerPlugin', 'splitStruct', '_loadFunctionList']
 import warnings
 
 class Runtime:
@@ -51,7 +51,8 @@ def pluginBundle(pluginName):
     only after it has been registered with registerPlugin
     """
     warnings.warn("Deprecated: use currentBundle()", DeprecationWarning)
-    from Foundation import NSBundle
+    import objc
+    NSBundle = objc.lookUpClass('NSBundle')
     return NSBundle.bundleWithPath_(_PLUGINS[pluginName])
 
 def splitStruct(value):

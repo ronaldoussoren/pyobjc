@@ -1460,7 +1460,14 @@ Descriptors
 .. function:: callbackFor(callable[, argIndex=])
 
    Use this decorator to tell that this function is the callback for
-   an (Objective-C) API.
+   an (Objective-C) API that stores a reference to the callback
+   function.
+
+   You only *have* to use this API when the Objective-C API can store
+   the callback function for later usage. For other functions the
+   bridge can create a temporary callback stub.
+
+   Using this decorator for methods is not supported
 
    Usage:
 
@@ -1473,6 +1480,12 @@ Descriptors
    This tells the bridge that 'compare' is used as the sort function
    for NSArray, and ensures that the function will get the correct
    Objective-C signature.
+
+   .. note::
+
+      The example will also work without the decorator because 
+      NSArray won't store a reference to the compare function that
+      is used after 'sortedArrayUsingFunction_context_' returns.
 
 .. function:: selectorFor(callable[, argIndex])
 
@@ -1487,13 +1500,10 @@ Descriptors
       def sheetDidEnd_returnCode_contextInfo_(self, sheet, returnCode, info): 
           pass 
       
-  This will tell the bridge that this method is used as the end method
-  for a sheet API, and will ensure that the method is registered with
-  the correct Objective-C signature.
+   This will tell the bridge that this method is used as the end method
+   for a sheet API, and will ensure that the method is registered with
+   the correct Objective-C signature.
 
-  You only *have* to use this API when the Objective-C API can store
-  the callback function for later usage. For other functions the
-  bridge can create a temporary callback stub.
 
 .. function:: synthesize(name[, copy[, readwrite[, type[, ivarName]]]])
 

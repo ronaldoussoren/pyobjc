@@ -24,12 +24,11 @@ import copy
 
 from pickle import PicklingError, UnpicklingError, whichmodule
 
-if hasattr(sys, 'intern'):
-    intern = sys.intern
 
-if sys.version_info[0] == 3:
+if sys.version_info[0] == 3: # pragma: no cover (py3k)
     unicode = str
     long = int
+    intern = sys.intern
 
 
 # FIXME: This requires manual wrappers from the Foundation bindings

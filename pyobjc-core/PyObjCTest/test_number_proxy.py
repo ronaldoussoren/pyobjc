@@ -11,6 +11,7 @@ from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.pythonnumber import OC_TestNumber
 import objc
 
+
 if sys.version_info[0] == 3:
     unicode = str
 
@@ -37,8 +38,77 @@ class TestNSNumber (TestCase):
             self.assertIsNotInstance(v, OC_PythonNumber)
             self.assertIs(OC_TestNumber.numberClass_(v), NSCFNumber)
 
+    def testDecimal(self):
+        NSDecimalNumber = objc.lookUpClass("NSDecimalNumber")
+        v = NSDecimalNumber.numberWithInt_(10)
+        self.assertIsInstance(v, NSDecimalNumber)
+
+        from objc._pythonify import numberWrapper
+        o = numberWrapper(v)
+        self.assertIs(o, v)
+
+    def testLongValue(self):
+        v = NSNumber.numberWithUnsignedLongLong_(2 ** 63 + 5000)
+        self.assertIsInstance(v, long)
+
+        self.assertEqual(v.description(), str(2**63+5000))
+
+        self.assertIsNot(type(v), long)
+
+        self.assertRaises(AttributeError, setattr, v, 'x', 42)
+
+    def testEdgeCases(self):
+        from objc._pythonify import numberWrapper
+
+        n = objc.lookUpClass('NSObject').alloc().init()
+
+        with filterWarnings("error", RuntimeWarning):
+            self.assertRaises(RuntimeWarning, numberWrapper, n)
+
+        with filterWarnings("ignore", RuntimeWarning):
+            self.assertIs(numberWrapper(n), n)
+
+
+        # Fake number class, to ensure that all of 
+        # numberWrapper can be tested with a 64-bit runtime
+        class Number (objc.lookUpClass("NSObject")):
+            def objCType(self):
+                return objc._C_INT
+
+            def longValue(self):
+                return 42
+
+        n = Number.alloc().init()
+        v = numberWrapper(n)
+        self.assertEqual(v, 42)
+        self.assertIs(v.__pyobjc_object__, n)
+
+    def testPickling(self):
+        v = {
+            'long': NSNumber.numberWithUnsignedLongLong_(2 ** 63 + 5000),
+            'int':  NSNumber.numberWithInt_(42),
+            'float': NSNumber.numberWithDouble_(2.0),
+        }
+        import pickle
+        data = pickle.dumps(v)
+
+        w = pickle.loads(data)
+        self.assertEqual(w, {
+            'long': 2**63 + 5000,
+            'int': 42,
+            'float': 2.0,
+        })
+
+        for o in v.values():
+            self.assertTrue(hasattr(o, '__pyobjc_object__'))
+
+        for o in w.values():
+            self.assertFalse(hasattr(o, '__pyobjc_object__'))
+
     def testShortConversions(self):
         v = NSNumber.numberWithShort_(42)
+
+        self.assertEqual(v.stringValue(), '42')
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
@@ -54,8 +124,11 @@ class TestNSNumber (TestCase):
         self.assertEqual(OC_TestNumber.numberAsFloat_(v), 42.0)
         self.assertEqual(OC_TestNumber.numberAsDouble_(v), 42.0)
 
+
     def testIntConversions(self):
         v = NSNumber.numberWithInt_(42)
+
+        self.assertEqual(v.stringValue(), '42')
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 42)
@@ -73,6 +146,8 @@ class TestNSNumber (TestCase):
 
         # Negative values
         v = NSNumber.numberWithInt_(-42)
+
+        self.assertEqual(v.stringValue(), '-42')
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), -42)
@@ -104,6 +179,7 @@ class TestNSNumber (TestCase):
 
     def testDoubleConversions(self):
         v = NSNumber.numberWithDouble_(75.5)
+        self.assertEqual(v.stringValue(), '75.5')
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), 75)
@@ -121,6 +197,7 @@ class TestNSNumber (TestCase):
 
         # Negative values
         v = NSNumber.numberWithDouble_(-127.6)
+        self.assertEqual(v.stringValue(), '-127.6')
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
         self.assertEqual(OC_TestNumber.numberAsChar_(v), -127)

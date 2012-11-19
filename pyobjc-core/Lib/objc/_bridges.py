@@ -2,12 +2,9 @@ from objc._objc import *
 from objc import _objc
 import struct
 import sys
+import collections
 
 __all__ = [ 'registerListType', 'registerMappingType' ]
-
-BRIDGED_STRUCTURES = {}
-BRIDGED_STRUCTURES2 = {}
-BRIDGED_TYPES = []
 
 def registerListType(type):
     """
@@ -26,22 +23,11 @@ def registerMappingType(type):
     OC_PythonDictionary.depythonifyTable().append(type)
 
 
-def _bridgePythonTypes():
-    # Python to Obj-C
-    OC_PythonObject = lookUpClass('OC_PythonObject')
-    try:
-        if BRIDGED_TYPES:
-            OC_PythonObject.depythonifyTable().extend(BRIDGED_TYPES)
-        if BRIDGED_STRUCTURES:
-            OC_PythonObject.pythonifyStructTable().update(BRIDGED_STRUCTURES)
-    except AttributeError:
-        pass
-
-if sys.version_info[0] > 2:
+if sys.version_info[0] > 2: # pragma: no cover (py3k)
     registerListType(type(range(1)))
 
 else:
     registerListType(xrange)
 
-
-_bridgePythonTypes()
+registerListType(collections.Sequence)
+registerMappingType(collections.Mapping)

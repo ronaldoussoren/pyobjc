@@ -5,6 +5,7 @@ from PyObjCTest.testbndl import PyObjC_TestClass4
 from . import fnd as Foundation
 from .fnd import NSObject, NSArray, NSAttributedString
 import sys
+import os
 
 
 class TestConstants(TestCase):
@@ -135,5 +136,51 @@ class TestPrivate (TestCase):
 
         self.assertRaises(AttributeError, resolve, "distutils.command.sdist.dont_show_formats")
         self.assertRaises(AttributeError, resolve, "sys.does_not_exist")
+
+class TestPluginSupport (TestCase):
+    def test_deprecated(self):
+        with filterWarnings("error", DeprecationWarning):
+            self.assertRaises(DeprecationWarning, objc.registerPlugin, "myplugin")
+            self.assertRaises(DeprecationWarning, objc.pluginBundle, "myplugin")
+
+    def test_usage(self):
+        with filterWarnings("ignore", DeprecationWarning):
+            self.assertRaises(KeyError, objc.pluginBundle, "myplugin")
+
+            self.assertNotIn('RESOURCEPATH', os.environ)
+            self.assertRaises(KeyError, objc.registerPlugin, "myplugin")
+
+            # Actual plugin is .../MyPlugin.bundle/Contents/Resources, this is close enought and
+            # ensures that we can actually create as NSBundle later on.
+            os.environ['RESOURCEPATH'] = '/System/Library/Frameworks/Cocoa.framework/Contents/Resources'
+            try:
+                objc.registerPlugin("myplugin")
+
+                if sys.version_info[0] == 2:
+                    os.environ['RESOURCEPATH'] = b'/System/Library/Frameworks/Cocoa.framework/Contents/Resources'
+                    objc.registerPlugin("myplugin")
+            finally:
+                del os.environ['RESOURCEPATH']
+
+            b = objc.pluginBundle("myplugin")
+            self.assertIsInstance(b, objc.lookUpClass("NSBundle"))
+            self.assertEqual(b.bundlePath(), '/System/Library/Frameworks/Cocoa.framework')
+
+class TestCompatJunk (TestCase):
+    def test_loadFunctionList(self):
+        with filterWarnings("error", DeprecationWarning):
+            self.assertRaises(DeprecationWarning, objc._loadFunctionList, [])
+
+        orig = objc.loadFunctionList
+        try:
+            l = []
+            objc.loadFunctionList = lambda *args, **kwds: l.append((args, kwds))
+
+            objc._loadFunctionList(1, 2, a=3, b=3)
+            self.assertEqual(l, [((1,2), {'a':3, 'b':3})])
+
+        finally:
+            objc.loadFunctionList = orig
+
 if __name__ == '__main__':
     main()

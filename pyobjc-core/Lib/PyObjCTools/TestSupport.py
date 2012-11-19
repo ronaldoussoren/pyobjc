@@ -290,25 +290,6 @@ class TestCase (_unittest.TestCase):
     This also adds a number of useful assertion methods
     """
 
-    if not hasattr(_unittest.TestCase, 'assertItemsEqual'):
-        def assertItemsEqual(self, seq1, seq2, message=None):
-            self.assertEqual(set(seq1), set(seq2), message)
-
-    def assertGreaterThan(self, value, test, message = None):
-        if not (value > test):
-            self.fail(message or "not: %s > %s"%(value, test))
-
-    def assertGreaterThanOrEquals(self, value, test, message = None):
-        if not (value >= test):
-            self.fail(message or "not: %s >= %s"%(value, test))
-
-    def assertLessThan(self, value, test, message = None):
-        if not (value < test):
-            self.fail(message or "not: %s < %s"%(value, test))
-
-    def assertLessThanOrEquals(self, value, test, message = None):
-        if not (value <= test):
-            self.fail(message or "not: %s <= %s"%(value, test))
 
     def assertIsCFType(self, tp, message = None):
         if not isinstance(tp, objc.objc_class):
@@ -325,25 +306,11 @@ class TestCase (_unittest.TestCase):
         if not hasattr(tp, "__typestr__"):
             self.fail(message or "%r is not an opaque-pointer"%(tp,))
 
-    def assertIs(self, value, test, message = None):
-        if value is not test:
-            self.fail(message or  "%r (id=%r) is not %r (id=%r) "%(value, id(value), test, id(test)))
-
-    def assertIsNot(self, value, test, message = None):
-        if value is test:
-            self.fail(message or  "%r is %r"%(value, test))
-
-    def assertIsNone(self, value, message = None):
-        self.assertIs(value, None)
-
-    def assertIsNotNone(self, value, message = None):
-        if value is None:
-            sel.fail(message, "%r is not %r"%(value, test))
 
     def assertResultIsNullTerminated(self, method, message = None):
         info = method.__metadata__()
         if not info['retval'].get('c_array_delimited_by_null'):
-            self.fail(message or "result of %r is not a nul-terminated array"%(method,))
+            self.fail(message or "result of %r is not a null-terminated array"%(method,))
 
     def assertIsNullTerminated(self, method, message = None):
         info = method.__metadata__()
@@ -636,64 +603,102 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "arg %d of %s is not an 'in' argument"%(
                 argno, method))
 
+    
+    #
+    # Addition assert methods, all of them should only be necessary for
+    # python 2.7 or later
+    #
 
-    def assertStartswith(self, value, check, message=None):
-        if not value.startswith(check):
-            self.fail(message or "not %r.startswith(%r)"%(value, check))
+    if not hasattr(_unittest.TestCase, 'assertItemsEqual'): # pragma: no cover
+        def assertItemsEqual(self, seq1, seq2, message=None):
+            self.assertEqual(set(seq1), set(seq2), message)
 
-    def assertHasAttr(self, value, key, message=None):
-        if not hasattr(value, key):
-            self.fail(message or "%s is not an attribute of %r"%(key, value))
+    if not hasattr(_unittest.TestCase, 'assertIs'): # pragma: no cover
+        def assertIs(self, value, test, message = None):
+            if value is not test:
+                self.fail(message or  "%r (id=%r) is not %r (id=%r) "%(value, id(value), test, id(test)))
 
-    def assertNotHasAttr(self, value, key, message=None):
-        if hasattr(value, key):
-            self.fail(message or "%s is an attribute of %r"%(key, value))
+    if not hasattr(_unittest.TestCase, 'assertIsNot'): # pragma: no cover
+        def assertIsNot(self, value, test, message = None):
+            if value is test:
+                self.fail(message or  "%r is %r"%(value, test))
 
-    def assertIsInstance(self, value, types, message=None):
-        if not isinstance(value, types):
-            self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
+    if not hasattr(_unittest.TestCase, 'assertIsNone'): # pragma: no cover
+        def assertIsNone(self, value, message = None):
+            self.assertIs(value, None)
 
-    def assertIsNotInstance(self, value, types, message=None):
-        if isinstance(value, types):
-            self.fail(message or "%s is an instance of %r"%(value, types))
+    if not hasattr(_unittest.TestCase, 'assertIsNotNone'): # pragma: no cover
+        def assertIsNotNone(self, value, message = None):
+            if value is None:
+                sel.fail(message, "%r is not %r"%(value, test))
 
-    def assertIn(self, value, seq, message=None):
-        if value not in seq:
-            self.fail(message or "%r is not in %r"%(value, seq))
+    if not hasattr(_unittest.TestCase, 'assertStartsWith'): # pragma: no cover
+        def assertStartswith(self, value, check, message=None):
+            if not value.startswith(check):
+                self.fail(message or "not %r.startswith(%r)"%(value, check))
 
-    def assertNotIn(self, value, seq, message=None):
-        if value in seq:
-            self.fail(message or "%r is in %r"%(value, seq))
+    if not hasattr(_unittest.TestCase, 'assertHasAttr'): # pragma: no cover
+        def assertHasAttr(self, value, key, message=None):
+            if not hasattr(value, key):
+                self.fail(message or "%s is not an attribute of %r"%(key, value))
+
+    if not hasattr(_unittest.TestCase, 'assertNotHasAttr'): # pragma: no cover
+        def assertNotHasAttr(self, value, key, message=None):
+            if hasattr(value, key):
+                self.fail(message or "%s is an attribute of %r"%(key, value))
+
+    if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
+        def assertIsInstance(self, value, types, message=None):
+            if not isinstance(value, types):
+                self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
+
+    if not hasattr(_unittest.TestCase, 'assertIsNotInstance'): # pragma: no cover
+        def assertIsNotInstance(self, value, types, message=None):
+            if isinstance(value, types):
+                self.fail(message or "%s is an instance of %r"%(value, types))
+
+    if not hasattr(_unittest.TestCase, 'assertIn'): # pragma: no cover
+        def assertIn(self, value, seq, message=None):
+            if value not in seq:
+                self.fail(message or "%r is not in %r"%(value, seq))
+
+    if not hasattr(_unittest.TestCase, 'assertNotIn'): # pragma: no cover
+        def assertNotIn(self, value, seq, message=None):
+            if value in seq:
+                self.fail(message or "%r is in %r"%(value, seq))
 
 
-    if not hasattr(_unittest.TestCase, 'assertGreaterThan'):
+    if not hasattr(_unittest.TestCase, 'assertGreaterThan'): # pragma: no cover
         def assertGreaterThan(self, val, test, message=None):
             if not (val > test):
                 self.fail(message or '%r <= %r'%(val, test))
 
-    if not hasattr(_unittest.TestCase, 'assertGreaterEqual'):
+    if not hasattr(_unittest.TestCase, 'assertGreaterEqual'): # pragma: no cover
         def assertGreaterEqual(self, val, test, message=None):
             if not (val >= test):
                 self.fail(message or '%r < %r'%(val, test))
 
-    if not hasattr(_unittest.TestCase, 'assertLessThan'):
+    if not hasattr(_unittest.TestCase, 'assertLessThan'): # pragma: no cover
         def assertLessThan(self, val, test, message=None):
             if not (val < test):
                 self.fail(message or '%r >= %r'%(val, test))
 
-    if not hasattr(_unittest.TestCase, 'assertLessEqual'):
+    if not hasattr(_unittest.TestCase, 'assertLessEqual'): # pragma: no cover
         def assertLessEqual(self, val, test, message=None):
             if not (val <= test):
                 self.fail(message or '%r > %r'%(val, test))
 
-
-    if not hasattr(_unittest.TestCase, "assertAlmostEquals"):
+    if not hasattr(_unittest.TestCase, "assertAlmostEquals"): # pragma: no cover
         def assertAlmostEquals(self, val1, val2, message=None):
             self.failUnless(abs (val1 - val2) < 0.00001, 
                     message or 'abs(%r - %r) >= 0.00001'%(val1, val2))
 
 
     def run(self, *args):
+        """
+        Run the test, same as unittest.TestCase.run, but every test is
+        run with a fresh autorelease pool.
+        """
         if _useleaks:
             leaksBefore = _leaks()
         if _usepool:
@@ -718,68 +723,14 @@ class TestCase (_unittest.TestCase):
                         for ln in leaksAfter:
                             print(ln)
 
-    def _deprecate(original_func):
-        def deprecated_func(*args, **kwds):
-            warnings.warn("Please use %s instead."%(original_func.__name__,),
-                    DeprecationWarning, 2)
-            return original_func(*args, **kwds)
-        return deprecated_func
-
-    failUnlessIsIn = _deprecate(assertIn)
-    failUnlessIsNotIn = _deprecate(assertNotIn)
-    assertIsIn = _deprecate(assertIn)
-    assertIsNotIn = _deprecate(assertNotIn)
-    failUnlessIsCFType = _deprecate(assertIsCFType)
-    failUnlessIsOpaquePointer = _deprecate(assertIsOpaquePointer)
-    failUnlessIsNone = _deprecate(assertIsNone)
-    failIfIsNone = _deprecate(assertIsNotNone)
-    failUnlessResultIsNullTerminated = _deprecate(assertResultIsNullTerminated)
-    failUnlessIsNullTerminated = _deprecate(assertIsNullTerminated)
-    failUnlessArgIsNullTerminated = _deprecate(assertArgIsNullTerminated)
-    failUnlessArgIsVariableSize = _deprecate(assertArgIsVariableSize)
-    failUnlessResultIsVariableSize = _deprecate(assertResultIsVariableSize)
-    failUnlessArgSizeInResult = _deprecate(assertArgSizeInResult)
-    failUnlessArgIsPrintf = _deprecate(assertArgIsPrintf)
-    failUnlessArgIsCFRetained = _deprecate(assertArgIsCFRetained)
-    failIfArgIsCFRetained = _deprecate(assertArgIsCFRetained)
-    failUnlessResultIsCFRetained = _deprecate(assertResultIsCFRetained)
-    failIfResultIsCFRetained = _deprecate(assertResultIsNotCFRetained)
-    failUnlessResultIsRetained = _deprecate(assertResultIsRetained)
-    failIfResultIsRetained = _deprecate(assertResultIsNotRetained)
-    failUnlessResultHasType = _deprecate(assertResultHasType)
-    failUnlessArgHasType = _deprecate(assertArgHasType)
-    failUnlessArgIsFunction = _deprecate(assertArgIsFunction)
-    failUnlessArgIsBlock = _deprecate(assertArgIsBlock)
-    failUnlessResultIsBlock = _deprecate(assertResultIsBlock)
-    failUnlessArgIsSEL = _deprecate(assertArgIsSEL)
-    failUnlessResultIsBOOL = _deprecate(assertResultIsBOOL)
-    failUnlessArgIsBOOL = _deprecate(assertArgIsBOOL)
-    failUnlessArgIsFixedSize = _deprecate(assertArgIsFixedSize)
-    failUnlessArgSizeInArg = _deprecate(assertArgSizeInArg)
-    failUnlessResultSizeInArg = _deprecate(assertResultSizeInArg)
-    failUnlessArgIsOut = _deprecate(assertArgIsOut)
-    failUnlessArgIsInOut = _deprecate(assertArgIsInOut)
-    failUnlessArgIsIn = _deprecate(assertArgIsIn)
-    failUnlessStartswith = _deprecate(assertStartswith)
-    failUnlessHasAttr = _deprecate(assertHasAttr)
-    failIfHasAttr = _deprecate(assertNotHasAttr)
-    failUnlessIsInstance = _deprecate(assertIsInstance)
-    failIfIsInstance = _deprecate(assertIsNotInstance)
-    failUnlessIsIn = _deprecate(assertIsIn)
-    failIfIsNotIn = _deprecate(assertIsIn)
-    failUnlessIsNotIn = _deprecate(assertIsNotIn)
-    failIfIsIn = _deprecate(assertIsNotIn)
-    assertNotIsInstance = _deprecate(assertIsNotInstance)
-    assertIsObject = _deprecate(assertIs)
-    assertIsNotObject = _deprecate(assertIsNot)
-
-    del _deprecate
 
 main = _unittest.main
 
 if hasattr(_unittest, 'expectedFailure'):
     expectedFailure = _unittest.expectedFailure
-else:
+
+else: # pragma: no cover (py2.6)
+
     def expectedFailure(func):
         def test(self):
             try:
@@ -793,6 +744,8 @@ else:
 
         return test
 
+# XXX: filterwarnings relies on implementation details of
+#      the warnings module
 class filterWarnings (object):
     def __init__(self, kind, category):
         self._kind = kind

@@ -163,7 +163,11 @@ Key-Value Coding wrapper
 
    .. method __setattr__(key, value)
 
-      Returns ``setKey(self, key, value)``.
+      Returns ``setKey(self, key, value)`` if the key
+      does not start with an underscore. 
+      
+      Sets an attribute of the wrapper
+      when the key does start with an undercore.
 
    .. method __getitem_(self, keypath)
 

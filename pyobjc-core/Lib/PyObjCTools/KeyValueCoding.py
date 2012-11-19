@@ -328,7 +328,9 @@ class kvc(object):
     def __setattr__(self, attr, value):
         if not attr.startswith('_'):
             setKey(self.__pyobjc_object__, attr, value)
-        object.__setattr__(self, attr, value)
+
+        else:
+            object.__setattr__(self, attr, value)
 
     def __getitem__(self, item):
         if not isinstance(item, basestring):
