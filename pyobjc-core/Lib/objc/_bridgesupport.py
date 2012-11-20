@@ -28,6 +28,12 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 # TODO: parseBridgeSupport (and its support class) is a 
 #       basic port from C, check if it can be simplified.
 
+# NOTE: This search path only contains system locations to
+# avoid accidently reiying on system-specific functionality.
+BRIDGESUPPORT_DIRECTORIES = [
+    '/System/Library/BridgeSupport',
+]
+
 _DEFAULT_SUGGESTION="don't use this method"
 _BOOLEAN_ATTRIBUTES=[
     "already_retained",
@@ -733,7 +739,7 @@ def initFrameworkWrapper(frameworkName,
     # If there is no metadata there look for metadata in the standard Library
     # locations
     fn = frameworkName + '.bridgesupport'
-    for dn in _gBridgeSupportDirectories:
+    for dn in BRIDGESUPPORT_DIRECTORIES:
         path = os.path.join(dn, fn)
         if os.path.exists(path):
             data = open(path, 'rb').read()

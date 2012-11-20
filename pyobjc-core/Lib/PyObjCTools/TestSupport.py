@@ -38,14 +38,17 @@ def sdkForPython(_cache=[]):
     if not _cache:
 
         cflags = _get_config_var('CFLAGS')
-        m = _re.search('-isysroot ([^ ]*) ', cflags)
+        m = _re.search('-isysroot\s+([^ ]*)(\s|$)', cflags)
         if m is None:
+            _cache.append(None)
             return None
 
 
         path = m.group(1)
         if path == '/':
-            return tuple(map(int, os_release().split('.')))
+            result = tuple(map(int, os_release().split('.')))
+            _cache.append(result)
+            return result
 
         bn = _os.path.basename(path)
         version = bn[6:-4]
@@ -53,7 +56,9 @@ def sdkForPython(_cache=[]):
             version = version[:-1]
 
 
-        return tuple(map(int, version.split('.')))
+        result =  tuple(map(int, version.split('.')))
+        _cache.append(result)
+        return result
 
     return _cache[0]
 
@@ -132,13 +137,8 @@ def is32Bit():
     """
     Return True if we're running in 32-bit mode
     """
-    if hasattr(_sys, 'maxint'):
-        # Python 2.5 or earlier
-        if _sys.maxint > 2 ** 32:
-            return False
-    else:
-        if _sys.maxsize > 2 ** 32:
-            return False
+    if _sys.maxsize > 2 ** 32:
+        return False
     return True
 
 def onlyIf(expr, message=None):

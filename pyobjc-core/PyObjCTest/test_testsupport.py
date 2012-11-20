@@ -1,6 +1,9 @@
 from PyObjCTools.TestSupport import *
 import unittest
 import objc
+import sys
+
+from PyObjCTools import TestSupport
 
 class Method(object):
     def __init__(self, argno, meta, selector=False):
@@ -24,6 +27,88 @@ class Method(object):
 
 
 class TestTestSupport (TestCase):
+
+    def test_sdkForPython(self):
+        orig_get_config_var = TestSupport._get_config_var
+        try:
+            config_result = ''
+            def get_config_var(value):
+                if value != 'CFLAGS':
+                    raise KeyError(value)
+
+                return config_result
+
+            TestSupport._get_config_var = get_config_var
+            cache = sdkForPython.func_defaults[0]
+
+            config_result = ''
+            self.assertEqual(sdkForPython(), None)
+            self.assertEqual(cache, [None])
+            self.assertEqual(sdkForPython(), None)
+            self.assertEqual(cache, [None])
+
+            cache[:] = []
+
+            config_result = '-isysroot /Developer/SDKs/MacOSX10.6.sdk'
+            self.assertEqual(sdkForPython(), (10, 6))
+            self.assertEqual(cache, [(10,6)])
+            self.assertEqual(sdkForPython(), (10, 6))
+            self.assertEqual(cache, [(10,6)])
+
+            cache[:] = []
+
+            config_result = '-isysroot /'
+            os_rel = tuple(map(int, os_release().split('.')))
+            self.assertEqual(sdkForPython(), os_rel)
+            self.assertEqual(cache, [os_rel])
+            self.assertEqual(sdkForPython(), os_rel)
+            self.assertEqual(cache, [os_rel])
+
+            cache[:] = []
+
+            config_result = '-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch x86_64'
+            self.assertEqual(sdkForPython(), (10,4))
+            self.assertEqual(cache, [(10,4)])
+            self.assertEqual(sdkForPython(), (10,4))
+            self.assertEqual(cache, [(10,4)])
+
+            cache[:] = []
+
+            config_result = '-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -arch i386 -arch x86_64'
+            self.assertEqual(sdkForPython(), (10,10))
+            self.assertEqual(cache, [(10,10)])
+            self.assertEqual(sdkForPython(), (10,10))
+            self.assertEqual(cache, [(10,10)])
+
+            cache[:] = []
+
+        finally:
+            TestSupport._get_config_var = orig_get_config_var
+
+    def test_os_release(self):
+        import platform
+        TestSupport._os_release = '10.10'
+        self.assertEqual(os_release(), '10.10')
+        TestSupport._os_release = None
+
+        self.assertEqual(TestSupport.os_release(), '.'.join(platform.mac_ver()[0].split('.')[:2]))
+
+    def test_fourcc(self):
+        import struct
+        self.assertEqual(fourcc('abcd'), struct.unpack('>i', 'abcd')[0])
+
+    def testIs32Bit(self):
+        orig = sys.maxsize
+        try:
+            sys.maxsize = 2 ** 31 -1
+            self.assertTrue(is32Bit())
+
+            sys.maxsize = 2 ** 63 -1
+            self.assertFalse(is32Bit())
+
+        finally:
+            sys.maxsize = orig
+
 
     def test_assert_opaque(self):
         self.assertRaises(AssertionError, self.assertIsOpaquePointer, long)

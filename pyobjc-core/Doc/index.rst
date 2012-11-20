@@ -18,6 +18,7 @@ Contents:
    fsref-fsspec
    xcode
    blocks
+   metadata/index
    lib/index
    dev/index
 

@@ -241,7 +241,15 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
 	}
 
 	if (meta != NULL && !PyDict_Check(meta)) {
-		PyErr_SetString(PyExc_TypeError, "invalid metadata");
+		PyObject* r = PyObject_Repr(meta);
+		if (r == NULL) {
+			return -1;
+		}
+		PyErr_Format(PyExc_TypeError, "metadata of type %s: %s",
+				Py_TYPE(meta)->tp_name,
+				PyText_AsString(r));
+		Py_DECREF(r);
+
 		return -1;
 	}
 
