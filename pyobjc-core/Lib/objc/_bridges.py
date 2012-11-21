@@ -23,11 +23,7 @@ def registerMappingType(type):
     OC_PythonDictionary.depythonifyTable().append(type)
 
 
-if sys.version_info[0] > 2: # pragma: no cover (py3k)
-    registerListType(type(range(1)))
-
-else:
-    registerListType(xrange)
+registerListType(xrange if sys.version_info[0] == 2 else range)
 
 registerListType(collections.Sequence)
 registerMappingType(collections.Mapping)

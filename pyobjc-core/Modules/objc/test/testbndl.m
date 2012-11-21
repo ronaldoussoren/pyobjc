@@ -845,6 +845,8 @@ static 	char buf[1024];
 {
 }
 
++(Class)classOfObject:(NSObject*)arg;
+
 /* "plain" calls */
 -(char)callInstanceCharFuncOf:(OC_TestClass1*)arg;
 -(unsigned char)callInstanceUnsignedCharFuncOf:(OC_TestClass1*)arg;
@@ -933,6 +935,11 @@ static 	char buf[1024];
 	[inv setSelector:selector]; 
 
 @implementation OC_TestClass2 
+
++(Class)classOfObject:(NSObject*)arg
+{
+	return [arg class];
+}
 
 -(char)callInstanceCharFuncOf:(OC_TestClass1*)arg
 {
