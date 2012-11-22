@@ -19,12 +19,154 @@ except NameError:
 
 IDENTIFIER=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
-class TestXMLFile (TestCase):
+# XXX: add all supported metadata to TEST_XML, validate in test_xml_structure
+TEST_XML="""\
+<signatures>
+  <unknown><!-- ignore -->
+    <enum name='nested1' value='4' /><!-- should be ignored -->
+  </unknown>
+  <opaque name='opaque1' type='^{opaque1}'/>
+  <opaque name='opaque2' type='^{opaque2=f}' type64='^{opaque2=d}' />
+  <opaque type='^{opaque2=f}' type64='^{opaque2=d}' /><!-- ignore -->
+  <opaque name='opaque3' /><!-- ignore -->
+  <opaque name='opaque4' type64='^{opaque2=d}' /><!-- ignore 32-bit -->
+  <opaque /><!-- ignore -->
+  <constant name='constant1' type='@'/>
+  <constant name='constant2' type='I' type64='Q' />
+  <constant type='@'/><!-- ignore -->
+  <constant name='constant3' /><!-- ignore -->
+  <constant name='constant2' type64='Q' /><!-- ignore 32-bit -->
+  <constant /><!-- ignore -->
+  <string_constant name='strconst1' value='string constant1' />
+  <string_constant name='strconst2' value='string constant 2' value64='string constant two' />
+  <string_constant name='strconst1u' value='string constant1 unicode' nsstring='true' />
+  <string_constant name='strconst2u' value='string constant 2 unicode' value64='string constant two unicode' nsstring='true' />
+  <string_constant name='strconst3' /><!-- ignore -->
+  <string_constant name='strconst4' nsstring='true' /><!-- ignore -->
+  <string_constant name='strconst5' value64='string five' /><!-- ignore 32-bit -->
+  <string_constant name='strconst5' value64='string five unicode' nsstring='true' /><!-- ignore 32-bit -->
+  <string_constant /><!-- ignore -->
+  <enum name='enum1' value='1' />
+  <enum name='enum2' value='3' value64='4'/>
+  <enum name='enum3' le_value='5' be_value64='6'/>
+  <enum name='enum4' value='7' be_value='8' /><!-- should have value 7 -->
+  <enum name='enum5' /><!-- ignore -->
+  <enum value='3' value64='4'/><!-- ignore -->
+  <enum name='enum6' value64='4'/><!-- ignore 32-bit -->
+  <enum name='enum7' be_value64='6' /><!-- ignore intel -->
+  <enum name='enum8' le_value='5' /><!-- ignore ppc -->
+  <enum /><!-- ignore -->
+  <null_constant name='null1' />
+  <null_constant /><!-- ignore -->
+  <function_pointer name='func1' orginal='orig_function' />
+  <function_pointer name='func2' /><!-- ignore -->
+  <function_pointer original='func3' /><!-- ignore -->
+  <function_pointer /><!-- ignore -->
+  <cftype name='CFProxy1Ref' type='^{CFProxy}' gettypeid_func='CFArrayGetTypeID' />
+  <cftype name='CFProxy2Ref' type='^{CFProxy32}' type64='^{CFProxy64}' gettypeid_func='CFArrayGetTypeID' />
+  <cftype name='CFProxy3Ref' type='^{CFProxy3}' tollfree='NSProxy' gettypeid_func='CFArrayGetTypeID' />
+  <cftype name='CFProxy4Ref' type='^{CFProxy4}' tollfree='NSProxy2' />
+  <cftype name='CFProxy5Ref' type='^{CFProxy}' gettypeid_func='NoSuchFunction' /><!-- tollfree to CFTypeRef -->
+  <cftype name='CFProxy6Ref' type='^{CFProxy}' /><!-- ignore: no typeid -->
+  <cftype name='CFProxy7Ref' type='^{CFProxy32}' type64='^{CFProxy64}' /><!-- ignore: no typeid -->
+  <cftype type='^{CFProxy}' gettypeid_func='CFArrayGetTypeID' /><!-- ignore -->
+  <cftype name='CFProxy8Ref' gettypeid_func='CFArrayGetTypeID' /><!-- ignore -->
+  <cftype name='CFProxy9Ref' type64='^{CFProxy64}' gettypeid_func='CFArrayGetTypeID' /><!-- ignore 32-bit -->
+  <cftype/><!-- ignore -->
+  <class name='MyClass1'></class>
+  <class /><!-- ignore -->
+  <class name='MyClass2'>
+    <method selector='method1'></method>
+    <method selector='method2' variadic='true' ></method>
+    <method selector='method3' variadic='true' c_array_delimited_by_null='true'></method>
+    <method selector='method4' variadic='true' c_array_length_in_arg='4'></method>
+    <method selector='method5' c_array_delimited_by_null='true'><retval type='d'/></method><!-- c_array... ignored -->
+    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /></method><!-- c_array... ignored -->
+    <method selector='method7' ignore='true'></method>
+    <method selector='method8' ignore='true' suggestion='ignore me'></method>
+    <method selector='method9' suggestion='ignore me'><retval type='d'/></method><!-- suggestion ignored -->
+    <method selector='method10'>
+       <retval type='d'/>
+    </method>
+    <method selector='method11'>
+       <retval type='f' type64='d' />
+    </method>
+    <method selector='method12'>
+       <retval/><!-- ignore -->
+    </method>
+    <method selector='method13'>
+       <retval type_modifier='n' />
+    </method>
+    <method selector='method13'>
+       <retval sel_of_type='v@:f' c_array_of_fixed_length='4'/>
+    </method>
+    <method selector='method14'>
+       <retval sel_of_type='v@:f' sel_of_type64='v@:d' />
+    </method>
+    <method selector='method15'>
+       <retval null_accepted='false' already_retained='true' already_cfretained='false' c_array_length_in_result='true' />
+    </method>
+    <method selector='method16'>
+       <retval c_array_delimited_by_null='true' c_array_of_variable_length='false' printf_format='true' free_result='true' />
+    </method>
+    <method selector='method17'>
+       <retval c_array_lenght_in_arg='1'/>
+    </method>
+    <method selector='method18'>
+       <retval c_array_lenght_in_arg='1,2'/>
+    </method>
+    <method selector='method19'>
+       <retval c_array_lenght_in_arg='4, 5'/>
+    </method>
+    <method selector='method20'>
+       <retval function_pointer_retained='true'/><!-- ignored, no function data -->
+    </method>
+    <method selector='method21'>
+       <retval function_pointer_retained='true' function_pointer='true'>
+          <retval type='v' />
+          <arg type='@' />
+          <arg type='d' />
+       </retval>
+    </method>
+    <method selector='method22'>
+       <retval function_pointer_retained='true' block='true'>
+          <retval type='v' />
+          <arg type='@' />
+          <arg type='d' />
+       </retval>
+    </method>
+    <method selector='method23'>
+       <retval function_pointer='true'>
+          <retval type='v' />
+          <arg type='@' />
+          <arg type='d' />
+       </retval>
+    </method>
+    <method selector='method24'>
+       <retval block='true'>
+          <retval type='v' />
+          <arg type='@' />
+          <arg type='d' />
+       </retval>
+    </method>
+    <!-- TODO: 'argument' and 'retval' nodes -->
+    <method ></method><!-- ignore -->
+    <method variadic='true'></method><!-- ignore -->
+    <method ignore='true'></method><!-- ignore -->
+  </class>
+  <function/><!-- TODO -->
+  <informal_protocol/><!-- TODO: no name, empty, methods -->
+  <struct/><!-- TODO -->
+  <!-- TODO: type rewriting (_C_BOOL, _C_NSBOOL)-->
+</signatures>
+"""
+
+# XXX: add unsupported variants
+
+class TestBridgeSupport (TestCase):
     def testInvalidToplevel(self):
         self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, '<signatures2></signatures2>', 'Cocoa')
         self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, '<signatures2></signatures>', 'Cocoa')
-
-class TestSystemBridgeSupport (TestCase):
 
     def iter_framework_dir(self, framework_dir):
         for dn in os.listdir(framework_dir):
@@ -50,7 +192,10 @@ class TestSystemBridgeSupport (TestCase):
 
                 self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
+    def test_xml_structure(self):
+        prs = self.assert_valid_bridgesupport('TestXML', TEST_XML)
 
+        self.fail("validate the metadata from TEST_XML")
 
     def assertIsIdenfier(self, value):
         m = IDENTIFIER.match(value)
@@ -69,7 +214,7 @@ class TestSystemBridgeSupport (TestCase):
             "type_modifier",
             "already_retained",
             "already_cfretained",
-            "c_array_length_in_retval",
+            "c_array_length_in_result",
             "c_array_delimited_by_null",
             "printf_format",
             "null_accepted",
@@ -79,6 +224,7 @@ class TestSystemBridgeSupport (TestCase):
             "sel_of_type",
             "callable",
             "callable_retained",
+            "free_result",
         }
 
         if "retval" in meta:
@@ -109,6 +255,9 @@ class TestSystemBridgeSupport (TestCase):
             if "already_cfretained" in meta["retval"]:
                 self.assertIsInstance(meta["retval"]["already_cfretained"], bool)
 
+            if "free_result" in meta["retval"]:
+                self.assertIsInstance(meta["retval"]["free_result"], bool)
+
             for key in ("c_array_length_in_arg", "c_array_of_fixed_length"):
                 if key in meta["retval"]:
                     self.assertIsInstance(meta["retval"][key], (int, long))
@@ -118,7 +267,7 @@ class TestSystemBridgeSupport (TestCase):
                     self.assertIsInstance(meta["retval"][key], bool)
 
 
-            self.assertNotIn("c_array_length_in_retval", meta["retval"])
+            self.assertNotIn("c_array_length_in_result", meta["retval"])
             self.assertEqual(set(meta["retval"]) - valid_keys, set())
 
         for idx in meta["arguments"]:
@@ -152,6 +301,9 @@ class TestSystemBridgeSupport (TestCase):
             if "already_cfretained" in arg:
                 self.assertIsInstance(arg["already_cfretained"], bool)
 
+            if "free_result" in arg:
+                self.assertIsInstance(arg["free_result"], bool)
+
             if "c_array_of_fixed_length" in arg:
                 self.assertIsInstance(arg["c_array_of_fixed_length"], (int, long))
 
@@ -167,7 +319,7 @@ class TestSystemBridgeSupport (TestCase):
 
 
             for key in ("c_array_delimited_by_null", "printf_format", "c_array_of_variable_length", 
-                        "null_accepted", "c_array_length_in_retval"):
+                        "null_accepted", "c_array_length_in_result"):
                 if key in arg:
                     self.assertIsInstance(arg[key], bool)
 
@@ -179,7 +331,7 @@ class TestSystemBridgeSupport (TestCase):
         if "variadic" in meta:
             self.assertIsInstance(meta["variadic"], bool)
 
-        if "varidic" in meta and meta["variadic"]:
+        if "variadic" in meta and meta["variadic"]:
             self.assertEqual(set(meta.keys()) - {"arguments", "retval", "variadic", 
                     "c_array_length_in_arg", "c_array_delimited_by_null", "suggestion"}, set())
 
@@ -194,14 +346,17 @@ class TestSystemBridgeSupport (TestCase):
                 found = False
 
             for idx in meta.get("arguments", {}):
-                arg = meta["arguments"]["idx"]
-                if "printf_format" in arg and arg["print_format"]:
+                arg = meta["arguments"][idx]
+                if "printf_format" in arg and arg["printf_format"]:
                     if found:
                         self.fail("meta for variadic with two ways to determine size: %s"%(meta,))
                     found = True
 
-            if not found:
-                self.fail("meta for variadic without method for deteriming size: %s"(meta,))
+            # NOTE: disabled because having unsupported variadic methods would be fine (e.g.
+            #       metadata says the method is variadic, but it doesn't fall into one of the
+            #       supported categories)
+            #if not found:
+            #    self.fail("meta for variadic without method for determining size: %s"%(meta,))
 
         else:
             self.assertEqual(set(meta.keys()) - {"arguments", "retval", "variadic", "suggestion" }, set())
@@ -282,6 +437,8 @@ class TestSystemBridgeSupport (TestCase):
 
         for name in prs.values:
             self.assertIsInstance(prs.values[name], (basestring, long, int, float, bytes))
+
+        return prs
 
 
 if __name__ == "__main__":

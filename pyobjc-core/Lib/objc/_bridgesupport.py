@@ -203,6 +203,8 @@ class _BridgeSupportParser (object):
             result["c_array_of_fixed_length"] = int(s)
 
         for attr in _BOOLEAN_ATTRIBUTES:
+            if attr == 'c_array_length_in_result' and not is_arg:
+                continue
             s = self.attribute_bool(node, attr, None, False)
             if s:
                 result[attr] = True
@@ -321,6 +323,9 @@ class _BridgeSupportParser (object):
             c_array  = self.attribute_bool(  method, "c_array_delimited_by_null", None, False)
             c_length = self.attribute_string(method, "c_array_length_in_arg", None)
             ignore   = self.attribute_bool(  method, "ignore", None, False)
+            
+            if sel_name is None:
+                continue
 
             metadata = {}
             if ignore:
