@@ -11,6 +11,13 @@ Version 2.5b1
    Version 2.5 is currently in development and hasn't been released
    yet.
 
+- Added implementation of '==' and '!=' for selectors defined in Python
+  that is slightly smarter than the default (identity based) implementation
+  in Python. 
+
+  This is mostly done for the PyObjC unittests and shouldn't affect user
+  code.
+
 - Issue #22: Reimplement support for bridgesupport files
 
   This reintroduces ``objc.parseBridgeSupport`` and 

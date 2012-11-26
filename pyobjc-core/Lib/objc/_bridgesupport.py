@@ -437,7 +437,6 @@ class _BridgeSupportParser (object):
                 _, d = self.xml_to_arg(al, False, True)
                 if "type" not in d:
                     # Ignore functions without type info
-                    print "ignore", name, d
                     return
                 siglist.append(d["type"])
 
@@ -447,7 +446,6 @@ class _BridgeSupportParser (object):
                 _, d = self.xml_to_arg(al, False, False)
                 if "type" not in d:
                     # Ignore functions without type info
-                    print "ignore2", name, d
                     return
                 siglist[0] = d["type"]
                 meta["retval"] = d
@@ -536,11 +534,10 @@ class _BridgeSupportParser (object):
                 pass
 
             else:
-                self.values[name] = value
-                objc.registerStructAlias(typestr, value)
-                _structConvenience(name, value)
+                self.structs.append((name, typestr, value))
+                return
 
-        self.structs.append((name, typestr))
+        self.structs.append((name, typestr, None))
 
 
     def do_string_constant(self, node):
@@ -611,10 +608,12 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
         for name, typestr in prs.opaque:
             globals[name] = objc.createOpaquePointerType(name, typestr)
 
-        for name, typestr in prs.structs:
-            globals[name] = value = objc.createStructType(name, typestr, None)
-            _structConvenience(name, value)
-            # XXX: new metadata should also use structConvenience!
+        for name, typestr, alias in prs.structs:
+            if alias is not None:
+                globals[name] = alias
+                objc.createStructAlias(name, typestr, alias)
+            else:
+                globals[name] = value = objc.createStructType(name, typestr, None)
 
         for name, method_list in prs.informal_protocols:
             proto = objc.informal_protocol(name, method_list)

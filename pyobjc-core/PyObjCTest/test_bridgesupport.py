@@ -393,15 +393,15 @@ TEST_XML="""\
   <!-- TODO: type rewriting (_C_BOOL, _C_NSBOOL)-->
   <informal_protocol/><!-- ignore -->
   <informal_protocol name='protocol1' />
-  <informal_protocol name='protocol1' >
+  <informal_protocol name='protocol2' >
     <method selector='selector1' type='v@:f' type64='v@:d' />
     <method selector='selector2' type='v@:f' type64='v@:d' classmethod='false' />
     <method selector='selector3' type='v@:f' type64='v@:d' classmethod='true' />
     <method selector='selector4' type='v@:f' type64='v@:d' variadic='true' /><!-- 'variadic' is ignored -->
     <method selector='selector5' /><!-- ignore: no type -->
     <method selector='selector6' type64='v@:@' /><!-- ignore 32-bit -->
-    <method selector='selector7' type='v@:f' type64='v@:d' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
-    <method selector='selector8' type='v@:f' type64='v@:d' class_method='true' />
+    <method selector='selector7' type='v@:f' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
+    <method selector='selector8' type='v@:f' class_method='true' />
   </informal_protocol>
   <struct/><!-- ignore -->
   <struct type='{foo=dd}' /><!--ignore-->
@@ -412,6 +412,7 @@ TEST_XML="""\
   <struct name='struct5' type='{struct3=@@}' alias='module2.struct'/>
   <struct name='struct6' type='{struct6=BB}' /><!-- _C_NSBOOL -->
   <struct name='struct7' type='{struct7=Z@}' /><!-- _C_BOOL -->
+  <struct name='struct8' type='{struct8=@@}' alias='sys.maxsize'/><!-- _C_BOOL -->
 </signatures>
 """
 
@@ -742,7 +743,7 @@ class TestBridgeSupport (TestCase):
             ('function14', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }}),
             ('function15', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }}),
             ('function16', b'i', '', { 'retval': {'type': b'i', 
-                'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }}),
+                'null_accepted': False, 'already_retained': True, }}),
             ('function17', b'i', '', { 'retval': {'type': b'i', 
                 'already_cfretained': True, 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
                 'printf_format': True, 'free_result': True }}),
@@ -784,12 +785,12 @@ class TestBridgeSupport (TestCase):
                 'retval': { 'type': b'q' },
                 'arguments': {
                     0:  { 'type': b'f' },
-                    1:  { 'type': b'f' }
+                    1:  { 'type': b'd' }
                 }
             }),
-            ('function27', b'vfd', '', { 
+            ('function27', b'vdd', '', { 
                 'arguments': {
-                    0:  { 'type': b'f' },
+                    0:  { 'type': b'd' },
                     1:  { 'type': b'd' }
                 }
             }),
@@ -798,7 +799,7 @@ class TestBridgeSupport (TestCase):
                     0:  { 'type': b'd' },
                 }
             }),
-            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , { 
+            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , '', { 
                 'arguments': {
                     0:  { 'type': b'f' if sys.maxsize < 2**32 else b'd'  },
                 }
@@ -823,7 +824,7 @@ class TestBridgeSupport (TestCase):
                     0:  { 'type': b'@', 'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }
                 }
             }),
-            ('function35', b'v@', '', { 
+            ('function36', b'v@', '', { 
                 'arguments': {
                     0:  { 'type': b'@', 'c_array_delimited_by_null': True, 'already_cfretained': True, 'c_array_of_variable_length': True,
                         'printf_format': True, 'free_result': True }
@@ -850,93 +851,113 @@ class TestBridgeSupport (TestCase):
                 }
             }),
             ('function41', b'v?', '', { 
-                'type': b'?',
-                'callable_retained': False,
-                'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'@' },
-                        1: { 'type': b'd' }
+                'arguments': {
+                    0: {
+                        'type': b'?',
+                        'callable_retained': False,
+                        'callable': {
+                            'retval': { 'type': b'v' },
+                            'arguments': {
+                                0: { 'type': b'@' },
+                                1: { 'type': b'd' }
+                            }
+                        }
                     }
                 }
             }),
-            ('function42', b'v?', '', { 
-                'type': b'?',
-                'callable_retained': False,
-                'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'^v' },
-                        1: { 'type': b'@' },
-                        2: { 'type': b'd' }
+            ('function42', b'v@?', '', { 
+                'arguments': {
+                    0: {
+                        'type': b'@?',
+                        'callable_retained': False,
+                        'callable': {
+                            'retval': { 'type': b'v' },
+                            'arguments': {
+                                0: { 'type': b'^v' },
+                                1: { 'type': b'@' },
+                                2: { 'type': b'd' }
+                            }
+                        }
                     }
                 }
             }),
-            ('function43', b'v?', '', { 
-                'type': b'?',
-                'callable_retained': True,
-                'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'@' },
-                        1: { 'type': b'd' }
+            ('function43', b'v?', '', {
+                'arguments': {
+                    0: { 
+                        'type': b'?',
+                        'callable_retained': True,
+                        'callable': {
+                            'retval': { 'type': b'v' },
+                            'arguments': {
+                                0: { 'type': b'@' },
+                                1: { 'type': b'd' }
+                            }
+                        }
                     }
                 }
             }),
-            ('function44', b'v?', '', { 
-                'type': b'?',
-                'callable_retained': True,
-                'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'^v' },
-                        1: { 'type': b'@' },
-                        2: { 'type': b'd' }
+            ('function44', b'v@?', '', {
+                'arguments': {
+                    0: { 
+                        'type': b'@?',
+                        'callable_retained': True,
+                        'callable': {
+                            'retval': { 'type': b'v' },
+                            'arguments': {
+                                0: { 'type': b'^v' },
+                                1: { 'type': b'@' },
+                                2: { 'type': b'd' }
+                            }
+                        }
                     }
                 }
             }),
         ]
+
+        self.maxDiff = None
+        if sys.maxsize <= 2**32:
+            all_protocols = [
+                ('protocol2', [
+                    objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
+                    objc.selector(None, b'selector2', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector3', b'v@:f' if sys.maxint < 2 **32 else b'v@:d', isClassMethod=True),
+                    objc.selector(None, b'selector4', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc. selector(None, b'selector7', b'v@:f'),
+                    objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),
+                ]),
+            ]
+        else:
+            all_protocols = [
+                ('protocol2', [
+                    objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
+                    objc.selector(None, b'selector2', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector3', b'v@:f' if sys.maxint < 2 **32 else b'v@:d', isClassMethod=True),
+                    objc.selector(None, b'selector4', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector6', b'v@:@'),
+                    objc. selector(None, b'selector7', b'v@:f'),
+                    objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),
+                ]),
+            ]
+
+        all_structs = [
+            ('struct3', b'{struct3=@@}', None),
+            ('struct4', b'{struct3=ff}' if sys.maxsize < 2**32 else b'{struct4=dd}', None),
+            ('struct5', b'{struct3=@@}', None),
+            ('struct6', b'{struct6=ZZ}', None),
+            ('struct7', b'{struct7=B@}', None),
+            ('struct8', b'{struct8=@@}', sys.maxsize),
+        ]
+
 
         self.assertItemsEqual(prs.constants,    all_constants)
         self.assertEqual(prs.values,            all_values)
         self.assertItemsEqual(prs.opaque,       all_opaque)
         self.assertItemsEqual(prs.func_aliases, all_func_aliases)
         self.assertItemsEqual(prs.cftypes,      all_cftypes)
-
-        self.maxDiff = None
         self.assertItemsEqual(prs.functions,    all_functions)
-
-        self.maxDiff = None
         self.assertEqual(prs.meta,              all_methods)
-        self.fail("validate the metadata from TEST_XML")
-
-
-
-        '''
-  <!-- TODO: type rewriting (_C_BOOL, _C_NSBOOL)-->
-  <informal_protocol/><!-- ignore -->
-  <informal_protocol name='protocol1' />
-  <informal_protocol name='protocol1' >
-    <method selector='selector1' type='v@:f' type64='v@:d' />
-    <method selector='selector2' type='v@:f' type64='v@:d' classmethod='false' />
-    <method selector='selector3' type='v@:f' type64='v@:d' classmethod='true' />
-    <method selector='selector4' type='v@:f' type64='v@:d' variadic='true' /><!-- 'variadic' is ignored -->
-    <method selector='selector5' /><!-- ignore: no type -->
-    <method selector='selector6' type64='v@:@' /><!-- ignore 32-bit -->
-    <method selector='selector7' type='v@:f' type64='v@:d' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
-    <method selector='selector8' type='v@:f' type64='v@:d' class_method='true' />
-  </informal_protocol>
-  <struct/><!-- ignore -->
-  <struct type='{foo=dd}' /><!--ignore-->
-  <struct name='struct1' /><!-- ignore -->
-  <struct name='struct2' alias='module.struct3' /><!-- ignore -->
-  <struct name='struct3' type='{struct3=@@}' />
-  <struct name='struct4' type='{struct3=ff}' type64='{struct4=dd}' />
-  <struct name='struct5' type='{struct3=@@}' alias='module2.struct'/>
-  <struct name='struct6' type='{struct6=BB}' /><!-- _C_NSBOOL -->
-  <struct name='struct7' type='{struct7=Z@}' /><!-- _C_BOOL -->
-</signatures>
-'''
+        self.assertItemsEqual(prs.informal_protocols,    all_protocols)
+        self.assertItemsEqual(prs.structs,      all_structs)
 
     def assertIsIdentifier(self, value):
         m = IDENTIFIER.match(value)
@@ -1180,10 +1201,9 @@ class TestBridgeSupport (TestCase):
 
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
-        for name, typestr in prs.structs:
+        for name, typestr, alias in prs.structs:
             self.assertIsInstance(name, basestring)
             self.assertIsInstance(typestr, bytes)
-
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name in prs.values:

@@ -1022,6 +1022,57 @@ PyObjCSelector_New(PyObject* callable,
  * This one can be allocated from python code.
  */
 
+static PyObject* pysel_richcompare(PyObject* a, PyObject* b, int op)
+{
+	if (op == Py_EQ || op == Py_NE) {
+		if (PyObjCPythonSelector_Check(a) && PyObjCPythonSelector_Check(b)) {
+			PyObjCPythonSelector* sel_a = (PyObjCPythonSelector*)a;
+			PyObjCPythonSelector* sel_b = (PyObjCPythonSelector*)b;
+			int same = 1;
+			int r;
+
+			if (sel_a->sel_selector != sel_b->sel_selector) {
+				same = 0;
+			}
+			if (sel_a->sel_class != sel_b->sel_class) {
+				same = 0;
+			}
+			if (sel_a->sel_self != sel_b->sel_self) {
+				same = 0;
+			}
+			r = PyObject_RichCompareBool(
+					sel_a->callable, 
+					sel_b->callable, Py_EQ);
+			if (r == -1) {
+				return NULL;
+			}
+			if (!r) {
+				same = 0;
+			}
+
+			if ((op == Py_EQ && !same) || (op == Py_NE && same)) {
+				Py_INCREF(Py_False);
+				return Py_False;
+			} else {
+				Py_INCREF(Py_False);
+				return Py_True;
+			}
+
+		} else {
+			if (op == Py_EQ) {
+				Py_INCREF(Py_False);
+				return Py_False;
+			} else {
+				Py_INCREF(Py_False);
+				return Py_True;
+			}
+		}
+	} else {
+		PyErr_SetString(PyExc_TypeError, "Cannot use '<', '<=', '>=' and '>' with objc.selector");
+		return NULL;
+	}
+}
+
 static PyObject*
 pysel_repr(PyObject* _self)
 {
@@ -1753,7 +1804,7 @@ PyTypeObject PyObjCPythonSelector_Type = {
  	0,					/* tp_doc */
  	0,					/* tp_traverse */
  	0,					/* tp_clear */
-	0,					/* tp_richcompare */
+	pysel_richcompare,			/* tp_richcompare */
 	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
