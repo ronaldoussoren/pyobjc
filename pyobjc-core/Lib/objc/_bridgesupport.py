@@ -34,6 +34,7 @@ BRIDGESUPPORT_DIRECTORIES = [
     '/System/Library/BridgeSupport',
 ]
 
+_SENTINEL=object()
 _DEFAULT_SUGGESTION="don't use this method"
 _BOOLEAN_ATTRIBUTES=[
     "already_retained",
@@ -182,7 +183,10 @@ class _BridgeSupportParser (object):
         result = {}
 
         if is_arg:
-            argIdx = int(self.attribute_string(node, "index", None))
+            argIdx = self.attribute_string(node, "index", None)
+            if argIdx is None:
+                return None, None
+            argIdx = int(argIdx)
 
         s = self.attribute_string(node, "type", "type64")
         if s:
@@ -323,6 +327,11 @@ class _BridgeSupportParser (object):
             c_array  = self.attribute_bool(  method, "c_array_delimited_by_null", None, False)
             c_length = self.attribute_string(method, "c_array_length_in_arg", None)
             ignore   = self.attribute_bool(  method, "ignore", None, False)
+
+            is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
+            if is_class is _SENTINEL:
+                # Manpage says 'class_method', older PyObjC used 'classmethod' 
+                is_class = self.attribute_bool(method, "class_method", None, False)
             
             if sel_name is None:
                 continue
@@ -334,8 +343,13 @@ class _BridgeSupportParser (object):
                     suggestion = _DEFAULT_SUGGESTION
 
                 metadata['suggestion'] = suggestion
-            metadata['variadic'] = variadic
+
+                # Force minimal metadata for ignored methods
+                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = metadata
+                continue
+
             if variadic:
+                metadata['variadic'] = True
                 if c_array:
                     metadata['c_array_delimited_by_null'] = c_array
 
@@ -347,13 +361,20 @@ class _BridgeSupportParser (object):
             for al in method:
                 if al.tag == "arg":
                     arg_idx, meta = self.xml_to_arg(al, True, True)
-                    arguments[arg_idx+2] = meta
+                    if arg_idx is not None and meta:
+                        arguments[arg_idx+2] = meta
 
                 elif al.tag == "retval":
                     _, meta = self.xml_to_arg(al, True, False)
-                    metadata['retval'] = meta
+                    if meta:
+                        metadata['retval'] = meta
 
-            self.meta[(_as_bytes(class_name), _as_bytes(sel_name))] = metadata
+            if not arguments:
+                # No argument metadata after all.
+                del metadata['arguments']
+
+            if metadata:
+                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = metadata
 
 
     def do_enum(self, node):
@@ -415,12 +436,18 @@ class _BridgeSupportParser (object):
         for al in node:
             if al.tag == "arg":
                 _, d = self.xml_to_arg(al, False, False)
+                if "type" not in d:
+                    # Ignore functions without type info
+                    return
                 siglist.append(d["type"])
 
                 arguments[len(siglist)-2] = d
 
             elif al.tag == "retval":
                 _, d = self.xml_to_arg(al, False, False)
+                if "type" not in d:
+                    # Ignore functions without type info
+                    return
                 siglist[0] = d["type"]
                 meta["retval"] = d
 
@@ -445,7 +472,10 @@ class _BridgeSupportParser (object):
         for method in node:
             sel_name = self.attribute_string(method, "selector", None)
             typestr  = self.attribute_string(method, "type", "type64")
-            is_class = self.attribute_bool(method, "classmethod", None, False)
+            is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
+            if is_class is _SENTINEL:
+                # Manpage says 'class_method', older PyObjC used 'classmethod' 
+                is_class = self.attribute_bool(method, "class_method", None, False)
 
             if not sel_name or not typestr:
                 continue
@@ -571,8 +601,8 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
             globals[name] = value
 
-        for class_name, sel_name in prs.meta:
-            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name)])
+        for class_name, sel_name, is_class in prs.meta:
+            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
 
         for name, typestr in prs.opaque:
             globals[name] = objc.createOpaquePointerType(name, typestr)
@@ -782,8 +812,9 @@ def initFrameworkWrapper(frameworkName,
     
     return bundle
 
-_ivar_dict = objc._ivar_dict()
-del objc._ivar_dict
+_ivar_dict = objc._objc._ivar_dict()
+if hasattr(objc, '_ivar_dict'):
+    del objc._ivar_dict
 def _structConvenience(structname, structencoding):
     def makevar(self, name=None):
         if name is None:
