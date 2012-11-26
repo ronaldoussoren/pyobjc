@@ -303,10 +303,19 @@ class _BridgeSupportParser (object):
         if typestr.startswith(objc._C_STRUCT_B):
             # Look for structs with embbeded function pointers
             # and ignore those
-            nm, fields = objc.splitStructSignature(_as_bytes(typestr))
-            for nm, tp in fields:
-                if tp == b'?':
-                    return
+
+            def has_embedded_function(typestr):
+                nm, fields = objc.splitStructSignature(_as_bytes(typestr))
+                for nm, tp in fields:
+                    if tp == b'?':
+                        return True
+                    elif tp.startswith(objc._C_STRUCT_B):
+                        return has_embedded_function(tp)
+
+                return False
+
+            if has_embedded_function(typestr):
+                return
 
         magic = self.attribute_bool(node, "magic_cookie", None, False)
         self.constants.append((name, typestr, magic))
@@ -385,6 +394,7 @@ class _BridgeSupportParser (object):
         if value is None:
             if sys.byteorder == 'little':
                 value = self.attribute_string(node, "le_value", None)
+
             else:
                 value = self.attribute_string(node, "be_value", None)
 
@@ -561,7 +571,7 @@ class _BridgeSupportParser (object):
                     except UnicodeError as e:
                         warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
                         return
-        else:
+        else: # pragma: no cover (py3k)
             if not nsstring:
                 try:
                     value = value.encode('latin1')

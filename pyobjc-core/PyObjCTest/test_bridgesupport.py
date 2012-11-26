@@ -43,6 +43,8 @@ TEST_XML="""\
   <constant name='constant7' type='@' magic_cookie='false' />
   <constant name='constant8' type='@' magic_cookie='true' />
   <constant /><!-- ignore -->
+  <constant name='constant9' type='{foo=i?i}' /><!-- ignore: embedded ? -->
+  <constant name='constant10' type='{foo={x=?}}' /><!-- ignore: embedded ? -->
   <string_constant name='strconst1' value='string constant1' />
   <string_constant name='strconst2' value='string constant 2' value64='string constant two' />
   <string_constant name='strconst1u' value='string constant1 unicode' nsstring='true' />
@@ -54,12 +56,12 @@ TEST_XML="""\
   <string_constant /><!-- ignore -->
   <enum name='enum1' value='1' />
   <enum name='enum2' value='3' value64='4'/>
-  <enum name='enum3' le_value='5' be_value64='6'/>
+  <enum name='enum3' le_value='5' be_value='6'/>
   <enum name='enum4' value='7' be_value='8' /><!-- should have value 7 -->
   <enum name='enum5' /><!-- ignore -->
   <enum value='3' value64='4'/><!-- ignore -->
   <enum name='enum6' value64='4'/><!-- ignore 32-bit -->
-  <enum name='enum7' be_value64='6' /><!-- ignore intel -->
+  <enum name='enum7' be_value='6' /><!-- ignore intel -->
   <enum name='enum8' le_value='5' /><!-- ignore ppc -->
   <enum name='enum9' value='2.5' />
   <enum name='enum10' value='0x1.5p+3' />
@@ -84,6 +86,7 @@ TEST_XML="""\
   <class name='MyClass1'></class>
   <class /><!-- ignore -->
   <class name='MyClass2'>
+    <function name='method.function'></function><!-- ignore, not at toplevel -->
     <method selector='method1' classmethod='true' ></method>
     <method selector='method2' variadic='true' ></method>
     <method selector='method3' variadic='true' c_array_delimited_by_null='true'></method>
@@ -390,6 +393,18 @@ TEST_XML="""\
         <arg type='d' />
      </arg>
   </function>
+  <function name='function45'><!-- ignore: arg node without type-->
+    <arg type_modifier='n' />
+  </function>
+  <function name='function46'><!-- ignore: arg node without type-->
+    <arg type='@' />
+    <arg type_modifier='n' />
+  </function>
+  <function name='function47'><!-- ignore: retval node without type-->
+    <retval type_modifier='n'/>
+    <arg type='@' />
+    <arg type='@' />
+  </function>
   <!-- TODO: type rewriting (_C_BOOL, _C_NSBOOL)-->
   <informal_protocol/><!-- ignore -->
   <informal_protocol name='protocol1' />
@@ -412,11 +427,12 @@ TEST_XML="""\
   <struct name='struct5' type='{struct3=@@}' alias='module2.struct'/>
   <struct name='struct6' type='{struct6=BB}' /><!-- _C_NSBOOL -->
   <struct name='struct7' type='{struct7=Z@}' /><!-- _C_BOOL -->
-  <struct name='struct8' type='{struct8=@@}' alias='sys.maxsize'/><!-- _C_BOOL -->
+  <struct name='struct8' type='{struct8=@@}' alias='sys.maxsize'/>
+  <struct name='struct9' type='{struct9=ii}' alias='sys.does_not_exist'/>
 </signatures>
 """
 
-class TestBridgeSupport (TestCase):
+class TestBridgeSupportParser (TestCase):
     def testInvalidToplevel(self):
         self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, '<signatures2></signatures2>', 'Cocoa')
         self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, '<signatures2></signatures>', 'Cocoa')
@@ -445,7 +461,7 @@ class TestBridgeSupport (TestCase):
 
                 self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
-    def _test_xml_structure_variants(self):
+    def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant 
         # (big/little endian,  32- en 64-bit)
         orig_byteorder = sys.byteorder
@@ -470,7 +486,7 @@ class TestBridgeSupport (TestCase):
             # See above
             imp.reload(bridgesupport)
 
-    def test_verify_xml_structure(self):
+    def verify_xml_structure(self):
         prs = self.assert_valid_bridgesupport('TestXML', TEST_XML)
 
         all_constants = [
@@ -946,9 +962,10 @@ class TestBridgeSupport (TestCase):
             ('struct6', b'{struct6=ZZ}', None),
             ('struct7', b'{struct7=B@}', None),
             ('struct8', b'{struct8=@@}', sys.maxsize),
+            ('struct9', b'{struct9=ii}', None),
         ]
 
-
+        self.maxDiff = None
         self.assertItemsEqual(prs.constants,    all_constants)
         self.assertEqual(prs.values,            all_values)
         self.assertItemsEqual(prs.opaque,       all_opaque)
@@ -1210,6 +1227,33 @@ class TestBridgeSupport (TestCase):
             self.assertIsInstance(prs.values[name], (basestring, long, int, float, bytes, type(None)))
 
         return prs
+
+class TestParseBridgeSupport (TestCase):
+    def test_calls(self):
+        # - Minimal XML with all types of metadata
+        # - Mock the APIs used by parseBridgeSupport
+        #   (with strict verification of arguments, based on C code)
+        # - Verify changes to globals where possible
+        # - Verify 'updatingmetadata' state
+        self.fail()
+
+    def test_real_loader(self):
+        # Use the real API in a subprocess and verify
+        # that the metadata is properly loaded
+        # (use subset of Foundation and CoreFoundation)
+        self.fail()
+
+
+class TestInitFrameworkWrapper (TestCase):
+    def test_calls(self):
+        # Test functionality of initFrameworkWrapper and _parseBridgeSupport
+        # by mocking 'parseBridgeSupport'. 
+        self.fail()
+
+    def test_real_loader(self):
+        # Load framework in subprocess and verify that
+        # the right metadata is loaded.
+        self.fail()
 
 
 if __name__ == "__main__":
