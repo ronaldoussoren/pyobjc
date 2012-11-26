@@ -1022,6 +1022,22 @@ PyObjCSelector_New(PyObject* callable,
  * This one can be allocated from python code.
  */
 
+static long 
+pysel_hash(PyObject* o)
+{
+	PyObjCPythonSelector* self = (PyObjCPythonSelector*)o;
+	long h = 0;
+
+	if (self->sel_self) {
+		h ^= PyObject_Hash(self->sel_self);
+	}
+	h ^= (long)(self->sel_class);
+	h ^= PyObject_Hash(self->callable);
+
+	return h;
+}
+
+
 static PyObject* pysel_richcompare(PyObject* a, PyObject* b, int op)
 {
 	if (op == Py_EQ || op == Py_NE) {
@@ -1794,7 +1810,7 @@ PyTypeObject PyObjCPythonSelector_Type = {
 	0,					/* tp_as_number */
 	0,					/* tp_as_sequence */
 	0,		       			/* tp_as_mapping */
-	0,					/* tp_hash */
+	pysel_hash,				/* tp_hash */
 	pysel_call,				/* tp_call */
 	0,					/* tp_str */
 	PyObject_GenericGetAttr,		/* tp_getattro */

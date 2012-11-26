@@ -578,7 +578,7 @@ class _BridgeSupportParser (object):
 
 _libraries = []
 
-def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None, bundle=None):
+def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None):
 
     if dylib_path:
         lib = ctypes.cdll.LoadLibrary(dylib_path)
@@ -630,11 +630,7 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
             setattr(m, name, proto)
 
         if prs.functions:
-            if bundle is None and inlineTab is None:
-                raise objc.error("Cannot load bundle functions without bundle argument")
-
-            if bundle is not None:
-                objc.loadBundleFunctions(bundle, globals, prs.functions)
+            objc.loadBundleFunctions(None, globals, prs.functions)
 
             if inlineTab is not None:
                 objc.loadFunctionList(inlineTab, globals, prs.functions)
@@ -744,7 +740,7 @@ def initFrameworkWrapper(frameworkName,
                 data = pkg_resources.resource_string(frameworkResourceName,
                     "PyObjC.bridgesupport")
                 if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab, bundle=bundle)
+                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
                 return bundle
 
     # Look for metadata in the framework bundle
@@ -753,9 +749,9 @@ def initFrameworkWrapper(frameworkName,
         dylib_path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'dylib', 'BridgeSupport')
         data = open(path, 'rb').read()
         if dylib_path is not None:
-            _parseBridgeSupport(data, globals, frameworkName, dylib_path, bundle=bundle)
+            _parseBridgeSupport(data, globals, frameworkName, dylib_path)
         else:
-            _parseBridgeSupport(data, globals, frameworkName, bundle=bundle)
+            _parseBridgeSupport(data, globals, frameworkName)
 
         # Check if we have additional metadata bundled with PyObjC
         try:
@@ -770,7 +766,7 @@ def initFrameworkWrapper(frameworkName,
                 data = pkg_resources.resource_string(frameworkResourceName,
                     "PyObjCOverrides.bridgesupport")
                 if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab, bundle=bundle)
+                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
     
@@ -801,7 +797,7 @@ def initFrameworkWrapper(frameworkName,
                     data = pkg_resources.resource_string(frameworkResourceName,
                         "PyObjCOverrides.bridgesupport")
                     if data:
-                        _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab, bundle=bundle)
+                        _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
             return bundle
     
     # And if that fails look for the metadata in the framework wrapper
@@ -810,7 +806,7 @@ def initFrameworkWrapper(frameworkName,
         data = pkg_resources.resource_string(frameworkResourceName,
             "PyObjC.bridgesupport")
         if data:
-            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab, bundle=bundle)
+            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
         return bundle
     
     return bundle

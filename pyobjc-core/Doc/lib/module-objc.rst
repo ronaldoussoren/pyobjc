@@ -471,6 +471,10 @@ Framework wrappers
    the function will skip entries that don't refer to existing functions, otherwise it 
    raises an :exc:`error` exception for these functions.
 
+   *bundle* is either an *NSBundle* instance, or :data:`None`. When a bundle is specified
+   the function is looked up in that bundle, otherwise the function is looked up in
+   any bundle (including the main program and Python extensions).
+
    *functionInfo* is a sequence of function descriptions. Every description is a tuple
    of two or four elements: the function name (a string) and signature (a byte string) and 
    optionally a value for the "\__doc__" attribute and a metadata dictionary.

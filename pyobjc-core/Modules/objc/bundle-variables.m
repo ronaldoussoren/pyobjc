@@ -220,23 +220,27 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 	}
 
 
-	PyObjC_DURING
-		cfBundle = NSBundle2CFBundle(bundle);
-	
-	PyObjC_HANDLER
-		PyObjCErr_FromObjC(localException);
+	if (bundle == NULL) {
 		cfBundle = NULL;
+	} else {
+		PyObjC_DURING
+			cfBundle = NSBundle2CFBundle(bundle);
+		
+		PyObjC_HANDLER
+			PyObjCErr_FromObjC(localException);
+			cfBundle = NULL;
 
-	PyObjC_ENDHANDLER
+		PyObjC_ENDHANDLER
 
-	if  (cfBundle == NULL && PyErr_Occurred()) {
-		return NULL;
-	}
-
-	if (cfBundle == NULL) {
-		PyErr_Format(PyObjCExc_Error, 
-			"Cannot convert NSBundle to CFBundle");
-		return NULL;
+		if  (cfBundle == NULL && PyErr_Occurred()) {
+			return NULL;
+		}
+	
+		if (cfBundle == NULL) {
+			PyErr_Format(PyObjCExc_Error, 
+				"Cannot convert NSBundle to CFBundle");
+			return NULL;
+		}
 	}
 
 	seq = PySequence_Fast(functionInfo, "functionInfo not a sequence");
@@ -250,6 +254,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 		void*		value;
 		char*		signature;
 		NSString*	name;
+		char*           c_name;
 		PyObject*	doc;
 		PyObject*       meta = NULL;
 
@@ -263,26 +268,40 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 		}
 
 		doc = NULL;
-		if (!PyArg_ParseTuple(item, 
+		if (cfBundle != NULL) {
+			if (!PyArg_ParseTuple(item, 
 #if PY_MAJOR_VERSION == 2
 				"O&s|SO;functionInfo", 
 #else
 				"O&y|UO;functionInfo", 
 #endif
 				PyObjCObject_Convert, &name, &signature, &doc, &meta)){
-			Py_DECREF(seq);
-			return NULL;
-		}
-
-		if (![name isKindOfClass:[NSString class]]) {
-			PyErr_SetString(PyExc_TypeError,
+				Py_DECREF(seq);
+				return NULL;
+			}
+			if (![name isKindOfClass:[NSString class]]) {
+				PyErr_SetString(PyExc_TypeError,
 					"functionInfo name not a string");
-			Py_DECREF(seq);
-			return NULL;
-		}
+				Py_DECREF(seq);
+				return NULL;
+			}
 
-		value = CFBundleGetFunctionPointerForName(cfBundle, 
-				(CFStringRef)name);
+			value = CFBundleGetFunctionPointerForName(cfBundle, 
+					(CFStringRef)name);
+		} else {
+			if (!PyArg_ParseTuple(item, 
+#if PY_MAJOR_VERSION == 2
+				"ss|SO;functionInfo", 
+#else
+				"sy|UO;functionInfo", 
+#endif
+				&c_name, &signature, &doc, &meta)){
+				Py_DECREF(seq);
+				return NULL;
+			}
+
+			value = dlsym(RTLD_DEFAULT, c_name);
+		}
 		if (value == NULL) {
 			if (!skip_undefined) {
 				PyErr_SetString(PyObjCExc_Error,
