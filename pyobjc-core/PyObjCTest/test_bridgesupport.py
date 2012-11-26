@@ -475,7 +475,7 @@ class TestBridgeSupport (TestCase):
 
         all_constants = [
             ('constant1', b'@', False,),
-            ('constant2', b'I' if sys.maxsize < 2**32 else 'Q' , False,),
+            ('constant2', b'I' if sys.maxsize < 2**32 else b'Q' , False,),
             ('constant5', objc._C_NSBOOL, False,),
             ('constant6', objc._C_BOOL, False,),
             ('constant7', b'@', False,),
@@ -526,12 +526,12 @@ class TestBridgeSupport (TestCase):
         CFArrayTypeID = a._cfTypeID()
         all_cftypes = [
             ( 'CFProxy1Ref', b'^{CFProxy}', CFArrayTypeID),
-            ( 'CFProxy2Ref', b'^{CFProxy32}' if sys.maxint < 2**32 else b'^{CFProxy64}', CFArrayTypeID),
+            ( 'CFProxy2Ref', b'^{CFProxy32}' if sys.maxsize < 2**32 else b'^{CFProxy64}', CFArrayTypeID),
             ( 'CFProxy3Ref', b'^{CFProxy3}', None, 'NSProxy'),
             ( 'CFProxy4Ref', b'^{CFProxy4}', None, 'NSProxy2'),
             ( 'CFProxy5Ref', b'^{CFProxy}', None, 'NSCFType'),
             ( 'CFProxy6Ref', b'^{CFProxy}', None, 'NSCFType'),
-            ( 'CFProxy7Ref',  b'^{CFProxy32}' if sys.maxint < 2**32 else b'^{CFProxy64}', None, 'NSCFType' ),
+            ( 'CFProxy7Ref',  b'^{CFProxy32}' if sys.maxsize < 2**32 else b'^{CFProxy64}', None, 'NSCFType' ),
         ]
         if sys.maxsize > 2**32:
             all_cftypes.append(
@@ -919,9 +919,9 @@ class TestBridgeSupport (TestCase):
             all_protocols = [
                 ('protocol2', [
                     objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
-                    objc.selector(None, b'selector2', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
-                    objc.selector(None, b'selector3', b'v@:f' if sys.maxint < 2 **32 else b'v@:d', isClassMethod=True),
-                    objc.selector(None, b'selector4', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector2', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector3', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d', isClassMethod=True),
+                    objc.selector(None, b'selector4', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
                     objc. selector(None, b'selector7', b'v@:f'),
                     objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),
                 ]),
@@ -930,9 +930,9 @@ class TestBridgeSupport (TestCase):
             all_protocols = [
                 ('protocol2', [
                     objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
-                    objc.selector(None, b'selector2', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
-                    objc.selector(None, b'selector3', b'v@:f' if sys.maxint < 2 **32 else b'v@:d', isClassMethod=True),
-                    objc.selector(None, b'selector4', b'v@:f' if sys.maxint < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector2', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
+                    objc.selector(None, b'selector3', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d', isClassMethod=True),
+                    objc.selector(None, b'selector4', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
                     objc.selector(None, b'selector6', b'v@:@'),
                     objc. selector(None, b'selector7', b'v@:f'),
                     objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),

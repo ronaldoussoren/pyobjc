@@ -38,7 +38,7 @@ def registerPlugin(pluginName):
     import os
     import sys
     path = os.path.dirname(os.path.dirname(os.environ['RESOURCEPATH']))
-    if not isinstance(path, unicode):
+    if sys.version_info[0] == 2 and not isinstance(path, unicode):
         path = unicode(path, sys.getfilesystemencoding())
     _PLUGINS[pluginName] = path
     return pluginBundle(pluginName)

@@ -654,7 +654,7 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(myMethod_arg_.signature, b'd@:ii')
         self.assertEqual(myMethod_arg_.selector, b'myMethod:arg:')
 
-        @objc.signature('q@:@q', selector=b'foo:bar:')
+        @objc.signature(b'q@:@q', selector=b'foo:bar:')
         def method(self, a, b):
             pass
 

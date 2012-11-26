@@ -321,7 +321,11 @@ class _BridgeSupportParser (object):
             if method.tag != "method":
                 continue
 
-            sel_name = _as_bytes(self.attribute_string(method, "selector", None))
+            sel_name = self.attribute_string(method, "selector", None)
+            if sel_name is None:
+                continue
+
+            sel_name = _as_bytes(sel_name)
             variadic = self.attribute_bool(  method, "variadic", None, False)
             c_array  = self.attribute_bool(  method, "c_array_delimited_by_null", None, False)
             c_length = self.attribute_string(method, "c_array_length_in_arg", None)
@@ -332,8 +336,6 @@ class _BridgeSupportParser (object):
                 # Manpage says 'class_method', older PyObjC used 'classmethod' 
                 is_class = self.attribute_bool(method, "class_method", None, False)
             
-            if sel_name is None:
-                continue
 
             metadata = {}
             if ignore:

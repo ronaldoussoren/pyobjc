@@ -248,7 +248,7 @@ class TestDyld (TestCase):
         # input, ensure that we're not one one of those
         self.assertEqual(os.path.realpath("/usr/lib/libSystem.dylib"), "/usr/lib/libSystem.B.dylib")
         self.assertEqual(os.path.realpath(b"/usr/lib/libSystem.dylib"), b"/usr/lib/libSystem.B.dylib")
-        self.assertEqual(os.path.realpath("/usr/lib/libSystem.dylib".decode('utf-8')), "/usr/lib/libSystem.B.dylib".decode('utf-8'))
+        self.assertEqual(os.path.realpath(b"/usr/lib/libSystem.dylib".decode('utf-8')), b"/usr/lib/libSystem.B.dylib".decode('utf-8'))
 
     def test_dyld_find(self):
         self.assertEqual(dyld.dyld_find('Cocoa.framework'), '/System/Library/Frameworks/Cocoa.framework/Cocoa')

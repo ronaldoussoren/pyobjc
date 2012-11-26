@@ -5,6 +5,16 @@ import sys
 
 from PyObjCTools import TestSupport
 
+try:
+    long
+except NameError:
+    long = int
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 class Method(object):
     def __init__(self, argno, meta, selector=False):
         self._selector = selector
@@ -39,7 +49,7 @@ class TestTestSupport (TestCase):
                 return config_result
 
             TestSupport._get_config_var = get_config_var
-            cache = sdkForPython.func_defaults[0]
+            cache = sdkForPython.func_defaults[0] if sys.version_info[0] == 2 else sdkForPython.__defaults__[0]
 
             config_result = ''
             self.assertEqual(sdkForPython(), None)
@@ -95,7 +105,7 @@ class TestTestSupport (TestCase):
 
     def test_fourcc(self):
         import struct
-        self.assertEqual(fourcc('abcd'), struct.unpack('>i', 'abcd')[0])
+        self.assertEqual(fourcc(b'abcd'), struct.unpack('>i', b'abcd')[0])
 
     def testIs32Bit(self):
         orig = sys.maxsize

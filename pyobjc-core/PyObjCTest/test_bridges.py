@@ -9,7 +9,7 @@ if sys.version_info[0] == 2:
     from UserDict import  IterableUserDict
 
 else:
-    from collections import IterableUserDict, UserList
+    from collections import UserDict as IterableUserDict, UserList
 
 NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")

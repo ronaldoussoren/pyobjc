@@ -611,7 +611,49 @@ class TestCase (_unittest.TestCase):
 
     if not hasattr(_unittest.TestCase, 'assertItemsEqual'): # pragma: no cover
         def assertItemsEqual(self, seq1, seq2, message=None):
-            self.assertEqual(set(seq1), set(seq2), message)
+            # This is based on unittest.util._count_diff_all_purpose from 
+            # Python 2.7
+            s, t = list(seq1), list(seq2)
+            m, n = len(s), len(t)
+            NULL = object()
+            result = []
+            for i, elem in enumerate(s):
+                if elem is NULL:
+                    continue
+
+                cnt_s = cnt_t = 0
+                for j in range(i, m):
+                    if s[j] == elem:
+                        cnt_s += 1
+                        s[j] = NULL
+
+                for j, other_elem in enumerate(t):
+                    if other_elem == elem:
+                        cnt_t += 1
+                        t[j] = NULL
+
+                if cnt_s != cnt_t:
+                    result.append((cnt_s, cnt_t, elem))
+            for i, elem in enumerate(t):
+                if elem is NULL:
+                    continue
+                cnt_t = 0
+                for j in range(i, n):
+                    if t[j] == elem:
+                        cnt_t += 1
+                        t[j] = NULL
+
+                result.append((0, cnt_t, elem))
+
+            if result:
+                for actual, expected, value in result:
+                    print("Seq1 %d, Seq2: %d  value: %r"%(actual, expected, value))
+
+                self.fail(message or ("sequences do not contain the same items:"  +
+                    "\n".join(["Seq1 %d, Seq2: %d  value: %r"%(item) for item in result])))
+
+
+
 
     if not hasattr(_unittest.TestCase, 'assertIs'): # pragma: no cover
         def assertIs(self, value, test, message = None):

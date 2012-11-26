@@ -30,7 +30,7 @@ DEFAULT_LIBRARY_FALLBACK = ':'.join([
 def ensure_unicode(s):
     """Not all of PyObjC understands unicode paths very well yet"""
     if isinstance(s, bytes):
-        return unicode(s, 'utf8')
+        return s.decode('utf-8')
     return s
 
 def inject_suffixes(iterator):

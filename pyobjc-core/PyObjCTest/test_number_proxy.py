@@ -14,6 +14,7 @@ import objc
 
 if sys.version_info[0] == 3:
     unicode = str
+    long = int
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
 try:
