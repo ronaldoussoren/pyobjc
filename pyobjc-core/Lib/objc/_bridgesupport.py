@@ -199,8 +199,7 @@ class _BridgeSupportParser (object):
 
         s = self.attribute_string(node, "sel_of_type", "sel_of_type64")
         if s:
-            s = self.typestr2typestr(s)
-            result["sel_of_type"] = s
+            result["sel_of_type"] = self.typestr2typestr(s)
 
         s = self.attribute_string(node, "c_array_of_fixed_length", None)
         if s:
@@ -354,7 +353,7 @@ class _BridgeSupportParser (object):
                     metadata['c_array_delimited_by_null'] = c_array
 
                 if c_length:
-                    metadata['c_array_length_in_arg'] = int(c_length);
+                    metadata['c_array_length_in_arg'] = int(c_length) + 2;
 
             arguments = metadata['arguments'] = {}
 

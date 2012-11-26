@@ -130,14 +130,14 @@ TEST_XML="""\
        <retval function_pointer_retained='true'/><!-- ignored, no function data -->
     </method>
     <method selector='method21'>
-       <retval function_pointer_retained='true' function_pointer='true'>
+       <retval function_pointer_retained='false' function_pointer='true'>
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
        </retval>
     </method>
     <method selector='method22'>
-       <retval function_pointer_retained='true' block='true'>
+       <retval function_pointer_retained='false' block='true'>
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
@@ -211,14 +211,14 @@ TEST_XML="""\
        <arg index='1' function_pointer_retained='true'/><!-- ignored, no function data -->
     </method>
     <method selector='method21'>
-       <arg index='1' function_pointer_retained='true' function_pointer='true'>
+       <arg index='1' function_pointer_retained='false' function_pointer='true'>
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
        </arg>
     </method>
     <method selector='method22'>
-       <arg index='1' function_pointer_retained='true' block='true'>
+       <arg index='1' function_pointer_retained='false' block='true'>
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
@@ -231,8 +231,8 @@ TEST_XML="""\
           <arg type='d' />
        </arg>
     </method>
-    <method selector='method24'>
-       <arg index='1' block='true' classmethod='true'>
+    <method selector='method24' classmethod='true'>
+       <arg index='1' block='true'>
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
@@ -552,7 +552,7 @@ class TestBridgeSupport (TestCase):
             (b'MyClass2', b'method6', False): { 'retval': { 'type': b'd' } },
             (b'MyClass2', b'method7', False): { 'suggestion': "don't use this method" },
             (b'MyClass2', b'method8', False): { 'suggestion': 'ignore me' },
-            (b'MyClass2', b'method9', False): { 'suggestion': 'ignore me' },
+            (b'MyClass2', b'method9', False): { 'retval': { 'type': b'd' } },
             (b'MyClass2', b'method10', False ): { 'retval': { 'type': b'd' } },
             (b'MyClass2', b'method11', False ): {
                 'retval': { 
@@ -583,16 +583,7 @@ class TestBridgeSupport (TestCase):
                 'retval': { 'c_array_length_in_arg': (4+2, 5+2) }
             },
             (b'MyClass2', b'method21', False): {
-                'retval': { 'function_pointer_retained': True, 'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': { 
-                        0: b'@',
-                        1: b'd',
-                    }
-                }}
-            },
-            (b'MyClass2', b'method22', False): {
-                'retval': { 'function_pointer_retained': True, 'callable': {
+                'retval': { 'callable_retained': False, 'callable': {
                     'retval': { 'type': b'v' },
                     'arguments': { 
                         0: { 'type': b'@' },
@@ -600,8 +591,18 @@ class TestBridgeSupport (TestCase):
                     }
                 }}
             },
+            (b'MyClass2', b'method22', False): {
+                'retval': { 'callable_retained': False, 'callable': {
+                    'retval': { 'type': b'v' },
+                    'arguments': { 
+                        0: { 'type': b'^v' },
+                        1: { 'type': b'@' },
+                        2: { 'type': b'd' },
+                    }
+                }}
+            },
             (b'MyClass2', b'method23', False): {
-                'retval': { 'callable': {
+                'retval': { 'callable_retained': True, 'callable': {
                     'retval': { 'type': b'v' },
                     'arguments': {
                         0: { 'type': b'@' },
@@ -610,11 +611,12 @@ class TestBridgeSupport (TestCase):
                 }}
             },
             (b'MyClass2', b'method24', False): {
-                'retval': { 'callable': {
+                'retval': { 'callable_retained': True, 'callable': {
                     'retval': { 'type': b'v' },
                     'arguments': {
-                        0: { 'type': b'@' },
-                        1: { 'type': b'd' },
+                        0: { 'type': b'^v' },
+                        1: { 'type': b'@' },
+                        2: { 'type': b'd' },
                     }
                 }}
             },
@@ -648,7 +650,7 @@ class TestBridgeSupport (TestCase):
             },
             (b'MyClass3', b'method13b', False): {
                 'arguments': {
-                    2+1: { 'sel_of_type': b'v@:f', 'c_array_of_fixed_lengt': 4 }
+                    2+1: { 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }
                 }
             },
             (b'MyClass3', b'method14', False): {
@@ -685,7 +687,7 @@ class TestBridgeSupport (TestCase):
             },
             (b'MyClass3', b'method21', False): {
                 'arguments': {
-                    2+1: { 'callable_retained': True, 'callable': {
+                    2+1: { 'callable_retained': False, 'callable': {
                         'retval': { 'type': b'v' },
                         'arguments': {
                             0:  { 'type': b'@' },
@@ -696,6 +698,18 @@ class TestBridgeSupport (TestCase):
             },
             (b'MyClass3', b'method22', False): {
                 'arguments': {
+                    2+1: { 'callable_retained': False, 'callable': {
+                        'retval': { 'type': b'v' },
+                        'arguments': {
+                            0:  { 'type': b'^v' },
+                            1:  { 'type': b'@' },
+                            2:  { 'type': b'd' },
+                        }
+                    }}
+                }
+            },
+            (b'MyClass3', b'method23', False): {
+                'arguments': {
                     2+1: { 'callable_retained': True, 'callable': {
                         'retval': { 'type': b'v' },
                         'arguments': {
@@ -705,24 +719,14 @@ class TestBridgeSupport (TestCase):
                     }}
                 }
             },
-            (b'MyClass3', b'method23', False): {
+            (b'MyClass3', b'method24', True): {
                 'arguments': {
-                    2+1: { 'callable': {
+                    2+1: { 'callable_retained': True, 'callable': {
                         'retval': { 'type': b'v' },
                         'arguments': {
-                            0:  { 'type': b'@' },
-                            1:  { 'type': b'd' },
-                        }
-                    }}
-                }
-            },
-            (b'MyClass3', b'method23', False): {
-                'arguments': {
-                    2+1: { 'callable': {
-                        'retval': { 'type': b'v' },
-                        'arguments': {
-                            0:  { 'type': b'@' },
-                            1:  { 'type': b'd' },
+                            0:  { 'type': b'^v' },
+                            1:  { 'type': b'@' },
+                            2:  { 'type': b'd' },
                         }
                     }}
                 }
