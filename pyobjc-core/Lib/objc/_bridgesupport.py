@@ -182,7 +182,7 @@ class _BridgeSupportParser (object):
         argIdx = None
         result = {}
 
-        if is_arg:
+        if is_arg and is_method:
             argIdx = self.attribute_string(node, "index", None)
             if argIdx is None:
                 return None, None
@@ -434,9 +434,10 @@ class _BridgeSupportParser (object):
 
         for al in node:
             if al.tag == "arg":
-                _, d = self.xml_to_arg(al, False, False)
+                _, d = self.xml_to_arg(al, False, True)
                 if "type" not in d:
                     # Ignore functions without type info
+                    print "ignore", name, d
                     return
                 siglist.append(d["type"])
 
@@ -446,9 +447,13 @@ class _BridgeSupportParser (object):
                 _, d = self.xml_to_arg(al, False, False)
                 if "type" not in d:
                     # Ignore functions without type info
+                    print "ignore2", name, d
                     return
                 siglist[0] = d["type"]
                 meta["retval"] = d
+
+        if not meta['arguments']:
+            del meta['arguments']
 
         self.functions.append((name, b"".join(siglist), "", meta))
 

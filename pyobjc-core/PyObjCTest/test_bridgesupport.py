@@ -127,7 +127,7 @@ TEST_XML="""\
        <retval c_array_length_in_arg='4, 5'/>
     </method>
     <method selector='method20'>
-       <retval function_pointer_retained='true'/><!-- ignored, no function data -->
+       <retval function_pointer_retained='false'/><!-- ignored, no function data -->
     </method>
     <method selector='method21'>
        <retval function_pointer_retained='false' function_pointer='true'>
@@ -208,7 +208,7 @@ TEST_XML="""\
        <arg index='1' c_array_length_in_arg='4, 5'/>
     </method>
     <method selector='method20'>
-       <arg index='1' function_pointer_retained='true'/><!-- ignored, no function data -->
+       <arg index='1' function_pointer_retained='false'/><!-- ignored, no function data -->
     </method>
     <method selector='method21'>
        <arg index='1' function_pointer_retained='false' function_pointer='true'>
@@ -266,55 +266,55 @@ TEST_XML="""\
      <retval/><!-- ignore -->
   </function>
   <function name='function13'>
-     <retval type_modifier='n' />
+     <retval type='i' type_modifier='n' />
   </function>
   <function name='function14'>
-     <retval sel_of_type='v@:f' c_array_of_fixed_length='4'/>
+     <retval type=':' sel_of_type='v@:f' c_array_of_fixed_length='4'/>
   </function>
   <function name='function15'>
-     <retval sel_of_type='v@:f' sel_of_type64='v@:d' />
+     <retval type=':' sel_of_type='v@:f' sel_of_type64='v@:d' />
   </function>
   <function name='function16'>
-     <retval null_accepted='false' already_retained='true' already_cfretained='true' c_array_length_in_result='true' />
+     <retval type='i' null_accepted='false' already_retained='true' c_array_length_in_result='true' />
   </function>
   <function name='function17'>
-     <retval c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+     <retval type='i' already_cfretained='true' c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
   </function>
   <function name='function18'>
-     <retval c_array_length_in_arg='1'/>
+     <retval type='i' c_array_length_in_arg='1'/>
   </function>
   <function name='function19'>
-     <retval c_array_length_in_arg='1,2'/>
+     <retval type='i' c_array_length_in_arg='1,2'/>
   </function>
   <function name='function20'>
-     <retval c_array_length_in_arg='4, 5'/>
+     <retval type='i' c_array_length_in_arg='4, 5'/>
   </function>
   <function name='function21'>
-     <retval function_pointer_retained='true'/><!-- ignored, no function data -->
+     <retval type='?' function_pointer_retained='false'/><!-- ignored, no function data -->
   </function>
   <function name='function22'>
-     <retval function_pointer_retained='true' function_pointer='true'>
+     <retval type='?' function_pointer_retained='false' function_pointer='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </retval>
   </function>
   <function name='function23'>
-     <retval function_pointer_retained='true' block='true'>
+     <retval type='@?' function_pointer_retained='false' block='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </retval>
   </function>
   <function name='function24'>
-     <retval function_pointer='true'>
+     <retval type='?' function_pointer='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </retval>
   </function>
   <function name='function25'>
-     <retval block='true'>
+     <retval type='@?' block='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
@@ -329,68 +329,62 @@ TEST_XML="""\
      <arg index='1' type='d'/>
      <arg index='2' type='d'/>
   </function>
-  <function name='function28'>
-     <arg type='d'/><!-- ignored: no index -->
-  </function>
   <function name='function29'>
-     <arg index='1' type='d'/>
+     <arg type='d'/>
   </function>
   <function name='function30'>
-     <arg index='1' type='f' type64='d' />
-  </function>
-  <function name='function31'>
-     <arg index='1'/><!-- ignore -->
+     <arg type='f' type64='d' />
   </function>
   <function name='function32'>
-     <arg index='1' type_modifier='n' />
+     <arg type='@' type_modifier='n' />
   </function>
   <function name='function33'>
-     <arg index='1' sel_of_type='v@:f' c_array_of_fixed_length='4'/>
+     <arg type=':' sel_of_type='v@:f' c_array_of_fixed_length='4'/>
   </function>
   <function name='function34'>
-     <arg index='1' sel_of_type='v@:f' sel_of_type64='v@:d' />
+     <arg type=':' sel_of_type='v@:f' sel_of_type64='v@:d' />
   </function>
   <function name='function35'>
-     <arg index='1' null_accepted='false' already_retained='true' already_cfretained='true' c_array_length_in_result='true' />
+     <arg type='@' null_accepted='false' already_retained='true' c_array_length_in_result='true' />
   </function>
   <function name='function36'>
-     <arg index='1' c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+     <arg type='@' c_array_delimited_by_null='true' already_cfretained='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
   </function>
   <function name='function37'>
-     <arg index='1' c_array_length_in_arg='1'/>
+     <arg type='@' c_array_length_in_arg='1'/>
   </function>
   <function name='function38'>
-     <arg index='1' c_array_length_in_arg='1,2'/>
+     <arg type='@' c_array_length_in_arg='1,2'/>
   </function>
   <function name='function39'>
-     <arg index='1' c_array_length_in_arg='4, 5'/>
+     <arg type='@' c_array_length_in_arg='4, 5'/>
   </function>
   <function name='function40'>
-     <arg index='1' function_pointer_retained='true'/><!-- ignored, no function data -->
+     <arg type='?' function_pointer_retained='false'/><!-- ignored, no function data -->
   </function>
   <function name='function41'>
-     <arg index='1' function_pointer_retained='true' function_pointer='true'>
+     <arg type='?' function_pointer_retained='false' function_pointer='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </arg>
   </function>
   <function name='function42'>
-     <arg index='1' function_pointer_retained='true' block='true'>
+     <arg type='@?' function_pointer_retained='false' block='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </arg>
   </function>
   <function name='function43'>
-     <arg index='1' function_pointer='true'>
+     <arg type='?' function_pointer='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
      </arg>
   </function>
   <function name='function44'>
-     <arg index='1' block='true'>
+     <arg type='@?' block='true'>
         <retval type='v' />
         <arg type='@' />
         <arg type='d' />
@@ -733,6 +727,176 @@ class TestBridgeSupport (TestCase):
             },
         }      
 
+
+
+        all_functions = [
+            ('function2', b'v', '', { 'variadic': True }),
+            ('function3', b'v', '', { 'variadic': True, 'c_array_delimited_by_null': True }),
+            ('function4', b'v', '', { 'variadic': True, 'c_array_length_in_arg': 4 }),
+            ('function5', b'd', '', { 'retval': { 'type': b'd' }}),
+            ('function6', b'd', '', { 'retval': { 'type': b'd' }}),
+            ('function9', b'd', '', { 'retval': { 'type': b'd' }}),
+            ('function10', b'd', '', { 'retval': { 'type': b'd' }}),
+            ('function11', b'f' if sys.maxsize < 2**32 else b'd' , '', { 'retval': { 'type': b'f' if sys.maxsize < 2**32 else b'd' }}),
+            ('function13', b'i', '', { 'retval': {'type': b'i', 'type_modifier': b'n' }}),
+            ('function14', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }}),
+            ('function15', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }}),
+            ('function16', b'i', '', { 'retval': {'type': b'i', 
+                'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }}),
+            ('function17', b'i', '', { 'retval': {'type': b'i', 
+                'already_cfretained': True, 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
+                'printf_format': True, 'free_result': True }}),
+            ('function18', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': 1 }}),
+            ('function19', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': (1,2) }}),
+            ('function20', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': (4,5) }}),
+            ('function21', b'?', '', { 'retval': { 'type': b'?', }}),
+            ('function22', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': False, 'callable': {
+                'retval': { 'type': b'v' },
+                'arguments': { 
+                    0: { 'type': b'@' },
+                    1: { 'type': b'd' },
+                }
+            }}}),
+            ('function23', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': False, 'callable': {
+                'retval': { 'type': b'v' },
+                'arguments': { 
+                    0: { 'type': b'^v' },
+                    1: { 'type': b'@' },
+                    2: { 'type': b'd' },
+                }
+            }}}),
+            ('function24', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': True, 'callable': {
+                'retval': { 'type': b'v' },
+                'arguments': { 
+                    0: { 'type': b'@' },
+                    1: { 'type': b'd' },
+                }
+            }}}),
+            ('function25', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': True, 'callable': {
+                'retval': { 'type': b'v' },
+                'arguments': { 
+                    0: { 'type': b'^v' },
+                    1: { 'type': b'@' },
+                    2: { 'type': b'd' },
+                }
+            }}}),
+            ('function26', b'qfd', '', { 
+                'retval': { 'type': b'q' },
+                'arguments': {
+                    0:  { 'type': b'f' },
+                    1:  { 'type': b'f' }
+                }
+            }),
+            ('function27', b'vfd', '', { 
+                'arguments': {
+                    0:  { 'type': b'f' },
+                    1:  { 'type': b'd' }
+                }
+            }),
+            ('function29', b'vd', '', { 
+                'arguments': {
+                    0:  { 'type': b'd' },
+                }
+            }),
+            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , { 
+                'arguments': {
+                    0:  { 'type': b'f' if sys.maxsize < 2**32 else b'd'  },
+                }
+            }),
+            ('function32', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'type_modifier': b'n' }
+                }
+            }),
+            ('function33', b'v:', '', { 
+                'arguments': {
+                    0:  { 'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }
+                }
+            }),
+            ('function34', b'v:', '', { 
+                'arguments': {
+                    0:  { 'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }
+                }
+            }),
+            ('function35', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }
+                }
+            }),
+            ('function35', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'c_array_delimited_by_null': True, 'already_cfretained': True, 'c_array_of_variable_length': True,
+                        'printf_format': True, 'free_result': True }
+                }
+            }),
+            ('function37', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'c_array_length_in_arg': 1 }
+                }
+            }),
+            ('function38', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'c_array_length_in_arg': (1,2) }
+                }
+            }),
+            ('function39', b'v@', '', { 
+                'arguments': {
+                    0:  { 'type': b'@', 'c_array_length_in_arg': (4,5) }
+                }
+            }),
+            ('function40', b'v?', '', { 
+                'arguments': {
+                    0:  { 'type': b'?' }
+                }
+            }),
+            ('function41', b'v?', '', { 
+                'type': b'?',
+                'callable_retained': False,
+                'callable': {
+                    'retval': { 'type': b'v' },
+                    'arguments': {
+                        0: { 'type': b'@' },
+                        1: { 'type': b'd' }
+                    }
+                }
+            }),
+            ('function42', b'v?', '', { 
+                'type': b'?',
+                'callable_retained': False,
+                'callable': {
+                    'retval': { 'type': b'v' },
+                    'arguments': {
+                        0: { 'type': b'^v' },
+                        1: { 'type': b'@' },
+                        2: { 'type': b'd' }
+                    }
+                }
+            }),
+            ('function43', b'v?', '', { 
+                'type': b'?',
+                'callable_retained': True,
+                'callable': {
+                    'retval': { 'type': b'v' },
+                    'arguments': {
+                        0: { 'type': b'@' },
+                        1: { 'type': b'd' }
+                    }
+                }
+            }),
+            ('function44', b'v?', '', { 
+                'type': b'?',
+                'callable_retained': True,
+                'callable': {
+                    'retval': { 'type': b'v' },
+                    'arguments': {
+                        0: { 'type': b'^v' },
+                        1: { 'type': b'@' },
+                        2: { 'type': b'd' }
+                    }
+                }
+            }),
+        ]
+
         self.assertItemsEqual(prs.constants,    all_constants)
         self.assertEqual(prs.values,            all_values)
         self.assertItemsEqual(prs.opaque,       all_opaque)
@@ -740,167 +904,15 @@ class TestBridgeSupport (TestCase):
         self.assertItemsEqual(prs.cftypes,      all_cftypes)
 
         self.maxDiff = None
+        self.assertItemsEqual(prs.functions,    all_functions)
+
+        self.maxDiff = None
         self.assertEqual(prs.meta,              all_methods)
         self.fail("validate the metadata from TEST_XML")
 
+
+
         '''
-  <function /><!-- ignored -->
-  <function><!-- ignored -->
-    <arg type="f" />
-    <retval type="@" />
-  </function>
-  <function name='function1' ignore='true' ><!-- ignore -->
-    <arg type="f" />
-    <retval type="@" />
-  </function>
-  <function name='function2' variadic='true' ></function>
-  <function name='function3' variadic='true' c_array_delimited_by_null='true'></function>
-  <function name='function4' variadic='true' c_array_length_in_arg='4'></function>
-  <function name='function5' c_array_delimited_by_null='true'><retval type='d'/></function><!-- c_array... ignored -->
-  <function name='function6' c_array_length_in_arg='4'><retval type='d' /></function><!-- c_array... ignored -->
-  <function name='function7' ignore='true'></function>
-  <function name='function8' ignore='true' suggestion='ignore me'></function>
-  <function name='function9' suggestion='ignore me'><retval type='d'/></function><!-- suggestion ignored -->
-  <function name='function10'>
-    <retval type='d'/>
-  </function>
-  <function name='function11'>
-     <retval type='f' type64='d' />
-  </function>
-  <function name='function12'>
-     <retval/><!-- ignore -->
-  </function>
-  <function name='function13'>
-     <retval type_modifier='n' />
-  </function>
-  <function name='function14'>
-     <retval sel_of_type='v@:f' c_array_of_fixed_length='4'/>
-  </function>
-  <function name='function15'>
-     <retval sel_of_type='v@:f' sel_of_type64='v@:d' />
-  </function>
-  <function name='function16'>
-     <retval null_accepted='false' already_retained='true' already_cfretained='true' c_array_length_in_result='true' />
-  </function>
-  <function name='function17'>
-     <retval c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
-  </function>
-  <function name='function18'>
-     <retval c_array_length_in_arg='1'/>
-  </function>
-  <function name='function19'>
-     <retval c_array_length_in_arg='1,2'/>
-  </function>
-  <function name='function20'>
-     <retval c_array_length_in_arg='4, 5'/>
-  </function>
-  <function name='function21'>
-     <retval function_pointer_retained='true'/><!-- ignored, no function data -->
-  </function>
-  <function name='function22'>
-     <retval function_pointer_retained='true' function_pointer='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </retval>
-  </function>
-  <function name='function23'>
-     <retval function_pointer_retained='true' block='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </retval>
-  </function>
-  <function name='function24'>
-     <retval function_pointer='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </retval>
-  </function>
-  <function name='function25'>
-     <retval block='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </retval>
-  </function>
-  <function name='function26'>
-     <retval type='q' />
-     <arg index='1' type='f'/>
-     <arg index='2' type='d'/>
-  </function>
-  <function name='function27'>
-     <arg index='1' type='d'/>
-     <arg index='2' type='d'/>
-  </function>
-  <function name='function28'>
-     <arg type='d'/><!-- ignored: no index -->
-  </function>
-  <function name='function29'>
-     <arg index='1' type='d'/>
-  </function>
-  <function name='function30'>
-     <arg index='1' type='f' type64='d' />
-  </function>
-  <function name='function31'>
-     <arg index='1'/><!-- ignore -->
-  </function>
-  <function name='function32'>
-     <arg index='1' type_modifier='n' />
-  </function>
-  <function name='function33'>
-     <arg index='1' sel_of_type='v@:f' c_array_of_fixed_length='4'/>
-  </function>
-  <function name='function34'>
-     <arg index='1' sel_of_type='v@:f' sel_of_type64='v@:d' />
-  </function>
-  <function name='function35'>
-     <arg index='1' null_accepted='false' already_retained='true' already_cfretained='true' c_array_length_in_result='true' />
-  </function>
-  <function name='function36'>
-     <arg index='1' c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
-  </function>
-  <function name='function37'>
-     <arg index='1' c_array_length_in_arg='1'/>
-  </function>
-  <function name='function38'>
-     <arg index='1' c_array_length_in_arg='1,2'/>
-  </function>
-  <function name='function39'>
-     <arg index='1' c_array_length_in_arg='4, 5'/>
-  </function>
-  <function name='function40'>
-     <arg index='1' function_pointer_retained='true'/><!-- ignored, no function data -->
-  </function>
-  <function name='function41'>
-     <arg index='1' function_pointer_retained='true' function_pointer='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </arg>
-  </function>
-  <function name='function42'>
-     <arg index='1' function_pointer_retained='true' block='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </arg>
-  </function>
-  <function name='function43'>
-     <arg index='1' function_pointer='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </arg>
-  </function>
-  <function name='function44'>
-     <arg index='1' block='true'>
-        <retval type='v' />
-        <arg type='@' />
-        <arg type='d' />
-     </arg>
-  </function>
   <!-- TODO: type rewriting (_C_BOOL, _C_NSBOOL)-->
   <informal_protocol/><!-- ignore -->
   <informal_protocol name='protocol1' />
@@ -934,9 +946,9 @@ class TestBridgeSupport (TestCase):
 
     def assert_valid_callable(self, meta, function):
         if function:
-            self.assertIn("arguments", meta)
-            indexes = list(sorted(meta["arguments"]))
-            self.assertEqual(indexes, list(range(len(indexes))))
+            if 'arguments' in meta:
+                indexes = list(sorted(meta["arguments"]))
+                self.assertEqual(indexes, list(range(len(indexes))))
 
         valid_keys = { 
             "type",
