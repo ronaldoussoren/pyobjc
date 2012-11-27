@@ -1280,7 +1280,7 @@ PyObjC_RegisterStructType(
 		const char* fieldstart;
 
 		if (*sigcur != _C_STRUCT_B) {
-			PyErr_SetString(PyExc_ValueError, "invalid signature");
+			PyErr_SetString(PyExc_ValueError, "invalid signature: not a struct encoding");
 			return NULL;
 		}
 
@@ -1288,7 +1288,7 @@ PyObjC_RegisterStructType(
 		while (*sigcur && *sigcur != _C_STRUCT_E && *sigcur != '=') sigcur++;
 
 		if (!*sigcur || *sigcur == _C_STRUCT_E) {
-			PyErr_SetString(PyExc_ValueError, "invalid signature");
+			PyErr_SetString(PyExc_ValueError, "invalid signature: not a complete struct encoding");
 			return NULL;
 		}
 
@@ -1301,12 +1301,12 @@ PyObjC_RegisterStructType(
 				sigcur++;
 				sigcur = strchr(sigcur, '"');
 				if (sigcur == NULL) {
-					PyErr_SetString(PyExc_ValueError, "invalid signature");
+					PyErr_SetString(PyExc_ValueError, "invalid signature: embedded field name without end");
 					return NULL;
 				}
 				sigcur++;
 			} else {
-				PyErr_SetString(PyExc_ValueError, "invalid signature");
+				PyErr_SetString(PyExc_ValueError, "invalid signature: not all fields have an embedded name");
 				return NULL;
 			}
 			if (*sigcur == _C_STRUCT_E) break;
@@ -1327,7 +1327,7 @@ PyObjC_RegisterStructType(
 				end = strchr(sigcur, '"');
 
 				if (end == NULL) {
-					PyErr_SetString(PyExc_ValueError, "invalid signature");
+					PyErr_SetString(PyExc_ValueError, "invalid signature: embedded field name without end");
 					return NULL;
 				}
 				fieldnames[numFields] = PyMem_Malloc(end - sigcur + 1);
