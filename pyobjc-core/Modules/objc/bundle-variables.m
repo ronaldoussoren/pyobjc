@@ -310,7 +310,12 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 				return NULL;
 			}
 		} else {
-			PyObject* py_name = PyObjC_IdToPython(name);
+			PyObject* py_name;
+			if (cfBundle == NULL) {
+				py_name = PyText_FromString(c_name);
+			} else {
+				py_name = PyObjC_IdToPython(name);
+			}
 			PyObject* pyVal = PyObjCFunc_New(
 					py_name,
 					value,
