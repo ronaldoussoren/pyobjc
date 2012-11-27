@@ -2,6 +2,7 @@ from PyObjCTools.TestSupport import *
 import unittest
 import objc
 import sys
+import ctypes
 
 from PyObjCTools import TestSupport
 
@@ -106,6 +107,197 @@ class TestTestSupport (TestCase):
     def test_fourcc(self):
         import struct
         self.assertEqual(fourcc(b'abcd'), struct.unpack('>i', b'abcd')[0])
+
+    def test_cast(self):
+        c_int = ctypes.c_int()
+        c_uint = ctypes.c_uint()
+
+        for v in (0, 1, sys.maxsize, sys.maxsize+2, 1<<31, -1, -10):
+            c_int.value = v
+            c_uint.value = v
+            self.assertEqual(c_int.value, TestSupport.cast_int(v))
+            self.assertEqual(c_uint.value, TestSupport.cast_uint(v))
+
+        c_longlong = ctypes.c_longlong()
+        c_ulonglong = ctypes.c_ulonglong()
+        for v in (0, 1, sys.maxsize, sys.maxsize+2, 1<<63, -1, -10):
+            c_longlong.value = v
+            c_ulonglong.value = v
+            self.assertEqual(c_longlong.value, TestSupport.cast_longlong(v))
+            self.assertEqual(c_ulonglong.value, TestSupport.cast_ulonglong(v))
+
+    def testOnlyIf(self):
+
+        def func_false():
+            pass
+        dec_false = onlyIf(1==2, "message")(func_false)
+
+        def func_true():
+            pass
+        dec_true = onlyIf(1==1, "message")(func_true)
+
+        self.assertIs(func_true, dec_true)
+        self.assertIsNot(func_false, dec_false)
+
+        if sys.version_info[:2] >= (2, 7):
+            try:
+                dec_false()
+            except TestSupport._unittest.SkipTest:
+                # OK
+                pass
+
+            else:
+                self.fail("Not skipped?")
+
+    def testOnlyPython(self):
+        orig_version = sys.version_info
+
+        try:
+            sys.version_info = (2, 7, 3, '-')
+
+            @onlyPython2
+            def func_true():
+                pass
+
+            @onlyPython3
+            def func_false():
+                pass
+
+            try:
+                func_true()
+            except TestSupport._unittest.SkipTest:
+                self.fail("Unexpected skip for python 2")
+
+            try:
+                func_false()
+            except TestSupport._unittest.SkipTest:
+                pass
+
+            else:
+                self.fail("Unexpected non-skip for python 2")
+
+            sys.version_info = (3, 3, 1, '-')
+
+            @onlyPython2
+            def func_false():
+                pass
+
+            @onlyPython3
+            def func_true():
+                pass
+
+            try:
+                func_true()
+            except TestSupport._unittest.SkipTest:
+                self.fail("Unexpected skip for python 2")
+
+            try:
+                func_false()
+            except TestSupport._unittest.SkipTest:
+                pass
+
+            else:
+                self.fail("Unexpected non-skip for python 2")
+
+        finally:
+            sys.version_info = orig_version
+
+    def testOnlyBits(self):
+        orig_size = sys.maxsize
+
+        try:
+            sys.maxsize = 2**30
+
+            @onlyOn32Bit
+            def func_true(): pass
+
+            @onlyOn64Bit
+            def func_false(): pass
+
+            try:
+                func_true()
+            except TestSupport._unittest.SkipTest:
+                self.fail("Unexpected skip for python 2")
+
+            try:
+                func_false()
+            except TestSupport._unittest.SkipTest:
+                pass
+
+            else:
+                self.fail("Unexpected non-skip for python 2")
+
+            sys.maxsize = 2**60
+
+            @onlyOn32Bit
+            def func_false(): pass
+
+            @onlyOn64Bit
+            def func_true(): pass
+
+            try:
+                func_true()
+            except TestSupport._unittest.SkipTest:
+                self.fail("Unexpected skip for python 2")
+
+            try:
+                func_false()
+            except TestSupport._unittest.SkipTest:
+                pass
+
+            else:
+                self.fail("Unexpected non-skip for python 2")
+
+        finally:
+            sys.maxsize = orig_size
+
+    def test_mxx_os_level(self):
+        orig_os_release = TestSupport.os_release
+
+        try:
+            TestSupport.os_release = lambda: '10.5'
+
+            @min_os_level('10.4')
+            def func_true_1(): pass
+
+            @min_os_level('10.5')
+            def func_true_2(): pass
+
+            @min_os_level('10.6')
+            def func_false_1(): pass
+
+            @max_os_level('10.5')
+            def func_true_3(): pass
+
+            @max_os_level('10.6')
+            def func_true_4(): pass
+
+            @max_os_level('10.4')
+            def func_false_2(): pass
+
+
+
+            for func_true in (func_true_1, func_true_2, func_true_3, func_true_4):
+                try:
+                    func_true()
+                except TestSupport._unittest.SkipTest:
+                    self.fail("Unexpected skip for python 2")
+
+            for func_false in (func_false_1, func_false_2):
+                try:
+                    func_false()
+                except TestSupport._unittest.SkipTest:
+                    pass
+
+                else:
+                    self.fail("Unexpected non-skip for python 2")
+
+
+
+
+        finally:
+            TestSupport.os_release = orig_os_release
+
 
     def testIs32Bit(self):
         orig = sys.maxsize

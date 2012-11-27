@@ -227,17 +227,7 @@ def min_os_level(release):
             def testSnowLeopardCode(self):
                 pass
     """
-    if os_release() >= release:
-        def decorator(function):
-            return function
-
-    else:
-        if _sys.version_info[:2] >= (2, 7):
-            return _unittest.skip("min_os_level(%s)"%(release,))
-        else:
-            return lambda self: None
-
-    return decorator
+    return onlyIf(os_release() >= release)
 
 def max_os_level(release):
     """
@@ -249,19 +239,7 @@ def max_os_level(release):
             def testUntilLeopard(self):
                 pass
     """
-    if os_release() <= release:
-        def decorator(function):
-            return function
-
-    else:
-        if _sys.version_info[:2] >= (2, 7):
-            return _unittest.skip("max_os_level(%s)"%(release,))
-        else:
-            return lambda self: None
-
-    return decorator
-
-
+    return onlyIf(os_release() <= release)
 
 def _leaks():
     data = _subprocess.Popen(
