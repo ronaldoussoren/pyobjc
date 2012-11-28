@@ -741,24 +741,23 @@ def initFrameworkWrapper(frameworkName,
     # calls will behave as expected in all cases.
     globals['super'] = objc.super
 
-    if 1:
-        # Look for metadata in the Python wrapper and prefer that over the
-        # data in the framework or in system locations. 
-        # Needed because the system bridgesupport files are buggy.
-        try:
-            exists = pkg_resources.resource_exists(
-                    frameworkResourceName, "PyObjC.bridgesupport")
-        
-        except ImportError:
-            pass
+    # Look for metadata in the Python wrapper and prefer that over the
+    # data in the framework or in system locations. 
+    # Needed because the system bridgesupport files are buggy.
+    try:
+        exists = pkg_resources.resource_exists(
+                frameworkResourceName, "PyObjC.bridgesupport")
+    
+    except ImportError:
+        pass
 
-        else:
-            if exists:
-                data = pkg_resources.resource_string(frameworkResourceName,
-                    "PyObjC.bridgesupport")
-                if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
-                return bundle
+    else:
+        if exists:
+            data = pkg_resources.resource_string(frameworkResourceName,
+                "PyObjC.bridgesupport")
+            if data:
+                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+            return bundle
 
     # Look for metadata in the framework bundle
     path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'bridgesupport', 'BridgeSupport')
@@ -816,15 +815,6 @@ def initFrameworkWrapper(frameworkName,
                     if data:
                         _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
             return bundle
-    
-    # And if that fails look for the metadata in the framework wrapper
-    if pkg_resources.resource_exists(
-            frameworkName, "PyObjC.bridgesupport"):
-        data = pkg_resources.resource_string(frameworkResourceName,
-            "PyObjC.bridgesupport")
-        if data:
-            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
-        return bundle
     
     return bundle
 

@@ -337,10 +337,13 @@ def setup(
 
     plat_name = "MacOS X"
     plat_versions = []
-    if min_os_level is not None:
-        plat_versions.append(">=%s"%(min_os_level,))
-    if max_os_level is not None:
-        plat_versions.append("<=%s"%(min_os_level,))
+    if min_os_level is not None and min_os_level == max_os_level:
+        plat_versions.append("==%s"%(min_os_level,))
+    else:
+        if min_os_level is not None:
+            plat_versions.append(">=%s"%(min_os_level,))
+        if max_os_level is not None:
+            plat_versions.append("<=%s"%(max_os_level,))
     if plat_versions:
         plat_name += " (%s)"%(", ".join(plat_versions),)
 

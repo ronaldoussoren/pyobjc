@@ -1655,7 +1655,125 @@ class TestInitFrameworkWrapper (TestCase):
 
 
     def test_calls_initwrappper(self):
-       self.fail()
+        with Patcher() as p:
+
+            SENTINEL=object()
+
+            class InlineTab (object): pass
+
+            class Bundle (object):
+                def __init__(self):
+                    self.calls = []
+
+                def pathForResource_ofType_inDirectory_(self, name, type, directory):
+                    self.calls.append((name, type, directory))
+                    return None
+
+
+            load_calls = []
+            def loadBundle(module_name, module_globals, bundle_path=SENTINEL, bundle_identifier=SENTINEL, scan_classes=True):
+                self.assertIsInstance(module_name, str)
+                self.assertIsInstance(module_globals, dict)
+                if bundle_path is not SENTINEL:
+                    self.assertIsInstance(bundle_path, str)
+                if bundle_identifier is not SENTINEL:
+                    self.assertIsInstance(bundle_identifier, str)
+                bool(scan_classes)
+                bundle = Bundle()
+                load_calls.append((bundle, module_name, module_globals, bundle_path, bundle_identifier, scan_classes))
+                return bundle
+
+            resources = {}
+            def resource_exists(package, name):
+                return (package, name) in resources
+
+            def resource_string(package, name):
+                return resources[(package, name)]
+
+            parse_calls = []
+            def parseBridgeSupport(xml,  globals, framework, dylib_path=None, inlineTab=None):
+                parse_calls.append((xml, globals, framework, dylib_path, inlineTab))
+
+            TEST_BRIDGESUPPORT_DIRECTORIES=[]
+
+            p.patch("objc.loadBundle", loadBundle)
+            p.patch("pkg_resources.resource_exists", resource_exists)
+            p.patch("pkg_resources.resource_string", resource_string)
+            p.patch("objc._bridgesupport._parseBridgeSupport", parseBridgeSupport)
+            p.patch("objc._bridgesupport.BRIDGESUPPORT_DIRECTORIES", TEST_BRIDGESUPPORT_DIRECTORIES)
+
+            # 1. No resource files, no bundle files, no library files
+            resources = {}
+            TEST_BRIDGESUPORT_DIRECTORIES = [] # Need to have actual entries in this list
+
+            def basic_verify(g):
+                self.assertIs(g['objc'], objc)
+                self.assertIs(g['super'], objc.super)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g)
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g)
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g, scan_classes=False)
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g)
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g, scan_classes=False)
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, inlineTab=InlineTab())
+            # VERIFY
+            basic_verify(g)
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=InlineTab(), scan_classes=False)
+            # VERIFY
+            basic_verify(g)
+
+
+            # 2. Have resource files, bundle files and library files (only first is used)
+
+            # 3. No resource files, have bundle files and library files (only bundle one is used)
+
+            # 4. No resource files, have bundle files (with override) and library files (only bundle one is used)
+
+            # 5. No resource file, no bundle file, have library file
+
+            # 6. No resource file, no bundle file, have library file (with override)
+
+            # 7. Cannot load bundle (should look for bridgesupport)
+
+            # 8. Use the 'frameworkResourceName' parameter
 
 
     def test_real_loader(self):
