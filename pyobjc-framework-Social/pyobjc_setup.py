@@ -360,6 +360,7 @@ def setup(
         test_suite='PyObjCTest',
         zip_safe = False,
         license = 'MIT License',
+        classifiers = CLASSIFIERS,
         **k
     ) 
 
