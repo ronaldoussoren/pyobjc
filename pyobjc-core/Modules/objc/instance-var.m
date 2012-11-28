@@ -317,6 +317,88 @@ PyDoc_STRVAR(ivar_doc,
 "value is assigned to"
 );
 
+PyDoc_STRVAR(ivar_typestr_doc,
+		        "The Objective-C type encoding");
+static PyObject*
+ivar_get_typestr(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+
+	return PyBytes_FromString(self->type);
+}
+
+PyDoc_STRVAR(ivar_name_doc,
+		        "The Objective-C name");
+static PyObject*
+ivar_get_name(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+
+
+	if (self->name) {
+		return PyText_FromString(self->name);
+	} else {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+}
+
+PyDoc_STRVAR(ivar_isOutlet_doc,
+		        "True if the instance variable is an IBOutlet");
+static PyObject*
+ivar_get_isOutlet(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+	PyObject* result = self->isOutlet ? Py_True : Py_False;
+	Py_INCREF(result);
+	return result;
+}
+
+PyDoc_STRVAR(ivar_isSlot_doc,
+		        "True if the instance variable is a Python slot");
+static PyObject*
+ivar_get_isSlot(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
+	PyObject* result = self->isSlot ? Py_True : Py_False;
+	Py_INCREF(result);
+	return result;
+}
+
+
+static PyGetSetDef ivar_getset[] = {
+	{
+		"__typestr__",
+		ivar_get_typestr,
+		0,
+		ivar_typestr_doc,
+		0
+	},
+	{
+		"__name__",
+		ivar_get_name,
+		0,
+		ivar_name_doc,
+		0
+	},
+	{
+		"__isOutlet__",
+		ivar_get_isOutlet,
+		0,
+		ivar_isOutlet_doc,
+		0
+	},
+	{
+		"__isSlot__",
+		ivar_get_isSlot,
+		0,
+		ivar_isSlot_doc,
+		0
+	},
+	{ 0, 0, 0, 0, 0 }
+};
+
+
 PyTypeObject PyObjCInstanceVariable_Type = {
 	PyVarObject_HEAD_INIT(&PyType_Type, 0)             
 	"ivar",                             
@@ -347,7 +429,7 @@ PyTypeObject PyObjCInstanceVariable_Type = {
 	0,                                      /* tp_iternext */
 	ivar_methods,                           /* tp_methods */
 	0,                                      /* tp_members */
-	0,                                      /* tp_getset */
+	ivar_getset,                            /* tp_getset */
 	0,                                      /* tp_base */
 	0,                                      /* tp_dict */
 	ivar_descr_get,           		/* tp_descr_get */

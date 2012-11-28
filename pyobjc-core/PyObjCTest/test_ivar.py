@@ -227,6 +227,8 @@ class TestAllInstanceVariables (TestCase):
             var2 = objc.ivar(type=objc._C_DBL)
 
             outlet = objc.IBOutlet()
+            self.assertTrue(outlet.__isOutlet__)
+            self.assertFalse(outlet.__isSlot__)
 
         o = AnonIvarClass.alloc().init()
         o.var = NSObject.alloc().init()
@@ -253,6 +255,41 @@ class TestAllInstanceVariables (TestCase):
         self.assertTrue(hasattr(o, 'outlet1'))
         self.assertTrue(hasattr(o, 'outlet2'))
 
+class TestStructConvenience (TestCase):
+    def test_using_convenience(self):
+        for name, typestr in [
+                ('bool', objc._C_BOOL),
+                ('char', objc._C_CHR),
+                ('int', objc._C_INT),
+                ('short', objc._C_SHT),
+                ('long', objc._C_LNG),
+                ('long_long', objc._C_LNG_LNG),
+                ('unsigned_char', objc._C_UCHR),
+                ('unsigned_int', objc._C_UINT),
+                ('unsigned_short', objc._C_USHT),
+                ('unsigned_long', objc._C_ULNG),
+                ('unsigned_long_long', objc._C_ULNG_LNG),
+                ('float', objc._C_FLT),
+                ('double', objc._C_DBL),
+                ('BOOL', objc._C_NSBOOL),
+                ('UniChar', objc._C_UNICHAR),
+                ('char_text', objc._C_CHAR_AS_TEXT),
+                ('char_int', objc._C_CHAR_AS_INT),
+            ]:
+            self.assertHasAttr(objc.ivar, name)
+            v = getattr(objc.ivar, name)()
+            self.assertIsInstance(v, objc.ivar)
+            self.assertEqual(v.__typestr__, typestr)
+            self.assertEqual(v.__name__, None)
+            self.assertFalse(v.__isOutlet__)
+            self.assertFalse(v.__isSlot__)
+
+            v = getattr(objc.ivar, name)('my_var')
+            self.assertIsInstance(v, objc.ivar)
+            self.assertEqual(v.__typestr__, typestr)
+            self.assertEqual(v.__name__, 'my_var')
+            self.assertFalse(v.__isOutlet__)
+            self.assertFalse(v.__isSlot__)
 
 if __name__ == '__main__':
     main()

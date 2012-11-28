@@ -21,37 +21,36 @@ class TestBundleFunctions (TestCase):
         self.bundle = Foundation.NSBundle.bundleForClass_(Foundation.NSBundle)
 
     def testSimple(self):
-        d = {}
-        objc.loadBundleFunctions(self.bundle, d, FUNCTIONS)
+        for bundle in (None, self.bundle):
+            d = {}
+            objc.loadBundleFunctions(self.bundle, d, FUNCTIONS)
 
-        self.assertIn('NSIsFreedObject', d)
-        self.assertIn('NSCountFrames', d)
-        self.assertIn('NSHomeDirectory', d)
+            self.assertIn('NSIsFreedObject', d)
+            self.assertIn('NSCountFrames', d)
+            self.assertIn('NSHomeDirectory', d)
 
-        # Don't use this API, it is unsupported and causes warnings.
-        #fn = d[u'NSIsFreedObject']
-        #obj = NSObject.alloc().init()
-        #value = fn(obj)
-        #self.assertTrue(not value)
+            # Don't use this API, it is unsupported and causes warnings.
+            #fn = d[u'NSIsFreedObject']
+            #obj = NSObject.alloc().init()
+            #value = fn(obj)
+            #self.assertTrue(not value)
 
-        fn = d['NSHomeDirectory']
-        value = fn()
-        self.assertEqual(value, os.path.expanduser('~'))
+            fn = d['NSHomeDirectory']
+            value = fn()
+            self.assertEqual(value, os.path.expanduser('~'))
 
-        fn = d['NSClassFromString']
-        value = fn('NSObject')
-        self.assertIs(value, NSObject)
+            fn = d['NSClassFromString']
+            value = fn('NSObject')
+            self.assertIs(value, NSObject)
 
-        # Need to look for a different example, NSCountFrames crashes
-        # (that is the actual function, not the dynamic wrapper)
-        #fn = d[u'NSCountFrames']
-        #import Foundation
-        #fn = Foundation.NSCountFrames
-        #value = fn()
-        #self.assertIsInstance(value, int)
+            # Need to look for a different example, NSCountFrames crashes
+            # (that is the actual function, not the dynamic wrapper)
+            #fn = d[u'NSCountFrames']
+            #import Foundation
+            #fn = Foundation.NSCountFrames
+            #value = fn()
+            #self.assertIsInstance(value, int)
 
 
 if __name__ == "__main__":
     main()
-
-

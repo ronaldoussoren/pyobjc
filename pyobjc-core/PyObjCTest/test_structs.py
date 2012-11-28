@@ -27,6 +27,10 @@ class TestStructs (TestCase):
         self.assertHasAttr(o, 'c')
         self.assertHasAttr(o, 'd')
 
+        self.assertHasAttr(objc.ivar, 'FooStruct')
+        v = objc.ivar.FooStruct()
+        self.assertIsInstance(v, objc.ivar)
+        self.assertEqual(v.__typestr__, tp.__typestr__)
 
 
     def testNamedTupleAPI(self):
@@ -105,7 +109,7 @@ class TestStructs (TestCase):
         self.assertHasAttr(o, 'h')
 
     def testEmbeddedFields(self):
-        tp = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
+        tp = objc.createStructType("BarStruct", b'{FooStruct="first"i"second"i}', None)
 
         v = OC_StructTest.createWithFirst_andSecond_(1, 2)
         self.assertIsInstance(v, tp)
@@ -114,6 +118,10 @@ class TestStructs (TestCase):
         self.assertEqual(x, v.first + v.second)
         self.assertEqual(v.first, 1)
         self.assertEqual(v.second, 2)
+
+        self.assertHasAttr(objc.ivar, 'BarStruct')
+        v = objc.ivar.BarStruct()
+        self.assertEqual(v.__typestr__, b'{FooStruct=ii}')
 
     def testStructCallback(self):
         """

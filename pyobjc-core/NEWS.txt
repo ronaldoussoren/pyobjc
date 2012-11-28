@@ -11,6 +11,16 @@ Version 2.5b1
    Version 2.5 is currently in development and hasn't been released
    yet.
 
+- Instances of :class:`objc.ivar` now have slots for introspection:
+
+  - *__typestr__*: The type encoding
+
+  - *__name__*: The Objective-C name
+
+  - *__isOutlet__*: :data:`True` if the instance variable is an IBOutlet
+
+  - *__isSlot__*: :data:`True` if the instance variable is a Python slot
+
 - Added implementation of '==' and '!=' for selectors defined in Python
   that is slightly smarter than the default (identity based) implementation
   in Python. 

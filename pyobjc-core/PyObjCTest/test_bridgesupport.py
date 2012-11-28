@@ -466,6 +466,8 @@ class TestBridgeSupportParser (TestCase):
         # (big/little endian,  32- en 64-bit)
         orig_byteorder = sys.byteorder
         orig_maxsize = sys.maxsize
+        orig_createStructType = bridgesupport._orig_createStructType
+        orig_registerStructAlias = bridgesupport._orig_registerStructAlias
 
         try:
             for is32bit in (True, False):
@@ -475,6 +477,8 @@ class TestBridgeSupportParser (TestCase):
 
                     # Reload the bridgesupport module because
                     # it contains conditional definitions
+                    objc.createStructType = orig_createStructType
+                    objc.registerStructAlias = orig_registerStructAlias
                     imp.reload(bridgesupport)
 
                     self.verify_xml_structure()
@@ -484,6 +488,8 @@ class TestBridgeSupportParser (TestCase):
             sys.maxsize = orig_maxsize
 
             # See above
+            objc.createStructType = orig_createStructType
+            objc.registerStructAlias = orig_registerStructAlias
             imp.reload(bridgesupport)
 
     def verify_xml_structure(self):
@@ -1228,6 +1234,38 @@ class TestBridgeSupportParser (TestCase):
 
         return prs
 
+class Patcher (object):
+    def __init__(self):
+        self._changes = {}
+
+    def patch(self, path, value):
+        if path not in self._changes:
+            self._changes[path] = self.get(path)
+        self.set(path, value)
+
+    def get(self, path):
+        module, name = path.rsplit('.', 1)
+        m = __import__(module)
+        for p in module.split('.')[1:]:
+            m = getattr(m, p)
+
+        return getattr(m, name)
+
+    def set(self, path, value):
+        module, name = path.rsplit('.', 1)
+        m = __import__(module)
+        for p in module.split('.')[1:]:
+            m = getattr(m, p)
+
+        setattr(m, name, value)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, tp):
+        for k in self._changes:
+            self.set(k, self._changes[k])
+
 class TestParseBridgeSupport (TestCase):
     def test_calls(self):
         # - Minimal XML with all types of metadata
@@ -1235,7 +1273,292 @@ class TestParseBridgeSupport (TestCase):
         #   (with strict verification of arguments, based on C code)
         # - Verify changes to globals where possible
         # - Verify 'updatingmetadata' state
-        self.fail()
+
+        class InlineTab (object): pass
+        def loadConstant(name, typestr, magic):
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(typestr, bytes)
+            self.assertEqual(len(objc.splitSignature(typestr)), 1)
+            self.assertIsInstance(magic, bool)
+
+            if 'raise' in name:
+                raise AttributeError(name)
+
+            return '<constant %r>'%(name,)
+
+        SENTINEL=object()
+        def registerCFSignature(name, encoding, typeId, tollfreeName=SENTINEL):
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(encoding, bytes);
+            self.assertIsInstance(typeId, (int, long, type(None)));
+            if tollfreeName is not SENTINEL:
+                self.assertIsInstance(tollfreeName, str)
+            
+            if typeId is None:
+                if tollfreeName is SENTINEL:
+                    raise ValueError("Must specify a typeid when not toll-free")
+
+            return "<cftype %r>"%(name,)
+
+        metadata_registry = {}
+        def registerMetaDataForSelector(class_, selector, metadata):
+            self.assertIsInstance(class_, str)
+            self.assertIsInstance(selector, str)
+            self.assertIsInstance(metadata, dict)
+
+            # XXX: It might be nice to validate the contents of
+            # metadata, but that can be added later.
+
+            metadata_registry[(class_, selector)] = metadata
+
+        def createOpaquePointerType(name, typestr, doc=None):
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(typestr, bytes)
+            self.assertIsInstance(doc, (str, type(None)))
+            self.assertEqual(len(objc.splitSignature(typestr)), 1)
+            self.assertTrue(typestr.startswith(objc._C_PTR))
+            return '<pointer %r>'%(name,)
+
+        def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(typestr, bytes)
+            self.assertIsInstance(fieldnames, (list, tuple, type(None)))
+            self.assertIsInstance(doc, (str, type(None)))
+            self.assertIsInstance(pack, (int, long))
+            self.assertTrue(-1 <= pack <= 32)
+            if fieldnames is not None:
+                for nm in fieldnames:
+                    self.assertIsInstance(nm, (str, bytes))
+            return '<struct %r>'%(name,)
+
+        def createStructAlias(name, typestr, structType):
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(typestr, bytes)
+
+        def informal_protocol(name, method_list):
+            self.assertIsInstance(name, str)
+            for item in method_list:
+                self.assertIsInstance(item, objc.selector)
+                self.assertIs(item.callable, None)
+
+            return '<informal_protocol %r>'%(name,)
+
+        def loadBundleFunctions(bundle, module_globals, functionInfo, skip_undefined=True):
+            self.assertIs(bundle, None)
+            self.assertIsInstance(module_globals, dict)
+            self.assertIsInstance(functionInfo, (list, tuple))
+            self.assertIsInstance(skip_undefined, bool)
+            for item in functionInfo:
+                self.assertIsInstance(item, (tuple, list))
+                self.assertTrue(2 <= len(item) <= 4)
+                self.assertIsInstance(item[0], str)
+                self.assertIsInstance(item[1], bytes)
+                if len(item) > 2:
+                    self.assertIsInstance(item[2], (str, type(None)))
+                if len(item) > 3:
+                    self.assertIsInstance(item[3], dict)
+
+                if 'inline' in item[0]:
+                    continue
+
+                module_globals[item[0]] = '<function %r>'%(item[0],)
+
+        def loadFunctionList(function_list, module_globals, functionInfo, skip_undefined=True):
+            self.assertIsInstance(function_list, InlineTab)
+            self.assertIsInstance(module_globals, dict)
+            self.assertIsInstance(functionInfo, (list, tuple))
+            self.assertIsInstance(skip_undefined, bool)
+            for item in functionInfo:
+                self.assertIsInstance(item, (tuple, list))
+                self.assertTrue(2 <= len(item) <= 4)
+                self.assertIsInstance(item[0], str)
+                self.assertIsInstance(item[1], bytes)
+                if len(item) > 2:
+                    self.assertIsInstance(item[2], (str, type(None)))
+                if len(item) > 3:
+                    self.assertIsInstance(item[3], dict)
+                if item[0] not in module_globals:
+                    module_globals[item[0]] = '<inline_function %r>'%(item[0],)
+
+
+        _meta_updates = []
+        def _updatingMetadata(flag):
+            self.assertIsInstance(flag, bool)
+            _meta_updates.append(flag)
+
+        with Patcher() as p:
+            p.patch('objc._updatingMetadata', _updatingMetadata)
+            p.patch('objc._loadConstant', loadConstant)
+            p.patch('objc.registerCFSignature', registerCFSignature)
+            p.patch('objc.registerMetaDataForSelector', registerMetaDataForSelector)
+            p.patch('objc.createOpaquePointerType', createOpaquePointerType)
+            p.patch('objc.createStructType', createStructType)
+            p.patch('objc.createStructAlias', createStructAlias)
+            p.patch('objc.informal_protocol', informal_protocol)
+            p.patch('objc.loadBundleFunctions', loadBundleFunctions)
+            p.patch('objc.loadFunctionList', loadFunctionList)
+            p.patch('sys.modules', sys.modules.copy())
+
+            # 1. Empty metadata
+            _meta_updates  = []
+            metadata_registry = {}
+            module_globals = {}
+
+            objc.parseBridgeSupport('''\
+            <signatures>
+            </signatures>
+            ''', module_globals, 'TestFramework')
+
+            self.assertEqual(_meta_updates, [True, False])
+            self.assertEqual(metadata_registry, {})
+            self.assertEqual(module_globals, {})
+
+            # 2. Various metadata
+            _meta_updates  = []
+            metadata_registry = {}
+            module_globals = {}
+            orig_libraries = list(bridgesupport._libraries)
+
+            xml = '''\
+            <signatures>
+              <opaque name='opaque_type' type='^{opaque}'/>
+              <struct name='OCPoint' type='{OCPoint=dd}' />
+              <struct name='OCPoint2' type='{OCPoint2=dd}' alias='distutils.sysconfig.get_config_var'/>
+              <enum name='enum_value' value='42' />
+              <constant name='const_value' type='@' />
+              <constant name='const_raise' type='@' />
+              <cftype name='cftype_value' type='^{cftype}' />
+              <class name='class1'>
+                <method selector='sel1:' class_method='false'>
+                  <arg index='0' null_accepted='false' type_modifier='o' />
+                </method>
+              </class>
+              <function name='function1'>
+                 <retval type='f' />
+                 <arg type='@' />
+                 <arg type='d' />
+              </function>
+              <function name='function2'>
+                 <retval type='d' />
+                 <arg type='d' />
+              </function>
+              <function name='inline_function'>
+                <retval type='i' />
+              </function>
+              <function_pointer name='function3' original='function2'/>
+              <function_pointer name='function4' original='no_such_function'/>
+              <informal_protocol name='protocol1'>
+                <method selector='sel1:' type='v@:@' />
+              </informal_protocol>
+              <informal_protocol name='protocol2'>
+                <method selector='sel2:' type='v@:@' />
+              </informal_protocol>
+            </signatures>
+            '''
+            objc.parseBridgeSupport(xml, module_globals, 'TestFramework')
+
+            self.assertEqual(_meta_updates, [True, False])
+            self.assertEqual(metadata_registry, {
+                (b'class1', 'sel1:'): {
+                    'arguments': {
+                        2: { 'null_accepted': False, 'type_modifier': b'o' }
+                    }
+                },
+            })
+
+            from distutils.sysconfig import get_config_var
+
+            self.assertIn('protocols', module_globals)
+            m = module_globals.pop('protocols')
+            self.assertIsInstance(m, type(objc))
+            self.assertEqual(m.__name__, 'TestFramework.protocols')
+            self.assertEqual(m.protocol1, "<informal_protocol 'protocol1'>")
+            self.assertEqual(m.protocol2, "<informal_protocol 'protocol2'>")
+            self.assertIs(sys.modules['TestFramework.protocols'], m)
+            self.assertEqual(module_globals, {
+                "enum_value":   42,
+                "const_value":  "<constant 'const_value'>",
+                "cftype_value":  "<cftype 'cftype_value'>",
+                "function1":     "<function 'function1'>",
+                "function2":     "<function 'function2'>",
+                "function3":     "<function 'function2'>",
+                "OCPoint":       "<struct 'OCPoint'>",
+                "OCPoint2":      get_config_var,
+                "opaque_type":   "<pointer 'opaque_type'>",
+            })
+            self.assertEqual(orig_libraries, bridgesupport._libraries)
+
+            # 3. inlineTab
+            _meta_updates  = []
+            metadata_registry = {}
+            module_globals = {}
+            orig_libraries = list(bridgesupport._libraries)
+
+            xml = '''\
+            <signatures>
+              <function name='function1'>
+                 <retval type='f' />
+                 <arg type='@' />
+                 <arg type='d' />
+              </function>
+              <function name='function2'>
+                 <retval type='d' />
+                 <arg type='d' />
+              </function>
+              <function name='inline_function_name'>
+                <retval type='i' />
+              </function>
+            </signatures>
+            '''
+            objc.parseBridgeSupport(xml, module_globals, 'TestFramework2', inlineTab=InlineTab())
+
+            self.assertEqual(_meta_updates, [True, False])
+            self.assertEqual(metadata_registry, {})
+            self.assertNotIn('protocols', module_globals)
+            self.assertNotIn('TestFramework2.protocols', sys.modules)
+            self.assertEqual(module_globals, {
+                "function1":     "<function 'function1'>",
+                "function2":     "<function 'function2'>",
+                "inline_function_name":     "<inline_function 'inline_function_name'>",
+            })
+            self.assertEqual(orig_libraries, bridgesupport._libraries)
+
+            # 4. dylib usage
+            _meta_updates  = []
+            metadata_registry = {}
+            module_globals = {}
+            orig_libraries = list(bridgesupport._libraries)
+
+            xml = '''\
+            <signatures>
+              <function name='function1'>
+                 <retval type='f' />
+                 <arg type='@' />
+                 <arg type='d' />
+              </function>
+              <function name='function2'>
+                 <retval type='d' />
+                 <arg type='d' />
+              </function>
+              <function name='inline_function_name'>
+                <retval type='i' />
+              </function>
+            </signatures>
+            '''
+            objc.parseBridgeSupport(xml, module_globals, 'TestFramework2', dylib_path='/usr/lib/libxml2.dylib')
+
+            self.assertEqual(_meta_updates, [True, False])
+            self.assertEqual(metadata_registry, {})
+            self.assertNotIn('protocols', module_globals)
+            self.assertNotIn('TestFramework2.protocols', sys.modules)
+            self.assertEqual(module_globals, {
+                "function1":     "<function 'function1'>",
+                "function2":     "<function 'function2'>",
+            })
+            self.assertEqual(len(orig_libraries)+1, len(bridgesupport._libraries))
+            self.assertIsInstance(bridgesupport._libraries[-1], ctypes.CDLL)
+            self.assertEqual(bridgesupport._libraries[-1]._name, '/usr/lib/libxml2.dylib')
+            
 
     def test_real_loader(self):
         # Use the real API in a subprocess and verify
@@ -1245,15 +1568,118 @@ class TestParseBridgeSupport (TestCase):
 
 
 class TestInitFrameworkWrapper (TestCase):
-    def test_calls(self):
+    def test_calls_parse_helper(self):
         # Test functionality of initFrameworkWrapper and _parseBridgeSupport
-        # by mocking 'parseBridgeSupport'. 
-        self.fail()
+        # by mocking 'parseBridgeSupport' (and the location of the caller)
+        with Patcher() as p:
+            calls = []
+            raise_exception = None
+            update_globals = None
+
+            def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None):
+                calls.append((xmldata, globals, frameworkName, dylib_path, inlineTab))
+                if update_globals is not None:
+                    globals.update(update_globals)
+
+                if raise_exception is not None:
+                    raise raise_exception()
+
+            class MockModule (object):
+                pass
+
+
+            p.patch('objc.parseBridgeSupport', parseBridgeSupport)
+
+
+            # 1. Verify that failures to load bridgesupport emit a warning
+            calls = []
+            raise_exception = objc.internal_error
+            update_globals = None
+
+            with filterWarnings("error", RuntimeWarning):
+                self.assertRaises(RuntimeWarning, bridgesupport._parseBridgeSupport, '', {}, 'TestFramework')
+
+            calls = []
+
+            with filterWarnings("ignore", RuntimeWarning):
+                g = {}
+                update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
+                bridgesupport._parseBridgeSupport('', g, 'TestFramework')
+                self.assertEqual(g, update_globals)
+                self.assertEqual(calls, [('', g, 'TestFramework', None, None)])
+
+                self.assertNotEqual(len(g['protocols'].__dict__), 0)
+                for v in g['protocols'].__dict__.values():
+                    self.assertIsInstance(v, objc.formal_protocol)
+
+
+            # 2. Run without problems, without 'protocols' in dictionary
+            raise_exception = None
+            update_globals = {'foo': 42, 'bar': 33,  }
+
+            calls = []
+            g = {}
+            bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
+            self.assertEqual(g, update_globals)
+            self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
+            self.assertNotIn('protocols', g)
+
+            calls = []
+            g = {}
+            bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
+            self.assertEqual(g, update_globals)
+            self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
+            self.assertNotIn('protocols', g)
+
+            # 3. Run witout problems, with 'protocols' in dictionary
+            calls = []
+            raise_exception = None
+            update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
+
+            g = {}
+            bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
+            self.assertEqual(g, update_globals)
+            self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
+            self.assertNotEqual(len(g['protocols'].__dict__), 0)
+            for v in g['protocols'].__dict__.values():
+                self.assertIsInstance(v, objc.formal_protocol)
+
+            calls = []
+            g = {}
+            bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
+            self.assertEqual(g, update_globals)
+            self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
+            self.assertNotEqual(len(g['protocols'].__dict__), 0)
+            for v in g['protocols'].__dict__.values():
+                self.assertIsInstance(v, objc.formal_protocol)
+
+
+    def test_calls_initwrappper(self):
+       self.fail()
+
 
     def test_real_loader(self):
         # Load framework in subprocess and verify that
         # the right metadata is loaded.
         self.fail()
+
+class TestMisc (TestCase):
+    def test_struct_alias(self):
+        tp1 = objc.createStructType('TestStruct1', b'{TestStruct1="f1"d"f2"d}', None)
+
+        with filterWarnings("error", DeprecationWarning):
+            self.assertRaises(DeprecationWarning, objc.registerStructAlias, b'{TestStruct2=dd}', tp1)
+
+        with filterWarnings("ignore", DeprecationWarning):
+            tp2 = objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
+            self.assertIs(tp1, tp2)
+
+        self.assertHasAttr(objc.ivar, 'TestStruct1')
+        self.assertNotHasAttr(objc.ivar, 'TestStruct2')
+
+        tp3 = objc.createStructAlias('TestStruct3', b'{TestStruct3=dd}', tp1)
+        self.assertIs(tp1, tp3)
+        self.assertHasAttr(objc.ivar, 'TestStruct3')
 
 
 if __name__ == "__main__":

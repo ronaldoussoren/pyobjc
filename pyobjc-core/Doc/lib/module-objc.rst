@@ -776,6 +776,22 @@ Types
    .. note::
       Sharing an ivar object between multiple class definitions is not supported.
 
+
+   Instances of :class:`ivar` have a number of attributes that help with introspection:
+   
+   * *__typestr__*: The type encoding of the Objective-C type of the variable
+
+   * *__name__*: The Objective-C name of the variable
+
+   * *__isOutlet__*: :data:`True` if the variable is an :func:`IBOutlet`
+
+   * *__isSlot__*: :data:`True` if the variable is a Python slot.
+
+   .. note::
+
+      You cannot access these attributes  through an Objective-C instance, you have to access
+      them through the class object. That's because :class:`ivar` is a data descriptor.
+
    .. seealso::
 
       Function :func:`IBOutlet`
@@ -1414,7 +1430,7 @@ Descriptors
 
       The example will also work without the decorator because 
       NSArray won't store a reference to the compare function that
-      is used after 'sortedArrayUsingFunction_context_' returns.
+      is used after 'sortedArrayUsingFunction_context\_' returns.
 
 .. function:: selectorFor(callable[, argIndex])
 

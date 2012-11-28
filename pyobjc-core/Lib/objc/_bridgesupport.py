@@ -10,6 +10,8 @@ import objc
 import re
 import warnings
 import functools
+import pkg_resources
+import os
 
 from objc import registerMetaDataForSelector, error
 
@@ -309,6 +311,8 @@ class _BridgeSupportParser (object):
                 for nm, tp in fields:
                     if tp == b'?':
                         return True
+                    elif tp == b'^?':
+                        return True
                     elif tp.startswith(objc._C_STRUCT_B):
                         return has_embedded_function(tp)
 
@@ -606,17 +610,6 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
             globals[entry[0]] = tp
 
-        for name, typestr, magic in prs.constants:
-            try:
-                value = objc._loadConstant(name, typestr, magic)
-            except AttributeError:
-                return
-
-            globals[name] = value
-
-        for class_name, sel_name, is_class in prs.meta:
-            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
-
         for name, typestr in prs.opaque:
             globals[name] = objc.createOpaquePointerType(name, typestr)
 
@@ -627,13 +620,25 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
             else:
                 globals[name] = value = objc.createStructType(name, typestr, None)
 
+
+        for name, typestr, magic in prs.constants:
+            try:
+                value = objc._loadConstant(name, typestr, magic)
+            except AttributeError:
+                continue
+
+            globals[name] = value
+
+        for class_name, sel_name, is_class in prs.meta:
+            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
+
         for name, method_list in prs.informal_protocols:
             proto = objc.informal_protocol(name, method_list)
 
             # XXX: protocols submodule should be deprecated
             if "protocols" not in globals:
-                mod_name = "%s.protocols"%(self.frameworkName,)
-                m = protocols["protocols"] = type(objc)(mod_name)
+                mod_name = "%s.protocols"%(frameworkName,)
+                m = globals["protocols"] = type(objc)(mod_name)
                 sys.modules[mod_name] = m
 
             else:
@@ -859,7 +864,7 @@ _orig_createStructType = objc.createStructType
 @functools.wraps(objc.createStructType)
 def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
     result = _orig_createStructType(name, typestr, fieldnames, doc, pack)
-    _structConvenience(name, result)
+    _structConvenience(name, result.__typestr__)
     return result
 
 objc.createStructType = createStructType
@@ -868,12 +873,12 @@ objc.createStructType = createStructType
 _orig_registerStructAlias = objc.registerStructAlias
 @functools.wraps(objc.registerStructAlias)
 def registerStructAlias(typestr, structType):
-    warning.warn("use createStructAlias instead", DeprecationWarning)
+    warnings.warn("use createStructAlias instead", DeprecationWarning)
     return _orig_registerStructAlias(typestr, structType)
 
 def createStructAlias(name, typestr, structType):
     result = _orig_registerStructAlias(typestr, structType)
-    _structConvenience(name, result)
+    _structConvenience(name, result.__typestr__)
     return result
 
 objc.createStructAlias = createStructAlias

@@ -1136,7 +1136,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 }
 
 PyDoc_STRVAR(registerMetaData_doc,
-	"registerMetaDataForSelector(class, selector, metaDataList) -> None\n"
+	"registerMetaDataForSelector(class, selector, metadata) -> None\n"
 	"\n"
 	"XXX: work out documentation.");
 static PyObject*
