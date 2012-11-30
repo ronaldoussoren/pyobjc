@@ -79,16 +79,153 @@ a file named "PyObjC.bridgesupport" next to the "__init__.py" when
 such a file exist, and otherwise from the default location in the
 framework itself.
 
+.. note::
+
+   The call to :func:`objc.pathForFramework` ensures that the wrapper does the right thing
+   when DYLD environment variables are 
+   set (see `dyld(1) <http://developer.apple.com/library/mac/#documentation/Darwin/Reference/Manpages/man1/dyld.1.html>`_ for
+   more information on those).
+
 
 Detailed file structure
 -----------------------
 
-.. todo:: fully describe the metadata supported by PyObjC
+This section describes the BridgeSupport file as supported by PyObjC. PyObjC supports a slightly different dialect of those files
+than what is described in `Apple's manual page for BridgeSupport`_.
+
+The file is an XML document with a toplevel element named "signatures". The standard proscribes an attribute named version, that 
+attribute is ignored by PyObjC. A minimal BridgeSupport file is:
+
+.. sourcecode:: xml
+
+   <signature version='1.0'>
+   </signatures>
+
+The document root has children that contain the metadata for various types of objects. 
+
+* *<cftype>*:   Describes a Core Foundation type
+
+* *<class>*:    Describes additional information for an Objective-C class, this does not contain
+  all information about the class, only those bits that cannot be extracted from the Objective-C runtime.
+
+* *<constant>*: Describes a (constant) external variable
+ 
+* *<enum>*: A numeric constant, used for enum labels and #define's that expand into an integer or
+  float literal.
+
+* *<function>*: Describes a C function
+
+* *<function_pointer>*: An alias for a *<function>* node.
+
+* *<informal_protocol>*: Describes the interface of an Objective-C informal protocol (that is, a protocol
+  that is only described in documentation and not as a language construct)
+
+* *<null_const>*: Describes a constant value that evaluates to C's NULL pointer
+
+* *<opaque>*: A pointer type that refers to an opaque blob (a "handle").
+
+* *<string_constant>*: Describes a #define that expands into a C or Objective-C string literal
+
+* *<struct>*:   Describes a typedef-ed C structure (for example :c:type:`NSPoint`)
+
+
+The sections below contain more information about all types, with details about their semantics,
+supported child nodes and attributes.
+
+The document can contain other nodes, attributes, and extra whitespace and those will be ignored by
+the bridgesupport parser.
+
+Bridgesupport elements are processed in an undefined order, the side effects of alle elements that have
+the same name will take place but it is undefined which definition will be bound to a name in the module
+globals dictionary.
 
 .. seealso::
 
-   `BridgeSupport(5) <http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`__
+   `BridgeSupport(5)`_ 
      Apple manual page describing the metadata format
+
+Type signatures
+...............
+
+A number of nodes have a "type" attribute that contains an Objective-C runtime type encoding. Most contain
+the type encoding for a single type, the signature for methods in informal protocol contains the type signatures
+of the return value and all arguments (included the implicit ones).
+
+The type signatures are described in `Apple's Objective-C Runtime Programming Guide`_, and the format of
+the BridgeSupport file uses that format with one small change: the BridgeSupport file can contain some
+type encoding that aren't presesnt in Apple's runtime and redefines one type encoding.
+
+  +--------------+---------------------------------------------------------------------------------------+
+  | **Typecode** | **Description**                                                                       |
+  +==============+=======================================================================================+
+  | *B*          | used for type :c:type:`BOOL`, is used for :c:type:`bool` in the Objective-C runtime   |
+  +--------------+---------------------------------------------------------------------------------------+
+  | *Z*          | used for type :c:type:`bool`                                                          |
+  +--------------+---------------------------------------------------------------------------------------+
+  | *T*          | used for type :c:type:`UniChar`                                                       |
+  +--------------+---------------------------------------------------------------------------------------+
+  | *t*          | used for type :c:type:`char` in the role of a single character                        |
+  +--------------+---------------------------------------------------------------------------------------+
+  | *z*          | used for type :c:type:`char` in the role of a small integer                           |
+  +--------------+---------------------------------------------------------------------------------------+
+
+The bridge uses the information provided by these ehnanced type encodings and translates them to regular
+type encodings when communicating with the Objective-C runtime (or other Objective-C code).
+
+<cftype>
+.........
+
+Nodes of this type define a CoreFoundation type, such :c:type:`CFURLRef`. These nodes are used to 
+define a Python proxy for the CoreFoundation type and to register that type with the bridge. The proxy
+type is a subclass of :class:`objc_object`.
+
+These nodes do not have child nodes, all information is encoded in attributes:
+
+ * *name*:           the name of the Objetive-C type (such as :c:type:`CFURLRef`
+ * *type*, *type64*: the type encoding for the Objective-C type, *type64* contains the encoding for use 
+   in 64-bit mode when that encoding is different from the encoding used in 32-bit mode.
+ * *gettypeid_func*: (optional) the name of a C function for retrieving the type ID of the type, the default is derived
+   from the name.
+ * *tollfree*:       (optional) the name of an Objective-C class that is tollfree bridged to this type
+   For tollfree bridged types the bridge does not create a new proxy type, but reuses the proxy type for the
+   Objective-C class. That is, in Python the CoreFoundation and Objective-C interfaces can be used without
+   any form of casting.
+
+
+<class>
+.......
+
+<constant>
+..........
+
+<enum>
+......
+
+<function>
+..........
+
+<function_pointer>
+..................
+
+<informal_protocol>
+...................
+
+<null_const>
+............
+
+<opaque>
+........
+
+<string_constant>
+.................
+
+<struct>
+........
+
+
+.. _`BridgeSupport(5)`: http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`
+
+.. _`Apple's manual page for BridgeSupport`: http://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`
 
 
 API description
@@ -131,3 +268,5 @@ API description
 
 .. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport 
        system was temporarily removed in PyObjC 2.4.
+
+.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1
