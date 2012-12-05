@@ -19,7 +19,7 @@ Contents:
    xcode
    blocks
    metadata/index
-   lib/index
+   api/index
    dev/index
 
 Indices and tables
