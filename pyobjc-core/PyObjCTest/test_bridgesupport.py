@@ -6,6 +6,8 @@ import re
 import sys
 import imp
 import ctypes
+import objc
+import subprocess
 
 import xml.etree.ElementTree as ET 
 
@@ -1560,12 +1562,6 @@ class TestParseBridgeSupport (TestCase):
             self.assertEqual(bridgesupport._libraries[-1]._name, '/usr/lib/libxml2.dylib')
             
 
-    def test_real_loader(self):
-        # Use the real API in a subprocess and verify
-        # that the metadata is properly loaded
-        # (use subset of Foundation and CoreFoundation)
-        self.fail()
-
 
 class TestInitFrameworkWrapper (TestCase):
     def test_calls_parse_helper(self):
@@ -1774,12 +1770,31 @@ class TestInitFrameworkWrapper (TestCase):
             # 7. Cannot load bundle (should look for bridgesupport)
 
             # 8. Use the 'frameworkResourceName' parameter
+            self.fail()
 
 
     def test_real_loader(self):
-        # Load framework in subprocess and verify that
-        # the right metadata is loaded.
-        self.fail()
+        script = os.path.join(os.path.dirname(__file__), 'helper_bridgesupport.py')
+        path_elem = os.path.dirname(objc.__file__)
+
+        if sys.byteorder == 'big':
+            if sys.maxsize < 2**32:
+                arch = '-ppc'
+            else:
+                arch = '-ppc64'
+
+        else:
+            if sys.maxsize < 2**32:
+                arch = '-i386'
+            else:
+                arch = '-x86_64'
+
+        p = subprocess.Popen([
+            '/usr/bin/arch', arch,
+            sys.executable, script, path_elem], stdout=subprocess.PIPE)
+        stdout, _ = p.communicate()
+        if p.returncode != 0:
+            self.fail("Selftest failed: %r" % stdout)
 
 class TestMisc (TestCase):
     def test_struct_alias(self):

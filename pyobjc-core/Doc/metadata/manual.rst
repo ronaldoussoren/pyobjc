@@ -23,7 +23,7 @@ to actually load the metadata.
 API description
 ---------------
 
-For now see :doc:`the main API description </lib/module-objc>` for the
+For now see :doc:`the main API description </api/module-objc>` for the
 functions that are used to load metadata.
 
 The contains of the metadata dictionary argument for 
