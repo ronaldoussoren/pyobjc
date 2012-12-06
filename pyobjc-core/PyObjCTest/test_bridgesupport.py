@@ -24,7 +24,7 @@ except NameError:
 
 IDENTIFIER=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
-TEST_XML="""\
+TEST_XML=b"""\
 <signatures>
   <unknown><!-- ignore -->
     <enum name='nested1' value='4' /><!-- should be ignored -->
@@ -436,8 +436,8 @@ TEST_XML="""\
 
 class TestBridgeSupportParser (TestCase):
     def testInvalidToplevel(self):
-        self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, '<signatures2></signatures2>', 'Cocoa')
-        self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, '<signatures2></signatures>', 'Cocoa')
+        self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, b'<signatures2></signatures2>', 'Cocoa')
+        self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, b'<signatures2></signatures>', 'Cocoa')
 
     def iter_framework_dir(self, framework_dir):
         for dn in os.listdir(framework_dir):
@@ -1406,7 +1406,7 @@ class TestParseBridgeSupport (TestCase):
             metadata_registry = {}
             module_globals = {}
 
-            objc.parseBridgeSupport('''\
+            objc.parseBridgeSupport(b'''\
             <signatures>
             </signatures>
             ''', module_globals, 'TestFramework')
@@ -1421,7 +1421,7 @@ class TestParseBridgeSupport (TestCase):
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = '''\
+            xml = b'''\
             <signatures>
               <opaque name='opaque_type' type='^{opaque}'/>
               <struct name='OCPoint' type='{OCPoint=dd}' />
@@ -1496,7 +1496,7 @@ class TestParseBridgeSupport (TestCase):
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = '''\
+            xml = b'''\
             <signatures>
               <function name='function1'>
                  <retval type='f' />
@@ -1531,7 +1531,7 @@ class TestParseBridgeSupport (TestCase):
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = '''\
+            xml = b'''\
             <signatures>
               <function name='function1'>
                  <retval type='f' />
@@ -1658,12 +1658,23 @@ class TestInitFrameworkWrapper (TestCase):
             class InlineTab (object): pass
 
             class Bundle (object):
-                def __init__(self):
-                    self.calls = []
+                def __init__(self, calls=None):
+                    if calls is None:
+                        calls = []
+                    self.calls = calls
 
                 def pathForResource_ofType_inDirectory_(self, name, type, directory):
                     self.calls.append((name, type, directory))
                     return None
+
+                def __eq__(self, other):
+                    if type(self) is not type(other):
+                        return False
+
+                    return self.calls == other.calls
+
+                def __repr__(self):
+                    return '<Bundle calls=%r>'%(self.calls,)
 
 
             load_calls = []
@@ -1698,9 +1709,12 @@ class TestInitFrameworkWrapper (TestCase):
             p.patch("objc._bridgesupport._parseBridgeSupport", parseBridgeSupport)
             p.patch("objc._bridgesupport.BRIDGESUPPORT_DIRECTORIES", TEST_BRIDGESUPPORT_DIRECTORIES)
 
+            helper_dir = os.path.join(os.path.dirname(__file__), 'data_bridgesupport')
+
+
             # 1. No resource files, no bundle files, no library files
             resources = {}
-            TEST_BRIDGESUPORT_DIRECTORIES = [] # Need to have actual entries in this list
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'empty') ]
 
             def basic_verify(g):
                 self.assertIs(g['objc'], objc)
@@ -1710,66 +1724,175 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
+            ])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, '/Library/Framework/Test.framework', SENTINEL, True)
+            ])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g, scan_classes=False)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, '/Library/Framework/Test.framework', SENTINEL, False)
+            ])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
+            ])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g, scan_classes=False)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [])
+
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, inlineTab=InlineTab())
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
+            ])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, 
                     inlineTab=InlineTab(), scan_classes=False)
-            # VERIFY
             basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [])
 
 
             # 2. Have resource files, bundle files and library files (only first is used)
+
+            # XXX: not actually have bundle file!
+            resources = {
+                    ('Test', 'PyObjC.bridgesupport'): b"<signatures><constant name='test resource' type='@' /></signatures>",
+            }
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b"<signatures><constant name='test resource' type='@' /></signatures>", g, 'Test', None, inlineTab)
+            ])
 
             # 3. No resource files, have bundle files and library files (only bundle one is used)
 
             # 4. No resource files, have bundle files (with override) and library files (only bundle one is used)
 
             # 5. No resource file, no bundle file, have library file
+            resources = {}
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n', g, 'Test', None, None)
+            ])
+
+            resources = {}
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data_dylib') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport 2" /></signatures>\n', g, 'Test', os.path.join(helper_dir, 'with_data_dylib', 'Test.dylib'), None)
+            ])
 
             # 6. No resource file, no bundle file, have library file (with override)
+            resources = {
+                    ('Test', 'PyObjCOverrides.bridgesupport'): b'<signatures><contant name="override" type="@"></signatures>',
+            }
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
 
-            # 7. Cannot load bundle (should look for bridgesupport)
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n', g, 'Test', None, None),
+                (b'<signatures><contant name="override" type="@"></signatures>', g, 'Test', None, inlineTab)
+            ])
+
+            # 7. Cannot load bundle (should not look for bridgesupport)
 
             # 8. Use the 'frameworkResourceName' parameter
+
+            # 9. loadBundle raises importError
+
+            # 10. pkg_resources.resource_exists raises ImportError
             self.fail()
 
 

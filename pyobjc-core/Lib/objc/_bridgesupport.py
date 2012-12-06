@@ -763,7 +763,8 @@ def initFrameworkWrapper(frameworkName,
     path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'bridgesupport', 'BridgeSupport')
     if path is not None:
         dylib_path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'dylib', 'BridgeSupport')
-        data = open(path, 'rb').read()
+        with open(path, 'rb') as fp:
+            data = fp.read()
         if dylib_path is not None:
             _parseBridgeSupport(data, globals, frameworkName, dylib_path)
         else:
@@ -792,7 +793,8 @@ def initFrameworkWrapper(frameworkName,
     for dn in BRIDGESUPPORT_DIRECTORIES:
         path = os.path.join(dn, fn)
         if os.path.exists(path):
-            data = open(path, 'rb').read()
+            with open(path, 'rb') as fp:
+                data = fp.read()
 
             dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
