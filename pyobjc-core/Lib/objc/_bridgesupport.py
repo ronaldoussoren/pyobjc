@@ -747,17 +747,18 @@ def initFrameworkWrapper(frameworkName,
     try:
         exists = pkg_resources.resource_exists(
                 frameworkResourceName, "PyObjC.bridgesupport")
-    
+   
     except ImportError:
-        pass
+        # resource_exists raises ImportError when it cannot find 
+        # the first argument.
+        exists = False
 
-    else:
-        if exists:
-            data = pkg_resources.resource_string(frameworkResourceName,
-                "PyObjC.bridgesupport")
-            if data:
-                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
-            return bundle
+    if exists:
+        data = pkg_resources.resource_string(frameworkResourceName,
+            "PyObjC.bridgesupport")
+        if data:
+            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+        return bundle
 
     # Look for metadata in the framework bundle
     path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'bridgesupport', 'BridgeSupport')
@@ -766,7 +767,7 @@ def initFrameworkWrapper(frameworkName,
         with open(path, 'rb') as fp:
             data = fp.read()
         if dylib_path is not None:
-            _parseBridgeSupport(data, globals, frameworkName, dylib_path)
+            _parseBridgeSupport(data, globals, frameworkName, dylib_path=dylib_path)
         else:
             _parseBridgeSupport(data, globals, frameworkName)
 
@@ -774,16 +775,16 @@ def initFrameworkWrapper(frameworkName,
         try:
             exists = pkg_resources.resource_exists(
                 frameworkResourceName, "PyObjCOverrides.bridgesupport")
-        
         except ImportError:
-            pass
-
-        else:
-            if exists:
-                data = pkg_resources.resource_string(frameworkResourceName,
-                    "PyObjCOverrides.bridgesupport")
-                if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+            # resource_exists raises ImportError when it cannot find 
+            # the first argument.
+            exists = False
+    
+        if exists:
+            data = pkg_resources.resource_string(frameworkResourceName,
+                "PyObjCOverrides.bridgesupport")
+            if data:
+                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
     
@@ -798,7 +799,7 @@ def initFrameworkWrapper(frameworkName,
 
             dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
-                _parseBridgeSupport(data, globals, frameworkName, dylib_path)
+                _parseBridgeSupport(data, globals, frameworkName, dylib_path=dylib_path)
             else:
                 _parseBridgeSupport(data, globals, frameworkName)
             
@@ -806,16 +807,17 @@ def initFrameworkWrapper(frameworkName,
             try:
                 exists = pkg_resources.resource_exists(
                     frameworkResourceName, "PyObjCOverrides.bridgesupport")
-
             except ImportError:
-                pass
+                # resource_exists raises ImportError when it cannot find 
+                # the first argument.
+                exists = False
 
-            else:
-                if exists:
-                    data = pkg_resources.resource_string(frameworkResourceName,
-                        "PyObjCOverrides.bridgesupport")
-                    if data:
-                        _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+            if exists:
+                data = pkg_resources.resource_string(frameworkResourceName,
+                    "PyObjCOverrides.bridgesupport")
+                if data:
+                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+
             return bundle
     
     return bundle

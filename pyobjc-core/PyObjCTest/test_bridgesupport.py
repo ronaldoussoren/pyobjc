@@ -1657,6 +1657,7 @@ class TestInitFrameworkWrapper (TestCase):
 
             class InlineTab (object): pass
 
+            bundle_resources = {}
             class Bundle (object):
                 def __init__(self, calls=None):
                     if calls is None:
@@ -1665,7 +1666,7 @@ class TestInitFrameworkWrapper (TestCase):
 
                 def pathForResource_ofType_inDirectory_(self, name, type, directory):
                     self.calls.append((name, type, directory))
-                    return None
+                    return bundle_resources.get((name, type), None)
 
                 def __eq__(self, other):
                     if type(self) is not type(other):
@@ -1678,7 +1679,10 @@ class TestInitFrameworkWrapper (TestCase):
 
 
             load_calls = []
+            bundle_exception = None
             def loadBundle(module_name, module_globals, bundle_path=SENTINEL, bundle_identifier=SENTINEL, scan_classes=True):
+                if bundle_exception is not None:
+                    bundle_exception(module_name, bundle_path, bundle_identifier)
                 self.assertIsInstance(module_name, str)
                 self.assertIsInstance(module_globals, dict)
                 if bundle_path is not SENTINEL:
@@ -1714,6 +1718,7 @@ class TestInitFrameworkWrapper (TestCase):
 
             # 1. No resource files, no bundle files, no library files
             resources = {}
+            bundle_resources = {}
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'empty') ]
 
             def basic_verify(g):
@@ -1801,10 +1806,11 @@ class TestInitFrameworkWrapper (TestCase):
 
 
             # 2. Have resource files, bundle files and library files (only first is used)
-
-            # XXX: not actually have bundle file!
             resources = {
                     ('Test', 'PyObjC.bridgesupport'): b"<signatures><constant name='test resource' type='@' /></signatures>",
+            }
+            bundle_resources = {
+                    'Test': os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
             }
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
 
@@ -1824,11 +1830,82 @@ class TestInitFrameworkWrapper (TestCase):
             ])
 
             # 3. No resource files, have bundle files and library files (only bundle one is used)
+            resources = {
+            }
+            bundle_resources = {
+                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+            }
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 
+                    'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', None, None)
+            ])
 
             # 4. No resource files, have bundle files (with override) and library files (only bundle one is used)
+            resources = {
+                    ('Test', 'PyObjCOverrides.bridgesupport'): b"<signatures><constant name='test override' type='@' /></signatures>",
+            }
+            bundle_resources = {
+                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+            }
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', None, None),
+                (b"<signatures><constant name='test override' type='@' /></signatures>", g, 'Test', None, inlineTab),
+            ])
+            
+            resources = {
+                    ('Test', 'PyObjCOverrides.bridgesupport'): b"<signatures><constant name='test override' type='@' /></signatures>",
+            }
+            bundle_resources = {
+                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+                    ('Test', 'dylib'): os.path.join(helper_dir, 'bundle_data', 'Test.dylib'),
+            }
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
+            ])
+            self.assertEqual(parse_calls, [
+                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', os.path.join(helper_dir, 'bundle_data', 'Test.dylib'), None),
+                (b"<signatures><constant name='test override' type='@' /></signatures>", g, 'Test', None, inlineTab),
+            ])
 
             # 5. No resource file, no bundle file, have library file
             resources = {}
+            bundle_resources = {}
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
 
             load_calls = []
@@ -1847,6 +1924,7 @@ class TestInitFrameworkWrapper (TestCase):
             ])
 
             resources = {}
+            bundle_resources = {}
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data_dylib') ]
 
             load_calls = []
@@ -1868,6 +1946,7 @@ class TestInitFrameworkWrapper (TestCase):
             resources = {
                     ('Test', 'PyObjCOverrides.bridgesupport'): b'<signatures><contant name="override" type="@"></signatures>',
             }
+            bundle_resources = {}
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
 
             load_calls = []
@@ -1887,13 +1966,64 @@ class TestInitFrameworkWrapper (TestCase):
             ])
 
             # 7. Cannot load bundle (should not look for bridgesupport)
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            def bundle_exception(name, path, identifier):
+                raise ImportError(name)
 
+            self.assertRaises(ImportError, objc.initFrameworkWrapper,
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+
+            self.assertEquals(load_calls, [])
+            self.assertEquals(parse_calls, [])
+            self.assertEquals(g, {})
+
+            # 8. framework_identifier is not None, cannot find through identifier
+            resources = {}
+            bundle_resources = {}
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = []
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            def bundle_exception(name, path, identifier):
+                if identifier is not SENTINEL:
+                    raise ImportError(name)
+
+            objc.initFrameworkWrapper(
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab, scan_classes=False)
+
+            self.assertEquals(load_calls, [
+                (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, False),
+            ])
+            self.assertEquals(parse_calls, [])
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            inlineTab = InlineTab()
+            def bundle_exception(name, path, identifier):
+                if identifier is not SENTINEL:
+                    raise ImportError(name)
+
+            objc.initFrameworkWrapper(
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    inlineTab=inlineTab)
+
+            self.assertEquals(load_calls, [
+                (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, True),
+            ])
+            self.assertEquals(parse_calls, [])
+
+
+            # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter
-
-            # 9. loadBundle raises importError
-
-            # 10. pkg_resources.resource_exists raises ImportError
-            self.fail()
+            # 11. pkg_resources.resource_exists raises ImportError
 
 
     def test_real_loader(self):

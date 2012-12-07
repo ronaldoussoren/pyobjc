@@ -537,7 +537,7 @@ class array_proxy (collections.MutableSequence):
                     NSKeyValueChangeReplacement,
                     indexes, self._name)
 
-    else:
+    else: # pragma: no cover (py3k)
         def sort(self, key=None, reverse=False):
             if self._ro:
                 raise ValueError("Property '%s' is read-only"%(self._name,))
