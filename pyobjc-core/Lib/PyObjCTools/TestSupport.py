@@ -157,7 +157,7 @@ def onlyIf(expr, message=None):
         if not expr:
             if hasattr(_unittest, 'skip'):
                 return _unittest.skip(message)(function)
-            return lambda self: None
+            return lambda self: None  # pragma: no cover (py2.6)
         else:
             return function
     return callback

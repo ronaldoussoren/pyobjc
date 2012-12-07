@@ -51,6 +51,9 @@ The "objective-metadata" project contains a tool for collecting information
 about frameworks and compiling that information and manual additions into
 a "_metadata" module.
 
+That project currently is not a stable as I'd like, this documentation will
+be updated with more information when that changes.
+
 .. todo:: include reference to that project and its documentation
 
 API description
