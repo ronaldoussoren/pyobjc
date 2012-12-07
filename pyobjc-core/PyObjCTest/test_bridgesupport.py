@@ -2045,7 +2045,7 @@ class TestInitFrameworkWrapper (TestCase):
 
             return_value = True
             exception  = ImportError
-            self.assertRaises(ImportError, bridgesupport.safe_resource_exists, "a", "b")
+            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
 
 
     def test_real_loader(self):
