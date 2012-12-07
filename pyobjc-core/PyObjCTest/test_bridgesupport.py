@@ -2023,7 +2023,29 @@ class TestInitFrameworkWrapper (TestCase):
 
             # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter
-            # 11. pkg_resources.resource_exists raises ImportError
+
+
+    def test_safe_resource_exists(self):
+        with Patcher() as p:
+            return_value = False
+            exception  = None
+
+            def resource_exists(resource, path):
+                if exception: raise exception
+                return return_value
+            p.patch("pkg_resources.resource_exists", resource_exists)
+
+            return_value = False
+            exception  = None
+            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
+
+            return_value = True
+            exception  = None
+            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), True)
+
+            return_value = True
+            exception  = ImportError
+            self.assertRaises(ImportError, bridgesupport.safe_resource_exists, "a", "b")
 
 
     def test_real_loader(self):
