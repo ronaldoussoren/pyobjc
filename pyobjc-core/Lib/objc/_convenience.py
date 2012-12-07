@@ -21,6 +21,7 @@ from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, 
 from objc._objc import registerMetaDataForSelector
 import sys
 import warnings
+import collections
 
 __all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
 
@@ -28,9 +29,9 @@ __all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
 _CONVENIENCE_METHODS = {}
 CLASS_METHODS = {}
 
-if sys.version_info[0] == 3:
-    # XXX: Temporary backward compatibily
-    xrange = range
+if sys.version_info[0] == 2:
+    # Use 'xrange' as range to get the same behavior on Python 2 and 3.
+    range = xrange
 
 
 def addConvenienceForSelector(selector, methods):
@@ -50,14 +51,6 @@ def addConvenienceForClass(classname, methods):
 NSObject = lookUpClass('NSObject')
 
 def add_convenience_methods(super_class, name, type_dict):
-    try:
-        return _add_convenience_methods(super_class, name, type_dict)
-    except:
-        import traceback
-        traceback.print_exc()
-        raise
-
-def _add_convenience_methods(super_class, name, type_dict):
     """
     Add additional methods to the type-dict of subclass 'name' of
     'super_class'.
@@ -455,7 +448,7 @@ def __getitem__objectAtIndex_(self, idx):
         #    m = getattr(self, 'subarrayWithRange_', None)
         #    if m is not None:
         #        return m((start, stop - start))
-        return [self[i] for i in xrange(start, stop, step)]
+        return [self[i] for i in range(start, stop, step)]
     
     elif not isinstance(idx, INT_TYPES):
         raise TypeError("index must be a number")
@@ -544,7 +537,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
         if not isinstance(anObject, (NSArray, list, tuple)):
             anObject = list(anObject)
 
-        slice_len = len(xrange(start, stop, step))
+        slice_len = len(range(start, stop, step))
         if slice_len != len(anObject):
             raise ValueError("Replacing extended slice with %d elements by %d elements"%(
                 slice_len, len(anObject)))
@@ -554,7 +547,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
                 toAssign = list(anObject)
             else:
                 toAssign = anObject
-            for inIdx, outIdx in enumerate(xrange(start, stop, step)): 
+            for inIdx, outIdx in enumerate(range(start, stop, step)): 
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
         elif step == 0:
@@ -565,7 +558,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
                 toAssign = list(anObject)
             else:
                 toAssign = anObject
-            for inIdx, outIdx in enumerate(xrange(start, stop, step)): 
+            for inIdx, outIdx in enumerate(range(start, stop, step)): 
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
 
@@ -852,7 +845,6 @@ CLASS_METHODS['NSBlock'] = (
 
 
 if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1] >= 6):
-    import collections
 
     def all_contained_in(inner, outer):
         """
