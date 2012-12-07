@@ -76,11 +76,6 @@ def _add_convenience_methods(super_class, name, type_dict):
             def bundleForClass(cls):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
-        if '__bundle_hack__' in type_dict:
-            import warnings
-            warnings.warn(
-                "__bundle_hack__ is not necessary in PyObjC 1.3+ / py2app 0.1.8+",
-                DeprecationWarning)
 
     look_at_super = (super_class is not None and super_class.__name__ != 'Object')
 
