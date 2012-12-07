@@ -48,6 +48,7 @@
     "typestr": "^{__CGEventSource=}"
    }, 
    "CGEventTapProxy": {
+    "ignore": true,
     "gettypeid_func": "CGEventTapProxyGetTypeID"
    }, 
    "CGFontRef": {
@@ -3769,6 +3770,9 @@
   "opaque": {
    "CGDirectPaletteRef": {
     "typestr": "^{_CGDirectPaletteRef=}"
+   }, 
+   "CGEventTapProxy": {
+    "typestr": "^{__CGEventTapProxy=}"
    }, 
    "CGDisplayConfigRef": {
     "typestr": "^{_CGDisplayConfigRef=}"
