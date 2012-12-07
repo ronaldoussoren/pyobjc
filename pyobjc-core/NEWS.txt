@@ -144,6 +144,8 @@ Version 2.4.1
 - Rename ReadMe.txt to README.txt to work around misfeature in the 
   sdist command in distutils.
 
+- Issue #28: Avoid crash when using CGEventTabProxy values.
+
 Version 2.4
 -----------
 
