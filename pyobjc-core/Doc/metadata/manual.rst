@@ -27,7 +27,7 @@ One or the arguments for :func:`loadBundleFunctions`, :func:`loadFunctionList` a
 contains (or "is" for :func:`registerMetaDataForSelector`) a metadata dictionary containing information about function 
 and method interfaces that cannot be extract from a basic type signature for that function or method.
 
-Copies of these structures can be also retrieved at runtime using the "__metadata__" method on both :class:`function` 
+Copies of these structures can be also retrieved at runtime using the *__metadata__()* method on both :class:`function` 
 and :class:`selector` objects, which makes it possible to introspect the metadata information when needed.
 
 The metadata is a Python dictionary with a particular structure (all keys are optional):
@@ -36,6 +36,10 @@ The metadata is a Python dictionary with a particular structure (all keys are op
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is
   visible in a prototype). The values are metadata dictionaries for the arguments and are decribed 
   `later on <argument and return value metadata>`_.
+
+  In metadata that is returned the *__metadata__()* method of :class:`function` and :class:`selector` objects the
+  *arguments* value is a tuple with items for all arguments.
+
 
 * *retval*: A metadata dictionary with more information on the return value. The contents of this dictionary
   is described `later on <argument and return value metadata>`_.
@@ -63,8 +67,6 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 
   In python the function is called with the additional arguments after the fixed arguments (just like in C).
 
-  .. todo:: list and example function or method.
-
 Keys not listed above will be ignored by the bridge.
 
 .. note::
@@ -73,6 +75,31 @@ Keys not listed above will be ignored by the bridge.
    on that behavior, it might change in a future release and changes to metadata dictionaries may or may not affect
    bridge behavior (basicly depending on if the change occurs before or after the bridge first uses the metadata)
 
+*c_array_lenght_in...* interpretation
+.....................................
+
+The keys *c_array_length_in_arg* (function, argument and return value metadata) and *c_array_length_in_result* (argument
+metadata) describe the index of an argument that contains the size of a C array. This section describes how the bridge
+determines the value to use for the array.
+
+For :data:`_C_INOUT` argument the value to use for converting to C and back from C is calculated both before and
+after the function call, which means that the length of the array passed to the function can have a different length
+than the array returned from the function.  This is used for function where a buffer is passed into the function and
+the function indicates the useable size of that buffer by modifiying a pass-by-reference argument.
+
+How the size of the C array is calculated depends on the *type* of the argument:
+
+* When the type is a pointer type the value is calculated by dereferencing the pointer.
+
+* When the type is a integer (for example, :c:type:`int`, :c:type:`unsigned long` or :c:type:`NSInteger`) the length
+  is the value of the C argument.
+
+* When the type is :c:type:`NSRange` or :c:type:`CFRange` the length of the C array is the lenght of the range.
+
+* When the type is :c:type:`id` and the Objective-C instance responds to the "-count" selector the length
+  of the C array is the result of calling that selector.
+ 
+* In all other cases the length cannot be calculated and the bridge raises an exception.
 
 Argument and return value metadata
 ..................................
@@ -83,6 +110,8 @@ dictionary all keys are optional unless the description mentions otherwise.
 * *type*: A byte string with the type encoding for the value. The default is extracted from the type encoding for
   the entire prototype (for methods this is extracted from the Objective-C runtime, for functions this is passed as
   one of the items in the function info tuple).
+
+  This key is always present in the metadata returned by the *__metadata__()* method.
 
 * *type_override*: A byte string with value :data:`_C_IN`, :data:`_C_OUT` or :data:`_C_INOUT` to indicate that the 
   argument is an input, output or input/output argument. Ignored unless the *type* is a pointer type that isn't a
@@ -136,13 +165,39 @@ dictionary all keys are optional unless the description mentions otherwise.
   pointer should be passed to the Objective-C function or a buffer object of the appropriate structure, and with enough
   room to store the function output including the null delimiter.
 
-* *c_array_length_in_arg*: ...
+* *c_array_length_in_arg*: The argument or return value is a C array where the length of the array is specified in 
+  another argument. Ignored when the *type* is not a pointer type. The value for this key is either a single integer, or
+  two integers (for :data:`_C_INOUT` arguments).
 
-* *c_array_of_fixed_length*: ...
+  When the *type_override* is :data:`_C_IN` or :data:`_C_INOUT` the input value must be a sequence of values of the correct
+  lenght (at least the length that's expected by the function, additional items in the sequence are ignored).
 
-* *c_array_of_variable_length*: ...
+  When the *type_override* is :data:`_C_OUT` the value can be :data:`NULL` (:c:data:`NULL` pointer passed to the function) or
+  :data:`None` (PyObjC allocates a C array of the right size and writes nul bytes in the entire buffer).
 
-* *c_array_length_in_result*: ...
+  When the value of the key is a single integer this argument index for the argument that contains the expected size
+  of the array. When the value of the key is a tuple of two integers these are the indexes for the argument that contains
+  the size that should be used when calling the function and the argument that contains the size of the array that is useable
+  after the call.
+
+* *c_array_of_fixed_length*: When the *type* is a pointer type the actual argument (or result) is an C array of a fixed length. The value
+  for this key is an integer that is the length of the C array.
+
+* *c_array_of_variable_length*: When the *type* is a pointer type the actual argument (or result) is a C array, but the
+  lenght of the array is unknown or cannot be described in metadata.
+
+  For results the bridge will return a value of :class:`varlist`.
+
+  For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the arugment must be a Python sequence 
+  and the bridge will allocate a C array that is long enough to contain all items of that sequence; alternatively the argument
+  can be a Python buffer object (simular to :data:`_C_OUT` arugments).  For :data:`_C_OUT` arguments the value for the argument 
+  must be either :data:`NULL` or a Python buffer object that will be passed to the function. 
+
+* *c_array_length_in_result*: Only valid for argument metadata. When the argument *type* is a pointer type and the 
+  *type_override* is :data:`_C_INOUT` or :data:`_C_OUT` the usuable length of the array is calculated from the return value.
+
+  The size of the buffer that needs to be allocated is determined using one of the other *c_array...* keys in the metadata
+  dictionary.
 
 * *null_accepted*: If :data:`True` and the argument is a pointer it is safe to pass a :data:`NULL` as the value. 
   Defaults to :data:`True`.
@@ -178,7 +233,8 @@ dictionary all keys are optional unless the description mentions otherwise.
 API description
 ---------------
 
-.. todo: Reorder the list and group functions with related functionality
+Loading frameworks and other bundles
+....................................
 
 .. function:: loadBundle(module_name, module_globals [, bundle_path [, bundle_identifier[, scan_classes]]])
 
@@ -202,6 +258,8 @@ API description
       testing if a class is located in a specific bundle is fairly expensive and slowed down
       application initialization too much.
 
+Creating and registering types
+..............................
    
 .. function:: registerCFSignature(name, encoding, typeId[, tollfreeName])
 
@@ -212,67 +270,6 @@ API description
    of the "GetTypeID" function for the type for other types.
 
    Returns the class object for the registerd type.
-
-
-.. function:: loadBundleVariables(bundle, module_globals, variableInfo[, skip_undefined])
-
-   Loads a list of global variables (constants) from a bundle and adds proxy objects for
-   them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
-   the function will skip entries that don't refer to existing variables, otherwise it 
-   raises an :exc:`error` exception for these variables.
-
-   *variableInfo* is a sequence of variable descriptions. Every description is a tuple
-   of two elements: the variable name (a string) and the type encoding for the variable
-   (a byte string).
-
-
-.. function:: loadSpecialVar(bundle, module_globals, typeid, name[, skip_undefined])
-
-   This function loads a global variable from a bundle and adds it to the *module_globals*
-   dictionary. The variable should be a CoreFoundation based type, with a value that 
-   is not a valid pointer.
-
-   If *skip_undefined* is :data:`True` (the default) the function won't raise and exception
-   when the variable is not present. Otherwise the function will raise an :exc:`error` exception.
-
-
-.. function:: loadBundleFunctions(bundle, module_globals, functionInfo[, skip_undefined])
-
-   Loads a list of functions from a bundle and adds proxy objects for
-   them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
-   the function will skip entries that don't refer to existing functions, otherwise it 
-   raises an :exc:`error` exception for these functions.
-
-   *bundle* is either an *NSBundle* instance, or :data:`None`. When a bundle is specified
-   the function is looked up in that bundle, otherwise the function is looked up in
-   any bundle (including the main program and Python extensions).
-
-   *functionInfo* is a sequence of function descriptions. Every description is a tuple
-   of two or four elements: the function name (a string) and signature (a byte string) and 
-   optionally a value for the "\__doc__" attribute and a metadata dictionary.
-
-   The structure of the metadata dictionary is descripted in the section `Metadata dictionaries`_.
-
-
-.. function:: loadFunctionList(list, module_globals, functionInfo[, skip_undefined])
-
-   Simular to :func:`loadBundleFunctions`, but loads the functions from *list* instead
-   of a bundle.
-
-   *List* should be a capsule object with tag "objc.__inline__" and the value should
-   be a pointer to an array of structs with the following definition:
-
-   .. sourcecode:: objective-c
-
-      struct function {
-          char*  name;
-          void   (*function)(void);
-      };
-
-   ..  x*
-
-   The last item in the array must have a :c:data:`NULL` pointer in the name field.
-
 
 .. function:: createOpaquePointerType(name, typestr, doc)
 
@@ -362,6 +359,75 @@ API description
    .. versionadded: 2.5
 
 
+Loading variable/constants
+..........................
+
+.. function:: loadBundleVariables(bundle, module_globals, variableInfo[, skip_undefined])
+
+   Loads a list of global variables (constants) from a bundle and adds proxy objects for
+   them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
+   the function will skip entries that don't refer to existing variables, otherwise it 
+   raises an :exc:`error` exception for these variables.
+
+   *variableInfo* is a sequence of variable descriptions. Every description is a tuple
+   of two elements: the variable name (a string) and the type encoding for the variable
+   (a byte string).
+
+
+.. function:: loadSpecialVar(bundle, module_globals, typeid, name[, skip_undefined])
+
+   This function loads a global variable from a bundle and adds it to the *module_globals*
+   dictionary. The variable should be a CoreFoundation based type, with a value that 
+   is not a valid pointer.
+
+   If *skip_undefined* is :data:`True` (the default) the function won't raise and exception
+   when the variable is not present. Otherwise the function will raise an :exc:`error` exception.
+
+
+Loading functions
+.................
+
+.. function:: loadBundleFunctions(bundle, module_globals, functionInfo[, skip_undefined])
+
+   Loads a list of functions from a bundle and adds proxy objects for
+   them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
+   the function will skip entries that don't refer to existing functions, otherwise it 
+   raises an :exc:`error` exception for these functions.
+
+   *bundle* is either an *NSBundle* instance, or :data:`None`. When a bundle is specified
+   the function is looked up in that bundle, otherwise the function is looked up in
+   any bundle (including the main program and Python extensions).
+
+   *functionInfo* is a sequence of function descriptions. Every description is a tuple
+   of two or four elements: the function name (a string) and signature (a byte string) and 
+   optionally a value for the "\__doc__" attribute and a metadata dictionary.
+
+   The structure of the metadata dictionary is descripted in the section `Metadata dictionaries`_.
+
+
+.. function:: loadFunctionList(list, module_globals, functionInfo[, skip_undefined])
+
+   Simular to :func:`loadBundleFunctions`, but loads the functions from *list* instead
+   of a bundle.
+
+   *List* should be a capsule object with tag "objc.__inline__" and the value should
+   be a pointer to an array of structs with the following definition:
+
+   .. sourcecode:: objective-c
+
+      struct function {
+          char*  name;
+          void   (*function)(void);
+      };
+
+   ..  x*
+
+   The last item in the array must have a :c:data:`NULL` pointer in the name field.
+
+
+Metadata for Objective-C methods and classes
+............................................
+
 .. function:: registerMetaDataForSelector(class\_, selector, metadata)
 
    Register a metadata structure for the given selector. The metadata is a dictionary,
@@ -400,9 +466,6 @@ API description
 
     The *methods* argument is a list of tuples (methodname, function).
 
-
-Deprecated APIs
----------------
 
 .. function:: setSignatureForSelector(class_name, selector, signature)
 

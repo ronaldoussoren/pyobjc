@@ -120,14 +120,14 @@ wrappers.
       autorelease pool for every test. This makes is less likely that two
       tests accidenty influence each other.
 
-      There will not be a fresh autorelease pool when :env:`PYOBJC_NO_AUTORELEASE`
+      There will not be a fresh autorelease pool when :envvar:`PYOBJC_NO_AUTORELEASE`
       is in the shell environment.
 
 
       .. versionchanged:: 2.5
          Removed support for using the `leaks(1)`_ tool to check for memory leaks because
          that support was broken (cause test hangs) and didn't properly report leaks. This
-         used to environment variable :env:`PyOBJC_USE_LEAKS` as a trigger to enable the
+         used to environment variable :envvar:`PyOBJC_USE_LEAKS` as a trigger to enable the
          functionality.
 
    .. method:: assertItemsEqual(seq1, seq2[, message])
