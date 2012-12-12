@@ -38,7 +38,6 @@ class Method(object):
 
 
 class TestTestSupport (TestCase):
-
     def test_sdkForPython(self):
         orig_get_config_var = TestSupport._get_config_var
         try:
@@ -312,6 +311,19 @@ class TestTestSupport (TestCase):
             sys.maxsize = orig
 
 
+    def test_assert_cftype(self):
+        self.assertRaises(AssertionError, self.assertIsCFType, long)
+        self.assertRaises(AssertionError, self.assertIsCFType, objc.lookUpClass('NSObject'))
+        self.assertRaises(AssertionError, self.assertIsCFType, objc.lookUpClass('NSCFType'))
+
+        class OC_OPAQUE_TEST_1 (objc.lookUpClass('NSCFType')): pass
+        try:
+            self.assertIsCFType(OC_OPAQUE_TEST_1)
+        except AssertionError:
+            self.fail("CFType subclass not recognized as CFType")
+
+
+
     def test_assert_opaque(self):
         self.assertRaises(AssertionError, self.assertIsOpaquePointer, long)
 
@@ -339,6 +351,36 @@ class TestTestSupport (TestCase):
 
         except AssertionError:
             self.fail("assertIsOpaque fails on opaque pointer type")
+
+
+    def test_assert_result_nullterminated(self):
+        m = Method(None, {"c_array_delimited_by_null": True })
+        self.assertResultIsNullTerminated(m)
+
+        m = Method(None, {"c_array_delimited_by_null": False })
+        self.assertRaises(AssertionError, self.assertResultIsNullTerminated, m)
+
+        m = Method(None, {})
+        self.assertRaises(AssertionError, self.assertResultIsNullTerminated, m)
+
+    def test_assert_arg_nullterminated(self):
+        m = Method(3, {"c_array_delimited_by_null": True }, selector=True)
+        self.assertArgIsNullTerminated(m, 1)
+
+        m = Method(3, {"c_array_delimited_by_null": False }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 1)
+
+        m = Method(3, {"c_array_delimited_by_null": True }, selector=False)
+        self.assertArgIsNullTerminated(m, 3)
+
+        m = Method(3, {"c_array_delimited_by_null": False }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
+
+        m = Method(3, {}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
 
 
 

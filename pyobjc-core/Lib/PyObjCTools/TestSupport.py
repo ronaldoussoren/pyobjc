@@ -23,8 +23,6 @@ __unittest = False
 
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get('PYOBJC_NO_AUTORELEASE')
-_useleaks = bool(_os.environ.get('PyOBJC_USE_LEAKS'))
-_leaksVerbose = True
 
 def _typemap(tp):
     if tp is None: return None
@@ -241,17 +239,11 @@ def max_os_level(release):
     """
     return onlyIf(os_release() <= release)
 
-def _leaks():
-    data = _subprocess.Popen(
-            ['/usr/bin/leaks', str(_os.getpid())], stdout=_subprocess.PIPE
-        ).communicate()[0]
-    return data.splitlines()
-
-
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
 _nscftype = objc.lookUpClass('NSCFType')
 
 _typealias = {}
+
 if not is32Bit():
     _typealias[objc._C_LNG_LNG] = objc._C_LNG
     _typealias[objc._C_ULNG_LNG] = objc._C_ULNG
@@ -276,6 +268,9 @@ class TestCase (_unittest.TestCase):
         if tp is _nscftype:
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
+        if not issubclass(tp, _nscftype):
+            self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
+
 
     def assertIsOpaquePointer(self, tp, message = None):
         if not hasattr(tp, "__pointer__"):
@@ -287,7 +282,7 @@ class TestCase (_unittest.TestCase):
 
     def assertResultIsNullTerminated(self, method, message = None):
         info = method.__metadata__()
-        if not info['retval'].get('c_array_delimited_by_null'):
+        if not info.get('retval', {}).get('c_array_delimited_by_null'):
             self.fail(message or "result of %r is not a null-terminated array"%(method,))
 
     def assertIsNullTerminated(self, method, message = None):
@@ -301,7 +296,7 @@ class TestCase (_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        if not info['arguments'][argno+offset].get('c_array_delimited_by_null'):
+        if not info.get('arguments', {}).get(argno+offset, {}).get('c_array_delimited_by_null'):
             self.fail(message or "argument %d of %r is not a null-terminated array"%(argno, method))
 
     def assertArgIsVariableSize(self, method, argno, message = None):
@@ -719,8 +714,6 @@ class TestCase (_unittest.TestCase):
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
         """
-        if _useleaks:
-            leaksBefore = _leaks()
         if _usepool:
             p = _poolclass.alloc().init()
         else:
@@ -732,17 +725,6 @@ class TestCase (_unittest.TestCase):
             _gc.collect()
             del p
             _gc.collect()
-            
-            if _useleaks:
-                leaksAfter = _leaks()
-                if len(leaksBefore) != len(leaksAfter):
-                    print("\ntest %s is leaking [%d lines]"%(self, len(leaksAfter) - len(leaksBefore)))
-                    if _leaksVerbose:
-                        # XXX: add a smartish filter the surpresses the leaks
-                        # in leaksBefore.
-                        for ln in leaksAfter:
-                            print(ln)
-
 
 main = _unittest.main
 

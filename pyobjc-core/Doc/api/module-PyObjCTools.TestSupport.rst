@@ -106,10 +106,29 @@ wrappers.
 
    This is similar to :class:`warnings.catch_warnings`.
 
+
+.. _`leaks(1)`: https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man1/leaks.1.html
+
 .. class:: TestCase
 
    A subclass of :class:`unittest.TestCase` with some addition functionality. The
    most important addition is that each test gets run with a fresh autorelease pool.
+
+   .. method:: run()
+
+      Calls :meth:`unitest.TestCase.run`, but ensures that there is a fresh 
+      autorelease pool for every test. This makes is less likely that two
+      tests accidenty influence each other.
+
+      There will not be a fresh autorelease pool when :env:`PYOBJC_NO_AUTORELEASE`
+      is in the shell environment.
+
+
+      .. versionchanged:: 2.5
+         Removed support for using the `leaks(1)`_ tool to check for memory leaks because
+         that support was broken (cause test hangs) and didn't properly report leaks. This
+         used to environment variable :env:`PyOBJC_USE_LEAKS` as a trigger to enable the
+         functionality.
 
    .. method:: assertItemsEqual(seq1, seq2[, message])
 

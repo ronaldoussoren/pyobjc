@@ -58,9 +58,10 @@ behave just like regular functions.
 Metadata for blocks
 -------------------
 
-The current implementation of blocks doesn't allow for full introspection, which means
-that PyObjC must be taught about the signatures of blocks. 
+The current implementation of blocks doesn't allow for full introspection, 
+which means that PyObjC must be taught about the signatures of blocks.  This
+is done using the :doc:`metadata system </metadata/index>`.
 
-.. todo::
-
-   Refer to the metadata documentation (which doesn't really exist at the moment)
+.. versionchanged:: 2.5
+   For basic blocks and (Objective-)C code compiled using a recent enough 
+   compiler the bridge can extract the block signature from the runtime.
