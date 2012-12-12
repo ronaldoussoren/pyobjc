@@ -128,6 +128,10 @@ Version 2.5b1
 
 - Improved documentation
 
+- For Objective-C blocks: try to extract the block signature from the (Objective-)C runtime
+  when there is no metadata for the block. The block signature is available only when the
+  code that creates the block is compiled using a recent enough compiler (although "recent
+  enough" is fairly old by now)
 
 Version 2.4.1
 -------------

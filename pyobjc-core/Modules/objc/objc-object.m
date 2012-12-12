@@ -149,8 +149,8 @@ object_dealloc(PyObject* obj)
 
 	if (PyObjCObject_IsBlock(obj)) {
 		PyObjCMethodSignature* v = PyObjCObject_GetBlock(obj);
-		Py_XDECREF(v);
 		PyObjCObject_SET_BLOCK(obj, NULL);	
+		Py_XDECREF(v);
 	}
 			
 

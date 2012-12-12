@@ -3310,13 +3310,31 @@ PyObjCFFI_BuildResult(
 					return NULL;
 				}
 
-				if (methinfo->rettype.callable != NULL) {
-					if (PyObjCObject_IsBlock(objc_result) && PyObjCObject_GetBlock(objc_result) == NULL) {
+				if (PyObjCObject_IsBlock(objc_result) && PyObjCObject_GetBlock(objc_result) == NULL) {
+					/* Result is an (Objective-)C block for which we don't have a Python signature
+					 *
+					 * 1) Try to extract from the metadata system
+					 * 2) Try to extract from the ObjC runtime
+					 *
+					 * Both systems may not have the required information.
+					 */
+
+					if (methinfo->rettype.callable != NULL) {
 						PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype.callable);
 						Py_INCREF(methinfo->rettype.callable);
+					} else {
+						char* signature = PyObjCBlock_GetSignature(objc_result);
+						if (signature != NULL) {
+							PyObject* sig = PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+							if (sig == NULL) {
+								Py_DECREF(objc_result);
+								return NULL;
+							}
+							PyObjCObject_SET_BLOCK(objc_result, sig);
+							sig = NULL;
+						}
 					}
 				}
-
 			} else {
 
 				objc_result = pythonify_c_return_value (tp, pRetval);
