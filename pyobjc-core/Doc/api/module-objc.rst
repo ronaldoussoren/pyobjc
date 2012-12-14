@@ -1067,7 +1067,7 @@ Descriptors
    ================================================== =================================== =========================================
    Name                                               Description                         Notes
    ================================================== =================================== =========================================
-   <property>                                         Getter for a basic property. 
+   *property*                                         Getter for a basic property. 
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    is\ *Property*                                     Likewise, for a boolean             PyObjC won't automaticly set the
                                                       property.                           correct property type, use
