@@ -28,6 +28,10 @@ Version 2.5b1
   This is mostly done for the PyObjC unittests and shouldn't affect user
   code.
 
+- Issue #30: Explicitly check if the compiler works, and try to
+  fall back to clang if it doesn't. This uses a simular algoritm as
+  the fix for <http://bugs.python.org/issue13590> in Python's tracker.
+
 - Issue #22: Reimplement support for bridgesupport files
 
   This reintroduces ``objc.parseBridgeSupport`` and 
@@ -132,6 +136,7 @@ Version 2.5b1
   when there is no metadata for the block. The block signature is available only when the
   code that creates the block is compiled using a recent enough compiler (although "recent
   enough" is fairly old by now)
+
 
 Version 2.4.1
 -------------

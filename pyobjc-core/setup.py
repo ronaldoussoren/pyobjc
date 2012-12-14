@@ -276,8 +276,91 @@ class pyobjc_install_lib (install_lib.install_lib):
 
         return result
 
+
+def _find_executable(executable):
+    if os.path.isfile(executable):
+        return executable
+
+    else:
+        for p in os.environ['PATH'].split(os.pathsep):
+            f = os.path.join(p, executable)
+            if os.path.isfile(f):
+                return f
+    return None
+
+def _working_compiler(executable):
+    import tempfile, subprocess, shlex
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.c') as fp:
+        fp.write('#include <stdarg.h>\nint main(void) { return 0; }\n')
+        fp.flush()
+
+        cflags = get_config_var('CFLAGS')
+        cflags = shlex.split(cflags)
+        cflags += CFLAGS
+
+        p = subprocess.Popen([
+            executable, '-c', fp.name] + cflags, 
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        exit = p.wait()
+        if exit != 0:
+            return False
+        
+        binfile = fp.name[:-1] + 'o'
+        if os.path.exists(binfile):
+            os.unlink(binfile)
+
+        binfile = os.path.basename(binfile)
+        if os.path.exists(binfile):
+            os.unlink(binfile)
+
+    return True
+
+def _fixup_compiler():
+    if 'CC' in os.environ:
+        # CC is in the environment, always use explicit 
+        # overrides.
+        return
+
+    cc = oldcc = get_config_var('CC').split()[0]
+    cc = _find_executable(cc)
+    if cc is not None and os.path.basename(cc).startswith('gcc'):
+        # Check if compiler is LLVM-GCC, that's known to
+        # generate bad code.
+        data = os.popen("'%s' --version 2>/dev/null"%(
+            cc.replace("'", "'\"'\"'"),)).read()
+        if 'llvm-gcc' in data:
+            cc = None
+
+    if not _working_compiler(cc):
+        cc = None
+
+    if cc is None:
+        # Default compiler is not useable, try finding 'clang'
+        cc = _find_executable('clang')
+        if cc is None:
+            cc = os.popen("/usr/bin/xcrun -find clang").read()
+
+    if not cc:
+        raise SystemExit("Cannot locate compiler candidate")
+
+    if not _working_compiler(cc):
+        raise SystemExit("Cannot locate a working compiler")
+
+    if cc != oldcc:
+        print("Use '%s' instead of '%s' as the compiler"%(
+            cc, oldcc))
+
+        vars = get_config_vars()
+        for env in ('BLDSHARED', 'LDSHARED', 'CC', 'CXX'):
+            if env in vars and env not in os.environ:
+                split = vars[env].split()
+                split[0] = cc if env != 'CXX' else cc + '++'
+                vars[env] = ' '.join(split)
+
+
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
+        _fixup_compiler()
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
@@ -359,7 +442,9 @@ CFLAGS.extend([
 if '-O0' in get_config_var('CFLAGS'):
     print ("Change -O0 to -O1")
     vars = get_config_vars()
-    vars['CFLAGS'] = vars['CFLAGS'].replace('-O0', '-O1')
+    for k in vars:
+        if isinstance(vars[k], str) and '-O0' in vars[k]:
+            vars[k] = vars[k].replace('-O0', '-O1')
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
@@ -370,9 +455,6 @@ if not os.path.exists('/usr/include/objc/runtime.h'):
 # a binary that runs on other releases of the OS without using a particular SDK.
 CFLAGS.extend(['-isysroot', '/'])
 OBJC_LDFLAGS.extend(['-isysroot', '/'])
-
-
-
 CFLAGS.append('-Ibuild/codegen/')
 
 # Patch distutils: it needs to compile .S files as well.
