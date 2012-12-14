@@ -137,6 +137,17 @@ Version 2.5b1
   code that creates the block is compiled using a recent enough compiler (although "recent
   enough" is fairly old by now)
 
+- Fixes some issues with :class:`objc.object_property` which were found by
+  improved unittests. In particular:
+
+  - The selector names for boolean properties were wrong
+
+  - Properties with a "depends_on" list didn't inherit properly
+
+  - Properties that were used in subclasses didn't generate the correct KVO 
+    events when they were observed.
+
+  - KVO issues with computed (read-only) properties
 
 Version 2.4.1
 -------------

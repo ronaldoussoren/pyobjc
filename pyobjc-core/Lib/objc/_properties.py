@@ -67,18 +67,23 @@ class object_property (object):
         self._setter = None
         self._validate = None
         if depends_on is None:
-            self._depends_on = ()
+            self._depends_on = None
         else:
-            self._depends_on = list(depends_on)
+            self._depends_on = set(depends_on)
 
         self.__getprop = None
         self.__setprop = None
         self.__parent = None
 
     def _clone(self):
+        if self._depends_on is None:
+            depends = None
+        else:
+            depends = self._depends_on.copy()
+
         v = type(self)(name=self._name, 
                 read_only=self._ro, copy=self._copy, dynamic=self._dynamic,
-                ivar=self._ivar, typestr=self._typestr, depends_on=None)
+                ivar=self._ivar, typestr=self._typestr, depends_on=depends)
         v.__inherit = True
 
         v.__getprop = self.__getprop
@@ -124,24 +129,30 @@ class object_property (object):
                             "Cannot create default setter for property "
                             "without ivar")
 
-                    self.__setprop = selector(
+                    setprop = selector(
                         attrsetter(self._name, ivname, self._copy),
                         selector=setterName,
                         signature=signature
                     )
-                    self.__setprop.isHidden = True
-                    instance_methods.add(self.__setprop)
+                    setprop.isHidden = True
+                    instance_methods.add(setprop)
+
+                    # Use dynamic setter to avoid problems when subclassing
+                    self.__setprop = _dynamic_setter(setterName)
             else:
-                self.__setprop = selector(
+                setprop = selector(
                     self._setter,
                     selector=setterName,
                     signature=signature
                 )
-                self.__setprop.isHidden = True
-                instance_methods.add(self.__setprop)
+                setprop.isHidden = True
+                instance_methods.add(setprop)
+
+                # Use dynamic setter to avoid problems when subclassing
+                self.__setprop = _dynamic_setter(setterName)
 
         if self._typestr in (_C_NSBOOL, _C_BOOL):
-            getterName = b'is' + name[0].upper().encode('latin1') + name[:1].encode('latin1')
+            getterName = b'is' + name[0].upper().encode('latin1') + name[1:].encode('latin1')
         else:
             getterName = self._name.encode('latin1')
 
@@ -151,7 +162,7 @@ class object_property (object):
 
             elif self._dynamic:
                 if self._typestr in (_C_NSBOOL, _C_BOOL):
-                    dynGetterName = 'is' + name[0].upper() + name[:1]
+                    dynGetterName = 'is' + name[0].upper() + name[1:]
                 else:
                     dynGetterName = self._name
 
@@ -171,12 +182,13 @@ class object_property (object):
                 instance_methods.add(self.__getprop)
 
         else:
-            self.__getprop = selector(
+            self.__getprop = getprop = selector(
                     self._getter,
                     selector=getterName,
                     signature=self._typestr + b'@:')
-            self.__getprop.isHidden=True
-            instance_methods.add(self.__getprop)
+            getprop.isHidden=True
+            instance_methods.add(getprop)
+            #self.__getprop = _dynamic_getter(getterName)
 
         if self._validate is not None:
             selName = b'validate' + self._name[0].upper().encode('latin') + self._name[1:].encode('latin') + b':error:'
@@ -185,7 +197,7 @@ class object_property (object):
                     self._validate,
                     selector=selName,
                     signature=signature)
-            validate.isHidden = True
+            class_dict[validate.selector] = validate
             instance_methods.add(validate)
 
         if self._depends_on:
@@ -200,10 +212,8 @@ class object_property (object):
                     selector = b'keyPathsForValuesAffecting' + self._name[0].upper().encode('latin1') + self._name[1:].encode('latin1'),
                     signature = b'@@:',
                     isClassMethod=True)
-            affecting.isHidden = True
             class_dict[affecting.selector] = affecting
             class_methods.add(affecting)
-
 
     def __get__(self, object, owner):
         if object is None:
@@ -268,8 +278,6 @@ class bool_property (object_property):
 
 
 
-def _id(value):
-    return value
 
 NSIndexSet = lookUpClass('NSIndexSet')
 NSMutableIndexSet = lookUpClass('NSMutableIndexSet')
@@ -277,6 +285,13 @@ NSKeyValueChangeSetting = 1
 NSKeyValueChangeInsertion = 2
 NSKeyValueChangeRemoval = 3
 NSKeyValueChangeReplacement = 4
+
+
+# Helper function for (not) pickling array_proxy instances
+# NOTE: Don't remove this function, it can be referenced from
+# pickle files.
+def _id(value):
+    return value
 
 # FIXME: split into two: array_proxy and mutable_array_proxy
 class array_proxy (collections.MutableSequence):
