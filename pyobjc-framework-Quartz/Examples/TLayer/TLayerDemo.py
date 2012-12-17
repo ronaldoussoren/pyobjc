@@ -6,7 +6,7 @@ import objc
 import ShadowOffsetView
 
 
-class TLayerDemo (NSObject:
+class TLayerDemo (NSObject):
     colorWell = objc.IBOutlet()
     shadowOffsetView = objc.IBOutlet()
     shadowRadiusSlider = objc.IBOutlet()
