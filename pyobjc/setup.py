@@ -64,6 +64,9 @@ REQUIRES_10_6=[
         'pyobjc-framework-ServiceManagement=='+VERSION,
 ]
 
+DEL_REQUIRES_10_7=[
+        'pyobjc-framework-InterfaceBuilderKit=',
+]
 REQUIRES_10_7=[
 ]
 
@@ -91,6 +94,11 @@ if rel >= (10, 6):
     REQUIRES.extend(REQUIRES_10_6)
 if rel >= (10, 7):
     REQUIRES.extend(REQUIRES_10_7)
+    for name in DEL_REQUIRES_10_7:
+        for line in REQUIRES:
+            if line.startswith(name):
+                REQUIRES.remove(line)
+                continue
 if rel >= (10, 8):
     REQUIRES.extend(REQUIRES_10_8)
     for name in DEL_REQUIRES_10_8:
