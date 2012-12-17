@@ -1,7 +1,7 @@
-''' 
+'''
 Wrappers for the "Automator" framework on MacOSX. The Automator framework
-supports the development of actions for the Automator application, as well 
-as the ability to run a workflow in developer applications. An action is 
+supports the development of actions for the Automator application, as well
+as the ability to run a workflow in developer applications. An action is
 a bundle that, when loaded and run, performs a specific task.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

@@ -15,7 +15,7 @@ class TestCGFunction (TestCase):
         def evaluate(info, input, output):
             values.append(input)
             return input * 4
-        
+
         self.assertIsInstance(CGFunctionGetTypeID(), (int, long))
 
         myInfo = object()
@@ -26,8 +26,8 @@ class TestCGFunction (TestCase):
         self.assertTrue(v is func)
         CGFunctionRelease(func)
 
-        
-        # It is not possible to "call" a CGFunction object directly, use a 
+
+        # It is not possible to "call" a CGFunction object directly, use a
         # shading object to check that the function is actually called.
 
         shading = CGShadingCreateAxial(CGColorSpaceCreateDeviceRGB(), (0, 0), (50, 50), func, True, True)
@@ -61,7 +61,7 @@ class TestCGFunction (TestCase):
 
 
 
-        
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,7 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-# Would like some tests for NSRunAlertPanel and friends as well, but those 
+# Would like some tests for NSRunAlertPanel and friends as well, but those
 # require user interaction :-(
 
 class TestAlertFormat (TestCase):

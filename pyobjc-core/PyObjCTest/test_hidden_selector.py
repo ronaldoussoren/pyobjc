@@ -2,20 +2,20 @@ from PyObjCTools.TestSupport import *
 import objc
 
 class hidden_method (object):
-     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
-         @objc.selector
-         def method(self):
-             return 42
+    def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
+        @objc.selector
+        def method(self):
+            return 42
 
-         method.isHidden = True
+        method.isHidden = True
 
-         def clsmethod(self):
-             return 99
-         clsmethod=objc.selector(clsmethod, isClassMethod=True)
-         clsmethod.isHidden = True
+        def clsmethod(self):
+            return 99
+        clsmethod=objc.selector(clsmethod, isClassMethod=True)
+        clsmethod.isHidden = True
 
-         instance_methods.add(method)
-         class_methods.add(clsmethod)
+        instance_methods.add(method)
+        class_methods.add(clsmethod)
 
 
 
@@ -149,7 +149,7 @@ class TestHiddenSelector (TestCase):
 
     def testHiddenInSubClass(self):
 
-        # Instance 
+        # Instance
         o = OCTestSubHidden.alloc().init()
         self.assertRaises(AttributeError, getattr, o, "body")
         v = o.performSelector_(b'body')

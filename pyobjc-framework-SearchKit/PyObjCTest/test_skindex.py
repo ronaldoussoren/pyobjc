@@ -123,7 +123,7 @@ class TestSKIndex (TestCase):
                     None, fn,
                     kCFURLPOSIXPathStyle, False))
 
-        v = SKIndexAddDocumentWithText(ref, 
+        v = SKIndexAddDocumentWithText(ref,
                 doc, "hello world", True)
         self.failUnless(v)
 

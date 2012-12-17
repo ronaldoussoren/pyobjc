@@ -1,5 +1,5 @@
-''' 
-PyObjC wrappers for the framework "CFNetwork", part of "CoreServices" on 
+'''
+PyObjC wrappers for the framework "CFNetwork", part of "CoreServices" on
 MacOSX.
 
 The CFNetwork framework provides a library of abstractions for networking
@@ -22,7 +22,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

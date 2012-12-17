@@ -73,7 +73,7 @@ class TestCALayer (TestCase):
         self.assertArgHasType(CALayer.setContentsCenter_, 0, CGRect.__typestr__)
         self.assertResultIsBOOL(CALayer.needsDisplay)
         self.assertResultIsBOOL(CALayer.needsLayout)
-    
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertIsInstance(kCAFilterTrilinear, unicode)

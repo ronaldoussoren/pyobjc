@@ -34,7 +34,7 @@ class BookmarksDocument (NSDocument):
     # open and save -- very simple, just (un)archive bookmarksArray
     def dataRepresentationOfType_(self, aType):
         return NSKeyedArchiver.archivedDataWithRootObject_(self.bookmarksArray)
-        
+
     def loadDataRepresentation_ofType_(self, data, aType):
         self.bookmarksArray = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
         return True

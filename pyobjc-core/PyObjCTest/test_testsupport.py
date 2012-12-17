@@ -31,7 +31,7 @@ class Method(object):
 
         else:
             return Method
-        
+
 
     def __metadata__(self):
         return self._meta.copy()
@@ -538,7 +538,7 @@ class TestTestSupport (TestCase):
 
         else:
             self.fail("unexpected test pass")
-        
+
 
     def run(self, *args, **kwds):
         unittest.TestCase.run(self, *args, **kwds)

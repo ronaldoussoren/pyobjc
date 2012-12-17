@@ -36,6 +36,6 @@ class TestNSMethodSignature (TestCase):
         self.assertResultIsNullTerminated(NSMethodSignature.methodReturnType)
         self.assertResultIsBOOL(NSMethodSignature.isOneway)
 
-            
+
 if __name__ == "__main__":
     main()

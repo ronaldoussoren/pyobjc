@@ -1,6 +1,6 @@
-''' 
-Wrappers for the "CoreText" framework on MacOSX 10.5 or later. Core Text is an 
-advanced, low-level technology for laying out text and handling fonts. It is 
+'''
+Wrappers for the "CoreText" framework on MacOSX 10.5 or later. Core Text is an
+advanced, low-level technology for laying out text and handling fonts. It is
 designed for high performance and ease of use.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -34,7 +34,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
         'pyobjc-framework-Quartz>=2.5.0b1',

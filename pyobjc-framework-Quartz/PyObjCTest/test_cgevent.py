@@ -130,7 +130,7 @@ class TestCGEvent (TestCase):
         self.assertIsInstance(evt, CGEventRef)
         self.assertRaises(ValueError, CGEventCreateScrollWheelEvent, kCGScrollEventUnitPixel, 40, 2, 99)
         self.assertRaises(ValueError, CGEventCreateScrollWheelEvent, kCGScrollEventUnitPixel, 40, 2, 99, 100, 101)
-        
+
         v = CGEventGetUnflippedLocation(evt)
         self.assertIsInstance(v, CGPoint)
 

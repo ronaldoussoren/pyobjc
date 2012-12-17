@@ -214,7 +214,7 @@ class TestNSTableView (TestCase):
         self.assertArgHasType(TestNSTableViewHelper.tableView_pastboardWriterForRow_, 1, objc._C_NSInteger)
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_, 2, NSPoint.__typestr__)
         self.assertArgHasType(TestNSTableViewHelper.tableView_draggingSession_endedAtPoint_operation_, 2, NSPoint.__typestr__)
-        
+
 
 if __name__ == "__main__":
     main()

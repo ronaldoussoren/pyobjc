@@ -36,7 +36,7 @@ class TestNSBrowser (TestCase):
         self.assertIsInstance(NSBrowserColumnConfigurationDidChangeNotification, unicode)
         self.assertEqual(NSAppKitVersionNumberWithContinuousScrollingBrowser, 680.0)
         self.assertEqual(NSAppKitVersionNumberWithColumnResizingBrowser, 685.0)
-        
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSBrowser.isLoaded)

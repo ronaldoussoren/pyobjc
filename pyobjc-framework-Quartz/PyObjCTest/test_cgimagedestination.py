@@ -41,7 +41,7 @@ class TestCGImageDestination (TestCase):
         if v:
             self.assertIsInstance(v[0], unicode)
 
-        data = NSMutableData.data() 
+        data = NSMutableData.data()
         self.assertResultIsCFRetained(CGImageDestinationCreateWithData)
         dest = CGImageDestinationCreateWithData(data, v[0], 1, None)
         self.assertIsInstance(dest, CGImageDestinationRef)
@@ -55,7 +55,7 @@ class TestCGImageDestination (TestCase):
         CGImageDestinationSetProperties(dest, {b'key'.decode('latin1'): b'value'.decode('latin1')})
 
         provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
-        img = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), 
+        img = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(),
                 kCGImageAlphaPremultipliedLast, provider, None, False, kCGRenderingIntentDefault)
         self.assertIsInstance(img, CGImageRef)
 

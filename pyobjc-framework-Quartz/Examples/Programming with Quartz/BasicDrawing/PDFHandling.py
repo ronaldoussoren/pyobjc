@@ -12,21 +12,21 @@ def createNewPDFRefFromPasteBoard():
     # Create a reference to the PDF data on the pasteboard.
     # The implementation of myCreatePDFDataFromPasteBoard depends
     # on the application framework you are using for your application.
-    # 
+    #
     # myCreatePDFDataFromPasteBoard creates a reference that is owned
     # by the calling application.
     pasteBoardData = FrameworkUtilities.myCreatePDFDataFromPasteBoard()
-	
+
     if pasteBoardData is None:
         print >>sys.stderr, "There is no PDF data on pasteboard!"
         return None
-    
+
     # Create a data provider from the pasteboard data.
     dataProvider = myCGDataProviderCreateWithCFData(pasteBoardData)
     # Release the pasteboard data since the data provider retains
     # it and this code owns a reference but no longer requires it.
     del pasteBoardData
-	
+
     if dataProvider is None:
         print >>sys.stderr, "Couldn't create data provider."
         return None
@@ -59,16 +59,16 @@ def drawPasteBoardPDF(context):
         print >>sys.stderr, "Quartz couldn't create CGPDFDocumentRef from pasteboard."
         return
 
-    # The media box is the bounding box of the PDF document. 
+    # The media box is the bounding box of the PDF document.
     pdfRect = CGPDFDocumentGetMediaBox(pdfDoc , 1);   # page 1
-    # Make the destination rect origin at the Quartz origin. 
-    pdfRect.origin.x = pdfRect.origin.y = 0.;	
+    # Make the destination rect origin at the Quartz origin.
+    pdfRect.origin.x = pdfRect.origin.y = 0.;
     CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1);  # page 1
 
 def cfDataCreatePDFDocumentFromCommand( command):
     # Media rect for the drawing. In a real application this
     # should be the bounding rectangle of the graphics
-    # that will be the PDF content. 
+    # that will be the PDF content.
     mediaRect = CGRectMake(0, 0, 612, 792)
 
     # Create a dictionary to hold the optional information describing the PDF data.
@@ -93,11 +93,11 @@ def cfDataCreatePDFDocumentFromCommand( command):
     pdfContext, mediaRect = CGPDFContextCreate(consumer, None, dict)
     del consumer
     del dict
-    
+
     if pdfContext is None:
         print >>sys.stderr, "Couldn't create pdf context!"
         return None
-    
+
     mediaRect = CGContextBeginPage(pdfContext)
     if 1:
         CGContextSaveGState(pdfContext)
@@ -106,20 +106,20 @@ def cfDataCreatePDFDocumentFromCommand( command):
             AppDrawing.DispatchDrawing(pdfContext, command)
         CGContextRestoreGState(pdfContext)
     CGContextEndPage(pdfContext)
-    
+
     return data
 
 def MakePDFDocument(url, exportInfo):
     # Use this as the media box for the document.
     # In a real application this should be the bounding
-    # rectangle of the graphics that will be the PDF content. 
+    # rectangle of the graphics that will be the PDF content.
     mediaRect = CGRectMake(0, 0, 612, 792)
 
     info = {
         # Add the title information for this document.
         kCGPDFContextTitle: "BasicDrawing Sample Graphics",
 
-        # Add the author information for this document. This is typically  
+        # Add the author information for this document. This is typically
         # the user creating the document.
         kCGPDFContextAuthor: "David Gelphman and Bunny Laden",
 
@@ -136,7 +136,7 @@ def MakePDFDocument(url, exportInfo):
 
             # XXX:fixme: need to encode as CFData!!!
             info[kCGPDFContextCropBox] = CGRectMake(100, 100, 200, 200)
-    
+
     if url is not None:
         pdfContext = CGPDFContextCreateWithURL(url, mediaRect, info)
         if pdfContext is not None:

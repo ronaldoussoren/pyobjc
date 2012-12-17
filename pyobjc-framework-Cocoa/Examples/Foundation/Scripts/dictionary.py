@@ -6,7 +6,7 @@ Using Cocoa collection classes
 ==============================
 
 Cocoa contains a number of collection classes, including dictionaries and
-arrays (like python lists) in mutable and immutable variations. We'll 
+arrays (like python lists) in mutable and immutable variations. We'll
 demonstrate their usage using the ``NSMutableDictonary`` class.
 
 We'll start by importing everything we need::

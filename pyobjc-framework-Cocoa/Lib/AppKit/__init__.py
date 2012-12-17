@@ -2,7 +2,7 @@
 Python mapping for the AppKit framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 import sys
 import objc
@@ -19,8 +19,8 @@ def NSDictionaryOfVariableBindings(*names):
     variables = sys._getframe(1).f_locals
 
     return {
-        nm: variables[nm] 
-        for nm in names 
+        nm: variables[nm]
+        for nm in names
     }
 
 
@@ -135,13 +135,12 @@ for nm in [
    "NSHelpFunctionKey",
    "NSModeSwitchFunctionKey",
    ]:
-       try:
-           setattr(mod, nm, unichr(getattr(mod, nm)))
-       except AttributeError:
-           pass
+    try:
+        setattr(mod, nm, unichr(getattr(mod, nm)))
+    except AttributeError:
+        pass
 
 try:
     mod.NSImageNameApplicationIcon
 except AttributeError:
     mod.NSImageNameApplicationIcon = "NSApplicationIcon"
-

@@ -153,7 +153,7 @@ class TestCVPixelBuffer (TestCase):
 
     @expectedFailure
     def testManual(self):
-        self.fail("CVPixelBufferCreate requires manual wrapper") 
+        self.fail("CVPixelBufferCreate requires manual wrapper")
         self.fail("CVPixelBufferCreateWithBytes requires manual wrapper")
         self.fail("CVPixelBufferCreateWithPlanarBytes requires manual wrapper")
 

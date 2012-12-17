@@ -40,7 +40,7 @@ class TestXMLNode (TestCase):
         self.assertEqual(kCFXMLEntityTypeCharacter , 4 )
 
     def testStructs(self):
-        return 
+        return
 
         o = CFXMLElementInfo()
         self.assertHasAttr(o, 'attributes')

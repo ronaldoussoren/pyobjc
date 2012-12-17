@@ -84,7 +84,7 @@ class TestFromObjCSuperToObjCClass(TestCase):
             self.assertEqual(m.selector, b"value")
             self.assertEqual(m.signature, b"q@:")
 
-            
+
             # Cannot add native selectors:
             self.assertRaises(AttributeError, objc.classAddMethod, NSObject, b"descriptionAlias", NSObject.description)
 
@@ -347,7 +347,7 @@ class TestCategory (TestCase):
     def testCategoryName(self):
         try:
             class NSFoo (objc.Category(NSObject)):
-                    pass
+                pass
 
             self.fail("Category name != class name")
 
@@ -426,7 +426,7 @@ class TestCategory (TestCase):
         o = NSObjectCat3.alloc().init()
         self.assertEqual(o.getClassValue(), "aap")
 
-                
+
 
 
 if __name__ == '__main__':

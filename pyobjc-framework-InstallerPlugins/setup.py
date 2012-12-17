@@ -1,5 +1,5 @@
-''' 
-Wrappers for the "InstallerPlugins" framework on MacOSX. This framework 
+'''
+Wrappers for the "InstallerPlugins" framework on MacOSX. This framework
 allows you to develop plugin's for the "Installer.app" application, and those
 make it possible to add new functionality to ".pkg" and ".mpkg" installers
 on MacOSX.
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

@@ -26,7 +26,7 @@ class TestIconsCore (TestCase):
         self.assertEqual(kGenericFileServerIconResource, -3972)
         self.assertEqual(kGenericSuitcaseIconResource, -3970)
         self.assertEqual(kGenericMoverObjectIconResource, -3969)
-        
+
         self.assertEqual(kGenericPreferencesIconResource, -3971)
         self.assertEqual(kGenericQueryDocumentIconResource, -16506)
         self.assertEqual(kGenericExtensionIconResource, -16415)
@@ -244,10 +244,10 @@ class TestIconsCore (TestCase):
         self.assertEqual(kBurningIcon, fourcc(b'burn'))
         self.assertEqual(kRightContainerArrowIcon, fourcc(b'rcar'))
         self.assertEqual(kIconServicesNormalUsageFlag, 0)
-        self.assertEqual(kIconServicesNoBadgeFlag, 1) 
+        self.assertEqual(kIconServicesNoBadgeFlag, 1)
         self.assertEqual(kIconServicesUpdateIfNeededFlag, 2)
         self.assertEqual(kIconServicesCatalogInfoMask, 531550)
-  
+
     @onlyOn32Bit
     def testFunctions32(self):
         # Not tested, deprecated function
@@ -263,7 +263,7 @@ class TestIconsCore (TestCase):
 
         ReadIconFile
         WriteIconFile
-    
+
     def testFunctions(self):
         self.assertArgIsOut(GetIconRef, 3)
         err, icon = GetIconRef(0, kSystemIconsCreator, kShortcutIcon, None)
@@ -315,7 +315,7 @@ class TestIconsCore (TestCase):
             self.assertArgIsOut(GetCustomIconsEnabled, 1)
             self.assertArgHasType(GetCustomIconsEnabled, 1, objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
 
-            
+
             # Untested...
             ReadIconFromFSRef
 

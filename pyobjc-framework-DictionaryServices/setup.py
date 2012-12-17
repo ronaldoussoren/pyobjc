@@ -1,9 +1,9 @@
-''' 
-Wrappers for the "DictionaryServices" framework on MacOSX 10.5 or later. 
+'''
+Wrappers for the "DictionaryServices" framework on MacOSX 10.5 or later.
 
-Dictionary Services lets you create your own custom dictionaries that users 
-can access through the Dictionary application. You also use these services to 
-access dictionaries programatically and to support user access to dictionary 
+Dictionary Services lets you create your own custom dictionaries that users
+can access through the Dictionary application. You also use these services to
+access dictionaries programatically and to support user access to dictionary
 look-up through a contextual menu.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -22,7 +22,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

@@ -20,7 +20,7 @@ class TestLaunchServices (TestCase):
         # Use this to test for a number of enum and #define values
         self.assert_( hasattr(LaunchServices, 'kLSRequestAllInfo') )
         self.assert_( isinstance(LaunchServices.kLSRequestAllInfo, (int, long)) )
-        # Note: the header file seems to indicate otherwise but the value 
+        # Note: the header file seems to indicate otherwise but the value
         # really is a signed integer!
         self.assertEquals(LaunchServices.kLSRequestAllInfo, 0xffffffff)
 
@@ -70,4 +70,3 @@ class TestLaunchServices (TestCase):
 
 if __name__ == "__main__":
     main()
-

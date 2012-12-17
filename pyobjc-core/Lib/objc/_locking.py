@@ -1,8 +1,8 @@
 """
 Support for @synchronized blocks
 
-The python class object_lock is a contextmanager for with statements that 
-can also be used manually. 
+The python class object_lock is a contextmanager for with statements that
+can also be used manually.
 """
 import objc as _objc
 
@@ -12,7 +12,7 @@ class object_lock(object):
     @synchronized statements in Objective-C. Locking can also
     be done manually using the ``lock`` and ``unlock`` methods.
 
-    The mutex for object ``anObject`` is represented by 
+    The mutex for object ``anObject`` is represented by
     ``objc.object_lock(anObject)``.
     """
     def __init__(self, value):

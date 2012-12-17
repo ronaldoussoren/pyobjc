@@ -19,13 +19,11 @@ class FontNameToDisplayNameTransformer(NSValueTransformer):
     def transformedValueClass(cls):
         return NSString
     transformedValueClass = classmethod(transformedValueClass)
-        
+
     def allowsReverseTransformation(cls):
         return False
     allowsReverseTransformation = classmethod(allowsReverseTransformation)
-        
+
     def transformedValue_(self, aValue):
         font = NSFont.fontWithName_size_(aValue, 12)
         return font.displayName()
-
-

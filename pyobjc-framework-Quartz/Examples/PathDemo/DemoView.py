@@ -23,10 +23,10 @@ class DemoView (NSView):
 
         CGContextSetGrayFillColor(context, 1.0, 1.0)
         CGContextFillRect(context, rect)
-   
+
         if self._demoNumber == 0:
-	    rectangles(context, rect)
-	
+            rectangles(context, rect)
+
         elif self._demoNumber == 1:
             circles(context, rect)
 
@@ -46,12 +46,12 @@ class DemoView (NSView):
 # The various demo functions
 
 def setRandomFillColor(context):
-    CGContextSetRGBFillColor(context, 
+    CGContextSetRGBFillColor(context,
            random.uniform(0, 1), random.uniform(0, 1),
            random.uniform(0, 1), random.uniform(0, 1))
 
 def setRandomStrokeColor(context):
-    CGContextSetRGBStrokeColor(context, 
+    CGContextSetRGBStrokeColor(context,
            random.uniform(0, 1), random.uniform(0, 1),
            random.uniform(0, 1), random.uniform(0, 1))
 
@@ -71,11 +71,11 @@ def rectangles(context, rect):
 
     for k in range(20):
         if k % 2 == 0:
-	    setRandomFillColor(context)
+            setRandomFillColor(context)
             CGContextFillRect(context, randomRectInRect(rect))
 
         else:
-	    setRandomStrokeColor(context)
+            setRandomStrokeColor(context)
             CGContextSetLineWidth(context, 2 + random.randint(0, 10))
             CGContextStrokeRect(context, randomRectInRect(rect))
 
@@ -83,9 +83,9 @@ def circles(context, rect):
     # Draw random circles (some stroked, some filled).
 
     for k in range(20):
-	r = randomRectInRect(rect)
-	w = CGRectGetWidth(r)
-	h = CGRectGetHeight(r)
+        r = randomRectInRect(rect)
+        w = CGRectGetWidth(r)
+        h = CGRectGetHeight(r)
         CGContextBeginPath(context)
 
         if w < h:
@@ -93,17 +93,17 @@ def circles(context, rect):
         else:
             v = h
 
-        CGContextAddArc(context, 
+        CGContextAddArc(context,
                 CGRectGetMidX(r), CGRectGetMidY(r),
                 v, 0, 2*PI, False)
         CGContextClosePath(context)
 
         if k % 2 == 0:
-	    setRandomFillColor(context)
+            setRandomFillColor(context)
             CGContextFillPath(context)
 
         else:
-	    setRandomStrokeColor(context)
+            setRandomStrokeColor(context)
             CGContextSetLineWidth(context, 2 + random.randint(0, 10))
             CGContextStrokePath(context)
 
@@ -111,27 +111,27 @@ def bezierPaths(context, rect):
     for k in range(20):
         numberOfSegments = 1 + random.randint(0, 8)
         CGContextBeginPath(context)
-	p = randomPointInRect(rect)
+        p = randomPointInRect(rect)
         CGContextMoveToPoint(context, p.x, p.y)
         for j in range(numberOfSegments):
-	    p = randomPointInRect(rect);
+            p = randomPointInRect(rect);
 
             if j % 2 == 0:
                 CGContextAddLineToPoint(context, p.x, p.y)
 
             else:
-		c1 = randomPointInRect(rect)
-		c2 = randomPointInRect(rect)
+                c1 = randomPointInRect(rect)
+                c2 = randomPointInRect(rect)
                 CGContextAddCurveToPoint(context, c1.x, c1.y,
-					 c2.x, c2.y, p.x, p.y)
+                                         c2.x, c2.y, p.x, p.y)
 
         if k % 2 == 0:
-	    setRandomFillColor(context)
-	    CGContextClosePath(context)
+            setRandomFillColor(context)
+            CGContextClosePath(context)
             CGContextFillPath(context)
 
         else:
-	    setRandomStrokeColor(context)
+            setRandomStrokeColor(context)
             CGContextSetLineWidth(context, 2 + random.randint(0, 10))
             CGContextStrokePath(context)
 
@@ -147,17 +147,17 @@ def circleClipping(context, rect):
     else:
         v = h
     CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect),
-		    v/2, 0, 2*PI, False)
+                    v/2, 0, 2*PI, False)
     CGContextClosePath(context)
     CGContextClip(context)
-    
+
     # Draw something into the clip.
     bezierPaths(context, rect)
-    
+
     # Draw a clip path on top as a black stroked circle.
     CGContextBeginPath(context)
     CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect),
-		    v/2, 0, 2*PI, False)
+                    v/2, 0, 2*PI, False)
     CGContextClosePath(context)
     CGContextSetLineWidth(context, 1)
     CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)

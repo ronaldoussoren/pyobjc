@@ -2,11 +2,11 @@ from Quartz import *
 import Quartz
 import os, sys
 
-# Return the generic RGB color space. This is a 'get' function and the caller 
-# should not release the returned value unless the caller retains it first. 
-# Usually callers of this routine will immediately use the returned colorspace 
-# with CoreGraphics so they typically do not need to retain it themselves.  
-# This function creates the generic RGB color space once and hangs onto it so 
+# Return the generic RGB color space. This is a 'get' function and the caller
+# should not release the returned value unless the caller retains it first.
+# Usually callers of this routine will immediately use the returned colorspace
+# with CoreGraphics so they typically do not need to retain it themselves.
+# This function creates the generic RGB color space once and hangs onto it so
 # it can return it whenever this function is called.
 
 _genericRGBColorSpace = None
@@ -22,8 +22,8 @@ def getTheCalibratedRGBColorSpace():
 
 def addURLAnnotationToPDFPage(c, rect):
     link = "http:#developer.apple.com/documentation/GraphicsImaging/"
-    linkURL = CFURLCreateWithBytes(None, link, len(link), 
-					    kCFStringEncodingUTF8, None)
+    linkURL = CFURLCreateWithBytes(None, link, len(link),
+                                            kCFStringEncodingUTF8, None)
     if linkURL is None:
         print >>sys.stderr, "Couldn't create url for link!"
         return
@@ -35,7 +35,7 @@ def myCreatePDFDocumentAtURL(url):
 
     # Make the media box the same size as the graphics this code draws.
     mediaBox = CGRectMake(0, 0, 200, 200)
-    
+
     # Create a PDF context using mediaBox as the default media box for the
     # document. The document will be created at the location described by
     # the supplied URL. This example passes None for the auxiliaryInfo
@@ -57,22 +57,22 @@ def myCreatePDFDocumentAtURL(url):
         # Clip to the media box.
         CGContextClipToRect(pdfContext, mediaBox)
         # Set the fill color and color space.
-        CGContextSetFillColorSpace(pdfContext, 
+        CGContextSetFillColorSpace(pdfContext,
                                 getTheCalibratedRGBColorSpace())
         CGContextSetFillColor(pdfContext, red)
         # Fill the rectangle of the media box with red.
         CGContextFillRect(pdfContext, mediaBox)
 
         # Add a link to a URL so that if you click
-        # on the rect you will go to that URL. 
+        # on the rect you will go to that URL.
         addURLAnnotationToPDFPage(pdfContext, mediaBox)
     CGContextRestoreGState(pdfContext)
 
-    # Calling CGContextEndPage denotes the end of the first page. 
+    # Calling CGContextEndPage denotes the end of the first page.
     # You MUST call CGContextEndPage after each time you call
     # CGContextBeginPage and they should not be nested.
     CGContextEndPage(pdfContext)
-    
+
     # You MUST release the PDF context when done with it. When the
     # retain count on the context reaches zero, Quartz flushes the
     # drawing content to the PDF file being created and closes it.
@@ -92,20 +92,20 @@ def createPasswordString(password):
         if not (32 <= ord(ch) <= 127):
             return None
 
-    return CFStringCreateWithCString(None, password, 
-					kCFStringEncodingASCII)
+    return CFStringCreateWithCString(None, password,
+                                        kCFStringEncodingASCII)
 
 def addEncryptionKeys(dict):
     ownerPassword = "test"
     ownerPasswordRef = None
     if dict is None:
-        return 
-    
+        return
+
     ownerPasswordRef = createPasswordString(ownerPassword)
     if ownerPasswordRef == None:
         print >>sys.stderr,  "Invalid owner password %s!"%(ownerPassword,)
         return
-   
+
     if hasattr(Quartz, 'kCGPDFContextOwnerPassword'):
         # Add the owner password.
         dict[kCGPDFContextOwnerPassword] = ownerPasswordRef
@@ -129,12 +129,12 @@ def myCreate2PagePDFDocumentAtURL(url):
     rectBox = CGRectMake(55, 55, 500, 680)
     # Create a point whose center is the center of rectBox.
     centerPoint = CGPoint(rectBox.origin.x + rectBox.size.width/2,
-				rectBox.origin.y + rectBox.size.height/2)
+                                rectBox.origin.y + rectBox.size.height/2)
 
     auxiliaryInfo = {}
     addEncryptionKeys(auxiliaryInfo)
     pdfContext =  CGPDFContextCreateWithURL(url, mediaBox, auxiliaryInfo)
-    
+
     if pdfContext is None:
         print >>sys.stderr, "Couldn't create PDF context!"
         return
@@ -146,7 +146,7 @@ def myCreate2PagePDFDocumentAtURL(url):
         # Clip to the media box.
         CGContextClipToRect(pdfContext, mediaBox)
         # Set the fill color and color space.
-        CGContextSetFillColorSpace(pdfContext, 
+        CGContextSetFillColorSpace(pdfContext,
                                 getTheCalibratedRGBColorSpace())
         CGContextSetFillColor(pdfContext, red)
         # Fill the rectangle of the media box with red.
@@ -154,7 +154,7 @@ def myCreate2PagePDFDocumentAtURL(url):
         # Make a new named destination at the center of the rect being
         # painted. Here the code uses the name redPageName since
         # this is the "red" page that is being named.
-        CGPDFContextAddDestinationAtPoint(pdfContext, 
+        CGPDFContextAddDestinationAtPoint(pdfContext,
                         redPageName, centerPoint)
         # Make a link to a destination not yet created, that for
         # the "blue" page. Making this link is independent from
@@ -173,16 +173,16 @@ def myCreate2PagePDFDocumentAtURL(url):
         # Clip to the media box.
         CGContextClipToRect(pdfContext, mediaBox)
         # Set the fill color and color space.
-        CGContextSetFillColorSpace(pdfContext, 
+        CGContextSetFillColorSpace(pdfContext,
                                 getTheCalibratedRGBColorSpace())
         CGContextSetFillColor(pdfContext, blue)
         # Fill the rectangle of the media box with blue.
         CGContextFillRect(pdfContext, rectBox)
-        # Make a new named destination at the center of the rect 
-        # being painted. Here the code uses the name bluePageName 
-        # since this is the "blue" page that is being named. The link 
+        # Make a new named destination at the center of the rect
+        # being painted. Here the code uses the name bluePageName
+        # since this is the "blue" page that is being named. The link
         # on page 1 refers to this destination.
-        CGPDFContextAddDestinationAtPoint(pdfContext, 
+        CGPDFContextAddDestinationAtPoint(pdfContext,
                         bluePageName, centerPoint)
         # Make a link to a destination already created
         # for page 1, the red page. Clicking on this link
@@ -192,7 +192,7 @@ def myCreate2PagePDFDocumentAtURL(url):
                 rectBox)
     CGContextRestoreGState(pdfContext)
     CGContextEndPage(pdfContext)
-    
+
     # You MUST release the PDF context when done with it. When the
     # retain count on the context reaches zero, Quartz flushes the
     # drawing content to the PDF file being created and closes it.

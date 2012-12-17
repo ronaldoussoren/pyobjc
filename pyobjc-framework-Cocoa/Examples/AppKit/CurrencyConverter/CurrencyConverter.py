@@ -15,7 +15,7 @@ class ConverterController (NSObject):
     # for introspection in objective-C)
     converter = objc.IBOutlet()
     dollarField = objc.IBOutlet()
-    rateField = objc.IBOutlet() 
+    rateField = objc.IBOutlet()
     totalField = objc.IBOutlet()
 
     def awakeFromNib(self):

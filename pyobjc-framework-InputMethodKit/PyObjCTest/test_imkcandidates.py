@@ -32,7 +32,7 @@ class TestIMKCandidates (TestCase):
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertResultIsBOOL(IMKCandidates.selectCandidateWithIdentifier_)
-        
+
 
 if __name__ == "__main__":
     main()

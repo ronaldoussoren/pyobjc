@@ -41,15 +41,15 @@ class TestABAddressBookC (TestCase):
         r = ABHasUnsavedChanges(ref)
         self.assertResultHasType(ABHasUnsavedChanges, objc._C_BOOL)
         self.assertIsInstance(r, bool)
-        
+
         r = me = ABGetMe(ref)
         self.assertIsInstance(r, ABPersonRef)
 
         # There's only one addressbook per user account, therefore
-        # testing functions that modify the adressbook isn't safe 
+        # testing functions that modify the adressbook isn't safe
         # because we'd update the AddressBook of the user running
         # the test which is a bad thing.
-        # Therefore we only test if the function signature is 
+        # Therefore we only test if the function signature is
         # correct. That's not ideal, but because mutation functions
         # have a simple interface it should be sufficient.
         self.assertResultHasType(ABSetMe, objc._C_VOID)
@@ -78,7 +78,7 @@ class TestABAddressBookC (TestCase):
         v = ABTypeOfProperty(ref, "ABPersion", v[0])
         self.assertIsInstance(v, (int, long))
 
-        v = ABCopyRecordForUniqueId(ref, ABRecordCopyUniqueId(me)) 
+        v = ABCopyRecordForUniqueId(ref, ABRecordCopyUniqueId(me))
         self.assertResultIsCFRetained(ABCopyRecordForUniqueId)
         self.assertIsInstance(v, ABPersonRef)
 

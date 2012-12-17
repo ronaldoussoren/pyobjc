@@ -115,7 +115,7 @@ class TestRunLoop (TestCase):
         CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
         res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
         CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
-        
+
         self.assertNotEqual(len(state) , 0 )
         for item in state:
             self.assertIs(item[0], observer)
@@ -171,7 +171,7 @@ class TestRunLoop (TestCase):
         runloop_mode = "pyobjctest.cfrunloop"
 
         rl = CFRunLoopGetCurrent()
-        
+
         state = []
         data = {}
         def schedule(info, rl, mode):
@@ -181,7 +181,7 @@ class TestRunLoop (TestCase):
         def perform(info):
             state.append(['perform', info])
 
-        source = CFRunLoopSourceCreate(None, 55, 
+        source = CFRunLoopSourceCreate(None, 55,
                 (0, schedule, cancel, perform, data))
         self.assertIsInstance(source, CFRunLoopSourceRef)
         ctx = CFRunLoopSourceGetContext(source, None)
@@ -196,7 +196,7 @@ class TestRunLoop (TestCase):
         self.assertIs(CFRunLoopSourceIsValid(source), True)
         CFRunLoopSourceInvalidate(source)
         self.assertIs(CFRunLoopSourceIsValid(source), False)
-        source = CFRunLoopSourceCreate(None, 55, 
+        source = CFRunLoopSourceCreate(None, 55,
                 (0, schedule, cancel, perform, data))
         self.assertIsInstance(source, CFRunLoopSourceRef)
         self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), False)
@@ -279,7 +279,7 @@ class TestRunLoop (TestCase):
 
         self.assertArgIsBlock(CFRunLoopTimerCreateWithHandler, 5, b'v^{__CFRunLoopTimer=}')
         l = []
-        ref = CFRunLoopTimerCreateWithHandler(None, 
+        ref = CFRunLoopTimerCreateWithHandler(None,
                 CFAbsoluteTimeGetCurrent() + 2.9, 0.0, 0, 0, lambda x: l.append(x))
         self.assertIsInstance(ref, CFRunLoopTimerRef)
 

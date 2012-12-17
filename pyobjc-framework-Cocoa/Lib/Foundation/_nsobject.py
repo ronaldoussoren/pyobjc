@@ -1,7 +1,7 @@
 """
 Define a category on NSObject with some useful methods.
 """
-import objc 
+import objc
 import sys
 
 if sys.version_info[0] == 2:
@@ -58,7 +58,7 @@ class NSObject (objc.Category(NSObject)):
         def pyobjc_performSelector_onThread_withObject_waitUntilDone_modes_(
                 self, aSelector, thread, arg, wait, modes):
             """
-            A version of performSelector:onThread:withObject:waitUntilDone:modes: 
+            A version of performSelector:onThread:withObject:waitUntilDone:modes:
             that will log exceptions in the called method (instead of aborting the
             NSRunLoop on the other thread).
             """
@@ -69,7 +69,7 @@ class NSObject (objc.Category(NSObject)):
     def pyobjc_performSelector_withObject_afterDelay_(
             self, aSelector, arg, delay):
         """
-        A version of performSelector:withObject:afterDelay: 
+        A version of performSelector:withObject:afterDelay:
         that will log exceptions in the called method (instead of aborting the
         NSRunLoop).
         """
@@ -138,7 +138,7 @@ class NSObject (objc.Category(NSObject)):
         """
         result = []
         self.performSelectorOnMainThread_withObject_waitUntilDone_modes_(
-            b'_pyobjc_performOnThreadWithResult:', 
+            b'_pyobjc_performOnThreadWithResult:',
             (aSelector, arg, result), True, modes)
         isOK, result = result[0]
 
@@ -153,7 +153,7 @@ class NSObject (objc.Category(NSObject)):
             self, aSelector, arg):
         result = []
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-            b'_pyobjc_performOnThreadWithResult:', 
+            b'_pyobjc_performOnThreadWithResult:',
             (aSelector, arg, result), True)
         isOK, result = result[0]
 
@@ -164,7 +164,7 @@ class NSObject (objc.Category(NSObject)):
             _raise(exc_type, exc_value, exc_trace)
 
     if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
-        # These methods require Leopard, don't define them if the 
+        # These methods require Leopard, don't define them if the
         # platform functionality isn't present.
 
         @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:modes:")

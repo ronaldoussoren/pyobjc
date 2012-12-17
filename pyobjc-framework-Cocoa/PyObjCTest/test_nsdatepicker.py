@@ -5,7 +5,7 @@ class TestNSDatePicker (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSDatePicker.isBezeled)
         self.assertArgIsBOOL(NSDatePicker.setBezeled_, 0)
-        
+
         self.assertResultIsBOOL(NSDatePicker.isBordered)
         self.assertArgIsBOOL(NSDatePicker.setBordered_, 0)
 

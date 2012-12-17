@@ -13,4 +13,3 @@ setup(
     app=["main.py"],
     data_files=["English.lproj"] + [ os.path.join('GraphicsFiles', fn) for fn in os.listdir('GraphicsFiles') ],
 )
-

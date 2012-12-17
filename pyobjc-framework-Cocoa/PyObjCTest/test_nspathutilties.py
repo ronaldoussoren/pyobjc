@@ -10,7 +10,7 @@ except NameError:
 
 class TestNSPathUtilities(TestCase):
     def testSearchPaths(self):
-        self.assert_( 
+        self.assert_(
                 NSSearchPathForDirectoriesInDomains( NSAllLibrariesDirectory, NSAllDomainsMask, NO ),
                       "NSSearchPathForDirectoriesInDomains() failed to return anything." )
 

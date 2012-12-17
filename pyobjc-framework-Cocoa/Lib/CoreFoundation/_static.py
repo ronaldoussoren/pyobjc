@@ -25,7 +25,7 @@ CFArrayCreate, CFArrayCreateMutable = _setup()
 def _setup():
     NSDictionary = _objc.lookUpClass('NSDictionary')
     NSMutableDictionary = _objc.lookUpClass('NSMutableDictionary')
-    def CFDictionaryCreate(allocator, keys, values, numValues, 
+    def CFDictionaryCreate(allocator, keys, values, numValues,
             keyCallbacks, valueCallbacks):
         assert keyCallbacks is None
         assert valueCallbacks is None

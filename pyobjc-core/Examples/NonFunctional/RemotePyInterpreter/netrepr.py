@@ -11,11 +11,11 @@ class NetRepr(object):
         self.objectPool = objectPool
         self.cache = {}
         self._identfactory = itertools.count()
-    
+
     def clear(self):
         self.cache.clear()
         self._identfactory = itertools.count()
-        
+
     def netrepr_tuple(self, obj):
         return repr(tuple(itertools.imap(self.netrepr, obj)))
 
@@ -91,7 +91,7 @@ class BaseObjectPool(object):
         pool = self.pools.pop()
         for ref, count in pool.iteritems():
             ref.release(count)
- 
+
     def referenceForObject(self, obj):
         raise TypeError, "Can not create a reference to %r, the bridge is unidirectional" % (obj,)
 
@@ -110,7 +110,7 @@ class RemoteObjectPool(BaseObjectPool):
         if rval is None:
             rval = RemoteObjectReference(self, ident, type_string)
         return rval
- 
+
 
 class ObjectPool(BaseObjectPool):
     def __init__(self):
@@ -123,10 +123,10 @@ class ObjectPool(BaseObjectPool):
 
     def object_alloc(self, ref, obj_id):
         self.obj_ids[obj_id] = ref
-    
+
     def object_dealloc(self, ref, obj_id):
         del self.obj_ids[obj_id]
-    
+
     def objectForIdent(self, ident):
         return self.referenceForIdent(ident).obj
 
@@ -138,7 +138,7 @@ class ObjectPool(BaseObjectPool):
             rval = ObjectReference(self, ident, type_string(obj), obj, obj_id)
             rval = rval.alloc().autorelease()
         return rval
-        
+
 
 class BaseObjectReference(object):
     def __init__(self, objectPool, ident, type_string):
@@ -170,7 +170,7 @@ class BaseObjectReference(object):
             raise ValueError, "Reference %r over-released (%r -> %r)" % (self, self.retainCount, newCount)
         self.retainCount = newCount
         return self
-            
+
     def autorelease(self):
         #print "%s.autorelease()" % (self,)
         self.objectPool.autorelease(self)
@@ -201,7 +201,7 @@ class ObjectReference(BaseObjectReference):
         self.obj = None
         self.obj_id = -1
         BaseObjectReference.dealloc(self)
-    
+
     def __netrepr__(self):
         return "__ref__(%r, %r)" % (self.ident, self.type_string)
 

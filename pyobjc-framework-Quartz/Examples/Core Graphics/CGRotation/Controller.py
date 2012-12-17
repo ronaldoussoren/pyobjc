@@ -17,20 +17,20 @@ class Controller (NSObject):
     openImageIOSupportedTypes = objc.ivar()
 
     def awakeFromNib(self):
-	self.openImageIOSupportedTypes = None
-	# Ask CFBundle for the location of our demo image
-	url = CFBundleCopyResourceURL(CFBundleGetMainBundle(), u"demo", u"png", None)
+        self.openImageIOSupportedTypes = None
+        # Ask CFBundle for the location of our demo image
+        url = CFBundleCopyResourceURL(CFBundleGetMainBundle(), u"demo", u"png", None)
         if url is not None:
             # And if available, load it
             self.imageView.setImage_(IICreateImage(url))
 
-	self.imageView.window().center()
-	self.setRotation_(0.0)
-	self.setScaleX_(1.0)
-	self.setScaleY_(1.0)
-	self.setTranslateX_(0.0)
-	self.setTranslateY_(0.0)
-	self.setPreserveAspectRatio_(False)
+        self.imageView.window().center()
+        self.setRotation_(0.0)
+        self.setScaleX_(1.0)
+        self.setScaleY_(1.0)
+        self.setTranslateX_(0.0)
+        self.setTranslateY_(0.0)
+        self.setPreserveAspectRatio_(False)
 
     @objc.IBAction
     def changeScaleX_(self, sender):
@@ -54,21 +54,21 @@ class Controller (NSObject):
 
     @objc.IBAction
     def reset_(self, sender):
-	self.setRotation_(0.0)
-	self.setScaleX_(1.0)
-	self.setScaleY_(1.0)
-	self.setTranslateX_(0.0)
-	self.setTranslateY_(0.0)
+        self.setRotation_(0.0)
+        self.setScaleX_(1.0)
+        self.setScaleY_(1.0)
+        self.setTranslateX_(0.0)
+        self.setTranslateY_(0.0)
 
-	self.imageView.setNeedsDisplay_(True)
+        self.imageView.setNeedsDisplay_(True)
 
     # Returns an array with the extensions that match the given Uniform Type Identifier (UTI).
     def extensionsForUTI_(self, uti):
-	# If anything goes wrong, we'll return None, otherwise this will be the array of extensions 
+        # If anything goes wrong, we'll return None, otherwise this will be the array of extensions
         # for this image type.
-	extensions = None
-	# Only get extensions for UTIs that are images (i.e. conforms to public.image aka kUTTypeImage)
-	# This excludes PDF support that ImageIO advertises, but won't actually use.
+        extensions = None
+        # Only get extensions for UTIs that are images (i.e. conforms to public.image aka kUTTypeImage)
+        # This excludes PDF support that ImageIO advertises, but won't actually use.
         if UTTypeConformsTo(uti, kUTTypeImage):
             # Copy the decleration for the UTI (if it exists)
             decleration = UTTypeCopyDeclaration(uti)
@@ -79,7 +79,7 @@ class Controller (NSObject):
                     # We are interested specifically in the extensions that this UTI uses
                     filenameExtensions = tags.get(kUTTagClassFilenameExtension)
                     if filenameExtensios is not None:
-                        # It is valid for a UTI to export either an Array (of Strings) representing 
+                        # It is valid for a UTI to export either an Array (of Strings) representing
                         # multiple tags, or a String representing a single tag.
                         type = CFGetTypeID(filenameExtensions)
                         if type == CFStringGetTypeID():
@@ -89,7 +89,7 @@ class Controller (NSObject):
                             # If an array was exported, then just return that array.
                             extensions = filenameExtensions.copy()
 
-	return extensions
+        return extensions
 
     # On Tiger NSOpenPanel only understands extensions, not UTIs, so we have to obtain a list of extentions
     # from the UTIs that Image IO tells us it can handle.
@@ -104,16 +104,16 @@ class Controller (NSObject):
 
     @objc.IBAction
     def openDocument_(self, sender):
-	panel = NSOpenPanel.openPanel()
-	panel.setAllowsMultipleSelection_(False)
-	panel.setResolvesAliases_(True)
-	panel.setTreatsFilePackagesAsDirectories_(True)
-	
-	self.createOpenTypesArray()
-	
-	panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+        panel = NSOpenPanel.openPanel()
+        panel.setAllowsMultipleSelection_(False)
+        panel.setResolvesAliases_(True)
+        panel.setTreatsFilePackagesAsDirectories_(True)
+
+        self.createOpenTypesArray()
+
+        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
                 None, None, self.openImageIOSupportedTypes, self.imageView.window(), self,
-		'openImageDidEnd:returnCode:contextInfo:', None)
+                'openImageDidEnd:returnCode:contextInfo:', None)
 
     @objc.signature("v@:@i^v")
     def openImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo_):
@@ -126,68 +126,68 @@ class Controller (NSObject):
 
     @objc.IBAction
     def saveDocumentAs_(self, sender):
-	panel = NSSavePanel.savePanel()
-	panel.setCanSelectHiddenExtension_(True)
-	panel.setRequiredFileType_("jpeg")
-	panel.setAllowsOtherFileTypes_(False)
-	panel.setTreatsFilePackagesAsDirectories_(True)
-	
-	panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
-                None, "untitled image", self.imageView.window(), self, 
+        panel = NSSavePanel.savePanel()
+        panel.setCanSelectHiddenExtension_(True)
+        panel.setRequiredFileType_("jpeg")
+        panel.setAllowsOtherFileTypes_(False)
+        panel.setTreatsFilePackagesAsDirectories_(True)
+
+        panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+                None, "untitled image", self.imageView.window(), self,
                 'saveImageDidEnd:returnCode:contextInfo:', None)
 
     @objc.signature("v@:@i^v")
     def saveImageDidEnd_returnCode_contextInfo_(self, panel, returnCode, contextInfo):
         if returnCode == NSOKButton:
-		frame = self.imageView.frame()
-		IISaveImage(self.imageView.image(), panel.URL(), 
-                        math.ceil(frame.size.width), math.ceil(frame.size.height))
+            frame = self.imageView.frame()
+            IISaveImage(self.imageView.image(), panel.URL(),
+                    math.ceil(frame.size.width), math.ceil(frame.size.height))
 
     def setRotation_(self, r):
         r = r % 360.0
         if r < 0:
             r += 360.0
 
-	self._rotation = r
-	self.imageView.image().fRotation = 360.0 - r # XXX
-	self.imageView.setNeedsDisplay_(True)
+        self._rotation = r
+        self.imageView.image().fRotation = 360.0 - r # XXX
+        self.imageView.setNeedsDisplay_(True)
 
     def setScaleX_(self, x):
-	self._scaleX = x;
-	self.imageView.image().fScaleX = self._scaleX
+        self._scaleX = x;
+        self.imageView.image().fScaleX = self._scaleX
         if self._preserveAspectRatio:
             self.imageView.image().fScaleY = self._scaleX
 
-	self.imageView.setNeedsDisplay_(True)
+        self.imageView.setNeedsDisplay_(True)
 
     def setScaleY_(self, y):
-	self._scaleY = y
+        self._scaleY = y
         if not self._preserveAspectRatio:
             self.imageView.image().fScaleY = self._scaleY
             self.imageView.setNeedsDisplay_(True)
 
     def setPreserveAspectRatio_(self, preserve):
-	self._preserveAspectRatio = preserve
-	self.imageView.image().fScaleX = self._scaleX
+        self._preserveAspectRatio = preserve
+        self.imageView.image().fScaleX = self._scaleX
         if self._preserveAspectRatio:
             self.imageView.image().fScaleY = self._scaleX
 
         else:
             self.imageView.image().fScaleY = self._scaleY
 
-	self.scaleYView.setEnabled_(not self._preserveAspectRatio)
-	self.textScaleYView.setEnabled_(not self._preserveAspectRatio)
-	self.imageView.setNeedsDisplay_(True)
+        self.scaleYView.setEnabled_(not self._preserveAspectRatio)
+        self.textScaleYView.setEnabled_(not self._preserveAspectRatio)
+        self.imageView.setNeedsDisplay_(True)
 
     def setTranslateX_(self, x):
         self._translateX = x
-	self.imageView.image().fTranslateX = self._translateX
-	self.imageView.setNeedsDisplay_(True)
+        self.imageView.image().fTranslateX = self._translateX
+        self.imageView.setNeedsDisplay_(True)
 
     def setTranslateY_(self, y):
-	self._translateY = y
-	self.imageView.image().fTranslateY = self._translateY
-	self.imageView.setNeedsDisplay_(True)
+        self._translateY = y
+        self.imageView.image().fTranslateY = self._translateY
+        self.imageView.setNeedsDisplay_(True)
 
     def rotation(self):
         return self._rotation

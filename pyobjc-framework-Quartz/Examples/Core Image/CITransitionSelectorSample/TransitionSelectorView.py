@@ -44,7 +44,7 @@ class TransitionSelectorView (NSView):
         NSRunLoop.currentRunLoop().addTimer_forMode_(timer, NSEventTrackingRunLoopMode)
 
     def setSourceImage_(self, source):
-        self._sourceImage = source 
+        self._sourceImage = source
 
     def setTargetImage_(self, target):
         self._targetImage = target
@@ -87,7 +87,7 @@ class TransitionSelectorView (NSView):
             transition.setValue_forKey_(self._targetImage, "inputImage")
             transition.setValue_forKey_(self._sourceImage, "inputTargetImage")
 
-        transition._.inputTime = t % 1.0 
+        transition._.inputTime = t % 1.0
 
         crop = CIFilter.filterWithName_("CICrop")
         crop._.inputImage = transition._.outputImage
@@ -111,7 +111,7 @@ class TransitionSelectorView (NSView):
         for i in xrange(TRANSITION_COUNT):
             origin.x = (i % w) * (self.thumbnailWidth  + self.thumbnailGap)
             origin.y = (i / w) * (self.thumbnailHeight + self.thumbnailGap)
-            
+
             if context is not None:
                 context.drawImage_atPoint_fromRect_(
                     self.imageForTransition_atTime_(i, t + 0.1 * i), origin, thumbFrame)
@@ -131,8 +131,8 @@ class TransitionSelectorView (NSView):
         self.transitions[0]._.inputOpacity = 0.0
 
         self.transitions[1] = CIFilter.filterWithName_("CIDissolveTransition")
-        
-        self.transitions[2] = CIFilter.filterWithName_("CISwipeTransition")			# dupe
+
+        self.transitions[2] = CIFilter.filterWithName_("CISwipeTransition")                     # dupe
         self.transitions[2]._.inputExtent = extent
         self.transitions[2]._.inputColor = CIColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0)
         self.transitions[2]._.inputAngle = math.pi
@@ -180,4 +180,3 @@ class TransitionSelectorView (NSView):
         self.transitions[8]._.inputBacksideImage = self.blankImage()
         self.transitions[8]._.inputAngle = -0.2 * math.pi
         self.transitions[8]._.inputRadius = 70.0
-

@@ -1,5 +1,5 @@
 """
-A very crude emulator of dejagnu, just enough to integrate the libbfi 
+A very crude emulator of dejagnu, just enough to integrate the libbfi
 unittests into the pyobjc ones.
 """
 import os
@@ -32,7 +32,7 @@ def exitCode2Description(code):
     """
     if os.WIFEXITED(code):
         return 'exited with status %s'%(os.WEXITSTATUS(code),)
-    
+
     elif os.WIFSIGNALED(code):
         sig = os.WTERMSIG(code)
         return 'crashed with signal %s [%s]'%(signame(sig), sig)
@@ -96,7 +96,7 @@ class DgTestCase (unittest.TestCase):
 
         # NOTE: We're ignoring the xfail data for now, none of the
         # testcases are supposed to fail on darwin.
-        
+
         self.compileTestCase()
         data = self.runTestCase()
 
@@ -126,7 +126,7 @@ class DgTestCase (unittest.TestCase):
 
         CFLAGS=get_config_var('CFLAGS')
         if int(os.uname()[2].split('.')[0]) >= 11:
-            # Workaround for compile failure on OSX 10.7 
+            # Workaround for compile failure on OSX 10.7
             # and Xcode 4.2
             CFLAGS=re.sub('\s+-isysroot\s+\S+\s+', ' ', CFLAGS)
 
@@ -164,7 +164,7 @@ class DgTestCase (unittest.TestCase):
                 if fn.endswith('.o'):
                     result.append(os.path.join(dirpath, fn))
         return result
-            
+
 
 def testSuiteForDirectory(dirname):
     tests = []

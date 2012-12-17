@@ -20,7 +20,7 @@ class TestCGImageProperties (TestCase):
         self.assertIsInstance(kCGImagePropertyRawDictionary, unicode)
         self.assertIsInstance(kCGImagePropertyCIFFDictionary, unicode)
 
-    
+
         self.assertIsInstance(kCGImagePropertyFileSize, unicode)
         self.assertIsInstance(kCGImagePropertyPixelHeight, unicode)
         self.assertIsInstance(kCGImagePropertyPixelWidth, unicode)

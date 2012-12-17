@@ -42,4 +42,3 @@ class MHTDocument (NSDocument):
         open('/tmp/archive.webarchive', 'wb').write(archive.data().bytes())
         self.webview.mainFrame().stopLoading()
         self.webview.mainFrame().loadArchive_(archive)
-

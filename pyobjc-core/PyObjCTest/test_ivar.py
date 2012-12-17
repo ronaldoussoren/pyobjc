@@ -111,7 +111,7 @@ class TestInstanceVariables(TestCase):
 
 
 class TestAllInstanceVariables (TestCase):
-    # Some tests for accessing any instance variable, even those not 
+    # Some tests for accessing any instance variable, even those not
     # declared in python.
 
     def testReading(self):
@@ -218,7 +218,7 @@ class TestAllInstanceVariables (TestCase):
         self.assertIn(('intValue', objc._C_INT), v)
         self.assertIn(('isa', objc._C_CLASS), v)
 
-    
+
     def testAnonymousIvar(self):
 
         class AnonIvarClass (NSObject):
@@ -234,7 +234,7 @@ class TestAllInstanceVariables (TestCase):
         o.var = NSObject.alloc().init()
 
         self.assertIsInstance(o.var, NSObject)
-    
+
         o.var2 = 4
         self.assertIsInstance(o.var2, float)
 

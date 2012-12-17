@@ -58,7 +58,7 @@ class oc_build_py (build_py.build_py):
         build_py.build_py.run_2to3(self, files, doctests)
 
     def build_packages(self):
-        log.info("Overriding build_packages to copy PyObjCTest")        
+        log.info("Overriding build_packages to copy PyObjCTest")
         p = self.packages
         self.packages = list(self.packages) + ['PyObjCTest']
         try:
@@ -124,7 +124,7 @@ class oc_test (test.test):
             self.run_command('egg_info')
             self.reinitialize_command('build_ext', inplace=1)
             self.run_command('build_ext')
-        
+
         self.__old_path = sys.path[:]
         self.__old_modules = sys.modules.copy()
 
@@ -135,7 +135,7 @@ class oc_test (test.test):
         ei_cmd = self.get_finalized_command('egg_info')
         sys.path.insert(0, normalize_path(ei_cmd.egg_base))
         sys.path.insert(1, os.path.dirname(__file__))
-            
+
         add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
         require('%s==%s'%(ei_cmd.egg_name, ei_cmd.egg_version))
@@ -299,12 +299,12 @@ def _working_compiler(executable):
         cflags += CFLAGS
 
         p = subprocess.Popen([
-            executable, '-c', fp.name] + cflags, 
+            executable, '-c', fp.name] + cflags,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         exit = p.wait()
         if exit != 0:
             return False
-        
+
         binfile = fp.name[:-1] + 'o'
         if os.path.exists(binfile):
             os.unlink(binfile)
@@ -317,7 +317,7 @@ def _working_compiler(executable):
 
 def _fixup_compiler():
     if 'CC' in os.environ:
-        # CC is in the environment, always use explicit 
+        # CC is in the environment, always use explicit
         # overrides.
         return
 
@@ -399,11 +399,11 @@ from distutils.sysconfig import get_config_var, get_config_vars
 
 CFLAGS=[ ]
 
-# Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal 
-# assertions. 
+# Enable 'PyObjC_STRICT_DEBUGGING' to enable some costly internal
+# assertions.
 CFLAGS.extend([
     #"-fdiagnostics-show-option",
-    
+
     # Use this to analyze with clang
     #"--analyze",
 
@@ -420,7 +420,7 @@ CFLAGS.extend([
 
     # Loads of warning flags
     "-Wall", "-Wstrict-prototypes", "-Wmissing-prototypes",
-    "-Wformat=2", "-W", 
+    "-Wformat=2", "-W",
     #"-Wshadow", # disabled due to warnings from Python headers
     "-Wpointer-arith", #"-Wwrite-strings",
     "-Wmissing-declarations",
@@ -435,10 +435,10 @@ CFLAGS.extend([
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
     ])
 
-## Arghh, a stupid compiler flag can cause problems. Don't 
+## Arghh, a stupid compiler flag can cause problems. Don't
 ## enable -O0 if you value your sanity. With -O0 PyObjC will crash
 ## on i386 systems when a method returns a struct that isn't returned
-## in registers. 
+## in registers.
 if '-O0' in get_config_var('CFLAGS'):
     print ("Change -O0 to -O1")
     vars = get_config_vars()
@@ -463,7 +463,7 @@ UnixCCompiler.src_extensions.append('.S')
 del UnixCCompiler
 
 
-# 
+#
 # Support for an embedded copy of libffi
 #
 FFI_CFLAGS=['-Ilibffi-src/include', '-Ilibffi-src/powerpc']
@@ -490,7 +490,7 @@ FFI_SOURCE=[
 #
 
 if USE_SYSTEM_FFI:
-    ExtensionList =  [ 
+    ExtensionList =  [
         Extension("objc._objc",
             list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
             extra_compile_args=CFLAGS + ["-I/usr/include/ffi"],
@@ -500,7 +500,7 @@ if USE_SYSTEM_FFI:
     ]
 
 else:
-    ExtensionList =  [ 
+    ExtensionList =  [
         Extension("objc._objc",
             FFI_SOURCE + list(glob.glob(os.path.join('Modules', 'objc', '*.m'))),
             extra_compile_args=CFLAGS + FFI_CFLAGS,
@@ -550,7 +550,7 @@ Topic :: Software Development :: User Interfaces
 
 
 dist = setup(
-    name = "pyobjc-core", 
+    name = "pyobjc-core",
     version = package_version(),
     description = "Python<->ObjC Interoperability Module",
     long_description = LONG_DESCRIPTION,
@@ -559,7 +559,7 @@ dist = setup(
     url = "http://pyobjc.sourceforge.net/",
     platforms = [ 'MacOS X' ],
     ext_modules = ExtensionList,
-    packages = [ 'objc', 'PyObjCTools', ], 
+    packages = [ 'objc', 'PyObjCTools', ],
     namespace_packages = ['PyObjCTools'],
     package_dir = { '': 'Lib', 'PyObjCTest': 'PyObjCTest' },
     extra_path = "PyObjC",

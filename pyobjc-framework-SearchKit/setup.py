@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "SearchKit" framework on MacOSX. SearchKit is a content
 indexing and search solution.
 
@@ -8,7 +8,7 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 
 NOTE: These wrappers are pretty fragile, sadly enough not all run-time
-information that needed to build reliable wrappers is exported from 
+information that needed to build reliable wrappers is exported from
 the framework.
 '''
 from pyobjc_setup import setup
@@ -22,7 +22,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

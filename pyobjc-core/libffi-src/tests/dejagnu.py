@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-A very crude emulator of dejagnu, just enough to integrate the libbfi 
+A very crude emulator of dejagnu, just enough to integrate the libbfi
 unittests into the pyobjc ones.
 """
 import os
@@ -31,7 +31,7 @@ def exitCode2Description(code):
     """
     if os.WIFEXITED(code):
         return 'exited with status %s'%(os.WEXITSTATUS(code),)
-    
+
     elif os.WIFSIGNALED(code):
         sig = os.WTERMSIG(code)
         return 'crashed with signal %s [%s]'%(signame(sig), sig)
@@ -70,10 +70,10 @@ class DgTestCase (unittest.TestCase):
     #archOption = ""
     compileOptionsBase = "-g -DMACOSX -Iinclude -o /tmp/test.bin -lffi"
     compileOptionsList = ( # HACK ALERT: Yes, there are better ways to do this, but this is easy and extremely flexible
-        "%s %s %s" % (compileOptionsBase, archOption, "-O0"), 
-        "%s %s %s" % (compileOptionsBase, archOption, "-O1"), 
-        "%s %s %s" % (compileOptionsBase, archOption, "-O2"), 
-        "%s %s %s" % (compileOptionsBase, archOption, "-O3"), 
+        "%s %s %s" % (compileOptionsBase, archOption, "-O0"),
+        "%s %s %s" % (compileOptionsBase, archOption, "-O1"),
+        "%s %s %s" % (compileOptionsBase, archOption, "-O2"),
+        "%s %s %s" % (compileOptionsBase, archOption, "-O3"),
         "%s %s %s" % (compileOptionsBase, archOption, "-Os"),
         "%s %s %s" % (compileOptionsBase, archOption, "-Oz"),  # Note: Apple-Only, see gcc man page for details
         )
@@ -102,7 +102,7 @@ class DgTestCase (unittest.TestCase):
 
         # NOTE: We're ignoring the xfail data for now, none of the
         # testcases are supposed to fail on darwin.
-        
+
         for compileOptions in self.compileOptionsList:
             self.compileTestCase(compileOptions)
             data = self.runTestCase()
@@ -147,7 +147,7 @@ class DgTestCase (unittest.TestCase):
                 if fn.endswith('.o'):
                     result.append(os.path.join(dirpath, fn))
         return result
-            
+
 
 def testSuiteForDirectory(dirname):
     tests = []

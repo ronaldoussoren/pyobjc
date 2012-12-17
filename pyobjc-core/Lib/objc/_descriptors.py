@@ -59,7 +59,7 @@ def accessor(func, typeSignature=b'@'):
             raise TypeError('%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, maxArgs, selArgs))
         else:
             raise TypeError('%s expected to take between %d and %d args, but must accept %d from Objective-C (implicit self plus count of underscores)' % (funcName, minArgs, maxArgs, selArgs))
-    
+
     if selArgs == 3:
         if funcName.startswith('validate') and funcName.endswith('_error_'):
             return selector(func, signature=_C_NSBOOL + b'@:N^@o^@')
@@ -70,13 +70,13 @@ def accessor(func, typeSignature=b'@'):
             return selector(func, signature=b'v@:' + _C_NSUInteger + typeSignature)
 
         elif funcName.startswith('get') and funcName.endswith('_range_'):
-            return selector(func, signature=b'v@:o^@' + _C_NSRange) 
+            return selector(func, signature=b'v@:o^@' + _C_NSRange)
 
         elif funcName.startswith('insert') and funcName.endswith('_atIndexes_'):
-            return selector(func, signature=b'v@:@@') 
+            return selector(func, signature=b'v@:@@')
 
         elif funcName.startswith('replace') and 'AtIndexes_with' in funcName:
-            return selector(func, signature=b'v@:@@') 
+            return selector(func, signature=b'v@:@@')
 
         # pass through to "too many arguments"
 
@@ -147,7 +147,7 @@ def namedselector(name, signature=None):
 def typedAccessor(typeSignature):
     """
     Decorator for creating a typed accessor, usage:
-        
+
         @typedAccessor('i')
         def someIntegerAccessor(self):
             return self.someInteger
@@ -178,7 +178,7 @@ def callbackFor(callable, argIndex=-1):
     decorator is optional when the callback isn't stored by the called function
 
     Usage::
-        
+
         @objc.callbackFor(NSArray.sortedArrayUsingFunction_context_)
         def compare(left, right, context):
             return 1
@@ -196,7 +196,7 @@ def selectorFor(callable, argIndex=-1):
     used as the selector argument to the specified method.
 
     Usage::
-        
+
         @objc.selectorFor(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_)
         def sheetDidEnd_returnCode_contextInfo_(self, sheet, returnCode, info):
             pass
@@ -215,7 +215,7 @@ def selectorFor(callable, argIndex=-1):
         except (IndexError, KeyError):
             raise ValueError("Not a selector argument with type information")
 
-    def addSignature(function): 
+    def addSignature(function):
         return selector(function, signature=signature)
 
     return addSignature
@@ -229,7 +229,7 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
     is used and special features (like copying) are needed
 
     usage::
-        
+
         class MyClass (NSObject):
             objc.synthesize('someTitle', copy=True)
 
@@ -275,7 +275,7 @@ def signature(signature, **kw):
     of Objective-C selectors.
 
     Usage::
-        
+
         @objc.signature('i@:if')
         def methodWithX_andY_(self, x, y):
             return 0

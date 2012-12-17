@@ -31,7 +31,7 @@ class TinyURLService(NSObject):
             types = pboard.types()
             url = None
 
-            
+
             if NSStringPboardType in types:
                 #NSLog(u'getting NSStringPboardType')
                 urlString = pboard.stringForType_(NSStringPboardType)
@@ -53,7 +53,7 @@ class TinyURLService(NSObject):
 
             urlString = url.absoluteString()
             #NSLog(u'urlString = %s', urlString)
-            
+
             res = getTinyURL(urlString.UTF8String())
 
             #NSLog(u'res = %r' % (res,))

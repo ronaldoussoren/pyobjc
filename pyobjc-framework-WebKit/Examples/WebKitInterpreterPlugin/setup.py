@@ -20,7 +20,7 @@ plist = dict(
         ),
     },
 )
-        
+
 setup(
     name="WebKitInterpreter",
     plugin = ["WebKitInterpreter.py"],

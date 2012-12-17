@@ -26,7 +26,7 @@ class TestCFODNode (TestCase):
 
         CFOpenDirectory.ODQueryScheduleWithRunLoop
         CFOpenDirectory.ODQueryUnscheduleFromRunLoop
-        
+
         self.assertArgHasType(CFOpenDirectory.ODQuerySetDispatchQueue, 1, b"^{dispatch_queue_s=}")
 
 if __name__ == "__main__":

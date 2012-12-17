@@ -27,7 +27,7 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 # The rest of this file contains support for bridgesupport
 # XML files.
 #
-# TODO: parseBridgeSupport (and its support class) is a 
+# TODO: parseBridgeSupport (and its support class) is a
 #       basic port from C, check if it can be simplified.
 
 # NOTE: This search path only contains system locations to
@@ -66,7 +66,7 @@ else: # pragma: no cover (py3k)
 
 class _BridgeSupportParser (object):
     """
-    Parser for the bridge support file format. 
+    Parser for the bridge support file format.
 
     Instances of this class will not update the bridge state,
     this makes it easier to test the class.
@@ -125,7 +125,7 @@ class _BridgeSupportParser (object):
                         result.append(b'"')
                         result.append(_as_bytes(nm))
                         result.append(b'"')
-                    
+
                     result.append(self.typestr2typestr(tp))
                 result.append(stop)
 
@@ -346,9 +346,9 @@ class _BridgeSupportParser (object):
 
             is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
             if is_class is _SENTINEL:
-                # Manpage says 'class_method', older PyObjC used 'classmethod' 
+                # Manpage says 'class_method', older PyObjC used 'classmethod'
                 is_class = self.attribute_bool(method, "class_method", None, False)
-            
+
 
             metadata = {}
             if ignore:
@@ -432,7 +432,7 @@ class _BridgeSupportParser (object):
 
         if self.attribute_bool(node, "ignore", None, False):
             return
-        
+
         meta = {}
         siglist = [b"v"]
         arguments = meta["arguments"] = {}
@@ -492,14 +492,14 @@ class _BridgeSupportParser (object):
             typestr  = self.attribute_string(method, "type", "type64")
             is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
             if is_class is _SENTINEL:
-                # Manpage says 'class_method', older PyObjC used 'classmethod' 
+                # Manpage says 'class_method', older PyObjC used 'classmethod'
                 is_class = self.attribute_bool(method, "class_method", None, False)
 
             if not sel_name or not typestr:
                 continue
 
             typestr = self.typestr2typestr(typestr)
-            sel = objc.selector(None, selector=_as_bytes(sel_name), 
+            sel = objc.selector(None, selector=_as_bytes(sel_name),
                     signature=_as_bytes(typestr), isClassMethod=is_class)
             method_list.append(sel)
 
@@ -684,12 +684,12 @@ def safe_resource_exists(package, resource):
     try:
         return  pkg_resources.resource_exists(package, resource)
     except ImportError:
-        # resource_exists raises ImportError when it cannot find 
+        # resource_exists raises ImportError when it cannot find
         # the first argument.
         return False
 
 def initFrameworkWrapper(frameworkName,
-        frameworkPath, frameworkIdentifier, globals, inlineTab=None, 
+        frameworkPath, frameworkIdentifier, globals, inlineTab=None,
         scan_classes=None, frameworkResourceName=None):
     """
     Load the named framework, using the identifier if that has result otherwise
@@ -727,7 +727,7 @@ def initFrameworkWrapper(frameworkName,
                     globals,
                     bundle_identifier=frameworkIdentifier,
                     scan_classes=scan_classes)
-        
+
         except ImportError:
             if scan_classes is None:
                 bundle = objc.loadBundle(
@@ -751,7 +751,7 @@ def initFrameworkWrapper(frameworkName,
     globals['super'] = objc.super
 
     # Look for metadata in the Python wrapper and prefer that over the
-    # data in the framework or in system locations. 
+    # data in the framework or in system locations.
     # Needed because the system bridgesupport files are buggy.
     if safe_resource_exists(frameworkResourceName, "PyObjC.bridgesupport"):
         data = pkg_resources.resource_string(frameworkResourceName,
@@ -779,7 +779,7 @@ def initFrameworkWrapper(frameworkName,
                 _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
-    
+
     # If there is no metadata there look for metadata in the standard Library
     # locations
     fn = frameworkName + '.bridgesupport'
@@ -794,7 +794,7 @@ def initFrameworkWrapper(frameworkName,
                 _parseBridgeSupport(data, globals, frameworkName, dylib_path=dylib_path)
             else:
                 _parseBridgeSupport(data, globals, frameworkName)
-            
+
             # Check if we have additional metadata bundled with PyObjC
             if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
                 data = pkg_resources.resource_string(frameworkResourceName,
@@ -803,7 +803,7 @@ def initFrameworkWrapper(frameworkName,
                     _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
             return bundle
-    
+
     return bundle
 
 _ivar_dict = objc._objc._ivar_dict()

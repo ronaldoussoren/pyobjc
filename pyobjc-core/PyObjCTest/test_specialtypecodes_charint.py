@@ -1,7 +1,7 @@
 """
 Test handling of the private typecodes:  _C_CHAR_AS_INT
 
-This typecode doesn't actually exists in the ObjC runtime but 
+This typecode doesn't actually exists in the ObjC runtime but
 are private to PyObjC. We use these to simplify the bridge code
 while at the same time getting a higher fidelity bridge.
 
@@ -152,7 +152,7 @@ class TestTypeCode_int8 (TestCase):
         self.assertEqual(v, (ord('b'), ord('o'), ord('a'), ord('t')))
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        a = array.array('b', [0] * 4) 
+        a = array.array('b', [0] * 4)
         v = o.int8ArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord('b'))

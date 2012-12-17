@@ -26,7 +26,7 @@ class TestFileDescriptor (TestCase):
     def testInspection(self):
         def callout(fd, types, context):
             pass
-        class Context: 
+        class Context:
             pass
         context = Context()
         fd = CFFileDescriptorCreate(None, 0, False, callout, context)

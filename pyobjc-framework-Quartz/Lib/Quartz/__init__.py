@@ -8,7 +8,7 @@ import AppKit
 
 def _load():
     submods = []
-    sys.modules['Quartz'] = mod = objc.ObjCLazyModule('Quartz', 
+    sys.modules['Quartz'] = mod = objc.ObjCLazyModule('Quartz',
             None, None, {}, None, {
                 '__doc__': __doc__,
                 'objc': objc,

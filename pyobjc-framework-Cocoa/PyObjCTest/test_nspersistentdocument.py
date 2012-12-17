@@ -7,7 +7,7 @@ class TestNSPersistentDocument (TestCase):
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSPersistentDocument.configurePersistentStoreCoordinatorForURL_ofType_modelConfiguration_storeOptions_error_)
         self.assertArgIsOut(NSPersistentDocument.configurePersistentStoreCoordinatorForURL_ofType_modelConfiguration_storeOptions_error_, 4)
-        
+
     def testMethods(self):
         self.assertResultIsBOOL(NSPersistentDocument.writeToURL_ofType_forSaveOperation_originalContentsURL_error_)
         self.assertArgIsOut(NSPersistentDocument.writeToURL_ofType_forSaveOperation_originalContentsURL_error_, 4)

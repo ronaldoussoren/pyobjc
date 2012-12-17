@@ -15,10 +15,10 @@ class xcPROJECTNAMEASIDENTIFIERxcDocument(NSPersistentDocument):
         self = super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).init()
         # initialization code
         return self
-        
+
     def windowNibName(self):
         return u"xcPROJECTNAMEASIDENTIFIERxcDocument"
-    
+
     def windowControllerDidLoadNib_(self, aController):
         super(xcPROJECTNAMEASIDENTIFIERxcDocument, self).windowControllerDidLoadNib_(aController)
         # user interface preparation code

@@ -19,7 +19,7 @@ class TestNSImage (TestCase):
         txtIcon.setSize_( (16,16) )
         htmlIcon = ws.iconForFileType_("html")
         htmlIcon.setSize_( (16,16) )
-        
+
         comboIcon = AppKit.NSImage.alloc().initWithSize_( (100,100) )
         comboIcon.lockFocus()
         txtIcon.compositeToPoint_fromRect_operation_((0,0), ((0,0),(16,16)), AppKit.NSCompositeCopy)
@@ -38,7 +38,7 @@ class TestNSImage (TestCase):
         self.assertEqual(NSImageCacheBySize, 2)
         self.assertEqual(NSImageCacheNever, 3)
 
-    
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance( NSImageNameQuickLookTemplate, unicode)

@@ -38,8 +38,8 @@ class TestClassMethods (TestCase):
 
 
 class TestInstanceMethods (TestCase):
-    # Check that instance methods can be accessed through the instance, and 
-    # also through the class when no class method of the same name is 
+    # Check that instance methods can be accessed through the instance, and
+    # also through the class when no class method of the same name is
     # available.
 
     def testViaClass(self):
@@ -88,4 +88,3 @@ class TestSuper (TestCase):
 
 if __name__ == "__main__":
     main()
-

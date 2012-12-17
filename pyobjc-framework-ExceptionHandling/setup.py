@@ -1,9 +1,9 @@
-''' 
+'''
 Wrappers for the "ExceptionHandling" framework on MacOSX. The ExceptionHandling
-framework provides facilities for monitoring and debugging exceptional 
-conditions in Cocoa programs. 
+framework provides facilities for monitoring and debugging exceptional
+conditions in Cocoa programs.
 
-PyObjC also provides low-level debugging utilities beyond the core 
+PyObjC also provides low-level debugging utilities beyond the core
 ExceptionHandling framework in the module ``PyObjCTools.Debugging``.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -22,7 +22,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

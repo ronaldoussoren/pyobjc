@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for framework 'CoreLocation' on MacOSX 10.6. This framework provides
 an interface for dealing with the physical location of a machine, which allows
 for geo-aware applications.
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

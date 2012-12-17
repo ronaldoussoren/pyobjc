@@ -91,14 +91,14 @@ class TestCGImage (TestCase):
         self.assertIsInstance(v, CGImageRef)
 
         self.assertResultIsCFRetained(CGImageCreateWithImageInRect)
-        v = CGImageCreateWithImageInRect(image, ((10, 10), (30, 40))) 
+        v = CGImageCreateWithImageInRect(image, ((10, 10), (30, 40)))
         self.assertIsInstance(v, CGImageRef)
 
         self.assertResultIsCFRetained(CGImageCreateWithMask)
         v = CGImageCreateWithMask(image, mask)
         self.assertIsInstance(v, CGImageRef)
 
-        
+
         self.assertResultIsCFRetained(CGImageCreateWithMaskingColors)
         v = CGImageCreateWithMaskingColors(image2, [0,255]*4)
         self.assertIsInstance(v, CGImageRef)

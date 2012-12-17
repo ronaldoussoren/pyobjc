@@ -7,7 +7,7 @@ from InstantMessage import *
 class GetBuddyInfo (AMBundleAction):
     def runWithInput_fromAction_error_(self, input, anAction, errorInfo):
         people = []
-    
+
         # convert the input to a list of ABPerson objects
         if isinstance(input, NSAppleEventDescriptor):
             count = input.numberOfItems()
@@ -44,29 +44,29 @@ class GetBuddyInfo (AMBundleAction):
                                 if firstName is not None:
                                     description += firstName
                                     description += ' '
-                            
+
                                 lastName = dict[IMPersonLastNameKey]
                                 if lastName is not None:
                                     description += lastName
-                            
+
                                 description += '\r'
-                            
+
                                 serviceName = dict[IMPersonServiceNameKey]
                                 if serviceName is not None:
                                     description += "Service: "
                                     description += serviceName
                                     description += "\r"
-                            
+
                                 screenName = dict[IMPersonScreenNameKey]
                                 if screenName is not None:
                                     description += "Screen Name: "
                                     description += screenName
                                     description += "\r"
-                            
+
                                 status = dict[IMPersonStatusKey]
                                 if status is not None:
                                     description += "Status: "
-                                
+
                                     if status == IMPersonStatusUnknown:
                                         description += "Unknown"
                                     elif status == IMPersonStatusOffline:
@@ -77,14 +77,14 @@ class GetBuddyInfo (AMBundleAction):
                                         description += "Away"
                                     elif status == IMPersonStatusAvailable:
                                         description += "Available"
-                                    
+
                                     description += "\r"
-                            
+
                                 message = dict[IMPersonStatusMessageKey]
                                 if message is not None:
                                     description += "Message: "
                                     description += message
                                     description += "\r"
-                            
+
                                 info.append(description)
         return str(info)

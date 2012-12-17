@@ -43,7 +43,7 @@ class NotificationHandler(NSObject):
                     return
                 workspace.openFile_withApplication_(fullPath, app)
 
-# Create an instance of our notification handler, and ask the workspace 
+# Create an instance of our notification handler, and ask the workspace
 # notification center to tell us when a new volume is mounted.
 workspace = NSWorkspace.sharedWorkspace()
 notificationCenter = workspace.notificationCenter()

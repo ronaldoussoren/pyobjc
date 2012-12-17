@@ -40,7 +40,7 @@ class TestCLLocation (TestCase):
     def testFunctions10_7(self):
         self.assertResultIsBOOL(CLLocationCoordinate2DIsValid)
         self.assertFalse(CLLocationCoordinate2DIsValid(kCLLocationCoordinate2DInvalid))
-        
+
         loc = CLLocationCoordinate2DMake(0.0, 0.0)
         self.assertIsInstance(loc, CLLocationCoordinate2D)
 

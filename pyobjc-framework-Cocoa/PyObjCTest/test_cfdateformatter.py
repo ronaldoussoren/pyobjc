@@ -61,7 +61,7 @@ class TestDateFormatter (TestCase):
         self.assertResultIsCFRetained(CFDateFormatterCreateDateFormatFromTemplate)
         r = CFDateFormatterCreateDateFormatFromTemplate(None, "%Y-%m-%d", 0, None)
         self.assertIsInstance(r, unicode)
-                            
+
     def testTypes(self):
         self.assertIsCFType(CFDateFormatterRef)
 
@@ -75,7 +75,7 @@ class TestDateFormatter (TestCase):
         self.assertIsInstance(date, NSDate)
 
         self.assertResultIsCFRetained(CFDateFormatterCreate)
-        fmt = CFDateFormatterCreate(None, locale, kCFDateFormatterShortStyle, kCFDateFormatterLongStyle) 
+        fmt = CFDateFormatterCreate(None, locale, kCFDateFormatterShortStyle, kCFDateFormatterLongStyle)
         self.assertIsInstance(fmt, CFDateFormatterRef)
         v = CFDateFormatterGetLocale(fmt)
         self.assertEqual(CFLocaleGetIdentifier(locale), CFLocaleGetIdentifier(v))

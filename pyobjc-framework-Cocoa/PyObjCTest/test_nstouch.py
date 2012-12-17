@@ -5,7 +5,7 @@ import sys
 class TestNSTouch (TestCase):
     @min_os_level('10.6')
     def testConstants(self):
-        self.assertEqual(NSTouchPhaseBegan, 1 << 0)    
+        self.assertEqual(NSTouchPhaseBegan, 1 << 0)
         self.assertEqual(NSTouchPhaseMoved, 1 << 1)
         self.assertEqual(NSTouchPhaseStationary, 1 << 2)
         self.assertEqual(NSTouchPhaseEnded, 1 << 3)

@@ -7,13 +7,13 @@ import sys
 #NSObject = objc.lookUpClass('NSObject')
 
 # Use a class that isn't used in the rest of the testsuite,
-# should write a native class for this! 
+# should write a native class for this!
 BaseName = 'NSAttributedString'
 BaseClass = objc.lookUpClass(BaseName)
 
 if sys.maxsize >= 2 ** 32:
-    # -poseAsClass: is not supported in 64-bit mode (the functionality is 
-    # not present in the 64-bit runtime and will never be because it 
+    # -poseAsClass: is not supported in 64-bit mode (the functionality is
+    # not present in the 64-bit runtime and will never be because it
     # conflicts with new functionality such as non-fragile class layouts)
     pass
 

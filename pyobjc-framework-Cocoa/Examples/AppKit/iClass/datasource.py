@@ -154,8 +154,8 @@ class ClassesDataSource (NSObject):
                     found = cls
 
         # mvl 2009-03-02: fix case where no match is found caused exception:
-        if (found is None): return  
-        
+        if (found is None): return
+
         self.setClassInfo(found)
         self.selectClass(found)
 

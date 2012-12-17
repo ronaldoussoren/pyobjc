@@ -35,12 +35,12 @@ class JoystickView(NSView):
     multipleSelectionForOffset = ivar(u'multipleSelectionForOffset')
     allowsMultipleSelectionForOffset = ivar(u'allowsMultipleSelectionForOffset')
 
-        
+
     def valueClassForBinding_(cls, binding):
         # both require numbers
         return NSNumber
     valueClassForBinding_ = classmethod(valueClassForBinding_)
-        
+
 
     def initWithFrame_(self, frameRect):
         self = super(JoystickView, self).initWithFrame_(frameRect)
@@ -51,18 +51,18 @@ class JoystickView(NSView):
         self.multipleSelectionForAngle = False
         self.multipleSelectionForOffset = False
         return self
-        
+
 
     def bind_toObject_withKeyPath_options_(
         self, bindingName, observableController, keyPath, options):
-        
+
         if bindingName == u"angle":
             # observe the controller for changes -- note, pass binding identifier
             # as the context, so we get that back in observeValueForKeyPath:...
             # that way we can determine what needs to be updated.
             observableController.addObserver_forKeyPath_options_context_(
                 self, keyPath, 0, self.AngleObservationContext)
-            # register what controller and what keypath are 
+            # register what controller and what keypath are
             # associated with this binding
             self.observedObjectForAngle = observableController
             self.observedKeyPathForAngle = keyPath
@@ -71,7 +71,7 @@ class JoystickView(NSView):
             self.allowsMultipleSelectionForAngle = False
             if options[u"NSAllowsEditingMultipleValuesSelection"]:
                 self.allowsMultipleSelectionForAngle = True
-                
+
         if bindingName == u"offset":
             observableController.addObserver_forKeyPath_options_context_(
                 self, keyPath, 0, self.OffsetObservationContext)
@@ -80,7 +80,7 @@ class JoystickView(NSView):
             self.allowsMultipleSelectionForOffset = False
             if options[u"NSAllowsEditingMultipleValuesSelection"]:
                 self.allowsMultipleSelectionForOffset = True
-                
+
 
     def unbind_(self, bindingName):
         if bindingName == u"angle":
@@ -98,7 +98,7 @@ class JoystickView(NSView):
                 self, self.observedKeyPathForOffset)
             self.observedObjectForOffset = None
             self.observedKeyPathForOffset = None
-            
+
 
     def observeValueForKeyPath_ofObject_change_context_(self, keyPath, object, change, context):
         # we passed the binding as the context when we added ourselves
@@ -125,7 +125,7 @@ class JoystickView(NSView):
                         vt = NSValueTransformer.valueTransformerForName_(self.angleValueTransformerName)
                         newAngle = vt.transformedValue_(newAngle)
                     self.setValue_forKey_(newAngle, u"angle")
-                    
+
         if context == self.OffsetObservationContext:
             # offset changed
             # if we got a NSNoSelectionMarker or NSNotApplicableMarker, or
@@ -154,19 +154,19 @@ class JoystickView(NSView):
         """
         if self.badSelectionForAngle or self.badSelectionForOffset:
             return # don't do anything
-            
+
         # find out where the event is, offset from the view center
         p = self.convertPoint_fromView_(event.locationInWindow(), None)
         myBounds = self.bounds()
         xOffset = (p.x - (myBounds.size.width/2))
         yOffset = (p.y - (myBounds.size.height/2))
-        
+
         newOffset = sqrt(xOffset*xOffset + yOffset*yOffset)
         if newOffset > self.maxOffset:
             newOffset = self.maxOffset
         elif newOffset < -self.maxOffset:
             newOffset = -self.maxOffset
-            
+
         # if we have a multiple selection for offset and Shift key is pressed
         # then don't update the offset
         # this allows offsets to remain constant, but change angle
@@ -175,7 +175,7 @@ class JoystickView(NSView):
             # update observed controller if set
             if self.observedObjectForOffset is not None:
                 self.observedObjectForOffset.setValue_forKeyPath_(newOffset, self.observedKeyPathForOffset)
-        
+
         # if we have a multiple selection for angle and Shift key is pressed
         # then don't update the angle
         # this allows angles to remain constant, but change offset
@@ -203,19 +203,19 @@ class JoystickView(NSView):
 
     def mouseDragged_(self, event):
         self.updateForMouseEvent_(event)
-        
+
 
     def mouseUp_(self, event):
         self.mouseDown = False
         self.updateForMouseEvent_(event)
-        
+
 
     def acceptsFirstMouse_(self, event):
         return True
-        
+
     def acceptsFirstResponder(self):
         return True
-        
+
 
     def drawRect_(self, rect):
         """
@@ -251,7 +251,7 @@ class JoystickView(NSView):
         NSDrawLightBezel(myBounds,myBounds)
         clipRect = NSBezierPath.bezierPathWithRect_( NSInsetRect(myBounds,2.0,2.0) )
         clipRect.addClip()
-        
+
         if self.multipleSelectionForAngle or self.multipleSelectionForOffset:
             originOffsetX = myBounds.size.width/2 + 0.5
             originOffsetY = myBounds.size.height/2 + 0.5
@@ -264,7 +264,7 @@ class JoystickView(NSView):
                 path.stroke()
                 return
             if self.multipleSelectionForOffset:
-                # draw a line from center to a point outside 
+                # draw a line from center to a point outside
                 # bounds in the direction specified by angle
                 angleRadians = self.angle * (pi/180.0)
                 x = sin(angleRadians) * myBounds.size.width + originOffsetX
@@ -289,33 +289,33 @@ class JoystickView(NSView):
         trans.translateXBy_yBy_( myBounds.size.width/2 + 0.5, myBounds.size.height/2 + 0.5)
         trans.concat()
         path = NSBezierPath.bezierPath()
-        
+
         # draw + where shadow extends
         angleRadians = self.angle * (pi/180.0)
         xOffset = sin(angleRadians) * self.offset
         yOffset = cos(angleRadians) * self.offset
-        
+
         path.moveToPoint_( NSMakePoint(xOffset,yOffset-5) )
         path.lineToPoint_( NSMakePoint(xOffset,yOffset+5) )
         path.moveToPoint_( NSMakePoint(xOffset-5,yOffset) )
         path.lineToPoint_( NSMakePoint(xOffset+5,yOffset) )
-        
+
         NSColor.lightGrayColor().set()
         path.setLineWidth_(1.5)
         path.stroke()
-        
+
         # draw + in center of view
         path = NSBezierPath.bezierPath()
-        
+
         path.moveToPoint_( NSMakePoint(0,-5) )
         path.lineToPoint_( NSMakePoint(0,+5) )
         path.moveToPoint_( NSMakePoint(-5,0) )
         path.lineToPoint_( NSMakePoint(+5,0) )
-        
+
         NSColor.blackColor().set()
         path.setLineWidth_(1.0)
         path.stroke()
-        
+
 
     def setNilValueForKey_(self, key):
         "We may get passed nil for angle or offset. Just use 0"
@@ -340,8 +340,3 @@ class JoystickView(NSView):
 
 JoystickView.exposeBinding_(u"offset")
 JoystickView.exposeBinding_(u"angle")
-
-
-
-
-

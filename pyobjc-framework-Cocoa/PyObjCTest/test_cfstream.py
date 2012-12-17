@@ -109,7 +109,7 @@ class TestStream (TestCase):
         del stream
 
         self.assertResultIsCFRetained(CFReadStreamCreateWithFile)
-        stream = CFReadStreamCreateWithFile(None, 
+        stream = CFReadStreamCreateWithFile(None,
                     CFURLCreateWithString(None, b"file:///etc/shells".decode('ascii'), None))
         self.assertIsInstance(stream, CFReadStreamRef)
         r = CFReadStreamOpen(stream)
@@ -217,7 +217,7 @@ class TestStream (TestCase):
         del stream
 
 
-        stream = CFWriteStreamCreateWithFile(None, 
+        stream = CFWriteStreamCreateWithFile(None,
                 CFURLCreateWithString(None, b"file:///tmp/pyobjc.test.txt".decode('ascii'), None))
         self.assertIsInstance(stream, CFWriteStreamRef)
         r = CFWriteStreamOpen(stream)
@@ -353,7 +353,7 @@ class TestStream (TestCase):
         self.assertEqual(status, kCFStreamStatusNotOpen)
 
         CFReadStreamOpen(readStream)
-         
+
         ok = CFReadStreamSetClient(readStream,
                 kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered,
                 callback, data)

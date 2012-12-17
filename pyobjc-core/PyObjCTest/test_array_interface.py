@@ -88,9 +88,9 @@ class ArrayTests (seq_tests.CommonTest):
 
     def test_bigrepeat(self): pass
     def test_getitemoverwriteiter(self): pass
-    def test_contains_fake(self): 
+    def test_contains_fake(self):
         # Disabled because the test seems to make use of an
-        # implementation detail of sequences, it assumes 
+        # implementation detail of sequences, it assumes
         # that "X in SEQ" is implemented as:
         #
         #   for value in SEQ:
@@ -98,11 +98,11 @@ class ArrayTests (seq_tests.CommonTest):
         #           return True
         #   return False
         #
-        # NSArray seems to have the test on (1) in a 
+        # NSArray seems to have the test on (1) in a
         # different order: 'if value == X', which causes
         # this test to fail.
         pass
-    def test_contains_order(self): 
+    def test_contains_order(self):
         # See test_contains_fake
         pass
 
@@ -144,7 +144,7 @@ class MutableArrayTest (list_tests.CommonTest):
         self.assertEqual(a, b)
 
 
-        
+
 
 
 
@@ -168,7 +168,7 @@ class MutableArrayTest (list_tests.CommonTest):
 
 
         if 0:
-            # Disabled due to dependency on the 
+            # Disabled due to dependency on the
             # order of arguments in the '==' expression
             # used to test if an item matches.
             class BadExc(Exception):
@@ -215,7 +215,7 @@ class MutableArrayTest (list_tests.CommonTest):
 
     def test_remove(self):
         # Same as the test inherited from the superclass,
-        # but without the tests that  are dependent on 
+        # but without the tests that  are dependent on
         # the way 'in' tests if an element matches.
         a = self.type2test([0, 0, 1])
         a.remove(1)
@@ -257,7 +257,7 @@ class MutableArrayTest (list_tests.CommonTest):
     def test_iadd(self): pass
 
 
-    def test_count(self): 
+    def test_count(self):
         # Disabled because NSArray.count has a different
         # interface than list.count
         pass

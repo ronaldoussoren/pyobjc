@@ -93,5 +93,3 @@ class CGContextPage (object):
     def __exit__(self, exc_type, exc_value, exc_tp):
         CG.CGContextEndPage(self.context)
         return False
-
-

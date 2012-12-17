@@ -12,16 +12,16 @@ from PyObjCTest.specialtypecodes import *
 
 
 EmbeddedBoolStruct = objc.createStructType(
-        "EmbeddedBoolStruct", 
-        b"{_EmbeddedBool=" + objc._C_INT + objc._C_NSBOOL + b"}", 
+        "EmbeddedBoolStruct",
+        b"{_EmbeddedBool=" + objc._C_INT + objc._C_NSBOOL + b"}",
         [
             "count",
             "isValid"
         ])
 
 EmbeddedBoolArrayStruct = objc.createStructType(
-        "EmbeddedBoolArrayStruct", 
-        b"{_EmbeddedBoolArray=" + objc._C_INT + b"[4" + objc._C_NSBOOL + b"]}", 
+        "EmbeddedBoolArrayStruct",
+        b"{_EmbeddedBoolArray=" + objc._C_INT + b"[4" + objc._C_NSBOOL + b"]}",
         [
             "count",
             "valid"
@@ -30,7 +30,7 @@ EmbeddedBoolArrayStruct = objc.createStructType(
 
 
 class TestRecode (TestCase):
-    # Use recode to test to/from Objective-C. 
+    # Use recode to test to/from Objective-C.
     #
     # This has limited because in 'real life' we'd encode/decode based on a
     # typestring from the Objective-C runtime and those don't include our
@@ -56,7 +56,7 @@ class TestRecode (TestCase):
 
 
 class TestObjectiveC (TestCase):
-    # Use an Objective-C class to test to/from Objective-C. 
+    # Use an Objective-C class to test to/from Objective-C.
     #
     def testBoolStruct(self):
         o = OC_TestSpecialTypeCode.alloc().init()

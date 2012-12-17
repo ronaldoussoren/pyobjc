@@ -17,7 +17,7 @@ class TestSCNetworkReachability (TestCase):
     @onlyIf(resolver_available(), "No DNS resolver available")
     def testFunctions(self):
         self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithAddressPair)
-        v = SCNetworkReachabilityCreateWithAddressPair(None, 
+        v = SCNetworkReachabilityCreateWithAddressPair(None,
                 ('0.0.0.0', 20990),
                 ('www.python.org', 80))
 
@@ -59,6 +59,6 @@ class TestSCNetworkReachability (TestCase):
             self.assertResultIsBOOL(SCNetworkReachabilityUnscheduleFromRunLoop)
             r = SCNetworkReachabilityUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
 
-        
+
 if __name__ == "__main__":
     main()

@@ -15,7 +15,7 @@ VERSION="2.5.0b1"
 
 # Note 1: the requires list is split into a number
 # of lists because not all framework wrappers can
-# be used on all OSX releases. 
+# be used on all OSX releases.
 #
 # Note 2: this package will not work correctly when
 # packaged into an egg file because of this.
@@ -146,7 +146,7 @@ Topic :: Software Development :: User Interfaces
 """.splitlines())
 
 dist = setup(
-    name = "pyobjc", 
+    name = "pyobjc",
     version = VERSION,
     description = "Python<->ObjC Interoperability Module",
     long_description = LONG_DESCRIPTION,

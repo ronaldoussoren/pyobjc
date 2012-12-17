@@ -11,7 +11,7 @@ class TestIMKServer (TestCase):
     @expectedFailure
     def testBrokenConstants(self):
         # The definitions below are defined on 10.5, but not actually
-        # exported by the framework. 
+        # exported by the framework.
         #
         # See also: Radar #6783035
         self.assertIsInstance(IMKDelegateClass, unicode)

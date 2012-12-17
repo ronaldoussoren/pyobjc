@@ -27,7 +27,7 @@ class CustomView(NSView):
             sys.stderr.write('failed to access pentagram image\n')
             raise RuntimeError
         self.setNeedsDisplay_(True)
-    
+
     def drawRect_(self, rect):
         NSColor.clearColor().set()
         NSRectFill(self.frame())
@@ -59,10 +59,10 @@ class CustomWindow(NSWindow):
         result.setOpaque_(False)
         result.setHasShadow_(True)
         return result
-    
+
     def canBecomeKeyWindow(self):
         return True
-    
+
     def mouseDragged_(self, theEvent):
         screenFrame = NSScreen.mainScreen().frame()
         if screenFrame is None:
@@ -80,7 +80,7 @@ class CustomWindow(NSWindow):
             newOrigin.y = screenFrame.origin.y + \
                           (screenFrame.size.height + windowFrame.size.height)
         self.setFrameOrigin_(newOrigin)
-    
+
     def mouseDown_(self, theEvent):
         windowFrame = self.frame()
         if windowFrame is None:

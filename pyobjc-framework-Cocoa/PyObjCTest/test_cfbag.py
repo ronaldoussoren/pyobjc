@@ -22,7 +22,7 @@ class TestCFBag (TestCase):
         CFBagAddValue(bag, 9)
         self.assertEqual(CFBagGetCountOfValue(bag, 9), 2)
         self.assertEqual(CFBagGetCountOfValue(bag, 8), 1)
-    
+
     def testApplyFunction(self):
         items = []
         contexts = []

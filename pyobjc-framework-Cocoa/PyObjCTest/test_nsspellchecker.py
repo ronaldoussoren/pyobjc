@@ -13,7 +13,7 @@ class TestNSSpellChecker (TestCase):
         self.assertArgIsBOOL(NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_, 3)
         self.assertArgIsOut(NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_, 5)
         self.assertResultIsBOOL(NSSpellChecker.setLanguage_)
-    
+
         self.assertArgHasType(NSSpellChecker.completionsForPartialWordRange_inString_language_inSpellDocumentWithTag_, 0, NSRange.__typestr__)
 
 

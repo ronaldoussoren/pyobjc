@@ -7,7 +7,7 @@ class PathDemoController (NSObject):
     window      = objc.ivar()
     demoView    = objc.ivar()
 
-    def awakeFromNib(self): 
+    def awakeFromNib(self):
         #  Add the title of your new demo to the END of this array.
 
         titles = [ 'Rectangles', 'Circles', 'Bezier Paths', 'Circle Clipping' ]

@@ -8,7 +8,7 @@ except NameError:
     unicode = str
 
 class TestNSToolbarItemHelper (NSObject):
-    def validateToolbarItem_(self, a): return 
+    def validateToolbarItem_(self, a): return
 
 class TestNSToolbarItem (TestCase):
     def testConstants(self):

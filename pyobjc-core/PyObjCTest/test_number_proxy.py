@@ -1,7 +1,7 @@
 """
 Tests for the proxy of Python numbers
 
-NOTE: Decimal conversion is not tested, the required proxy is part of 
+NOTE: Decimal conversion is not tested, the required proxy is part of
 the Foundation bindings :-(
 """
 from __future__ import unicode_literals
@@ -70,7 +70,7 @@ class TestNSNumber (TestCase):
             self.assertIs(numberWrapper(n), n)
 
 
-        # Fake number class, to ensure that all of 
+        # Fake number class, to ensure that all of
         # numberWrapper can be tested with a 64-bit runtime
         class Number (objc.lookUpClass("NSObject")):
             def objCType(self):
@@ -222,7 +222,7 @@ class TestNSNumber (TestCase):
         #   double v = -127.6;
         #   unsigned long long lv = v;
         #   printf("%llu\n", lv);
-        # 
+        #
 
         self.assertIn(
                 OC_TestNumber.numberAsUnsignedLongLong_(v),
@@ -584,7 +584,7 @@ class TestInteractions (TestCase):
 
 
 class TestNumberFormatter (TestCase):
-    # Test behaviour of an NSNumberFormatter, both with 
+    # Test behaviour of an NSNumberFormatter, both with
     # Python numbers and NSNumbers
     def testFormatting(self):
         formatter = NSNumberFormatter.alloc().init()

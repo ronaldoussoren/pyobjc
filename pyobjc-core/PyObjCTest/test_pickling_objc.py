@@ -5,12 +5,12 @@ Objective-C objects
 from PyObjCTools.TestSupport import *
 
 
-# Test cases for pickling ObjC objects 
+# Test cases for pickling ObjC objects
 class TestPickleObjC (TestCase):
     pass
 
 
-# Test cases for pickling mixed Python/ObjC 
+# Test cases for pickling mixed Python/ObjC
 # object graphs
 class TestPickleMixedGraph (TestCase):
     pass

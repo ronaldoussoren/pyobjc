@@ -15,7 +15,7 @@ def runsocketcode(clientfile, g):
     source = eval(source)
     co = compile(source+'\n', '<remote-source>', 'exec')
     exec co in g
-    
+
 def serveonce(clientsock, name='stdin'):
     clientfile = clientsock.makefile('r+b', 0)
     g = {
@@ -50,7 +50,7 @@ def main():
     g.update(newglobals)
     serverglobals = {'__name__': '__socketclient__'}
     execfile(sourcefile, serverglobals, serverglobals)
-    
+
 if __name__ == '__main__':
     main()
 elif __name__ == '__socketclient__':

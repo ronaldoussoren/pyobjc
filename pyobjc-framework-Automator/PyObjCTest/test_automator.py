@@ -9,7 +9,7 @@ class TestAutomator (TestCase):
     def testClasses(self):
         self.assert_( hasattr(Automator, 'AMAction') )
         self.assert_( isinstance(Automator.AMAction, objc.objc_class) )
-        
+
         self.assert_( hasattr(Automator, 'AMAppleScriptAction') )
         self.assert_( isinstance(Automator.AMAppleScriptAction, objc.objc_class) )
 
@@ -21,4 +21,3 @@ class TestAutomator (TestCase):
 
 if __name__ == "__main__":
     main()
-

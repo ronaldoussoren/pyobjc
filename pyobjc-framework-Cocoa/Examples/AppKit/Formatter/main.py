@@ -4,7 +4,7 @@ from PyObjCTools import AppHelper
 class MyFormatter(NSFormatter):
     def stringForObjectValue_(self, product):
         if isinstance(product, (str, unicode)):
-                return product
+            return product
         return str(product)
 
     def getObjectValue_forString_errorDescription_(self, value, upc, error):

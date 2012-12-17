@@ -7,7 +7,7 @@ import CFOpenDirectory
 from PyObjCTools.TestSupport import *
 
 try:
-    unicode 
+    unicode
 except NameError:
     unicode = str
 
@@ -428,4 +428,3 @@ class TestCFOpenDirectoryConstants (TestCase):
 
 if __name__ == "__main__":
     main()
-

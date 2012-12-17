@@ -31,11 +31,11 @@ class TestSCDynamicStore (TestCase):
         def callback(store, changedKeys, info):
             l.append((store, changedKeys, info))
 
-        st = SCDynamicStoreCreate(None, 
-                "pyobjc.test", 
+        st = SCDynamicStoreCreate(None,
+                "pyobjc.test",
                 callback, info)
         self.assertTrue(isinstance(st, SCDynamicStoreRef))
-        
+
         st = SCDynamicStoreCreateWithOptions(None,
                 "pyobjc.test",
                 {},
@@ -67,7 +67,7 @@ class TestSCDynamicStore (TestCase):
         r = SCDynamicStoreSetValue(st, "Setup:/PyObjC", { b"key".decode('latin1'):42 })
         self.assertTrue(r is True or r is False)
 
-        r = SCDynamicStoreSetMultiple(st, 
+        r = SCDynamicStoreSetMultiple(st,
                 {
                     'Setup:/PyObjC2': { b"key".decode('latin1'): 42},
                 },
@@ -98,8 +98,8 @@ class TestSCDynamicStore (TestCase):
         def callback(store, changedKeys, info):
             l.append((store, changedKeys, info))
 
-        st = SCDynamicStoreCreate(None, 
-                b"pyobjc.test".decode('latin1'), 
+        st = SCDynamicStoreCreate(None,
+                b"pyobjc.test".decode('latin1'),
                 callback, info)
 
         SCDynamicStoreSetNotificationKeys(st, None, ['.*'])
@@ -115,7 +115,7 @@ class TestSCDynamicStore (TestCase):
         self.assertTrue(l[0][0] is st)
         self.assertIsInstance(l[0][1], CFArrayRef)
         self.assertTrue(l[0][2] is info)
-        
+
 
 
 

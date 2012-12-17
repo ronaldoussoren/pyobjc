@@ -10,7 +10,7 @@ llc, sze = 0, 1 # Left Lower Corner, Size
 
 #____________________________________________________________
 class CGraphView(NSView):
-    
+
     azmuthSlider = objc.IBOutlet()
     mapOffsetEWSlider = objc.IBOutlet()
     mapOffsetNSSlider = objc.IBOutlet()
@@ -20,7 +20,7 @@ class CGraphView(NSView):
     mapOffsetEWDisplay = objc.IBOutlet()
     mapOffsetNSDisplay = objc.IBOutlet()
     mapScaleDisplay = objc.IBOutlet()
-    
+
     def initWithFrame_(self, frame):
         super(CGraphView, self).initWithFrame_(frame)
         self.setGridColor()

@@ -2,13 +2,13 @@ from Cocoa import *
 from Automator import *
 
 class Controller (NSObject):
-    # interface builder variables 
+    # interface builder variables
     myWindow = objc.IBOutlet()
     workflowView = objc.IBOutlet()
     workflowTable = objc.IBOutlet()
     workflowController = objc.IBOutlet()
     tableContent = objc.IBOutlet()
-    
+
     # instance variables
     _workflows = objc.ivar()
     _runningWorkflow = objc.ivar.bool()
@@ -27,7 +27,7 @@ class Controller (NSObject):
 
     # display the selected workflow.
     def displaySelectedWorkflow(self):
-        # get the selected row from the workflow table. 
+        # get the selected row from the workflow table.
         theRow = self.workflowTable.selectedRow()
 
         # if there is a selection and we are not running
@@ -53,7 +53,7 @@ class Controller (NSObject):
 
     # awakeFromNib is called after our MainMenu.nib file has been loaded
     # and the main window is ready for use.  Here, we finish initializing
-    # our content for display in the window. 
+    # our content for display in the window.
     def awakeFromNib(self):
         # we're only using the AMWorkflowView for display
         self.workflowView.setEditable_(False)
@@ -61,9 +61,9 @@ class Controller (NSObject):
         # set up the data for NSTableView.  We'll store a list of
         # NSDictonary records each containing some information about the
         # workflow.  We'll display the name of the workflow's file in the
-        # window. 
+        # window.
 
-        # set up an array for storing the table information 
+        # set up an array for storing the table information
         theWorkflows = NSMutableArray.alloc().initWithCapacity_(20)
 
         # retrieve a list of all of the workflows stored in the application's
@@ -72,11 +72,11 @@ class Controller (NSObject):
                 "workflow", "workflows")
 
         # iterate through the paths, adding them to our table information
-        # as we go. 
+        # as we go.
         for nthWorkflowPath in workflowPaths:
             wfError = None
 
-            # convert the path into an URL 
+            # convert the path into an URL
             nthWorkflowURL = NSURL.fileURLWithPath_isDirectory_(nthWorkflowPath, False)
 
             # allocate and initialize the workflow
@@ -110,7 +110,7 @@ class Controller (NSObject):
         return True
 
     # NSTableView delegate methods.
-    # We have set our controller object as the NSTableView's delegate in the MainMenu.nib file. 
+    # We have set our controller object as the NSTableView's delegate in the MainMenu.nib file.
 
     # selectionShouldChangeInTableView: is called when the user has clicked in the
     # table view in a way that will cause the selection to change.  This method allows us
@@ -154,4 +154,3 @@ class Controller (NSObject):
 
     def workflowControllerDidStop_(self, controller):
         self._.runningWorkflow = False
-

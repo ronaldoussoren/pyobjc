@@ -1,6 +1,6 @@
-''' 
+'''
 Wrappers for the "PubSub" framework on MacOSX 10.5 or later.  This framework
-offers developers a way to subscribe to web feeds (RSS, Atom) from their 
+offers developers a way to subscribe to web feeds (RSS, Atom) from their
 applications.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

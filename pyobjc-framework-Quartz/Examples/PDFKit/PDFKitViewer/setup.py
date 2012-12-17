@@ -16,4 +16,3 @@ setup(
             plist='Info.plist',
         )),
 )
-

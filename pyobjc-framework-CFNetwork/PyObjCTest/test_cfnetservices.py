@@ -133,7 +133,7 @@ class TestCFNetServices (TestCase):
         self.fail("CFNetServiceResolve")
         self.fail("CFNetServiceGetProtocolSpecificInformation")
         self.fail("CFNetServiceSetProtocolSpecificInformation")
-        
+
 
 
 if __name__ == "__main__":

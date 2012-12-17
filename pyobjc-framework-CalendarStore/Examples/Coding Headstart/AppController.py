@@ -7,7 +7,7 @@ class AppController (NSObject):
     priorityPopup = objc.IBOutlet()
     eventCreationDialog = objc.IBOutlet()
     calendarData = objc.IBOutlet()
-    
+
     calItemTitle = objc.ivar()
     calItemStartDate = objc.ivar()
     calItemEndDate = objc.ivar()
@@ -28,7 +28,7 @@ class AppController (NSObject):
 
 
     @objc.IBAction
-    def showEventCreationDialog_(self, sender): 
+    def showEventCreationDialog_(self, sender):
         # Set default values for the title and start/end date
         # Cocoa bindings will clear out the related fields in the sheet
         self._.calItemTitle = None
@@ -48,7 +48,7 @@ class AppController (NSObject):
     def didEndSheet_returnCode_contextInfo_(self, sheet, returnCode, contextInfo):
 
         # Find out which calendar was selected for the new event/task
-        # We do this using the calendarData array controller which is bound to 
+        # We do this using the calendarData array controller which is bound to
         # the calendar popups in the sheet
         selectedCalendar = None
         count = len(self.calendarData.selectedObjects())
@@ -74,7 +74,7 @@ class AppController (NSObject):
             self.createNewEventWithCalendar_title_startDate_endDate_(
                     selectedCalendar, self._.calItemTitle,
                     self._.calItemStartDate, self._.calItemEndDate)
-        
+
         # Dismiss the sheet
         sheet.orderOut_(self)
 
@@ -84,7 +84,7 @@ class AppController (NSObject):
 
         # Create a new CalEvent object
         newEvent = CalEvent.event()
-        
+
         # Set the calendar, title, start date and end date on the new event
         # using the parameters passed to this method
         newEvent._.calendar = calendar;
@@ -92,7 +92,7 @@ class AppController (NSObject):
         newEvent._.startDate = startDate;
         newEvent._.endDate = endDate;
 
-        # Save the new event to the calendar store (CalCalendarStore) and 
+        # Save the new event to the calendar store (CalCalendarStore) and
         # return it
         res, err = CalCalendarStore.defaultCalendarStore().saveEvent_span_error_(
                 newEvent, 0, None)
@@ -114,12 +114,12 @@ class AppController (NSObject):
         newTask._.title = title
         newTask._.priority = priority
         newTask._.dueDate = dueDate
-        
-        # Save the new task to the calendar store (CalCalendarStore) and 
+
+        # Save the new task to the calendar store (CalCalendarStore) and
         # return it
         res, err = CalCalendarStore.defaultCalendarStore().saveTask_error_(newTask, None)
         if res:
             return newTask
-    
+
         NSLog("error:%@", err.localizedDescription())
         return None

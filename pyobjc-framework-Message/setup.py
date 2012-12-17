@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "Message" framework on MacOSX. This framework contains a
 number of utilities for sending e-mail.
 
@@ -16,7 +16,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

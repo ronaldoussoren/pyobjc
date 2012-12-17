@@ -16,7 +16,7 @@ class TestNSStreamUsage(TestCase):
 
         # Try to create a connection to the IPP port on the local host
         inputStream, outputStream = NSStream.getStreamsToHost_port_inputStream_outputStream_(
-                NSHost.hostWithAddress_(b"127.0.0.1".decode('ascii')), 
+                NSHost.hostWithAddress_(b"127.0.0.1".decode('ascii')),
                 631, # IPP port
                 None,
                 None
@@ -33,7 +33,7 @@ class TestNSStreamUsage(TestCase):
         self.assertEqual(NSStreamStatusOpening, 1)
         self.assertEqual(NSStreamStatusOpen, 2)
         self.assertEqual(NSStreamStatusReading, 3)
-        self.assertEqual(NSStreamStatusWriting, 4)    
+        self.assertEqual(NSStreamStatusWriting, 4)
         self.assertEqual(NSStreamStatusAtEnd, 5)
         self.assertEqual(NSStreamStatusClosed, 6)
         self.assertEqual(NSStreamStatusError, 7)

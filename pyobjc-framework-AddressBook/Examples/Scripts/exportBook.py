@@ -37,7 +37,7 @@ def encodeField(value):
 
 def personToFields(person, fieldnames):
     """ Extract the specified fields from a person object """
-    return [ encodeField(person.valueForProperty_(nm)) for nm in fieldnames ]     
+    return [ encodeField(person.valueForProperty_(nm)) for nm in fieldnames ]
 
 def bookFields(book, fieldnames):
     """ Generate the records for all people in the book """

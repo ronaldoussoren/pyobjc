@@ -46,7 +46,7 @@ def main():
         addr = '82.94.237.218' # www.python.org
 
     loop = CFRunLoopGetCurrent()
-    
+
     target = SCNetworkReachabilityCreateWithAddress(None, (addr, 80))
     SCNetworkReachabilitySetCallback(target, resultAvailable, addr)
 
@@ -55,7 +55,7 @@ def main():
         resultAvailable(target, flags, addr)
 
     else:
-        ok = SCNetworkReachabilityScheduleWithRunLoop(target, 
+        ok = SCNetworkReachabilityScheduleWithRunLoop(target,
                 loop, kCFRunLoopCommonModes)
 
         CFRunLoopRun()

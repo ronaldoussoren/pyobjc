@@ -199,7 +199,7 @@ class TestOverridingSpecials(TestCase):
                 aList[0] += 1
                 return objc.super(ClassWithAlloc, cls).alloc()
 
-            
+
         self.assertEqual(aList[0], 0)
         o = ClassWithAlloc.alloc().init()
         self.assertEqual(aList[0], 1)
@@ -246,14 +246,14 @@ class TestOverridingSpecials(TestCase):
         del v
         del o
         del pool
-        
+
         self.assertEqual(aList, ['retain', 'release', 'release', '__del__'])
 
         class ClassWithRetainCount(NSObject):
             def retainCount(self):
                 aList.append('retainCount')
                 return objc.super(ClassWithRetainCount, self).retainCount()
-        
+
         del aList[:]
         o = ClassWithRetainCount.alloc().init()
         self.assertEqual(aList, [])
@@ -345,7 +345,7 @@ class TestOverridingSpecials(TestCase):
             def froobnicate__(self, a, b):
                 pass
 
-        # XXX: workaround for a 'feature' in class-builder.m, that code 
+        # XXX: workaround for a 'feature' in class-builder.m, that code
         # ignores methods whose name starts with two underscores. That code
         # is not necessary, or the other ways of adding methods to a class
         # should be changed.

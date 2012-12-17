@@ -43,7 +43,7 @@ class CIMicroPaintView  (SampleCIView):
             print "Nothing changed"
             return
 
-        # Create a new accumulator and composite the old one over the it. 
+        # Create a new accumulator and composite the old one over the it.
 
         c = CIImageAccumulator.alloc(
             ).initWithExtent_format_(bounds, kCIFormatRGBA16)
@@ -76,12 +76,12 @@ class CIMicroPaintView  (SampleCIView):
         self.brushFilter.setValue_forKey_(
             CIVector.vectorWithX_Y_(loc.x, loc.y),
             "inputCenter")
-        
+
         self.compositeFilter.setValue_forKey_(
             self.brushFilter.valueForKey_("outputImage"), "inputImage")
         self.compositeFilter.setValue_forKey_(
             self.imageAccumulator.image(), "inputBackgroundImage")
-        
+
         self.imageAccumulator.setImage_dirtyRect_(
             self.compositeFilter.valueForKey_("outputImage"), rect)
 

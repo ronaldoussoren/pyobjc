@@ -25,7 +25,7 @@ class TLayerDemo (NSObject):
 
         if not NSBundle.loadNibNamed_owner_("TLayerDemo", self):
             NSLog("Failed to load TLayerDemo.nib")
-	    return nil
+            return nil
 
         self.shadowOffsetView.setScale_(40)
         self.shadowOffsetView.setOffset_(CGSizeMake(-30, -30))
@@ -33,7 +33,7 @@ class TLayerDemo (NSObject):
 
         self.shadowRadiusChanged_(self.shadowRadiusSlider)
 
-        # Better to do this as a subclass of NSControl.... 
+        # Better to do this as a subclass of NSControl....
         NSNotificationCenter.defaultCenter(
                 ).addObserver_selector_name_object_(
                         self, 'shadowOffsetChanged:',

@@ -1,7 +1,7 @@
 """
 These tests check if method prototypes match method signatures.
 
-TODO: a separate test file that tests calls with optional arguments in 
+TODO: a separate test file that tests calls with optional arguments in
 method defintions:
         class MyClass (NSObject):
             def myMethod_(self, arg=1):
@@ -15,7 +15,7 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSObject
 
 class TestInheritedProtoype (TestCase):
-    # 
+    #
     # These tests check for methods that are inherited from a superclass and
     # therefore have an explict method signature. The number of arguments in
     # the actual method implementation must match that signature.
@@ -51,7 +51,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooFew1 (NSObject):
                 def init():
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -60,7 +60,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooFew2 (NSObject):
                 def replacementObjectForArchiver_(self):
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -69,7 +69,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooFew3 (NSObject):
                 def replacementObjectForArchiver_():
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -81,7 +81,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooMany1 (NSObject):
                 def init(self, arg):
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -90,7 +90,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooMany2 (NSObject):
                 def init(self, arg, arg2):
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -99,7 +99,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooMany3 (NSObject):
                 def replacementObjectForArchiver_(self, archiver, extra):
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -108,7 +108,7 @@ class TestInheritedProtoype (TestCase):
             class OC_InPro_TooMany4 (NSObject):
                 def replacementObjectForArchiver_(self, archiver, opt=3):
                     pass
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
@@ -148,11 +148,11 @@ class TestInheritedProtoype (TestCase):
 
     def testAllArgsOptional(self):
         # Dodgy, all arguments are optional using '*args, **kwds'
-        # 
+        #
         # This should be accepted because simple decorators will use
         # a method signature like this and we don't want errors or warnings
         # for that.
-        # 
+        #
         # NOTE: see also the 'decorator' library, that allows you to
         # use decorators without ending up with an ugly signature.
         class OC_InPro_AllOpt1 (NSObject):
@@ -195,7 +195,7 @@ class TestInheritedProtoype (TestCase):
             pass
 
 class TestExplicitPrototype (TestCase):
-    # 
+    #
     # These tests check for methods with an explict method signature in the
     # python code (not inheritted). The python code should match the provided
     # signature.
@@ -283,18 +283,18 @@ class TestExplicitPrototype (TestCase):
                 def oneargmethod4_(self, a, b):
                     pass
                 oneargmethod4_ = objc.selector(oneargmethod4_, signature=b'i@:f')
-        
+
             self.fail()
         except objc.BadPrototypeError:
             pass
 
     def testAllArgsOptional(self):
         # Dodgy, all arguments are optional using '*args, **kwds'
-        # 
+        #
         # This should be accepted because simple decorators will use
         # a method signature like this and we don't want errors or warnings
         # for that.
-        # 
+        #
         # NOTE: see also the 'decorator' library, that allows you to
         # use decorators without ending up with an ugly signature.
         class OC_ExplProto_AllOpt1 (NSObject):
@@ -336,12 +336,12 @@ class TestExplicitPrototype (TestCase):
 
             def oneinput_output_(self, input, output):
                 pass
-            oneinput_output_ = objc.selector(oneinput_output_, 
+            oneinput_output_ = objc.selector(oneinput_output_,
                     signature=b'i@:f^@')
 
     def testOutputArgumentsAbsent(self):
         # BAD: Output arguments, output not in prototype
-        # 
+        #
         # NOTE: this was a warning in PyObjC 2.0 and the only
         # valid way to work in PyObjC 1.x.
         try:
@@ -361,7 +361,7 @@ class TestExplicitPrototype (TestCase):
 
                 def oneinput_output_(self, input):
                     pass
-                oneinput_output_ = objc.selector(oneinput_output_, 
+                oneinput_output_ = objc.selector(oneinput_output_,
                         signature=b'i@:i^@')
 
             self.fail()
@@ -370,7 +370,7 @@ class TestExplicitPrototype (TestCase):
             pass
 
 class TestImplicitSignature (TestCase):
-    # 
+    #
     # These tests check for methods that aren't inheritted and don't have
     # an explicit prototype either
     #
@@ -400,7 +400,7 @@ class TestImplicitSignature (TestCase):
     def testTooFewColons(self):
         # OK: the number of implied colons is smaller than the actual number of
         # arguments.
-        # 
+        #
         # This is fine because you want to use the regular python naming
         # conventions for methods that won't be called from Objective-C,
         # that keeps Python code as nice as possible.
@@ -477,7 +477,7 @@ class TestImplicitSignature (TestCase):
 
     def testMethodVariations(self):
         # OK: all methods with an implied signature are fine
-        # 
+        #
         # That is, as long as the implied selector doesn't contain
         # colons. If the implied selector does contain colons the
         # method must have the right number of parameters, that

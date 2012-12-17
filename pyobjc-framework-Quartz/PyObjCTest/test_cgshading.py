@@ -18,7 +18,7 @@ class TestCGShading (TestCase):
         def evaluate(info, input, output):
             values.append(input)
             return input * 4
-        
+
         self.assertIsInstance(CGFunctionGetTypeID(), (int, long))
 
         myInfo = object()
@@ -38,7 +38,7 @@ class TestCGShading (TestCase):
         self.assertArgHasType(CGShadingCreateRadial, 6, objc._C_BOOL)
         self.assertArgHasType(CGShadingCreateRadial, 7, objc._C_BOOL)
         shading = CGShadingCreateRadial(
-                CGColorSpaceCreateDeviceRGB(), CGPoint(0, 0), 5.0, 
+                CGColorSpaceCreateDeviceRGB(), CGPoint(0, 0), 5.0,
                 CGPoint(50, 200), 10.5, func, False, False)
         self.assertIsInstance(shading, CGShadingRef)
 

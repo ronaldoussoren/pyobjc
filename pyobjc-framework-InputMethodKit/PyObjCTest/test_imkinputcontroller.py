@@ -74,7 +74,7 @@ class TestIMKInputController (TestCase):
         self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 1, NSPoint.__typestr__)
         self.assertArgHasType(TestIMKInputControllerHelper.mouseMovedOnCharacterIndex_coordinate_withModifier_client_, 2, objc._C_NSUInteger)
 
-        
+
 
 if __name__ == "__main__":
     main()

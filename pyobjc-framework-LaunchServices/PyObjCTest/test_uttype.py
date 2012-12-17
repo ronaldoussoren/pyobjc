@@ -64,7 +64,7 @@ class TestUTType (TestCase):
 
         v = UTGetOSTypeFromString(v)
         self.assertEqual(v, 24353)
-        
+
 
 
 

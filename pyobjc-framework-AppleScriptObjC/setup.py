@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for framework 'AppleScriptObjC' on MacOSX 10.6. This framework is
 not useful for most users, it provides additional functionality for AppleScript
 based application bundles.
@@ -20,7 +20,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

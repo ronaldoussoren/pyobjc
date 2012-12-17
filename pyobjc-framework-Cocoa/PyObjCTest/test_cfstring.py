@@ -59,13 +59,13 @@ class TestString (TestCase):
         self.assertEqual(s, b"HELLO".decode('ascii'))
 
         # NOTE: the deallocator must be kCFAllocatorNull
-        s = CFStringCreateWithCStringNoCopy(None, b"hello world", 
+        s = CFStringCreateWithCStringNoCopy(None, b"hello world",
                 kCFStringEncodingASCII, kCFAllocatorNull)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
         self.assertEqual(s, b"hello world".decode('ascii'))
 
-        
+
         s = CFStringCreateWithBytesNoCopy(None, b"hello world", 5, kCFStringEncodingASCII, False, kCFAllocatorNull)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, unicode)
@@ -92,7 +92,7 @@ class TestString (TestCase):
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, b"hello foo = 52".decode('ascii'))
 
-        self.assertFalse(hasattr(CoreFoundation, 
+        self.assertFalse(hasattr(CoreFoundation,
             "CFStringCreateWithFormatAndArguments"))
 
     def testCreateMutable(self):
@@ -179,11 +179,11 @@ class TestString (TestCase):
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, b"hello world".decode('ascii'))
 
-        data = CFStringCreateExternalRepresentation(None, s, 
+        data = CFStringCreateExternalRepresentation(None, s,
                 kCFStringEncodingUTF16BE, b'\0')
         self.assertIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
-        self.assertEqual(val, 
+        self.assertEqual(val,
                 b'\0h\0e\0l\0l\0o\0 \0w\0o\0r\0l\0d')
 
         v = CFStringGetSmallestEncoding(s)
@@ -210,7 +210,7 @@ class TestString (TestCase):
                 CFStringCreateWithFileSystemRepresentation, None, b"/tmp".decode('ascii'))
 
         r = CFStringCompareWithOptionsAndLocale(
-                b"aas".decode('ascii'), b"noot".decode('ascii'), 
+                b"aas".decode('ascii'), b"noot".decode('ascii'),
                 CFRange(0, 3),
                 kCFCompareBackwards, CFLocaleCopyCurrent())
         self.assertEqual(r, kCFCompareLessThan)
@@ -342,12 +342,12 @@ class TestString (TestCase):
 
         CFStringReplaceAll(s, b"* * * *abc * ".decode('ascii'))
         trim_chars = b'* '.decode('ascii')
-        
+
         trim_chars = CFStringCreateWithCString(None, b"* ", kCFStringEncodingASCII)
         CFStringTrim(s, trim_chars)
         self.assertEqual(s, b"*abc ".decode('ascii'))
-        
-        
+
+
         CFStringReplaceAll(s, b" \tHello world  \t ".decode('ascii'))
         CFStringTrimWhitespace(s)
         self.assertEqual(s, b"Hello world".decode('ascii'))
@@ -372,9 +372,9 @@ class TestString (TestCase):
         self.assertEqual(s, b'hello world'.decode('ascii'))
 
         CFStringReplaceAll(s, b"A C".decode('ascii'))
-        ok, rng = CFStringTransform(s, CFRange(0, 3), kCFStringTransformToXMLHex, 
+        ok, rng = CFStringTransform(s, CFRange(0, 3), kCFStringTransformToXMLHex,
                                         False)
-        self.assertEqual(s, 'A C') 
+        self.assertEqual(s, 'A C')
         self.assertIs(ok, True)
         self.assertEqual(rng, CFRange(0, 3))
 
@@ -626,12 +626,12 @@ class TestStringEncodingExt (TestCase):
             self.assertEqual(chars[1], unichr(0xDC01))
 
         else:
-            # ucs4 build of python 3.2 or earlier; or 
+            # ucs4 build of python 3.2 or earlier; or
             # python 3.3
             #
             # In both cases this function is useless because
             # Python can represent unicode codepoints without using
-            # surrogate pairs, and will do so when converting 
+            # surrogate pairs, and will do so when converting
             # an array of UCS2 codepoints to a Pytho unicode object
             pass
 

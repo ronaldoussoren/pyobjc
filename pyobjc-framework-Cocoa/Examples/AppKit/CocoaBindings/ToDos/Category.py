@@ -19,14 +19,14 @@ class Category(NSObject):
     def allCategories(cls):
         """Predefined global list of categories"""
         return categories
-        
+
     @classmethod
     def categoryForPriority_(cls, thePriority):
         for category in categories:
             if thePriority >= category.priority:
                 return category
         return None
-        
+
     @classmethod
     def categoryWithTitle_andPriority_(cls, aTitle, aValue):
         """Convenience constructor"""
@@ -45,20 +45,19 @@ class Category(NSObject):
             encoder.encodeInt_forKey_(self.priority, u"priority")
         else:
             encoder.encodeObject_(self.priority)
-        
+
     def initWithCoder_(self, decoder):
         if decoder.allowsKeyedCoding():
             thePriority = decoder.decodeIntForKey_(u"priority")
         else:
             thePriority = decoder.decodeObject()
         return Category.categoryForPriority_(thePriority)
-		
+
 
 categories = [
-	Category.categoryWithTitle_andPriority_(u"Vital", 11),
-	Category.categoryWithTitle_andPriority_(u"Very Important", 4),
-	Category.categoryWithTitle_andPriority_(u"Important", 3),
-	Category.categoryWithTitle_andPriority_(u"Not Important", 2),
-	Category.categoryWithTitle_andPriority_(u"Whenever", 0)
+        Category.categoryWithTitle_andPriority_(u"Vital", 11),
+        Category.categoryWithTitle_andPriority_(u"Very Important", 4),
+        Category.categoryWithTitle_andPriority_(u"Important", 3),
+        Category.categoryWithTitle_andPriority_(u"Not Important", 2),
+        Category.categoryWithTitle_andPriority_(u"Whenever", 0)
 ]
-

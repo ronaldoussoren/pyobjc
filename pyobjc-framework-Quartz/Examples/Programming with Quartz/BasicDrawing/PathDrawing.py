@@ -4,12 +4,12 @@ import math
 def doEgg(context):
     p0 = CGPoint(0, 0)
     p1 = CGPoint(0, 200)
-    c1 = CGPoint(140, 5) 
+    c1 = CGPoint(140, 5)
     c2 = CGPoint(80, 198)
 
     CGContextTranslateCTM(context, 100, 5)
     CGContextBeginPath(context)
-    
+
     CGContextMoveToPoint(context, p0.x, p0.y)
     # Create the Bezier path segment for the right side of the egg.
     CGContextAddCurveToPoint(context, c1.x, c1.y, c2.x, c2.y, p1.x, p1.y)
@@ -27,7 +27,7 @@ def addRoundedRectToPath(context, rect, ovalWidth, ovalHeight):
         CGContextSaveGState(context)
         if 1:
             # Translate to lower-left corner of rectangle.
-            CGContextTranslateCTM(context, 
+            CGContextTranslateCTM(context,
                     CGRectGetMinX(rect), CGRectGetMinY(rect))
             # Scale by the oval width and height so that
             # each rounded corner is 0.5 units in radius.
@@ -71,11 +71,11 @@ def doStrokeWithCTM(context):
         CGContextBeginPath(context)
         # Create an arc that is a circle.
         CGContextAddArc(context, 0., 0., 45., 0., 2*math.pi, 0)
-	# Restore the context parameters prior to stroking the path.
-	# CGContextRestoreGState does not affect the path in the context.
+        # Restore the context parameters prior to stroking the path.
+        # CGContextRestoreGState does not affect the path in the context.
     CGContextRestoreGState(context)
     CGContextStrokePath(context)
-	
+
     # *** was 0, -120
     CGContextTranslateCTM(context, 220., 0.)
     # Draw ellipse 2 with non-uniform stroke.
@@ -107,17 +107,17 @@ def doRotatedEllipsesWithCGPath(context):
 
     # Add a circular arc to the CGPath object, transformed
     # by an affine transform.
-    CGPathAddArc(path, theTransform, 0., 0., 45., 0., 2*math.pi, False); 
+    CGPathAddArc(path, theTransform, 0., 0., 45., 0., 2*math.pi, False);
     # Close the CGPath object.
     CGPathCloseSubpath(path)
-	
-    # Place the first ellipse at a good location.	
+
+    # Place the first ellipse at a good location.
     CGContextTranslateCTM(context, 100, 100)
     for i in range(totreps):
         CGContextBeginPath(context)
         # Add the CGPath object to the current path in the context.
         CGContextAddPath(context, path)
-		
+
         # Set the fill color for this instance of the ellipse.
         CGContextSetRGBFillColor(context, tint, 0., 0., 1.)
         # Filling the path implicitly closes it.
@@ -159,7 +159,7 @@ def alignRectToUserSpace(context, r):
     # encloses the original one.
     r.size.width = math.floor(r.size.width)
     r.size.height = math.floor(r.size.height)
-    
+
     # Convert back to user space.
     return CGContextConvertRectToUserSpace(context, r)
 
@@ -167,27 +167,27 @@ def doPixelAlignedFillAndStroke(context):
     p1 = CGPointMake(16.7, 17.8)
     p2 = CGPointMake(116.7, 17.8)
     r = CGRectMake(16.7, 20.8, 100.6, 100.6)
-    
+
     CGContextSetLineWidth(context, 2)
     CGContextSetRGBFillColor(context, 1., 0., 0., 1.)
     CGContextSetRGBStrokeColor(context, 1., 0., 0., 1.)
-    
+
     # Unaligned drawing.
     CGContextBeginPath(context)
     CGContextMoveToPoint(context, p1.x, p1.y)
     CGContextAddLineToPoint(context, p2.x, p2.y)
     CGContextStrokePath(context)
     CGContextFillRect(context, r)
-    
+
     # Translate to the right before drawing along
     # aligned coordinates.
     CGContextTranslateCTM(context, 106, 0)
-    
+
     # Aligned drawing.
-    
+
     # Compute the length of the line in user space.
     s = CGSizeMake(p2.x - p1.x, p2.y - p1.y)
-    
+
     CGContextBeginPath(context)
     # Align the starting point to a device
     # pixel boundary.
@@ -197,9 +197,9 @@ def doPixelAlignedFillAndStroke(context):
     # Compute the line length as an integer
     # number of device pixels.
     s = alignSizeToUserSpace(context, s)
-    CGContextAddLineToPoint(context, 
-				p1.x + s.width, 
-				p1.y + s.height)
+    CGContextAddLineToPoint(context,
+                                p1.x + s.width,
+                                p1.y + s.height)
     CGContextStrokePath(context)
     # Compute a rect that is aligned to device
     # space with a width that is an integer

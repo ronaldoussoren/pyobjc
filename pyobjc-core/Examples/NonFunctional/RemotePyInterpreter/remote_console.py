@@ -35,7 +35,7 @@ class RemoteConsole(InteractiveConsole):
 
     def excepthook(self, type, value, traceback):
         return self.pipe.expect('RemoteConsole.excepthook', type, value, traceback)
-    
+
     def runcode(self, code):
         try:
             exec code in self.locals

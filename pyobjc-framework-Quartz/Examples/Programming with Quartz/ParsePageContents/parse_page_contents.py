@@ -29,19 +29,19 @@ def printPageResults(outFile, myData, pageNum):
                     pageNum)
 
     if myData.numImagesMaskedWithMaskThisPage:
-        print >>outFile, "Found %d images masked with masks on page %d."%( 
+        print >>outFile, "Found %d images masked with masks on page %d."%(
                     myData.numImagesMaskedWithMaskThisPage,
                     pageNum)
 
     if myData.numImagesMaskedWithColorsThisPage:
-        print >>outFile, "Found %d images masked with colors on page %d."%( 
+        print >>outFile, "Found %d images masked with colors on page %d."%(
                     myData.numImagesMaskedWithColorsThisPage,
                     pageNum)
 
 def printDocResults(outFile, totPages, totImages):
     print >>outFile
-    print >>outFile, "Summary: %d page document contains %d images."%( 
-			totPages, totImages)
+    print >>outFile, "Summary: %d page document contains %d images."%(
+                        totPages, totImages)
     print >>outFile
 
 
@@ -49,11 +49,11 @@ def checkImageType(imageDict, myScanData):
     hasMaskKey, isMask = CGPDFDictionaryGetBoolean(imageDict, "ImageMask", None);
     if not hasMaskKey:
         hasMaskKey, isMask = CGPDFDictionaryGetBoolean(imageDict, "IM", None);
-	
+
     if hasMaskKey and isMask:
         myScanData.numImageMasksThisPage += 1
         return
-    
+
     # If image is masked with an alpha image it has an SMask entry.
     hasSMaskKey, object = CGPDFDictionaryGetObject(imageDict, "SMask", None)
     if hasSMaskKey:
@@ -62,11 +62,11 @@ def checkImageType(imageDict, myScanData):
         myScanData.numImagesMaskedWithMaskThisPage += 1
         return
 
-    # If this image is masked with an image or with colors it has 
+    # If this image is masked with an image or with colors it has
     # a Mask entry.
     hasMask, object = CGPDFDictionaryGetObject(imageDict, "Mask", None)
     if hasMask:
-        # If the object is an XObject then the mask is an image. 
+        # If the object is an XObject then the mask is an image.
         # If it is an array, the mask is an array of colors.
         type = CGPDFObjectGetType(object)
         # Check if it is a stream type which it must be to be an XObject.
@@ -76,29 +76,29 @@ def checkImageType(imageDict, myScanData):
             myScanData.numImagesMaskedWithColorsThisPage += 1
         else:
             print >>sys.stderr, "Mask entry in Image object is not well formed!"
-        
+
         return
 
-    # This image is not a mask, is not masked with another image or 
+    # This image is not a mask, is not masked with another image or
     # color so it must be an image with intrinsic color with no mask.
     myScanData.numImagesWithColorThisPage += 1
 
-#	The "Do" operator consumes one value off the stack, the name of 
-# 	the object to execute. The name is a resource in the resource
-# 	dictionary of the page and the object corresponding to that name 
-# 	is an XObject. The most common types of XObjects are either
-# 	Form objects or Image objects. This code only counts images.
-#    
-#	Note that forms, patterns, and potentially other resources contain
-#	images. This code only counts the top level images in a PDF document,
-#	not images embedded in other resources.
+#       The "Do" operator consumes one value off the stack, the name of
+#       the object to execute. The name is a resource in the resource
+#       dictionary of the page and the object corresponding to that name
+#       is an XObject. The most common types of XObjects are either
+#       Form objects or Image objects. This code only counts images.
+#
+#       Note that forms, patterns, and potentially other resources contain
+#       images. This code only counts the top level images in a PDF document,
+#       not images embedded in other resources.
 @objc.callbackFor(CGPDFOperatorTableSetCallback)
 def myOperator_Do(s, info):
     # Check to see if this is an image or not.
     cs = CGPDFScannerGetContentStream(s)
-    
+
     # The Do operator takes a name. Pop the name off the
-    # stack. If this fails then the argument to the 
+    # stack. If this fails then the argument to the
     # Do operator is not a name and is therefore invalid!
     res, name = CGPDFScannerPopName(s, None)
     if not res:
@@ -117,7 +117,7 @@ def myOperator_Do(s, info):
     res, stream = CGPDFObjectGetValue(xobject, kCGPDFObjectTypeStream, None)
     if not res:
         print >>sys.stderr, "XObject '%s' is not a stream"%(name,)
-        return 
+        return
 
     print stream
 
@@ -132,20 +132,20 @@ def myOperator_Do(s, info):
     res, name = CGPDFDictionaryGetName(dict, "Subtype", None)
     if not res:
         print >>sys.stderr, "Couldn't get SubType of dictionary object!"
-        return 
-    
+        return
+
     # This code is interested in the "Image" Subtype of an XObject.
     # Check whether this object has Subtype of "Image".
     if name != "Image":
-        # The Subtype is not "Image" so this must be a form 
+        # The Subtype is not "Image" so this must be a form
         # or other type of XObject.
         return
-    
-    
+
+
     # This is an Image so figure out what variety of image it is.
     checkImageType(dict, info)
 
-# This callback handles inline images. Inline images end with the 
+# This callback handles inline images. Inline images end with the
 # "EI" operator.
 @objc.callbackFor(CGPDFOperatorTableSetCallback)
 def myOperator_EI(s, info):
@@ -197,52 +197,52 @@ def dumpPageStreams(url, outFile):
     # Loop over all the pages in the document, scanning the
     # content stream of each one.
     for i in range(1, totPages+1):
-		# Get the PDF page for this page in the document.
-		p = CGPDFDocumentGetPage(pdfDoc, i)
+        # Get the PDF page for this page in the document.
+        p = CGPDFDocumentGetPage(pdfDoc, i)
 
-		# Create a reference to the content stream for this page.
-		cs = CGPDFContentStreamCreateWithPage(p)
+        # Create a reference to the content stream for this page.
+        cs = CGPDFContentStreamCreateWithPage(p)
 
-                if cs is None:
-                    print >>sys.stderr, "Couldn't create content stream for page #%d"%(i,)
-                    return
+        if cs is None:
+            print >>sys.stderr, "Couldn't create content stream for page #%d"%(i,)
+            return
 
-		# Initialize the counters of images for this page.
-                myData = MyDataScan()
+        # Initialize the counters of images for this page.
+        myData = MyDataScan()
 
-		# Create a scanner for this PDF document page.
-		scanner = CGPDFScannerCreate(cs, table, 0);
-                if scanner is None:
-			print >>sys.stderr, "Couldn't create scanner for page #%d!"%(i,)
-			return
+        # Create a scanner for this PDF document page.
+        scanner = CGPDFScannerCreate(cs, table, 0);
+        if scanner is None:
+            print >>sys.stderr, "Couldn't create scanner for page #%d!"%(i,)
+            return
 
-	
-		# CGPDFScannerScan causes Quartz to scan the content stream,
-		# calling the callbacks in the table when the corresponding
-		# operator is encountered. Once the content stream for the
-		# page has been consumed or Quartz detects a malformed 
-		# content stream, CGPDFScannerScan returns. 
-                if not CGPDFScannerScan(scanner):
-                    print >>sys.stderr, "Scanner couldn't scan all of page #%d!"%(i,)
-		
-		# Print the results for this page.
-		printPageResults(outFile, myData, i);
-		
-		# Update the total count of images with the count of the
-		# images on this page.
-		totalImages += (
-			myData.numImagesWithColorThisPage + 
-			myData.numImageMasksThisPage +
-			myData.numImagesMaskedWithMaskThisPage +
-			myData.numImagesMaskedWithColorsThisPage)
-	
-		# Once the page has been scanned, release the 
-		# scanner for this page.
-		CGPDFScannerRelease(scanner)
-		# Release the content stream for this page.
-		CGPDFContentStreamRelease(cs)
-		# Done with this page; loop to next page.
-    
+
+        # CGPDFScannerScan causes Quartz to scan the content stream,
+        # calling the callbacks in the table when the corresponding
+        # operator is encountered. Once the content stream for the
+        # page has been consumed or Quartz detects a malformed
+        # content stream, CGPDFScannerScan returns.
+        if not CGPDFScannerScan(scanner):
+            print >>sys.stderr, "Scanner couldn't scan all of page #%d!"%(i,)
+
+        # Print the results for this page.
+        printPageResults(outFile, myData, i);
+
+        # Update the total count of images with the count of the
+        # images on this page.
+        totalImages += (
+                myData.numImagesWithColorThisPage +
+                myData.numImageMasksThisPage +
+                myData.numImagesMaskedWithMaskThisPage +
+                myData.numImagesMaskedWithColorsThisPage)
+
+        # Once the page has been scanned, release the
+        # scanner for this page.
+        CGPDFScannerRelease(scanner)
+        # Release the content stream for this page.
+        CGPDFContentStreamRelease(cs)
+        # Done with this page; loop to next page.
+
     printDocResults(outFile, totPages, totalImages)
 
 def main(args = None):
@@ -257,15 +257,15 @@ def main(args = None):
         print "Beginning Document %r"%(inputFileName,)
 
         print CFURLCreateFromFileSystemRepresentation.__metadata__()
-        inURL = CFURLCreateFromFileSystemRepresentation(None, inputFileName, 
-				len(inputFileName), False)
+        inURL = CFURLCreateFromFileSystemRepresentation(None, inputFileName,
+                                len(inputFileName), False)
         if inURL is None:
             print >>sys.stderr, "Couldn't create URL for input file!"
             return 1
-    
+
         dumpPageStreams(inURL, sys.stdout)
         #CFRelease(inURL)
-    
+
     return 0
 
 if __name__ == "__main__":

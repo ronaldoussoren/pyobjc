@@ -1,11 +1,11 @@
 """
 Implementation of NSCoding for OC_PythonObject and friends
 
-NOTE: this only works with a keyed archiver, not with a plain archiver. It 
+NOTE: this only works with a keyed archiver, not with a plain archiver. It
 should be easy enough to change this later on if needed.
 
 A minor problem with NSCoding support is that NSCoding restores
-graphs recusively while Pickle does so depth-first (more of less). 
+graphs recusively while Pickle does so depth-first (more of less).
 This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
@@ -76,7 +76,7 @@ def setupPythonObject():
     # adaptations because we're not saving to a byte stream but to another
     # serializer.
 
-    def save_reduce(coder, func, args, 
+    def save_reduce(coder, func, args,
             state=None, listitems=None, dictitems=None, obj=None):
 
         if not isinstance(args, tuple):
@@ -223,7 +223,7 @@ def setupPythonObject():
 
     encode_dispatch[str] = save_string
 
-    
+
     def save_tuple(coder, obj):
         if coder.allowsKeyedCoding():
             coder.encodeInt_forKey_(kOP_TUPLE, kKIND)
@@ -419,7 +419,7 @@ def setupPythonObject():
 
 
         instantiated = 0
-        if (sys.version_info[0] == 2 and not initargs and 
+        if (sys.version_info[0] == 2 and not initargs and
                 type(cls) is ClassType and
                 not hasattr(cls, "__getinitargs__")):
             try:
@@ -437,7 +437,7 @@ def setupPythonObject():
                 raise TypeError("in constructor for %s: %s" % (
                     cls.__name__, str(err)), sys.exc_info()[2])
 
-            
+
         # We now have the object, but haven't set the correct
         # state yet.  Tell the bridge about this value right
         # away, that's needed because `value` might be part
@@ -477,7 +477,7 @@ def setupPythonObject():
 
         return value
     decode_dispatch[kOP_INST] = load_inst
-        
+
 
     def load_reduce(coder, setValue):
         if coder.allowsKeyedCoding():

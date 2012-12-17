@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "Collaboration" framework in MacOSX 10.5 or later. The
 Collaboration framework provides access to identities, and manages
 user interface elements for selecting identities.
@@ -18,7 +18,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

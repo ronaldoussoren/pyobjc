@@ -9,7 +9,7 @@ from setuptools import setup
 plist = dict(
     NSPrincipalClass='HotKeyApp',
 )
-    
+
 
 setup(
     app=["HotKey.py"],

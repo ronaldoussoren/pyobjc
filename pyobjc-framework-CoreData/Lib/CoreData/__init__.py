@@ -2,7 +2,7 @@
 Python mapping for the CoreData framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 
 import sys
@@ -20,4 +20,3 @@ sys.modules['CoreData'] = objc.ObjCLazyModule(
         '__path__': __path__,
         'objc': objc
     }, (Foundation,))
-

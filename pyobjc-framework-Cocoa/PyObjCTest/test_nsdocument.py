@@ -21,7 +21,7 @@ class TestNSDocument (TestCase):
         self.assertEqual(NSChangeDiscardable, 256)
         self.assertEqual(NSAutosaveInPlaceOperation, 4)
         self.assertEqual(NSAutosaveElsewhereOperation, 3)
-        
+
     @min_os_level('10.8')
     def testConstants10_8(self):
         self.assertEqual(NSAutosaveAsOperation, 5)
@@ -110,7 +110,7 @@ class TestNSDocument (TestCase):
         self.assertArgIsBlock(NSDocument.continueAsynchronousWorkOnMainThreadUsingBlock_, 0, b'v')
         self.assertArgIsBlock(NSDocument.performSynchronousFileAccessUsingBlock_, 0, b'v')
 
-        self.assertArgIsBlock(NSDocument.performAsynchronousFileAccessUsingBlock_, 0, b'v@?') #FIXME: block has a block argument 
+        self.assertArgIsBlock(NSDocument.performAsynchronousFileAccessUsingBlock_, 0, b'v@?') #FIXME: block has a block argument
 
         self.assertResultIsBOOL(NSDocument.isEntireFileLoaded)
         self.assertResultIsBOOL(NSDocument.autosavingIsImplicitlyCancellable)
@@ -121,7 +121,7 @@ class TestNSDocument (TestCase):
         self.assertArgIsOut(NSDocument.checkAutosavingSafetyAndReturnError_, 0)
         self.assertArgIsBOOL(NSDocument.autosaveWithImplicitCancellability_completionHandler_, 0)
         self.assertArgIsBlock(NSDocument.autosaveWithImplicitCancellability_completionHandler_, 1, b'v@')
-        
+
         self.assertResultIsBOOL(NSDocument.autosavesInPlace)
         self.assertResultIsBOOL(NSDocument.preservesVersions)
 

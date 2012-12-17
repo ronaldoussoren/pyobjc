@@ -2,7 +2,7 @@
 Python mapping for the SearchKit framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 import objc, sys
 
@@ -27,7 +27,7 @@ try:
 
 except NameError:
     # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
-    # emulate the missing functionality. 
+    # emulate the missing functionality.
     #
     # See also radar:6525606.
     #
@@ -106,13 +106,13 @@ except NameError:
                 "SKDocumentRef", b"@", mod.SKDocumentGetTypeID())
 
 
-        return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType, 
+        return (SKIndexGetTypeID, indexType, SKIndexDocumentIteratorGetTypeID, iterType,
                 SKSearchGroupGetTypeID, groupType, SKSearchResultsGetTypeID, resultType,
                 SKSummaryGetTypeID, summaryType, iterType,
                 SKDocumentRef, searchref)
 
-    (mod.SKIndexGetTypeID, mod.SKIndexRef, 
-        mod.SKIndexDocumentIteratorGetTypeID, mod.SKIndexDocumentRef, 
+    (mod.SKIndexGetTypeID, mod.SKIndexRef,
+        mod.SKIndexDocumentIteratorGetTypeID, mod.SKIndexDocumentRef,
         mod.SKSearchGroupGetTypeID, mod.SKSearchGroupRef,
         mod.SKSearchResultsGetTypeID, mod.SKSearchResultsRef,
         mod.SKSummaryGetTypeID, mod.SKSummaryRef,

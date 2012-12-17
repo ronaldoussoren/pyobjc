@@ -90,8 +90,8 @@ class TestSCPreferences (TestCase):
 
 
 
-    
-            
+
+
 
 
 

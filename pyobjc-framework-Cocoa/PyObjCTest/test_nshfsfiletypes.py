@@ -22,7 +22,7 @@ class TestNSHFSFileTypes (TestCase):
         w = NSFileTypeForHFSTypeCode(v)
         self.assertIsInstance(w, unicode)
         self.assertEqual(w, b"'rtfd'".decode('latin1'))
-           
+
         fname = '/Library/Documentation/Acknowledgements.rtf'
         if not os.path.exists(fname):
             fname = '/Library/Documentation/AirPort Acknowledgements.rtf'

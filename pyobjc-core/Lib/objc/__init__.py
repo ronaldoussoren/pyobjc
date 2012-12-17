@@ -13,7 +13,7 @@ NO = False
 # Import the namespace from the _objc extension
 def _update(g=globals()):
 
-    # Dummy import of copy_reg, needed 
+    # Dummy import of copy_reg, needed
     # for py2app.
     if sys.version_info[0] == 2:
         import copy_reg
@@ -60,4 +60,3 @@ def _resolve_name(name):
         m = getattr(m, k)
 
     return getattr(m, name)
-

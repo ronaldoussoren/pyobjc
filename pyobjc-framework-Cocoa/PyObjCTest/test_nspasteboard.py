@@ -53,7 +53,7 @@ class TestNSPasteboard (TestCase):
 
         v = NSGetFileTypes([tp])
         self.assertIsInstance(v, NSArray)
-    
+
     def testMethods(self):
         self.assertResultIsBOOL(NSPasteboard.setData_forType_)
         self.assertResultIsBOOL(NSPasteboard.setPropertyList_forType_)

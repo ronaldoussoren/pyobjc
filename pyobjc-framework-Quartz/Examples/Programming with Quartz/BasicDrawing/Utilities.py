@@ -49,7 +49,7 @@ def getTheRGBColorSpace():
     # Set once, the first time this function is called.
     if _deviceRGB is None:
         _deviceRGB = CGColorSpaceCreateDeviceRGB()
-	    
+
     return _deviceRGB
 
 
@@ -102,99 +102,99 @@ _rgbBlack = None
 def getRGBOpaqueBlackColor():
     global _rgbBlack
     if _rgbBlack is None:
-            opaqueBlack = (0, 0, 0, 1)
-            _rgbBlack = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueBlack)
+        opaqueBlack = (0, 0, 0, 1)
+        _rgbBlack = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueBlack)
     return _rgbBlack
 
 _rgbGray = None
 def getRGBOpaqueGrayColor():
     global _rgbGray
     if _rgbGray is None:
-            opaqueGray = (0.9, 0.9, 0.9, 1)
-            _rgbGray = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueGray)
+        opaqueGray = (0.9, 0.9, 0.9, 1)
+        _rgbGray = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueGray)
     return _rgbGray
 
 _rgbRed = None
 def getRGBOpaqueRedColor():
     global _rgbRed
     if _rgbRed is None:
-            opaqueRed = (0.663, 0, 0.031, 1)
-            _rgbRed = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueRed)
+        opaqueRed = (0.663, 0, 0.031, 1)
+        _rgbRed = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueRed)
     return _rgbRed
 
 _rgbBlue = None
 def getRGBOpaqueBlueColor():
     global _rgbBlue
     if _rgbBlue is None:
-            opaqueBlue = (0.482, 0.62, 0.871, 1)
-            _rgbBlue = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueBlue)
+        opaqueBlue = (0.482, 0.62, 0.871, 1)
+        _rgbBlue = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueBlue)
     return _rgbBlue
 
 _rgbPurple = None
 def getRGBOpaquePurpleColor():
     global _rgbPurple
     if _rgbPurple is None:
-            opaquePurple = (0.69, 0.486, 0.722, 1)
-            _rgbPurple = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaquePurple)
+        opaquePurple = (0.69, 0.486, 0.722, 1)
+        _rgbPurple = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaquePurple)
     return _rgbPurple
 
 _rgbDarkBlue = None
 def getRGBOpaqueDarkBlueColor():
     global _rgbDarkBlue
     if _rgbDarkBlue is None:
-            opaqueDarkBlue = (0.11, 0.208, 0.451, 1)
-            _rgbDarkBlue = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueDarkBlue)
+        opaqueDarkBlue = (0.11, 0.208, 0.451, 1)
+        _rgbDarkBlue = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueDarkBlue)
     return _rgbDarkBlue
 
 _rgbBrown = None
 def getRGBOpaqueBrownColor():
     global _rgbBrown
     if _rgbBrown is None:
-            opaqueBrown = (0.325, 0.208, 0.157, 1)
-            _rgbBrown = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueBrown)
+        opaqueBrown = (0.325, 0.208, 0.157, 1)
+        _rgbBrown = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueBrown)
     return _rgbBrown
 
 _rgbOrange = None
 def getRGBOpaqueOrangeColor():
     global _rgbOrange
     if _rgbOrange is None:
-            opaqueOrange = (0.965, 0.584, 0.059, 1)
-            _rgbOrange = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueOrange)
+        opaqueOrange = (0.965, 0.584, 0.059, 1)
+        _rgbOrange = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueOrange)
     return _rgbOrange
 
 _rgbYellow = None
 def getRGBOpaqueYellowColor():
     global _rgbYellow
     if _rgbYellow is None:
-            opaqueYellow = (1, 0.816, 0, 1)
-            _rgbYellow = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueYellow)
+        opaqueYellow = (1, 0.816, 0, 1)
+        _rgbYellow = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueYellow)
     return _rgbYellow
 
 _rgbGreen = None
 def getRGBOpaqueGreenColor():
     global _rgbGreen
     if _rgbGreen is None:
-            opaqueGreen = (0.584, 0.871, 0.318, 1)
-            _rgbGreen = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueGreen)
+        opaqueGreen = (0.584, 0.871, 0.318, 1)
+        _rgbGreen = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueGreen)
     return _rgbGreen
 
 _rgbDarkGreen = None
 def getRGBOpaqueDarkGreenColor():
     global _rgbDarkGreen
     if _rgbDarkGreen is None:
-            opaqueDarkGreen = (0.404, 0.808, 0.239, 1)
-            _rgbDarkGreen = CGColorCreate(
-                    getTheCalibratedRGBColorSpace(), opaqueDarkGreen)
+        opaqueDarkGreen = (0.404, 0.808, 0.239, 1)
+        _rgbDarkGreen = CGColorCreate(
+                getTheCalibratedRGBColorSpace(), opaqueDarkGreen)
     return _rgbDarkGreen
 
 def myCGContextAddEllipseInRect(context, r):
@@ -202,17 +202,17 @@ def myCGContextAddEllipseInRect(context, r):
         CGContextAddEllipseInRect(context, r)
 
     else:
-        # This is not a perfect emulation but is correct as long as there is 
-        # not an open subpath already in the current path. In that case the 
-        # CGContextClosePath here would not necessarily produce the desired 
+        # This is not a perfect emulation but is correct as long as there is
+        # not an open subpath already in the current path. In that case the
+        # CGContextClosePath here would not necessarily produce the desired
         # result.
         CGContextSaveGState(context)
         if 1:
-            # Translate to the center of the ellipse.
-            CGContextTranslateCTM(context, 
+        # Translate to the center of the ellipse.
+            CGContextTranslateCTM(context,
                             CGRectGetMidX(r),
                             CGRectGetMidY(r))
-            # Scale by half the width and height of the rectangle 
+            # Scale by half the width and height of the rectangle
             # bounding the ellipse.
             CGContextScaleCTM(context, r.size.width/2, r.size.height/2)
             # Establish a current point at the first point
@@ -235,13 +235,13 @@ def myCGContextAddEllipseInRect(context, r):
 def drawPoint(context, p):
     CGContextSaveGState(context)
     if 1:
-	# Opaque black.
-	CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)
-	CGContextSetLineWidth(context, 5)
-	CGContextSetLineCap(context, kCGLineCapRound)
-	CGContextMoveToPoint(context, p.x, p.y)
-	CGContextAddLineToPoint(context, p.x, p.y)
-	CGContextStrokePath(context)
+        # Opaque black.
+        CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)
+        CGContextSetLineWidth(context, 5)
+        CGContextSetLineCap(context, kCGLineCapRound)
+        CGContextMoveToPoint(context, p.x, p.y)
+        CGContextAddLineToPoint(context, p.x, p.y)
+        CGContextStrokePath(context)
     CGContextRestoreGState(context)
 
 
@@ -270,7 +270,7 @@ def drawCoordinateAxes(context):
         CGContextMoveToPoint(context, 0, -kTickLength)
         CGContextAddLineToPoint(context, 0, kAxesLength)
         CGContextDrawPath(context, kCGPathStroke)
-        
+
         # Paint the x-axis tick marks in red.
         CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
         for i in range(2):
@@ -294,7 +294,7 @@ def drawDebuggingRect(context, rect):
         CGContextSetRGBStrokeColor(context, 1, 0, 0, 1.0)
         CGContextMoveToPoint(context, rect.origin.x,
                                         rect.origin.y + rect.size.height)
-        CGContextAddLineToPoint(context, 
+        CGContextAddLineToPoint(context,
                                         rect.origin.x + rect.size.width,
                                         rect.origin.y)
         CGContextStrokePath(context)

@@ -174,7 +174,7 @@ class TestSCNetworkConfiguration (TestCase):
 
             r = SCBondInterfaceSetLocalizedDisplayName(iface, "pyobjc.bond")
             self.assertTrue(r is True or r is False)
-           
+
 
             r = SCBondInterfaceSetOptions(iface, {})
             self.assertTrue(r is True or r is False)
@@ -357,7 +357,7 @@ class TestSCNetworkConfiguration (TestCase):
         v = SCNetworkServiceEstablishDefaultConfiguration(serv)
         self.assertIsInstance(v, bool)
 
-        
+
 
 if __name__ == "__main__":
     main()

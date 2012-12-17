@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import * 
+from PyObjCTools.TestSupport import *
 
 from Foundation import *
 

@@ -1,8 +1,8 @@
 """
 Conversion.py -- Tools for converting between Python and Objective-C objects.
 
-Conversion offers API to convert between Python and Objective-C instances of 
-various classes.   Currently, the focus is on Python and Objective-C 
+Conversion offers API to convert between Python and Objective-C instances of
+various classes.   Currently, the focus is on Python and Objective-C
 collections.
 """
 
@@ -52,7 +52,7 @@ def serializePropertyList(aPropertyList, format='xml'):
     """
     Serialize a property list to an NSData object.  Format is one of the
     following strings:
-    
+
     xml (default):
         NSPropertyListXMLFormat_v1_0, the XML representation
 

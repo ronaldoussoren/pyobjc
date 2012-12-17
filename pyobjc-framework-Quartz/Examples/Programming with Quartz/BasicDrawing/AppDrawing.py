@@ -16,18 +16,18 @@ import Shadings
 import DrawingBasics
 
 
-# Defines 
-kCatPDF		 = "Kitty.pdf"
+# Defines
+kCatPDF          = "Kitty.pdf"
 kPDFForBlendMode = "blendmode.pdf"
 
-kOurJPEG	  = "Poot.jpg"
-kQTImage	  = "ptlobos.tif"
+kOurJPEG          = "Poot.jpg"
+kQTImage          = "ptlobos.tif"
 kOurSubstituteJPG = "LyingOnDeckNoProfile.JPG"
-kOurEPS		  = "imageturkey.eps"
+kOurEPS           = "imageturkey.eps"
 
-RAW_IMAGE_WIDTH	  = 400
+RAW_IMAGE_WIDTH   = 400
 RAW_IMAGE_HEIGHT  = 300
-kRawColorImage	  = "image-400x300x24.raw"
+kRawColorImage    = "image-400x300x24.raw"
 kOtherColorImage  = "otherimage-400x300x24.raw"
 
 MASKING_IMAGE_WIDTH  = 400
@@ -67,7 +67,7 @@ def GetURL(name):
 
     return url
 
-# 
+#
 # Helper functions for drawing
 #
 
@@ -89,7 +89,7 @@ def doRawImageFileWithURL(context):
 
     if url is not None:
         Images.drawImageFromURL(context, url,
-            RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 
+            RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT,
             8, True);   # 8 bits per component, isColor = True
 
 
@@ -98,7 +98,7 @@ def doRawImageFileWithCallbacks(context):
 
     if url is not None:
         Images.doImageWithCallbacksCreatedFromURL(context, url,
-                RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 
+                RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT,
                 8, True);   # 8 bits per component, isColor = True
 
 
@@ -159,15 +159,15 @@ def exportImageMaskedWithImage(context):
     if theImageToMaskURL is not None and theMaskingImageURL is not None:
         ImageMasking.exportImageWithMaskFromURLWithDestination(
                 context, theImageToMaskURL, RAW_IMAGE_WIDTH,
-                RAW_IMAGE_HEIGHT, 8, theMaskingImageURL, 
+                RAW_IMAGE_HEIGHT, 8, theMaskingImageURL,
                 MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT)
 
 def doClipMask(context):
     theMaskingImageURL = GetURL(kMaskingImage)
 
     if theMaskingImageURL is not None:
-            ImageMasking.drawWithClippingMask(context, 
-                theMaskingImageURL, MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT)
+        ImageMasking.drawWithClippingMask(context,
+            theMaskingImageURL, MASKING_IMAGE_WIDTH, MASKING_IMAGE_HEIGHT)
 
 def tilePDFDocument(context, offscreenType):
     url = GetURL(kCatPDF)
@@ -190,193 +190,193 @@ def doCompatibleEPSDrawing(context):
 def DispatchDrawing(context, drawingType):
     """ Drawing dispatcher """
     if drawingType == UIHandling.kHICommandSimpleRect:
-            DrawingBasics.doSimpleRect(context)
+        DrawingBasics.doSimpleRect(context)
 
     elif drawingType == UIHandling.kHICommandStrokedRect:
-            DrawingBasics.doStrokedRect(context)
-    
+        DrawingBasics.doStrokedRect(context)
+
     elif drawingType == UIHandling.kHICommandStrokedAndFilledRect:
-            DrawingBasics.doStrokedAndFilledRect(context)
+        DrawingBasics.doStrokedAndFilledRect(context)
 
     elif drawingType == UIHandling.kHICommandPathRects:
-            DrawingBasics.doPathRects(context)
-    
+        DrawingBasics.doPathRects(context)
+
     elif drawingType == UIHandling.kHICommandAlphaRects:
-            DrawingBasics.doAlphaRects(context)
-    
+        DrawingBasics.doAlphaRects(context)
+
     elif drawingType == UIHandling.kHICommandDashed:
-            DrawingBasics.doDashedLines(context)
-    
+        DrawingBasics.doDashedLines(context)
+
     elif drawingType == UIHandling.kHICommandSimpleClip:
-            DrawingBasics.doClippedCircle(context)
-    
+        DrawingBasics.doClippedCircle(context)
+
     elif drawingType == UIHandling.kHICommandPDFDoc:
-            callPDFDrawProc(context, DrawingBasics.doPDFDocument, kCatPDF)
-        
+        callPDFDrawProc(context, DrawingBasics.doPDFDocument, kCatPDF)
+
     elif drawingType == UIHandling.kHICommandRotatedEllipses:
-            CoordinateSystem.doRotatedEllipses(context)
+        CoordinateSystem.doRotatedEllipses(context)
 
     elif drawingType == UIHandling.kHICommandDrawSkewCoordinates:
-            CoordinateSystem.drawSkewedCoordinateSystem(context)
+        CoordinateSystem.drawSkewedCoordinateSystem(context)
 
     elif drawingType == UIHandling.kHICommandBezierEgg:
-            PathDrawing.doEgg(context)
+        PathDrawing.doEgg(context)
 
     elif drawingType == UIHandling.kHICommandRoundedRects:
-            PathDrawing.doRoundedRects(context)
+        PathDrawing.doRoundedRects(context)
 
     elif drawingType == UIHandling.kHICommandStrokeWithCTM:
-            PathDrawing.doStrokeWithCTM(context)
+        PathDrawing.doStrokeWithCTM(context)
 
     elif drawingType == UIHandling.kHICommandRotatedEllipsesWithCGPath:
-            PathDrawing.doRotatedEllipsesWithCGPath(context)
+        PathDrawing.doRotatedEllipsesWithCGPath(context)
 
     elif drawingType == UIHandling.kHICommandPixelAligned:
-            PathDrawing.doPixelAlignedFillAndStroke(context)
+        PathDrawing.doPixelAlignedFillAndStroke(context)
 
     elif drawingType == UIHandling.kHICommandDeviceFillAndStrokeColor:
-            ColorAndGState.doColorSpaceFillAndStroke(context)
+        ColorAndGState.doColorSpaceFillAndStroke(context)
 
     elif drawingType == UIHandling.kHICommandCLUTDrawGraphics:
-            ColorAndGState.doIndexedColorDrawGraphics(context)
-            
+        ColorAndGState.doIndexedColorDrawGraphics(context)
+
     elif drawingType == UIHandling.kHICommandDrawWithGlobalAlpha:
-            ColorAndGState.drawWithGlobalAlpha(context)
+        ColorAndGState.drawWithGlobalAlpha(context)
 
     elif drawingType == UIHandling.kHICommandDrawWithBlendMode:
-            callPDFDrawProc(context, ColorAndGState.drawWithColorBlendMode, kPDFForBlendMode)
+        callPDFDrawProc(context, ColorAndGState.drawWithColorBlendMode, kPDFForBlendMode)
 
     elif drawingType == UIHandling.kHICommandDrawWithColorRefs:
-            ColorAndGState.drawWithColorRefs(context)
+        ColorAndGState.drawWithColorRefs(context)
 
     elif drawingType == UIHandling.kHICommandFunctionsHaveOwnGSave:
-            ColorAndGState.doClippedEllipse(context)
+        ColorAndGState.doClippedEllipse(context)
 
     elif drawingType == UIHandling.kHICommandDrawJPEGImage:
-            doDrawJPEGFile(context)
+        doDrawJPEGFile(context)
 
     elif drawingType == UIHandling.kHICommandColorImageFromFile:
-            doRawImageFileWithURL(context)
+        doRawImageFileWithURL(context)
 
     elif drawingType == UIHandling.kHICommandColorImageFromData:
-            Images.doColorRampImage(context)
+        Images.doColorRampImage(context)
 
     elif drawingType == UIHandling.kHICommandColorImageFromCallbacks:
-            doRawImageFileWithCallbacks(context)
+        doRawImageFileWithCallbacks(context)
 
     elif drawingType == UIHandling.kHICommandGrayRamp:
-            Images.doGrayRamp(context)
+        Images.doGrayRamp(context)
 
     elif drawingType == UIHandling.kHICommandDrawWithCGImageSource:
-            doDrawImageWithCGImageSource(context)
+        doDrawImageWithCGImageSource(context)
 
     elif drawingType == UIHandling.kHICommandDrawWithCGImageSourceIncremental:
-            doIncrementalImage(context)
+        doIncrementalImage(context)
 
     elif drawingType == UIHandling.kHICommandDrawWithQuickTime:
-            doQTImage(context)
+        doQTImage(context)
 
     elif drawingType == UIHandling.kHICommandSubstituteImageProfile:
-            doJPEGDocumentWithMultipleProfiles(context)
+        doJPEGDocumentWithMultipleProfiles(context)
 
     elif drawingType == UIHandling.kHICommandDoSubImage:
-            Images.doColorRampSubImage(context)
+        Images.doColorRampSubImage(context)
 
     elif drawingType == UIHandling.kHICommandExportWithQuickTime:
-            Images.exportColorRampImageWithQT(context)
+        Images.exportColorRampImageWithQT(context)
 
     elif drawingType == UIHandling.kHICommandMaskTurkeyImage:
-            ImageMasking.doOneBitMaskImages(context)
+        ImageMasking.doOneBitMaskImages(context)
 
     elif drawingType == UIHandling.kHICommandImageMaskedWithMask:
-            doMaskImageWithMask(context)
+        doMaskImageWithMask(context)
 
     elif drawingType == UIHandling.kHICommandImageMaskedWithGrayImage:
-            doMaskImageWithGrayImage(context)
+        doMaskImageWithGrayImage(context)
 
     elif drawingType == UIHandling.kHICommandMaskImageWithColor:
-            doImageMaskedWithColor(context)
+        doImageMaskedWithColor(context)
 
     elif drawingType == UIHandling.kHICommandClipToMask:
-            doClipMask(context)
+        doClipMask(context)
 
     elif drawingType == UIHandling.kHICommandExportWithCGImageDestination:
-            exportImageMaskedWithImage(context)
+        exportImageMaskedWithImage(context)
 
     elif drawingType == UIHandling.kHICommandSimpleCGLayer:
-            BitmapContext.doSimpleCGLayer(context)
+        BitmapContext.doSimpleCGLayer(context)
 
     elif drawingType == UIHandling.kHICommandAlphaOnlyContext:
-            BitmapContext.doAlphaOnlyContext(context)
+        BitmapContext.doAlphaOnlyContext(context)
 
     elif drawingType == UIHandling.kHICommandDrawNoOffScreenImage:
-            tilePDFDocument(context, noOffScreen)
+        tilePDFDocument(context, noOffScreen)
 
     elif drawingType == UIHandling.kHICommandDrawOffScreenImage:
-            tilePDFDocument(context, bitmapOffScreen)
+        tilePDFDocument(context, bitmapOffScreen)
 
     elif drawingType == UIHandling.kHICommandDrawWithLayer:
-            tilePDFDocument(context, layerOffScreen)
+        tilePDFDocument(context, layerOffScreen)
 
     elif drawingType == UIHandling.kHICommandQuartzRomanText:
-            QuartzTextDrawing.drawQuartzRomanText(context)
+        QuartzTextDrawing.drawQuartzRomanText(context)
 
     elif drawingType == UIHandling.kHICommandQuartzTextModes:
-            QuartzTextDrawing.drawQuartzTextWithTextModes(context)
+        QuartzTextDrawing.drawQuartzTextWithTextModes(context)
 
     elif drawingType == UIHandling.kHICommandQuartzTextMatrix:
-            QuartzTextDrawing.drawQuartzTextWithTextMatrix(context)
+        QuartzTextDrawing.drawQuartzTextWithTextMatrix(context)
 
     elif drawingType == UIHandling.kHICommandSimplePattern:
-            PatternDrawing.doRedBlackCheckerboard(context)
+        PatternDrawing.doRedBlackCheckerboard(context)
 
     elif drawingType == UIHandling.kHICommandPatternPhase:
-            PatternDrawing.doPatternPhase(context)
+        PatternDrawing.doPatternPhase(context)
 
     elif drawingType == UIHandling.kHICommandPatternMatrix:
-            PatternDrawing.doPatternMatrix(context)
+        PatternDrawing.doPatternMatrix(context)
 
     elif drawingType == UIHandling.kHICommandUncoloredPattern:
-            PatternDrawing.doStencilPattern(context)
-            
+        PatternDrawing.doStencilPattern(context)
+
     elif drawingType == UIHandling.kHICommandDrawWithPDFPattern:
-            callPDFDrawProc(context, PatternDrawing.drawWithPDFPattern, kCatPDF)
+        callPDFDrawProc(context, PatternDrawing.drawWithPDFPattern, kCatPDF)
 
     elif drawingType == UIHandling.kHICommandSimpleShadow:
-            ShadowsAndTransparencyLayers.drawSimpleShadow(context)
-        
+        ShadowsAndTransparencyLayers.drawSimpleShadow(context)
+
     elif drawingType == UIHandling.kHICommandShadowScaling:
-            ShadowsAndTransparencyLayers.doShadowScaling(context)
-    
+        ShadowsAndTransparencyLayers.doShadowScaling(context)
+
     elif drawingType == UIHandling.kHICommandShadowProblems:
-            ShadowsAndTransparencyLayers.showComplexShadowIssues(context)
+        ShadowsAndTransparencyLayers.showComplexShadowIssues(context)
 
     elif drawingType == UIHandling.kHICommandComplexShadow:
-            ShadowsAndTransparencyLayers.showComplexShadow(context)
-    
+        ShadowsAndTransparencyLayers.showComplexShadow(context)
+
     elif drawingType == UIHandling.kHICommandMultipleShapeComposite:
-            ShadowsAndTransparencyLayers.doLayerCompositing(context)
+        ShadowsAndTransparencyLayers.doLayerCompositing(context)
 
     elif drawingType == UIHandling.kHICommandFillAndStrokeWithShadow:
-            ShadowsAndTransparencyLayers.drawFillAndStrokeWithShadow(context)
+        ShadowsAndTransparencyLayers.drawFillAndStrokeWithShadow(context)
 
     elif drawingType == UIHandling.kHICommandPDFDocumentShadow:
-            callPDFDrawProc(context, ShadowsAndTransparencyLayers.shadowPDFDocument, kCatPDF)
+        callPDFDrawProc(context, ShadowsAndTransparencyLayers.shadowPDFDocument, kCatPDF)
 
     elif drawingType == UIHandling.kHICommandSimpleAxialShading:
-            Shadings.doSimpleAxialShading(context)
-            
+        Shadings.doSimpleAxialShading(context)
+
     elif drawingType == UIHandling.kHICommandExampleAxialShadings:
-            Shadings.doExampleAxialShading(context)
+        Shadings.doExampleAxialShading(context)
 
     elif drawingType == UIHandling.kHICommandSimpleRadialShading:
-            Shadings.doSimpleRadialShading(context)
+        Shadings.doSimpleRadialShading(context)
 
     elif drawingType == UIHandling.kHICommandExampleRadialShadings:
-            Shadings.doExampleRadialShadings(context)
+        Shadings.doExampleRadialShadings(context)
 
     elif drawingType == UIHandling.kHICommandEllipseShading:
-            Shadings.doEllipseShading(context)
+        Shadings.doEllipseShading(context)
 
     elif drawingType == UIHandling.kHICommandDoCompatibleEPS:
-            doCompatibleEPSDrawing(context)
+        doCompatibleEPSDrawing(context)

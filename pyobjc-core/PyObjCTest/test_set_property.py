@@ -132,7 +132,7 @@ class TestSetProperty (TestCase):
 
 
 
-    def testAddDiscard(self): 
+    def testAddDiscard(self):
         with OCObserve.alloc().init() as observer:
             o = TestSetPropertyHelper.alloc().init()
             observer.register(o, 'aSet')
@@ -153,7 +153,7 @@ class TestSetProperty (TestCase):
             self.assertEqual(observer.values[-1][-1]['old'], set([]))
 
 
-    def testAddRemove(self): 
+    def testAddRemove(self):
         with OCObserve.alloc().init() as observer:
             o = TestSetPropertyHelper.alloc().init()
             observer.register(o, 'aSet')
@@ -242,7 +242,7 @@ class TestSetProperty (TestCase):
 
             def __eq__(self, other):
                 return isinstance(other, Testing)
-    
+
         p = Testing()
         o.aSet.add(p)
 

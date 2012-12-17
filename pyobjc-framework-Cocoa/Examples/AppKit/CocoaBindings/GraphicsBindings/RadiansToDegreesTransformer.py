@@ -15,14 +15,14 @@ class RadiansToDegreesTransformer(NSValueTransformer):
     def transformedValueClass(cls):
         return NSNumber
     transformedValueClass = classmethod(transformedValueClass)
-        
+
     def allowsReverseTransformation(cls):
         return True
     allowsReverseTransformation = classmethod(allowsReverseTransformation)
-        
+
     def transformedValue_(self, radians):
         return radians / (3.1415927/180.0)
-        
+
     def reverseTransformedValue_(self, degrees):
         if type(degrees) == type(1.2):
             # when using jostickview we get a value of type float()

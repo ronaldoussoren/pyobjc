@@ -32,7 +32,7 @@ def bind_and_listen(hostport):
     # allow the address to be re-used in a reasonable amount of time
     if os.name == 'posix' and sys.platform != 'cygwin':
         serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        
+
     serversock.bind(hostport)
     serversock.listen(5)
     return serversock
@@ -84,7 +84,7 @@ class AsyncPythonInterpreter(NSObject):
         self.port = default(u'AsyncPythonInterpreterInterpreterPort', 0, int)
         self.interpreterPath = default(u'AsyncPythonInterpreterInterpreterPath', u'/usr/bin/python', unicode)
         self.scriptPath = type(self).bundleForClass().pathForResource_ofType_(u'tcpinterpreter', u'py')
-    
+
     def connect(self):
         #NSLog(u'connect')
         self.serverSocket = bind_and_listen((self.host, self.port))
@@ -161,7 +161,7 @@ class AsyncPythonInterpreter(NSObject):
         except objc.error:
             self.close()
         #NSLog(u'bytes written.')
-    
+
     def childTaskTerminated_(self, notification):
         #NSLog(u'childTaskTerminated_')
         self.close()
@@ -183,7 +183,7 @@ class AsyncPythonInterpreter(NSObject):
             except objc.error:
                 pass
             self.remoteFileHandle = None
-    
+
     def terminateChildTask(self):
         #NSLog(u'terminateChildTask')
         if self.childTask is not None:
@@ -206,7 +206,7 @@ class AsyncPythonInterpreter(NSObject):
         self.closeServerFileHandle()
         self.closeRemoteFileHandle()
         self.terminateChildTask()
-        
+
 def test_console():
     from PyObjCTools import AppHelper
     from ConsoleReactor import ConsoleReactor

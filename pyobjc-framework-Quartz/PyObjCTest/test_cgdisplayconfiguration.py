@@ -58,7 +58,7 @@ class TestCGDisplayConfiguration (TestCase):
             CGCompleteDisplayConfiguration(config, kCGConfigureForAppOnly)
 
             self.assertTrue(len(info) > 0)
-      
+
         finally:
             err = CGDisplayRemoveReconfigurationCallback(reconfig, myInfo)
             self.assertEqual(err, 0)
@@ -73,7 +73,7 @@ class TestCGDisplayConfiguration (TestCase):
 
         v = CGDisplayIsActive(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
-        
+
         v = CGDisplayIsAsleep(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
 

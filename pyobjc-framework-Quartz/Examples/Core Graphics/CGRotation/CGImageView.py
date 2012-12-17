@@ -15,14 +15,14 @@ class CGImageView (NSView):
         return self._image
 
     def drawRect_(self, rect):
-	# Obtain the current context
-	ctx = NSGraphicsContext.currentContext().graphicsPort()
-	
-	# Draw the image in the context
-	IIDrawImageTransformed(self._image, ctx, 
+        # Obtain the current context
+        ctx = NSGraphicsContext.currentContext().graphicsPort()
+
+        # Draw the image in the context
+        IIDrawImageTransformed(self._image, ctx,
                 CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
 
-	# Draw the view border, just a simple stroked rectangle
-	CGContextAddRect(ctx, CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
-	CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0)
-	CGContextStrokePath(ctx)
+        # Draw the view border, just a simple stroked rectangle
+        CGContextAddRect(ctx, CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height))
+        CGContextSetRGBStrokeColor(ctx, 1.0, 0.0, 0.0, 1.0)
+        CGContextStrokePath(ctx)

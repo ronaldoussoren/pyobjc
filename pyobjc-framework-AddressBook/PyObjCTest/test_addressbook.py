@@ -19,7 +19,7 @@ class TestAddressBook (TestCase):
         self.assert_( hasattr(AddressBook, 'protocols') )
         self.assert_( hasattr(AddressBook.protocols, 'ABActionDelegate') )
         self.assertIsInstance(AddressBook.protocols.ABActionDelegate, (objc.informal_protocol, objc.formal_protocol))
-        
+
 
 if __name__ == "__main__":
     main()

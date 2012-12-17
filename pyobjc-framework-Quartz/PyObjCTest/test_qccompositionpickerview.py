@@ -25,7 +25,7 @@ class TestQCCompositionPickerView (TestCase):
 
         self.assertResultIsBOOL(QCCompositionPickerView.drawsBackground)
         self.assertArgIsBOOL(QCCompositionPickerView.setDrawsBackground_, 0)
-        
+
 
 if __name__ == "__main__":
     main()

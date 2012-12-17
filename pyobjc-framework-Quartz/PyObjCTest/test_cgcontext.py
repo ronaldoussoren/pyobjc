@@ -193,7 +193,7 @@ class TestCGContext (TestCase):
 
             CGContextSetLineDash(context, 0.5, [0.4, 0.2, 0.8, 0.1], 4)
 
-            self.assertRaises(ValueError, CGContextSetLineDash, 
+            self.assertRaises(ValueError, CGContextSetLineDash,
                     context, 0.5, [0.4, 0.2, 0.8, 0.1], 8)
 
             CGContextSetFlatness(context, 0.8)
@@ -379,10 +379,10 @@ class TestCGContext (TestCase):
             sz = CGContextConvertSizeToUserSpace(context, (10.5, 11.9))
             self.assertIsInstance(sz, CGSize)
 
-            box = CGContextConvertRectToDeviceSpace(context, 
+            box = CGContextConvertRectToDeviceSpace(context,
                     ((10.5, 11.9), (55.6, 39.3)))
             self.assertIsInstance(box, CGRect)
-            box = CGContextConvertRectToUserSpace(context, 
+            box = CGContextConvertRectToUserSpace(context,
                     ((10.5, 11.9), (55.6, 39.3)))
             self.assertIsInstance(box, CGRect)
 
@@ -500,7 +500,7 @@ class TestCGContext (TestCase):
             tf = CGContextGetCTM(context)
             self.assertEqual(tf, transform)
 
-           
+
 
 
             CGContextEndPage(context)

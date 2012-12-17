@@ -11,7 +11,7 @@ _useQT = False
 
 def getURLToExport(suffix):
     savePanel = NSSavePanel.savePanel()
-    
+
     initialFileName = "BasicDrawing.%s"%(suffix,)
 
     if savePanel.runModalForDirectory_file_(None, initialFileName) == NSFileHandlingPanelOKButton:
@@ -71,7 +71,7 @@ class MyAppController (NSObject):
         # Use the printable version of the current command. This produces
         # the best results for exporting.
         exportInfoP.command = self.theView.currentPrintableCommand()
-        exportInfoP.fileType = '    '	# unused
+        exportInfoP.fileType = '    '   # unused
         exportInfoP.useQTForExport = _useQT
         exportInfoP.dpi = _dpi
 
@@ -79,34 +79,34 @@ class MyAppController (NSObject):
     def exportAsPDF_(self, sender):
         url = getURLToExport("pdf")
         if url is not None:
-		exportInfo = Utilities.ExportInfo()
-		self.setupExportInfo_(exportInfo)
-		PDFHandling.MakePDFDocument(url, exportInfo)
+            exportInfo = Utilities.ExportInfo()
+            self.setupExportInfo_(exportInfo)
+            PDFHandling.MakePDFDocument(url, exportInfo)
 
     @objc.IBAction
     def exportAsPNG_(self, sender):
         url = getURLToExport("png")
         if url is not None:
-		exportInfo = Utilities.ExportInfo()
-		self.setupExportInfo_(exportInfo)
-		BitmapContext.MakePNGDocument(url, exportInfo)
+            exportInfo = Utilities.ExportInfo()
+            self.setupExportInfo_(exportInfo)
+            BitmapContext.MakePNGDocument(url, exportInfo)
 
     @objc.IBAction
     def exportAsTIFF_(self, sender):
         url = getURLToExport("tif")
         if url is not None:
-		exportInfo = Utilities.ExportInfo()
-		self.setupExportInfo_(exportInfo)
-		BitmapContext.MakeTIFFDocument(url, exportInfo)
+            exportInfo = Utilities.ExportInfo()
+            self.setupExportInfo_(exportInfo)
+            BitmapContext.MakeTIFFDocument(url, exportInfo)
 
 
     @objc.IBAction
     def exportAsJPEG_(self, sender):
         url = getURLToExport("jpg")
         if url is not None:
-		exportInfo = Utilities.ExportInfo()
-		self.setupExportInfo_(exportInfo)
-		BitmapContext.MakeJPEGDocument(url, exportInfo)
+            exportInfo = Utilities.ExportInfo()
+            self.setupExportInfo_(exportInfo)
+            BitmapContext.MakeJPEGDocument(url, exportInfo)
 
     def validateMenuItem_(self, menuItem):
         if menuItem.tag == _dpi:
@@ -118,12 +118,12 @@ class MyAppController (NSObject):
                 menuItem.setState_(True)
             else:
                 menuItem.setState_(False)
-        
+
         elif menuItem.action() == 'setUseCGImageSource:':
             if _useQT:
                 currentDPIMenuItem = menuItem
                 menuItem.setState_(True)
             else:
                 menuItem.setState_(False)
-        
-	return True
+
+        return True

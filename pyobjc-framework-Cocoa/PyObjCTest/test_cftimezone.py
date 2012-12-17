@@ -99,7 +99,7 @@ class TestTimeZone (TestCase):
                 minute = 0,
                 second = 0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone, 
+        r = CFTimeZoneIsDaylightSavingTime(zone,
                 CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIs(r, True)
         dt = CFGregorianDate(
@@ -110,16 +110,16 @@ class TestTimeZone (TestCase):
                 minute = 0,
                 second = 0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone, 
+        r = CFTimeZoneIsDaylightSavingTime(zone,
                 CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIsIn(r, (False, True))
-        offset = CFTimeZoneGetDaylightSavingTimeOffset(zone, 
+        offset = CFTimeZoneGetDaylightSavingTimeOffset(zone,
                 CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIsInstance(offset, float)
         dt = CFTimeZoneGetNextDaylightSavingTimeTransition(
                 zone, CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIsInstance(dt, float)
-        nm = CFTimeZoneCopyLocalizedName(zone, 
+        nm = CFTimeZoneCopyLocalizedName(zone,
                 kCFTimeZoneNameStyleShortStandard, CFLocaleCopyCurrent())
         self.assertIsInstance(nm, unicode)
 

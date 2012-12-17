@@ -27,13 +27,13 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
     # pixels where each pixel is 4 bytes. The format is 8-bit ARGB or XRGB, depending on
     # whether needsTransparentBitmap is true. In order to get the recommended
     # pixel alignment, the bytesPerRow is rounded up to the nearest multiple
-    # of BEST_BYTE_ALIGNMENT bytes. 
+    # of BEST_BYTE_ALIGNMENT bytes.
 
     # Minimum bytes per row is 4 bytes per sample * number of samples.
     bytesPerRow = width*4;
     # Round to nearest multiple of BEST_BYTE_ALIGNMENT.
     bytesPerRow = COMPUTE_BEST_BYTES_PER_ROW(bytesPerRow);
-    
+
     # Allocate the data for the raster. The total amount of data is bytesPerRow
     # times the number of rows. The function 'calloc' is used so that the
     # memory is initialized to 0.
@@ -41,7 +41,7 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
         rasterData = objc.allocateBuffer(int(bytesPerRow * height))
     except  MemoryError:
         return None
-    
+
     # The wantDisplayColorSpace argument passed to the function determines
     # whether or not to use the display color space or the generic calibrated
     # RGB color space. The needsTransparentBitmap argument determines whether
@@ -56,7 +56,7 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
     else:
         transparency = kCGImageAlphaPremultipliedFirst
 
-    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow, 
+    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
             cs, transparency)
     if context is None:
         return None
@@ -70,7 +70,7 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
         CGContextClearRect(context, CGRectMake(0, 0, width, height))
 
     else:
-        # Since the drawing destination is opaque, first paint 
+        # Since the drawing destination is opaque, first paint
         # the context bits to white.
         CGContextSaveGState(context)
         CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueWhiteColor())
@@ -90,7 +90,7 @@ def myCGContextGetBitmapInfo(c):
 # transfers 'ownership' of the raster data
 # in the bitmap context, to the image. If the
 # image can't be created, this routine frees
-# the memory associated with the raster. 
+# the memory associated with the raster.
 def createImageFromBitmapContext(c):
     rasterData = _rasterDataForContext[c]
     # We own the data, hence remove from the mapping
@@ -100,7 +100,7 @@ def createImageFromBitmapContext(c):
 
     if rasterData is None:
         fprintf(stderr, "Context is not a bitmap context!")
-	
+
     # Create the data provider from the image data
     dataProvider = CGDataProviderCreateWithData(None,
                                 rasterData,
@@ -114,14 +114,14 @@ def createImageFromBitmapContext(c):
     # the parameters of the bitmap context. This code uses a NULL
     # decode array and shouldInterpolate is true.
     image = CGImageCreate(
-                CGBitmapContextGetWidth(c), 
-                CGBitmapContextGetHeight(c), 
-                CGBitmapContextGetBitsPerComponent(c), 
-                CGBitmapContextGetBitsPerPixel(c), 
-                CGBitmapContextGetBytesPerRow(c), 
+                CGBitmapContextGetWidth(c),
+                CGBitmapContextGetHeight(c),
+                CGBitmapContextGetBitsPerComponent(c),
+                CGBitmapContextGetBitsPerPixel(c),
+                CGBitmapContextGetBytesPerRow(c),
                 CGBitmapContextGetColorSpace(c),
                 myCGContextGetBitmapInfo(c),
-		dataProvider,
+                dataProvider,
                 None,
                 True,
                 kCGRenderingIntentDefault)
@@ -134,9 +134,9 @@ def createImageFromBitmapContext(c):
 
 def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
     """
-    Export an image using QuickTime API's. 
+    Export an image using QuickTime API's.
 
-    This function can't possibly work, as the relevant APIs aren't available 
+    This function can't possibly work, as the relevant APIs aren't available
     through MacPython. The code below is mostly there in case someone fixes
     the MacPython QuickTime bindings.
     """
@@ -154,15 +154,15 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
     else:
         print >>sys.stderr, "Requested image export format %@s unsupported"%(outputFormat,)
         return
-	
-	result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0,  None, None)
+
+        result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0,  None, None)
         if result == 0:
             result, graphicsExporter = OpenADefaultComponent(GraphicsExporterComponentType,
-				    imageExportType, graphicsExporter)
+                                    imageExportType, graphicsExporter)
             if result == 0:
                 result = GraphicsExportSetInputCGImage(graphicsExporter, image)
                 if result == 0:
-                    result = GraphicsExportSetResolution(graphicsExporter, 
+                    result = GraphicsExportSetResolution(graphicsExporter,
                                             FloatToFixed(dpi), FloatToFixed(dpi));
                 if result == 0:
                     result = GraphicsExportSetOutputDataReference(
@@ -173,10 +173,10 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
                 CloseComponent(graphicsExporter);
 
         if dataRef:
-		DisposeHandle(dataRef);
+            DisposeHandle(dataRef);
 
         if result:
-		print >>sys.stderr, "QT export got bad result = %d!"%(result,)
+            print >>sys.stderr, "QT export got bad result = %d!"%(result,)
 
 
 def exportCGImageToFileWithDestination(image, url, outputFormat, dpi):
@@ -184,7 +184,7 @@ def exportCGImageToFileWithDestination(image, url, outputFormat, dpi):
     # corresponds to the output image format. The destination will
     # only contain 1 image.
     imageDestination = CGImageDestinationCreateWithURL(url, outputFormat, 1, None)
-		
+
     if imageDestination is None:
         print >>sys.stderr, "Couldn't create image destination!"
         return
@@ -194,16 +194,16 @@ def exportCGImageToFileWithDestination(image, url, outputFormat, dpi):
         kCGImagePropertyDPIWidth: dpi,
         kCGImagePropertyDPIHeight: dpi,
     }
-    
+
     # Add the image with the options dictionary to the destination.
     CGImageDestinationAddImage(imageDestination, image, options);
 
-    # When all the images are added to the destination, finalize it. 
+    # When all the images are added to the destination, finalize it.
     CGImageDestinationFinalize(imageDestination);
 
 def MakeImageDocument(url, imageType, exportInfo):
     # First make a bitmap context for a US Letter size
-    # raster at the requested resolution. 
+    # raster at the requested resolution.
     dpi = exportInfo.dpi;
     width = int(8.5*dpi)
     height = int(11*dpi)
@@ -216,14 +216,14 @@ def MakeImageDocument(url, imageType, exportInfo):
     # instead of the display color space.
     useDisplayColorSpace = False;
     c = createRGBBitmapContext(width, height, useDisplayColorSpace, needTransparentBitmap)
-    
+
     if c is None:
         print >>sys.stderr, "Couldn't make destination bitmap context"
         return memFullErr;
-      
+
     # Scale the coordinate system based on the resolution in dots per inch.
     CGContextScaleCTM(c, dpi/72, dpi/72);
-    
+
     # Set the font smoothing parameter to false since it's better to
     # draw any text without special LCD text rendering when creating
     # rendered data for export.
@@ -235,13 +235,13 @@ def MakeImageDocument(url, imageType, exportInfo):
     # obtain it. Better would be that DispatchDrawing and the code
     # it calls would take this scaling factor as a parameter.
     Utilities.setScalingFactor(dpi/72)
-    
+
     # Draw into that raster...
     AppDrawing.DispatchDrawing(c, exportInfo.command)
-    
+
     # Set the scaling factor back to 1.0.
     Utilities.setScalingFactor(1.0)
-    
+
     # Create an image from the raster data. Calling
     # createImageFromBitmapContext gives up ownership
     # of the raster data used by the context.
@@ -259,7 +259,7 @@ def MakeImageDocument(url, imageType, exportInfo):
         exportCGImageToFileWithQT(image, url, imageType, exportInfo.dpi)
     else:
         exportCGImageToFileWithDestination(image, url, imageType, exportInfo.dpi)
-    
+
 
 def MakeTIFFDocument(url, exportInfo):
     return MakeImageDocument(url, kUTTypeTIFF, exportInfo)
@@ -281,18 +281,18 @@ def createCGLayerForDrawing(c):
     layer = CGLayerCreateWithContext(c, layerSize, None);
     if layer is None:
         return None
-	
-    # Get the context corresponding to the layer. 
+
+    # Get the context corresponding to the layer.
     layerContext = CGLayerGetContext(layer)
     if layerContext is None:
         return None
-    
+
     #$ Set the fill color to opaque black.
     CGContextSetFillColorWithColor(layerContext, Utilities.getRGBOpaqueBlackColor())
-    
+
     # Draw the content into the layer.
     CGContextFillRect(layerContext, rect)
-    
+
     # Now the layer has the contents needed.
     return layer
 
@@ -303,14 +303,14 @@ def doSimpleCGLayer(context):
     if layer is None:
         print >>sys.stderr, "Couldn't create layer!"
         return
-    
+
     # Get the size of the layer created.
     s = CGLayerGetSize(layer)
-    
+
     # Clip to a rect that corresponds to
     # a grid of 8x8 layer objects.
     CGContextClipToRect(context, CGRectMake(0, 0, 8*s.width, 8*s.height))
-    
+
     # Paint 8 rows of layer objects.
     for j in range(8):
         CGContextSaveGState(context)
@@ -318,12 +318,12 @@ def doSimpleCGLayer(context):
         # across the drawing canvas by skipping a
         # square on the grid each time across.
         for i in range(4):
-                # Draw the layer at the current origin.
-                CGContextDrawLayerAtPoint(context, 
-                        CGPointZero, 
-                        layer);
-                # Translate across two layer widths.
-                CGContextTranslateCTM(context, 2*s.width, 0);
+            # Draw the layer at the current origin.
+            CGContextDrawLayerAtPoint(context,
+                    CGPointZero,
+                    layer);
+            # Translate across two layer widths.
+            CGContextTranslateCTM(context, 2*s.width, 0);
 
         CGContextRestoreGState(context)
         # Translate to the left one layer width on
@@ -332,22 +332,22 @@ def doSimpleCGLayer(context):
         # time through the outer loop, translate up
         # one layer height.
         if j % 2:
-            CGContextTranslateCTM(context, 
+            CGContextTranslateCTM(context,
                 s.width, s.height)
         else:
-            CGContextTranslateCTM(context, 
+            CGContextTranslateCTM(context,
                 -s.width, s.height)
-    
+
 def createAlphaOnlyContext(width, height):
-    # This routine allocates data for a pixel array that contains 
-    # width*height pixels, each pixel is 1 byte. The format is 
+    # This routine allocates data for a pixel array that contains
+    # width*height pixels, each pixel is 1 byte. The format is
     # 8 bits per pixel, where the data is the alpha value of the pixel.
 
     # Minimum bytes per row is 1 byte per sample * number of samples.
     bytesPerRow = width;
     # Round to nearest multiple of BEST_BYTE_ALIGNMENT.
     bytesPerRow = COMPUTE_BEST_BYTES_PER_ROW(bytesPerRow);
-    
+
     # Allocate the data for the raster. The total amount of data is bytesPerRow
     #// times the number of rows. The function 'calloc' is used so that the
     #// memory is initialized to 0.
@@ -355,12 +355,12 @@ def createAlphaOnlyContext(width, height):
         rasterData = objc.allocateBuffer(bytesPerRow * height);
     except MemoryError:
         return None
-    
+
     # This type of context is only available in Panther and later, otherwise
     # this fails and returns a NULL context. The color space for an alpha
     #// only context is NULL and the BitmapInfo value is kCGImageAlphaOnly.
-    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow, 
-					None, kCGImageAlphaOnly);
+    context = CGBitmapContextCreate(rasterData, width, height, 8, bytesPerRow,
+                                        None, kCGImageAlphaOnly);
     if context is None:
         print >>sys.stderr, "Couldn't create the context!"
         return None
@@ -369,14 +369,14 @@ def createAlphaOnlyContext(width, height):
 
     # Clear the context bits so they are initially transparent.
     CGContextClearRect(context, CGRectMake(0, 0, width, height))
-    
+
     return context;
 
 # createMaskFromAlphaOnlyContext creates a CGImageRef
 # from an alpha-only bitmap context. Calling this routine
-# transfers 'ownership' of the raster data in the bitmap 
-# context, to the image. If the image can't be created, this 
-# routine frees the memory associated with the raster. 
+# transfers 'ownership' of the raster data in the bitmap
+# context, to the image. If the image can't be created, this
+# routine frees the memory associated with the raster.
 
 def createMaskFromAlphaOnlyContext(alphaContext):
     rasterData = _rasterDataForContext[alphaContext]
@@ -385,28 +385,28 @@ def createMaskFromAlphaOnlyContext(alphaContext):
 
     imageDataSize = CGBitmapContextGetBytesPerRow(alphaContext) * CGBitmapContextGetHeight(alphaContext)
     invertDecode = [ 1.0, 0.0 ]
-        
+
     # Create the data provider from the image data.
-    dataProvider = CGDataProviderCreateWithData(None, 
-					    rasterData,
-					    imageDataSize,
-					    None)
+    dataProvider = CGDataProviderCreateWithData(None,
+                                            rasterData,
+                                            imageDataSize,
+                                            None)
 
     if dataProvider is None:
         print >>sys.stderr, "Couldn't create data provider!"
         return None
 
-    mask = CGImageMaskCreate(CGBitmapContextGetWidth(alphaContext), 
-			  CGBitmapContextGetHeight(alphaContext), 
-			  CGBitmapContextGetBitsPerComponent(alphaContext), 
-			  CGBitmapContextGetBitsPerPixel(alphaContext), 
-			  CGBitmapContextGetBytesPerRow(alphaContext), 
-			  dataProvider,
+    mask = CGImageMaskCreate(CGBitmapContextGetWidth(alphaContext),
+                          CGBitmapContextGetHeight(alphaContext),
+                          CGBitmapContextGetBitsPerComponent(alphaContext),
+                          CGBitmapContextGetBitsPerPixel(alphaContext),
+                          CGBitmapContextGetBytesPerRow(alphaContext),
+                          dataProvider,
                           # The decode is an inverted decode since a mask has the opposite
                           # sense than alpha, i.e. 0 in a mask paints 100% and 1 in a mask
                           # paints nothing.
-			  invertDecode,
-			  True)
+                          invertDecode,
+                          True)
 
     if mask is None:
         print >>sys.stderr, "Couldn't create image mask!"
@@ -438,7 +438,7 @@ def doAlphaOnlyContext(context):
     # This code is now finshed with the context so it can
     # release it.
     del alphaContext
-    
+
     if mask is None:
         return
 
@@ -465,7 +465,7 @@ def getThePDFDoc(url):
 
     if url is None:
         return None, 0, 0
-    
+
     # See whether to update the cached PDF document.
     if _pdfDoc is None or url != _pdfURL:
         # Release any cached document or URL.
@@ -479,7 +479,7 @@ def getThePDFDoc(url):
 
         else:
             _pdfURL = None
-   
+
     if _pdfDoc is not None:
         return _pdfDoc, _width, _height
 
@@ -490,7 +490,7 @@ def getThePDFDoc(url):
 DOSCALING=True
 
 def TilePDFNoBuffer(context, url):
-    # The amount of area to tile should really be based on the 
+    # The amount of area to tile should really be based on the
     # window/document. Here it is hard coded to a US Letter
     # size document. This may draw too many or too few tiles
     # for the area actually being filled.
@@ -516,13 +516,13 @@ def TilePDFNoBuffer(context, url):
     # Tile the PDF document.
     for h in range(0, int(fillheight), int(tileOffsetY)):
         for w in range(0, int(fillwidth), int(tileOffsetX)):
-            CGContextDrawPDFDocument(context, 
+            CGContextDrawPDFDocument(context,
                 CGRectMake(w, h, tileX, tileY), pdfDoc, 1);
 
 def TilePDFWithOffscreenBitmap(context, url):
     # Again this should really be computed based on
     # the area intended to be tiled.
-    fillwidth = 612.0 
+    fillwidth = 612.0
     fillheight = 792.0
     extraOffset = 6.0
 
@@ -535,28 +535,28 @@ def TilePDFWithOffscreenBitmap(context, url):
         # Make the tiles 1/3 the size of the PDF document.
         tileX /= 3
         tileY /= 3
-	extraOffset /= 3
+        extraOffset /= 3
 
     # Space the tiles by the tile width and height
     # plus extraOffset units in each dimension.
     tileOffsetX = extraOffset + tileX;
     tileOffsetY = extraOffset + tileY;
-    
+
     # Since the bitmap context is for use with the display
     # and should capture alpha, these are the values
     # to pass to createRGBBitmapContext.
     useDisplayColorSpace = True;
     needTransparentBitmap = True;
-    bitmapContext = createRGBBitmapContext(tileX, tileY, 
-					useDisplayColorSpace, 
-					needTransparentBitmap);
+    bitmapContext = createRGBBitmapContext(tileX, tileY,
+                                        useDisplayColorSpace,
+                                        needTransparentBitmap);
     if bitmapContext is None:
         print >>sys.stderr, "Couldn't create bitmap context!"
         return
 
     # Draw the PDF document one time into the bitmap context.
-    CGContextDrawPDFDocument(bitmapContext, 
-		    CGRectMake(0, 0, tileX, tileY), pdfDoc, 1);
+    CGContextDrawPDFDocument(bitmapContext,
+                    CGRectMake(0, 0, tileX, tileY), pdfDoc, 1);
 
     # Create an image from the raster data. Calling
     # createImageFromBitmapContext gives up ownership
@@ -568,12 +568,12 @@ def TilePDFWithOffscreenBitmap(context, url):
 
     if image is None:
         return
-    
+
     # Now tile the image.
     for h in range(0, int(fillheight), int(tileOffsetY)):
         for w in range(0, int(fillwidth), int(tileOffsetX)):
             CGContextDrawImage(context, CGRectMake(w, h, tileX, tileY), image)
-	
+
 
 def createLayerWithImageForContext(c, url):
     layerSize = CGSize()
@@ -590,18 +590,18 @@ def createLayerWithImageForContext(c, url):
     layer = CGLayerCreateWithContext(c, layerSize, None)
     if layer is None:
         return NULL
-	
+
     # Get the context corresponding to the layer. Note
     # that this is a 'Get' function so the code must
     # not release the context.
     layerContext = CGLayerGetContext(layer)
     if layerContext is None:
         return None
-    
+
     # Draw the PDF document into the layer.
     CGContextDrawPDFDocument(layerContext,
         CGRectMake(0, 0, layerSize.width, layerSize.height), pdfDoc, 1);
-    
+
     # Now the layer has the contents needed.
     return layer
 
@@ -614,7 +614,7 @@ def TilePDFWithCGLayer(context, url):
     if layer is None:
         print >>sys.stderr, "Couldn't create the layer!"
         return
-    
+
     # Compute the tile size and offset.
     s = CGLayerGetSize(layer);
     tileX = s.width
@@ -626,8 +626,8 @@ def TilePDFWithCGLayer(context, url):
         tileOffsetX = 2.0 + tileX;
         tileOffsetY = 2.0 + tileY;
     else:
-	# Add 6 units to the offset in each direction
-	# if there is no scaling of the source PDF document.
+        # Add 6 units to the offset in each direction
+        # if there is no scaling of the source PDF document.
         tileOffsetX = 6. + tileX;
         tileOffsetY = 6. + tileY;
 

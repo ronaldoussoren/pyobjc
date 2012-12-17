@@ -458,7 +458,7 @@ class TestNSArray (TestCase):
 
         self.assertArgIsFunction(NSMutableArray.sortUsingFunction_context_, 0, b'l@@@', False)
         self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, b'@')
-        
+
         self.assertArgIsSEL(NSMutableArray.sortUsingSelector_, 0, b'i@:@')
 
         self.assertIsNullTerminated(NSArray.arrayWithObjects_)

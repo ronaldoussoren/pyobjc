@@ -26,13 +26,13 @@ class SampleCIView (NSOpenGLView):
         global _pf
 
         if _pf is None:
-	    # Making sure the context's pixel format doesn't have a recovery
-	    # renderer is important - otherwise CoreImage may not be able to
-	    # create deeper context's that share textures with this one.
+            # Making sure the context's pixel format doesn't have a recovery
+            # renderer is important - otherwise CoreImage may not be able to
+            # create deeper context's that share textures with this one.
 
-            attr = ( NSOpenGLPFAAccelerated, 
+            attr = ( NSOpenGLPFAAccelerated,
                     NSOpenGLPFANoRecovery, NSOpenGLPFAColorSize, 32 )
-	    _pf = NSOpenGLPixelFormat.alloc().initWithAttributes_(attr)
+            _pf = NSOpenGLPixelFormat.alloc().initWithAttributes_(attr)
 
         return _pf
 
@@ -75,8 +75,8 @@ class SampleCIView (NSOpenGLView):
         glHint (GL_TRANSFORM_HINT_APPLE, GL_FASTEST)
 
     def viewBoundsDidChange_(self, bounds):
-        # For subclasses. 
-        pass 
+        # For subclasses.
+        pass
 
     def updateMatrices(self):
         r = self.bounds()
@@ -150,7 +150,7 @@ class SampleCIView (NSOpenGLView):
             glFlush ()
 
         else:
-            # Printing the view contents. Render using CG, not OpenGL. 
+            # Printing the view contents. Render using CG, not OpenGL.
 
             if self.respondsToSelector_('drawRect:inCIContext:'):
                 self.drawRect_inCIContext_(ir, self._context)
@@ -163,4 +163,3 @@ class SampleCIView (NSOpenGLView):
                     CGContextDrawImage(
                             NSGraphicsContext.currentContext().graphicsPort(),
                             ir, cgImage)
-

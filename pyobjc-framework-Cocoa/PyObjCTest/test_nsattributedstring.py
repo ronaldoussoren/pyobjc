@@ -139,7 +139,7 @@ class TestNSAttributedString (TestCase):
 
         self.assertArgIsOut(NSAttributedString.dataFromRange_documentAttributes_error_, 2)
         self.assertArgIsOut(NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2)
-        
+
         self.assertResultIsBOOL(NSMutableAttributedString.readFromURL_options_documentAttributes_error_)
         self.assertArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 2)
         self.assertArgIsOut(NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 3)

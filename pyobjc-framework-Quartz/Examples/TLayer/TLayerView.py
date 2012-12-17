@@ -31,7 +31,7 @@ class TLayerView (NSView):
 
         self.useTLayer = False;
         self.circles = []
-    
+
         for c in  colors:
             color = NSColor.colorWithCalibratedRed_green_blue_alpha_(*c)
             circle = Circle.alloc().init()
@@ -93,7 +93,7 @@ class TLayerView (NSView):
             center.x += point.x - start.x;
             center.y += point.y - start.y;
             circle.center = center
-            
+
             self.setNeedsDisplayInRect_(self.boundsForCircle_(circle))
 
             start = point;
@@ -152,7 +152,7 @@ class TLayerView (NSView):
     def performDragOperation_(self, sender):
         point = self.convertPoint_fromView_(sender.draggingLocation(), None)
         index = self.indexOfCircleAtPoint_(point)
-        
+
         if index >= 0:
             # The current drag location is inside the bounds of a circle so we
             # accept the drop and move on to concludeDragOperation:.
@@ -164,7 +164,7 @@ class TLayerView (NSView):
         color = NSColor.colorFromPasteboard_(sender.draggingPasteboard())
         point = self.convertPoint_fromView_(sender.draggingLocation(), None)
         index = self.indexOfCircleAtPoint_(point)
-        
+
         if index >= 0:
             circle = self.circles[index]
             circle.color = color

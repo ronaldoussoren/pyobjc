@@ -39,13 +39,13 @@ class TestABGlobals (TestCase):
 
     @min_os_level('10.6')
     def testConstants10_6(self):
-          self.assertIsInstance(kABPhoneiPhoneLabel, unicode)
-          self.assertEqual(kABShowAsResource, 2)
-          self.assertEqual(kABShowAsRoom, 3)
+        self.assertIsInstance(kABPhoneiPhoneLabel, unicode)
+        self.assertEqual(kABShowAsResource, 2)
+        self.assertEqual(kABShowAsRoom, 3)
 
     @min_os_level('10.5')
     def testConstants10_5(self):
-          self.assertIsInstance(kABCalendarURIsProperty, unicode)
+        self.assertIsInstance(kABCalendarURIsProperty, unicode)
 
     @expectedFailure
     def testConstants_10_7_broken(self):

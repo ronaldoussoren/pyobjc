@@ -98,7 +98,7 @@ class TestIKImageBrowserView (TestCase):
         self.assertIsInstance(IKImageBrowserGroupBackgroundColorKey, unicode)
         self.assertIsInstance(IKImageBrowserGroupTitleKey, unicode)
         self.assertIsInstance(IKImageBrowserGroupStyleKey, unicode)
-        
+
     @min_os_level('10.6')
     def testConstants10_6(self):
         self.assertEqual(IKImageBrowserDropOn, 0)

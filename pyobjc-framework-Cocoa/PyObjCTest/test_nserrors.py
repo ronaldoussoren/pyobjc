@@ -14,7 +14,7 @@ class TestNSErrors (TestCase):
         self.assertIsInstance(NSWordTablesWriteException, unicode)
         self.assertIsInstance(NSWordTablesReadException, unicode)
         self.assertIsInstance(NSTextReadException, unicode)
-        self.assertIsInstance(NSTextWriteException, unicode)   
+        self.assertIsInstance(NSTextWriteException, unicode)
         self.assertIsInstance(NSPasteboardCommunicationException, unicode)
         self.assertIsInstance(NSPrintingCommunicationException, unicode)
         self.assertIsInstance(NSAbortModalException, unicode)

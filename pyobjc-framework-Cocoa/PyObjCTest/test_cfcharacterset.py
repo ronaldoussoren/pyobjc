@@ -54,8 +54,8 @@ class TestCharacterSet (TestCase):
         self.assertTrue(CFCharacterSetHasMemberInPlane(digits, 0))
         self.assertFalse(CFCharacterSetHasMemberInPlane(digits, 4))
 
-        self.assertTrue(CFCharacterSetIsCharacterMember(letters, b'A'.decode('latin1')))    
-        self.assertFalse(CFCharacterSetIsCharacterMember(letters, b'9'.decode('latin1')))    
+        self.assertTrue(CFCharacterSetIsCharacterMember(letters, b'A'.decode('latin1')))
+        self.assertFalse(CFCharacterSetIsCharacterMember(letters, b'9'.decode('latin1')))
 
         data = CFCharacterSetCreateBitmapRepresentation(None, set)
         self.assertIsInstance(data, CFDataRef)
@@ -63,8 +63,8 @@ class TestCharacterSet (TestCase):
     def testInspectLongUnicode(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
         digits = CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit)
-        self.assertTrue(CFCharacterSetIsLongCharacterMember(letters, ord(b'A'.decode('latin1'))))    
-        self.assertFalse(CFCharacterSetIsLongCharacterMember(letters, ord(b'9'.decode('latin1'))))    
+        self.assertTrue(CFCharacterSetIsLongCharacterMember(letters, ord(b'A'.decode('latin1'))))
+        self.assertFalse(CFCharacterSetIsLongCharacterMember(letters, ord(b'9'.decode('latin1'))))
 
     def testMutation(self):
         set = CFCharacterSetCreateWithCharactersInString(None, b"abcdef".decode('latin1'))
@@ -88,7 +88,7 @@ class TestCharacterSet (TestCase):
         self.assertFalse(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
         CFCharacterSetUnion(set, CFCharacterSetGetPredefined(kCFCharacterSetDecimalDigit))
         self.assertTrue(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
-    
+
         CFCharacterSetIntersect(set, CFCharacterSetGetPredefined(kCFCharacterSetLetter))
         self.assertFalse(CFCharacterSetIsCharacterMember(set, b"9".decode('latin1')))
 

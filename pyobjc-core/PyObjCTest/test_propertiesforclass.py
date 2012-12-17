@@ -136,7 +136,7 @@ class TestPropertiesForClass (TestCase):
             if item['name'] == name:
                 return item
         self.fail("property not found: %s"%(name,))
-        
+
 
 
 if __name__ == "__main__":

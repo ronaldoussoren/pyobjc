@@ -29,7 +29,7 @@ class ShadowOffsetView (NSView):
     def isOpaque(self):
         return False
 
-    def setOffsetFromPoint_(self, point): 
+    def setOffsetFromPoint_(self, point):
         bounds = self.bounds()
         offset = CGSize(
             width = (point.x - NSMidX(bounds)) / (NSWidth(bounds) / 2),
@@ -59,7 +59,7 @@ class ShadowOffsetView (NSView):
         w = NSWidth(bounds)
         h = NSHeight(bounds)
         r = min(w / 2, h / 2)
-        
+
         context = NSGraphicsContext.currentContext().graphicsPort()
 
         CGContextTranslateCTM(context, x + w/2, y + h/2)

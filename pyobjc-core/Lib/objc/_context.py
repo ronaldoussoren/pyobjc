@@ -1,5 +1,5 @@
 """
-A number of Cocoa API's have a 'context' argument that is a plain 'void*' 
+A number of Cocoa API's have a 'context' argument that is a plain 'void*'
 in ObjC, and an Integer value in Python.  The 'context' object defined here
 allows you to get a unique integer number that can be used as the context
 argument for any Python object, and retrieve that object later on using the
@@ -15,7 +15,7 @@ Usage::
 
 and in the callback::
 
-    def observeValueForKeyPath_ofObject_change_context_(self, 
+    def observeValueForKeyPath_ofObject_change_context_(self,
         kp, obj, change, ctx):
 
         myContext = objc.context.get(ctx)

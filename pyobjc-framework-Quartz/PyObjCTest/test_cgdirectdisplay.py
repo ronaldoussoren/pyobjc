@@ -47,7 +47,7 @@ class TestCGDirectDisplay (TestCase):
         self.assertEqual(kCGIODisplayModeID, "IODisplayModeID")
 
         self.assertEqual(kCGDisplayModeIsSafeForHardware, "kCGDisplayModeIsSafeForHardware")
-        self.assertEqual(kCGDisplayModeIsInterlaced, "kCGDisplayModeIsInterlaced") 
+        self.assertEqual(kCGDisplayModeIsInterlaced, "kCGDisplayModeIsInterlaced")
         self.assertEqual(kCGDisplayModeIsStretched, "kCGDisplayModeIsStretched")
         self.assertEqual(kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput" )
 
@@ -70,7 +70,7 @@ class TestCGDirectDisplay (TestCase):
 
         self.assertArgIsOut(CGGetDisplaysWithRect, 2)
         self.assertArgIsOut(CGGetDisplaysWithRect, 3)
-        v, ids, cnt = CGGetDisplaysWithRect(((0, 0), (400, 500)), 
+        v, ids, cnt = CGGetDisplaysWithRect(((0, 0), (400, 500)),
                 10, None, None)
         self.assertIsInstance(v, (int, long))
         self.assertIsInstance(cnt, (int, long))
@@ -248,7 +248,7 @@ class TestCGDirectDisplay (TestCase):
 
         err = CGReleaseAllDisplays()
         self.assertEqual(err, 0)
-        
+
         v = CGShieldingWindowID(CGMainDisplayID())
         self.assertIsInstance(v, (int, long))
 

@@ -54,7 +54,7 @@ class TestCFProxySupport (TestCase):
             lst.append([ctx, proxies, error])
 
         url = CFURLCreateWithString(None, "http://www.apple.com/", None)
-        
+
         rls = CFNetworkExecuteProxyAutoConfigurationScript(
                 SCRIPT, url, callback, ctx)
         self.assertIsInstance(rls, CFRunLoopSourceRef)

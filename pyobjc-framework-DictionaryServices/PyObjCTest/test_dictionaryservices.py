@@ -19,7 +19,7 @@ class TestDictionaryServices (TestCase):
     def testClasses(self):
         self.assertIsCFType(DCSDictionaryRef)
 
-    
+
     def testFunctions(self):
         txt = b"the hello world program".decode('latin1')
         r = DCSGetTermRangeInString(None, txt, 5)
@@ -35,4 +35,3 @@ class TestDictionaryServices (TestCase):
 
 if __name__ == "__main__":
     main()
-

@@ -52,8 +52,8 @@ def _dynamic_setter(name):
     return setter
 
 class object_property (object):
-    def __init__(self, name=None, 
-            read_only=False, copy=False, dynamic=False, 
+    def __init__(self, name=None,
+            read_only=False, copy=False, dynamic=False,
             ivar=None, typestr=_C_ID, depends_on=None):
         self.__created = False
         self.__inherit = False
@@ -81,7 +81,7 @@ class object_property (object):
         else:
             depends = self._depends_on.copy()
 
-        v = type(self)(name=self._name, 
+        v = type(self)(name=self._name,
                 read_only=self._ro, copy=self._copy, dynamic=self._dynamic,
                 ivar=self._ivar, typestr=self._typestr, depends_on=depends)
         v.__inherit = True
@@ -270,8 +270,8 @@ class object_property (object):
         return self
 
 class bool_property (object_property):
-    def __init__(self, name=None, 
-            read_only=False, copy=False, dynamic=False, 
+    def __init__(self, name=None,
+            read_only=False, copy=False, dynamic=False,
             ivar=None, typestr=_C_NSBOOL):
         super(bool_property, self).__init__(
                 name, read_only, copy, dynamic, ivar, typestr)
@@ -331,7 +331,7 @@ class array_proxy (collections.MutableSequence):
 
             else:
                 return NSIndexSet.alloc().initWithIndex_(index)
-        
+
 
 
     def __repr__(self):
@@ -483,7 +483,7 @@ class array_proxy (collections.MutableSequence):
 #
 #        return self
 
-    
+
     def __eq__(self, other):
         if isinstance(other, array_proxy):
             return self._wrapped == other._wrapped
@@ -586,7 +586,7 @@ class array_proxy (collections.MutableSequence):
                 indexes, self._name)
 
 def makeArrayAccessors(name):
-    
+
     def countOf(self):
         return len(getattr(self, name))
 
@@ -605,11 +605,11 @@ def makeArrayAccessors(name):
     return countOf, objectIn, insert, remove, replace
 
 class array_property (object_property):
-    def __init__(self, name=None, 
-            read_only=False, copy=True, dynamic=False, 
+    def __init__(self, name=None,
+            read_only=False, copy=True, dynamic=False,
             ivar=None, depends_on=None):
-        super(array_property, self).__init__(name, 
-                read_only=read_only, 
+        super(array_property, self).__init__(name,
+                read_only=read_only,
                 copy=copy, dynamic=dynamic,
                 ivar=ivar, depends_on=depends_on)
 
@@ -625,35 +625,35 @@ class array_property (object_property):
 
         countOf, objectIn, insert, remove, replace = makeArrayAccessors(self._name)
 
-        countOf = selector(countOf, 
+        countOf = selector(countOf,
                 selector  = ('countOf%s'%(Name,)).encode('latin1'),
                 signature = _C_NSUInteger + b'@:',
         )
         countOf.isHidden = True
         instance_methods.add(countOf)
 
-        objectIn = selector(objectIn, 
+        objectIn = selector(objectIn,
                 selector  = ('objectIn%sAtIndex:'%(Name,)).encode('latin1'),
                 signature = b'@@:' + _C_NSUInteger,
         )
         objectIn.isHidden = True
         instance_methods.add(objectIn)
 
-        insert = selector(insert, 
+        insert = selector(insert,
                 selector  = ('insertObject:in%sAtIndex:'%(Name,)).encode('latin1'),
                 signature = b'v@:@' + _C_NSUInteger,
         )
         insert.isHidden = True
         instance_methods.add(insert)
 
-        remove = selector(remove, 
+        remove = selector(remove,
                 selector  = ('removeObjectFrom%sAtIndex:'%(Name,)).encode('latin1'),
                 signature = b'v@:' + _C_NSUInteger,
         )
         remove.isHidden = True
         instance_methods.add(remove)
 
-        replace = selector(replace, 
+        replace = selector(replace,
                 selector  = ('replaceObjectIn%sAtIndex:withObject:'%(Name,)).encode('latin1'),
                 signature = b'v@:' + _C_NSUInteger + b'@',
         )
@@ -686,7 +686,7 @@ NSKeyValueUnionSetMutation = 1
 NSKeyValueMinusSetMutation = 2
 NSKeyValueIntersectSetMutation = 3
 NSKeyValueSetSetMutation = 4
-             
+
 
 class set_proxy (collections.MutableSet):
     __slots__ = ('_name', '__wrapped', '_parent', '_ro')
@@ -714,10 +714,10 @@ class set_proxy (collections.MutableSet):
 
     def __contains__(self, value):
         return self._wrapped.__contains__(value)
-    
+
     def __iter__(self):
         return self._wrapped.__iter__()
-    
+
     def __len__(self):
         return self._wrapped.__len__()
 
@@ -850,7 +850,7 @@ class set_proxy (collections.MutableSet):
                 NSKeyValueMinusSetMutation,
                 set([item])
             )
-        
+
     def intersection_update(self, other):
         if self._ro:
             raise ValueError("Property '%s' is read-only"%(self._name,))
@@ -878,7 +878,7 @@ class set_proxy (collections.MutableSet):
             v = iter(self).next()
         except KeyError:
             raise KeyError("Empty set")
-        
+
         self.remove(v)
 
 
@@ -1032,11 +1032,11 @@ def makeSetAccessors(name):
 
 
 class set_property (object_property):
-    def __init__(self, name=None, 
-            read_only=False, copy=True, dynamic=False, 
+    def __init__(self, name=None,
+            read_only=False, copy=True, dynamic=False,
             ivar=None, depends_on=None):
-        super(set_property, self).__init__(name, 
-                read_only=read_only, 
+        super(set_property, self).__init__(name,
+                read_only=read_only,
                 copy=copy, dynamic=dynamic,
                 ivar=ivar, depends_on=depends_on)
 
@@ -1065,49 +1065,49 @@ class set_property (object_property):
 
         countOf, enumeratorOf, memberOf, add, remove = makeSetAccessors(self._name)
 
-        countOf = selector(countOf, 
+        countOf = selector(countOf,
                 selector  = ('countOf%s'%(Name,)).encode('latin1'),
                 signature = _C_NSUInteger + b'@:',
         )
         countOf.isHidden = True
         instance_methods.add(countOf)
 
-        enumeratorOf = selector(enumeratorOf, 
+        enumeratorOf = selector(enumeratorOf,
                 selector  = ('enumeratorOf%s'%(Name,)).encode('latin1'),
                 signature = b'@@:',
         )
         enumeratorOf.isHidden = True
         instance_methods.add(enumeratorOf)
 
-        memberOf = selector(memberOf, 
+        memberOf = selector(memberOf,
                 selector  = ('memberOf%s:'%(Name,)).encode('latin'),
                 signature = b'@@:@',
         )
         memberOf.isHidden = True
         instance_methods.add(memberOf)
 
-        add1 = selector(add, 
+        add1 = selector(add,
                 selector  = ('add%s:'%(Name,)).encode('latin'),
                 signature = b'v@:@',
         )
         add1.isHidden = True
         instance_methods.add(add1)
 
-        add2 = selector(add, 
+        add2 = selector(add,
                 selector  = ('add%sObject:'%(Name,)).encode('latin1'),
                 signature = b'v@:@',
         )
         add2.isHidden = True
         instance_methods.add(add2)
 
-        remove1 = selector(remove, 
+        remove1 = selector(remove,
                 selector  = ('remove%s:'%(Name,)).encode('latin1'),
                 signature = b'v@:@',
         )
         remove1.isHidden = True
         instance_methods.add(remove1)
 
-        remove2 = selector(remove, 
+        remove2 = selector(remove,
                 selector  = ('remove%sObject:'%(Name,)).encode('latin'),
                 signature = b'v@:@',
         )
@@ -1124,4 +1124,3 @@ class dict_property (object_property):
             v = NSMutableDictionary.alloc().init()
             object_property.__set__(self, object, v)
         return object_property.__get__(self, object, owner)
-        

@@ -1,6 +1,6 @@
 """
 Bindings and notification support for Calendar data used
-by this application.  Exposes read-only collections 
+by this application.  Exposes read-only collections
 (calendars, events, tasks) as observable entities.
 """
 from Cocoa import *
@@ -14,9 +14,9 @@ nonePriority = "None"
 # Transformer class for CalPriority->String conversion
 class CalPriorityToStringTransformer (NSValueTransformer):
     '''
-    The CalPriorityToStringTransformer class allows easy conversion between 
-    CalPriority values (0-9) and human-readable priority strings (High, 
-    Normal, Low, None). This allows us to populate the priority dropdown 
+    The CalPriorityToStringTransformer class allows easy conversion between
+    CalPriority values (0-9) and human-readable priority strings (High,
+    Normal, Low, None). This allows us to populate the priority dropdown
     using bindings
     '''
 
@@ -43,7 +43,7 @@ class CalPriorityToStringTransformer (NSValueTransformer):
 
 class CalController (NSObject):
     def awakeFromNib(self):
-        # Register a transformer object for easy generation of 
+        # Register a transformer object for easy generation of
         # human-readable priority strings
         #
         # See CalPriorityToStringTransformer implementation below
@@ -51,25 +51,25 @@ class CalController (NSObject):
         prioTransformer = CalPriorityToStringTransformer.alloc().init()
         NSValueTransformer.setValueTransformer_forName_(
                 prioTransformer, "CalPriorityToStringTransformer")
-        
-        # Register for notifications on calendars, events and tasks so we can 
+
+        # Register for notifications on calendars, events and tasks so we can
         # update the GUI to reflect any changes beneath us
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'calendarsChanged:', 
+                self, 'calendarsChanged:',
                 CalCalendarsChangedExternallyNotification, None)
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'calendarsChanged:', 
+                self, 'calendarsChanged:',
                 CalCalendarsChangedNotification, None)
-        
+
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'eventsChanged:', 
+                self, 'eventsChanged:',
                 CalEventsChangedExternallyNotification, None)
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'eventsChanged:', 
+                self, 'eventsChanged:',
                 CalEventsChangedNotification, None)
-        
+
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
                 self, 'tasksChanged:',
                 CalTasksChangedExternallyNotification, None)
@@ -79,9 +79,9 @@ class CalController (NSObject):
                 CalTasksChangedNotification, None)
 
 
-    # Set up the read-only calendars/events/tasks arrays from Calendar Store 
+    # Set up the read-only calendars/events/tasks arrays from Calendar Store
     # as observable keys for Cocoa Bindings
-    # This in conjunction with the notifications will allow for immediate UI 
+    # This in conjunction with the notifications will allow for immediate UI
     # updates whenever calendar data changes outside of this app
     def calendars(self):
         return CalCalendarStore.defaultCalendarStore().calendars()
@@ -107,7 +107,7 @@ class CalController (NSObject):
         self.willChangeValueForKey_("calendars")
         self.didChangeValueForKey_("calendars")
 
-    def eventsChanged_(self, notification): 
+    def eventsChanged_(self, notification):
         self.willChangeValueForKey_("events")
         self.didChangeValueForKey_("events")
 

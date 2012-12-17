@@ -108,7 +108,7 @@ class TestSocket (TestCase):
             self.assertEqual(n, sd.fileno())
 
 
-    
+
             ctx = CFSocketGetContext(sock, None)
             self.assertIs(ctx, data)
             flags = CFSocketGetSocketFlags(sock)
@@ -180,14 +180,14 @@ class TestSocket (TestCase):
             self.assertResultIsCFRetained(CFSocketCreateRunLoopSource)
             src = CFSocketCreateRunLoopSource(None, sock, 0)
             self.assertIsInstance(src, CFRunLoopSourceRef)
-        
+
         finally:
             sd.close()
 
     def testSocketNameServer(self):
         # The documentation says:
         #   Name server functionality is currently inoperable in Mac OS X.
-        # 
+        #
         # Therefore these functions are not available from Python
         self.assertNotHasAttr(CoreFoundation, 'CFSocketCopyRegisteredSocketSignature')
         self.assertNotHasAttr(CoreFoundation, 'CFSocketCopyRegisteredValue')

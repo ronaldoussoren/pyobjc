@@ -122,7 +122,7 @@ class TestNSLayoutManager (TestCase):
         self.assertArgSizeInArg(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_, 0, 1)
         self.assertArgHasType(NSLayoutManager.fillBackgroundRectArray_count_forCharacterRange_color_,
                 2, NSRange.__typestr__)
-    
+
     @min_os_level('10.7')
     def testMethods10_7(self):
         self.assertArgIsIn(NSLayoutManager.showCGGlyphs_positions_count_font_matrix_attributes_inContext_, 0)

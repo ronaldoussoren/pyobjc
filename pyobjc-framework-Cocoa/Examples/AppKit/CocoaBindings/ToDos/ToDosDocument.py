@@ -22,7 +22,7 @@ class ToDosDocument(NSDocument):
         if self is None:
             return None
         self.toDos = NSMutableArray.array()
-        return self # if this line is missing you will get the 
+        return self # if this line is missing you will get the
                     # simple message: "Can't create new document"
 
     def categories(self):

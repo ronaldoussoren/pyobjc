@@ -2,7 +2,7 @@
 Python mapping for the XgridFoundation framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 import sys
 import objc
@@ -18,4 +18,3 @@ sys.modules['XgridFoundation'] = mod = objc.ObjCLazyModule('XgridFoundation',
        '__path__': __path__,
        'objc': objc,
     }, ( Foundation,))
-

@@ -13,4 +13,3 @@ setup(
     data_files=["English.lproj"],
     install_requires = [ 'PyOpenGL' ],
 )
-

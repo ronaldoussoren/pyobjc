@@ -28,7 +28,7 @@ class TestQuartzFilterManager (TestCase):
         self.assertIsInstance(kQuartzFilterApplicationDomain, unicode)
         self.assertIsInstance(kQuartzFilterPDFWorkflowDomain, unicode)
         self.assertIsInstance(kQuartzFilterPrintingDomain, unicode)
-                                                                                                         
+
 
 if __name__ == "__main__":
     main()

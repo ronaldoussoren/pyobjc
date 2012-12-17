@@ -4,7 +4,7 @@ XXX: Add tests that check that the type actually works as expected:
 * Use struct value as method argument
 * Return struct value from a method
 
-Add tests for nested structs as well (that is assert that NSRect.location is 
+Add tests for nested structs as well (that is assert that NSRect.location is
 an NSPoint, but using our own types)
 """
 from PyObjCTools.TestSupport import *
@@ -59,7 +59,7 @@ class TestStructs (TestCase):
         self.assertEqual(l.stop.y, 9.0)
         self.assertEqual(l.width, 7.0)
 
-        self.assertEqual(l._asdict(), 
+        self.assertEqual(l._asdict(),
             {"start": Point(1,2), "stop":Point(8,9), "width": 7.0})
 
         l2 = l._replace(stop=Point(3,4), width=0.5)
@@ -74,7 +74,7 @@ class TestStructs (TestCase):
         self.assertEqual(l2.stop.x, 3.0)
         self.assertEqual(l2.stop.y, 4.0)
         self.assertEqual(l2.width, 0.5)
-    
+
 
     def testCreateImplicit(self):
         tp = objc.createStructType("BarStruct", b'{_BarStruct="e"f"f"f"g"f"h"f}', None)
@@ -89,14 +89,14 @@ class TestStructs (TestCase):
 
         self.assertEqual(tp._fields, ("e", "f", "g", "h"))
 
-        self.assertRaises(ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None) 
-        self.assertRaises(ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None) 
-        self.assertRaises(ValueError, objc.createStructType, "Foo4", b'^{_Foo="a"f}', None) 
+        self.assertRaises(ValueError, objc.createStructType, "Foo2", b'{_Foo=f"a"}', None)
+        self.assertRaises(ValueError, objc.createStructType, "Foo3", b'{_Foo="a"f', None)
+        self.assertRaises(ValueError, objc.createStructType, "Foo4", b'^{_Foo="a"f}', None)
 
     def testPointerFields(self):
         # Note: the created type won't be all that useful unless the pointer
         # happens to be something that PyObjC knows how to deal with, this is
-        # more a check to see if createStructType knows how to cope with 
+        # more a check to see if createStructType knows how to cope with
         # non-trivial types.
         tp = objc.createStructType("XBarStruct", b'{_XBarStruct="e"^f"f"^f"g"^@"h"f}', None)
         self.assertIsInstance(tp, type)
@@ -137,7 +137,7 @@ class TestStructs (TestCase):
             ])
 
         class OC_PyStruct (NSObject):
-            
+
             def arrayOf4Structs_(self, value):
                 return value
 

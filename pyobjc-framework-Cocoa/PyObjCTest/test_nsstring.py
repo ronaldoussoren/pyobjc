@@ -34,7 +34,7 @@ class TestNSString(TestCase):
     def testGetCString(self):
         # Custom wrappers
         v = NSString.stringWithString_(b"hello world".decode('ascii'))
-        
+
         self.assertEqual(v, b"hello world".decode('ascii'))
 
         x = v.getCString_maxLength_(None, 16)
@@ -363,12 +363,12 @@ class TestPickle(TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
-        self.assertArgHasType(NSString.enumerateSubstringsInRange_options_usingBlock_, 0, 
+        self.assertArgHasType(NSString.enumerateSubstringsInRange_options_usingBlock_, 0,
                 NSRange.__typestr__)
         self.assertArgIsBlock(NSString.enumerateSubstringsInRange_options_usingBlock_, 2, b'v@'+NSRange.__typestr__+NSRange.__typestr__+b'o^'+objc._C_NSBOOL)
         self.assertArgIsBlock(NSString.enumerateLinesUsingBlock_, 0, b'v@o^'+objc._C_NSBOOL)
 
-    
+
 
 if __name__ == '__main__':
     main()

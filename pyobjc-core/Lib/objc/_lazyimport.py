@@ -29,7 +29,7 @@ def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
                 {},
                 bundle_identifier=frameworkIdentifier,
                 scan_classes=False)
-        
+
         except ImportError:
             bundle = loadBundle(
                 frameworkName,
@@ -54,7 +54,7 @@ class ObjCLazyModule (module):
 
     # Define slots for all attributes, that way they don't end up it __dict__.
     __slots__ = (
-                '_ObjCLazyModule__bundle', '_ObjCLazyModule__enummap', '_ObjCLazyModule__funcmap', 
+                '_ObjCLazyModule__bundle', '_ObjCLazyModule__enummap', '_ObjCLazyModule__funcmap',
                 '_ObjCLazyModule__parents', '_ObjCLazyModule__varmap', '_ObjCLazyModule__inlinelist',
                 '_ObjCLazyModule__aliases',
             )
@@ -94,7 +94,7 @@ class ObjCLazyModule (module):
                     metadict['protocols'])
 
             for p in objc.protocolsForProcess():
-                                setattr(self.__dict__['protocols'], p.__name__, p)
+                setattr(self.__dict__['protocols'], p.__name__, p)
 
 
     def __dir__(self):
@@ -118,7 +118,7 @@ class ObjCLazyModule (module):
             else:
                 self.__dict__[name] = value
                 return value
-        
+
         # Check if the name is a constant from
         # the metadata files
         try:
@@ -304,7 +304,7 @@ class ObjCLazyModule (module):
         for name, type, gettypeid_func, tollfree in cftypes:
             if tollfree:
                 for nm in tollfree.split(','):
-                    try: 
+                    try:
                         objc.lookUpClass(nm)
                     except objc.error:
                         pass
@@ -322,7 +322,7 @@ class ObjCLazyModule (module):
             try:
                 func = getattr(self, gettypeid_func)
             except AttributeError:
-                # GetTypeID function not found, this is either 
+                # GetTypeID function not found, this is either
                 # a CFType that isn't present on the current
                 # platform, or a CFType without a public GetTypeID
                 # function. Proxy using the generic CFType
@@ -334,7 +334,7 @@ class ObjCLazyModule (module):
 
             if tollfree:
                 for nm in tollfree.split(','):
-                    try: 
+                    try:
                         objc.lookUpClass(nm)
                     except objc.error:
                         pass

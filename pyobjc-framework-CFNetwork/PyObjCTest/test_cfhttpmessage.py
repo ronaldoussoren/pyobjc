@@ -54,7 +54,7 @@ class TestCFHTTPMessage (TestCase):
         self.assertResultIsCFRetained(CFHTTPMessageCreateResponse)
         resp = CFHTTPMessageCreateResponse(None, 200, "Okidoki", kCFHTTPVersion1_1)
         self.assertIsInstance(req, CFHTTPMessageRef)
-        
+
         self.assertResultIsCFRetained(CFHTTPMessageCreateEmpty)
         self.assertArgIsBOOL(CFHTTPMessageCreateEmpty, 1)
         m = CFHTTPMessageCreateEmpty(None, True)

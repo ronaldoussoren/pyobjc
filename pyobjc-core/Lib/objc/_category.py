@@ -56,7 +56,7 @@ class _CategoryMeta(type):
 
 def Category(cls):
     """
-    Create a category on ``cls``. 
+    Create a category on ``cls``.
 
     Usage:
         class SomeClass (Category(SomeClass)):

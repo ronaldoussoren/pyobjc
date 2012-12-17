@@ -188,7 +188,7 @@ class OC_LeakTest_20090704_init (NSObject):
 
 class OC_LeakTest_20090704_noinit (NSObject):
     def dealloc(self):
-        global gDeallocCounter 
+        global gDeallocCounter
         gDeallocCounter += 1
 
 

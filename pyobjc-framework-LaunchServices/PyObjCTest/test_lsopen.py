@@ -111,7 +111,7 @@ class TestLSOpen (TestCase):
                 argv = [b"Terminal".decode('latin1')],
                 initialEvent = None,
             )
-        
+
         # Call will fail for now, 'application' is an FSRef pointers and
         # pyobjc-core isn't smart enough to deal with that.
         ok, psn = LSOpenApplication(params, None)
@@ -125,6 +125,6 @@ class TestLSOpen (TestCase):
         # manual wrappers
         self.fail("LSOpenFromRefSpec")
         self.fail("LSOpenFromURLSpec")
-        
+
 if __name__ == "__main__":
     main()

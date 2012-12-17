@@ -23,7 +23,7 @@ class FontSampleDisplayView(NSView):
         fontSize = getKey(defaults, u'FontSize')
         favoriteFont = NSFont.fontWithName_size_(fontName, fontSize)
         wordOfTheDay = getKey(defaults, u'WordOfTheDay')
-        
+
         # Do the actual drawing
         myBounds = self.bounds() # = (x, y), (bw, bh)
         NSDrawLightBezel(myBounds, myBounds)
@@ -38,7 +38,7 @@ class FontSampleDisplayView(NSView):
                 (attrSize.height / -2) + (myBounds.size.height / 2),
             ),
         )
-        
+
     def initWithFrame_(self, frameRect):
         self = super(FontSampleDisplayView, self).initWithFrame_(frameRect)
         dnc = NSNotificationCenter.defaultCenter()

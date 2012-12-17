@@ -221,7 +221,7 @@ class TestDecimalNumber (TestCase):
         one_half = NSDecimalNumber.decimalNumberWithString_(b"0.50".decode('ascii'))
         self.assertIsInstance(one_half, NSDecimalNumber)
 
-        
+
         self.assertEqual(one + two, three)
         self.assertEqual(three - one, two)
         self.assertEqual(three * two, six)

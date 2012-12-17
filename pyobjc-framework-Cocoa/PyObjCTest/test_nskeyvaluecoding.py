@@ -39,7 +39,7 @@ class TestNSKeyValueCoding (TestCase):
         m = o.validateValue_forKeyPath_error_.__metadata__()
         self.assertEqual(  m['arguments'][4]['type'], b'o^@' )
 
-   
+
     def testMethods(self):
         self.assertResultIsBOOL(NSObject.accessInstanceVariablesDirectly)
 

@@ -33,15 +33,15 @@ class GraphicsView(NSView):
 
     def initWithFrame_(self, frameRect):
         return super(GraphicsView, self).initWithFrame_(frameRect)
-        
+
     def graphics(self):
         if not self.graphicsContainer: return None
         return self.graphicsContainer.valueForKeyPath_(self.graphicsKeyPath)
-        
+
     def selectionIndexes(self):
         if not self.selectionIndexesContainer: return None
         return self.selectionIndexesContainer.valueForKeyPath_(self.selectionIndexesKeyPath)
-        
+
     def startObservingGraphics_(self, graphics):
         if not graphics: return
         # Register to observe each of the new graphics, and
@@ -50,20 +50,20 @@ class GraphicsView(NSView):
         for newGraphic in graphics:
             # Register as observer for all the drawing-related properties
             newGraphic.addObserver_forKeyPath_options_context_(
-                self, u"drawingBounds", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld), 
+                self, u"drawingBounds", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
                 PropertyObservationContext)
             keys = Circle.keysForNonBoundsProperties()
             for key in keys:
                 newGraphic.addObserver_forKeyPath_options_context_(
                     self, key, 0, PropertyObservationContext)
-                    
+
     def stopObservingGraphics_(self, graphics):
         if graphics is None: return
         for graphic in graphics:
             for key in graphic.class__().keysForNonBoundsProperties():
                 graphic.removeObserver_forKeyPath_(self, key)
             graphic.removeObserver_forKeyPath_(self, u"drawingBounds")
-        
+
     def bind_toObject_withKeyPath_options_(self, bindingName, observableObject, observableKeyPath, options):
         if bindingName == u"graphics":
             self.graphicsContainer = observableObject
@@ -72,14 +72,14 @@ class GraphicsView(NSView):
                     self, self.graphicsKeyPath, (NSKeyValueObservingOptionNew |
                     NSKeyValueObservingOptionOld), GraphicsObservationContext)
             self.startObservingGraphics_(self.graphics())
-            
+
         elif bindingName == u"selectionIndexes":
             self.selectionIndexesContainer = observableObject
             self.selectionIndexesKeyPath = observableKeyPath
             self.selectionIndexesContainer.addObserver_forKeyPath_options_context_(
                 self, self.selectionIndexesKeyPath, 0, SelectionIndexesObservationContext)
         self.setNeedsDisplay_(True)
-        
+
     def unbind_(self, bindingName):
         if bindingName == u"graphics":
             self.graphicsContainer.removeObserver_forKeyPath_(self, self.graphicsKeyPath)
@@ -99,17 +99,17 @@ class GraphicsView(NSView):
             newGraphics = Set(object.valueForKeyPath_(self.graphicsKeyPath))
             onlyNew = newGraphics - Set(self.oldGraphics)
             self.startObservingGraphics_(onlyNew)
-            
+
             if self.oldGraphics:
                 removed = Set(self.oldGraphics) - newGraphics
                 self.stopObservingGraphics_(removed)
-            
+
             self.oldGraphics = newGraphics
-            
+
             # could check drawingBounds of old and new, but...
             self.setNeedsDisplay_(True)
             return
-        
+
         if context == PropertyObservationContext:
             updateRect = (0,)
             # Note: for Circle, drawingBounds is a dependent key of all the other
@@ -126,7 +126,7 @@ class GraphicsView(NSView):
                                 updateRect.size.height+2.0)
             self.setNeedsDisplay_(True)
             return
-            
+
         if context == SelectionIndexesObservationContext:
             self.setNeedsDisplay_(True)
             return
@@ -136,7 +136,7 @@ class GraphicsView(NSView):
         NSDrawLightBezel(myBounds, myBounds) # AppKit Function
         clipRect = NSBezierPath.bezierPathWithRect_(NSInsetRect(myBounds, 2.0, 2.0))
         clipRect.addClip()
-        
+
         # Draw graphics
         graphicsArray = self.graphics()
         if graphicsArray:
@@ -144,11 +144,11 @@ class GraphicsView(NSView):
                 graphicDrawingBounds = graphic.drawingBounds()
                 if NSIntersectsRect(rect, graphicDrawingBounds):
                     graphic.drawInView_(self)
-        
+
         # Draw a red box around items in the current selection.
         # Selection should be handled by the graphic, but this is a
         # shortcut simply for display.
-        
+
         currentSelectionIndexes = self.selectionIndexes() # ist das wir ein Array im Indezes?
         if currentSelectionIndexes != None:
             path = NSBezierPath.bezierPath()
@@ -158,14 +158,14 @@ class GraphicsView(NSView):
                 if NSIntersectsRect(rect, graphicDrawingBounds):
                     path.appendBezierPathWithRect_(graphicDrawingBounds)
                 index = currentSelectionIndexes.indexGreaterThanIndex_(index)
-                    
+
             NSColor.redColor().set()
             path.setLineWidth_(1.5)
             path.stroke()
 
-            
+
         # Fairly simple just to illustrate the point
-    def mouseDown_(self, event):		
+    def mouseDown_(self, event):
         # find out if we hit anything
         p = self.convertPoint_fromView_(event.locationInWindow(), None)
         for aGraphic in self.graphics():
@@ -173,14 +173,14 @@ class GraphicsView(NSView):
                 break; # aGraphic soll spaeter einen Wert haben, falls es getroffene gibt!
         else:
             aGraphic = None
-                
+
         # if no graphic hit, then if extending selection do nothing
         # else set selection to nil
         if aGraphic == None:
             if not event.modifierFlags() & NSShiftKeyMask:
                 self.selectionIndexesContainer.setValue_forKeyPath_(None, self.selectionIndexesKeyPath)
             return
-            
+
         # graphic hit
         # if not extending selection (Shift key down) then set
         # selection to this graphic

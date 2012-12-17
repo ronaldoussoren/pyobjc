@@ -28,11 +28,11 @@ class GlobalFunctionTest (TestCase):
             # NSFileTypeForHFSTypeCode therefore also accepts integers.
             fourchar = struct.unpack('i', b'rtfx')[0]
             if sys.byteorder == 'little':
-                    self.assertEqual("'xftr'",
-                            Foundation.NSFileTypeForHFSTypeCode(fourchar))
+                self.assertEqual("'xftr'",
+                        Foundation.NSFileTypeForHFSTypeCode(fourchar))
             else:
-                    self.assertEqual("'rtfx'",
-                            Foundation.NSFileTypeForHFSTypeCode(fourchar))
+                self.assertEqual("'rtfx'",
+                        Foundation.NSFileTypeForHFSTypeCode(fourchar))
 
         def testNSHFSTypeCodeFromFileType(self):
             self.assertEqual(b"rtfx",

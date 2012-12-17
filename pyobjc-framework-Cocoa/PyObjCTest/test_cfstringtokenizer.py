@@ -21,7 +21,7 @@ class TestStringTokenizer (TestCase):
         self.assertIsInstance(v, (int, long))
         self.assertResultIsCFRetained(CFStringTokenizerCreate)
         tok = CFStringTokenizerCreate(
-                None, s, (0, len(s)), kCFStringTokenizerUnitWord, 
+                None, s, (0, len(s)), kCFStringTokenizerUnitWord,
                 CFLocaleCopyCurrent())
         self.assertIsInstance(tok, CFStringTokenizerRef)
         v = CFStringTokenizerGoToTokenAtIndex(tok, 2)

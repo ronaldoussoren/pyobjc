@@ -8,7 +8,7 @@ class TestNSTokenFieldCellHelper (NSObject):
     def tokenFieldCell_writeRepresentedObjects_toPasteboard_(self, a, b, c): return 1
     def tokenFieldCell_hasMenuForRepresentedObject_(self, a, b): return 1
     def tokenFieldCell_styleForRepresentedObject_(self, a, b): return 1
-        
+
 
 class TestNSTokenFieldCell (TestCase):
     def testConstants(self):

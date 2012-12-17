@@ -33,7 +33,7 @@ class TestFromC (TestCase):
 
         self.assertHasAttr(FooHandle, 'create')
         self.assertHasAttr(FooHandle, 'delete')
-        
+
         f = FooHandle.create(42)
         self.assertIsInstance(f, FooHandle)
         self.assertEqual( f.get(), 42 )
@@ -43,7 +43,7 @@ class TestFromC (TestCase):
 
         FooHandle.__int__ = lambda self: self.get()
         FooHandle.__getitem__ = lambda self, x: self.get() * x
-        
+
         self.assertEqual(int(f), 62)
         self.assertEqual(f[4], 4 * 62)
 

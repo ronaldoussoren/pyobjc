@@ -39,7 +39,7 @@ class TestISyncSessionDriverHelper (NSObject):
 
     def deleteAllRecordsForEntityName_error_(self, nm, e):
         return (True, None)
-                      
+
 
 class TestISyncSessionDriver (TestCase):
     @min_os_level('10.5')

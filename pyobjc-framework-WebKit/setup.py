@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "WebKit" and "JavaScriptCore" frameworks on MacOSX. The
 WebKit framework contains the views and support classes for creating a
 browser. The JavaScriptCore framework implements a JavaScript interpreter.
@@ -18,7 +18,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

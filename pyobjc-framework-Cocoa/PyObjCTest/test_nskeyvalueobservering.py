@@ -68,7 +68,7 @@ class TestNSKeyValueObserving (TestCase):
         o = NSMutableArray.alloc().init()
         m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
         self.assertEqual( m['arguments'][5]['type'], b'^v')
-        
+
         o = NSOrderedSet.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
         self.assertEqual( m['arguments'][4]['type'], b'^v')

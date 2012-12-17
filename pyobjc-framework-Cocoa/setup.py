@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the core Cocoa frameworks: CoreFoundation, Foundation and
 AppKit.
 
@@ -19,31 +19,31 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
     ext_modules = [
         # CoreFoundation
-        Extension('CoreFoundation._inlines', 
+        Extension('CoreFoundation._inlines',
                 [ 'Modules/_CoreFoundation_inlines.m' ],
                 extra_link_args=['-framework', 'CoreFoundation']),
-        Extension('CoreFoundation._CoreFoundation', 
+        Extension('CoreFoundation._CoreFoundation',
             [ 'Modules/_CoreFoundation.m' ],
             extra_link_args=['-framework', 'CoreFoundation'],
             depends=[
-                os.path.join('Modules', fn) 
+                os.path.join('Modules', fn)
                 for fn in os.listdir('Modules')
                 if fn.startswith('_CoreFoundation') ]),
 
         # Foundation
-        Extension('Foundation._inlines', 
+        Extension('Foundation._inlines',
                 [ 'Modules/_Foundation_inlines.m' ],
                 extra_link_args=['-framework', 'Foundation']),
-        Extension('Foundation._Foundation', 
+        Extension('Foundation._Foundation',
             [ 'Modules/_Foundation.m' ],
             extra_link_args=['-framework', 'Foundation'],
             depends=[
-                os.path.join('Modules', fn) 
+                os.path.join('Modules', fn)
                 for fn in os.listdir('Modules')
                 if fn.startswith('_Foundation') ]),
 
@@ -55,7 +55,7 @@ setup(
             [ "Modules/_AppKit.m" ],
             extra_link_args=["-framework", "AppKit"],
             depends=[
-                os.path.join('Modules', fn) 
+                os.path.join('Modules', fn)
                 for fn in os.listdir('Modules')
                 if fn.startswith('_AppKit') ]),
 

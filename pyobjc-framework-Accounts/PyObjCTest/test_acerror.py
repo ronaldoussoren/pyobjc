@@ -21,7 +21,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(Accounts.ACErrorAccountAlreadyExists, 5)
             self.assertEqual(Accounts.ACErrorAccountNotFound, 6)
             self.assertEqual(Accounts.ACErrorPermissionDenied, 7)
-            self.assertEqual(Accounts.ACErrorAccessInfoInvalid, 8)            
+            self.assertEqual(Accounts.ACErrorAccessInfoInvalid, 8)
 
     if __name__ == "__main__":
         main()

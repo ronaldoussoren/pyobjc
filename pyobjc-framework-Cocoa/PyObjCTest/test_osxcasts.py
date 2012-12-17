@@ -5,7 +5,7 @@ from Foundation import *
 
 class TestTollFreeBridging( TestCase ):
     def testImplicitFromCF(self):
-        
+
         c = CFArrayCreateMutable(None, 0, None)
         self.assert_(isinstance(c, CFMutableArrayRef))
 

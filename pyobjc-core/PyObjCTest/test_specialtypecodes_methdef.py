@@ -1,8 +1,8 @@
 """
-Test handling of the private typecodes: 
+Test handling of the private typecodes:
     _C_NSBOOL, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT and _C_UNICHAR
 
-These typecodes don't actually exists in the ObjC runtime but 
+These typecodes don't actually exists in the ObjC runtime but
 are private to PyObjC. We use these to simplify the bridge code
 while at the same time getting a higher fidelity bridge.
 

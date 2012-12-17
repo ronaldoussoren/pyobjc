@@ -4,8 +4,8 @@ __all__ = ()
 
 FunctionType = type(lambda:1)
 
-def class_setup_hook(name, 
-        super_class, class_dict, instance_vars, instance_methods, 
+def class_setup_hook(name,
+        super_class, class_dict, instance_vars, instance_methods,
         class_methods):
     """
     This function is called during the construction of a Python subclass

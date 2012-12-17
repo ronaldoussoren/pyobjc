@@ -3,12 +3,12 @@ from Cocoa import *
 class MyWindowController (NSWindowController):
     rectGradientView = objc.IBOutlet()
     bezierGradientView = objc.IBOutlet()
-    
+
     startColorWell = objc.IBOutlet()
     endColorWell = objc.IBOutlet()
     angle = objc.IBOutlet()
     angleSlider = objc.IBOutlet()
-    
+
     radialCheck = objc.IBOutlet()
     radialExplainText = objc.IBOutlet()
 
@@ -21,17 +21,17 @@ class MyWindowController (NSWindowController):
         formatter = NSNumberFormatter.alloc().init()
         formatter.setNumberStyle_(NSNumberFormatterDecimalStyle)
         self.angle.cell().setFormatter_(formatter)
-        
+
         # setup the initial start color
         self.rectGradientView.setStartColor_(NSColor.orangeColor())
         self.bezierGradientView.setStartColor_(NSColor.orangeColor())
         self.startColorWell.setColor_(NSColor.orangeColor())
-        
+
         # setup the initial end color
         self.rectGradientView.setEndColor_(NSColor.blueColor())
         self.bezierGradientView.setEndColor_(NSColor.blueColor())
         self.endColorWell.setColor_(NSColor.blueColor())
-        
+
         # setup the initial angle value
         self.rectGradientView.setAngle_(90.0)
         self.bezierGradientView.setAngle_(90.0)
@@ -42,14 +42,14 @@ class MyWindowController (NSWindowController):
     def swapColors_(self, sender):
         startColor = self.startColorWell.color()
         endColor = self.endColorWell.color()
-        
+
         # change all our view's start and end colors
         self.rectGradientView.setStartColor_(endColor)
         self.rectGradientView.setEndColor_(startColor)
-        
+
         self.bezierGradientView.setStartColor_(endColor)
         self.bezierGradientView.setEndColor_(startColor)
-        
+
         # fix our color wells
         self.startColorWell.setColor_(endColor)
         self.endColorWell.setColor_(startColor)
@@ -70,7 +70,7 @@ class MyWindowController (NSWindowController):
         theAngle = self.angle.floatValue()
         self.rectGradientView.setAngle_(theAngle)
         self.bezierGradientView.setAngle_(theAngle)
-        
+
         theAngleDougle = self.angle.doubleValue()
         self.angleSlider.setDoubleValue_(theAngleDougle)
         self.angleSlider.setNeedsDisplay_(True)
@@ -86,10 +86,10 @@ class MyWindowController (NSWindowController):
     def radialDraw_(self, sender):
         self.rectGradientView.setRadialDraw_(sender.selectedCell().state())
         self.bezierGradientView.setRadialDraw_(sender.selectedCell().state())
-        
+
         # angle factor does not relate to radial draws
         self.angleSlider.setEnabled_(not sender.selectedCell().state())
         self.angle.setEnabled_(not sender.selectedCell().state())
-        
+
         # hide/show the explain text for radial gradients
         self.radialExplainText.setHidden_(not sender.selectedCell().state())

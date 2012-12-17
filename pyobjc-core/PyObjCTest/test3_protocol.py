@@ -39,7 +39,7 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
         objc.selector(None, selector=b"anotherProto:with:", signature=b"v@:ii"),
     ))
 
-    MyOtherProtocol3 = objc.formal_protocol("MyOtherProtocol3", 
+    MyOtherProtocol3 = objc.formal_protocol("MyOtherProtocol3",
             (MyProtocol3,), [
                 objc.selector(None, selector=b"yetAnother:", signature=b"i@:I")
             ])
@@ -52,7 +52,7 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
     if OC_TestProtocol is not None:
 
         class TestFormalOCProtocols(TestCase):
-            
+
             def testImplementFormalProtocol(self):
 
                 class MyClassNotImplementingProtocol(NSObject):
@@ -82,13 +82,13 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
                 # XXX: not really: you won't inherit the right signatures by default
 
                 class MyClassImplementingHalfOfProtocol(NSObject):
-                        def method1(self): pass
-                        method1 = objc.selector(method1, signature=b'i@:')
+                    def method1(self): pass
+                    method1 = objc.selector(method1, signature=b'i@:')
 
                 self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
                 class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, protocols=[OC_TestProtocol]):
-                        def method2_(self, v): pass
+                    def method2_(self, v): pass
 
                 self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
@@ -104,23 +104,23 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, protocols=[anObject]):
-                        pass
+                    pass
                 self.fail("Can create class that implements an object???")
-            except TypeError: 
+            except TypeError:
                 pass
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, protocols=[10]):
-                        pass
+                    pass
                 self.fail()
-            except TypeError: 
+            except TypeError:
                 pass
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, protocols=[int]):
-                        pass
+                    pass
                 self.fail()
-            except TypeError: 
+            except TypeError:
                 pass
 
 

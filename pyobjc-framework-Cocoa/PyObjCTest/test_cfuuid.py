@@ -80,7 +80,7 @@ class TestCFUUIDAPI (TestCase):
         self.assertEqual(bytes.byte15 , 16)
 
     def testConstant(self):
-        # This is an interesting one, the result of 
+        # This is an interesting one, the result of
         # CFUUIDGetConstantUUIDWithBytes should not be released.
 
         uuid = CFUUIDGetConstantUUIDWithBytes(None, *range(16))

@@ -11,7 +11,7 @@ class TestNSGradient (TestCase):
     def testMethods(self):
         self.assertArgSizeInArg(NSGradient.initWithColors_atLocations_colorSpace_, 1, 0)
         self.assertArgIsIn(NSGradient.initWithColors_atLocations_colorSpace_, 1)
-        
+
         self.assertArgIsOut(NSGradient.getColor_location_atIndex_, 0)
         self.assertArgIsOut(NSGradient.getColor_location_atIndex_, 1)
 

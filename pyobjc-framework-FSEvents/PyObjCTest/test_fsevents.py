@@ -49,7 +49,7 @@ class TestFSEvents (TestCase):
             pass
         context = object()
 
-        ref = FSEventStreamCreate(None, fsevents_callback, context, 
+        ref = FSEventStreamCreate(None, fsevents_callback, context,
                 ["/etc", "/tmp"], kFSEventStreamEventIdSinceNow, 2.0,  kFSEventStreamCreateFlagUseCFTypes|kFSEventStreamCreateFlagNoDefer)
 
         self.assertIsInstance(ref, FSEventStreamRef)
@@ -89,7 +89,7 @@ class TestFSEvents (TestCase):
             # the tests as root), therefore test against /dev which is a virtual
             # filesystem on OSX
             self.assertResultIsBOOL(FSEventsPurgeEventsForDeviceUpToEventId)
-            v = FSEventsPurgeEventsForDeviceUpToEventId(os.stat('/dev').st_dev, 
+            v = FSEventsPurgeEventsForDeviceUpToEventId(os.stat('/dev').st_dev,
                     FSEventsGetLastEventIdForDeviceBeforeTime(os.stat('/dev').st_dev, 0))
             self.assertIsInstance(v, bool)
 
@@ -137,4 +137,3 @@ class TestFSEvents (TestCase):
 
 if __name__ == "__main__":
     main()
-

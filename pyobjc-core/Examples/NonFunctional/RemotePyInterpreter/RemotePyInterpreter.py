@@ -73,7 +73,7 @@ class RemotePyInterpreterReactor(NibClassBuilder.AutoBaseClass):
         #    self.doCallback_sequence_args_(meth, seq, args[1:])
         else:
             self.doCallback_sequence_args_(NSLog, seq, [u'%s does not respond to expect %s', self, command])
-    
+
     def close(self):
         super(RemotePyInterpreterReactor, self).close()
         self.delegate = None
@@ -156,7 +156,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         if not hasattr(self, 'version'):
             return u'Starting...'
         return u'Python %s - %s - %s' % (self.version, self.executable, self.pid)
-    
+
     def updateChangeCount_(self, val):
         return
 
@@ -167,13 +167,13 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
         if self.interpreter is not None:
             self.interpreter.close()
             self.interpreter = None
-    
+
     def windowNibName(self):
         return u'RemotePyInterpreterDocument'
-    
+
     def isDocumentEdited(self):
         return False
-    
+
     def awakeFromNib(self):
         # XXX - should this be done later?
         self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
@@ -309,7 +309,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
 
     def setColor_forName_(self, color, name):
         self.p_colors[name] = color
-    
+
     #
     #  Convenience methods for manipulating the NSTextView
     #
@@ -329,7 +329,7 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
     #
 
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
-        # XXX 
+        # XXX
         # this will probably have to be tricky in order to be asynchronous..
         # either by:
         #     nesting a run loop (bleh)
@@ -476,8 +476,8 @@ class RemotePyInterpreterDocument(NibClassBuilder.AutoBaseClass):
 
     def setSingleLineInteraction_(self, v):
         self.p_singleLineInteraction = v
-    
-        
+
+
 
 if __name__ == '__main__':
     AppHelper.runEventLoop(installInterrupt=True)

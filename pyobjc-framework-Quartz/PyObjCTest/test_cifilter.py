@@ -64,7 +64,7 @@ class TestCIFilter (TestCase):
 
         @min_os_level('10.5')
         def testConstants10_5(self):
-            
+
             self.assertIsInstance(kCIAttributeDescription, unicode)
             self.assertIsInstance(kCIAttributeReferenceDocumentation, unicode)
             self.assertIsInstance(kCIUIParameterSet, unicode)

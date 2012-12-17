@@ -28,7 +28,7 @@ class TestCATransform3D (TestCase):
         self.assertIsInstance(v.m42, float)
         self.assertIsInstance(v.m43, float)
         self.assertIsInstance(v.m44, float)
-        
+
 
     @min_os_level('10.5')
     def testConstants(self):

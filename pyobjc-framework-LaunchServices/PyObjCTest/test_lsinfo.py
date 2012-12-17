@@ -168,7 +168,7 @@ class TestLSInfo (TestCase):
         self.assertEquals(ok, 0)
         self.assertIsInstance(ref, objc.FSRef)
         self.assertIsInstance(info_url, CFURLRef)
-        
+
         self.assertArgIsOut(LSCopyApplicationForMIMEType, 2)
         self.assertArgIsCFRetained(LSCopyApplicationForMIMEType, 2)
         ok, info_url = LSCopyApplicationForMIMEType("text/plain", kLSRolesAll, None)
@@ -209,7 +209,7 @@ class TestLSInfo (TestCase):
         for a in v:
             self.assertIsInstance(a, CFURLRef)
 
-        
+
         default_role = LSCopyDefaultRoleHandlerForContentType("public.plain-text", kLSRolesAll)
         self.assertIsInstance(default_role, unicode)
 

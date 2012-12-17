@@ -101,7 +101,7 @@ class TestError (TestCase):
         self.assertIsInstance(kCFErrorLocalizedRecoverySuggestionKey, unicode)
         self.assertIsInstance(kCFErrorDescriptionKey, unicode)
         self.assertIsInstance(kCFErrorUnderlyingErrorKey, unicode)
-    
+
     @min_os_level('10.7')
     def testConstants10_7(self):
         self.assertIsInstance(kCFErrorURLKey, unicode)

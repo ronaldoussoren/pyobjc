@@ -379,7 +379,7 @@ class TestCase (_unittest.TestCase):
                 and _typealias.get(type, type) != _typealias.get(tp, tp):
             self.fail(message or "result of %r is not of type %r, but %r"%(
                 method, tp, type))
-        
+
     def assertArgHasType(self, method, argno, tp, message=None):
         if isinstance(method, objc.selector):
             offset = 2
@@ -576,7 +576,7 @@ class TestCase (_unittest.TestCase):
             self.fail(message or "arg %d of %s is not an 'in' argument"%(
                 argno, method))
 
-    
+
     #
     # Addition assert methods, all of them should only be necessary for
     # python 2.7 or later
@@ -584,7 +584,7 @@ class TestCase (_unittest.TestCase):
 
     if not hasattr(_unittest.TestCase, 'assertItemsEqual'): # pragma: no cover
         def assertItemsEqual(self, seq1, seq2, message=None):
-            # This is based on unittest.util._count_diff_all_purpose from 
+            # This is based on unittest.util._count_diff_all_purpose from
             # Python 2.7
             s, t = list(seq1), list(seq2)
             m, n = len(s), len(t)
@@ -705,7 +705,7 @@ class TestCase (_unittest.TestCase):
 
     if not hasattr(_unittest.TestCase, "assertAlmostEquals"): # pragma: no cover
         def assertAlmostEquals(self, val1, val2, message=None):
-            self.failUnless(abs (val1 - val2) < 0.00001, 
+            self.failUnless(abs (val1 - val2) < 0.00001,
                     message or 'abs(%r - %r) >= 0.00001'%(val1, val2))
 
 
@@ -737,7 +737,7 @@ else: # pragma: no cover (py2.6)
         def test(self):
             try:
                 func(self)
-            
+
             except AssertionError:
                 return
 

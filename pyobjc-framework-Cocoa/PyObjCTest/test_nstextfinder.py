@@ -71,7 +71,7 @@ class TestNSTextFinder (TestCase):
         self.assertArgHasType(FindHelper.contentViewAtIndex_effectiveCharacterRange_, 0, objc._C_NSUInteger)
         self.assertArgHasType(FindHelper.contentViewAtIndex_effectiveCharacterRange_, 1, b'o^' + AppKit.NSRange.__typestr__)
         self.assertArgHasType(FindHelper.drawCharactersInRange_forContentView_, 0, AppKit.NSRange.__typestr__)
-        
+
         self.assertResultIsBOOL(FindHelper.isFindBarVisible)
         self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)
 

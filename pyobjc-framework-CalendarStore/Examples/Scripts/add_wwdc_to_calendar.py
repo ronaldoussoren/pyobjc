@@ -11,14 +11,14 @@ for cal in store.calendars():
         event._.calendar = cal
         event._.title = "WWDC 2009"
         event._.notes = textwrap.dedent('''\
-                This June, the center of the Mac universe will be at Moscone 
-                West in downtown San Francisco, as developers and IT 
-                professionals from around the globe come together for the 
-                Apple Worldwide Developers Conference. 
-                
-                Don't miss this opportunity to connect with Apple engineers, 
-                get a firsthand look at the latest technology, and spend a 
-                week getting the kind of inspiration you won't find anywhere 
+                This June, the center of the Mac universe will be at Moscone
+                West in downtown San Francisco, as developers and IT
+                professionals from around the globe come together for the
+                Apple Worldwide Developers Conference.
+
+                Don't miss this opportunity to connect with Apple engineers,
+                get a firsthand look at the latest technology, and spend a
+                week getting the kind of inspiration you won't find anywhere
                 else.
                 ''')
         event._.url = NSURL.URLWithString_('http://www.apple.com/wwdc/')

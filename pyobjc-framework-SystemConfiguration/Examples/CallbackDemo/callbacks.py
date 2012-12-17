@@ -1,6 +1,6 @@
 #!/usr/bin/env
 """
-This is a simple tool that exercises the some callback functions in the 
+This is a simple tool that exercises the some callback functions in the
 SystemConfiguration framework.
 
 In an ideal world this would be a nice GUI.

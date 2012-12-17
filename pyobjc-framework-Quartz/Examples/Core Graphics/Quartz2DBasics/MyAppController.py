@@ -6,7 +6,7 @@ from PyObjCTools import NibClassBuilder
 
 def getURLToExport(suffix):
     savePanel = NSSavePanel.savePanel()
-    
+
     initialFileName = u"Quartz2DBasics.%s"%(suffix,)
 
     if savePanel.runModalForDirectory_file_(None, initialFileName) == NSFileHandlingPanelOKButton:

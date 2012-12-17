@@ -134,7 +134,7 @@ class TestNSObjCRuntime (TestCase):
         v = NSClassFromString('NSDictionary')
         self.assertIsInstance(v, objc.objc_class)
         self.assertEqual(v, NSDictionary)
-    
+
     def testProtocolAccess(self):
         p = NSProtocolFromString('NSObject')
         self.assertIsInstance(p, objc.formal_protocol)

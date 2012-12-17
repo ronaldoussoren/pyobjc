@@ -48,7 +48,7 @@ class TestArraysOut (TestCase):
         n, v = m(o, objc.NULL)
         self.assertEqual(n, 0)
         self.assertIs(v, objc.NULL)
-        
+
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('fillStringArray:')
@@ -84,7 +84,7 @@ class TestArraysOut (TestCase):
         self.assertEqual(list(v),  [])
 
         self.assertRaises(ValueError, m, o, objc.NULL, 0)
-        
+
         m = o.methodForSelector_('nullfillArray:count:')
         n, v = m(o, None, 3)
         self.assertEqual(n, 1)
@@ -204,7 +204,7 @@ class TestArraysInOut (TestCase):
         self.assertEqual(c, 5)
         self.assertEqual(len(v), 5)
         self.assertEqual(list(v),  [9, 8, 7, 6, 5])
-        
+
         m = o.methodForSelector_('maybeReverseArray:')
         c, v = m(o, [1,2,3,4])
         self.assertEqual(c, 2)
@@ -272,7 +272,7 @@ class TestArraysIn (TestCase):
         v = m(o, (1,2,3,4), 3)
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), [1,2,3])
-        
+
         # XXX: This one would be nice to have, but not entirely trivial
         #v = m(o, (1,2,3,4), None)
         #self.assertEqual(len(v), 3)
@@ -348,14 +348,14 @@ class TestArrayReturns (TestCase):
         self.assertEqual(v, objc.NULL)
 
 class TestByReference (TestCase):
-    # Pass by reference arguments. 
+    # Pass by reference arguments.
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
 
     def testInput(self):
         o = OC_MetaDataTest.new()
         m = o.methodForSelector_('sumX:andY:')
-        
+
         r = m(o, 1, 2)
         self.assertEqual(r, 1+2)
 
@@ -376,7 +376,7 @@ class TestByReference (TestCase):
         self.assertEqual(div, 2)
         self.assertEqual(rem, 3)
 
-        # To be fixed: 
+        # To be fixed:
         #self.assertRaises(ValueError, m, o, 42, objc.NULL)
 
     def testInputOutput(self):

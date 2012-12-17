@@ -34,7 +34,7 @@ def bind_and_listen(hostport):
     # allow the address to be re-used in a reasonable amount of time
     if os.name == 'posix' and sys.platform != 'cygwin':
         serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        
+
     serversock.bind(hostport)
     serversock.listen(5)
     return serversock

@@ -14,7 +14,7 @@ class TestNSByteOrder (TestCase):
         self.assertEqual(NSHostByteOrder(), CFByteOrderGetCurrent())
         self.assertEqual(NSSwapShort(350), CFSwapInt16(350))
         self.assertEqual(NSSwapInt(350), CFSwapInt32(350))
-        
+
         if sys.maxsize > 2 ** 32:
             self.assertEqual(NSSwapLong(350), CFSwapInt64(350))
             self.assertEqual(NSSwapBigLongToHost(350), CFSwapInt64BigToHost(350))

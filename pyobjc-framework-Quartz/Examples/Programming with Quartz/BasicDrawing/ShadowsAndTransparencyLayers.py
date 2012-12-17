@@ -5,10 +5,10 @@ import Utilities
 
 def scaleShadowOffset(offset):
     shadowScaling = Utilities.getScalingFactor()
-    # Adjust the shadow offset if scaling to export as bits. This is 
+    # Adjust the shadow offset if scaling to export as bits. This is
     # equivalent to scaling base space by the scaling factor.
     if shadowScaling != 1.0:
-        offset = CGSizeApplyAffineTransform(offset, 
+        offset = CGSizeApplyAffineTransform(offset,
                     CGAffineTransformMakeScale(shadowScaling, shadowScaling))
     return offset
 
@@ -22,9 +22,9 @@ def createTrianglePath(context):
 
 def drawSimpleShadow(context):
     r = CGRectMake(20, 20, 100, 200)
-    
+
     CGContextTranslateCTM(context, 20, 300)
-    
+
     # A blur of 0 is a hard edge blur.
     blur = 0
     # An offset where both components are negative casts a shadow to the
@@ -33,10 +33,10 @@ def drawSimpleShadow(context):
     offset = CGSize(-7, -7)
     offset = scaleShadowOffset(offset)
 
-    # Set the shadow in the context. 
+    # Set the shadow in the context.
     CGContextSetShadow(context, offset, blur)
-    
-    # Object 1. 
+
+    # Object 1.
     # Paint a rectangle.
     CGContextFillRect(context, r)
 
@@ -61,11 +61,11 @@ def drawSimpleShadow(context):
     CGContextScaleCTM(context, 2, 2)
     createTrianglePath(context)
     CGContextSetStrokeColorWithColor(context, Utilities.getRGBOpaqueRedColor())
-    
+
     CGContextSetLineWidth(context, 5)
     # Stroking produces a shadow as well.
     CGContextStrokePath(context)
-    
+
     # Object 4.
     CGContextTranslateCTM(context, 75, 0)
     createTrianglePath(context)
@@ -74,11 +74,11 @@ def drawSimpleShadow(context):
     offset.width = -5
     offset.height = +7
     offset = scaleShadowOffset(offset)
-    
+
     # The shadow can be colored. Create a CGColorRef
     # that represents a red color with opacity of 0.3333...
     shadowColor = CGColorCreateCopyWithAlpha(Utilities.getRGBOpaqueRedColor(), 1.0/3.0)
-    
+
     CGContextSetShadowWithColor(context, offset, blur, shadowColor)
     CGContextStrokePath(context)
 
@@ -109,12 +109,12 @@ def doShadowScaling(context):
 
     CGContextTranslateCTM(context, 20, 220)
     CGContextSetShadow(context, scaleShadowOffset(offset), blur)
-    
+
     # Object 1
     # Draw a triangle filled with black and shadowed with black.
     createTrianglePath(context)
     CGContextFillPath(context)
-    
+
     # Object 2
     # Scaling without changing the shadow doesn't impact
     # the shadow offset or blur.
@@ -123,9 +123,9 @@ def doShadowScaling(context):
     CGContextTranslateCTM(context, 40, 0)
     createTrianglePath(context)
     CGContextFillPath(context)
-    
+
     # Object 3
-    # By transforming the offset you can transform the shadow. 
+    # By transforming the offset you can transform the shadow.
     # This may be desirable if you are drawing a zoomed view.
     offset = CGSizeApplyAffineTransform(offset, t)
     CGContextSetShadow(context, scaleShadowOffset(offset), blur)
@@ -141,14 +141,14 @@ def drawFillAndStrokeWithShadow(context):
 
     # Set the shadow.
     CGContextSetShadow(context, scaleShadowOffset(offset), blur)
-    
+
     CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueOrangeColor())
 
     # Draw the graphic on the left.
     CGContextBeginPath(context)
     Utilities.myCGContextAddEllipseInRect(context, r)
     CGContextDrawPath(context, kCGPathFillStroke)
-    
+
     # Draw the graphic on the right.
     r = CGRectOffset(r, 125, 0)
     # Begin the transparency layer.
@@ -160,37 +160,37 @@ def drawFillAndStrokeWithShadow(context):
     CGContextEndTransparencyLayer(context)
 
 def drawColoredLogo(context):
-	r = CGRectMake(0, 0, 100, 100)
-	CGContextSaveGState(context)
-        if 1:
-		# Position the center of the rectangle on the left.
-		CGContextTranslateCTM(context, 140, 140)
-		# Rotate so that the rectangles are rotated 45 degrees 
-		# about the current coordinate origin.
-		CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
-		# Translate so that the center of the rect is at the previous origin.
-		CGContextTranslateCTM(context, 
-                        -r.size.width/2, -r.size.height/2)
-		# Set the fill color to a purple color.
-		CGContextSetFillColorWithColor(context, 
-                        Utilities.getRGBOpaquePurpleColor())
-		# Fill the first rectangle.
-		CGContextFillRect(context, r)
-		# Position to draw the right-most rectangle.
-		CGContextTranslateCTM(context, 60, -60)
-		# Set the fill color to a yellow color.
-		CGContextSetFillColorWithColor(context, 
-                        Utilities.getRGBOpaqueYellowColor())
-		CGContextFillRect(context, r)
-		
-		# Position for the center rectangle.
-		CGContextTranslateCTM(context, -30, +30)
-		# Set the stroke color to an orange color.
-		CGContextSetStrokeColorWithColor(context, 
-                        Utilities.getRGBOpaqueOrangeColor())
-		# Stroke the rectangle with a linewidth of 12.
-		CGContextStrokeRectWithWidth(context, r, 12)
-	CGContextRestoreGState(context)
+    r = CGRectMake(0, 0, 100, 100)
+    CGContextSaveGState(context)
+    if 1:
+        # Position the center of the rectangle on the left.
+        CGContextTranslateCTM(context, 140, 140)
+        # Rotate so that the rectangles are rotated 45 degrees
+        # about the current coordinate origin.
+        CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
+        # Translate so that the center of the rect is at the previous origin.
+        CGContextTranslateCTM(context,
+                -r.size.width/2, -r.size.height/2)
+        # Set the fill color to a purple color.
+        CGContextSetFillColorWithColor(context,
+                Utilities.getRGBOpaquePurpleColor())
+        # Fill the first rectangle.
+        CGContextFillRect(context, r)
+        # Position to draw the right-most rectangle.
+        CGContextTranslateCTM(context, 60, -60)
+        # Set the fill color to a yellow color.
+        CGContextSetFillColorWithColor(context,
+                Utilities.getRGBOpaqueYellowColor())
+        CGContextFillRect(context, r)
+
+        # Position for the center rectangle.
+        CGContextTranslateCTM(context, -30, +30)
+        # Set the stroke color to an orange color.
+        CGContextSetStrokeColorWithColor(context,
+                Utilities.getRGBOpaqueOrangeColor())
+        # Stroke the rectangle with a linewidth of 12.
+        CGContextStrokeRectWithWidth(context, r, 12)
+    CGContextRestoreGState(context)
 
 def showComplexShadowIssues(context):
     offset = CGSize(-6, -6)
@@ -204,32 +204,32 @@ def showComplexShadowIssues(context):
 def showComplexShadow(context):
     offset = CGSize(-6, -6)
     blur = 3
-    
+
     # Set the shadow.
     CGContextSetShadow(context, scaleShadowOffset(offset), blur)
 
-    # Begin a transparency layer. A snapshot is made of the graphics state and 
-    # the shadow parameter is temporarily reset to no shadow, the blend mode 
+    # Begin a transparency layer. A snapshot is made of the graphics state and
+    # the shadow parameter is temporarily reset to no shadow, the blend mode
     # is set to Normal, and the global alpha parameter is set to 1.0.
     #
-    # All drawing that occurs after CGContextBeginTransparencyLayer but before 
-    # CGContextEndTransparencyLayer is collected together and when 
-    # CGContextEndTransparencyLayer is called, Quartz composites the collected 
-    # drawing to the context, using the global alpha, blend mode, and shadow 
+    # All drawing that occurs after CGContextBeginTransparencyLayer but before
+    # CGContextEndTransparencyLayer is collected together and when
+    # CGContextEndTransparencyLayer is called, Quartz composites the collected
+    # drawing to the context, using the global alpha, blend mode, and shadow
     # that was in effect when CGContextBeginTransparencyLayer was called.
 
     CGContextBeginTransparencyLayer(context, None)
     # Draw the colored logo.
     drawColoredLogo(context)
 
-    # Ending the transparency layer causes all drawing in the transparency 
-    # layer to be composited with the global alpha, blend mode, and shadow 
-    # in effect at the time CGContextBeginTransparencyLayer was called.  The 
-    # graphics state is restored to that in effect when 
-    # CGContextBeginTransparencyLayer was called.    
+    # Ending the transparency layer causes all drawing in the transparency
+    # layer to be composited with the global alpha, blend mode, and shadow
+    # in effect at the time CGContextBeginTransparencyLayer was called.  The
+    # graphics state is restored to that in effect when
+    # CGContextBeginTransparencyLayer was called.
 
     # This restores the graphics state to that in effect
-    # at the last call to CGContextBeginTransparencyLayer. 
+    # at the last call to CGContextBeginTransparencyLayer.
     CGContextEndTransparencyLayer(context)
 
 def doLayerCompositing(context):
@@ -247,10 +247,10 @@ def doLayerCompositing(context):
     CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueGreenColor())
     # Draw a green background.
     CGContextFillRect(context, r)
-    
+
     # Draw the rectangles with opacity 0.75.
     CGContextSetAlpha(context, 0.75)
-    
+
     drawColoredLogo(context)
 
     # Object 3.
@@ -266,7 +266,7 @@ def doLayerCompositing(context):
     # alpha value of 0.75 when the transparency layer is ended.
     CGContextBeginTransparencyLayer(context, None)
     if 1:
-        # Draw the colored logo into the transparency layer.
+    # Draw the colored logo into the transparency layer.
         drawColoredLogo(context)
 
     # Ending the transparency layer causes the drawing
@@ -277,18 +277,18 @@ def doLayerCompositing(context):
 def shadowPDFDocument(context, url):
     pdfDoc = CGPDFDocumentCreateWithURL(url)
     offset = CGSize(-7, -7)
-    
+
     if pdfDoc is None:
         print >>sys.stderr, "Couldn't create PDF document reference!"
         return
-	
+
     r = CGPDFDocumentGetMediaBox(pdfDoc, 1)
     r.origin.x = 20
     r.origin.y = 20
 
     # Set the shadow.
     CGContextSetShadow(context, scaleShadowOffset(offset), 3)
-    
+
     # On Tiger and later, there is no need to use
     # a transparency layer to draw a PDF document as
     # a grouped object. On Panther, you can do so

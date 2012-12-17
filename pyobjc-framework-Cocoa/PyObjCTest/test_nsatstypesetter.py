@@ -4,58 +4,58 @@ from AppKit import *
 
 
 class TestNSATSTypesetterHelper (NSATSTypesetter):
-        def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
-                self, lineRect, glyphRange, usedRect, offset):
-            return None
+    def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
+            self, lineRect, glyphRange, usedRect, offset):
+        return None
 
 
-        def shouldBreakLineByWordBeforeCharacterAtIndex_(self, v):
-            return None
+    def shouldBreakLineByWordBeforeCharacterAtIndex_(self, v):
+        return None
 
-        def shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, v):
-            return True
+    def shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, v):
+        return True
 
-        def hyphenationFactorForGlyphAtIndex_(self, v):
-            return None
+    def hyphenationFactorForGlyphAtIndex_(self, v):
+        return None
 
-        def hyphenCharacterForGlyphAtIndex_(self, v):
-            return None
+    def hyphenCharacterForGlyphAtIndex_(self, v):
+        return None
 
-        def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, v, v2, v3, v4, v5):
-            return None
+    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(self, v, v2, v3, v4, v5):
+        return None
 
-        def characterRangeForGlyphRange_actualGlyphRange_(self, v1, v2):
-            pass
+    def characterRangeForGlyphRange_actualGlyphRange_(self, v1, v2):
+        pass
 
-        def glyphRangeForCharacterRange_actualCharacterRange_(self, v1, v2):
-            pass
+    def glyphRangeForCharacterRange_actualCharacterRange_(self, v1, v2):
+        pass
 
-        def getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_(self, v1, v2, v3, v4, v5):
-            pass
+    def getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_(self, v1, v2, v3, v4, v5):
+        pass
 
-        def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, v1, v2, v3, v4):
-            pass
+    def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, v1, v2, v3, v4):
+        pass
 
-        def substituteGlyphsInRange_withGlyphs_(self, v1, v2):
-            pass
+    def substituteGlyphsInRange_withGlyphs_(self, v1, v2):
+        pass
 
-        def insertGlyph_atGlyphIndex_characterIndex_(self, v1, v2, v3):
-            pass
+    def insertGlyph_atGlyphIndex_characterIndex_(self, v1, v2, v3):
+        pass
 
-        def deleteGlyphsInRange_(self, v1):
-            pass
+    def deleteGlyphsInRange_(self, v1):
+        pass
 
-        def setNotShownAttribute_forGlyphRange_(self, v1, v2):
-            pass
+    def setNotShownAttribute_forGlyphRange_(self, v1, v2):
+        pass
 
-        def setLocation_withAdvancements_forStartOfGlyphRange_(self, v1, v2, v3):
-            pass
+    def setLocation_withAdvancements_forStartOfGlyphRange_(self, v1, v2, v3):
+        pass
 
-        def setAttachmentSize_forGlyphRange_(self, v1, v2):
-            pass
+    def setAttachmentSize_forGlyphRange_(self, v1, v2):
+        pass
 
-        def setBidiLevels_forGlyphRange_(self, v1, v2):
-            pass
+    def setBidiLevels_forGlyphRange_(self, v1, v2):
+        pass
 
 
 class TestNSATSTypesetter (TestCase):
@@ -70,7 +70,7 @@ class TestNSATSTypesetter (TestCase):
         self.assertStartswith(m['arguments'][2]['type'], b'N^{')
         self.assertStartswith(m['arguments'][4]['type'], b'N^{')
         self.assertStartswith(m['arguments'][5]['type'], b'N^' + objc._C_CGFloat)
-        
+
         m = o.shouldBreakLineByWordBeforeCharacterAtIndex_.__metadata__()
         self.assertEqual(m['retval']['type'], objc._C_NSBOOL)
         self.assertEqual(m['arguments'][2]['type'], objc._C_NSUInteger)

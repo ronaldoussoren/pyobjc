@@ -54,7 +54,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
         objc.selector(None, selector=b"anotherProto:with:", signature=b"v@:ii"),
     ))
 
-    MyOtherProtocol = objc.formal_protocol("MyOtherProtocol", 
+    MyOtherProtocol = objc.formal_protocol("MyOtherProtocol",
             (MyProtocol,), [
                 objc.selector(None, selector=b"yetAnother:", signature=b"i@:I")
             ])
@@ -79,7 +79,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
 
                 self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method1"), (b"method1", b"i@:"))
                 self.assertEqual(OC_TestProtocol.descriptionForInstanceMethod_(b"method2:"), (b"method2:", b"v@:i"))
-            
+
             def testImplementFormalProtocol(self):
 
                 class MyClassNotImplementingProtocol(NSObject):
@@ -109,13 +109,13 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
                 # XXX: not really: you won't inherit the right signatures by default
 
                 class MyClassImplementingHalfOfProtocol(NSObject):
-                        def method1(self): pass
-                        method1 = objc.selector(method1, signature=b'i@:')
+                    def method1(self): pass
+                    method1 = objc.selector(method1, signature=b'i@:')
 
                 self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
                 class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, OC_TestProtocol):
-                        def method2_(self, v): pass
+                    def method2_(self, v): pass
 
                 self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
@@ -131,23 +131,23 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, anObject):
-                        pass
+                    pass
                 self.fail()
-            except TypeError: 
+            except TypeError:
                 pass
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, 10):
-                        pass
+                    pass
                 self.fail()
-            except TypeError: 
+            except TypeError:
                 pass
 
             try:
                 class MyClassImplementingAnotherObject(NSObject, int):
-                        pass
+                    pass
                 self.fail()
-            except TypeError: 
+            except TypeError:
                 pass
 
         def dont_testDefiningingProtocols(self):
@@ -198,13 +198,13 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
                 pass
 
             class ImplementingMyClassProtocol(NSObject, MyClassProtocol):
-                    def anAnotherOne_(self, a):
-                        pass
+                def anAnotherOne_(self, a):
+                    pass
 
-                    def aClassOne_(self, a):
-                        pass
+                def aClassOne_(self, a):
+                    pass
 
-                    aClassOne_ = classmethod(aClassOne_)
+                aClassOne_ = classmethod(aClassOne_)
 
             self.assertEqual(ImplementingMyClassProtocol.anAnotherOne_.signature, b'i@:i')
             self.assertEqual(ImplementingMyClassProtocol.aClassOne_.isClassMethod, True)
@@ -212,7 +212,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
 
             # TODO: protocol with class and instance method with different
             # signatures.
-            # TODO: should not need to specify classmethod() if it can be 
+            # TODO: should not need to specify classmethod() if it can be
             # deduced from the protocol
 
 
@@ -232,7 +232,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
 
         def testMethodInfo(self):
             self.assertEqual(MyProtocol.instanceMethods(), [
-                {'typestr': b'I@:', 'required': True, 'selector': b'protoMethod'}, 
+                {'typestr': b'I@:', 'required': True, 'selector': b'protoMethod'},
                 {'typestr': b'v@:ii', 'required': True, 'selector': b'anotherProto:with:'},
             ])
             self.assertEqual(MyProtocol.classMethods(), [
@@ -261,7 +261,7 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= '10.7') and sys.version_in
 
         def dont_testObjCInterface(self):
             # TODO: tests that access the Objective-C interface of protocols
-            # (those methods should be forwarded to the underlying object, as 
+            # (those methods should be forwarded to the underlying object, as
             #  with objc.pyobjc_unicode).
             # NOTE: This is not very important, the only methods that are not
             # explicitly wrapped should be compatibility methods that will

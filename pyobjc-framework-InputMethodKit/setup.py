@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "InputMethodKit" framework on MacOSX 10.5 or later. The
 interfaces in this framework allow you to develop input methods.
 
@@ -18,7 +18,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

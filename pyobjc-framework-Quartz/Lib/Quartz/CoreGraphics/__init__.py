@@ -2,7 +2,7 @@
 Python mapping for the CoreGraphics framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 import sys
 import objc
@@ -64,8 +64,8 @@ def _load(mod):
 
     # a #define
     mod.kCGEventFilterMaskPermitAllEvents = (
-                    mod.kCGEventFilterMaskPermitLocalMouseEvents | 
-                    mod.kCGEventFilterMaskPermitLocalKeyboardEvents | 
+                    mod.kCGEventFilterMaskPermitLocalMouseEvents |
+                    mod.kCGEventFilterMaskPermitLocalKeyboardEvents |
                     mod.kCGEventFilterMaskPermitSystemDefinedEvents)
 
     def CGEventMaskBit(eventType):

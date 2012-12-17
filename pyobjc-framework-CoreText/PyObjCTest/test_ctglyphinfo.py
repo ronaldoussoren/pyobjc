@@ -46,7 +46,7 @@ class TestCTGlyphInfo (TestCase):
         self.assertResultIsCFRetained(CTGlyphInfoCreateWithCharacterIdentifier)
 
         for collection in (kCTIdentityMappingCharacterCollection, kCTAdobeCNS1CharacterCollection,
-                kCTAdobeGB1CharacterCollection, kCTAdobeJapan1CharacterCollection, 
+                kCTAdobeGB1CharacterCollection, kCTAdobeJapan1CharacterCollection,
                 kCTAdobeJapan2CharacterCollection, kCTAdobeKorea1CharacterCollection):
             v = CTGlyphInfoCreateWithCharacterIdentifier(3254, collection, "(c)")
             if v is not None:

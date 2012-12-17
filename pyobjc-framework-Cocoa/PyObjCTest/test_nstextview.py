@@ -63,7 +63,7 @@ class TestNSTextView (TestCase):
         self.assertIsInstance(NSTextViewWillChangeNotifyingTextViewNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeSelectionNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeTypingAttributesNotification, unicode)
-        
+
 
     def testMethods(self):
         self.assertResultIsBOOL(NSTextView.rulerView_shouldMoveMarker_)

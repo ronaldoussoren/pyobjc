@@ -51,7 +51,7 @@ class TestWebPreferences (TestCase):
 
         self.assertResultIsBOOL(WebPreferences.tabsToLinks)
         self.assertArgIsBOOL(WebPreferences.setTabsToLinks_, 0)
-        
+
         self.assertResultIsBOOL(WebPreferences.usesPageCache)
         self.assertArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
 

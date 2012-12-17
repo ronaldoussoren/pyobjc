@@ -9,7 +9,7 @@ __all__ = [ 'registerListType', 'registerMappingType' ]
 def registerListType(type):
     """
     Register 'type' as a list-like type that will be proxied
-    as an NSMutableArray subclass. 
+    as an NSMutableArray subclass.
     """
     OC_PythonArray = lookUpClass('OC_PythonArray')
     OC_PythonArray.depythonifyTable().append(type)
@@ -17,7 +17,7 @@ def registerListType(type):
 def registerMappingType(type):
     """
     Register 'type' as a list-like type that will be proxied
-    as an NSMutableArray subclass. 
+    as an NSMutableArray subclass.
     """
     OC_PythonDictionary = lookUpClass('OC_PythonDictionary')
     OC_PythonDictionary.depythonifyTable().append(type)

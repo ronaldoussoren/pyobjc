@@ -175,7 +175,7 @@ def doSubstitutions(dirName, aName, options):
 
 def doFileSubstitution(aFile, encoding, translator, cleanQuotes = False):
     _tempFile = tempfile.TemporaryFile()
-    
+
     # do the translation
     info('encoding is: %s' % (encoding))
     inFile = codecs.getreader(encoding)(file(aFile, "rb"))
@@ -298,17 +298,17 @@ def main():
     if source == dest:
         parser.error("Source and destination may not be the same.")
         return
-    
+
     if os.path.exists(dest):
         if options.killDest:
             deletePath(dest)
         else:
             parser.error("Destination already exists.  -k to destroy or use different destination.")
             return
-    
+
     if options.templateFile and (not os.path.exists(options.templateFile)):
         parser.error("Template file specified, but does not exist.")
-        return    
+        return
 
     info("Copying from '%s' to '%s'....", source, dest)
     shutil.copytree(source, dest)
@@ -329,7 +329,7 @@ def main():
                 os.rename(rightPath, leftPath)
             else:
                 info("rename %s ==> %s", leftPath, rightPath)
-                os.rename(leftPath, rightPath)                
+                os.rename(leftPath, rightPath)
 
 if __name__ == '__main__':
     main()

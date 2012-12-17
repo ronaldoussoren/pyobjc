@@ -74,7 +74,7 @@ class SplitSignatureTest (TestCase):
             # For some reason this signature doesn't seem to be correct, even
             # though we don't touch it...
             "initWithDocument_URL_windowProperties_locationProperties_interpreterBuiltins_",
-            
+
             # Some unittests...
             "setKey4",
             "get_key2",
@@ -110,14 +110,14 @@ class SplitSignatureTest (TestCase):
                 argcount = len(elems) - 3 # retval, self, _sel
                 coloncount = sel.selector.count(b':')
 
-                self.assertEqual(argcount, coloncount, 
+                self.assertEqual(argcount, coloncount,
                         '%s [%d:%d] %r %r'%(sel.selector.decode('latin1'), argcount, coloncount, elems, cls))
 
     def testSplitStructSignature(self):
         self.assertRaises(ValueError, objc.splitStructSignature, objc._C_ID)
         self.assertRaises(ValueError, objc.splitStructSignature, b"{NSPoint=dd")
         self.assertRaises(ValueError, objc.splitStructSignature, b"{NSPoint=dd}d")
-        
+
         self.assertEqual(objc.splitStructSignature(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
         self.assertEqual(objc.splitStructSignature(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 
@@ -125,7 +125,7 @@ class SplitSignatureTest (TestCase):
         self.assertRaises(ValueError, objc.splitStruct, objc._C_ID)
         self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd")
         self.assertRaises(ValueError, objc.splitStruct, b"{NSPoint=dd}d")
-        
+
         self.assertEqual(objc.splitStruct(b'{NSPoint=dd}'), ("NSPoint", [(None, b'd'), (None, b'd')]))
         self.assertEqual(objc.splitStruct(b'{NSPoint="x"d"y"d}'), ("NSPoint", [("x", b'd'), ("y", b'd')]))
 

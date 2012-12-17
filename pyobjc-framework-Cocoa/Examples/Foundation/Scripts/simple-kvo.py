@@ -31,5 +31,3 @@ myInstance.setValue_forKey_(2, "base")
 myInstance.power = 4
 
 print "%d ** %d == %d" % (myInstance.base, myInstance.valueForKey_("power"), myInstance.result())
-
-    

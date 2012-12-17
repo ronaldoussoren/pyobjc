@@ -18,7 +18,7 @@ class TestNSZone (TestCase):
         zone = obj.zone()
         self.assert_(zone is not None)
         self.assert_(zone.__pointer__ != 0)
-        
+
         obj2 = NSObject.allocWithZone_(zone).init()
         zone2 = obj2.zone()
         self.assertEqual(zone.__pointer__, zone2.__pointer__)
@@ -46,7 +46,7 @@ class TestNSZone (TestCase):
 
     def testMakeCollectable(self):
         v = NSMakeCollectable
-        
+
         o = NSObject.alloc().init()
         CFRetain(o)
         v = NSMakeCollectable(o)

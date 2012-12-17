@@ -5,7 +5,7 @@ from Quartz.PDFKit import *
 class TestPDFAnnotationButtonWidget (TestCase):
     def testConstants(self):
         self.assertEqual(kPDFWidgetUnknownControl, -1)
-        self.assertEqual(kPDFWidgetPushButtonControl, 0) 
+        self.assertEqual(kPDFWidgetPushButtonControl, 0)
         self.assertEqual(kPDFWidgetRadioButtonControl, 1)
         self.assertEqual(kPDFWidgetCheckBoxControl, 2)
 

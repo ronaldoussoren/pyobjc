@@ -37,7 +37,7 @@ class TestPropertyList (TestCase):
         value = {b'key1'.decode('ascii'): 42, b'key2'.decode('ascii'): 1}
 
         self.assertArgIsOut(CFPropertyListWriteToStream, 3)
-        rval, errorString = CFPropertyListWriteToStream(value, stream, 
+        rval, errorString = CFPropertyListWriteToStream(value, stream,
                 kCFPropertyListXMLFormat_v1_0, None)
         self.assertIsInstance(rval, (int, long))
         self.assertTrue(rval)

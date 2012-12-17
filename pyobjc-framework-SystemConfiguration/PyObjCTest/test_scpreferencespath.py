@@ -13,7 +13,7 @@ class TestSCPreferencesPath (TestCase):
         ref = SCPreferencesCreate(None, "pyobjc.test", "pyobjc.test")
         self.assertIsInstance(ref, SCPreferencesRef)
 
-        r = SCPreferencesAddValue(ref, "use", 
+        r = SCPreferencesAddValue(ref, "use",
                 NSMutableDictionary.dictionaryWithDictionary_(
                     { "python2": True, "python3": False }))
         self.assertTrue(r)

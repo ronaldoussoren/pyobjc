@@ -18,11 +18,11 @@ class FahrenheitToCelsiusTransformer(NSValueTransformer):
     def transformedValueClass(cls):
         return NSNumber
     transformedValueClass = classmethod(transformedValueClass)
-        
+
     def allowsReverseTransformation(cls):
         return True
     allowsReverseTransformation = classmethod(allowsReverseTransformation)
-        
+
     def transformedValue_(self, value):
         if value is None:
             return None
@@ -47,6 +47,6 @@ class FahrenheitToCelsiusTransformer(NSValueTransformer):
 
 class TransformerAppDelegate (NSObject):
     fahrenheit = objc.ivar('fahrenheit', objc._C_DBL)
-        
+
 trans = FahrenheitToCelsiusTransformer.alloc().init()
 NSValueTransformer.setValueTransformer_forName_(trans, u"FahrenheitToCelsiusTransformer")

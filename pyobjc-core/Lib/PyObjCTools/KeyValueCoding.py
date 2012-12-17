@@ -88,10 +88,10 @@ class ArrayOperators(object):
         if count == 0:
             return 0.0
         return msum(map(float, lst)) / count
-    
+
     def count(self, obj, segments):
         return len(obj)
-    
+
     def distinctUnionOfArrays(self, obj, segments):
         path = '.'.join(segments)
         rval = []
@@ -116,15 +116,15 @@ class ArrayOperators(object):
             rval.append(item)
             s.add(item)
         return rval
-        
+
     def max(self, obj, segments):
         path = '.'.join(segments)
         return max(getKeyPath(obj, path))
-    
+
     def min(self, obj, segments):
         path = '.'.join(segments)
         return min(getKeyPath(obj, path))
-    
+
     def sum(self, obj, segments):
         path = '.'.join(segments)
         lst = getKeyPath(obj, path)
@@ -168,7 +168,7 @@ def getKey(obj, key):
             # This is not entirely correct, should check if this
             # is the right kind of ValueError before translating
             raise KeyError(str(msg))
-    
+
     # check for dict-like objects
     getitem = getattr(obj, '__getitem__', None)
     if getitem is not None:
@@ -279,7 +279,7 @@ def getKeyPath(obj, keypath):
     """
     if obj is None:
         return None
-        
+
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         return obj.valueForKeyPath_(keypath)
 
@@ -303,7 +303,7 @@ def setKeyPath(obj, keypath, value):
     """
     if obj is None:
         return
-        
+
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         return getattr(obj, SETVALUEFORKEYPATH)(value, keypath)
 
@@ -314,11 +314,11 @@ def setKeyPath(obj, keypath, value):
 
     return setKey(cur, elements[-1], value)
 
-        
+
 class kvc(object):
     def __init__(self, obj):
         self.__pyobjc_object__ = obj
-    
+
     def __getattr__(self, attr):
         return getKey(self.__pyobjc_object__, attr)
 

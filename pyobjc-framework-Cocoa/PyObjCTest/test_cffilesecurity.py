@@ -83,7 +83,7 @@ class TestCFFileSecurity (TestCase):
         self.assertTrue(ok)
         self.assertEqual(v, 0o444)
 
-    @min_os_level('10.7') 
+    @min_os_level('10.7')
     @expectedFailure
     def testFunctionsUnwrapped(self):
         # There are no usable wrappers for sys/acl.h at this time
@@ -95,7 +95,7 @@ class TestCFFileSecurity (TestCase):
         self.assertIsInstance(security, CoreFoundation.CFFileSecurityRef)
 
         CoreFoundation.CFFileSecurityClearProperties(security, CoreFoundation.kCFFileSecurityClearGroup)
-        
+
 
 if __name__ == "__main__":
     main()

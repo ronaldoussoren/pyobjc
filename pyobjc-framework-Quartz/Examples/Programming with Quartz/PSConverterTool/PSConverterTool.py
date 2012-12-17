@@ -43,15 +43,15 @@ def progress_callback(info):
     if info.doProgress:
         print >>info.outStatusFile.write(".")
         info.outStatusFile.flush()
-    
+
     # Here would be a callout to code that
     # would conceivably return whether to abort
     # the conversion process.
 
     #UpdateStatus(converterDataP);
-    
+
     if info.abortConverter:
-	CGPSConverterAbort(info.converter);
+        CGPSConverterAbort(info.converter);
         print >>info.outStatusFile, "ABORTED!"
 
 
@@ -77,11 +77,11 @@ def convertPStoPDF(inputPSURL, outPDFURL):
     if provider is None or consumer is None:
         if provider is None:
             print >>sys.stderr, "Couldn't create provider"
-	    
+
         if consumer is None:
             print >>sys.stderr, "Couldn't create consumer"
-	    
-	return False
+
+        return False
 
     # Setup the info data for the callbacks to
     # do progress reporting, set the initial state
@@ -94,7 +94,7 @@ def convertPStoPDF(inputPSURL, outPDFURL):
 
     # Create a converter object with myConverterData as the
     # info parameter and our callbacks as the set of callbacks
-    # to use for the conversion. There are no converter options 
+    # to use for the conversion. There are no converter options
     # defined as of Tiger so the options dictionary passed is None.
     myConverterData.converter = CGPSConverterCreate(myConverterData, (
         begin_document_callback,
@@ -103,17 +103,17 @@ def convertPStoPDF(inputPSURL, outPDFURL):
         end_page_callback,
         progress_callback,
         message_callback,
-        None,   # no release_info_callback 
+        None,   # no release_info_callback
         ), None)
 
     if myConverterData.converter is None:
-	print >>sys.stderr, "Couldn't create converter object!"
-	return False
+        print >>sys.stderr, "Couldn't create converter object!"
+        return False
 
     # There are no conversion options so the options
     # dictionary for the conversion is None.
-    success = CGPSConverterConvert(myConverterData.converter, 
-		    provider, consumer, None)
+    success = CGPSConverterConvert(myConverterData.converter,
+                    provider, consumer, None)
     if not success:
         print >>sys.stderr, "Conversion failed!"
 
@@ -127,18 +127,18 @@ def main(args = None):
         args = sys.argv
 
     if len(args) != 3:
-	print >>sys.stderr, "Usage: %s inputfile outputfile."%(args[0],)
-	return 0
+        print >>sys.stderr, "Usage: %s inputfile outputfile."%(args[0],)
+        return 0
 
     # Create the data provider and data consumer.
-    inputURL = CFURLCreateFromFileSystemRepresentation(None, 
-			args[1], len(args[1]), False)
+    inputURL = CFURLCreateFromFileSystemRepresentation(None,
+                        args[1], len(args[1]), False)
 
-    outputURL = CFURLCreateFromFileSystemRepresentation(None, 
-			args[2], len(args[2]), False)
+    outputURL = CFURLCreateFromFileSystemRepresentation(None,
+                        args[2], len(args[2]), False)
 
     if inputURL is not None and outputURL is not None:
-	convertPStoPDF(inputURL, outputURL)
+        convertPStoPDF(inputURL, outputURL)
 
     return 0
 

@@ -11,24 +11,24 @@ class ABPerson (objc.Category(ABPerson)):
         flags = self.valueForProperty_(kABPersonFlags)
         if flags is None:
             flags = 0
-        
+
         if (flags & kABShowAsMask) == kABShowAsCompany:
             if len(companyName):
                 return companyName;
-        
+
         lastNameFirst = (flags & kABNameOrderingMask) == kABLastNameFirst
         hasFirstName = firstName is not None
         hasLastName = lastName is not None
-        
+
         if hasLastName and hasFirstName:
             if lastNameFirst:
                 return NSString.stringWithString_("%s %s"%(lastName, firstName))
             else:
                 return NSString.stringWithString_("%s %s"%(firstName, lastName))
-        
+
         if hasLastName:
             return lastName
-        
+
         return firstName
 
     def compareDisplayNames_(self, person):

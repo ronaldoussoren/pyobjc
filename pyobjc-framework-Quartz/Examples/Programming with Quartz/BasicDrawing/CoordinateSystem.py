@@ -12,14 +12,14 @@ def doRotatedEllipses(context):
     theTransform = CGAffineTransformScale(theTransform, 1, 2)
     # Place the first ellipse at a good location.
     CGContextTranslateCTM(context, 100.0, 100.0)
-    
+
     for i in range(totreps):
         # Make a snapshot the coordinate system.
         CGContextSaveGState(context)
         # Set up the coordinate system for the rotated ellipse.
         CGContextConcatCTM(context, theTransform)
         CGContextBeginPath(context)
-        CGContextAddArc(context, 0.0, 0.0, 45.0, 0.0, 2*math.pi, 0); 
+        CGContextAddArc(context, 0.0, 0.0, 45.0, 0.0, 2*math.pi, 0);
         # Set the fill color for this instance of the ellipse.
         CGContextSetRGBFillColor(context, tint, 0.0, 0.0, 1.0)
         CGContextDrawPath(context, kCGPathFill)
@@ -37,7 +37,7 @@ def drawSkewedCoordinateSystem(context):
     # Create a rectangle that is 72 units on a side
     # with its origin at (0,0).
     r = CGRectMake(0, 0, 72, 72)
-    
+
     CGContextTranslateCTM(context, 144, 144)
     # Draw the coordinate axes untransformed.
     Utilities.drawCoordinateAxes(context)
@@ -45,7 +45,7 @@ def drawSkewedCoordinateSystem(context):
     CGContextFillRect(context, r)
 
     # Create an affine transform that skews the coordinate system,
-    # skewing the x-axis by alpha radians and the y-axis by beta radians. 
+    # skewing the x-axis by alpha radians and the y-axis by beta radians.
     skew = CGAffineTransformMake(1, math.tan(alpha), math.tan(beta), 1, 0, 0)
     # Apply that transform to the context coordinate system.
     CGContextConcatCTM(context, skew)
@@ -53,7 +53,7 @@ def drawSkewedCoordinateSystem(context):
     # Set the fill and stroke color to a dark blue.
     CGContextSetRGBStrokeColor(context, 0.11, 0.208, 0.451, 1)
     CGContextSetRGBFillColor(context, 0.11, 0.208, 0.451, 1)
-    
+
     # Draw the coordinate axes again, now transformed.
     Utilities.drawCoordinateAxes(context)
     # Set the fill color again but with a partially transparent alpha.

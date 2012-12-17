@@ -27,7 +27,7 @@ class CGraphController(NSObject):
     phaseDisplay2 = objc.IBOutlet()
     RMSGainDisplay = objc.IBOutlet()
     spacingDisplay = objc.IBOutlet()
-    
+
 #____________________________________________________________
 # Update GUI display and control values
 
@@ -64,7 +64,7 @@ class CGraphController(NSObject):
 
 #____________________________________________________________
 # Handle GUI values
-    
+
     @objc.IBAction
     def fieldDisplay0_(self, sender):
         self.setNormalizedField(0, sender.floatValue())

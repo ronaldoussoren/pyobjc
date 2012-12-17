@@ -50,7 +50,7 @@ class TestNSDictionaryInterface (TestCase):
 
         self.assertIsNotInstance(k, list)
 
-        self.assertEqual(repr(self.createDictionary(a=1).keys()), 
+        self.assertEqual(repr(self.createDictionary(a=1).keys()),
                 "<nsdict_keys(['a'])>")
 
     def testValues(self):
@@ -63,7 +63,7 @@ class TestNSDictionaryInterface (TestCase):
         self.assertRaises(TypeError, d.values, None)
         self.assertIsNotInstance(d.values(), list)
 
-        self.assertEqual(repr(self.createDictionary(a=1).values()), 
+        self.assertEqual(repr(self.createDictionary(a=1).values()),
                 "<nsdict_values([1])>")
 
     def testItems(self):
@@ -73,7 +73,7 @@ class TestNSDictionaryInterface (TestCase):
         d = self.createDictionary(a=1)
         self.assertEqual(set(d.items()), {('a', 1)})
         self.assertRaises(TypeError, d.items, None)
-        self.assertEqual(repr(self.createDictionary(a=1).items()), 
+        self.assertEqual(repr(self.createDictionary(a=1).items()),
                 "<nsdict_items([('a', 1)])>")
 
     def testContains(self):
@@ -546,7 +546,7 @@ class TestNSMutableDictionaryInterface (TestNSDictionaryInterface):
 
 class DictSetTest (TestCase):
     testclass = NSDictionary
-    
+
     def testDictKeys(self):
         d = self.testclass.dictionaryWithDictionary_({1: 10, "a": "ABC"})
 
@@ -649,7 +649,7 @@ class TestABC (TestCase):
         self.assertTrue(isinstance(d.keys(), collections.KeysView))
         self.assertTrue(isinstance(d.values(), collections.ValuesView))
         self.assertTrue(isinstance(d.items(), collections.ItemsView))
-    
+
         d = NSMutableDictionary.dictionary()
         self.assertTrue(isinstance(d.keys(), collections.KeysView))
         self.assertTrue(isinstance(d.values(), collections.ValuesView))

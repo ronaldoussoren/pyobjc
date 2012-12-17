@@ -29,12 +29,12 @@ class CIBevelView (SampleCIView):
         self.points[1] = CGPointMake(150.0, 100.0)
         self.points[2] = CGPointMake(frameRect.size.width - 150.0, 100.0)
         self.points[3] = CGPointMake(0.7*self.points[0].x + 0.3*self.points[2].x, 0.7*self.points[0].y + 0.3*self.points[2].y)
-                
+
         url = NSURL.fileURLWithPath_(
            NSBundle.mainBundle().pathForResource_ofType_("lightball", "tiff"))
 
         self.lightball = CIImage.imageWithContentsOfURL_(url)
-                
+
         self.heightFieldFilter = CIFilter.filterWithName_("CIHeightFieldFromMask")
         self.heightFieldFilter.setDefaults()
         self.heightFieldFilter.setValue_forKey_(15.0, "inputRadius")
@@ -43,7 +43,7 @@ class CIBevelView (SampleCIView):
         self.twirlFilter.setDefaults()
         self.twirlFilter.setValue_forKey_(
             CIVector.vectorWithX_Y_(
-                0.5*frameRect.size.width, 
+                0.5*frameRect.size.width,
                 0.5*frameRect.size.height),
             "inputCenter")
         self.twirlFilter.setValue_forKey_(300.0, "inputRadius")
@@ -72,7 +72,7 @@ class CIBevelView (SampleCIView):
         self.points[self.currentPoint].y = loc.y
         self.lineImage = None
 
-        # normally we'd want this, but the timer will cause us to 
+        # normally we'd want this, but the timer will cause us to
         # redisplay anyway
         #self.setNeedsDisplay_(True)
 

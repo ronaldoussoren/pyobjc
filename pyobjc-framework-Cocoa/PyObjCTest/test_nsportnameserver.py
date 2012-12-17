@@ -12,7 +12,7 @@ class TestNSPortNameServer (TestCase):
         self.assertResultIsBOOL(NSSocketPortNameServer.removePortForName_)
         self.assertResultIsBOOL(NSSocketPortNameServer.registerPort_name_nameServerPortNumber_)
 
-    
+
 
 if __name__ == "__main__":
     main()

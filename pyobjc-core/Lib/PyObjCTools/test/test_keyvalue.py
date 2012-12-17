@@ -374,7 +374,7 @@ class Account(object):
 class Transaction(object):
     def __init__(self, **kw):
         self.__dict__.update(kw)
-        
+
 class PyObjCAccount(NSObject):
     openingBalance = objc.ivar('openingBalance', 'd')
     name = objc.ivar('name')
@@ -386,7 +386,7 @@ class PyObjCAccount(NSObject):
         for k, v in kw.iteritems():
             setattr(self, k, v)
         return self
-        
+
 class PyObjCTransaction(NSObject):
     referenceNumber = objc.ivar('referenceNumber', 'I')
     amount = objc.ivar('amount', 'd')
@@ -470,7 +470,7 @@ def makeAccounts(Account, Transaction):
 
 class TestArrayOperators(unittest.TestCase):
     def setUp(self):
-        self.accounts = makeAccounts(Account, Transaction)    
+        self.accounts = makeAccounts(Account, Transaction)
     def testCount(self):
         self.assertEquals(
             getKeyPath(self, u'accounts.@count'), 2)
@@ -499,7 +499,7 @@ class TestArrayOperators(unittest.TestCase):
                 self.accounts,
                 u'@distinctUnionOfArrays.transactions.category'),
             [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book'])
-    
+
     def testDistinctUnionOfObjects(self):
         alice = self.accounts[0]
         v = getKeyPath(alice, u'transactions.@distinctUnionOfObjects.payee')
@@ -547,7 +547,7 @@ class TestArrayOperators(unittest.TestCase):
                 alice,
                 u'transactions.@max.amount'),
             250)
-            
+
     def testMin(self):
         alice = self.accounts[0]
         self.assertEquals(
@@ -579,7 +579,7 @@ class TestArrayOperators(unittest.TestCase):
                 bob,
                 u'transactions.@sum.amount'),
             25 + 60 + 250)
-    
+
     def testUnionOfArrays(self):
         self.assertEquals(
             getKeyPath(
@@ -596,7 +596,7 @@ class TestArrayOperators(unittest.TestCase):
                 self.accounts,
                 u'@unionOfArrays.transactions.category'),
             [u'Tacos', u'Bagels', u'Tequila', u'Beer', u'Book', u'Tequila'])
-    
+
     def testUnionOfObjects(self):
         alice = self.accounts[0]
         self.assertEquals(

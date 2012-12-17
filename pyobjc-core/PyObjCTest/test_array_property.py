@@ -32,7 +32,7 @@ class TestArrayProperty (TestCase):
         self.assertEqual(type(v).__name__, 'array_proxy')
 
     def testSetting(self):
-        # Set value, check that 
+        # Set value, check that
         # (1) value gets copied
         # (2) accessing the property result in proxy
         observer = OCObserve.alloc().init()
@@ -501,7 +501,7 @@ class TestArrayProperty (TestCase):
 
         self.assertEqual(o.array, [1,2,3,4])
         self.assertNotEqual(o.array, [1,2,3,4, 5])
-        
+
 
         self.assertTrue(o.array < [1,2,3,4,5])
         self.assertTrue(o.array <= [1,2,3,4,5])

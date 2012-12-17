@@ -15,4 +15,3 @@ sys.modules['OpenDirectory'] = mod = objc.ObjCLazyModule('OpenDirectory',
        '__path__': __path__,
        'objc': objc,
     }, (CFOpenDirectory,))
-

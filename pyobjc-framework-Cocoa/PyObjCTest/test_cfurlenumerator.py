@@ -19,7 +19,7 @@ class TestCFURLEnumerator (TestCase):
         v = CFURLEnumeratorGetTypeID()
         self.assertIsInstance(v, (int, long))
 
-        ref = CFURLEnumeratorCreateForDirectoryURL(None, 
+        ref = CFURLEnumeratorCreateForDirectoryURL(None,
                 CFURLCreateWithFileSystemPath(None, os.path.expanduser('~'), kCFURLPOSIXPathStyle, True),
                 kCFURLEnumeratorDefaultBehavior,
                 [kCFURLNameKey])

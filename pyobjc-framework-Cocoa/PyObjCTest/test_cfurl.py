@@ -224,7 +224,7 @@ class TestURL (TestCase):
 
         cnt, bytes = CFURLGetBytes(ref, None, 100)
         self.assertEqual(cnt, 62)
-        self.assertEqual(bytes, 
+        self.assertEqual(bytes,
                 b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor")
 
         cnt, bytes = CFURLGetBytes(ref, objc.NULL, 0)
@@ -234,7 +234,7 @@ class TestURL (TestCase):
         rng1, rng2 = CFURLGetByteRangeForComponent(ref, kCFURLComponentHost, None)
         self.assertIsInstance(rng1, CFRange)
         self.assertIsInstance(rng2, CFRange)
-        
+
 
     def testUpdating(self):
         base = CFURLCreateWithString(None, b"http://www.omroep.nl/sport".decode('ascii'), None)
@@ -276,7 +276,7 @@ class TestURL (TestCase):
         strval = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(None, base, "", kCFStringEncodingISOLatin1)
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
-        
+
         base = b"http://www.omroep.nl/sport en spel".decode('ascii')
         strval = CFURLCreateStringByAddingPercentEscapes(None, base, "", "",
                 kCFStringEncodingISOLatin1)
@@ -295,7 +295,7 @@ class TestURL (TestCase):
         self.assertEqual(fsref.as_pathname(), os.getcwd())
 
         ref2 = CFURLCreateFromFSRef(None, fsref)
-        self.assertEqual(ref, ref2) 
+        self.assertEqual(ref, ref2)
 
     def testConstants(self):
         self.assertEqual(kCFURLPOSIXPathStyle, 0)
@@ -321,7 +321,7 @@ class TestURL (TestCase):
         fp.close()
         try:
             baseURL = CFURLCreateWithFileSystemPath(None,
-                os.path.realpath(b"/tmp/pyobjc.test".decode('ascii')), 
+                os.path.realpath(b"/tmp/pyobjc.test".decode('ascii')),
                 kCFURLPOSIXPathStyle, False)
             self.assertIsInstance(baseURL, CFURLRef)
 

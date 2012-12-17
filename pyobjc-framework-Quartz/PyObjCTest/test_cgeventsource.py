@@ -52,14 +52,14 @@ class TestCGEventSource (TestCase):
         self.assertIsInstance(v, (int, long))
         self.assertEqual(v, 0xabbccdd00112233)
 
-        CGEventSourceSetLocalEventsFilterDuringSuppressionState(src, 
+        CGEventSourceSetLocalEventsFilterDuringSuppressionState(src,
                 kCGEventFlagMaskControl|kCGEventFlagMaskCommand,
                  kCGEventSuppressionStateRemoteMouseDrag )
 
-        m = CGEventSourceGetLocalEventsFilterDuringSuppressionState(src, 
+        m = CGEventSourceGetLocalEventsFilterDuringSuppressionState(src,
                  kCGEventSuppressionStateRemoteMouseDrag )
         self.assertIsInstance(m, (int, long))
-        
+
         CGEventSourceSetLocalEventsSuppressionInterval(src, 1.5)
         v = CGEventSourceGetLocalEventsSuppressionInterval(src)
         self.assertEqual(v, 1.5)

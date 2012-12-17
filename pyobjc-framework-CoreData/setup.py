@@ -1,6 +1,6 @@
-''' 
-Wrappers for the "CoreData" framework on MacOSX. The Core Data framework 
-provides generalized and automated solutions to common tasks associated 
+'''
+Wrappers for the "CoreData" framework on MacOSX. The Core Data framework
+provides generalized and automated solutions to common tasks associated
 with object life-cycle and object graph management, including persistence.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -17,7 +17,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

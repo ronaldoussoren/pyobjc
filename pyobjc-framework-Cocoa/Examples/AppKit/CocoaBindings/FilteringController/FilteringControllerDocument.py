@@ -29,12 +29,12 @@ class FilteringControllerDocument (NSDocument):
 
     def dataRepresentationOfType_(self, aType):
         return NSKeyedArchiver.archivedDataWithRootObject_(self._k_people)
-        
+
     def loadDataRepresentation_ofType_(self, data, aType):
         self.setPeople_(NSKeyedUnarchiver.unarchiveObjectWithData_(data))
         return True
-        
-        
+
+
     ### indexed accessors
 
     def people(self):
@@ -46,11 +46,11 @@ class FilteringControllerDocument (NSDocument):
     @objc.accessor
     def countOfPeople(self):
         return len(self._k_people)
-        
+
     @objc.accessor
     def objectInPeopleAtIndex_(self, idx):
         return self._k_people[idx]
-        
+
     @objc.accessor
     def insertObject_inPeopleAtIndex_(self, obj, idx):
         self._k_people.insert(idx, obj)
@@ -58,7 +58,7 @@ class FilteringControllerDocument (NSDocument):
     @objc.accessor
     def removeObjectFromPeopleAtIndex_(self, idx):
         del self._k_people[idx]
-        
+
     @objc.accessor
     def replaceObjectInPeopleAtIndex_withObject_(self, idx, obj):
         self._k_people[idx] = obj

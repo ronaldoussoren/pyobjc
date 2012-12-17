@@ -1,7 +1,7 @@
 """
 Test handling of the private typecodes:  _C_CHAR_AS_BYTE
 
-This typecode doesn't actually exists in the ObjC runtime but 
+This typecode doesn't actually exists in the ObjC runtime but
 are private to PyObjC. We use these to simplify the bridge code
 while at the same time getting a higher fidelity bridge.
 
@@ -171,9 +171,9 @@ class TestTypeCode_byte (TestCase):
 
         o = OC_TestSpecialTypeCode.alloc().init()
         if sys.version_info[0] == 2:
-            a = array.array(b'b', [0] * 4) 
+            a = array.array(b'b', [0] * 4)
         else:
-            a = array.array('b', [0] * 4) 
+            a = array.array('b', [0] * 4)
         v = o.byteArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord('b'))

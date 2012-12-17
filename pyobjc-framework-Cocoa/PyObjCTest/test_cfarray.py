@@ -40,7 +40,7 @@ class TestCFArray (TestCase):
 
         self.assertArgIsFunction(CFArrayApplyFunction, 2, b'v@@', False)
         self.assertArgHasType(CFArrayApplyFunction, 3, b'@')
-        
+
         items = []
         infos = []
 

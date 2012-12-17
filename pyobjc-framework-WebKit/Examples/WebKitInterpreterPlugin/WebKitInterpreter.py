@@ -195,10 +195,10 @@ class PyInterpreter(NSObject):
         self.textView.setDelegate_(self)
         self.awakeFromNib()
         return self
-    
+
     def interpreterLocals(self):
         return self._console.locals
-    
+
     #
     #  NSApplicationDelegate methods
     #
@@ -557,15 +557,15 @@ class PyInterpreter(NSObject):
     moveUp_ = historyUp_
 
 class WebKitInterpreter(NSView):
-    
+
     arguments = objc.ivar('arguments')
     pyInterpreter = objc.ivar('pyInterpreter')
     scrollView = objc.ivar('scrollView')
     textView = objc.ivar('textView')
-    
+
     def container(self):
         return self.arguments.get(u'WebPluginContainer')
-        
+
     def pluginViewWithArguments_(cls, arguments):
         self = super(WebKitInterpreter, cls).alloc().initWithFrame_(NSZeroRect)
         NSLog('pluginViewWithArguments:')
@@ -585,7 +585,7 @@ class WebKitInterpreter(NSView):
     def doPluginStart(self):
         dct = self.arguments[u'WebPluginAttributes']
         w, h = [float(dct.get(k, 0)) for k in ('width', 'height')]
-        
+
         self.setFrame_(((0.0, 0.0), (w, h)))
         scrollView = NSScrollView.alloc().initWithFrame_(self.frame())
         scrollView.setHasVerticalScroller_(True)

@@ -41,7 +41,7 @@ class TestCoreFoundation (TestCase):
         formatter.setTimeStyle_(OC_TestCoreFoundation.shortStyle())
         formatter.setLocale_(objc.lookUpClass("NSLocale").currentLocale())
         v2 = formatter.stringForObjectValue_(obj)
-        
+
         # Arggh, I'm an idiot: the code above doesn't calculate the same
         # string as the C code in corefoundation.m.
         #print v , v2
@@ -56,7 +56,7 @@ class TestCoreFoundation (TestCase):
 
         self.assertIsInstance(formatted, unicode)
         self.assertTrue( re.match(
-            r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}', 
+            r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}',
             formatted) )
 
         self.assertRaises(objc.error, objc.lookUpClass, "CFUUIDRef")
@@ -72,14 +72,14 @@ class TestCoreFoundation (TestCase):
 
         self.assertIsInstance(formatted, unicode)
         self.assertTrue( re.match(
-            r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}', 
+            r'[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}',
             formatted) )
 
     # TODO: testcases that check that
     # 1) you cannot delete selectors
     # 2) or even add them
     # 3) but can add/update/delete new Python methods or other attributes
-    # 
+    #
 
     def testMutableTypes(self):
         cftype = objc.lookUpClass('NSCFType')
@@ -97,5 +97,3 @@ class TestCoreFoundation (TestCase):
 
 if __name__ == "__main__":
     main()
-    
-

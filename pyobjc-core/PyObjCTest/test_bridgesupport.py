@@ -9,7 +9,7 @@ import ctypes
 import objc
 import subprocess
 
-import xml.etree.ElementTree as ET 
+import xml.etree.ElementTree as ET
 
 
 try:
@@ -464,7 +464,7 @@ class TestBridgeSupportParser (TestCase):
                 self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
 
     def test_xml_structure_variants(self):
-        # Run 'verify_xml_structure' for all cpu variant 
+        # Run 'verify_xml_structure' for all cpu variant
         # (big/little endian,  32- en 64-bit)
         orig_byteorder = sys.byteorder
         orig_maxsize = sys.maxsize
@@ -486,7 +486,7 @@ class TestBridgeSupportParser (TestCase):
                     self.verify_xml_structure()
 
         finally:
-            sys.byteorder = orig_byteorder 
+            sys.byteorder = orig_byteorder
             sys.maxsize = orig_maxsize
 
             # See above
@@ -538,9 +538,9 @@ class TestBridgeSupportParser (TestCase):
             ('opaque2', b'^{opaque2=f}' if sys.maxsize < 2**32 else b'^{opaque2=d}'),
         ]
         if sys.maxsize > 2**32:
-          all_opaque.append(
-              ('opaque4', b'^{opaque4=d}'),
-          )
+            all_opaque.append(
+                ('opaque4', b'^{opaque4=d}'),
+            )
 
         all_func_aliases = [
             ('func1', 'orig_function'),
@@ -574,7 +574,7 @@ class TestBridgeSupportParser (TestCase):
             (b'MyClass2', b'method9', False): { 'retval': { 'type': b'd' } },
             (b'MyClass2', b'method10', False ): { 'retval': { 'type': b'd' } },
             (b'MyClass2', b'method11', False ): {
-                'retval': { 
+                'retval': {
                     'type': b'f' if sys.maxsize < 2**32 else b'd'
                 }
             },
@@ -589,7 +589,7 @@ class TestBridgeSupportParser (TestCase):
                 'retval': { 'null_accepted': False, 'already_retained': True,  }
             },
             (b'MyClass2', b'method16', False): {
-                'retval': { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True, 'printf_format': True,  
+                'retval': { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True, 'printf_format': True,
                             'free_result': True, 'already_cfretained': True }
             },
             (b'MyClass2', b'method17', False): {
@@ -604,7 +604,7 @@ class TestBridgeSupportParser (TestCase):
             (b'MyClass2', b'method21', False): {
                 'retval': { 'callable_retained': False, 'callable': {
                     'retval': { 'type': b'v' },
-                    'arguments': { 
+                    'arguments': {
                         0: { 'type': b'@' },
                         1: { 'type': b'd' },
                     }
@@ -613,7 +613,7 @@ class TestBridgeSupportParser (TestCase):
             (b'MyClass2', b'method22', False): {
                 'retval': { 'callable_retained': False, 'callable': {
                     'retval': { 'type': b'v' },
-                    'arguments': { 
+                    'arguments': {
                         0: { 'type': b'^v' },
                         1: { 'type': b'@' },
                         2: { 'type': b'd' },
@@ -679,13 +679,13 @@ class TestBridgeSupportParser (TestCase):
             },
             (b'MyClass3', b'method15', False): {
                 'arguments': {
-                    2+1: { 'null_accepted': False, 'already_retained': True, 
+                    2+1: { 'null_accepted': False, 'already_retained': True,
                            'c_array_length_in_result': True }
                 }
             },
             (b'MyClass3', b'method16', False): {
                 'arguments': {
-                    2+1: { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True, 
+                    2+1: { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
                            'printf_format': True, 'free_result': True, 'already_cfretained': True }
                 }
             },
@@ -750,7 +750,7 @@ class TestBridgeSupportParser (TestCase):
                     }}
                 }
             },
-        }      
+        }
 
 
 
@@ -766,9 +766,9 @@ class TestBridgeSupportParser (TestCase):
             ('function13', b'i', '', { 'retval': {'type': b'i', 'type_modifier': b'n' }}),
             ('function14', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }}),
             ('function15', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }}),
-            ('function16', b'i', '', { 'retval': {'type': b'i', 
+            ('function16', b'i', '', { 'retval': {'type': b'i',
                 'null_accepted': False, 'already_retained': True, }}),
-            ('function17', b'i', '', { 'retval': {'type': b'i', 
+            ('function17', b'i', '', { 'retval': {'type': b'i',
                 'already_cfretained': True, 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
                 'printf_format': True, 'free_result': True }}),
             ('function18', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': 1 }}),
@@ -777,14 +777,14 @@ class TestBridgeSupportParser (TestCase):
             ('function21', b'?', '', { 'retval': { 'type': b'?', }}),
             ('function22', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': False, 'callable': {
                 'retval': { 'type': b'v' },
-                'arguments': { 
+                'arguments': {
                     0: { 'type': b'@' },
                     1: { 'type': b'd' },
                 }
             }}}),
             ('function23', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': False, 'callable': {
                 'retval': { 'type': b'v' },
-                'arguments': { 
+                'arguments': {
                     0: { 'type': b'^v' },
                     1: { 'type': b'@' },
                     2: { 'type': b'd' },
@@ -792,89 +792,89 @@ class TestBridgeSupportParser (TestCase):
             }}}),
             ('function24', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': True, 'callable': {
                 'retval': { 'type': b'v' },
-                'arguments': { 
+                'arguments': {
                     0: { 'type': b'@' },
                     1: { 'type': b'd' },
                 }
             }}}),
             ('function25', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': True, 'callable': {
                 'retval': { 'type': b'v' },
-                'arguments': { 
+                'arguments': {
                     0: { 'type': b'^v' },
                     1: { 'type': b'@' },
                     2: { 'type': b'd' },
                 }
             }}}),
-            ('function26', b'qfd', '', { 
+            ('function26', b'qfd', '', {
                 'retval': { 'type': b'q' },
                 'arguments': {
                     0:  { 'type': b'f' },
                     1:  { 'type': b'd' }
                 }
             }),
-            ('function27', b'vdd', '', { 
+            ('function27', b'vdd', '', {
                 'arguments': {
                     0:  { 'type': b'd' },
                     1:  { 'type': b'd' }
                 }
             }),
-            ('function29', b'vd', '', { 
+            ('function29', b'vd', '', {
                 'arguments': {
                     0:  { 'type': b'd' },
                 }
             }),
-            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , '', { 
+            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , '', {
                 'arguments': {
                     0:  { 'type': b'f' if sys.maxsize < 2**32 else b'd'  },
                 }
             }),
-            ('function32', b'v@', '', { 
+            ('function32', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'type_modifier': b'n' }
                 }
             }),
-            ('function33', b'v:', '', { 
+            ('function33', b'v:', '', {
                 'arguments': {
                     0:  { 'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }
                 }
             }),
-            ('function34', b'v:', '', { 
+            ('function34', b'v:', '', {
                 'arguments': {
                     0:  { 'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }
                 }
             }),
-            ('function35', b'v@', '', { 
+            ('function35', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }
                 }
             }),
-            ('function36', b'v@', '', { 
+            ('function36', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'c_array_delimited_by_null': True, 'already_cfretained': True, 'c_array_of_variable_length': True,
                         'printf_format': True, 'free_result': True }
                 }
             }),
-            ('function37', b'v@', '', { 
+            ('function37', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'c_array_length_in_arg': 1 }
                 }
             }),
-            ('function38', b'v@', '', { 
+            ('function38', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'c_array_length_in_arg': (1,2) }
                 }
             }),
-            ('function39', b'v@', '', { 
+            ('function39', b'v@', '', {
                 'arguments': {
                     0:  { 'type': b'@', 'c_array_length_in_arg': (4,5) }
                 }
             }),
-            ('function40', b'v?', '', { 
+            ('function40', b'v?', '', {
                 'arguments': {
                     0:  { 'type': b'?' }
                 }
             }),
-            ('function41', b'v?', '', { 
+            ('function41', b'v?', '', {
                 'arguments': {
                     0: {
                         'type': b'?',
@@ -889,7 +889,7 @@ class TestBridgeSupportParser (TestCase):
                     }
                 }
             }),
-            ('function42', b'v@?', '', { 
+            ('function42', b'v@?', '', {
                 'arguments': {
                     0: {
                         'type': b'@?',
@@ -907,7 +907,7 @@ class TestBridgeSupportParser (TestCase):
             }),
             ('function43', b'v?', '', {
                 'arguments': {
-                    0: { 
+                    0: {
                         'type': b'?',
                         'callable_retained': True,
                         'callable': {
@@ -922,7 +922,7 @@ class TestBridgeSupportParser (TestCase):
             }),
             ('function44', b'v@?', '', {
                 'arguments': {
-                    0: { 
+                    0: {
                         'type': b'@?',
                         'callable_retained': True,
                         'callable': {
@@ -996,7 +996,7 @@ class TestBridgeSupportParser (TestCase):
                 indexes = list(sorted(meta["arguments"]))
                 self.assertEqual(indexes, list(range(len(indexes))))
 
-        valid_keys = { 
+        valid_keys = {
             "type",
             "type_modifier",
             "already_retained",
@@ -1066,60 +1066,60 @@ class TestBridgeSupportParser (TestCase):
             self.assertEqual(set(meta["retval"]) - valid_keys, set())
 
         if 'arguments' in meta:
-          for idx in meta["arguments"]:
-            self.assertIsInstance(idx, (int, long))
-            arg = meta["arguments"][idx]
+            for idx in meta["arguments"]:
+                self.assertIsInstance(idx, (int, long))
+                arg = meta["arguments"][idx]
 
-            if "type" in arg:
-                self.assertIsInstance(arg["type"], bytes)
-                self.assertEqual(len(objc.splitSignature(arg["type"])), 1)
+                if "type" in arg:
+                    self.assertIsInstance(arg["type"], bytes)
+                    self.assertEqual(len(objc.splitSignature(arg["type"])), 1)
 
-            if "type_modifier" in arg:
-                self.assertIsInstance(arg["type_modifier"], bytes)
-                self.assertIn(arg["type_modifier"], [b"o", b"n", b"N"])
+                if "type_modifier" in arg:
+                    self.assertIsInstance(arg["type_modifier"], bytes)
+                    self.assertIn(arg["type_modifier"], [b"o", b"n", b"N"])
 
-            if "callable" in arg:
-                self.assert_valid_callable(arg["callable"], True)
-                if "callable_retained" in arg:
-                    self.assertIsInstance(arg["callable_retained"], bool)
-            else:
-                self.assertNotIn("callable_retained", arg)
-
-            if "sel_of_type" in arg:
-                split = objc.splitSignature(arg["sel_of_type"])
-                self.assertEqual(split[1], objc._C_ID)
-                self.assertEqual(split[2], objc._C_SEL)
-
-            if "already_retained" in arg:
-                self.assertIsInstance(arg["already_retained"], bool)
-                self.assertNotIn("already_cfretained", arg)
-
-            if "already_cfretained" in arg:
-                self.assertIsInstance(arg["already_cfretained"], bool)
-
-            if "free_result" in arg:
-                self.assertIsInstance(arg["free_result"], bool)
-
-            if "c_array_of_fixed_length" in arg:
-                self.assertIsInstance(arg["c_array_of_fixed_length"], (int, long))
-
-            if "c_array_length_in_arg" in arg:
-                if isinstance(arg["c_array_length_in_arg"], (int, long)):
-                    pass
-
+                if "callable" in arg:
+                    self.assert_valid_callable(arg["callable"], True)
+                    if "callable_retained" in arg:
+                        self.assertIsInstance(arg["callable_retained"], bool)
                 else:
-                    self.assertIsInstance(arg["c_array_length_in_arg"], tuple)
-                    self.assertEqual(len(arg["c_array_length_in_arg"]), 2)
-                    for x in arg["c_array_length_in_arg"]:
-                        self.assertIsInstance(x, (int, long))
+                    self.assertNotIn("callable_retained", arg)
+
+                if "sel_of_type" in arg:
+                    split = objc.splitSignature(arg["sel_of_type"])
+                    self.assertEqual(split[1], objc._C_ID)
+                    self.assertEqual(split[2], objc._C_SEL)
+
+                if "already_retained" in arg:
+                    self.assertIsInstance(arg["already_retained"], bool)
+                    self.assertNotIn("already_cfretained", arg)
+
+                if "already_cfretained" in arg:
+                    self.assertIsInstance(arg["already_cfretained"], bool)
+
+                if "free_result" in arg:
+                    self.assertIsInstance(arg["free_result"], bool)
+
+                if "c_array_of_fixed_length" in arg:
+                    self.assertIsInstance(arg["c_array_of_fixed_length"], (int, long))
+
+                if "c_array_length_in_arg" in arg:
+                    if isinstance(arg["c_array_length_in_arg"], (int, long)):
+                        pass
+
+                    else:
+                        self.assertIsInstance(arg["c_array_length_in_arg"], tuple)
+                        self.assertEqual(len(arg["c_array_length_in_arg"]), 2)
+                        for x in arg["c_array_length_in_arg"]:
+                            self.assertIsInstance(x, (int, long))
 
 
-            for key in ("c_array_delimited_by_null", "printf_format", "c_array_of_variable_length", 
-                        "null_accepted", "c_array_length_in_result"):
-                if key in arg:
-                    self.assertIsInstance(arg[key], bool)
+                for key in ("c_array_delimited_by_null", "printf_format", "c_array_of_variable_length",
+                            "null_accepted", "c_array_length_in_result"):
+                    if key in arg:
+                        self.assertIsInstance(arg[key], bool)
 
-            self.assertEqual(set(arg) - valid_keys, set())
+                self.assertEqual(set(arg) - valid_keys, set())
 
         if "suggestion" in meta:
             self.assertIsInstance(meta["suggestion"], basestring)
@@ -1295,7 +1295,7 @@ class TestParseBridgeSupport (TestCase):
             self.assertIsInstance(typeId, (int, long, type(None)));
             if tollfreeName is not SENTINEL:
                 self.assertIsInstance(tollfreeName, str)
-            
+
             if typeId is None:
                 if tollfreeName is SENTINEL:
                     raise ValueError("Must specify a typeid when not toll-free")
@@ -1560,7 +1560,7 @@ class TestParseBridgeSupport (TestCase):
             self.assertEqual(len(orig_libraries)+1, len(bridgesupport._libraries))
             self.assertIsInstance(bridgesupport._libraries[-1], ctypes.CDLL)
             self.assertEqual(bridgesupport._libraries[-1]._name, '/usr/lib/libxml2.dylib')
-            
+
 
 
 class TestInitFrameworkWrapper (TestCase):
@@ -1795,7 +1795,7 @@ class TestInitFrameworkWrapper (TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=InlineTab(), scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1818,7 +1818,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1841,12 +1841,12 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 
+                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]),
                     'Test', g, SENTINEL, 'com.apple.Test', False)
             ])
             self.assertEqual(parse_calls, [
@@ -1866,7 +1866,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1877,7 +1877,7 @@ class TestInitFrameworkWrapper (TestCase):
                 (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', None, None),
                 (b"<signatures><constant name='test override' type='@' /></signatures>", g, 'Test', None, inlineTab),
             ])
-            
+
             resources = {
                     ('Test', 'PyObjCOverrides.bridgesupport'): b"<signatures><constant name='test override' type='@' /></signatures>",
             }
@@ -1891,7 +1891,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1912,7 +1912,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1931,7 +1931,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1953,7 +1953,7 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -1974,7 +1974,7 @@ class TestInitFrameworkWrapper (TestCase):
                 raise ImportError(name)
 
             self.assertRaises(ImportError, objc.initFrameworkWrapper,
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
             self.assertEquals(load_calls, [])
@@ -1995,7 +1995,7 @@ class TestInitFrameworkWrapper (TestCase):
                     raise ImportError(name)
 
             objc.initFrameworkWrapper(
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
             self.assertEquals(load_calls, [
@@ -2012,7 +2012,7 @@ class TestInitFrameworkWrapper (TestCase):
                     raise ImportError(name)
 
             objc.initFrameworkWrapper(
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g, 
+                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab)
 
             self.assertEquals(load_calls, [

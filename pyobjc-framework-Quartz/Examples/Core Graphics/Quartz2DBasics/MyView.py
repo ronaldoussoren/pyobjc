@@ -22,8 +22,8 @@ class MyView (NibClassBuilder.AutoBaseClass):
             self.setNeedsDisplay_(True)
 
             self.currentMenuItem.setState_(NSOffState)
-	    self.currentMenuItem = sender;
-	    self.currentMenuItem.setState_(NSOnState)
+            self.currentMenuItem = sender;
+            self.currentMenuItem.setState_(NSOnState)
 
     def currentPrintableCommand(self):
         # The best representation for printing or exporting
@@ -31,7 +31,7 @@ class MyView (NibClassBuilder.AutoBaseClass):
         # or a layer is to not do any caching.
         if _drawingCommand == kCommandDoCGLayer:
             return kCommandDoUncachedDrawing
-    
+
         return _drawingCommand
 
     def print_(self, sender):
@@ -57,4 +57,4 @@ class MyView (NibClassBuilder.AutoBaseClass):
         else:
             menuItem.setState_(False)
 
-	return True
+        return True

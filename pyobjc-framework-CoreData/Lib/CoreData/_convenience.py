@@ -27,7 +27,7 @@ def NSMOgetValueForKey_(self, name):
             return super(self.__class__, self).valueForKey_(name)
         else:
             return self.valueForKey_(name)
-        
+
     except KeyError as msg:
         raise AttributeError(name)
 

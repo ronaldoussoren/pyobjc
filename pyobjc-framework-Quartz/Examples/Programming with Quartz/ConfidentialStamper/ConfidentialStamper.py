@@ -18,8 +18,8 @@ class MyPDFData (object):
 # a path to a file. The path can be relative to the
 # current directory or an absolute path.
 def createURL(path):
-    return CFURLCreateFromFileSystemRepresentation(None, path, 
-			    len(path), False)
+    return CFURLCreateFromFileSystemRepresentation(None, path,
+                            len(path), False)
 
 # For the supplied URL and media box, create a PDF context
 # that creates a PDF file at that URL and uses supplied rect
@@ -33,7 +33,7 @@ def myCreatePDFContext(url, mediaBox):
 
 # For a URL corresponding to an existing PDF document on disk,
 # create a CGPDFDocumentRef and obtain the media box of the first
-# page. 
+# page.
 def myCreatePDFSourceDocument(url):
     myPDFData = MyPDFData()
     myPDFData.pdfDoc = CGPDFDocumentCreateWithURL(url)
@@ -43,20 +43,20 @@ def myCreatePDFSourceDocument(url):
         page = CGPDFDocumentGetPage(myPDFData.pdfDoc, 1)
         myPDFData.mediaRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox)
 
-        # Make the media rect origin at 0,0. 
+        # Make the media rect origin at 0,0.
         myPDFData.mediaRect.origin.x = myPDFData.mediaRect.origin.y = 0.0
-    
+
     return myPDFData
 
 # Draw the source PDF document into the context and then draw the stamp PDF document
 # on top of it. When drawing the stamp on top, place it along the diagonal from the lower
 # left corner to the upper right corner and center its media rect to the center of that
-# diagonal. 
-def StampWithPDFDocument(context, 
-			sourcePDFDoc, 
+# diagonal.
+def StampWithPDFDocument(context,
+                        sourcePDFDoc,
                         stampFileDoc, stampMediaRect):
     numPages = CGPDFDocumentGetNumberOfPages(sourcePDFDoc)
-    
+
     # Loop over document pages and stamp each one appropriately.
     for i in range(1, numPages+1):
         # Use the page rectangle of each page from the source to compute
@@ -74,9 +74,9 @@ def StampWithPDFDocument(context,
         CGContextClipToRect(context, pageRect)
         # First draw the content of the source document.
         CGContextDrawPDFDocument(context, pageRect, sourcePDFDoc, i)
-        # Translate to center of destination rect, that is the center of 
+        # Translate to center of destination rect, that is the center of
         # the media box of content to draw on top of.
-        CGContextTranslateCTM(context, 
+        CGContextTranslateCTM(context,
             pageRect.size.width/2, pageRect.size.height/2)
         # Compute angle of the diagonal across the destination page.
         angle = math.atan(pageRect.size.height/pageRect.size.width)
@@ -85,11 +85,11 @@ def StampWithPDFDocument(context,
         CGContextRotateCTM(context, angle)
         # Move the origin so that the media box of the PDF to stamp
         # is centered around center point of destination.
-        CGContextTranslateCTM(context, 
-            -stampMediaRect.size.width/2, 
+        CGContextTranslateCTM(context,
+            -stampMediaRect.size.width/2,
             -stampMediaRect.size.height/2)
         # Now draw the document to stamp with on top of original content.
-        CGContextDrawPDFDocument(context, stampMediaRect, 
+        CGContextDrawPDFDocument(context, stampMediaRect,
             stampFileDoc, 1)
         CGContextRestoreGState(context)
         CGContextEndPage(context)
@@ -97,7 +97,7 @@ def StampWithPDFDocument(context,
 # From an input PDF document and a PDF document whose contents you
 # want to draw on top of the other, create a new PDF document
 # containing all the pages of the input document with the first page
-# of the "stamping" overlayed. 
+# of the "stamping" overlayed.
 def createStampedFileWithFile(inURL, stampURL, outURL):
     sourceFileData = myCreatePDFSourceDocument(inURL)
     if sourceFileData.pdfDoc is None:
@@ -109,14 +109,14 @@ def createStampedFileWithFile(inURL, stampURL, outURL):
         CGPDFDocumentRelease(sourceFileData.pdfDoc);
         print >>sys.stderr, "Can't create PDFDocumentRef for file to stamp with!"
         return
-    
+
     pdfContext = myCreatePDFContext(outURL, sourceFileData.mediaRect)
     if pdfContext is None:
         print >>sys.stderr, "Can't create PDFContext for output file!"
         return
-    
-    StampWithPDFDocument(pdfContext, sourceFileData.pdfDoc, 
-	    stampFileData.pdfDoc, stampFileData.mediaRect)
+
+    StampWithPDFDocument(pdfContext, sourceFileData.pdfDoc,
+            stampFileData.pdfDoc, stampFileData.mediaRect)
 
 def main(args = None):
     if args is None:
@@ -132,12 +132,12 @@ def main(args = None):
 
     inputFileName = args[1];
     outputFileName = os.path.splitext(inputFileName)[0] + suffix
-    
+
     inURL = createURL(inputFileName);
     if inURL is None:
         print >>sys.stderr, "Couldn't create URL for input file!"
         return 1
-    
+
     outURL = createURL(outputFileName)
     if outURL is None:
         print >>sys.stderr, "Couldn't create URL for output file!"

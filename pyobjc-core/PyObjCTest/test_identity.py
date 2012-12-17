@@ -1,8 +1,8 @@
-# Some tests that verify that object identity is correctly retained 
+# Some tests that verify that object identity is correctly retained
 # accross the bridge
-# 
+#
 # TODO:
-# - Add unittests here for every class that is treated specially by 
+# - Add unittests here for every class that is treated specially by
 #   the bridge.
 # - Add unittests that test for "real-world" scenarios (writing stuff
 #   to plists, ...)
@@ -157,10 +157,10 @@ class ObjCtoPython (TestCase):
     # TODO: NSProxy
 
     def assertFetchingTwice(self, container, message = None):
-            v1 = container.storedObject()
-            v2 = container.storedObject()
+        v1 = container.storedObject()
+        v2 = container.storedObject()
 
-            self.assertTrue(v1 is v2, message)
+        self.assertTrue(v1 is v2, message)
 
     def testNSObject(self):
         container = OC_TestIdentity.alloc().init()
@@ -285,7 +285,7 @@ class PythonToObjC (TestCase):
             self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
 
 class TestSerializingDataStructures (TestCase):
-    # OC_Python{Array,Dictionary} used to contain specialized 
+    # OC_Python{Array,Dictionary} used to contain specialized
     # identity-preservation code. It is unclear why this was added, it might
     # have to do with writing data to plist files.
     # This TestCase tries to trigger the problem that caused the addition of
@@ -314,7 +314,7 @@ class TestSerializingDataStructures (TestCase):
         container.setStoredObject_(value)
         container.writeStoredObjectToFile_("/tmp/pyPyObjCTest.identity")
 
-        
+
 
 if __name__ == "__main__":
     main()

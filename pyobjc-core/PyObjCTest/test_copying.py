@@ -33,8 +33,8 @@ class OC_TestCopy1 (NSObject):
         return other
     # Argh, copyWithZone_ is a classmethod by default unless the
     # superclass implements  -copyWithZone:
-    copyWithZone_ = objc.selector(copyWithZone_, 
-            signature=NSObject.copyWithZone_.signature, 
+    copyWithZone_ = objc.selector(copyWithZone_,
+            signature=NSObject.copyWithZone_.signature,
             isClassMethod=False)
 
 class OC_TestCopy2 (OC_CopyBase):

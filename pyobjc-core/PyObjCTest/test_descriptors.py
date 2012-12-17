@@ -22,7 +22,7 @@ class TestBasicDescriptors (TestCase):
     # IBOutlet is tested in test_ivar
 
     def test_ibaction(self):
-        
+
         @objc.IBAction
         def myAction_(self, sender):
             return 1
@@ -57,7 +57,7 @@ class TestBasicDescriptors (TestCase):
         self.assertRaises(TypeError, objc.instancemethod, 42)
 
     def test_typedSelector(self):
-        
+
         @objc.typedSelector(b"I@:qq")
         def mySelector_arg_(self, a, b):
             return 4
@@ -122,7 +122,7 @@ class TestBasicDescriptors (TestCase):
         # NOTE: the optional type argument is tested through the typedAccessor function
 
         # Basic properties:
-        
+
         @objc.accessor
         def color(self):
             return 42
@@ -239,7 +239,7 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(memberOfLanguages_.signature, objc._C_NSBOOL + b"@:@")
 
         # Mutable Unordered Accessors
-        
+
         @objc.accessor
         def addLanguagesObject_(self, value):
             pass
@@ -312,7 +312,7 @@ class TestBasicDescriptors (TestCase):
         # Basic properties:
 
         mytype = b"{Struct=qq}"
-        
+
         @objc.typedAccessor(mytype)
         def color(self):
             return 42
@@ -429,7 +429,7 @@ class TestBasicDescriptors (TestCase):
         self.assertEqual(memberOfLanguages_.signature, objc._C_NSBOOL + b"@:" + mytype)
 
         # Mutable Unordered Accessors
-        
+
         @objc.typedAccessor(mytype)
         def addLanguagesObject_(self, value):
             pass
@@ -463,7 +463,7 @@ class TestBasicDescriptors (TestCase):
             # NOTE: the optional type argument is tested through the typedAccessor function
 
             # Basic properties:
-            
+
             @objc.Accessor
             def color(self):
                 return 42
@@ -580,7 +580,7 @@ class TestBasicDescriptors (TestCase):
             self.assertEqual(memberOfLanguages_.signature, objc._C_NSBOOL + b"@:@")
 
             # Mutable Unordered Accessors
-            
+
             @objc.Accessor
             def addLanguagesObject_(self, value):
                 pass
@@ -666,7 +666,7 @@ class TestBasicDescriptors (TestCase):
 
 
 
-        
+
 
 if __name__ == "__main__":
     main()

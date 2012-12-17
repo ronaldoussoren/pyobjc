@@ -1,10 +1,10 @@
-''' 
-Wrappers for the "SyncServices" framework on MacOSX. 
+'''
+Wrappers for the "SyncServices" framework on MacOSX.
 
-Sync Services is a framework containing all the components you need 
-to sync your applications and devices. If your application uses 
-Sync Services, user data can be synced with other applications and 
-devices on the same computer, or other computers over the network via 
+Sync Services is a framework containing all the components you need
+to sync your applications and devices. If your application uses
+Sync Services, user data can be synced with other applications and
+devices on the same computer, or other computers over the network via
 MobileMe.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -22,7 +22,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
         'pyobjc-framework-CoreData>=2.5.0b1',

@@ -27,12 +27,12 @@ class DNDArrayController (NSArrayController):
         self.tableView.registerForDraggedTypes_(
             [CopiedRowsType, MovedRowsType, NSURLPboardType])
         self.tableView.setAllowsMultipleSelection_(True)
-        
-        
+
+
     def tableView_writeRows_toPasteboard_(self, tv, rows, pboard):
         # declare our own pasteboard types
         typesArray = [CopiedRowsType, MovedRowsType]
-        
+
         # If the number of rows is not 1, then we only support our own types.
         # If there is just one row, then try to create an NSURL from the url
         # value in that row.  If that's possible, add NSURLPboardType to the
@@ -57,26 +57,26 @@ class DNDArrayController (NSArrayController):
 
         # add rows array for local move
         pboard.setPropertyList_forType_(rows, MovedRowsType)
-        
+
         # create new array of selected rows for remote drop
         # could do deferred provision, but keep it direct for clarity
         rowCopies = self.arrangedObjects()[:]
-        
+
         # setPropertyList works here because we're using dictionaries, strings,
         # and dates; otherwise, archive collection to NSData...
         pboard.setPropertyList_forType_(rowCopies, CopiedRowsType)
         return True
-        
+
     def tableView_validateDrop_proposedRow_proposedDropOperation_(self, tv, info, row, op):
         dragOp = NSDragOperationCopy
         # if drag source is self, it's a move
         if info.draggingSource() == self.tableView:
             dragOp =  NSDragOperationMove
         # we want to put the object at, not over,
-        # the current row (contrast NSTableViewDropOn) 
+        # the current row (contrast NSTableViewDropOn)
         tv.setDropRow_dropOperation_(row, NSTableViewDropAbove)
         return dragOp
-            
+
     def tableView_acceptDrop_row_dropOperation_(self, tv, info, row, op):
         if row < 0:
             row = 0
@@ -92,7 +92,7 @@ class DNDArrayController (NSArrayController):
             # set selected rows to those that were just copied
             self.setSelectionIndexes_(indexSet)
             return True
-            
+
         # Can we get rows from another document?  If so, add them, then return.
         newRows = info.draggingPasteboard().propertyListForType_(CopiedRowsType)
         if newRows:
@@ -101,7 +101,7 @@ class DNDArrayController (NSArrayController):
             self.insertObjects_atArrangedObjectIndexes_(newRows, indexSet)
             self.setSelectionIndexes_(indexSet)
             return True
-            
+
         # Can we get an URL?  If so, add a new row, configure it, then return.
         url = NSURL.URLFromPasteboard_(info.draggingPasteboard())
         if url:
@@ -113,13 +113,13 @@ class DNDArrayController (NSArrayController):
             self.setSelectionIndex_(row)
             return True
         return False
-            
+
     def moveObjectsInArrangedObjectsFromIndexes_toIndex_(self, indexSet, insertIndex):
         objects = self.arrangedObjects()
         index = indexSet.lastIndex()
         aboveInsertIndexCount = 0
         removeIndex = 0
-        
+
         while index != NSNotFound:
             if index >= insertIndex:
                 removeIndex = index + aboveInsertIndexCount
@@ -131,13 +131,13 @@ class DNDArrayController (NSArrayController):
             self.removeObjectAtArrangedObjectIndex_(removeIndex)
             self.insertObject_atArrangedObjectIndex_(obj, insertIndex)
             index = indexSet.indexLessThanIndex_(index)
-            
+
     def indexSetFromRows_(self, rows):
         indexSet = NSMutableIndexSet.indexSet()
         for row in rows:
             indexSet.addIndex_(row)
         return indexSet
-        
+
     def rowsAboveRow_inIndexSet_(self, row, indexSet):
         currentIndex = indexSet.firstIndex()
         i = 0

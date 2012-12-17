@@ -76,7 +76,7 @@ def add_convenience_methods(super_class, name, type_dict):
         if not isinstance(sel, selector):
             continue
 
-        # 
+        #
         # Handle some common exceptions to the usual rules:
         #
 
@@ -110,9 +110,9 @@ def add_convenience_methods(super_class, name, type_dict):
     if name == 'NSObject':
         class kvc (object):
             """
-            Key-Value-Coding accessor for Cocoa objects. 
-            
-            Both attribute access and dict-like indexing will attempt to 
+            Key-Value-Coding accessor for Cocoa objects.
+
+            Both attribute access and dict-like indexing will attempt to
             access the requested item through Key-Value-Coding.
             """
             __slots__ = ('__object',)
@@ -152,7 +152,7 @@ _setClassExtender(add_convenience_methods)
 
 
 #
-# The following conveniences should strictly speaking be in 
+# The following conveniences should strictly speaking be in
 # in pyobjc-framework-Foundation, but as they are very fundamental
 # we're keeping them here.
 #
@@ -224,7 +224,7 @@ def setdefault_setObject_forKey_(self, key, dflt=None):
 
 def __setitem__setObject_forKey_(self, key, value):
     self.setObject_forKey_(container_wrap(value), container_wrap(key))
-   
+
 pop_setObject_dflt=object()
 def pop_setObject_forKey_(self, key, dflt=pop_setObject_dflt):
     try:
@@ -359,7 +359,7 @@ def ensureArray(anArray):
     if not isinstance(anArray, (NSArray, list, tuple)):
         anArray = list(anArray)
     return anArray
-    
+
 
 def extend_addObjectsFromArray_(self, anArray):
     self.addObjectsFromArray_(ensureArray(anArray))
@@ -395,7 +395,7 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
 
         if itemcount == 0:
             raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
-           
+
         else:
             if start >= itemcount:
                 start = itemcount - 1
@@ -403,7 +403,7 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
                 stop = itemcount - 1
 
             if stop <= start:
-                ln = 0 
+                ln = 0
             else:
 
                 ln = stop - start
@@ -411,7 +411,7 @@ def index_indexOfObject_inRange_(self, item, start=0, stop=_index_sentinel):
 
             if ln == 0:
                 raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
-            
+
             if ln > sys.maxsize:
                 ln = sys.maxsize
 
@@ -425,7 +425,7 @@ _CONVENIENCE_METHODS[b'indexOfObject:inRange:'] = (
 )
 
 def insert_insertObject_atIndex_(self, idx, item):
-    if idx < 0: 
+    if idx < 0:
         idx += len(self)
         if idx < 0:
             raise IndexError("list index out of range")
@@ -449,10 +449,10 @@ def __getitem__objectAtIndex_(self, idx):
         #    if m is not None:
         #        return m((start, stop - start))
         return [self[i] for i in range(start, stop, step)]
-    
+
     elif not isinstance(idx, INT_TYPES):
         raise TypeError("index must be a number")
-    
+
     if idx < 0:
         idx += len(self)
         if idx < 0:
@@ -487,12 +487,12 @@ def __delitem__removeObjectAtIndex_(self, idx):
         idx += len(self)
         if idx < 0:
             raise IndexError("list index out of range")
-        
+
     self.removeObjectAtIndex_(idx)
 
 def __delslice__removeObjectAtIndex_(self, i, j):
     __delitem__removeObjectAtIndex_(self, slice(i, j))
-    
+
 def pop_removeObjectAtIndex_(self, idx=-1):
     length = len(self)
     if length <= 0:
@@ -547,7 +547,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
                 toAssign = list(anObject)
             else:
                 toAssign = anObject
-            for inIdx, outIdx in enumerate(range(start, stop, step)): 
+            for inIdx, outIdx in enumerate(range(start, stop, step)):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
         elif step == 0:
@@ -558,7 +558,7 @@ def __setitem__replaceObjectAtIndex_withObject_(self, idx, anObject):
                 toAssign = list(anObject)
             else:
                 toAssign = anObject
-            for inIdx, outIdx in enumerate(range(start, stop, step)): 
+            for inIdx, outIdx in enumerate(range(start, stop, step)):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
 
@@ -705,7 +705,7 @@ def sort(self, key=None, reverse=False, cmpfunc=cmp):
 registerMetaDataForSelector(b"NSObject", b"sortUsingFunction:context:",
         dict(
             arguments={
-                2:  { 
+                2:  {
                         'callable': {
                             'reval': 'i',
                             'arguments': {
@@ -826,7 +826,7 @@ CLASS_METHODS['NSData'] = (
 def NSMutableData__setslice__(self, i, j, sequence):
     # XXX - could use replaceBytes:inRange:, etc.
     self.mutableBytes()[i:j] = sequence
-    
+
 def NSMutableData__setitem__(self, item, value):
     self.mutableBytes()[item] = value
 
@@ -865,7 +865,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
             if len(self) == len(other):
                 return all_contained_in(self, other)
-        
+
             else:
                 return False
 
@@ -875,7 +875,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
             if len(self) == len(other):
                 return not all_contained_in(self, other)
-        
+
             else:
                 return True
 
@@ -953,7 +953,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             result = set(self)
             result.symmetric_difference_update(other)
             return result
-    
+
     #collections.Set.register(nsdict_view)
 
     class nsdict_keys(nsdict_view):
@@ -966,7 +966,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             #keys.sort()
 
             return "<nsdict_keys({0})>".format(keys)
-            
+
 
         def __len__(self):
             return len(self.__value)
@@ -1100,7 +1100,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
     def nsdict__richcmp__(self, other):
         return NotImplemented
-        
+
 
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
@@ -1110,15 +1110,15 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('items', lambda self: nsdict_items(self)),
 
             # Explicitly add these methods, instead of relying
-            # on the selector based selection. 
+            # on the selector based selection.
             #
             # Primary reason: turns out at least the chosen
             # implementation for __contains__ depends on dict
-            # iteration order, and one of the implementation doesn't 
+            # iteration order, and one of the implementation doesn't
             # work for NSDictionary.
             #
-            # In the slightly longer run all python API 
-            # implementations will be added explictly to 
+            # In the slightly longer run all python API
+            # implementations will be added explictly to
             # classes because of this, and because this allows
             # for a faster implementation of method dispatch.
             ('__getitem__', __getitem__objectForKey_),
@@ -1304,7 +1304,7 @@ def nsset_symmetric_difference(self, other):
         if item not in self:
             result.add(item)
     return result
-    
+
 
 def nsset__contains__(self, value):
     hash(value) # Force error for non-hashable values
@@ -1539,7 +1539,7 @@ if sys.version_info[0] == 2:
     )
 
 CLASS_METHODS['NSMutableSet'] = (
-    ('add',  nsset_add), 
+    ('add',  nsset_add),
     ('remove',  nsset_remove),
     ('discard',  nsset_discard),
     ('update', nsset_update),

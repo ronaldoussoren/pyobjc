@@ -52,7 +52,7 @@ class TestCFHost (TestCase):
         self.assertResultIsCFRetained(CFHostCreateCopy)
         w = CFHostCreateCopy(None, v)
         self.assertIsInstance(w, (type(None), CFHostRef))
-        
+
 
         self.assertArgHasType(CFHostGetReachability, 1, b'o^' + objc._C_NSBOOL)
         lst, ok = CFHostGetReachability(v, None)
@@ -72,7 +72,7 @@ class TestCFHost (TestCase):
         self.assertIsInstance(lst, CFArrayRef)
         self.assertIsInstance(ok, bool)
 
-        
+
     def testCallbacks(self):
         lst = []
         ctx = object()

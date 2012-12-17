@@ -1,6 +1,6 @@
-''' 
-Wrappers for the "XgridFoundation" framework on MacOSX. This framework 
-supports the development of applications that monitor or control jobs 
+'''
+Wrappers for the "XgridFoundation" framework on MacOSX. This framework
+supports the development of applications that monitor or control jobs
 processed by Xgrid clusters.
 
 These wrappers don't include documentation, please check Apple's documention
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

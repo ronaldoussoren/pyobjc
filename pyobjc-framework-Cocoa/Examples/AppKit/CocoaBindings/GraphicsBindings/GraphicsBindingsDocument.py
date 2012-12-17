@@ -12,7 +12,7 @@ import objc
 from PyObjCTools import AppHelper
 
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
-from Cocoa import * 
+from Cocoa import *
 
 class GraphicsBindingsDocument (NSDocument):
     graphicsView = objc.IBOutlet()
@@ -37,7 +37,7 @@ class GraphicsBindingsDocument (NSDocument):
 
     def windowControllerDidLoadNib_(self, controller):
         super(GraphicsBindingsDocument, self).windowControllerDidLoadNib_(controller)
-        
+
         # we can't do these in IB at the moment, as
         # we don't have palette items for them
 
@@ -59,16 +59,16 @@ class GraphicsBindingsDocument (NSDocument):
 
         # "fake" what should be set in IB if we had a palette...
         self.shadowInspector.maxOffset = 15
-        
+
     def close(self):
         while self.bindings:
             obj, binding = self.bindings.pop()
             obj.unbind_(binding)
         super(GraphicsBindingsDocument, self).close()
-            
+
     def dataRepresentationOfType_(self, aType):
         return NSKeyedArchiver.archivedDataWithRootObject_(self.graphics)
-        
+
     def loadDataRepresentation_ofType_(self, data, aType):
         self.graphics = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
         return True

@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "AddressBook" framework on MacOS X. The Address Book is
 a centralized database for contact and other information for people. Appliations
 that make use of the AddressBook framework all use the same database.
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

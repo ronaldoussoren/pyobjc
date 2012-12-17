@@ -36,7 +36,7 @@ class TestKVOProp (TestCase):
         self.assertEqual(o.helper, 42)
         self.assertEqual(len(o.accessing), 2)
         self.assertEqual(o.accessing[-1], ('get_helper',))
-        
+
         o.accessing[:] = []
 
         self.assertEqual(len(o.accessing), 0)

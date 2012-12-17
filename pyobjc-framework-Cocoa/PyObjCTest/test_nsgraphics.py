@@ -167,7 +167,7 @@ class TestNSGraphics (TestCase):
 
             #self.assertArgIsBOOL(NSDrawBitmap, 7)
             #self.assertArgIsBOOL(NSDrawBitmap, 8)
-            #NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True, 
+            #NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True,
             #        NSDeviceRGBColorSpace, [' '*4*10*20, '', '', '', ''])
 
             self.assertArgSizeInArg(NSWindowList, 1, 0)

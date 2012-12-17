@@ -95,7 +95,7 @@ class TestCVDisplayLink (TestCase):
         v = CVDisplayLinkRetain(link)
         self.assertTrue(v is link)
         CVDisplayLinkRelease(v)
-        
+
 
 if __name__ == "__main__":
     main()

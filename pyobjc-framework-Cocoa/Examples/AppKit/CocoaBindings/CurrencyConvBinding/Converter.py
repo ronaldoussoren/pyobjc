@@ -9,7 +9,7 @@ class Converter (NSObject):
         self.exchangeRate = 3
         self.dollarsToConvert = 4
         return self
-		
+
     def amountInOtherCurrency(self):
         return self.dollarsToConvert * self.exchangeRate
 
@@ -17,4 +17,3 @@ Converter.setKeys_triggerChangeNotificationsForDependentKey_(
     [u"dollarsToConvert", u"exchangeRate"],
     u"amountInOtherCurrency"
 )
-

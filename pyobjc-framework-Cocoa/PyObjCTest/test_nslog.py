@@ -17,7 +17,7 @@ class TestNSLog (TestCase):
         fp.close()
         os.unlink('pyobjc-test-nslog.txt')
         return data
-    
+
     def testBasic(self):
         self._redirect()
         try:

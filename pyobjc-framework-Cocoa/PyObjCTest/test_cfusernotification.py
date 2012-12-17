@@ -67,7 +67,7 @@ class TestUserNotification (TestCase):
         self.assertEqual(error , 0)
         error = CFUserNotificationCancel(ref)
         self.assertEqual(error, 0)
-        
+
         v = CFUserNotificationGetResponseValue(ref, kCFUserNotificationTextFieldValuesKey, 0)
         if v is not None:
             self.assertIsInstance(v, unicode)

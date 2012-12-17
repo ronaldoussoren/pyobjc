@@ -123,7 +123,7 @@ class TestCFCalendarVariadic (TestCase):
         else:
             if m.year % 4 == 0:
                 # Yes this is wrong, but the next time this fails in
-                # in 2100. 
+                # in 2100.
                 monthLength = 29
             else:
                 monthLength = 28

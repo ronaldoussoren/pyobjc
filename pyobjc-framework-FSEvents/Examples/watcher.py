@@ -194,10 +194,10 @@ def main(argv=None):
         argv = sys.argv
 
     settings.parse_argv(argv)
-   
+
     if settings.verbose or settings.print_settings:
         settings.dump()
-   
+
     if settings.print_settings:
         return 0
 
@@ -226,8 +226,8 @@ def main(argv=None):
         settings.debug("CFAbsoluteTimeGetCurrent() => %.3f", CFAbsoluteTimeGetCurrent())
 
         timer = CFRunLoopTimerCreate(
-                FSEventStreamGetSinceWhen(streamRef), 
-                CFAbsoluteTimeGetCurrent() + settings.flush_seconds, 
+                FSEventStreamGetSinceWhen(streamRef),
+                CFAbsoluteTimeGetCurrent() + settings.flush_seconds,
                 settings.flush_seconds,
                 0, 0, timer_callback, streamRef)
         CFRunLoopAddTimer(CFRunLoopGetCurrent(), timer, kCFRunLoopDefaultMode)
@@ -245,7 +245,7 @@ def main(argv=None):
 
 #
 #--------------------------------------------------------------------------------
-# Routines to keep track of the size of the directory hierarchy 
+# Routines to keep track of the size of the directory hierarchy
 # we are watching.
 #
 # This code is not exemplary in any way.  It should definitely
@@ -268,17 +268,17 @@ def iterate_subdirs(dirname, recursive):
     except os.error, msg:
         print msg.errno, errno.EPERM
         if msg.errno in (errno.ENOENT, errno.EPERM, errno.EACCES):
-            del dir_items[dirname] 
+            del dir_items[dirname]
             return 0
 
         raise
-    
+
     size = 0
     for nm in names:
         full_path = os.path.join(dirname, nm)
         st = os.lstat(full_path)
         size += st.st_size
-        
+
         if stat.S_ISDIR(st.st_mode) and (recursive or (full_path not in dir_items)):
             result = get_directory_size(full_path, 1)
 

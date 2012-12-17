@@ -13,14 +13,14 @@ if sys.version_info[0] != 2:
 
 class TestCGDataProvider (TestCase):
     def testTypes(self):
-        self.assertIsCFType(CGDataProviderRef) 
+        self.assertIsCFType(CGDataProviderRef)
 
     def testFunctions(self):
         provider = CGDataProviderCreateWithCFData(buffer("data"))
         self.assertIsInstance(provider, CGDataProviderRef)
 
         url = CFURLCreateWithFileSystemPath(None,
-                "/Library/Documentation/Acknowledgements.rtf", 
+                "/Library/Documentation/Acknowledgements.rtf",
                 kCFURLPOSIXPathStyle, False)
 
         provider = CGDataProviderCreateWithURL(url)

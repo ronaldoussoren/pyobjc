@@ -30,12 +30,12 @@ if sys.version_info[0] == 2:
         return array.array(fmt.encode('ascii'), *args)
 
 def setupMetaData():
-    # Note to self: what we think of as the first argument of a method is 
+    # Note to self: what we think of as the first argument of a method is
     # actually the third one, the objc runtime implicitly passed 'self' and
     # the selector as well. Therefore we need to start counting at 2 instead
     # of 0.
     #
-    # Note2: the code below would normally be done using a metadata file 
+    # Note2: the code below would normally be done using a metadata file
     # instead of hardcoding.
     objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"boolClassMethod",
             dict(
@@ -312,16 +312,16 @@ def setupMetaData():
         )
 
 
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_IN, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:",
             dict(arguments={
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
@@ -391,7 +391,7 @@ class TestArraysOut (TestCase):
         self.assertRaises(ValueError, o.fill4Tuple_, a)
         a = make_array('i', [0]* 3)
         self.assertRaises(ValueError, o.fill4Tuple_, a)
-        
+
     def testNullTerminated(self):
         o = OC_MetaDataTest.new()
 
@@ -557,7 +557,7 @@ class TestArraysInOut (TestCase):
         self.assertEqual(c, 5)
         self.assertEqual(len(v), 5)
         self.assertEqual(list(v),  [9, 8, 7, 6, 5])
-        
+
         c, v = o.maybeReverseArray_([1,2,3,4])
         self.assertEqual(c, 2)
         self.assertEqual(len(v), 2)
@@ -620,7 +620,7 @@ class TestArraysIn (TestCase):
         v = o.makeIntArray_count_((1,2,3,4), 3)
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), [1,2,3])
-        
+
         # XXX: This one would be nice to have, but not entirely trivial
         #v = o.makeIntArray_count_((1,2,3,4), None)
         #self.assertEqual(len(v), 3)
@@ -694,13 +694,13 @@ class TestArrayReturns (TestCase):
         self.assertEqual(v, objc.NULL)
 
 class TestByReference (TestCase):
-    # Pass by reference arguments. 
+    # Pass by reference arguments.
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
 
     def testInput(self):
         o = OC_MetaDataTest.new()
-        
+
         r = o.sumX_andY_(1, 2)
         self.assertEqual(r, 1+2)
 
@@ -822,8 +822,8 @@ class TestPrintfFormat (TestCase):
             ( b'% #x', (99,)),
             ]:
 
-                v = o.makeArrayWithCFormat_(fmt, *args)
-                self.assertEqual(list(map(unicode, list(v))), [fmt.decode('latin'), (fmt.decode('latin')%args)[1:]] )
+            v = o.makeArrayWithCFormat_(fmt, *args)
+            self.assertEqual(list(map(unicode, list(v))), [fmt.decode('latin'), (fmt.decode('latin')%args)[1:]] )
 
         # Insert thousands seperator, the one in the C locale is ''
         v = o.makeArrayWithCFormat_(b"%'d", 20000)
@@ -941,7 +941,7 @@ class TestMetaDataAccess (TestCase):
         self.assertIn('suggestion', meta)
         self.assertEqual(meta['suggestion'], "please ignore me")
 
-    def testPrintfFormat(self): 
+    def testPrintfFormat(self):
         meta = OC_MetaDataTest.makeArrayWithFormat_.__metadata__()
         self.assertEqual(meta['variadic'], True)
         self.assertNotIn('printf_format', meta['arguments'][0])
@@ -953,7 +953,7 @@ class TestMetaDataAccess (TestCase):
 
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
         self.assertEqual(meta['variadic'], False)
-       
+
     def testTypes(self):
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
         self.assertEqual(meta['retval']['type'], objc._C_INT)
@@ -1050,7 +1050,7 @@ class TestBuffers (TestCase):
 
     def testInOutChars(self):
         o = OC_MetaDataTest.alloc().init()
-        
+
         input = b"hello " + b"world"
         v = o.addOneToBytes_count_(input, len(input))
         self.assertIsInstance(v, bytes)
@@ -1082,7 +1082,7 @@ class TestBuffers (TestCase):
 
     def testInOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
-        
+
         input = b"hello " + b"world"
         v = o.addOneToVoids_count_(input, len(input))
         self.assertIsInstance(v, type(b""))

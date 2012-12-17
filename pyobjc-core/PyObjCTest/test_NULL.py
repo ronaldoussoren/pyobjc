@@ -105,7 +105,7 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
     def callOut_(self, value):
         assert value is None or value is objc.NULL
         return 441;
-    callOut_ = objc.selector(callOut_, signature=b'v@:o^i')    
+    callOut_ = objc.selector(callOut_, signature=b'v@:o^i')
 
 class TestNULLArguments (TestCase):
     def testCallInOutNULL(self):
@@ -225,7 +225,7 @@ class TestNULLArguments (TestCase):
         - result should be objc.NULL
         """
 
-        
+
 
 
 if __name__ == "__main__":

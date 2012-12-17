@@ -8,6 +8,6 @@ class TestNSMenuItemCell (TestCase):
         self.assertArgIsBOOL(NSMenuItemCell.setNeedsSizing_, 0)
         self.assertResultIsBOOL(NSMenuItemCell.needsDisplay)
         self.assertArgIsBOOL(NSMenuItemCell.setNeedsDisplay_, 0)
-    
+
 if __name__ == "__main__":
     main()

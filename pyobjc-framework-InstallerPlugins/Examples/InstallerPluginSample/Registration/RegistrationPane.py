@@ -26,7 +26,7 @@ class RegistrationPane (InstallerPane):
 
     def _serialNumberIsValid(self):
         """
-        perform a simple string compare to validate the serial number 
+        perform a simple string compare to validate the serial number
         entered by the user
         """
         return self.uiSerialNumberField.stringValue() == '123-456-789'
@@ -37,7 +37,7 @@ class RegistrationPane (InstallerPane):
 
     def _localizedStringForKey_(self, key):
         '''
-        localization helper method:  This pulls localized strings from the 
+        localization helper method:  This pulls localized strings from the
         plugin's bundle
         '''
         return NSBundle.bundleForClass_(type(self
@@ -47,37 +47,37 @@ class RegistrationPane (InstallerPane):
         ''' return the title of this pane '''
         return self._localizedStringForKey_("Title")
 
-    def didEnterPane_(self, dir): 
+    def didEnterPane_(self, dir):
         ''' pane's entry point: code called when user enters this pane '''
         NSLog("DIDENTER")
         self._updateNextButtonState()
 
     def shouldExitPane_(self, dir):
         '''
-        called when user clicks "Continue" -- return value indicates 
+        called when user clicks "Continue" -- return value indicates
         if application should exit pane
         '''
         if dir == InstallerDirectionForward and not self._serialNumberIsValid():
             self._updateNextButtonState()
 
             NSBeginInformationalAlertSheet(
-                    None, 
-                    self._localizedStringForKey_("OK_BUTTON"), 
-                    None, 
-                    None, 
-                    self.uiFirstNameField.window(), 
-                    None, 
-                    None, 
-                    None, 
-                    0, 
+                    None,
+                    self._localizedStringForKey_("OK_BUTTON"),
+                    None,
+                    None,
+                    self.uiFirstNameField.window(),
+                    None,
+                    None,
+                    None,
+                    0,
                     self._localizedStringForKey_("InvalidSerialNumberAlertMessage"));
             return False
-            
+
         return True
 
     def controlTextDidChange_(self, notification):
-        """ 
-        updates the state of the next button when the contents of the 
+        """
+        updates the state of the next button when the contents of the
         delegate textfields change
         """
         self._updateNextButtonState()

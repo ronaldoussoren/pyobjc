@@ -21,12 +21,12 @@ class HazeFilterView (NSView):
     def drawRect_(self, rect):
         cg = CGRectMake(
                 NSMinX(rect), NSMinY(rect), NSWidth(rect), NSHeight(rect))
-        
+
         context = NSGraphicsContext.currentContext().CIContext()
-            
+
         if self.filter is None:
             # make sure initialize is called
-            MyHazeFilter.MyHazeFilter.pyobjc_classMethods.class__()   
+            MyHazeFilter.MyHazeFilter.pyobjc_classMethods.class__()
 
             url = NSURL.fileURLWithPath_(
                 NSBundle.mainBundle().pathForResource_ofType_(
@@ -38,7 +38,7 @@ class HazeFilterView (NSView):
 
             self.filter.setValue_forKey_(
                 CIColor.colorWithRed_green_blue_(0.7, 0.9,  1),
-                "inputColor") 
+                "inputColor")
 
         self.filter.setValue_forKey_(self.distance, "inputDistance")
         self.filter.setValue_forKey_(self.slope, "inputSlope")

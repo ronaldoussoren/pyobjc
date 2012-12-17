@@ -13,7 +13,7 @@ class MyDocument (NSPersistentDocument):
             return (None, error)
 
         managedObjectContext = self.managedObjectContext()
-    
+
         for aPriorityValue in range(5):
             aPriority = NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_("Priority", managedObjectContext)
             aPriority.setValue_forKey_(aPriorityValue+1, "value")
@@ -33,7 +33,7 @@ class MyDocument (NSPersistentDocument):
 
     def prioritySortDescriptions(self):
         return prioritySortDescriptions
-        
+
     def createNote_(self, sender):
         self.outlineTreeController.add_(sender)
 
@@ -62,14 +62,14 @@ class MyDocument (NSPersistentDocument):
         else:
             sibling = children.objectAtIndex_(index - 1)
             selection.setValue_forKeyPath_(sibling, "parent")
-    
+
     def dedentNote_(self, sender):
         selection = self.outlineTreeController.selection()
         parent = selection.valueForKeyPath_("parent")
-    
+
         if parent is None or parent is NSMultipleValuesMarker or parent is NSNoSelectionMarker or parent is NSNotApplicableMarker:
             NSBeep();
             return;
-        
+
         parent = parent.valueForKeyPath_("parent")
         selection.setValue_forKeyPath_(parent, "parent")

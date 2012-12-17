@@ -1,6 +1,6 @@
-''' 
-Wrappers for the "ScriptingBrige" framework on MacOSX 10.5 or later. This 
-framework provides an easy way to use the scripting functionality of 
+'''
+Wrappers for the "ScriptingBrige" framework on MacOSX 10.5 or later. This
+framework provides an easy way to use the scripting functionality of
 applications ("AppleScript") from Cocoa applications.
 
 The functionality of this framework is comparable to that off "appscript",
@@ -23,7 +23,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

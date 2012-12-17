@@ -29,7 +29,7 @@ class TestNSGeometry (TestCase):
         self.assertEqual(NSMinY(rect), 2)
         self.assertEqual(NSWidth(rect), 4)
         self.assertEqual(NSHeight(rect), 6)
-       
+
         # Cannot test these here, need to be tested in the Quartz unittests
         self.assertHasAttr(Foundation, 'NSRectFromCGRect')
         self.assertHasAttr(Foundation, 'NSRectToCGRect')
@@ -41,7 +41,7 @@ class TestNSGeometry (TestCase):
     def testFunctions(self):
         p1 = NSPoint(1, 2)
         p2 = NSPoint(3, 4)
-        
+
         s1 = NSSize(4, 5)
         s2 = NSSize(7, 8)
 
@@ -75,7 +75,7 @@ class TestNSGeometry (TestCase):
         self.assertEqual(ra, NSRect(NSPoint(5, 7), NSSize(4,5)))
 
         slice, rem = NSDivideRect(r2, None, None, 1.5, NSMaxYEdge)
-        self.assertEqual(slice, NSRect(NSPoint(4.5, 12.5), NSSize(7.5, 1.5))) 
+        self.assertEqual(slice, NSRect(NSPoint(4.5, 12.5), NSSize(7.5, 1.5)))
         self.assertEqual(rem, NSRect(NSPoint(4.5, 5.5), NSSize(7.5, 7.0)))
 
         self.assertIs(NSPointInRect(p1, r1), True)

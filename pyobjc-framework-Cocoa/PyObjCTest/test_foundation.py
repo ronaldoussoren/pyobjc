@@ -87,4 +87,3 @@ class TestFoundation (TestCase):
 
 if __name__ == "__main__":
     main()
-

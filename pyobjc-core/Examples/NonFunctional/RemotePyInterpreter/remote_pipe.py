@@ -46,7 +46,7 @@ class RemotePipe(object):
 
     def respond(self, *args):
         self.send('respond', *args)
-        
+
     def expect(self, *args):
         self.pool.push()
         try:
@@ -85,7 +85,7 @@ class RemoteFileLike(object):
     def writelines(self, lines):
         for line in lines:
             self.write(line)
-    
+
     def close(self):
         self.closed = True
 

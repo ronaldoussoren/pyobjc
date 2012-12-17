@@ -15,27 +15,27 @@ from AppKit import *
 from PyObjCTools.KeyValueCoding import *
 
 class PreferencesPanelController (NSWindowController):
-        
+
     @objc.IBAction
     def changeTextFont_(self, sender):
         "The user changed the current font selection, so update the default font"
-        
+
         # Get font name and size from user defaults
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
         fontName = getKey(defaults, u'FontName')
         fontSize = getKey(defaults, u'FontSize')
-        
+
         # Create font from name and size; initialize font panel
         font = NSFont.fontWithName_size_(fontName, fontSize)
         if font is None:
             font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         NSFontManager.sharedFontManager().setSelectedFont_isMultiple_(font, False)
         NSFontManager.sharedFontManager().orderFrontFontPanel_(self)
-        
+
         # Set window as firstResponder so we get changeFont: messages
         self.window().makeFirstResponder_(self.window())
-    
-		
+
+
     @objc.IBAction
     def changeFont_(self, sender):
         "This is the message the font panel sends when a new font is selected"
@@ -45,12 +45,12 @@ class PreferencesPanelController (NSWindowController):
         if selectedFont is None:
             selectedFont = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         panelFont = fontManager.convertFont_(selectedFont)
-        
+
         # Get and store details of selected font
         # Note: use fontName, not displayName.  The font name identifies the font to
         # the system, we use a value transformer to show the user the display name
         fontSize = panelFont.pointSize()
-        
+
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
         defaults.setValue_forKey_(panelFont.fontName(), u"FontName")
         defaults.setValue_forKey_(fontSize, u"FontSize")

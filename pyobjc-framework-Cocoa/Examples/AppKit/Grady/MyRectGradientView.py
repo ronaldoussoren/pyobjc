@@ -5,7 +5,7 @@ class MyRectGradientView (MyBaseGradientView):
         self = super(MyRectGradientView, self).init()
         if self is None:
             return self
-        
+
         self.myOffsetPt = NSMakePoint(0.0, 0.0)
         return self
 

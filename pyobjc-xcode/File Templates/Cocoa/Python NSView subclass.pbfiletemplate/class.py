@@ -20,4 +20,3 @@ class «FILEBASENAMEASIDENTIFIER»(NSView):
 
     def drawRect_(self, rect):
         # drawing code here
-

@@ -134,7 +134,7 @@ class TestNSBitmapImageRep(TestCase):
         else:
             self.assertEqual(bitmapData.tobytes(),
                 singlePlane)
-        
+
         a = array.array('L', [255]*4)
         self.assertArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
         d = i2.getPixel_atX_y_(a, 1, 1)
@@ -142,7 +142,7 @@ class TestNSBitmapImageRep(TestCase):
 
 class TestBadCreation(TestCase):
 
-    # Redirect stderr to /dev/null for the duration of this test, 
+    # Redirect stderr to /dev/null for the duration of this test,
     # NSBitmapImageRep will write an error message to stderr.
 
     def setUp(self):

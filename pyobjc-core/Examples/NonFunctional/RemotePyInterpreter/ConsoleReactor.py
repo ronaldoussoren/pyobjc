@@ -13,7 +13,7 @@ class ConsoleReactor(NSObject):
         self.connection = None
         self.commands = {}
         return self
-    
+
     def connectionEstablished_(self, connection):
         #NSLog(u'connectionEstablished_')
         self.connection = connection
@@ -29,7 +29,7 @@ class ConsoleReactor(NSObject):
     def writeCode_(self, code):
         #NSLog(u'writeCode_')
         self.connection.writeBytes_(repr(code) + '\n')
-    
+
     def netEval_(self, s):
         #NSLog(u'netEval_')
         return eval(s, self.pool.namespace, self.pool.namespace)
@@ -75,7 +75,7 @@ class ConsoleReactor(NSObject):
         code = 'raise ' + nr.netrepr_exception(e)
         print "forwarding:", code
         self.writeCode_(code)
-    
+
     def doCallback_sequence_args_(self, callback, seq, args):
         nr = self.netReprCenter
         try:
@@ -84,11 +84,11 @@ class ConsoleReactor(NSObject):
             self.sendException_sequence_(e, seq)
         else:
             self.sendResult_sequence_(rval, seq)
-    
+
     def deferCallback_sequence_value_(self, callback, seq, value):
         self.commands[seq] = callback
         self.writeCode_('pipe.respond(%r, netrepr(%s))' % (seq, value))
-    
+
     def handleExpectCommand_(self, command):
         #NSLog(u'handleExpectCommand_')
         seq = command[0]

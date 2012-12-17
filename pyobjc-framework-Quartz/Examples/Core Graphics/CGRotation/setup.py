@@ -12,4 +12,3 @@ setup(
     app=["main.py"],
     data_files=["English.lproj", "demo.png"],
 )
-

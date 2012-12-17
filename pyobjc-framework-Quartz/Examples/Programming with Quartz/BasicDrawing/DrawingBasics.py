@@ -23,7 +23,7 @@ def doStrokedRect(context):
 def doStrokedAndFilledRect(context):
     # Define a rectangle to use for drawing.
     ourRect = CGRectMake(20.0, 220.0, 130.0, 100.0)
-     
+
     # ***** Rectangle 1 *****
     # Set the fill color to a light opaque blue.
     CGContextSetRGBFillColor(context, 0.482, 0.62, 0.871, 1.0)
@@ -56,13 +56,13 @@ def createRectPath(context, rect):
     CGContextBeginPath(context)
     CGContextMoveToPoint(context, rect.origin.x, rect.origin.y)
     # ***** Segment 1 *****
-    CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, 
+    CGContextAddLineToPoint(context, rect.origin.x + rect.size.width,
                                 rect.origin.y)
     # ***** Segment 2 *****
     CGContextAddLineToPoint(context, rect.origin.x + rect.size.width,
                                 rect.origin.y + rect.size.height)
     # ***** Segment 3 *****
-    CGContextAddLineToPoint(context, rect.origin.x, 
+    CGContextAddLineToPoint(context, rect.origin.x,
                                 rect.origin.y + rect.size.height)
     # ***** Segment 4 is created by closing the path *****
     CGContextClosePath(context)
@@ -89,11 +89,11 @@ def doPathRects(context):
     # Stroke the path.
     CGContextDrawPath (context, kCGPathStroke)  # Clears the path.
     # ***** Rectangle 3 *****
-    # Translate the coordinate system 
+    # Translate the coordinate system
     # 200 units to the left and 200 units down.
     CGContextTranslateCTM(context, -200.0, -200.0)
     createRectPath (context, ourRect)
-    #CGContextSetLineWidth(context, 10.0)	# This is redundant.
+    #CGContextSetLineWidth(context, 10.0)       # This is redundant.
     # Fill, then stroke the path.
     CGContextDrawPath (context, kCGPathFillStroke)  # Clears the path.
     # ***** Rectangle 4 *****
@@ -113,11 +113,11 @@ def doAlphaRects(context):
     numRects = 6
     rotateAngle = 2*math.pi/numRects
     tintAdjust = 1.0/numRects
-    
+
     # ***** Part 2 *****
-    CGContextTranslateCTM(context, 2*ourRect.size.width, 
+    CGContextTranslateCTM(context, 2*ourRect.size.width,
                                     2*ourRect.size.height)
-    
+
     # ***** Part 3 *****
     tint = 1.0
     for i in range(numRects):
@@ -135,7 +135,7 @@ def drawStrokedLine(context, start, end):
 
 def doDashedLines(context):
     lengths = ( 12.0, 6.0, 5.0, 6.0, 5.0, 6.0 )
-    
+
     start = CGPoint(20.0, 270.0)
     end = CGPoint(300.0, 270.0)
     # ***** Line 1 solid line *****
@@ -169,31 +169,31 @@ def doClippedCircle(context):
     startingAngle = 0.0
     endingAngle = 2*math.pi
     ourRect = CGRectMake(65.0, 65.0, 170.0, 170.0)
-	
-    # ***** Filled Circle ***** 
+
+    # ***** Filled Circle *****
     CGContextSetRGBFillColor(context, 0.663, 0., 0.031, 1.0)
     CGContextBeginPath(context)
     # Construct the circle path counterclockwise.
-    CGContextAddArc(context, circleCenter.x, 
-                            circleCenter.y, circleRadius, 
-                            startingAngle, endingAngle, 0) 
+    CGContextAddArc(context, circleCenter.x,
+                            circleCenter.y, circleRadius,
+                            startingAngle, endingAngle, 0)
     CGContextDrawPath(context, kCGPathFill)
 
-    # ***** Stroked Square ***** 
+    # ***** Stroked Square *****
     CGContextStrokeRect(context, ourRect)
-    
-    # Translate so that the next drawing doesn't overlap what 
+
+    # Translate so that the next drawing doesn't overlap what
     # has already been drawn.
     CGContextTranslateCTM(context, ourRect.size.width + circleRadius + 5.0, 0)
     # Create a rectangular path and clip to that path.
     CGContextBeginPath(context)
     CGContextAddRect(context, ourRect)
     CGContextClip(context)
-    
+
     # ***** Clipped Circle *****
     CGContextBeginPath(context)
     # Construct the circle path counterclockwise.
-    CGContextAddArc (context, circleCenter.x, 
+    CGContextAddArc (context, circleCenter.x,
                             circleCenter.y, circleRadius,
                             startingAngle, endingAngle, 0)
     CGContextDrawPath(context, kCGPathFill)
@@ -210,13 +210,13 @@ def doPDFDocument(context, url):
         pdfRect.origin.x = pdfRect.origin.y = 0.
         # Draw page 1 of the PDF document.
         CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
-        
+
         CGContextTranslateCTM(context, pdfRect.size.width*1.2, 0)
         # Scale non-uniformly making the y coordinate scale 1.5 times
         # the x coordinate scale.
         CGContextScaleCTM(context, 1, 1.5)
         CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
-        
+
         CGContextTranslateCTM(context, pdfRect.size.width*1.2, pdfRect.size.height)
         # Flip the y coordinate axis horizontally about the x axis.
         CGContextScaleCTM(context, 1, -1)

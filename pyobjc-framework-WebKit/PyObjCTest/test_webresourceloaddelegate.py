@@ -10,7 +10,7 @@ class TestWebResourceLoadDelegate (TestCase):
         self.assertArgHasType(
             TestWebResourceLoadDelegateHelper.webView_resource_didReceiveContentLength_fromDataSource_,
             2, objc._C_NSInteger)
-        
+
 
 if __name__ == "__main__":
     main()

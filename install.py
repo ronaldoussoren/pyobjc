@@ -17,7 +17,7 @@ import platform
 TOPDIR = os.path.dirname(os.path.abspath(__file__))
 
 
-# Module defining a topological sort function, see 
+# Module defining a topological sort function, see
 # <http://www.bitformation.com/art/python_toposort.html> for more
 # information.
 #

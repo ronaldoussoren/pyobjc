@@ -1,4 +1,4 @@
-''' 
+'''
 Wrappers for the "FSEvents" API in MacOS X. The functions in this framework
 allow you to reliably observe changes to the filesystem, even when your
 program is not running al the time.
@@ -19,7 +19,7 @@ setup(
     setup_requires = [
         'pyobjc-core>=2.5.0b1',
     ],
-    install_requires = [ 
+    install_requires = [
         'pyobjc-core>=2.5.0b1',
         'pyobjc-framework-Cocoa>=2.5.0b1',
     ],

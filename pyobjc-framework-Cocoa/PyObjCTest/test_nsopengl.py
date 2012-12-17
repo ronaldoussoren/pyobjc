@@ -94,10 +94,10 @@ class TestNSOpenGL (TestCase):
                 None, NSOpenGLPFANoRecovery, 0)
         self.assertIsInstance(v, (int, long))
 
-        self.assertResultHasType(NSOpenGLPixelFormat.CGLPixelFormatObj, 
+        self.assertResultHasType(NSOpenGLPixelFormat.CGLPixelFormatObj,
                 b'^{_CGLPixelFormatObject}')
 
-        self.assertResultHasType(NSOpenGLContext.CGLContextObj, 
+        self.assertResultHasType(NSOpenGLContext.CGLContextObj,
                 b'^{_CGLContextObj}')
 
     @min_os_level('10.6')

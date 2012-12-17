@@ -21,7 +21,7 @@ class TestDyld (TestCase):
         if 'DYLD_IMAGE_SUFFIX' in os.environ:
             del os.environ['DYLD_IMAGE_SUFFIX']
 
-        
+
         # No suffix
         paths = [ '/usr/lib/libSystem.dylib',
                 '/lib/libfoo.3.dylib',
@@ -33,7 +33,7 @@ class TestDyld (TestCase):
 
         os.environ['DYLD_IMAGE_SUFFIX'] = '_DEBUG'
         self.maxDiff = None
-        self.assertEqual(list(dyld.inject_suffixes(iter(paths))), [ 
+        self.assertEqual(list(dyld.inject_suffixes(iter(paths))), [
                 '/usr/lib/libSystem_DEBUG.dylib',
                 '/usr/lib/libSystem.dylib',
                 '/lib/libfoo.3_DEBUG.dylib',
@@ -164,7 +164,7 @@ class TestDyld (TestCase):
             self.maxDiff = None
 
             l = []
-            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa") 
+            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa")
             self.assertEqual(l, [
                 "/System/Library/Cocoa.framework/Cocoa",
                 os.path.expanduser("~/Library/Frameworks/XCocoa.framework/XCocoa"),
@@ -175,7 +175,7 @@ class TestDyld (TestCase):
 
             os.environ["DYLD_IMAGE_SUFFIX"] = "_profile"
             l = []
-            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa") 
+            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa")
             self.assertEqual(l, [
                 "/System/Library/Cocoa.framework/Cocoa_profile",
                 "/System/Library/Cocoa.framework/Cocoa",
@@ -192,7 +192,7 @@ class TestDyld (TestCase):
 
             os.environ["DYLD_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
             l = []
-            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa") 
+            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa")
             self.assertEqual(l, [
                 "/Projects/Frameworks/XCocoa.framework/XCocoa",
                 "/Company/XCocoa.framework/XCocoa",
@@ -206,7 +206,7 @@ class TestDyld (TestCase):
 
             os.environ["DYLD_FALLBACK_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
             l = []
-            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa") 
+            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa")
             self.assertEqual(l, [
                 "/System/Library/Cocoa.framework/Cocoa",
                 "/Projects/Frameworks/XCocoa.framework/XCocoa",
@@ -219,7 +219,7 @@ class TestDyld (TestCase):
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
 
             l = []
-            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa", "B") 
+            self.assertRaises(ImportError, dyld.dyld_framework, "/System/Library/Cocoa.framework/Cocoa", "XCocoa", "B")
             self.assertEqual(l, [
                 "/Prefix1/XCocoa.framework/Versions/B/XCocoa_debug",
                 "/Prefix1/XCocoa.framework/Versions/B/XCocoa",
@@ -235,7 +235,7 @@ class TestDyld (TestCase):
             del os.environ["DYLD_FRAMEWORK_PATH"]
             del os.environ["DYLD_FALLBACK_FRAMEWORK_PATH"]
             del os.environ["DYLD_IMAGE_SUFFIX"]
-            
+
 
         finally:
             os.path.exists = orig
@@ -244,7 +244,7 @@ class TestDyld (TestCase):
         self.assertEqual(dyld.dyld_framework("/System/Library/Cocoa.framework/Cocoa", "Cocoa", "A"), "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa")
 
     def test_readlink(self):
-        # Some python versions had a readlink version that doesn't work with unicode 
+        # Some python versions had a readlink version that doesn't work with unicode
         # input, ensure that we're not one one of those
         self.assertEqual(os.path.realpath("/usr/lib/libSystem.dylib"), "/usr/lib/libSystem.B.dylib")
         self.assertEqual(os.path.realpath(b"/usr/lib/libSystem.dylib"), b"/usr/lib/libSystem.B.dylib")

@@ -46,7 +46,7 @@ class TestCGFont (TestCase):
 
 
     @min_os_level('10.5')
-    # Most functions should work on 10.4 as well, except for the convenient 
+    # Most functions should work on 10.4 as well, except for the convenient
     # contruction functions
     def testFunctions(self):
         self.assertIsInstance(CGFontGetTypeID(), (int, long))
@@ -110,7 +110,7 @@ class TestCGFont (TestCase):
         self.assertResultHasType(CGFontCanCreatePostScriptSubset, objc._C_BOOL)
         v = CGFontCanCreatePostScriptSubset(font, kCGFontPostScriptFormatType1)
         self.assertIsInstance(v, bool)
-        
+
 
         # PyObjC doesn't wrap ATSUI, therefore we cannot actually call
         # the function.
@@ -182,7 +182,7 @@ class TestCGFont (TestCase):
         psfont = CGFontCreatePostScriptEncoding(
                 font, map)
         self.assertIsInstance(psfont, CFDataRef)
-    
+
 
 
 if __name__ == "__main__":

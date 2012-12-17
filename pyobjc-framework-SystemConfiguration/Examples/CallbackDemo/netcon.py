@@ -2,7 +2,7 @@
 """
 Exercise some API's related to SCNetworkConnection.
 
-NOTE: this example doesn't actually work yet as the author of this script 
+NOTE: this example doesn't actually work yet as the author of this script
 doesn't use PPP :-)
 
 Usage:
@@ -15,7 +15,7 @@ def connectionChanged(connection, status, info):
 
 
 def main():
-    conn = SCNetworkConnectionCreateWithServiceID(None, 
+    conn = SCNetworkConnectionCreateWithServiceID(None,
             "Automatic",
             connectionChanged,
             "foobar")

@@ -130,7 +130,7 @@ class TestNSFont(TestCase):
         self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b'I')
         self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b'I')
         self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, b'o^'+objc._C_NSBOOL)
-        
+
         self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, b'n^I')
         self.assertArgSizeInArg(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1)
         self.assertArgHasType(NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, b'o^'+NSPoint.__typestr__)

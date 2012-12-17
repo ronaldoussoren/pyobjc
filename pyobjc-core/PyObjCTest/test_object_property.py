@@ -440,7 +440,7 @@ class TestObjectProperty (TestCase):
         o = OCTestObjectProperty3.alloc().init()
 
         self.assertRaises(ValueError, setattr, o, 'p1', 42)
-    
+
     def testSubclass(self):
 
         class OCTestObjectProperty5 (NSObject):

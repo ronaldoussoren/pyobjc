@@ -68,7 +68,7 @@ class TestCGAffineTransform (TestCase):
         tf = CGAffineTransformInvert(tf)
         self.assertIsInstance(tf, CGAffineTransform)
 
-        tf2 = CGAffineTransformConcat(tf, 
+        tf2 = CGAffineTransformConcat(tf,
                 CGAffineTransformMake(1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
         self.assertIsInstance(tf2, CGAffineTransform)
 

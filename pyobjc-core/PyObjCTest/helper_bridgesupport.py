@@ -16,7 +16,7 @@ passed = True
 g = {}
 objc.initFrameworkWrapper("AddressBook",
         "/System/Library/Frameworks/AddressBook.framework",
-        "com.apple.AddressBook.framework", 
+        "com.apple.AddressBook.framework",
         g, scan_classes=False)
 
 if 'ABAddPropertiesAndTypes' not in g:
@@ -32,29 +32,29 @@ else:
     else:
         if func.__metadata__() != {
             'retval': {
-                'already_retained': False, 
+                'already_retained': False,
                 'already_cfretained': False,
-                'type': 'q' if sys.maxint > 2**32 else 'l', 
-            }, 
+                'type': 'q' if sys.maxint > 2**32 else 'l',
+            },
             'arguments': (
                 {
-                    'null_accepted': True, 
-                    'already_retained': False, 
+                    'null_accepted': True,
+                    'already_retained': False,
                     'already_cfretained': False,
-                    'type': '^{__ABAddressBookRef=}', 
-                }, 
+                    'type': '^{__ABAddressBookRef=}',
+                },
                 {
-                    'null_accepted': True, 
-                    'already_retained': False, 
+                    'null_accepted': True,
+                    'already_retained': False,
                     'already_cfretained': False,
-                    'type': '^{__CFString=}', 
+                    'type': '^{__CFString=}',
                 }, {
-                    'null_accepted': True, 
-                    'already_retained': False, 
+                    'null_accepted': True,
+                    'already_retained': False,
                     'already_cfretained': False,
-                    'type': '^{__CFDictionary=}', 
+                    'type': '^{__CFDictionary=}',
                 }
-            ), 
+            ),
             'variadic': False
             }:
 
@@ -88,7 +88,7 @@ if 'ABAddressBook' in g:
 g = {}
 objc.initFrameworkWrapper("AddressBook",
         "/System/Library/Frameworks/AddressBook.framework",
-        "com.apple.AddressBook.framework", 
+        "com.apple.AddressBook.framework",
         g, scan_classes=True)
 
 if 'ABAddressBook' not in g:

@@ -13,7 +13,7 @@ except NameError:
 class TestDebugging (TestCase):
     def testConstants(self):
         for nm in (
-                'LOGSTACKTRACE', 'DEFAULTVERBOSITY', 
+                'LOGSTACKTRACE', 'DEFAULTVERBOSITY',
                 'DEFAULTMASK', 'EVERYTHINGMASK'):
             self.assertTrue(hasattr(Debugging, nm))
             self.assertTrue(isinstance(getattr(Debugging, nm), (int, long)))
@@ -51,5 +51,3 @@ class TestDebugging (TestCase):
 
 if __name__ == "__main__":
     main()
-
-

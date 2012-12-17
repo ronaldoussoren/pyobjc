@@ -58,7 +58,7 @@ class TestSet (test.test_set.TestJointOps, TestCase):
             self.assertEqual(self.thetype('abcba').union(C('ccb')), set('abc'))
             self.assertEqual(self.thetype('abcba').union(C('ef')), set('abcef'))
             self.assertEqual(self.thetype('abcba').union(C('ef'), C('fg')), set('abcefg'))
-        
+
         # Issue #6573
         x = self.thetype()
         self.assertEqual(x.union(set([1]), x, set([2])), self.thetype([1, 2]))
@@ -79,29 +79,29 @@ class TestSet (test.test_set.TestJointOps, TestCase):
             self.assertEqual(self.thetype('abcba').symmetric_difference(C('ef')), set('abcef'))
 
     def test_difference(self):
-         i = self.s.difference(self.otherword)
-         for c in self.letters:
-             self.assertEqual(c in i, c in self.d and c not in self.otherword)
-         self.assertEqual(self.s, self.thetype(self.word))
-         #self.assertEqual(type(i), self.thetype)
-         self.assertIsInstance(i, self.thetype)
-         self.assertRaises(PassThru, self.s.difference, check_pass_thru())
-         self.assertRaises(TypeError, self.s.difference, [[]])        
-         for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
-             self.assertEqual(self.thetype('abcba').difference(C('cdc')), set('ab'))
-             self.assertEqual(self.thetype('abcba').difference(C('efgfe')), set('abc'))
-             self.assertEqual(self.thetype('abcba').difference(C('ccb')), set('a'))
-             self.assertEqual(self.thetype('abcba').difference(C('ef')), set('abc'))
-             self.assertEqual(self.thetype('abcba').difference(), set('abc'))
-             self.assertEqual(self.thetype('abcba').difference(C('a'), C('b')), set('c'))
+        i = self.s.difference(self.otherword)
+        for c in self.letters:
+            self.assertEqual(c in i, c in self.d and c not in self.otherword)
+        self.assertEqual(self.s, self.thetype(self.word))
+        #self.assertEqual(type(i), self.thetype)
+        self.assertIsInstance(i, self.thetype)
+        self.assertRaises(PassThru, self.s.difference, check_pass_thru())
+        self.assertRaises(TypeError, self.s.difference, [[]])
+        for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
+            self.assertEqual(self.thetype('abcba').difference(C('cdc')), set('ab'))
+            self.assertEqual(self.thetype('abcba').difference(C('efgfe')), set('abc'))
+            self.assertEqual(self.thetype('abcba').difference(C('ccb')), set('a'))
+            self.assertEqual(self.thetype('abcba').difference(C('ef')), set('abc'))
+            self.assertEqual(self.thetype('abcba').difference(), set('abc'))
+            self.assertEqual(self.thetype('abcba').difference(C('a'), C('b')), set('c'))
 
     def test_intersection(self):
         i = self.s.intersection(self.otherword)
         for c in self.letters:
             self.assertEqual(c in i, c in self.d and c in self.otherword)
         self.assertEqual(self.s, self.thetype(self.word))
-        #self.assertEqual(type(i), self.thetype)        
-        self.assertIsInstance(i, self.thetype)        
+        #self.assertEqual(type(i), self.thetype)
+        self.assertIsInstance(i, self.thetype)
         self.assertRaises(PassThru, self.s.intersection, check_pass_thru())
         for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
             self.assertEqual(self.thetype('abcba').intersection(C('cdc')), set('cc'))
@@ -224,7 +224,7 @@ class TestSubsetEqualNonEmpty (test.test_set.TestSubsetEqualNonEmpty):
     left  = NSMutableSet([1, 2])
     right = NSMutableSet([1, 2])
 
-    
+
 class TestSubsetPartial (test.test_set.TestSubsetPartial):
     left  = NSMutableSet([1])
     right = NSMutableSet([1, 2])

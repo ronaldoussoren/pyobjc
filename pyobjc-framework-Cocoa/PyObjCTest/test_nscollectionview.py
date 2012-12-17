@@ -39,7 +39,7 @@ class TestNSCollectionView (TestCase):
         self.assertResultHasType(TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
                 objc._C_NSInteger)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
-                2, b'N^' + objc._C_NSInteger) 
+                2, b'N^' + objc._C_NSInteger)
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_validateDrop_proposedIndex_dropOperation_,
                 3, b'N^' + objc._C_NSInteger)
 
@@ -50,11 +50,11 @@ class TestNSCollectionView (TestCase):
             3, objc._C_NSInteger)
 
         self.assertArgHasType(TestNSCollectionViewHelper.collectionView_pasteboardWriterForItemAtIndex_, 1, objc._C_NSInteger)
-        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_, 
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_willBeginAtPoint_forItemsAtIndexes_,
                 2, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,
                 2, NSPoint.__typestr__)
-        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_, 
+        self.assertArgHasType(TestNSCollectionViewHelper.collectionView_draggingSession_endedAtPoint_draggingOperation_,
                 3, objc._C_NSInteger)
 
 

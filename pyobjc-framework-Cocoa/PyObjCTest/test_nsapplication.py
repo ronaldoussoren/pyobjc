@@ -161,7 +161,7 @@ class TestNSApplication (TestCase):
         self.assertArgIsBOOL(NSApplication.replyToApplicationShouldTerminate_, 0)
         self.assertArgIsBOOL(NSApplication.addWindowsItem_title_filename_, 2)
         self.assertArgIsBOOL(NSApplication.changeWindowsItem_title_filename_, 2)
-   
+
     def testDelegateMethods(self):
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openFile_)
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openTempFile_)

@@ -130,7 +130,7 @@ class TestPrivate (TestCase):
         self.assertIs(resolve("sys.path"), sys.path)
 
         v = resolve("distutils.command.sdist.show_formats")
-        
+
         from distutils.command.sdist import show_formats
         self.assertIs(v, show_formats)
 

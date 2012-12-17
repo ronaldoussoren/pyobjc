@@ -64,7 +64,7 @@ class TestNSLayoutContraintManual (TestCase):
         self.assertEqual(v.bottom, 0.0)
         self.assertEqual(v.right, 0.0)
 
-        self.assertEqual(NSEdgeInsets.__typestr__, 
+        self.assertEqual(NSEdgeInsets.__typestr__,
                 b'{_NSEdgeInsets=' + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + objc._C_CGFloat + b'}')
 
     @min_os_level('10.7')

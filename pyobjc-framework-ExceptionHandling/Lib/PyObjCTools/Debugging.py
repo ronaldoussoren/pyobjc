@@ -70,7 +70,7 @@ DEFAULTVERBOSITY = 0
 
 class PyObjCDebuggingDelegate(NSObject):
     verbosity = objc.ivar('verbosity', b'i')
-    
+
     def initWithVerbosity_(self, verbosity):
         self = self.init()
         self.verbosity = verbosity

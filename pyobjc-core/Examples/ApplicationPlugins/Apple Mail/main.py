@@ -39,6 +39,6 @@ None, None)
 
     def initialize (cls):
         cls.registerBundle()
-        NSLog('ToyMailBundle2 registered with Mail')        
+        NSLog('ToyMailBundle2 registered with Mail')
 
     initialize = classmethod(initialize)

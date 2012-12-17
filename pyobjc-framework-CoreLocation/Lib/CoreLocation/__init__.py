@@ -2,7 +2,7 @@
 Python mapping for the CoreLocation framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
-documentation for details on how to use these functions and classes. 
+documentation for details on how to use these functions and classes.
 '''
 
 import sys
@@ -31,4 +31,3 @@ sys.modules['CoreLocation'] = mod = objc.ObjCLazyModule(
         'kCLErrorGeocodeFoundNoResult': kCLErrorGeocodeFoundNoResult,
         'kCLErrorGeocodeCanceled': kCLErrorGeocodeCanceled,
     }, (Foundation,))
-

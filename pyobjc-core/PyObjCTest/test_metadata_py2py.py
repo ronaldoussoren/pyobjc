@@ -47,7 +47,7 @@ class TestArraysOut_AllArgs (TestCase):
         n, v = o.nullfill4Tuple_(objc.NULL)
         self.assertEqual(n, 2)
         #self.assertIs(v, objc.NULL )
-        
+
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -81,7 +81,7 @@ class TestArraysOut_AllArgs (TestCase):
         self.assertEqual(list(v),  [])
 
         #self.assertRaises(ValueError, o.fillArray_count_, objc.NULL, 0)
-        
+
         n, v = o.nullfillArray_count_(3)
         self.assertEqual(n, 2)
         self.assertEqual(list(v),  [30,31,32])
@@ -128,7 +128,7 @@ if 0:
             n, v = o.nullfill4Tuple_(objc.NULL)
             #self.assertEqual(n, 2)
             #self.assertIs(v, objc.NULL)
-            
+
         def testNullTerminated(self):
             o = Py_MetaDataTest_OutputOptional.new()
 
@@ -162,7 +162,7 @@ if 0:
             self.assertEqual(list(v),  [])
 
             #self.assertRaises(ValueError, o.fillArray_count_, objc.NULL, 0)
-            
+
             n, v = o.nullfillArray_count_(3)
             self.assertEqual(n, 2)
             self.assertEqual(list(v),  [30,31,32])
@@ -268,14 +268,14 @@ class TestArraysInOut_AllArgs (TestCase):
 
     def testWithCountInResult(self):
         o = Py_MetaDataTest_AllArgs.new()
-        
+
         # XXX: caling python->python has the usual python semantics, hence
         # the argument won't be truncated!
         c, v = o.reverseArray_uptoCount_(range(10), 10)
         self.assertEqual(c, 5)
         self.assertEqual(len(v), 10)
         self.assertEqual(list(v)[:int(c)],  [0, 10, 20, 30, 40])
-        
+
         c, v = o.maybeReverseArray_([1,2,3,4])
         self.assertEqual(c, 2)
         self.assertEqual(len(v), 2)
@@ -336,7 +336,7 @@ class TestArraysIn_AllArgs (TestCase):
         # into C or from C.
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v)[:c], [1,2,3])
-        
+
         # XXX: This one would be nice to have, but not entirely trivial
         #v, c = o.makeIntArray_count_((1,2,3,4), None)
         #self.assertEqual(c, 3)
@@ -400,13 +400,13 @@ class TestArrayReturns_AllArgs (TestCase):
         self.assertEqual(v, objc.NULL)
 
 class TestByReference_AllArgs (TestCase):
-    # Pass by reference arguments. 
+    # Pass by reference arguments.
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
 
     def testInput(self):
         o = Py_MetaDataTest_AllArgs.new()
-        
+
         r = o.sumX_andY_(1, 2)
         self.assertEqual(r, 1**2+2**2)
 
@@ -426,7 +426,7 @@ class TestByReference_AllArgs (TestCase):
         self.assertEqual(div, 13 / 7)
         self.assertEqual(rem, 13 % 7)
 
-        # XXX: To be fixed: 
+        # XXX: To be fixed:
         #self.assertRaises(ValueError, o.divBy5_remainder_, 42, objc.NULL)
 
     def testInputOutput(self):

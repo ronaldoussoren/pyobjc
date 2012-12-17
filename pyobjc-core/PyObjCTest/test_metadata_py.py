@@ -19,12 +19,12 @@ from PyObjCTest.metadata import *
 import PyObjCTest.test_metadata
 
 def setupMetaData():
-    # Note to self: what we think of as the first argument of a method is 
+    # Note to self: what we think of as the first argument of a method is
     # actually the third one, the objc runtime implicitly passed 'self' and
     # the selector as well. Therefore we need to start counting at 2 instead
     # of 0.
     #
-    # Note2: the code below would normally be done using a metadata file 
+    # Note2: the code below would normally be done using a metadata file
     # instead of hardcoding.
 
     objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"make4Tuple:on:",
@@ -244,16 +244,16 @@ def setupMetaData():
         )
 
 
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"sumX:andY:on:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_IN, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_IN, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"divBy5:remainder:on:",
             dict(arguments={
                     2+1: dict(type_modifier=objc._C_OUT, null_accepted=False),
                 }))
-    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:on:", 
+    objc.registerMetaDataForSelector(b"OC_MetaDataTest", b"swapX:andY:on:",
             dict(arguments={
                     2+0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
                     2+1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
@@ -288,7 +288,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
     def nullIntArrayOf_(self, count):
         return objc.NULL
 
-    # In arrays: 
+    # In arrays:
     def makeIntArray_count_(self, data, count): return [data, count]
     def makeIntArray_countPtr_(self, data, count): return [data, count]
     def nullIntArray_count_(self, data, count): return [data, count]
@@ -366,7 +366,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
     def nullreverseArray_count_(self, data, count):
         if data is objc.NULL:
             return 2, objc.NULL
-        
+
         else:
             data = list(data)
             for i in range(len(data)):
@@ -415,7 +415,7 @@ class Py_MetaDataTest_AllArgs (OC_MetaDataTest):
     def maybeReverseArray_(self, data):
         return 2, (data[0] + 44, data[1] + 49)
 
-    # pass-by-reference 
+    # pass-by-reference
     def sumX_andY_(self, x, y):
         return x ** 2 + y ** 2
 
@@ -468,7 +468,7 @@ class TestArraysOut (TestCase):
         n, v = OC_MetaDataTest.nullfill4Tuple_on_(objc.NULL, o)
         self.assertEqual(n, 2)
         self.assertIs(v, objc.NULL)
-        
+
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
 
@@ -497,7 +497,7 @@ class TestArraysOut (TestCase):
         self.assertEqual(list(v),  [])
 
         self.assertRaises(ValueError, OC_MetaDataTest.fillArray_count_on_, objc.NULL, 0, o)
-    
+
         n, v = OC_MetaDataTest.nullfillArray_count_on_(None, 3, o)
         self.assertEqual(n, 2)
         self.assertEqual(list(v),  [30,31,32])
@@ -602,7 +602,7 @@ class TestArraysInOut (TestCase):
         self.assertEqual(c, 5)
         self.assertEqual(len(v), 5)
         self.assertEqual(list(v),  [0, 10, 20, 30, 40])
-        
+
         c, v = OC_MetaDataTest.maybeReverseArray_on_([1,2,3,4], o)
         self.assertEqual(c, 2)
         self.assertEqual(len(v), 2)
@@ -657,7 +657,7 @@ class TestArraysIn (TestCase):
         self.assertEqual(c, 3)
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), [1,2,3])
-        
+
         # XXX: This one would be nice to have, but not entirely trivial
         #v, c = OC_MetaDataTest.makeIntArray_count_on_((1,2,3,4), None, o)
         #self.assertEqual(c, 3)
@@ -719,13 +719,13 @@ class TestArrayReturns (TestCase):
         self.assertEqual(v, objc.NULL)
 
 class TestByReference (TestCase):
-    # Pass by reference arguments. 
+    # Pass by reference arguments.
     # Note that these tests aren't exhaustive, we have test_methods and
     # test_methods2 for that :-)
 
     def testInput(self):
         o = Py_MetaDataTest_AllArgs.new()
-        
+
         r = OC_MetaDataTest.sumX_andY_on_(1, 2, o)
         self.assertEqual(r, 1**2+2**2)
 

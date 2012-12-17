@@ -36,34 +36,34 @@ class TestCFHTTPStream (TestCase):
         self.assertIsInstance(kCFStreamPropertyHTTPRequestBytesWrittenCount, unicode)
 
     def testFunctions(self):
-       url = CFURLCreateWithString(None, "http://www.python.org/", None)
-       self.assertIsInstance(url, CFURLRef)
+        url = CFURLCreateWithString(None, "http://www.python.org/", None)
+        self.assertIsInstance(url, CFURLRef)
 
-       req = CFHTTPMessageCreateRequest(None, "GET", url, kCFHTTPVersion1_1)
-       self.assertIsInstance(req, CFHTTPMessageRef)
+        req = CFHTTPMessageCreateRequest(None, "GET", url, kCFHTTPVersion1_1)
+        self.assertIsInstance(req, CFHTTPMessageRef)
 
-       self.assertResultIsCFRetained(CFReadStreamCreateForHTTPRequest)
-       v = CFReadStreamCreateForHTTPRequest(None, req)
-       self.assertIsInstance(v, CFReadStreamRef)
+        self.assertResultIsCFRetained(CFReadStreamCreateForHTTPRequest)
+        v = CFReadStreamCreateForHTTPRequest(None, req)
+        self.assertIsInstance(v, CFReadStreamRef)
 
-       with open("/dev/null", "w") as fp:
-           fd_2 = os.dup(2)
-           os.dup2(fp.fileno(), 2)
+        with open("/dev/null", "w") as fp:
+            fd_2 = os.dup(2)
+            os.dup2(fp.fileno(), 2)
 
-       try:
-           # Avoid deprecation messages from CFNetwork
+        try:
+            # Avoid deprecation messages from CFNetwork
 
-           self.assertResultIsCFRetained(CFReadStreamCreateForStreamedHTTPRequest)
-           v = CFReadStreamCreateForStreamedHTTPRequest(None, req, v)
-           self.assertIsInstance(v, CFReadStreamRef)
+            self.assertResultIsCFRetained(CFReadStreamCreateForStreamedHTTPRequest)
+            v = CFReadStreamCreateForStreamedHTTPRequest(None, req, v)
+            self.assertIsInstance(v, CFReadStreamRef)
 
-           self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
-           CFHTTPReadStreamSetRedirectsAutomatically(v, True)
+            self.assertArgIsBOOL(CFHTTPReadStreamSetRedirectsAutomatically, 1)
+            CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-           CFHTTPReadStreamSetProxy(v, "localhost", 8080)
+            CFHTTPReadStreamSetProxy(v, "localhost", 8080)
 
-       finally:
-           os.dup2(fd_2, 2)
+        finally:
+            os.dup2(fd_2, 2)
 
 if __name__ == "__main__":
     main()

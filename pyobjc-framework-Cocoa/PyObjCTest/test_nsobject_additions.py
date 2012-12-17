@@ -280,7 +280,7 @@ class TestThreadingHelpers (TestCase):
             self.assertIn('Traceback', sys.stderr.getvalue())
         finally:
             sys.stderr = orig_stderr
-    
+
     def testOnMtWithResult(self):
         # pyobjc_performSelectorOnMainThread_withObject_
         obj = TheadingHelperTestHelper.alloc().init()

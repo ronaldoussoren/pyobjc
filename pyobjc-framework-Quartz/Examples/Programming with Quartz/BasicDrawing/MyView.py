@@ -29,10 +29,10 @@ class MyView (NSView):
 
 
     def drawRect_(self, rect):
-	context = NSGraphicsContext.currentContext().graphicsPort()
-		
+        context = NSGraphicsContext.currentContext().graphicsPort()
+
         if _pdfDocument is None:
-	    if	_drawingCommand in (UIHandling.kHICommandDrawNSString,
+            if  _drawingCommand in (UIHandling.kHICommandDrawNSString,
                     UIHandling.kHICommandDrawNSLayoutMgr, UIHandling.kHICommandDrawCustomNSLayoutMgr):
 
                 if _drawingCommand == UIHandling.kHICommandDrawNSString:
@@ -47,9 +47,9 @@ class MyView (NSView):
                 AppDrawing.DispatchDrawing(context, _drawingCommand)
 
         else:
-	    mediaRect = CGPDFDocumentGetMediaBox(_pdfDocument, 1)
-	    mediaRect.origin.x = mediaRect.origin.y = 0
-	    CGContextDrawPDFDocument(context, mediaRect, _pdfDocument, 1)
+            mediaRect = CGPDFDocumentGetMediaBox(_pdfDocument, 1)
+            mediaRect.origin.x = mediaRect.origin.y = 0
+            CGContextDrawPDFDocument(context, mediaRect, _pdfDocument, 1)
 
     @objc.IBAction
     def setDrawCommand_(self, sender):
@@ -70,7 +70,7 @@ class MyView (NSView):
 
             # Enable new menu item.
             self.currentMenuItem.setState_(NSOnState)
-		
+
             # If we were showing a pasted document, let's get rid of it.
             if _pdfDocument:
                 _pdfDocument = None
@@ -79,10 +79,10 @@ class MyView (NSView):
         # The best representation for printing or exporting
         # when the current command caches using a bitmap context
         # or a layer is to not do any caching.
-        if _drawingCommand in (UIHandling.kHICommandDrawOffScreenImage, 
+        if _drawingCommand in (UIHandling.kHICommandDrawOffScreenImage,
                 UIHandling.kHICommandDrawWithLayer):
             return UIHandling.kHICommandDrawNoOffScreenImage
-    
+
         return _drawingCommand
 
 
@@ -94,7 +94,7 @@ class MyView (NSView):
         _drawingCommand = self.currentPrintableCommand()
         # Do the printing operation on the view.
         NSPrintOperation.printOperationWithView_(self).runOperation()
-        # Restore that before the printing operation. 
+        # Restore that before the printing operation.
         _drawingCommand = savedDrawingCommand
 
     def acceptsFirstResponder(self):
@@ -112,11 +112,11 @@ class MyView (NSView):
         newPDFDocument = createNewPDFRefFromPasteBoard()
         if newPDFDocument is not None:
             _pdfDocument = newPDFDocument
-            # The view needs to be redisplayed since there is 
+            # The view needs to be redisplayed since there is
             # a new PDF document.
             self.setNeedsDisplay_(True)
 
-    
+
     # Return the number of pages available for printing. For this
     # application it is always 1.
     def knowsPageRange_(self):
@@ -137,5 +137,5 @@ class MyView (NSView):
             menuItem.setState_(True)
         else:
             menuItem.setState_(False)
-            
+
         return True

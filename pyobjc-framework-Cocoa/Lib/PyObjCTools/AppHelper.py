@@ -22,7 +22,7 @@ import traceback
 import objc
 
 class PyObjCAppHelperCaller(NSObject):
-    
+
     def initWithArgs_(self, args):
         self = self.init()
         self.args = args
@@ -35,7 +35,7 @@ class PyObjCAppHelperCaller(NSObject):
     def callLater_(self, delay):
         self.performSelector_withObject_afterDelay_(
             self.callAfter_, None, delay)
-    
+
     def call_(self, func_args_kwargs):
         (func, args, kwargs) = func_args_kwargs
         func(*args, **kwargs)
@@ -56,7 +56,7 @@ def callLater(delay, func, *args, **kwargs):
     obj.callLater_(delay)
     del obj
     del pool
-    
+
 class PyObjCAppHelperApplicationActivator(NSObject):
 
     def activateNow_(self, aNotification):
@@ -70,7 +70,7 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
         runLoop = NSRunLoop.currentRunLoop()
         return cls.singletons.get(runLoop)
     currentRunLoopStopper = classmethod(currentRunLoopStopper)
-            
+
     def init(self):
         self = super(PyObjCAppHelperRunLoopStopper, self).init()
         self.shouldStop = False
@@ -84,13 +84,13 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
             raise ValueError("Stopper already registered for this runLoop")
         cls.singletons[runLoop] = runLoopStopper
     addRunLoopStopper_toRunLoop_ = classmethod(addRunLoopStopper_toRunLoop_)
-        
+
     def removeRunLoopStopperFromRunLoop_(cls, runLoop):
         if runLoop not in cls.singletons:
             raise ValueError("Stopper not registered for this runLoop")
         del cls.singletons[runLoop]
     removeRunLoopStopperFromRunLoop_ = classmethod(removeRunLoopStopperFromRunLoop_)
-        
+
     def stop(self):
         self.shouldStop = True
         # this should go away when/if runEventLoop uses
@@ -213,10 +213,10 @@ def runEventLoop(argv=None, unexpectedErrorAlert=None, installInterrupt=None, pd
         )
     else:
         Debugging = None
-    
+
     if installInterrupt is None and pdb:
         installInterrupt = True
-    
+
     if unexpectedErrorAlert is None:
         if pdb:
             unexpectedErrorAlert = unexpectedErrorAlertPdb

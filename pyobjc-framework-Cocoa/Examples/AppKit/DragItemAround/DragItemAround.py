@@ -1,4 +1,4 @@
-# Updated by mvl on 2009-02-22 for PyObjC 2 
+# Updated by mvl on 2009-02-22 for PyObjC 2
 
 import objc
 from PyObjCTools import AppHelper
@@ -11,10 +11,10 @@ class DraggableItemView(NSView):
     _locationDefault = NSMakePoint(0.0, 0.0)
     _itemColorDefault = NSColor.redColor()
     _backgroundColorDefault = NSColor.whiteColor()
-    
+
     def awakeFromNib(self):
         self.dragging = None
-    
+
     def initWithFrame_(self, frame):
         """."""
         result = super(DraggableItemView, self).initWithFrame_(frame)
@@ -23,7 +23,7 @@ class DraggableItemView(NSView):
             result._itemColor = self._itemColorDefault
             result._backgroundColor = self._backgroundColorDefault
         return result
-    
+
     def drawRect_(self, rect):
         """."""
         NSColor.whiteColor().set()
@@ -60,7 +60,7 @@ class DraggableItemView(NSView):
         """."""
         if self.dragging:
             newDragLocation = self.convertPoint_fromView_(
-                event.locationInWindow(), 
+                event.locationInWindow(),
                 None
             )
             self.offsetLocationByX_andY_(
@@ -101,31 +101,31 @@ class DraggableItemView(NSView):
         self.discardCursorRects()
         self.addCursorRect_cursor_(self.calculatedItemBounds(),
                                    NSCursor.openHandCursor())
-        
+
     @objc.IBAction
     def moveUp_(self, sender):
         """."""
         self.offsetLocationByX_andY_(0.0, 10.0)
         self.window().invalidateCursorRectsForView_(self)
-    
+
     @objc.IBAction
     def moveDown_(self, sender):
         """."""
         self.offsetLocationByX_andY_(0.0, -10.0)
         self.window().invalidateCursorRectsForView_(self)
-    
+
     @objc.IBAction
     def moveLeft_(self, sender):
         """."""
         self.offsetLocationByX_andY_(-10.0, 0.0)
         self.window().invalidateCursorRectsForView_(self)
-    
+
     @objc.IBAction
     def moveRight_(self, sender):
         """."""
         self.offsetLocationByX_andY_(10.0, 0.0)
         self.window().invalidateCursorRectsForView_(self)
-        
+
     @objc.IBAction
     def setItemPropertiesToDefault_(self, sender):
         """."""
@@ -176,6 +176,6 @@ class DraggableItemView(NSView):
         if itemHit:
             pass
         return itemHit
-    
+
 if __name__ == "__main__":
     AppHelper.runEventLoop()

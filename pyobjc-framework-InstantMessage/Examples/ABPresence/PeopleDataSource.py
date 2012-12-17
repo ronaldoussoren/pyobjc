@@ -12,8 +12,8 @@ class PeopleDataSource (NSObject):
     def awakeFromNib(self):
         self._imPersonStatus = NSMutableArray.alloc().init()
 
-        # We don't need to query the staus of everyone, we will wait for 
-        # notifications of their status to arrive, so we just set them all up 
+        # We don't need to query the staus of everyone, we will wait for
+        # notifications of their status to arrive, so we just set them all up
         # as offline.
         self.setupABPeople()
 
@@ -26,43 +26,43 @@ class PeopleDataSource (NSObject):
                 kAddressBookPersonStatusChanged, None)
 
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, 'statusImagesChanged:', 
+                self, 'statusImagesChanged:',
                 kStatusImagesChanged, None)
 
-    # This dumps all the status information and rebuilds the array against 
+    # This dumps all the status information and rebuilds the array against
     # the current _abPeople
     # Fairly expensive, so this is only done when necessary
     def rebuildStatusInformation(self):
-        # Now scan through all the people, adding their status to the status 
+        # Now scan through all the people, adding their status to the status
         # cache array
         for i, person in enumerate(self._abPeople):
-                # Let's assume they're offline to start
-                bestStatus = IMPersonStatusOffline 
+            # Let's assume they're offline to start
+            bestStatus = IMPersonStatusOffline
 
-                for service in IMService.allServices():
-                        screenNames = service.screenNamesForPerson_(person)
-                        
-                        for screenName in screenNames:
-                                dictionary = service.infoForScreenName_(
-                                        screenName)
-                                status = dictionary.get(IMPersonStatusKey)
-                                if status is not None:
-                                        thisStatus = status
-                                        if IMComparePersonStatus(bestStatus, thisStatus) != NSOrderedAscending:
-                                                bestStatus = thisStatus;
-                
-                self._imPersonStatus[i] = bestStatus
+            for service in IMService.allServices():
+                screenNames = service.screenNamesForPerson_(person)
+
+                for screenName in screenNames:
+                    dictionary = service.infoForScreenName_(
+                            screenName)
+                    status = dictionary.get(IMPersonStatusKey)
+                    if status is not None:
+                        thisStatus = status
+                        if IMComparePersonStatus(bestStatus, thisStatus) != NSOrderedAscending:
+                            bestStatus = thisStatus;
+
+            self._imPersonStatus[i] = bestStatus
 
         self._table.reloadData()
 
-    # Rebuild status information for a given person, much faster than a full 
+    # Rebuild status information for a given person, much faster than a full
     # rebuild
     def rebuildStatusInformationForPerson_(self, forPerson):
         for i, person in enumerate(self._abPeople):
             if person is forPerson:
                 bestStatus = IMPersonStatusOffline
-                        
-                # Scan through all the services, taking the 'best' status we 
+
+                # Scan through all the services, taking the 'best' status we
                 # can find
                 for service in IMService.allServices():
                     screenNames = service.screenNamesForPerson_(person)
@@ -75,7 +75,7 @@ class PeopleDataSource (NSObject):
                             thisStatus = status
                             if IMComparePersonStatus(bestStatus, thisStatus) != NSOrderedAscending:
                                 bestStatus = thisStatus
-                        
+
                 self._imPersonStatus[i] = bestStatus
                 self._table.reloadData()
                 break
@@ -84,7 +84,7 @@ class PeopleDataSource (NSObject):
     def setupABPeople(self):
         # Keep around a copy of all the people in the AB now
         self._abPeople = ABAddressBook.sharedAddressBook().people().mutableCopy()
-        
+
         # Sort them by display name
         self._abPeople.sortUsingSelector_('compareDisplayNames:')
 
@@ -94,11 +94,11 @@ class PeopleDataSource (NSObject):
         for i in range(len(self._abPeople)):
             self._imPersonStatus.append(offlineNumber)
 
-    # This will do a full flush of people in our AB Cache, along with 
+    # This will do a full flush of people in our AB Cache, along with
     # rebuilding their status */
     def reloadABPeople(self):
         self.setupABPeople()
-        
+
         # Now recache all the status info, this will spawn a reload of the table
         self.rebuildStatusInformation()
 
@@ -112,7 +112,7 @@ class PeopleDataSource (NSObject):
         if identifier == u"image":
             status = self._imPersonStatus[row]
             return NSImage.imageNamed_(IMService.imageNameForStatus_(status))
-                
+
         elif identifier == u"name":
             return self._abPeople[row].displayName()
 
@@ -132,7 +132,7 @@ class PeopleDataSource (NSObject):
         self._table.reloadData()
 
     # If the AB database changes, force a reload of everyone
-    # We could look in the notification to catch differential updates, but 
+    # We could look in the notification to catch differential updates, but
     # for now this is fine.
     def abDatabaseChangedExternallyNotification_(self, notification):
         self.reloadABPeople()

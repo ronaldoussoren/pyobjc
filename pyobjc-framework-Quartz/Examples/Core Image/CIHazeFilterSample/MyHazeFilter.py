@@ -18,8 +18,8 @@ class MyHazeFilter (CIFilter):
                 "MyHazeRemover",  cls, {
                     kCIAttributeFilterDisplayName: "Haze Remover" ,
                     kCIAttributeFilterCategories: [
-                        kCICategoryColorAdjustment, kCICategoryVideo, 
-                        kCICategoryStillImage, kCICategoryInterlaced, 
+                        kCICategoryColorAdjustment, kCICategoryVideo,
+                        kCICategoryStillImage, kCICategoryInterlaced,
                         kCICategoryNonSquarePixels,
                     ],
                     "inputDistance": {
@@ -66,6 +66,6 @@ class MyHazeFilter (CIFilter):
     def outputImage(self):
         src = CISampler.samplerWithImage_(self.inputImage)
 
-        return self.apply_arguments_options_(_hazeRemovalKernel, 
+        return self.apply_arguments_options_(_hazeRemovalKernel,
                 (src, self.inputColor, self.inputDistance, self.inputSlope),
                 { "definition": src.definition() })

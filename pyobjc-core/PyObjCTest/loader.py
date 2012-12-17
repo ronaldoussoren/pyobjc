@@ -22,7 +22,7 @@ def recursiveGlob(root, pathPattern):
             if fnmatch(fn, pathPattern):
                 result.append(join(rootpath, fn))
     return result
-        
+
 
 def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     """
@@ -35,7 +35,7 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
         testModules = [(package + '.' + m) for m in testModules]
 
     suites = []
-   
+
     for modName in testModules:
         try:
             module = __import__(modName)
@@ -70,7 +70,7 @@ def makeTestSuite():
 
     version_suite = importExternalTestCases("test%d_*.py"%(sys.version_info[0],),
         join(topdir, 'PyObjCTest'), package='PyObjCTest')
-        
+
     suite = unittest.TestSuite((plain_suite, version_suite, deja_suite))
 
     # the libffi tests don't work unless we use our own

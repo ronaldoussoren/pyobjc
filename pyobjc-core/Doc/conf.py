@@ -219,5 +219,3 @@ pdf_fit_mode='shrink'
 pdf_splittables = True
 pdf_use_modindex = False
 pdf_use_index = True
-
-

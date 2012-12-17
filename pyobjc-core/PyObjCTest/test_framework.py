@@ -10,11 +10,11 @@ class TestFramework (TestCase):
         self.assertIsNone(objc.infoForFramework("/usr/lib/libSystem.B_debug.dylib"))
 
     def test_basic_framework(self):
-        self.assertEqual(("/Library/Frameworks", "Python", "Current"),  
+        self.assertEqual(("/Library/Frameworks", "Python", "Current"),
                 objc.infoForFramework("/Library/Frameworks/Python.framework/Versions/Current/Python"))
-        self.assertEqual(("/Library/Frameworks", "Python", "2.7"), 
+        self.assertEqual(("/Library/Frameworks", "Python", "2.7"),
                 objc.infoForFramework("/Library/Frameworks/Python.framework/Versions/2.7/Python"))
-        self.assertEqual(("/System/Library/Frameworks", "Python", ""), 
+        self.assertEqual(("/System/Library/Frameworks", "Python", ""),
                 objc.infoForFramework("/System/Library/Frameworks/Python.framework/Python"))
 
     def test_altname_framework(self):
@@ -38,7 +38,7 @@ class TestFramework (TestCase):
                 objc.infoForFramework(
                     "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks/AE.framework/Versions/A/AE"))
 
-        
+
 
 if __name__ == "__main__":
     main()

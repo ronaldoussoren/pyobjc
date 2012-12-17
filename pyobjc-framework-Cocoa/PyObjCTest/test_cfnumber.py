@@ -82,7 +82,7 @@ class TestCFNumber (TestCase):
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
-        ## Don't test this, the wrapper shouldn't range-check 
+        ## Don't test this, the wrapper shouldn't range-check
         ## arguments and CFNumberGetValue will crash when the
         ## number type is invalid
         #ok, v = CFNumberGetValue(number, kCFNumberMaxType+2)

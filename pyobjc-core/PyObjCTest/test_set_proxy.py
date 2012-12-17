@@ -113,7 +113,7 @@ class BasicSetTests:
         o2 = OC_TestElem(2)
         o3 = OC_TestElem(3)
         s = self.setClass([o1, o2, o3])
-       
+
         o = OC_TestSet.set_member_(s, OC_TestElem(4))
         self.assertIsNone(o)
 
@@ -191,7 +191,7 @@ class TestImmutableSet (TestCase, BasicSetTests):
 
         if onLeopard:
             self.assertRaises(TypeError,
-                    OC_TestSet.set_filterUsingPredicate_, o, 
+                    OC_TestSet.set_filterUsingPredicate_, o,
                     NSPredicate.predicateWithValue_(True))
 
         self.assertRaises(TypeError,

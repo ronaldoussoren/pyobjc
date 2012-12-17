@@ -120,7 +120,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
         endRadius = 0;
         endExtend = False;
 
-	return self;
+        return self;
 
     def drawRect_(self, rect):
         currentContext = NSGraphicsContext.currentContext().graphicsPort()
@@ -148,7 +148,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
         CGContextBeginPage(currentContext, bounds)
 
-        CGContextTranslateCTM(currentContext, 
+        CGContextTranslateCTM(currentContext,
                 bounds.size.width/2, bounds.size.height/2);
         CGContextConcatCTM(currentContext, m);
         CGContextTranslateCTM(currentContext, -0.5, -0.5);
@@ -168,7 +168,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
         CGContextSetRGBStrokeColor(currentContext, 1, 0, 0, 1);
 
         if (getShading == getRadialShading):
-            CGContextAddArc(currentContext, 
+            CGContextAddArc(currentContext,
                     startPoint.x, startPoint.y, startRadius,
                     math.radians(0), math.radians(360), True)
             CGContextClosePath(currentContext)
@@ -199,7 +199,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
         CGContextEndPage(currentContext)
 
-        CGContextFlush(currentContext);   
+        CGContextFlush(currentContext);
 
     def randomize_(self, sender):
         global colorspace, getFunction, getShading
@@ -216,7 +216,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
         startRadius = random.random() / 2;
         endPoint = randomPoint();
         endRadius = random.random() / 2;
-   
+
         if getFunction == getFunction1:
             getFunction = getFunction2
 
@@ -238,7 +238,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
     def toggleStartExtend_(self, sender):
         global startExtend, shading
-        
+
         startExtend = not startExtend
         shading = getShading(colorspace, function)
 
@@ -246,7 +246,7 @@ class MyQuartzView (NibClassBuilder.AutoBaseClass):
 
     def toggleEndExtend_(self, sender):
         global endExtend, shading
-        
+
         endExtend = not endExtend
         shading = getShading(colorspace, function)
 

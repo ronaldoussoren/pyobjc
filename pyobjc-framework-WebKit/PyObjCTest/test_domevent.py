@@ -24,7 +24,7 @@ class TestDOMEvent (TestCase):
         self.assertResultIsBOOL(DOMEvent.cancelBubble)
         self.assertArgIsBOOL(DOMEvent.setCancelBubble_, 0)
 
-    
+
 
 if __name__ == "__main__":
     main()

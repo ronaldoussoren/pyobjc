@@ -164,7 +164,7 @@ class TestHeader (TestCase):
         self.assertArgHasType(NSView.showDefinitionForAttributedString_atPoint_, 1, NSPoint.__typestr__)
 
         self.assertArgHasType(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 1, NSRange.__typestr__)
-        self.assertArgIsBlock(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 3, 
+        self.assertArgIsBlock(NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_, 3,
                 NSPoint.__typestr__ + NSRange.__typestr__)
 
     @min_os_level('10.7')

@@ -7,7 +7,7 @@ import sys
 import objc
 
 def getTextString():
-    # These unicode values are the characters: Q, u, a, r, t, z, 
+    # These unicode values are the characters: Q, u, a, r, t, z,
     # eighthnote, floral heart, black chess queen, and two CJK characters.
     # Note: Create an NSString, because we'll use NSString-specific API's, otherwise
     # we could just have used a python unicode object
@@ -19,12 +19,12 @@ def drawNSStringWithAttributes():
     textString = getTextString()
     if doPointDrawing:
         context = NSGraphicsContext.currentContext().graphicsPort()
-    
+
     # Text Line 1. Draw with default attributes.
     p = NSMakePoint(20.0, 400.0)
-        
+
     # Draw text with default text attributes. The point supplied is
-    # not the text baseline but rather the lower-left corner of the box 
+    # not the text baseline but rather the lower-left corner of the box
     # which bounds the text.
     textString.drawAtPoint_withAttributes_(p, None)
 
@@ -32,7 +32,7 @@ def drawNSStringWithAttributes():
         Utilities.drawPoint(context, p)
 
     # Text Line 2. Draw with a specific font and color.
-    
+
     # Position the text 50 units below the previous text.
     p.y -= 50
 
@@ -52,11 +52,11 @@ def drawNSStringWithAttributes():
         Utilities.drawPoint(context, p)
 
     # Text Line 3. Draw stroked text.
-    
+
     # Position the text 50 units below the previous text.
     p.y -= 50
 
-    # Panther and later support stroke attributes. A positive value 
+    # Panther and later support stroke attributes. A positive value
     # of the stroke width attribute produces text that is stroked rather
     # than filled.
     stringAttributes[NSStrokeWidthAttributeName] = 3.0
@@ -66,24 +66,24 @@ def drawNSStringWithAttributes():
         Utilities.drawPoint(context, p)
 
     # Text Line 4. Draw with fill and stroke.
-    
+
     p.y -= 50
 
-    # Panther and later support stroke attributes. A negative value 
+    # Panther and later support stroke attributes. A negative value
     # of the stroke width attribute results in text that is both filled
     # and stroked.
     stringAttributes[NSStrokeWidthAttributeName] = -3.0
     # Set the stroke color attribute to black.
     stringAttributes[NSStrokeColorAttributeName] = NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 1.0)
-	
+
     textString.drawAtPoint_withAttributes_(p, stringAttributes)
 
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
     # Text Line 5. Draw at baseline.
-    # Tiger and later support the drawWithRect method which allows 
-    # string text drawing from a point on the text baseline. 
+    # Tiger and later support the drawWithRect method which allows
+    # string text drawing from a point on the text baseline.
     p.y -= 50
     rect = NSRect(
             origin=p,
@@ -129,10 +129,10 @@ def drawWithNSLayout():
         # Create the range of text for the entire length of text
         # in the textStorage object.
         _myTextRange = NSMakeRange(0, _textStorage.length())
-        # Set the attributes on the entire range of text. 
+        # Set the attributes on the entire range of text.
         _textStorage.setAttributes_range_(stringAttributes, _myTextRange)
 
-    # Set the point for drawing the layout. 
+    # Set the point for drawing the layout.
     p = NSMakePoint(20.0, 400.0)
 
     # Draw the text range at the point.
@@ -144,7 +144,7 @@ def drawWithNSLayout():
 
 # The interface to the NSLayoutManager subclass.
 class MyNSLayoutManager (NSLayoutManager):
-    # The extra instance variables for this subclass. 
+    # The extra instance variables for this subclass.
     _textMode = objc.ivar()
     _fColor = objc.ivar()
     _sColor = objc.ivar()
@@ -168,8 +168,8 @@ class MyNSLayoutManager (NSLayoutManager):
         self._lineWidth = width
 
     def setClippingDrawProc_withInfo_(self, clippingDrawProc, info):
-	self._clippingDrawProc = clippingDrawProc
-	self._clippingInfo = info
+        self._clippingDrawProc = clippingDrawProc
+        self._clippingInfo = info
 
     def init(self):
         self = super(MyNSLayoutManager, self).init()
@@ -188,7 +188,7 @@ class MyNSLayoutManager (NSLayoutManager):
         return self
 
     # This code overrides this method to record the y coordinate
-    # to use as the True baseline for the text drawing. 
+    # to use as the True baseline for the text drawing.
     def drawGlyphsForGlyphRange_atPoint_(self, glyphsToShow, origin):
         self._yStartPosition = origin.y
         super(MyNSLayoutManager, self).drawGlyphsForGlyphRange_atPoint_(glyphsToShow, origin)
@@ -209,27 +209,27 @@ class MyNSLayoutManager (NSLayoutManager):
 
         # The Quartz graphics state should be preserved by showPackedGlyphs.
         CGContextSaveGState(context)
-    
+
         # Set the desired text drawing mode.
         CGContextSetTextDrawingMode(context, self._textMode)
-    
-	# Set the fill color if needed.
-        if (self._textMode == kCGTextFill or _self.textMode == kCGTextFillStroke or 
+
+        # Set the fill color if needed.
+        if (self._textMode == kCGTextFill or _self.textMode == kCGTextFillStroke or
                 self._textMode == kCGTextFillClip or _textMode == kCGTextFillStrokeClip):
             if self._fColor is not None:
                 CGContextSetFillColorWithColor(context, self._fColor)
-    
-	# Set the  line width and the stroke color if needed.
-        if (self._textMode == kCGTextStroke or self._textMode == kCGTextFillStroke or 
-                self._textMode == kCGTextStrokeClip or self._textMode == kCGTextFillStrokeClip):
-		CGContextSetLineWidth(context, self._lineWidth)
-                if self._sColor is not None:
-                    CGContextSetStrokeColorWithColor(context, self._sColor)
 
-	# Now draw the text. Check whether to adjust for printing widths
+        # Set the  line width and the stroke color if needed.
+        if (self._textMode == kCGTextStroke or self._textMode == kCGTextFillStroke or
+                self._textMode == kCGTextStrokeClip or self._textMode == kCGTextFillStrokeClip):
+            CGContextSetLineWidth(context, self._lineWidth)
+            if self._sColor is not None:
+                CGContextSetStrokeColorWithColor(context, self._sColor)
+
+        # Now draw the text. Check whether to adjust for printing widths
         # and if needed adjust extra character spacing accordingly.
         if printingAdjustment.width != 0.0:
-            # If printingAdjustment width is non-zero then the text 
+            # If printingAdjustment width is non-zero then the text
             # needs to be adjusted. printingAdjustment is the per character
             # adjustment required for this piece of text. Because
             # the Quartz text character spacing set is transformed by
@@ -243,7 +243,7 @@ class MyNSLayoutManager (NSLayoutManager):
             CGContextSetCharacterSpacing(context, 0.0)
 
         # Draw the glyphs. The total number of glyphs is the length
-        # of the glyphs string passed to showPackedGlyphs, divided by 2 
+        # of the glyphs string passed to showPackedGlyphs, divided by 2
         # since there are two bytes per glyph.
         CGContextShowGlyphsAtPoint(context, point.x, point.y, glyphs, glyphLen/2)
 
@@ -251,28 +251,28 @@ class MyNSLayoutManager (NSLayoutManager):
         # a custom clipping proc, call it. This allows drawing through
         # clipped text before the graphics state is restored.
         if (self._textMode == kCGTextClip or self._textMode == kCGTextFillClip or
-                self._textMode == kCGTextStrokeClip or 
+                self._textMode == kCGTextStrokeClip or
                 self._textMode == kCGTextFillStrokeClip) and self._clippingDrawProc is not None:
 
-		self._clippingDrawProc(context, point.x, point.y, self._clippingInfo)
-    
+            self._clippingDrawProc(context, point.x, point.y, self._clippingInfo)
+
         CGContextRestoreGState(context)
 
 def MyClipProc(c, x, y, info):
     CGContextTranslateCTM(c, x, y)
     CGContextSetStrokeColorWithColor(c, Utilities.getRGBOpaqueBlackColor())
-    # Draw a grid of lines through the clip.    
-    QuartzTextDrawing.drawGridLines(c); 
+    # Draw a grid of lines through the clip.
+    QuartzTextDrawing.drawGridLines(c);
 
 _myLayout = None
 _textStorage = None
 _myTextRange = None
 def drawWithCustomNSLayout():
     global _myLayout, _textStorage, _myTextRange
-    
+
     if _myLayout is None:
         textContainer = NSTextContainer.alloc().init()
-		
+
         _textStorage = NSTextStorage.alloc().initWithString_(getTextString())
         # Create an instance of the MyNSLayoutManager subclass of NSLayoutManager.
         _myLayout = MyNSLayoutManager.alloc().init()
@@ -289,7 +289,7 @@ def drawWithCustomNSLayout():
 
         # Create the range.
         _myTextRange = NSMakeRange(0, _textStorage.length())
-        # Set the attributes on the entire range of text. 
+        # Set the attributes on the entire range of text.
         _textStorage.setAttributes_range_(stringAttributes, _myTextRange)
 
     p = NSMakePoint(20.0, 400.0)
@@ -298,8 +298,8 @@ def drawWithCustomNSLayout():
     # the text will be filled with black.
     _myLayout.setTextMode_(kCGTextFill)
     _myLayout.setFillColor_(Utilities.getRGBOpaqueBlackColor())
-    
-    # Draw text line 1.    
+
+    # Draw text line 1.
     _myLayout.drawGlyphsForGlyphRange_atPoint_(_myTextRange, p)
 
     if doPointDrawing:
@@ -312,14 +312,14 @@ def drawWithCustomNSLayout():
     _myLayout.setStrokeColor_(Utilities.getRGBOpaqueBlackColor())
     _myLayout.setTextLineWidth_(2)
 
-    # Draw text line 2.    
-    p.y -= 50; 
+    # Draw text line 2.
+    p.y -= 50;
     _myLayout.drawGlyphsForGlyphRange_atPoint_(_myTextRange, p)
 
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
-    p.y -= 50; 
+    p.y -= 50;
 
     # Set the custom attributes of the layout subclass so that
     # the text will be filled and stroked and the fill color
@@ -327,25 +327,25 @@ def drawWithCustomNSLayout():
     # will be stroked with black.
     _myLayout.setTextMode_(kCGTextFillStroke)
     _myLayout.setFillColor_(Utilities.getRGBOpaqueRedColor())
-    # Draw text line 3.    
+    # Draw text line 3.
     _myLayout.drawGlyphsForGlyphRange_atPoint_(_myTextRange, p)
 
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 
-    p.y -= 50; 
+    p.y -= 50;
 
     # Set the custom attributes of the layout subclass so that
     # the text will be filled, stroked, then clipped.
     _myLayout.setTextMode_(kCGTextFillStrokeClip)
-    
+
     # Set the clipping proc to MyClipProc which requires
     # no info data.
     _myLayout.setClippingDrawProc_withInfo_(MyClipProc, None)
-    
-    # Draw text line 4.    
+
+    # Draw text line 4.
     _myLayout.drawGlyphsForGlyphRange_atPoint_(_myTextRange, p)
-    
+
     if doPointDrawing:
         Utilities.drawPoint(context, p)
 

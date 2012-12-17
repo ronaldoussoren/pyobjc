@@ -32,5 +32,3 @@ if sys.maxsize > 2**32:
 
 if __name__ == '__main__':
     main()
-
-        

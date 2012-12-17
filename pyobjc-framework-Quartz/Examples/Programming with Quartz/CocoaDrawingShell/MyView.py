@@ -10,11 +10,11 @@ def doAlphaRects(context):
     numRects = 6
     rotateAngle = 2 * math.pi / numRects
     tintAdjust = 1./numRects
-    
+
     # ***** Part 2 *****
-    CGContextTranslateCTM(context, 2*ourRect.size.width, 
+    CGContextTranslateCTM(context, 2*ourRect.size.width,
                                     2*ourRect.size.height)
-    
+
     # ***** Part 3 *****
     tint = 1.0
     for i in range(numRects):
@@ -28,16 +28,16 @@ class MyView (NSView):
         nsctx = NSGraphicsContext.currentContext()
         context = nsctx.graphicsPort()
 
-	CGContextSetLineWidth(context, 5.0)
-	# Draw the coordinate axes.
-	CGContextBeginPath(context)
-	# First draw the x axis.
-	CGContextMoveToPoint(context, -2000., 0.0)
-	CGContextAddLineToPoint(context, 2000., 0.0)
-	CGContextDrawPath(context, kCGPathStroke)
-	# Next draw the y axis.
-	CGContextMoveToPoint(context, 0.0, -2000.0)
-	CGContextAddLineToPoint(context, 0.0, 2000.0)
-	CGContextDrawPath(context, kCGPathStroke)
-	
-	doAlphaRects(context)
+        CGContextSetLineWidth(context, 5.0)
+        # Draw the coordinate axes.
+        CGContextBeginPath(context)
+        # First draw the x axis.
+        CGContextMoveToPoint(context, -2000., 0.0)
+        CGContextAddLineToPoint(context, 2000., 0.0)
+        CGContextDrawPath(context, kCGPathStroke)
+        # Next draw the y axis.
+        CGContextMoveToPoint(context, 0.0, -2000.0)
+        CGContextAddLineToPoint(context, 0.0, 2000.0)
+        CGContextDrawPath(context, kCGPathStroke)
+
+        doAlphaRects(context)

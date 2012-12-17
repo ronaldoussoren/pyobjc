@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 import objc
 
 class TestPython3Types (TestCase):
-    # Add tests here for all metadata and function arguments (when py3k and py2 
+    # Add tests here for all metadata and function arguments (when py3k and py2
     # behaviour is different)
 
     def testSelectorArguments(self):
