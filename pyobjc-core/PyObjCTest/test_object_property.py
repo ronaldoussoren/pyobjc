@@ -122,6 +122,13 @@ class TestObjectProperty (TestCase):
                 return (self.p4 or '', self.p2 or '', self.p1 or '')
             p3.depends_on('p4')
 
+            p5 = objc.object_property(read_only=True)
+
+            @p5.getter
+            def p5(self):
+                return "-%s-"%(self.p4,)
+            p5.depends_on('p4')
+
         observer1 = OCObserve.alloc().init()
         observer2 = OCObserve.alloc().init()
         object1 = OCTestObjectProperty2.alloc().init()
@@ -159,6 +166,7 @@ class TestObjectProperty (TestCase):
         observer2.register(object2, 'p2')
         observer2.register(object2, 'p3')
         observer2.register(object2, 'p4')
+        observer2.register(object2, 'p5')
 
         try:
             self.assertEqual(observer1.values, [])
@@ -183,7 +191,7 @@ class TestObjectProperty (TestCase):
 
             seen = { v[1]: v[2]['new'] for v in observer2.values }
             self.assertEqual(seen,
-               {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c' })
+                {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c', 'p5': '-c-' })
 
         finally:
             observer1.unregister(object1, 'p1')
@@ -194,6 +202,7 @@ class TestObjectProperty (TestCase):
             observer2.unregister(object2, 'p2')
             observer2.unregister(object2, 'p3')
             observer2.unregister(object2, 'p4')
+            observer2.unregister(object2, 'p5')
 
     def testDepends2(self):
         class OCTestObjectProperty2B (NSObject):
@@ -476,6 +485,13 @@ class TestObjectProperty (TestCase):
         self.assertTrue(sub.respondsToSelector_(b'isP3'))
         self.assertFalse(sub.respondsToSelector_(b'p3'))
 
+        try:
+            del sub.p3
+        except TypeError:
+            pass
+        else:
+            self.fail("Deleting an object_property shouldn't be possible")
+
     def testDefaultSetterWithoutIvar(self):
 
         try:
@@ -490,6 +506,35 @@ class TestObjectProperty (TestCase):
         try:
             class OCTestObjectProperty8 (NSObject):
                 p1 = objc.object_property(ivar=objc.NULL, read_only=True)
+        except ValueError:
+            pass
+
+        else:
+            self.fail("ValueError not raised")
+
+
+        try:
+            class OCTestObjectProperty9 (NSObject):
+                p1 = objc.object_property(read_only=True)
+
+                @p1.setter
+                def p1(self, v):
+                    pass
+
+        except ValueError:
+            pass
+
+        else:
+            self.fail("ValueError not raised")
+
+        try:
+            class OCTestObjectProperty9 (NSObject):
+                p1 = objc.object_property(read_only=True)
+
+                @p1.validate
+                def p1(self, v):
+                    pass
+
         except ValueError:
             pass
 
