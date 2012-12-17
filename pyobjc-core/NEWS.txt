@@ -21,6 +21,9 @@ Version 2.4.1
 
 - Issue #28: Avoid crash when using CGEventTabProxy values.
 
+- Issue #33: "easy_install pyobjc" no longer tries to install the
+  InterfaceBuilderKit bindings on OSX 10.7 or later.
+
 Version 2.4
 -----------
 
