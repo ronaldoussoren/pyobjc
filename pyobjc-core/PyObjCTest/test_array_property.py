@@ -1,6 +1,8 @@
 from PyObjCTools.TestSupport import *
 import objc
+import pickle
 import collections
+import sys
 
 NSObject = objc.lookUpClass('NSObject')
 NSIndexSet = objc.lookUpClass('NSIndexSet')
@@ -8,6 +10,7 @@ NSMutableIndexSet = objc.lookUpClass('NSMutableIndexSet')
 
 class TestArrayPropertyHelper (NSObject):
     array = objc.array_property()
+    array2 = objc.array_property()
     roArray = objc.array_property(read_only=True)
 
 from PyObjCTest.test_object_property import OCObserve
@@ -40,11 +43,11 @@ class TestArrayProperty (TestCase):
         o = TestArrayPropertyHelper.alloc().init()
         observer.register(o, 'array')
         try:
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
             self.assertEqual(len(o.array), 0)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {'array': []})
             o.array = l
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
 
 
             self.assertEqual(len(o.array), 3)
@@ -56,10 +59,25 @@ class TestArrayProperty (TestCase):
             self.assertEqual(len(l), 4)
             o.array.append(5)
             self.assertEqual(len(l), 4)
+            self.assertEqual(len(o.array), 4)
 
         finally:
             observer.unregister(o, 'array')
 
+        l = [1,2]
+        o.array2 = l
+        self.assertIsNot(o._array2, l)
+
+        o.array2 = o.array
+        self.assertEqual(o.array2, [1, 2, 3, 5])
+        o.array2.append(1)
+        self.assertEqual(o.array2, [1, 2, 3, 5, 1])
+        self.assertEqual(o.array, [1, 2, 3, 5])
+
+
+        arr = o.array2
+        o._array2 = None
+        self.assertEqual(arr, [])
 
 
     def testGetSetItem(self):
@@ -74,22 +92,35 @@ class TestArrayProperty (TestCase):
         len(o.array)
         try:
             IS = NSIndexSet.alloc().initWithIndex_(0)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {'array': []})
 
             o.array.append(1)
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': [1]})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertEqual(observer.values[-1][-1]['new'], [1])
+
+            o.array.append(2)
+            o.array.append(3)
 
 
             self.assertEqual(o.array[0], 1)
             o.array[0] = 4
             self.assertEqual(o.array[0], 4)
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(observer.seen, { 'array': [4] })
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertEqual(observer.values[-1][-1]['old'], [1])
             self.assertEqual(observer.values[-1][-1]['new'], [4])
+
+            o.array[-1] = 9
+            self.assertEqual(o.array[2], 9)
+            IS = NSIndexSet.alloc().initWithIndex_(2)
+            self.assertEqual(observer.seen, { 'array': [9] })
+            self.assertEqual(observer.values[-1][-1]['indexes'], IS)
+            self.assertEqual(observer.values[-1][-1]['old'], [3])
+            self.assertEqual(observer.values[-1][-1]['new'], [9])
+
+            self.assertEqual(o.array[-1], 9)
 
         finally:
             observer.unregister(o, 'array')
@@ -107,20 +138,21 @@ class TestArrayProperty (TestCase):
             IS3 = NSMutableIndexSet.alloc().init()
             IS3.addIndex_(0)
             IS3.addIndex_(2)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
 
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertNotIn('indexes', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['new'], [1, 2, 3])
 
 
-            self.assertEqual(o.array[0], 1)
             o.array[1:3] = [4, 5]
+            self.assertEqual(o.array[0], 1)
             self.assertEqual(o.array[1], 4)
             self.assertEqual(o.array[2], 5)
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(o.array,[1, 4, 5])
+            self.assertEqual(observer.seen, {'array': [4, 5]})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS2)
             self.assertEqual(observer.values[-1][-1]['old'], [2, 3])
             self.assertEqual(observer.values[-1][-1]['new'], [4, 5])
@@ -130,7 +162,7 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[0], 9)
             self.assertEqual(o.array[1], 4)
             self.assertEqual(o.array[2], 10)
-            self.assertEqual(len(observer.values), 3)
+            self.assertEqual(observer.seen, { 'array': [9, 10]})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS3)
             self.assertEqual(observer.values[-1][-1]['old'], [1, 5])
             self.assertEqual(observer.values[-1][-1]['new'], [9, 10])
@@ -147,14 +179,16 @@ class TestArrayProperty (TestCase):
         o = TestArrayPropertyHelper.alloc().init()
         observer.register(o, 'array')
 
+        self.assertEqual(o.array, [])
+
         try:
             IS = NSIndexSet.alloc().initWithIndex_(0)
             IS1 = NSIndexSet.alloc().initWithIndex_(4)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {'array': []})
 
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 1)
@@ -164,7 +198,7 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[0], 'a')
             self.assertEqual(len(o.array), 4)
 
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(observer.seen, {'array': ['a']})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertNotIn('old', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['new'], ['a'])
@@ -173,10 +207,14 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[4], 'b')
             self.assertEqual(len(o.array), 5)
 
-            self.assertEqual(len(observer.values), 3)
+            self.assertEqual(observer.seen, {'array': ['b']})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS1)
             self.assertNotIn('old', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['new'], ['b'])
+
+            self.assertRaises(TypeError, o.array.insert, slice(0,2), 4)
+            self.assertRaises(TypeError, o.array.insert, 'a', 4)
+            o.array.insert(0, 'a')
 
         finally:
             observer.unregister(o, 'array')
@@ -192,11 +230,11 @@ class TestArrayProperty (TestCase):
         try:
             IS = NSIndexSet.alloc().initWithIndex_(0)
             IS2 = NSIndexSet.alloc().initWithIndex_(2)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
 
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 1)
@@ -207,7 +245,6 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[0], 2)
             self.assertEqual(len(o.array), 3)
 
-            self.assertEqual(len(observer.values), 2)
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertNotIn('new', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], [1])
@@ -216,10 +253,12 @@ class TestArrayProperty (TestCase):
             self.assertEqual(v, 4)
             self.assertEqual(len(o.array), 2)
 
-            self.assertEqual(len(observer.values), 3)
             self.assertEqual(observer.values[-1][-1]['indexes'], IS2)
             self.assertNotIn('new', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], [4])
+
+            self.assertRaises(TypeError, o.array.pop, slice(0, 2))
+            self.assertRaises(TypeError, o.array.pop, 'a')
 
         finally:
             observer.unregister(o, 'array')
@@ -235,11 +274,11 @@ class TestArrayProperty (TestCase):
         try:
             IS = NSIndexSet.alloc().initWithIndex_(0)
             IS2 = NSIndexSet.alloc().initWithIndex_(2)
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
 
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 1)
@@ -249,7 +288,6 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[0], 2)
             self.assertEqual(len(o.array), 3)
 
-            self.assertEqual(len(observer.values), 2)
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertNotIn('new', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], [1])
@@ -257,7 +295,6 @@ class TestArrayProperty (TestCase):
             del o.array[2]
             self.assertEqual(len(o.array), 2)
 
-            self.assertEqual(len(observer.values), 3)
             self.assertEqual(observer.values[-1][-1]['indexes'], IS2)
             self.assertNotIn('new', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], [4])
@@ -280,7 +317,7 @@ class TestArrayProperty (TestCase):
 
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 1)
@@ -291,7 +328,6 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[1], 4)
             self.assertEqual(len(o.array), 2)
 
-            self.assertEqual(len(observer.values), 2)
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertNotIn('new', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], [1, 3])
@@ -309,7 +345,7 @@ class TestArrayProperty (TestCase):
         try:
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l })
             self.assertEqual(o.array[0], 1)
 
             o.array.extend(l2)
@@ -317,10 +353,10 @@ class TestArrayProperty (TestCase):
             self.assertEqual(len(o.array), 7)
             self.assertEqual(o.array[4], 'a')
 
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(observer.seen, {'array': l2 })
             self.assertEqual(observer.values[-1][-1]['indexes'], NSIndexSet.alloc().initWithIndexesInRange_((4, 3)))
             self.assertNotIn('old', observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]['new'], ['a', 'b', 'c'])
+            self.assertEqual(observer.values[-1][-1]['new'], l2)
 
         finally:
             observer.unregister(o, 'array')
@@ -335,24 +371,31 @@ class TestArrayProperty (TestCase):
         try:
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertEqual(o.array[0], 1)
 
             o.array += l2
 
+            self.assertEqual(o.array, l + l2)
             self.assertEqual(len(o.array), 7)
             self.assertEqual(o.array[4], 'a')
 
-            #self.assertEqual(len(observer.values), 3)
-            #self.assertEqual(observer.values[-2][-1]['indexes'], NSIndexSet.alloc().initWithIndexesInRange_((4, 3)))
-            #self.assertNotIn('old', observer.values[-2][-1])
-            #self.assertEqual(observer.values[-2][-1]['new'], ['a', 'b', 'c'])
+            self.assertEqual(observer.seen, {'array': l + l2})
+            self.assertEqual(observer.values[-2][-1]['indexes'], NSIndexSet.alloc().initWithIndexesInRange_((4, 3)))
+            self.assertNotIn('old', observer.values[-2][-1])
+            self.assertEqual(observer.values[-2][-1]['new'], l2)
 
-            self.assertEqual(len(observer.values), 2)
             self.assertNotIn('indexes', observer.values[-1][-1])
+
+            before = observer.values[:]
+            v = o.array + l2
+            self.assertEqual(observer.values, before)
+            self.assertEqual(v, l + l2 + l2)
+            self.assertIsInstance(v, list)
 
         finally:
             observer.unregister(o, 'array')
+
 
     def testIMul(self):
         observer = OCObserve.alloc().init()
@@ -363,9 +406,10 @@ class TestArrayProperty (TestCase):
         try:
             o.array = l
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l})
             self.assertEqual(o.array[0], 1)
 
+            observer.values[:] = []
             o.array *= 3
 
             self.assertEqual(len(o.array), 6)
@@ -376,13 +420,19 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[4], 1)
             self.assertEqual(o.array[5], 2)
 
-            #self.assertEqual(len(observer.values), 3)
-            #self.assertEqual(observer.values[-2][-1]['indexes'], NSIndexSet.alloc().initWithIndexesInRange_((2, 4)))
-            #self.assertNotIn('old', observer.values[-2][-1])
-            #self.assertEqual(observer.values[-2][-1]['new'], [1, 2, 1, 2])
+            self.assertEqual(observer.seen, {'array': [ 1, 2, 1, 2, 1, 2]})
+            self.assertEqual(observer.values[-2][-1]['indexes'], NSIndexSet.alloc().initWithIndexesInRange_((2, 4)))
+            self.assertNotIn('old', observer.values[-2][-1])
+            self.assertEqual(observer.values[-2][-1]['new'], [ 1, 2, 1, 2])
 
             self.assertEqual(len(observer.values), 2)
             self.assertNotIn('indexes', observer.values[-1][-1])
+
+            before = observer.values[:]
+            n = o.array * 4
+            self.assertEqual(observer.values, before)
+            self.assertEqual(n, [1,2]* 3 * 4)
+            self.assertIsInstance(n, list)
 
         finally:
             observer.unregister(o, 'array')
@@ -398,13 +448,13 @@ class TestArrayProperty (TestCase):
 
         try:
             IS = NSIndexSet.alloc().initWithIndexesInRange_((0, 4))
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
 
             orig_l = l[:]
             o.array = l
 
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l })
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 2)
@@ -417,7 +467,7 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[3], 4)
             self.assertEqual(len(o.array), 4)
 
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(observer.seen, {'array': [1,2,3,4]})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertEqual(observer.values[-1][-1]['old'], l)
             self.assertEqual(observer.values[-1][-1]['new'], [1,2,3,4])
@@ -436,13 +486,13 @@ class TestArrayProperty (TestCase):
 
         try:
             IS = NSIndexSet.alloc().initWithIndexesInRange_((0, 4))
-            self.assertEqual(len(observer.values), 0)
+            self.assertEqual(observer.seen, {})
 
             orig_l = l[:]
             o.array = l
 
 
-            self.assertEqual(len(observer.values), 1)
+            self.assertEqual(observer.seen, {'array': l })
             self.assertNotIn('indexes', observer.values[-1][-1])
 
             self.assertEqual(o.array[0], 2)
@@ -455,7 +505,7 @@ class TestArrayProperty (TestCase):
             self.assertEqual(o.array[3], 2)
             self.assertEqual(len(o.array), 4)
 
-            self.assertEqual(len(observer.values), 2)
+            self.assertEqual(observer.seen, {'array': [3, 1, 4, 2]})
             self.assertEqual(observer.values[-1][-1]['indexes'], IS)
             self.assertEqual(observer.values[-1][-1]['old'], l)
             self.assertEqual(observer.values[-1][-1]['new'], [3, 1, 4, 2])
@@ -525,6 +575,7 @@ class TestArrayProperty (TestCase):
         self.assertRaises(ValueError, o.roArray.extend, [1,2])
         self.assertRaises(ValueError, o.roArray.sort)
         self.assertRaises(ValueError, o.roArray.reverse)
+        self.assertRaises(ValueError, o.roArray.pop)
         try:
             o.roArray[0] = 2
         except ValueError:
@@ -593,6 +644,82 @@ class TestArrayProperty (TestCase):
         o.array.append(1)
         self.assertEqual(len(o.array), 1)
         self.assertEqual(len(array), 1)
+
+    def testPickling(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        o.array.extend([3,4,5])
+
+        self.assertFalse(isinstance(o.array, list))
+
+        p = pickle.dumps(o.array)
+        v = pickle.loads(p)
+        self.assertEqual(v, o.array)
+        self.assertTrue(isinstance(v, list))
+
+    def testRepr(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        o.array.extend([3,4,5])
+
+        self.assertFalse(isinstance(o.array, list))
+
+        self.assertEqual(repr(o.array), '<array proxy for property array %r>'%([3,4,5],))
+
+    def testFinding(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        o.array.extend([3,4,5])
+
+        self.assertEqual(0, o.array.index(3))
+
+    def testCompare(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        o.array.extend([3,4,5])
+        o.array2.extend([4,5])
+
+        self.assertFalse(o.array == o.array2)
+        self.assertFalse(o.array ==  [4,5])
+        self.assertTrue(o.array ==  [3,4,5])
+
+        self.assertTrue(o.array != o.array2)
+        self.assertTrue(o.array !=  [4,5])
+        self.assertFalse(o.array !=  [3,4,5])
+
+        o.array2.insert(0, 3)
+        self.assertFalse(o.array != o.array2)
+        self.assertTrue(o.array == o.array2)
+
+        o.array2 = [4,5]
+        self.assertTrue(o.array < o.array2)
+        self.assertTrue(o.array < [4,5])
+        self.assertFalse(o.array2 < o.array)
+        self.assertFalse(o.array2 < [4,5])
+        self.assertTrue(o.array2 <= o.array2)
+        self.assertTrue(o.array2 <= [4,5])
+
+        self.assertTrue(o.array <= o.array2)
+        self.assertTrue(o.array <= [4,5])
+        self.assertFalse(o.array2 <= o.array)
+
+        self.assertFalse(o.array > o.array2)
+        self.assertFalse(o.array > [4,5])
+        self.assertTrue(o.array2 > o.array)
+        self.assertFalse(o.array2 > [4,5])
+
+        self.assertFalse(o.array >= o.array2)
+        self.assertFalse(o.array >= [4,5])
+        self.assertTrue(o.array2 >= o.array)
+        self.assertTrue(o.array2 >= [4,5])
+        self.assertTrue(o.array2 >= o.array2)
+
+        if sys.version_info[0] == 2:
+            n = cmp(o.array2, o.array)
+            self.assertEqual(n, 1)
+
+            n = cmp(o.array2, [3,4,5])
+            self.assertEqual(n, 1)
+
+
+        
+
 
 if __name__ == "__main__":
     main()

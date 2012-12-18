@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from PyObjCTools.TestSupport import *
 import objc
+import copy
 from PyObjCTest.fnd import *
 
 objc.registerMetaDataForSelector(
@@ -28,6 +29,11 @@ class OCObserve (NSObject):
         self.registrations = []
         return self
 
+    @property
+    def seen(self):
+        return { v[1]: v[2]['new'] for v in self.values }
+
+
     def register(self, object, keypath):
         object.addObserver_forKeyPath_options_context_(
                 self, keypath, 0x3, None)
@@ -41,7 +47,13 @@ class OCObserve (NSObject):
 
         # We don't get to keep the 'change' dictionary, make
         # a copy (it gets reused in future calls)
-        self.values.append((object, keypath, dict(change)))
+        new_change = {}
+        for k in change:
+            v = change[k]
+            if isinstance(v, (list, tuple, set)):
+                v = copy.copy(v)
+            new_change[k] = v
+        self.values.append((object, keypath, new_change))
 
     def __enter__(self):
         return self
@@ -185,12 +197,12 @@ class TestObjectProperty (TestCase):
             self.assertEqual(object2.pyobjc_instanceMethods.p3(), ("c", "b", "a"))
             self.assertEqual(object2.pyobjc_instanceMethods.p4(), "c")
 
-            seen = { v[1]: v[2]['new'] for v in observer1.values }
-            self.assertEqual(seen,
+            #seen = { v[1]: v[2]['new'] for v in observer1.values }
+            self.assertEqual(observer1.seen,
                 {'p1': 'a', 'p2': 'b', 'p3': ('a', 'b') })
 
-            seen = { v[1]: v[2]['new'] for v in observer2.values }
-            self.assertEqual(seen,
+            #seen = { v[1]: v[2]['new'] for v in observer2.values }
+            self.assertEqual(observer2.seen,
                 {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c', 'p5': '-c-' })
 
         finally:
@@ -295,12 +307,12 @@ class TestObjectProperty (TestCase):
             self.assertEqual(object2.pyobjc_instanceMethods.p3(), ("c", "b", "a"))
             self.assertEqual(object2.pyobjc_instanceMethods.p4(), "c")
 
-            seen = { v[1]: v[2]['new'] for v in observer1.values }
-            self.assertEqual(seen,
+            #seen = { v[1]: v[2]['new'] for v in observer1.values }
+            self.assertEqual(observer1.seen,
                 {'p1': 'a', 'p2': 'b', 'p3': ('a', 'b') })
 
-            seen = { v[1]: v[2]['new'] for v in observer2.values }
-            self.assertEqual(seen,
+            #seen = { v[1]: v[2]['new'] for v in observer2.values }
+            self.assertEqual(observer2.seen,
                {'p1': 'a', 'p2': 'b', 'p3': ('c', 'b', 'a'), 'p4': 'c' })
 
         finally:
@@ -338,6 +350,14 @@ class TestObjectProperty (TestCase):
                 else:
                     return (False, 2, "snake")
 
+        class OCTestObjectProperty4b (OCTestObjectProperty4):
+            @OCTestObjectProperty4.p1.validate
+            def p1(self, value, error):
+                if value == 2:
+                    return (True, value, None)
+                else:
+                    return (False, 2, "monty")
+
 
         o = OCTestObjectProperty4.alloc().init()
         o.p1 = 'f'
@@ -356,6 +376,25 @@ class TestObjectProperty (TestCase):
         self.assertFalse(ok)
         self.assertEqual(value, 2)
         self.assertEqual(error, "snake")
+
+        l = []
+        o = OCTestObjectProperty4b.alloc().init()
+        o.p1 = 'f'
+        self.assertEqual(o.p1, 'f?!')
+        self.assertEqual(o._p1, 'f?')
+        self.assertEqual(l, [('set', 'f'), ('get',)])
+
+        ok, value, error = o.validateValue_forKey_error_(
+                2, 'p1', None)
+        self.assertTrue(ok)
+        self.assertEqual(value, 2)
+        self.assertEqual(error, None)
+
+        ok, value, error = o.validateValue_forKey_error_(
+                9, 'p1', None)
+        self.assertFalse(ok)
+        self.assertEqual(value, 2)
+        self.assertEqual(error, "monty")
 
     def testNative(self):
         l = []
@@ -540,6 +579,17 @@ class TestObjectProperty (TestCase):
 
         else:
             self.fail("ValueError not raised")
+
+class TestBoolProperty (TestCase):
+    def testDefault(self):
+        class OCTestBoolProperty1 (NSObject):
+            p1 = objc.bool_property()
+
+        o = OCTestBoolProperty1.alloc().init()
+        self.assertEqual(o.p1, False)
+
+        o.p1 = [1, 2]
+        self.assertEqual(o.p1, True)
 
 if __name__ == "__main__":
     main()

@@ -16,18 +16,25 @@ class TestDictProperty (TestCase):
 
         o = TestDictPropertyHelper.alloc().init()
         observer.register(o, 'aDict')
+
+        cleanup = []
         try:
             self.assertEqual(len(o.aDict), 0)
             self.assertEqual(o.aDict, {})
-            self.assertEqual(len(observer.values), 0)
+
+            seen = { v[1]: v[2]['new'] for v in observer.values }
+            self.assertEqual(seen, {'aDict': {}})
 
             o.aDict['key'] = 42
-            self.assertEqual(len(observer.values), 0)
+            seen = { v[1]: v[2]['new'] for v in observer.values }
+            self.assertEqual(seen, {'aDict': { 'key': 42}})
 
             observer.register(o, 'aDict.key')
+            cleanup.append(lambda: observer.unregister(o, 'aDict.key'))
 
             o.aDict['key'] = 43
-            self.assertEqual(len(observer.values), 1)
+            seen = { v[1]: v[2]['new'] for v in observer.values }
+            self.assertEqual(seen, {'aDict': { 'key': 43}, 'aDict.key': 43})
 
             self.assertNotIn('indexes', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], 42)
@@ -35,14 +42,16 @@ class TestDictProperty (TestCase):
 
             del o.aDict['key']
 
-            self.assertEqual(len(observer.values), 2)
+            seen = { v[1]: v[2]['new'] for v in observer.values }
+            self.assertEqual(seen, {'aDict': {}, 'aDict.key': None})
             self.assertNotIn('indexes', observer.values[-1][-1])
             self.assertEqual(observer.values[-1][-1]['old'], 43)
             self.assertEqual(observer.values[-1][-1]['new'], None)
 
         finally:
             observer.unregister(o, 'aDict')
-            observer.unregister(o, 'aDict.key')
+            for func in cleanup[::-1]:
+                func()
 
 if __name__ == "__main__":
     main()
