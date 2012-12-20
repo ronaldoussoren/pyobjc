@@ -252,7 +252,7 @@ def _fixup_compiler():
         if 'llvm-gcc' in data:
             cc = None
 
-    if not _working_compiler(cc):
+    if cc is not None and not _working_compiler(cc):
         cc = None
 
     if cc is None:
