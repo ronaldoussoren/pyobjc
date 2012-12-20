@@ -196,7 +196,7 @@ class TestSetProperty (TestCase):
             self.assertEqual(len(observer.values), 2)
             print observer.values[-1][-1]
             self.assertEqual(observer.values[-1][-1]['kind'], 1)
-            #self.assertEqual(observer.values[-1][-1]['old'], set([1]))
+            self.assertEqual(observer.values[-1][-1]['old'], set([1]))
             self.assertEqual(observer.values[-1][-1]['new'], set([1,2,3]))
 
             self.assertEqual(o.aSet, {1,2,3})
@@ -205,9 +205,6 @@ class TestSetProperty (TestCase):
             self.assertEqual(o.aSet, set([3]))
             self.assertEqual(len(observer.values), 4)
             self.assertEqual(observer.values[-1][-1]['kind'], 1)
-            print observer.values[-1][-1]
-            print id(observer.values[-1][-1]['old'])
-            print id(observer.values[-1][-1]['new'])
             self.assertEqual(observer.values[-1][-1]['old'], set([1,2,3]))
             self.assertEqual(observer.values[-1][-1]['new'], set([3]))
 
