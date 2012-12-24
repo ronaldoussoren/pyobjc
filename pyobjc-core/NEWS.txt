@@ -152,6 +152,32 @@ Version 2.5b1
 - Fixed some issues with :class:`objc.array_property` and :class:`objc.set_property`
   that were found by much improved unittests.
 
+- Fixed issues with :mod:`PyObjCTools.KeyValueCoding` that were found by improved
+  unittests:
+
+  - ``getKey`` didn't work propertly on dictionaries (dictionaries were treated as sequences)
+
+  - ``getKeyPath(list, "@avg.field")`` didn't work when field wasn't a valid key for all
+     items in the list, and likewise for the '@sum', '@min', '@max' special keys.
+
+  - ``getKeyPath`` didn't raise the correct exception for empty key paths
+
+  - ``@unionOfObjects`` and ``@distinctUnionOfObjects`` operators for Python sequences
+    didn't raise an exception when the selected keypath didn't exist on an item of the sequence.
+
+  - ``@unionOfArrays`` and ``@distinctUnionOfArrays`` operators for Python sequences
+    didn't raise an exception when the selected keypath didn't exist on an item of the sequence.
+
+  - ``@distinctUnionOfArrays`` and ``@distinctUnionOfObjects`` didn't work properly when
+     the keypath pointed to objects that weren't hashable.
+
+  - ``@distinctUnionOfSets`` operator was not present at all. 
+
+
+- Removed Mac OS X 10.2 (!) compatibility from :mod:`PyObjCTools.KeyValueCoding`.
+
+- PyObjCTools.KeyValueCoding has undocumented attributes 'ArrayOperators' and 'arrayOperators',
+  both will be removed in a future release.
 
 
 Version 2.4.1

@@ -36,24 +36,17 @@ if sys.version_info[0] == 2:
 import objc
 import types
 import sys
+import collections
+import warnings
 
 if sys.version_info[0] == 2:
     from itertools import imap as map
     pass
 
-else:
+else:   # pragma: no cover (py3k)
     basestring = str
 
-if objc.lookUpClass('NSObject').alloc().init().respondsToSelector_('setValue:forKey:'):
-    SETVALUEFORKEY = 'setValue_forKey_'
-    SETVALUEFORKEYPATH = 'setValue_forKeyPath_'
-else:
-    SETVALUEFORKEY = 'takeValue_forKey_'
-    SETVALUEFORKEYPATH = 'takeValue_forKeyPath_'
-
-if sys.version_info[0] == 2:
-    SETVALUEFORKEY = str(SETVALUEFORKEY)
-    SETVALUEFORKEYPATH = str(SETVALUEFORKEYPATH)
+_null = objc.lookUpClass('NSNull').null()
 
 def keyCaps(s):
     return s[:1].capitalize() + s[1:]
@@ -80,69 +73,108 @@ def msum(iterable):
         partials[i:] = [x]
     return sum(partials, 0.0)
 
-class ArrayOperators(object):
-    def avg(self, obj, segments):
+class _ArrayOperators (object):
+
+    @staticmethod
+    def avg(obj, segments):
         path = '.'.join(segments)
         lst = getKeyPath(obj, path)
         count = len(lst)
         if count == 0:
             return 0.0
-        return msum(map(float, lst)) / count
+        return msum(float(x) if x is not _null else 0.0 for x in lst) / count
 
-    def count(self, obj, segments):
+    @staticmethod
+    def count(obj, segments):
         return len(obj)
 
-    def distinctUnionOfArrays(self, obj, segments):
+    @staticmethod
+    def distinctUnionOfArrays(obj, segments):
         path = '.'.join(segments)
         rval = []
         s = set()
-        lists = getKeyPath(obj, path)
-        for lst in lists:
-            for item in lst:
-                if item in s:
+        r = []
+        for lst in obj:
+            for item in [ getKeyPath(item, path) for item in lst ]:
+                try:
+                    if item in s or item in r:
+                        continue
+                    rval.append(item)
+                    s.add(item)
+
+                except TypeError:
+                    if item in rval:
+                        continue
+
+                    rval.append(item)
+                    r.append(item)
+        return rval
+
+    @staticmethod
+    def distinctUnionOfSets(obj, segments):
+        path = '.'.join(segments)
+        rval = set()
+        for lst in obj:
+            for item in [ getKeyPath(item, path) for item in lst ]:
+                rval.add(item)
+        return rval
+
+    @staticmethod
+    def distinctUnionOfObjects(obj, segments):
+        path = '.'.join(segments)
+        rval = []
+        s = set()
+        r = []
+        lst = [ getKeyPath(item, path) for item in obj ]
+        for item in lst:
+            try:
+                if item in s or item in r:
                     continue
+
                 rval.append(item)
                 s.add(item)
+
+            except TypeError:
+                if item in rval: 
+                    continue
+
+                rval.append(item)
+                r.append(item)
         return rval
 
-    def distinctUnionOfObjects(self, obj, segments):
+
+    @staticmethod
+    def max(obj, segments):
+        path = '.'.join(segments)
+        return max(x for x in getKeyPath(obj, path) if x is not _null)
+
+    @staticmethod
+    def min(obj, segments):
+        path = '.'.join(segments)
+        return min(x for x in getKeyPath(obj, path) if x is not _null)
+
+    @staticmethod
+    def sum(obj, segments):
+        path = '.'.join(segments)
+        lst = getKeyPath(obj, path)
+        return msum(float(x) if x is not _null else 0.0 for x in lst)
+
+    @staticmethod
+    def unionOfArrays(obj, segments):
         path = '.'.join(segments)
         rval = []
-        s = set()
-        lst = getKeyPath(obj, path)
-        for item in lst:
-            if item in s:
-                continue
-            rval.append(item)
-            s.add(item)
+        for lst in obj:
+            rval.extend([ getKeyPath(item, path) for item in lst ])
         return rval
 
-    def max(self, obj, segments):
-        path = '.'.join(segments)
-        return max(getKeyPath(obj, path))
 
-    def min(self, obj, segments):
+    @staticmethod
+    def unionOfObjects(obj, segments):
         path = '.'.join(segments)
-        return min(getKeyPath(obj, path))
+        return [ getKeyPath(item, path) for item in obj]
 
-    def sum(self, obj, segments):
-        path = '.'.join(segments)
-        lst = getKeyPath(obj, path)
-        return msum(map(float, lst))
 
-    def unionOfArrays(self, obj, segments):
-        path = '.'.join(segments)
-        rval = []
-        lists = getKeyPath(obj, path)
-        for lst in lists:
-            rval.extend(lst)
-        return rval
 
-    def unionOfObjects(self, obj, segments):
-        path = '.'.join(segments)
-        return getKeyPath(obj, path)
-
-arrayOperators = ArrayOperators()
 
 def getKey(obj, key):
     """
@@ -178,13 +210,13 @@ def getKey(obj, key):
             pass
 
     # check for array-like objects
-    if not isinstance(obj, basestring):
-        try:
-            itr = iter(obj)
-        except TypeError:
-            pass
-        else:
-            return [getKey(obj, key) for obj in itr]
+    if isinstance(obj, (collections.Sequence, collections.Set)) and not isinstance(obj, (basestring, collections.Mapping)):
+        def maybe_get(obj, key):
+            try:
+                return getKey(obj, key)
+            except KeyError:
+                return _null
+        return [maybe_get(obj, key) for obj in iter(obj)]
 
     try:
         m = getattr(obj, "get" + keyCaps(key))
@@ -243,7 +275,7 @@ def setKey(obj, key, value):
         return
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         try:
-            getattr(obj, SETVALUEFORKEY)(value, key)
+            obj.setValue_forKey_(value, key)
             return
         except ValueError as msg:
             raise KeyError(str(msg))
@@ -277,8 +309,12 @@ def getKeyPath(obj, keypath):
     Get the value for the keypath. Keypath is a string containing a
     path of keys, path elements are seperated by dots.
     """
+    if not keypath:
+        raise KeyError
+
     if obj is None:
         return None
+
 
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
         return obj.valueForKeyPath_(keypath)
@@ -289,7 +325,7 @@ def getKeyPath(obj, keypath):
     for e in elemiter:
         if e[:1] == '@':
             try:
-                oper = getattr(arrayOperators, e[1:])
+                oper = getattr(_ArrayOperators, e[1:])
             except AttributeError:
                 raise KeyError("Array operator %s not implemented" % (e,))
             return oper(cur, elemiter)
@@ -305,7 +341,7 @@ def setKeyPath(obj, keypath, value):
         return
 
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
-        return getattr(obj, SETVALUEFORKEYPATH)(value, keypath)
+        return obj.setValue_forKeyPath_(value, keypath)
 
     elements = keypath.split('.')
     cur = obj
@@ -341,3 +377,19 @@ class kvc(object):
         if not isinstance(item, basestring):
             raise TypeError('Keys must be strings')
         setKeyPath(self.__pyobjc_object__, item, value)
+
+
+
+# XXX: Undocumented and deprecated functions, only present because these had public
+#      names in previous releases and the module has suboptimal documentation.
+#      To be removed in PyObjC 3.0
+class ArrayOperators (_ArrayOperators):
+    def __init__(self):
+        warnings.warn("Don't use PyObjCTools.KeyValueCoding.ArrayOperators", DeprecationWarning)
+
+class _Deprecated (object):
+    def __getattr__(self, nm):
+        warnings.warn("Don't use PyObjCTools.KeyValueCoding.arrayOperators", DeprecationWarning)
+        return getattr(_ArrayOperators, nm)
+
+arrayOperators = _Deprecated()

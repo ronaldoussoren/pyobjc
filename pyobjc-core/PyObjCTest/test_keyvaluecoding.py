@@ -23,12 +23,344 @@ class TestHelpers (TestCase):
 
 
 class TestArrayOperators (TestCase):
-    def test_missing(self):
-        self.fail("Missing tests for ArrayOperators")
+    def test_unknown_function(self):
+        values = [ { 'a': 1 } ]
+
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, values, '@nofunction.a')
+
+
+    def test_sum(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : 1 },
+                { 'a' : 2, 'b': 4 },
+                { 'a' : 3, 'b': 2 },
+                { 'a' : 4 },
+        ]
+        self.assertEqual(arrayOperators.sum(values, 'a'), 10)
+        self.assertEqual(arrayOperators.sum(values, 'b'), 6)
+        self.assertEqual(arrayOperators.sum(values, 'c'), 0)
+        self.assertEqual(arrayOperators.sum([], 'b'), 0)
+        self.assertRaises(KeyError, arrayOperators.sum, [], ())
+
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@sum.a'), 10)
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@sum.b'), 6)
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@sum.c'), 0)
+
+
+    def test_avg(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : 1 },
+                { 'a' : 2, 'b': 4 },
+                { 'a' : 3, 'b': 2 },
+                { 'a' : 4 },
+        ]
+        self.assertEqual(arrayOperators.avg(values, 'a'), 2.5)
+        self.assertEqual(arrayOperators.avg(values, 'b'), 1.5)
+        self.assertEqual(arrayOperators.avg(values, 'c'), 0)
+        self.assertEqual(arrayOperators.avg([], 'b'), 0)
+        self.assertRaises(KeyError, arrayOperators.avg, [], ())
+
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@avg.a'), 2.5)
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@avg.b'), 1.5)
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@avg.c'), 0)
+
+    def test_count(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : 1 },
+                { 'a' : 2, 'b': 4 },
+                { 'a' : 3, 'b': 2 },
+                { 'a' : 4 },
+        ]
+        self.assertEqual(arrayOperators.count(values, 'a'), len(values))
+        self.assertEqual(arrayOperators.count(values, 'b'), len(values))
+        self.assertEqual(arrayOperators.count(values, ()), len(values))
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@count'), len(values))
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@count.a'), len(values))
+
+    def test_max(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : 1 },
+                { 'a' : 2, 'b': 5 },
+                { 'a' : 3, 'b': 2 },
+                { 'a' : 4 },
+        ]
+        self.assertEqual(arrayOperators.max(values, 'a'), 4)
+        self.assertEqual(arrayOperators.max(values, 'b'), 5)
+        self.assertRaises(KeyError, arrayOperators.max, values, ())
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@max.a'), 4)
+
+    def test_min(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : 1 },
+                { 'a' : 2, 'b': 5 },
+                { 'a' : 3, 'b': 2 },
+                { 'a' : 4 },
+        ]
+        self.assertEqual(arrayOperators.min(values, 'a'), 1)
+        self.assertEqual(arrayOperators.min(values, 'b'), 2)
+        self.assertRaises(KeyError, arrayOperators.min, values, ())
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@min.a'), 1)
+
+    def test_unionOfObjects(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        values = [
+                { 'a' : { 'b': 1 } },
+                { 'a' : { 'b': 1 } },
+                { 'a' : { 'b': 2 } },
+                { 'a' : { 'b': 3 } },
+        ]
+        
+        self.assertEqual(arrayOperators.unionOfObjects(values, ('a', 'b')), [1, 1, 2, 3 ])
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@unionOfObjects.a.b'), [1, 1, 2, 3])
+
+        values.append({'a': {}})
+        self.assertRaises(KeyError, arrayOperators.unionOfObjects, values, ('a', 'b'))
+
+    def test_distinctUnionOfObjects(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        class Int (object):
+            def __init__(self, value):
+                self._value = value
+
+            def __repr__(self):
+                return 'Int(%r)'%(self._value)
+
+            def __eq__(self, other):
+                if isinstance(other, int):
+                    return self._value == other
+
+                elif isinstance(other, Int):
+                    return self._value == other._value
+
+                else:
+                    return False
+
+            def __hash__(self): raise TypeError
+
+        values = [
+                { 'a' : { 'b': 1 } },
+                { 'a' : { 'b': Int(1) } },
+                { 'a' : { 'b': 2 } },
+                { 'a' : { 'b': Int(3) } },
+                { 'a' : { 'b': Int(3) } },
+        ]
+        
+        self.assertEqual(arrayOperators.distinctUnionOfObjects(values, ('a', 'b')), [1, 2, 3 ])
+        self.assertEqual(KeyValueCoding.getKeyPath(values, '@distinctUnionOfObjects.a.b'), [1, 2, 3 ])
+
+        values.append({'a': {}})
+        self.assertRaises(KeyError, arrayOperators.distinctUnionOfObjects, values, ('a', 'b'))
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, values, '@distinctUnionOfObjects.a.b')
+
+        class Rec (object):
+            def __init__(self, b):
+                self.b = b
+
+            def __eq__(self, other):
+                return type(self) == type(other) and self.b == other.b
+
+            def __hash__(self): raise TypeError
+
+        values = [
+                { 'a' : Rec(1) },
+                { 'a' : Rec(1) },
+                { 'a' : Rec(2) },
+                { 'a' : Rec(3) },
+        ]
+        self.assertEqual(arrayOperators.distinctUnionOfObjects(values, ('a', 'b')), [1, 2, 3 ])
+
+    def test_unionOfArrays(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        class Rec (object):
+            def __init__(self, **kwds):
+                for k, v in kwds.items():
+                    setattr(self, k, v)
+
+            def __eq__(self, other):
+                return type(self) is type(other) and self.__dict__ == other.__dict__
+
+            def __hash__(self): raise TypeError
+
+        class Str (object):
+            def __init__(self, value):
+                self._value = value
+
+            def __repr__(self):
+                return 'Str(%r)'%(self._value)
+
+            def __eq__(self, other):
+                if isinstance(other, str):
+                    return self._value == other
+
+                elif isinstance(other, Str):
+                    return self._value == other._value
+
+                else:
+                    return False
+
+            def __cmp__(self, other):
+                if isinstance(other, str):
+                    return cmp(self._value, other)
+
+                elif isinstance(other, Str):
+                    return cmp(self._value, other._value)
+
+                else:
+                    return NotImplementedError
+
+            def __hash__(self): raise TypeError
+
+        transactions = [
+            [
+                dict(payee='Green Power', amount=120.0),
+                dict(payee='Green Power', amount=150.0),
+                dict(payee=Str('Green Power'), amount=170.0),
+                Rec(payee='Car Loan', amount=250.0),
+                dict(payee='Car Loan', amount=250.0),
+                dict(payee='Car Loan', amount=250.0),
+                dict(payee=Str('General Cable'), amount=120.0),
+                dict(payee='General Cable', amount=155.0),
+                Rec(payee='General Cable', amount=120.0),
+                dict(payee='Mortgage', amount=1250.0),
+                dict(payee='Mortgage', amount=1250.0),
+                dict(payee='Mortgage', amount=1250.0),
+                dict(payee='Animal Hospital', amount=600.0),
+            ],
+            [
+                dict(payee='General Cable - Cottage',   amount=120.0),
+                dict(payee='General Cable - Cottage',   amount=155.0),
+                Rec(payee='General Cable - Cottage',   amount=120.0),
+                dict(payee='Second Mortgage',   amount=1250.0),
+                dict(payee='Second Mortgage',   amount=1250.0),
+                dict(payee=Str('Second Mortgage'),   amount=1250.0),
+                dict(payee='Hobby Shop',   amount=600.0),
+            ]
+        ]
+
+        self.assertEqual(arrayOperators.distinctUnionOfArrays(transactions, ('payee',)), ['Green Power', 'Car Loan', 'General Cable', 'Mortgage', 'Animal Hospital', 'General Cable - Cottage', 'Second Mortgage', 'Hobby Shop'])
+        self.assertEqual(KeyValueCoding.getKeyPath(transactions, '@distinctUnionOfArrays.payee'), ['Green Power', 'Car Loan', 'General Cable', 'Mortgage', 'Animal Hospital', 'General Cable - Cottage', 'Second Mortgage', 'Hobby Shop'])
+        self.assertEqual(arrayOperators.unionOfArrays(transactions, ('payee',)), [
+            'Green Power', 
+            'Green Power', 
+            'Green Power', 
+            'Car Loan', 
+            'Car Loan', 
+            'Car Loan', 
+            'General Cable', 
+            'General Cable', 
+            'General Cable', 
+            'Mortgage', 
+            'Mortgage', 
+            'Mortgage', 
+            'Animal Hospital', 
+            'General Cable - Cottage', 
+            'General Cable - Cottage', 
+            'General Cable - Cottage', 
+            'Second Mortgage', 
+            'Second Mortgage', 
+            'Second Mortgage', 
+            'Hobby Shop'
+        ])
+        self.assertEqual(KeyValueCoding.getKeyPath(transactions, '@unionOfArrays.payee'), [
+            'Green Power', 
+            'Green Power', 
+            'Green Power', 
+            'Car Loan', 
+            'Car Loan', 
+            'Car Loan', 
+            'General Cable', 
+            'General Cable', 
+            'General Cable', 
+            'Mortgage', 
+            'Mortgage', 
+            'Mortgage', 
+            'Animal Hospital', 
+            'General Cable - Cottage', 
+            'General Cable - Cottage', 
+            'General Cable - Cottage', 
+            'Second Mortgage', 
+            'Second Mortgage', 
+            'Second Mortgage', 
+            'Hobby Shop'
+        ])
+
+        self.assertRaises(KeyError, arrayOperators.unionOfArrays, transactions, 'date')
+        self.assertRaises(KeyError, arrayOperators.distinctUnionOfArrays, transactions, 'date')
+
+    def testUnionOfSets(self):
+        arrayOperators = KeyValueCoding._ArrayOperators
+
+        class Rec (object):
+            def __init__(self, n):
+                self.n = n
+
+            def __eq__(self, other):
+                return self.n == other.n
+
+            def __hash__(self):
+                return hash(self.n)
+
+        
+        values = {
+            frozenset({
+                Rec(1),
+                Rec(1),
+                Rec(2),
+            }),
+            frozenset({
+                Rec(1),
+                Rec(3),
+            }),
+        }
+
+        self.assertEqual(arrayOperators.distinctUnionOfSets(values, 'n'), {1,2,3})
+
+class TestDeprecatedJunk (TestCase):
+    def test_deprecated_class (self):
+        with filterWarnings('error', DeprecationWarning):
+            self.assertRaises(DeprecationWarning, KeyValueCoding.ArrayOperators)
+
+
+        o = KeyValueCoding.ArrayOperators()
+        self.assertIsInstance(o, KeyValueCoding._ArrayOperators)
+
+    def test_deprecated_object (self):
+        with filterWarnings('error', DeprecationWarning):
+            self.assertRaises(DeprecationWarning, getattr, KeyValueCoding.arrayOperators, 'avg')
+
+        self.assertEqual(KeyValueCoding.arrayOperators.avg, KeyValueCoding._ArrayOperators.avg)
+
+
+
+null = objc.lookUpClass('NSNull').null()
 
 class TestPythonObject (TestCase):
     def test_missing(self):
         self.fail("Missing tests for KVC on Python objects")
+
+    def test_dict_get(self):
+        d = {'a':1 }
+        self.assertEqual(KeyValueCoding.getKey(d, 'a'), 1)
+        self.assertRaises(KeyError, KeyValueCoding.getKey, d, 'b')
+
+    def test_array_get(self):
+        l = [{'a': 1, 'b':2 }, {'a':2} ]
+        self.assertEquals(KeyValueCoding.getKey(l, 'a'), [1, 2])
+        self.assertEquals(KeyValueCoding.getKey(l, 'b'), [2, null])
+
 
 
 class TestObjectiveCObject (TestCase):
