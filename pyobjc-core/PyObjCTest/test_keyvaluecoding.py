@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import *
 
 from PyObjCTools import KeyValueCoding
 import operator
+import os
 
 
 class TestHelpers (TestCase):
@@ -348,9 +349,6 @@ class TestDeprecatedJunk (TestCase):
 null = objc.lookUpClass('NSNull').null()
 
 class TestPythonObject (TestCase):
-    def test_missing(self):
-        self.fail("Missing tests for KVC on Python objects")
-
     def test_dict_get(self):
         d = {'a':1 }
         self.assertEqual(KeyValueCoding.getKey(d, 'a'), 1)
@@ -358,19 +356,284 @@ class TestPythonObject (TestCase):
 
     def test_array_get(self):
         l = [{'a': 1, 'b':2 }, {'a':2} ]
-        self.assertEquals(KeyValueCoding.getKey(l, 'a'), [1, 2])
-        self.assertEquals(KeyValueCoding.getKey(l, 'b'), [2, null])
+        self.assertEqual(KeyValueCoding.getKey(l, 'a'), [1, 2])
+        self.assertEqual(KeyValueCoding.getKey(l, 'b'), [2, null])
+
+    def test_attr_get(self):
+        class Record (object):
+            __slots__ = ('slot1', '__dict__')
+            def __init__(self, **kwds):
+                for k, v in kwds.items():
+                    setattr(self, k, v)
+
+            @property
+            def prop1(self):
+                return 'a property'
+
+        r = Record(slot1=42, attr1='a')
+
+        self.assertEqual(KeyValueCoding.getKey(r, 'slot1'), 42)
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr1'), 'a')
+        self.assertEqual(KeyValueCoding.getKey(r, 'prop1'), 'a property')
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'slot1'), 42)
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'attr1'), 'a')
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'prop1'), 'a property')
+
+        r = Record(attr1=Record(attr2='b', attr3=[Record(a=1), Record(a=2, b='b')]))
+        self.assertRaises(KeyError, KeyValueCoding.getKey, r, 'slot1')
+        self.assertRaises(KeyError, KeyValueCoding.getKey, r, 'attr99')
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, 'slot1')
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, 'attr99')
+
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'attr1.attr2'), 'b')
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'attr1.attr3.a'), [1, 2])
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'attr1.attr3.b'), [null, 'b'])
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, 'attr3')
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, 'attr1.attr9')
 
 
+    def test_cocoa_get(self):
+        r = objc.lookUpClass('NSObject').alloc().init()
+        self.assertEqual(KeyValueCoding.getKey(r, 'description'), r.description())
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'description'), r.description())
+        self.assertEqual(KeyValueCoding.getKeyPath(r, 'description.length'), len(r.description()))
+        self.assertRaises(KeyError, KeyValueCoding.getKey, r, 'nosuchattr')
+        self.assertRaises(KeyError, KeyValueCoding.getKeyPath, r, 'description.nosuchattr')
 
-class TestObjectiveCObject (TestCase):
-    def test_missing(self):
-        self.fail("Missing tests for KVC on Cocoa objects")
+    def test_accessor_get(self):
+        class Object (object):
+            def get_attr1(self):
+                return "attr1"
+
+            def getAttr1(self):
+                return "Attr1"
+
+            def attr1(self):
+                return ".attr1"
+
+            def get_attr2(self):
+                return "attr2"
+
+            def attr2(self):
+                return '.attr2'
+
+            def attr3(self):
+                return '.attr3'
+
+            def isAttr4(self):
+                return "attr4?"
+
+            @objc.selector
+            def attrsel(self):
+                return 'selattr'
+
+        r = Object()
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr1'), 'Attr1')
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr2'), 'attr2')
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr3'), '.attr3')
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr4'), 'attr4?')
+        self.assertEqual(KeyValueCoding.getKey(r, 'attrsel'), 'selattr')
+
+        t = Object()
+        o = objc.lookUpClass('NSObject').alloc().init()
+        l = []
+
+        r.attr5 = t.isAttr4
+        r.attr6 = o.description
+        r.attr7 = l.__len__
+        r.attr8 = os.getpid
+        r.attr9 = 'attribute 9'
+
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr5'), t.isAttr4)
+        self.assertEqual( KeyValueCoding.getKey(r, 'attr6'), r.attr6)
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr7'), l.__len__)
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr8'), os.getpid())
+        self.assertEqual(KeyValueCoding.getKey(r, 'attr9'), 'attribute 9')
+        self.assertEqual(KeyValueCoding.getKey(1.5, 'hex'), (1.5).hex())
+
+    def test_none_get(self):
+        self.assertEqual(KeyValueCoding.getKey(None, 'a'), None)
+        self.assertEqual(KeyValueCoding.getKeyPath(None, 'a'), None)
+
+    def test_none_set(self):
+        # setKey(None, 'any', 'value') is documented as a no-op
+        # check that this doesn't raise an exception.
+        v = None
+        KeyValueCoding.setKey(v, 'a', 42)
+        KeyValueCoding.setKeyPath(v, 'a', 42)
+
+    def test_dict_set(self):
+        v = {'a': 42, 'c':{} }
+
+        KeyValueCoding.setKey(v, 'a', 43)
+        KeyValueCoding.setKey(v, 'b', 'B')
+        self.assertEqual(v, {'a': 43, 'b': 'B', 'c':{} })
+
+        KeyValueCoding.setKeyPath(v, 'a', 44)
+        KeyValueCoding.setKeyPath(v, 'b', 'C')
+        KeyValueCoding.setKeyPath(v, 'c.a', 'A')
+        self.assertEqual(v, {'a': 44, 'b': 'C', 'c':{'a': 'A'} })
+
+    def test_attr_set(self):
+        class R (object):
+            @property
+            def attr3(self):
+                return self._attr3
+
+            @attr3.setter
+            def attr3(self, v):
+                self._attr3 = v * 2
+
+            @property
+            def attr4(self):
+                return self._attr4
+
+            def attr6(self):
+                return self._attr6
+
+        r = R()
+        r._attr1 = 42
+        r._attr4 = 43
+        r.attr5 = {}
+        r._attr6 = 9
+
+        KeyValueCoding.setKey(r, 'attr1', 1)
+        KeyValueCoding.setKey(r, 'attr2', 2)
+        KeyValueCoding.setKey(r, 'attr3', 3)
+        self.assertRaises(KeyError, KeyValueCoding.setKey, r, 'attr4', 4)
+        KeyValueCoding.setKey(r, 'attr6', 7)
+
+        self.assertEqual(r._attr1, 1)
+        self.assertEqual(r.attr2, 2)
+        self.assertEqual(r.attr3, 6)
+        self.assertEqual(r._attr3, 6)
+        self.assertEqual(r._attr6, 7)
+
+        KeyValueCoding.setKeyPath(r, 'attr1', 'one')
+        KeyValueCoding.setKeyPath(r, 'attr2', 'two')
+        KeyValueCoding.setKeyPath(r, 'attr3', 'three')
+        KeyValueCoding.setKeyPath(r, 'attr5.sub1', 3)
+        KeyValueCoding.setKeyPath(r, 'attr6', 'seven')
+
+        self.assertEqual(r._attr1, 'one')
+        self.assertEqual(r.attr2, 'two')
+        self.assertEqual(r.attr3, 'threethree')
+        self.assertEqual(r._attr3, 'threethree')
+        self.assertEqual(r.attr5, {'sub1': 3})
+        self.assertEqual(r._attr6, 'seven')
+
+    def test_cocoa_set(self):
+        o = objc.lookUpClass('NSMutableDictionary').alloc().init()
+        KeyValueCoding.setKey(o, 'attr', 'value')
+        self.assertEqual(o, {'attr': 'value'})
+
+        KeyValueCoding.setKeyPath(o, 'attr', 'value2')
+        self.assertEqual(o, {'attr': 'value2'})
+
+        o = objc.lookUpClass('NSObject').alloc().init()
+        self.assertRaises(KeyError, KeyValueCoding.setKey, o, 'description', 'hello')
+        self.assertRaises(KeyError, KeyValueCoding.setKeyPath, o, 'description', 'hello')
+
+    def test_accessor(self):
+        class Record (object):
+            def __init__(self):
+                self._attr1 = 1
+                self._attr2 = 2
+                self._attr3 = 3
+
+            def attr1(self):
+                return self._attr1
+
+            def setAttr1_(self, value):
+                self._attr1 = (1, value)
+
+            def setAttr1(self, value):
+                self._attr1 = (2, value)
+
+            def set_attr1(self, value):
+                self._attr1 = (3, value)
+
+            def setAttr2(self, value):
+                self._attr2 = (2, value)
+
+            def set_attr2(self, value):
+                self._attr2 = (3, value)
+
+            def set_attr3(self, value):
+                self._attr3 = (3, value)
+            
+            set_no_attr = 4
+
+        o = Record()
+        self.assertEqual(o._attr1, 1)
+        self.assertEqual(o._attr2, 2)
+        self.assertEqual(o._attr3, 3)
+        self.assertEqual(o.set_no_attr, 4)
+
+        KeyValueCoding.setKey(o, 'attr1', 9)
+        KeyValueCoding.setKey(o, 'attr2', 10)
+        KeyValueCoding.setKey(o, 'attr3', 11)
+        KeyValueCoding.setKey(o, 'no_attr', 12)
+
+        
+        self.assertEqual(o._attr1, (1, 9))
+        self.assertEqual(o._attr2, (2, 10))
+        self.assertEqual(o._attr3, (3, 11))
+        self.assertEqual(o.no_attr, 12)
+
+        KeyValueCoding.setKeyPath(o, 'attr1', 29)
+        KeyValueCoding.setKeyPath(o, 'attr2', 210)
+        KeyValueCoding.setKeyPath(o, 'attr3', 211)
+        
+        self.assertEqual(o._attr1, (1, 29))
+        self.assertEqual(o._attr2, (2, 210))
+        self.assertEqual(o._attr3, (3, 211))
+
+        o._attr1 = {'a': 'b'}
+        KeyValueCoding.setKeyPath(o, 'attr1.a', 30)
+        self.assertEqual(o._attr1, {'a': 30})
 
 
-class TestMixed (TestCase):
-    def test_missing(self):
-        self.fail("Test keypath operations on mixed graphs")
+    def testMixedGraph(self):
+        arr = objc.lookUpClass('NSMutableArray').alloc().init()
+        d1 = objc.lookUpClass('NSMutableDictionary').alloc().init()
+        d2 = objc.lookUpClass('NSMutableDictionary').alloc().init()
+        d3 = {}
+        
+        root = { 'a': arr, 'd': d2 }
+
+        arr.addObject_(d1)
+        arr.addObject_(d3)
+        d1['k'] = 1
+        d3['k'] = 2
+
+        KeyValueCoding.setKeyPath(root, 'd.a', 'the letter A')
+        self.assertEqual(d2, {'a': 'the letter A', })
+
+        self.assertEqual(KeyValueCoding.getKeyPath(root, 'd.a'), 'the letter A')
+        self.assertEqual(KeyValueCoding.getKeyPath(arr, 'k'), [1, 2])
+        self.assertEqual(KeyValueCoding.getKeyPath(root, 'a.k'), [1, 2])
+
+    def testMixedGraph2(self):
+        arr = objc.lookUpClass('NSMutableArray').alloc().init()
+        d1 = objc.lookUpClass('NSMutableDictionary').alloc().init()
+        d2 = objc.lookUpClass('NSMutableDictionary').alloc().init()
+        d3 = {}
+        
+        root = objc.lookUpClass('NSMutableDictionary').dictionaryWithDictionary_({ 'a': arr, 'd': d2 })
+
+        arr.addObject_(d1)
+        arr.addObject_(d3)
+        d1['k'] = 1
+        d3['k'] = 2
+
+        KeyValueCoding.setKeyPath(root, 'd.a', 'the letter A')
+        self.assertEqual(d2, {'a': 'the letter A', })
+
+        self.assertEqual(KeyValueCoding.getKeyPath(root, 'd.a'), 'the letter A')
+        self.assertEqual(KeyValueCoding.getKeyPath(arr, 'k'), [1, 2])
+        self.assertEqual(KeyValueCoding.getKeyPath(root, 'a.k'), [1, 2])
+
 
 
 class TestKVCHelper (TestCase):

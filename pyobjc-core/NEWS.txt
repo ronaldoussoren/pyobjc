@@ -173,6 +173,27 @@ Version 2.5b1
 
   - ``@distinctUnionOfSets`` operator was not present at all. 
 
+- 'PyObjCTools.KeyValueCoding.setKey' now sets keys in dictionaries, that is::
+
+     >>> a = {}
+     >>> setKey(a, 'foo', 42)
+     >>> a
+     {'foo': 42 }
+
+- 'PyObjCTools.KeyValueCoding.setKey(object, 'key', value)' now sets attribute 'key' when
+  the object already has that attribute, before looking at '_key'. This avoids that ``setKey``
+  changes the underlying storage for a common Python property pattern::
+
+      class Record (object):
+         @property 
+	 def prop(self):
+	     return self._prop
+
+	 @prop.setter
+	 def prop(self, value):
+	     self._prop = calculate_using(value)
+
+  Until PyObjC 2.5 the property setter for 'prop' would not be called when using KeyValueCoding.
 
 - Removed Mac OS X 10.2 (!) compatibility from :mod:`PyObjCTools.KeyValueCoding`.
 

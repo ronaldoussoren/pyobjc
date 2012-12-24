@@ -58,20 +58,26 @@ Accessor functions
    ``key``. The key is used to build the name of an accessor 
    method or attribute name. 
 
+   When the object is a Cocoa object (including those implemented in
+   Python) this method calls the regular Cocoa API for setting a property.
+
+   When the object is an instance of :class:`collections.Mapping`
+   this function uses :func:`operator.setitem` to update the 
+   dictionary.
+
    The following methods are tried for regular Python objects:
 
    * Accessor method ``setKey``
 
    * Accessor method ``set_key``
 
-   * attribute ``_key``
+   * attribute ``key`` when that already exists (and is not a method)
+
+   * attribute ``_key`` when that already exists
 
    * Attribute ``key``
  
    (In all of these "key" is replaced by the value of ``key``).
-
-   This function calls the regular Key-Value Coding methods for Cocoa objects,
-   including those implemented in Python.
 
    :param object: An arbitrary object
    :param key: name of a key

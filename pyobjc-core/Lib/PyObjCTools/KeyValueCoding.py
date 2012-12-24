@@ -194,12 +194,7 @@ def getKey(obj, key):
     if obj is None:
         return None
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
-        try:
-            return obj.valueForKey_(key)
-        except ValueError as msg:
-            # This is not entirely correct, should check if this
-            # is the right kind of ValueError before translating
-            raise KeyError(str(msg))
+        return obj.valueForKey_(key)
 
     # check for dict-like objects
     getitem = getattr(obj, '__getitem__', None)
@@ -263,6 +258,7 @@ def setKey(obj, key, value):
     to build the name of an attribute, or attribute accessor method.
 
     The following attributes and accessors are tried (in this order):
+    - Mapping access (that is __setitem__ for collection.Mapping instances)
     - Accessor 'setKey_'
     - Accessor 'setKey'
     - Accessor 'set_key'
@@ -274,11 +270,12 @@ def setKey(obj, key, value):
     if obj is None:
         return
     if isinstance(obj, (objc.objc_object, objc.objc_class)):
-        try:
-            obj.setValue_forKey_(value, key)
-            return
-        except ValueError as msg:
-            raise KeyError(str(msg))
+        obj.setValue_forKey_(value, key)
+        return
+
+    if isinstance(obj, collections.Mapping):
+        obj[key] = value
+        return
 
     aBase = 'set' + keyCaps(key)
     for accessor in (aBase + '_', aBase, 'set_' + key):
@@ -292,7 +289,24 @@ def setKey(obj, key, value):
             pass
 
     try:
-        o = getattr(obj, "_" + key)
+        m = getattr(obj, key)
+    except AttributeError:
+        pass
+
+    else:
+        if isinstance(m, types.MethodType) and m.__self__ is obj:
+            # This looks like a getter method, don't call setattr
+            pass
+
+        else:
+            try:
+                setattr(obj, key, value)
+                return
+            except AttributeError:
+                raise KeyError("Key %s does not exist" % (key,))
+    
+    try:
+        getattr(obj, "_" + key)
     except AttributeError:
         pass
     else:
