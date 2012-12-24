@@ -13,7 +13,7 @@ NSObject = lookUpClass('NSObject')
 if sys.version_info[0] == 2:
     range = xrange
 
-else:
+else: # pragma: no cover (py3k)
     long = int
 
 
@@ -470,7 +470,7 @@ class array_proxy (collections.MutableSequence):
         if self._ro:
             raise ValueError("Property '%s' is read-only"%(self._name,))
         if not isinstance(count, (int, long)):
-            raise ValueError(count)
+            raise TypeError(count)
 
         indexes = NSIndexSet.alloc().initWithIndexesInRange_((len(self), len(self)*(count-1)))
         self._parent.willChange_valuesAtIndexes_forKey_(
@@ -711,9 +711,9 @@ class set_proxy (collections.MutableSet):
     def _wrapped(self):
         return self.__wrapped.__getvalue__(self._parent)
 
-    @_wrapped.setter
-    def _wrapped(self, value):
-        setattr(self._parent, self._name, value) 
+    #@_wrapped.setter
+    #def _wrapped(self, value):
+        #setattr(self._parent, self._name, value) 
 
     def __getattr__(self, attr):
         return getattr(self._wrapped, attr)
@@ -774,11 +774,7 @@ class set_proxy (collections.MutableSet):
 
     if sys.version_info[0] == 2:
         def __cmp__(self, other):
-            if isinstance(other, set_proxy):
-                return cmp(self._wrapped, other._wrapped)
-
-            else:
-                return cmp(self._wrapped, other)
+            raise TypeError('cannot compare sets using cmp()')
 
     def add(self, item):
         if self._ro:
@@ -885,11 +881,11 @@ class set_proxy (collections.MutableSet):
 
         try:
             v = iter(self).next()
-        except KeyError:
+        except StopIteration:
             raise KeyError("Empty set")
 
         self.remove(v)
-
+        return v
 
     def remove(self, item):
         if self._ro:
@@ -1018,6 +1014,7 @@ class set_proxy (collections.MutableSet):
 
         self.intersection_update(other)
         return self
+
 
 def makeSetAccessors(name):
     def countOf(self):

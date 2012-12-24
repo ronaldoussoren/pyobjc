@@ -149,6 +149,11 @@ Version 2.5b1
 
   - KVO issues with computed (read-only) properties
 
+- Fixed some issues with :class:`objc.array_property` and :class:`objc.set_property`
+  that were found by much improved unittests.
+
+
+
 Version 2.4.1
 -------------
 

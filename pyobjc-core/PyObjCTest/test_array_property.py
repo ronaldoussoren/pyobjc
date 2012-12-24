@@ -122,6 +122,14 @@ class TestArrayProperty (TestCase):
 
             self.assertEqual(o.array[-1], 9)
 
+            try:
+                o.array[-20] = 4
+            except IndexError:
+                pass
+
+            else:
+                self.fail("IndexError not raised")
+
         finally:
             observer.unregister(o, 'array')
 
@@ -434,6 +442,14 @@ class TestArrayProperty (TestCase):
             self.assertEqual(n, [1,2]* 3 * 4)
             self.assertIsInstance(n, list)
 
+            try:
+                o.array *= 'a'
+            except TypeError:
+                pass
+
+            else:
+                self.fail("array * 'a' didn't raise exception")
+
         finally:
             observer.unregister(o, 'array')
 
@@ -552,6 +568,9 @@ class TestArrayProperty (TestCase):
         self.assertEqual(o.array, [1,2,3,4])
         self.assertNotEqual(o.array, [1,2,3,4, 5])
 
+        self.assertEqual(o.array.count(1), 1)
+        self.assertEqual(o.array.index(4), 3)
+
 
         self.assertTrue(o.array < [1,2,3,4,5])
         self.assertTrue(o.array <= [1,2,3,4,5])
@@ -559,8 +578,6 @@ class TestArrayProperty (TestCase):
         self.assertTrue(o.array >= [1,2,3,4])
         self.assertTrue(o.array > [1,2,3])
 
-        self.assertEqual(o.array.count(1), 1)
-        self.assertEqual(o.array.index(4), 3)
 
     def testMutatingReadonlyProperty(self):
         # Check that trying to mutate a read-only property
@@ -666,9 +683,10 @@ class TestArrayProperty (TestCase):
 
     def testFinding(self):
         o = TestArrayPropertyHelper.alloc().init()
-        o.array.extend([3,4,5])
+        o.array.extend([3,4,5,4])
 
         self.assertEqual(0, o.array.index(3))
+        self.assertEqual(2, o.array.count(4))
 
     def testCompare(self):
         o = TestArrayPropertyHelper.alloc().init()
@@ -717,8 +735,25 @@ class TestArrayProperty (TestCase):
             n = cmp(o.array2, [3,4,5])
             self.assertEqual(n, 1)
 
+            n = cmp([3,4,5], o.array2)
+            self.assertEqual(n, -1)
 
-        
+            n = o.array2.__cmp__(o.array)
+            self.assertEqual(n, 1)
+
+            n = o.array2.__cmp__([3,4,5])
+            self.assertEqual(n, 1)
+
+
+    def testGetAttr(self):
+        o = TestArrayPropertyHelper.alloc().init()
+        o.array = [1,2,3]
+        v = o.array
+        self.assertEqual(v.count('a'), 0)
+        self.assertEqual(list(v.__reversed__()), [3,2,1]) 
+
+        self.assertRaises(AttributeError, getattr, o.array, 'nosuchattribute')
+
 
 
 if __name__ == "__main__":
