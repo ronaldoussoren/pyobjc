@@ -711,13 +711,13 @@ class set_proxy (collections.MutableSet):
     def _wrapped(self):
         return self.__wrapped.__getvalue__(self._parent)
 
-    #@_wrapped.setter
-    #def _wrapped(self, value):
-        #setattr(self._parent, self._name, value) 
+    def __reduce__(self):
+        # Ensure that the proxy itself doesn't get stored
+        # in pickles.
+        return _id, (self._wrapped,)
 
     def __getattr__(self, attr):
         return getattr(self._wrapped, attr)
-
 
     def __contains__(self, value):
         return self._wrapped.__contains__(value)
