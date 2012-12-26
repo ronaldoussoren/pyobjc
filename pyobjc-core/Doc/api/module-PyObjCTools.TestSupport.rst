@@ -317,6 +317,10 @@ wrappers.
       If *retained* is true the function stores the function reference beyond
       the end of the function call.
 
+   .. method:: assertResultsFunction(method, sel_type, [, message])
+
+      Assert that the result is a function with a specific type signature.
+
    .. method:: assertResultIsBlock(method, sel_type[, message])
 
       Assert that the result is a block with a specific type signature.

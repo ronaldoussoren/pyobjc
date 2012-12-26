@@ -16,6 +16,12 @@ try:
 except NameError:
     unicode = str
 
+try:
+    from StringIO import StringIO
+
+except ImportError:
+    from io import StringIO
+
 class Method(object):
     def __init__(self, argno, meta, selector=False):
         self._selector = selector
@@ -23,6 +29,7 @@ class Method(object):
             self._meta = {'retval': meta}
         else:
             self._meta = {'arguments': { argno: meta }}
+
 
     @property
     def __class__(self):
@@ -366,6 +373,7 @@ class TestTestSupport (TestCase):
     def test_assert_arg_nullterminated(self):
         m = Method(3, {"c_array_delimited_by_null": True }, selector=True)
         self.assertArgIsNullTerminated(m, 1)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 0)
 
         m = Method(3, {"c_array_delimited_by_null": False }, selector=True)
         self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 1)
@@ -375,12 +383,471 @@ class TestTestSupport (TestCase):
 
         m = Method(3, {"c_array_delimited_by_null": True }, selector=False)
         self.assertArgIsNullTerminated(m, 3)
+        self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 2)
 
         m = Method(3, {"c_array_delimited_by_null": False }, selector=False)
         self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
 
         m = Method(3, {}, selector=False)
         self.assertRaises(AssertionError, self.assertArgIsNullTerminated, m, 3)
+
+    def test_function_nullterminated(self):
+        m = Method(None, {}, selector=False)
+        m._meta.update({
+            'variadic': True,
+            'c_array_delimited_by_null': True,
+        })
+        self.assertIsNullTerminated(m)
+
+        m._meta['variadic'] = False
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+        m._meta['variadic'] = True
+        m._meta['c_array_delimited_by_null'] = False
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+        del m._meta['variadic']
+        m._meta['c_array_delimited_by_null'] = True
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+        m = Method(None, {}, selector=True)
+        m._meta.update({
+            'variadic': True,
+            'c_array_delimited_by_null': True,
+        })
+        self.assertIsNullTerminated(m)
+
+        m._meta['variadic'] = False
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+        m._meta['variadic'] = True
+        m._meta['c_array_delimited_by_null'] = False
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+        del m._meta['variadic']
+        m._meta['c_array_delimited_by_null'] = True
+        self.assertRaises(AssertionError, self.assertIsNullTerminated, m)
+
+    def test_arg_varialbe_size(self):
+        m = Method(3, { 'c_array_of_variable_length': True }, selector=True)
+        self.assertArgIsVariableSize(m, 1)
+        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 0)
+
+        m = Method(3, { 'c_array_of_variable_length': False }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 1)
+
+        m = Method(3, { 'c_array_of_variable_length': True }, selector=False)
+        self.assertArgIsVariableSize(m, 3)
+        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 1)
+
+        m = Method(3, { 'c_array_of_variable_length': False }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsVariableSize, m, 3)
+
+    def test_result_varialbe_size(self):
+        m = Method(None, { 'c_array_of_variable_length': True }, selector=True)
+        self.assertResultIsVariableSize(m, 1)
+
+        m = Method(None, { 'c_array_of_variable_length': False }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsVariableSize, m, 1)
+
+        m = Method(None, { }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsVariableSize, m, 1)
+
+    def test_argsize_in_result(self):
+        m = Method(3, { 'c_array_length_in_result': True }, selector=True)
+        self.assertArgSizeInResult(m, 1)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 0)
+
+        m = Method(3, { 'c_array_length_in_result': False }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 1)
+
+        m = Method(3, { 'c_array_length_in_result': True }, selector=False)
+        self.assertArgSizeInResult(m, 3)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 2)
+
+        m = Method(3, { 'c_array_length_in_result': False }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 3)
+
+        m = Method(3, {}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgSizeInResult, m, 3)
+
+    def test_arg_printf(self):
+        m = Method(3, { 'printf_format': True }, selector=True)
+        m._meta['variadic'] = True
+        self.assertArgIsPrintf(m, 1)
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 0)
+
+        m._meta['variadic'] = False
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+
+        m._meta['variadic'] = True
+        m._meta['arguments'][3]['printf_format'] = False
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+
+        m._meta['variadic'] = True
+        del m._meta['arguments'][3]['printf_format'] 
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 1)
+
+
+        m = Method(3, { 'printf_format': True }, selector=False)
+        m._meta['variadic'] = True
+        self.assertArgIsPrintf(m, 3)
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 2)
+
+        m._meta['variadic'] = False
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+
+        m._meta['variadic'] = True
+        m._meta['arguments'][3]['printf_format'] = False
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+
+        m._meta['variadic'] = True
+        del m._meta['arguments'][3]['printf_format'] 
+        self.assertRaises(AssertionError, self.assertArgIsPrintf, m, 3)
+
+
+    def test_arg_cfretained(self):
+        m = Method(3, {'already_cfretained': True}, selector=True)
+        self.assertArgIsCFRetained(m, 1)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 0)
+
+        m = Method(3, {'already_cfretained': False}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 1)
+
+        m = Method(3, {'already_cfretained': True}, selector=False)
+        self.assertArgIsCFRetained(m, 3)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 2)
+
+        m = Method(3, {'already_cfretained': False}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 3)
+
+        m = Method(3, {}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsCFRetained, m, 3)
+
+    def test_arg_not_cfretained(self):
+        m = Method(3, {'already_cfretained': True}, selector=True)
+        self.assertArgIsNotCFRetained(m, 0)
+        self.assertRaises(AssertionError, self.assertArgIsNotCFRetained, m, 1)
+
+        m = Method(3, {'already_cfretained': False}, selector=True)
+        self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(3, {'already_cfretained': True}, selector=False)
+        self.assertArgIsCFRetained(m, 3)
+        self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(3, {'already_cfretained': False}, selector=False)
+        self.assertArgIsNotCFRetained(m, 1)
+
+        m = Method(3, {}, selector=False)
+        self.assertArgIsNotCFRetained(m, 1)
+
+    def test_result_cfretained(self):
+        m = Method(None, {'already_cfretained': True })
+        self.assertResultIsCFRetained(m)
+
+        m = Method(None, {'already_cfretained': False })
+        self.assertRaises(AssertionError, self.assertResultIsCFRetained, m)
+
+        m = Method(None, {})
+        self.assertRaises(AssertionError, self.assertResultIsCFRetained, m)
+
+    def test_result_not_cfretained(self):
+        m = Method(None, {'already_cfretained': True })
+        self.assertRaises(AssertionError, self.assertResultIsNotCFRetained, m)
+
+        m = Method(None, {'already_cfretained': False })
+        self.assertResultIsNotCFRetained(m)
+
+        m = Method(None, {})
+        self.assertResultIsNotCFRetained(m)
+
+
+    def test_arg_type(self):
+        m = Method(3, {'type': objc._C_DBL }, selector=True)
+        self.assertArgHasType(m, 1, objc._C_DBL)
+        self.assertRaises(AssertionError, self.assertArgHasType, m, 2, objc._C_ID)
+        self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+        m = Method(3, {}, selector=True)
+        self.assertArgHasType(m, 1, objc._C_ID)
+
+        if sys.maxsize > 2**32:
+            m = Method(3, {'type': objc._C_LNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_LNG)
+            self.assertArgHasType(m, 1, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_ULNG)
+            self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_LNG_LNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_LNG)
+            self.assertArgHasType(m, 1, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG_LNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_ULNG)
+            self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+        else:
+            m = Method(3, {'type': objc._C_LNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_LNG)
+            self.assertArgHasType(m, 1, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_ULNG)
+            self.assertArgHasType(m, 1, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_INT }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_LNG)
+            self.assertArgHasType(m, 1, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_UINT }, selector=True)
+            self.assertArgHasType(m, 1, objc._C_UINT)
+            self.assertArgHasType(m, 1, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 1, objc._C_ID)
+
+        m = Method(3, {'type': objc._C_DBL }, selector=False)
+        self.assertArgHasType(m, 3, objc._C_DBL)
+        self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+        self.assertRaises(AssertionError, self.assertArgHasType, m, 2, objc._C_ID)
+
+        m = Method(3, {}, selector=False)
+        self.assertArgHasType(m, 3, objc._C_ID)
+
+        if sys.maxsize > 2**32:
+            m = Method(3, {'type': objc._C_LNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_LNG)
+            self.assertArgHasType(m, 3, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_ULNG)
+            self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_LNG_LNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_LNG)
+            self.assertArgHasType(m, 3, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG_LNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_ULNG)
+            self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+        else:
+            m = Method(3, {'type': objc._C_LNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_LNG)
+            self.assertArgHasType(m, 3, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_ULNG }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_ULNG)
+            self.assertArgHasType(m, 3, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_INT }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_LNG)
+            self.assertArgHasType(m, 3, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+            m = Method(3, {'type': objc._C_UINT }, selector=False)
+            self.assertArgHasType(m, 3, objc._C_UINT)
+            self.assertArgHasType(m, 3, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertArgHasType, m, 3, objc._C_ID)
+
+
+    def test_result_type(self):
+        m = Method(None, {})
+        self.assertResultHasType(m, objc._C_VOID)
+        self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+        m = Method(None, { 'type': objc._C_DBL})
+        self.assertResultHasType(m, objc._C_DBL)
+        self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+        if sys.maxsize > 2**32:
+            m = Method(None, {'type': objc._C_LNG }, selector=False)
+            self.assertResultHasType(m, objc._C_LNG)
+            self.assertResultHasType(m, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_ULNG }, selector=False)
+            self.assertResultHasType(m, objc._C_ULNG)
+            self.assertResultHasType(m, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_LNG_LNG }, selector=False)
+            self.assertResultHasType(m, objc._C_LNG)
+            self.assertResultHasType(m, objc._C_LNG_LNG)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_ULNG_LNG }, selector=False)
+            self.assertResultHasType(m, objc._C_ULNG)
+            self.assertResultHasType(m, objc._C_ULNG_LNG)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+        else:
+            m = Method(None, {'type': objc._C_LNG }, selector=False)
+            self.assertResultHasType(m, objc._C_LNG)
+            self.assertResultHasType(m, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_ULNG }, selector=False)
+            self.assertResultHasType(m, objc._C_ULNG)
+            self.assertResultHasType(m, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_INT }, selector=False)
+            self.assertResultHasType(m, objc._C_LNG)
+            self.assertResultHasType(m, objc._C_INT)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+            m = Method(None, {'type': objc._C_UINT }, selector=False)
+            self.assertResultHasType(m, objc._C_UINT)
+            self.assertResultHasType(m, objc._C_UINT)
+            self.assertRaises(AssertionError, self.assertResultHasType, m, objc._C_ID)
+
+
+    def test_arg_fixed_size(self):
+        m = Method(3, { 'c_array_of_fixed_length': 42 }, selector=True)
+        self.assertArgIsFixedSize(m, 1, 42)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 0, 42)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 1, 3)
+
+        m = Method(3, { }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 1, 3)
+
+        m = Method(3, { 'c_array_of_fixed_length': 42 }, selector=False)
+        self.assertArgIsFixedSize(m, 3, 42)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 2, 42)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 3, 3)
+
+        m = Method(3, { }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsFixedSize, m, 3, 3)
+
+    def test_result_fixed_size(self):
+        m = Method(None, { 'c_array_of_fixed_length': 42 })
+        self.assertResultIsFixedSize(m, 42)
+        self.assertRaises(AssertionError, self.assertResultIsFixedSize, m, 3)
+
+        m = Method(None, { }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsFixedSize, m, 3)
+
+
+    def test_arg_size_in_arg(self):
+        m = Method(3, {'c_array_length_in_arg': 4 }, selector=True)
+        self.assertArgSizeInArg(m, 1, 2)
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, 3)
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, 3)
+
+        m = Method(3, {'c_array_length_in_arg': (2, 4) }, selector=True)
+        self.assertArgSizeInArg(m, 1, (0, 2))
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, (0, 3))
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, (1, 2))
+
+
+
+        m = Method(3, {'c_array_length_in_arg': 4 }, selector=False)
+        self.assertArgSizeInArg(m, 3, 4)
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, 3)
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, 3)
+
+        m = Method(3, {'c_array_length_in_arg': (2, 4) }, selector=False)
+        self.assertArgSizeInArg(m, 3, (2, 4))
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 1, (2, 3))
+        self.assertRaises(AssertionError, self.assertArgSizeInArg, m, 0, (2, 3))
+
+    def test_result_ize_in_arg(self):
+        m = Method(None, {'c_array_length_in_arg': 4 }, selector=True)
+        self.assertResultSizeInArg(m, 2)
+        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
+        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
+
+        m = Method(None, {'c_array_length_in_arg': 4 }, selector=False)
+        self.assertResultSizeInArg(m, 4)
+        self.assertRaises(AssertionError, self.assertResultSizeInArg, m, 3)
+
+
+
+    def test_arg_retained(self):
+        m = Method(3, {'already_retained': True}, selector=True)
+        self.assertArgIsRetained(m, 1)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 0)
+
+        m = Method(3, {'already_retained': False}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 1)
+
+        m = Method(3, {'already_retained': True}, selector=False)
+        self.assertArgIsRetained(m, 3)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 2)
+
+        m = Method(3, {'already_retained': False}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 3)
+
+        m = Method(3, {}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsRetained, m, 3)
+
+    def test_arg_not_retained(self):
+        m = Method(3, {'already_retained': True}, selector=True)
+        self.assertArgIsNotRetained(m, 0)
+        self.assertRaises(AssertionError, self.assertArgIsNotRetained, m, 1)
+
+        m = Method(3, {'already_retained': False}, selector=True)
+        self.assertArgIsNotRetained(m, 1)
+
+        m = Method(3, {}, selector=True)
+        self.assertArgIsNotRetained(m, 1)
+
+        m = Method(3, {'already_retained': True}, selector=False)
+        self.assertArgIsRetained(m, 3)
+        self.assertArgIsNotRetained(m, 1)
+
+        m = Method(3, {'already_retained': False}, selector=False)
+        self.assertArgIsNotRetained(m, 1)
+
+        m = Method(3, {}, selector=False)
+        self.assertArgIsNotRetained(m, 1)
+
+    def test_result_retained(self):
+        m = Method(None, {'already_retained': True })
+        self.assertResultIsRetained(m)
+
+        m = Method(None, {'already_retained': False })
+        self.assertRaises(AssertionError, self.assertResultIsRetained, m)
+
+        m = Method(None, {})
+        self.assertRaises(AssertionError, self.assertResultIsRetained, m)
+
+    def test_result_not_retained(self):
+        m = Method(None, {'already_retained': True })
+        self.assertRaises(AssertionError, self.assertResultIsNotRetained, m)
+
+        m = Method(None, {'already_retained': False })
+        self.assertResultIsNotRetained(m)
+
+        m = Method(None, {})
+        self.assertResultIsNotRetained(m)
 
 
 
@@ -508,6 +975,226 @@ class TestTestSupport (TestCase):
         else:
             self.fail("unexpected test pass")
 
+    def test_arg_is_sel(self):
+        m = Method(3, { 'type': objc._C_SEL, 'sel_of_type': b'v@:@' }, selector=True)
+        self.assertArgIsSEL(m, 1, b'v@:@')
+
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 2, b'v@:@')
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:')
+
+        m = Method(3, { 'type': objc._C_SEL }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:')
+
+        m = Method(3, { 'type': objc._C_ID, 'sel_of_type': b'v@:@' }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 1, b'v@:@')
+
+
+        m = Method(3, { 'type': objc._C_SEL, 'sel_of_type': b'v@:@' }, selector=False)
+        self.assertArgIsSEL(m, 3, b'v@:@')
+
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 2, b'v@:@')
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:')
+
+        m = Method(3, { 'type': objc._C_SEL }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:')
+
+        m = Method(3, { 'type': objc._C_ID, 'sel_of_type': b'v@:@' }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsSEL, m, 3, b'v@:@')
+
+    def test_arg_is_function(self):
+        m = Method(3, { 'type': b'^?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=True)
+        self.assertArgIsFunction(m, 1, b'i@d', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 0, 'v', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'i@b', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'i@d', True)
+        m = Method(3, { 'type': b'^?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            },
+            'callable_retained': True }, selector=True)
+        self.assertArgIsFunction(m, 1, b'i@d', True)
+
+        m = Method(3, { 'type': b'?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+
+        m = Method(3, { 'type': b'^?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        m = Method(3, { 'type': b'^?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+        m = Method(3, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 1, 'v', False)
+
+
+
+        m = Method(3, { 'type': b'^?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=False)
+        self.assertArgIsFunction(m, 3, b'i@d', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 2, 'v', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'i@b', False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'i@d', True)
+        m = Method(3, { 'type': b'^?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            },
+            'callable_retained': True }, selector=False)
+        self.assertArgIsFunction(m, 3, b'i@d', True)
+
+        m = Method(3, { 'type': b'?', 'callable': {}}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+
+        m = Method(3, { 'type': b'^?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        m = Method(3, { 'type': b'^?', 'callable': {}}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+        m = Method(3, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsFunction, m, 3, 'v', False)
+
+    def test_result_is_function(self):
+        m = Method(None, { 'type': b'^?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=True)
+        self.assertResultIsFunction(m, b'i@d')
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'i@b')
+
+        m = Method(1, {})
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'i@b')
+
+        m = Method(None, { 'type': b'?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+
+        m = Method(None, { 'type': b'^?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        m = Method(None, { 'type': b'^?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+        m = Method(None, { 'type': b'^?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsFunction, m, 'v')
+
+
+
+    def test_arg_is_block(self):
+        m = Method(3, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': b'^v' },
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=True)
+        self.assertArgIsBlock(m, 1, b'i@d')
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 0, 'v')
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'i@b')
+
+        m = Method(3, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            },
+            'callable_retained': True }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+
+        m = Method(3, { 'type': b'?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+
+        m = Method(3, { 'type': b'@?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        m = Method(3, { 'type': b'@?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+        m = Method(3, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 1, 'v')
+
+
+
+        m = Method(3, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': b'^v' },
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=False)
+        self.assertArgIsBlock(m, 3, b'i@d')
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 2, 'v')
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'i@b')
+
+        m = Method(3, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            },
+            'callable_retained': True }, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+
+        m = Method(3, { 'type': b'?', 'callable': {}}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+
+        m = Method(3, { 'type': b'@?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        m = Method(3, { 'type': b'@?', 'callable': {}}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+        m = Method(3, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=False)
+        self.assertRaises(AssertionError, self.assertArgIsBlock, m, 3, 'v')
+
+
+    def test_result_is_block(self):
+        m = Method(None, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': b'^v' },
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            }}, selector=True)
+        self.assertResultIsBlock(m, b'i@d')
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'i@b')
+
+        m = Method(None, { 'type': b'@?', 'callable': {
+                'retval': { 'type': objc._C_INT },
+                'arguments': [
+                    {'type': objc._C_ID },
+                    {'type': objc._C_DBL },
+                ]
+            },
+            'callable_retained': True }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+
+        m = Method(3, {})
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+
+        m = Method(None, { 'type': b'?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+
+        m = Method(None, { 'type': b'@?', }, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        m = Method(None, { 'type': b'@?', 'callable': {}}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+        m = Method(None, { 'type': b'@?', 'callable': { 'retval': {'type': objc._C_VOID } }}, selector=True)
+        self.assertRaises(AssertionError, self.assertResultIsBlock, m, 'v')
+
     def test_result_bool(self):
         m = Method(None, { "type": objc._C_NSBOOL })
         try:
@@ -538,6 +1225,71 @@ class TestTestSupport (TestCase):
 
         else:
             self.fail("unexpected test pass")
+
+    def test_filterWarnings(self):
+        class Warn1 (RuntimeWarning): pass
+        class Warn2 (RuntimeWarning): pass
+        class Warn3 (RuntimeWarning): pass
+
+        orig_stderr = sys.stderr
+        sys.stderr = StringIO()
+        try:
+            with filterWarnings('error', Warn1):
+                self.assertRaises(Warn1, warnings.warn, 'helper', category=Warn1)
+
+            self.assertEqual(sys.stderr.getvalue(), '')
+
+            with filterWarnings('ignore', Warn2):
+                warnings.warn('helper', category=Warn2)
+
+            self.assertEqual(sys.stderr.getvalue(), '')
+
+            warnings.warn('helper', category=Warn3)
+
+            self.assertNotEqual(sys.stderr.getvalue(), '')
+        finally:
+            sys.stderr = orig_stderr
+
+
+    def test_running(self):
+        orig_use    = TestSupport._usepool
+        orig_class = TestSupport._poolclass
+        orig_run   = TestSupport._unittest.TestCase.run
+        
+        allocs = [0]
+        NSObject = objc.lookUpClass('NSObject')
+        class PoolClass (object):
+            def init(self):
+                allocs[0] += 1
+
+            @classmethod
+            def alloc(cls):
+                return cls()
+
+
+
+        TestSupport._unittest.TestCase.run = lambda self: None
+                
+        try:
+            TestSupport._poolclass = PoolClass
+
+            TestSupport._usepool = True
+
+            self.assertEqual(allocs, [0])
+            TestCase.run(self)
+            self.assertEqual(allocs, [1])
+
+            TestSupport._usepool = False
+            self.assertEqual(allocs, [1])
+            TestCase.run(self)
+            self.assertEqual(allocs, [1])
+
+        finally:
+            TestSupport._usepool = orig_use
+            TestSupport._poolclass = orig_class
+            TestSupport._unittest.TestCase.run = orig_run
+
+
 
 
     def run(self, *args, **kwds):

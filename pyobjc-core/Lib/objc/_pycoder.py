@@ -191,7 +191,7 @@ def setupPythonObject():
 
         encode_dispatch[long] = save_long
 
-    else:
+    else: # pragma: no cover (py3k)
         def save_int(coder, obj):
             if coder.allowsKeyedCoding():
                 coder.encodeInt_forKey_(kOP_LONG, kKIND)
