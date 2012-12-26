@@ -9,7 +9,8 @@ supports the wrappers for these types in ``Carbon.File``.
     This type represents an opaque ``FSRef`` structure.
 
     New instances are created using the ``from_pathname`` method:
-    .. sourcecode:: pycon
+
+    .. sourcecode:: python
     
         >>> ref = objc.FSRef.from_pathname("/Libray")
         >>> isinstance(ref, objc.FSRef)
@@ -34,9 +35,15 @@ supports the wrappers for these types in ``Carbon.File``.
         NOTE: This method is only available when ``Carbon`` support is
         enabled in the Python build.
 
-    NOTE: ``Carbon.File.FSRef`` instances can be used as the argument
-    of functions that have an ``FSRef`` structure as one of their
-    arguments.
+    .. note:: ``Carbon.File.FSRef`` instances can be used as the argument
+       of functions that have an ``FSRef`` structure as one of their
+       arguments.
+
+
+    .. note::
+       All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
+       for most of those APIs there are alternate APIs that use URL objects
+       (:c:type:`NSURL` or :c:type:`CFURL`).
 
 .. class:: objc.FSSpec
 
