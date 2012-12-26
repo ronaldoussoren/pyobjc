@@ -3323,9 +3323,9 @@ PyObjCFFI_BuildResult(
 						PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype.callable);
 						Py_INCREF(methinfo->rettype.callable);
 					} else {
-						char* signature = PyObjCBlock_GetSignature(objc_result);
+						const char* signature = PyObjCBlock_GetSignature(objc_result);
 						if (signature != NULL) {
-							PyObject* sig = PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+							PyObjCMethodSignature* sig = PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 							if (sig == NULL) {
 								Py_DECREF(objc_result);
 								return NULL;

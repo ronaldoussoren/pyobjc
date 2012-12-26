@@ -359,12 +359,20 @@ static PyObject* mapTypes = NULL;
 	PyObjC_BEGIN_WITH_GIL
 		if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
 			for  (i = 0; i < count; i++) {
-				PyObject* v = PyObjC_IdToPython(objects[i]);
+				PyObject* v;
+				if (objects[i] == [NSNull null]) {
+					v = Py_None; Py_INCREF(Py_None);
+				} else {
+					v = PyObjC_IdToPython(objects[i]);
+				}
 				if (v == NULL) {
 					PyObjC_GIL_FORWARD_EXC();
 				}
 				if (PyTuple_GET_ITEM(value, i) != NULL) {
-					abort();
+					/* use temporary option to avoid race condition */
+					PyObject* t = PyTuple_GET_ITEM(value, i);
+					PyTuple_SET_ITEM(value, i, NULL);
+					Py_DECREF(t);
 				}
 				PyTuple_SET_ITEM(value, i, v);
 				/* Don't DECREF v; SetItem stole a reference */
@@ -372,11 +380,17 @@ static PyObject* mapTypes = NULL;
 		} else {
 
 			for  (i = 0; i < count; i++) {
-				PyObject* v = PyObjC_IdToPython(objects[i]);
+				PyObject* v;
+				int r;
+				if (objects[i] == [NSNull null]) {
+					v = Py_None; Py_INCREF(Py_None);
+				} else {
+					v = PyObjC_IdToPython(objects[i]);
+				}
 				if (v == NULL) {
 					PyObjC_GIL_FORWARD_EXC();
 				}
-				int r = PyList_Append(value,  v);
+				r = PyList_Append(value,  v);
 				if (r == -1) {
 					PyObjC_GIL_FORWARD_EXC();
 				}
@@ -407,12 +421,12 @@ static PyObject* mapTypes = NULL;
 	int code;
         int size;
 
+
 	if ([coder allowsKeyedCoding]) {
 		code = [coder decodeInt32ForKey:@"pytype"];
 	} else {
 		[coder decodeValueOfObjCType:@encode(int) at:&code];
 	}
-
 
 	switch (code) {
 	case 4: 

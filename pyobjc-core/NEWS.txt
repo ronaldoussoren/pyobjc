@@ -200,6 +200,10 @@ Version 2.5b1
 - PyObjCTools.KeyValueCoding has undocumented attributes 'ArrayOperators' and 'arrayOperators',
   both will be removed in a future release.
 
+- Using NSArchiver or NSKeyedArchiver to encode and then decode a python list or tuple could
+  result in an unexpected value. In particular, if any element of the sequence was :data:`None`
+  before archiving it would by ``NSNull.null()`` when read back.
+
 
 Version 2.4.1
 -------------

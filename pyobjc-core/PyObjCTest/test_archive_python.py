@@ -43,6 +43,19 @@ def C__repr__(self):
 test.pickletester.C.__repr__ = C__repr__
 del C__repr__
 
+class myobject :
+    def __init__(self):
+        pass
+
+    def __getinitargs__(self):
+        return (1,2)
+
+class mystr(str):
+    __slots__ = ()
+
+class myint(int):
+    __slots__ = ()
+
 def a_function():
     pass
 
@@ -94,6 +107,82 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_,
                 object2)
 
+    def test_various_objects(self):
+        o = a_newstyle_class()
+        o.attr1 = False
+        o.attr2 = None
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, a_newstyle_class)
+        self.assertEqual(v.__dict__, o.__dict__)
+
+
+    def test_misc_globals(self):
+        global mystr 
+        orig = mystr
+        try:
+            del mystr
+
+            o = orig('hello')
+            self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, o)
+
+        finally:
+            mystr = orig
+
+        try:
+            mystr = None
+
+            o = orig('hello')
+            self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, o)
+
+        finally:
+            mystr = orig
+
+
+        # XXX: this test doesn't actually do what I want, the extension path is not used.
+        try:
+            copyreg.add_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+
+            o = a_newstyle_class()
+            buf = self.archiverClass.archivedDataWithRootObject_(o)
+            self.assertIsInstance(buf, NSData)
+            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+            self.assertIsInstance(v, a_newstyle_class)
+
+            copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+            self.assertRaises(ValueError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+        finally:
+            mystr = orig
+            try:
+                copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+            except ValueError:
+                pass
+
+
+        def f(): pass
+        del f.__module__
+        try:
+            sys.f = f
+
+            buf = self.archiverClass.archivedDataWithRootObject_(f)
+            self.assertIsInstance(buf, NSData)
+            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+            self.assertIs(v, f)
+
+        finally:
+            del f
+
+    @onlyPython2
+    def test_invalid_initargs(self):
+        v = myobject()
+        buf = self.archiverClass.archivedDataWithRootObject_(v)
+        self.assertIsInstance(buf, NSData)
+        self.assertRaises(TypeError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+
     def test_basic_objects(self):
         buf = self.archiverClass.archivedDataWithRootObject_(a_function)
         self.assertIsInstance(buf, NSData)
@@ -125,13 +214,13 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, a_classic_class_with_state)
         self.assertEqual(v.a, 1)
 
-        o = None
-        buf = self.archiverClass.archivedDataWithRootObject_(o)
-        self.assertIsInstance(buf, NSData)
-        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertEqual(o, v)
+        for o in (None,  [None], (None,), {None,}):
+            buf = self.archiverClass.archivedDataWithRootObject_(o)
+            self.assertIsInstance(buf, NSData)
+            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+            self.assertEqual(o, v)
 
-        for o in (True, False):
+        for o in (True, False, [True]):
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -186,6 +275,27 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(v, type(o))
         self.assertEqual(o, v)
 
+
+        o = mystr('hello world')
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, mystr)
+        self.assertEqual(o, v)
+
+        o = myint(4)
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, myint)
+        self.assertEqual(o, v)
+
+        o = 42.5
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, float)
+        self.assertEqual(o, v)
 
 
         if sys.version_info[0] == 2:
