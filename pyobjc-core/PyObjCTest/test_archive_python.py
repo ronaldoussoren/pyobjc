@@ -15,6 +15,7 @@ else:
     import copy_reg as copyreg
 
 from PyObjCTools.TestSupport import *
+import objc._pycoder as pycoder
 
 from PyObjCTest.fnd import NSArchiver, NSUnarchiver
 from PyObjCTest.fnd import NSKeyedArchiver, NSKeyedUnarchiver
@@ -35,6 +36,11 @@ import test.pickletester
 
 MyList = test.pickletester.MyList
 
+class reduce_global (object):
+    def __reduce__(self):
+        return "reduce_global"
+reduce_global = reduce_global()
+
 # Quick hack to add a proper __repr__ to class C in
 # pickletester, makes it a lot easier to debug.
 def C__repr__(self):
@@ -49,6 +55,11 @@ class myobject :
 
     def __getinitargs__(self):
         return (1,2)
+
+class state_obj_1:
+    def __getstate__(self):
+        return ({'a': 1, 42: 3}, {'b': 2})
+
 
 class mystr(str):
     __slots__ = ()
@@ -73,6 +84,15 @@ class a_classic_class_with_state:
 class a_newstyle_class (object):
     pass
 
+class newstyle_with_slots (object):
+    __slots__ = ('a', 'b', '__dict__')
+
+class newstyle_with_setstate (object):
+    def __setstate__(self, state):
+        self.state = state
+
+
+
 def make_instance(state):
     o = a_reducing_class()
     o.__dict__.update(state)
@@ -89,6 +109,21 @@ class TestKeyedArchiveSimple (TestCase):
     def setUp(self):
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
+
+    def test_unknown_type(self):
+        try:
+            orig = pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR]
+            del pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR]
+
+            o = 14.2
+            buf = self.archiverClass.archivedDataWithRootObject_(o)
+            self.assertRaises(pickle.UnpicklingError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+
+        finally:
+            pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR] = orig
+
+
 
     def test_reducing_issues(self):
         class Error1 (object):
@@ -111,6 +146,7 @@ class TestKeyedArchiveSimple (TestCase):
         o = a_newstyle_class()
         o.attr1 = False
         o.attr2 = None
+        o.__dict__[42] = 3
 
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -141,23 +177,27 @@ class TestKeyedArchiveSimple (TestCase):
             mystr = orig
 
 
-        # XXX: this test doesn't actually do what I want, the extension path is not used.
         try:
-            copyreg.add_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+            copyreg.add_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
+            self.assertIn((a_newstyle_class.__module__, a_newstyle_class.__name__), copyreg._extension_registry)
 
-            o = a_newstyle_class()
+            o = a_newstyle_class
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertIsInstance(buf, NSData)
             v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsInstance(v, a_newstyle_class)
+            self.assertIs(v, o)
 
-            copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+            self.assertIsInstance(buf, NSData)
+            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+            self.assertIs(v, o)
+
+            copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
             self.assertRaises(ValueError, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
         finally:
             mystr = orig
             try:
-                copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class, 42)
+                copyreg.remove_extension(a_newstyle_class.__module__, a_newstyle_class.__name__, 42)
             except ValueError:
                 pass
 
@@ -181,6 +221,68 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(v)
         self.assertIsInstance(buf, NSData)
         self.assertRaises(TypeError, self.unarchiverClass.unarchiveObjectWithData_, buf)
+
+    def test_class_with_slots(self):
+        # Test dumpling a class with slots
+        o = newstyle_with_slots()
+        o.a = 1
+        o.b = 2
+        o.c = 3
+
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, newstyle_with_slots)
+        self.assertEqual(v.a, 1)
+        self.assertEqual(v.b, 2)
+        self.assertEqual(v.c, 3)
+
+    @onlyPython2
+    def test_class_with_state(self):
+        o = state_obj_1()
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, state_obj_1)
+        self.assertEqual(v.a, 1)
+        self.assertEqual(v.b, 2)
+        self.assertEqual(v.__dict__[42], 3)
+
+    def test_class_with_setstate(self):
+        o = newstyle_with_setstate()
+        o.a = 1
+        o.b = 2
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, newstyle_with_setstate)
+        self.assertEquals(v.state, {'a': 1, 'b': 2})
+        
+    def test_reduce_as_global(self):
+        # Test class where __reduce__ returns a string (the name of a global)
+
+        o = reduce_global
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIs(v, reduce_global)
+
+
+    def test_reduce_invalid(self):
+        class invalid_reduce (object):
+            def __reduce__(self):
+                return 42
+        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
+
+        class invalid_reduce (object):
+            def __reduce__(self):
+                return (1,)
+        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
+
+        class invalid_reduce (object):
+            def __reduce__(self):
+                return (1,2,3,4,5,6)
+        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
 
 
     def test_basic_objects(self):
@@ -426,6 +528,15 @@ class TestKeyedArchiveSimple (TestCase):
 
         self.assertIsInstance(v, a_reducing_class)
         self.assertIs(v.value, v)
+
+    def test_reducing_object(self):
+        o = a_reducing_class()
+        o.value = 42
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, a_reducing_class)
+        self.assertEqual(o.value, 42)
 
     def testRecusiveNesting(self):
         l = []

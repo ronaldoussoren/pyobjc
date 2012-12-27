@@ -267,7 +267,6 @@ def save_dict(coder, obj): # pragma: no cover
 encode_dispatch[dict] = save_dict
 
 def save_global(coder, obj, name=None):
-
     if name is None:
         name = obj.__name__
 
@@ -351,7 +350,9 @@ def load_long(coder, setValue):
         return long(coder.decodeObject())
 decode_dispatch[kOP_LONG] = load_long
 
-def load_float(coder, setValue):
+def load_float(coder, setValue): # pragma: no cover
+    # Only used with old versions of PyObjC (before 2.3), keep
+    # for backward compatibility.
     if coder.allowsKeyedCoding():
         return coder.decodeFloatForKey_(kVALUE)
     else:
@@ -392,7 +393,7 @@ decode_dispatch[kOP_DICT] = load_dict
 
 def load_global_ext(coder, setValue):
     if coder.allowsKeyedCoding():
-        code = coder.intForKey_(kCODE)
+        code = coder.decodeIntForKey_(kCODE)
     else:
         code = coder.__pyobjc__decodeInt()
     nil = []
@@ -407,6 +408,7 @@ def load_global_ext(coder, setValue):
     __import__(module)
     mod = sys.modules[module]
     klass = getattr(mod, name)
+    copyreg._extension_cache[code] = klass
     return klass
 decode_dispatch[kOP_GLOBAL_EXT] = load_global_ext
 
@@ -469,18 +471,17 @@ def load_inst(coder, setValue):
         state, slotstate = state
 
     if state:
-        try:
-            inst_dict = value.__dict__
-            for k in state:
-                v = state[k]
-                if type(k) == str:
-                    inst_dict[intern(k)] = v
-                else:
-                    inst_dict[k] = v
+        # Note: pickle.py catches RuntimeError here,
+        # that's for supporting restricted mode and
+        # is not relevant for PyObjC.
+        inst_dict = value.__dict__
+        for k in state:
+            v = state[k]
+            if type(k) == str:
+                inst_dict[intern(k)] = v
+            else:
+                inst_dict[k] = v
 
-        except RuntimeError:
-            for k, v in state.items():
-                setattr(value, intern(k), v)
 
     if slotstate:
         for k, v in slotstate.items():
@@ -518,26 +519,25 @@ def load_reduce(coder, setValue):
     setstate = getattr(value, "__setstate__", None)
     if setstate:
         setstate(state)
-        return
+        return value
 
     slotstate = None
     if isinstance(state, tuple) and len(state) == 2:
         state, slotstate = state
 
     if state:
-        try:
-            inst_dict = value.__dict__
+        # NOTE: picke.py catches RuntimeError here
+        # to support restricted execution, that is not
+        # relevant for PyObjC.
+        inst_dict = value.__dict__
 
-            for k in state:
-                v = state[k]
-                if type(k) == str:
-                    inst_dict[intern(k)] = v
-                else:
-                    inst_dict[k] = v
+        for k in state:
+            v = state[k]
+            if type(k) == str:
+                inst_dict[intern(k)] = v
+            else:
+                inst_dict[k] = v
 
-        except RuntimeError:
-            for k, v in state.items():
-                setattr(value, intern(k), v)
 
     if slotstate:
         for k, v in slotstate.items():
@@ -565,10 +565,10 @@ def pyobjectEncode(self, coder):
         return
 
     # Check for a class with a custom metaclass
-    try:
-        issc = issubclass(t, type)
-    except TypeError:
-        issc = 0
+    # XXX: pickle.py catches TypeError here, that's for
+    #      compatibility with ancient versions of Boost 
+    #      (before Python 2.2) and is not needed here.
+    issc = issubclass(t, type)
 
     if issc:
         save_global(coder, self)
@@ -584,7 +584,9 @@ def pyobjectEncode(self, coder):
         if reduce is not None:
             rv = reduce(2)
 
-        else:
+        else: # pragma: no cover
+            # This path will never be used because object implements 
+            # __reduce_ex__ (at least in python2.6 and later)
             rv = getattr(self, "__reduce__", None)
             if reduce is not None:
                 rv = reduce()
@@ -594,7 +596,7 @@ def pyobjectEncode(self, coder):
                         (t.__name__, self))
 
     if type(rv) is str:
-        save_global(coder, rv)
+        save_global(coder, self, rv)
         return
 
     if type(rv) is not tuple:

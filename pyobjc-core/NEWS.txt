@@ -204,6 +204,9 @@ Version 2.5b1
   result in an unexpected value. In particular, if any element of the sequence was :data:`None`
   before archiving it would by ``NSNull.null()`` when read back.
 
+- Using NSArchiver or NSKeyedArchiver to encode and decode (pure) python objects didn't always
+  work correctly. Found by improved unittests.
+
 
 Version 2.4.1
 -------------
