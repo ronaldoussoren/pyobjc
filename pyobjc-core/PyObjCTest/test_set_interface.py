@@ -116,10 +116,39 @@ class TestSet (test.test_set.TestJointOps, TestCase):
         else:
             self.assertNotEqual(id(s), id(z))
 
+    def test_creation_from_sets(self):
+        s1 = {1, 2, 3}
+        s2 = frozenset({3, 4, 5})
 
+        s = self.thetype(s1)
+        self.assertIsInstance(s, self.thetype)
+        self.assertEqual(s, s1)
+
+        s = self.thetype(s2)
+        self.assertIsInstance(s, self.thetype)
+        self.assertEqual(s, s2)
+
+        n  = self.thetype(s)
+        self.assertIsInstance(n, self.thetype)
+        self.assertEqual(n, s)
+        
     def test_copy(self):
         dup = self.s.copy()
         self.assertEqual(id(self.s), id(dup))
+
+    def test_as_list(self):
+        l = list(self.s)
+        self.assertIsInstance(l, list)
+        self.assertEqual(len(l), len(self.s))
+        for item in l:
+            self.assertIn(item, self.s)
+
+    @onlyPython2
+    def test_cmp_function(self):
+        self.assertRaises(TypeError, cmp, self.s, 'hello')
+        self.assertRaises(TypeError, self.s.__cmp__, self.s)
+
+
 
 class TestMutableSet (TestSet, test.test_set.TestSet):
     thetype = NSMutableSet

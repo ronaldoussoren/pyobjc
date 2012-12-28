@@ -41,6 +41,44 @@ class TestConvenienceHelpers (TestCase):
                 del convenience.CLASS_METHODS["MyObject"]
 
 
+
+class TestBasicConveniences (TestCase):
+    def testBundleForClass(self):
+        orig = convenience.currentBundle
+        try:
+            the_bundle = object()
+            def currentBundle():
+                return the_bundle
+            convenience.currentBundle = currentBundle
+
+            class OC_Test_Basic_Convenience_1 (objc.lookUpClass("NSObject")):
+                pass
+
+            self.assertIs(OC_Test_Basic_Convenience_1.bundleForClass(), the_bundle)
+        finally:
+            convenience.currentBundle = orig
+
+    def test_kvc_helper(self):
+        o = objc.lookUpClass('NSURL').URLWithString_('http://www.python.org/')
+        self.assertEqual(o.host(), 'www.python.org')
+
+        self.assertEqual(o._.host, 'www.python.org')
+        self.assertEqual(o._['host'], 'www.python.org')
+        self.assertRaises(TypeError, lambda: o._[42])
+        self.assertEqual(repr(o._), '<KVC accessor for %r>'%(o,))
+        self.assertRaises(AttributeError, o._.nosuchattr)
+        self.assertRaises(TypeError, o._.__setitem__, 42) 
+
+        o = objc.lookUpClass('NSMutableDictionary').dictionary()
+        o._.key1 = 1
+        o._['key2'] = 2
+
+        self.assertEqual(o, {'key1': 1, 'key2': 2 })
+        self.assertRaises(AttributeError, o._.nosuchattr)
+        self.assertRaises(TypeError, o._.__setitem__, 42) 
+
+
+
 # TODO: Explicit tests for add_convenience_methods.
 
 if __name__ == "__main__":

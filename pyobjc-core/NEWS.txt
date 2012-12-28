@@ -207,6 +207,10 @@ Version 2.5b1
 - Using NSArchiver or NSKeyedArchiver to encode and decode (pure) python objects didn't always
   work correctly. Found by improved unittests.
 
+- The implementation of cmp() for NSSet instances now matches the behavior of regular python
+  sets, that is calling ``cmp(anNSSet, aValue)`` will raise a TypeError exception unless
+  both arguments are the same object (``anNSSet is aValue``).
+
 
 Version 2.4.1
 -------------

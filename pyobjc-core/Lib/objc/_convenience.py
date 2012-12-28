@@ -1411,15 +1411,7 @@ def nsset__gt__(self, other):
 
 if sys.version_info[0] == 2:
     def nsset__cmp__(self, other):
-        try:
-            if self < other:
-                return -1
-            elif self == other:
-                return 0
-            else:
-                return 1
-        except TypeError:
-            return cmp(id(self), id(other))
+        raise TypeError("Cannot compare sets using cmp")
 
 def nsset__length_hint__(self):
     return len(self)
@@ -1535,7 +1527,7 @@ CLASS_METHODS['NSSet'] = (
 
 if sys.version_info[0] == 2:
     CLASS_METHODS['NSSet'] += (
-        ('__cmp__', 'nsset__cmp__'),
+        ('__cmp__', nsset__cmp__),
     )
 
 CLASS_METHODS['NSMutableSet'] = (

@@ -12,7 +12,7 @@ import struct
 
 from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
-module = type(sys)
+ModuleType = type(sys)
 
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
@@ -50,7 +50,7 @@ class GetAttrMap (object):
         except AttributeError:
             raise KeyError(key)
 
-class ObjCLazyModule (module):
+class ObjCLazyModule (ModuleType):
 
     # Define slots for all attributes, that way they don't end up it __dict__.
     __slots__ = (
@@ -89,7 +89,7 @@ class ObjCLazyModule (module):
         self.__load_cftypes(metadict.get('cftypes'))
 
         if metadict.get('protocols') is not None:
-            self.__dict__['protocols'] = module('%s.protocols'%(name,))
+            self.__dict__['protocols'] = ModuleType('%s.protocols'%(name,))
             self.__dict__['protocols'].__dict__.update(
                     metadict['protocols'])
 
