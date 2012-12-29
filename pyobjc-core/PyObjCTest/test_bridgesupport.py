@@ -1304,8 +1304,8 @@ class TestParseBridgeSupport (TestCase):
 
         metadata_registry = {}
         def registerMetaDataForSelector(class_, selector, metadata):
-            self.assertIsInstance(class_, str)
-            self.assertIsInstance(selector, str)
+            self.assertIsInstance(class_, bytes)
+            self.assertIsInstance(selector, bytes)
             self.assertIsInstance(metadata, dict)
 
             # XXX: It might be nice to validate the contents of
@@ -1461,7 +1461,7 @@ class TestParseBridgeSupport (TestCase):
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {
-                (b'class1', 'sel1:'): {
+                (b'class1', b'sel1:'): {
                     'arguments': {
                         2: { 'null_accepted': False, 'type_modifier': b'o' }
                     }

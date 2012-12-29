@@ -169,7 +169,7 @@ PyObject* PyObjC_CopyFunc = NULL;
 				r = -1;
 			}
 		}
-#endif /* ! Python3 */
+#endif /* !Python3 */
 	} else if (PyObject_CheckReadBuffer(argument)) {
 		rval = [OC_PythonData
 			dataWithPythonObject:argument];

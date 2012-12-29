@@ -66,7 +66,7 @@ class TestBasicConveniences (TestCase):
         self.assertEqual(o._['host'], 'www.python.org')
         self.assertRaises(TypeError, lambda: o._[42])
         self.assertEqual(repr(o._), '<KVC accessor for %r>'%(o,))
-        self.assertRaises(AttributeError, o._.nosuchattr)
+        self.assertRaises(AttributeError, getattr, o._, 'nosuchattr')
         self.assertRaises(TypeError, o._.__setitem__, 42) 
 
         o = objc.lookUpClass('NSMutableDictionary').dictionary()

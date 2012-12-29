@@ -256,7 +256,7 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, newstyle_with_setstate)
-        self.assertEquals(v.state, {'a': 1, 'b': 2})
+        self.assertEqual(v.state, {'a': 1, 'b': 2})
         
     def test_reduce_as_global(self):
         # Test class where __reduce__ returns a string (the name of a global)

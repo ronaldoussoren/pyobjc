@@ -37,7 +37,7 @@ def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
                 bundle_path=frameworkPath,
                 scan_classes=False)
 
-        return bundle
+    return bundle
 
 class GetAttrMap (object):
     __slots__ = ('_container',)
@@ -332,21 +332,6 @@ class ObjCLazyModule (ModuleType):
                         self.__dict__[name] = v
                 continue
 
-            if tollfree:
-                for nm in tollfree.split(','):
-                    try:
-                        objc.lookUpClass(nm)
-                    except objc.error:
-                        pass
-                    else:
-                        tollfree = nm
-                        break
-
-                try:
-                    v = objc.registerCFSignature(name, type, func(), tollfree)
-                except objc.nosuchclass_error:
-                    v = objc.registerCFSignature(name, type, func())
-            else:
-                v = objc.registerCFSignature(name, type, func())
+            v = objc.registerCFSignature(name, type, func())
             if v is not None:
                 self.__dict__[name] = v

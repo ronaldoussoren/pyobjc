@@ -141,7 +141,7 @@ class object_property (object):
                     instance_methods.add(setprop)
 
                     # Use dynamic setter to avoid problems when subclassing
-                    self.__setprop = _dynamic_setter(setterName)
+                    self.__setprop = _dynamic_setter(setterName.decode('ascii'))
             else:
                 setprop = selector(
                     self._setter,
@@ -152,7 +152,7 @@ class object_property (object):
                 instance_methods.add(setprop)
 
                 # Use dynamic setter to avoid problems when subclassing
-                self.__setprop = _dynamic_setter(setterName)
+                self.__setprop = _dynamic_setter(setterName.decode('ascii'))
 
         if self._typestr in (_C_NSBOOL, _C_BOOL):
             getterName = b'is' + name[0].upper().encode('latin1') + name[1:].encode('latin1')
@@ -880,7 +880,7 @@ class set_proxy (collections.MutableSet):
             raise ValueError("Property '%s' is read-only"%(self._name,))
 
         try:
-            v = iter(self).next()
+            v = next(iter(self))
         except StopIteration:
             raise KeyError("Empty set")
 
