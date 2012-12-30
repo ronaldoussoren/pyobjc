@@ -11,6 +11,13 @@ Version 2.5b1
    Version 2.5 is currently in development and hasn't been released
    yet.
 
+
+- A number of framework wrappers have a "protocols" submodule containing
+  protocol objects (for example the module 'Foundation.protocol'). Use
+  of these modules is deprecated, they will be removed in PyObjC 3.0.
+
+  Use :func:`objc.protocolNamed` to access protocols instead.
+
 - Instances of :class:`objc.ivar` now have slots for introspection:
 
   - *__typestr__*: The type encoding
