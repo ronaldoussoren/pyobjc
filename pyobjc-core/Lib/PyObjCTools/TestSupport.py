@@ -240,7 +240,9 @@ def max_os_level(release):
     return onlyIf(os_release() <= release)
 
 _poolclass = objc.lookUpClass('NSAutoreleasePool')
-_nscftype = objc.lookUpClass('NSCFType')
+
+# NOTE: On at least OSX 10.8 there are multiple proxy classes for CFTypeRef...
+_nscftype = tuple(cls for cls in objc.getClassList() if 'NSCFType' in cls.__name__)
 
 _typealias = {}
 

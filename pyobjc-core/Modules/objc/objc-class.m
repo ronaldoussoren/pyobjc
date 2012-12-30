@@ -1041,7 +1041,7 @@ class_repr(PyObject* obj)
 
 	if (cls) {
 		const char* nm = class_getName(cls);
-		if (strcmp(nm, "NSCFType") == 0) {
+		if (strstr(nm, "NSCFType") != NULL) {
 			return PyText_FromFormat(
 				"<core-foundation class %s at %p>", 
 				((PyTypeObject*)obj)->tp_name, (void*)cls);
@@ -1483,7 +1483,7 @@ cls_get__name__(PyObject* self, void* closure __attribute__((__unused__)))
 		return PyText_FromString("objc.objc_class");
 	} else {
 		const char* nm = class_getName(cls);
-		if (strcmp(nm, "NSCFType") == 0) {
+		if (strstr(nm, "NSCFType") != NULL) {
 			return PyText_FromString(((PyTypeObject*)self)->tp_name);
 		} else {
 			return PyText_FromString(nm);
