@@ -214,6 +214,11 @@ Version 2.5b1
   sets, that is calling ``cmp(anNSSet, aValue)`` will raise a TypeError exception unless
   both arguments are the same object (``anNSSet is aValue``).
 
+- Issue #36: explictly document that PyObjC does not support the Objective-C Garbage Collection
+  system (introduced in OSX 10.5, deprecated in OSX 10.8), and also mention this in the
+  documentation for the screen saver framework because the screen saver engine uses GC on 
+  OSX 10.6 and 10.7.
+
 
 Version 2.4.1
 -------------

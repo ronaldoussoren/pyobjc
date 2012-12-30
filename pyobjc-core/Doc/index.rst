@@ -18,6 +18,7 @@ Contents:
    fsref-fsspec
    xcode
    blocks
+   objc-gc
    metadata/index
    api/index
    dev/index
