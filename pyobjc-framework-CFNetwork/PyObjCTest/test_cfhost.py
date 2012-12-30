@@ -46,7 +46,7 @@ class TestCFHost (TestCase):
         self.assertResultIsBOOL(CFHostStartInfoResolution)
         self.assertArgIsOut(CFHostStartInfoResolution, 2)
         ok, error = CFHostStartInfoResolution(v, kCFHostAddresses, None)
-        self.assertIsObject(ok, expected_resolution)
+        self.assertIs(ok, expected_resolution)
         self.assertIsInstance(error, CFStreamError)
 
         self.assertResultIsCFRetained(CFHostCreateCopy)
@@ -97,9 +97,9 @@ class TestCFHost (TestCase):
         self.assertIsInstance(lst[0][0], CFHostRef)
         self.assertIsInstance(lst[0][1], (int, long))
         self.assertIsInstance(lst[0][2], CFStreamError)
-        self.assertIsObject(lst[0][3], ctx)
+        self.assertIs(lst[0][3], ctx)
 
-        self.failIfResultIsCFRetained(CFHostGetAddressing)
+        self.assertResultIsNotCFRetained(CFHostGetAddressing)
         self.assertArgHasType(CFHostGetAddressing, 1, b'o^Z')
         lst, ok = CFHostGetAddressing(host, None)
         self.assertIsInstance(lst, CFArrayRef)
