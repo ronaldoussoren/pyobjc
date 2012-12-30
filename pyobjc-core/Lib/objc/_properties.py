@@ -13,8 +13,15 @@ NSObject = lookUpClass('NSObject')
 if sys.version_info[0] == 2:
     range = xrange
 
+    def _str(value):
+        return value
+
 else: # pragma: no cover (py3k)
     long = int
+
+    def _str(value):
+        return value.decode('ascii')
+
 
 
 def attrsetter(prop, name, copy):
@@ -141,7 +148,7 @@ class object_property (object):
                     instance_methods.add(setprop)
 
                     # Use dynamic setter to avoid problems when subclassing
-                    self.__setprop = _dynamic_setter(setterName.decode('ascii'))
+                    self.__setprop = _dynamic_setter(_str(setterName))
             else:
                 setprop = selector(
                     self._setter,
@@ -152,7 +159,7 @@ class object_property (object):
                 instance_methods.add(setprop)
 
                 # Use dynamic setter to avoid problems when subclassing
-                self.__setprop = _dynamic_setter(setterName.decode('ascii'))
+                self.__setprop = _dynamic_setter(_str(setterName))
 
         if self._typestr in (_C_NSBOOL, _C_BOOL):
             getterName = b'is' + name[0].upper().encode('latin1') + name[1:].encode('latin1')
