@@ -162,7 +162,7 @@
 		self = [super init];
 		if (unlikely(self == nil)) return nil;
 
-		void *bytes;
+		const void *bytes;
 		NSUInteger length;
 
 		if ([coder allowsKeyedCoding]) {
