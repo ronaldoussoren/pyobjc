@@ -1,3 +1,8 @@
+WARNING: This is an experimental branch for cleaning up the core bridge code,
+don't use this in production (or even at all unless you want to contribute to the
+clean up effort)
+
+
 Welcome to the PyObjC repository
 ================================
 
