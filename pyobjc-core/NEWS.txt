@@ -11,6 +11,8 @@ Version 2.5b1
    Version 2.5 is currently in development and hasn't been released
    yet.
 
+- Issue #37: Fix runtime link error with EPD (Enthought Python Distribution),
+  which doesn't include the pymactoolbox functionality.
 
 - A number of framework wrappers have a "protocols" submodule containing
   protocol objects (for example the module 'Foundation.protocol'). Use

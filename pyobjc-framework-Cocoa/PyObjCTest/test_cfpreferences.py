@@ -82,7 +82,7 @@ class TestPreferences (TestCase):
         self.assertResultIsCFRetained(CFPreferencesCopyApplicationList)
         apps = CFPreferencesCopyApplicationList(kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(apps, CFArrayRef)
-        self.assertIsIn(b"com.apple.AddressBook".decode('ascii'), apps)
+        self.assertIn(b"com.apple.AddressBook".decode('ascii'), apps)
         self.assertResultIsCFRetained(CFPreferencesCopyKeyList)
         keys = CFPreferencesCopyKeyList(b"com.apple.AddressBook".decode('ascii'), kCFPreferencesCurrentUser, kCFPreferencesAnyHost)
         self.assertIsInstance(keys, CFArrayRef)
