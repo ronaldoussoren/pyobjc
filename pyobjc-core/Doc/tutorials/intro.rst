@@ -23,12 +23,12 @@ you understand that Cocoa is different.  For this once this isn't
 marketing-speak: Cocoa is inherently different from common toolkits such as
 Tk, wxWindows, Carbon, MFC, etc.  Apple's documentation explains this, but
 such introductory text is often skipped.  It is a good idea to refer back to
-`Application Architecture`__ after reading this section.  If you want, you can
+`The Core App Design`__ after reading this section.  If you want, you can
 write code that does not follow the Model-View-Controller paradigm, but you
 would be on your own.  Cocoa and Interface Builder are designed to suit this
 model.
 
-.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/AppArchitecture/index.html
+.. __: https://developer.apple.com/library/mac/#documentation/General/Conceptual/MOSXAppProgrammingGuide/Introduction/Introduction.html
 
 Cocoa is built on the Model-View-Controller paradigm (MVC).  What this means
 is that the application code should be split into three parts:

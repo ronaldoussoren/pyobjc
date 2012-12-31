@@ -451,7 +451,9 @@ For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
 
-.. _`The Objective-C Programming Language`: http://developer.apple.com/documentation/Cocoa/Conceptual/ObjectiveC/index.html
+.. _`The Objective-C Programming Language`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html
+
+   The link is not correct, but the actual document is not online at the  moment.
 
 
 Overview of the bridge
@@ -533,7 +535,7 @@ as the corresponding Objective-C method or function, unless otherwise noted
 in the documentation (`Notes on supported APIs and classes on Mac OS X`_ for
 Cocoa on Mac OS X).
 
-.. _`Notes on supported APIs and classes on Mac OS X`: api-notes-macosx.html
+.. _`Notes on supported APIs and classes on Mac OS X`: :doc:`/apinotes`
 
 Most methods or functions that take or return pointers to values will be an
 exception to this rule if it is callable from Python at all.  In Objective-C
@@ -665,14 +667,12 @@ In Python 2.4 or later there is a decorator for this purpose:
 Reference counting
 ..................
 
-The `Cocoa libraries`_, and most (if not all) other class libraries for 
+The Cocoa libraries, and most (if not all) other class libraries for 
 Objective-C use explicit reference counting to manage memory.  The methods
 ``retain``, ``release`` and ``autorelease`` are used to manage these 
 reference counts.  You won't have to manage reference counts in Python, the
-bridge does all that work for you (but see `Notes on supported APIs and classes 
-on Mac OS X`__ for some advanced issues).
-
-.. __: api-notes-macosx.html
+bridge does all that work for you (but see :doc:`Notes on supported APIs and classes 
+on Mac OS X </apinotes>` for some advanced issues).
 
 The only reasons reference counts are mentioned at all are to tell you about
 ignoring them, and more importantly to introduce you to some issues w.r.t. 
@@ -720,9 +720,7 @@ PyObjC will automatically use the information in the ``informal_protocol``
 objects to add the right method signatures to methods, and to warn about
 classes that partially implement a protocol.
 
-See `PyObjC protocol support`__ for more information.
-
-.. __: protocols.html
+See :doc:`PyObjC protocol support <protocols>` for more information.
 
 Cocoa Bindings
 ..............
@@ -863,7 +861,7 @@ and during runtime.  See the online documentation for this module for more
 information.
 
 PyObjC includes a number of examples that show how to use Cocoa from
-Python.  The `PyObjC Example index`_ contains an overview of those examples.
+Python.  The :doc:`PyObjC Example index </examples/index>` contains an overview of those examples.
 
 More information on Cocoa programming can be found at:
 
@@ -873,7 +871,7 @@ More information on Cocoa programming can be found at:
 
 * Your local bookstore or library
 
-.. _`PyObjC Example index`: ../Examples/00ReadMe.html
+.. :doc:`PyObjC Example index </examples/index>`:
 
 ..  _`Cocoa libraries`: https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html#//apple_ref/doc/uid/TP40002974
 
@@ -1001,7 +999,7 @@ application will include stripped down version of the Python runtime that
 you ran setup.py with.
 
 For more information about ``py2app`` usage, read through some of the
-``setup.py`` scripts used by the examples in the `Examples`__ folder.
+``setup.py`` scripts used by the examples in the :doc:`Examples </examples/index>` folder.
 On any ``setup.py`` script that imports ``py2app``, you can use the
 following command to see the list of options:
 
@@ -1009,17 +1007,19 @@ following command to see the list of options:
 
     $ python setup.py py2app --help
 
-.. __: ../Examples/00ReadMe.txt
 
 
-"IDE approach" : Xcode
-......................
+.. 
+        This section is disabled for now because the Xcode templates aren't maintained.
 
-PyObjC includes a number of Xcode templates that can be used to 
-develop applications, using the same underlying functionality that
-is in py2app.  These templates are used like any other Xcode template,
-but there are some organizational rules about the template.
+        "IDE approach" : Xcode
+        ......................
 
-See `the documentation for the templates`__ for more details.
+        PyObjC includes a number of Xcode templates that can be used to 
+        develop applications, using the same underlying functionality that
+        is in py2app.  These templates are used like any other Xcode template,
+        but there are some organizational rules about the template.
 
-.. __: Xcode-Templates.html
+        See `the documentation for the templates` for more details.
+
+        .. Xcode-Templates.html
