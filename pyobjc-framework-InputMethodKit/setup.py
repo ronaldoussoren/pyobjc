@@ -12,14 +12,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-InputMethodKit',
-    version="2.5",
+    version="2.6b1",
     description = "Wrappers for the framework InputMethodKit on Mac OS X",
     packages = [ "InputMethodKit" ],
     setup_requires = [
-        'pyobjc-core>=2.5',
+        'pyobjc-core>=2.6b1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5',
-        'pyobjc-framework-Cocoa>=2.5',
+        'pyobjc-core>=2.6b1',
+        'pyobjc-framework-Cocoa>=2.6b1',
     ],
 )

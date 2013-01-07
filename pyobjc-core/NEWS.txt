@@ -3,6 +3,17 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.6
+-----------
+
+.. note:: 
+
+   This is version currently in development and has not been released yet
+
+- ...
+
+
+
 Version 2.5
 -----------
 

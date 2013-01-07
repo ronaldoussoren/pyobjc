@@ -16,15 +16,15 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-SyncServices',
-    version="2.5",
+    version="2.6b1",
     description = "Wrappers for the framework SyncServices on Mac OS X",
     packages = [ "SyncServices" ],
     setup_requires = [
-        'pyobjc-core>=2.5',
+        'pyobjc-core>=2.6b1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5',
-        'pyobjc-framework-Cocoa>=2.5',
-        'pyobjc-framework-CoreData>=2.5',
+        'pyobjc-core>=2.6b1',
+        'pyobjc-framework-Cocoa>=2.6b1',
+        'pyobjc-framework-CoreData>=2.6b1',
     ],
 )
