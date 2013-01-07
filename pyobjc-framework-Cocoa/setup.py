@@ -12,15 +12,15 @@ import os
 
 setup(
     name='pyobjc-framework-Cocoa',
-    version="2.5.0b1",
+    version="2.5",
     description = "Wrappers for the Cocoa frameworks on Mac OS X",
     packages = [ "Cocoa", "CoreFoundation", "Foundation", "AppKit", "PyObjCTools" ],
     namespace_packages = ['PyObjCTools'],
     setup_requires = [
-        'pyobjc-core>=2.5.0b1',
+        'pyobjc-core>=2.5',
     ],
     install_requires = [
-        'pyobjc-core>=2.5.0b1',
+        'pyobjc-core>=2.5',
     ],
     ext_modules = [
         # CoreFoundation

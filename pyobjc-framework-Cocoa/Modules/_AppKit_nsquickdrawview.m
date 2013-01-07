@@ -1,5 +1,5 @@
 
-#if !defined(__LP64__) && PY_MAJOR_VERSION == 2
+#if !defined(__LP64__) && PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 	/* Quickdraw only exists in 32-bit mode. We do define a dummy 
 	 * init function to avoid breaking the Python module.
 	 */
@@ -99,7 +99,7 @@ error:
 
 static int setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
 {
-#if !defined(__LP64__) && PY_MAJOR_VERSION == 2
+#if !defined(__LP64__) && PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 	Class classNSQuickDrawView = objc_lookUpClass("NSQuickDrawView");
 	if (classNSQuickDrawView == NULL) {
 		return 0;

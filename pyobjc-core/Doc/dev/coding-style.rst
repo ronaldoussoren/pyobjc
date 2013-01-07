@@ -2,12 +2,6 @@
 Coding style for PyObjC 
 =======================
 
-:authors: Ronald Oussoren,
-          Bill Bumgarner
-:contact: pyobjc-dev@lists.sourceforge.net
-:URL: http://pyobjc.sourceforge.net/
-:copyright: 2002 The PyObjC Project
-
 Introduction
 ------------
 

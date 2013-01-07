@@ -1,6 +1,6 @@
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 
-#ifdef __LP64__
+#ifdef __LP64__ 
 
 #include "pymactoolbox.h"
 
@@ -194,7 +194,7 @@ error:
 static int setup_nswindows(PyObject* m __attribute__((__unused__)))
 {
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 	Class classNSWindow = objc_lookUpClass("NSWindow");
 	if (classNSWindow == NULL) {
 		return 0;

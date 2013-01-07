@@ -3,7 +3,7 @@
  * used in AppKit and wrapped in the python core).
  */
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 
 #ifndef __LP64__
 
@@ -35,7 +35,7 @@ window2py(void* value)
 
 static int setup_carbon(PyObject* m __attribute__((__unused__)))
 {
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 	if (PyObjCPointerWrapper_Register(@encode(WindowRef),
 	                &window2py, &py2window) < 0)
 		return -1;

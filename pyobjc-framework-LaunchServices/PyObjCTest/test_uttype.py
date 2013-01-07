@@ -40,11 +40,11 @@ class TestUTType (TestCase):
 
         self.assertResultIsBOOL(UTTypeEqual)
         v = UTTypeEqual("public.python-script", "public.python-script")
-        self.assertIsObject(v, True)
+        self.assertIs(v, True)
 
         self.assertResultIsBOOL(UTTypeConformsTo)
         v = UTTypeConformsTo("public.python-script", kUTTypePlainText)
-        self.assertIsObject(v, True)
+        self.assertIs(v, True)
 
         self.assertResultIsCFRetained(UTTypeCopyDescription)
         v = UTTypeCopyDescription(kUTTypePlainText)

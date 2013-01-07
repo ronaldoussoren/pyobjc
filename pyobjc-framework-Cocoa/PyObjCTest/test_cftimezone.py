@@ -112,7 +112,7 @@ class TestTimeZone (TestCase):
 
         r = CFTimeZoneIsDaylightSavingTime(zone,
                 CFGregorianDateGetAbsoluteTime(dt, zone))
-        self.assertIsIn(r, (False, True))
+        self.assertIn(r, (False, True))
         offset = CFTimeZoneGetDaylightSavingTimeOffset(zone,
                 CFGregorianDateGetAbsoluteTime(dt, zone))
         self.assertIsInstance(offset, float)

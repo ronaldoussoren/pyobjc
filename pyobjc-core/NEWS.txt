@@ -3,14 +3,26 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 2.5b1
--------------
+Version 2.5
+-----------
 
-.. note::
+- Add conversion to/from ctypes.c_void_p to proxies for Cocoa objects.
 
-   Version 2.5 is currently in development and hasn't been released
-   yet.
+  To use::
 
+     anObject = NSArray.array()
+     void_p = anObject.__c_void_p__()
+     # use void_p with ctypes
+
+     otherObject = NSObject(c_void_p=voip_p)
+     assert anObject is otherObject
+
+  Note that it is save to contruct the python proxy from NSObject,
+  the class will return an instance of the correct proxy type (in this
+  example an instance of NSArray)
+
+- Fixed problem where the result of ``anObject.__cobject__()`` could not be converted
+  back to a PyObjC object again.
 
 - A number of framework wrappers have a "protocols" submodule containing
   protocol objects (for example the module 'Foundation.protocol'). Use
@@ -226,9 +238,15 @@ Version 2.5b1
   documentation for the screen saver framework because the screen saver engine uses GC on 
   OSX 10.6 and 10.7.
 
+- Issue #37: Fix runtime link error with EPD (Enthought Python Distribution),
+  which doesn't include the pymactoolbox functionality.
+
+- Various improvements to the documentation
 
 Version 2.4.1
 -------------
+
+.. note:: 2.41 was never released, all bugfixes are in the 2.4 branch as well as the 2.5 release.
 
 - Cocoa wrappers: fix metadata for ``copy``, ``mutableCopy``, 
   ``copyWithZone:`` and ``mutableCopyWithZone:``
@@ -636,7 +654,7 @@ Version 2.2 (2009-11-24)
     such as an ``NSArray``, and there are no direct references to the block from
     Python.
 
-.. __: http://clang.llvm.org/docs/Block-ABI-Apple.txt
+.. __: https://llvm.org/viewvc/llvm-project/cfe/trunk/docs/Block-ABI-Apple.txt?revision=HEAD
 
 - ``objc.inject`` is no longer support. This was code that had no real relation
   to the rest of PyObjC and was only working in 32-bit mode with little reason

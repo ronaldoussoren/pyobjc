@@ -80,21 +80,58 @@ object_new(
 	PyObject* args,
 	PyObject* kwds)
 {
-static char* keywords[] = { "cobject", NULL };
-	PyObject* arg = NULL;
+static char* keywords[] = { "cobject", "c_void_p", NULL };
+	PyObject* cobject = NULL;
+	PyObject* c_void_p = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", keywords, &arg)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
 		return NULL;
 	}
 
-	if (arg == NULL || !PyCapsule_CheckExact(arg)) {
+	if (cobject != NULL && c_void_p != NULL) {
+		PyErr_SetString(PyExc_TypeError,
+				"Pass either cobject or c_void_p, but not both");
+		return NULL;
+	}
+
+	if (cobject != NULL && PyCapsule_CheckExact(cobject)) {
+		NSObject* p = PyCapsule_GetPointer(cobject, "objc.__object__");
+
+		return PyObjC_IdToPython(p);
+
+	} else if (c_void_p != NULL) {
+		NSObject* p;
+
+		PyObject* attrval = PyObject_GetAttrString(c_void_p, "value");
+		if (attrval == NULL) {
+			return NULL;
+		}
+
+		if (
+#if PY_MAJOR_VERSION == 2
+			PyInt_Check(attrval) ||
+			/* NOTE: PyLong_AsVoidPtr works on Int objects as well */
+#endif /* PY_MAJOR_VERSION == 2 */
+			PyLong_Check(attrval)
+		) {
+			p = PyLong_AsVoidPtr(attrval);
+			if (p == NULL && PyErr_Occurred()) {
+				Py_DECREF(attrval);
+				return NULL;
+			}
+
+		} else {
+			PyErr_SetString(PyExc_ValueError,
+				"c_void_p.value is not an integer");
+			return NULL;
+		}
+		Py_DECREF(attrval);
+		return PyObjC_IdToPython(p);
+
+	} else {
 		PyErr_SetString(PyExc_TypeError, 
 			"Use class methods to instantiate new Objective-C objects");
 		return NULL;
-	} else {
-		NSObject* v = PyCapsule_GetPointer(arg, "objc.__object__");
-
-		return pythonify_c_value(@encode(NSObject), &v);
 	}
 }
 
@@ -712,6 +749,46 @@ as_cobject(PyObject* self)
 	return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);
 }
 
+static PyObject*
+get_c_void_p(void)
+{
+static  PyObject* c_void_p = NULL;
+	if (c_void_p == NULL) {
+		PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
+		if (mod_ctypes == NULL) {
+			/* ctypes is nota available */
+			return NULL;
+		}
+		c_void_p = PyObject_GetAttrString(mod_ctypes, "c_void_p");
+		Py_DECREF(mod_ctypes);
+		if (c_void_p == NULL) {
+			/* invalid or incomplete module */
+			return NULL;
+		}
+	}
+	return c_void_p;
+}
+
+static PyObject*
+as_ctypes_voidp(PyObject* self)
+{
+	PyObject* c_void_p;
+
+	if (PyObjCObject_GetObject(self) == nil) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	c_void_p = get_c_void_p();
+	if (c_void_p == NULL) {
+		return NULL;
+	}
+
+	return PyObject_CallFunction(c_void_p, "k", (long)PyObjCObject_GetObject(self));
+}
+
+
+
 
 static PyMethodDef obj_methods[] = {
 	{
@@ -725,6 +802,12 @@ static PyMethodDef obj_methods[] = {
 		(PyCFunction)as_cobject,
 		METH_NOARGS,
 		"Return a CObject representing this object"
+	},
+	{
+		"__c_void_p__",
+		(PyCFunction)as_ctypes_voidp,
+		METH_NOARGS,
+		"Return a ctypes.c_void_p representing this object"
 	},
 	{
 		NULL,

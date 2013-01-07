@@ -10,14 +10,14 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 setup(
     name='pyobjc-framework-Message',
-    version="2.5.0b1",
+    version="2.5",
     description = "Wrappers for the framework Message on Mac OS X",
     packages = [ "Message" ],
     setup_requires = [
-        'pyobjc-core>=2.5.0b1',
+        'pyobjc-core>=2.5',
     ],
     install_requires = [
-        'pyobjc-core>=2.5.0b1',
-        'pyobjc-framework-Cocoa>=2.5.0b1',
+        'pyobjc-core>=2.5',
+        'pyobjc-framework-Cocoa>=2.5',
     ],
 )

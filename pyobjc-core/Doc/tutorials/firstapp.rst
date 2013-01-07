@@ -2,8 +2,10 @@
 Creating your first PyObjC application.
 =======================================
 
-WARNING: This tutorial assumes you're using Xcode 2.5 and is therefore not 
-entirely valid with Xcode 3 (that is MacOS 10.5).
+.. warning::
+   
+   This document is old and hasn't been updated for modern versions of
+   PyObjC and Apple's developer tools.
 
 In this tutorial you will learn how to create your first Python Cocoa
 application: a simple dialog that allows you to convert amounts of money from
@@ -21,9 +23,8 @@ To follow the tutorial you need:
  * Xcode Tools (was Developer Tools for Mac OS X 10.2)
 
 If you do not have a ``/Developer`` folder, then you do not have Xcode Tools
-installed.  See `Getting the Xcode Tools`_.
-
-.. _`Getting the Xcode Tools`: http://developer.apple.com/tools/download/
+installed.  See `Apple's developer website <https://developer.apple.com/xcode/>`
+for more information on getting Xcode.
 
 Getting Started
 ---------------

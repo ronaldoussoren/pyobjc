@@ -4,4 +4,4 @@ Fahrenheit.
 Based on `Apple's Value Transformers`__ documentation, converted to PyObjC 
 by u.fiedler.
 
-.. __: http://developer.apple.com/documentation/Cocoa/Conceptual/ValueTransformers/index.html
+.. __: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ValueTransformers/index.html

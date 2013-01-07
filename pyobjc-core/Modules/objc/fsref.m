@@ -72,7 +72,7 @@ static PyObject* fsref_as_path(PyObject* ref)
 	rc = FSRefMakePath( &((PyObjC_FSRefObject*)ref)->ref,
 			buffer, sizeof(buffer));
 	if (rc != 0) {
-#if PY_MAJOR_VERSION == 2
+#if (PY_MAJOR_VERSION == 2) && defined (USE_TOOLBOX_OBJECT_GLUE)
 		PyMac_Error(rc);
 #else
 		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
@@ -107,7 +107,7 @@ static PyObject* fsref_from_path(PyObject* self __attribute__((__unused__)), PyO
 	rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
 	Py_DECREF(value);
 	if (rc != 0) {
-#if PY_MAJOR_VERSION == 2
+#if (PY_MAJOR_VERSION == 2) && defined(USE_TOOLBOX_OBJECT_GLUE)
 		PyMac_Error(rc);
 #else
 		PyErr_Format(PyExc_OSError, "MAC Error %d", rc);

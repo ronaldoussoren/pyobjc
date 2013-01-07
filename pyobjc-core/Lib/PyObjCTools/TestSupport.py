@@ -267,11 +267,11 @@ class TestCase (_unittest.TestCase):
         if not isinstance(tp, objc.objc_class):
             self.fail(message or "%r is not a CFTypeRef type"%(tp,))
 
-        if tp is _nscftype:
+        if any(x is tp for x in _nscftype):
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
-        if not issubclass(tp, _nscftype):
-            self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
+        #if not issubclass(tp, _nscftype):
+        #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
 
     def assertIsOpaquePointer(self, tp, message = None):

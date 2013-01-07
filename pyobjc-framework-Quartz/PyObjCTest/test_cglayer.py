@@ -45,10 +45,10 @@ class TestCGLayer (TestCase):
         self.assertIsInstance(sz, CGSize)
         self.assertEqual(sz, CGSize(50, 100))
 
-        self.failIfResultIsCFRetained(CGLayerGetContext)
+        self.assertResultIsNotCFRetained(CGLayerGetContext)
         ctx = CGLayerGetContext(layer)
         self.assertIsInstance(ctx, CGContextRef)
-        self.failIf(ctx is self.context)
+        self.assertIsNot(ctx, self.context)
 
         CGContextDrawLayerInRect(self.context, CGRectMake(0, 0, 50, 50), layer)
         CGContextDrawLayerAtPoint(self.context, CGPoint(10, 10), layer)

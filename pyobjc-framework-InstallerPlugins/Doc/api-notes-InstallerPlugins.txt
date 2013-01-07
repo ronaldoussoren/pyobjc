@@ -5,3 +5,9 @@ API Notes
 ---------
 
 All API's in the InstallerPlugins framework are wrapped by PyObjC.
+
+.. warning::
+
+   I cannot find documentation for this framework on Apple's developer
+   website anymore, this likely means that this framework is on the
+   way out (even if it doesn't appear to be officially deprecated).

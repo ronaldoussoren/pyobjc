@@ -78,5 +78,6 @@ Contact: Subscribe to the installer-dev mailing list at the Apple Mailing
 Lists web page <http://lists.apple.com/mailman/listinfo>.  Select the 
 "Installer-dev" list item and follow the steps on 
 "Subscribing to Installer-dev".
-	
-Documentation:	http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/index.html
+
+.. dead link:
+	Documentation:	http://developer.apple.com/documentation/DeveloperTools/Conceptual/SoftwareDistribution/index.html

@@ -26,4 +26,4 @@ Building
 
 Run ``python setup.py py2app`` to create the application.
 
-.. _`MacPython wiki`: http://pythonmac.org/wiki
+.. _`MacPython wiki`: http://wiki.python.org/moin/MacPython
