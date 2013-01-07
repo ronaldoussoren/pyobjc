@@ -3,6 +3,14 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 3.0
+-----------
+
+.. warning::
+
+   The 3.0 branch is currently highly experimental, don't uses this version!
+
+
 Version 2.5
 -----------
 
