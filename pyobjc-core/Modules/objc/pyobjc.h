@@ -79,6 +79,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #endif
 #endif
 
+#include "arc-runtime.h"
 #include "objc-runtime-compat.h"
 #include "proxy-registry.h"
 #include "objc_support.h"
