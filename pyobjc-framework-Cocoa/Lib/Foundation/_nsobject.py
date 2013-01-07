@@ -5,13 +5,20 @@ import objc
 import sys
 
 if sys.version_info[0] == 2:
+    def _str(v): return v
     exec("""\
 def _raise(exc_type, exc_value, exc_trace):
     raise exc_type, exc_value, exc_trace
 """)
 else:
+    def _str(v): 
+        if isinstance(v, str):
+            return v
+        return v.decode('ascii')
+
     def _raise(exc_type, exc_value, exc_trace):
         raise exc_type(exc_value).with_traceback(exc_trace)
+
 
 NSObject = objc.lookUpClass('NSObject')
 
@@ -24,7 +31,7 @@ class NSObject (objc.Category(NSObject)):
             # XXX: PyObjC's methodForSelector implementation doesn't work
             # with Python methods, using getattr instead
             #m = self.methodForSelector_(sel)
-            m = getattr(self, sel)
+            m = getattr(self, _str(sel))
             m(arg)
         except:
             import traceback
@@ -35,7 +42,7 @@ class NSObject (objc.Category(NSObject)):
         try:
             sel, arg, result = callinfo
             #m = self.methodForSelector_(sel)
-            m = getattr(self, sel)
+            m = getattr(self, _str(sel))
             r = m(arg)
             result.append((True, r))
         except:
