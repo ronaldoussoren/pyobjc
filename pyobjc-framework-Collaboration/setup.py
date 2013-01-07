@@ -12,14 +12,14 @@ from pyobjc_setup import setup
 setup(
     min_os_level='10.5',
     name='pyobjc-framework-Collaboration',
-    version="2.5",
+    version="3.0a1",
     description = "Wrappers for the framework Collaboration on Mac OS X",
     packages = [ "Collaboration" ],
     setup_requires = [
-        'pyobjc-core>=2.5',
+        'pyobjc-core>=3.0a1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5',
-        'pyobjc-framework-Cocoa>=2.5',
+        'pyobjc-core>=3.0a1',
+        'pyobjc-framework-Cocoa>=3.0a1',
     ],
 )

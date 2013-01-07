@@ -15,15 +15,15 @@ from  pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-ExceptionHandling',
-    version="2.5",
+    version="3.0a1",
     description = "Wrappers for the framework ExceptionHandling on Mac OS X",
     packages = [ "PyObjCTools", "ExceptionHandling" ],
     namespace_packages = [ "PyObjCTools" ],
     setup_requires = [
-        'pyobjc-core>=2.5',
+        'pyobjc-core>=3.0a1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5',
-        'pyobjc-framework-Cocoa>=2.5',
+        'pyobjc-core>=3.0a1',
+        'pyobjc-framework-Cocoa>=3.0a1',
     ],
 )

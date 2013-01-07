@@ -11,7 +11,7 @@ except ImportError:
 
 import os
 
-VERSION="2.5"
+VERSION="3.0a1"
 
 # Note 1: the requires list is split into a number
 # of lists because not all framework wrappers can
