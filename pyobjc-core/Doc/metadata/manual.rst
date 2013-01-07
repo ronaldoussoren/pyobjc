@@ -35,14 +35,14 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 * *arguments*: A dictionary containing more information on arguments. The keys of this dictionary are integers
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is
   visible in a prototype). The values are metadata dictionaries for the arguments and are decribed 
-  `later on <Argument and return value metadata>`_.
+  :ref:`later on <manual-metadata-argument-metadata>`.
 
   In metadata that is returned the *__metadata__()* method of :class:`function` and :class:`selector` objects the
   *arguments* value is a tuple with items for all arguments.
 
 
 * *retval*: A metadata dictionary with more information on the return value. The contents of this dictionary
-  is described `later on <Argument and return value metadata>`_.
+  is described :ref:`later on <manual-metadata-argument-metadata>`.
 
 * *suggestion*: For methods only: the method should not be called from Python, and calling it will raise and exception
   with the *suggestion* value in the exception message.
@@ -100,6 +100,8 @@ How the size of the C array is calculated depends on the *type* of the argument:
   of the C array is the result of calling that selector.
  
 * In all other cases the length cannot be calculated and the bridge raises an exception.
+
+  .. _manual-metadata-argument-metadata:
 
 Argument and return value metadata
 ..................................

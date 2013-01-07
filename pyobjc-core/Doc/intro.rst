@@ -5,7 +5,7 @@ An introduction to PyObjC
 ..	:authors: Ronald Oussoren, Bob Ippolito
 	:contact: pyobjc-dev@lists.sourceforge.net
 	:URL: http://pyobjc.sourceforge.net/
-	:copyright: 2003-2005 The PyObjC Project
+	:copyright: 2003-2013 The PyObjC Project
 
 Preface
 -------
@@ -532,10 +532,8 @@ custom Objective-C code in order to be accessible by Python.
 
 Wrapped/bridged methods (and functions) have the same number of arguments
 as the corresponding Objective-C method or function, unless otherwise noted
-in the documentation (`Notes on supported APIs and classes on Mac OS X`_ for
+in the documentation (:doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` for
 Cocoa on Mac OS X).
-
-.. _`Notes on supported APIs and classes on Mac OS X`: :doc:`/apinotes`
 
 Most methods or functions that take or return pointers to values will be an
 exception to this rule if it is callable from Python at all.  In Objective-C
@@ -693,7 +691,7 @@ object stays alive, but the proxy object as seen by the Objective-C code is
 actually an autoreleased object that will be cleaned up unless the Objective-C
 code increases its reference count.
 
-The document `Notes on supported APIs and classes on Mac OS X`_ contains 
+The document :doc:`Notes on supported APIs and classes on Mac OS X </apinotes>` contains 
 information about classes that work with weak references.  The most important
 are notification centers and ``NSOutlineView``, to be exact: the outline view
 stores weak references to the objects return by the method 

@@ -16,9 +16,9 @@ To follow the tutorial you need:
  * Xcode Tools
 
 If you do not have a ``/Developer`` folder, then you do not have Xcode Tools
-installed.  See `Getting the Xcode Tools`_.
-
-.. _`Getting the Xcode Tools`: http://developer.apple.com/tools/download/
+installed. On MacOSX 10.7 or later you can download Xcode from the App Store,
+see `Apple's developer website <https://developer.apple.com/xcode/>` for
+more information.
 
 The application we are going to modify is Apple's SimpleComboBox example.
 This example shows you how to use combo boxes, but that is not what interests

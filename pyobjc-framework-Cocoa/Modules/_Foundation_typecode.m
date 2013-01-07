@@ -5,7 +5,7 @@
  */
 /* inline definition of PyMac_GetOSType pymactoolbox.h doesn't work in 64-bit mode */
 
-#if PY_MAJOR_VERSION == 2
+#if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
 extern int PyMac_GetOSType(PyObject *v, OSType *pr);
 extern PyObject * PyMac_BuildOSType(OSType t);
 

@@ -1,6 +1,4 @@
-A rewrite of `CurrencyConverter`__ using Cocoa Bindings.
-
-.. __: ../../CurrentConverter/index.html
+A rewrite of the :doc:`CurrencyConverter example </examples/Cocoa/AppKit/CurrencyConverter/index>` using Cocoa Bindings.
 
 Originally from `Introduction to Developing Cocoa Applications Using Bindings`, converted to PyObjC by u.fiedler.
 

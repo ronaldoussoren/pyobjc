@@ -414,12 +414,27 @@ Types
    This class is the metatype for Objective-C classes and provides no user-visible
    behavior.
 
-.. class:: objc_object
+.. class:: objc_object([cobject, [c_void_p]])
 
    This class is the root class for Objective-C classes, that is all wrappers for
    Objective-C classes are a subclass of this class. It is not possible to instantiate
    instances of Objective-C classes by using the class as a callable, instances are
    created using the standard Objective-C mechanisms instead.
+
+   The *cobject* and *c_void_p* arguments should always be passed as keyword arguments,
+   and at most one of them should be provided. This will construct a proxy object of the
+   right subclass of :class:`objc_object` for the Cocoa object that the passed in value
+   refers to. *Cobject* should be a Pytho capsule created using the :meth:`__cobject__`
+   method, *c_void_p* should be a :class:`ctypes.c_void_p`.
+
+   .. note:: 
+   
+      The normal way to create instances of (subclasses of) :class:`objc_object` is
+      to call the normal Cocoa allocation method. Calling the class should only be used
+      to contruct a proxy from a pre-existing pointer value (for interoperability with
+      other libraries).
+
+         
 
    .. data:: pyobjc_ISA
 
@@ -438,6 +453,10 @@ Types
 
       Returns a capsule object with identifier "objc.__object__" and the a reference
       to the Objective-C object as the value.
+
+   .. method:: __c_void_p__()
+
+      Returns a :class:`ctypes.c_void_p` instance for this object.
 
    .. method:: __reduce__()
 
