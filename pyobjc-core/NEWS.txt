@@ -3,6 +3,20 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 2.5.1
+-------------
+
+- PyObjC could crash when calling a method that is dynamicly generated
+  (that is, the selector is not present in the class according to the 
+  Objective-C runtime but the instance responds to it anyway). 
+
+  The cases that used to crash now raise :exc:`objc.error` instead.
+
+  .. note:: 
+
+     It is highly unlikely that real code would run into this, found
+     while working on PyObjC 3.x.
+
 Version 2.5
 -----------
 
