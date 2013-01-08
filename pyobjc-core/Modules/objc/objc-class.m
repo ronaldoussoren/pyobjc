@@ -1170,7 +1170,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 
 /* FIXME: version of _type_lookup that only looks for instance methods */
 static inline PyObject*
-_type_lookup_instance(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
@@ -1235,7 +1235,7 @@ _type_lookup_instance(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 
 
 				/* add to __dict__ 'cache' */
-				if (PyDict_SetItem(dict, name, result) == -1) {
+				if (PyDict_SetItem(class_dict, name, result) == -1) {
 					Py_DECREF(result);
 					return NULL;
 				}
@@ -1333,7 +1333,7 @@ class_getattro(PyObject* self, PyObject* name)
 	}
 
 	if (descr == NULL) {
-		descr = _type_lookup_instance(Py_TYPE(self), name, bytes);
+		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, Py_TYPE(self), name, bytes);
 		if (descr != NULL) {
 			result = descr;
 			descr = NULL;
