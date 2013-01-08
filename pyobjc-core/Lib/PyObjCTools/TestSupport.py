@@ -761,6 +761,10 @@ class TestCase (_unittest.TestCase):
 
 
 
+    if not hasattr(_unittest.TestCase, 'assertStartswith'):
+        def assertStartswith(self, value, test, message = None): # pragma: no cover
+            if not value.startswith(test):
+                self.fail(message or "%r does not start with %r"%(value, test))
 
     if not hasattr(_unittest.TestCase, 'assertIs'): # pragma: no cover
         def assertIs(self, value, test, message = None):

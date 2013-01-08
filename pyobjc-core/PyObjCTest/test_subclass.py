@@ -95,7 +95,7 @@ class TestSelectors(TestCase):
             def foo(self):
                 pass
 
-        self.assertTrue(repr(SelectorRepr.foo).startswith('<unbound selector foo of SelectorRepr at'))
+        self.assertStartswith(repr(SelectorRepr.foo), '<unbound selector foo of SelectorRepr at')
 
 
 class TestCopying (TestCase):

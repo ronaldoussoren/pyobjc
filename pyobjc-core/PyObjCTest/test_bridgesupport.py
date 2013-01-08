@@ -1318,7 +1318,7 @@ class TestParseBridgeSupport (TestCase):
             self.assertIsInstance(typestr, bytes)
             self.assertIsInstance(doc, (str, type(None)))
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
-            self.assertTrue(typestr.startswith(objc._C_PTR))
+            self.assertStartswith(typestr, objc._C_PTR)
             return '<pointer %r>'%(name,)
 
         def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
