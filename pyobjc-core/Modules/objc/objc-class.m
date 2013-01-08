@@ -1208,6 +1208,12 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 		} else {
 			return NULL;
 		}
+
+		descr = PyDict_GetItem(dict, name);
+		if (descr != NULL) {
+			return descr;
+		}
+
 		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
 			Class cls = objc_metaclass_locate(base);
 			Method m;
@@ -1331,7 +1337,9 @@ class_getattro(PyObject* self, PyObject* name)
 		result = ((PyTypeObject*)self)->tp_dict;
 		goto done;
 
-	} else {
+	} 
+#if 0
+	else {
 		/* XXX: This code might be too smart
 		 * What this tries to do:
 		 * - NSObject.description should be the class method, not the one in tp_dict
@@ -1360,12 +1368,22 @@ class_getattro(PyObject* self, PyObject* name)
 			}
 		}
 	}
+#endif
 
 	if (descr == NULL) {
-		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, Py_TYPE(self), name, bytes);
-		if (descr != NULL) {
+		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, self, name, bytes);
+		if (descr != NULL 
+#if PY_MAJOR_VERSION == 2
+			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
+#endif
+		    ) {
+			f = Py_TYPE(descr)->tp_descr_get;
+			if (f != NULL) {
+				result = f(descr, NULL, self);
+				goto done;
+			}
+		} else if (descr != NULL) {
 			result = descr;
-			descr = NULL;
 			Py_INCREF(result);
 			goto done;
 		}
