@@ -39,6 +39,11 @@ Version 3.0
   Maintaining the *__dict__* was *very* expensive, on every method call the bridge would
   check if the method list had changed and there is no cheap way to perform that check.
 
+  .. note:: 
+
+     I haven't done performance tests at this time, it is not yet clear if this work will 
+     make the bridge more efficient or that there are other more important bottlenecks.
+
 Version 2.5
 -----------
 
