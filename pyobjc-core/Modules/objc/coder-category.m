@@ -5,6 +5,9 @@
  * wrappers in pyobjc-framework-Cocoa work just
  * fine but we cannot use that in this package
  * to avoid creating circular dependencies.
+ *
+ * XXX: Fix this by moving the nscoder helpers
+ *      to pyobjc-core and drop this category.
  */
 #import <Foundation/Foundation.h>
 
