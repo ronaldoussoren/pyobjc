@@ -127,6 +127,7 @@ class TestRegressions(TestCase):
         o = InitializeTestClass.new()
         self.assertEqual(len(calls), 1)
 
+    @expectedFailure # XXX: private/protected method support is no longer present
     def testPrivateIntrospection(self):
         o = testbndl.PyObjC_TestClass4.alloc().init()
         self.assertEqual(o._privateMethodWithArg_(1.5), 1)

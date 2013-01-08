@@ -97,7 +97,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	PyObject* result;
 	PyObject* bases;
 	PyObjCClassObject* info;
-	PyObject* protectedMethods;
 
 	/*
 	 * First look for an already registerd type
@@ -135,12 +134,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	 * If that doesn't exist create a new one.
 	 */
 
-	protectedMethods = PyDict_New();
-	if (protectedMethods == NULL) {
-		Py_DECREF(cf);
-		return NULL;
-	}
-
 	dict = PyDict_New();
 	if (dict == NULL) {
 		Py_DECREF(cf);
@@ -172,13 +165,11 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 	info = (PyObjCClassObject*)result;
 	info->class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
 	info->sel_to_py = NULL;
-	info->method_magic = 0;
 	info->dictoffset = 0;
 	info->useKVO = 0;
 	info->delmethod = NULL;
 	info->hasPythonImpl = 0;
 	info->isCFWrapper = 1;
-	info->protectedMethods = protectedMethods;
 
 	if (PyObject_SetAttrString(result, 
 			"__module__", PyObjCClass_DefaultModule) < 0) {

@@ -54,7 +54,6 @@ extern PyObject* PyObjC_ClassExtender;
  * @field base      Type actual type object
  * @field sel_to_py Mapping to speed up finding the correct Python method
  *                  for a selector.
- * @field method_magic  The most recent PyObjC_methodlist_magic() for the class
  * @field dictoffset  Offset in the Objective-C instance for the instance 
  *                    __dict__
  * @field delmethod  The method that implements __del__
@@ -62,19 +61,11 @@ extern PyObject* PyObjC_ClassExtender;
  * @field generation   The value of PyObjC_MappingCount at the last time
  *                     the method-list was updated.
  * @field useKVO    should the class implement automatic KVO notifications?
- * @field protectedMethods methods whose name starts with an underscore
  *
  * @discussion
  *      This struct is the type-object for on Objective-C class. It stores
  *      some additional information that is used to manage the interface
  *      with the Objective-C runtime.
- *
- *      (method_magic, generation) is used to detect if the method wrappers
- *      should be regenerated: if method_magic is no longer equal to 
- *      PyObjC_methodlist_magic() the Objective-C class changed, if generation
- *      is no longer equal to PyObjC_MappingCount there are new method-mappings
- *      and we should rescan just in case one of those mappings is needed for
- *      this class.
  *
  *	dictoffset is used by objc-object.m to find the __dict__ for instances.
  *	If the offset is 0 there is no __dict__.
@@ -86,14 +77,12 @@ typedef struct _PyObjCClassObject {
 	PyHeapTypeObject base;
 	__strong Class class;
 	PyObject* sel_to_py;
-	int method_magic;
 	Py_ssize_t dictoffset;
 	PyObject* delmethod;
 	int hasPythonImpl;
 	int isCFWrapper;
 	int generation;
 	int useKVO;
-	PyObject* protectedMethods;
 	PyObject* hiddenSelectors;
 	PyObject* hiddenClassSelectors;
 	struct _PyObjCClassObject* meta_class; /* To be dropped */

@@ -144,7 +144,6 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 extern BOOL PyObjC_useKVO;
 extern BOOL PyObjC_nativeProperties;
 extern int PyObjC_VerboseLevel;
-extern int PyObjC_HideProtected;
 #if PY_MAJOR_VERSION == 2
 extern int PyObjC_StrBridgeEnabled;
 #endif

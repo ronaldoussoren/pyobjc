@@ -96,6 +96,12 @@ super_getattro(PyObject *self, PyObject *name)
 			else
 				continue;
 
+			/* FIXME: 
+			 * need to call the __getattribute__ functionality for this
+			 * particular class when looking at a PybOjCClass object, otherwise
+			 * we won't actually find methods!
+			 */
+
 			res = PyDict_GetItem(dict, name);
 			if (res != NULL) {
 				Py_INCREF(res);

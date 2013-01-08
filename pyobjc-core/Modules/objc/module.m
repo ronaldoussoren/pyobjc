@@ -26,7 +26,6 @@
 
 
 int PyObjC_VerboseLevel = 0;
-int PyObjC_HideProtected = 1;
 BOOL PyObjC_useKVO = YES;
 BOOL PyObjC_nativeProperties = NO;
 
@@ -449,28 +448,6 @@ static 	char* keywords[] = { NULL };
 	return PyObjC_NSNumberWrapper;
 }
 
-PyDoc_STRVAR(setHideProtected_doc,
-	"setHideProtected(bool) -> None\n"
-	"\n"
-	"If true methods whose name starts with an underscore will not "
-	"visible for introspection using dir() or the class __dict__.");
-static PyObject* 
-setHideProtected(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static 	char* keywords[] = { "flag", NULL };
-	PyObject* o;
-
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
-			keywords, &o)) {
-		return NULL;
-	}
-
-	PyObjC_HideProtected = PyObject_IsTrue(o);
-
-	Py_INCREF(Py_None);
-	return Py_None;
-}
-
 
 PyDoc_STRVAR(setObjCPointerIsError_doc,
 	"setObjCPointerIsError(bool) -> None\n"
@@ -730,8 +707,6 @@ static	Py_ssize_t	curClassCount = -1;
 
 		if (nm[0] == '%') {
 			/* skip, posed-as type */
-		} else if (PyObjC_HideProtected && nm[0] == '_') {
-			/* Skip private classes */
 		} else if (strcmp(nm, "Object") == 0 
 				|| strcmp(nm, "List") == 0
 				|| strcmp(nm, "Protocol") == 0) {
@@ -1961,7 +1936,6 @@ static PyMethodDef mod_methods[] = {
 	{ "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
 	{ "setObjCPointerIsError", (PyCFunction)setObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, setObjCPointerIsError_doc },
 	{ "setUseKVOForSetattr", (PyCFunction)setUseKVOForSetattr, METH_VARARGS|METH_KEYWORDS, setUseKVOForSetattr_doc },
-	{ "setHideProtected", (PyCFunction)setHideProtected, METH_VARARGS|METH_KEYWORDS, setHideProtected_doc },
 	{ "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
 	{ "getObjCPointerIsError", (PyCFunction)getObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, getObjCPointerIsError_doc },
 	{ "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },

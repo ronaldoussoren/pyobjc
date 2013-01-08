@@ -10,6 +10,34 @@ Version 3.0
 
    The 3.0 branch is currently highly experimental, don't uses this version!
 
+* Removed support for hiding "protected" methods, :func:`objc.setHideProtected` is gone,
+  it complicated the code without real advantages.
+
+* Removed :func:`objc.addConvenienceForSelector` (and the storage used by that
+  function). It is no longer to magically add methods to a Python proxy for a Cocoa
+  class just because the Cocoa class implemented a specific selector.
+
+  Reasons for this:
+
+  * There were some conflicts because a class implemented two selectors that caused
+    the same python method to be added to the class *__dict__*. Which one was added
+    was basicly random.
+
+  * The functionality required PyObjC to maintain a full *__dict__* for classes, even
+    when most Cocoa methods were never called. Ensuring that the contents of *__dict__*
+    is correct in the face of Objective-C categories and class patches required some
+    *very* expensive code.
+
+  As a side effect of this some classes may no longer have the convenience methods they
+  had in earlier releases (in particular classes that are not mentioned in Apple's 
+  documentation).
+
+* The bridge now lazily looks for Objective-C methods as they are used from Python, instead
+  of trying to maintain a class *__dict__* that mirrors the method list of the Objective-C
+  class.
+
+  Maintaining the *__dict__* was *very* expensive, on every method call the bridge would
+  check if the method list had changed and there is no cheap way to perform that check.
 
 Version 2.5
 -----------

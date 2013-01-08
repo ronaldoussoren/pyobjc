@@ -782,7 +782,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 	PyObject* retval;
 
 	NSMethodSignature* methsig;
-	char  buf[1024];
+	char  buf[2048]; /* 1024  XXX: yes, some signatures are actually longer than 1K bytes */
 
 	if (PyObjCObject_Check(self)) {
 		if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
@@ -835,6 +835,7 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 				return NULL;
 			}
 		}
+
 
 		NS_DURING
 			if ([cls instancesRespondToSelector:sel]) {
@@ -909,9 +910,17 @@ PyObjCSelector_NewNative(Class class,
 	const char* native_signature = signature;
 	char* repl_sig;
 
+
 	repl_sig = PyObjC_FindReplacementSignature(class, selector);
 	if (repl_sig) {
 		signature = repl_sig;
+	}
+
+	if (signature == NULL) {
+		PyErr_Format(PyExc_RuntimeError, 
+			"PyObjCSelector_NewNative: nil signature for %s", sel_getName(selector));
+		printf("** PyObjCSelector_NewNative: nil signature for %s\n", sel_getName(selector));
+		return NULL;
 	}
 
 	result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);

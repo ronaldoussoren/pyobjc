@@ -4,21 +4,16 @@ add Python special methods to Objective-C classes with a suitable interface.
 
 This module contains no user callable code.
 
-TODO:
-- Add external interface: Framework specific modules may want to add to this.
-
-- These are candidates for implementation:
-
-    >>> from Foundation import *
-    >>> set(dir(list)) - set(dir(NSMutableArray))
-    set(['__delslice__', '__imul__', '__getslice__', '__setslice__',
-        '__iadd__', '__mul__', '__add__', '__rmul__'])
-    >>> set(dir(dict)) - set(dir(NSMutableDictionary))
-    set(['__cmp__'])
+FIXME: this module needs to be cleaned up
+- all _CONVENIENCE_METHOD updates need to go (move to CLASS_METHODS mechanism instead,
+  and for anything not in Foundation those CLASS_METHODS updates should be in the 
+  relevant framework wrapper)
+- remove all functions that are no longer used
+- group the others (possibly splitting this file into a number of modules)
 
 """
 from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
-from objc._objc import registerMetaDataForSelector
+from objc._objc import registerMetaDataForSelector, _updatingMetadata
 import sys
 import warnings
 import collections
@@ -33,6 +28,8 @@ if sys.version_info[0] == 2:
     # Use 'xrange' as range to get the same behavior on Python 2 and 3.
     range = xrange
 
+_updatingMetadata(True)
+
 
 def addConvenienceForSelector(selector, methods):
     """
@@ -46,7 +43,12 @@ def addConvenienceForClass(classname, methods):
     """
     Add the list with methods to the class with the specified name
     """
-    CLASS_METHODS[classname] = methods
+    # XXX: Need to be sightly smarter than this.
+    if classname in CLASS_METHODS:
+        CLASS_METHODS[classname] += methods
+
+    else:
+        CLASS_METHODS[classname] = methods
 
 NSObject = lookUpClass('NSObject')
 
@@ -54,9 +56,6 @@ def add_convenience_methods(super_class, name, type_dict):
     """
     Add additional methods to the type-dict of subclass 'name' of
     'super_class'.
-
-    _CONVENIENCE_METHODS is a global variable containing a mapping from
-    an Objective-C selector to a Python method name and implementation.
 
     CLASS_METHODS is a global variable containing a mapping from
     class name to a list of Python method names and implementation.
@@ -70,83 +69,10 @@ def add_convenience_methods(super_class, name, type_dict):
                 return cb
             type_dict['bundleForClass'] = selector(bundleForClass, isClassMethod=True)
 
-    look_at_super = (super_class is not None and super_class.__name__ != 'Object')
-
-    for k, sel in list(type_dict.items()):
-        if not isinstance(sel, selector):
-            continue
-
-        #
-        # Handle some common exceptions to the usual rules:
-        #
-
-        sel = sel.selector
-
-        if sel in _CONVENIENCE_METHODS:
-            v = _CONVENIENCE_METHODS[sel]
-            for nm, value in v:
-                if nm in type_dict and isinstance(type_dict[nm], selector):
-
-                    # Clone attributes of already existing version
-
-                    t = type_dict[nm]
-                    v = selector(value, selector=t.selector,
-                        signature=t.signature, isClassMethod=t.isClassMethod)
-
-                    type_dict[nm] = v
-
-                elif look_at_super and hasattr(super_class, nm):
-                    # Skip, inherit the implementation from a super_class
-                    pass
-
-                elif nm not in type_dict:
-                    type_dict[nm] = value
-
     if name in CLASS_METHODS:
         for nm, value in CLASS_METHODS[name]:
             type_dict[nm] = value
 
-
-    if name == 'NSObject':
-        class kvc (object):
-            """
-            Key-Value-Coding accessor for Cocoa objects.
-
-            Both attribute access and dict-like indexing will attempt to
-            access the requested item through Key-Value-Coding.
-            """
-            __slots__ = ('__object',)
-            def __init__(self, value):
-                self.__object = value
-
-            def __repr__(self):
-                return "<KVC accessor for %r>"%(self.__object,)
-
-            def __getattr__(self, key):
-                try:
-                    return self.__object.valueForKey_(key)
-                except KeyError as msg:
-                    if hasattr(msg, '_pyobjc_info_') and msg._pyobjc_info_['name'] == 'NSUnknownKeyException':
-                        raise AttributeError(key)
-
-                    raise
-            def __setattr__(self, key, value):
-                if not key.startswith('_'):
-                    return self.__object.setValue_forKey_(value, key)
-                else:
-                    super(kvc, self).__setattr__(key, value)
-
-            def __getitem__(self, key):
-                if not isinstance(key, STR_TYPES):
-                    raise TypeError("Key must be string")
-                return self.__object.valueForKey_(key)
-
-            def __setitem__(self, key, value):
-                if not isinstance(key, STR_TYPES):
-                    raise TypeError("Key must be string")
-                return self.__object.setValue_forKey_(value, key)
-
-        type_dict['_'] = property(kvc)
 
 _setClassExtender(add_convenience_methods)
 
@@ -301,6 +227,44 @@ def nsobject__lt__(self, other):
 def nsobject__le__(self, other):
     return bool(self.isLessThanOrEqualTo_(other))
 
+class kvc (object):
+    """
+    Key-Value-Coding accessor for Cocoa objects.
+
+    Both attribute access and dict-like indexing will attempt to
+    access the requested item through Key-Value-Coding.
+    """
+    __slots__ = ('__object',)
+    def __init__(self, value):
+        self.__object = value
+
+    def __repr__(self):
+        return "<KVC accessor for %r>"%(self.__object,)
+
+    def __getattr__(self, key):
+        try:
+            return self.__object.valueForKey_(key)
+        except KeyError as msg:
+            if hasattr(msg, '_pyobjc_info_') and msg._pyobjc_info_['name'] == 'NSUnknownKeyException':
+                raise AttributeError(key)
+
+            raise
+    def __setattr__(self, key, value):
+        if not key.startswith('_'):
+            return self.__object.setValue_forKey_(value, key)
+        else:
+            super(kvc, self).__setattr__(key, value)
+
+    def __getitem__(self, key):
+        if not isinstance(key, STR_TYPES):
+            raise TypeError("Key must be string")
+        return self.__object.valueForKey_(key)
+
+    def __setitem__(self, key, value):
+        if not isinstance(key, STR_TYPES):
+            raise TypeError("Key must be string")
+        return self.__object.setValue_forKey_(value, key)
+
 CLASS_METHODS["NSObject"] = (
     ('__hash__', nsobject_hash),
     ('__eq__', nsobject__eq__),
@@ -309,6 +273,7 @@ CLASS_METHODS["NSObject"] = (
     ('__ge__', nsobject__ge__),
     ('__lt__', nsobject__lt__),
     ('__le__', nsobject__le__),
+    ('_',   property(kvc)),
 )
 
 if sys.version_info[0] == 2:
@@ -638,6 +603,7 @@ _CONVENIENCE_METHODS[b'dictionaryWithDictionary:'] = (
 _CONVENIENCE_METHODS[b'nextObject'] = (
     ('__iter__', enumeratorGenerator),
 )
+
 
 #
 # NSNumber seems to be and abstract base-class that is implemented using
@@ -1128,6 +1094,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
 
         CLASS_METHODS['NSMutableDictionary'] = (
             ('fromkeys', classmethod(nsmutabledict_fromkeys)),
+            ('__setitem__', __setitem__setObject_forKey_),
         )
 
     else:
@@ -1143,6 +1110,12 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('get', get_objectForKey_),
             ('__contains__', has_key_objectForKey_),
             ('has_key', has_key_objectForKey_),
+            ('iterkeys', lambda self: iter(self.keyEnumerator())),
+            ('iteritems', lambda self: itemsGenerator(self)),
+        )
+
+        CLASS_METHODS['NSMutableDictionary'] = (
+            ('__setitem__', __setitem__setObject_forKey_),
         )
 
     CLASS_METHODS['NSDictionary'] += (
@@ -1152,14 +1125,21 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
         ('__le__', nsdict__richcmp__),
         ('__gt__', nsdict__richcmp__),
         ('__ge__', nsdict__richcmp__),
+        ('__new__', staticmethod(nsdict_new)),
+        ('__len__', lambda self: self.count()),
+        ('__iter__', __iter__objectEnumerator_keyEnumerator),
+    )
+    CLASS_METHODS['NSMutableDictionary'] += (
+        ('__new__', staticmethod(nsmutabledict_new)),
+        ('__setitem__', __setitem__setObject_forKey_),
+        ('update', update_setObject_forKey_),
+        ('setdefault', setdefault_setObject_forKey_),
+        ('pop', pop_setObject_forKey_),
+        ('popitem', popitem_setObject_forKey_),
+        ('__delitem__', __delitem__removeObjectForKey_),
+        ('clear', lambda self: self.removeAllObjects()),
     )
 
-    NSDictionary.__new__ = nsdict_new
-    NSMutableDictionary.__new__ = nsmutabledict_new
-
-    NSMutableDictionary.dictionary()
-
-    #FIXME: This shouldn't be necessary
 
 NSMutableArray = lookUpClass('NSMutableArray')
 def nsarray_add(self, other):
@@ -1238,14 +1218,29 @@ CLASS_METHODS['NSArray'] = (
     ('__radd__', nsarray_radd),
     ('__mul__', nsarray_mul),
     ('__rmul__', nsarray_mul),
+    ('__new__', staticmethod(nsarray_new)),
+    ('__len__', lambda self: self.count()),
+    ('__contains__', containsObject_has_key),
+    ('index', index_indexOfObject_inRange_),
+    ('remove', remove_removeObjectAtIndex_),
+    ('pop', pop_removeObjectAtIndex_),
+    ('__delitem__', __delitem__removeObjectAtIndex_),
+    ('__delslice__', __delslice__removeObjectAtIndex_), # Python 2
+    ('__copy__', __copy__),
+    ('__getitem__', __getitem__objectAtIndex_),
+    ('__getslice__', __getslice__objectAtIndex_),
 )
 
-# Force scans to ensure __new__ is set correctly
-# FIXME: This shouldn't be necessary!
-NSArray.__new__ = nsarray_new
-NSMutableArray.__new__ = nsmutablearray_new
-NSMutableArray.alloc().init()
-#NSMutableSet.set()
+CLASS_METHODS['NSMutableArray'] = (
+    ('__setitem__', __setitem__replaceObjectAtIndex_withObject_),
+    ('__setslice__', __setslice__replaceObjectAtIndex_withObject_),
+    ('__new__', staticmethod(nsmutablearray_new)),
+    ('extend', extend_addObjectsFromArray_),
+    ('append', lambda self, item: self.addObject_(container_wrap(item))),
+    ('sort', sort),
+    ('insert', insert_insertObject_atIndex_),
+    ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
+)
 
 NSSet = lookUpClass('NSSet')
 NSMutableSet = lookUpClass('NSMutableSet')
@@ -1566,7 +1561,22 @@ def nsmutableset_new(cls, sequence=None):
 
     return value
 
-NSSet.__new__ = nsset_new
-NSMutableSet.__new__ = nsmutableset_new
+CLASS_METHODS['NSSet'] += (
+    ('__new__',     staticmethod(nsset_new)),
+)
 
-NSMutableSet.alloc().init()
+CLASS_METHODS['NSMutableSet'] += (
+    ('__new__',     staticmethod(nsmutableset_new)),
+)
+
+
+# XXX: is this sane, why not implement next/__next__ with __iter__ returning self?
+def enumeratorGenerator(anEnumerator):
+    while True:
+        yield container_unwrap(anEnumerator.nextObject(), StopIteration)
+CLASS_METHODS['NSEnumerator'] = (
+    ('__iter__', enumeratorGenerator),
+)
+
+
+_updatingMetadata(False)

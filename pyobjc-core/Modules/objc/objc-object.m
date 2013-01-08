@@ -253,13 +253,14 @@ object_dealloc(PyObject* obj)
 
 
 static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name)
+_type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
 	PyObject* protDict;
 	PyObject* res;
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
 
 	/* FIXME: Support for method name cache */
 
@@ -276,11 +277,9 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 
 		if (PyObjCClass_Check(base)) {
 			PyObjCClass_CheckMethodList(base, 0);
-			protDict = ((PyObjCClassObject*)base)->protectedMethods;
 			dict = ((PyTypeObject *)base)->tp_dict;
 
 		} else if (PyType_Check(base)) {
-			protDict = NULL;
 			dict = ((PyTypeObject *)base)->tp_dict;
 
 
@@ -298,10 +297,41 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 			break;
 		}
 
-		if (protDict) {
-			descr = PyDict_GetItem(protDict, name);
-			if (descr != NULL) {
-				break;
+		if (PyObjCClass_Check(base)) {
+			/* Check if the name is a selector that
+			 * is not cached yet 
+			 *
+			 * XXX: Once this works try to avoid calling class_getInstanceMethod too often
+			 */
+			Class cls = PyObjCClass_GetClass(base);
+			Method m = class_getInstanceMethod(cls, sel);
+			if (m) {
+				int use = 1;
+				Class sup = class_getSuperclass(cls);
+				if (sup) {
+					Method m_sup = class_getInstanceMethod(sup, sel);
+					if (m_sup == m) {
+						use = 0;
+					}
+				}
+				if (!use) continue;
+
+				/* Create (unbound) selector */
+				PyObject* result = PyObjCSelector_NewNative(
+						cls, sel, method_getTypeEncoding(m), 0);
+				if (result == NULL) {
+					return NULL;
+				}
+
+
+				/* add to __dict__ 'cache' */
+				if (PyDict_SetItem(dict, name, result) == -1) {
+					Py_DECREF(result);
+					return NULL;
+				}
+				
+				/* and return */
+				return result;
 			}
 		}
 	}
@@ -319,7 +349,6 @@ static PyObject** _get_dictptr(PyObject* obj)
 	assert(obj_object != nil);
 	return (PyObject**)(((char*)obj_object) + dictoffset);
 }
-
 
 static PyObject *
 object_getattro(PyObject *obj, PyObject * volatile name)
@@ -422,7 +451,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	/* replace _PyType_Lookup */
 	if (descr == NULL) {
-		descr = _type_lookup(tp, name);
+		descr = _type_lookup(tp, name, bytes);
 	}
 
 	f = NULL;
@@ -563,7 +592,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 			_UseKVO((NSObject *)obj_inst, obj_name, YES);
 		}
 	}
-	descr = _type_lookup(tp, name);
+	descr = _type_lookup(tp, name, bytes);
 	f = NULL;
 	if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
@@ -788,6 +817,67 @@ as_ctypes_voidp(PyObject* self)
 }
 
 
+/* 
+ * Implementation of __dir__, which is the hook used by dir() on python 2.6 or later.
+ */
+static PyObject* 
+meth_dir(PyObject* self)
+{
+	PyObject* result;
+	Class     cls;
+	Method*   methods;
+	unsigned int method_count, i;
+	char      selbuf[1024];
+
+
+	/* Start of with keys in __dict__ */
+	result = PyDict_Keys(Py_TYPE(self)->tp_dict);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	cls = object_getClass(PyObjCObject_GetObject(self));
+	while (cls != NULL) {
+		/* Now add all instance method names */
+		methods = class_copyMethodList(cls, &method_count);
+		for (i = 0; i < method_count; i++) {
+			char* name;
+			PyObject* item;
+
+			/* Check if the selector should be hidden */
+			if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),  /* XXX */
+						method_getName(methods[i]), NO)) {
+				continue;
+			}
+
+			name = (char*)PyObjC_SELToPythonName(
+						method_getName(methods[i]), 
+						selbuf, 
+						sizeof(selbuf));
+			if (name == NULL) continue;
+
+			item = PyText_FromString(name);
+			if (item == NULL) {
+				free(methods);
+				Py_DECREF(result);
+				return NULL;
+			}
+
+			if (PyList_Append(result, item) == -1) {
+				free(methods);
+				Py_DECREF(result);
+				Py_DECREF(item);
+				return NULL;
+			}
+			Py_DECREF(item);
+		}
+		free(methods);
+
+		cls = class_getSuperclass(cls);
+	}
+	return result;
+}
+
 
 
 static PyMethodDef obj_methods[] = {
@@ -808,6 +898,12 @@ static PyMethodDef obj_methods[] = {
 		(PyCFunction)as_ctypes_voidp,
 		METH_NOARGS,
 		"Return a ctypes.c_void_p representing this object"
+	},
+	{
+		"__dir__",
+		(PyCFunction)meth_dir,
+		METH_NOARGS,
+		"dir() hook, don't call directly"
 	},
 	{
 		NULL,
@@ -907,7 +1003,7 @@ PyObjCClassObject PyObjCObject_Type = {
 
 
 #endif /* Python 3 */
-   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*
