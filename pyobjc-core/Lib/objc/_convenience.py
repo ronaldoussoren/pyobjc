@@ -18,7 +18,7 @@ import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForClass' )
+__all__ = ( 'addConvenienceForClass', )
 
 
 _CONVENIENCE_METHODS = {}

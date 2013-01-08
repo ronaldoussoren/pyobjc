@@ -1483,6 +1483,9 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	 * Also if the name starts and ends with two underscores, return
 	 * it unmodified. This avoids mangling of Python's special methods.
 	 *
+	 * Also don't rewrite two underscores between name elements, such
+	 * as '__pyobjc__setItem_' -> '__pyobjc__setitem:'
+	 *
 	 * Both are heuristics and could be the wrong choice, but either 
 	 * form is very unlikely to exist in ObjC code.
 	 */
@@ -1502,7 +1505,14 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	/* Replace all other underscores by colons */
 	cur = strchr(cur, '_');
 	while (cur != NULL) {
-		*cur = ':';
+		if (cur[1] == '_' && cur[2] && cur[2] != '_') {
+			/* Don't translate double underscores between
+			 * name elements.
+			 */
+			cur += 2;
+		} else {
+			*cur = ':';
+		}
 		cur = strchr(cur, '_');
 	}
 	return sel_registerName(buf);
