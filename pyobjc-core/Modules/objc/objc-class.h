@@ -114,6 +114,7 @@ PyObject* PyObjCClass_ListProperties(PyObject* cls);
 
 /* Returns a borrowed reference or NULL (without necessarily raising an exception) */
 PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
+PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 
 
 #endif /* PyObjC_OBJC_CLASS_H */

@@ -1130,42 +1130,49 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 		}
 
 		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
-			Class cls = objc_metaclass_locate(base);
-			Method m = class_getClassMethod(cls, sel);
-
-			if (m) {
-				int use = 1;
-				Class sup = class_getSuperclass(cls);
-				if (sup) {
-					Method m_sup = class_getClassMethod(sup, sel);
-					if (m_sup == m) {
-						use = 0;
-					}
-				}
-				if (!use) continue;
-
-				/* Create (unbound) selector */
-				PyObject* result = PyObjCSelector_NewNative(
-						cls, sel, method_getTypeEncoding(m), 1);
-				if (result == NULL) {
-					return NULL;
-				}
-
-
-				/* add to __dict__ 'cache' */
-				if (PyDict_SetItem(dict, name, result) == -1) {
-					Py_DECREF(result);
-					return NULL;
-				}
-				
-				/* and return, as a borrowed reference */
-				Py_DECREF(result);
-				return result;
-			}
+			descr = PyObjCMetaClass_TryResolveSelector(base, name, sel);
 		}
 	}
 
 	return descr;
+}
+
+PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
+{
+	Class cls = objc_metaclass_locate(base);
+	Method m = class_getClassMethod(cls, sel);
+	PyObject* dict = ((PyTypeObject *)base)->tp_dict;
+
+	if (m) {
+		int use = 1;
+		Class sup = class_getSuperclass(cls);
+		if (sup) {
+			Method m_sup = class_getClassMethod(sup, sel);
+			if (m_sup == m) {
+				use = 0;
+			}
+		}
+		if (!use) return NULL;
+
+		/* Create (unbound) selector */
+		PyObject* result = PyObjCSelector_NewNative(
+				cls, sel, method_getTypeEncoding(m), 1);
+		if (result == NULL) {
+			return NULL;
+		}
+
+
+		/* add to __dict__ 'cache' */
+		if (PyDict_SetItem(dict, name, result) == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+		
+		/* and return, as a borrowed reference */
+		Py_DECREF(result);
+		return result;
+	}
+	return NULL;
 }
 
 /* FIXME: version of _type_lookup that only looks for instance methods */

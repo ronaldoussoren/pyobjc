@@ -125,29 +125,54 @@ super_getattro(PyObject *self, PyObject *name)
 			}
 
 			if (PyObjCClass_Check(tmp)) {
-				res = PyObjCClass_TryResolveSelector(tmp, name, sel);
-				if (res) {
-					Py_INCREF(res);
-					f = Py_TYPE(res)->tp_descr_get;
-					if (f != NULL) {
-						tmp = f(res,
-							/* Only pass 'obj' param if
-							   this is instance-mode super 
-							   (See SF ID #743627)
-							*/
-							(su->obj == (PyObject *)
-								    su->obj_type 
-								? (PyObject *)NULL 
-								: su->obj),
-							(PyObject *)starttype);
-						Py_DECREF(res);
-						res = tmp;
+				if (!PyObjCClass_Check(su->obj)) {
+					res = PyObjCClass_TryResolveSelector(tmp, name, sel);
+					if (res) {
+						Py_INCREF(res);
+						f = Py_TYPE(res)->tp_descr_get;
+						if (f != NULL) {
+							tmp = f(res,
+								/* Only pass 'obj' param if
+								   this is instance-mode super 
+								   (See SF ID #743627)
+								*/
+								(su->obj == (PyObject *)
+									    su->obj_type 
+									? (PyObject *)NULL 
+									: su->obj),
+								(PyObject *)starttype);
+							Py_DECREF(res);
+							res = tmp;
+						}
+						return res;
+					} else if (PyErr_Occurred()) {
+						return NULL;
 					}
-					return res;
-				} else if (PyErr_Occurred()) {
-					return NULL;
+				} else {
+					res = PyObjCMetaClass_TryResolveSelector(Py_TYPE(tmp), name, sel);
+					if (res) {
+						Py_INCREF(res);
+						f = Py_TYPE(res)->tp_descr_get;
+						if (f != NULL) {
+							tmp = f(res,
+								/* Only pass 'obj' param if
+								   this is instance-mode super 
+								   (See SF ID #743627)
+								*/
+								(su->obj == (PyObject *)
+									    su->obj_type 
+									? (PyObject *)NULL 
+									: su->obj),
+								(PyObject *)starttype);
+							Py_DECREF(res);
+							res = tmp;
+						}
+						return res;
+					} else if (PyErr_Occurred()) {
+						return NULL;
+					}
 				}
-			} /* TODO: same trick for class methods */
+			}
 		}
 	}
 	return PyObject_GenericGetAttr(self, name);
