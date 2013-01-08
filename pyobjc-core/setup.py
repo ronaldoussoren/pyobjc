@@ -446,10 +446,10 @@ if '-O0' in get_config_var('CFLAGS'):
         if isinstance(vars[k], str) and '-O0' in vars[k]:
             vars[k] = vars[k].replace('-O0', '-O1')
 
-#vars = get_config_vars()
-#for k in vars: # XXX
-#    if isinstance(vars[k], str) and '-O2' in vars[k]:
-#        vars[k] = vars[k].replace('-O2', '-O1')
+vars = get_config_vars()
+for k in vars: # XXX
+    if isinstance(vars[k], str) and '-O2' in vars[k]:
+        vars[k] = vars[k].replace('-O2', '-O1')
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 

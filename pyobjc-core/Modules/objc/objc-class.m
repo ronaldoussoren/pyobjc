@@ -1108,14 +1108,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	n = PyTuple_GET_SIZE(mro);
 	for (i = 0; i < n; i++) {
 		base = PyTuple_GET_ITEM(mro, i);
-#if 0
 		if (PyObjCClass_Check(base)) {
 			PyObjCClass_CheckMethodList(base, 0);
 			dict = ((PyTypeObject *)base)->tp_dict;
 
-		} else 
-#endif
-			if (PyType_Check(base)) {
+		} else if (PyType_Check(base)) {
 			dict = ((PyTypeObject *)base)->tp_dict;
 
 
@@ -1134,38 +1131,13 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 
 		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
 			Class cls = objc_metaclass_locate(base);
-			int is_class = 1;
 			Method m = class_getClassMethod(cls, sel);
-
-			if (!m) {
-				/* XXX: This isn't quite correct, this is used to fake
-				 *      access to the class __dict__ and explicitly share
-				 *      functionality with _type_lookup in objc-object.m
-				 *      (that is called from class_getattro)
-				 */
-				PyObjC_DURING
-					m = class_getInstanceMethod(cls, sel);
-				PyObjC_HANDLER
-
-					/* Annoyingly enough this can result in callbacks to ObjC
-					 * that can raise an exception.
-					 */
-					m = NULL;
-			        PyObjC_ENDHANDLER
-
-				is_class = 0;
-			}
 
 			if (m) {
 				int use = 1;
 				Class sup = class_getSuperclass(cls);
 				if (sup) {
-					Method m_sup;
-					if (is_class) {
-						m_sup = class_getClassMethod(sup, sel);
-					} else {
-						m_sup = class_getInstanceMethod(sup, sel);
-					}
+					Method m_sup = class_getClassMethod(sup, sel);
 					if (m_sup == m) {
 						use = 0;
 					}
@@ -1174,7 +1146,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 
 				/* Create (unbound) selector */
 				PyObject* result = PyObjCSelector_NewNative(
-						cls, sel, method_getTypeEncoding(m), is_class);
+						cls, sel, method_getTypeEncoding(m), 1);
 				if (result == NULL) {
 					return NULL;
 				}
@@ -1191,15 +1163,58 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 				return result;
 			}
 		}
-#if 0
-		if (PyObjCClass_Check(base)) {
-			/* Check if the name is a selector that
-			 * is not cached yet 
-			 *
-			 * XXX: Once this works try to avoid calling class_getInstanceMethod too often
-			 */
-			Class cls = PyObjCClass_GetClass(base);
-			Method m = class_getInstanceMethod(cls, sel);
+	}
+
+	return descr;
+}
+
+/* FIXME: version of _type_lookup that only looks for instance methods */
+static inline PyObject*
+_type_lookup_instance(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+{
+	Py_ssize_t i, n;
+	PyObject *mro, *base, *dict;
+	PyObject *descr = NULL;
+	PyObject* res;
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+
+	/* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
+
+	/* Look in tp_dict of types in MRO */
+	mro = tp->tp_mro;
+	if (mro == NULL) {
+		return NULL;
+	}
+	res = NULL;
+	assert(PyTuple_Check(mro));
+	n = PyTuple_GET_SIZE(mro);
+	for (i = 0; i < n; i++) {
+		base = PyTuple_GET_ITEM(mro, i);
+		if (PyType_Check(base)) {
+			dict = ((PyTypeObject *)base)->tp_dict;
+
+
+#if PY_MAJOR_VERSION == 2
+		} else if (PyClass_Check(base)) {
+			dict = ((PyClassObject*)base)->cl_dict;
+#endif
+		} else {
+			return NULL;
+		}
+		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
+			Class cls = objc_metaclass_locate(base);
+			Method m;
+			
+			PyObjC_DURING
+				m = class_getInstanceMethod(cls, sel);
+
+			PyObjC_HANDLER
+				/* Annoyingly enough this can result in callbacks to ObjC
+				 * that can raise an exception.
+				 */
+				m = NULL;
+			PyObjC_ENDHANDLER
+
 			if (m) {
 				int use = 1;
 				Class sup = class_getSuperclass(cls);
@@ -1225,15 +1240,16 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 					return NULL;
 				}
 				
-				/* and return */
+				/* and return, as a borrowed reference */
+				Py_DECREF(result);
 				return result;
 			}
 		}
-#endif
 	}
 
 	return descr;
 }
+
 
 static PyObject*
 class_getattro(PyObject* self, PyObject* name)
@@ -1311,6 +1327,16 @@ class_getattro(PyObject* self, PyObject* name)
 	} else {
 		result = PyDict_GetItem(((PyTypeObject*)self)->tp_dict, name);
 		if (result != NULL) {
+			Py_INCREF(result);
+			goto done;
+		}
+	}
+
+	if (descr == NULL) {
+		descr = _type_lookup_instance(Py_TYPE(self), name, bytes);
+		if (descr != NULL) {
+			result = descr;
+			descr = NULL;
 			Py_INCREF(result);
 			goto done;
 		}
