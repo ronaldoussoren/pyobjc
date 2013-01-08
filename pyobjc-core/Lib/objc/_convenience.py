@@ -18,7 +18,7 @@ import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForSelector', 'addConvenienceForClass' )
+__all__ = ( 'addConvenienceForClass' )
 
 
 _CONVENIENCE_METHODS = {}
@@ -29,15 +29,6 @@ if sys.version_info[0] == 2:
     range = xrange
 
 _updatingMetadata(True)
-
-
-def addConvenienceForSelector(selector, methods):
-    """
-    Add the list with methods to every class that has a selector with the
-    given name.
-    """
-    warnings.warn("addConvenienceForSelector is on the way out", DeprecationWarning)
-    _CONVENIENCE_METHODS[selector] = methods
 
 def addConvenienceForClass(classname, methods):
     """

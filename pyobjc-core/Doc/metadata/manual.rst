@@ -446,20 +446,6 @@ Metadata for Objective-C methods and classes
    Register *type* as a dict-like type that will be bridged to Objective-C as an NSDictionary subclass.
 
 
-.. function:: addConvenienceForSelector(selector, methods)
-
-    Add a list of method to every class that has *selector* as a selector.
-    These additional methods are not added to the Objective-C class, but are 
-    only visibile in Python code.
-
-    The *methods* argument is a list of tuples (methodname, function).
-
-   .. deprecated:: 2.5
-
-      This function is deprecated, future versions of PyObjC will use a different way
-      to initialize classes that will require us to remove this function.
-
-
 .. function:: addConvenienceForClass(classname, method)
 
     Add a list of method the named class when that class is initialized, the class
