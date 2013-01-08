@@ -673,6 +673,10 @@ objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
 	/* Bind 'self' */
 	if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
 		obj = class;
+	} else {
+		if (obj && PyObjCClass_Check(obj)) {
+			obj = NULL;
+		}
 	}
 	result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);
 	result->sel_selector   = meth->sel_selector;
@@ -838,10 +842,10 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 
 
 		NS_DURING
-			if ([cls instancesRespondToSelector:sel]) {
-				methsig = [cls instanceMethodSignatureForSelector:sel];
+			if ([cls respondsToSelector:sel]) {
+				methsig = [cls methodSignatureForSelector:sel];
 				retval = PyObjCSelector_NewNative(cls, sel, 
-					PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 0);
+					PyObjC_NSMethodSignatureToTypeString(methsig, buf, sizeof(buf)), 1);
 			} else if ((Object_class != nil) && (cls != Object_class) && nil != (methsig = [(NSObject*)cls methodSignatureForSelector:sel])) {
 				retval = PyObjCSelector_NewNative(cls, sel, 
 					PyObjC_NSMethodSignatureToTypeString(
@@ -852,6 +856,8 @@ PyObjCSelector_FindNative(PyObject* self, const char* name)
 				retval = NULL;
 			}
 		NS_HANDLER
+			PyObjCErr_FromObjC(localException);
+			PyErr_Print();
 			PyErr_Format(PyExc_AttributeError,
 				"No attribute %s", name);
 			retval = NULL;
@@ -919,7 +925,6 @@ PyObjCSelector_NewNative(Class class,
 	if (signature == NULL) {
 		PyErr_Format(PyExc_RuntimeError, 
 			"PyObjCSelector_NewNative: nil signature for %s", sel_getName(selector));
-		printf("** PyObjCSelector_NewNative: nil signature for %s\n", sel_getName(selector));
 		return NULL;
 	}
 

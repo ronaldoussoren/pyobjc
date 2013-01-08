@@ -3,7 +3,7 @@ Tests if NSSet conforms to the interface of the python type set()
 
 This is a port of the set tests from the Python stdlib for 3.2
 """
-raise ImportError
+raise ImportError("XXX: disable set API tests")
 from PyObjCTools.TestSupport import *
 
 import objc

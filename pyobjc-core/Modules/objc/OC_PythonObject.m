@@ -616,7 +616,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 {
 	Method		   m;
 
-	m = class_getInstanceMethod(self, sel);
+	m = class_getClassMethod(self, sel);
 	if (m) {
 		/* A real Objective-C method */
 		return [NSMethodSignature 

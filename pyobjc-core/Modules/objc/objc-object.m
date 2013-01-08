@@ -262,8 +262,6 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	PyObject* res;
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
 
-	/* FIXME: Support for method name cache */
-
 	/* Look in tp_dict of types in MRO */
 	mro = tp->tp_mro;
 	if (mro == NULL) {
@@ -303,40 +301,54 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 			 *
 			 * XXX: Once this works try to avoid calling class_getInstanceMethod too often
 			 */
-			Class cls = PyObjCClass_GetClass(base);
-			Method m = class_getInstanceMethod(cls, sel);
-			if (m) {
-				int use = 1;
-				Class sup = class_getSuperclass(cls);
-				if (sup) {
-					Method m_sup = class_getInstanceMethod(sup, sel);
-					if (m_sup == m) {
-						use = 0;
-					}
-				}
-				if (!use) continue;
-
-				/* Create (unbound) selector */
-				PyObject* result = PyObjCSelector_NewNative(
-						cls, sel, method_getTypeEncoding(m), 0);
-				if (result == NULL) {
-					return NULL;
-				}
-
-
-				/* add to __dict__ 'cache' */
-				if (PyDict_SetItem(dict, name, result) == -1) {
-					Py_DECREF(result);
-					return NULL;
-				}
-				
-				/* and return */
-				return result;
+			descr = PyObjCClass_TryResolveSelector(base, name, sel);
+			if (descr) {
+				return descr;
+			} else if (PyErr_Occurred()) {
+				return NULL;
 			}
 		}
 	}
 
 	return descr;
+}
+
+PyObject*
+PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
+{
+	Class cls = PyObjCClass_GetClass(base);
+	PyObject* dict = ((PyTypeObject *)base)->tp_dict;
+	Method m = class_getInstanceMethod(cls, sel);
+	if (m) {
+		int use = 1;
+		Class sup = class_getSuperclass(cls);
+		if (sup) {
+			Method m_sup = class_getInstanceMethod(sup, sel);
+			if (m_sup == m) {
+				use = 0;
+			}
+		}
+		if (!use) return NULL;
+
+		/* Create (unbound) selector */
+		PyObject* result = PyObjCSelector_NewNative(
+				cls, sel, method_getTypeEncoding(m), 0);
+		if (result == NULL) {
+			return NULL;
+		}
+
+
+		/* add to __dict__ 'cache' */
+		if (PyDict_SetItem(dict, name, result) == -1) {
+			Py_DECREF(result);
+			return NULL;
+		}
+		
+		/* and return as a borrowed reference */
+		Py_DECREF(result);
+		return result;
+	}
+	return NULL;
 }
 
 static PyObject** _get_dictptr(PyObject* obj)

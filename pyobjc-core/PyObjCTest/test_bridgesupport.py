@@ -454,7 +454,7 @@ class TestBridgeSupportParser (TestCase):
         for item in self.iter_framework_dir('/System/Library/Frameworks'):
             yield item
 
-    def no_test_system_bridgesupport(self): # XXX
+    def test_system_bridgesupport(self): # XXX
         with filterWarnings("ignore", RuntimeWarning):
             # Check that all system bridgesupport files can be processed correctly
             for fn in self.iter_system_bridgesupport_files():

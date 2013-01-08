@@ -193,7 +193,6 @@ PyObjC_NSMethodSignatureToTypeString(
 
 	r = snprintf(buf, buflen, "%s", [sig methodReturnType]);
 	if (r > buflen) {
-		printf("overflow for return type\n");
 		return NULL;
 	}
 
@@ -205,7 +204,6 @@ PyObjC_NSMethodSignatureToTypeString(
 	for (i = 0; i < arg_count; i++) {
 		r = snprintf(buf, buflen, "%s", [sig getArgumentTypeAtIndex:i]);
 		if (r > buflen) {
-			printf("overflow for argument %d %s %d %d\n", i, buf, (int)buflen, (int)r);
 			return NULL;
 		}
 

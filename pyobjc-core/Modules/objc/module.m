@@ -2098,7 +2098,15 @@ PyObjC_MODULE_INIT(_objc)
 		PyObjC_INITERROR();
 	}
 
-
+#if 0
+	if (setup_class_meta() < 0) {
+		PyObjC_INITERROR();
+	}
+#else
+	if (PyType_Ready(&PyObjCMetaClass_Type) < 0) {
+		PyObjC_INITERROR();
+	}
+#endif
 	if (PyType_Ready(&PyObjCClass_Type) < 0) {
 		PyObjC_INITERROR();
 	}
@@ -2172,6 +2180,9 @@ PyObjC_MODULE_INIT(_objc)
 	}
 	/* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
 
+	if (PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
+		PyObjC_INITERROR();
+	}
 	if (PyDict_SetItemString(d, "objc_class", (PyObject*)&PyObjCClass_Type) < 0) {
 		PyObjC_INITERROR();
 	}

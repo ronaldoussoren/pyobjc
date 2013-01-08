@@ -78,8 +78,7 @@ class BaseClass (objc.lookUpClass('NSObject')):
 
 class TestLockingBasic (TestCase):
 
-    # XXX: test disabled for now due to speed
-    def no_testBasicLocking(self):
+    def testBasicLocking(self):
         lst = []
 
         obj = BaseClass.alloc().initWithList_(lst)
@@ -103,8 +102,7 @@ class TestLockingBasic (TestCase):
             if lst[idx].endswith(' a'):
                 self.assertTrue(lst[idx+1].endswith(' b'))
 
-    # XXX: test disabled for now due to speed
-    def no_testObjectiveCLocking(self):
+    def testObjectiveCLocking(self):
         lst = []
         lst = []
 
@@ -133,8 +131,7 @@ class TestLockingBasic (TestCase):
 
 class TestLockingWithStatement (TestCase):
 
-    # XXX: test disabled for now due to speed
-    def no_testBasicLocking(self):
+    def testBasicLocking(self):
         lst = []
         lst = []
 

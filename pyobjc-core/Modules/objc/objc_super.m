@@ -32,6 +32,7 @@ super_getattro(PyObject *self, PyObject *name)
 {
 	superobject *su = (superobject *)self;
 	int skip = su->obj_type == NULL;
+	SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name)); /* XXX: needs to be changed for py3k */
 
 
 
@@ -122,6 +123,31 @@ super_getattro(PyObject *self, PyObject *name)
 				}
 				return res;
 			}
+
+			if (PyObjCClass_Check(tmp)) {
+				res = PyObjCClass_TryResolveSelector(tmp, name, sel);
+				if (res) {
+					Py_INCREF(res);
+					f = Py_TYPE(res)->tp_descr_get;
+					if (f != NULL) {
+						tmp = f(res,
+							/* Only pass 'obj' param if
+							   this is instance-mode super 
+							   (See SF ID #743627)
+							*/
+							(su->obj == (PyObject *)
+								    su->obj_type 
+								? (PyObject *)NULL 
+								: su->obj),
+							(PyObject *)starttype);
+						Py_DECREF(res);
+						res = tmp;
+					}
+					return res;
+				} else if (PyErr_Occurred()) {
+					return NULL;
+				}
+			} /* TODO: same trick for class methods */
 		}
 	}
 	return PyObject_GenericGetAttr(self, name);

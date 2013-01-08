@@ -22,7 +22,11 @@
  * @const PyObjCClass_Type
  * @abstract The type objc.objc_class
  */
+extern PyTypeObject PyObjCMetaClass_Type;
 extern PyTypeObject PyObjCClass_Type;
+
+/*extern int setup_class_meta(void);*/
+
 
 /*!
  * @function PyObjCClass_Check
@@ -31,6 +35,7 @@ extern PyTypeObject PyObjCClass_Type;
  * @result Returns True if the object is an Objective-C class, false otherwise
  */
 #define PyObjCClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCClass_Type)
+#define PyObjCMetaClass_Check(obj) PyObject_TypeCheck(obj, &PyObjCMetaClass_Type)
 
 // The @const is not correct, but what else can we use here?
 /*!
@@ -79,14 +84,15 @@ typedef struct _PyObjCClassObject {
 	PyObject* sel_to_py;
 	Py_ssize_t dictoffset;
 	PyObject* delmethod;
-	int hasPythonImpl;
-	int isCFWrapper;
 	int generation;
-	int useKVO;
 	PyObject* hiddenSelectors;
 	PyObject* hiddenClassSelectors;
-	struct _PyObjCClassObject* meta_class; /* To be dropped */
+
+	int  useKVO; 	/* FIXME: swith to getset in python API  and switch this to a bitfield as well. */
+	unsigned int hasPythonImpl:1;
+	unsigned int isCFWrapper:1;
 } PyObjCClassObject;
+
 
 extern PyObject* PyObjCClass_DefaultModule;
 PyObject* PyObjCClass_New(Class objc_class);
@@ -105,6 +111,9 @@ int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* met
 int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
 
 PyObject* PyObjCClass_ListProperties(PyObject* cls);
+
+/* Returns a borrowed reference or NULL (without necessarily raising an exception) */
+PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 
 
 #endif /* PyObjC_OBJC_CLASS_H */

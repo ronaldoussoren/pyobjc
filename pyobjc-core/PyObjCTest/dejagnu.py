@@ -168,7 +168,6 @@ class DgTestCase (unittest.TestCase):
 
 def testSuiteForDirectory(dirname):
     tests = []
-    return unittest.TestSuite(tests) # XXX
     for fn in os.listdir(dirname):
         if not fn.endswith('.c') and not fn.endswith('.m'): continue
         tst = DgTestCase(os.path.join(dirname, fn))
