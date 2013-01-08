@@ -1332,10 +1332,32 @@ class_getattro(PyObject* self, PyObject* name)
 		goto done;
 
 	} else {
+		/* XXX: This code might be too smart
+		 * What this tries to do:
+		 * - NSObject.description should be the class method, not the one in tp_dict
+		 * - NSArray.count should be an unbound instance method
+		 * - class Foo (NSObject): m = staticmethod(lambda: 1): 'm' should be a function
+		 */
 		result = PyDict_GetItem(((PyTypeObject*)self)->tp_dict, name);
 		if (result != NULL) {
-			Py_INCREF(result);
-			goto done;
+			if (descr == NULL) {
+				descr = result;
+				if (descr != NULL 
+#if PY_MAJOR_VERSION == 2
+					&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
+#endif
+				    ) {
+					f = Py_TYPE(descr)->tp_descr_get;
+					if (f != NULL) {
+						result = f(descr, NULL, self);
+						goto done;
+					}
+				}
+
+			} else {
+				Py_INCREF(result);
+				goto done;
+			}
 		}
 	}
 

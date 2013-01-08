@@ -149,7 +149,7 @@ super_getattro(PyObject *self, PyObject *name)
 						return NULL;
 					}
 				} else {
-					res = PyObjCMetaClass_TryResolveSelector(Py_TYPE(tmp), name, sel);
+					res = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tmp), name, sel);
 					if (res) {
 						Py_INCREF(res);
 						f = Py_TYPE(res)->tp_descr_get;
