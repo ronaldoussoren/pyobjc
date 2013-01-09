@@ -50,7 +50,7 @@ class SplitSignatureTest (TestCase):
             for selName in list(cls.__dict__.keys()):
                 try:
                     sel = getattr(cls, selName.decode('latin1'))
-                except AttributeError:
+                except (AttributeError, TypeError):
                     continue
 
                 if not isinstance(sel, objc.selector): continue
@@ -101,7 +101,7 @@ class SplitSignatureTest (TestCase):
 
                 try:
                     sel = getattr(cls, selName)
-                except AttributeError:
+                except (AttributeError, TypeError):
                     continue
 
                 if not isinstance(sel, objc.selector): continue

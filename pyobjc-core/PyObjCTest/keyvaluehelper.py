@@ -50,7 +50,7 @@ class KVPySubObjCPath (PyObjCTest_KVPathClass):
 
 class KVPySubOverObjCBase (PyObjCTest_KVBaseClass):
     def init(self):
-        self = super(KVPySubOverObjCBase, self).init()
+        self = objc.super(KVPySubOverObjCBase, self).init()
         if not self:
             return self
 
@@ -66,7 +66,7 @@ class KVPySubOverObjCBase (PyObjCTest_KVBaseClass):
 
 class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
     def init(self):
-        self = super(KVPySubOverObjCPath, self).init()
+        self = objc.super(KVPySubOverObjCPath, self).init()
         self.overDirectHead = KVPySubOverObjCBase.new()
         self._overIndirectHead = KVPySubOverObjCBase.new()
         return self
@@ -79,7 +79,7 @@ class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
 
 class PyObjCTestObserver (NSObject):
     def init(self):
-        self = super(PyObjCTestObserver, self).init()
+        self = objc.super(PyObjCTestObserver, self).init()
         if self is not None:
             self.observed = []
             self.willChange = []

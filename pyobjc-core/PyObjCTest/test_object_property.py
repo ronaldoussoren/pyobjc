@@ -24,7 +24,7 @@ class OCCopy (NSObject):
 
 class OCObserve (NSObject):
     def init(self):
-        self = super(OCObserve, self).init()
+        self = objc.super(OCObserve, self).init()
         self.values = []
         self.registrations = []
         return self
@@ -498,7 +498,7 @@ class TestObjectProperty (TestCase):
 
             @OCTestObjectProperty5.p3.getter
             def p3(self):
-                return not super(OCTestObjectProperty6, self).p3
+                return not objc.super(OCTestObjectProperty6, self).p3
 
         base = OCTestObjectProperty5.alloc().init()
         self.assertRaises(ValueError, setattr, base, 'p1', 1)

@@ -5,7 +5,7 @@ NSObject = objc.lookUpClass('NSObject')
 
 class TestUseKVOObserver (NSObject):
     def init(self):
-        self = super(TestUseKVOObserver, self).init()
+        self = objc.super(TestUseKVOObserver, self).init()
         if self is None:
             return None
 

@@ -18320,7 +18320,7 @@ g_structTestStruct5_values = ((1, 2.5), (2, 4.5))
 
 class Python_TestClass (objc.lookUpClass("NSObject")):
     def init(self):
-        self = super(Python_TestClass, self).init()
+        self = objc.super(Python_TestClass, self).init()
         self.reset()
         return self
 

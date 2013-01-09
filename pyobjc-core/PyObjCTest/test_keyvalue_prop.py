@@ -5,7 +5,7 @@ NSObject = objc.lookUpClass('NSObject')
 
 class TestKVOPropHelper (NSObject):
     def init(self):
-        self = super(TestKVOPropHelper, self).init()
+        self = objc.super(TestKVOPropHelper, self).init()
         if self is None: return None
 
         self.__helper = None

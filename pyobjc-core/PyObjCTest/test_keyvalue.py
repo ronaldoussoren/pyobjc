@@ -447,7 +447,7 @@ if PyObjCTest_KeyValueObserver is not None:
         FOOBASE = "base"
 
         def init(self):
-            self = super(PyObjCTestObserved1, self).init()
+            self = objc.super(PyObjCTestObserved1, self).init()
             if self is not None:
                 self._kvo_bar = None
                 self._kvo_foo = None
@@ -486,7 +486,7 @@ if PyObjCTest_KeyValueObserver is not None:
         bar = objc.ivar('bar')
 
         def init(self):
-            self = super(PyObjCTestObserved2, self).init()
+            self = objc.super(PyObjCTestObserved2, self).init()
             self.foo = None
             return self
 
