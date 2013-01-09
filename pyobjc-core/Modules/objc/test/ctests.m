@@ -945,7 +945,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_ctests(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_ctests(void)
 
 #else
@@ -955,7 +955,7 @@ PyInit_ctests(void)
 
 void initctests(void);
 
-void
+void __attribute__((__visibility__("default")))
 initctests(void)
 #endif
 {

@@ -94,7 +94,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_fsref(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_fsref(void)
 
 #else
@@ -104,7 +104,7 @@ PyInit_fsref(void)
 
 void initfsref(void);
 
-void
+void __attribute__((__visibility__("default")))
 initfsref(void)
 #endif
 {

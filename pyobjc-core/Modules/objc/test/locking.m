@@ -65,7 +65,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_locking(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_locking(void)
 
 #else
@@ -75,7 +75,7 @@ PyInit_locking(void)
 
 void initlocking(void);
 
-void
+void __attribute__((__visibility__("default")))
 initlocking(void)
 #endif
 {

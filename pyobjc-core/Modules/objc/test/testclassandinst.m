@@ -68,7 +68,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_testclassandinst(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_testclassandinst(void)
 
 #else
@@ -78,7 +78,7 @@ PyInit_testclassandinst(void)
 
 void inittestclassandinst(void);
 
-void
+void __attribute__((__visibility__("default")))
 inittestclassandinst(void)
 #endif
 {

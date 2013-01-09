@@ -157,7 +157,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_identity(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_identity(void)
 
 #else
@@ -167,7 +167,7 @@ PyInit_identity(void)
 
 void initidentity(void);
 
-void
+void __attribute__((__visibility__("default")))
 initidentity(void)
 #endif
 {

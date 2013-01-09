@@ -53,7 +53,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_opaque(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_opaque(void)
 
 #else
@@ -63,7 +63,7 @@ PyInit_opaque(void)
 
 void initopaque(void);
 
-void
+void __attribute__((__visibility__("default")))
 initopaque(void)
 #endif
 {

@@ -86,7 +86,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_properties(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_properties(void)
 
 #else
@@ -96,7 +96,7 @@ PyInit_properties(void)
 
 void initproperties(void);
 
-void
+void __attribute__((__visibility__("default")))
 initproperties(void)
 #endif
 {

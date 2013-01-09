@@ -263,7 +263,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_arrays(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_arrays(void)
 
 #else
@@ -273,7 +273,7 @@ PyInit_arrays(void)
 
 void initarrays(void);
 
-void
+void __attribute__((__visibility__("default")))
 initarrays(void)
 #endif
 {

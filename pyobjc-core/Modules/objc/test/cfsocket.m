@@ -43,7 +43,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_cfsocket(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_cfsocket(void)
 
 #else
@@ -53,7 +53,7 @@ PyInit_cfsocket(void)
 
 void initcfsocket(void);
 
-void
+void __attribute__((__visibility__("default")))
 initcfsocket(void)
 #endif
 {

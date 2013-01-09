@@ -1937,7 +1937,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_testbndl(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_testbndl(void)
 
 #else
@@ -1947,7 +1947,7 @@ PyInit_testbndl(void)
 
 void inittestbndl(void);
 
-void
+void __attribute__((__visibility__("default")))
 inittestbndl(void)
 #endif
 {

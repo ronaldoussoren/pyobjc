@@ -96,7 +96,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_exceptions(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_exceptions(void)
 
 #else
@@ -106,7 +106,7 @@ PyInit_exceptions(void)
 
 void initexceptions(void);
 
-void
+void __attribute__((__visibility__("default")))
 initexceptions(void)
 #endif
 {

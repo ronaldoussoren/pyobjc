@@ -19625,7 +19625,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_testbndl2(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_testbndl2(void)
 
 #else
@@ -19635,7 +19635,7 @@ PyInit_testbndl2(void)
 
 void inittestbndl2(void);
 
-void
+void __attribute__((__visibility__("default")))
 inittestbndl2(void)
 #endif
 {

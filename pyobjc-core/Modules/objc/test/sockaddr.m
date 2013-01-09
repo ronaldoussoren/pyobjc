@@ -112,7 +112,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_sockaddr(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_sockaddr(void)
 
 #else
@@ -122,7 +122,7 @@ PyInit_sockaddr(void)
 
 void initsockaddr(void);
 
-void
+void __attribute__((__visibility__("default")))
 initsockaddr(void)
 #endif
 {

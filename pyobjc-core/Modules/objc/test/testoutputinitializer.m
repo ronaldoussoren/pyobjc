@@ -60,7 +60,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_testoutputinitializer(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_testoutputinitializer(void)
 
 #else
@@ -70,7 +70,7 @@ PyInit_testoutputinitializer(void)
 
 void inittestoutputinitializer(void);
 
-void
+void __attribute__((__visibility__("default")))
 inittestoutputinitializer(void)
 #endif
 {

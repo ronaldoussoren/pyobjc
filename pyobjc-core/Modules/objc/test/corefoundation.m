@@ -146,7 +146,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_corefoundation(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_corefoundation(void)
 
 #else
@@ -156,7 +156,7 @@ PyInit_corefoundation(void)
 
 void initcorefoundation(void);
 
-void
+void __attribute__((__visibility__("default")))
 initcorefoundation(void)
 #endif
 {

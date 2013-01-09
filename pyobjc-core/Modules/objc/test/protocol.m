@@ -45,7 +45,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_protocol(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_protocol(void)
 
 #else
@@ -55,7 +55,7 @@ PyInit_protocol(void)
 
 void initprotocol(void);
 
-void
+void __attribute__((__visibility__("default")))
 initprotocol(void)
 #endif
 {

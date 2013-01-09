@@ -482,7 +482,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_metadatafunction(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_metadatafunction(void)
 
 #else
@@ -492,7 +492,7 @@ PyInit_metadatafunction(void)
 
 void initmetadatafunction(void);
 
-void
+void __attribute__((__visibility__("default")))
 initmetadatafunction(void)
 #endif
 {

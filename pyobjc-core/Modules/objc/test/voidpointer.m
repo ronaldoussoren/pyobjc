@@ -57,7 +57,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_voidpointer(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_voidpointer(void)
 
 #else
@@ -67,7 +67,7 @@ PyInit_voidpointer(void)
 
 void initvoidpointer(void);
 
-void
+void __attribute__((__visibility__("default")))
 initvoidpointer(void)
 #endif
 {

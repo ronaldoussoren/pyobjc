@@ -392,7 +392,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_specialtypecodes(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_specialtypecodes(void)
 
 #else
@@ -402,7 +402,7 @@ PyInit_specialtypecodes(void)
 
 void initspecialtypecodes(void);
 
-void
+void __attribute__((__visibility__("default")))
 initspecialtypecodes(void)
 #endif
 {

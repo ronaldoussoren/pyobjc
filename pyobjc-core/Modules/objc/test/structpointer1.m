@@ -49,7 +49,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_structpointer1(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_structpointer1(void)
 
 #else
@@ -59,7 +59,7 @@ PyInit_structpointer1(void)
 
 void initstructpointer1(void);
 
-void
+void __attribute__((__visibility__("default")))
 initstructpointer1(void)
 #endif
 {

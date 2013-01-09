@@ -77,7 +77,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_instanceVariables(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_instanceVariables(void)
 
 #else
@@ -87,7 +87,7 @@ PyInit_instanceVariables(void)
 
 void initinstanceVariables(void);
 
-void
+void __attribute__((__visibility__("default")))
 initinstanceVariables(void)
 #endif
 {

@@ -106,7 +106,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_copying(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_copying(void)
 
 #else
@@ -116,7 +116,7 @@ PyInit_copying(void)
 
 void initcopying(void);
 
-void
+void __attribute__((__visibility__("default")))
 initcopying(void)
 #endif
 {
