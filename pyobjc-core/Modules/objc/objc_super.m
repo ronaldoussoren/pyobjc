@@ -33,9 +33,7 @@ super_getattro(PyObject *self, PyObject *name)
 	superobject *su = (superobject *)self;
 	int skip = su->obj_type == NULL;
 	SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name)); /* XXX: needs to be changed for py3k */
-
-
-
+	
 	if (!skip) {
 		/* We want __class__ to return the class of the super object
 		   (i.e. super, or a subclass), not the class of su->obj. */
@@ -88,20 +86,15 @@ super_getattro(PyObject *self, PyObject *name)
 			if (PyObjCClass_Check(tmp) && PyObjCClass_Check(su->obj))  {
 				dict = Py_TYPE(tmp)->tp_dict;
 				
-			} else if (PyType_Check(tmp))
+			} else if (PyType_Check(tmp)) {
 				dict = ((PyTypeObject *)tmp)->tp_dict;
 #if PY_MAJOR_VERSION == 2
-			else if (PyClass_Check(tmp))
+			} else if (PyClass_Check(tmp)) {
 				dict = ((PyClassObject *)tmp)->cl_dict;
 #endif
-			else
+			} else {
 				continue;
-
-			/* FIXME: 
-			 * need to call the __getattribute__ functionality for this
-			 * particular class when looking at a PybOjCClass object, otherwise
-			 * we won't actually find methods!
-			 */
+			}
 
 			res = PyDict_GetItem(dict, name);
 			if (res != NULL) {
@@ -124,53 +117,33 @@ super_getattro(PyObject *self, PyObject *name)
 				return res;
 			}
 
+			
 			if (PyObjCClass_Check(tmp)) {
 				if (!PyObjCClass_Check(su->obj)) {
 					res = PyObjCClass_TryResolveSelector(tmp, name, sel);
-					if (res) {
-						Py_INCREF(res);
-						f = Py_TYPE(res)->tp_descr_get;
-						if (f != NULL) {
-							tmp = f(res,
-								/* Only pass 'obj' param if
-								   this is instance-mode super 
-								   (See SF ID #743627)
-								*/
-								(su->obj == (PyObject *)
-									    su->obj_type 
-									? (PyObject *)NULL 
-									: su->obj),
-								(PyObject *)starttype);
-							Py_DECREF(res);
-							res = tmp;
-						}
-						return res;
-					} else if (PyErr_Occurred()) {
-						return NULL;
-					}
 				} else {
 					res = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tmp), name, sel);
-					if (res) {
-						Py_INCREF(res);
-						f = Py_TYPE(res)->tp_descr_get;
-						if (f != NULL) {
-							tmp = f(res,
-								/* Only pass 'obj' param if
-								   this is instance-mode super 
-								   (See SF ID #743627)
-								*/
-								(su->obj == (PyObject *)
-									    su->obj_type 
-									? (PyObject *)NULL 
-									: su->obj),
-								(PyObject *)starttype);
-							Py_DECREF(res);
-							res = tmp;
-						}
-						return res;
-					} else if (PyErr_Occurred()) {
-						return NULL;
+				}
+				if (res) {
+					Py_INCREF(res);
+					f = Py_TYPE(res)->tp_descr_get;
+					if (f != NULL) {
+						tmp = f(res,
+							/* Only pass 'obj' param if
+							   this is instance-mode super 
+							   (See SF ID #743627)
+							*/
+							(su->obj == (PyObject *)
+								    su->obj_type 
+								? (PyObject *)NULL 
+								: su->obj),
+							(PyObject *)starttype);
+						Py_DECREF(res);
+						res = tmp;
 					}
+					return res;
+				} else if (PyErr_Occurred()) {
+					return NULL;
 				}
 			}
 		}

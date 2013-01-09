@@ -2824,6 +2824,7 @@ update_convenience_methods(PyObject* cls)
 			continue;
 		}
 		if (PyType_Type.tp_setattro(cls, k, v) == -1) {
+			PyErr_Print();
 			PyErr_Clear();
 			continue;
 		}
