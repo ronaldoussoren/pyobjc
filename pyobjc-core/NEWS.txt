@@ -44,6 +44,14 @@ Version 3.0
      I haven't done performance tests at this time, it is not yet clear if this work will 
      make the bridge more efficient or that there are other more important bottlenecks.
 
+* The default translation from a python name to a selector was slightly changed:
+
+  * double underscores inside the name are no translated to colons, that is 'foo__bar_' is translated to 'foo__bar:', not 'foo::bar:'
+
+  * if the Python name start with two uppercase letters and an underscore, that first underscore is not translated into
+    an colon. Two leading capitals are often used as a way to add some kind of namespacing
+    to selector names (and avoid conflicts when a method with the same name is added later by the library provider)
+
 Version 2.5
 -----------
 

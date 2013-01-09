@@ -1491,6 +1491,10 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	 * Also don't rewrite two underscores between name elements, such
 	 * as '__pyobjc__setItem_' -> '__pyobjc__setitem:'
 	 *
+	 * Also: when the name starts with two capital letters and an underscore
+	 * don't replace the underscore, the 'XX_' prefix is a common way to
+	 * namespace selectors.
+	 *
 	 * Both are heuristics and could be the wrong choice, but either 
 	 * form is very unlikely to exist in ObjC code.
 	 */
@@ -1505,6 +1509,10 @@ PyObjCSelector_DefaultSelector(const char* methname)
 
 	while (*cur == '_') {
 		cur++;
+	}
+
+	if (isupper(cur[0]) && isupper(cur[1]) && cur[2] == '_') {
+		cur += 3;
 	}
 
 	/* Replace all other underscores by colons */
