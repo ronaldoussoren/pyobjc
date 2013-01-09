@@ -1103,6 +1103,7 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
             ('has_key', has_key_objectForKey_),
             ('iterkeys', lambda self: iter(self.keyEnumerator())),
             ('iteritems', lambda self: itemsGenerator(self)),
+            ('itervalues', lambda self: iter(self.objectEnumerator())),
         )
 
         CLASS_METHODS['NSMutableDictionary'] = (
