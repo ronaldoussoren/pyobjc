@@ -52,6 +52,10 @@ Version 3.0
     an colon. Two leading capitals are often used as a way to add some kind of namespacing
     to selector names (and avoid conflicts when a method with the same name is added later by the library provider)
 
+* Added *__new__* method to NSString, it is now possible to explictly convert a python string to a Cocoa
+  string with ``NSString(someString)``
+
+
 Version 2.5
 -----------
 

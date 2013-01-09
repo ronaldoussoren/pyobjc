@@ -1564,6 +1564,19 @@ CLASS_METHODS['NSEnumerator'] = (
     ('__iter__', enumeratorGenerator),
 )
 
+_no_value = object()
+def nsstring_new(cls, value=_no_value):
+    if value is _no_value:
+        return cls.alloc().init()
+    else:
+        return cls.alloc().initWithString_(value)
+
+CLASS_METHODS['NSString'] = (
+    ('__len__',     lambda self: self.length() ),
+    ('endswith',    lambda self, pfx: self.hasSuffix_(pfx)),
+    ('startswith',  lambda self, pfx: self.hasPrefix_(pfx)),
+    ('__new__',     staticmethod(nsstring_new)),
+)
 
 _updatingMetadata(False)
 
@@ -1574,6 +1587,8 @@ NSMutableSet = lookUpClass('NSMutableSet')
 # XXX: not sure why this is needed....
 getattr(NSSet, 'foo', None)
 getattr(NSMutableSet, 'foo', None)
+getattr(lookUpClass('NSString'), 'foo', None)
+getattr(lookUpClass('NSMutableString'), 'foo', None)
 
 try:
     from collections import Set
