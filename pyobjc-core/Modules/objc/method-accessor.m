@@ -109,6 +109,7 @@ find_selector(PyObject* self, char* name, int class_method)
 	if (flattened == NULL) {
 		return NULL;
 	}
+
 	return PyObjCSelector_NewNative((Class)objc_object, sel,
 		flattened, class_method);
 }
@@ -352,10 +353,25 @@ obj_getattro(PyObject* _self, PyObject* name)
 		if (!PyObjCSelector_Check(result)) {
 			Py_DECREF(result);
 			result = NULL;
-		} else {
-			Py_DECREF(name_bytes); name_bytes = NULL;
-			return result;
 		}
+	}
+
+	if (result) {
+		if (self->class_method) {
+			if (!PyObjCSelector_IsClassMethod(result)) {
+				Py_DECREF(result);
+				result = NULL;
+			}
+		} else {
+			if (PyObjCSelector_IsClassMethod(result)) {
+				Py_DECREF(result);
+				result = NULL;
+			}
+		}
+	}
+
+	if (result != NULL) {
+		return result;
 	}
 
 	/* Didn't find the selector the first trip around, try harder. */

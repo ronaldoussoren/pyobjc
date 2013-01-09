@@ -359,8 +359,8 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
 
 
 /* XXX: 'default' visibility due to testing, that needs to change somehow */
-PyObject* 
-PyObjCErr_Format(PyObject* exception, const char* format, ...) __attribute__((__visibility__("default")))
+PyObject* __attribute__((__visibility__("default")))
+PyObjCErr_Format(PyObject* exception, const char* format, ...) 
 {
 	/* This is an enhanced version of PyErr_Format for python 2.x that
 	 * accept much of the format characters that are supported in python 3

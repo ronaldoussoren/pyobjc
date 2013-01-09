@@ -89,6 +89,10 @@ class TestMethodInvocation(TestCase):
 
 class TestClassDict(TestCase):
     def testDict(self):
+
+        # XXX: actually access the method to force a __dict__ update
+        NSAttributedString.attributesAtIndex_longestEffectiveRange_inRange_
+
         self.assertIn("attributesAtIndex_longestEffectiveRange_inRange_", NSAttributedString.__dict__)
 
 class TestPickle(TestCase):

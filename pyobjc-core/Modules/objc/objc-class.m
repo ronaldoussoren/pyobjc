@@ -13,7 +13,7 @@ int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* met
 	if (classMethod) {
 		hidden = ((PyObjCClassObject*)tp)->hiddenClassSelectors;
 		if (hidden == NULL) {
-			hidden = PySet_New(NULL);
+			hidden = PyDict_New();
 			if (hidden == NULL) {
 				return -1;
 			}
@@ -22,7 +22,7 @@ int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* met
 	} else {
 		hidden = ((PyObjCClassObject*)tp)->hiddenSelectors;
 		if (hidden == NULL) {
-			hidden = PySet_New(NULL);
+			hidden = PyDict_New();
 			if (hidden == NULL) {
 				return -1;
 			}

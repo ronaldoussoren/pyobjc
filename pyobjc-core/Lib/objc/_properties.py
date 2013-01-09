@@ -56,7 +56,7 @@ def _dynamic_getter(name):
 
 def _dynamic_setter(name):
     def setter(object, value):
-        m = getattr(object.pyobjc_instanceMethods, name)
+        m = getattr(object.pyobjc_instanceMethods, name.replace(':', '_'))
         return m(value)
     setter.__name__ = name
     return setter
