@@ -513,7 +513,7 @@ extern struct pyobjc_api	objc_api;
 	}; \
 	\
 	PyObject* PyInit_##name(void); \
-	PyObject* PyInit_##name(void)
+	PyObject* __attribute__ ((__visibility__ ("default"))) PyInit_##name(void) 
 
 #define PyObjC_MODULE_CREATE(name) \
 	PyModule_Create(&mod_module);
@@ -525,7 +525,7 @@ extern struct pyobjc_api	objc_api;
 
 #define PyObjC_MODULE_INIT(name) \
 	void init##name(void); \
-	void init##name(void)
+	void __attribute__ ((__visibility__ ("default"))) init##name(void) 
 
 #define PyObjC_MODULE_CREATE(name) \
 	Py_InitModule4(PyObjC_STR(name), mod_methods, \
