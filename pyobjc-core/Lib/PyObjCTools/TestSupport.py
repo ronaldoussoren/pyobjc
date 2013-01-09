@@ -270,8 +270,15 @@ class TestCase (_unittest.TestCase):
         if any(x is tp for x in _nscftype):
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
-        if not issubclass(tp, _nscftype) and not 'NSCF' in tp.__name__:
-            self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
+        # NOTE: Don't test if this is a subclass of one of the known
+        #       CF roots, this tests is mostly used to ensure that the
+        #       type is distinct from one of those roots.
+        #  XXX: With the next two lines enabled there are spurious test
+        #       failures when a CF type is toll-free bridged to an
+        #       (undocumented) Cocoa class. It might be worthwhile to
+        #       look for these, but not in the test suite.
+        #if not issubclass(tp, _nscftype):
+        #    self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
 
     def assertIsOpaquePointer(self, tp, message = None):
