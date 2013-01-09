@@ -137,7 +137,7 @@ initialization phase:
             # ALWAYS call the super's designated initializer.
             # Also, make sure to re-bind "self" just in case it
             # returns something else, or even None!
-            self = super(MyClass, self).init()
+            self = objc.super(MyClass, self).init()
 	    if self is None: return None
 
             self.myVariable = 10
@@ -153,7 +153,7 @@ initialization phase:
             """
             Designated initializer for MyOtherClass
             """
-            self = super(MyOtherClass, self).init()
+            self = objc.super(MyOtherClass, self).init()
 	    if self is None: return None
 
             self.otherVariable = otherVariable
@@ -220,7 +220,7 @@ the instance variable something else:
     class MyValueHolder(NSObject):
 
         def initWithValue_(self, value):
-            self = super(MyValueHolder, self).init()
+            self = objc.super(MyValueHolder, self).init()
             # It's recommended not to use typical Python convention here,
             # as instance variables prefixed with underscores are reserved
             # by the Objective-C runtime.  It still works if you use
@@ -431,7 +431,7 @@ A class implementation:
         [instanceVariable release];
 
         // Very roughly similar to:
-        //     super(MyClass, self).__del__()
+        //     objc.super(MyClass, self).__del__()
         [super dealloc];
     }
 

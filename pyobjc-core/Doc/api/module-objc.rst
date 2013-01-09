@@ -742,6 +742,10 @@ Types
    This is a subclass of :class:`super <__builtin__.super>` that works
    properly for Objective-C classes as well as regular Python classes.
 
+   The regular :class:`super <__builtin__.super>` does *not* work correctly
+   for Cocoa classes, the default function doesn't support custom attribute
+   getters as used by PyObjC.
+
    .. note:: 
    
       The statement :samp:`from {Framework} import \*` will replace the 
