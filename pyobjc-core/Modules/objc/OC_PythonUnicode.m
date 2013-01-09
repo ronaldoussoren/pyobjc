@@ -403,6 +403,9 @@
 		[coder decodeValueOfObjCType:@encode(int) at:&ver];
 	}
 	if (ver == 1) {
+		/* Version 1: plain unicode string (not subclass).
+		 * emitted by some versions of PyObjC (< 2.4.1, < 2.5.1, <2.6)
+		 */
 		self = [super initWithCoder:coder];
 		return self;
 	} else if (ver == 2) {
@@ -460,12 +463,6 @@
 -(void)encodeWithCoder:(NSCoder*)coder
 {
 	if (PyUnicode_CheckExact(value)) {
-		if ([coder allowsKeyedCoding]) {
-			[coder encodeInt32:1 forKey:@"pytype"];
-		} else {
-			int v = 1;
-			[coder encodeValueOfObjCType:@encode(int) at:&v];
-		}
 		[super encodeWithCoder:coder];
 	} else {
 		if ([coder allowsKeyedCoding]) {
@@ -503,24 +500,46 @@
 	return self;
 }
 
+/* 
+ * Plain unicode objects (not subclasses) are archived as "real"
+ * NSString objects. This means you won't get the same object type back
+ * when reading them back, but does allow for better interop with code
+ * that uses a non-keyed archiver.
+ */
 -(Class)classForArchiver
 {
-	return [OC_PythonUnicode class];
+	if (PyUnicode_CheckExact(value)) {
+		return [NSString class];
+	} else {
+		return [OC_PythonUnicode class];
+	}
 }
 
 -(Class)classForKeyedArchiver
 {
-	return [OC_PythonUnicode class];
+	if (PyUnicode_CheckExact(value)) {
+		return [NSString class];
+	} else {
+		return [OC_PythonUnicode class];
+	}
 }
 
 -(Class)classForCoder
 {
-	return [OC_PythonUnicode class];
+	if (PyUnicode_CheckExact(value)) {
+		return [NSString class];
+	} else {
+		return [OC_PythonUnicode class];
+	}
 }
 
 -(Class)classForPortCoder
 {
-	return [OC_PythonUnicode class];
+	if (PyUnicode_CheckExact(value)) {
+		return [NSString class];
+	} else {
+		return [OC_PythonUnicode class];
+	}
 }
 
 /* Ensure that we can be unarchived as a generic string by pure ObjC

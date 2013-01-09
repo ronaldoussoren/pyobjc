@@ -17,6 +17,17 @@ Version 2.5.1
      It is highly unlikely that real code would run into this, found
      while working on PyObjC 3.x.
 
+- When writing a python unicode object to an NSArchiver or NSKeyedArchiver
+  the object is now stored exactly the same as a normal NSString, and will
+  be read back as such.
+
+  This increases interoperability with code that expects to read back a
+  non-keyed archive in a different proces. An example of this is the use
+  of Growl.
+
+  Instances of subclasses of unicode are not affected by this change, and
+  can only be read back by other PyObjC programs.
+
 Version 2.5
 -----------
 
