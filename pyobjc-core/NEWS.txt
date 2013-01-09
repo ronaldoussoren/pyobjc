@@ -10,9 +10,29 @@ Version 2.6
 
    This is version currently in development and has not been released yet
 
-- ...
+Version 2.5.1
+-------------
 
+- PyObjC could crash when calling a method that is dynamicly generated
+  (that is, the selector is not present in the class according to the 
+  Objective-C runtime but the instance responds to it anyway). 
 
+  The cases that used to crash now raise :exc:`objc.error` instead.
+
+  .. note:: 
+     It is highly unlikely that real code would run into this, found
+     while working on PyObjC 3.x.
+
+- When writing a python unicode object to an NSArchiver or NSKeyedArchiver
+  the object is now stored exactly the same as a normal NSString, and will
+  be read back as such.
+
+  This increases interoperability with code that expects to read back a
+  non-keyed archive in a different proces. An example of this is the use
+  of Growl.
+
+  Instances of subclasses of unicode are not affected by this change, and
+  can only be read back by other PyObjC programs.
 
 Version 2.5
 -----------

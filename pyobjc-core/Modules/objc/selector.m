@@ -914,6 +914,11 @@ PyObjCSelector_NewNative(Class class,
 		signature = repl_sig;
 	}
 
+	if (signature == NULL) {
+		PyErr_SetString(PyObjCExc_Error, "Selector with NULL or too long signature");
+		return NULL;
+	}
+
 	result = PyObject_New(PyObjCNativeSelector, &PyObjCNativeSelector_Type);
 	if (result == NULL) return NULL;
 
