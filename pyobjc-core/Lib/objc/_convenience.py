@@ -1233,14 +1233,6 @@ CLASS_METHODS['NSMutableArray'] = (
     ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
 )
 
-NSSet = lookUpClass('NSSet')
-NSMutableSet = lookUpClass('NSMutableSet')
-
-try:
-    from collections import Set
-    Set.register(NSSet)
-except:
-    Set = (set, frozenset, NSSet)
 
 def nsset_isdisjoint(self, other):
     for item in self:
@@ -1486,6 +1478,7 @@ class nsset__iter__ (object):
 
 
 CLASS_METHODS['NSSet'] = (
+    ('__len__', lambda self: self.count()),
     ('__iter__', lambda self: nsset__iter__(self)),
     ('__length_hint__', nsset__length_hint__),
     ('__contains__',  nsset__contains__),
@@ -1561,6 +1554,7 @@ CLASS_METHODS['NSMutableSet'] += (
 )
 
 
+
 # XXX: is this sane, why not implement next/__next__ with __iter__ returning self?
 def enumeratorGenerator(anEnumerator):
     while True:
@@ -1571,3 +1565,19 @@ CLASS_METHODS['NSEnumerator'] = (
 
 
 _updatingMetadata(False)
+
+
+NSSet = lookUpClass('NSSet')
+NSMutableSet = lookUpClass('NSMutableSet')
+
+# XXX: not sure why this is needed....
+getattr(NSSet, 'foo', None)
+getattr(NSMutableSet, 'foo', None)
+
+try:
+    from collections import Set
+    Set.register(NSSet)
+except:
+    Set = (set, frozenset, NSSet)
+
+
