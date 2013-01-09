@@ -270,7 +270,7 @@ class TestCase (_unittest.TestCase):
         if any(x is tp for x in _nscftype):
             self.fail(message or "%r is not a unique CFTypeRef type"%(tp,))
 
-        if not issubclass(tp, _nscftype):
+        if not issubclass(tp, _nscftype) and not 'NSCF' in tp.__name__:
             self.fail(message or "%r is not a CFTypeRef subclass"%(tp,))
 
 
