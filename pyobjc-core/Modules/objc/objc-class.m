@@ -39,9 +39,13 @@ int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* met
 PyObject*
 PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 {
-	PyObject* mro = ((PyTypeObject*)tp)->tp_mro;
+	PyObject* mro;
 	int i, n;
+	if (tp == NULL) {
+		return NO;
+	}
 
+	mro = ((PyTypeObject*)tp)->tp_mro;
 	if (mro == NULL) {
 		return NO;
 	}
@@ -1143,6 +1147,11 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 	Method m = class_getClassMethod(cls, sel);
 	PyObject* dict = ((PyTypeObject *)base)->tp_dict;
 
+	if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)) {
+		/* XXX: what about super calls? */
+		return NULL;
+	}
+
 	if (m) {
 		int use = 1;
 		Class sup = class_getSuperclass(cls);
@@ -2157,6 +2166,10 @@ PyObjCClass_New(Class objc_class)
 	PyObject* hiddenSelectors;
 	PyTypeObject* metaclass;
 	const char* className;
+
+	if (objc_class == Nil) {
+		return NULL;
+	}
 
 	result = objc_class_locate(objc_class);
 	if (result != NULL) {
