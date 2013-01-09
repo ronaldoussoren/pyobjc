@@ -1214,8 +1214,10 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 			return descr;
 		}
 
-		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
-			Class cls = objc_metaclass_locate(base);
+		/*if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {*/
+		if (PyObjCClass_Check(base)) {
+			/*Class cls = objc_metaclass_locate(base);*/
+			Class cls = PyObjCClass_GetClass(base);
 			Method m;
 			
 			PyObjC_DURING

@@ -20,13 +20,17 @@ class TestSubclassing(TestCase):
             def raise__(self):
                 pass
 
-        self.assertNotHasAttr(NSObject, 'raise__')
-        self.assertNotHasAttr(NSObject, 'raise')
-
         self.assertHasAttr(RaiseClass, 'raise__')
         self.assertHasAttr(RaiseClass, 'raise')
         self.assertEqual(RaiseClass.raise__.selector, b'raise')
         self.assertEqual(getattr(RaiseClass, 'raise').selector, b'raise')
+
+        raiseInstance = RaiseClass.alloc().init()
+        self.assertHasAttr(raiseInstance, 'raise__')
+        self.assertHasAttr(raiseInstance, 'raise')
+        self.assertEqual(RaiseClass.raise__.selector, b'raise')
+        self.assertEqual(getattr(RaiseClass, 'raise').selector, b'raise')
+        
 
     def testMIObjC(self):
         try:
@@ -162,6 +166,21 @@ class TestCopying (TestCase):
         self.assertHasAttr(MITestClass2, 'mixinMethod')
 
         o = MITestClass2.alloc().init()
+        self.assertEqual(o.mixinMethod(), "foo")
+
+    def testMultipleInheritance3(self):
+        # New-style class mixin
+        class MixinClass3 (object):
+            def mixinMethod(self):
+                return "foo"
+
+        class MITestClass3 (NSObject, MixinClass3):
+            def init(self):
+                return super(MITestClass3, self).init()
+
+        self.assertHasAttr(MITestClass3, 'mixinMethod')
+
+        o = MITestClass3.alloc().init()
         self.assertEqual(o.mixinMethod(), "foo")
 
 class TestClassMethods (TestCase):
