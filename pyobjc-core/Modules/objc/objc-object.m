@@ -299,8 +299,15 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 			/* Check if the name is a selector that
 			 * is not cached yet 
 			 *
+			 * Skip hidden methods.
+			 *
 			 * XXX: Once this works try to avoid calling class_getInstanceMethod too often
 			 */
+			if (PyObjCClass_HiddenSelector(base, sel, NO)) {
+				/* XXX: what about super calls? */
+				return NULL;
+			}
+
 			descr = PyObjCClass_TryResolveSelector(base, name, sel);
 			if (descr) {
 				return descr;
