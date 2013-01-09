@@ -32,7 +32,8 @@ super_getattro(PyObject *self, PyObject *name)
 {
 	superobject *su = (superobject *)self;
 	int skip = su->obj_type == NULL;
-	SEL sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name)); /* XXX: needs to be changed for py3k */
+	SEL sel;
+
 	
 	if (!skip) {
 		/* We want __class__ to return the class of the super object
@@ -49,6 +50,21 @@ super_getattro(PyObject *self, PyObject *name)
 			skip = 0;
 		}
 
+	}
+
+	if (PyUnicode_Check(name)) {
+		PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (bytes == NULL) {
+			return NULL;
+		}
+		sel = sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(bytes));
+#if PY_MAJOR_VERSION == 2
+	} else if (PyBytes_Check(name)) {
+		sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name)); 
+#endif
+	} else if (!skip) {
+		PyErr_SetString(PyExc_TypeError, "attribute name is not a string");
+		return NULL;
 	}
 
 	if (!skip) {

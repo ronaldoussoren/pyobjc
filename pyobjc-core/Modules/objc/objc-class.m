@@ -1138,6 +1138,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 		}
 	}
 
+	/*printf("type_lookup %s %s -> %s\n", PyObject_REPR(tp), PyObject_REPR(name), PyObject_REPR(descr));*/
 	return descr;
 }
 

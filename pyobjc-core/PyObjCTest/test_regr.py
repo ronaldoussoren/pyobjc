@@ -28,6 +28,14 @@ class ReturnAStruct (NSObject):
 
 
 class TestRegressions(TestCase):
+    def testNSObjectPerforming(self):
+        # XXX: 3.x test: regression w.r.t 2.5
+        o = NSObject.performSelector_('new')
+        self.assertIsInstance(o, NSObject)
+
+        v = o.performSelector_('description')
+        self.assertEqual(v, o.description())
+
     def testNSObjectRespondsToCommonMethods(self):
         self.assertTrue(NSObject.pyobjc_classMethods.respondsToSelector_('alloc'))
         self.assertTrue(NSObject.instancesRespondToSelector_('init'))
