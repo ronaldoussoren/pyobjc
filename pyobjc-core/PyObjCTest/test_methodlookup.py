@@ -113,6 +113,16 @@ class TestMethodResolution (TestCase):
 
         self.assertEqual(o.pyobjc_setObject_forKey_(1, 2), [2, 1])
         self.assertEqual(o.pyobjc_setObject_forKey_.selector, b'pyobjc_setObject:forKey:')
+
+    def test_explicit_choice(self):
+        s = PyObjC_MethodLookup1.pyobjc_classMethods.both
+        self.assertTrue(s.isClassMethod)
+
+        self.assertRaises(AttributeError, getattr, PyObjC_MethodLookup1.pyobjc_classMethods, 'instance5')
+
+        s = PyObjC_MethodLookup1.pyobjc_instanceMethods.both
+        self.assertFalse(s.isClassMethod)
+        self.assertRaises(AttributeError, getattr, PyObjC_MethodLookup1.pyobjc_instanceMethods, 'clsmeth5')
         
 
 if __name__ == "__main__":

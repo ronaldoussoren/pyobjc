@@ -14,12 +14,14 @@
 -(int)instance2;
 -(int)instance3;
 -(int)instance4;
+-(int)instance5;
 -(int)both;
 +(int)both;
 +(int)clsmeth;
 +(int)clsmeth2;
 +(int)clsmeth3;
 +(int)clsmeth4;
++(int)clsmeth5;
 
 +(id)OC_description;
 -(id)OC_description;
@@ -51,6 +53,11 @@
 	return -1;
 }
 
+-(int)instance5
+{
+	return -1;
+}
+
 -(int)both
 {
 	return 2;
@@ -75,6 +82,10 @@
 	return 4;
 }
 +(int)clsmeth4
+{
+	return 4;
+}
++(int)clsmeth5
 {
 	return 4;
 }
