@@ -32,7 +32,7 @@ Version 3.0
   had in earlier releases (in particular classes that are not mentioned in Apple's 
   documentation).
 
-* The bridge now lazily looks for Objective-C methods as they are used from Python, instead
+* Issue #3: The bridge now lazily looks for Objective-C methods as they are used from Python, instead
   of trying to maintain a class *__dict__* that mirrors the method list of the Objective-C
   class.
 

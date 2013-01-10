@@ -788,18 +788,22 @@ if sys.version_info[:2] <= (2,6):
 
 elif sys.version_info[0] == 2:
     def NSData__str__(self):
+        if len(self) == 0:
+            return str(b"")
         return str(self.bytes().tobytes())
 
 else:
     def NSData__str__(self):
+        if len(self) == 0:
+            return str(b"")
         return str(self.bytes().tobytes())
 
 
 CLASS_METHODS['NSData'] = (
+    ('__len__', lambda self: self.length()),
     ('__str__', NSData__str__),
     ('__getitem__', NSData__getitem__),
     ('__getslice__', NSData__getslice__),
-    ('__len__', lambda self: self.length()),
 )
 
 def NSMutableData__setslice__(self, i, j, sequence):
@@ -1254,6 +1258,7 @@ CLASS_METHODS['NSMutableArray'] = (
     ('sort', sort),
     ('insert', insert_insertObject_atIndex_),
     ('reverse', reverse_exchangeObjectAtIndex_withObjectAtIndex_),
+    ('clear', lambda self: self.removeAllObjects()),
 )
 
 
@@ -1611,6 +1616,7 @@ getattr(NSSet, 'foo', None)
 getattr(NSMutableSet, 'foo', None)
 getattr(lookUpClass('NSString'), 'foo', None)
 getattr(lookUpClass('NSMutableString'), 'foo', None)
+getattr(lookUpClass('NSData'), 'foo', None)
 
 try:
     from collections import Set

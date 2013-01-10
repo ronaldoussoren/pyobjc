@@ -4,8 +4,6 @@ TODO's for the 3.0 branch
 Short term
 ----------
 
-* C-level crash when running test suite of pyobjc-core with Python 3.4
-
 * Merge changes from 'head'
 
 * Better tests for the new C code, especially:
@@ -24,7 +22,7 @@ Short term
 
   - Move bits of _convenience.py to the right framework wrapper
 
-* Move some Foundation helpers to core
+* Issue #29: Move some Foundation helpers to core
 
   This helps in keeping pyobjc-core usable without framework wrappers, and the core
   has intimate knowledge about these types anyway for implementing the OC_* classes.
@@ -48,6 +46,10 @@ Short term
     note: no need to care for __builtin__.super support here, that super wont work
     with Cocoa classes anyway (already true in 2.x, and more glaringly so in 3.0)
 
+* Issue #25: issue the 'protocols' submodule on framework wrappers (e.g. Foundation.protocols)
+
+* Issue #35: Lib/objc/_pycoder.py contains some dead code, verify that the code is 
+  actually dead and then remove.
 
 Medium term
 -----------

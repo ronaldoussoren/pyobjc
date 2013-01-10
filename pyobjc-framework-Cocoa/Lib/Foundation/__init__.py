@@ -172,7 +172,7 @@ sys.modules['Foundation'] = mod = objc.ObjCLazyModule('Foundation',
             'NO': objc.NO,
             'NSMaximumStringLength': sys.maxsize - 1,
             '__path__': __path__,
-        }, ()) #(CoreFoundation,))
+        }, (CoreFoundation,))
 
 import Foundation._Foundation
 for nm in dir(Foundation._Foundation):
