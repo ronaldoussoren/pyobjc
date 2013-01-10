@@ -446,9 +446,10 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 			}
 
 // XXX: You'd expect the code below works, but it actually doesn't. Need to check why.
-//			Py_DECREF(Py_TYPE(obj));
-//			Py_TYPE(obj) = tp;
-//			
+			Py_DECREF(Py_TYPE(obj));
+			Py_TYPE(obj) = tp;
+			Py_INCREF(tp);
+			
 
 			PyObjCClass_CheckMethodList((PyObject*)tp, 0);
 			dict = tp->tp_dict;
