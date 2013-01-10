@@ -112,16 +112,16 @@ class TestKeyedArchiveSimple (TestCase):
 
     def test_unknown_type(self):
         try:
-            orig = pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR]
-            del pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR]
+            orig = pycoder.decode_dispatch[pycoder.kOP_GLOBAL]
+            del pycoder.decode_dispatch[pycoder.kOP_GLOBAL]
 
-            o = 14.2
+            o = TestKeyedArchiveSimple
             buf = self.archiverClass.archivedDataWithRootObject_(o)
             self.assertRaises(pickle.UnpicklingError, self.unarchiverClass.unarchiveObjectWithData_, buf)
 
 
         finally:
-            pycoder.decode_dispatch[pycoder.kOP_FLOAT_STR] = orig
+            pycoder.decode_dispatch[pycoder.kOP_GLOBAL] = orig
 
 
 

@@ -5,8 +5,13 @@ import sys
 
 if sys.version_info[0] == 2:
     from StringIO import StringIO
+    def _str(v): return v
 else:
     from io import StringIO
+    def _str(v): 
+        if isinstance(v, str):
+            return v
+        return v.decode('ascii')
 
 class TheadingHelperTestHelper (Foundation.NSObject):
     def init(self):
@@ -24,7 +29,7 @@ class TheadingHelperTestHelper (Foundation.NSObject):
         assert isinstance(wait, bool)
 
         self.calls.append((selector, thread, object, wait))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelector_onThread_withObject_waitUntilDone_modes_(self,
             selector, thread, object, wait, modes):
@@ -33,36 +38,36 @@ class TheadingHelperTestHelper (Foundation.NSObject):
         assert isinstance(wait, bool)
 
         self.calls.append((selector, thread, object, wait, modes))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelector_withObject_afterDelay_(self,
             selector, object, delay):
         assert isinstance(selector, bytes)
 
         self.calls.append((selector, object, delay))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelector_withObject_afterDelay_inModes_(self,
             selector, object, delay, modes):
         assert isinstance(selector, bytes)
 
         self.calls.append((selector, object, delay, modes))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelectorInBackground_withObject_(self,
             selector, object):
         self.calls.append((selector, object))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelectorOnMainThread_withObject_waitUntilDone_(self,
             selector, object, wait):
         self.calls.append((selector, object, wait))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def performSelectorOnMainThread_withObject_waitUntilDone_modes_(self,
             selector, object, wait, modes):
         self.calls.append((selector, object, wait, modes))
-        getattr(self, selector)(object)
+        getattr(self, _str(selector))(object)
 
     def sel1_(self, arg):
         pass
@@ -291,8 +296,8 @@ class TestThreadingHelpers (TestCase):
         self.assertEqual(r, 0.5)
 
         self.assertEqual(obj.calls, [
-            (b'_pyobjc_performOnThreadWithResult:', (b'sel2:', 3, [(True, 6)]), True),
-            (b'_pyobjc_performOnThreadWithResult:', (b'sel3:', 2.0, [(True, 0.5)]), True),
+            (b'_pyobjc_performOnThreadWithResult:', ('sel2:', 3, [(True, 6)]), True),
+            (b'_pyobjc_performOnThreadWithResult:', ('sel3:', 2.0, [(True, 0.5)]), True),
         ])
 
         # Raise an exception
@@ -320,8 +325,8 @@ class TestThreadingHelpers (TestCase):
         self.assertEqual(r, 0.5)
 
         self.assertEqual(obj.calls, [
-            (b'_pyobjc_performOnThreadWithResult:', (b'sel2:', 3, [(True, 6)]), True, 1),
-            (b'_pyobjc_performOnThreadWithResult:', (b'sel3:', 2.0, [(True, 0.5)]), True, 2),
+            (b'_pyobjc_performOnThreadWithResult:', ('sel2:', 3, [(True, 6)]), True, 1),
+            (b'_pyobjc_performOnThreadWithResult:', ('sel3:', 2.0, [(True, 0.5)]), True, 2),
         ])
 
         # Raise an exception
@@ -350,8 +355,8 @@ class TestThreadingHelpers (TestCase):
         self.assertEqual(r, 0.5)
 
         self.assertEqual(obj.calls, [
-            (b'_pyobjc_performOnThreadWithResult:', thr, (b'sel2:', 3, [(True, 6)]), True),
-            (b'_pyobjc_performOnThreadWithResult:', thr, (b'sel3:', 2.0, [(True, 0.5)]), True),
+            (b'_pyobjc_performOnThreadWithResult:', thr, ('sel2:', 3, [(True, 6)]), True),
+            (b'_pyobjc_performOnThreadWithResult:', thr, ('sel3:', 2.0, [(True, 0.5)]), True),
         ])
 
         # Raise an exception
@@ -380,8 +385,8 @@ class TestThreadingHelpers (TestCase):
         self.assertEqual(r, 0.5)
 
         self.assertEqual(obj.calls, [
-            (b'_pyobjc_performOnThreadWithResult:', thr, (b'sel2:', 3, [(True, 6)]), True, 1),
-            (b'_pyobjc_performOnThreadWithResult:', thr, (b'sel3:', 2.0, [(True, 0.5)]), True, 2),
+            (b'_pyobjc_performOnThreadWithResult:', thr, ('sel2:', 3, [(True, 6)]), True, 1),
+            (b'_pyobjc_performOnThreadWithResult:', thr, ('sel3:', 2.0, [(True, 0.5)]), True, 2),
         ])
 
         # Raise an exception

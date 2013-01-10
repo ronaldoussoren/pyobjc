@@ -4,8 +4,6 @@ TODO's for the 3.0 branch
 Short term
 ----------
 
-* Merge changes from 'head'
-
 * Better tests for the new C code, especially:
 
   - lookup of selectors like 'prefix_suffixCanDo:withObject:' (with an embedded underscore)
