@@ -1196,6 +1196,76 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	return descr;
 }
 
+static inline PyObject*
+_type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+	/* See function of same name in objc-object.m for an explanation */
+{
+	Py_ssize_t i, n;
+	PyObject *mro, *base, *dict;
+	PyObject *descr = NULL;
+	PyObject* res;
+
+	/* Look in tp_dict of types in MRO */
+	mro = tp->tp_mro;
+	if (mro == NULL) {
+		return NULL;
+	}
+	res = NULL;
+	assert(PyTuple_Check(mro));
+	n = PyTuple_GET_SIZE(mro);
+	for (i = 0; i < n; i++) {
+		Class cls;
+		Method*   methods;
+		unsigned int method_count, j;
+		char      selbuf[2048];
+		char*     sel_name;
+
+		base = PyTuple_GET_ITEM(mro, i);
+
+		if (!PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
+			continue;
+		}
+
+		cls = objc_metaclass_locate(base);
+		methods = class_copyMethodList(object_getClass(cls), &method_count);
+		for (j = 0; j < method_count; j++) {
+			Method m = methods[j];
+
+			if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), method_getName(m), YES)) {
+				continue;
+			}
+
+			sel_name = (char*)PyObjC_SELToPythonName(
+						method_getName(m),
+						selbuf,
+						sizeof(selbuf));
+			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+				free(methods);
+				/* Create (unbound) selector */
+				descr = PyObjCSelector_NewNative(
+						cls, method_getName(m), method_getTypeEncoding(m), 1);
+				if (descr == NULL) {
+					return NULL;
+				}
+
+
+				/* add to __dict__ 'cache' */
+				if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr) == -1) {
+					Py_DECREF(descr);
+					return NULL;
+				}
+				
+				/* and return, as a borrowed reference */
+				Py_DECREF(descr);
+				return descr;
+			}
+		}
+		free(methods);
+	}
+
+	return descr;
+}
+
 PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
 	Class cls = objc_metaclass_locate(base);
@@ -1406,8 +1476,9 @@ class_getattro(PyObject* self, PyObject* name)
 
 	} 
 
+
 	if (descr == NULL) {
-		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, self, name, bytes);
+		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyObject*)self, name, bytes);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -1422,6 +1493,21 @@ class_getattro(PyObject* self, PyObject* name)
 			result = descr;
 			Py_INCREF(result);
 			goto done;
+		}
+	}
+
+	if (descr == NULL) {
+		/* XXX: Should this block be here or above _type_lookup_instance. The latter
+		 *      is more correct, but more likely to be inefficient (but how often are
+		 *      instance methods accessed through the class anyway?
+		 */
+		descr = _type_lookup_harder(Py_TYPE(self), name, bytes);
+		if (descr != NULL 
+#if PY_MAJOR_VERSION == 2
+			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
+#endif
+		    ) {
+			f = Py_TYPE(descr)->tp_descr_get;
 		}
 	}
 

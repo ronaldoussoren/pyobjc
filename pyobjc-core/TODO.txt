@@ -37,6 +37,18 @@ Short term
 
 * Create and run performance tests to check if new code is faster than the 2.x branch
 
+  - check if it is useful to cache method name lookup in subclasses as well (that is,
+    when looking for a method in a subclass and that method is found in a superclass
+    add it to the subclass dict as well, with a flag mentioning that this is a cache
+    entry). 
+    
+    This avoids hitting the runtime when calling methods that are defined in a superclass,
+    and could be more efficient. Needs care to avoid problems with objc.super though.
+
+    note: no need to care for __builtin__.super support here, that super wont work
+    with Cocoa classes anyway (already true in 2.x, and more glaringly so in 3.0)
+
+
 Medium term
 -----------
 

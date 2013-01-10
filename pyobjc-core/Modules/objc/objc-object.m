@@ -317,6 +317,90 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	return descr;
 }
 
+static inline PyObject*
+_type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+	/* XXX: Name needs changing.
+	 *      Second pass through the class hierarchy when _type_lookup failed and the name is not in __dict__
+	 *      Used to look for selectors that cannot be found using the default translation from Python to ObjC
+	 *      (for example 'some_methodWithArg:andArg').
+	 *
+	 *      The assumption is that user code is not buggy, and hence it is acceptable to take an expensive
+	 *      path once in a while.
+	 * XXX: May need to cache the found methods in subclasses as well to be 100% reliable, add test
+	 *      that first finds the method in a superclass, then loads a shared library with a subclass that
+	 *      also defines the method. This should find the subclass method (but might not with current code).
+	 */
+{
+	Py_ssize_t i, n;
+	PyObject *mro, *base, *dict;
+	PyObject *descr = NULL;
+	PyObject* protDict;
+	PyObject* res;
+	char selbuf[2048];
+	char* sel_name;
+
+	/* Look in tp_dict of types in MRO */
+	mro = tp->tp_mro;
+	if (mro == NULL) {
+		return NULL;
+	}
+	res = NULL;
+	assert(PyTuple_Check(mro));
+	n = PyTuple_GET_SIZE(mro);
+	for (i = 0; i < n; i++) {
+		Class cls;
+		Method*   methods;
+		unsigned int method_count, j;
+		base = PyTuple_GET_ITEM(mro, i);
+
+		if (!PyObjCClass_Check(base)) {
+			continue;
+		}
+
+		cls = PyObjCClass_GetClass(base);
+
+		methods = class_copyMethodList(cls, &method_count);
+		for (j = 0; j < method_count; j++) {
+			Method m = methods[j];
+			if (PyObjCClass_HiddenSelector(base, method_getName(m), NO)) {
+				continue;
+			}
+
+			sel_name = (char*)PyObjC_SELToPythonName(
+						method_getName(m), 
+						selbuf, 
+						sizeof(selbuf));
+			if (sel_name == NULL) continue;
+
+			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+				free(methods);
+
+				/* Create (unbound) selector */
+				descr = PyObjCSelector_NewNative(
+						cls, method_getName(m), 
+						method_getTypeEncoding(m), 0);
+				if (descr == NULL) {
+					return NULL;
+				}
+
+
+				/* add to __dict__ 'cache' */
+				if (PyDict_SetItem(((PyTypeObject*)base)->tp_dict, name, descr) == -1) {
+					Py_DECREF(descr);
+					return NULL;
+				}
+				
+				/* and return as a borrowed reference */
+				Py_DECREF(descr);
+				return descr;
+			}
+		}
+		free(methods);
+	}
+
+	return descr;
+}
+
 PyObject*
 PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
@@ -522,6 +606,24 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 			}
 		}
 	}
+
+	if (descr == NULL) {
+		/*
+		 * The method cannot be found in the regular path. 
+		 * Assume that the user knows what he's doing and is looking
+		 * for a method where the selector does not conform to the
+		 * naming convention that _type_lookup expects.
+		 */
+		descr = _type_lookup_harder(tp, name, bytes);
+		if (descr != NULL 
+#if PY_MAJOR_VERSION == 2
+			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
+#endif
+		    ) {
+			f = Py_TYPE(descr)->tp_descr_get;
+		}
+	}
+
 
 	if (f != NULL) {
 		res = f(descr, obj, (PyObject*)Py_TYPE(obj));
@@ -844,7 +946,7 @@ meth_dir(PyObject* self)
 	Class     cls;
 	Method*   methods;
 	unsigned int method_count, i;
-	char      selbuf[1024];
+	char      selbuf[2048];
 
 
 	/* Start of with keys in __dict__ */
