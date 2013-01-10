@@ -29,7 +29,7 @@ Version 2.5.1
 
   This increases interoperability with code that expects to read back a
   non-keyed archive in a different proces. An example of this is the use
-  of Growl.
+  of Growl (see issue #31)
 
   Instances of subclasses of unicode are not affected by this change, and
   can only be read back by other PyObjC programs.
