@@ -1135,10 +1135,12 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 
 		if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
 			descr = PyObjCMetaClass_TryResolveSelector(base, name, sel);
+			if (descr != NULL) {
+				break;
+			}
 		}
 	}
 
-	/*printf("type_lookup %s %s -> %s\n", PyObject_REPR(tp), PyObject_REPR(name), PyObject_REPR(descr));*/
 	return descr;
 }
 
@@ -1149,7 +1151,6 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 	PyObject* dict = ((PyTypeObject *)base)->tp_dict;
 
 	if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)) {
-		/* XXX: what about super calls? */
 		return NULL;
 	}
 
@@ -1162,7 +1163,9 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 				use = 0;
 			}
 		}
-		if (!use) return NULL;
+		if (!use) {
+			return NULL;
+		}
 
 		/* Create (unbound) selector */
 		PyObject* result = PyObjCSelector_NewNative(
@@ -1350,37 +1353,6 @@ class_getattro(PyObject* self, PyObject* name)
 		goto done;
 
 	} 
-#if 0
-	else {
-		/* XXX: This code might be too smart
-		 * What this tries to do:
-		 * - NSObject.description should be the class method, not the one in tp_dict
-		 * - NSArray.count should be an unbound instance method
-		 * - class Foo (NSObject): m = staticmethod(lambda: 1): 'm' should be a function
-		 */
-		result = PyDict_GetItem(((PyTypeObject*)self)->tp_dict, name);
-		if (result != NULL) {
-			if (descr == NULL) {
-				descr = result;
-				if (descr != NULL 
-#if PY_MAJOR_VERSION == 2
-					&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
-#endif
-				    ) {
-					f = Py_TYPE(descr)->tp_descr_get;
-					if (f != NULL) {
-						result = f(descr, NULL, self);
-						goto done;
-					}
-				}
-
-			} else {
-				Py_INCREF(result);
-				goto done;
-			}
-		}
-	}
-#endif
 
 	if (descr == NULL) {
 		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, self, name, bytes);
