@@ -1084,9 +1084,61 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
 
 static PyObject*
-metaclass_getattro(PyObject* self, PyObject* name)
+metaclass_dir(PyObject* self)
 {
-	return PyObject_GenericGetAttr(self, name);
+	PyObject* result;
+	Class     cls;
+	Method*   methods;
+	unsigned int method_count, i;
+	char      selbuf[2048];
+
+	/* Start of with keys in __dict__ */
+	result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
+	if (result == NULL) {
+		return NULL;
+	}
+
+	cls = objc_metaclass_locate(self);
+
+	while (cls != NULL) {
+		/* Now add all method names */
+		methods = class_copyMethodList(object_getClass(cls), &method_count);
+		for (i = 0; i < method_count; i++) {
+			char* name;
+			PyObject* item;
+
+			/* Check if the selector should be hidden */
+			if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(self),
+						method_getName(methods[i]), YES)) {
+				continue;
+			}
+
+			name = (char*)PyObjC_SELToPythonName(
+						method_getName(methods[i]), 
+						selbuf, 
+						sizeof(selbuf));
+			if (name == NULL) continue;
+
+			item = PyText_FromString(name);
+			if (item == NULL) {
+				free(methods);
+				Py_DECREF(result);
+				return NULL;
+			}
+
+			if (PyList_Append(result, item) == -1) {
+				free(methods);
+				Py_DECREF(result);
+				Py_DECREF(item);
+				return NULL;
+			}
+			Py_DECREF(item);
+		}
+		free(methods);
+
+		cls = class_getSuperclass(cls);
+	}
+	return result;
 }
 
 
@@ -1763,7 +1815,7 @@ meth_dir(PyObject* self)
 	Class     cls;
 	Method*   methods;
 	unsigned int method_count, i;
-	char      selbuf[1024];
+	char      selbuf[2048];
 
 	/* Start of with keys in __dict__ */
 	result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -1813,6 +1865,21 @@ meth_dir(PyObject* self)
 	}
 	return result;
 }
+
+static PyMethodDef metaclass_methods[] = {
+	{
+		"__dir__",
+		(PyCFunction)metaclass_dir,
+		METH_NOARGS,
+		"dir() hook, don't call directly"
+	},
+	{
+		NULL,
+		NULL,
+		0,
+		NULL
+	}
+};
 
 
 static PyMethodDef class_methods[] = {
@@ -1865,11 +1932,10 @@ PyTypeObject PyObjCMetaClass_Type = {
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	metaclass_getattro,			/* tp_getattro */
-	PyObject_GenericSetAttr,		/* tp_setattro */
+	0,					/* tp_getattro */
+	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT,
-		// | Py_TPFLAGS_BASETYPE,		/* tp_flags */
+	Py_TPFLAGS_DEFAULT, 			/* tp_flags */
 	0,					/* tp_doc */
 	0,					/* tp_traverse */
 	0,					/* tp_clear */
@@ -1877,7 +1943,7 @@ PyTypeObject PyObjCMetaClass_Type = {
 	0,					/* tp_weaklistoffset */
 	0,					/* tp_iter */
 	0,					/* tp_iternext */
-	0,					/* tp_methods */
+	metaclass_methods,			/* tp_methods */
 	0,					/* tp_members */
 	0,					/* tp_getset */
 	&PyType_Type,				/* tp_base */
@@ -1904,12 +1970,7 @@ PyTypeObject PyObjCMetaClass_Type = {
 
 
 PyTypeObject PyObjCClass_Type = {
-#if 1
-	/*PyVarObject_HEAD_INIT(&PyObjCMetaClass_Type, 0)*/
-	PyVarObject_HEAD_INIT(NULL, 0)
-#else
-	PyVarObject_HEAD_INIT(&PyType_Type, 0)
-#endif
+	PyVarObject_HEAD_INIT(&PyObjCMetaClass_Type, 0)
 	"objc_class",				/* tp_name */
 	sizeof (PyObjCClassObject),		/* tp_basicsize */
 	0,					/* tp_itemsize */
