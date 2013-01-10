@@ -55,6 +55,9 @@ Version 3.0
 * Added *__new__* method to NSString, it is now possible to explictly convert a python string to a Cocoa
   string with ``NSString(someString)``
 
+* Added *__eq__* and *__ne__* methods to native selector objects, which mean you can now
+  check if two method objects are the same using 'sel1 == sel2'. This works both for bound
+  and unbound selectors.
 
 Version 2.5
 -----------
