@@ -18,7 +18,7 @@ import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForClass', )
+__all__ = ( 'addConvenienceForClass', 'addConveniencesForBasicMapping', 'addConveniencesForBasicSequence')
 
 
 _CONVENIENCE_METHODS = {}
@@ -36,10 +36,10 @@ def addConvenienceForClass(classname, methods):
     """
     # XXX: Need to be sightly smarter than this.
     if classname in CLASS_METHODS:
-        CLASS_METHODS[classname] += methods
+        CLASS_METHODS[classname] += tuple(methods)
 
     else:
-        CLASS_METHODS[classname] = methods
+        CLASS_METHODS[classname] = tuple(methods)
 
 NSObject = lookUpClass('NSObject')
 
@@ -99,6 +99,27 @@ if sys.version_info[0] == 2:
     )
 
 
+def addConveniencesForBasicMapping(classname, readonly=True):
+    conveniences = (
+        ('__getitem__', __getitem__objectForKey_),
+        ('get', get_objectForKey_),
+        ('__contains__', has_key_objectForKey_),
+    )
+    if sys.version_info[0] == 2:
+        conveniences += (
+            ('has_key', has_key_objectForKey_),
+        )
+    if not readonly:
+        conveniences += (
+            ('__delitem__', __delitem__removeObjectForKey_),
+            ('__setitem__', __setitem__setObject_forKey_),
+            ('update', update_setObject_forKey_),
+            ('setdefault', setdefault_setObject_forKey_),
+            ('pop', pop_setObject_forKey_),
+            ('popitem', popitem_setObject_forKey_),
+        )
+
+    addConvenienceForClass(classname, conveniences)
 
 
 def __delitem__removeObjectForKey_(self, key):
@@ -778,6 +799,7 @@ CLASS_METHODS['NSData'] = (
     ('__str__', NSData__str__),
     ('__getitem__', NSData__getitem__),
     ('__getslice__', NSData__getslice__),
+    ('__len__', lambda self: self.length()),
 )
 
 def NSMutableData__setslice__(self, i, j, sequence):
@@ -1597,3 +1619,28 @@ except:
     Set = (set, frozenset, NSSet)
 
 
+# These need to be moved to the correct framework wrappes
+addConveniencesForBasicMapping('IKImageBrowserGridGroup', False)
+addConveniencesForBasicMapping('IKImageCell', False)
+addConveniencesForBasicMapping('IKImageState', False)
+addConveniencesForBasicMapping('NSMergeConflict', True)
+addConveniencesForBasicMapping('NSUbiquitousKeyValueStore', False)
+addConveniencesForBasicMapping('NSUserDefaults', False)
+
+
+def addConveniencesForBasicSequence(classname, readonly=True):
+    addConveniencesForClass(classname, (
+        ('__len__',  lambda self: self.count()),
+        ('__getitem__', lambda self, idx: self.objectAtIndex_(idx)),
+    )
+
+    if not readonly:
+        raise NotImplementedError
+
+
+addConveniencesForBasicSequence('WebScriptObject', True)
+addConveniencesForClass('WebScriptObject', (
+    ('count':    lambda self: self.lenght()),
+)
+addConveniencesForBasicSequence('IKLinkedList', True)
+addConveniencesForBasicSequence('QCStructure', True)

@@ -454,6 +454,29 @@ Metadata for Objective-C methods and classes
 
     The *methods* argument is a list of tuples (methodname, function).
 
+.. function:: addConveniencesForBasicMapping(classname[, readonly])
+
+   Add ``__getitem__``, ``get``, and for writable classes, ``__setitem__``,
+   ``update`` (TDB: clearer description), to a class that implements the
+   basic Cocoa mapping protocol: ``objectForKey:``, ``setObject:forKey:``,
+   ``removeObject:forKey:``.
+
+   .. note::
+
+      This uses :func:`addConvenienceForClass` to actually add the conveniences,
+      and therefore will add the convenience methods regardless of the actual
+      existance of the Cocoa mapping selectors.
+
+   .. versionadded:: 3.0
+
+.. function:: addConveniencesForBasicSequence(classname[, readonly])
+
+   Like :func:`addConveniencesForBasicMapping`, but for sequences with
+   ``count`` and ``objectAtIndex:`` selectors.
+
+   .. warning:: ``readonly==False`` is not supported at the moment.
+
+   .. versionadded:: 3.0
 
 .. function:: setSignatureForSelector(class_name, selector, signature)
 

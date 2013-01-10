@@ -1,4 +1,5 @@
 import sys
+import objc
 from PyObjCTools.TestSupport import *
 
 import objc
@@ -8,7 +9,7 @@ NSObject = objc.lookUpClass('NSObject')
 
 class OC_TestConveniences(NSObject):
     def initWithHashValue_(self, hashValue):
-        self = super(OC_TestConveniences, self).init()
+        self = objc.super(OC_TestConveniences, self).init()
         self.hashValue = hashValue
         return self
 

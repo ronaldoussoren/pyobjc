@@ -10,7 +10,7 @@ else:
 
 class TheadingHelperTestHelper (Foundation.NSObject):
     def init(self):
-        self = super(TheadingHelperTestHelper, self).init()
+        self = objc.super(TheadingHelperTestHelper, self).init()
         if self is None:
             return None
 

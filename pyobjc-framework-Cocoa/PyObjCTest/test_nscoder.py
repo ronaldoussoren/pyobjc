@@ -54,7 +54,7 @@ class TestNSCoderUsage(TestCase):
 
 class MyCoder (NSCoder):
     def init(self):
-        self = super(MyCoder, self).init()
+        self = objc.super(MyCoder, self).init()
         if self is None: return None
         self.coded = []
         return self

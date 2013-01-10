@@ -11,6 +11,26 @@ import Foundation
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
 
+def _setup_conveniences():
+    def fontdescriptor_get(self, key, default=None):
+        value = self.objectForKey_(key)
+        if value is None:
+            return default
+        return value
+
+    def fontdescriptor_getitem(self, key, default=None):
+        value = self.objectForKey_(key)
+        if value is None:
+            raise KeyError(key)
+        return value
+
+    objc.addConvenienceForClass('NSFontDescriptor', (
+        ('__getitem__',  fontdescriptor_getitem),
+        ('get',          fontdescriptor_get),
+    ))
+
+_setup_conveniences()
+
 def NSDictionaryOfVariableBindings(*names):
     """
     Return a dictionary with the given names and there values.

@@ -37,7 +37,7 @@ class TestNSDictionarySubclassing(TestCase):
 
         class DictTestExceptionClass2 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
-                return super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
+                return objc.super(DictTestExceptionClass2, self).initWithObjects_forKeys_count_(o, k, c)
 
         import warnings
         warnings.filterwarnings('ignore',
@@ -58,7 +58,7 @@ class TestNSDictionarySubclassing(TestCase):
 
         class DictTestExceptionClass3 (NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
-                return super(DictTestExceptionClass3, self).initWithObjects_forKeys_count_(o, k, c)
+                return objc.super(DictTestExceptionClass3, self).initWithObjects_forKeys_count_(o, k, c)
 
         try:
             d = DictTestExceptionClass3.dictionaryWithDictionary_({})
