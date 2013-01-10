@@ -1,0 +1,67 @@
+TODO's for the 3.0 branch
+=========================
+
+Short term
+----------
+
+* C-level crash when running test suite of pyobjc-core with Python 3.4
+
+* Merge changes from 'head'
+
+* Better tests for the new C code, especially:
+
+  - lookup of selectors like 'prefix_suffixCanDo:withObject:' (with an embedded underscore)
+    test if a subclass version is found when the superclass version is already in __dict__.
+
+  - test_methodlookup might not yet test all relevant code paths
+
+* Code cleanup for the new C code, I've done too much copy&paste editing
+  while getting the new code to work properly.
+
+* Lib/objc/_convenience.py cleanup:
+
+  - Remove all _CONVENIENCE_METHODS, as well as functions that aren't used anymore
+
+  - Move bits of _convenience.py to the right framework wrapper
+
+* Move some Foundation helpers to core
+
+  This helps in keeping pyobjc-core usable without framework wrappers, and the core
+  has intimate knowledge about these types anyway for implementing the OC_* classes.
+
+  - convenience helpers for NSArray, NSData, NSDictionary, NSSet need to be in core
+  - likewise for mutable versions
+  - likewise for their C helpers
+  - likewise for the C helper for NSCoding (and remove Modules/objc/coder-category.m
+    while doing that, needs change to Lib/objc/_pycoder as well)
+
+* Create and run performance tests to check if new code is faster than the 2.x branch
+
+Medium term
+-----------
+
+* Loading a framework takes too much time, why?
+
+* Look for a more efficient encoding of _metadata.py, possibly using a C exension
+
+* Look for a more efficient encoding of method metadata registry (the data
+  structure maintained by ``objc.registerMetaDataForSelector``)
+
+* Try adding support for ARC runtime functions (to avoid hitting
+  the autorelease pool on systems using ARC)
+
+  - Add explict preprocessor test and #error line to ensure 
+    PyObjC itself isn't compiled with ARC enabled.
+
+  - Basically try to create a variant of the libffi assembly code
+    for x86_64 that calls objc_retainAutoreleasedReturnValue on the
+    result and use that instead of the regular assembly unless
+    the method returns an 'already_retained' value (and adjust
+    libffi-support code to deal with this).
+
+    Note: code changes should be done carefully to ensure PyObjC still works
+    on older OSX releases that don't support ARC (10.6 and earlier and
+    32-bit binaries)
+
+* Remove use of CFRetain/CFRelease, use regular -retain/-release messages
+  instead (or even 'objc_retain/objc_release)'
