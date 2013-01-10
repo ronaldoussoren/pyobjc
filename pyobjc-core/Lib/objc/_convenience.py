@@ -18,7 +18,7 @@ import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForClass', 'addConveniencesForBasicMapping', 'addConveniencesForBasicSequence')
+__all__ = ( 'addConvenienceForClass', 'addConvenienceForBasicMapping', 'addConvenienceForBasicSequence')
 
 
 _CONVENIENCE_METHODS = {}
@@ -99,7 +99,7 @@ if sys.version_info[0] == 2:
     )
 
 
-def addConveniencesForBasicMapping(classname, readonly=True):
+def addConvenienceForBasicMapping(classname, readonly=True):
     conveniences = (
         ('__getitem__', __getitem__objectForKey_),
         ('get', get_objectForKey_),
@@ -1620,27 +1620,27 @@ except:
 
 
 # These need to be moved to the correct framework wrappes
-addConveniencesForBasicMapping('IKImageBrowserGridGroup', False)
-addConveniencesForBasicMapping('IKImageCell', False)
-addConveniencesForBasicMapping('IKImageState', False)
-addConveniencesForBasicMapping('NSMergeConflict', True)
-addConveniencesForBasicMapping('NSUbiquitousKeyValueStore', False)
-addConveniencesForBasicMapping('NSUserDefaults', False)
+addConvenienceForBasicMapping('IKImageBrowserGridGroup', False)
+addConvenienceForBasicMapping('IKImageCell', False)
+addConvenienceForBasicMapping('IKImageState', False)
+addConvenienceForBasicMapping('NSMergeConflict', True)
+addConvenienceForBasicMapping('NSUbiquitousKeyValueStore', False)
+addConvenienceForBasicMapping('NSUserDefaults', False)
 
 
-def addConveniencesForBasicSequence(classname, readonly=True):
-    addConveniencesForClass(classname, (
+def addConvenienceForBasicSequence(classname, readonly=True):
+    addConvenienceForClass(classname, (
         ('__len__',  lambda self: self.count()),
         ('__getitem__', lambda self, idx: self.objectAtIndex_(idx)),
-    )
+    ))
 
     if not readonly:
         raise NotImplementedError
 
 
-addConveniencesForBasicSequence('WebScriptObject', True)
-addConveniencesForClass('WebScriptObject', (
-    ('count':    lambda self: self.lenght()),
-)
-addConveniencesForBasicSequence('IKLinkedList', True)
-addConveniencesForBasicSequence('QCStructure', True)
+addConvenienceForBasicSequence('WebScriptObject', True)
+addConvenienceForClass('WebScriptObject', (
+    ('count',    lambda self: self.lenght()),
+))
+addConvenienceForBasicSequence('IKLinkedList', True)
+addConvenienceForBasicSequence('QCStructure', True)

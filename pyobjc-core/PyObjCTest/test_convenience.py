@@ -12,7 +12,7 @@ class TestConvenienceHelpers (TestCase):
 
         try:
             objc.addConvenienceForClass("MyObject", methods)
-            self.assertEqual(convenience.CLASS_METHODS["MyObject"], methods)
+            self.assertEqual(convenience.CLASS_METHODS["MyObject"], tuple(methods))
 
         finally:
             if 'MyObject' in convenience.CLASS_METHODS:

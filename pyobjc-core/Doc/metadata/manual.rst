@@ -454,7 +454,7 @@ Metadata for Objective-C methods and classes
 
     The *methods* argument is a list of tuples (methodname, function).
 
-.. function:: addConveniencesForBasicMapping(classname[, readonly])
+.. function:: addConvenienceForBasicMapping(classname[, readonly])
 
    Add ``__getitem__``, ``get``, and for writable classes, ``__setitem__``,
    ``update`` (TDB: clearer description), to a class that implements the
@@ -469,9 +469,9 @@ Metadata for Objective-C methods and classes
 
    .. versionadded:: 3.0
 
-.. function:: addConveniencesForBasicSequence(classname[, readonly])
+.. function:: addConvenienceForBasicSequence(classname[, readonly])
 
-   Like :func:`addConveniencesForBasicMapping`, but for sequences with
+   Like :func:`addConvenienceForBasicMapping`, but for sequences with
    ``count`` and ``objectAtIndex:`` selectors.
 
    .. warning:: ``readonly==False`` is not supported at the moment.
