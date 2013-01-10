@@ -73,12 +73,16 @@ class TestMethodResolution (TestCase):
     def test_class_overloading(self):
         s1 = PyObjC_MethodLookup1.clsmeth3
         s2 = PyObjC_MethodLookup1.clsmeth4
+
+        self.assertIn('clsmeth3', type(PyObjC_MethodLookup1).__dict__)
+        self.assertIn('clsmeth4', type(PyObjC_MethodLookup1).__dict__)
         
         # Overridden in subclass:
-        self.assertNotEqual(PyObjC_MethodLookup2.clsmeth3, s1)
+        self.assertEqual(PyObjC_MethodLookup2.clsmeth3.definingClass, PyObjC_MethodLookup2)
+        self.assertIn('clsmeth3', type(PyObjC_MethodLookup2).__dict__)
 
         # Not overriden in subclass:
-        self.assertEqual(PyObjC_MethodLookup2.clsmeth4, s2)
+        self.assertEqual(PyObjC_MethodLookup2.clsmeth4.definingClass, PyObjC_MethodLookup1)
 
         self.assertEqual(PyObjC_MethodLookup2.clsmeth3.selector, s1.selector)
         self.assertEqual(PyObjC_MethodLookup2.clsmeth4.selector, s2.selector)
