@@ -859,17 +859,20 @@ class TestCase (_unittest.TestCase):
         Run the test, same as unittest.TestCase.run, but every test is
         run with a fresh autorelease pool.
         """
-        if _usepool:
-            p = _poolclass.alloc().init()
-        else:
-            p = 1
+        #if _usepool:
+        #    p = _poolclass.alloc().init()
+        #else:
+        #    p = 1
 
         try:
             _unittest.TestCase.run(self, *args)
         finally:
             _gc.collect()
-            del p
+            #del p
+            if _usepool:
+                objc.recycleAutoreleasePool()
             _gc.collect()
+
 
 main = _unittest.main
 

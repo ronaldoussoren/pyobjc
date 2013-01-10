@@ -1977,9 +1977,9 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
-            self.assertEquals(load_calls, [])
-            self.assertEquals(parse_calls, [])
-            self.assertEquals(g, {})
+            self.assertEqual(load_calls, [])
+            self.assertEqual(parse_calls, [])
+            self.assertEqual(g, {})
 
             # 8. framework_identifier is not None, cannot find through identifier
             resources = {}
@@ -1998,10 +1998,10 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab, scan_classes=False)
 
-            self.assertEquals(load_calls, [
+            self.assertEqual(load_calls, [
                 (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, False),
             ])
-            self.assertEquals(parse_calls, [])
+            self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
@@ -2015,10 +2015,10 @@ class TestInitFrameworkWrapper (TestCase):
                     "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
                     inlineTab=inlineTab)
 
-            self.assertEquals(load_calls, [
+            self.assertEqual(load_calls, [
                 (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, True),
             ])
-            self.assertEquals(parse_calls, [])
+            self.assertEqual(parse_calls, [])
 
 
             # XXX: The following path's aren't properly tested at the moment:
@@ -2037,15 +2037,15 @@ class TestInitFrameworkWrapper (TestCase):
 
             return_value = False
             exception  = None
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
             return_value = True
             exception  = None
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), True)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), True)
 
             return_value = True
             exception  = ImportError
-            self.assertEquals(bridgesupport.safe_resource_exists("a", "b"), False)
+            self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
 
     def test_real_loader(self):

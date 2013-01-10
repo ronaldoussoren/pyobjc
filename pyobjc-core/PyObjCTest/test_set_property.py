@@ -222,19 +222,19 @@ class TestSetProperty (TestCase):
             o.aSet = {1,2,3}
 
             observer.register(o, 'aSet')
-            self.assertEquals(observer.seen, {})
+            self.assertEqual(observer.seen, {})
 
-            self.assertEquals(o.aSet - {2}, {1,3})
-            self.assertEquals(o.aSet, {1,2,3})
+            self.assertEqual(o.aSet - {2}, {1,3})
+            self.assertEqual(o.aSet, {1,2,3})
 
-            self.assertEquals(o.aSet | {4}, {1,2,3,4})
-            self.assertEquals(o.aSet, {1,2,3})
+            self.assertEqual(o.aSet | {4}, {1,2,3,4})
+            self.assertEqual(o.aSet, {1,2,3})
 
-            self.assertEquals(o.aSet & {3,4}, {3})
-            self.assertEquals(o.aSet, {1,2,3})
+            self.assertEqual(o.aSet & {3,4}, {3})
+            self.assertEqual(o.aSet, {1,2,3})
 
-            self.assertEquals(o.aSet ^ {3,4}, {1,2,4})
-            self.assertEquals(o.aSet, {1,2,3})
+            self.assertEqual(o.aSet ^ {3,4}, {1,2,4})
+            self.assertEqual(o.aSet, {1,2,3})
 
     def testInplace(self):
         # FIXME: the disabled lines in this test indicate a problem in 
