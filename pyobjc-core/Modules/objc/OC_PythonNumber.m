@@ -369,6 +369,39 @@
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
+	if (PyFloat_CheckExact(value)) {
+		/* Float is a C double and can be roundtripped using 
+		 * NSNumber.
+		 */
+		[super encodeWithCoder:coder];
+		return;
+
+#if PY_MAJOR_VERSION == 2
+	} else if (PyInt_CheckExact(value)) {
+		/* Int is a C double and can be roundtripped using 
+		 * NSNumber.
+		 */
+		[super encodeWithCoder:coder];
+		return;
+#endif
+	} else if (PyLong_CheckExact(value)) {
+		int use_super = 0;
+		PyObjC_BEGIN_WITH_GIL
+			/* Long object that fits in a long long */
+			(void)PyLong_AsLongLong(value);
+			if (PyErr_Occurred()) {
+				PyErr_Clear();
+				use_super = 0;
+			} else {
+				use_super = 1;
+			}
+		PyObjC_END_WITH_GIL
+
+		if (use_super) {
+			[super encodeWithCoder:coder];
+			return;
+		}
+	}
 	PyObjC_encodeWithCoder(value, coder);
 }
 
@@ -550,12 +583,39 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 -(Class)classForArchiver
 {
-	return [OC_PythonNumber class];
+	if (PyFloat_CheckExact(value)) {
+		/* Float is a C double and can be roundtripped using 
+		 * NSNumber.
+		 */
+		return [NSNumber class];
+
+#if PY_MAJOR_VERSION == 2
+	} else if (PyInt_CheckExact(value)) {
+		/* Int is a C double and can be roundtripped using 
+		 * NSNumber.
+		 */
+		return [NSNumber class];
+#endif
+	} else if (PyLong_CheckExact(value)) {
+		PyObjC_BEGIN_WITH_GIL
+			/* Long object that fits in a long long */
+			(void)PyLong_AsLongLong(value);
+			if (PyErr_Occurred()) {
+				PyErr_Clear();
+				PyObjC_GIL_RETURN([OC_PythonNumber class]);
+			} else {
+				PyObjC_GIL_RETURN([NSNumber class]);
+			}
+		PyObjC_END_WITH_GIL
+
+	} else {
+		return [OC_PythonNumber class];
+	}
 }
 
 -(Class)classForKeyedArchiver
 {
-	return [OC_PythonNumber class];
+	return [self classForArchiver];
 }
 
 +(Class)classForUnarchiver
@@ -570,12 +630,12 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 -(Class)classForCoder
 {
-	return [OC_PythonNumber class];
+	return [self classForArchiver];
 }
 
 -(Class)classForPortCoder
 {
-	return [OC_PythonNumber class];
+	return [self classForArchiver];
 }
 
 -(id)copy
