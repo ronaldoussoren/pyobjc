@@ -512,7 +512,7 @@ static PyObject* mapTypes = NULL;
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-	if (1 && PyDict_CheckExact(value)) {
+	if (PyDict_CheckExact(value)) {
 		if ([coder allowsKeyedCoding]) {
 			[coder encodeInt32:1 forKey:@"pytype"];
 		} else {
