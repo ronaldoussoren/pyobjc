@@ -132,7 +132,7 @@ object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject*
 
 /*
  * XXX: this might mess up reference counts if this is an array of objects,
- * but there's no rules about ownership in arbitrary arrays.
+ * but there are no clear rules about ownership in arbitrary arrays.
  */
 static int
 object__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* value)
@@ -305,6 +305,24 @@ PyDoc_STRVAR(object_doc,
 	"convertto a python tuple, or ``obj[index]`` to fetch a single item"
 );
 
+static PyObject* object_typestr_get(PyObject* self, void* closure __attribute__((__unused__)))
+{
+	return PyBytes_FromString(((PyObjC_VarList*)self)->tp);
+}
+
+
+static PyGetSetDef object_getset[] = {
+	{
+		"__typestr__",
+		object_typestr_get,
+		0,
+		"type encoding for elements of the array",
+		0
+	},
+	{ 0, 0, 0, 0, 0}
+};
+
+
 static PyMethodDef object_methods[] = {
         {
 		"as_tuple",
@@ -347,7 +365,7 @@ PyTypeObject PyObjC_VarList_Type = {
 	0,					/* tp_iternext */
 	object_methods,				/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	object_getset,				/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
@@ -374,11 +392,24 @@ PyObject*
 PyObjC_VarList_New(const char* tp, void* array)
 {
 	PyObjC_VarList* result;
+	char* end;
 
+	/* XXX: 'tp' should be a copy of just the first
+	 * element of the typestring. This block of code
+	 * copies too much data.
+	 * XXX: store the copy of 'tp' with the varlist object,
+	 * make memory management easier.
+	 */
 	tp  = PyObjCUtil_Strdup(tp);
 	if (tp == NULL) {
 		return NULL;
 	}
+	end = (char*)PyObjCRT_SkipTypeSpec(tp);
+	while (end > tp && isdigit(end[-1])) {
+		end --;
+	}
+	*end = '\0';
+
 	if (*tp == _C_VOID) {
 		*(char*)tp = _C_CHAR_AS_TEXT;
 	}

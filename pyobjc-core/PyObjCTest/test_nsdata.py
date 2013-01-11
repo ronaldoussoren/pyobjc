@@ -11,8 +11,10 @@ class TestNSDataSupport (TestCase):
 
         if sys.version_info[0] == 3:
             self.assertEqual(buf.bytes(), b"")
+        elif sys.version_info[:2] == (2, 7):
+            self.assertEqual(buf.bytes(), memoryview(b""))
         else:
-            self.assertEqual(buf.bytes(), buffer(b""))
+            self.assertEqual(buf.bytes(), bytes(b""))
 
 
     def no_testEmptyRwBuffer(self):

@@ -1144,6 +1144,7 @@ class TestVariableLengthValue (TestCase):
 
         v = o.unknownLengthArray()
         self.assertIsInstance(v, objc.varlist)
+        self.assertEqual(v.__typestr__, objc._C_INT)
 
         self.assertEqual(v[0], 1)
         self.assertEqual(v[1], 3)
