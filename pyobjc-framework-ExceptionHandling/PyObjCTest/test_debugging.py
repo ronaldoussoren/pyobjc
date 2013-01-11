@@ -39,11 +39,23 @@ class TestDebugging (TestCase):
         Debugging.removeExceptionHandler()
         self.assertFalse(Debugging.handlerInstalled())
 
+    def test_isPythonException(self):
+        try:
+            a = objc.lookUpClass('NSArray').array()
+            a.objectAtIndex_(42)
+        except Exception as exc:
+            self.assertFalse(Debugging.isPythonException(exc))
+
+        try:
+            a = []
+            a[42]
+
+        except Exception as exc:
+            self.assertTrue(Debugging.isPythonException(exc))
 
     @expectedFailure
     def testMisc(self):
         self.fail("Actually test this module")
-        # - isPythonException
         # - nsLogPythonException
         # - nsLogObjCException
         #
