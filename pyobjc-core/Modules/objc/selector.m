@@ -328,6 +328,13 @@ static PyGetSetDef base_getset[] = {
 		0
 	},
 	{ 
+		"__objclass__", 
+		base_class, 
+		0,
+		base_class_doc, 
+		0
+	},
+	{ 
 		"signature", 
 		base_signature, 
 		base_signature_setter,
@@ -1550,7 +1557,7 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	while (*cur == '_') {
 		cur++;
 	}
-
+ 
 	if (isupper(cur[0]) && isupper(cur[1]) && cur[2] == '_') {
 		cur += 3;
 	}
@@ -1558,9 +1565,12 @@ PyObjCSelector_DefaultSelector(const char* methname)
 	/* Replace all other underscores by colons */
 	cur = strchr(cur, '_');
 	while (cur != NULL) {
-		if (cur[1] == '_' && cur[2] && cur[2] != '_') {
+		if (cur[1] == '_' && cur[2] && cur[2] != '_' && cur[-1] != '_') {
 			/* Don't translate double underscores between
 			 * name elements.
+			 *
+			 * NOTE: cur[-1] is save because we've skipped leading
+			 * underscores earlier in this function.
 			 */
 			cur += 2;
 		} else {

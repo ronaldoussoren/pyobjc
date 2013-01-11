@@ -58,6 +58,12 @@ Version 3.0
 * NSMutableData.mutableBytes() raises an exception when the data object has a 0-sized buffer.
   (see also the previous bullet)
 
+* Add attribute *__objclass__* to :class:`objc.selector` instances as an alias for *definingClass*. The name
+  *__objclass__* is used by builtin method objects for the same purpose as *definingClass*. 
+  
+  The new attribute is needed to ensure that ``help(NSObject)`` works (although all methods are shown as
+  data descriptors, not methods)
+
 Version 2.6
 -----------
 
