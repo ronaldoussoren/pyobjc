@@ -2098,15 +2098,9 @@ PyObjC_MODULE_INIT(_objc)
 		PyObjC_INITERROR();
 	}
 
-#if 0
-	if (setup_class_meta() < 0) {
-		PyObjC_INITERROR();
-	}
-#else
 	if (PyType_Ready(&PyObjCMetaClass_Type) < 0) {
 		PyObjC_INITERROR();
 	}
-#endif
 	if (PyType_Ready(&PyObjCClass_Type) < 0) {
 		PyObjC_INITERROR();
 	}
@@ -2161,6 +2155,13 @@ PyObjC_MODULE_INIT(_objc)
 	PyObjCSuper_Type.tp_free = PySuper_Type.tp_free;
 	PyObjCSuper_Type.tp_traverse = PySuper_Type.tp_traverse;
 	if (PyType_Ready(&PyObjCSuper_Type) < 0) {
+		PyObjC_INITERROR();
+	}
+
+	if (PyObjC_setup_nsdata() < 0) {
+		PyObjC_INITERROR();
+	}
+	if (PyObjC_setup_nscoder() < 0) {
 		PyObjC_INITERROR();
 	}
 
@@ -2402,6 +2403,7 @@ PyObjC_MODULE_INIT(_objc)
 	if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
 		PyObjC_INITERROR();
 	}
+
 
 	PyEval_InitThreads();
 	if (![NSThread isMultiThreaded]) {

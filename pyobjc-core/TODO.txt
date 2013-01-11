@@ -27,9 +27,7 @@ Short term
 
   - convenience helpers for NSArray, NSData, NSDictionary, NSSet need to be in core
   - likewise for mutable versions
-  - likewise for their C helpers
-  - likewise for the C helper for NSCoding (and remove Modules/objc/coder-category.m
-    while doing that, needs change to Lib/objc/_pycoder as well)
+  - likewise for their C helpers (partially done for NSData)
 
 * Create and run performance tests to check if new code is faster than the 2.x branch
 

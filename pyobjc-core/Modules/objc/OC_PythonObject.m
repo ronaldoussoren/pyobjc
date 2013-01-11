@@ -1513,6 +1513,8 @@ static CFTypeID _NSObjectTypeID;
 void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 {
 	if (PyObjC_Encoder != NULL) {
+		NSException* exc = nil;
+
 		PyObjC_BEGIN_WITH_GIL
 			PyObject* cdr = PyObjC_IdToPython(coder);
 			if (cdr == NULL) {
@@ -1522,11 +1524,18 @@ void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
 			PyObject* r = PyObject_CallFunction(PyObjC_Encoder, "OO", pyObject, cdr);
 			Py_DECREF(cdr);
 			if (r == NULL) {
-            			PyObjC_GIL_FORWARD_EXC();
+				exc = PyObjCErr_AsExc();
+            			// PyObjC_GIL_FORWARD_EXC();
+
+			} else {
+				Py_DECREF(r);
 			}
-			Py_DECREF(r);
 
 		PyObjC_END_WITH_GIL
+
+		if (exc != nil) {
+			[exc raise];
+		}
 
 	} else {
 		[NSException raise:NSInvalidArgumentException

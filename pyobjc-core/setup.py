@@ -301,6 +301,7 @@ def _working_compiler(executable):
         p = subprocess.Popen([
             executable, '-c', fp.name] + cflags,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p.communicate()
         exit = p.wait()
         if exit != 0:
             return False
@@ -456,6 +457,8 @@ for k in vars: # XXX
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
 if not os.path.exists('/usr/include/objc/runtime.h'):
+    # XXX: fixme: this ^^^ should test for a header file in the location
+    #      that the compiler will use, which might not be here (Xcode 4.5, no unix tools)
     CFLAGS.append('-DNO_OBJC2_RUNTIME')
 
 # Force compilation with the local SDK, compilation of PyObC will result in

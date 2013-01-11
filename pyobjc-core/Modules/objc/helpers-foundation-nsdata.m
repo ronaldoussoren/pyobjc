@@ -1,3 +1,5 @@
+#include "pyobjc.h"
+
 static PyObject* call_NSData_bytes(
 	PyObject* method, PyObject* self, PyObject* arguments)
 {
@@ -11,9 +13,8 @@ static PyObject* call_NSData_bytes(
 	}
 
 	PyObjC_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+		objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 		bytes = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, 
 				PyObjCSelector_GetSelector(method));
@@ -32,6 +33,17 @@ static PyObject* call_NSData_bytes(
 #if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
 	result = PyBuffer_FromMemory((char*)bytes, bytes_len);
 #else
+
+#if PY_MAJOR_VERSION == 3
+	if (bytes == NULL) {
+		/* Creating a memory view with a NULL pointer will
+		 * fail in 3.4 (and possibly earlier), use a
+		 * bytes object instead.
+		 */
+		return PyBytes_FromStringAndSize("", 0);
+	}
+#endif
+
 	/* 2.7 or later: use a memory view */
 	Py_buffer info;
 	if (PyBuffer_FillInfo(&info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO) < 0) {
@@ -45,7 +57,7 @@ static PyObject* call_NSData_bytes(
 
 static void 
 imp_NSData_bytes(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp, 
 	void** args, 
 	void* callable)
@@ -132,9 +144,8 @@ call_NSMutableData_mutableBytes(
 	}
 
 	PyObjC_DURING
-		PyObjC_InitSuper(&super,
-			PyObjCSelector_GetClass(method),
-			PyObjCObject_GetObject(self));
+		objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+		objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 		bytes = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, 
 				PyObjCSelector_GetSelector(method));
@@ -153,6 +164,14 @@ call_NSMutableData_mutableBytes(
 	result = PyBuffer_FromReadWriteMemory((void*)bytes, bytes_len);
 
 #else
+	if (bytes == NULL) {
+		/* PyMemoryView doesn't like null pointers, and those
+		 * are nonsensical here anyway.
+		 */
+		PyErr_SetString(PyExc_ValueError, "NULL pointer in NSMutableData");
+		return NULL;
+	}
+
 	/* 2.7 or later: use a memory view */
 	Py_buffer info;
 	if (PyBuffer_FillInfo(&info, self, bytes, bytes_len, 0, PyBUF_FULL) < 0) {
@@ -166,7 +185,7 @@ call_NSMutableData_mutableBytes(
 
 static void
 imp_NSMutableData_mutableBytes(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp, 
 	void** args, 
 	void* callable)
@@ -223,7 +242,7 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static int setup_nsdata(PyObject* m __attribute__((__unused__)))
+int PyObjC_setup_nsdata(void)
 {
 	Class classNSData = objc_lookUpClass("NSData");
 	Class classNSMutableData = objc_lookUpClass("NSMutableData");

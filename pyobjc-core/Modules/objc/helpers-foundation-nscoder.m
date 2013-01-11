@@ -1,11 +1,4 @@
-
-#if PY_MAJOR_VERSION == 2
-#  define BYTES_ARG "s"
-
-#else
-#  define BYTES_ARG "y"
-
-#endif
+#include "pyobjc.h"
 
 static PyObject* 
 call_NSCoder_encodeValueOfObjCType_at_(
@@ -20,7 +13,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	Py_ssize_t typestr_len;
 
 	if  (
-		!PyArg_ParseTuple(arguments, BYTES_ARG "#O", &typestr, &typestr_len, &value)) {
+		!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
 		return NULL;
 	}
 
@@ -28,19 +21,20 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	if (size == -1) {
 		return NULL;
 	}
+
 	buf = PyMem_Malloc(size);
 	if (buf == NULL) {
 		PyErr_NoMemory();
 		return NULL;
 	}
 
-	err = PyObjC_PythonToObjC(typestr, value, buf);
+	err = depythonify_c_value(typestr, value, buf);
 	if (err == -1) {
 		PyMem_Free(buf);
 		return NULL;
 	}
 
-	PyObjC_DURING
+	NS_DURING
 		if (PyObjCIMP_Check(method)) {
 			((void(*)(id,SEL, char*,void*))
 				(PyObjCIMP_GetIMP(method)))(
@@ -48,17 +42,17 @@ call_NSCoder_encodeValueOfObjCType_at_(
 					PyObjCIMP_GetSelector(method),
 					typestr, buf);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			((void(*)(struct objc_super*,SEL,char*,void*))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
 					typestr, buf);
 		}
-	PyObjC_HANDLER
+	NS_HANDLER
 		PyObjCErr_FromObjC(localException);
-	PyObjC_ENDHANDLER
+
+	NS_ENDHANDLER
 
 	PyMem_Free(buf);
 
@@ -72,7 +66,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 
 static void 
 imp_NSCoder_encodeValueOfObjCType_at_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -102,7 +96,7 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 	if (v == NULL) goto error;
 	PyTuple_SetItem(arglist, 1, v);
 
-	v = PyObjC_ObjCToPython(typestr, buf);
+	v = pythonify_c_value(typestr, buf);
 	if (v == NULL) goto error;
 	PyTuple_SetItem(arglist, 2, v);
 
@@ -146,7 +140,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	struct objc_super super;
 	Py_ssize_t typestr_len;
 
-	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &value)) {
 		return NULL;
 	}
 
@@ -167,14 +161,17 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	}
 
 	value_len = PySequence_Size(value);
-	if (value_len > count) {
+	if (value_len == -1) {
+		PyMem_Free(buf);
+		return NULL;
+	} else if ((NSUInteger)value_len > count) {
 		PyMem_Free(buf);
 		PyErr_SetString(PyExc_ValueError, "Inconsistent arguments");
 		return NULL;
 	}
 
 	for (i = 0; i < count; i++) {
-		err = PyObjC_PythonToObjC(typestr, 
+		err = depythonify_c_value(typestr, 
 				PySequence_GetItem(value, i), 
 				((char*)buf) + (size * i));
 		if (err == -1) {
@@ -191,9 +188,8 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 					PyObjCIMP_GetSelector(method),
 					typestr, count, buf);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			((void(*)(struct objc_super*,SEL, char*, NSUInteger, void*))objc_msgSendSuper)(&super,
 					PyObjCSelector_GetSelector(method),
@@ -212,7 +208,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 
 static void 
 imp_NSCoder_encodeArrayOfObjCType_count_at_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -257,7 +253,7 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(
 	if (values == NULL) goto error;
 
 	for (i = 0; i < count; i++) {
-		v = PyObjC_ObjCToPython(typestr, ((char*)buf)+(i*size));
+		v = pythonify_c_value(typestr, ((char*)buf)+(i*size));
 		if (v == NULL) goto error;
 		PyTuple_SetItem(values, i, v);
 	}
@@ -299,7 +295,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
 	struct objc_super super;
 	PyObject* py_buf;
 
-	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#O", &typestr, &typestr_len, &py_buf)) {
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &py_buf)) {
 		return NULL;
 	}
 
@@ -326,9 +322,8 @@ call_NSCoder_decodeValueOfObjCType_at_(
 					PyObjCIMP_GetSelector(method),
 					typestr, buf);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			(void)objc_msgSendSuper(&super,
 					PyObjCSelector_GetSelector(method),
@@ -343,7 +338,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
 		return NULL;
 	}
 
-	value = PyObjC_ObjCToPython(typestr, buf);
+	value = pythonify_c_value(typestr, buf);
 	PyMem_Free(buf);
 	if (value == NULL) {
 		return NULL;
@@ -354,7 +349,7 @@ call_NSCoder_decodeValueOfObjCType_at_(
 
 static void 
 imp_NSCoder_decodeValueOfObjCType_at_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -390,7 +385,7 @@ imp_NSCoder_decodeValueOfObjCType_at_(
 	PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
 	if (result == NULL) goto error;
 
-	err = PyObjC_PythonToObjC(typestr, result, buf);
+	err = depythonify_c_value(typestr, result, buf);
 	Py_DECREF(result);
 	if (err == -1) goto error;
 
@@ -412,7 +407,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 {
 	char* typestr;
 	NSUInteger   count;
-	int   i;
+	NSUInteger   i;
 	PyObject* result;
 	PyObject* py_buf;
 	void*     buf;
@@ -420,7 +415,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	struct objc_super super;
 	Py_ssize_t typestr_len;
 
-	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &py_buf)) {
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#" Py_ARG_NSUInteger "O", &typestr, &typestr_len, &count, &py_buf)) {
 		return NULL;
 	}
 
@@ -447,9 +442,8 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 					PyObjCIMP_GetSelector(method),
 					typestr, count, buf);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method), 
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			((void(*)(struct objc_super*,SEL,char*,NSUInteger,void*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
@@ -471,7 +465,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		PyTuple_SetItem(result, i,  PyObjC_ObjCToPython(typestr, 
+		PyTuple_SetItem(result, i,  pythonify_c_value(typestr, 
 				((char*)buf) + (size * i)));
 		if (PyTuple_GetItem(result, i) == NULL) {
 			Py_DECREF(result);
@@ -486,7 +480,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 
 static void 
 imp_NSCoder_decodeArrayOfObjCType_count_at_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -547,7 +541,7 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
 	}
 
 	for (i = 0; i < count; i++) {
-		res = PyObjC_PythonToObjC(typestr, 
+		res = depythonify_c_value(typestr, 
 			PySequence_Fast_GET_ITEM(seq, i),
 			((char*)buf)+(i*size));
 		if (res == -1) goto error;
@@ -575,7 +569,7 @@ call_NSCoder_encodeBytes_length_(
 
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, BYTES_ARG"#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
 		return NULL;
 	}
 
@@ -593,9 +587,8 @@ call_NSCoder_encodeBytes_length_(
 					PyObjCIMP_GetSelector(method),
 					bytes, length);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			((void(*)(struct objc_super*,SEL,void*,NSUInteger))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
@@ -613,7 +606,7 @@ call_NSCoder_encodeBytes_length_(
 
 static void 
 imp_NSCoder_encodeBytes_length_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -696,9 +689,8 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 					PyObjCIMP_GetSelector(method),
 					&size);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			bytes = ((void*(*)(struct objc_super*,SEL,NSUInteger*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
@@ -722,7 +714,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 		PyTuple_SetItem(result, 0, Py_None);
 		Py_INCREF(Py_None);
 
-		v = PyObjC_ObjCToPython(@encode(unsigned), &size);
+		v = pythonify_c_value(@encode(unsigned), &size);
 		if (v == NULL) {
 			Py_DECREF(result);
 			return NULL;
@@ -744,7 +736,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 
 	PyTuple_SetItem(result, 0, v);
 
-	v = PyObjC_ObjCToPython(@encode(unsigned), &size);
+	v = pythonify_c_value(@encode(unsigned), &size);
 	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
@@ -756,7 +748,7 @@ call_NSCoder_decodeBytesWithReturnedLength_(
 
 static void 
 imp_NSCoder_decodeBytesWithReturnedLength_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp, 
 	void** args, 
 	void* callable)
@@ -803,13 +795,13 @@ imp_NSCoder_decodeBytesWithReturnedLength_(
 		goto error;
 	}
 	
-	if (PyObjC_PythonToObjC(@encode(NSUInteger), 
+	if (depythonify_c_value(@encode(NSUInteger), 
 			PyTuple_GetItem(result, 1), &len) < 0) {
 		Py_DECREF(result);
 		goto error;
 	}
 
-	if (len < buflen) {
+	if (len < (NSUInteger)buflen) {
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
@@ -865,9 +857,8 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 					PyObjCIMP_GetSelector(method),
 					key, (NSUInteger *)&size);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			bytes = ((void*(*)(struct objc_super*,SEL,id,NSUInteger*))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
@@ -892,7 +883,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 		PyTuple_SetItem(result, 0, Py_None);
 		Py_INCREF(Py_None);
 
-		v = PyObjC_ObjCToPython(@encode(unsigned), &size);
+		v = pythonify_c_value(@encode(unsigned), &size);
 		if (v == NULL) {
 			Py_DECREF(result);
 			return NULL;
@@ -914,7 +905,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 
 	PyTuple_SetItem(result, 0, v);
 
-	v = PyObjC_ObjCToPython(@encode(NSUInteger), &size);
+	v = pythonify_c_value(@encode(NSUInteger), &size);
 	if (v == NULL) {
 		Py_DECREF(result);
 		return NULL;
@@ -926,7 +917,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
 
 static void 
 imp_NSCoder_decodeBytesForKey_returnedLength_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp, 
 	void** args, 
 	void* callable)
@@ -978,13 +969,13 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(
 		goto error;
 	}
 	
-	if (PyObjC_PythonToObjC(@encode(NSUInteger), 
+	if (depythonify_c_value(@encode(NSUInteger), 
 			PyTuple_GetItem(result, 1), &len) < 0) {
 		Py_DECREF(result);
 		goto error;
 	}
 
-	if (len < buflen) {
+	if (len < (NSUInteger)buflen) {
 		Py_DECREF(result);
 		PyErr_SetString(PyExc_ValueError, 
 			"Should return (bytes, length)");
@@ -1021,7 +1012,7 @@ call_NSCoder_encodeBytes_length_forKey_(
 	id     		key;
 	struct objc_super super;
 
-	if  (!PyArg_ParseTuple(arguments, BYTES_ARG "#O&", &bytes, &size, 
+	if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size, 
 			PyObjCObject_Convert, &key)) {
 		return NULL;
 	}
@@ -1034,9 +1025,8 @@ call_NSCoder_encodeBytes_length_forKey_(
 					PyObjCIMP_GetSelector(method),
 					bytes, size, key);
 		} else {
-			PyObjC_InitSuper(&super, 
-				PyObjCSelector_GetClass(method),
-				PyObjCObject_GetObject(self));
+			objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+			objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 			((void(*)(struct objc_super*, SEL, void*, NSUInteger, id))objc_msgSendSuper)(&super,
 				PyObjCSelector_GetSelector(method),
@@ -1054,7 +1044,7 @@ call_NSCoder_encodeBytes_length_forKey_(
 
 static void 
 imp_NSCoder_encodeBytes_length_forKey_(
-	void* cif __attribute__((__unused__)), 
+	ffi_cif* cif __attribute__((__unused__)), 
 	void* resp __attribute__((__unused__)), 
 	void** args, 
 	void* callable)
@@ -1115,7 +1105,7 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static int setup_nscoder(PyObject* m __attribute__((__unused__)))
+int PyObjC_setup_nscoder(void)
 {
 	Class classNSCoder = objc_lookUpClass("NSCoder");
   

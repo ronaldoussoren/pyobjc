@@ -158,6 +158,7 @@ int PyObjCAPI_Register(PyObject* module);
 #include "corefoundation.h"
 #include "closure_pool.h"
 #include "block_support.h"
+#include "helpers.h"
 
 extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
 

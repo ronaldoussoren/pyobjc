@@ -3886,11 +3886,10 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		PyObjCErr_FromObjC(localException);
 
 	PyObjC_ENDHANDLER
-#if 1
+	
 	if (isUninitialized && PyObjCObject_Check(self)) {
 		((PyObjCObject*)self)->flags  |= PyObjCObject_kUNINITIALIZED;
 	}
-#endif
 
 	if (PyErr_Occurred()) goto error_cleanup;
 

@@ -194,7 +194,6 @@ PyDoc_STRVAR(class_doc,
 
 PyObject* PyObjC_ClassExtender = NULL;
 
-static int add_class_fields(Class objc_class, PyObject* py_class, PyObject* dict, PyObject* classDict); 
 static int add_convenience_methods(Class cls, PyObject* type_dict);
 static int update_convenience_methods(PyObject* cls);
 
@@ -1049,17 +1048,6 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 
 		if (info->generation != PyObjC_MappingCount) {
 			int r;
-
-			r = add_class_fields(
-				info->class,
-				cls,
-				((PyTypeObject*)cls)->tp_dict,
-				Py_TYPE(cls)->tp_dict);
-			if (r < 0) {
-				PyErr_SetString(PyExc_RuntimeError,
-					"Cannot rescan method table");
-				return;
-			}
 			info->generation = PyObjC_MappingCount;
 
 			r =  update_convenience_methods(cls);
@@ -1201,7 +1189,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	/* See function of same name in objc-object.m for an explanation */
 {
 	Py_ssize_t i, n;
-	PyObject *mro, *base, *dict;
+	PyObject *mro, *base;
 	PyObject *descr = NULL;
 	PyObject* res;
 
@@ -1478,7 +1466,7 @@ class_getattro(PyObject* self, PyObject* name)
 
 
 	if (descr == NULL) {
-		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyObject*)self, name, bytes);
+		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name, bytes);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -2132,135 +2120,6 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 		cur = strchr(cur, ':');
 	}
 	return buf;
-}
-
-/*
- * Add methods and descriptors for the instance variables to the dict.
- *
- * Add only the items for this specific class, the items from the super-class
- * are found through inheritance.
- *
- * We add instance methods, class methods and instance variables in that 
- * order, methods always override variables (most classes provide accessor
- * methods with the same name as the variables and this order is the least
- * surprising)
- */
-static int
-add_class_fields(Class objc_class, PyObject* py_class, PyObject* dict, PyObject* classDict)
-{
-#if 0
-	Class     cls;
-	Method*   methods;
-	unsigned int method_count, i;
-	PyObject* descr;
-	char      selbuf[1024];
-#endif
-
-	if (objc_class == NULL) return 0;
-
-
-#if 0
-	/*
-	 * First add instance methods
-	 */
-
-	methods = class_copyMethodList(objc_class, &method_count);
-	for (i = 0; i < method_count; i++) {
-		char* name;
-		PyObject* curItem;
-
-		/* Check if the selector should be hidden */
-		if (PyObjCClass_HiddenSelector(py_class, 
-					method_getName(methods[i]), NO)) {
-			continue;
-		}
-
-
-		name = (char*)PyObjC_SELToPythonName(
-					method_getName(methods[i]), 
-					selbuf, 
-					sizeof(selbuf));
-		if (name == NULL) continue;
-
-		curItem = PyDict_GetItemString(dict, name);
-		if (curItem == NULL) {
-			PyErr_Clear();
-		} else if (!PyObjCNativeSelector_Check(curItem)) {
-			continue;
-		}
-
-		descr = PyObjCSelector_NewNative(
-				objc_class,
-				method_getName(methods[i]),
-				method_getTypeEncoding(methods[i]),
-				NO);
-
-		if (PyDict_SetItemString(
-				dict, 
-				name,
-				descr) != 0) {
-
-			Py_DECREF(descr); 
-			free(methods);
-			return -1;
-		}
-		Py_DECREF(descr); 
-	}
-	free(methods);
-#endif
-
-
-#if 0 
-	/* 
-	 * Then add class methods
-	 */
-
-
-	cls = object_getClass(objc_class);
-	methods = class_copyMethodList(cls, &method_count);
-	for (i = 0; i < method_count; i++) {
-		PyObject* curItem;
-		char* name;
-
-		dict = classDict;
-
-		/* Check if the selector should be hidden */
-		if (PyObjCClass_HiddenSelector(py_class, 
-					method_getName(methods[i]), YES)) {
-			continue;
-		}
-
-		name = PyObjC_SELToPythonName(
-			method_getName(methods[i]), 
-			selbuf, 
-			sizeof(selbuf));
-		if (name == NULL) continue;
-
-		curItem = PyDict_GetItemString(dict, name);
-		if (curItem == NULL) {
-		} else if (!PyObjCNativeSelector_Check(curItem)) {
-			continue;
-		}
-
-		descr = PyObjCSelector_NewNative(
-			objc_class,
-			method_getName(methods[i]),
-			method_getTypeEncoding(methods[i]),
-			YES);
-
-		if (PyDict_SetItemString(dict, 
-				selbuf,
-				descr) != 0) {
-			Py_DECREF(descr);
-			free(methods);
-			return -1;
-		}
-		Py_DECREF(descr);
-	}
-	free(methods);
-#endif
-
-	return  0;
 }
 
 /*

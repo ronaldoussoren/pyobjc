@@ -107,26 +107,26 @@ def _setup_conveniences():
         value = self.firstIndex()
         while value != NSNotFound:
             yield value
-            value = self.indexGreaterThanIndex(value)
+            value = self.indexGreaterThanIndex_(value)
 
     def indexset_reversed(self):
         value = self.lastIndex()
         while value != NSNotFound:
             yield value
-            value = self.indexLessThanIndex(value)
+            value = self.indexLessThanIndex_(value)
 
     NSIndexSet = objc.lookUpClass('NSIndexSet')
     def indexset_eq(self, other):
         if not isinstance(other, NSIndexSet):
             return False
 
-        return self.isEqualToIndexSet(other)
+        return self.isEqualToIndexSet_(other)
 
     def indexset_ne(self, other):
         if not isinstance(other, NSIndexSet):
             return True
 
-        return not self.isEqualToIndexSet(other)
+        return not self.isEqualToIndexSet_(other)
 
     def indexset_contains(self, value):
         try:

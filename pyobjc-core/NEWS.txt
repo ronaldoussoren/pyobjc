@@ -52,6 +52,11 @@ Version 3.0
   check if two method objects are the same using 'sel1 == sel2'. This works both for bound
   and unbound selectors.
 
+* NSData.bytes() could raise an exception on some version of Python 3 when the data object is empty.
+  The function now returns an empty bytes object instead.
+
+* NSMutableData.mutableBytes() raises an exception when the data object has a 0-sized buffer.
+  (see also the previous bullet)
 
 Version 2.6
 -----------

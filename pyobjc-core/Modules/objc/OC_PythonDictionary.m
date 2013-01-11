@@ -171,6 +171,9 @@ static PyObject* mapTypes = NULL;
 -(NSUInteger)count
 {
 	Py_ssize_t result;
+	if (value == NULL) {
+		return 0;
+	}
 
 	PyObjC_BEGIN_WITH_GIL
 		if (likely(PyDict_CheckExact(value))) {
@@ -205,6 +208,10 @@ static PyObject* mapTypes = NULL;
 	PyObject* v;
 	PyObject* k;
 	id result;
+
+	if (value == NULL) {
+		return nil;
+	}
 
 	PyObjC_BEGIN_WITH_GIL
 
@@ -351,6 +358,10 @@ static PyObject* mapTypes = NULL;
 
 -(NSEnumerator *)keyEnumerator
 {
+	if (value == NULL) {
+		return nil;
+	}
+
 	if (PyDict_CheckExact(value)) {
 		return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 	} else {
@@ -407,6 +418,18 @@ static PyObject* mapTypes = NULL;
 				if (k == NULL) {
 					PyObjC_GIL_FORWARD_EXC();
 				}
+#if PY_MAJOR_VERSION == 3
+				if (PyObjCUnicode_Check(k)) {
+					PyObject* k2 = PyObject_Str(k);
+					if (k2 == NULL) {
+						Py_DECREF(k);
+						PyObjC_GIL_FORWARD_EXC();
+					}
+					PyUnicode_InternInPlace(&k2);
+					Py_DECREF(k);
+					k = k2;
+				}
+#endif
 			}
 
 			r = PyDict_SetItem(value, k, v);

@@ -258,7 +258,6 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
-	PyObject* protDict;
 	PyObject* res;
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
 
@@ -284,7 +283,6 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 #if PY_MAJOR_VERSION == 2
 		} else if (PyClass_Check(base)) {
 			dict = ((PyClassObject*)base)->cl_dict;
-			protDict = NULL;
 #endif
 		} else {
 			return NULL;
@@ -332,9 +330,8 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 	 */
 {
 	Py_ssize_t i, n;
-	PyObject *mro, *base, *dict;
+	PyObject *mro, *base;
 	PyObject *descr = NULL;
-	PyObject* protDict;
 	PyObject* res;
 	char selbuf[2048];
 	char* sel_name;
@@ -1122,7 +1119,7 @@ PyObjCClassObject PyObjCObject_Type = {
 
 
 #endif /* Python 3 */
-   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   }, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
 /*

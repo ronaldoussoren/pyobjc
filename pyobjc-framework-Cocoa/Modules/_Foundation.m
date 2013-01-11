@@ -10,9 +10,7 @@
 
 #include "_Foundation_NSDecimal.m"
 #include "_Foundation_NSInvocation.m"
-#include "_Foundation_data.m"
 #include "_Foundation_netservice.m"
-#include "_Foundation_nscoder.m"
 #include "_Foundation_string.m"
 #include "_Foundation_typecode.m"
 
@@ -35,9 +33,7 @@ PyObjC_MODULE_INIT(_Foundation)
 
 	if (setup_nsdecimal(m) == -1) PyObjC_INITERROR();
 	if (setup_nsinvocation(m) == -1) PyObjC_INITERROR();
-	if (setup_nsdata(m) == -1) PyObjC_INITERROR();
 	if (setup_nsnetservice(m) == -1) PyObjC_INITERROR();
-	if (setup_nscoder(m) == -1) PyObjC_INITERROR();
 	if (setup_nssstring(m) == -1) PyObjC_INITERROR();
 
 	PyObjC_INITDONE();
