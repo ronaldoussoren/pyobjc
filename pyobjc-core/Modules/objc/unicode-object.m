@@ -67,7 +67,7 @@ meth_getattro(PyObject *o, PyObject *attr_name)
 	if (res == NULL) {
 		PyErr_Clear();
 		PyObject *py_nsstr = meth_nsstring(o);
-		res = PyObject_GenericGetAttr(py_nsstr, attr_name);
+		res = PyObject_GetAttr(py_nsstr, attr_name);
 		Py_XDECREF(py_nsstr);
 	}
 	return res;

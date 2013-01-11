@@ -462,20 +462,23 @@
 
 -(void)encodeWithCoder:(NSCoder*)coder
 {
+	int is_exact_unicode;
 	PyObjC_BEGIN_WITH_GIL
-		if (PyUnicode_CheckExact(value)) {
-			[super encodeWithCoder:coder];
-		} else {
-			if ([coder allowsKeyedCoding]) {
-				[coder encodeInt32:2 forKey:@"pytype"];
-			} else {
-				int v = 2;
-				[coder encodeValueOfObjCType:@encode(int) at:&v];
-			}
-
-			PyObjC_encodeWithCoder(value, coder);
-		}
+		is_exact_unicode = PyUnicode_CheckExact(value);
 	PyObjC_END_WITH_GIL
+
+	if (is_exact_unicode) {
+		[super encodeWithCoder:coder];
+	} else {
+		if ([coder allowsKeyedCoding]) {
+			[coder encodeInt32:2 forKey:@"pytype"];
+		} else {
+			int v = 2;
+			[coder encodeValueOfObjCType:@encode(int) at:&v];
+		}
+
+		PyObjC_encodeWithCoder(value, coder);
+	}
 }
 
 -(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver 
@@ -510,13 +513,16 @@
  */
 -(Class)classForArchiver
 {
+	Class result;
 	PyObjC_BEGIN_WITH_GIL
 		if (PyUnicode_CheckExact(value)) {
-			PyObjC_GIL_RETURN([NSString class]);
+			result = [NSString class];
 		} else {
-			PyObjC_GIL_RETURN([OC_PythonUnicode class]);
+			result = [OC_PythonUnicode class];
 		}
 	PyObjC_END_WITH_GIL
+
+	return result;
 }
 
 -(Class)classForKeyedArchiver
