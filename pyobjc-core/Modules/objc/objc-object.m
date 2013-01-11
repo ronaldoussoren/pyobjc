@@ -405,6 +405,7 @@ PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 	PyObject* dict = ((PyTypeObject *)base)->tp_dict;
 	Method m = class_getInstanceMethod(cls, sel);
 	if (m) {
+#ifndef PyObjC_FAST_BUT_INEXACT
 		int use = 1;
 		Class sup = class_getSuperclass(cls);
 		if (sup) {
@@ -414,6 +415,7 @@ PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 			}
 		}
 		if (!use) return NULL;
+#endif
 
 		/* Create (unbound) selector */
 		PyObject* result = PyObjCSelector_NewNative(

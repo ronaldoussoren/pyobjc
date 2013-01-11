@@ -1265,6 +1265,7 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 	}
 
 	if (m) {
+#ifndef PyObjC_FAST_BUT_INEXACT
 		int use = 1;
 		Class sup = class_getSuperclass(cls);
 		if (sup) {
@@ -1276,6 +1277,7 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 		if (!use) {
 			return NULL;
 		}
+#endif
 
 		/* Create (unbound) selector */
 		PyObject* result = PyObjCSelector_NewNative(
@@ -1354,6 +1356,7 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 			PyObjC_ENDHANDLER
 
 			if (m) {
+#ifndef PyObjC_FAST_BUT_INEXACT
 				int use = 1;
 				Class sup = class_getSuperclass(cls);
 				if (sup) {
@@ -1363,6 +1366,7 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 					}
 				}
 				if (!use) continue;
+#endif
 
 				/* Create (unbound) selector */
 				PyObject* result = PyObjCSelector_NewNative(

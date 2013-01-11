@@ -434,6 +434,7 @@ CFLAGS.extend([
     "-Wno-import",
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, get_os_level().split('.')))),
     "-fvisibility=hidden",
+    "-fcatch-undefined-behavior", #XXX
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
     ])
 
@@ -448,10 +449,10 @@ if '-O0' in get_config_var('CFLAGS'):
         if isinstance(vars[k], str) and '-O0' in vars[k]:
             vars[k] = vars[k].replace('-O0', '-O1')
 
-vars = get_config_vars()
-for k in vars: # XXX
-    if isinstance(vars[k], str) and '-O2' in vars[k]:
-        vars[k] = vars[k].replace('-O2', '-O1')
+#vars = get_config_vars()
+#for k in vars: # XXX
+#    if isinstance(vars[k], str) and '-O2' in vars[k]:
+#        vars[k] = vars[k].replace('-O2', '-O4')
 
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')

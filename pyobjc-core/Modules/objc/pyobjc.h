@@ -51,6 +51,18 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 /* PyObjC_ERROR_ABORT: If defined an internal error will result in an abort() */
 #define	PyObjC_ERROR_ABORT 1
 
+/* PyObjC_FAST_BUT_INEXACT: If defined the method lookup will add a selector
+ * to the __dict__ of the class of the object that you looked up the selector,
+ * when it it is not defined the selector is added to the dict of the class that
+ * actually defines the method.
+ *
+ * The latter is slightly more correct when using objc.super on arbitrary classes,
+ * but does result in more calls to the objc runtime and appears to be slower.
+ *
+ * NOTE: Option is present for performance testing.
+ */
+#define PyObjC_FAST_BUT_INEXACT 1
+
 
 #include <objc/objc-runtime.h>
 #include <objc/objc.h>

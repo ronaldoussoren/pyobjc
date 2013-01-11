@@ -554,7 +554,8 @@ Types
 
    Instances of :class:`ivar` have a number of attributes that help with introspection:
    
-   * *__typestr__*: The type encoding of the Objective-C type of the variable
+   * *__typestr__*: The type encoding of the Objective-C type of the variable. See
+     :ref:`type-encodings` for more information.
 
    * *__name__*: The Objective-C name of the variable
 
@@ -664,6 +665,11 @@ Types
       wrapped C array.  Read the Apple documentation for APIs that return a varlist to
       determine how many elements you can safely access.
 
+   .. data:: __typestr__
+
+      The type encoding for elements of the array. See :ref:`type-encodings` for more
+      information.
+
    .. method:: as_tuple(count)
 
       Returns a tuple containing the first *count* elements of the array.
@@ -678,6 +684,17 @@ Types
       Sets the value of the *index*-th element of the array. Supports numeric
       indexes as well as slices (but assigning to a slice is only possible when
       that does not resize the array).
+
+      .. warning::
+
+         When underlying data type is :data:`objc._C_ID` (that is, an array of Cocoa
+         objects it is very likely that the retain count of the object needs to be
+         adjusted. The :meth:`__setitem__` method stores a reference to the object 
+         *without* adjusting any reference counts.
+
+         The correct behavior depends on the kind of array used, when the array is
+         documented as containing strong references you should increase the retain count
+         of the new value and lower the retain of the old value (in that order).
 
 
 .. class:: function
@@ -800,6 +817,7 @@ Constants
    This always has the value "MACOSX".
 
 
+.. _type-encodings:
 
 Objective-C type strings
 ------------------------
