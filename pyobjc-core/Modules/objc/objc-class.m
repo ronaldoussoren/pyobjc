@@ -1228,10 +1228,10 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 						selbuf,
 						sizeof(selbuf));
 			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
-				free(methods);
 				/* Create (unbound) selector */
 				descr = PyObjCSelector_NewNative(
 						cls, method_getName(m), method_getTypeEncoding(m), 1);
+				free(methods);
 				if (descr == NULL) {
 					return NULL;
 				}
@@ -1339,7 +1339,6 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 			return descr;
 		}
 
-		/*if (PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {*/
 		if (PyObjCClass_Check(base)) {
 			/*Class cls = objc_metaclass_locate(base);*/
 			Class cls = PyObjCClass_GetClass(base);
@@ -1387,6 +1386,72 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 				return result;
 			}
 		}
+	}
+
+	return descr;
+}
+
+static inline PyObject*
+_type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+{
+	Py_ssize_t i, n;
+	PyObject *mro, *base;
+	PyObject *descr = NULL;
+	PyObject* res;
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+
+	/* Look in tp_dict of types in MRO */
+	mro = tp->tp_mro;
+	if (mro == NULL) {
+		return NULL;
+	}
+	res = NULL;
+	assert(PyTuple_Check(mro));
+	n = PyTuple_GET_SIZE(mro);
+	for (i = 0; i < n; i++) {
+		Class     cls;
+		Method*   methods;
+		unsigned int method_count, j;
+		char      selbuf[2048];
+		char*     sel_name;
+
+		base = PyTuple_GET_ITEM(mro, i);
+		if (!PyObjCClass_Check(base)) {
+			continue;
+		}
+
+		cls = PyObjCClass_GetClass(base);
+		methods = class_copyMethodList(cls, &method_count);
+		for (j = 0; j < method_count; j++) {
+			Method m = methods[j];
+
+			sel_name = (char*)PyObjC_SELToPythonName(
+						method_getName(m),
+						selbuf,
+						sizeof(selbuf));
+
+			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+				/* Create (unbound) selector */
+				PyObject* result = PyObjCSelector_NewNative(
+						cls, sel, method_getTypeEncoding(m), 0);
+				free(methods);
+				if (result == NULL) {
+					return NULL;
+				}
+
+
+				/* add to __dict__ 'cache' */
+				if (PyDict_SetItem(class_dict, name, result) == -1) {
+					Py_DECREF(result);
+					return NULL;
+				}
+				
+				/* and return, as a borrowed reference */
+				Py_DECREF(result);
+				return result;
+			}
+		}
+		free(methods);
 	}
 
 	return descr;
@@ -1494,6 +1559,17 @@ class_getattro(PyObject* self, PyObject* name)
 		 *      instance methods accessed through the class anyway?
 		 */
 		descr = _type_lookup_harder(Py_TYPE(self), name, bytes);
+		if (descr != NULL 
+#if PY_MAJOR_VERSION == 2
+			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
+#endif
+		    ) {
+			f = Py_TYPE(descr)->tp_descr_get;
+		}
+	}
+
+	if (descr == NULL) {
+		descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name, bytes);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
