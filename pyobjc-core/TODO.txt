@@ -11,6 +11,9 @@ Short term
 
   - test_methodlookup might not yet test all relevant code paths
 
+* help(NSObject) doesn't work at the moment, likely due to the change in handling of some
+  selectos with underscores in them.
+
 * Code cleanup for the new C code, I've done too much copy&paste editing
   while getting the new code to work properly.
 
@@ -47,12 +50,13 @@ Short term
 * Issue #35: Lib/objc/_pycoder.py contains some dead code, verify that the code is 
   actually dead and then remove.
 
-* Attribute lookup converst name to bytestring and that to a SEL. For python 3.3 we can
+* Attribute lookup converts name to bytestring and that to a SEL. For python 3.3 we can
   shortcut this: selectors must be all ascii, hence we could just check that the unicode
   object has the ascii representation and then directly access the UCS1 buffer instead
   of converting to a bytes object first. This should slightly improve performance.
 
-* -O4 crashes (py2.7), not tested with default branch yet.
+* -O4 crashes (py2.7), but works fine on 'default' branch.
+
 
 Medium term
 -----------
