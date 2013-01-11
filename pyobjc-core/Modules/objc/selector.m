@@ -265,6 +265,18 @@ base_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 	return PyBytes_FromString(sel_getName(self->sel_selector));
 }
 
+PyDoc_STRVAR(base_name_doc, "Name for the method");
+static PyObject*
+base_name(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	PyObjCSelector* self = (PyObjCSelector*)_self;
+#if PY_MAJOR_VERSION == 2
+	return PyString_FromString(sel_getName(self->sel_selector));
+#else
+	return PyUnicode_FromString(sel_getName(self->sel_selector));
+#endif
+}
+
 PyDoc_STRVAR(base_class_doc, "Objective-C Class that defines the method");
 static PyObject*
 base_class(PyObject* _self, void* closure __attribute__((__unused__)))
@@ -294,7 +306,6 @@ base_required(PyObject* _self, void* closure __attribute__((__unused__)))
 	PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
 	return PyBool_FromLong(0 != (self->sel_flags & PyObjCSelector_kREQUIRED));
 }
-
 
 
 
@@ -364,9 +375,9 @@ static PyGetSetDef base_getset[] = {
 	},
 	{ 
 		"__name__",  
-		base_selector, 
+		base_name, 
 		0, 
-		base_selector_doc,
+		base_name_doc,
 		0
 	},
 	{ 0, 0, 0, 0, 0 }
@@ -394,6 +405,10 @@ sel_dealloc(PyObject* object)
 	Py_TYPE(object)->tp_free(object);
 }
 
+#if 0
+/* This isn't needed and causes selectors to be classified as *data* instead 
+ * of *method* selectors.
+ */
 static int
 base_descr_set(
 		PyObject* self __attribute__((__unused__)), 
@@ -407,6 +422,7 @@ base_descr_set(
 	}
 	return -1;
 }
+#endif
 
 
 PyDoc_STRVAR(base_selector_type_doc,
@@ -488,7 +504,12 @@ PyTypeObject PyObjCSelector_Type = {
 	0,					/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
+#if 0
+	/* See above */
 	base_descr_set,				/* tp_descr_set */
+#else
+	0, 					/* tp_descr_set */
+#endif
 	0,					/* tp_dictoffset */
 	0,					/* tp_init */
 	0,					/* tp_alloc */
@@ -766,6 +787,36 @@ objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
 	return (PyObject*)result;
 }
 
+PyDoc_STRVAR(objcsel_docstring_doc, "The document string for a method");
+static PyObject*
+objcsel_docstring(PyObject* _self, void* closure __attribute__((__unused__)))
+{
+	/* XXX: Place holder descriptor for getting some documentation
+	 *
+	 * Need to replace this by code that generates some minimal documentation
+	 * (number argument, exepcted argument types, ...)
+	 */
+	PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
+	PyObject* info = PyObjCMethodSignature_AsDict(self->sel_methinfo);
+	PyObject* doc;
+	if (info == NULL) {
+		return NULL;
+	}
+	doc = PyObject_Repr(info);
+	Py_DECREF(info);
+	return doc;
+}
+
+static PyGetSetDef objcsel_getset[] = {
+	{
+		"__doc__",
+		objcsel_docstring,
+		0,
+		objcsel_docstring_doc,
+		0
+	},
+	{ 0, 0, 0, 0, 0 }
+};
 
 
 PyTypeObject PyObjCNativeSelector_Type = {
@@ -799,7 +850,7 @@ PyTypeObject PyObjCNativeSelector_Type = {
 	0,					/* tp_iternext */
 	0,					/* tp_methods */
 	0,					/* tp_members */
-	0,					/* tp_getset */
+	objcsel_getset,				/* tp_getset */
 	&PyObjCSelector_Type,			/* tp_base */
 	0,					/* tp_dict */
 	objcsel_descr_get,			/* tp_descr_get */

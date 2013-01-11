@@ -64,6 +64,15 @@ Version 3.0
   The new attribute is needed to ensure that ``help(NSObject)`` works (although all methods are shown as
   data descriptors, not methods)
 
+* :class`objc.selector` no longer implements *__set__*, which means it is now classified as a method
+  descriptor by the :mod:`inspec` module, which gives nicer output in :mod:`pydoc`.
+
+  This doesn't change any functionality beyond that, it is still possible to overwrite methods and not
+  possible to delete them.
+
+* :class:`objc.native_selector` now has a (minimal) docstring with informationn about the native
+  selector. This makes :func:`help <pydoc.help>` for Cocoa classes more usefull.
+
 Version 2.6
 -----------
 
