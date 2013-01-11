@@ -1179,8 +1179,6 @@ PyObjC_MakeStructType(
 		}
 	}
 
-	/* XXX: Add _fields to tp_dict (NamedTuple interface */
-
 	result->pack = pack;
 
 	if (PyType_Ready((PyTypeObject*)result) == -1) {
@@ -1388,8 +1386,6 @@ PyObjC_RegisterStructType(
 	if (pack != -1) {
 		/* Store custom struct packing as an attribute of the type
 		 * object, to be able to  fetch it when depythonifying the object.
-		 *
-		 * XXX: Need a cleaner method for doing this.
 		 */
 		v = Py_BuildValue(Py_ARG_SIZE_T, pack);
 		if (v == NULL) {
