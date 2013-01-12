@@ -788,29 +788,10 @@ objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
 }
 
 PyDoc_STRVAR(objcsel_docstring_doc, "The document string for a method");
-static PyObject*
-objcsel_docstring(PyObject* _self, void* closure __attribute__((__unused__)))
-{
-	/* XXX: Place holder descriptor for getting some documentation
-	 *
-	 * Need to replace this by code that generates some minimal documentation
-	 * (number argument, exepcted argument types, ...)
-	 */
-	PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
-	PyObject* info = PyObjCMethodSignature_AsDict(self->sel_methinfo);
-	PyObject* doc;
-	if (info == NULL) {
-		return NULL;
-	}
-	doc = PyObject_Repr(info);
-	Py_DECREF(info);
-	return doc;
-}
-
 static PyGetSetDef objcsel_getset[] = {
 	{
 		"__doc__",
-		objcsel_docstring,
+		PyObjC_callable_docstr_get,
 		0,
 		objcsel_docstring_doc,
 		0

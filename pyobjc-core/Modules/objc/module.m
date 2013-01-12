@@ -1887,6 +1887,29 @@ static char* keywords[] = { "name", "type", "magic", NULL };
 }
 
 
+static PyObject* callable_doc_function = NULL;
+
+PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__unused__)))
+
+{
+	if (callable_doc_function == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+	return PyObject_CallFunction(callable_doc_function, "O", callable);
+}
+
+static PyObject* 
+set_callable_doc(PyObject* mod __attribute__((__unused__)), PyObject* hook)
+{
+	Py_INCREF(hook);
+	Py_XDECREF(callable_doc_function);
+	callable_doc_function = hook;
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+
 static PyMethodDef mod_methods[] = {
 	{
 		"_setClassSetUpHook",
@@ -2012,6 +2035,8 @@ static PyMethodDef mod_methods[] = {
 
 	{ "_loadConstant", (PyCFunction)PyObjC_LoadConstant,
 		METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
+	{ "_setCallableDoc", (PyCFunction)set_callable_doc,
+		METH_O, "private function" },
 
 	{ 0, 0, 0, 0 } /* sentinel */
 };

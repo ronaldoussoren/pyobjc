@@ -11,9 +11,6 @@ Short term
 
   - test_methodlookup might not yet test all relevant code paths
 
-* help(NSObject) doesn't work at the moment, likely due to the change in handling of some
-  selectos with underscores in them.
-
 * Code cleanup for the new C code, I've done too much copy&paste editing
   while getting the new code to work properly.
 
@@ -53,6 +50,22 @@ Short term
   of converting to a bytes object first. This should slightly improve performance.
 
 * -O4 crashes (py2.7), but works fine on 'default' branch.
+
+* Finish Lib/objc/_callable_docsstr.py
+
+  - not all types are described
+  - for block, function arguments: should prototype of the callable that should
+    be used
+  - for pass-by-reference arguments: show if argument is an array, and how the
+    size is determined.
+  - Show that a method is unsupported ('suggestion' in metadata)
+  - ...
+
+  Also: the __name__ of a selector should be the default python representation of
+  the selector (for nicer output in pydoc)
+  
+  Also: research why pydoc(Foundation.CFRetain) shows information about
+  class objc.function instead of the callable itself.
 
 
 Medium term

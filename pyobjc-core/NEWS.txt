@@ -70,8 +70,12 @@ Version 3.0
   This doesn't change any functionality beyond that, it is still possible to overwrite methods and not
   possible to delete them.
 
-* :class:`objc.native_selector` now has a (minimal) docstring with informationn about the native
-  selector. This makes :func:`help <pydoc.help>` for Cocoa classes more usefull.
+* :class:`objc.native_selector` and :class:`objc.function` now have a (minimal) docstring with information 
+  object.  This makes :func:`help <pydoc.help>` for Cocoa classes and functions more usefull.
+
+  As a side-effect of this the docstring is no longer writeable.
+
+
 
 Version 2.6
 -----------

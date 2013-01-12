@@ -198,6 +198,7 @@ PyObject* PyObjC_SockAddrToPython(void*);
 /* module.m */
 extern PyObject* PyObjC_TypeStr2CFTypeID;
 extern PyObject* PyObjC_AdjustSelf(PyObject* self);
+extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
 
 
 

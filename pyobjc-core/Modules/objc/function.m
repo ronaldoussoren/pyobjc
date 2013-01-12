@@ -41,16 +41,21 @@ static PyMethodDef func_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
+PyDoc_STRVAR(func_docstring_doc, "The document string for a method");
+static PyGetSetDef func_getset[] = {
+	{
+		"__doc__",
+		PyObjC_callable_docstr_get,
+		0,
+		func_docstring_doc,
+		0
+	},
+	{ 0, 0, 0, 0, 0 }
+};
+
 
 
 static PyMemberDef func_members[] = {
-	{
-		"__doc__",
-		T_OBJECT,
-		offsetof(func_object, doc),
-		READONLY,
-		NULL
-	},
 	{
 		"__name__",
 		T_OBJECT,
@@ -310,7 +315,7 @@ PyTypeObject PyObjCFunc_Type =
 	0,					/* tp_iternext */
 	func_methods,				/* tp_methods */
 	func_members,				/* tp_members */
-	0,					/* tp_getset */
+	func_getset,				/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */
 	0,					/* tp_descr_get */
