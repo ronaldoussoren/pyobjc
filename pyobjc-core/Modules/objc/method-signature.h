@@ -57,9 +57,6 @@ struct _PyObjCMethodSignature {
 	unsigned char		variadic:1;
 	unsigned char		null_terminated_array:1;
 	unsigned char		free_result:1;
-	unsigned char		have_by_ref:1;
-	unsigned int    	basic_align:5;
-	unsigned int    	basic_size:14;
 	PyObject*   		suggestion;
 	struct _PyObjC_ArgDescr rettype;
 	struct _PyObjC_ArgDescr argtype[1];
