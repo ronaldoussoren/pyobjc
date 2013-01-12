@@ -2928,3 +2928,118 @@ BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
 		}
 	}
 }
+
+static const char* type_name(const char* type)
+{
+	switch (*type) {
+	case '"':
+		/* Embedded name in ivar or compound type */
+		type++;
+		while (*type != '\0' && *type != '"') type++;
+		break;
+
+	/* The following are one character type codes */
+	case _C_UNDEF:		return "<unknown>";
+	case _C_CLASS:		return "Class";
+	case _C_SEL:		return "SEL";
+	case _C_CHR:		return "char";
+	case _C_UCHR:		return "unsigned char";
+	case _C_CHARPTR:	return "char*";
+#ifdef _C_ATOM
+	case _C_ATOM:		return "<atom>";
+#endif
+#ifdef _C_BOOL
+	case _C_BOOL:		return "bool";
+#endif
+	case _C_SHT:		return "short";
+	case _C_USHT:		return "unsigned short";
+	case _C_INT:		return "int";
+	case _C_UINT:		return "unsigned int";
+	case _C_LNG:		return "long";
+	case _C_ULNG:		return "unsigned long";
+	case _C_FLT:		return "float";
+	case _C_DBL:		return "double";
+	case _C_VOID:		return "void";
+	case _C_LNG_LNG:	return "long long";
+	case _C_ULNG_LNG:	return "unsigned long";
+	case _C_UNICHAR:	return "UniChar";
+	case _C_CHAR_AS_TEXT:	return "char(text)";
+	case _C_CHAR_AS_INT:	return "int8_t";
+	case _C_NSBOOL:		return "BOOL";
+	case _C_ID:		return "id";
+	case _C_PTR:
+				if (type[1] == '?') {
+					return "<function>";
+				}
+				break;
+	}
+	return NULL;
+}
+
+size_t describe_type(const char* type, char* buf, size_t buflen)
+{
+	const char* name;
+
+	if (*type == '"') {
+		type++;
+		while (*type != '\0' && *type != '"') type++;
+	}
+
+	name = type_name(type);
+	if (name != NULL) {
+		return snprintf(buf, buflen, "%s", name);
+	}
+
+	return snprintf(buf, buflen, "<TODO>");
+}
+
+#if 0
+	switch (*type) {
+	case _C_BFLD: 
+	case _C_ARY_B:
+		/* skip digits, typespec and closing ']' */
+
+		while (isdigit (*++type));
+		type = PyObjCRT_SkipTypeSpec (type);
+		assert (type == NULL || *type == _C_ARY_E);
+		if (type) type++;
+		break;
+  
+	case _C_STRUCT_B:
+		/* skip name, and elements until closing '}'  */
+		while (*type != _C_STRUCT_E && *type++ != '='); 
+		while (type && *type != _C_STRUCT_E) {
+			if (*type == '"') {
+				/* embedded field names */
+				type = strchr(type+1, '"');
+				if (type != NULL) {
+					type++;
+				} else {
+					return NULL;
+				}
+			}
+			type = PyObjCRT_SkipTypeSpec (type);
+		}
+		if (type) type++;
+		break;
+
+	case _C_UNION_B:
+		/* skip name, and elements until closing ')'  */
+		while (*type != _C_UNION_E && *type++ != '='); 
+		while (type && *type != _C_UNION_E) { 
+			if (*type == '"') {
+				/* embedded field names */
+				type = strchr(type+1, '"');
+				if (type != NULL) {
+					type++;
+				} else {
+					return NULL;
+				}
+			}
+			type = PyObjCRT_SkipTypeSpec (type); 
+		}
+		if (type) type++;
+		break;
+  
+	case _C_PTR:
+#endif

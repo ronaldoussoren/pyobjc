@@ -29,6 +29,8 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
  * - 'float'/'double' are not compatible with integer types.
  */
 
+extern size_t describe_type(const char* type, char* buf, size_t buflen);
+
 /*#F Takes a C value pointed by @var{datum} with its type encoded in
   @var{type}, that should be coming from an ObjC @encode directive,
   and returns an equivalent Python object where C structures and

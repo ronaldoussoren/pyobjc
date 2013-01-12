@@ -47,9 +47,6 @@ Short term
 
 * Issue #25: issue the 'protocols' submodule on framework wrappers (e.g. Foundation.protocols)
 
-* Issue #35: Lib/objc/_pycoder.py contains some dead code, verify that the code is 
-  actually dead and then remove.
-
 * Attribute lookup converts name to bytestring and that to a SEL. For python 3.3 we can
   shortcut this: selectors must be all ascii, hence we could just check that the unicode
   object has the ascii representation and then directly access the UCS1 buffer instead
@@ -86,3 +83,6 @@ Medium term
 
 * Remove use of CFRetain/CFRelease, use regular -retain/-release messages
   instead (or even 'objc_retain/objc_release)'
+
+* Tweak __name__ and __qualname__ for convenience functions/methods for nicer
+  pydoc output.

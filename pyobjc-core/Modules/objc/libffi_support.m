@@ -2120,8 +2120,17 @@ int PyObjCFFI_CountArguments(
 	Py_ssize_t i;
 	Py_ssize_t itemAlign;
 	Py_ssize_t itemSize;
+	Py_ssize_t basic_size = 0;
 
 	*byref_in_count = *byref_out_count = *plain_count = 0;
+	*variadicAllArgs = NO;
+
+	if (!methinfo->have_by_ref && (methinfo->basic_size != 0)) {
+		*argbuf_len = align(*argbuf_len, methinfo->basic_align);
+		*argbuf_len += align(*argbuf_len, methinfo->basic_size);
+		return 0;
+	}
+
 	
 	for (i = argOffset; i < Py_SIZE(methinfo); i++) {
 		const char *argtype = methinfo->argtype[i].type;
@@ -2256,11 +2265,20 @@ int PyObjCFFI_CountArguments(
 			if (itemSize == -1) {
 				return -1;
 			}
+			if (i == argOffset && methinfo->basic_size == 0) {
+				methinfo->basic_align = itemAlign;
+			}
+			basic_size = align(basic_size, itemAlign);
+			basic_size += itemSize;
 			*argbuf_len = align(*argbuf_len, itemAlign);
 			(*argbuf_len) += itemSize;
 			(*plain_count)++;
 			break;
 		}
+	}
+
+	if (!methinfo->have_by_ref && methinfo->basic_size == 0) {
+		methinfo->basic_size = basic_size;
 	}
 	return 0;
 }

@@ -124,10 +124,17 @@ static PyObjCMethodSignature* new_methodsignature(
 	retval->variadic = NO;
 	retval->free_result = NO;
 	retval->null_terminated_array = NO;
+	retval->have_by_ref = 1; /*0;*/
+	retval->basic_align = 1;
+	retval->basic_size = 0;
 	retval->signature = PyObjCUtil_Strdup(signature);
 	if (retval->signature == NULL) {
 		Py_DECREF(retval);
 		return NULL;
+	}
+
+	if (retval->variadic) {
+		retval->have_by_ref = 1;
 	}
 
 	retval->rettype.type = retval->signature;
@@ -153,6 +160,13 @@ static PyObjCMethodSignature* new_methodsignature(
 	cur = PyObjCRT_SkipTypeSpec(retval->signature);
 	nargs = 0;
 	for (;cur && *cur; cur = PyObjCRT_SkipTypeSpec(cur)) {
+		if (*PyObjCRT_SkipTypeQualifiers(cur) == _C_PTR) {
+			/* XXX: This is slightly too strict, can change later 
+			 * 1) CFTypeRef looks like a pointer but isn't
+			 * 2) ^v may or may not be a pointer (depends on metadata)
+			 */
+			retval->have_by_ref = 1;
+		}
 		retval->argtype[nargs].type = cur;
 		retval->argtype[nargs].ptrType = PyObjC_kPointerPlain;
 		retval->argtype[nargs].allowNULL = YES;
