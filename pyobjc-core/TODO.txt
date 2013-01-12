@@ -51,12 +51,6 @@ Short term
 
 * -O4 crashes (py2.7), but works fine on 'default' branch.
 
-  Also: the __name__ of a selector should be the default python representation of
-  the selector (for nicer output in pydoc)
-  
-  Also: research why pydoc(Foundation.CFRetain) shows information about
-  class objc.function instead of the callable itself.
-
 
 Medium term
 -----------
@@ -89,3 +83,5 @@ Medium term
 
 * Tweak __name__ and __qualname__ for convenience functions/methods for nicer
   pydoc output.
+
+* Add __signature__ to objc.selector and objc.function (see inspect.signature)

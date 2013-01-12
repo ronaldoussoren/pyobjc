@@ -282,6 +282,14 @@ func_dealloc(PyObject* s)
 	PyObject_Free(s);
 }
 
+static PyObject *
+func_descr_get(PyObject *self, PyObject *obj __attribute__((__unused__)), PyObject *type __attribute__((__unused__)))
+{
+	Py_INCREF(self);
+	return self;
+}
+
+
 PyTypeObject PyObjCFunc_Type =
 {
 	PyVarObject_HEAD_INIT(&PyType_Type, 0)
@@ -318,7 +326,7 @@ PyTypeObject PyObjCFunc_Type =
 	func_getset,				/* tp_getset */
 	0,					/* tp_base */
 	0,					/* tp_dict */
-	0,					/* tp_descr_get */
+	func_descr_get,				/* tp_descr_get */
 	0,					/* tp_descr_set */
 	0,					/* tp_dictoffset */
 	0,					/* tp_init */
