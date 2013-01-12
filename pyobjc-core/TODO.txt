@@ -51,16 +51,6 @@ Short term
 
 * -O4 crashes (py2.7), but works fine on 'default' branch.
 
-* Finish Lib/objc/_callable_docsstr.py
-
-  - not all types are described
-  - for block, function arguments: should prototype of the callable that should
-    be used
-  - for pass-by-reference arguments: show if argument is an array, and how the
-    size is determined.
-  - Show that a method is unsupported ('suggestion' in metadata)
-  - ...
-
   Also: the __name__ of a selector should be the default python representation of
   the selector (for nicer output in pydoc)
   

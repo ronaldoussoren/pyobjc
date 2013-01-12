@@ -270,10 +270,14 @@ static PyObject*
 base_name(PyObject* _self, void* closure __attribute__((__unused__)))
 {
 	PyObjCSelector* self = (PyObjCSelector*)_self;
+	char buf[2048];
+	const char* name;
+	name = PyObjC_SELToPythonName(
+		self->sel_selector, buf, sizeof(buf));
 #if PY_MAJOR_VERSION == 2
-	return PyString_FromString(sel_getName(self->sel_selector));
+	return PyString_FromString(name);
 #else
-	return PyUnicode_FromString(sel_getName(self->sel_selector));
+	return PyUnicode_FromString(name);
 #endif
 }
 
