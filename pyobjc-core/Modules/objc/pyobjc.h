@@ -61,7 +61,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
  *
  * NOTE: Option is present for performance testing.
  */
-#define PyObjC_FAST_BUT_INEXACT 1
+/*#define PyObjC_FAST_BUT_INEXACT 1*/
 
 
 #include <objc/objc-runtime.h>
