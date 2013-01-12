@@ -1,5 +1,5 @@
 __all__ = ()
-from objc._objc import _setCallableDoc
+from objc._objc import _setCallableDoc, _nameForSignature
 import objc
 
 basic_types = {
@@ -47,10 +47,18 @@ def describe_type(typestr):
         return "<BLOCK>"
 
     if typestr.startswith(objc._C_PTR):
+        nm = _nameForSignature(typestr)
+        if nm is not None:
+            return nm
         return describe_type(typestr[1:]) + '*'
 
     if typestr[0] in prefixes:
         return prefixes[typestr[0]] + describe_type(typestr[1:])
+
+    if typestr.startswith(objc._C_STRUCT_B):
+        nm = _nameForSignature(typestr)
+        if nm is not None:
+            return nm
 
     # XXX: handle struct, union, array, bitfield
     return "<?>"
@@ -65,14 +73,17 @@ def describe_signature(callable):
 
         name_parts = name.split(':')
         hdr_name = []
-        for idx, (nm, info) in enumerate(zip(name_parts, metadata['arguments'][2:])):
-            print(nm, info)
-            hdr_name.append(nm)
-            hdr_name.append(':(')
-            hdr_name.append(describe_type(info['type']))
-            hdr_name.append(')arg%d '%(idx,))
-        if metadata['variadic']:
-            hdr_name.append(", ...")
+        if len(metadata['arguments']) > 2:
+            for idx, (nm, info) in enumerate(zip(name_parts, metadata['arguments'][2:])):
+                hdr_name.append(nm)
+                hdr_name.append(':(')
+                hdr_name.append(describe_type(info['type']))
+                hdr_name.append(')arg%d '%(idx,))
+                if metadata['variadic']:
+                    hdr_name.append(", ...")
+        else:
+            hdr_name.append(name)
+
 
         header = "%s (%s)%s"%(
                 "+" if callable.isClassMethod else "-",

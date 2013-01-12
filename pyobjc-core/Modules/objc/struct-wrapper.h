@@ -1,3 +1,4 @@
+
 #ifndef PyObjC_STRUCT_WRAPPER
 #define PyObjC_STRUCT_WRAPPER
 /*!
@@ -97,5 +98,8 @@ PyObject* PyObjC_RegisterStructType(
 PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature, Py_ssize_t* pack);
 
 int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
+
+PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
+
 
 #endif /* PyObjC_STRUCT_MEMBER */

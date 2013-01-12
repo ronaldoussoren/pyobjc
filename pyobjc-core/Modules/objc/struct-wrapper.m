@@ -1196,6 +1196,24 @@ PyObjC_MakeStructType(
 
 static PyObject* structRegistry = NULL;
 
+PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
+{
+	PyObject* type;
+	PyObject* v;
+
+	v = PyText_FromStringAndSize(signature, len);
+	type = PyDict_GetItem(structRegistry, v);
+	Py_DECREF(v);
+	if (type == NULL) {
+		PyErr_Clear();
+		return NULL;
+	}
+	Py_INCREF(type);
+	return type;
+}
+
+
+
 PyObject* 
 PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_encoding, Py_ssize_t* ppack)
 {

@@ -354,6 +354,7 @@ PyObjCPointerWrapper_Init(void)
 {
 	int r = 0;
 
+	/* XXX: why register these explictly, will be done by framework wrappers??? */
 	r = PyObjCPointerWrapper_RegisterCF(@encode(CFURLRef)); 
 	if (r == -1) return -1;
 
@@ -387,4 +388,26 @@ PyObjCPointerWrapper_Init(void)
 #endif
 
 	return 0;
+}
+
+/*
+ * XXX: Need a better mechanism for this, the current version is 
+ * a hardcoded mess.
+ */
+const char* PyObjCPointerWrapper_Describe(const char* signature)
+{
+	struct wrapper* wrapper = FindWrapper(signature);
+	if (wrapper == NULL) return NULL;
+
+#if PY_MAJOR_VERSION == 2
+	if (wrapper->pythonify == FILE_New) return "FILE*";
+#endif
+
+	/* XXX: It would be nice to return the CF type name */
+	if (wrapper->pythonify == ID_to_py) return "id";
+
+	/* XXX: Handle 'opaque' pointers (handles);
+	 *      Handle FSRef and FSSpec
+	 */
+	return NULL;
 }

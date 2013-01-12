@@ -1909,6 +1909,42 @@ set_callable_doc(PyObject* mod __attribute__((__unused__)), PyObject* hook)
 	return Py_None;
 }
 
+static PyObject*
+name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signature)
+{
+	char* typestr;
+	if (!PyBytes_Check(signature)) {
+		PyErr_Format(PyExc_TypeError, "type encoding must be a bytes string, not a '%s' object",
+				Py_TYPE(signature)->tp_name);
+		return NULL;
+	}
+	typestr = PyBytes_AS_STRING(signature);
+	if (typestr[0] == _C_STRUCT_B) {
+		PyTypeObject* type = (PyTypeObject*)PyObjC_FindRegisteredStruct(typestr, PyBytes_GET_SIZE(signature));
+		if (type == NULL) {
+			Py_INCREF(Py_None);
+			return Py_None;
+		} else {
+#if PY_MAJOR_VERSION == 2
+			return PyString_FromString(type->tp_name);
+#else
+			return PyUnicode_FromString(type->tp_name);
+#endif
+		}
+	}
+	if (typestr[0] == _C_PTR) {
+		const char* name = PyObjCPointerWrapper_Describe(typestr);
+		if (name != NULL) {
+#if PY_MAJOR_VERSION == 2
+			return PyString_FromString(name);
+#else
+			return PyUnicode_FromString(name);
+#endif
+		}
+	}
+	Py_INCREF(Py_None);
+	return Py_None;
+}
 
 static PyMethodDef mod_methods[] = {
 	{
@@ -2036,6 +2072,8 @@ static PyMethodDef mod_methods[] = {
 	{ "_loadConstant", (PyCFunction)PyObjC_LoadConstant,
 		METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
 	{ "_setCallableDoc", (PyCFunction)set_callable_doc,
+		METH_O, "private function" },
+	{ "_nameForSignature", (PyCFunction)name_for_signature,
 		METH_O, "private function" },
 
 	{ 0, 0, 0, 0 } /* sentinel */

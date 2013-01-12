@@ -19,4 +19,7 @@ int PyObjCPointerWrapper_FromPython(const char*, PyObject*, void*);
 int PyObjCPointerWrapper_Init(void);
 int PyObjCPointerWrapper_HaveWrapper(const char*);
 
+const char* PyObjCPointerWrapper_Describe(const char* signature);
+
+
 #endif /* PyObjC_POINTER_SUPPORT_H */

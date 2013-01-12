@@ -185,6 +185,7 @@ extern PyObject* PyObjCErr_Format(PyObject* exception, const char* format, ...);
 #define PyBytes_FromString	PyString_FromString
 #define PyBytes_FromStringAndSize	PyString_FromStringAndSize
 #define PyBytes_AS_STRING	PyString_AS_STRING
+#define PyBytes_GET_SIZE	PyString_GET_SIZE
 #endif
 
 #define PyBytes_InternFromString	PyString_InternFromString
