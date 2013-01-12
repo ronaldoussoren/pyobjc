@@ -2122,7 +2122,6 @@ int PyObjCFFI_CountArguments(
 	Py_ssize_t itemSize;
 
 	*byref_in_count = *byref_out_count = *plain_count = 0;
-	*variadicAllArgs = NO;
 
 	for (i = argOffset; i < Py_SIZE(methinfo); i++) {
 		const char *argtype = methinfo->argtype[i].type;
