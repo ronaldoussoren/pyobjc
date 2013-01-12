@@ -168,4 +168,3 @@ def describe_callable(name, metadata, offset='', ismethod=False):
     return ('\n'+offset).join(result)
 
 _setCallableDoc(describe_signature)
-print(describe_signature(objc.runtime.NSObject.init))
