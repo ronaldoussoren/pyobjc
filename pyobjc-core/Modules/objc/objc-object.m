@@ -370,12 +370,11 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 			if (sel_name == NULL) continue;
 
 			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
-				free(methods);
-
 				/* Create (unbound) selector */
 				descr = PyObjCSelector_NewNative(
 						cls, method_getName(m), 
 						method_getTypeEncoding(m), 0);
+				free(methods);
 				if (descr == NULL) {
 					return NULL;
 				}
