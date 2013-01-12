@@ -131,11 +131,13 @@ def describe_callable(name, metadata, offset='', ismethod=False):
     if arg_info:
         result.append('')
         for idx, info in arg_info:
-            if info.get('print_format'):
+            if info.get('printf_format'):
                 result.append('arg%d: %%-style format'%(idx,))
+                continue
 
             elif info.get('callable'):
                 result.append('arg%d: %s'%(idx, describe_callable('callback', info['callable'], offset='    ' + offset)))
+                continue
 
             else:
                 arg = info.get('c_array_length_in_arg')
