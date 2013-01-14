@@ -34,6 +34,9 @@ Version 2.5.1
   Instances of subclasses of unicode are not affected by this change, and
   can only be read back by other PyObjC programs.
 
+- Issue #43: It was no longer possible to create instances of
+  LaunchServices.LSLaunchURLSpec due to incomplete metadata.
+
 Version 2.5
 -----------
 
