@@ -203,12 +203,15 @@ def write_header(cmd, basename, filename):
 # (issue 123 in the distribute tracker)
 class my_egg_info (egg_info.egg_info):
     def run(self):
-        egg_info.egg_info.run(self)
+        self.mkpath(self.egg_info)
 
         for hdr in ("pyobjc-compat.h", "pyobjc-api.h"):
             fn = os.path.join("include", hdr)
 
             write_header(self, fn, os.path.join(self.egg_info, fn))
+
+        egg_info.egg_info.run(self)
+
 
 if sys.version_info[0] == 3:
     # FIXME: add custom test command that does the work.

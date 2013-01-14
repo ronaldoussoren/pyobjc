@@ -31,6 +31,9 @@ Version 2.5.1
 - Issue #43: It was no longer possible to create instances of
   LaunchServices.LSLaunchURLSpec due to incomplete metadata.
 
+- Issue #41: the 'install.py' script in the root of pyobjc repository 
+  failed to perform an install when running in a clean checkout of the tree.
+
 Version 2.5
 -----------
 
