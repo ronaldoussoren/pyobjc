@@ -123,7 +123,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	Py_ssize_t plain_count;
 	Py_ssize_t argbuf_len;
 	int r;
-	int cif_arg_count;
+	Py_ssize_t cif_arg_count;
 	BOOL variadicAllArgs = NO;
 
 	unsigned char* argbuf = NULL;
@@ -209,7 +209,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 	}
 
 	if (variadicAllArgs) {
-		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, cif_arg_count,
+		r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
 			signature_to_ffi_return_type(self->methinfo->rettype.type), arglist);
 		if (r != FFI_OK) {
 			PyErr_Format(PyExc_RuntimeError,

@@ -84,7 +84,7 @@ typedef struct _PyObjCClassObject {
 	PyObject* sel_to_py;
 	Py_ssize_t dictoffset;
 	PyObject* delmethod;
-	int generation;
+	Py_ssize_t generation;
 	PyObject* hiddenSelectors;
 	PyObject* hiddenClassSelectors;
 

@@ -75,7 +75,9 @@ Version 3.0
 
   As a side-effect of this the docstring is no longer writeable.
 
-
+* It should now be possible to write tuples with more than INT_MAX elements to an NSArchive. Those archives
+  cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that 
+  contain only smaller tuples can be read back by earlier versions.
 
 Version 2.6
 -----------

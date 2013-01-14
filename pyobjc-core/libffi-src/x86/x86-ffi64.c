@@ -161,7 +161,7 @@ classify_argument(
 			return 1;
 #else
 		{
-			int size = byte_offset + type->size;
+			size_t size = byte_offset + type->size;
 
 			if (size <= 4)
 			{
@@ -213,7 +213,7 @@ classify_argument(
 			enum x86_64_reg_class	subclasses[MAX_CLASSES];
 			const int				UNITS_PER_WORD = 8;
 			int						words =
-				(type->size + UNITS_PER_WORD - 1) / UNITS_PER_WORD;
+				(int)((type->size + UNITS_PER_WORD - 1) / UNITS_PER_WORD);
 
 			/* If the struct is larger than 16 bytes, pass it on the stack.  */
 			if (type->size > 16)
@@ -285,7 +285,7 @@ classify_argument(
 				}
 			}
 
-			return words;
+			return (int)words;
 		}
 
 		default:
@@ -420,8 +420,8 @@ ffi_prep_cif_machdep(
 		flags |= 1 << 11;
 
 	cif->flags = flags;
-	cif->bytes = bytes;
-	cif->bytes = ALIGN(bytes,8);
+	/*cif->bytes = (unsigned)bytes;*/
+	cif->bytes = (unsigned)ALIGN(bytes,8);
 
 	return FFI_OK;
 }

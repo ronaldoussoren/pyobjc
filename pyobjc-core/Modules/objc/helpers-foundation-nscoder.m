@@ -7,7 +7,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
 	char* typestr;
 	PyObject* value;
 	void*     buf;
-	int    size;
+	Py_ssize_t    size;
 	int err;
 	struct objc_super super;
 	Py_ssize_t typestr_len;
@@ -132,10 +132,10 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
 	char* typestr;
 	NSUInteger   count;
 	NSUInteger   i;
-	int   value_len;
+	Py_ssize_t   value_len;
 	PyObject* value;
 	void*     buf;
-	int    size;
+	Py_ssize_t    size;
 	int err;
 	struct objc_super super;
 	Py_ssize_t typestr_len;
@@ -411,7 +411,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
 	PyObject* result;
 	PyObject* py_buf;
 	void*     buf;
-	int    size;
+	Py_ssize_t    size;
 	struct objc_super super;
 	Py_ssize_t typestr_len;
 

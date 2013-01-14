@@ -715,11 +715,11 @@ PyObjCRT_AlignOfType (const char *type)
 
 	case _C_UNION_B:
 	{
-		int maxalign = 0;
+		Py_ssize_t maxalign = 0;
 		type++;
 		while (*type != _C_UNION_E)
 		{
-			int item_align = PyObjCRT_AlignOfType(type);
+			Py_ssize_t item_align = PyObjCRT_AlignOfType(type);
 			if (item_align == -1) return -1;
 			maxalign = MAX (maxalign, item_align);
 			type = PyObjCRT_SkipTypeSpec (type);
@@ -898,7 +898,7 @@ PyObjCRT_SizeOfType (const char *type)
 
 	case _C_BFLD:
 		{
-			int i = strtol(type+1, NULL, 10);
+			long i = strtol(type+1, NULL, 10);
 			return (i+7)/8;
 		}
 		break;
@@ -2116,7 +2116,7 @@ const char* type, PyObject* argument, void* datum)
 		r = depythonify_signed_int_value(argument, "char",
 			&temp, CHAR_MIN, CHAR_MAX);
 		if (r == 0) {
-			*(int*)datum = temp;
+			*(int*)datum = (int)temp;
 		}
 		return r;
 	
@@ -2151,7 +2151,7 @@ const char* type, PyObject* argument, void* datum)
 		r = depythonify_signed_int_value(argument, "char",
 			&temp, CHAR_MIN, CHAR_MAX);
 		if (r == 0) {
-			*(int*)datum = temp;
+			*(int*)datum = (int)temp;
 		}
 		return r;
 
@@ -2187,7 +2187,7 @@ const char* type, PyObject* argument, void* datum)
 		r = depythonify_unsigned_int_value(argument, "unsigned char",
 			&utemp, UCHAR_MAX);
 		if (r == 0) {
-			*(unsigned int*)datum = utemp;
+			*(unsigned int*)datum = (unsigned int)utemp;
 		}
 		return r;
 
@@ -2195,7 +2195,7 @@ const char* type, PyObject* argument, void* datum)
 		r = depythonify_signed_int_value(argument, "short",
 			&temp, SHRT_MIN, SHRT_MAX);
 		if (r == 0) {
-			*(int*)datum = temp;
+			*(int*)datum = (int)temp;
 		}
 		return r;
 
@@ -2203,7 +2203,7 @@ const char* type, PyObject* argument, void* datum)
 		r = depythonify_unsigned_int_value(argument, "unsigned short",
 			&utemp, USHRT_MAX);
 		if (r == 0) {
-			*(unsigned int*)datum = utemp;
+			*(unsigned int*)datum = (unsigned int)utemp;
 		}
 		return r;
 
@@ -2431,7 +2431,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		r = depythonify_signed_int_value(argument, "int",
 			&temp, INT_MIN, INT_MAX);
 		if (r == 0) {
-			*(int*)datum = temp;
+			*(int*)datum = (int)temp;
 		}
 		return r;
 
@@ -2439,7 +2439,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		r = depythonify_unsigned_int_value(argument, "unsigned int",
 			&utemp, UINT_MAX);
 		if (r == 0) {
-			*(unsigned int*)datum = utemp;
+			*(unsigned int*)datum = (unsigned int)utemp;
 		}
 		return r;
 
@@ -2447,7 +2447,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		r = depythonify_signed_int_value(argument, "long",
 			&temp, LONG_MIN, LONG_MAX);
 		if (r == 0) {
-			*(long*)datum = temp;
+			*(long*)datum = (long)temp;
 		}
 		return r;
 
@@ -2455,7 +2455,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 		r = depythonify_unsigned_int_value(argument, "unsigned long",
 			&utemp, ULONG_MAX);
 		if (r == 0) {
-			*(unsigned long*)datum = utemp;
+			*(unsigned long*)datum = (unsigned long)utemp;
 		}
 		return r;
 

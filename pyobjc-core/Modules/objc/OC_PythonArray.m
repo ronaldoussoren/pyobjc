@@ -314,16 +314,32 @@ static PyObject* mapTypes = NULL;
 		 *
 		 * NOTE: older versions used type 1 and no length.
 		 */
+		Py_ssize_t size = PyTuple_Size(value);
+
 		if ([coder allowsKeyedCoding]) {
-			[coder encodeInt32:4 forKey:@"pytype"];
-			[coder encodeInt32:PyTuple_Size(value) forKey:@"pylength"];
+			if (size > INT_MAX) {
+				[coder encodeInt32:5 forKey:@"pytype"];
+				[coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
+			} else {
+				[coder encodeInt32:4 forKey:@"pytype"];
+				[coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
+			}
 		} else {
-			int v = 4;
-			[coder encodeValueOfObjCType:@encode(int) at:&v];
-			v = (int)PyTuple_Size(value);
-			[coder encodeValueOfObjCType:@encode(int) at:&v];
+			if (size > INT_MAX) {
+				int v = 5;
+				[coder encodeValueOfObjCType:@encode(int) at:&v];
+				v = (int)PyTuple_Size(value);
+				[coder encodeValueOfObjCType:@encode(long long) at:&v];
+
+			} else {
+				int v = 4;
+				[coder encodeValueOfObjCType:@encode(int) at:&v];
+				v = (int)PyTuple_Size(value);
+				[coder encodeValueOfObjCType:@encode(int) at:&v];
+			}
 		}
 		[super encodeWithCoder:coder];
+		
 	} else if (PyList_CheckExact(value)) {
 		if ([coder allowsKeyedCoding]) {
 			[coder encodeInt32:2 forKey:@"pytype"];
@@ -332,6 +348,7 @@ static PyObject* mapTypes = NULL;
 			[coder encodeValueOfObjCType:@encode(int) at:&v];
 		}
 		[super encodeWithCoder:coder];
+
 	} else {
 		if ([coder allowsKeyedCoding]) {
 			[coder encodeInt32:3 forKey:@"pytype"];
@@ -419,7 +436,7 @@ static PyObject* mapTypes = NULL;
 {
 	PyObject* t;
 	int code;
-        int size;
+        Py_ssize_t size;
 
 
 	if ([coder allowsKeyedCoding]) {
@@ -429,23 +446,6 @@ static PyObject* mapTypes = NULL;
 	}
 
 	switch (code) {
-	case 4: 
-	      if ([coder allowsKeyedCoding]) {
-		      size = [coder decodeInt32ForKey:@"pylength"];
-	      } else {
-		      [coder decodeValueOfObjCType:@encode(int) at:&size];
-	      }
-
-	      PyObjC_BEGIN_WITH_GIL
-	          value = PyTuple_New(size);
-		  if (value == NULL){
-			PyObjC_GIL_FORWARD_EXC();
-		  }
-	      PyObjC_END_WITH_GIL
-	      [super initWithCoder:coder];
-	      return self;
-
-
 	case 1:
 	      /* This code was created by some previous versions of PyObjC
 	       * (before 2.2) and is kept around for backward compatibilty.
@@ -523,6 +523,47 @@ static PyObject* mapTypes = NULL;
 
 			return self;
 		}
+
+	case 4:
+	      /* tuple with less than 2**31 elements */
+	      if ([coder allowsKeyedCoding]) {
+		      size = [coder decodeInt32ForKey:@"pylength"];
+	      } else {
+		      [coder decodeValueOfObjCType:@encode(int) at:&size];
+	      }
+
+	      PyObjC_BEGIN_WITH_GIL
+	          value = PyTuple_New(size);
+		  if (value == NULL){
+			PyObjC_GIL_FORWARD_EXC();
+		  }
+	      PyObjC_END_WITH_GIL
+	      [super initWithCoder:coder];
+	      return self;
+
+	case 5: 
+	      /* tuple with more than 2**31 elements */
+#ifdef __LP64__
+	      if ([coder allowsKeyedCoding]) {
+		      size = [coder decodeInt64ForKey:@"pylength"];
+	      } else {
+		      [coder decodeValueOfObjCType:@encode(long long) at:&size];
+	      }
+
+	      PyObjC_BEGIN_WITH_GIL
+	          value = PyTuple_New(size);
+		  if (value == NULL){
+			PyObjC_GIL_FORWARD_EXC();
+		  }
+	      PyObjC_END_WITH_GIL
+	      [super initWithCoder:coder];
+	      return self;
+#else
+	      [NSException raise:NSInvalidArgumentException
+			format:@"decoding tuple with more than INT_MAX elements in 32-bit"];
+	      [self release];
+	      return nil;
+#endif
 	}
 
 	[NSException raise:NSInvalidArgumentException

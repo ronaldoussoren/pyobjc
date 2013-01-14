@@ -435,6 +435,7 @@ CFLAGS.extend([
     "-DPyObjC_BUILD_RELEASE=%02d%02d"%(tuple(map(int, get_os_level().split('.')))),
     "-fvisibility=hidden",
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
+    "-Wshorten-64-to-32",
     ])
 
 ## Arghh, a stupid compiler flag can cause problems. Don't

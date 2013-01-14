@@ -186,8 +186,8 @@ PyObjC_NSMethodSignatureToTypeString(
 {
 	char* result = buf;
 	char* end;
-	int arg_count = [sig numberOfArguments];
-	int i;
+	NSUInteger arg_count = [sig numberOfArguments];
+	NSUInteger i;
 	size_t r;
 
 
@@ -713,7 +713,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
 	v = PyDict_GetItemString(metadata, "c_array_length_in_arg");
 	if (v) {
 		if (PyLong_Check(v)) {
-			methinfo->arrayArg = PyLong_AsLong(v);
+			methinfo->arrayArg = (int)PyLong_AsLong(v);
 			if (PyErr_Occurred()) {
 				return NULL;
 			}

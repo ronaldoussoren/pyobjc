@@ -25,7 +25,7 @@
 
 struct wrapper {
 	const char* signature;
-	int offset;
+	size_t offset;
 	PyObject* (*pythonify)(void*);
 	int (*depythonify)(PyObject*, void*);
 };
@@ -47,7 +47,7 @@ static Py_ssize_t item_count = 0;
  * We want to treat those two pointer as the same type, therefore we need to
  * ignore everything beyond the end of the struct name.
  */
-static int find_end_of_structname(const char* signature) {
+static size_t find_end_of_structname(const char* signature) {
 	if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
 		char* end1;
 		char* end2;
@@ -56,9 +56,9 @@ static int find_end_of_structname(const char* signature) {
 		end2 = strchr(signature, '=');
 
 		if (end2 == NULL) {
-			return end1 - signature;
+			return (size_t)(end1 - signature);
 		} else {
-			return end2 - signature;
+			return (size_t)(end2 - signature);
 		}
 
 	} else if (signature[1] == _C_STRUCT_B) {
@@ -69,9 +69,9 @@ static int find_end_of_structname(const char* signature) {
 		end2 = strchr(signature, '=');
 
 		if (end2 == NULL) {
-			return end1 - signature;
+			return (size_t)(end1 - signature);
 		} else {
-			return end2 - signature;
+			return (size_t)(end2 - signature);
 		}
 	}
 	return strlen(signature);

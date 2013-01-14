@@ -729,7 +729,7 @@ struct_init(
 
 	if (kwds != NULL) {
 		PyObject* keys;
-		int i, len;
+		Py_ssize_t i, len;
 
 		keys = PyDict_Keys(kwds);
 		if (keys == NULL) {

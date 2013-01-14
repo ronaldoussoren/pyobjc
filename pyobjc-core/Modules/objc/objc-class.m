@@ -40,7 +40,7 @@ PyObject*
 PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 {
 	PyObject* mro;
-	int i, n;
+	Py_ssize_t i, n;
 	if (tp == NULL) {
 		return NO;
 	}
@@ -3054,12 +3054,12 @@ int PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t
 
 	/* add the methods */
 	if (curMethodIndex != 0) {
-		class_addMethodList(targetClass, methodsToAdd, curMethodIndex);
+		class_addMethodList(targetClass, methodsToAdd, (unsigned)curMethodIndex);
 	}
 	PyMem_Free(methodsToAdd);
 	if (curClassMethodIndex != 0) {
 		class_addMethodList(object_getClass(targetClass),
-				classMethodsToAdd, curClassMethodIndex);
+				classMethodsToAdd, (unsigned)curClassMethodIndex);
 	}
 	PyMem_Free(classMethodsToAdd);
 

@@ -38,7 +38,7 @@ int PyObjCFFI_CountArguments(
 	Py_ssize_t* argbuf_len,
 	BOOL* havePrintf);
 
-int PyObjCFFI_ParseArguments(
+Py_ssize_t PyObjCFFI_ParseArguments(
 	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 	PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf, Py_ssize_t argbuf_len,
 	void** byref, struct byref_attr* byref_attr,
@@ -50,8 +50,8 @@ PyObject* PyObjCFFI_BuildResult(
 	Py_ssize_t byref_out_count,
 	PyObject* self, int flags, void** argvalues);
 
-int PyObjCFFI_AllocByRef(int argcount, void*** byref, struct byref_attr** byref_attr);
-int PyObjCFFI_FreeByRef(int argcount, void** byref, struct byref_attr* byref_attr);
+int PyObjCFFI_AllocByRef(Py_ssize_t argcount, void*** byref, struct byref_attr** byref_attr);
+int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr);
 
 /* XXX: rename me */
 ffi_type* signature_to_ffi_return_type(const char* argtype);

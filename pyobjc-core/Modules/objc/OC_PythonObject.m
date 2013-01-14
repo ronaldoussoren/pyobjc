@@ -820,7 +820,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 	int		   err;
 	PyObject*          args = NULL;
 	volatile unsigned int       i;
-	unsigned int       argcount;      
+	NSUInteger         argcount;      
 	Py_ssize_t	   retsize;
 	char*              retbuffer;
 
@@ -1225,7 +1225,7 @@ static  PyObject* setKeyFunc = NULL;
 -(NSUInteger)hash
 {
     PyObjC_BEGIN_WITH_GIL
-        int rval;
+        Py_hash_t rval;
         rval = PyObject_Hash([self pyObject]);
         if (rval == -1) {
             PyErr_Clear();

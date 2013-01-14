@@ -447,61 +447,61 @@ static Py_ssize_t extract_count(const char* type, void* pvalue)
 			}
 		}
 		break;
-	case _C_CHR: return *(char*)pvalue;
-	case _C_CHAR_AS_INT: return *(char*)pvalue;
-	case _C_UCHR: return *(unsigned char*)pvalue;
-	case _C_SHT: return *(short*)pvalue;
-	case _C_USHT: return *(unsigned short*)pvalue;
-	case _C_INT: return *(int*)pvalue;
-	case _C_UINT: return *(unsigned int*)pvalue;
-	case _C_LNG: return *(long*)pvalue;
-	case _C_ULNG: return *(unsigned long*)pvalue;
-	case _C_LNG_LNG: return *(long long*)pvalue;
-	case _C_ULNG_LNG: return *(unsigned long long*)pvalue;
+	case _C_CHR: return (Py_ssize_t)*(char*)pvalue;
+	case _C_CHAR_AS_INT: return (Py_ssize_t)*(char*)pvalue;
+	case _C_UCHR: return (Py_ssize_t)*(unsigned char*)pvalue;
+	case _C_SHT: return (Py_ssize_t)*(short*)pvalue;
+	case _C_USHT: return (Py_ssize_t)*(unsigned short*)pvalue;
+	case _C_INT: return (Py_ssize_t)*(int*)pvalue;
+	case _C_UINT: return (Py_ssize_t)*(unsigned int*)pvalue;
+	case _C_LNG: return (Py_ssize_t)*(long*)pvalue;
+	case _C_ULNG: return (Py_ssize_t)*(unsigned long*)pvalue;
+	case _C_LNG_LNG: return (Py_ssize_t)*(long long*)pvalue;
+	case _C_ULNG_LNG: return (Py_ssize_t)*(unsigned long long*)pvalue;
 	case _C_PTR:
 		switch(type[1]) {
-		case _C_CHR: return **(char**)pvalue;
-		case _C_CHAR_AS_INT: return **(char**)pvalue;
-		case _C_UCHR: return **(unsigned char**)pvalue;
-		case _C_SHT: return **(short**)pvalue;
-		case _C_USHT: return **(unsigned short**)pvalue;
-		case _C_INT: return **(int**)pvalue;
-		case _C_UINT: return **(unsigned int**)pvalue;
-		case _C_LNG: return **(long**)pvalue;
-		case _C_ULNG: return **(unsigned long**)pvalue;
-		case _C_LNG_LNG: return **(long long**)pvalue;
-		case _C_ULNG_LNG: return **(unsigned long long**)pvalue;
+		case _C_CHR: return (Py_ssize_t)**(char**)pvalue;
+		case _C_CHAR_AS_INT: return (Py_ssize_t)**(char**)pvalue;
+		case _C_UCHR: return (Py_ssize_t)**(unsigned char**)pvalue;
+		case _C_SHT: return (Py_ssize_t)**(short**)pvalue;
+		case _C_USHT: return (Py_ssize_t)**(unsigned short**)pvalue;
+		case _C_INT: return (Py_ssize_t)**(int**)pvalue;
+		case _C_UINT: return (Py_ssize_t)**(unsigned int**)pvalue;
+		case _C_LNG: return (Py_ssize_t)**(long**)pvalue;
+		case _C_ULNG: return (Py_ssize_t)**(unsigned long**)pvalue;
+		case _C_LNG_LNG: return (Py_ssize_t)**(long long**)pvalue;
+		case _C_ULNG_LNG: return (Py_ssize_t)**(unsigned long long**)pvalue;
 		}
 
 		if (strncmp(type+1, @encode(NSRange), sizeof(@encode(NSRange)) - 1) == 0) {
-			return (*(NSRange**)pvalue)->length;
+			return (Py_ssize_t)((*(NSRange**)pvalue)->length);
 		}
 
 		/* Fall through: */
 	}
 	if (strncmp(type, @encode(NSRange), sizeof(@encode(NSRange)) - 1) == 0) {
-		return ((NSRange*)pvalue)->length;
+		return (Py_ssize_t)(((NSRange*)pvalue)->length);
 	}
 	if (strncmp(type, @encode(CFRange), sizeof(@encode(CFRange)) - 1) == 0) {
-		return ((CFRange*)pvalue)->length;
+		return (Py_ssize_t)(((CFRange*)pvalue)->length);
 	}
 #ifdef __LP64__
 	if (strncmp(type, "{_CFRange=qq}", sizeof("{_CFRange=qq}") - 1) == 0) {
-		return ((CFRange*)pvalue)->length;
+		return (Py_ssize_t)(((CFRange*)pvalue)->length);
 	}
 #else
 	if (strncmp(type, "{_CFRange=ii}", sizeof("{_CFRange=ii}") - 1) == 0) {
-		return ((CFRange*)pvalue)->length;
+		return (Py_ssize_t)(((CFRange*)pvalue)->length);
 	}
 #endif
 	if (strncmp(type, "{_CFRange=ll}", sizeof("{_CFRange=ll}") - 1) == 0) {
-		return ((CFRange*)pvalue)->length;
+		return (Py_ssize_t)(((CFRange*)pvalue)->length);
 	}
 
 	if (strncmp(type, @encode(CFArrayRef), sizeof(@encode(CFArrayRef))-1) == 0 || 
 		strncmp(type, @encode(CFMutableArrayRef), sizeof(@encode(CFMutableArrayRef))-1) == 0) {
 	
-		return CFArrayGetCount(*(CFArrayRef*)pvalue);
+		return (Py_ssize_t)CFArrayGetCount(*(CFArrayRef*)pvalue);
 	}
 	PyErr_Format(PyExc_TypeError, 
 			"Don't know how to convert to extract count: %s", type);
@@ -509,7 +509,7 @@ static Py_ssize_t extract_count(const char* type, void* pvalue)
 }
 
 /* Support for printf format strings */
-static int
+static Py_ssize_t
 parse_printf_args(
 	PyObject* py_format,
 	PyObject* argtuple, Py_ssize_t argoffset,
@@ -936,7 +936,7 @@ parse_printf_args(
 	return curarg;
 }
 
-static int parse_varargs_array(
+static Py_ssize_t parse_varargs_array(
 	PyObjCMethodSignature* methinfo,
 	PyObject* argtuple, Py_ssize_t argoffset,
 	void** byref,
@@ -1000,9 +1000,9 @@ enum closureType {
 
 typedef struct {
 	PyObject* callable;
-	int       argCount;
+	Py_ssize_t argCount;
 	PyObjCMethodSignature* methinfo;
-	enum closureType	  closureType;
+	enum closureType closureType;
 } _method_stub_userdata;
 
 static void 
@@ -1795,7 +1795,7 @@ error:
  * signature from Objective-C to Python.
  */
 
-static int _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
+static Py_ssize_t _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
 {
 	PyCodeObject *func_code;
 
@@ -1820,7 +1820,7 @@ static int _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
 
 	} else if (PyObjCNativeSelector_Check(callable)) {
 		PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
-		 int result = Py_SIZE(sig) - 1;
+		 Py_ssize_t result = Py_SIZE(sig) - 1;
 		 
 		 Py_DECREF(sig);
 		 return result;
@@ -2288,7 +2288,7 @@ static void block_capsule_cleanup(PyObject* ptr)
 #endif
 
 
-int PyObjCFFI_ParseArguments(
+Py_ssize_t PyObjCFFI_ParseArguments(
 		PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 		PyObject* args,
 		Py_ssize_t argbuf_cur, unsigned char* argbuf,
@@ -3096,7 +3096,7 @@ int PyObjCFFI_ParseArguments(
 	}
 
 	if (printf_format) {
-		int r;
+		Py_ssize_t r;
 
 		r = parse_printf_args(
 			printf_format,
@@ -3112,7 +3112,7 @@ int PyObjCFFI_ParseArguments(
 
 		return r;
 	} else if (methinfo->variadic && methinfo->null_terminated_array) {
-		int r;
+		Py_ssize_t r;
 
 		r = parse_varargs_array(
 				methinfo,
@@ -3123,7 +3123,7 @@ int PyObjCFFI_ParseArguments(
 		}
 		return r;
 	} else if (methinfo->variadic && methinfo->arrayArg != -1) {
-		int r;
+		Py_ssize_t r;
 		Py_ssize_t cnt = extract_count(
 			methinfo->argtype[methinfo->arrayArg].type,
 			values[methinfo->arrayArg]);
@@ -3555,7 +3555,7 @@ error_cleanup:
 	return NULL;
 }
 
-int PyObjCFFI_AllocByRef(int argcount, void*** byref, struct byref_attr** byref_attr)
+int PyObjCFFI_AllocByRef(Py_ssize_t argcount, void*** byref, struct byref_attr** byref_attr)
 {
 	*byref = NULL; *byref_attr = NULL;
 
@@ -3579,7 +3579,7 @@ int PyObjCFFI_AllocByRef(int argcount, void*** byref, struct byref_attr** byref_
 	return 0;
 }
 
-int PyObjCFFI_FreeByRef(int argcount, void** byref, struct byref_attr* byref_attr)
+int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
 {
 	Py_ssize_t i;
 	if (byref) {
@@ -3629,7 +3629,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	ffi_cif		  cif;
 	ffi_type*	  arglist[128]; /* XX: Magic constant */
 	void*             values[128];
-	int               r;
+	Py_ssize_t        r;
 	void* volatile	  msgResult;
 	Py_ssize_t        resultSize;
 	volatile int      useStret;
@@ -3850,7 +3850,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	PyErr_Clear();
 	ffi_type* retsig = signature_to_ffi_return_type(rettype);
 	if (retsig == NULL) goto error_cleanup;
-	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, r, retsig, arglist);
+	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
 	if (r != FFI_OK) {
 		PyErr_Format(PyExc_RuntimeError,
 			"Cannot setup FFI CIF [%d]", r);
@@ -3994,7 +3994,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 		return NULL;
 	}
 
-	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, Py_SIZE(methinfo), 
+	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), 
 		cl_ret_type, cl_arg_types);
 
 	if (rv != FFI_OK) {

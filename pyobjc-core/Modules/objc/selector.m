@@ -621,7 +621,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 	}
 
 	if (pyself == NULL) {
-		int       argslen;
+		Py_ssize_t       argslen;
 		argslen = PyTuple_Size(args);
 		if (argslen < 1) {
 			PyErr_SetString(PyExc_TypeError,

@@ -186,7 +186,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 	Py_ssize_t	byref_out_count;
 	Py_ssize_t	plain_count;
 	Py_ssize_t	argbuf_len;
-	int		cif_arg_count;
+	Py_ssize_t	cif_arg_count;
 	BOOL		variadicAllArgs = NO;
 	int 		r;
 	unsigned char*	argbuf = NULL;
@@ -275,7 +275,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 	arglist[0] = &ffi_type_pointer;
 	values[0] = &block_ptr;
 
-	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, cif_arg_count, 
+	r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count, 
 			signature_to_ffi_return_type(signature->rettype.type), arglist);
 	if (r != FFI_OK) {
 		PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
