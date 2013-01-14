@@ -562,6 +562,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		f = Py_TYPE(descr)->tp_descr_get;
 		if (f != NULL && PyDescr_IsData(descr)) {
 			res = f(descr, obj, (PyObject*)Py_TYPE(obj));
+			if (res == NULL && !PyErr_Occurred()) {
+				PyErr_SetString(PyObjCExc_Error, 
+					"Descriptor getter returned NULL "
+					"without raising an exception");
+			}
 			goto done;
 		}
 	}
@@ -625,6 +630,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	if (f != NULL) {
 		res = f(descr, obj, (PyObject*)Py_TYPE(obj));
+		if (res == NULL && !PyErr_Occurred()) {
+			PyErr_SetString(PyObjCExc_Error, 
+				"Descriptor getter returned NULL "
+				"without raising an exception");
+		}
 		goto done;
 	}
 
