@@ -29,12 +29,51 @@ as_cobject(PyObject* self)
 	return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__", NULL);
 }
 
+static PyObject*
+as_ctypes_voidp(PyObject* self)
+{
+	PyObject* c_void_p;
+
+	if (((OpaquePointerObject*)self)->pointer_value == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+
+	c_void_p = PyObjC_get_c_void_p();
+	if (c_void_p == NULL) {
+		return NULL;
+	}
+
+	return PyObject_CallFunction(c_void_p, "k", 
+		(long)((OpaquePointerObject*)self)->pointer_value);
+}
+
+static PyObject*
+opaque_sizeof(PyObject* self)
+{
+	return PyLong_FromSsize_t(Py_TYPE(self)->tp_basicsize);
+}
+
+
+
 static PyMethodDef opaque_methods[] = {
 	{
 		  "__cobject__",
 		  (PyCFunction)as_cobject,
 		  METH_NOARGS,
 		  "get a CObject representing this object"
+	},
+	{
+		  "__c_void_p__",
+		  (PyCFunction)as_ctypes_voidp,
+		  METH_NOARGS,
+		  "get a ctypes.void_p representing this object"
+	},
+	{
+		"__sizeof__",
+		  (PyCFunction)opaque_sizeof,
+		  METH_NOARGS,
+		  0,
 	},
 	{ 0, 0, 0, 0 }
 };

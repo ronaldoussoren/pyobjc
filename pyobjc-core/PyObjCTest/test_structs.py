@@ -9,8 +9,14 @@ an NSPoint, but using our own types)
 """
 from PyObjCTools.TestSupport import *
 import objc
+import sys
 from PyObjCTest.structs import *
 from PyObjCTest.fnd import NSObject
+
+if sys.maxsize > 2 ** 32:
+    PTR_SIZE = 8
+else:
+    PTR_SIZE = 4
 
 
 class TestStructs (TestCase):
@@ -21,11 +27,14 @@ class TestStructs (TestCase):
 
         self.assertEqual(tp._fields, ("a", "b", "c", "d"))
 
+
         o = tp()
         self.assertHasAttr(o, 'a')
         self.assertHasAttr(o, 'b')
         self.assertHasAttr(o, 'c')
         self.assertHasAttr(o, 'd')
+
+        self.assertEqual(len(o), 4)
 
         self.assertHasAttr(objc.ivar, 'FooStruct')
         v = objc.ivar.FooStruct()
@@ -154,6 +163,13 @@ class TestStructs (TestCase):
         self.assertEqual(v[2], tp(5, 6))
         self.assertEqual(v[3], tp(7, 8))
 
+    def testSTructSize(self):
+        tp0 = objc.createStructType("FooStruct", b'{FooStruct=}', None)
+        tp1 = objc.createStructType("FooStruct", b'{FooStruct="first"i}', None)
+        tp2 = objc.createStructType("FooStruct", b'{FooStruct="first"i"second"i}', None)
+
+        self.assertEqual(sys.getsizeof(tp0()) + 1 * PTR_SIZE, sys.getsizeof(tp1()))
+        self.assertEqual(sys.getsizeof(tp0()) + 2 * PTR_SIZE, sys.getsizeof(tp2()))
 
 if __name__ == "__main__":
     main()

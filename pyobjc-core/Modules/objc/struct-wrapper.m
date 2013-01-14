@@ -219,6 +219,16 @@ struct_reduce(PyObject* self)
 }
 
 static PyObject*
+struct_sizeof(PyObject* self)
+{
+	Py_ssize_t res;
+
+	res = Py_TYPE(self)->tp_basicsize;
+	return PyLong_FromSsize_t(res);
+}
+
+
+static PyObject*
 struct_copy(PyObject* self)
 {
 	PyObject* result;
@@ -474,6 +484,12 @@ static PyMethodDef struct_methods[] = {
 	{
 		"__pyobjc_copy__",
 		(PyCFunction)struct_copy,
+		METH_NOARGS,
+		NULL,
+	},
+	{
+		"__sizeof__",
+		(PyCFunction)struct_sizeof,
 		METH_NOARGS,
 		NULL,
 	},
@@ -1039,7 +1055,7 @@ static struct StructTypeObject StructTemplate_Type = {
     {
 	PyVarObject_HEAD_INIT(NULL, 0)
 	"objc.StructTemplate",			/* tp_name */
-	sizeof (PyObject*),			/* tp_basicsize */
+	sizeof(PyObject),			/* tp_basicsize */
 	0,					/* tp_itemsize */
   
 	/* methods */
@@ -1159,7 +1175,7 @@ PyObjC_MakeStructType(
 	}
 	Py_REFCNT(result) = 1;
 	result->base.tp_members = members;
-	result->base.tp_basicsize = sizeof(PyObject) + numFields*sizeof(PyObject*);
+	result->base.tp_basicsize = sizeof(PyObject) + (numFields*sizeof(PyObject*));
 	if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields)==-1){
 		Py_DECREF(fields);
 		PyMem_Free(members);

@@ -905,8 +905,8 @@ as_cobject(PyObject* self)
 	return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);
 }
 
-static PyObject*
-get_c_void_p(void)
+PyObject*
+PyObjC_get_c_void_p(void)
 {
 static  PyObject* c_void_p = NULL;
 	if (c_void_p == NULL) {
@@ -935,7 +935,7 @@ as_ctypes_voidp(PyObject* self)
 		return Py_None;
 	}
 
-	c_void_p = get_c_void_p();
+	c_void_p = PyObjC_get_c_void_p();
 	if (c_void_p == NULL) {
 		return NULL;
 	}

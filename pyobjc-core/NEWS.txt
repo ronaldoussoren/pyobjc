@@ -79,6 +79,12 @@ Version 3.0
   cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that 
   contain only smaller tuples can be read back by earlier versions.
 
+* Issue #38: Struct wrappers and opaque pointer types now implement support for :func:`sys.getsizeof`.
+
+* Opaque pointer objects now have a method "__c_void_p__" that returns a :class:`ctypes.void_p` for
+  the same pointer.
+
+
 Version 2.6
 -----------
 
