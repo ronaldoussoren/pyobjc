@@ -525,7 +525,7 @@ static PyObject* mapTypes = NULL;
 		}
 
 	case 4:
-	      /* tuple with less than 2**31 elements */
+	      /* tuple with less than MAX_INT elements */
 	      if ([coder allowsKeyedCoding]) {
 		      size = [coder decodeInt32ForKey:@"pylength"];
 	      } else {
@@ -542,7 +542,7 @@ static PyObject* mapTypes = NULL;
 	      return self;
 
 	case 5: 
-	      /* tuple with more than 2**31 elements */
+	      /* tuple with more than MAX_INT elements */
 #ifdef __LP64__
 	      if ([coder allowsKeyedCoding]) {
 		      size = [coder decodeInt64ForKey:@"pylength"];
