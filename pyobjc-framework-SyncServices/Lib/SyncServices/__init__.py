@@ -9,6 +9,7 @@ import objc
 import CoreData
 
 from SyncServices import _metadata
+from SyncServices._SyncServices import *
 
 sys.modules['SyncServices'] = mod = objc.ObjCLazyModule('SyncServices',
     "com.apple.syncservices",

@@ -10,6 +10,7 @@ import sys
 import Foundation
 
 from AddressBook import _metadata
+from AddressBook._AddressBook import *
 
 sys.modules['AddressBook'] = mod = objc.ObjCLazyModule(
     "AddressBook",

@@ -87,6 +87,33 @@ static Protocol** compat_objc_copyProtocolList(unsigned int* outCount)
 	return protocols;
 }
 
+static Protocol*  compat_objc_getProtocol(char* name)
+{
+	uint32_t image_count, image_index;
+	image_count = _dyld_image_count();
+	for (image_index = 0; image_index < image_count; image_index++) {
+		uint32_t size = 0;
+		const struct mach_header *mh = _dyld_get_image_header(image_index);
+		intptr_t slide = _dyld_get_image_vmaddr_slide(image_index);
+		ProtocolTemplate *protos = (ProtocolTemplate*)(
+			((char *)getsectdatafromheader(mh, SEG_OBJC, "__protocol", &size)) +
+			slide);
+		uint32_t nprotos = size / sizeof(ProtocolTemplate);
+		uint32_t i;
+
+		if (nprotos == 0) continue;
+
+		for (i = 0; i < nprotos; i++) {
+			Protocol* p = (Protocol*)&protos[i];
+			if (strcmp([protocol name], name) == 0) {
+				return p;
+			}
+		}
+	}
+	return protocols;
+}
+
+
 static void
 compat_objc_registerClassPair(Class cls)
 {
@@ -788,6 +815,7 @@ Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t) = NULL;
 void (*PyObjC_objc_registerClassPair)(Class) = NULL;
 void (*PyObjC_objc_disposeClassPair)(Class) = NULL;
 Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*) = NULL;
+Protocol*  (*PyObjC_objc_getProtocol)(char* name) = NULL;
 
 BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_preclass_addIvar)(Class cls, 
@@ -1123,6 +1151,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	SETUP(objc_registerClassPair);
 	SETUP(objc_disposeClassPair);
 	SETUP(objc_copyProtocolList);
+	SETUP(objc_getProtocol);
 
 	SETUP(object_getClass);
 	SETUP(object_setClass);

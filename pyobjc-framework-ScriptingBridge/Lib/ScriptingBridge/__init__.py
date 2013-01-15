@@ -9,6 +9,7 @@ import objc
 import Foundation
 
 from ScriptingBridge import _metadata
+from ScriptingBridge._ScriptingBridge import *
 
 sys.modules['ScriptingBridge'] = mod = objc.ObjCLazyModule('ScriptingBridge',
     "com.apple.ScriptingBridge",
