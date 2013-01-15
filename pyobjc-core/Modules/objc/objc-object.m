@@ -896,6 +896,24 @@ meth_reduce(PyObject* self __attribute__((__unused__)))
 }
 
 static PyObject*
+meth_sizeof(PyObject* self __attribute__((__unused__)))
+{
+	/* Basis __sizeof__ implementation for Cocoa objects. 
+	 * This doesn't return the correct size for collections (such as NSArray),
+	 * but is better than the default implementation
+	 */
+	if (PyObjCObject_GetObject(self) == nil) {
+		return PyLong_FromSize_t(Py_TYPE(self)->tp_basicsize);
+
+	} else {
+		return PyLong_FromSize_t(
+				  Py_TYPE(self)->tp_basicsize
+				+ class_getInstanceSize(object_getClass(PyObjCObject_GetObject(self)))
+			);
+	}
+}
+
+static PyObject*
 as_cobject(PyObject* self)
 {
 	if (PyObjCObject_GetObject(self) == nil) {
@@ -1025,6 +1043,12 @@ static PyMethodDef obj_methods[] = {
 		(PyCFunction)as_ctypes_voidp,
 		METH_NOARGS,
 		"Return a ctypes.c_void_p representing this object"
+	},
+	{
+		"__sizeof__",
+		(PyCFunction)meth_sizeof,
+		METH_NOARGS,
+		0
 	},
 	{
 		"__dir__",

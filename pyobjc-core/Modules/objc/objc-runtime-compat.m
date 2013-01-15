@@ -378,6 +378,12 @@ compat_class_getName(Class cls)
 	return cls->name;
 }
 
+static size_t
+compat_class_getInstanceSize(Class cls)
+{
+	return cls->instance_size;
+}
+
 static Class 
 compat_class_getSuperclass(Class cls)
 {
@@ -764,6 +770,7 @@ const char* (*PyObjC_object_getClassName)(id obj) = NULL;
 
 Method* (*PyObjC_class_copyMethodList)(Class, unsigned int*) = NULL;
 const char*  (*PyObjC_class_getName)(Class) = NULL;
+const size_t  (*PyObjC_class_getInstanceSize)(Class) = NULL;
 Class (*PyObjC_class_getSuperclass)(Class) = NULL;
 BOOL (*PyObjC_class_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_class_addMethodList)(Class,
@@ -1075,6 +1082,7 @@ void PyObjC_SetupRuntimeCompat(void)
 	SETUP(class_copyProtocolList);
 	SETUP(class_copyMethodList);
 	SETUP(class_getName);
+	SETUP(class_getInstanceSize);
 	SETUP(class_isMetaClass);
 
 	SETUP(method_getName);

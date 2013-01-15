@@ -93,6 +93,7 @@ extern const char* (*PyObjC_object_getClassName)(id obj);
 
 extern Method* (*PyObjC_class_copyMethodList)(Class, unsigned int*);
 extern const char* (*PyObjC_class_getName)(Class);
+extern size_t (*PyObjC_class_getInstanceSize)(Class);
 extern Class (*PyObjC_class_getSuperclass)(Class);
 extern BOOL (*PyObjC_class_addMethod)(Class, SEL, IMP, const char*);
 extern BOOL (*PyObjC_class_addMethodList)(Class, 
@@ -148,6 +149,7 @@ extern void (*PyObjC_object_setIvar)(id obj, Ivar ivar, id value);
 
 #define class_copyMethodList 		PyObjC_class_copyMethodList
 #define class_getName 			PyObjC_class_getName
+#define class_getInstanceSize 		PyObjC_class_getInstanceSize
 #define class_getSuperclass 		PyObjC_class_getSuperclass
 #define class_addMethod	 		PyObjC_class_addMethod
 #define class_addMethodList		PyObjC_class_addMethodList

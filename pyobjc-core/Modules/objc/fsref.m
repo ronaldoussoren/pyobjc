@@ -49,6 +49,11 @@ static PyObject* fsref_as_bytes(PyObject* ref, void* closure __attribute__((__un
 			sizeof(FSRef));
 }
 
+static PyObject* fsref_sizeof(PyObject* ref)
+{
+	return PyLong_FromSsize_t(Py_TYPE(ref)->tp_basicsize);
+}
+
 #if USE_TOOLBOX_OBJECT_GLUE
 static PyObject* fsref_as_carbon(PyObject* ref)
 {
@@ -152,6 +157,12 @@ static PyMethodDef fsref_methods[] = {
 		"return Carbon.File.FSRef instance for this object"
 	},
 #endif
+	{
+		"__sizeof__",
+		(PyCFunction)fsref_sizeof,
+		METH_NOARGS,
+		0
+	},
 
 	{ 0, 0, 0, 0 }
 };

@@ -46,6 +46,11 @@ static PyObject* fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__u
 			sizeof(FSSpec));
 }
 
+static PyObject* fsspec_sizeof(PyObject* ref)
+{
+	        return PyLong_FromSsize_t(Py_TYPE(ref)->tp_basicsize);
+}
+
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
 static PyObject* fsspec_as_carbon(PyObject* ref)
 {
@@ -78,6 +83,12 @@ static PyMethodDef fsspec_methods[] = {
 		"return Carbon.File.FSSpec instance for this object"
 	},
 #endif
+	{
+		"__sizeof__",
+		(PyCFunction)fsspec_sizeof,
+		METH_NOARGS,
+		0
+	},
 
 	{ 0, 0, 0, 0 }
 };
