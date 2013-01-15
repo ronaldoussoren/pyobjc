@@ -1,5 +1,5 @@
-
 from PyObjCTools.TestSupport import *
+import objc
 from ScriptingBridge import *
 
 class TestSBApplicationHelper (NSObject):
@@ -9,6 +9,9 @@ class TestSBApplicationHelper (NSObject):
 class TestSBApplication (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(SBApplication.isRunning)
+
+    def testProtocols(self):
+        objc.protocolNamed('SBApplicationDelegate')
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ import objc
 import Foundation
 
 from InputMethodKit import _metadata
+from InputMethodKit._InputMethodKit import *
 
 sys.modules['InputMethodKit'] = mod = objc.ObjCLazyModule('InputMethodKit',
     "com.apple.InputMethodKit",

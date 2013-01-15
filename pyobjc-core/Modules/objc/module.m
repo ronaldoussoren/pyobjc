@@ -1044,6 +1044,27 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
 	return protocols;
 }
 
+PyDoc_STRVAR(protocolNamed_doc,
+	"_protocolNamed(name) -> Protocol\n");
+static PyObject*
+protocolNamed(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static 	char* keywords[] = { "name", NULL };
+	char* name;
+	Protocol* p;
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &name)) {
+		return NULL;
+	}
+
+	p = objc_getProtocol(name);
+	if (p == NULL) {
+		PyErr_SetString(PyExc_AttributeError, name);
+		return NULL;
+	}
+	return PyObjCFormalProtocol_ForProtocol(p);
+}
+
 
 PyDoc_STRVAR(protocolsForClass_doc,
 	"protocolsForClass(cls) -> [Protocols]\n"
@@ -2007,6 +2028,7 @@ static PyMethodDef mod_methods[] = {
 	{ "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
 	{ "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
 	{ "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
+	{ "_protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
 	{ "registerCFSignature", (PyCFunction)registerCFSignature, METH_VARARGS|METH_KEYWORDS, registerCFSignature_doc },
 #if PY_MAJOR_VERSION == 2
 	{ "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },

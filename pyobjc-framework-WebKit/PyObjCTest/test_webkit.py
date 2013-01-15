@@ -45,6 +45,18 @@ class TestWebKit (TestCase):
         self.assert_( hasattr(WebKit, 'WebConvertNSImageToCGImageRef') )
         self.assert_(isinstance(WebKit.WebConvertNSImageToCGImageRef, objc.function) )
 
+    def testProtocols(self):
+        objc.protocolNamed('DOMEventListener')
+        objc.protocolNamed('DOMEventTarget')
+        objc.protocolNamed('DOMNodeFilter')
+        objc.protocolNamed('DOMXPathNSResolver')
+        objc.protocolNamed('WebDocumentRepresentation')
+        objc.protocolNamed('WebDocumentSearching')
+        objc.protocolNamed('WebDocumentText')
+        objc.protocolNamed('WebDocumentView')
+        objc.protocolNamed('WebOpenPanelResultListener')
+        objc.protocolNamed('WebPlugInViewFactory')
+        objc.protocolNamed('WebPolicyDecisionListener')
 
 
 if __name__ == "__main__":

@@ -122,6 +122,17 @@ Version 2.5.1
   Instances of subclasses of unicode are not affected by this change, and
   can only be read back by other PyObjC programs.
 
+- Issue #43: It was no longer possible to create instances of
+  LaunchServices.LSLaunchURLSpec due to incomplete metadata.
+
+- Issue #41: the 'install.py' script in the root of pyobjc repository 
+  failed to perform an install when running in a clean checkout of the tree.
+
+- Issue #44: the various Cocoa frameworks only export @protocol defintions when
+  they happen to be used by code in the framework. Added extensions to the
+  various framework wrappers to ensure that all protocols are available to
+  python code.
+
 Version 2.5
 -----------
 

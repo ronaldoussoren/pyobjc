@@ -52,6 +52,22 @@ class TestLSOpen (TestCase):
         self.assertHasAttr(v, "argv")
         self.assertHasAttr(v, "initialEvent")
 
+    def testLSLaunchFSRefSpec(self):
+        o = LSLaunchURLSpec()
+        self.assertEqual(o.appURL, None)
+        self.assertEqual(o.itemURLs, None)
+        self.assertEqual(o.passThruParams, None)
+        self.assertEqual(o.launchFlags, 0)
+        self.assertEqual(o.asyncRefCon, None)
+
+        o = LSLaunchFSRefSpec()
+        self.assertEqual(o.appRef, None)
+        self.assertEqual(o.numDocs, 0)
+        self.assertEqual(o.itemRefs, None)
+        self.assertEqual(o.passThruParams, None)
+        self.assertEqual(o.launchFlags, 0)
+        self.assertEqual(o.asyncRefCon, None)
+
     @expectedFailure
     def testUnsupportedStructs(self):
         self.fail("LSLaunchFSRefSpec")

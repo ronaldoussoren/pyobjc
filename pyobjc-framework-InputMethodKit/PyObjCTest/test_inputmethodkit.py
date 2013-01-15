@@ -38,6 +38,10 @@ class TestInputMethodKit (unittest.TestCase):
         self.assert_( hasattr(InputMethodKit.protocols, 'IMKServerInput') )
         self.assert_( isinstance(InputMethodKit.protocols.IMKServerInput, objc.informal_protocol) )
 
+    def testProtocols2(self):
+        objc.protocolNamed('IMKMouseHandling')
+        objc.protocolNamed('IMKStateSetting')
+
 
 
 if __name__ == "__main__":

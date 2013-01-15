@@ -14,10 +14,12 @@
        			[ "flags", "filetype", "creator", "extension" ] ]
     },
     "LSLaunchFSRefSpec": {
-       "pack": 2
+       "pack": 2,
+       "fieldnames": [  "appRef", "numDocs", "itemRefs", "passThruParams", "launchFlags", "asyncRefCon" ]
     },
-    "LSLaunchFSRefSpec": {
-       "pack": 2
+    "LSLaunchURLSpec": {
+       "pack": 2,
+       "fieldnames": [  "appURL", "itemURLs", "passThruParams", "launchFlags", "asyncRefCon" ]
     }
   },
   "opaque": {

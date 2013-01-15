@@ -9,6 +9,7 @@ import sys
 import Foundation
 
 from WebKit import _metadata
+from WebKit._WebKit import *
 
 sys.modules['WebKit'] = mod = objc.ObjCLazyModule(
     "WebKit",

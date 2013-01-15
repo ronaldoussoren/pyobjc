@@ -10,6 +10,7 @@ import objc
 import Foundation
 
 from CoreLocation import _metadata
+from CoreLocation._CoreLocation import *
 import os
 
 if int(os.uname()[2].split('.')[0]) < 12:

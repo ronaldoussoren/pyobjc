@@ -13,6 +13,7 @@
 #include "_Foundation_netservice.m"
 #include "_Foundation_string.m"
 #include "_Foundation_typecode.m"
+#include "_Foundation_protocols.m"
 
 static PyMethodDef mod_methods[] = {
 	FOUNDATION_TYPECODE_METHODS
