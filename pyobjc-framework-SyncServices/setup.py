@@ -12,7 +12,8 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 setup(
     name='pyobjc-framework-SyncServices',
@@ -27,4 +28,15 @@ setup(
         'pyobjc-framework-Cocoa>=2.5.1b1',
         'pyobjc-framework-CoreData>=2.5.1b1',
     ],
+    ext_modules = [
+        Extension("SyncServices._SyncServices",
+            [ "Modules/_SyncServices.m" ],
+            extra_link_args=["-framework", "SyncServices"],
+            depends=[
+                os.path.join('Modules', fn)
+                    for fn in os.listdir('Modules')
+                    if fn.startswith('_SyncServices')
+            ]
+        ),
+    ]
 )

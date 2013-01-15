@@ -7,7 +7,8 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 '''
-from pyobjc_setup import setup
+from pyobjc_setup import setup, Extension
+import os
 
 setup(
     min_os_level='10.5',
@@ -22,4 +23,15 @@ setup(
         'pyobjc-core>=2.5.1b1',
         'pyobjc-framework-Cocoa>=2.5.1b1',
     ],
+    ext_modules = [
+        Extension("InputMethodKit._InputMethodKit",
+            [ "Modules/_InputMethodKit.m" ],
+            extra_link_args=["-framework", "InputMethodKit"],
+            depends=[
+                os.path.join('Modules', fn)
+                    for fn in os.listdir('Modules')
+                    if fn.startswith('_InputMethodKit')
+            ]
+       ),
+   ]
 )
