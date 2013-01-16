@@ -118,6 +118,8 @@ typedef int Py_ssize_t;
 
 #if PY_MAJOR_VERSION == 2
 
+typedef long Py_hash_t;
+
 #ifndef Py_ARG_BYTES
 #define Py_ARG_BYTES "z"
 #endif
