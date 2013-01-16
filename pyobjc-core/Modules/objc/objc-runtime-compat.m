@@ -87,7 +87,7 @@ static Protocol** compat_objc_copyProtocolList(unsigned int* outCount)
 	return protocols;
 }
 
-static Protocol*  compat_objc_getProtocol(char* name)
+static Protocol*  compat_objc_getProtocol(const char* name)
 {
 	uint32_t image_count, image_index;
 	image_count = _dyld_image_count();
@@ -729,7 +729,6 @@ compat_protocol_copyMethodDescriptionList(Protocol *p, BOOL isRequiredMethod, BO
 		result[*outCount].types = list->list[i].types;
 		(*outCount)++;
 	}
-
 	return result;
 }
 
@@ -815,7 +814,7 @@ Class (*PyObjC_objc_allocateClassPair)(Class, const char*, size_t) = NULL;
 void (*PyObjC_objc_registerClassPair)(Class) = NULL;
 void (*PyObjC_objc_disposeClassPair)(Class) = NULL;
 Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int*) = NULL;
-Protocol*  (*PyObjC_objc_getProtocol)(char* name) = NULL;
+Protocol*  (*PyObjC_objc_getProtocol)(const char* name) = NULL;
 
 BOOL (*PyObjC_preclass_addMethod)(Class, SEL, IMP, const char*) = NULL;
 BOOL (*PyObjC_preclass_addIvar)(Class cls, 
@@ -950,6 +949,7 @@ void (*PyObjC_protocol_addProtocol)(Protocol*, Protocol*) = NULL;
 
 #ifndef __LP64__
 struct Protocol_struct {
+	Class _isa;
 	char *protocol_name;
 	struct objc_protocol_list *protocol_list;
 	struct objc_method_description_list *instance_methods, *class_methods;
@@ -1014,6 +1014,10 @@ static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const
 		(*plist)->count = 0;
 	} else {
 		*plist = realloc(*plist, sizeof(struct objc_method_description_list) + (2+((*plist)->count)*sizeof(struct objc_method_description)));
+		if (*plist == NULL) {
+			/* Cannot report errors */
+			abort();
+		}
 	}
 	(*plist)->list[(*plist)->count].name = sel;
 	(*plist)->list[(*plist)->count].types = strdup(types);
@@ -1021,10 +1025,10 @@ static void compat_protocol_addMethodDescription(Protocol* proto, SEL sel, const
 		/* Cannot report errors */
 		abort();
 	}
-
-	(*plist)->list[(*plist)->count+1].name = NULL;
-	(*plist)->list[(*plist)->count+1].types = NULL;
 	(*plist)->count++;
+
+	(*plist)->list[(*plist)->count].name = NULL;
+	(*plist)->list[(*plist)->count].types = NULL;
 }
 
 static void compat_protocol_addProtocol(Protocol* proto, Protocol* newProto)
