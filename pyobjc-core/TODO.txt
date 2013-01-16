@@ -49,8 +49,6 @@ Short term
   object has the ascii representation and then directly access the UCS1 buffer instead
   of converting to a bytes object first. This should slightly improve performance.
 
-* -O4 crashes (py2.7), but works fine on 'default' branch.
-
 
 Medium term
 -----------
