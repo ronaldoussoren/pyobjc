@@ -7,7 +7,7 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p;
-#if PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_5
+#if PyObjC_BUILD_RELEASE >= 1005
     p = PyObjC_IdToPython(@protocol(DOMEventListener)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(DOMEventTarget)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(DOMNodeFilter)); Py_XDECREF(p);
@@ -19,5 +19,5 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WebOpenPanelResultListener)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WebPolicyDecisionListener)); Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_5 */
+#endif /* PyObjC_BUILD_RELEASE >= 1005 */
 }

@@ -7,7 +7,7 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p;
-#if PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_6
+#if PyObjC_BUILD_RELEASE >= 1006
     p = PyObjC_IdToPython(@protocol(NSAlertDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSAnimatablePropertyContainer)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSAnimationDelegate)); Py_XDECREF(p);
@@ -64,8 +64,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSUserInterfaceValidations)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSValidatedUserInterfaceItem)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSWindowDelegate)); Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_6 */
-#if PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_7
+#endif /* PyObjC_BUILD_RELEASE >= 1006 */
+#if PyObjC_BUILD_RELEASE >= 1007
     p = PyObjC_IdToPython(@protocol(NSDraggingDestination)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSDraggingSource)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSPopoverDelegate)); Py_XDECREF(p);
@@ -74,10 +74,10 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSTextLayoutOrientationProvider)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserInterfaceItemIdentification)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSWindowRestoration)); Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_7 */
-#if PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_8
+#endif /* PyObjC_BUILD_RELEASE >= 1007 */
+#if PyObjC_BUILD_RELEASE >= 1008
     p = PyObjC_IdToPython(@protocol(NSPageControllerDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSSharingServiceDelegate)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSSharingServicePickerDelegate)); Py_XDECREF(p);
-#endif /* PyObjC_BUILD_RELEASE >= MAC_OS_X_VERSION_10_8 */
+#endif /* PyObjC_BUILD_RELEASE >= 1008 */
 }
