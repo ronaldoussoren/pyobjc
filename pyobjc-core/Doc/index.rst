@@ -19,6 +19,7 @@ Contents:
    xcode
    blocks
    objc-gc
+   type-wrapper
    metadata/index
    api/index
    dev/index
