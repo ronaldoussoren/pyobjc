@@ -749,7 +749,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 	} else if (sel_isEqual(aSelector, @selector(replacementObjectForKeyedArchiver:))){
 		NSObject*	c;
-		NSObject* archiver;
+		NSKeyedArchiver* archiver;
 
 		[invocation getArgument:&archiver atIndex:2];
 		c = [self replacementObjectForKeyedArchiver:archiver];
@@ -759,7 +759,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 	} else if (sel_isEqual(aSelector, @selector(replacementObjectForArchiver:))){
 		NSObject*	c;
-		NSObject* archiver;
+		NSArchiver* archiver;
 
 		[invocation getArgument:&archiver atIndex:2];
 		c = [self replacementObjectForArchiver:archiver];
@@ -769,7 +769,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 	} else if (sel_isEqual(aSelector, @selector(replacementObjectForCoder:))){
 		NSObject*	c;
-		NSObject* archiver;
+		NSCoder* archiver;
 
 		[invocation getArgument:&archiver atIndex:2];
 		c = [self replacementObjectForCoder:archiver];
@@ -779,7 +779,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 	} else if (sel_isEqual(aSelector, @selector(replacementObjectForPortCoder:))){
 		NSObject*	c;
-		NSObject* archiver;
+		NSPortCoder* archiver;
 
 		[invocation getArgument:&archiver atIndex:2];
 		c = [self replacementObjectForPortCoder:archiver];

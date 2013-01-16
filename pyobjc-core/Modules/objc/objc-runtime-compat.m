@@ -105,12 +105,12 @@ static Protocol*  compat_objc_getProtocol(char* name)
 
 		for (i = 0; i < nprotos; i++) {
 			Protocol* p = (Protocol*)&protos[i];
-			if (strcmp([protocol name], name) == 0) {
+			if (strcmp([p name], name) == 0) {
 				return p;
 			}
 		}
 	}
-	return protocols;
+	return nil;
 }
 
 
