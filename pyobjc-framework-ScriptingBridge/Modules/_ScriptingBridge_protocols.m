@@ -7,5 +7,7 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p;
+#if PyObjC_BUILD_RELEASE >= 1005
     p = PyObjC_IdToPython(@protocol(SBApplicationDelegate)); Py_XDECREF(p);
+#endif /* PyObjC_BUILD_RELEASE >= 1005 */
 }
