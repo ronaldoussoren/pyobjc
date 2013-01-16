@@ -5,7 +5,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonArray 
 
-+ (instancetype)depythonifyObject:(PyObject*)object
++ (OC_PythonArray*)depythonifyObject:(PyObject*)object
 {
 	Py_ssize_t i, len;
 	
@@ -51,7 +51,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+ (instancetype)arrayWithPythonObject:(PyObject*)v
++ (OC_PythonArray*)arrayWithPythonObject:(PyObject*)v
 {
 	OC_PythonArray* res;
 
