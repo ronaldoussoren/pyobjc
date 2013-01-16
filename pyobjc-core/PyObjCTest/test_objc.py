@@ -106,7 +106,7 @@ class TestPickle(TestCase):
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
 
-    @onlyIf(sys.version_info[0] == 2, "python 2.x test")
+    @onlyPython2
     def testCPicklePure(self):
         import cPickle as pickle
 
