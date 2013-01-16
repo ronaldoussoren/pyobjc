@@ -96,15 +96,28 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
 
 	if (cobject != NULL && PyCapsule_CheckExact(cobject)) {
 		NSObject* p = PyCapsule_GetPointer(cobject, "objc.__object__");
+		if (PyErr_Occurred()) {
+			return NULL;
+		}
 
 		return PyObjC_IdToPython(p);
 
 	} else if (c_void_p != NULL) {
 		NSObject* p;
+		PyObject* attrval;
 
-		PyObject* attrval = PyObject_GetAttrString(c_void_p, "value");
-		if (attrval == NULL) {
-			return NULL;
+		if (PyLong_Check(c_void_p)
+#if PY_MAJOR_VERSION == 2
+				|| PyInt_Check(c_void_p)
+#endif
+			) {
+				attrval = c_void_p;
+				Py_INCREF(attrval);
+		} else {
+			attrval = PyObject_GetAttrString(c_void_p, "value");
+			if (attrval == NULL) {
+				return NULL;
+			}
 		}
 
 		if (
