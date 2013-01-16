@@ -10,6 +10,7 @@ class TestSBApplication (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(SBApplication.isRunning)
 
+    @min_os_level('10.6')
     def testProtocols(self):
         objc.protocolNamed('SBApplicationDelegate')
 

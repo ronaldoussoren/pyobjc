@@ -1,6 +1,7 @@
 
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
+import os
 
 try:
     unicode
@@ -26,6 +27,9 @@ class TestCIImageProvider (TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIImageProviderTileSize, unicode)
         self.assertIsInstance(kCIImageProviderUserInfo, unicode)
+
+    @min_os_level('10.6')
+    def testConstants10_6(self):
         self.assertIsInstance(kCIOutputNativeSizeKey, unicode)
 
 

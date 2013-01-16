@@ -12,6 +12,8 @@ class TestCGPDFContentStream (TestCase):
             pdf_path = "/Library/Documentation//Applications/iWeb/Acknowledgements.pdf"
         elif os.path.exists("/Library/Documentation/Applications/iMovie/Acknowledgements.pdf"):
             pdf_path = "/Library/Documentation/Applications/iMovie/Acknowledgements.pdf"
+        elif os.path.exists("/Library/Documentation/WebObjects/Acknowlegdements.pdf"):
+            pdf_path = "/Library/Documentation/WebObjects/Acknowlegdements.pdf"
         else:
             self.fail("No test PDF file found")
 
