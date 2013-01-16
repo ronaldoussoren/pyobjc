@@ -135,18 +135,6 @@ class TestRegressions(TestCase):
         o = InitializeTestClass.new()
         self.assertEqual(len(calls), 1)
 
-    @expectedFailure # XXX: private/protected method support is no longer present
-    def testPrivateIntrospection(self):
-        o = testbndl.PyObjC_TestClass4.alloc().init()
-        self.assertEqual(o._privateMethodWithArg_(1.5), 1)
-        self.assertEqual(o._privateMethodWithArg_(-2.5), -2)
-
-        imp = testbndl.PyObjC_TestClass4.instanceMethodForSelector_('_privateMethodWithArg:')
-        self.assertEqual(imp.signature, b'i@:f')
-
-        sel = testbndl.PyObjC_TestClass4._privateMethodWithArg_
-        self.assertEqual(sel.signature, b'i@:f')
-
     def testStructReturnPy(self):
         o = ReturnAStruct.alloc().init()
         p = structargs.StructArgClass.alloc().init()

@@ -454,7 +454,7 @@ if '-O0' in get_config_var('CFLAGS'):
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
-if 0:
+if 1:
     # XXX: This block is enabled for two reasons:
     # 1) Testsuite crashes with an incomplete testcase (python2.7, OSX 10.8)
     # 2) There should be a build-time check to see if these options are supported
