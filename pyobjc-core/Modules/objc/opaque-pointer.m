@@ -82,26 +82,91 @@ static PyMethodDef opaque_methods[] = {
 static PyObject* 
 opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-static  char* keywords[] = { "cobject", NULL };
-	PyObject* arg = NULL;
+static  char* keywords[] = { "cobject", "c_void_p", NULL };
+	PyObject* cobject = NULL;
+	PyObject* c_void_p = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", keywords, &arg)) {
+	if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
 		return NULL;
 	}
 
-	if (arg == NULL || !PyCapsule_CheckExact(arg)) {
-		PyErr_Format(PyExc_TypeError, "Cannot create %s objects",
-				type->tp_name);
+	if (cobject != NULL && c_void_p != NULL) {
+		PyErr_SetString(PyExc_ValueError,
+			"pass 'cobject' or 'c_void_p', not both");
 		return NULL;
-	} else {
+	}
+
+	if (cobject != NULL) {
 		OpaquePointerObject* result;
+		void* p;
+		if (!PyCapsule_CheckExact(cobject)) {
+			PyErr_SetString(PyExc_TypeError, 
+			 	"'cobject' argument is not a PyCapsule");
+			return NULL;
+		}
+		p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
+		if (PyErr_Occurred()) {
+			return NULL;
+		}
+
 
 		result = PyObject_New(OpaquePointerObject, type);
 		if (result == NULL) {
 			return NULL;
 		}
-		result->pointer_value = PyCapsule_GetPointer(arg, "objc.__opaque__");
+		result->pointer_value = p;
 		return (PyObject*)result;
+
+	} else if (c_void_p != NULL) {
+		OpaquePointerObject* result;
+		void* p;
+		PyObject* attrval;
+
+		if (PyLong_Check(c_void_p)
+#if PY_MAJOR_VERSION == 2
+				|| PyInt_Check(c_void_p)
+#endif
+			) {
+				attrval = c_void_p;
+				Py_INCREF(attrval);
+		} else {
+			attrval = PyObject_GetAttrString(c_void_p, "value");
+			if (attrval == NULL) {
+				return NULL;
+			}
+		}
+
+		if (
+#if PY_MAJOR_VERSION == 2
+			PyInt_Check(attrval) ||
+			/* NOTE: PyLong_AsVoidPtr works on Int objects as well */
+#endif /* PY_MAJOR_VERSION == 2 */
+			PyLong_Check(attrval)
+		) {
+			p = PyLong_AsVoidPtr(attrval);
+			if (p == NULL && PyErr_Occurred()) {
+				Py_DECREF(attrval);
+				return NULL;
+			}
+
+		} else {
+			PyErr_SetString(PyExc_ValueError,
+				"c_void_p.value is not an integer");
+			return NULL;
+		}
+		Py_DECREF(attrval);
+		result = PyObject_New(OpaquePointerObject, type);
+		if (result == NULL) {
+			return NULL;
+		}
+		result->pointer_value = p;
+		return (PyObject*)result;
+		
+
+	} else {
+		PyErr_Format(PyExc_TypeError, "Cannot create %s objects",
+				type->tp_name);
+		return NULL;
 	}
 }
 
