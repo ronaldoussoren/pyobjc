@@ -20,8 +20,9 @@ class TestISyncChange (TestCase):
         self.assertIsInstance(ISyncChangePropertyNameKey, unicode)
         self.assertIsInstance(ISyncChangePropertyValueKey, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level('10.6')
     def testConstants10_5(self):
+        # Document for 10.5, but not actually present there
         self.assertIsInstance(ISyncChangePropertyValueIsDefaultKey, unicode)
 
 if __name__ == "__main__":
