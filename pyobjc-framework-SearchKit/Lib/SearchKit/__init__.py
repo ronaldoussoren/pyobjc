@@ -25,7 +25,7 @@ try:
     mod.SKIndexGetTypeID
     mod.SKDocumentRef
 
-except NameError:
+except AttributeError:
     # SKIndexGetTypeID is documented, but not actually exported by Leopard. Try to
     # emulate the missing functionality.
     #
@@ -37,7 +37,7 @@ except NameError:
         pool = NSAutoreleasePool.alloc().init()
         try:
             rI = mod.SKIndexCreateWithMutableData(NSMutableData.data(),
-                    None, kSKIndexInverted, None)
+                    None, mod.kSKIndexInverted, None)
 
             indexID = mod.CFGetTypeID(rI)
 
@@ -102,7 +102,7 @@ except NameError:
         # when the framework loader calls it the first time around,
         # by this time the framework is fully initialized and we get
         # the correct result.
-        mod.SKDocumentRef = objc.registerCFSignature(
+        SKDocumentRef = objc.registerCFSignature(
                 "SKDocumentRef", b"@", mod.SKDocumentGetTypeID())
 
 
