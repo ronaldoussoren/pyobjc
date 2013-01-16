@@ -41,7 +41,7 @@ The easiest way to install PyObjC from the repository is by using the
 
 First create a check-out::
 
-  $ hg clone https://ronaldoussoren@bitbucket.org/ronaldoussoren/pyobjc
+  $ hg clone https://bitbucket.org/ronaldoussoren/pyobjc
 
 Then perform the installation::
 

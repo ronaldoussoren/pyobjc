@@ -115,7 +115,7 @@ extern const char*  (*PyObjC_ivar_getTypeEncoding)(Ivar);
 extern ptrdiff_t    (*PyObjC_ivar_getOffset)(Ivar);
 
 extern Protocol** (*PyObjC_objc_copyProtocolList)(unsigned int* outCount);
-extern Protocol*  (*PyObjC_objc_getProtocol)(char* name);
+extern Protocol*  (*PyObjC_objc_getProtocol)(const char* name);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyInstanceMethodDescriptionList)(Protocol* proto);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyClassMethodDescriptionList)(Protocol *proto);
 extern struct objc_method_description_list* (*PyObjC_protocol_copyOptionalInstanceMethodDescriptionList)(Protocol *proto);

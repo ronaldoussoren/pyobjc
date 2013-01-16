@@ -69,7 +69,10 @@ class TestCGImage (TestCase):
         v = CGImageCreateCopy(image)
         self.assertIsInstance(v, CGImageRef)
 
-        with open('/System/Library/CoreServices/DefaultDesktop.jpg', 'rb') as fp:
+        fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+        if not os.path.exists(fn):
+            fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+        with open(fn, 'rb') as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithJPEGDataProvider)

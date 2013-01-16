@@ -68,7 +68,7 @@ static PyObject* mapTypes = NULL;
 
 @implementation OC_PythonDictionary 
 
-+ (instancetype)depythonifyObject:(PyObject*)object
++ (OC_PythonDictionary*)depythonifyObject:(PyObject*)object
 {
 	Py_ssize_t i, len;
 	
@@ -114,7 +114,7 @@ static PyObject* mapTypes = NULL;
 	return result;
 }
 
-+(instancetype)dictionaryWithPythonObject:(PyObject*)v
++(OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)v
 {
 	OC_PythonDictionary* res = 
 		[[OC_PythonDictionary alloc] initWithPythonObject:v];
@@ -122,7 +122,7 @@ static PyObject* mapTypes = NULL;
 	return res;
 }
 
--(id)initWithPythonObject:(PyObject*)v
+-(OC_PythonDictionary*)initWithPythonObject:(PyObject*)v
 {
 	self = [super init];
 	if (unlikely(self == nil)) return nil;

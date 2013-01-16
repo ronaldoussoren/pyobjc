@@ -223,6 +223,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
 	struct objc_method_description * methods;
 	unsigned int method_count, i;
 
+
 	methods = protocol_copyMethodDescriptionList(protocol, isRequired, isInstance, &method_count);
 	if (!methods) {
 		return 0;

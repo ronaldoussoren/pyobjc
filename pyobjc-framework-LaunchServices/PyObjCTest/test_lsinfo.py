@@ -211,7 +211,11 @@ class TestLSInfo (TestCase):
 
 
         default_role = LSCopyDefaultRoleHandlerForContentType("public.plain-text", kLSRolesAll)
-        self.assertIsInstance(default_role, unicode)
+        if os_release() <= '10.5':
+            if default_role is not None:
+                self.assertIsInstance(default_role, unicode)
+        else:
+            self.assertIsInstance(default_role, unicode)
 
         v = LSCopyAllRoleHandlersForContentType("public.plain-text", kLSRolesAll)
         self.assertIsInstance(v, CFArrayRef)
@@ -230,7 +234,11 @@ class TestLSInfo (TestCase):
 
         self.assertResultIsCFRetained(LSCopyDefaultHandlerForURLScheme)
         default_handler = LSCopyDefaultHandlerForURLScheme("http")
-        self.assertIsInstance(default_handler, unicode)
+        if os_release() <= '10.5':
+            if default_handler is not None:
+                self.assertIsInstance(default_handler, unicode)
+        else:
+            self.assertIsInstance(default_handler, unicode)
 
         self.assertResultIsCFRetained(LSCopyAllHandlersForURLScheme)
         v = LSCopyAllHandlersForURLScheme("http")

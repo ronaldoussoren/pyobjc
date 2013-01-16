@@ -123,7 +123,7 @@ class TestSCNetworkConfiguration (TestCase):
         for item in r:
             self.assertTrue(isinstance(item, unicode))
 
-        r = SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[1])
+        r = SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[0])
         self.assertTrue(isinstance(r, CFArrayRef))
 
         if sys.byteorder == 'little':
@@ -201,32 +201,33 @@ class TestSCNetworkConfiguration (TestCase):
         a = SCVLANInterfaceCopyAvailablePhysicalInterfaces()
         self.assertTrue(isinstance(a, CFArrayRef))
 
-        iface = SCVLANInterfaceCreate(prefs, a[0], 99)
-        self.assertTrue(isinstance(iface, SCVLANInterfaceRef))
+        if len(a) != 0:
+            iface = SCVLANInterfaceCreate(prefs, a[0], 99)
+            self.assertTrue(isinstance(iface, SCVLANInterfaceRef))
 
-        r = SCVLANInterfaceGetPhysicalInterface(iface)
-        self.assertEqual(r, a[0])
+            r = SCVLANInterfaceGetPhysicalInterface(iface)
+            self.assertEqual(r, a[0])
 
-        t = SCVLANInterfaceGetTag(iface)
-        self.assertEquals(t, 99)
+            t = SCVLANInterfaceGetTag(iface)
+            self.assertEquals(t, 99)
 
-        t = SCVLANInterfaceGetOptions(iface)
-        self.assertTrue(t is None or isinstance(t, CFDictionaryRef))
+            t = SCVLANInterfaceGetOptions(iface)
+            self.assertTrue(t is None or isinstance(t, CFDictionaryRef))
 
-        r = SCVLANInterfaceSetPhysicalInterfaceAndTag(iface, a[0], 42)
-        self.assertIs(r, True)
+            r = SCVLANInterfaceSetPhysicalInterfaceAndTag(iface, a[0], 42)
+            self.assertIs(r, True)
 
-        r = SCVLANInterfaceSetLocalizedDisplayName(iface, "octest")
-        self.assertIs(r, True)
+            r = SCVLANInterfaceSetLocalizedDisplayName(iface, "octest")
+            self.assertIs(r, True)
 
-        r = SCVLANInterfaceSetOptions(iface, {"name": "foo"})
-        self.assertIs(r, True)
+            r = SCVLANInterfaceSetOptions(iface, {"name": "foo"})
+            self.assertIs(r, True)
 
-        t = SCVLANInterfaceGetOptions(iface)
-        self.assertTrue(isinstance(t, CFDictionaryRef))
+            t = SCVLANInterfaceGetOptions(iface)
+            self.assertTrue(isinstance(t, CFDictionaryRef))
 
-        r = SCVLANInterfaceRemove(iface)
-        self.assertTrue(r is True)
+            r = SCVLANInterfaceRemove(iface)
+            self.assertTrue(r is True)
 
         r = SCNetworkProtocolGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))

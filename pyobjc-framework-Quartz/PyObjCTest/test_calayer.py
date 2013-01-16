@@ -47,7 +47,6 @@ class TestCALayer (TestCase):
 
     @min_os_level('10.5')
     def testMethods(self):
-        self.assertResultIsBOOL(CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(CALayer.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(CALayer.isHidden)
         self.assertArgIsBOOL(CALayer.setHidden_, 0)
@@ -65,6 +64,7 @@ class TestCALayer (TestCase):
 
     @min_os_level('10.6')
     def testMethods10_6(self):
+        self.assertResultIsBOOL(CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(CALayer.isGeometryFlipped)
         self.assertArgIsBOOL(CALayer.setGeometryFlipped_, 0)
         self.assertResultIsBOOL(CALayer.contentsAreFlipped)

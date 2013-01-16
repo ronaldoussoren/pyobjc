@@ -13,6 +13,9 @@
     "kSCNetworkConnectionSelectionOptionOnDemandHostName": { "unicode": true },
     "kSCNetworkConnectionSelectionOptionOnDemandRetry": { "unicode": true }
   },
+  "externs": {
+    "kSCNetworkInterfaceIPv4": { "magic_cookie": true, "comment": "not actually a magic cookie, workaround for a crash on OSX 10.5" }
+  },
   "cftypes": {
    "SCBondStatusRef": {
     "gettypeid_func": "SCBondStatusGetTypeID"

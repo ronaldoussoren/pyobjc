@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 import Cocoa
 
 class TestProtocolsExisting (TestCase):
-    def testProtocols(self):
+    @min_os_level('10.6')
+    def testProtocols10_6(self):
         objc.protocolNamed('NSAlertDelegate')
         objc.protocolNamed('NSAnimatablePropertyContainer')
         objc.protocolNamed('NSAnimationDelegate')

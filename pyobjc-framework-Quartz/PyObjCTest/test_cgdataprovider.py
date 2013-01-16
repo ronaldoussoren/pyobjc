@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Foundation import NSData
 
-import sys
+import sys, os
 
 if sys.version_info[0] != 2:
     def buffer(value):
@@ -19,9 +19,11 @@ class TestCGDataProvider (TestCase):
         provider = CGDataProviderCreateWithCFData(buffer("data"))
         self.assertIsInstance(provider, CGDataProviderRef)
 
+        fn = "/Library/Documentation/Acknowledgements.rtf"
+        if not os.path.exists(fn):
+            fn = "/Library/Documentation/Airport Acknowledgements.rtf"
         url = CFURLCreateWithFileSystemPath(None,
-                "/Library/Documentation/Acknowledgements.rtf",
-                kCFURLPOSIXPathStyle, False)
+                fn, kCFURLPOSIXPathStyle, False)
 
         provider = CGDataProviderCreateWithURL(url)
         self.assertIsInstance(provider, CGDataProviderRef)
