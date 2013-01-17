@@ -29,7 +29,6 @@ static PyMethodDef mod_methods[] = {
 PyObjC_MODULE_INIT(_AppKit)
 {
 	PyObject* m;
-	Protocol* p;
 	m = PyObjC_MODULE_CREATE(_AppKit)
 	if (!m) { 
 		PyObjC_INITERROR();
@@ -43,15 +42,6 @@ PyObjC_MODULE_INIT(_AppKit)
 	if (setup_nsquickdrawview(m) == -1) PyObjC_INITERROR();
 	if (setup_nsview(m) == -1) PyObjC_INITERROR();
 	if (setup_nswindows(m) == -1) PyObjC_INITERROR();
-
-	p = @protocol(NSSpeechSynthesizerDelegate);
-	if (p != nil) {
-		PyObject* r = PyObjC_ObjCToPython("@", p);
-		Py_XDECREF(r);
-		if (r == NULL) {
-			PyObjC_INITERROR();
-		}
-	}
 
 	PyObjC_INITDONE();
 }
