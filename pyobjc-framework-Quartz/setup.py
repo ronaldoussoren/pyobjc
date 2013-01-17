@@ -77,6 +77,6 @@ setup(
         Extension('Quartz.CoreGraphics._sortandmap',
             [ 'Modules/_sortandmap.m' ]),
         Extension('Quartz.CoreGraphics._coregraphics',
-            [ 'Modules/_coregraphics.m' ]),
+            [ 'Modules/_coregraphics.m' ], extra_link_args=["-framework", "ApplicationServices"]),
     ],
 )

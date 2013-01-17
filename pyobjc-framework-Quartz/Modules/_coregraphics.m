@@ -4,7 +4,30 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
+
 #import <ApplicationServices/ApplicationServices.h>
+
+#if PyObjC_BUILD_RELEASE >= 1006
+#  if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
+
+/* 
+ * Implementation of poor-mans weak linking for a 10.6+ symbol, needed
+ * to be able to use a binary created on OSX 10.8 on a 10.5 system.
+ *
+ * XXX: The same mechanism should be used for the other functions wrapped
+ *      in this file.
+ */
+#include <dlfcn.h>
+static CGContextRef (*ptr_CGBitmapContextCreateWithData)(
+		   void *data, size_t width, size_t height, size_t bitsPerComponent, size_t bytesPerRow,
+		  CGColorSpaceRef space, CGBitmapInfo bitmapInfo, CGBitmapContextReleaseDataCallback releaseCallback,
+		   void *releaseInfo);
+#  else
+#    define ptr_CGBitmapContextCreateWithData CGBitmapContextCreateWithData
+#  endif
+#endif
+ 
+
 
 #if PyObjC_BUILD_RELEASE >= 1005
 static PyObject*
@@ -437,7 +460,7 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
 
 	CGContextRef ctx = NULL;
 	PyObjC_DURING
-		ctx = CGBitmapContextCreateWithData(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback, releaseInfo);
+		ctx = ptr_CGBitmapContextCreateWithData(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback, releaseInfo);
 
 	PyObjC_HANDLER
 		ctx = NULL;
@@ -545,6 +568,20 @@ PyObjC_MODULE_INIT(_coregraphics)
 		}
 	}
 #endif 
+
+
+#if (PyObjC_BUILD_RELEASE >= 1006) && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
+	{
+		void* dl = dlopen(NULL, RTLD_GLOBAL);
+		ptr_CGBitmapContextCreateWithData = dlsym(dl, "CGBitmapContextCreateWithData");
+		if (ptr_CGBitmapContextCreateWithData == NULL) {
+			if (PyDict_DelItemString(d, "CGBitmapContextCreateWithData") < 0) {
+				PyObjC_INITERROR();
+			}
+		}
+		/* Don't call dlclose */
+	}
+#endif
 
 	PyObjC_INITDONE();
 }
