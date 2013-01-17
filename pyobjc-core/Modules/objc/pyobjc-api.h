@@ -533,4 +533,43 @@ extern struct pyobjc_api	objc_api;
 
 #endif
 
+
+/*
+ * Explicit support for weak-linking functions
+ *
+ * For some reason implicit weak-linking using '#pragma weak' and 
+ * '__attribute__((__weak__))' doesn't work (at least of some functions) 
+ * when building on 10.8 and deploying to * 10.5) 
+ *
+ * The code below introduces infrastructure that makes it fairly 
+ * painless to do weak-linking anyway.
+ *
+ * Usage for function CFArrayCreate:
+ * * Use 'WEAK_LINKED_NAME(CFArrayCreate)' at the start of a wrapper module
+ * * Use 'ptr_CFArrayCreate' to actually call the function, don't use the
+ *   actual function.
+ * * Use 'CHECK_WEAK_LINK(module_dict, CFArrayCreate)' in the module init function, 
+ *   this will remove "CFArrayCreate" from the module dictionary when the function
+ *   cannot by found by dlsym.
+ * * All access to function should be done through weak-refs like this.
+ *
+ * XXX: Find a way to directly call the function when MAC_OS_X_VERSION_MIN_REQUIRED
+ *      is high enought that the function will always be found (and weak linking
+ *      isn't necessary).
+ */
+#include <dlfcn.h>
+
+#define WEAK_LINKED_NAME(NAME) static __typeof__(&NAME) ptr_ ## NAME
+#define CHECK_WEAK_LINK(module_dict, NAME) \
+	do {											\
+		void* dl = dlopen(NULL, RTLD_GLOBAL);						\
+		ptr_ ## NAME = dlsym(dl, PyObjC_STR(NAME));					\
+		dlclose(dl);									\
+		if (ptr_ ## NAME == NULL) {							\
+			if (PyDict_DelItemString((module_dict), PyObjC_STR(NAME)) < 0) {	\
+				PyObjC_INITERROR();						\
+			}									\
+		}										\
+	} while(0)
+
 #endif /*  PyObjC_API_H */
