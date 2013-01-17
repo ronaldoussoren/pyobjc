@@ -51,6 +51,13 @@ Version 2.5.1
   This is the reverse of the *__c_void_p__()* method that was added
   earlier.
 
+- Issue #46: It was not possible to use the Quartz.CoreGraphics module
+  on OSX 10.5 when the binary was build on 10.8 (and using a 10.5 deployment
+  target).
+
+  Simular issues may be present in some of the other framework wrappers,
+  there will be a more generic fix for this issue in a future release.
+
 Version 2.5
 -----------
 
