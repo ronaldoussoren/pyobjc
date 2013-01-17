@@ -546,20 +546,21 @@ extern struct pyobjc_api	objc_api;
  *
  * Usage for function CFArrayCreate:
  * * Use 'WEAK_LINKED_NAME(CFArrayCreate)' at the start of a wrapper module
- * * Use 'ptr_CFArrayCreate' to actually call the function, don't use the
+ * * Use 'USE(CFArrayCreate)' to actually call the function, don't use the
  *   actual function.
  * * Use 'CHECK_WEAK_LINK(module_dict, CFArrayCreate)' in the module init function, 
  *   this will remove "CFArrayCreate" from the module dictionary when the function
  *   cannot by found by dlsym.
  * * All access to function should be done through weak-refs like this.
  *
- * XXX: Find a way to directly call the function when MAC_OS_X_VERSION_MIN_REQUIRED
- *      is high enought that the function will always be found (and weak linking
- *      isn't necessary).
+ * NOTE: When the version that introduced the function is known, that version number
+ *       can be appended to the macros and the function will be hard-linked when
+ *       the minimal deployment target is high enough.
  */
 #include <dlfcn.h>
 
-#define WEAK_LINKED_NAME(NAME) static __typeof__(&NAME) ptr_ ## NAME
+#define WEAK_LINKED_NAME(NAME)	static __typeof__(&NAME) ptr_ ## NAME
+#define USE(NAME)		ptr_ ## NAME
 #define CHECK_WEAK_LINK(module_dict, NAME) \
 	do {											\
 		void* dl = dlopen(NULL, RTLD_GLOBAL);						\
@@ -571,5 +572,45 @@ extern struct pyobjc_api	objc_api;
 			}									\
 		}										\
 	} while(0)
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+#define WEAK_LINKED_NAME_10_5(NAME)	
+#define USE_10_5(NAME)				NAME
+#define CHECK_WEAK_LINK_10_5(module_dict, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_5(NAME)	 	WEAK_LINKED_NAME(NAME)
+#define USE_10_5(NAME)				USE(NAME)
+#define CHECK_WEAK_LINK_10_5(module_dict, NAME) CHECK_WEAK_LINK(module_dict, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
+#define WEAK_LINKED_NAME_10_6(NAME)	
+#define USE_10_6(NAME)				NAME
+#define CHECK_WEAK_LINK_10_6(module_dict, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_6(NAME)	 	WEAK_LINKED_NAME(NAME)
+#define USE_10_6(NAME)				USE(NAME)
+#define CHECK_WEAK_LINK_10_6(module_dict, NAME) CHECK_WEAK_LINK(module_dict, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+#define WEAK_LINKED_NAME_10_7(NAME)	
+#define USE_10_7(NAME)				NAME
+#define CHECK_WEAK_LINK_10_7(module_dict, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_7(NAME)	 	WEAK_LINKED_NAME(NAME)
+#define USE_10_7(NAME)				USE(NAME)
+#define CHECK_WEAK_LINK_10_7(module_dict, NAME) CHECK_WEAK_LINK(module_dict, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
+#define WEAK_LINKED_NAME_10_8(NAME)	
+#define USE_10_8(NAME)				NAME
+#define CHECK_WEAK_LINK_10_8(module_dict, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_8(NAME)	 	WEAK_LINKED_NAME(NAME)
+#define USE_10_8(NAME)				USE(NAME)
+#define CHECK_WEAK_LINK_10_8(module_dict, NAME) CHECK_WEAK_LINK(module_dict, NAME)
+#endif
 
 #endif /*  PyObjC_API_H */

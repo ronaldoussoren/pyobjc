@@ -53,6 +53,13 @@ Short term
 Medium term
 -----------
 
+* All symbols that are available on 10.5 or later should be weak linked using the new
+  macros in pyobjc-api.h. See <https://bitbucket.org/ronaldoussoren/pyobjc/issue/46/deployment-issue-in-coregraphics>
+  for the reason for this.
+
+  This shouldn't result in a lot more code, and could even make manual wrappers slightly
+  shorter.
+
 * Loading a framework takes too much time, why?
 
 * Look for a more efficient encoding of _metadata.py, possibly using a C exension
