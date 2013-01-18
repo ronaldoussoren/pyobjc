@@ -90,6 +90,24 @@ Version 3.0
 * Opaque pointer objects now have a method "__c_void_p__" that returns a :class:`ctypes.void_p` for
   the same pointer.
 
+* Added an API to "pyobjc-api.h" that makes it easier to explicitly load function references in 
+  manual function wrappers. This replaces the compiler support for weak linking, which was needed
+  because weak linking did not work properly with clang (Xcode 4.5.1). This also makes it possible
+  to compile in support for functions that aren't available on the build platform (in particular, when
+  building on 10.8 the Quartz bindings now contain support for some functions that were dropped in 10.8
+  and which will be available through pyobjc when deploying to 10.7)
+
+* The framework wrappers no longer export a "protocols" submodule. Those submodules were deprecated in
+  2.4 and did not contain information that is usefull for users of PyObjC.
+
+* Dropped the *objc.runtime" attribute (which was deprecated in PyObjC 2.0)
+
+* Dropped depcreated APIs *objc.pluginBundle*, *objc.registerPlugin*. Py2app has used a 
+  different mechanism for years now.
+
+* Dropped deprecatd APIs: *objc.splitStruct*,  *objc._loadFunctionList*. Both have
+  been replaced by newer APIs in PyObjC 2.4.
+
 
 Version 2.6
 -----------

@@ -32,7 +32,6 @@ from objc._protocols import *
 from objc._descriptors import *
 from objc._category import *
 from objc._bridges import *
-from objc._compat import *
 from objc._pythonify import *
 from objc._locking import *
 from objc._context import *

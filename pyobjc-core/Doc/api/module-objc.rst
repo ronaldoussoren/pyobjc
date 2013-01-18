@@ -322,23 +322,6 @@ Plugin bundles
    After module initialization use ``NSBundle.bundleForClass_(ClassInYourBundle)``
    to get the bundle.
 
-.. function:: registerPlugin(pluginName)
-
-   .. deprecated:: 2.3
-      use :func:`currentBundle` instead
-
-   Register the current py2app plugin by named and return its bundle.
-
-.. function:: pluginBundle(pluginName)
-
-   .. deprecated:: 2.3
-      use :func:`currentBundle` instead
-
-   Return the main bundle for a named plugin. This should only be used
-   after it has been register with :func:`registerPlugin`.
-
-
-
 Memory management
 .................
 
