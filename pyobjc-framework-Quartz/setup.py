@@ -71,7 +71,7 @@ setup(
         Extension('Quartz.CoreGraphics._inlines',
             [ 'Modules/_CoreGraphics_inlines.m' ]),
         Extension('Quartz.CoreGraphics._callbacks',
-            [ 'Modules/_callbacks.m' ]),
+            [ 'Modules/_callbacks.m' ], extra_compile_args=['-Wno-deprecated-declarations']),
         Extension('Quartz.CoreGraphics._doubleindirect',
             [ 'Modules/_doubleindirect.m' ]),
         Extension('Quartz.CoreGraphics._sortandmap',
