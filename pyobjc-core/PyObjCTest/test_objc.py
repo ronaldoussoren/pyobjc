@@ -17,43 +17,6 @@ class TestConstants(TestCase):
         self.assertIsNone(objc.nil, "nil is not nil/None.")
 
 
-class TestObjCRuntime (TestCase):
-    # Tests for objc.runtime
-    def setUp(self):
-        import warnings
-        warnings.filterwarnings('ignore', category=DeprecationWarning)
-
-    def tearDown(self):
-        import warnings
-        del warnings.filters[0]
-
-    def testClasses(self):
-        classes = objc.runtime.__objc_classes__
-        for cls in classes:
-            self.assertIsInstance(cls, objc.objc_class)
-
-    def testKind(self):
-        self.assertEqual(objc.runtime.__kind__, "python")
-
-    def testRepr(self):
-        self.assertEqual(repr(objc.runtime), "objc.runtime")
-
-
-    def testRuntimeNoSuchClassErrorRaised(self):
-        try:
-            objc.runtime.ThisClassReallyShouldNotExist
-        except AttributeError:
-            pass
-        except AttributeError:
-            pass
-        else:
-            fail("objc.runtime.ThisClassReallyShouldNotExist should have thrown a nosuchclass_error.  It didn't.")
-
-    def testRuntimeConsistency(self):
-        self.assertIsNotNone(objc.lookUpClass("NSObject"))
-        self.assertIs(objc.lookUpClass( "NSObject" ), objc.runtime.NSObject)
-
-
 class TestClassLookup(TestCase):
     def testLookupClassNoSuchClassErrorRaised(self):
         self.assertRaises(objc.nosuchclass_error, objc.lookUpClass, "")
@@ -140,51 +103,6 @@ class TestPrivate (TestCase):
 
         self.assertRaises(AttributeError, resolve, "distutils.command.sdist.dont_show_formats")
         self.assertRaises(AttributeError, resolve, "sys.does_not_exist")
-
-class TestPluginSupport (TestCase):
-    def test_deprecated(self):
-        with filterWarnings("error", DeprecationWarning):
-            self.assertRaises(DeprecationWarning, objc.registerPlugin, "myplugin")
-            self.assertRaises(DeprecationWarning, objc.pluginBundle, "myplugin")
-
-    def test_usage(self):
-        with filterWarnings("ignore", DeprecationWarning):
-            self.assertRaises(KeyError, objc.pluginBundle, "myplugin")
-
-            self.assertNotIn('RESOURCEPATH', os.environ)
-            self.assertRaises(KeyError, objc.registerPlugin, "myplugin")
-
-            # Actual plugin is .../MyPlugin.bundle/Contents/Resources, this is close enought and
-            # ensures that we can actually create as NSBundle later on.
-            os.environ['RESOURCEPATH'] = '/System/Library/Frameworks/Cocoa.framework/Contents/Resources'
-            try:
-                objc.registerPlugin("myplugin")
-
-                if sys.version_info[0] == 2:
-                    os.environ['RESOURCEPATH'] = b'/System/Library/Frameworks/Cocoa.framework/Contents/Resources'
-                    objc.registerPlugin("myplugin")
-            finally:
-                del os.environ['RESOURCEPATH']
-
-            b = objc.pluginBundle("myplugin")
-            self.assertIsInstance(b, objc.lookUpClass("NSBundle"))
-            self.assertEqual(b.bundlePath(), '/System/Library/Frameworks/Cocoa.framework')
-
-class TestCompatJunk (TestCase):
-    def test_loadFunctionList(self):
-        with filterWarnings("error", DeprecationWarning):
-            self.assertRaises(DeprecationWarning, objc._loadFunctionList, [])
-
-        orig = objc.loadFunctionList
-        try:
-            l = []
-            objc.loadFunctionList = lambda *args, **kwds: l.append((args, kwds))
-
-            objc._loadFunctionList(1, 2, a=3, b=3)
-            self.assertEqual(l, [((1,2), {'a':3, 'b':3})])
-
-        finally:
-            objc.loadFunctionList = orig
 
 if __name__ == '__main__':
     main()
