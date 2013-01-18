@@ -37,7 +37,7 @@ static PyMethodDef mod_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-#if PY_VERSION_HEX >= 0x03000000
+#if PY_MAJOR_VERSION == 3
 
 static struct PyModuleDef mod_module = {
 	PyModuleDef_HEAD_INIT,
@@ -56,7 +56,7 @@ static struct PyModuleDef mod_module = {
 
 PyObject* PyInit_pointersupport(void);
 
-PyObject*
+PyObject* __attribute__((__visibility__("default")))
 PyInit_pointersupport(void)
 
 #else
@@ -66,7 +66,7 @@ PyInit_pointersupport(void)
 
 void initpointersupport(void);
 
-void
+void __attribute__((__visibility__("default")))
 initpointersupport(void)
 #endif
 {
