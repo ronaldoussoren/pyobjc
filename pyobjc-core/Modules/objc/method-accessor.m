@@ -7,7 +7,7 @@
 #include "pyobjc.h"
 
 static PyObject* 
-find_selector(PyObject* self, char* name, int class_method)
+find_selector(PyObject* self, const char* name, int class_method)
 {
 	SEL   sel = PyObjCSelector_DefaultSelector(name);
 	volatile id    objc_object;
@@ -246,13 +246,21 @@ obj_getattro(PyObject* _self, PyObject* name)
 {
 	ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
 	PyObject* result = NULL;
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	PyObject* name_bytes;
+#endif
 
 	if (PyUnicode_Check(name)) {
+#ifdef PyObjC_FAST_UNICODE_ASCII
+		if (PyObjC_Unicode_Fast_Bytes(name) == NULL) {
+			return NULL;
+		}
+#else
 		name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
 		if (name_bytes == NULL) {
 			return NULL;
 		}
+#endif
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
 		name_bytes = name; Py_INCREF(name_bytes);
@@ -264,8 +272,17 @@ obj_getattro(PyObject* _self, PyObject* name)
 		return NULL;
 	}
 
-	if (strcmp(PyBytes_AsString(name_bytes), "__dict__") == 0) {
+	if (strcmp(
+#ifdef PyObjC_FAST_UNICODE_ASCII
+		PyObjC_Unicode_Fast_Bytes(name),
+#else
+		PyBytes_AsString(name_bytes), 
+#endif
+		"__dict__") == 0) {
+
+#ifndef PyObjC_FAST_UNICODE_ASCII
 		Py_DECREF(name_bytes); name_bytes = NULL;
+#endif
 
 		PyObject* dict;
 		dict = make_dict(self->base, self->class_method);
@@ -283,15 +300,33 @@ obj_getattro(PyObject* _self, PyObject* name)
 		 */
 	}
 
-	if (strcmp(PyBytes_AsString(name_bytes), "__methods__") == 0) {
+	if (strcmp(
+#ifdef PyObjC_FAST_UNICODE_ASCII
+		PyObjC_Unicode_Fast_Bytes(name),
+#else
+		PyBytes_AsString(name_bytes), 
+#endif
+		"__methods__") == 0) {
+
+#ifndef PyObjC_FAST_UNICODE_ASCII
 		Py_DECREF(name_bytes); name_bytes = NULL;
+#endif
 		PyErr_SetString(PyExc_AttributeError,
 			"No such attribute: __methods__");
 		return NULL;
 	}
 
-	if (strcmp(PyBytes_AsString(name_bytes), "__members__") == 0) {
+	if (strcmp(
+#ifdef PyObjC_FAST_UNICODE_ASCII
+		PyObjC_Unicode_Fast_Bytes(name),
+#else
+		PyBytes_AsString(name_bytes), 
+#endif
+		"__members__") == 0) {
+
+#ifndef PyObjC_FAST_UNICODE_ASCII
 		Py_DECREF(name_bytes); name_bytes = NULL;
+#endif
 		PyErr_SetString(PyExc_AttributeError,
 			"No such attribute: __members__");
 		return NULL;
@@ -371,14 +406,24 @@ obj_getattro(PyObject* _self, PyObject* name)
 	}
 
 	if (result != NULL) {
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		Py_DECREF(name_bytes);
+#endif
 		return result;
 	}
 
 	/* Didn't find the selector the first trip around, try harder. */
 	result = find_selector(self->base, 
-		PyBytes_AS_STRING(name_bytes), self->class_method);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		PyBytes_AS_STRING(name_bytes), 
+#else
+		PyObjC_Unicode_Fast_Bytes(name),
+#endif
+		self->class_method);
 	if (result == NULL) {
+#ifndef PyObjC_FAST_UNICODE_ASCII
 		Py_DECREF(name_bytes); name_bytes = NULL;
+#endif
 		return result;
 	}
 
@@ -395,8 +440,10 @@ obj_getattro(PyObject* _self, PyObject* name)
 		Py_INCREF(self->base);
 
 	}
-	/*Py_XINCREF(((PyObjCSelector*)result)->sel_self);*/
+
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	Py_DECREF(name_bytes);
+#endif
 	return result;
 }
 

@@ -20,6 +20,26 @@ typedef float CGFloat;
 #endif /* CGFLOAT_DEFINED */
 
 
+#if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION >= 3
+
+/* 
+ * A micro optimization: when using Python 3.3 or later it
+ * is possible to access a 'char*' with an ASCII representation
+ * of a unicode object without first converting it to a bytes
+ * string (if the string can be encoded as ASCII in the first
+ * place.
+ *
+ * This slightly reduces the object allocation rate during
+ * attribute access.
+ */
+
+#  define PyObjC_FAST_UNICODE_ASCII 1
+
+extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
+
+#endif
+
+
 #ifndef NSINTEGER_DEFINED
 
 #ifdef __LP64__

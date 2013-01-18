@@ -518,3 +518,20 @@ PyObject* PyObjC_IntFromLong(long v)
 	}
 	return PyObjC_InternValue(r);
 }
+
+#ifdef PyObjC_FAST_UNICODE_ASCII
+
+const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
+{
+	if (!PyUnicode_Check(object)) {
+		PyErr_SetString(PyExc_UnicodeDecodeError, "Not a unicode object");
+		return NULL;
+	}
+	if (!PyUnicode_IS_ASCII(object)) {
+		PyErr_SetString(PyExc_UnicodeDecodeError, "Not an ASCII string");
+		return NULL;
+	}
+	return (const char*)(PyUnicode_DATA(object));
+}
+
+#endif /* PyObjC_FAST_UNICODE_ASCII */

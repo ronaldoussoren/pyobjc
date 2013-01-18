@@ -1132,13 +1132,21 @@ metaclass_dir(PyObject* self)
 
 /* FIXME: This is a lightly modified version of _type_lookup in objc-object.m, need to merge these */
 static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup(PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, PyObject* name_bytes
+#endif
+)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
 	PyObject* res;
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+#else
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+#endif
 
 	/* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1185,7 +1193,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 }
 
 static inline PyObject*
-_type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup_harder(PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	, PyObject* name_bytes
+#endif 
+	)
 	/* See function of same name in objc-object.m for an explanation */
 {
 	Py_ssize_t i, n;
@@ -1227,7 +1239,13 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 						method_getName(m),
 						selbuf,
 						sizeof(selbuf));
-			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+			if (strcmp(sel_name, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+					PyBytes_AS_STRING(name_bytes)
+#else
+					PyObjC_Unicode_Fast_Bytes(name)
+#endif
+					) == 0) {
 				/* Create (unbound) selector */
 				descr = PyObjCSelector_NewNative(
 						cls, method_getName(m), method_getTypeEncoding(m), 1);
@@ -1302,13 +1320,21 @@ PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL
 
 /* FIXME: version of _type_lookup that only looks for instance methods */
 static inline PyObject*
-_type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	, PyObject* name_bytes
+#endif
+	)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
 	PyObject* res;
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+#else
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+#endif
 
 	/* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1392,13 +1418,21 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name, Py
 }
 
 static inline PyObject*
-_type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, PyObject* name_bytes
+#endif
+	)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base;
 	PyObject *descr = NULL;
 	PyObject* res;
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+#else
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+#endif
 
 	/* Look in tp_dict of types in MRO */
 	mro = tp->tp_mro;
@@ -1430,7 +1464,13 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
 						selbuf,
 						sizeof(selbuf));
 
-			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+			if (strcmp(sel_name, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+					PyBytes_AS_STRING(name_bytes)
+#else
+					PyObjC_Unicode_Fast_Bytes(name)
+#endif
+					) == 0) {
 				/* Create (unbound) selector */
 				PyObject* result = PyObjCSelector_NewNative(
 						cls, sel, method_getTypeEncoding(m), 0);
@@ -1463,7 +1503,9 @@ class_getattro(PyObject* self, PyObject* name)
 {
 	PyObject *descr = NULL;
 	PyObject *result = NULL;
-	PyObject *bytes;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	PyObject *name_bytes;
+#endif
 	descrgetfunc f;
 
 	/* Python will look for a number of "private" attributes during 
@@ -1488,9 +1530,12 @@ class_getattro(PyObject* self, PyObject* name)
 			}
 			PyErr_Clear();
 		}
-
-	  	bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-		if (bytes == NULL) return NULL;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	  	name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (name_bytes == NULL) return NULL;
+#else
+		if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
+#endif
 
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
@@ -1502,7 +1547,7 @@ class_getattro(PyObject* self, PyObject* name)
 			PyErr_Clear();
 		}
 
-		bytes = name;
+		name_bytes = name;
 		Py_INCREF(bytes);
 #endif
 	} else {
@@ -1512,7 +1557,11 @@ class_getattro(PyObject* self, PyObject* name)
 	}
 	PyObjCClass_CheckMethodList(self, 1);
 	
-	descr = _type_lookup(Py_TYPE(self), name, bytes);
+	descr = _type_lookup(Py_TYPE(self), name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, name_bytes
+#endif
+	);
 
 	f = NULL;
 	if (descr != NULL 
@@ -1527,7 +1576,14 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 	}
 
-	if (strcmp(PyBytes_AS_STRING(bytes), "__dict__") == 0) {
+	if (strcmp(
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		PyBytes_AS_STRING(name_bytes), 
+#else
+		PyObjC_Unicode_Fast_Bytes(name),
+#endif
+		"__dict__") == 0) {
+
 		result = ((PyTypeObject*)self)->tp_dict;
 		goto done;
 
@@ -1535,7 +1591,11 @@ class_getattro(PyObject* self, PyObject* name)
 
 
 	if (descr == NULL) {
-		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name, bytes);
+		descr = _type_lookup_instance(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			, name_bytes
+#endif
+		);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -1558,7 +1618,11 @@ class_getattro(PyObject* self, PyObject* name)
 		 *      is more correct, but more likely to be inefficient (but how often are
 		 *      instance methods accessed through the class anyway?
 		 */
-		descr = _type_lookup_harder(Py_TYPE(self), name, bytes);
+		descr = _type_lookup_harder(Py_TYPE(self), name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			, name_bytes
+#endif
+		);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -1569,7 +1633,11 @@ class_getattro(PyObject* self, PyObject* name)
 	}
 
 	if (descr == NULL) {
-		descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name, bytes);
+		descr = _type_lookup_instance_harder(((PyTypeObject*)self)->tp_dict, (PyTypeObject*)self, name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			, name_bytes
+#endif
+		);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -1594,12 +1662,26 @@ class_getattro(PyObject* self, PyObject* name)
 
 	/* Try to find the method anyway */
 	PyErr_Clear();
-	if (PyObjCClass_HiddenSelector(self, sel_getUid(PyBytes_AsString(bytes)), YES)) {
-		Py_DECREF(bytes);
+	if (PyObjCClass_HiddenSelector(self, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			sel_getUid(PyBytes_AsString(name_bytes)), 
+#else
+			sel_getUid(PyObjC_Unicode_Fast_Bytes(name)), 
+#endif
+			YES)) {
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		Py_DECREF(name_bytes);
+#endif
 		PyErr_SetObject(PyExc_AttributeError, name);
 		return NULL;
 	}
-	result = PyObjCSelector_FindNative(self, PyBytes_AsString(bytes));
+	result = PyObjCSelector_FindNative(self, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		PyBytes_AsString(name_bytes)
+#else
+		PyObjC_Unicode_Fast_Bytes(name)
+#endif
+	);
 
 	if (result != NULL) {
 		int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
@@ -1620,7 +1702,9 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 	}
 done:
-	Py_DECREF(bytes);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	Py_DECREF(name_bytes);
+#endif
 	return result;
 }
 

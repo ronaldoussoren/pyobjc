@@ -266,13 +266,21 @@ object_dealloc(PyObject* obj)
 
 
 static inline PyObject*
-_type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup(PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, PyObject* name_bytes
+#endif
+	)
 {
 	Py_ssize_t i, n;
 	PyObject *mro, *base, *dict;
 	PyObject *descr = NULL;
 	PyObject* res;
+#ifndef PyObjC_FAST_UNICODE_ASCII
 	SEL	  sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name_bytes));
+#else
+	SEL	  sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+#endif
 
 	/* Look in tp_dict of types in MRO */
 	mro = tp->tp_mro;
@@ -329,7 +337,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 }
 
 static inline PyObject*
-_type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
+_type_lookup_harder(PyTypeObject* tp, PyObject* name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, PyObject* name_bytes
+#endif
+	)
 	/* XXX: Name needs changing.
 	 *      Second pass through the class hierarchy when _type_lookup failed and the name is not in __dict__
 	 *      Used to look for selectors that cannot be found using the default translation from Python to ObjC
@@ -382,7 +394,14 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name, PyObject* name_bytes)
 						sizeof(selbuf));
 			if (sel_name == NULL) continue;
 
-			if (strcmp(sel_name, PyBytes_AS_STRING(name_bytes)) == 0) {
+			if (strcmp(sel_name, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+				PyBytes_AS_STRING(name_bytes)
+#else
+				PyObjC_Unicode_Fast_Bytes(name)
+#endif
+				) == 0) {
+
 				/* Create (unbound) selector */
 				descr = PyObjCSelector_NewNative(
 						cls, method_getName(m), 
@@ -469,9 +488,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	PyObject *res = NULL;
 	descrgetfunc f;
 	PyObject** dictptr;
-	char* namestr;
 	id obj_inst;
-	PyObject* bytes;
+	const char* namestr;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	PyObject* name_bytes;
+#endif
 
 	if (name == NULL) {
 		PyErr_SetString(PyExc_TypeError, "<nil> name");
@@ -479,11 +500,16 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	}
 
 	if (PyUnicode_Check(name)) {
-		bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-		if (bytes == NULL) return NULL;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (name_bytes == NULL) return NULL;
+#else
+		if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return NULL;
+#endif
+
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
-		bytes = name; Py_INCREF(bytes);
+		name_bytes = name; Py_INCREF(name_bytes);
 #endif
 	} else {
 		PyErr_Format(PyExc_TypeError,
@@ -494,7 +520,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 
 
-	namestr = PyBytes_AsString(bytes);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	namestr = PyBytes_AsString(name_bytes);
+#else
+	namestr = PyObjC_Unicode_Fast_Bytes(name);
+#endif
 	if (namestr == NULL) {
 		if (!PyErr_Occurred()) {
 			PyErr_SetString(PyExc_ValueError, "Empty name");
@@ -563,7 +593,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 
 	/* replace _PyType_Lookup */
 	if (descr == NULL) {
-		descr = _type_lookup(tp, name, bytes);
+		descr = _type_lookup(tp, name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			, name_bytes
+#endif
+		);
 	}
 
 	f = NULL;
@@ -584,7 +618,15 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		}
 	}
 
-	if (strcmp(PyBytes_AS_STRING(bytes), "__del__") == 0) {
+	if (strcmp(
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		PyBytes_AS_STRING(name_bytes), 
+#else
+		PyObjC_Unicode_Fast_Bytes(name),
+#endif
+
+		"__del__") == 0) {
+
 		res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
 		if (res != NULL) {
 			/* XXX: bind self */	
@@ -598,7 +640,14 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	if (dictptr != NULL) {
 		PyObject *dict;
 
-		if (strcmp(PyBytes_AS_STRING(bytes), "__dict__") == 0) {
+		if (strcmp(
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			PyBytes_AS_STRING(name_bytes), 
+#else
+			PyObjC_Unicode_Fast_Bytes(name),
+#endif
+			"__dict__") == 0) {
+
 			res = *dictptr;
 			if (res == NULL) {
 				*dictptr = PyDict_New();
@@ -630,7 +679,11 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		 * for a method where the selector does not conform to the
 		 * naming convention that _type_lookup expects.
 		 */
-		descr = _type_lookup_harder(tp, name, bytes);
+		descr = _type_lookup_harder(tp, name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			, name_bytes
+#endif
+		);
 		if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
 			&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -684,7 +737,9 @@ done:
 			res = NULL;
 		}
 	}
-	Py_DECREF(bytes);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	Py_DECREF(name_bytes);
+#endif
 	return res;
 }
 
@@ -699,14 +754,21 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	int res;
 	id obj_inst;
 	NSString *obj_name;
-	PyObject* bytes;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	PyObject* name_bytes;
+#endif
 	
 	if (PyUnicode_Check(name)) {
-		bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
-		if (bytes == NULL) return -1;
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		name_bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
+		if (name_bytes == NULL) return -1;
+#else
+		if (PyObjC_Unicode_Fast_Bytes(name) == NULL) return -1;
+#endif
+
 #if PY_MAJOR_VERSION == 2
 	} else if (PyString_Check(name)) {
-		bytes = name; Py_INCREF(bytes);
+		name_bytes = name; Py_INCREF(name_bytes);
 #endif
 	} else {
 		PyErr_Format(PyExc_TypeError,
@@ -719,20 +781,36 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	if (obj_inst == nil) {
 		PyErr_Format(PyExc_AttributeError,
 		     "Cannot set '%s.400s' on NIL '%.50s' object",
-		     PyBytes_AS_STRING(bytes),
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		     PyBytes_AS_STRING(name_bytes),
+#else
+		     PyObjC_Unicode_Fast_Bytes(name),
+#endif
 		     tp->tp_name);
-		Py_DECREF(bytes);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		Py_DECREF(name_bytes);
+#endif
 		return -1;
 	}
 
 	obj_name = nil;
 	if (((PyObjCClassObject*)tp)->useKVO) {
 		if ((PyObjCObject_GetFlags(obj) & PyObjCObject_kUNINITIALIZED) == 0) {
-			obj_name = [NSString stringWithUTF8String:PyBytes_AS_STRING(bytes)];
+			obj_name = [NSString stringWithUTF8String:
+#ifndef PyObjC_FAST_UNICODE_ASCII
+				PyBytes_AS_STRING(name_bytes)
+#else
+				PyObjC_Unicode_Fast_Bytes(name)
+#endif
+			];
 			_UseKVO((NSObject *)obj_inst, obj_name, YES);
 		}
 	}
-	descr = _type_lookup(tp, name, bytes);
+	descr = _type_lookup(tp, name
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		, name_bytes
+#endif
+	);
 	f = NULL;
 	if (descr != NULL 
 #if PY_MAJOR_VERSION == 2
@@ -782,20 +860,34 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	if (descr == NULL) {
 		PyErr_Format(PyExc_AttributeError,
 			     "'%.50s' object has no attribute '%.400s'",
-			     tp->tp_name, PyBytes_AS_STRING(bytes));
+			     tp->tp_name, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+			     PyBytes_AS_STRING(name_bytes)
+#else
+			     PyObjC_Unicode_Fast_Bytes(name)
+#endif
+		     );
 		res = -1;
 		goto done;
 	}
 
 	PyErr_Format(PyExc_AttributeError,
 		     "'%.50s' object attribute '%.400s' is read-only",
-		     tp->tp_name, PyBytes_AS_STRING(bytes));
+		     tp->tp_name, 
+#ifndef PyObjC_FAST_UNICODE_ASCII
+		     PyBytes_AS_STRING(name_bytes)
+#else
+		     PyObjC_Unicode_Fast_Bytes(name)
+#endif
+	);
 	res = -1;
   done:
 	if (obj_inst && obj_name) {
 		_UseKVO((NSObject *)obj_inst, obj_name, NO);
 	}
-	Py_DECREF(bytes);
+#ifndef PyObjC_FAST_UNICODE_ASCII
+	Py_DECREF(name_bytes);
+#endif
 	return res;
 }
 
