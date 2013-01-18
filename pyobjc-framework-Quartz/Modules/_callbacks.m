@@ -228,6 +228,7 @@ m_CGDataProviderGetBytesCallback(
 }
 
 #if PyObjC_BUILD_RELEASE < 1008
+/* XXX: compile this in on 10.8 as well */
 
 static void 
 m_CGDataProviderSkipBytesCallback(void* _info, size_t count)
@@ -288,6 +289,7 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 }
 
 #if PyObjC_BUILD_RELEASE < 1008
+/* XXX: compile this in on 10.8 as well */
 static CGDataProviderCallbacks m_CGDataProviderCallbacks = {
 	m_CGDataProviderGetBytesCallback, 	/*  getBytes */
 	m_CGDataProviderSkipBytesCallback,	/*  skipBytes */
@@ -297,6 +299,7 @@ static CGDataProviderCallbacks m_CGDataProviderCallbacks = {
 #endif /* PyObjC_BUILD_RELEASE < 1008 */
 
 #if PyObjC_BUILD_RELEASE < 1008
+/* XXX: compile this in on 10.8 as well, using manual weaklinking support */
 static const void*
 m_CGDataProviderGetBytePointerCallback(void* _info)
 {
@@ -464,6 +467,8 @@ static CGDataProviderSequentialCallbacks m_CGDataProviderSequentialCallbacks = {
 
 };
 
+WEAK_LINKED_NAME_10_5(CGDataProviderCreateSequential)
+
 PyDoc_STRVAR(doc_CGDataProviderCreateSequential,
 	"CGDataConsumerCreateSequential(info, (getBytes, skipForward, rewind, releaseProvider)) -> object\n"
 	"\n"
@@ -506,7 +511,7 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 
 	CGDataProviderRef result;
 	PyObjC_DURING
-		result = CGDataProviderCreateSequential(real_info, 
+		result = USE_10_5(CGDataProviderCreateSequential)(real_info, 
 				&m_CGDataProviderSequentialCallbacks);
 
 	PyObjC_HANDLER
@@ -538,6 +543,7 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
 
 
 #if PyObjC_BUILD_RELEASE < 1008
+/* XXX: compile in on 10.8 as well, unless min deploymet > 10.8 */
 PyDoc_STRVAR(doc_CGDataProviderCreate,
 	"CGDataConsumerCreate(info, (getBytes, skipBytes, rewind, releaseProvider)) -> object\n"
 	"\n"
@@ -2167,11 +2173,7 @@ PyObjC_MODULE_INIT(_callbacks)
         if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
 
 #if PyObjC_BUILD_RELEASE >= 1005
-	if (CGDataProviderCreateSequential == NULL) {
-		if (PyDict_DelItemString(md, "CGDataProviderCreateSequential") < 0) {
-			PyObjC_INITERROR();
-		}
-	}
+	CHECK_WEAK_LINK_10_5(m, CGDataProviderCreateSequential);
 #endif
 	
 	PyObjC_INITDONE();

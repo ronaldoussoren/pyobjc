@@ -33,6 +33,8 @@ mod_CVPixelBufferReleaseBytesCallback(
 	PyGILState_Release(state);
 }
 
+WEAK_LINKED_NAME_10_5(CVPixelBufferCreateWithBytes)
+
 static PyObject*
 mod_CVPixelBufferCreateWithBytes(
 	PyObject* self __attribute__((__unused__)),
@@ -103,7 +105,7 @@ mod_CVPixelBufferCreateWithBytes(
 	CVReturn rv;
 
 	PyObjC_DURING
-		rv = CVPixelBufferCreateWithBytes(
+		rv = USE_10_5(CVPixelBufferCreateWithBytes)(
 			allocator,
 			width,
 			height,
@@ -168,6 +170,10 @@ PyObjC_MODULE_INIT(_CVPixelBuffer)
 	if (!m) PyObjC_INITERROR();
 
 	if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+
+#if PyObjC_BUILD_RELEASE >= 1005
+	CHECK_WEAK_LINK_10_5(m, CVPixelBufferCreateWithBytes);
+#endif
 
 	PyObjC_INITDONE();
 }

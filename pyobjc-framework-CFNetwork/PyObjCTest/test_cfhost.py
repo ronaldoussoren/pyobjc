@@ -51,7 +51,7 @@ class TestCFHost (TestCase):
 
         self.assertResultIsCFRetained(CFHostCreateCopy)
         w = CFHostCreateCopy(None, v)
-        self.assertIsInstance(w, (type(None), CFHostRef))
+        self.assertIsInstance(w, type(v))
 
 
         self.assertArgHasType(CFHostGetReachability, 1, b'o^' + objc._C_NSBOOL)

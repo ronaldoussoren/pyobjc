@@ -125,6 +125,8 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
 
 #if PyObjC_BUILD_RELEASE >= 1005
   /* This function is available on 10.5 or later, but the prototype isn't in the headers on 10.5 */
+WEAK_LINKED_NAME_10_5(CFNetworkExecuteProxyAutoConfigurationScript)
+
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__unused__)),
 		PyObject* args)
@@ -162,7 +164,7 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 	CFRunLoopSourceRef ref = NULL;
 
 	PyObjC_DURING
-		ref = CFNetworkExecuteProxyAutoConfigurationScript(
+		ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationScript)(
 				script, url, 
 				m_CFProxyAutoConfigurationResultCallback,
 				&context);
@@ -185,6 +187,8 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 #endif
 
 #if PyObjC_BUILD_RELEASE >= 1005
+WEAK_LINKED_NAME_10_5(CFNetworkExecuteProxyAutoConfigurationURL)
+
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unused__)),
 		PyObject* args)
@@ -222,7 +226,7 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
 	CFRunLoopSourceRef ref = NULL;
 
 	PyObjC_DURING
-		ref = CFNetworkExecuteProxyAutoConfigurationURL(
+		ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationURL)(
 				script, url, 
 				m_CFProxyAutoConfigurationResultCallback,
 				&context);
@@ -350,20 +354,8 @@ PyObjC_MODULE_INIT(_manual)
 		PyObjC_INITERROR();
 	}
 
-#if PyObjC_BUILD_RELEASE >= 1006
-	if (CFNetworkExecuteProxyAutoConfigurationScript == NULL) {
-		if (PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationScript") < 0) {
-			PyObjC_INITERROR();
-		}
-	}
-#endif
-#if PyObjC_BUILD_RELEASE >= 1005
-	if (CFNetworkExecuteProxyAutoConfigurationURL == NULL) {
-		if (PyDict_DelItemString(m, "CFNetworkExecuteProxyAutoConfigurationURL") < 0) {
-			PyObjC_INITERROR();
-		}
-	}
-#endif
+	CHECK_WEAK_LINK_10_5(m, CFNetworkExecuteProxyAutoConfigurationScript);
+	CHECK_WEAK_LINK_10_5(m, CFNetworkExecuteProxyAutoConfigurationURL);
 
 	PyObjC_INITDONE();
 }
