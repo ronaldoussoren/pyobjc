@@ -79,7 +79,4 @@ Medium term
 * Remove use of CFRetain/CFRelease, use regular -retain/-release messages
   instead (or even 'objc_retain/objc_release)'
 
-* Tweak __name__ and __qualname__ for convenience functions/methods for nicer
-  pydoc output.
-
 * Add __signature__ to objc.selector and objc.function (see inspect.signature)
