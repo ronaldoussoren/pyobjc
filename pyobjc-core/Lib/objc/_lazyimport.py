@@ -83,18 +83,14 @@ class ObjCLazyModule (ModuleType):
         self.__aliases = metadict.get('aliases')
         self.__inlinelist = inline_list
 
+        # informal protocols are not exposed, but added here
+        # for completeness sake.
+        self.__informal_protocols = metadict.get('protocols')
+
         self.__expressions = metadict.get('expressions')
         self.__expressions_mapping = GetAttrMap(self)
 
         self.__load_cftypes(metadict.get('cftypes'))
-
-        if metadict.get('protocols') is not None:
-            self.__dict__['protocols'] = ModuleType('%s.protocols'%(name,))
-            self.__dict__['protocols'].__dict__.update(
-                    metadict['protocols'])
-
-            for p in objc.protocolsForProcess():
-                setattr(self.__dict__['protocols'], p.__name__, p)
 
 
     def __dir__(self):

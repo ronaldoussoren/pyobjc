@@ -42,8 +42,6 @@ Short term
     note: no need to care for __builtin__.super support here, that super wont work
     with Cocoa classes anyway (already true in 2.x, and more glaringly so in 3.0)
 
-* Issue #25: issue the 'protocols' submodule on framework wrappers (e.g. Foundation.protocols)
-
 * Attribute lookup converts name to bytestring and that to a SEL. For python 3.3 we can
   shortcut this: selectors must be all ascii, hence we could just check that the unicode
   object has the ascii representation and then directly access the UCS1 buffer instead
