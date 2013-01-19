@@ -47,6 +47,40 @@ Medium term
 
 * Loading a framework takes too much time, why?
 
+  On my machine the first import is slow, subsequence imports are faster. 
+
+  This appears to primairly be disk I/O::
+
+     $ for in in $(seq 20); do purge; python -c 'pass'; time python3 -c 'import Quartz'; done
+     ...
+
+     real	0m28.873s
+     user	0m0.635s
+     sys	0m0.169s
+
+     ...
+
+  These times were fairly consistent, the 'real' time fluctuated but around the 30
+  second mark.
+
+  The regular interpreter startup is much faster::
+
+  $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'pass'; done
+
+  real	0m3.504s
+  user	0m0.068s
+  sys	0m0.033s
+
+  ...
+
+  Again, the timing was consistent.
+
+  It is likely possible to speed up the framework loading by reducing the amount of
+  disk I/O.
+
+
+
+
 * Look for a more efficient encoding of _metadata.py, possibly using a C exension
 
 * Look for a more efficient encoding of method metadata registry (the data
