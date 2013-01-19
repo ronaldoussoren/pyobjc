@@ -14,6 +14,10 @@ Short term
 * Code cleanup for the new C code, I've done too much copy&paste editing
   while getting the new code to work properly.
 
+* Calling methods is slower than expected, create better performance tests and try
+  to optimize (for example by creating a shortcut variant that doesn't handle 
+  "hard" methods).
+
 * Lib/objc/_convenience.py cleanup:
 
   - Remove all _CONVENIENCE_METHODS, as well as functions that aren't used anymore
@@ -65,19 +69,37 @@ Medium term
 
   The regular interpreter startup is much faster::
 
-  $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'pass'; done
+     $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'pass'; done
 
-  real	0m3.504s
-  user	0m0.068s
-  sys	0m0.033s
+     real	0m3.504s
+     user	0m0.068s
+     sys	0m0.033s
 
-  ...
+     ...
 
   Again, the timing was consistent.
 
   It is likely possible to speed up the framework loading by reducing the amount of
   disk I/O.
 
+  There is however some inherent overhead in loading just "objc":
+
+      $ for in in $(seq 5); do purge; python -c 'pass'; time python3 -c 'import objc'; done
+
+      real	0m16.866s
+      user	0m0.255s
+      sys	0m0.086s
+    
+      real	0m12.323s
+      user	0m0.255s
+      sys	0m0.057s
+    
+      real	0m9.325s
+      user	0m0.252s
+      sys	0m0.052s
+
+  It might be possible to avoid part of this by using a smaller number of submodules for
+  the objc package.
 
 
 
