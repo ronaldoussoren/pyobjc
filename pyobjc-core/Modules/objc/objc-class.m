@@ -1548,7 +1548,7 @@ class_getattro(PyObject* self, PyObject* name)
 		}
 
 		name_bytes = name;
-		Py_INCREF(bytes);
+		Py_INCREF(name_bytes);
 #endif
 	} else {
 		PyErr_Format(PyExc_TypeError, "Attribute name is not a string, but an instance of '%s'", 

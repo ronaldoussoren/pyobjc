@@ -720,7 +720,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
 		}
 #if PY_MAJOR_VERSION == 2
 		else if (PyInt_Check(v)) {
-			methinfo->arrayArg = PyInt_AsLong(v);
+			methinfo->arrayArg = (int)PyInt_AsLong(v);
 		}
 #endif
 	}
