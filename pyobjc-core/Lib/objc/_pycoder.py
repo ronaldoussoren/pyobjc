@@ -485,6 +485,8 @@ def load_inst(coder, setValue):
 
     if slotstate:
         for k, v in slotstate.items():
+            if isinstance(k, objc.pyobjc_unicode):
+                k = unicode(k)
             setattr(value, intern(k), v)
 
     return value
@@ -541,6 +543,8 @@ def load_reduce(coder, setValue):
 
     if slotstate:
         for k, v in slotstate.items():
+            if isinstance(k, objc.pyobjc_unicode):
+                k = unicode(k)
             setattr(value, intern(k), v)
 
     if listitems:
