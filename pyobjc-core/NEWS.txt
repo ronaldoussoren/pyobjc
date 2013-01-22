@@ -46,7 +46,7 @@ Version 2.5.1
   python code.
 
 - Opaque pointer types now can be constructed with a "c_void_p" keyword  
-  argument that contains a :type:`ctypes.c_void_p` value for the pointer.
+  argument that contains a :class:`ctypes.c_void_p` value for the pointer.
 
   This is the reverse of the *__c_void_p__()* method that was added
   earlier.
