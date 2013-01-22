@@ -18,7 +18,7 @@ def main():
     for nm in names:
         status = subprocess.call([
             'python', 'setup.py', 'sdist'],
-            cwd=os.path.join(TOPDIR), nm)
+            cwd=os.path.join(TOPDIR, nm))
 
         if status != 0:
             print("WARNING: Building sdist for {} failed".format(nm))
@@ -36,7 +36,7 @@ def main():
     for nm in names:
         status = subprocess.call([
             'python', 'setup.py', 'sdist', 'register', 'upload'],
-            cwd=os.path.join(TOPDIR), nm)
+            cwd=os.path.join(TOPDIR, nm))
 
         if status != 0:
             print("WARNING: Uploading {} failed".format(nm))
