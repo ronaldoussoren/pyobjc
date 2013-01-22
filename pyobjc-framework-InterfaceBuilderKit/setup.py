@@ -26,14 +26,14 @@ setup(
     min_os_level='10.5',
     max_os_level='10.6',
     name='pyobjc-framework-InterfaceBuilderKit',
-    version="2.5.1b1",
+    version="2.5.1",
     description = "Wrappers for the framework InterfaceBuilderKit on Mac OS X",
     packages = [ "InterfaceBuilderKit" ],
     setup_requires = [
-        'pyobjc-core>=2.5.1b1',
+        'pyobjc-core>=2.5.1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5.1b1',
-        'pyobjc-framework-Cocoa>=2.5.1b1',
+        'pyobjc-core>=2.5.1',
+        'pyobjc-framework-Cocoa>=2.5.1',
     ],
 )
