@@ -4,6 +4,16 @@ Support for ``FSRef`` and ``FSSpec``
 PyObjC has its own wrappers for the types ``FSRef`` and ``FSSpec``, and also
 supports the wrappers for these types in ``Carbon.File``.
 
+.. note::
+   All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
+   for most of those APIs there are alternate APIs that use URL objects
+   (:c:type:`NSURL` or :c:type:`CFURL`).
+
+.. note::
+   "FSSpec" is a deprecated type in Apple's APIs as of Mac OS X 10.4 . The type 
+   is not availble for 64-bit code, and shouldn't be used for new development.
+
+
 .. class:: objc.FSRef
 
     This type represents an opaque ``FSRef`` structure.
@@ -40,10 +50,6 @@ supports the wrappers for these types in ``Carbon.File``.
        arguments.
 
 
-    .. note::
-       All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
-       for most of those APIs there are alternate APIs that use URL objects
-       (:c:type:`NSURL` or :c:type:`CFURL`).
 
 .. class:: objc.FSSpec
 
@@ -71,7 +77,3 @@ supports the wrappers for these types in ``Carbon.File``.
        of functions that have an ``FSSpec`` structure as one of their
        arguments.
 
-    .. note::
-
-       "FSSpec" is a deprecated type in Apple's APIs. The type is not 
-       availble for 64-bit code, and shouldn't be used for new development.
