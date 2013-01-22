@@ -10,6 +10,7 @@ from pyobjc_setup import setup
 
 setup(
     name='pyobjc-framework-AppleScriptKit',
+<<<<<<< local
     version="2.6b1",
     description = "Wrappers for the framework AppleScriptKit on Mac OS X",
     packages = [ "AppleScriptKit" ],

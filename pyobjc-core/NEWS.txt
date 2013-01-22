@@ -7,8 +7,14 @@ Version 2.6
 -----------
 
 .. note:: 
-
    This is version currently in development and has not been released yet
+
+
+Version 2.5.2
+-------------
+
+-
+
 
 Version 2.5.1
 -------------
