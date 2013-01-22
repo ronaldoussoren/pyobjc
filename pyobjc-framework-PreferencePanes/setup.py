@@ -10,14 +10,14 @@ and (Objective-)C frameworks
 from pyobjc_setup import *
 setup(
     name='pyobjc-framework-PreferencePanes',
-    version="2.5.1",
+    version="2.5.2b1",
     description = "Wrappers for the framework PreferencePanes on Mac OS X",
     packages = [ "PreferencePanes" ],
     setup_requires = [
-        'pyobjc-core>=2.5.1',
+        'pyobjc-core>=2.5.2b1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5.1',
-        'pyobjc-framework-Cocoa>=2.5.1',
+        'pyobjc-core>=2.5.2b1',
+        'pyobjc-framework-Cocoa>=2.5.2b1',
     ],
 )

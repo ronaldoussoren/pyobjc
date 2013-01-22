@@ -14,15 +14,15 @@ import os
 setup(
     min_os_level='10.6',
     name='pyobjc-framework-CoreLocation',
-    version="2.5.1",
+    version="2.5.2b1",
     description = "Wrappers for the framework CoreLocation on Mac OS X",
     packages = [ "CoreLocation" ],
     setup_requires = [
-        'pyobjc-core>=2.5.1',
+        'pyobjc-core>=2.5.2b1',
     ],
     install_requires = [
-        'pyobjc-core>=2.5.1',
-        'pyobjc-framework-Cocoa>=2.5.1',
+        'pyobjc-core>=2.5.2b1',
+        'pyobjc-framework-Cocoa>=2.5.2b1',
     ],
     ext_modules = [
         Extension("CoreLocation._CoreLocation",
