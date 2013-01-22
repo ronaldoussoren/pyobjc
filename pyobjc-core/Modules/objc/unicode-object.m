@@ -377,6 +377,10 @@ PyObjCUnicode_New(NSString* value)
 			ascii->length = length - nr_surrogates;
 			*ucs2_cur = 0;
 		}
+#if SIZEOF_WCHAR_T == 2
+		ascii->wstr = (wchar_t*)(result->base.data.ucs4);
+		compact->wstr_length = ascii->length;
+#endif
 
 	} else { /* 4BYTE_KIND */
 		result->base.data.ucs4 = PyObject_MALLOC(sizeof(Py_UCS4) * (length + 1 - nr_surrogates));
@@ -412,6 +416,10 @@ PyObjCUnicode_New(NSString* value)
 		}
 		*ucs4_cur = 0;
 		ascii->length = length - nr_surrogates;
+#if SIZEOF_WCHAR_T == 4
+		ascii->wstr = (wchar_t*)(result->base.data.ucs4);
+		compact->wstr_length = ascii->length;
+#endif
 	}
 
 
