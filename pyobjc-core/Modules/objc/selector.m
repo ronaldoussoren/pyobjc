@@ -791,15 +791,23 @@ objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
 	return (PyObject*)result;
 }
 
-PyDoc_STRVAR(objcsel_docstring_doc, "The document string for a method");
 static PyGetSetDef objcsel_getset[] = {
 	{
 		"__doc__",
 		PyObjC_callable_docstr_get,
 		0,
-		objcsel_docstring_doc,
+		"The document string for a method",
 		0
 	},
+#if PY_VERSION_HEX >= 0x03030000
+	{
+		"__signature__",
+		PyObjC_callable_signature_get,
+		0,
+		"inspect.Signature for a method",
+		0
+	},
+#endif
 	{ 0, 0, 0, 0, 0 }
 };
 
@@ -1888,6 +1896,9 @@ pysel_docstring(PyObject* _self, void* closure __attribute__((__unused__)))
 	return docstr;
 }
 
+PyDoc_STRVAR(pysel_signature_doc,
+	"inspect.Signaturefor a method");
+
 static PyGetSetDef pysel_getset[] = {
 	{
 		"callable",
@@ -1901,6 +1912,13 @@ static PyGetSetDef pysel_getset[] = {
 		pysel_docstring,
 		0,
 		pysel_docstring_doc,
+		0
+	},
+	{
+		"__signature__",
+		PyObjC_callable_signature_get,
+		0,
+		pysel_signature_doc,
 		0
 	},
 

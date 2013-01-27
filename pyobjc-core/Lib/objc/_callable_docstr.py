@@ -1,5 +1,6 @@
 __all__ = ()
 from objc._objc import _setCallableDoc, _nameForSignature
+import sys
 import objc
 
 basic_types = {
@@ -63,13 +64,13 @@ def describe_type(typestr):
     # XXX: handle struct, union, array, bitfield
     return "<?>"
 
-def describe_signature(callable):
+def describe_callable(callable):
     name     = callable.__name__
     metadata = callable.__metadata__()
 
-    return describe_callable(name, metadata, ismethod=isinstance(callable, objc.selector))
+    return describe_callable_metadata(name, metadata, ismethod=isinstance(callable, objc.selector))
 
-def describe_callable(name, metadata, offset='', ismethod=False):
+def describe_callable_metadata(name, metadata, offset='', ismethod=False):
     arg_info = []
     if ismethod:
         arg_offset = 2
@@ -136,7 +137,7 @@ def describe_callable(name, metadata, offset='', ismethod=False):
                 continue
 
             elif info.get('callable'):
-                result.append('arg%d: %s'%(idx, describe_callable('callback', info['callable'], offset='    ' + offset)))
+                result.append('arg%d: %s'%(idx, describe_callable_metadata('callback', info['callable'], offset='    ' + offset)))
                 continue
 
             else:
@@ -167,4 +168,36 @@ def describe_callable(name, metadata, offset='', ismethod=False):
 
     return ('\n'+offset).join(result)
 
-_setCallableDoc(describe_signature)
+_setCallableDoc(describe_callable)
+
+if sys.version_info[:2] >= (3,3):
+    import inspect
+
+    def callable_signature(callable):
+        # Create an inspect.Signature for an PyObjC callable
+        # both objc.function and objc.native_selector only support positional 
+        # arguments, and not keyword arguments.
+        #
+        # TODO: it might be useful to add annotations when the argument/result
+        #       value is not an object.
+        metadata = callable.__metadata__()
+        ismethod = isinstance(callable, objc.selector)
+
+        if ismethod:
+            args = metadata['arguments'][2:] # Skip 'self' and 'selector' implicit arguments
+        else:
+            args = metadata['arguments']
+
+        parameters = []
+        for idx, arg in enumerate(args):
+            p_name = 'arg%d'%(idx,)
+            parameters.append(
+                inspect.Parameter(
+                    p_name,
+                    inspect.Parameter.POSITIONAL_ONLY
+                )
+            )
+        
+        return inspect.Signature(parameters)
+
+    objc._setCallableSignature(callable_signature)

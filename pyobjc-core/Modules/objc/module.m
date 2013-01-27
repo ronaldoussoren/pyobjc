@@ -1930,6 +1930,32 @@ set_callable_doc(PyObject* mod __attribute__((__unused__)), PyObject* hook)
 	return Py_None;
 }
 
+
+#if PY_VERSION_HEX >= 0x03030000
+static PyObject* callable_signature_function = NULL;
+
+PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure __attribute__((__unused__)))
+
+{
+	if (callable_signature_function == NULL) {
+		Py_INCREF(Py_None);
+		return Py_None;
+	}
+	return PyObject_CallFunction(callable_signature_function, "O", callable);
+}
+
+
+static PyObject* 
+set_callable_signature(PyObject* mod __attribute__((__unused__)), PyObject* hook)
+{
+	Py_INCREF(hook);
+	Py_XDECREF(callable_signature_function);
+	callable_signature_function = hook;
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+#endif
+
 static PyObject*
 name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signature)
 {
@@ -2095,6 +2121,10 @@ static PyMethodDef mod_methods[] = {
 		METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
 	{ "_setCallableDoc", (PyCFunction)set_callable_doc,
 		METH_O, "private function" },
+#if PY_VERSION_HEX >= 0x03030000
+	{ "_setCallableSignature", (PyCFunction)set_callable_signature,
+		METH_O, "private function" },
+#endif
 	{ "_nameForSignature", (PyCFunction)name_for_signature,
 		METH_O, "private function" },
 
@@ -2256,6 +2286,10 @@ PyObjC_MODULE_INIT(_objc)
 
 	m = PyObjC_MODULE_CREATE(_objc);
 	if (m == 0) {
+		PyObjC_INITERROR();
+	}
+
+	if (PyObjC_setup_nsdecimal(m) < 0) {
 		PyObjC_INITERROR();
 	}
 

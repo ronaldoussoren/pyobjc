@@ -41,15 +41,23 @@ static PyMethodDef func_methods[] = {
 	{ 0, 0, 0, 0 }
 };
 
-PyDoc_STRVAR(func_docstring_doc, "The document string for a method");
 static PyGetSetDef func_getset[] = {
 	{
 		"__doc__",
 		PyObjC_callable_docstr_get,
 		0,
-		func_docstring_doc,
+		"Documentation for a function",
 		0
 	},
+#if PY_VERSION_HEX >= 0x03030000
+	{
+		"__signature__",
+		PyObjC_callable_signature_get,
+		0,
+		"inspect.Signature for a function",
+		0
+	},
+#endif
 	{ 0, 0, 0, 0, 0 }
 };
 
