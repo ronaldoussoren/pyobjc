@@ -16,8 +16,8 @@ static PyObject* mapTypes = NULL;
 @interface OC_PythonDictionaryEnumerator : NSEnumerator
 {
     OC_PythonDictionary* value;
-    BOOL valid;
     Py_ssize_t pos;
+    BOOL valid;
 }
 +(instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
 -(id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
@@ -126,9 +126,7 @@ static PyObject* mapTypes = NULL;
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
-    Py_INCREF(v);
-    Py_XDECREF(value);
-    value = v;
+    SET_FIELD_RETAIN(value, v);
     return self;
 }
 
@@ -151,7 +149,7 @@ static PyObject* mapTypes = NULL;
 {
     PyObjC_BEGIN_WITH_GIL
     	PyObjC_UnregisterObjCProxy(value, self);
-    	Py_XDECREF(value);
+    	Py_CLEAR(value);
     
     PyObjC_END_WITH_GIL
 
@@ -181,6 +179,7 @@ static PyObject* mapTypes = NULL;
     PyObjC_BEGIN_WITH_GIL
     	if (likely(PyDict_CheckExact(value))) {
             result = PyDict_Size(value);
+
     	} else {
             result = PyObject_Length(value);
     	}
@@ -463,8 +462,8 @@ static PyObject* mapTypes = NULL;
 {
     PyObjC_BEGIN_WITH_GIL
     	PyObject* v = PyObjC_IdToPython(other);
-    	Py_XDECREF(value);
-    	value = v;
+
+        SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
 }
 
@@ -493,15 +492,18 @@ static PyObject* mapTypes = NULL;
     	if (PyObjC_Decoder != NULL) {
             PyObjC_BEGIN_WITH_GIL
                 PyObject* cdr = PyObjC_IdToPython(coder);
+                PyObject* setValue;
+                PyObject* selfAsPython;
+                PyObject* v;
+
                 if (cdr == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                PyObject* setValue;
-                PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+                selfAsPython = PyObjCObject_New(self, 0, YES);
                 setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-                PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+                v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
                 Py_DECREF(cdr);
                 Py_DECREF(setValue);
                 Py_DECREF(selfAsPython);
@@ -510,12 +512,12 @@ static PyObject* mapTypes = NULL;
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                Py_XDECREF(value);
-                value = v;
+                SET_FIELD(value, v);
 
                 NSObject* proxy = PyObjC_FindObjCProxy(value);
                 if (proxy == NULL) {
                     PyObjC_RegisterObjCProxy(value, self);
+
                 } else {
                     [self release];
                     [proxy retain];
@@ -573,6 +575,8 @@ static PyObject* mapTypes = NULL;
 -(id)copyWithZone:(NSZone*)zone
 {
     if (PyObjC_CopyFunc) {
+        NSObject* result;
+
     	PyObjC_BEGIN_WITH_GIL
             PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc,
                             value, NULL);
@@ -580,7 +584,7 @@ static PyObject* mapTypes = NULL;
                 PyObjC_GIL_FORWARD_EXC();
             } 
 
-            NSObject* result = PyObjC_PythonToId(copy);
+            result = PyObjC_PythonToId(copy);
             Py_DECREF(copy);
 
             if (PyErr_Occurred()) {
@@ -588,10 +592,10 @@ static PyObject* mapTypes = NULL;
             }
 
             [result retain];
-
-            PyObjC_GIL_RETURN(result);
-
     	PyObjC_END_WITH_GIL
+
+        return result;
+
     } else {
     	return [super copyWithZone:zone];
     }
@@ -600,6 +604,8 @@ static PyObject* mapTypes = NULL;
 -(id)mutableCopyWithZone:(NSZone*)zone
 {
     if (PyObjC_CopyFunc) {
+        NSObject* result;
+
         PyObjC_BEGIN_WITH_GIL
             PyObject* copy = PyDict_New();
             if (copy == NULL) {
@@ -611,7 +617,7 @@ static PyObject* mapTypes = NULL;
                 PyObjC_GIL_FORWARD_EXC();
             } 
 
-            NSObject* result = PyObjC_PythonToId(copy);
+            result = PyObjC_PythonToId(copy);
             Py_DECREF(copy);
 
             if (PyErr_Occurred()) {
@@ -620,14 +626,13 @@ static PyObject* mapTypes = NULL;
 
             [result retain];
 
-            PyObjC_GIL_RETURN(result);
-
     	PyObjC_END_WITH_GIL
+
+        return result;
         
     } else {
     	return [super mutableCopyWithZone:zone];
     }
 }
-
 
 @end  // interface OC_PythonDictionary
