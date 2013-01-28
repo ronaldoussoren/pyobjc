@@ -7,9 +7,11 @@
 
 #define OBJC_VERSION "3.0a1"
 
-// Loading in AppKit on Mac OS X 10.3 results in
-// a bit less than 1500 classes.
-#define PYOBJC_EXPECTED_CLASS_COUNT 3000
+/*
+ * Loading Quartz results close to 5K classes
+ * on OSX 10.8
+ */
+#define PYOBJC_EXPECTED_CLASS_COUNT 10000
 #define PY_SSIZE_T_CLEAN
 
 #include <Python.h>
@@ -199,6 +201,9 @@ PyObject* PyObjC_SockAddrToPython(void*);
 extern PyObject* PyObjC_TypeStr2CFTypeID;
 extern PyObject* PyObjC_AdjustSelf(PyObject* self);
 extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
+#if PY_VERSION_HEX >= 0x03030000
+extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure);
+#endif
 
 
 
