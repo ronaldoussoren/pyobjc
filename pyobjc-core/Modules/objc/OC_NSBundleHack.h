@@ -13,7 +13,7 @@
  * @class       OC_NSBundleHack
  * @abstract    NSBundle hacks to support plugins
  * @discussion
- *     This class that is used to post for NSBundle
+ *     This class that is used to pose for NSBundle
  *     if it does not do the right thing
  */
 
