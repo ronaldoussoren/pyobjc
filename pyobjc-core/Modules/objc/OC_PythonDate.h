@@ -3,8 +3,8 @@
 
 @interface OC_PythonDate : NSDate
 {
-	PyObject* value;
-	NSDate*   oc_value;
+    PyObject* value;
+    NSDate*   oc_value;
 }
 
 + (instancetype)depythonifyObject:(PyObject*)object;
@@ -20,7 +20,6 @@
  */
 -(NSTimeInterval)timeIntervalSinceReferenceDate;
 
-/* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
 - (id)initWithCoder:(NSCoder*)coder;
 
