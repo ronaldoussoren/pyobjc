@@ -66,9 +66,7 @@ static PyObject* mapTypes = NULL;
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
-    Py_INCREF(v);
-    Py_XDECREF(value);
-    value = v;
+    SET_FIELD_INCREF(value, v);
     return self;
 }
 
@@ -103,7 +101,7 @@ static PyObject* mapTypes = NULL;
 {
     PyObjC_BEGIN_WITH_GIL
         PyObjC_UnregisterObjCProxy(value, self);
-        Py_XDECREF(value);
+        Py_CLEAR(value);
 
     PyObjC_END_WITH_GIL
 
@@ -216,11 +214,10 @@ static PyObject* mapTypes = NULL;
         }
 
         w = PyObject_CallMethod(value, "append", "O", v);
+        Py_DECREF(v);
         if (unlikely(w == NULL)) {
-            Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
-        Py_DECREF(v);
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -252,11 +249,10 @@ static PyObject* mapTypes = NULL;
         }
 
         w = PyObject_CallMethod(value, "insert", Py_ARG_SIZE_T "O", theIndex, v);
+        Py_DECREF(v);
         if (unlikely(w == NULL)) {
-            Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
-        Py_DECREF(v);
         Py_DECREF(w);
 
     PyObjC_END_WITH_GIL;
@@ -382,14 +378,19 @@ static PyObject* mapTypes = NULL;
         if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
             for  (i = 0; i < count; i++) {
                 PyObject* v;
+
                 if (objects[i] == [NSNull null]) {
                     v = Py_None; Py_INCREF(Py_None);
+
                 } else {
                     v = PyObjC_IdToPython(objects[i]);
+
                 }
+
                 if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
+
                 if (PyTuple_GET_ITEM(value, i) != NULL) {
                     /* use temporary option to avoid race condition */
                     PyObject* t = PyTuple_GET_ITEM(value, i);
@@ -432,8 +433,8 @@ static PyObject* mapTypes = NULL;
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
-        Py_XDECREF(value);
-        value = v;
+        SET_FIELD(value, v);
+
     PyObjC_END_WITH_GIL
 }
 
@@ -456,12 +457,14 @@ static PyObject* mapTypes = NULL;
            */
           PyObjC_BEGIN_WITH_GIL
               value = PyList_New(0);
-          if (value == NULL){
-            PyObjC_GIL_FORWARD_EXC();
-          }
+              if (value == NULL){
+                  PyObjC_GIL_FORWARD_EXC();
+              }
+
           PyObjC_END_WITH_GIL
           
           [super initWithCoder:coder];
+
           PyObjC_BEGIN_WITH_GIL
               t = value;
               value = PyList_AsTuple(t);
@@ -490,6 +493,7 @@ static PyObject* mapTypes = NULL;
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
+
         PyObjC_END_WITH_GIL
 
         if (PyObjC_Decoder != NULL) {
@@ -515,8 +519,7 @@ static PyObject* mapTypes = NULL;
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                Py_XDECREF(value);
-                value = v;
+                SET_FIELD(value, v);
 
                 NSObject* proxy = PyObjC_FindObjCProxy(value);
                 if (proxy == NULL) {
@@ -543,10 +546,12 @@ static PyObject* mapTypes = NULL;
 
           PyObjC_BEGIN_WITH_GIL
               value = PyTuple_New(size);
-          if (value == NULL){
-            PyObjC_GIL_FORWARD_EXC();
-          }
+              if (value == NULL){
+                  PyObjC_GIL_FORWARD_EXC();
+              }
+
           PyObjC_END_WITH_GIL
+
           [super initWithCoder:coder];
           return self;
 
@@ -561,9 +566,10 @@ static PyObject* mapTypes = NULL;
 
           PyObjC_BEGIN_WITH_GIL
               value = PyTuple_New(size);
-          if (value == NULL){
-            PyObjC_GIL_FORWARD_EXC();
-          }
+              if (value == NULL){
+                  PyObjC_GIL_FORWARD_EXC();
+              }
+
           PyObjC_END_WITH_GIL
           [super initWithCoder:coder];
           return self;
@@ -576,7 +582,7 @@ static PyObject* mapTypes = NULL;
     }
 
     [NSException raise:NSInvalidArgumentException
-            format:@"decoding Python objects is not supported"];
+                format:@"decoding Python objects is not supported"];
     [self release];
     return nil;
 }
@@ -633,4 +639,5 @@ static PyObject* mapTypes = NULL;
         return [super mutableCopyWithZone:zone];
     }
 }
+
 @end /* implementation OC_PythonArray */

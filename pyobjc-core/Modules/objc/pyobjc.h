@@ -18,6 +18,34 @@
 #include "structmember.h"
 #include "pyobjc-compat.h"
 
+/*
+ * SET_FIELD(op, value): 
+ *    macro for updating the value of 'op' to 'value',
+ *    steals a reference to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); op = value'
+ */
+#define SET_FIELD(op, value)                    \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
+
+/*
+ * SET_FIELD_INCREF(op, value): 
+ *    macro for updating the value of 'op' to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
+ */
+#define SET_FIELD_INCREF(op, value)             \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        Py_INCREF(value);                       \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
+
 #ifdef __clang__
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
