@@ -22,17 +22,6 @@ preferably by prefixing names with ``PyObjC`` or ``pyobjc``.  This should make
 it clear to users where they should look for documentation of an item: The
 Apple documentation or ours.
 
-C code
-------
-
-The coding style for core Python is used (see :pep:`7`).  We use ``PyObjC`` 
-instead of ``Py`` as the prefix for globally visible symbols.
-
-All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as
-their first include.  The (Objective-)C files in the wrappers for frameworks
-should include ``"pyobjc-api.h"`` and should not use other headers files from
-``pyobjc-core``.
-
 The ``setup.py`` for a framework wrapper should defer most work to 
 ``pyobjc_setup.py``, like so:
 
@@ -53,6 +42,32 @@ The ``setup.py`` for a framework wrapper should defer most work to
 
 The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but 
 dynamicly fetch that at build time.
+
+C code
+------
+
+The coding style for core Python is used (see :pep:`7`).  We use ``PyObjC`` 
+instead of ``Py`` as the prefix for globally visible symbols.
+
+.. note:: 
+
+   Currently identation is done using tabs instead of spaces, I'm slowly migrating
+   code to use spaces for indentation.
+
+All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as
+their first include.  The (Objective-)C files in the wrappers for frameworks
+should include ``"pyobjc-api.h"`` and should not use other headers files from
+``pyobjc-core``.
+
+* Use Py_CLEAR to set fields in data structure to NULL instead of using Py_DECREF
+
+* Use SET_FIELD or SET_FIELD_INCREF to set the value of a field in a data structure,
+  instead of trying to manage the retain count manually.
+
+  Both this and the previous item can avoid hard crashes when the DECREF of the
+  current value causes a callback that accesses the same field before it is set
+  to NULL.
+
 
 Documentation
 -------------
