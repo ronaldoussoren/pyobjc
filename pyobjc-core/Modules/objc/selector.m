@@ -1914,6 +1914,7 @@ static PyGetSetDef pysel_getset[] = {
 		pysel_docstring_doc,
 		0
 	},
+#if PY_VERSION_HEX >= 0x03030000
 	{
 		"__signature__",
 		PyObjC_callable_signature_get,
@@ -1921,6 +1922,7 @@ static PyGetSetDef pysel_getset[] = {
 		pysel_signature_doc,
 		0
 	},
+#endif
 
 	{
 		NULL,
