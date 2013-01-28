@@ -7,7 +7,6 @@
  */
 
 #import "pyobjc.h"
-#import <Foundation/Foundation.h>
 
 /*!
  * @class OC_PythonDictionary
@@ -24,7 +23,7 @@
  */
 @interface OC_PythonDictionary : NSMutableDictionary
 {
-	PyObject* value;
+    PyObject* value;
 }
 
 /*!
