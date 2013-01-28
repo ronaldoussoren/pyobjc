@@ -53,6 +53,8 @@ static id (*bundleForClassIMP)(id, SEL, Class);
 	return rval;
 }
 
+static const char BUNDLE_FOR_CLASS_SIGNATURE[] = { _C_ID, _C_ID, _C_SEL, _C_CLASS, 0 };
+
 +(void)installBundleHack
 {
 	if ([[NSBundle bundleForClass:[NSObject class]] isEqual:[NSBundle bundleForClass:[OC_NSBundleHackCheck class]]]) {
@@ -69,7 +71,7 @@ static id (*bundleForClassIMP)(id, SEL, Class);
 			object_getClass([NSBundle class]),
 			@selector(bundleForClass:),
 			[self methodForSelector:@selector(bundleForClass:)],
-		        "@@:#");
+		        BUNDLE_FOR_CLASS_SIGNATURE);
 	} else {
 		method_setImplementation(method, 
 			[self methodForSelector:@selector(bundleForClass:)]
