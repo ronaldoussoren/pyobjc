@@ -7,7 +7,7 @@
  */
 
 #import "pyobjc.h"
-#import <Foundation/Foundation.h>
+
 
 /*!
  * @class       OC_PythonData
@@ -21,12 +21,6 @@
 @interface OC_PythonData : NSData
 {
     PyObject* value;
-
-    /* XXX: why are these here? These fields don't seem to be necessary
-     * at all!
-     */
-    Py_ssize_t buffer_len;
-    const void *buffer;
 }
 
 /*!

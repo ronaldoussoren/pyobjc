@@ -15,6 +15,9 @@
 
 - (OC_PythonData*)initWithPythonObject:(PyObject*)v
 {
+    Py_ssize_t buffer_len;
+    const void *buffer;
+
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
@@ -22,9 +25,8 @@
         [super dealloc];
         return nil;
     }
-    Py_INCREF(v);
-    Py_XDECREF(value);
-    value = v;
+
+    SET_FIELD_INCREF(value, v);
     return self;
 }
 
@@ -50,6 +52,7 @@
     /* See comment in OC_PythonUnicode */
     PyObjC_BEGIN_WITH_GIL
         [super release];
+
     PyObjC_END_WITH_GIL
 }
         
@@ -71,6 +74,9 @@
     NSUInteger rval;
     
     PyObjC_BEGIN_WITH_GIL
+        Py_ssize_t buffer_len;
+        const void *buffer;
+
         if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
             PyErr_Clear();
             rval = 0;
@@ -91,6 +97,9 @@
 {
     const void *rval;
     PyObjC_BEGIN_WITH_GIL
+        Py_ssize_t buffer_len;
+        const void *buffer;
+
         if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
             PyErr_Clear();
             rval = NULL;
@@ -112,10 +121,12 @@
 
     PyObjC_BEGIN_WITH_GIL
         if (PyBytes_CheckExact(value)) {
+            Py_ssize_t buffer_len;
+            const void *buffer;
+
             if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
                 PyObjC_GIL_FORWARD_EXC();
             }
-
 
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:1 forKey:@"pytype"];
@@ -148,8 +159,8 @@
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
-        Py_XDECREF(value);
-        value = v;
+
+        SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
 }
 
@@ -193,15 +204,19 @@
         if (PyObjC_Decoder != NULL) {
             PyObjC_BEGIN_WITH_GIL
                 PyObject* cdr = PyObjC_IdToPython(coder);
+                PyObject* setValue;
+                PyObject* selfAsPython;
+                PyObject* v2;
+
                 if (cdr == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                PyObject* setValue;
-                PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
+
+                selfAsPython = PyObjCObject_New(self, 0, YES);
                 setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-                PyObject* v2 = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+                v2 = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
                 Py_DECREF(cdr);
                 Py_DECREF(setValue);
                 Py_DECREF(selfAsPython);
@@ -210,18 +225,9 @@
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                Py_XDECREF(value);
-                value = v2;
+                SET_FIELD(value, v2);
 
-                NSObject* proxy = PyObjC_FindObjCProxy(value);
-                if (proxy == NULL) {
-                    PyObjC_RegisterObjCProxy(value, self);
-                } else {
-                    [self release];
-                    [proxy retain];
-                    self = (OC_PythonData*)proxy;
-                }
-
+                self = PyObjC_FindOrRegisterObjCProxy(value, self);
 
             PyObjC_END_WITH_GIL
 

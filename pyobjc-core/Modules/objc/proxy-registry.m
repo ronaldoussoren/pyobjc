@@ -3,6 +3,8 @@
 static NSMapTable* python_proxies = NULL;
 static NSMapTable* objc_proxies = NULL;
 
+
+
 int PyObjC_InitProxyRegistry(void)
 {
 	python_proxies = NSCreateMapTable(
@@ -82,5 +84,19 @@ id PyObjC_FindObjCProxy(PyObject* original)
         return nil;
     } else {
         return NSMapGet(objc_proxies, original);
+    }
+}
+
+id PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
+{
+    id result = PyObjC_FindObjCProxy(value);
+    if (result == NULL) {
+        PyObjC_RegisterObjCProxy(value, proxy);
+        return proxy;
+
+    } else {
+        [proxy release];
+        [result retain];
+        return result;
     }
 }

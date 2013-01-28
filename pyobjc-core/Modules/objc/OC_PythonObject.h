@@ -24,10 +24,6 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
-#import <Foundation/NSProxy.h>
-#import <Foundation/NSDictionary.h>
-#import <Foundation/NSMethodSignature.h>
-
 extern PyObject* PyObjC_Encoder;
 extern PyObject* PyObjC_Decoder;
 extern PyObject* PyObjC_CopyFunc;

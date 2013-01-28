@@ -126,7 +126,7 @@ static PyObject* mapTypes = NULL;
     self = [super init];
     if (unlikely(self == nil)) return nil;
 
-    SET_FIELD_RETAIN(value, v);
+    SET_FIELD_INCREF(value, v);
     return self;
 }
 
@@ -514,16 +514,7 @@ static PyObject* mapTypes = NULL;
 
                 SET_FIELD(value, v);
 
-                NSObject* proxy = PyObjC_FindObjCProxy(value);
-                if (proxy == NULL) {
-                    PyObjC_RegisterObjCProxy(value, self);
-
-                } else {
-                    [self release];
-                    [proxy retain];
-                    self = (OC_PythonDictionary*)proxy;
-                }
-
+                self = PyObjC_FindOrRegisterObjCProxy(value, self);
             PyObjC_END_WITH_GIL
 
             return self;

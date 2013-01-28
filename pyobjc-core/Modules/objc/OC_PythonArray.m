@@ -521,15 +521,7 @@ static PyObject* mapTypes = NULL;
 
                 SET_FIELD(value, v);
 
-                NSObject* proxy = PyObjC_FindObjCProxy(value);
-                if (proxy == NULL) {
-                    PyObjC_RegisterObjCProxy(value, self);
-                } else {
-                    [proxy retain];
-                    [self release];
-                    self = (OC_PythonArray*)proxy;
-                }
-
+                self = PyObjC_FindOrRegisterObjCProxy(value, self);
 
             PyObjC_END_WITH_GIL
 

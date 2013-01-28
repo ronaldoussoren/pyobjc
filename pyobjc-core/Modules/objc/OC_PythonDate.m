@@ -158,16 +158,7 @@ static PyObject* datetime_types = NULL;
             }
 
             SET_FIELD(value, v);
-
-            NSObject* proxy = PyObjC_FindObjCProxy(value);
-            if (proxy == NULL) {
-                PyObjC_RegisterObjCProxy(value, self);
-            } else {
-                [self release];
-                [proxy retain];
-                self = (OC_PythonDate*)proxy;
-            }
-
+            self = PyObjC_FindOrRegisterObjCProxy(value, self);
 
         PyObjC_END_WITH_GIL
 

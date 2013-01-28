@@ -20,4 +20,6 @@ void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy);
 id PyObjC_FindObjCProxy(PyObject* original);
 PyObject* PyObjC_FindPythonProxy(id original);
 
+id PyObjC_FindOrRegisterObjCProxy(PyObject* original, id proxy);
+
 #endif /* PyObjC_PROXY_REGISTRY_H */

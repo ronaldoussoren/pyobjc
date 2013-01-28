@@ -1348,15 +1348,7 @@ static  PyObject* setKeyFunc = NULL;
 			Py_XDECREF(pyObject);
 			pyObject = v;
 
-			NSObject* proxy = PyObjC_FindObjCProxy(pyObject);
-			if (proxy == NULL) {
-				PyObjC_RegisterObjCProxy(pyObject, self);
-			} else {
-				[self release];
-				[proxy retain];
-				self = (OC_PythonObject*)proxy;
-			}
-
+                        self = PyObjC_FindOrRegisterObjCProxy(pyObject, self);
 
 		PyObjC_END_WITH_GIL
 

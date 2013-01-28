@@ -7,7 +7,6 @@
  */
 
 #import "pyobjc.h"
-#import <Foundation/Foundation.h>
 
 /*!
  * @class       OC_PythonArray
