@@ -17,7 +17,7 @@
  * First some helpers: easy access to the actual fields
  */
 static inline PyObject*
-GET_FIELD(PyObject* self, PyMemberDef* member)
+GET_STRUCT_FIELD(PyObject* self, PyMemberDef* member)
 {
 	PyObject* v; 
 
@@ -30,7 +30,7 @@ GET_FIELD(PyObject* self, PyMemberDef* member)
 }
 
 static inline void
-SET_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
+SET_STRUCT_FIELD(PyObject* self, PyMemberDef* member, PyObject* val)
 {
 	PyObject* tmp;
 	Py_XINCREF(val);
@@ -68,7 +68,7 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
 	} 
 
 	member = Py_TYPE(self)->tp_members + offset;
-	res = GET_FIELD(self, member);
+	res = GET_STRUCT_FIELD(self, member);
 
 	Py_INCREF(res);
 	return res;
@@ -91,7 +91,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 
 	for (i = ilow; i < ihigh; i++) {
 		PyMemberDef* member = Py_TYPE(self)->tp_members + i;
-		PyObject* v = GET_FIELD(self, member);
+		PyObject* v = GET_STRUCT_FIELD(self, member);
 		Py_INCREF(v);
 		PyTuple_SET_ITEM(result, i-ilow, v);
 	}
@@ -120,7 +120,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 		return -1;
 	}
 	member = Py_TYPE(self)->tp_members + offset;
-	SET_FIELD(self, member, newVal);
+	SET_STRUCT_FIELD(self, member, newVal);
 	return 0;
 }
 
@@ -171,7 +171,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
 			Py_DECREF(seq);
 			return -1;
 		}
-		SET_FIELD(self, member, x);
+		SET_STRUCT_FIELD(self, member, x);
 	}
 	Py_DECREF(seq);
 	return 0;
@@ -184,7 +184,7 @@ struct_sq_contains(PyObject* self, PyObject* value)
 
 	while (member && member->name) {
 		int r;
-		PyObject* cur = GET_FIELD(self, member);
+		PyObject* cur = GET_STRUCT_FIELD(self, member);
 
 		r = PyObject_RichCompareBool(cur, value, Py_EQ);
 		if (r == -1) {
@@ -208,7 +208,7 @@ struct_reduce(PyObject* self)
 	if (values == NULL) return NULL;
 
 	for (i = 0; i < len; i++) {
-		PyObject* v = GET_FIELD(self, Py_TYPE(self)->tp_members + i);
+		PyObject* v = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
 		Py_INCREF(v);
 		PyTuple_SET_ITEM(values, i, v);
 	}
@@ -245,13 +245,13 @@ struct_copy(PyObject* self)
 			continue;
 		}
 		*((PyObject**)(((char*)result) + member->offset)) = NULL;
-		PyObject* t = GET_FIELD(self, member);
+		PyObject* t = GET_STRUCT_FIELD(self, member);
 
 		if (t != NULL) {
 			PyObject* m = PyObject_GetAttrString(t, "__pyobjc_copy__");
 			if (m == NULL) {
 				PyErr_Clear();
-				SET_FIELD(result, member, t);
+				SET_STRUCT_FIELD(result, member, t);
 			} else {
 				PyObject* c = PyObject_CallObject(m, NULL);
 				Py_DECREF(m);
@@ -259,7 +259,7 @@ struct_copy(PyObject* self)
 					Py_DECREF(result);
 					return NULL;
 				}
-				SET_FIELD(result, member, c);
+				SET_STRUCT_FIELD(result, member, c);
 				Py_DECREF(c);
 			}
 		}
@@ -323,7 +323,7 @@ struct_asdict(PyObject* self)
 			member++;
 			continue;
 		}
-		PyObject* t = GET_FIELD(self, member);
+		PyObject* t = GET_STRUCT_FIELD(self, member);
 		r = PyDict_SetItemString(result, member->name, t);
 		if (r == -1) {
 			Py_DECREF(result);
@@ -738,7 +738,7 @@ struct_init(
 		for (i = 0; i < len; i++) {
 			PyObject* v = PyTuple_GET_ITEM(args, i);
 
-			SET_FIELD(self, Py_TYPE(self)->tp_members+i, v);
+			SET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i, v);
 		}
 		setUntil = len-1;
 	}
@@ -817,7 +817,7 @@ struct_init(
 
 			member = Py_TYPE(self)->tp_members + off;
 			v = PyDict_GetItem(kwds, k);
-			SET_FIELD(self, member, v);
+			SET_STRUCT_FIELD(self, member, v);
 		}
 		Py_DECREF(keys);
 	}
@@ -914,7 +914,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 	for (i = 0; i < len; i ++) {
 		int k;
 
-		self_cur = GET_FIELD(self, Py_TYPE(self)->tp_members+i);
+		self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members+i);
 		other_cur = PySequence_GetItem(other, i);
 		if (other_cur == NULL) return NULL;
 
@@ -975,7 +975,7 @@ struct_traverse(PyObject* self, visitproc visit, void* arg)
 
 	for (member = Py_TYPE(self)->tp_members; 
 				member && member->name; member++) {
-		v = GET_FIELD(self, member);
+		v = GET_STRUCT_FIELD(self, member);
 		if (v == NULL) continue;
 		err = visit(v, arg);
 		if (err) return err;
@@ -990,7 +990,7 @@ struct_clear(PyObject* self)
 
 	for (member = Py_TYPE(self)->tp_members; 
 				member && member->name; member++) {
-		SET_FIELD(self, member, NULL);
+		SET_STRUCT_FIELD(self, member, NULL);
 	}
 	return 0;
 }
@@ -1029,7 +1029,7 @@ struct_repr(PyObject* self)
 			PyText_FromFormat(" %s=", member->name));
 		if (cur == NULL) goto done;
 
-		v = GET_FIELD(self, member);
+		v = GET_STRUCT_FIELD(self, member);
 
 		PyText_Append(&cur, PyObject_Repr(v));
 		if (cur == NULL) goto done;
