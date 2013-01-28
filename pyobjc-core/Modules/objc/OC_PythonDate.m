@@ -23,11 +23,12 @@ static PyObject* datetime_types = NULL;
 
         name = PyText_FromString("datetime");
         if (name == NULL) {
+            Py_CLEAR(datetime_types);
             return nil;
         }
 
         datetime = PyImport_Import(name);
-        Py_DECREF(name); name = NULL;
+        Py_CLEAR(name);
 
         if (datetime == NULL) {
             PyErr_Clear();
@@ -36,6 +37,7 @@ static PyObject* datetime_types = NULL;
 
         PyList_Append(datetime_types,
             PyObject_GetAttrString(datetime, "date"));
+
         PyList_Append(datetime_types,
             PyObject_GetAttrString(datetime, "datetime"));
         if (PyErr_Occurred()) {
@@ -56,8 +58,7 @@ static PyObject* datetime_types = NULL;
     OC_PythonDate* res;
 
     res = [[OC_PythonDate alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [res autorelease];
 }
 
 - (id)initWithPythonObject:(PyObject*)v
@@ -67,9 +68,7 @@ static PyObject* datetime_types = NULL;
 
     oc_value = nil;
 
-    Py_INCREF(v);
-    Py_XDECREF(value);
-    value = v;
+    SET_FIELD_INCREF(value, v);
     return self;
 }
 
@@ -128,8 +127,8 @@ static PyObject* datetime_types = NULL;
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
-        Py_XDECREF(value);
-        value = v;
+
+        SET_FIELD(value, v);
 
     PyObjC_END_WITH_GIL
 }
@@ -158,8 +157,7 @@ static PyObject* datetime_types = NULL;
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            Py_XDECREF(value);
-            value = v;
+            SET_FIELD(value, v);
 
             NSObject* proxy = PyObjC_FindObjCProxy(value);
             if (proxy == NULL) {
