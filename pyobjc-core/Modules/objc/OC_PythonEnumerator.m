@@ -4,76 +4,74 @@
 
 +(instancetype)enumeratorWithPythonObject:(PyObject*)object
 {
-	return [[[self alloc] initWithPythonObject:object] autorelease];
+    return [[[self alloc] initWithPythonObject:object] autorelease];
 }
 
 -(id)initWithPythonObject:(PyObject*)object
 {
-	self = [super init];
-	if (self == nil) return nil;
+    self = [super init];
+    if (self == nil) return nil;
 
-	Py_INCREF(object);
-	Py_XDECREF(value);
-	value = object;
-	valid = YES;
+    SET_FIELD_INCREF(value, object);
+    valid = YES;
 
-	return self;
+    return self;
 }
 
 -(void)dealloc
 {
-	Py_XDECREF(value);
-	[super dealloc];
+    Py_XDECREF(value);
+    [super dealloc];
 }
 
 -(id)nextObject
 {
-	if (!valid) {
-		return nil;
-	}
+    if (!valid) {
+        return nil;
+    }
 
-	NSObject* result = nil;
+    NSObject* result = nil;
 
-	PyObjC_BEGIN_WITH_GIL
-		PyObject* object = PyIter_Next(value);
-		if (object == NULL) {
-			if (!PyErr_Occurred()) {
-				valid = NO;
-				PyErr_Clear();
-				PyObjC_GIL_RETURN(nil);
-			} else {
-				PyObjC_GIL_FORWARD_EXC();
-			}
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* object = PyIter_Next(value);
+        if (object == NULL) {
+            if (!PyErr_Occurred()) {
+                valid = NO;
+                PyErr_Clear();
+                PyObjC_GIL_RETURN(nil);
+            } else {
+                PyObjC_GIL_FORWARD_EXC();
+            }
 
-		}
-		result = PyObjC_PythonToId(object);
-		if (result == nil) {
-			if (PyErr_Occurred()) {
-				PyObjC_GIL_FORWARD_EXC();
-			} else {
-				PyObjC_GIL_RETURN([NSNull null]);
-			}
-		}
+        }
+        result = PyObjC_PythonToId(object);
+        if (result == nil) {
+            if (PyErr_Occurred()) {
+                PyObjC_GIL_FORWARD_EXC();
+            } else {
+                PyObjC_GIL_RETURN([NSNull null]);
+            }
+        }
 
-	PyObjC_END_WITH_GIL
+    PyObjC_END_WITH_GIL
 
-	return result;
+    return result;
 }
 
 -(NSArray*)allObjects
 {
-	NSMutableArray* array;
-	NSObject* cur;
+    NSMutableArray* array;
+    NSObject* cur;
 
-	array = [NSMutableArray array];
-	if (array == nil) 
-		return nil;
+    array = [NSMutableArray array];
+    if (array == nil)
+        return nil;
 
-	while ((cur = [self nextObject]) != nil) {
-		[array addObject:cur];
-	}
+    while ((cur = [self nextObject]) != nil) {
+        [array addObject:cur];
+    }
 
-	return array;
+    return array;
 }
 
 @end

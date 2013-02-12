@@ -8,8 +8,8 @@
 #import <Foundation/Foundation.h>
 
 struct FooStruct {
-	int first;
-	int second;
+    int first;
+    int second;
 };
 
 @interface OC_StructTest : NSObject
@@ -25,52 +25,52 @@ struct FooStruct {
 @implementation OC_StructTest
 +(struct FooStruct)createWithFirst:(int)first andSecond:(int)second
 {
-	struct FooStruct f;
-	f.first = first;
-	f.second = second;
-	return f;
+    struct FooStruct f;
+    f.first = first;
+    f.second = second;
+    return f;
 }
 
 +(int)sumFields:(struct FooStruct)foo
 {
-	return foo.first + foo.second;
+    return foo.first + foo.second;
 }
 
 +(NSObject*)callArrayOf4Structs:(OC_StructTest*)object
 {
-static	struct FooStruct structs[4] = {
-		{ 1, 2 },
-		{ 3, 4 },
-		{ 5, 6 },
-		{ 7, 8 },
-	};
+static    struct FooStruct structs[4] = {
+        { 1, 2 },
+        { 3, 4 },
+        { 5, 6 },
+        { 7, 8 },
+    };
 
-	return [object arrayOf4Structs:structs];
+    return [object arrayOf4Structs:structs];
 }
 -(NSObject*)arrayOf4Structs:(struct FooStruct[4])argument
 {
-	return [NSData dataWithBytes:(void*)argument length:4*sizeof(*argument)];
+    return [NSData dataWithBytes:(void*)argument length:4*sizeof(*argument)];
 }
 
 @end
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"structs",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "structs",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -92,27 +92,27 @@ void __attribute__((__visibility__("default")))
 initstructs(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("structs", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("structs", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_StructTest", 
-		PyObjCClass_New([OC_StructTest class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_StructTest",
+        PyObjCClass_New([OC_StructTest class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

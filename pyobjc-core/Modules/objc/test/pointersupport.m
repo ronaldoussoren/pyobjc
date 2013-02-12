@@ -10,45 +10,45 @@
 static PyObject*
 make_opaque_capsule(PyObject* mod __attribute__((__unused__)))
 {
-	return PyCapsule_New((void*)1234, "objc.__opaque__", NULL);
+    return PyCapsule_New((void*)1234, "objc.__opaque__", NULL);
 }
 
 static PyObject*
 make_object_capsule(PyObject* mod __attribute__((__unused__)))
 {
-	NSObject* object = [[[NSObject alloc] init] autorelease];
-	return PyCapsule_New(object, "objc.__object__", NULL);
+    NSObject* object = [[[NSObject alloc] init] autorelease];
+    return PyCapsule_New(object, "objc.__object__", NULL);
 }
 
 
 static PyMethodDef mod_methods[] = {
-	{
-		"opaque_capsule",
-		(PyCFunction)make_opaque_capsule,
-		METH_NOARGS,
-		0,
-	},
-	{
-		"object_capsule",
-		(PyCFunction)make_object_capsule,
-		METH_NOARGS,
-		0,
-	},
-	{ 0, 0, 0, 0 }
+    {
+        "opaque_capsule",
+        (PyCFunction)make_opaque_capsule,
+        METH_NOARGS,
+        0,
+    },
+    {
+        "object_capsule",
+        (PyCFunction)make_object_capsule,
+        METH_NOARGS,
+        0,
+    },
+    { 0, 0, 0, 0 }
 };
 
 #if PY_MAJOR_VERSION == 3
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"pointersupport",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "pointersupport",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -70,21 +70,21 @@ void __attribute__((__visibility__("default")))
 initpointersupport(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("pointersupport", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("pointersupport", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

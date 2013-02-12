@@ -31,21 +31,21 @@ typedef struct _Bar* BarHandle;
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"opaque",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "opaque",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -67,41 +67,41 @@ void __attribute__((__visibility__("default")))
 initopaque(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("opaque", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("opaque", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_OpaqueTest", 
-		PyObjCClass_New([OC_OpaqueTest class])) < 0) {
-		INITERROR();
-	}
-	if (PyModule_AddObject(m, "FooHandle", 
-		PyObjCCreateOpaquePointerType("FooHandle",
-			                @encode(FooHandle), "FooHandle doc")) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_OpaqueTest",
+        PyObjCClass_New([OC_OpaqueTest class])) < 0) {
+        INITERROR();
+    }
+    if (PyModule_AddObject(m, "FooHandle",
+        PyObjCCreateOpaquePointerType("FooHandle",
+                            @encode(FooHandle), "FooHandle doc")) < 0) {
+        INITERROR();
+    }
 #if PY_VERSION_HEX >= 0x03000000
-	if (PyModule_AddObject(m, "BarEncoded",  PyBytes_FromString(@encode(BarHandle))) < 0) {
+    if (PyModule_AddObject(m, "BarEncoded",  PyBytes_FromString(@encode(BarHandle))) < 0) {
 #else
-	if (PyModule_AddObject(m, "BarEncoded",  PyString_FromString(@encode(BarHandle))) < 0) {
+    if (PyModule_AddObject(m, "BarEncoded",  PyString_FromString(@encode(BarHandle))) < 0) {
 #endif
-		INITERROR();
-	}
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }
 
 /*
@@ -110,90 +110,90 @@ initopaque(void)
  */
 
 struct _Foo {
-	int index;
+    int index;
 };
 
 struct _Bar {
-	double first;
-	double second;
+    double first;
+    double second;
 };
 
 @implementation OC_OpaqueTest
 +(FooHandle)createFoo:(int)value
 {
-	FooHandle result = malloc(sizeof(struct _Foo));
-	if (result == NULL) {
-		return NULL;
-	}
-	result->index = value;
-	return result;
+    FooHandle result = malloc(sizeof(struct _Foo));
+    if (result == NULL) {
+        return NULL;
+    }
+    result->index = value;
+    return result;
 }
 
 +(FooHandle)nullFoo
 {
-	return NULL;
+    return NULL;
 }
 
 +(void)deleteFoo:(FooHandle)handle
 {
-	if (handle) {
-		free(handle);
-	}
+    if (handle) {
+        free(handle);
+    }
 }
 
 +(int)getValueOf:(FooHandle)foo
 {
-	return foo->index;
+    return foo->index;
 }
 
 +(void)setValue:(int)value forFoo:(FooHandle)handle
 {
-	handle->index = value;
+    handle->index = value;
 }
 
 +(BarHandle)createBarWithFirst:(double)first andSecond:(double)second
 {
-	BarHandle result = malloc(sizeof(struct _Bar));
-	if (result == NULL) return NULL;
+    BarHandle result = malloc(sizeof(struct _Bar));
+    if (result == NULL) return NULL;
 
-	result->first = first;
-	result->second = second;
-	return result;
+    result->first = first;
+    result->second = second;
+    return result;
 }
 
 +(BarHandle)nullBar
 {
-	return NULL;
+    return NULL;
 }
 
 
 +(void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar
 {
-	*first = bar->first;
-	*second = bar->second;
+    *first = bar->first;
+    *second = bar->second;
 }
 
 +(void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar
 {
-	bar->first = first;
-	bar->second = second;
+    bar->first = first;
+    bar->second = second;
 }
 
 +(void)deleteBar:(BarHandle)handle
 {
-	if (handle) {
-		free(handle);
-	}
+    if (handle) {
+        free(handle);
+    }
 }
 
 +(double)getFirst:(BarHandle)handle
 {
-	return handle->first;
+    return handle->first;
 }
 
 +(double)getSecond:(BarHandle)handle
 {
-	return handle->second;
+    return handle->second;
 }
 
 @end

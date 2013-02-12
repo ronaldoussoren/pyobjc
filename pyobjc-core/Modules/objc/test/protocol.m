@@ -23,21 +23,21 @@
 #pragma clang diagnostic pop
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"protocols",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "protocols",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -59,31 +59,31 @@ void __attribute__((__visibility__("default")))
 initprotocol(void)
 #endif
 {
-	PyObject* m;
-	Protocol* p;
+    PyObject* m;
+    Protocol* p;
 
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("protocol", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("protocol", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	p = @protocol(OC_TestProtocol);
-	PyObject* prot = PyObjC_ObjCToPython("@", &p);
-	if (!prot) {
-		INITERROR();
-	}
-	if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
-		INITERROR();
-	}
+    p = @protocol(OC_TestProtocol);
+    PyObject* prot = PyObjC_ObjCToPython("@", &p);
+    if (!prot) {
+        INITERROR();
+    }
+    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

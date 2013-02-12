@@ -452,9 +452,16 @@ if '-O0' in get_config_var('CFLAGS'):
         if isinstance(vars[k], str) and '-O0' in vars[k]:
             vars[k] = vars[k].replace('-O0', '-O1')
 
+if '-O2' in get_config_var('CFLAGS'):
+    print ("Change -O2 to -O1")
+    vars = get_config_vars()
+    for k in vars:
+        if isinstance(vars[k], str) and '-O2' in vars[k]:
+            vars[k] = vars[k].replace('-O2', '-O1')
+
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
-if 1:
+if 0:
     # XXX: This block is enabled for two reasons:
     # 1) Testsuite crashes with an incomplete testcase (python2.7, OSX 10.8)
     # 2) There should be a build-time check to see if these options are supported

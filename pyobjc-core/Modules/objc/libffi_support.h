@@ -8,8 +8,8 @@
 #endif
 
 struct byref_attr {
-	int       token;
-	PyObject* buffer;
+    int       token;
+    PyObject* buffer;
 };
 
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void**, void*);
@@ -17,7 +17,7 @@ typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void**, void*);
 void PyObjCFFI_FreeCIF(ffi_cif* cif);
 ffi_cif* PyObjCFFI_CIFForSignature(PyObjCMethodSignature* signature);
 IMP PyObjCFFI_MakeClosure(PyObjCMethodSignature* signature,
-			PyObjCFFI_ClosureFunc func, void* userdata);
+            PyObjCFFI_ClosureFunc func, void* userdata);
 void* PyObjCFFI_FreeClosure(IMP closure);
 
 IMP PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject* callable);
@@ -31,24 +31,24 @@ void PyObjCFFI_FreeBlockFunction(PyObjCBlockFunction value);
 
 
 int PyObjCFFI_CountArguments(
-	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset, 
-	Py_ssize_t* byref_in_count,
-	Py_ssize_t* byref_out_count,
-	Py_ssize_t* plain_count,
-	Py_ssize_t* argbuf_len,
-	BOOL* havePrintf);
+    PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+    Py_ssize_t* byref_in_count,
+    Py_ssize_t* byref_out_count,
+    Py_ssize_t* plain_count,
+    Py_ssize_t* argbuf_len,
+    BOOL* havePrintf);
 
 Py_ssize_t PyObjCFFI_ParseArguments(
-	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
-	PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf, Py_ssize_t argbuf_len,
-	void** byref, struct byref_attr* byref_attr,
-	ffi_type** arglist, void** values);
+    PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+    PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf, Py_ssize_t argbuf_len,
+    void** byref, struct byref_attr* byref_attr,
+    ffi_type** arglist, void** values);
 
 PyObject* PyObjCFFI_BuildResult(
-	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
-	void* pRetval, void** byref, struct byref_attr* byref_attr, 
-	Py_ssize_t byref_out_count,
-	PyObject* self, int flags, void** argvalues);
+    PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+    void* pRetval, void** byref, struct byref_attr* byref_attr,
+    Py_ssize_t byref_out_count,
+    PyObject* self, int flags, void** argvalues);
 
 int PyObjCFFI_AllocByRef(Py_ssize_t argcount, void*** byref, struct byref_attr** byref_attr);
 int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr);

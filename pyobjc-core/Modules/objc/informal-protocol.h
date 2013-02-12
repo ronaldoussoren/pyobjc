@@ -4,12 +4,12 @@
  * @header informal-protocol.h
  * @abstruct Support for informal protocols
  * @discussion
- * 	This module defines functions and types for working with informal 
- * 	protocols. 
+ *     This module defines functions and types for working with informal
+ *     protocols.
  *
- * 	NOTE: We also use these functions when looking for the method signatures
- * 	declared in formal protocols, as we don't have specific support for
- * 	formal protocols.
+ *     NOTE: We also use these functions when looking for the method signatures
+ *     declared in formal protocols, as we don't have specific support for
+ *     formal protocols.
  */
 
 extern PyTypeObject PyObjCInformalProtocol_Type;
@@ -23,7 +23,5 @@ PyObject* PyObjCInformalProtocol_FindProtocol(SEL selector);
 /* TODO: rename */
 PyObject* findSelInDict(PyObject* clsdict, SEL selector);
 int signaturesEqual(const char* sig1, const char* sig2);
-
-
 
 #endif /* PyObjC_INFORMAL_PROTOCOL_H */

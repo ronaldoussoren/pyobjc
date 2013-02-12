@@ -1,5 +1,5 @@
 /*!
- * @header   OC_NSBundleHack.h 
+ * @header   OC_NSBundleHack.h
  * @abstract NSBundle hacks to support plugins
  * @discussion
  *     This file defines the class that is used to convince NSBundle

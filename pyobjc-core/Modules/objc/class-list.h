@@ -15,8 +15,8 @@ Py_ssize_t PyObjC_ClassCount(void);
  * @function PyObjC_GetClassList
  * @result Returns a list of Objective-C classes
  * @discussion
- * 	This function returns a list containing the wrappers for all classes
- * 	in the Objective-C runtime.
+ *     This function returns a list containing the wrappers for all classes
+ *     in the Objective-C runtime.
  */
 PyObject* PyObjC_GetClassList(void);
 

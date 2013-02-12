@@ -2,12 +2,12 @@
 
 @interface OC_PythonSet : NSMutableSet
 {
-	PyObject* value;
+    PyObject* value;
 }
 
-+ (instancetype)depythonifyObject:(PyObject*)object;
-+ (instancetype)setWithPythonObject:(PyObject*)value;
-- (id)initWithPythonObject:(PyObject*)value;
++(instancetype)depythonifyObject:(PyObject*)object;
++(instancetype)setWithPythonObject:(PyObject*)value;
+-(id)initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
 -(PyObject*)__pyobjc_PythonObject__;
 

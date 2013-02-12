@@ -1,7 +1,7 @@
 #include "pyobjc.h"
 #import "OC_PythonData.h"
 
-@implementation OC_PythonData 
+@implementation OC_PythonData
 
 + (OC_PythonData*)dataWithPythonObject:(PyObject*)v
 {
@@ -43,8 +43,8 @@
     return value;
 }
 
--(BOOL)supportsWeakPointers { 
-    return YES; 
+-(BOOL)supportsWeakPointers {
+    return YES;
 }
 
 -(oneway void)release
@@ -55,7 +55,7 @@
 
     PyObjC_END_WITH_GIL
 }
-        
+
 
 
 -(void)dealloc
@@ -72,7 +72,7 @@
 -(NSUInteger)length
 {
     NSUInteger rval;
-    
+
     PyObjC_BEGIN_WITH_GIL
         Py_ssize_t buffer_len;
         const void *buffer;
@@ -137,7 +137,7 @@
                 [coder encodeValueOfObjCType:@encode(int) at:&v];
                 [coder encodeBytes:buffer length:buffer_len];
             }
-            
+
         } else {
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:2 forKey:@"pytype"];
@@ -151,7 +151,7 @@
     PyObjC_END_WITH_GIL
 }
 
-/* 
+/*
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
@@ -167,7 +167,7 @@
 - (id)initWithCoder:(NSCoder*)coder
 {
     int v;
-    
+
     if ([coder allowsKeyedCoding]) {
         v = [coder decodeInt32ForKey:@"pytype"];
 

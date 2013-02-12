@@ -179,6 +179,8 @@ for nm in dir(Foundation._Foundation):
     if nm.startswith('_'): continue
     setattr(mod, nm, getattr(Foundation._Foundation, nm))
 
+mod.NSDecimal = objc.NSDecimal
+
 import Foundation._nsobject
 import Foundation._nsindexset
 

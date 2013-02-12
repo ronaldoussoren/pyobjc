@@ -18,7 +18,7 @@
 @end
 
 @implementation PyObjC_TestUnallocatable
-+ (id)allocWithZone:(NSZone *)zone 
++ (id)allocWithZone:(NSZone *)zone
 {
     (void)&zone; /* Force use */
     return nil;
@@ -36,31 +36,31 @@
 @implementation PyObjC_TestClassAndInstance
 +(BOOL)isInstance
 {
-	return NO;
+    return NO;
 }
 -(BOOL)isInstance
 {
-	return YES;
+    return YES;
 }
 @end
 
 /* Python glue */
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"testclassandinst",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "testclassandinst",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -82,31 +82,31 @@ void __attribute__((__visibility__("default")))
 inittestclassandinst(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("testclassandinst", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("testclassandinst", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance", 
-		PyObjCClass_New([PyObjC_TestClassAndInstance class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance",
+        PyObjCClass_New([PyObjC_TestClassAndInstance class])) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "PyObjC_TestUnallocatable", 
-		PyObjCClass_New([PyObjC_TestUnallocatable class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "PyObjC_TestUnallocatable",
+        PyObjCClass_New([PyObjC_TestUnallocatable class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

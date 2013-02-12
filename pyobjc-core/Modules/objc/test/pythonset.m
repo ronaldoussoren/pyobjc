@@ -17,18 +17,18 @@ typedef unsigned int NSUInteger;
 
 +(Class)classOf:(NSObject*)value
 {
-	return [value class];
+    return [value class];
 }
 
 /* copying */
 +(id)set:(NSSet*)set copyWithZone:(NSZone*)zone
 {
-	return [[set copyWithZone:zone] autorelease];
+    return [[set copyWithZone:zone] autorelease];
 }
 
 +(id)set:(NSSet*)set mutableCopyWithZone:(NSZone*)zone
 {
-	return [[set mutableCopyWithZone:zone] autorelease];
+    return [[set mutableCopyWithZone:zone] autorelease];
 }
 
 
@@ -36,145 +36,145 @@ typedef unsigned int NSUInteger;
 
 +(NSArray*)allObjectsOfSet:(NSSet*)set
 {
-	return [set allObjects];
+    return [set allObjects];
 }
 
 +(id)anyObjectOfSet:(NSSet*)set
 {
-	return [set anyObject];
+    return [set anyObject];
 }
 
 +(BOOL)set:(NSSet*)set containsObject:(id)anObject
 {
-	return [set containsObject:anObject];
+    return [set containsObject:anObject];
 }
 
 +(NSUInteger)countOfSet:(NSSet*)set
 {
-	return [set count];
+    return [set count];
 }
 
 +(NSString*)descriptionOfSet:(NSSet*)set
 {
-	return [set description];
+    return [set description];
 }
 
 +(NSString*)set:(NSSet*)set descriptionWithLocale:(id)locale
 {
-	return [set descriptionWithLocale:locale];
+    return [set descriptionWithLocale:locale];
 }
 
 
 +(NSSet*)set:(NSSet*)set filteredSetUsingPredicate:(NSPredicate*)predicate
 {
-	return [set filteredSetUsingPredicate:predicate];
+    return [set filteredSetUsingPredicate:predicate];
 }
 
 +(BOOL)set:(NSMutableSet*)set intersectsSet:(NSSet *)otherSet
 {
-	return [set intersectsSet:otherSet];
+    return [set intersectsSet:otherSet];
 }
 
 +(BOOL)set:(NSSet*)set isEqualToSet:(NSSet*)otherSet
 {
-	return [set isEqualToSet:otherSet];
+    return [set isEqualToSet:otherSet];
 }
 
 +(BOOL)set:(NSSet*)set isSubsetOfSet:(NSSet*)otherSet
 {
-	return [set isSubsetOfSet:otherSet];
+    return [set isSubsetOfSet:otherSet];
 }
 
 +(void)set:(NSSet*)set makeObjectsPerformSelector:(SEL)aSelector
 {
-	return [set makeObjectsPerformSelector:aSelector];
+    return [set makeObjectsPerformSelector:aSelector];
 }
 
 +(void)set:(NSSet*)set makeObjectsPerformSelector:(SEL)aSelector withObject:(id)anObject
 {
-	return [set makeObjectsPerformSelector:aSelector withObject:anObject];
+    return [set makeObjectsPerformSelector:aSelector withObject:anObject];
 }
 
 +(id)set:(NSSet*)set member:(id)anObject
 {
-	return [set member:anObject];
+    return [set member:anObject];
 }
 
 +(NSEnumerator*)objectEnumeratorOfSet:(NSSet*)set
 {
-	return [set objectEnumerator];
+    return [set objectEnumerator];
 }
 
 +(NSSet*)set:(NSSet*)set setByAddingObject:(id)anObject
 {
-	return [set setByAddingObject:anObject];
+    return [set setByAddingObject:anObject];
 }
 
 +(NSSet*)set:(NSSet*)set setByAddingObjectsFromArray:(NSArray*)anObject
 {
-	return [set setByAddingObjectsFromArray:anObject];
+    return [set setByAddingObjectsFromArray:anObject];
 }
 
 +(NSSet*)set:(NSSet*)set setByAddingObjectsFromSet:(NSSet*)anObject
 {
-	return [set setByAddingObjectsFromSet:anObject];
+    return [set setByAddingObjectsFromSet:anObject];
 }
 
 +(void)set:(NSSet*)set setValue:(id)value forKey:(id)key
 {
-	[set setValue:value forKey:key];
+    [set setValue:value forKey:key];
 }
 
 +(id)set:(NSSet*)set valueForKey:(id)key
 {
-	return [set valueForKey:key];
+    return [set valueForKey:key];
 }
 
 /* Mutable set */
 
 +(void)set:(NSMutableSet*)set addObject:(id)anObject
 {
-	[set addObject:anObject];
+    [set addObject:anObject];
 }
 
 +(void)set:(NSMutableSet*)set addObjectsFromArray:(NSArray *)anArray
 {
-	[set addObjectsFromArray:anArray];
+    [set addObjectsFromArray:anArray];
 }
 
 +(void)set:(NSMutableSet*)set filterUsingPredicate:(NSPredicate *)predicate
 {
-	[set filterUsingPredicate:predicate];
+    [set filterUsingPredicate:predicate];
 }
 
 +(void)set:(NSMutableSet*)set intersectSet:(NSSet *)otherSet
 {
-	[set intersectSet:otherSet];
+    [set intersectSet:otherSet];
 }
 
 +(void)set:(NSMutableSet*)set minusSet:(NSSet *)otherSet
 {
-	[set minusSet:otherSet];
+    [set minusSet:otherSet];
 }
 
 +(void)removeAllObjecsFromSet:(NSMutableSet*)set
 {
-	[set removeAllObjects];
+    [set removeAllObjects];
 }
 
 +(void)set:(NSMutableSet*)set removeObject:(id)anObject
 {
-	[set removeObject:anObject];
+    [set removeObject:anObject];
 }
 
 +(void)set:(NSMutableSet*)set setSet:(NSSet *)otherSet
 {
-	[set setSet:otherSet];
+    [set setSet:otherSet];
 }
 
 +(void)set:(NSMutableSet*)set unionSet:(NSSet *)otherSet
 {
-	[set unionSet:otherSet];
+    [set unionSet:otherSet];
 }
 
 
@@ -183,21 +183,21 @@ typedef unsigned int NSUInteger;
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"pythonset",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "pythonset",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -219,26 +219,26 @@ void __attribute__((__visibility__("default")))
 initpythonset(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("pythonset", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("pythonset", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_TestSet",
-	    PyObjCClass_New([OC_TestSet class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_TestSet",
+        PyObjCClass_New([OC_TestSet class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

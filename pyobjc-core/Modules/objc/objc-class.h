@@ -1,21 +1,21 @@
-#ifndef  PyObjC_OBJC_CLASS_H 
-#define  PyObjC_OBJC_CLASS_H 
+#ifndef  PyObjC_OBJC_CLASS_H
+#define  PyObjC_OBJC_CLASS_H
 /*!
- * @header objc-class.m 
+ * @header objc-class.m
  * @abstract Definition of the wrapper for Objective-C classes
  * @discussion
- *	This module implements the wrappers for Objective-C classes, included
- *	subclasses defined in Python.
+ *    This module implements the wrappers for Objective-C classes, included
+ *    subclasses defined in Python.
  *
- *	The class-wrapper maintains a full __dict__ to make it easier to 
- *	support introspection, and to make it easier to detect if someone 
- *	does a super() call of a method.
+ *    The class-wrapper maintains a full __dict__ to make it easier to
+ *    support introspection, and to make it easier to detect if someone
+ *    does a super() call of a method.
  *
- *	Maintaining a full dict is problematic because the Objective-C runtime 
- *	is fairly dynamic and does not have hooks to detect these changes. Our 
- *	only way to detect changes is to periodicly check the runtime if 
- *	something has changed. See the definition for PyObjCClassObject for 
- *	an explanation.
+ *    Maintaining a full dict is problematic because the Objective-C runtime
+ *    is fairly dynamic and does not have hooks to detect these changes. Our
+ *    only way to detect changes is to periodicly check the runtime if
+ *    something has changed. See the definition for PyObjCClassObject for
+ *    an explanation.
  */
 
 /*!
@@ -59,7 +59,7 @@ extern PyObject* PyObjC_ClassExtender;
  * @field base      Type actual type object
  * @field sel_to_py Mapping to speed up finding the correct Python method
  *                  for a selector.
- * @field dictoffset  Offset in the Objective-C instance for the instance 
+ * @field dictoffset  Offset in the Objective-C instance for the instance
  *                    __dict__
  * @field delmethod  The method that implements __del__
  * @field hasPythonImpl True if the class is implemented in Python
@@ -72,25 +72,25 @@ extern PyObject* PyObjC_ClassExtender;
  *      some additional information that is used to manage the interface
  *      with the Objective-C runtime.
  *
- *	dictoffset is used by objc-object.m to find the __dict__ for instances.
- *	If the offset is 0 there is no __dict__.
+ *    dictoffset is used by objc-object.m to find the __dict__ for instances.
+ *    If the offset is 0 there is no __dict__.
  *
- *	We store the __del__ implementation here instead of in the type itself
- *	to ensure that our teardown code is correctly called.
+ *    We store the __del__ implementation here instead of in the type itself
+ *    to ensure that our teardown code is correctly called.
  */
 typedef struct _PyObjCClassObject {
-	PyHeapTypeObject base;
-	__strong Class class;
-	PyObject* sel_to_py;
-	Py_ssize_t dictoffset;
-	PyObject* delmethod;
-	Py_ssize_t generation;
-	PyObject* hiddenSelectors;
-	PyObject* hiddenClassSelectors;
+    PyHeapTypeObject base;
+    __strong Class class;
+    PyObject* sel_to_py;
+    Py_ssize_t dictoffset;
+    PyObject* delmethod;
+    Py_ssize_t generation;
+    PyObject* hiddenSelectors;
+    PyObject* hiddenClassSelectors;
 
-	int  useKVO; 	/* FIXME: swith to getset in python API  and switch this to a bitfield as well. */
-	unsigned int hasPythonImpl:1;
-	unsigned int isCFWrapper:1;
+    int  useKVO;     /* FIXME: swith to getset in python API  and switch this to a bitfield as well. */
+    unsigned int hasPythonImpl:1;
+    unsigned int isCFWrapper:1;
 } PyObjCClassObject;
 
 

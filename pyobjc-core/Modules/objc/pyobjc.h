@@ -2,7 +2,7 @@
 #define PyObjC_H
 
 /*
- * Central include file for PyObjC. 
+ * Central include file for PyObjC.
  */
 
 #define OBJC_VERSION "3.0a1"
@@ -18,8 +18,10 @@
 #include "structmember.h"
 #include "pyobjc-compat.h"
 
+#import <Foundation/Foundation.h>
+
 /*
- * SET_FIELD(op, value): 
+ * SET_FIELD(op, value):
  *    macro for updating the value of 'op' to 'value',
  *    steals a reference to 'value'.
  *
@@ -33,7 +35,7 @@
     } while(0)
 
 /*
- * SET_FIELD_INCREF(op, value): 
+ * SET_FIELD_INCREF(op, value):
  *    macro for updating the value of 'op' to 'value'.
  *
  *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
@@ -41,7 +43,7 @@
 #define SET_FIELD_INCREF(op, value)             \
     do {                                        \
         PyObject* _py_tmp = (PyObject*)(op);    \
-        Py_INCREF(value);                       \
+        Py_XINCREF(value);                       \
         (op) = value;                           \
         Py_XDECREF(_py_tmp);                    \
     } while(0)
@@ -55,14 +57,14 @@
 #pragma clang diagnostic ignored "-Warray-bounds"
 static inline void _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
 {
-	PyTuple_SET_ITEM(tuple, idx, value);
+    PyTuple_SET_ITEM(tuple, idx, value);
 }
 #undef PyTuple_SET_ITEM
 #define PyTuple_SET_ITEM(a, b, c) _PyObjCTuple_SetItem(a, b, c)
 
 static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
-	return PyTuple_GET_ITEM(tuple, idx);
+    return PyTuple_GET_ITEM(tuple, idx);
 }
 #undef PyTuple_GET_ITEM
 #define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
@@ -79,7 +81,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #endif
 
 /* PyObjC_ERROR_ABORT: If defined an internal error will result in an abort() */
-#define	PyObjC_ERROR_ABORT 1
+#define    PyObjC_ERROR_ABORT 1
 
 /* PyObjC_FAST_BUT_INEXACT: If defined the method lookup will add a selector
  * to the __dict__ of the class of the object that you looked up the selector,
@@ -110,7 +112,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_UNICODE_FAST_PATH
 #endif
 
-/* 
+/*
  * XXX: disable the fast path for
  * unicode strings due to unexplained
  * test failures.
@@ -148,7 +150,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include "libffi_support.h"
 #include "super-call.h"
 #include "instance-var.h"
-#include "class-builder.h" 
+#include "class-builder.h"
 #include "ObjCPointer.h"
 #include "informal-protocol.h"
 #include "formal-protocol.h"
@@ -167,19 +169,19 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 
 /*
- * XXX: All definitions below here should be moved to different/new 
+ * XXX: All definitions below here should be moved to different/new
  * headers
  */
 
 /* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,
  * but that method is not present in the header files. We add the definition
  * here to avoid warnings.
- * 
+ *
  * XXX: We use an undocumented API, but we also don't have much choice: we
  * must create the things and this is the only way to do it...
  */
 @interface NSMethodSignature (WarningKiller)
-	+(instancetype)signatureWithObjCTypes:(const char*)types;
+    +(instancetype)signatureWithObjCTypes:(const char*)types;
 @end /* interface NSMethodSignature */
 
 
@@ -214,8 +216,8 @@ id PyObjC_CFTypeToID(PyObject* argument);
 PyObject* PyObjC_IDToCFType(id argument);
 
 /* opaque-pointer.m */
-PyObject* PyObjCCreateOpaquePointerType(const char* name, 
-		const char* typestr, const char* docstr);
+PyObject* PyObjCCreateOpaquePointerType(const char* name,
+        const char* typestr, const char* docstr);
 
 /* objc-NULL.m */
 extern PyObject* PyObjC_NULL;
@@ -239,38 +241,38 @@ extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure
 #ifdef PyObjC_DEBUG
 
 #ifdef PyObjCErr_InternalError
-#define _PyObjC_InternalError_Bailout()	abort()
+#define _PyObjC_InternalError_Bailout()    abort()
 #else
-#define _PyObjC_InternalError_Bailout()	((void)0)
+#define _PyObjC_InternalError_Bailout()    ((void)0)
 #endif
 
 #define PyObjCErr_InternalError() \
     do { \
-	PyErr_Format(PyObjCExc_InternalError, \
-	   "PyObjC: internal error in %s at %s:%d", \
-	   __FUNCTION__, __FILE__, __LINE__); \
-	   _PyObjC_InternalError_Bailout(); \
+    PyErr_Format(PyObjCExc_InternalError, \
+       "PyObjC: internal error in %s at %s:%d", \
+       __FUNCTION__, __FILE__, __LINE__); \
+       _PyObjC_InternalError_Bailout(); \
     } while (0)
 
 #define PyObjCErr_InternalErrorMesg(msg) \
     do { \
-	PyErr_Format(PyObjCExc_InternalError, \
-	  "PyObjC: internal error in %s at %s:%d: %s", \
-	   __FUNCTION__, __FILE__, __LINE__, msg); \
-	   _PyObjC_InternalError_Bailout(); \
+    PyErr_Format(PyObjCExc_InternalError, \
+      "PyObjC: internal error in %s at %s:%d: %s", \
+       __FUNCTION__, __FILE__, __LINE__, msg); \
+       _PyObjC_InternalError_Bailout(); \
     } while (0)
 
 #define PyObjC_Assert(expr, retval) \
-	do { \
-	if (!(expr)) { PyObjCErr_InternalErrorMesg(\
-			"assertion failed: " #expr); return (retval); } \
-	} while (0)
+    do { \
+    if (!(expr)) { PyObjCErr_InternalErrorMesg(\
+            "assertion failed: " #expr); return (retval); } \
+    } while (0)
 #else
 
-#define PyObjCErr_InternalError()	((void)0)
-#define PyObjCErr_InternalErrorMesg(mesg)	((void)0)
+#define PyObjCErr_InternalError()    ((void)0)
+#define PyObjCErr_InternalErrorMesg(mesg)    ((void)0)
 
-#define PyObjC_Assert(expr, retval)	((void)0)
+#define PyObjC_Assert(expr, retval)    ((void)0)
 
 #endif
 

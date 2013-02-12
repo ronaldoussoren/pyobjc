@@ -1,6 +1,6 @@
-/* 
+/*
  * See the clang documentation for more information
- * about the defintions in the file, in particular 
+ * about the definitions in thise file, in particular
  * <http://clang.llvm.org/docs/AutomaticReferenceCounting.html>
  *
  * These should be available in the 64-bit runtime

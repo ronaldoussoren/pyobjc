@@ -15,13 +15,13 @@
 
 -(int)callList:(NSMutableArray*)list andInOut:(int*)pval
 {
-	if (pval == NULL) {
-		[list addObject: @"NULL"];
-	} else {
-		[list addObject: [NSString stringWithFormat:@"%d", *pval]];
-		*pval = *pval / 2;
-	}
-	return 12;
+    if (pval == NULL) {
+        [list addObject: @"NULL"];
+    } else {
+        [list addObject: [NSString stringWithFormat:@"%d", *pval]];
+        *pval = *pval / 2;
+    }
+    return 12;
 }
 
 /* This is the same implementation as callList:andInOut:, the python code
@@ -29,81 +29,81 @@
  */
 -(int)callList:(NSMutableArray*)list andInOut2:(int*)pval
 {
-	if (pval == NULL) {
-		[list addObject: @"NULL"];
-	} else {
-		[list addObject: [NSString stringWithFormat:@"%d", *pval]];
-		*pval = *pval / 2;
-	}
-	return 12;
+    if (pval == NULL) {
+        [list addObject: @"NULL"];
+    } else {
+        [list addObject: [NSString stringWithFormat:@"%d", *pval]];
+        *pval = *pval / 2;
+    }
+    return 12;
 }
 
 -(int)callList:(NSMutableArray*)list andIn:(int*)pval
 {
-	if (pval == NULL) {
-		[list addObject: @"NULL"];
-	} else {
-		[list addObject: [NSString stringWithFormat:@"%d", *pval]];
-	}
-	return 24;
+    if (pval == NULL) {
+        [list addObject: @"NULL"];
+    } else {
+        [list addObject: [NSString stringWithFormat:@"%d", *pval]];
+    }
+    return 24;
 }
 
 -(int)callList:(NSMutableArray*)list andOut:(int*)pval
 {
-	if (pval == NULL) {
-		[list addObject: @"NULL"];
-	} else {
-		[list addObject: @"POINTER"];
-		*pval = 99;
-	}
+    if (pval == NULL) {
+        [list addObject: @"NULL"];
+    } else {
+        [list addObject: @"POINTER"];
+        *pval = 99;
+    }
 
-	return 24;
+    return 24;
 }
 
 -(int)on:(OCTestNULL*)object callList:(NSMutableArray*)list andInOut:(int*)pval
 {
-	return [object callList:list andInOut:pval];
+    return [object callList:list andInOut:pval];
 }
 
 -(int)on:(OCTestNULL*)object callList:(NSMutableArray*)list andIn:(int*)pval
 {
-	return [object callList:list andIn:pval];
+    return [object callList:list andIn:pval];
 }
 
 -(int)on:(OCTestNULL*)object callList:(NSMutableArray*)list andOut:(int*)pval
 {
-	return [object callList:list andOut:pval];
+    return [object callList:list andOut:pval];
 }
 
 -(void)callOut:(int*)pval
 {
-	*pval = 144;
+    *pval = 144;
 }
 
 -(void)on:(OCTestNULL*)object callOut:(int*)pval
 {
-	[object callOut:pval];
+    [object callOut:pval];
 }
 
 @end
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"NULL",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "NULL",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -125,26 +125,26 @@ void __attribute__((__visibility__("default")))
 initNULL(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("NULL", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("NULL", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OCTestNULL",
-	    PyObjCClass_New([OCTestNULL class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OCTestNULL",
+        PyObjCClass_New([OCTestNULL class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

@@ -1,5 +1,5 @@
 /*!
- * @header OC_PythonArray.h 
+ * @header OC_PythonArray.h
  * @abstract Objective-C proxy class for Python sequences
  * @discussion
  *     This file defines the class that is used to represent Python sequences
@@ -11,10 +11,10 @@
 /*!
  * @class       OC_PythonArray
  * @abstract    Objective-C proxy class for Python sequences
- * @discussion  Instances of this class are used as proxies for Python 
- *              sequences when these are passed to Objective-C code. Because 
- *              this class is a subclass of NSMutableArray Python sequences 
- *              can be used everywhere where NSArray or NSMutableArray objects 
+ * @discussion  Instances of this class are used as proxies for Python
+ *              sequences when these are passed to Objective-C code. Because
+ *              this class is a subclass of NSMutableArray Python sequences
+ *              can be used everywhere where NSArray or NSMutableArray objects
  *              are expected.
  */
 @interface OC_PythonArray : NSMutableArray

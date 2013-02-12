@@ -31,107 +31,107 @@
 
 +(Class)numberClass:(NSNumber*)number
 {
-	return [number class];
+    return [number class];
 }
 
 +(const char*)objCTypeOf:(NSNumber*)number
 {
-	return [number objCType];
+    return [number objCType];
 }
 
 +(int)compareA:(NSNumber*)a andB:(NSNumber*)b
 {
-	return [a compare:b];
+    return [a compare:b];
 }
 
 +(BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b
 {
-	return [a isEqualToNumber:b];
+    return [a isEqualToNumber:b];
 }
 
 +(NSString*)numberDescription:(NSNumber*)number
 {
-	return [number description];
+    return [number description];
 }
 
 +(NSString*)numberAsString:(NSNumber*)number
 {
-	return [number stringValue];
+    return [number stringValue];
 }
 
 +(NSString*)numberDescription:(NSNumber*)number withLocale:(id)aLocale
 {
-	return [number descriptionWithLocale:aLocale];
+    return [number descriptionWithLocale:aLocale];
 }
 
 +(BOOL)numberAsBOOL:(NSNumber*)number
 {
-	return [number boolValue];
+    return [number boolValue];
 }
 
 +(char)numberAsChar:(NSNumber*)number
 {
-	return [number charValue];
+    return [number charValue];
 }
 
 +(short)numberAsShort:(NSNumber*)number
 {
-	return [number shortValue];
+    return [number shortValue];
 }
 
 +(int)numberAsInt:(NSNumber*)number
 {
-	return [number intValue];
+    return [number intValue];
 }
 
 +(long)numberAsLong:(NSNumber*)number
 {
-	return [number longValue];
+    return [number longValue];
 }
 
 +(long long)numberAsLongLong:(NSNumber*)number
 {
-	return [number longLongValue];
+    return [number longLongValue];
 }
 
 +(unsigned char)numberAsUnsignedChar:(NSNumber*)number
 {
-	return [number unsignedCharValue];
+    return [number unsignedCharValue];
 }
 
 +(unsigned short)numberAsUnsignedShort:(NSNumber*)number
 {
-	return [number unsignedShortValue];
+    return [number unsignedShortValue];
 }
 
 +(unsigned int)numberAsUnsignedInt:(NSNumber*)number
 {
-	return [number unsignedIntValue];
+    return [number unsignedIntValue];
 }
 
 +(unsigned long)numberAsUnsignedLong:(NSNumber*)number
 {
-	return [number unsignedLongValue];
+    return [number unsignedLongValue];
 }
 
 +(unsigned long long)numberAsUnsignedLongLong:(NSNumber*)number
 {
-	return [number unsignedLongLongValue];
+    return [number unsignedLongLongValue];
 }
 
 +(NSDecimal)numberAsDecimal:(NSNumber*)number
 {
-	return [number decimalValue];
+    return [number decimalValue];
 }
 
 +(float)numberAsFloat:(NSNumber*)number
 {
-	return [number floatValue];
+    return [number floatValue];
 }
 
 +(double)numberAsDouble:(NSNumber*)number
 {
-	return [number doubleValue];
+    return [number doubleValue];
 }
 
 
@@ -139,21 +139,21 @@
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"pythonnumber",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "pythonnumber",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -175,26 +175,26 @@ void __attribute__((__visibility__("default")))
 initpythonnumber(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("pythonnumber", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("pythonnumber", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_TestNumber",
-	    PyObjCClass_New([OC_TestNumber class])) < 0){
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_TestNumber",
+        PyObjCClass_New([OC_TestNumber class])) < 0){
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

@@ -3,7 +3,7 @@
 
 static PyObject* datetime_types = NULL;
 
-@implementation OC_PythonDate 
+@implementation OC_PythonDate
 
 + (instancetype)depythonifyObject:(PyObject*)object
 {
@@ -85,8 +85,8 @@ static PyObject* datetime_types = NULL;
     return value;
 }
 
--(BOOL)supportsWeakPointers { 
-    return YES; 
+-(BOOL)supportsWeakPointers {
+    return YES;
 }
 
 -(oneway void)release
@@ -119,7 +119,7 @@ static PyObject* datetime_types = NULL;
 }
 
 
-/* 
+/*
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
@@ -207,13 +207,13 @@ static PyObject* datetime_types = NULL;
                 }
                 offset = offset / 60; /* Seconds to minutes */
 
-                int minutes = offset % 60;
-                int hours = offset / 60;
+                NSInteger minutes = offset % 60;
+                NSInteger hours = offset / 60;
 
 
 
-                snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02d%02d",
-                    posneg, hours, minutes);
+                snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld",
+                    posneg, (long)hours, (long)minutes);
                 v = PyObject_CallMethod(value, "strftime", "s", buf);
                 if (v == NULL) {
                     /* Raise ObjC exception */
@@ -225,7 +225,7 @@ static PyObject* datetime_types = NULL;
             }
 
         PyObjC_END_WITH_GIL
-    } 
+    }
     return oc_value;
 }
 

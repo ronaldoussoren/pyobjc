@@ -12,8 +12,8 @@
  * @class OC_PythonDictionary
  * @abstract Objective-C proxy for Python dictonaries
  * @discussion
- *      Instances of this class are used as proxies for Python dicts when 
- *      these are passed to Objective-C functions/methods. Because this class 
+ *      Instances of this class are used as proxies for Python dicts when
+ *      these are passed to Objective-C functions/methods. Because this class
  *      is a subclass of NSMutableDictonary Python dictionaries can be used
  *      whereever instances of NSDictionary or NSMutableDictionary are expected.
  *

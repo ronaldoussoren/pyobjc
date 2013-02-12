@@ -11,19 +11,19 @@
 /*!
  * @class       OC_PythonUnicode
  * @abstract    Objective-C proxy class for Python unicode
- * @discussion  Instances of this class are used as proxies for Python 
+ * @discussion  Instances of this class are used as proxies for Python
  *              unicode when these are passed to Objective-C code.
  */
 @interface OC_PythonUnicode : NSString
 {
-	PyObject* value;
-	id realObject;
+    PyObject* value;
+    id realObject;
 
 #ifdef PyObjC_STR_CACHE_IMP
-	/* Cache IMPs for proxied methods, for slightly better efficiency */
-	NSUInteger (*imp_length)(id, SEL);
-	unichar (*imp_charAtIndex)(id, SEL, NSUInteger);
-	void (*imp_getCharacters)(id, SEL, unichar*, NSRange);
+    /* Cache IMPs for proxied methods, for slightly better efficiency */
+    NSUInteger (*imp_length)(id, SEL);
+    unichar (*imp_charAtIndex)(id, SEL, NSUInteger);
+    void (*imp_getCharacters)(id, SEL, unichar*, NSRange);
 #endif /* PyObjC_STR_CACHE_IMP */
 }
 

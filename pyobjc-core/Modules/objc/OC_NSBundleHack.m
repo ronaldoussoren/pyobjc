@@ -85,7 +85,7 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = { _C_ID, _C_ID, _C_SEL, _C_CLAS
             [self methodForSelector:@selector(bundleForClass:)],
             BUNDLE_FOR_CLASS_SIGNATURE);
     } else {
-        method_setImplementation(method, 
+        method_setImplementation(method,
             [self methodForSelector:@selector(bundleForClass:)]
         );
     }

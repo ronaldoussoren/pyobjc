@@ -22,7 +22,7 @@ typedef float CGFloat;
 
 #if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION >= 3
 
-/* 
+/*
  * A micro optimization: when using Python 3.3 or later it
  * is possible to access a 'char*' with an ASCII representation
  * of a unicode object without first converting it to a bytes
@@ -58,16 +58,16 @@ typedef unsigned int NSUInteger;
 #endif
 
 
-/* 
- * Compatibilty definitions 
+/*
+ * Compatibilty definitions
  */
 
 #ifdef __GNUC__
-#define unlikely(x)	__builtin_expect (!!(x), 0)
-#define likely(x)	__builtin_expect (!!(x), 1)
+#define unlikely(x)    __builtin_expect (!!(x), 0)
+#define likely(x)    __builtin_expect (!!(x), 1)
 #else
-#define likely(x)	x 
-#define likely(x)	x 
+#define likely(x)    x
+#define likely(x)    x
 #endif
 
 #import <AvailabilityMacros.h>
@@ -144,11 +144,11 @@ typedef long Py_hash_t;
 #define Py_ARG_BYTES "z"
 #endif
 
-/* Cast a PyObject* to the type expected by the 2.x C API. 
+/* Cast a PyObject* to the type expected by the 2.x C API.
  * This is a macro because the cast is not necessary for the 3.x C API)
  */
 #define UNICODE_CAST(item)  ((PyUnicodeObject*)(item))
-#define SLICE_CAST(item)	   ((PySliceObject*)(item))
+#define SLICE_CAST(item)       ((PySliceObject*)(item))
 
 #else
 
@@ -156,8 +156,8 @@ typedef long Py_hash_t;
 #define Py_ARG_BYTES "y"
 #endif
 
-#define UNICODE_CAST(item)	(item)
-#define SLICE_CAST(item)	(item)
+#define UNICODE_CAST(item)    (item)
+#define SLICE_CAST(item)    (item)
 
 #endif
 
@@ -181,7 +181,7 @@ typedef long Py_hash_t;
 #if PY_MINOR_VERSION < 7
 #define PyCapsule_New(pointer, name, destructor) PyCObject_FromVoidPtr(pointer, destructor)
 #define PyCapsule_GetPointer(object, name) PyCObject_AsVoidPtr(object)
-#define PyCapsule_CheckExact(object)	PyCObject_Check(object)
+#define PyCapsule_CheckExact(object)    PyCObject_Check(object)
 #endif
 
 #endif
@@ -199,19 +199,19 @@ extern PyObject* PyObjCErr_Format(PyObject* exception, const char* format, ...);
 #define PyText_InternFromString PyString_InternFromString
 #define PyText_InternInPlace PyString_InternInPlace
 #define PyText_Append PyString_ConcatAndDel
-#define PyText_AsString	PyString_AsString
+#define PyText_AsString    PyString_AsString
 
 #ifndef PyBytes_FromString
-#define PyBytes_AsString	PyString_AsString
-#define PyBytes_Size		PyString_Size
-#define PyBytes_FromString	PyString_FromString
-#define PyBytes_FromStringAndSize	PyString_FromStringAndSize
-#define PyBytes_AS_STRING	PyString_AS_STRING
-#define PyBytes_GET_SIZE	PyString_GET_SIZE
+#define PyBytes_AsString    PyString_AsString
+#define PyBytes_Size        PyString_Size
+#define PyBytes_FromString    PyString_FromString
+#define PyBytes_FromStringAndSize    PyString_FromStringAndSize
+#define PyBytes_AS_STRING    PyString_AS_STRING
+#define PyBytes_GET_SIZE    PyString_GET_SIZE
 #endif
 
-#define PyBytes_InternFromString	PyString_InternFromString
-#define PyBytes_InternFromStringAndSize	PyObjCString_InternFromStringAndSize
+#define PyBytes_InternFromString    PyString_InternFromString
+#define PyBytes_InternFromStringAndSize    PyObjCString_InternFromStringAndSize
 
 extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
@@ -224,13 +224,13 @@ extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t 
 #define PyText_InternFromString PyUnicode_InternFromString
 #define PyText_InternInPlace PyUnicode_InternInPlace
 #define PyText_Append PyUnicode_Append
-#define PyText_AsString	_PyUnicode_AsString
+#define PyText_AsString    _PyUnicode_AsString
 
 #endif
 
 #if PY_MAJOR_VERSION == 3
-#define PyInt_FromLong		PyLong_FromLong
-#define PyInt_FromString	PyLong_FromString
+#define PyInt_FromLong        PyLong_FromLong
+#define PyInt_FromString    PyLong_FromString
 
 extern int PyObject_Cmp (PyObject *o1, PyObject *o2, int *result);
 extern PyObject* PyBytes_InternFromString(const char* v);

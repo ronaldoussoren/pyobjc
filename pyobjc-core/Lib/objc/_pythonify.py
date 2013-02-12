@@ -66,7 +66,6 @@ if sys.version_info[0] == 2:
 
 NSNumber = _objc.lookUpClass('NSNumber')
 NSDecimalNumber = _objc.lookUpClass('NSDecimalNumber')
-Foundation = None
 
 def numberWrapper(obj):
     if isinstance(obj, NSDecimalNumber):

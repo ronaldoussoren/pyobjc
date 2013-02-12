@@ -3,12 +3,12 @@
 
 static PyObject* mapTypes = NULL;
 
-@implementation OC_PythonArray 
+@implementation OC_PythonArray
 
 + (OC_PythonArray*)depythonifyObject:(PyObject*)object
 {
     Py_ssize_t i, len;
-    
+
     if (mapTypes == NULL) return NULL;
 
     len = PyList_GET_SIZE(mapTypes);
@@ -31,7 +31,7 @@ static PyObject* mapTypes = NULL;
 
 + (id)depythonifyTable
 {
-    NSObject* result; 
+    NSObject* result;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -83,8 +83,8 @@ static PyObject* mapTypes = NULL;
     return value;
 }
 
--(BOOL)supportsWeakPointers { 
-    return YES; 
+-(BOOL)supportsWeakPointers {
+    return YES;
 }
 
 -(oneway void)release
@@ -144,9 +144,9 @@ static PyObject* mapTypes = NULL;
         err = depythonify_c_value(@encode(id), v, &result);
         if (unlikely(err == -1)) {
             PyObjC_GIL_FORWARD_EXC();
-        } 
+        }
         Py_CLEAR(v);
-    
+
     PyObjC_END_WITH_GIL
 
     if (!result) {
@@ -340,7 +340,7 @@ static PyObject* mapTypes = NULL;
             }
         }
         [super encodeWithCoder:coder];
-        
+
     } else if (PyList_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:2 forKey:@"pytype"];
@@ -425,7 +425,7 @@ static PyObject* mapTypes = NULL;
     return self;
 }
 
-/* 
+/*
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
@@ -462,7 +462,7 @@ static PyObject* mapTypes = NULL;
               }
 
           PyObjC_END_WITH_GIL
-          
+
           [super initWithCoder:coder];
 
           PyObjC_BEGIN_WITH_GIL
@@ -547,7 +547,7 @@ static PyObject* mapTypes = NULL;
           [super initWithCoder:coder];
           return self;
 
-    case 5: 
+    case 5:
           /* tuple with more than MAX_INT elements */
 #ifdef __LP64__
           if ([coder allowsKeyedCoding]) {
@@ -588,7 +588,7 @@ static PyObject* mapTypes = NULL;
 
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            } 
+            }
 
             NSObject* result = PyObjC_PythonToId(copy);
             Py_DECREF(copy);
@@ -614,7 +614,7 @@ static PyObject* mapTypes = NULL;
             PyObject* copy = PySequence_List(value);
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
-            } 
+            }
 
             NSObject* result = PyObjC_PythonToId(copy);
             Py_DECREF(copy);

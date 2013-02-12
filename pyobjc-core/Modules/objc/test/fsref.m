@@ -26,67 +26,67 @@
 
 -(NSString*)stringForFSRef:(FSRef)fsref
 {
-	return [self pathForFSRef:&fsref];
+    return [self pathForFSRef:&fsref];
 }
 
 -(FSRef)fsrefForPath:(NSString*)path
 {
-	FSRef fsref;
-	Boolean isDirectory;
-	OSStatus rc;
+    FSRef fsref;
+    Boolean isDirectory;
+    OSStatus rc;
 
-	rc = FSPathMakeRef((UInt8*)[path UTF8String],
-		&fsref, &isDirectory);
-	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
-	}
+    rc = FSPathMakeRef((UInt8*)[path UTF8String],
+        &fsref, &isDirectory);
+    if (rc != 0) {
+        [NSException raise:@"failure" format:@"status: %ld", (long)rc];
+    }
 
-	return fsref;
+    return fsref;
 }
 
 -(NSString*)pathForFSRef:(in FSRef *)fsref
 {
-	UInt8 buffer[256];
-	OSStatus rc;
+    UInt8 buffer[256];
+    OSStatus rc;
 
-	rc = FSRefMakePath(fsref, buffer, sizeof(buffer));
-	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
-	}
+    rc = FSRefMakePath(fsref, buffer, sizeof(buffer));
+    if (rc != 0) {
+        [NSException raise:@"failure" format:@"status: %ld", (long)rc];
+    }
 
-	return [NSString stringWithUTF8String: (char*)buffer];
+    return [NSString stringWithUTF8String: (char*)buffer];
 }
 
 -(void)getFSRef:(out FSRef*)fsref forPath:(NSString*)path
 {
-	Boolean isDirectory;
-	OSStatus rc;
+    Boolean isDirectory;
+    OSStatus rc;
 
-	rc = FSPathMakeRef((UInt8*)[path UTF8String],
-		fsref, &isDirectory);
-	if (rc != 0) {
-		[NSException raise:@"failure" format:@"status: %ld", (long)rc];
-	}
+    rc = FSPathMakeRef((UInt8*)[path UTF8String],
+        fsref, &isDirectory);
+    if (rc != 0) {
+        [NSException raise:@"failure" format:@"status: %ld", (long)rc];
+    }
 }
 
 @end
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"fsref",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "fsref",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -108,26 +108,26 @@ void __attribute__((__visibility__("default")))
 initfsref(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("fsref", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("fsref", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_TestFSRefHelper", 
-			PyObjCClass_New([OC_TestFSRefHelper class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_TestFSRefHelper",
+            PyObjCClass_New([OC_TestFSRefHelper class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

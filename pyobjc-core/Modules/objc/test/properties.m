@@ -5,21 +5,21 @@
 
 typedef struct s { int i; char b; } struct_s;
 @interface OCPropertyDefinitions : NSObject {
-	int _prop1;
-	float _prop2;
-	struct_s _prop3;
-	id	_prop4;
-	id	_prop5;
-	id	_prop6;
-	id	_prop7;
-	id	_prop8;
-	id	_prop9;
-	struct_s _prop10;
-	id	_prop11;
-	id	_prop12;
+    int _prop1;
+    float _prop2;
+    struct_s _prop3;
+    id    _prop4;
+    id    _prop5;
+    id    _prop6;
+    id    _prop7;
+    id    _prop8;
+    id    _prop9;
+    struct_s _prop10;
+    id    _prop11;
+    id    _prop12;
 }
 
-#if (PyObjC_BUILD_RELEASE >= 1005) 
+#if (PyObjC_BUILD_RELEASE >= 1005)
 
 #pragma message "Ignore warnings about properties in this file."
 @property int prop1;
@@ -64,21 +64,21 @@ typedef struct s { int i; char b; } struct_s;
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"properties",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "properties",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -100,26 +100,26 @@ void __attribute__((__visibility__("default")))
 initproperties(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("properties", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("properties", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OCPropertyDefinitions",
-	    PyObjCClass_New([OCPropertyDefinitions class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OCPropertyDefinitions",
+        PyObjCClass_New([OCPropertyDefinitions class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

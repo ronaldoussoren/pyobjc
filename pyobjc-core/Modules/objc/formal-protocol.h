@@ -4,12 +4,12 @@
  * @header formal-protocol.h
  * @abstruct Support for formal protocols (aka @protocol)
  * @discussion
- * 	This module defines functions and types for working with formal 
- * 	protocols. 
+ *     This module defines functions and types for working with formal
+ *     protocols.
  *
- * 	NOTE: We also use these functions when looking for the method signatures
- * 	declared in formal protocols, as we don't have specific support for
- * 	formal protocols.
+ *     NOTE: We also use these functions when looking for the method signatures
+ *     declared in formal protocols, as we don't have specific support for
+ *     formal protocols.
  */
 
 extern PyTypeObject PyObjCFormalProtocol_Type;

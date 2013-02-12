@@ -1,5 +1,5 @@
 /*
- * VariableLengthList 
+ * VariableLengthList
  */
 #ifndef PyObjC_VARLIST_H
 #define  PyObjC_VARLIST_H

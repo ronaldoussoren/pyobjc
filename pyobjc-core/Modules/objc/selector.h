@@ -12,14 +12,14 @@
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
 
 #define PyObjCSelector_HEAD \
-	PyObject_HEAD 			\
-	const char*	sel_python_signature;  \
-	const char* 	sel_native_signature; \
-	SEL		sel_selector;	\
-	PyObject*	sel_self;	\
-	Class		sel_class;	\
-	int		sel_flags;	\
-	PyObjCMethodSignature* sel_methinfo;
+    PyObject_HEAD             \
+    const char*    sel_python_signature;  \
+    const char*     sel_native_signature; \
+    SEL        sel_selector;    \
+    PyObject*    sel_self;    \
+    Class        sel_class;    \
+    int        sel_flags;    \
+    PyObjCMethodSignature* sel_methinfo;
 
 
 /*!
@@ -30,22 +30,22 @@
  * @result Returns the return value, or NULL if an exception occurred
  */
 typedef PyObject* (*PyObjC_CallFunc)(
-	PyObject* meth, PyObject* self, PyObject* args);
+    PyObject* meth, PyObject* self, PyObject* args);
 
 typedef struct {
-	PyObjCSelector_HEAD
+    PyObjCSelector_HEAD
 } PyObjCSelector;
 
 typedef struct {
-	PyObjCSelector_HEAD
-	PyObjC_CallFunc sel_call_func; 
+    PyObjCSelector_HEAD
+    PyObjC_CallFunc sel_call_func;
 } PyObjCNativeSelector;
 
 typedef struct {
-	PyObjCSelector_HEAD
-	PyObject*	callable;
-	Py_ssize_t	argcount;
-	Py_ssize_t	numoutput;
+    PyObjCSelector_HEAD
+    PyObject*    callable;
+    Py_ssize_t    argcount;
+    Py_ssize_t    numoutput;
 } PyObjCPythonSelector;
 
 extern PyTypeObject PyObjCSelector_Type;
@@ -79,12 +79,12 @@ PyObject* PyObjCSelector_New(PyObject* callable, SEL selector, const char* signa
 SEL PyObjCSelector_DefaultSelector(const char* methname);
 
 
-PyObject* 
+PyObject*
 PyObjCSelector_FromFunction(
-	PyObject* pyname,
-	PyObject* callable,
-	PyObject* template_class,
-	PyObject* protocols);
+    PyObject* pyname,
+    PyObject* callable,
+    PyObject* template_class,
+    PyObject* protocols);
 
 
 #endif /* PyObjC_SELECTOR_H */

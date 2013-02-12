@@ -75,6 +75,10 @@ Version 3.0
 
   As a side-effect of this the docstring is no longer writeable.
 
+* :class:`objc.selector` and :class:`objc.function` now have an implementation for the "__signature__" 
+  property when using Python 3.3 or later. This makes it possible to use :func:`inspect.signature` with
+  these objects.
+
 * It should now be possible to write tuples with more than INT_MAX elements to an NSArchive. Those archives
   cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that 
   contain only smaller tuples can be read back by earlier versions.
@@ -108,6 +112,25 @@ Version 3.0
 * Dropped deprecatd APIs: *objc.splitStruct*,  *objc._loadFunctionList*. Both have
   been replaced by newer APIs in PyObjC 2.4.
 
+* Foundation's *NSDecimal* type is exposed in the objc module as well. 
+
+  This was done to remove a dependency from the pyobjc-core package to pyobjc-framework-Cocoa.
+
+* The type :class:`objc.NSDecimal` is now an immutable type, just like
+  :class:`decimal.Decimal` and other Python value types.
+
+* The C code is more careful about updating Python reference counts, in earlier versions
+  it was possible to trigger access to a field in a datastructure that was being deallocated
+  because the calls to :c:macro:`Py_DECREF` for the field happened before setting the 
+  field to :c:data:`NULL` or a new value.  This could then result in a hard crash due to
+  accessing freed memory.
+
+* Bugfix: objc.NSDecimal(2.5) works with python 3 (caused a confusing 
+  exception due to buggy code before).
+
+* Bugfix: the support for :func:`round <__builtin__.round>` for :type:`objc.NSDecimal`
+  always rounded down, instead of using the normal rounding rules used by other
+  methods.
 
 Version 2.6
 -----------

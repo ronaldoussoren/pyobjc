@@ -15,7 +15,7 @@ Short term
   while getting the new code to work properly.
 
 * Calling methods is slower than expected, create better performance tests and try
-  to optimize (for example by creating a shortcut variant that doesn't handle 
+  to optimize (for example by creating a shortcut variant that doesn't handle
   "hard" methods).
 
 * Lib/objc/_convenience.py cleanup:
@@ -38,8 +38,8 @@ Short term
   - check if it is useful to cache method name lookup in subclasses as well (that is,
     when looking for a method in a subclass and that method is found in a superclass
     add it to the subclass dict as well, with a flag mentioning that this is a cache
-    entry). 
-    
+    entry).
+
     This avoids hitting the runtime when calling methods that are defined in a superclass,
     and could be more efficient. Needs care to avoid problems with objc.super though.
 
@@ -51,7 +51,7 @@ Medium term
 
 * Loading a framework takes too much time, why?
 
-  On my machine the first import is slow, subsequence imports are faster. 
+  On my machine the first import is slow, subsequence imports are faster.
 
   This appears to primairly be disk I/O::
 
@@ -89,11 +89,11 @@ Medium term
       real	0m16.866s
       user	0m0.255s
       sys	0m0.086s
-    
+
       real	0m12.323s
       user	0m0.255s
       sys	0m0.057s
-    
+
       real	0m9.325s
       user	0m0.252s
       sys	0m0.052s
@@ -111,7 +111,7 @@ Medium term
 * Try adding support for ARC runtime functions (to avoid hitting
   the autorelease pool on systems using ARC)
 
-  - Add explict preprocessor test and #error line to ensure 
+  - Add explict preprocessor test and #error line to ensure
     PyObjC itself isn't compiled with ARC enabled.
 
   - Basically try to create a variant of the libffi assembly code
@@ -128,3 +128,33 @@ Medium term
   instead (or even 'objc_retain/objc_release)'
 
 * Add __signature__ to objc.selector and objc.function (see inspect.signature)
+
+* PyList_GET_ITEM/PyTuple_GET_ITEM + usage without INCREF is unsafe when code
+  might call back into python!
+
+* The initWithCoder methods contain a large blob of shared code, move to
+  a separate function
+
+* Add tests to check that serializing list, tuple, unicode, str, ... (but not subtypes)
+  results in an NSArchive/NSKeyedArchive that can be read back in a pure ObjC
+  process (without PyObjC subclasses in the process)
+
+  NOTE: might require further update to the serialization code
+
+* #include -> #import (and remove include guards), alternatively cleanup
+  include guards.
+
+* See XXX in block-support.m: need some extra code to get the
+  same block objects as emitted by recent Clang versions
+
+* Remove 10.3 support from class-builder.m (KVOHackLevel.m)
+
+* FIXME in classbuilder.m
+
+* Remove 'volatile' where possible (almost everywhere)
+
+* Scare XXX in corefoundation.m
+
+* getattro for NSDecimal values seems dodgy
+
+* Remove use of 'volatile'

@@ -20,22 +20,22 @@
 
 -(int)instance
 {
-	return 1;
+    return 1;
 }
 
 -(int)both
 {
-	return 2;
+    return 2;
 }
 
 +(int)both
 {
-	return 3;
+    return 3;
 }
 
 +(int)clsmeth
 {
-	return 4;
+    return 4;
 }
 @end
 
@@ -53,43 +53,43 @@
 
 -(int)instance
 {
-	return 10;
+    return 10;
 }
 
 -(int)both
 {
-	return 20;
+    return 20;
 }
 
 +(int)both
 {
-	return 30;
+    return 30;
 }
 
 +(int)clsmeth
 {
-	return 40;
+    return 40;
 }
 @end
 
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"clinmeth",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "clinmeth",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -111,30 +111,30 @@ void __attribute__((__visibility__("default")))
 initclinmeth(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("clinmeth", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("clinmeth", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "PyObjC_ClsInst1", 
-		PyObjCClass_New([PyObjC_ClsInst1 class])) < 0) {
-		INITERROR();
-	}
-	if (PyModule_AddObject(m, "PyObjC_ClsInst2", 
-		PyObjCClass_New([PyObjC_ClsInst2 class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "PyObjC_ClsInst1",
+        PyObjCClass_New([PyObjC_ClsInst1 class])) < 0) {
+        INITERROR();
+    }
+    if (PyModule_AddObject(m, "PyObjC_ClsInst2",
+        PyObjCClass_New([PyObjC_ClsInst2 class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

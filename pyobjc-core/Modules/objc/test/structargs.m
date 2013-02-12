@@ -5,7 +5,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface StructArgClass : NSObject 
+@interface StructArgClass : NSObject
 {
 }
 -(NSString*)compP:(NSPoint)aPoint aRect:(NSRect)aRect anOp:(int)op;
@@ -19,62 +19,62 @@
 @implementation StructArgClass
 -(NSRect)someRectWithRect:(NSRect)rect
 {
-	return rect;
+    return rect;
 }
 
 -(NSRect)someRectWithX:(int)x Y:(int)y H:(int)h W:(int)w
 {
-	return NSMakeRect(x, y, h, w);
+    return NSMakeRect(x, y, h, w);
 }
 
 -(NSRect)someRectWithObject:(StructArgClass*)o X:(int)x Y:(int)y H:(int)h W:(int)w
 {
-	return [o someRectWithRect:NSMakeRect(x, y, h, w)];
+    return [o someRectWithRect:NSMakeRect(x, y, h, w)];
 }
 
 -(NSRect)someRect
 {
-	NSRect retval = NSMakeRect(1,2,3,4);
-	return retval;
+    NSRect retval = NSMakeRect(1,2,3,4);
+    return retval;
 }
 
 
 -(NSString*)compP:(NSPoint)aPoint aRect:(NSRect)aRect anOp:(int)op
 {
-	return [NSString stringWithFormat:@"aP:%@ aR:%@ anO:%d",
-			NSStringFromPoint(aPoint),
-			NSStringFromRect(aRect),
-			op];
+    return [NSString stringWithFormat:@"aP:%@ aR:%@ anO:%d",
+            NSStringFromPoint(aPoint),
+            NSStringFromRect(aRect),
+            op];
 }
 
 static size_t ident(size_t v)
 {
-	return v;
+    return v;
 }
 -(size_t)stackPtr
 {
-	char c;
+    char c;
 
-	return ident(((size_t)&c)+1);
+    return ident(((size_t)&c)+1);
 }
 @end
 
 static PyMethodDef mod_methods[] = {
-	                { 0, 0, 0, 0 }
+                    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"structargs",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "structargs",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -96,28 +96,28 @@ void __attribute__((__visibility__("default")))
 initstructargs(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("structargs", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("structargs", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "StructArgClass",
-		PyObjCClass_New([StructArgClass class])) < 0) {
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "StructArgClass",
+        PyObjCClass_New([StructArgClass class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }
 
 

@@ -56,8 +56,8 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
  * @method __pyobjc_PythonObject__
  * @result Returns a new reference to the wrapped object
  * @discussion
- * 	This method is part of the implementation of objc_support.m,
- * 	see that file for details.
+ *     This method is part of the implementation of objc_support.m,
+ *     see that file for details.
  */
 - (PyObject*) __pyobjc_PythonObject__;
 - (void) forwardInvocation:(NSInvocation *) invocation;

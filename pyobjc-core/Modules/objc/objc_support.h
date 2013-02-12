@@ -36,9 +36,9 @@ extern size_t describe_type(const char* type, char* buf, size_t buflen);
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
 extern PyObject *pythonify_c_value (const char *type,
-				    void *datum);
+                    void *datum);
 extern PyObject *pythonify_c_return_value (const char *type,
-				    void *datum);
+                    void *datum);
 
 extern PyObject *pythonify_c_array_nullterminated(const char* type, void* datum, BOOL already_retained, BOOL already_cfretained);
 
@@ -53,11 +53,11 @@ extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count
   Returns NULL on success, or a static error string describing the
   error. */
 extern int depythonify_c_value (const char *type,
-					PyObject *arg,
-					void *datum);
+                    PyObject *arg,
+                    void *datum);
 extern int depythonify_c_return_value (const char *type,
-					PyObject *arg,
-					void *datum);
+                    PyObject *arg,
+                    void *datum);
 
 extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
@@ -79,23 +79,23 @@ extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
  */
 static inline id PyObjC_PythonToId(PyObject* value)
 {
-	id res;
-	int r;
+    id res;
+    int r;
 
-	r = depythonify_c_value(@encode(id), value, &res);
-	if (r == -1) {
-		return NULL;
-	} else {
-		return res;
-	}
+    r = depythonify_c_value(@encode(id), value, &res);
+    if (r == -1) {
+        return NULL;
+    } else {
+        return res;
+    }
 }
 
 static inline PyObject* PyObjC_IdToPython(id value)
 {
-	PyObject* res;
+    PyObject* res;
 
-	res = pythonify_c_value(@encode(id), &value);
-	return res;
+    res = pythonify_c_value(@encode(id), &value);
+    return res;
 }
 
 #endif /* _objc_support_H */

@@ -4,7 +4,7 @@
  * @header super-call.h
  * @abstract Finding the right functions to call Objective-C methods
  * @discussion
- *     This module deals with finding the correct function to call a method, 
+ *     This module deals with finding the correct function to call a method,
  *     both from Python to Objective-C and from Objective-C to python.
  *
  *     The default Python to Objective-C calls for 'normal' calls is good enough
@@ -32,16 +32,16 @@ extern BOOL PyObjC_UpdatingMetaData;
  * @param aClass         Class for which this mapping is valid (+subclasses)
  * @param sel            The selector with a custom mapping
  * @param call_to_objc   Function for calling into Objective-C (from Python),
- * 	                 the default is 'PyObjCFFI_Caller'.
+ *                      the default is 'PyObjCFFI_Caller'.
  * @param call_to_python Function for calling into Python (from Objective-C)
  * @result Returns 0 on success, -1 on error.
  */
 extern int PyObjC_RegisterMethodMapping(
-	Class aClass, 
-	SEL sel, 
-	PyObjC_CallFunc call_to_objc, 
-	PyObjCFFI_ClosureFunc call_to_python
-	);
+    Class aClass,
+    SEL sel,
+    PyObjC_CallFunc call_to_objc,
+    PyObjCFFI_ClosureFunc call_to_python
+    );
 
 /*!
  * @function PyObjC_RegisterSignatureMapping
@@ -52,9 +52,9 @@ extern int PyObjC_RegisterMethodMapping(
  * @result Returns 0 on success, -1 on failure
  */
 extern int PyObjC_RegisterSignatureMapping(
-	char* signature,
-	PyObjC_CallFunc call_to_super,
-	PyObjCFFI_ClosureFunc call_to_python);
+    char* signature,
+    PyObjC_CallFunc call_to_super,
+    PyObjCFFI_ClosureFunc call_to_python);
 
 /*!
  * @function PyObjC_FindCallFunc
@@ -63,8 +63,8 @@ extern int PyObjC_RegisterSignatureMapping(
  * @param sel        A selector
  * @result Returns a function or NULL
  * @discussion
- * 	This finds the function that can be used to call the Objective-C
- * 	implementation of the specified method.
+ *     This finds the function that can be used to call the Objective-C
+ *     implementation of the specified method.
  */
 extern PyObjC_CallFunc PyObjC_FindCallFunc(Class aClass, SEL sel);
 
@@ -87,18 +87,18 @@ extern IMP PyObjC_MakeIMP(Class aClass, Class aSuperClass, PyObject* sel, PyObje
 /*!
  * @constant PyObjCUnsupportedMethod_IMP
  * @discussion
- * 	Use this as the 'call_to_python' argument to 
- * 	PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
- * 	the method cannot be implemented in Python.
+ *     Use this as the 'call_to_python' argument to
+ *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
+ *     the method cannot be implemented in Python.
  */
 extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
 
 /*!
  * @constant PyOBjCUnsupportedMethod_Caller
  * @discussion
- * 	Use this as the 'call_to_objc' argument to 
- * 	PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
- * 	the method cannot be called from Python.
+ *     Use this as the 'call_to_objc' argument to
+ *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
+ *     the method cannot be called from Python.
  */
 extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*);
 

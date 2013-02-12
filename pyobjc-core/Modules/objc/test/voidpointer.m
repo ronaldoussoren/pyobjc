@@ -8,7 +8,7 @@
 
 @interface OC_TestVoidPointer : NSObject
 {
-	void* value;
+    void* value;
 }
 
 -(void*)getvalue;
@@ -16,40 +16,40 @@
 @end
 
 @implementation OC_TestVoidPointer
--(instancetype)init 
+-(instancetype)init
 {
-	self = [super init];
-	if (self) {
-		value = NULL;
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        value = NULL;
+    }
+    return self;
 }
 -(void*)getvalue
 {
-	return value;
+    return value;
 }
 -(void)setvalue:(void*)v
 {
-	value = v;
+    value = v;
 }
 @end
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"voidpointer",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "voidpointer",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -71,26 +71,26 @@ void __attribute__((__visibility__("default")))
 initvoidpointer(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("voidpointer", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("voidpointer", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_TestVoidPointer", 
-			PyObjCClass_New([OC_TestVoidPointer class])) < 0){
-		INITERROR();
-	}
+    if (PyModule_AddObject(m, "OC_TestVoidPointer",
+            PyObjCClass_New([OC_TestVoidPointer class])) < 0){
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

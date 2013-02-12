@@ -8,7 +8,6 @@
  * using the linker due to limitations in pyobjc-api.h
  */
 
-#include "_Foundation_NSDecimal.m"
 #include "_Foundation_NSInvocation.m"
 #include "_Foundation_netservice.m"
 #include "_Foundation_string.m"
@@ -32,7 +31,6 @@ PyObjC_MODULE_INIT(_Foundation)
 
 	if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
 
-	if (setup_nsdecimal(m) == -1) PyObjC_INITERROR();
 	if (setup_nsinvocation(m) == -1) PyObjC_INITERROR();
 	if (setup_nsnetservice(m) == -1) PyObjC_INITERROR();
 	if (setup_nssstring(m) == -1) PyObjC_INITERROR();

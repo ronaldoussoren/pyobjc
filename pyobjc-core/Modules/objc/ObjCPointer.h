@@ -1,10 +1,10 @@
 #ifndef PyObjC_OBJC_POINTER_H
 #define PyObjC_OBJC_POINTER_H
 
-/* Python wrapper around C pointer 
+/* Python wrapper around C pointer
  *
  * NOTE: This class is almost never used, pointers in method interfaces are,
- * or should be, treated differently and I've yet to run into a Cocoa structure 
+ * or should be, treated differently and I've yet to run into a Cocoa structure
  * that contains pointers.
  */
 
@@ -17,7 +17,7 @@ typedef struct
   char contents[1];
 } PyObjCPointer;
 
-extern int	PyObjCPointer_RaiseException;
+extern int PyObjCPointer_RaiseException;
 
 extern PyTypeObject PyObjCPointer_Type;
 

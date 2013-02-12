@@ -64,9 +64,9 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 
 /* pass-by-reference */
--(int)sumX:(int*)x andY:(int*)y;		/* in */
--(int)divBy5:(int)x remainder:(int*)r;		/* out */
--(void)swapX:(double*)x andY:(double*)y; 	/* inout */
+-(int)sumX:(int*)x andY:(int*)y;        /* in */
+-(int)divBy5:(int)x remainder:(int*)r;        /* out */
+-(void)swapX:(double*)x andY:(double*)y;     /* inout */
 -(NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z;
 
 -(NSArray*)makeArrayWithFormat:(NSString*)fmt, ...;
@@ -128,549 +128,549 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 +(BOOL) boolClassMethod
 {
-	return YES;
+    return YES;
 }
 
 
 -(int*)   makeIntArrayOf5
 {
-	static int result[5];
-	int i;
-	for (i = 0; i < 5; i++) {
-		result[i] = i*i;
-	}
-	return result;
+    static int result[5];
+    int i;
+    for (i = 0; i < 5; i++) {
+        result[i] = i*i;
+    }
+    return result;
 }
 
 -(char**) makeStringArray
 {
-	static char* result[] = {
-		"hello",
-		"world",
-		"out",
-		"there",
-		NULL
-	};
-	return result;
+    static char* result[] = {
+        "hello",
+        "world",
+        "out",
+        "there",
+        NULL
+    };
+    return result;
 }
 
 
 -(int*)   makeIntArrayOf:(int)count
 {
-	static int* result = NULL;
-	int i;
+    static int* result = NULL;
+    int i;
 
-	if (result) {
-		free(result);
-	}
-	result = malloc(sizeof(int) * count);
-	if (result == NULL) {
-		return NULL;
-	}
-	for (i = 0; i < count; i++) {
-		result[i] = i * i * i;
-	}
-	return result;
+    if (result) {
+        free(result);
+    }
+    result = malloc(sizeof(int) * count);
+    if (result == NULL) {
+        return NULL;
+    }
+    for (i = 0; i < count; i++) {
+        result[i] = i * i * i;
+    }
+    return result;
 }
 -(const int*)   nullIntArrayOf5
 {
-	return NULL;
+    return NULL;
 }
 
 -(char**) nullStringArray
 {
-	return NULL;
+    return NULL;
 }
 
 -(int*)   nullIntArrayOf:(int)count
 {
-	use_int(count);
-	return NULL;
+    use_int(count);
+    return NULL;
 }
 
 
 -(NSArray*)nullIntArray:(int*) data count:(unsigned)count
 {
-	if (data) {
-		return [self makeIntArray:data count:count];
-	} else {
-		return nil;
-	}
+    if (data) {
+        return [self makeIntArray:data count:count];
+    } else {
+        return nil;
+    }
 }
 
 -(NSArray*)makeIntArray:(int*) data countPtr:(unsigned*)countPtr
 {
-	return [self makeIntArray:data count:*countPtr];
+    return [self makeIntArray:data count:*countPtr];
 }
 
 -(NSArray*)makeIntArray:(int*) data halfCount:(unsigned)count
 {
-	return [self makeIntArray:data count:count*2];
+    return [self makeIntArray:data count:count*2];
 }
 
 -(NSArray*)makeIntArray:(int*) data count:(unsigned)count
 {
-	NSMutableArray* array;
-	unsigned i;
+    NSMutableArray* array;
+    unsigned i;
 
-	array = [NSMutableArray arrayWithCapacity:count];
+    array = [NSMutableArray arrayWithCapacity:count];
 
-	for (i = 0; i < count; i++) {
-		[array addObject: [NSNumber numberWithInt:data[i]]];
-	}
-	return array;
+    for (i = 0; i < count; i++) {
+        [array addObject: [NSNumber numberWithInt:data[i]]];
+    }
+    return array;
 }
 
 -(NSArray*)make4Tuple:(double*)data
 {
-	NSMutableArray* array;
-	unsigned i;
+    NSMutableArray* array;
+    unsigned i;
 
-	array = [NSMutableArray array];
+    array = [NSMutableArray array];
 
-	for (i = 0; i < 4; i++) {
-		[array addObject: [NSNumber numberWithDouble:data[i]]];
-	}
-	return array;
+    for (i = 0; i < 4; i++) {
+        [array addObject: [NSNumber numberWithDouble:data[i]]];
+    }
+    return array;
 }
 
 -(NSArray*)null4Tuple:(double*)data
 {
-	if (data)  {
-		return [self make4Tuple:data];
-	} else {
-		return nil;
-	}
+    if (data)  {
+        return [self make4Tuple:data];
+    } else {
+        return nil;
+    }
 }
 
 
 -(NSArray*)nullStringArray:(char**)data
 {
-	if (data) {
-		return [self makeStringArray:data];
-	} else {
-		return nil;
-	}
+    if (data) {
+        return [self makeStringArray:data];
+    } else {
+        return nil;
+    }
 }
 
 -(NSArray*)makeStringArray:(char**)data
 {
-	NSMutableArray* array;
+    NSMutableArray* array;
 
-	array = [NSMutableArray array];
+    array = [NSMutableArray array];
 
-	while (*data != NULL) {
-		[array addObject: [NSString stringWithUTF8String: *data]];
-		data ++;
-	}
-	return array;
+    while (*data != NULL) {
+        [array addObject: [NSString stringWithUTF8String: *data]];
+        data ++;
+    }
+    return array;
 }
 
 -(NSArray*)makeObjectArray:(id*)data
 {
-	NSMutableArray* array;
+    NSMutableArray* array;
 
-	array = [NSMutableArray array];
+    array = [NSMutableArray array];
 
-	while (*data != NULL) {
-		[array addObject: *data];
-		data ++;
-	}
-	return array;
+    while (*data != NULL) {
+        [array addObject: *data];
+        data ++;
+    }
+    return array;
 }
 
 -(void)fillArray:(int*)data count:(int)count
 {
-	int i;
-	for (i = 0; i < count; i++) {
-		data[i] = i*i;
-	}
+    int i;
+    for (i = 0; i < count; i++) {
+        data[i] = i*i;
+    }
 }
 
 -(int)nullfillArray:(int*)data count:(int)count
 {
-	if (data == NULL) {
-		return 0;
-	} else {
-		[self fillArray:data count:count];
-		return 1;
-	}
+    if (data == NULL) {
+        return 0;
+    } else {
+        [self fillArray:data count:count];
+        return 1;
+    }
 }
 
 -(void)fill4Tuple:(int*)data
 {
-	int i;
-	for (i = 0; i < 4; i++) {
-		data[i] = - i * i * i;
-	}
+    int i;
+    for (i = 0; i < 4; i++) {
+        data[i] = - i * i * i;
+    }
 }
 
 -(int)nullfill4Tuple:(int*)data
 {
-	if (data == NULL) {
-		return 0;
-	} else {
-		[self fill4Tuple:data];
-		return 1;
-	}
+    if (data == NULL) {
+        return 0;
+    } else {
+        [self fill4Tuple:data];
+        return 1;
+    }
 }
 
 -(void)fillStringArray:(char**)data
 {
-	use_charpp(data);
-	/* NULL-terminated output arrays can't work */
+    use_charpp(data);
+    /* NULL-terminated output arrays can't work */
 }
 
 -(int)nullfillStringArray:(char**)data
 {
-	if (data == NULL) return 0;
-	[self fillStringArray:data];
-	return 1;
+    if (data == NULL) return 0;
+    [self fillStringArray:data];
+    return 1;
 }
 
 -(void)reverseArray:(float*)data count:(int)count
 {
-	float t;
-	int i;
-	for (i = 0; i < count / 2; i++) {
-		t = data[i];
-		data[i] = data[count - 1 - i];
-		data[count - 1 -i] = t;
-	}
+    float t;
+    int i;
+    for (i = 0; i < count / 2; i++) {
+        t = data[i];
+        data[i] = data[count - 1 - i];
+        data[count - 1 -i] = t;
+    }
 }
 
 -(int)nullreverseArray:(float*)data count:(int)count
 {
-	if (data == NULL) return 0;
-	[self reverseArray:data count:count];
-	return 1;
+    if (data == NULL) return 0;
+    [self reverseArray:data count:count];
+    return 1;
 }
 
 -(void)reverseStrings:(char**)data
 {
-	int count, i;
-	char* t;
+    int count, i;
+    char* t;
 
-	for (count = 0; data[count] != NULL; count++) {
-		;
-	}
+    for (count = 0; data[count] != NULL; count++) {
+        ;
+    }
 
-	for (i = 0; i < count / 2 ; i++) {
-		t = data[i];
-		data[i] = data[count-1-i];
-		data[count-1-i] = t;
-	}
+    for (i = 0; i < count / 2 ; i++) {
+        t = data[i];
+        data[i] = data[count-1-i];
+        data[count-1-i] = t;
+    }
 }
 
 -(int)nullreverseStrings:(char**)data
 {
-	if (data == NULL) return 0;
-	[self reverseStrings:data];
-	return 1;
+    if (data == NULL) return 0;
+    [self reverseStrings:data];
+    return 1;
 }
 
 -(void)reverse4Tuple:(short*)data
 {
-	short t;
+    short t;
 
-	t = data[0];
-	data[0] = data[3];
-	data[3] = t;
+    t = data[0];
+    data[0] = data[3];
+    data[3] = t;
 
-	t = data[1];
-	data[1] = data[2];
-	data[2] = t;
+    t = data[1];
+    data[1] = data[2];
+    data[2] = t;
 }
 
 -(int)nullreverse4Tuple:(short*)data
 {
-	if (data == NULL) return 0;
-	[self reverse4Tuple:data];
-	return 1;
+    if (data == NULL) return 0;
+    [self reverse4Tuple:data];
+    return 1;
 }
 
--(int)sumX:(int*)x andY:(int*)y		/* in */
+-(int)sumX:(int*)x andY:(int*)y        /* in */
 {
-	return *x + *y;
+    return *x + *y;
 }
 
--(int)divBy5:(int)x remainder:(int*)r	/* out */
+-(int)divBy5:(int)x remainder:(int*)r    /* out */
 {
-	*r = x % 5;
-	return x / 5;
+    *r = x % 5;
+    return x / 5;
 }
 
 -(void)swapX:(double*)x andY:(double*)y /* inout */
 {
-	int t = *x;
-	*x = *y;
-	*y = t;
+    int t = *x;
+    *x = *y;
+    *y = t;
 }
 
 -(NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z
 {
-	char buf[64];
-	NSMutableArray* result = [NSMutableArray array];
+    char buf[64];
+    NSMutableArray* result = [NSMutableArray array];
 
-	snprintf(buf, sizeof(buf), "%p", x);
-	[result addObject: [NSString stringWithUTF8String:buf]];
+    snprintf(buf, sizeof(buf), "%p", x);
+    [result addObject: [NSString stringWithUTF8String:buf]];
 
-	snprintf(buf, sizeof(buf), "%p", y);
-	[result addObject: [NSString stringWithUTF8String:buf]];
+    snprintf(buf, sizeof(buf), "%p", y);
+    [result addObject: [NSString stringWithUTF8String:buf]];
 
-	snprintf(buf, sizeof(buf), "%p", z);
-	[result addObject: [NSString stringWithUTF8String:buf]];
+    snprintf(buf, sizeof(buf), "%p", z);
+    [result addObject: [NSString stringWithUTF8String:buf]];
 
-	if (y) {
-		if (x) {
-			if (z) {
-				*y = *x + *z;
-			} else {
-				*y = *x + 42;
-			}
-		} else if (z) {
-			*y = 42 - *z;
-		} else {
-			*y = -1;
-		}
-	}
+    if (y) {
+        if (x) {
+            if (z) {
+                *y = *x + *z;
+            } else {
+                *y = *x + 42;
+            }
+        } else if (z) {
+            *y = 42 - *z;
+        } else {
+            *y = -1;
+        }
+    }
 
-	if (z) {
-		if (x) {
-			*z = *x - *z;
-		} else {
-			*z = -*z;
-		}
-	}
+    if (z) {
+        if (x) {
+            *z = *x - *z;
+        } else {
+            *z = -*z;
+        }
+    }
 
-	return result;
+    return result;
 }
-	
+
 -(int)fillArray:(int*)data uptoCount:(int)count
 {
-	int i;
-	for (i = 0; i < count / 2; i++) {
-		data[i] = i + 2;
-	}
-	for (i = count/2; i < count; i++) {
-		data[i] = -42;
-	}
-	return count/2;
+    int i;
+    for (i = 0; i < count / 2; i++) {
+        data[i] = i + 2;
+    }
+    for (i = count/2; i < count; i++) {
+        data[i] = -42;
+    }
+    return count/2;
 }
 
 -(int)maybeFillArray:(int*)data
 {
-	int i;
-	for (i = 0; i < 2; i++) {
-		data[i] = i + 10;
-	}
-	for (i = 2; i < 4; i++) {
-		data[i] = -42;
-	}
-	return 2;
+    int i;
+    for (i = 0; i < 2; i++) {
+        data[i] = i + 10;
+    }
+    for (i = 2; i < 4; i++) {
+        data[i] = -42;
+    }
+    return 2;
 }
 
 -(int)reverseArray:(float*)data uptoCount:(int)count
 {
-	[self reverseArray:data count:count];
-	return count/2;
+    [self reverseArray:data count:count];
+    return count/2;
 }
 
 -(int)maybeReverseArray:(short*)data
 {
-	[self reverse4Tuple:data];
-	return 2;
+    [self reverse4Tuple:data];
+    return 2;
 }
 
 
 +(int*)   makeIntArrayOf5On:(OC_MetaDataTest*)obj
 {
-	return [obj makeIntArrayOf5];
+    return [obj makeIntArrayOf5];
 }
 
 +(char**) makeStringArrayOn:(OC_MetaDataTest*)obj
 {
-	return [obj makeStringArray];
+    return [obj makeStringArray];
 }
 
 +(int*)   makeIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj makeIntArrayOf:count];
+    return [obj makeIntArrayOf:count];
 }
 
 +(const int*)   nullIntArrayOf5On:(OC_MetaDataTest*)obj
 {
-	return [obj nullIntArrayOf5];
+    return [obj nullIntArrayOf5];
 }
 
 +(char**) nullStringArrayOn:(OC_MetaDataTest*)obj
 {
-	return [obj nullStringArray];
+    return [obj nullStringArray];
 }
 
 +(int*)   nullIntArrayOf:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj nullIntArrayOf:count];
+    return [obj nullIntArrayOf:count];
 }
 
 +(NSArray*)makeIntArray:(int*) data count:(unsigned)count on:(OC_MetaDataTest*)obj
 {
-	return [obj makeIntArray:data count:count];
+    return [obj makeIntArray:data count:count];
 }
 
 +(NSArray*)makeIntArray:(int*) data countPtr:(unsigned*)countPtr on:(OC_MetaDataTest*)obj
 {
-	return [obj makeIntArray:data countPtr:countPtr];
+    return [obj makeIntArray:data countPtr:countPtr];
 }
 
 +(NSArray*)nullIntArray:(int*) data count:(unsigned)count on:(OC_MetaDataTest*)obj
 {
-	return [obj nullIntArray:data count:count];
+    return [obj nullIntArray:data count:count];
 }
 
 +(NSArray*)makeStringArray:(char**)data on:(OC_MetaDataTest*)obj
 {
-	return [obj makeStringArray:data];
+    return [obj makeStringArray:data];
 }
 
 +(NSArray*)makeObjectArray:(id*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj makeObjectArray:data];
+    return [obj makeObjectArray:data];
 }
 
 +(NSArray*)nullStringArray:(char**)data on:(OC_MetaDataTest*)obj
 {
-	return [obj nullStringArray:data];
+    return [obj nullStringArray:data];
 }
 
 +(NSArray*)make4Tuple:(double*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj make4Tuple:data];
+    return [obj make4Tuple:data];
 }
 
 +(NSArray*)null4Tuple:(double*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj null4Tuple:data];
+    return [obj null4Tuple:data];
 }
 
 +(void)fillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj fillArray:data count:count];
+    return [obj fillArray:data count:count];
 }
 
 +(int)nullfillArray:(int*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj nullfillArray:data count:count];
+    return [obj nullfillArray:data count:count];
 }
 
 +(void)fill4Tuple:(int*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj fill4Tuple:data];
+    return [obj fill4Tuple:data];
 }
 
 +(int)nullfill4Tuple:(int*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj nullfill4Tuple:data];
+    return [obj nullfill4Tuple:data];
 }
 
 +(int)fillArray:(int*)data uptoCount:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj fillArray:data uptoCount:count];
+    return [obj fillArray:data uptoCount:count];
 }
 
 +(int)maybeFillArray:(int*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj maybeFillArray:data];
+    return [obj maybeFillArray:data];
 }
 
 +(void)fillStringArray:(char**)data on:(OC_MetaDataTest*)obj
 {
-	[obj fillStringArray:data];
+    [obj fillStringArray:data];
 }
 
 +(int)nullfillStringArray:(char**)data on:(OC_MetaDataTest*)obj
 {
-	return [obj nullfillStringArray:data];
+    return [obj nullfillStringArray:data];
 }
 
 +(void)reverseArray:(float*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
-	[obj reverseArray:data count:count];
+    [obj reverseArray:data count:count];
 }
 
 +(int)nullreverseArray:(float*)data count:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj nullreverseArray:data count:count];
+    return [obj nullreverseArray:data count:count];
 }
 
 +(void)reverseStrings:(char**)data on:(OC_MetaDataTest*)obj
 {
-	[obj reverseStrings:data];
+    [obj reverseStrings:data];
 }
 
 +(int)nullreverseStrings:(char**)data on:(OC_MetaDataTest*)obj
 {
-	return [obj nullreverseStrings:data];
+    return [obj nullreverseStrings:data];
 }
 
 +(void)reverse4Tuple:(short*)data on:(OC_MetaDataTest*)obj
 {
-	[obj reverse4Tuple:data];
+    [obj reverse4Tuple:data];
 }
 
 +(int)nullreverse4Tuple:(short*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj nullreverse4Tuple:data];
+    return [obj nullreverse4Tuple:data];
 }
 
 +(int)reverseArray:(float*)data uptoCount:(int)count on:(OC_MetaDataTest*)obj
 {
-	return [obj reverseArray:data uptoCount:count];
+    return [obj reverseArray:data uptoCount:count];
 }
 
 +(int)maybeReverseArray:(short*)data on:(OC_MetaDataTest*)obj
 {
-	return [obj maybeReverseArray:data];
+    return [obj maybeReverseArray:data];
 }
 
 +(int)sumX:(int*)x andY:(int*)y on:(OC_MetaDataTest*)obj
 {
-	return [obj sumX:x andY:y];
+    return [obj sumX:x andY:y];
 }
 
 +(int)divBy5:(int)x remainder:(int*)r on:(OC_MetaDataTest*)obj
 {
-	return [obj divBy5:x remainder:r];
+    return [obj divBy5:x remainder:r];
 }
 
 +(void)swapX:(double*)x andY:(double*)y on:(OC_MetaDataTest*)obj
 {
-	return [obj swapX:x andY:y];
+    return [obj swapX:x andY:y];
 }
 
 +(NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z on:(OC_MetaDataTest*)obj
 {
-	return [obj input:x output:y inputAndOutput:z];
+    return [obj input:x output:y inputAndOutput:z];
 }
 
 -(NSArray*)makeArrayWithFormat:(NSString*)fmt, ...
 {
-	va_list ap;
-	char buffer[2048];
+    va_list ap;
+    char buffer[2048];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
-	va_start(ap, fmt);
-	vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
-	va_end(ap);
+    va_start(ap, fmt);
+    vsnprintf(buffer, sizeof(buffer), [fmt UTF8String], ap);
+    va_end(ap);
 
 #pragma clang diagnostic pop
 
-	return [NSArray arrayWithObjects: 
-			fmt, 
-			[NSString stringWithUTF8String:buffer],
-			NULL];
+    return [NSArray arrayWithObjects:
+            fmt,
+            [NSString stringWithUTF8String:buffer],
+            NULL];
 }
 
 #pragma GCC diagnostic push
@@ -680,111 +680,111 @@ static void use_id(id x __attribute__((__unused__))) { };
 
 -(NSArray*)makeArrayWithCFormat:(char*)fmt, ...
 {
-	va_list ap;
-	char  buffer[2048];
-	
-	va_start(ap, fmt);
-	vsnprintf(buffer, sizeof(buffer), fmt, ap);
-	va_end(ap);
+    va_list ap;
+    char  buffer[2048];
 
-	return [NSArray arrayWithObjects: 
-			[NSString stringWithUTF8String:fmt], 
-			[NSString stringWithUTF8String:buffer], 
-			NULL];
+    va_start(ap, fmt);
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
+    va_end(ap);
+
+    return [NSArray arrayWithObjects:
+            [NSString stringWithUTF8String:fmt],
+            [NSString stringWithUTF8String:buffer],
+            NULL];
 }
 #pragma GCC diagnostic pop
 #pragma clang diagnostic pop
 
 -(NSArray*)makeArrayWithArguments:(id)arg, ...
 {
-	va_list ap;
-	NSMutableArray* array = [[[NSMutableArray alloc] init] autorelease];
-	if (arg == NULL) {
-		return array;
-	}
+    va_list ap;
+    NSMutableArray* array = [[[NSMutableArray alloc] init] autorelease];
+    if (arg == NULL) {
+        return array;
+    }
 
 
-	va_start(ap, arg);
-	do {
-		[array addObject:arg];
-		arg = va_arg(ap, id);
-	} while (arg != NULL);
+    va_start(ap, arg);
+    do {
+        [array addObject:arg];
+        arg = va_arg(ap, id);
+    } while (arg != NULL);
 
-	va_end(ap);
-	return array;
+    va_end(ap);
+    return array;
 }
 
 -(void)varargsMethodWithObjects:(id)first, ...
 {
-	use_id(first);
+    use_id(first);
 }
 
 -(int)ignoreMethod
 {
-	return 42;
+    return 42;
 }
 
 -(NSData*)makeDataForBytes:(char*)data count:(int)count
 {
-	return [NSData dataWithBytes:data length:count];
+    return [NSData dataWithBytes:data length:count];
 }
 
 -(NSData*)makeDataForVoids:(void*)data count:(int)count
 {
-	return [NSData dataWithBytes:data length:count];
+    return [NSData dataWithBytes:data length:count];
 }
 
 -(void)addOneToBytes:(char*)data count:(int)count
 {
-	int i;
-	for (i = 0;i < count; i++) {
-		data[i] += 1;
-	}
+    int i;
+    for (i = 0;i < count; i++) {
+        data[i] += 1;
+    }
 }
 
 -(void)addOneToVoids:(void*)data count:(int)count
 {
-	int i;
-	for (i = 0; i < count; i++) {
-		((char*)data)[i] += 2;
-	}
+    int i;
+    for (i = 0; i < count; i++) {
+        ((char*)data)[i] += 2;
+    }
 }
 
 -(void)fillBuffer:(char*)data count:(int)count
 {
-	memset(data, '\xfe', count);
+    memset(data, '\xfe', count);
 }
 
 -(void)fillVoids:(void*)data count:(int)count
 {
-	memset(data, '\xab', count);
+    memset(data, '\xab', count);
 }
 
 -(int*)   unknownLengthArray
 {
 static  int theValue[] = { 1, 3, 5, 7, 11, 13, 17, 19 };
-	return theValue;
+    return theValue;
 }
 
 -(int*)  unknownLengthMutable
 {
 static  int theValue[20];
-	return theValue;
+    return theValue;
 }
 
 -(NSArray*) makeVariableLengthArray:(int*)array halfCount:(int)cnt
 {
-	cnt *= 2;
+    cnt *= 2;
 
-	NSMutableArray* result;
-	int i;
+    NSMutableArray* result;
+    int i;
 
-	result = [NSMutableArray arrayWithCapacity:cnt];
+    result = [NSMutableArray arrayWithCapacity:cnt];
 
-	for (i = 0; i < cnt; i++) {
-		[result addObject: [NSNumber numberWithFloat:array[i]]];
-	}
-	return result;
+    for (i = 0; i < cnt; i++) {
+        [result addObject: [NSNumber numberWithFloat:array[i]]];
+    }
+    return result;
 }
 
 
@@ -792,21 +792,21 @@ static  int theValue[20];
 
 
 static PyMethodDef mod_methods[] = {
-	        { 0, 0, 0, 0 }
+            { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"metadata",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "metadata",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -829,28 +829,28 @@ initmetadata(void)
 #endif
 
 {
-	PyObject* m;
+    PyObject* m;
 
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("metadata", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("metadata", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
 
-	if (PyModule_AddObject(m, "OC_MetaDataTest", 
-		PyObjCClass_New([OC_MetaDataTest class])) < 0) {
+    if (PyModule_AddObject(m, "OC_MetaDataTest",
+        PyObjCClass_New([OC_MetaDataTest class])) < 0) {
 
-		INITERROR();
-	}
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }

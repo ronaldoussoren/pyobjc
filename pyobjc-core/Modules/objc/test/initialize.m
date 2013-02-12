@@ -10,7 +10,7 @@ static int numUninitialized = 0;
 
 @interface OC_TestInitialize : NSObject
 {
-	int       isInitialized;
+    int       isInitialized;
 }
 -(instancetype)init;
 -(instancetype)retain;
@@ -26,85 +26,85 @@ static int numUninitialized = 0;
 
 @end
 
-@implementation OC_TestInitialize 
+@implementation OC_TestInitialize
 
 -(instancetype)init
 {
-	self = [super init];
-	if (!self) return self;
+    self = [super init];
+    if (!self) return self;
 
-	isInitialized = 1;
-	return self;
+    isInitialized = 1;
+    return self;
 }
 
 -(instancetype)retain
 {
-	if (!isInitialized) {
-		numUninitialized ++;
-	}
-	return [super retain];
+    if (!isInitialized) {
+        numUninitialized ++;
+    }
+    return [super retain];
 }
 
 -(void)release
 {
-	if (!isInitialized) {
-		numUninitialized ++;
-	}
-	[super release];
+    if (!isInitialized) {
+        numUninitialized ++;
+    }
+    [super release];
 }
 
 -(instancetype)autorelease
 {
-	if (!isInitialized) {
-		numUninitialized ++;
-	}
-	return [super autorelease];
+    if (!isInitialized) {
+        numUninitialized ++;
+    }
+    return [super autorelease];
 }
 
 -(int)isInitialized
 {
-	return isInitialized;
+    return isInitialized;
 }
 
 +(int)numUninitialized
 {
-	return numUninitialized;
+    return numUninitialized;
 }
 
 -(id)dummy
 {
-	return @"hello";
+    return @"hello";
 }
 
 +(id)makeInstance
 {
-	return [[[self alloc] init] autorelease];
+    return [[[self alloc] init] autorelease];
 }
 
 -(oneway void)onewayVoidMethod
 {
-	isInitialized=-1;
+    isInitialized=-1;
 }
 
 @end
 
 
 static PyMethodDef mod_methods[] = {
-	{ 0, 0, 0, 0 }
+    { 0, 0, 0, 0 }
 };
 
 #if PY_VERSION_HEX >= 0x03000000
 
 static struct PyModuleDef mod_module = {
-	PyModuleDef_HEAD_INIT,
-	"initialize",
-	NULL,
-	0,
-	mod_methods,
-	NULL,
-	NULL,
-	NULL,
-	NULL
+    PyModuleDef_HEAD_INIT,
+    "initialize",
+    NULL,
+    0,
+    mod_methods,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 #define INITERROR() return NULL
@@ -126,25 +126,25 @@ void __attribute__((__visibility__("default")))
 initinitialize(void)
 #endif
 {
-	PyObject* m;
+    PyObject* m;
 
 #if PY_VERSION_HEX >= 0x03000000
-	m = PyModule_Create(&mod_module);
+    m = PyModule_Create(&mod_module);
 #else
-	m = Py_InitModule4("initialize", mod_methods,
-		NULL, NULL, PYTHON_API_VERSION);
+    m = Py_InitModule4("initialize", mod_methods,
+        NULL, NULL, PYTHON_API_VERSION);
 #endif
-	if (!m) {
-		INITERROR();
-	}
+    if (!m) {
+        INITERROR();
+    }
 
-	if (PyObjC_ImportAPI(m) < 0) {
-		INITERROR();
-	}
-	if (PyModule_AddObject(m, "OC_TestInitialize", 
-		PyObjCClass_New([OC_TestInitialize class])) < 0) {
-		INITERROR();
-	}
+    if (PyObjC_ImportAPI(m) < 0) {
+        INITERROR();
+    }
+    if (PyModule_AddObject(m, "OC_TestInitialize",
+        PyObjCClass_New([OC_TestInitialize class])) < 0) {
+        INITERROR();
+    }
 
-	INITDONE();
+    INITDONE();
 }
