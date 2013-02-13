@@ -155,7 +155,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include "informal-protocol.h"
 #include "formal-protocol.h"
 #include "alloc_hack.h"
-#include "unicode-object.h"
+#include "pyobjc_unicode.h"
 #include "class-descriptor.h"
 #include "class-list.h"
 #include "struct-wrapper.h"

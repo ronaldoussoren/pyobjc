@@ -469,7 +469,6 @@ Types
       string. This provides full access to the Cocoa string API, but without easy
       interoperability with Python APIs.
 
-
    .. note::
 
       Instances of :c:type:`NSString` can be mutable. Mutations to mutable Cocoa
