@@ -3,28 +3,29 @@
  *
  * This file defines a registry that is used to find the right function to
  * call when a method is called. There are 3 variants:
- * - Call the method from python
- * - Call the superclass implementation from python
- * - Call the python implementation of a method from Objective-C
  *
- * The first will almost always be 'execute_and_pythonify_method', the other
- * two classes contain lots of functions because the normal runtime doesn't
- * allow for dynamicly creating these types of calls (see also: register.m)
+ * - Call the method from python
+ * - Call the python implementation of a method from Objective-C
  */
 #include "pyobjc.h"
 
+/*
+ * Serial number for metadata and helper functions. Classes contain
+ * the version number that was present when they were initialized and
+ * will reinitalize when they notice the global value has changed.
+ */
 Py_ssize_t PyObjC_MappingCount = 0;
 
 struct registry
 {
-    PyObjC_CallFunc     call_to_objc;
-    PyObjCFFI_ClosureFunc    call_to_python;
+    PyObjC_CallFunc call_to_objc;
+    PyObjCFFI_ClosureFunc call_to_python;
 };
 
 /* Dict mapping from signature-string to a 'struct registry' */
 static PyObject* signature_registry = NULL;
 
-/* List of 3-tuples: (Class, "selector", 'struct registry' */
+/* Dict mapping from selector to a list of (Class, struct registry) tuples */
 static PyObject* special_registry  = NULL;
 
 /*
@@ -39,7 +40,7 @@ init_registry(void)
     }
 
     if (special_registry == NULL) {
-        special_registry = PyList_New(0);
+        special_registry = PyDict_New();
         if (special_registry == NULL) return -1;
     }
 
@@ -52,12 +53,15 @@ static void memblock_capsule_cleanup(void* ptr)
 {
     PyMem_Free(ptr);
 }
-#else
+
+#else /* Python 2.7 and 3.x */
+
 static void memblock_capsule_cleanup(PyObject* ptr)
 {
     PyMem_Free(PyCapsule_GetPointer(ptr, "objc.__memblock__"));
 }
-#endif
+
+#endif /* Python 2.7 and 3.x */
 
 
 /*
@@ -69,12 +73,14 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
     PyObjCFFI_ClosureFunc call_to_python)
 {
     struct registry* v;
-    const char* selname = sel_getName(sel);
     PyObject* pyclass;
     PyObject* entry;
+    PyObject* lst;
 
     if (signature_registry == NULL) {
-        if (init_registry() < 0) return -1;
+        if (init_registry() < 0) {
+            return -1;
+        }
     }
 
     if (!call_to_python) {
@@ -88,10 +94,13 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
     }
 
     if (class == nil) {
-        pyclass = Py_None; Py_INCREF(Py_None);
+        pyclass = Py_None;
+        Py_INCREF(Py_None);
     } else {
-                pyclass = PyObjCClass_New(class);
-        if (pyclass == NULL) return -1;
+        pyclass = PyObjCClass_New(class);
+        if (pyclass == NULL) {
+            return -1;
+        }
     }
 
     v = PyMem_Malloc(sizeof(*v));
@@ -102,27 +111,43 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel,
     v->call_to_objc  = call_to_objc;
     v->call_to_python = call_to_python;
 
-    entry = PyTuple_New(3);
+    entry = PyTuple_New(2);
     if (entry == NULL) return -1;
 
     PyTuple_SET_ITEM(entry, 0, pyclass);
-    PyTuple_SET_ITEM(entry, 1, PyBytes_InternFromString((char*)selname));
-    PyTuple_SET_ITEM(entry, 2, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
+    PyTuple_SET_ITEM(entry, 1, PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup));
 
-    if (PyErr_Occurred()) {
+    if (PyTuple_GET_ITEM(entry, 1) == NULL) {
         Py_DECREF(entry);
         return -1;
     }
 
-    if (PyList_Append(special_registry, entry) < 0) {
+    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
+    if (lst == NULL) {
+        lst = PyList_New(0);
+        if (PyDict_SetItemString(special_registry, sel_getName(sel), lst) == -1) {
+            Py_DECREF(lst);
+            Py_DECREF(entry);
+            return -1;
+        }
+    } else {
+        Py_INCREF(lst);
+    }
+
+    if (PyList_Append(lst, entry) < 0) {
+        Py_DECREF(lst);
         Py_DECREF(entry);
         return -1;
     }
+    Py_DECREF(lst);
+    Py_DECREF(entry);
 
     PyObjC_MappingCount += 1;
 
     return 0;
 }
+
+
 
 int PyObjC_RegisterSignatureMapping(
     char* signature,
@@ -190,66 +215,71 @@ search_special(Class class, SEL sel)
 {
     PyObject* result = NULL;
     PyObject* special_class = NULL;
-    Py_ssize_t special_len;
+    PyObject* search_class = NULL;
+    PyObject* lst;
     Py_ssize_t i;
 
     if (special_registry == NULL) goto error;
+    if (!class) goto error;
 
-    if (class) {
-        special_class = PyObjCClass_New(class);
-        if (special_class == NULL) goto error;
+    search_class = PyObjCClass_New(class);
+    if (search_class == NULL) goto error;
 
+    lst = PyDict_GetItemString(special_registry, sel_getName(sel));
+    if (lst == NULL) {
+        goto error;
     }
 
-    special_len = PyList_Size(special_registry);
+    Py_INCREF(lst);
 
-    for (i = 0; i < special_len; i++) {
-        PyObject* entry = PyList_GetItem(special_registry, i);
+    /*
+     * Look for the most specific match:
+     * - class in the list item is either the class we're looking
+     *   for, or the "closest" superclass. The list item class
+     *   can be 'None', which is less specific than any other class.
+     * - later items in the list with the same list item class
+     *   are preferred over earlier items (those are metadata that
+     *   was added later).
+     */
+    for (i = 0; i < PyList_GET_SIZE(lst); i++) {
+        PyObject* entry   = PyList_GET_ITEM(lst, i);
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
-        PyObject* pysel = PyTuple_GET_ITEM(entry, 1);
 
-        if (pyclass == NULL || pysel == NULL) continue;
+        if (pyclass == NULL) continue;
+        if (pyclass != Py_None && !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
+            continue;
+        }
 
-        if (
-            (PyUnicode_Check(pysel) && PyObjC_is_ascii_string(pysel, sel_getName(sel)))
-#if PY_MAJOR_VERSION == 2
-             || (PyString_Check(pysel) && strcmp(PyString_AsString(pysel), sel_getName(sel)) == 0)
-#else
-             || (PyBytes_Check(pysel) && strcmp(PyBytes_AsString(pysel), sel_getName(sel)) == 0)
-#endif
-             ) {
+        if (!special_class) {
+            /* No match yet, use */
+            special_class = pyclass;
+            result = PyTuple_GET_ITEM(entry, 1);
 
-            if (!special_class) {
-                special_class = pyclass;
-                Py_INCREF(special_class);
-                result = PyTuple_GET_ITEM(entry, 2);
+        } else if (pyclass == Py_None) {
+            /* Already have a match, Py_None is less specific */
+            continue;
 
-            } else if (pyclass == Py_None) {
-                Py_DECREF(special_class);
-                special_class = pyclass;
-                Py_INCREF(special_class);
-                result = PyTuple_GET_ITEM(entry, 2);
-
-            } else if (PyType_IsSubtype(
+        } else if (PyType_IsSubtype(
                     (PyTypeObject*)special_class,
                     (PyTypeObject*)pyclass
-                    )) {
-                Py_DECREF(special_class);
-                special_class = pyclass;
-                Py_INCREF(special_class);
-                result = PyTuple_GET_ITEM(entry, 2);
+                )) {
+            /* special_type is a superclass of search_class,
+             * but a subclass of the current match, hence it is
+             * a more specific match or a simular match later in the
+             * list.
+             */
+            special_class = pyclass;
+            result = PyTuple_GET_ITEM(entry, 1);
             }
-        }
     }
-    Py_XDECREF(special_class);
+    Py_XDECREF(search_class);
     if (!result) goto error;
 
     return PyCapsule_GetPointer(result, "objc.__memblock__");
 
 error:
     PyErr_Format(PyObjCExc_Error,
-        "PyObjC: don't know how to call method '%s'",
-            sel_getName(sel));
+        "PyObjC: don't know how to call method '%s'", sel_getName(sel));
     return NULL;
 }
 
@@ -257,11 +287,6 @@ error:
 PyObjC_CallFunc
 PyObjC_FindCallFunc(Class class, SEL sel)
 {
-/*
- * TODO: Should add special case code for NSUndoManager: If this
- * is a selector that is forwarded to the 'target' we should get
- * the caller for the target instead of for this object!
- */
     struct registry* special;
 
     if (special_registry == NULL) return PyObjCFFI_Caller;
@@ -416,12 +441,14 @@ PyObjCUnsupportedMethod_Caller(
         PyString_AS_STRING(repr));
     Py_DECREF(repr);
     return NULL;
+
 #else
     PyErr_Format(PyExc_TypeError,
         "Cannot call '%s' on '%R' from Python",
         sel_getName(PyObjCSelector_GetSelector(meth)),
         self);
     return NULL;
+
 #endif
 
 }

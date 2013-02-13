@@ -158,3 +158,11 @@ Medium term
 * getattro for NSDecimal values seems dodgy
 
 * Remove use of 'volatile'
+
+* special_registry in supercall should be a dictionary
+  (selector -> list of structs)
+
+* Add testsuite for "difficult" calls through NSUndoManager (but first check docs
+  and test in objc, calling methods with arbitrary pointer arguments likely
+  won't work with NSUndoManager anyway)
+
