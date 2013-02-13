@@ -211,10 +211,6 @@ extern PyTypeObject PyObjCMethodAccessor_Type;
 char* PyObjC_SELToPythonName(SEL, char*, size_t);
 
 
-/* toll-free-bridging.m */
-id PyObjC_CFTypeToID(PyObject* argument);
-PyObject* PyObjC_IDToCFType(id argument);
-
 /* opaque-pointer.m */
 PyObject* PyObjCCreateOpaquePointerType(const char* name,
         const char* typestr, const char* docstr);

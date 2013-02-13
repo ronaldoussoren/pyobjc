@@ -187,10 +187,6 @@ PyObject* PyObjC_CopyFunc = NULL;
             r = -1;
         }
 
-    } else if ((rval = PyObjC_CFTypeToID(argument))) {
-        // unwrapped cf
-        r = 0;
-
     } else {
         PyObjC_DURING
             rval = [OC_PythonObject

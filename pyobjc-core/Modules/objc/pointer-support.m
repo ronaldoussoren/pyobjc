@@ -322,55 +322,10 @@ FILE_Convert(PyObject* obj, void* pObj)
 
 #endif
 
-/*
- * Generic CF type support
- */
-static PyObject*
-CF_to_py(void* cfValue)
-{
-    return PyObjC_IDToCFType((id)cfValue);
-}
-
-static int
-py_to_CF(PyObject* obj, void* output)
-{
-    id tmp = PyObjC_CFTypeToID(obj);
-    if (tmp == NULL && PyErr_Occurred()) {
-        return -1;
-    }
-    *(void**)output = tmp;
-    return 0;
-}
-
-int PyObjCPointerWrapper_RegisterCF(const char *signature) {
-    return PyObjCPointerWrapper_Register(signature,
-        (PyObjCPointerWrapper_ToPythonFunc)&CF_to_py,
-        (PyObjCPointerWrapper_FromPythonFunc)&py_to_CF);
-}
-
-
 int
 PyObjCPointerWrapper_Init(void)
 {
     int r = 0;
-
-    /* XXX: why register these explictly, will be done by framework wrappers??? */
-    r = PyObjCPointerWrapper_RegisterCF(@encode(CFURLRef));
-    if (r == -1) return -1;
-
-    r = PyObjCPointerWrapper_RegisterCF(@encode(CFSetRef));
-    if (r == -1) return -1;
-
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_2
-    r = PyObjCPointerWrapper_RegisterCF(@encode(CFNetServiceRef));
-    if (r == -1) return -1;
-#endif
-
-    r = PyObjCPointerWrapper_RegisterCF(@encode(CFReadStreamRef));
-    if (r == -1) return -1;
-
-    r = PyObjCPointerWrapper_RegisterCF(@encode(CFRunLoopRef));
-    if (r == -1) return -1;
 
     r = PyObjCPointerWrapper_Register(@encode(PyObject*),
         PyObjectPtr_New, PyObjectPtr_Convert);

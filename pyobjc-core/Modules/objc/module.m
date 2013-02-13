@@ -939,73 +939,7 @@ PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
 
 
 
-#if PY_MAJOR_VERSION == 2
-PyDoc_STRVAR(objc_CFToObject_doc,
-    "CFToObject(cfObject) -> objCObject\n"
-    "\n"
-    "Convert a CoreFoundation object to an Objective-C object. \n"
-    "Raises an exception if the conversion fails"
-);
-static PyObject*
-objc_CFToObject(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static  char* keywords[] = { "value", 0 };
-    PyObject* argument;
-    id      res;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-            "O:CFToObject", keywords,
-            &argument)) {
-        return NULL;
-    }
-
-    if (PyErr_WarnEx(PyExc_DeprecationWarning,
-        "MacPython CF support is no longer supported and will be removed in PyObjC 3.0", 0) < 0) {
-        return NULL;
-    }
-
-
-    res = PyObjC_CFTypeToID(argument);
-    if (res == 0) {
-        PyErr_SetString(PyExc_TypeError, "not a CoreFoundation object");
-        return NULL;
-    }
-
-    return pythonify_c_value(@encode(id), &res);
-}
-
-PyDoc_STRVAR(objc_ObjectToCF_doc,
-    "ObjectToCF(objCObject) -> cfObject\n"
-    "\n"
-    "Convert an Objective-C object to a CoreFoundation object. \n"
-    "Raises an exception if the conversion fails"
-);
-static PyObject*
-objc_ObjectToCF(PyObject* self __attribute__((__unused__)),
-    PyObject* args, PyObject* kwds)
-{
-static char* keywords[] = { "value", 0 };
-    PyObject* argument;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-            "O:ObjectToCF", keywords,
-            &argument)) {
-        return NULL;
-    }
-
-    if (PyErr_WarnEx(PyExc_DeprecationWarning,
-        "MacPython CF support is no longer supported and will be removed in PyObjC 3.0", 0) < 0) {
-        return NULL;
-    }
-
-    if (!PyObjCObject_Check(argument)) {
-        PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
-        return NULL;
-    }
-
-    return PyObjC_IDToCFType(PyObjCObject_GetObject(argument));
-}
-#endif /* PY_MAJOR_VERSION == 2 */
 
 
 PyDoc_STRVAR(protocolsForProcess_doc,
@@ -2056,10 +1990,6 @@ static PyMethodDef mod_methods[] = {
     { "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
     { "_protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
     { "registerCFSignature", (PyCFunction)registerCFSignature, METH_VARARGS|METH_KEYWORDS, registerCFSignature_doc },
-#if PY_MAJOR_VERSION == 2
-    { "CFToObject", (PyCFunction)objc_CFToObject, METH_VARARGS|METH_KEYWORDS, objc_CFToObject_doc },
-    { "ObjectToCF", (PyCFunction)objc_ObjectToCF, METH_VARARGS|METH_KEYWORDS, objc_ObjectToCF_doc },
-#endif
     { "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,
         METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
     { "loadSpecialVar", (PyCFunction)PyObjC_loadSpecialVar,
