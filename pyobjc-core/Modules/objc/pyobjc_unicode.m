@@ -229,6 +229,10 @@ PyObjCUnicode_New(NSString* value)
     PyObjC_ENDHANDLER
 
     result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+    result->weakrefs = NULL;
+    result->py_nsstr = NULL;
+    result->nsstr = nil;
+
     ascii = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
 
@@ -405,8 +409,6 @@ PyObjCUnicode_New(NSString* value)
 #endif
 
     /* Finally store PyUnicode specific data */
-    result->weakrefs = NULL;
-    result->py_nsstr = NULL;
     result->nsstr = [value retain];
 
     return (PyObject*)result;
@@ -454,8 +456,10 @@ PyObjCUnicode_New(NSString* value)
     result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
     tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
     result->base.str = tptr;
+    result->nsstr = nil;
+    result->weakrefs = NULL;
+    result->py_nsstr = NULL;
     tptr[0] = tptr[length] = 0;
-    tptr = NULL;
 
     if (tptr == NULL) {
         Py_DECREF((PyObject*)result);
@@ -500,13 +504,17 @@ PyObjCUnicode_New(NSString* value)
 
     result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
     tptr = PyObject_MALLOC(sizeof(Py_UNICODE) * (length+1));
-    tptr[0] = tptr[length] = 0;
+    result->nsstr = nil;
+    result->py_nsstr = NULL;
+    result->weakrefs = NULL;
     result->base.str = tptr;
-    if (PyUnicode_AS_UNICODE(result) == NULL) {
+    if (tptr == NULL) {
         Py_DECREF((PyObject*)result);
         PyMem_Free(characters); characters = NULL;
         PyErr_NoMemory();
         return NULL;
+    } else {
+        tptr[0] = tptr[length] = 0;
     }
 
     result->base.length = length;
@@ -526,8 +534,6 @@ PyObjCUnicode_New(NSString* value)
         result->base.hash = 0;
     }
 
-    result->weakrefs = NULL;
-    result->py_nsstr = NULL;
     result->nsstr = [value retain];
 
     return (PyObject*)result;
