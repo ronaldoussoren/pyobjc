@@ -21,7 +21,8 @@ typedef struct s { int i; char b; } struct_s;
 
 #if (PyObjC_BUILD_RELEASE >= 1005)
 
-#pragma message "Ignore warnings about properties in this file."
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-property-no-attribute"
 @property int prop1;
 @property float prop2;
 @property struct_s prop3;
@@ -36,6 +37,7 @@ typedef struct s { int i; char b; } struct_s;
 @property(nonatomic,readwrite,retain) id prop12;
 @property(readwrite,copy) id prop13;
 
+#pragma clang diagnostic pop
 #endif
 
 @end
