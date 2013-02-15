@@ -14,13 +14,13 @@ PyObjC_NewRegistry(void)
     return PyDict_New();
 }
 
-
 int
 PyObjC_AddToRegistry(
         PyObject* registry,
         PyObject* class_name, PyObject* selector,
         PyObject* value)
 {
+    int result;
     PyObject* sublist;
     PyObject* item = Py_BuildValue("(OO)", class_name, value);
     if (item == NULL) {
@@ -37,7 +37,7 @@ PyObjC_AddToRegistry(
     if (!PyObjC_UpdatingMetaData) {
         PyObjC_MappingCount += 1;
     }
-    int result = PyList_Append(sublist, item);
+    result = PyList_Append(sublist, item);
     Py_DECREF(item);
     return result;
 }

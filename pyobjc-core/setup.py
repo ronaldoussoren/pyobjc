@@ -466,7 +466,7 @@ if 0:
     # 1) Testsuite crashes with an incomplete testcase (python2.7, OSX 10.8)
     # 2) There should be a build-time check to see if these options are supported
 
-    # Enable more optimization. 
+    # Enable more optimization.
     vars = get_config_vars()
     for k in vars: # XXX
         if isinstance(vars[k], str) and '-O2' in vars[k]:

@@ -24,7 +24,7 @@ mod_CFNumberGetValue(
 		CFIndex indexv;
 	} buf;
 
-	if (!PyArg_ParseTuple(args, "O"Py_ARG_SIZE_T"O", &py_number, &type, &py_buf)) {
+	if (!PyArg_ParseTuple(args, "OnO", &py_number, &type, &py_buf)) {
 		return NULL;
 	}
 	if (py_buf != Py_None) {
@@ -146,7 +146,7 @@ mod_CFNumberCreate(
 		CFIndex indexv;
 	} buf;
 
-	if (!PyArg_ParseTuple(args, "O"Py_ARG_SIZE_T"O", &py_allocator, &type, &py_value)) {
+	if (!PyArg_ParseTuple(args, "OnO", &py_allocator, &type, &py_value)) {
 		return NULL;
 	}
 	if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {

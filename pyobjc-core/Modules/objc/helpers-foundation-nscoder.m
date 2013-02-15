@@ -569,7 +569,7 @@ call_NSCoder_encodeBytes_length_(
 
     struct objc_super super;
 
-    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#"Py_ARG_SIZE_T, &bytes, &size, &length)) {
+    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES"#n", &bytes, &size, &length)) {
         return NULL;
     }
 

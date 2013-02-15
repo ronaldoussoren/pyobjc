@@ -245,7 +245,15 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         addr->sun_family = AF_INET;
 
         if (PyUnicode_Check(value)) {
+#if Py_MAJOR_VERSION == 3 && PY_MINOR_VERSION >= 2
             value = PyUnicode_EncodeFSDefault(value);
+#else
+            /* The filesystem encoding on OSX is UTF-8,
+             * use that instead of trying to fetch the
+             * filesystem encoding from the sys module.
+             */
+            value = PyUnicode_AsUTF8String(value);
+#endif
             if (value == NULL) {
                 return -1;
             }

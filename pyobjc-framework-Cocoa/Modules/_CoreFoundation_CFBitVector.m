@@ -1,7 +1,7 @@
 /*
  * Manual wrappers for CFBitVector
  */
-static PyObject* 
+static PyObject*
 mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)),
 	PyObject* args)
 {
@@ -12,7 +12,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)),
 	CFBitVectorRef vector;
 
 
-	if (!PyArg_ParseTuple(args, "OO" Py_ARG_SIZE_T, &py_allocator, &py_bytes, &count)) {
+	if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_bytes, &count)) {
 		return NULL;
 	}
 
@@ -24,7 +24,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)),
 	void* bytes;
 	int r;
 	Py_ssize_t byteCount;
-	
+
 	if (count == -1) {
 		byteCount = -1;
 	} else {

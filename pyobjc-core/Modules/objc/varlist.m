@@ -25,7 +25,7 @@ static char* keywords[] = { "count", NULL };
     Py_ssize_t i, length;
     PyObject*  result;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, Py_ARG_SIZE_T, keywords, &length)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
         return NULL;
     }
 

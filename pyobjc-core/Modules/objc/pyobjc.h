@@ -7,72 +7,22 @@
 
 #define OBJC_VERSION "3.0a1"
 
-/*
- * Loading Quartz results close to 5K classes
- * on OSX 10.8
- */
-#define PYOBJC_EXPECTED_CLASS_COUNT 10000
-#define PY_SSIZE_T_CLEAN
 
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 #include "structmember.h"
-#include "pyobjc-compat.h"
 
 #import <Foundation/Foundation.h>
+#include <AvailabilityMacros.h>
+#include <objc/objc-runtime.h>
+#include <objc/objc.h>
+
+
+#include "pyobjc-compat.h"
 
 /*
- * SET_FIELD(op, value):
- *    macro for updating the value of 'op' to 'value',
- *    steals a reference to 'value'.
- *
- *    use this instead of 'Py_XDECREF(op); op = value'
+ * Configuration block
  */
-#define SET_FIELD(op, value)                    \
-    do {                                        \
-        PyObject* _py_tmp = (PyObject*)(op);    \
-        (op) = value;                           \
-        Py_XDECREF(_py_tmp);                    \
-    } while(0)
-
-/*
- * SET_FIELD_INCREF(op, value):
- *    macro for updating the value of 'op' to 'value'.
- *
- *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
- */
-#define SET_FIELD_INCREF(op, value)             \
-    do {                                        \
-        PyObject* _py_tmp = (PyObject*)(op);    \
-        Py_XINCREF(value);                       \
-        (op) = value;                           \
-        Py_XDECREF(_py_tmp);                    \
-    } while(0)
-
-#ifdef __clang__
-
-/* This is a crude hack to disable a otherwise useful warning in the context of
- * PyTuple_SET_ITEM, without disabling it everywhere
- */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warray-bounds"
-static inline void _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
-{
-    PyTuple_SET_ITEM(tuple, idx, value);
-}
-#undef PyTuple_SET_ITEM
-#define PyTuple_SET_ITEM(a, b, c) _PyObjCTuple_SetItem(a, b, c)
-
-static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
-{
-    return PyTuple_GET_ITEM(tuple, idx);
-}
-#undef PyTuple_GET_ITEM
-#define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
-
-#pragma clang diagnostic pop
-
-#endif /* __clang__ */
-
 
 /* PyObjC_DEBUG: If defined the bridge will perform more internal checks */
 #ifdef Py_DEBUG
@@ -96,32 +46,11 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 /*#define PyObjC_FAST_BUT_INEXACT 1*/
 
 
-#include <objc/objc-runtime.h>
-#include <objc/objc.h>
-
-/* Define PyObjC_UNICODE_FAST_PATH when
- * 1) We're before Python 3.3, and
- * 2) Py_UNICODE has the same size as unichar
- *
- * Python 3.3 has an optimized representation that
- * makes it impossible to use the "fast path"
- */
-#if PY_VERSION_HEX >= 0x03030000
-#undef PyObjC_UNICODE_FAST_PATH
-#elif Py_UNICODE_SIZE == 2
-#define PyObjC_UNICODE_FAST_PATH
-#endif
-
 /*
- * XXX: disable the fast path for
- * unicode strings due to unexplained
- * test failures.
+ * End of configuration block
  */
-#if 0
-#ifdef PyObjC_UNICODE_FAST_PATH
-#undef PyObjC_UNICODE_FAST_PATH
-#endif
-#endif
+
+
 
 #include "arc-runtime.h"
 #include "objc-runtime-compat.h"
@@ -167,23 +96,20 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include "objc_super.h"
 #include "fsref.h"
 #include "fsspec.h"
+#include "registry.h"
+#include "corefoundation.h"
+#include "closure_pool.h"
+#include "block_support.h"
+#include "helpers.h"
 
+#define PYOBJC_BUILD
+#include "pyobjc-api.h"
+#undef PyObjC_BUILD
 
 /*
  * XXX: All definitions below here should be moved to different/new
  * headers
  */
-
-/* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,
- * but that method is not present in the header files. We add the definition
- * here to avoid warnings.
- *
- * XXX: We use an undocumented API, but we also don't have much choice: we
- * must create the things and this is the only way to do it...
- */
-@interface NSMethodSignature (WarningKiller)
-    +(instancetype)signatureWithObjCTypes:(const char*)types;
-@end /* interface NSMethodSignature */
 
 
 extern BOOL PyObjC_useKVO;
@@ -197,13 +123,7 @@ extern PyObject *PyObjC_NSNumberWrapper;
 
 
 int PyObjCAPI_Register(PyObject* module);
-#define PYOBJC_BUILD
-#include "pyobjc-api.h"
-#include "registry.h"
-#include "corefoundation.h"
-#include "closure_pool.h"
-#include "block_support.h"
-#include "helpers.h"
+
 
 extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
 
@@ -229,7 +149,59 @@ extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure
 #endif
 
 
+/*!
+ * PYOBJC_EXPECTED_CLASS_COUNT: Hint about the number of classes to expect
+ *
+ * Loading Quartz results close to 5K classes on OSX 10.8
+ */
+#define PYOBJC_EXPECTED_CLASS_COUNT 10000
 
+/*
+ * SET_FIELD(op, value):
+ *    macro for updating the value of 'op' to 'value',
+ *    steals a reference to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); op = value'
+ */
+#define SET_FIELD(op, value)                    \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
+
+/*
+ * SET_FIELD_INCREF(op, value):
+ *    macro for updating the value of 'op' to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
+ */
+#define SET_FIELD_INCREF(op, value)             \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        Py_XINCREF(value);                       \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
+
+
+/* Define PyObjC_UNICODE_FAST_PATH when
+ * 1) We're before Python 3.3, and
+ * 2) Py_UNICODE has the same size as unichar
+ *
+ * Python 3.3 has an optimized representation that
+ * makes it impossible (and unnecessary) to use the
+ * "fast path"
+ */
+#if PY_VERSION_HEX >= 0x03030000
+
+#undef PyObjC_UNICODE_FAST_PATH
+
+#elif Py_UNICODE_SIZE == 2
+
+#define PyObjC_UNICODE_FAST_PATH
+
+#endif
 
 #ifdef PyObjC_DEBUG
 

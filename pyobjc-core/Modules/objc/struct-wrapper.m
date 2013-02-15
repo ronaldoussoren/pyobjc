@@ -1412,7 +1412,7 @@ PyObjC_RegisterStructType(
         /* Store custom struct packing as an attribute of the type
          * object, to be able to  fetch it when depythonifying the object.
          */
-        v = Py_BuildValue(Py_ARG_SIZE_T, pack);
+        v = Py_BuildValue("n", pack);
         if (v == NULL) {
             Py_DECREF(structType);
             return NULL;

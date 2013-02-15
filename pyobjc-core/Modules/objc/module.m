@@ -526,7 +526,7 @@ allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
     static    char* keywords[] = { "length", 0 };
     Py_ssize_t length;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, Py_ARG_SIZE_T,
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "n",
                 keywords, &length)) {
         return NULL;
     }
@@ -1108,7 +1108,7 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", "pack", NULL
     Py_ssize_t pack = -1;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "s"Py_ARG_BYTES"O|z" Py_ARG_SIZE_T ,
+                "s"Py_ARG_BYTES"O|zn",
                 keywords,
                 &name, &typestr, &pyfieldnames, &docstr, &pack)) {
         return NULL;
@@ -1393,7 +1393,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
     Py_ssize_t i;
 
     argIndex=-1;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|" Py_ARG_SIZE_T ,
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO|n",
         keywords, &callable, &closureFor, &argIndex)) {
         return NULL;
     }
@@ -1631,15 +1631,6 @@ typestr2typestr(PyObject* args)
     return result;
 }
 
-
-
-static PyObject*
-_clear_intern(PyObject* self __attribute__((__unused__)))
-{
-    PyObjC_ClearIntern();
-    Py_INCREF(Py_None);
-    return Py_None;
-}
 
 
 #if    PyObjC_BUILD_RELEASE >= 1006
@@ -1994,8 +1985,6 @@ static PyMethodDef mod_methods[] = {
 
     { "_typestr2typestr", (PyCFunction)typestr2typestr,
         METH_O, "private function" },
-
-    { "_clear_intern", (PyCFunction)_clear_intern, METH_NOARGS,  NULL },
 
 #if    PyObjC_BUILD_RELEASE >= 1006
 

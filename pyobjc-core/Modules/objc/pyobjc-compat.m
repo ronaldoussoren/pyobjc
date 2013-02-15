@@ -11,11 +11,10 @@ PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l)
     if (result == NULL) {
         return NULL;
     }
+
     PyString_InternInPlace(&result);
     return result;
 }
-
-
 
 #ifndef PY_FORMAT_LONG_LONG
 #define   PY_FORMAT_LONG_LONG "ll"
@@ -33,9 +32,9 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
     const char* f;
     char *s;
     PyObject* string;
-        Py_ssize_t callcount = 0;
+    Py_ssize_t callcount = 0;
     PyObject **callresults = NULL;
-        PyObject **callresult = NULL;
+    PyObject **callresult = NULL;
 
 #ifdef VA_LIST_IS_ARRAY
     Py_MEMCPY(count, vargs, sizeof(va_list));
@@ -54,10 +53,12 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
         if (*f == '%') {
             if (*(f+1)=='%')
                 continue;
+
             if (*(f+1)=='S' || *(f+1)=='R')
                 ++callcount;
          }
     }
+
     if (callcount) {
         callresults = PyObject_Malloc(sizeof(PyObject *)*callcount);
         if (!callresults) {
@@ -92,6 +93,7 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
                 }
 #endif
             }
+
             else if (*f == 'z' && (f[1] == 'd' || f[1] == 'u')) {
                 ++f;
             }
@@ -478,47 +480,6 @@ PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     }
 }
 
-
-#endif /* Py3K */
-
-/*
- * Helper function for making sure that we don't store duplicate data
- * for the metadata bridges.
- *
- * Interface: call on value, don't update value afterwards. Steals
- * reference to argument and returns a new reference.
- */
-static    PyObject* intern_mapping = NULL;
-
-void      PyObjC_ClearIntern(void)
-{
-    Py_CLEAR(intern_mapping);
-}
-
-PyObject* PyObjC_InternValue(PyObject* orig)
-{
-    return orig;
-}
-
-PyObject* PyObjC_IntFromString(char* v, char**pend, int base)
-{
-    PyObject* r = PyInt_FromString(v, pend, base);
-    if (r == NULL) {
-        return NULL;
-    }
-    return PyObjC_InternValue(r);
-}
-
-
-PyObject* PyObjC_IntFromLong(long v)
-{
-    PyObject* r = PyInt_FromLong(v);
-    if (r == NULL) {
-        return NULL;
-    }
-    return PyObjC_InternValue(r);
-}
-
 #ifdef PyObjC_FAST_UNICODE_ASCII
 
 const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
@@ -535,3 +496,5 @@ const char* PyObjC_Unicode_Fast_Bytes(PyObject* object)
 }
 
 #endif /* PyObjC_FAST_UNICODE_ASCII */
+
+#endif /* Py3K */

@@ -749,7 +749,7 @@ static char* keywords[] = { "digits", NULL };
     Py_ssize_t digits = 0;
     NSDecimal  result;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|" Py_ARG_SIZE_T, keywords, &digits)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|n", keywords, &digits)) {
         return NULL;
     }
 

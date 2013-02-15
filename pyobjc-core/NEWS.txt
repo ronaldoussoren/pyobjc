@@ -146,6 +146,8 @@ Version 3.0
   to use type encodings as used in :c:func:`Py_BuildValue` and AFAIK were never
   used in real code.
 
+* Py_ARG_SIZE_T is no longer defined by "pyobjc-api.h"
+
 
 Version 2.6
 -----------
