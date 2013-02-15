@@ -1,5 +1,5 @@
 =======================
-Coding style for PyObjC 
+Coding style for PyObjC
 =======================
 
 Introduction
@@ -17,12 +17,12 @@ Python code
 The coding style for core Python is used (see :pep:`8`).  For consistency with
 Cocoa we use mixed-case identifiers (like ``lookUpClass``).
 
-PyObjC extensions to Apple frameworks should be clearly marked as such, 
+PyObjC extensions to Apple frameworks should be clearly marked as such,
 preferably by prefixing names with ``PyObjC`` or ``pyobjc``.  This should make
 it clear to users where they should look for documentation of an item: The
 Apple documentation or ours.
 
-The ``setup.py`` for a framework wrapper should defer most work to 
+The ``setup.py`` for a framework wrapper should defer most work to
 ``pyobjc_setup.py``, like so:
 
 .. code-block:: python
@@ -40,16 +40,16 @@ The ``setup.py`` for a framework wrapper should defer most work to
       ],
    )
 
-The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but 
+The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but
 dynamicly fetch that at build time.
 
 C code
 ------
 
-The coding style for core Python is used (see :pep:`7`).  We use ``PyObjC`` 
+The coding style for core Python is used (see :pep:`7`).  We use ``PyObjC``
 instead of ``Py`` as the prefix for globally visible symbols.
 
-.. note:: 
+.. note::
 
    Currently identation is done using tabs instead of spaces, I'm slowly migrating
    code to use spaces for indentation.
@@ -68,6 +68,9 @@ should include ``"pyobjc-api.h"`` and should not use other headers files from
   current value causes a callback that accesses the same field before it is set
   to NULL.
 
+* Use C99 style struct initialization (at least for larger structs). This
+  makes the code easier to read, and the compiler will warn when you use
+  the wrong field names.
 
 Documentation
 -------------
@@ -88,7 +91,7 @@ differently.
 
 To format the DocStrings to be ReST compatible, make the following
 changes/additions to the source.  These examples were taken from source found
-in the DocUtils source tree. 
+in the DocUtils source tree.
 
 (1) Add appropriate ReST style fields to the top of the document as comments::
 
@@ -100,11 +103,11 @@ in the DocUtils source tree.
     the text contained in the docstrings::
 
         __docformat__ = 'reStructuredText'
-    
+
 (3) Format all other DocStrings as one normally would in Python.   Use ReST
     style markup where appropriate.   For example, bulleted lists and
     sections might commonly appear in the module or class docstrings.   The
     docstrings for individual methods may use example blocks, hyperlinks, or
     any other ReST markup.
-        
+
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html

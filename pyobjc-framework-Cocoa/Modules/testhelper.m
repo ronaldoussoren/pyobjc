@@ -62,12 +62,12 @@
 	keys[3] = [[NSObject alloc] init];
 
 	if (i == 0) {
-		return [cls 
-				dictionaryWithObjects:objects 
+		return [cls
+				dictionaryWithObjects:objects
 				forKeys:keys count:4];
 	} else {
-		return [[cls alloc] 
-				initWithObjects:objects 
+		return [[cls alloc]
+				initWithObjects:objects
 				forKeys:keys count:4];
 	}
 }
@@ -87,7 +87,7 @@
 	theCopy = [source copy];
 	[pool release];
 	pool = nil;
-	
+
 	return theCopy;
 }
 
@@ -285,9 +285,9 @@ inittesthelper(void)
 	if (PyObjC_ImportAPI(m) == -1) INITERROR();
 
 	PyModule_AddObject(m, "PyObjC_TestClass3",
-		PyObjCClass_New([PyObjC_TestClass3 class]));
+		PyObjC_IdToPython([PyObjC_TestClass3 class]));
 	PyModule_AddObject(m, "PyObjC_TestClass4",
-		PyObjCClass_New([PyObjC_TestClass4 class]));
+		PyObjC_IdToPython([PyObjC_TestClass4 class]));
 
 	INITDONE();
 }

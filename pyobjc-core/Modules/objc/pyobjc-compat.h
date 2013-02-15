@@ -96,6 +96,85 @@ typedef unsigned int NSUInteger;
 #endif /* PyObjC_BUILD_RELEASE <= 1005 */
 
 /*
+ * Explicit support for weak-linking functions
+ *
+ * For some reason implicit weak-linking using '#pragma weak' and
+ * '__attribute__((__weak__))' doesn't work (at least of some functions)
+ * when building on 10.8 and deploying to * 10.5)
+ *
+ * The code below introduces infrastructure that makes it fairly
+ * painless to do weak-linking anyway.
+ *
+ * Usage for function CFArrayCreate:
+ * * Use 'WEAK_LINKED_NAME(CFArrayCreate)' at the start of a wrapper module
+ * * Use 'USE(CFArrayCreate)' to actually call the function, don't use the
+ *   actual function.
+ * * Use 'CHECK_WEAK_LINK(module, CFArrayCreate)' in the module init function,
+ *   this will remove "CFArrayCreate" from the module dictionary when the function
+ *   cannot by found by dlsym.
+ * * All access to function should be done through weak-refs like this.
+ *
+ * NOTE: When the version that introduced the function is known, that version number
+ *       can be appended to the macros and the function will be hard-linked when
+ *       the minimal deployment target is high enough.
+ */
+#include <dlfcn.h>
+
+#define WEAK_LINKED_NAME(NAME)    static __typeof__(&NAME) ptr_ ## NAME;
+#define USE(NAME)        ptr_ ## NAME
+#define CHECK_WEAK_LINK(module, NAME) \
+    do {                                            \
+        void* dl = dlopen(NULL, RTLD_GLOBAL);                        \
+        ptr_ ## NAME = dlsym(dl, PyObjC_STR(NAME));                    \
+        dlclose(dl);                                    \
+        if (ptr_ ## NAME == NULL) {                            \
+            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {    \
+                PyObjC_INITERROR();                        \
+            }                                    \
+        }                                        \
+    } while(0)
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
+#define WEAK_LINKED_NAME_10_5(NAME)
+#define USE_10_5(NAME)                NAME
+#define CHECK_WEAK_LINK_10_5(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_5(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_5(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_5(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
+#define WEAK_LINKED_NAME_10_6(NAME)
+#define USE_10_6(NAME)                NAME
+#define CHECK_WEAK_LINK_10_6(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_6(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_6(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_6(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
+#define WEAK_LINKED_NAME_10_7(NAME)
+#define USE_10_7(NAME)                NAME
+#define CHECK_WEAK_LINK_10_7(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_7(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_7(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_7(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
+#define WEAK_LINKED_NAME_10_8(NAME)
+#define USE_10_8(NAME)                NAME
+#define CHECK_WEAK_LINK_10_8(module, NAME) do {} while(0)
+#else
+#define WEAK_LINKED_NAME_10_8(NAME)         WEAK_LINKED_NAME(NAME)
+#define USE_10_8(NAME)                USE(NAME)
+#define CHECK_WEAK_LINK_10_8(module, NAME) CHECK_WEAK_LINK(module, NAME)
+#endif
+
+/*
  *
  * End of Cocoa definitions
  *
@@ -157,6 +236,15 @@ typedef unsigned int NSUInteger;
  *
  */
 
+
+#define PyObjC__STR(x) #x
+#define PyObjC_STR(x) PyObjC__STR(x)
+
+
+
+
+
+
 #if PY_MAJOR_VERSION == 2
 
     typedef long Py_hash_t;
@@ -212,6 +300,17 @@ typedef unsigned int NSUInteger;
 
     extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
+#   define PyObjC_INITERROR() return
+#   define PyObjC_INITDONE() return
+
+#   define PyObjC_MODULE_INIT(name) \
+        void init##name(void); \
+        void __attribute__ ((__visibility__ ("default"))) init##name(void)
+
+#   define PyObjC_MODULE_CREATE(name) \
+        Py_InitModule4(PyObjC_STR(name), mod_methods, \
+            NULL, NULL, PYTHON_API_VERSION);
+
 
 # else /* Py_MAJOR_VERSION == 3 */
 
@@ -238,6 +337,28 @@ typedef unsigned int NSUInteger;
     extern int PyObject_Cmp(PyObject *o1, PyObject *o2, int *result);
     extern PyObject* PyBytes_InternFromString(const char* v);
     extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
+
+#   define PyObjC_INITERROR() return NULL
+#   define PyObjC_INITDONE() return m
+
+#   define PyObjC_MODULE_INIT(name) \
+        static struct PyModuleDef mod_module = { \
+            PyModuleDef_HEAD_INIT, \
+            PyObjC_STR(name), \
+            NULL, \
+            0, \
+            mod_methods, \
+            NULL, \
+            NULL, \
+            NULL, \
+            NULL \
+        }; \
+        \
+        PyObject* PyInit_##name(void); \
+        PyObject* __attribute__ ((__visibility__ ("default"))) PyInit_##name(void)
+
+#define PyObjC_MODULE_CREATE(name) \
+    PyModule_Create(&mod_module);
 
 #   if PY_MINOR_VERSION >= 3
 
@@ -287,6 +408,68 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #pragma clang diagnostic pop
 
 #endif /* __clang__ */
+
+
+/*
+ *
+ * Helper macros for Cocoa exceptions and the Python GIL
+ *
+ */
+
+#ifdef NO_OBJC2_RUNTIME
+
+#define PyObjC_DURING \
+        Py_BEGIN_ALLOW_THREADS \
+        NS_DURING
+
+#define PyObjC_HANDLER NS_HANDLER
+
+#define PyObjC_ENDHANDLER \
+        NS_ENDHANDLER \
+        Py_END_ALLOW_THREADS
+
+#else /* !NO_OBJC2_RUNTIME */
+
+#define    PyObjC_DURING \
+        Py_BEGIN_ALLOW_THREADS \
+        @try {
+
+#define PyObjC_HANDLER } @catch(volatile NSObject* _localException) { \
+        NSException* localException __attribute__((__unused__))= (NSException*)_localException;
+
+#define PyObjC_ENDHANDLER \
+        } \
+        Py_END_ALLOW_THREADS
+
+#endif /* !NO_OBJC2_RUNTIME */
+
+#define PyObjC_BEGIN_WITH_GIL \
+    { \
+        PyGILState_STATE _GILState; \
+        _GILState = PyGILState_Ensure();
+
+#define PyObjC_GIL_FORWARD_EXC() \
+        do { \
+            PyObjCErr_ToObjCWithGILState(&_GILState); \
+        } while (0)
+
+
+#define PyObjC_GIL_RETURN(val) \
+        do { \
+            PyGILState_Release(_GILState); \
+            return (val); \
+        } while (0)
+
+#define PyObjC_GIL_RETURNVOID \
+        do { \
+            PyGILState_Release(_GILState); \
+            return; \
+        } while (0)
+
+
+#define PyObjC_END_WITH_GIL \
+        PyGILState_Release(_GILState); \
+    }
 
 
 #endif /* PyObjC_COMPAT_H */

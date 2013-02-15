@@ -146,7 +146,61 @@ Version 3.0
   to use type encodings as used in :c:func:`Py_BuildValue` and AFAIK were never
   used in real code.
 
-* Py_ARG_SIZE_T is no longer defined by "pyobjc-api.h"
+* The header "pyobjc-api.h" has been cleaned up:
+
+  .. note::
+
+     "pyobjc-api.h" is used by extension modules in the PyObjC framework wrappers
+     but is not intended to be a public API. Please let me (Ronald) know if you
+     use this API, I'm trying to get the API as small as possible and that might
+     lead to its complete removal in a future version of PyObjC.
+
+  - Py_ARG_SIZE_T is no longer defined by pyobjc-api.h (use "n" instead)
+
+  - Removed the following functions from the API (PYOBJC_API_VERSION is now 20)
+    because they aren't used by PyObjC:
+
+    - PyObjC_PerformWeaklinking (and struct PyObjC_WeakLink)
+
+    - PyObjCRT_RemoveFieldNames
+
+    - PyObjC_is_ascii_string
+
+    - PyObjC_is_ascii_prefix
+
+    - PyObjCObject_Check
+
+    - PyObjCClass_Check
+
+    - PyObjCSelector_Check
+
+    - PyObjCObject_ClearObject
+
+    - PyObjCClass_New
+
+    - PyObjCErr_ToObjC
+
+    - PyObjC_RegisterSignatureMapping
+
+    - PyObjCRT_AlignOfType
+
+    - PyObjCRT_SELName
+
+    - PyObjCRT_SimplifySignature
+
+    - PyObjC_RegisterStructType
+
+    - PyObjCObject_IsUninitialized
+
+    - PyObjCObject_New
+
+    - PyObjCCreateOpaquePointerType
+
+    .. note::
+
+       There will be futher cleanup of this API before the 3.0 release.
+
+
 
 
 Version 2.6
