@@ -166,3 +166,5 @@ Medium term
   and test in objc, calling methods with arbitrary pointer arguments likely
   won't work with NSUndoManager anyway)
 
+* Is Selector_FindNative needed with the new lookup mechanism?
+  (also check explict class/instance method lookup mechanism)

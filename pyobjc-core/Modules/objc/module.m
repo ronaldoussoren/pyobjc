@@ -364,44 +364,6 @@ getClassList(PyObject* self __attribute__((__unused__)))
     return PyObjC_GetClassList();
 }
 
-PyDoc_STRVAR(set_signature_for_selector_doc,
-    "setSignatureForSelector(class_name, selector, signature) -> None\n"
-    "\n"
-    "Register a replacement signature for a specific selector. This \n"
-    "can be used to provide a more exact signature for a method.\n"
-    "\n"
-    "This function is deprecated, use the new metadata machinery.\n"
-    "");
-static PyObject*
-set_signature_for_selector(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { "class_name", "selector", "signature", NULL };
-    char* class_name;
-    char* selector;
-    char* signature;
-    SEL   sel;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sss:setSignatureForSelector",
-            keywords, &class_name, &selector, &signature)) {
-        return NULL;
-    }
-
-    if (PyErr_WarnEx(PyExc_DeprecationWarning,
-        "Use the new metadata machinery", 1) < 0) {
-
-        return NULL;
-    }
-
-    sel = sel_getUid(selector);
-
-    if (ObjC_SignatureForSelector(class_name, sel, signature) < 0) {
-        return NULL;
-    }
-
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
 PyDoc_STRVAR(setNSNumberWrapper_doc,
     "_setNSNumberWrapper(wrapper) -> None\n"
     "\n"
@@ -1968,7 +1930,6 @@ static PyMethodDef mod_methods[] = {
     { "currentBundle", (PyCFunction)currentBundle, METH_NOARGS, currentBundle_doc },
     { "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
     { "_setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
-    { "setSignatureForSelector", (PyCFunction)set_signature_for_selector, METH_VARARGS|METH_KEYWORDS, set_signature_for_selector_doc },
     { "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
     { "removeAutoreleasePool", (PyCFunction)remove_autorelease_pool, METH_VARARGS|METH_KEYWORDS, remove_autorelease_pool_doc },
     { "_setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },

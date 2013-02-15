@@ -159,6 +159,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #include "class-descriptor.h"
 #include "class-list.h"
 #include "struct-wrapper.h"
+#include "struct-sockaddr.h"
 #include "method-imp.h"
 #include "bundle-variables.h"
 #include "function.h"
@@ -218,10 +219,6 @@ PyObject* PyObjCCreateOpaquePointerType(const char* name,
 /* objc-NULL.m */
 extern PyObject* PyObjC_NULL;
 extern PyObject* PyObjCInitNULL(void);
-
-/* socketsupport.m */
-int PyObjC_SockAddrFromPython(PyObject*, void*);
-PyObject* PyObjC_SockAddrToPython(void*);
 
 /* module.m */
 extern PyObject* PyObjC_TypeStr2CFTypeID;

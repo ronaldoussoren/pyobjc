@@ -1,4 +1,3 @@
-
 #ifndef PyObjC_STRUCT_WRAPPER
 #define PyObjC_STRUCT_WRAPPER
 /*!
@@ -97,9 +96,37 @@ PyObject* PyObjC_RegisterStructType(
  */
 PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature, Py_ssize_t* pack);
 
+/*!
+ * @function PyObjC_RegisterStructAlias
+ * @param signature  An Objective-C signature for a struct type
+ * @param type       The type to use for wrapping this struct type,
+ *                   this should be a type created with PyObjC_MakeStructType
+ *                   for a struct with a compatible signature.
+ * @result -1 on error, 0 on success.
+ * @discussion
+ *
+ *     This function is used to ensure that there is only one
+ *     wrapper type for C structures that are the same except for
+ *     the struct tag and that are used for the same tasks.
+ *
+ *     An example of this are NSRect and CGRect (in 32-bit code
+ *     this are two seperate struct types, in 64-bit code NSRect
+ *     is already an alias for CGRect). By using this function PyObjC
+ *     ensures that NSRect is always an alias for CGRect in Python code.
+ */
 int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
 
+/*!
+ * @function PyObjC_FindRegisteredStruct
+ * @param signature   An Objective-C signature for a struct type
+ * @param len         Length of the sigature string
+ * @result A type registered with PyObjC_CreateRegisteredStruct or PyObjC_RegisterStructAlias,
+ *         or NULL when such a type cannot be found.
+ *
+ * @discussion
+ *     This function will not set an error when it cannot find
+ *     a wrapper for the specified Objective-C type.
+ */
 PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
-
 
 #endif /* PyObjC_STRUCT_MEMBER */

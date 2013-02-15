@@ -42,12 +42,6 @@ except AssertionError:
 
 NSArray = objc.lookUpClass('NSArray')
 
-# First make sure that the pass-by-reference methods have the correct signature
-setSignature = objc.setSignatureForSelector
-
-# FIXME
-import sys
-
 # Note: @encode(unsigned char*) gives the wrong result at least upto 9A337a,
 # hence the 'type=b' annotations in several lines
 for method, argmeta in [

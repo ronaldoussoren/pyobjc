@@ -136,6 +136,17 @@ Version 3.0
   in the standard library for Python 2.  The "Carbon.CF" module is not present
   in Python 3, and is unmaintained in Python 2.
 
+* The 'struct sockaddr' conversion code now understands the AF_UNIX address family.
+
+* The function "objc.setSignatureForSelector" has been removed (and was deprecated
+  in 2.3), use the metadata system instead."
+
+* The 'returnTypes' and 'argumentTypes' parameters for 'objc.selector' have
+  been removed (they were deprecated in version 2.5). These were an attempt
+  to use type encodings as used in :c:func:`Py_BuildValue` and AFAIK were never
+  used in real code.
+
+
 Version 2.6
 -----------
 

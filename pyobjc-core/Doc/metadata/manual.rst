@@ -24,17 +24,17 @@ Metadata dictionaries
 ---------------------
 
 One or the arguments for :func:`loadBundleFunctions`, :func:`loadFunctionList` and :func:`registerMetaDataForSelector`
-contains (or "is" for :func:`registerMetaDataForSelector`) a metadata dictionary containing information about function 
+contains (or "is" for :func:`registerMetaDataForSelector`) a metadata dictionary containing information about function
 and method interfaces that cannot be extract from a basic type signature for that function or method.
 
-Copies of these structures can be also retrieved at runtime using the *__metadata__()* method on both :class:`function` 
+Copies of these structures can be also retrieved at runtime using the *__metadata__()* method on both :class:`function`
 and :class:`selector` objects, which makes it possible to introspect the metadata information when needed.
 
 The metadata is a Python dictionary with a particular structure (all keys are optional):
 
 * *arguments*: A dictionary containing more information on arguments. The keys of this dictionary are integers
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is
-  visible in a prototype). The values are metadata dictionaries for the arguments and are decribed 
+  visible in a prototype). The values are metadata dictionaries for the arguments and are decribed
   :ref:`later on <manual-metadata-argument-metadata>`.
 
   In metadata that is returned the *__metadata__()* method of :class:`function` and :class:`selector` objects the
@@ -53,16 +53,16 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 
 * *c_array_delimited_by_null*: If present and the value is :data:`True`, and the function is a variadic function, the
   variable part of the function argument list is a list of values where the last item of the list is a null value. All elements
-  of the list are the same type, that of the last type that is present in the prototype. 
+  of the list are the same type, that of the last type that is present in the prototype.
 
   In python the function is called with the additional arguments after the fixed arguments (just like in C), but without
   a null value at the end of the argument array.
-  
+
   An example of such a function is `execlp(3) <http://www.manpages.info/macosx/execl.3.html>`_
 
-* *c_array_length_in_arg*: If present and the value is an integer, and the function is a variadic function, the 
+* *c_array_length_in_arg*: If present and the value is an integer, and the function is a variadic function, the
   variable part of the function argument list is a list of values and the value for this key indicates which function
-  argument contains the length of that list. All elements of the list are the same type, that of the last type that 
+  argument contains the length of that list. All elements of the list are the same type, that of the last type that
   is present in the prototype.
 
   In python the function is called with the additional arguments after the fixed arguments (just like in C).
@@ -70,7 +70,7 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 Keys not listed above will be ignored by the bridge.
 
 .. note::
-   
+
    The bridge currently does not copy the metadata when you register it with the functions listed above. Don't rely
    on that behavior, it might change in a future release and changes to metadata dictionaries may or may not affect
    bridge behavior (basicly depending on if the change occurs before or after the bridge first uses the metadata)
@@ -98,7 +98,7 @@ How the size of the C array is calculated depends on the *type* of the argument:
 
 * When the type is :c:type:`id` and the Objective-C instance responds to the "-count" selector the length
   of the C array is the result of calling that selector.
- 
+
 * In all other cases the length cannot be calculated and the bridge raises an exception.
 
   .. _manual-metadata-argument-metadata:
@@ -115,7 +115,7 @@ dictionary all keys are optional unless the description mentions otherwise.
 
   This key is always present in the metadata returned by the *__metadata__()* method.
 
-* *type_override*: A byte string with value :data:`_C_IN`, :data:`_C_OUT` or :data:`_C_INOUT` to indicate that the 
+* *type_override*: A byte string with value :data:`_C_IN`, :data:`_C_OUT` or :data:`_C_INOUT` to indicate that the
   argument is an input, output or input/output argument. Ignored unless the *type* is a pointer type that isn't a
   CoreFoundation instance.
 
@@ -127,35 +127,35 @@ dictionary all keys are optional unless the description mentions otherwise.
 * *printf_format*: If present and the value is :data:`True` the argument value is a printf(3) style format string for
   a variadic function or method. Ignored unless the function or method actually is variadic.
 
-* *sel_of_type*: A byte string that describes the expected selector prototype for arguments of the :data:`_C_SEL`. 
+* *sel_of_type*: A byte string that describes the expected selector prototype for arguments of the :data:`_C_SEL`.
 
   Used by the decorator :func:`selectorFor` to calculate the signature of the decorated method.
 
-* *already_retained*: Value :data:`True` indicates that the return value, or a pass-by-reference output parameter, is 
-  returned to the caller with an increased reference count. An Objective-C caller will have to call "-retain" on the value 
+* *already_retained*: Value :data:`True` indicates that the return value, or a pass-by-reference output parameter, is
+  returned to the caller with an increased reference count. An Objective-C caller will have to call "-retain" on the value
   when the value is no longer used.
 
   Used by the bridge to correctly maintain the Objective-C reference count. Python users do not have to maintain the
   reference count themselfes.
 
-* *already_cfretained*: Value :data:`True` indicates that the return value, or a pass-by-reference output parameter, is 
-  returned to the caller with an increased reference count. An Objective-C caller will have to call "CFRelease" on the value 
+* *already_cfretained*: Value :data:`True` indicates that the return value, or a pass-by-reference output parameter, is
+  returned to the caller with an increased reference count. An Objective-C caller will have to call "CFRelease" on the value
   when the value is no longer used.
 
   Used by the bridge to correctly maintain the Objective-C reference count. Python users do not have to maintain the
   reference count themselfes.
 
-  .. note:: 
+  .. note::
 
-     Use either *already_retained*, or *already_cfretained* but not both. 
+     Use either *already_retained*, or *already_cfretained* but not both.
 
      The two different keys are present to be able to support Objective-C Garbage Collection: in process with GC enabled
      the CoreFoundation and Cocoa retain count APIs behave differently. Because GC is on the way out and PyObjC doesn't
      properly support GC anyway it is better to use *already_retained* where approprate and not use *already_cfretained*.
 
 
-* *c_array_delimited_by_null*: When :data:`True`, and the argument or return value *type* is a pointer type, the value 
-  is a C array with a null value at the end. Python users do not have to supply the null value on calls, and the bridge 
+* *c_array_delimited_by_null*: When :data:`True`, and the argument or return value *type* is a pointer type, the value
+  is a C array with a null value at the end. Python users do not have to supply the null value on calls, and the bridge
   will strip the null value in return values.
 
   When the *type_override* is :data:`_C_IN` or :data:`_C_INOUT` the input value must be a sequence of values (list, tuple,
@@ -167,7 +167,7 @@ dictionary all keys are optional unless the description mentions otherwise.
   pointer should be passed to the Objective-C function or a buffer object of the appropriate structure, and with enough
   room to store the function output including the null delimiter.
 
-* *c_array_length_in_arg*: The argument or return value is a C array where the length of the array is specified in 
+* *c_array_length_in_arg*: The argument or return value is a C array where the length of the array is specified in
   another argument. Ignored when the *type* is not a pointer type. The value for this key is either a single integer, or
   two integers (for :data:`_C_INOUT` arguments).
 
@@ -190,23 +190,23 @@ dictionary all keys are optional unless the description mentions otherwise.
 
   For results the bridge will return a value of :class:`varlist`.
 
-  For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the arugment must be a Python sequence 
+  For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the arugment must be a Python sequence
   and the bridge will allocate a C array that is long enough to contain all items of that sequence; alternatively the argument
-  can be a Python buffer object (simular to :data:`_C_OUT` arugments).  For :data:`_C_OUT` arguments the value for the argument 
-  must be either :data:`NULL` or a Python buffer object that will be passed to the function. 
+  can be a Python buffer object (simular to :data:`_C_OUT` arugments).  For :data:`_C_OUT` arguments the value for the argument
+  must be either :data:`NULL` or a Python buffer object that will be passed to the function.
 
-* *c_array_length_in_result*: Only valid for argument metadata. When the argument *type* is a pointer type and the 
+* *c_array_length_in_result*: Only valid for argument metadata. When the argument *type* is a pointer type and the
   *type_override* is :data:`_C_INOUT` or :data:`_C_OUT` the usuable length of the array is calculated from the return value.
 
   The size of the buffer that needs to be allocated is determined using one of the other *c_array...* keys in the metadata
   dictionary.
 
-* *null_accepted*: If :data:`True` and the argument is a pointer it is safe to pass a :data:`NULL` as the value. 
+* *null_accepted*: If :data:`True` and the argument is a pointer it is safe to pass a :data:`NULL` as the value.
   Defaults to :data:`True`.
 
   This key is not used in return value metadata.
 
-  .. note:: 
+  .. note::
      The metadata that is currently shipped with PyObjC does not contain *null_accepted* data. This means that the bridge
      won't check if it safe to pass :data:`NULL` as a value for pointer arguments, read the Cocoa documentation to check
      if passing :data:`NULL` is safe.
@@ -230,7 +230,7 @@ dictionary all keys are optional unless the description mentions otherwise.
 
   When this value is :data:`True` the argument must be a global object that is annotated with the decorator
   :func:`callbackFor`. That decorator ensures that the C representation of the function is always present to ensure that
-  it is safe to store a reference on the Objective-C side of the bridge. 
+  it is safe to store a reference on the Objective-C side of the bridge.
 
 API description
 ---------------
@@ -255,18 +255,18 @@ Loading frameworks and other bundles
       *bundle_path* must be an absolute path.
 
    .. note::
-      
+
       The current implementation loads *all* Objective-C classes into *module_globals*, as
       testing if a class is located in a specific bundle is fairly expensive and slowed down
       application initialization too much.
 
 Creating and registering types
 ..............................
-   
+
 .. function:: registerCFSignature(name, encoding, typeId[, tollfreeName])
 
    Register a CoreFoundation based type with the bridge. If *tollfreeName* is specified
-   the type is tollfree bridged to that Objective-C class. 
+   the type is tollfree bridged to that Objective-C class.
 
    The value of *typeId* is :data:`None` for tollfree bridged types, and the result
    of the "GetTypeID" function for the type for other types.
@@ -275,8 +275,8 @@ Creating and registering types
 
 .. function:: createOpaquePointerType(name, typestr, doc)
 
-   Return a wrapper type for opaque pointers ("handles") of a given type. 
-   The type will be registered with the bridge and will be used to wrap 
+   Return a wrapper type for opaque pointers ("handles") of a given type.
+   The type will be registered with the bridge and will be used to wrap
    values with the given type signature.
 
 
@@ -290,7 +290,7 @@ Creating and registering types
 
    * *name* is a string with the name of the structure, for example "NSPoint".
 
-   * *typestr* is the encoded type of the structure and can optionally 
+   * *typestr* is the encoded type of the structure and can optionally
      contain embedded field names
 
    * *fieldnames* is a list with the field names, the value can be :data:`None`
@@ -342,7 +342,7 @@ Creating and registering types
 
 .. function:: registerStructAlias(typestr, structType)
 
-   Tell the brige that structures with encoding *typestr* should also be 
+   Tell the brige that structures with encoding *typestr* should also be
    coverted to Python using *structType* (a type created using :func:`createStructType`).
 
    .. deprecated:: 2.5
@@ -351,8 +351,8 @@ Creating and registering types
 
 .. function:: createStructAlias(name, typestr, structType)
 
-   Tell the brige that structures with encoding *typestr* should also be 
-   coverted to Python using *structType* (a type created using 
+   Tell the brige that structures with encoding *typestr* should also be
+   coverted to Python using *structType* (a type created using
    :func:`createStructType`).
 
    This also adds a class method named *name* to :class:`objc.ivar`. This class
@@ -368,7 +368,7 @@ Loading variable/constants
 
    Loads a list of global variables (constants) from a bundle and adds proxy objects for
    them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
-   the function will skip entries that don't refer to existing variables, otherwise it 
+   the function will skip entries that don't refer to existing variables, otherwise it
    raises an :exc:`error` exception for these variables.
 
    *variableInfo* is a sequence of variable descriptions. Every description is a tuple
@@ -379,7 +379,7 @@ Loading variable/constants
 .. function:: loadSpecialVar(bundle, module_globals, typeid, name[, skip_undefined])
 
    This function loads a global variable from a bundle and adds it to the *module_globals*
-   dictionary. The variable should be a CoreFoundation based type, with a value that 
+   dictionary. The variable should be a CoreFoundation based type, with a value that
    is not a valid pointer.
 
    If *skip_undefined* is :data:`True` (the default) the function won't raise and exception
@@ -393,7 +393,7 @@ Loading functions
 
    Loads a list of functions from a bundle and adds proxy objects for
    them to the *module_globals* dictionary. If *skip_undefined* is :data:`True` (the default)
-   the function will skip entries that don't refer to existing functions, otherwise it 
+   the function will skip entries that don't refer to existing functions, otherwise it
    raises an :exc:`error` exception for these functions.
 
    *bundle* is either an *NSBundle* instance, or :data:`None`. When a bundle is specified
@@ -401,7 +401,7 @@ Loading functions
    any bundle (including the main program and Python extensions).
 
    *functionInfo* is a sequence of function descriptions. Every description is a tuple
-   of two or four elements: the function name (a string) and signature (a byte string) and 
+   of two or four elements: the function name (a string) and signature (a byte string) and
    optionally a value for the "\__doc__" attribute and a metadata dictionary.
 
    The structure of the metadata dictionary is descripted in the section `Metadata dictionaries`_.
@@ -477,14 +477,3 @@ Metadata for Objective-C methods and classes
    .. warning:: ``readonly==False`` is not supported at the moment.
 
    .. versionadded:: 3.0
-
-.. function:: setSignatureForSelector(class_name, selector, signature)
-
-   .. deprecated:: 2.3
-
-   Use the metadata system instead
-
-   Register a replacement signature for a specific selector. This can
-   be used to provide a more exact signature for a method.
-
-

@@ -495,12 +495,7 @@ Types
                      (or 'void' when the function does not contain a return statement with a value).
    :param isClassMethod: Used to specify if a method is a class method (default is :data:`True` if *function* is a :class:`classmethod`
                      and :data:`False` otherwise)
-   :param returnType: Alternative method for specifying the method return type, using the syntax of :c:func:`Py_BuildValue`.
-   :param argumentTypes: Alternative method for specifying argument types, using the syntax of :c:func:`Py_BuildValue`.
    :param isRequired:    Specify if the method is required (defaults to :data:`True`), used in the definition of protocols.
-
-   The arguments *returnType* and *argumentTypes* are deprecated in PyObjC 2.5, they are confusing and can only specify
-   a subset of types.
 
    .. data:: callable
 

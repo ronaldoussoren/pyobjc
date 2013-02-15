@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <sys/un.h>
 #include <netdb.h>
 
 static PyObject* socket_error = NULL;
@@ -113,9 +114,11 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         case AF_INET:
             siz = 4;
             break;
+
         case AF_INET6:
             siz = 16;
             break;
+
         default:
             freeaddrinfo(res);
             PyErr_SetString(socket_error,
@@ -182,6 +185,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     }
 }
 
+
 PyObject*
 PyObjC_SockAddrToPython(void* value)
 {
@@ -210,6 +214,16 @@ PyObjC_SockAddrToPython(void* value)
             return NULL;
         }
 
+    case AF_UNIX:
+        {
+            struct sockaddr_un* a = (struct sockaddr_un*)value;
+#if PY_MAJOR_VERSION == 3
+            return PyUnicode_DecodeFSDefault(a->sun_path);
+#else
+            return PyBytes_FromString(a->sun_path);
+#endif
+        }
+
     default:
         PyErr_Format(PyExc_ValueError,
             "Don't know how to convert sockaddr family %d",
@@ -222,8 +236,38 @@ PyObjC_SockAddrToPython(void* value)
 int
 PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
 {
-    if (PyTuple_Size(value) == 2) {
-        /* IPv4 address */
+    if (PyUnicode_Check(value) || PyBytes_Check(value)) {
+        /* AF_UNIX */
+        struct sockaddr_un* addr = (struct sockaddr_un*)buffer;
+        char *path;
+        Py_ssize_t len;
+
+        addr->sun_family = AF_INET;
+
+        if (PyUnicode_Check(value)) {
+            value = PyUnicode_EncodeFSDefault(value);
+            if (value == NULL) {
+                return -1;
+            }
+        } else {
+            Py_INCREF(value);
+        }
+
+        if (!PyArg_Parse(value, "y#", &path, &len)) {
+            Py_DECREF(value);
+            return -1;
+        }
+        if (len >= (Py_ssize_t)sizeof(addr->sun_path)) {
+            PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
+            Py_DECREF(value);
+            return -1;
+        }
+        memcpy(addr->sun_path, path, len);
+        Py_DECREF(value);
+        return 0;
+
+    } else if (PyTuple_Size(value) == 2) {
+        /* AF_INET */
         struct sockaddr_in* addr = (struct sockaddr_in*)buffer;
         char* host;
         int port, result;
@@ -243,7 +287,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         return 0;
 
     } else {
-        /* Must be a IPv6 address */
+        /* AF_INET6 */
         struct sockaddr_in6* addr = (struct sockaddr_in6*)buffer;
         char* host;
         int port, flowinfo, scope_id, result;
