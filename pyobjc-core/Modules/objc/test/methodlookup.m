@@ -224,11 +224,11 @@ initmethodlookup(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_MethodLookup1",
-        PyObjCClass_New([PyObjC_MethodLookup1 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_MethodLookup1 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjC_MethodLookup2",
-        PyObjCClass_New([PyObjC_MethodLookup2 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_MethodLookup2 class])) < 0) {
         INITERROR();
     }
 

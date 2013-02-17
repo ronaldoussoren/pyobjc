@@ -79,7 +79,7 @@ initstructpointer1(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_TestStructPointer",
-        PyObjCClass_New([OC_TestStructPointer class])) < 0) {
+        PyObjC_IdToPython([OC_TestStructPointer class])) < 0) {
         INITERROR();
     }
 

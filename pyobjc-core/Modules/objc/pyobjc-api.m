@@ -113,6 +113,12 @@ struct pyobjc_api objc_api = {
     .dep_c_array_count          = depythonify_c_array_count2,
     .varlistnew                 = PyObjC_VarList_New,
     .pyobjcobject_convert       = PyObjCObject_Convert,
+
+    .align_of_type              = PyObjCRT_AlignOfType,
+    .simplify_signature         = PyObjCRT_SimplifySignature,
+    .remove_fieldnames          = PyObjCRT_RemoveFieldNames,
+    .is_ascii_string            = PyObjC_is_ascii_string,
+    .is_ascii_prefix            = PyObjC_is_ascii_prefix,
 };
 
 int PyObjCAPI_Register(PyObject* module)

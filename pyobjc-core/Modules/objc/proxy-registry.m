@@ -3,17 +3,16 @@
 static NSMapTable* python_proxies = NULL;
 static NSMapTable* objc_proxies = NULL;
 
-
-
-int PyObjC_InitProxyRegistry(void)
+int
+PyObjC_InitProxyRegistry(void)
 {
     python_proxies = NSCreateMapTable(
             PyObjCUtil_PointerKeyCallBacks,
             PyObjCUtil_PointerValueCallBacks,
             0);
+
     if (python_proxies == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "Cannot create NSMapTable for python_proxies");
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for python_proxies");
         return -1;
     }
 
@@ -22,26 +21,28 @@ int PyObjC_InitProxyRegistry(void)
             PyObjCUtil_PointerValueCallBacks,
             0);
     if (objc_proxies == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "Cannot create NSMapTable for objc_proxies");
+        PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for objc_proxies");
         return -1;
     }
     return 0;
 }
 
-int PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
+int
+PyObjC_RegisterPythonProxy(id original, PyObject* proxy)
 {
     NSMapInsert(python_proxies, original, proxy);
     return 0;
 }
 
-int PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
+int
+PyObjC_RegisterObjCProxy(PyObject* original, id proxy)
 {
     NSMapInsert(objc_proxies, original, proxy);
     return 0;
 }
 
-void PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
+void
+PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
 {
     PyObject* v;
 
@@ -53,7 +54,8 @@ void PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
     }
 }
 
-void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
+void
+PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
 {
     id v;
 
@@ -65,29 +67,35 @@ void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
     }
 }
 
-PyObject* PyObjC_FindPythonProxy(id original)
+PyObject*
+PyObjC_FindPythonProxy(id original)
 {
     PyObject* v;
 
     if (original == nil) {
         v = Py_None;
+
     } else {
         v = NSMapGet(python_proxies, original);
     }
+
     Py_XINCREF(v);
     return v;
 }
 
-id PyObjC_FindObjCProxy(PyObject* original)
+id
+PyObjC_FindObjCProxy(PyObject* original)
 {
     if (original == Py_None) {
         return nil;
+
     } else {
         return NSMapGet(objc_proxies, original);
     }
 }
 
-id PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
+id
+PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
 {
     id result = PyObjC_FindObjCProxy(value);
     if (result == NULL) {

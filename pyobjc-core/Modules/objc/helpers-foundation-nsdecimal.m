@@ -1153,13 +1153,13 @@ PyObjC_setup_nsdecimal(PyObject* m)
         return -1;
     }
 
-    if (PyObjCPointerWrapper_Register(@encode(NSDecimal*),
+    if (PyObjCPointerWrapper_Register("NSDecimal*", @encode(NSDecimal*),
             pythonify_nsdecimal,
             depythonify_nsdecimal) < 0) {
         return -1;
     }
 
-    if (PyObjCPointerWrapper_Register(@encode(const NSDecimal*),
+    if (PyObjCPointerWrapper_Register("NSDecimal*", @encode(const NSDecimal*),
             pythonify_nsdecimal,
             depythonify_nsdecimal) < 0) {
         return -1;
@@ -1181,13 +1181,13 @@ PyObjC_setup_nsdecimal(PyObject* m)
                 sizeof(buffer)-2-sizeof("_NSDecimal"),
                 "%s", @encode(NSDecimal) + 2);
 
-        if (PyObjCPointerWrapper_Register(buffer+1,
+        if (PyObjCPointerWrapper_Register("NSDecimal*", buffer+1,
                 pythonify_nsdecimal,
                 depythonify_nsdecimal) < 0) {
             return -1;
         }
 
-        if (PyObjCPointerWrapper_Register(buffer,
+        if (PyObjCPointerWrapper_Register("NSDecimal*", buffer,
                 pythonify_nsdecimal,
                 depythonify_nsdecimal) < 0) {
             return -1;

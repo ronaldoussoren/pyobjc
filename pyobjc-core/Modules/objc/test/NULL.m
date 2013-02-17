@@ -142,7 +142,7 @@ initNULL(void)
     }
 
     if (PyModule_AddObject(m, "OCTestNULL",
-        PyObjCClass_New([OCTestNULL class])) < 0) {
+        PyObjC_IdToPython([OCTestNULL class])) < 0) {
         INITERROR();
     }
 

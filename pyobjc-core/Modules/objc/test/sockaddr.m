@@ -143,7 +143,7 @@ initsockaddr(void)
     }
 
     if (PyModule_AddObject(m, "PyObjCTestSockAddr",
-        PyObjCClass_New([PyObjCTestSockAddr class])) < 0) {
+        PyObjC_IdToPython([PyObjCTestSockAddr class])) < 0) {
         INITERROR();
     }
 

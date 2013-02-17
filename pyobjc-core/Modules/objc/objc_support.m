@@ -15,7 +15,12 @@
  * Created Tue Sep 10 14:16:02 1996.
  */
 
+#ifndef PyOBjC_SELF_TEST
 #include "pyobjc.h"
+#else
+#include <Python.h>
+#include "objc_support.h"
+#endif
 #include <objc/Protocol.h>
 
 #include <unistd.h>
@@ -29,6 +34,7 @@
 
 #include <CoreFoundation/CFNumber.h>
 
+#ifndef PyOBjC_SELF_TEST
 /*
  * Category on NSObject to make sure that every object supports
  * the method  __pyobjc_PythonObject__, this helps to simplify
@@ -305,6 +311,8 @@
     return [self __pyobjc_PythonObject__];
 }
 @end
+
+#endif /* PyOBjC_SELF_TEST */
 
 #ifndef MAX
 static inline Py_ssize_t

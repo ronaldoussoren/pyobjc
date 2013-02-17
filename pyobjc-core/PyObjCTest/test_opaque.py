@@ -2,6 +2,9 @@ from PyObjCTools.TestSupport import *
 import objc, sys
 from PyObjCTest.opaque import *
 
+
+FooHandle = objc.createOpaquePointerType("FooHandle", FooEncoded, "FooHandle doc")
+
 class TestFromPython (TestCase):
     def testBasic (self):
         tp = objc.createOpaquePointerType(

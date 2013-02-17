@@ -5,6 +5,7 @@
 
 typedef struct {
     PyObject_HEAD
+
     void* pointer_value;
 } OpaquePointerObject;
 
@@ -26,6 +27,7 @@ as_cobject(PyObject* self)
         Py_INCREF(Py_None);
         return Py_None;
     }
+
     return PyCapsule_New(((OpaquePointerObject*)self)->pointer_value, "objc.__opaque__", NULL);
 }
 
@@ -99,21 +101,23 @@ static  char* keywords[] = { "cobject", "c_void_p", NULL };
     if (cobject != NULL) {
         OpaquePointerObject* result;
         void* p;
+
         if (!PyCapsule_CheckExact(cobject)) {
             PyErr_SetString(PyExc_TypeError,
                  "'cobject' argument is not a PyCapsule");
             return NULL;
         }
+
         p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
         if (PyErr_Occurred()) {
             return NULL;
         }
 
-
         result = PyObject_New(OpaquePointerObject, type);
         if (result == NULL) {
             return NULL;
         }
+
         result->pointer_value = p;
         return (PyObject*)result;
 
@@ -129,6 +133,7 @@ static  char* keywords[] = { "cobject", "c_void_p", NULL };
             ) {
                 attrval = c_void_p;
                 Py_INCREF(attrval);
+
         } else {
             attrval = PyObject_GetAttrString(c_void_p, "value");
             if (attrval == NULL) {
@@ -154,14 +159,15 @@ static  char* keywords[] = { "cobject", "c_void_p", NULL };
                 "c_void_p.value is not an integer");
             return NULL;
         }
+
         Py_DECREF(attrval);
         result = PyObject_New(OpaquePointerObject, type);
         if (result == NULL) {
             return NULL;
         }
+
         result->pointer_value = p;
         return (PyObject*)result;
-
 
     } else {
         PyErr_Format(PyExc_TypeError, "Cannot create %s objects",
@@ -192,6 +198,7 @@ opaque_from_c(
         *(PyObject**)retval = NULL;
         return;
     }
+
     result->pointer_value = pointer_value;
     *(PyObject**)retval = (PyObject*)result;
 }
@@ -240,10 +247,6 @@ static const char new_cif_signature[]     = { _C_PTR, _C_VOID, _C_PTR, _C_VOID, 
 static  ffi_cif* convert_cif = NULL;
 static  ffi_cif* new_cif = NULL;
 
-    /*
-     * XXX: This code is questionable, should use same approach as in struct-wrapper.m
-     */
-
     PyHeapTypeObject* newType = NULL;
     PyObjCPointerWrapper_ToPythonFunc from_c = NULL;
     PyObjCPointerWrapper_FromPythonFunc to_c = NULL;
@@ -273,16 +276,11 @@ static  ffi_cif* new_cif = NULL;
         }
     }
 
-
     newType = (PyHeapTypeObject*)PyType_Type.tp_alloc(&PyType_Type, 0);
     if (newType == NULL) {
         return NULL;
     }
-#if PY_VERSION_HEX < 0x02050000
-# define ht_type type
-# define ht_name name
-#endif
-    //memcpy(newType, &opaque_template, sizeof(*newType));
+
     newType->ht_type.tp_basicsize = sizeof(OpaquePointerObject);
     newType->ht_type.tp_dealloc = opaque_dealloc;
     newType->ht_type.tp_getattro = PyObject_GenericGetAttr;
@@ -312,7 +310,6 @@ static  ffi_cif* new_cif = NULL;
 
     newType->ht_type.tp_name = PyText_AsString(newType->ht_name);
 
-
 #if PY_VERSION_HEX >= 0x03030000
     newType->ht_qualname = PyText_FromString(name);
     if (newType->ht_qualname == NULL) {
@@ -335,7 +332,8 @@ static  ffi_cif* new_cif = NULL;
     if (PyDict_SetItemString(v, "__typestr__", w) != 0) {
         goto error_cleanup;
     }
-    Py_DECREF(w); w = NULL;
+
+    Py_CLEAR(w);
 
     newType->ht_type.tp_dict = v; v = NULL;
 
@@ -355,10 +353,13 @@ static  ffi_cif* new_cif = NULL;
     newType->ht_type.tp_alloc = PyType_GenericAlloc;
     Py_INCREF(Py_TYPE(&(newType->ht_type)));
     PyType_Ready((PyTypeObject*)newType);
-    Py_INCREF((PyObject*)newType);
-    Py_INCREF((PyObject*)newType);
-    Py_INCREF((PyObject*)newType);
 
+    /* XXX: This doesn't seem right... */
+#if 1
+    Py_INCREF((PyObject*)newType);
+    Py_INCREF((PyObject*)newType);
+    Py_INCREF((PyObject*)newType);
+#endif
 
     rv = ffi_prep_closure(cl, convert_cif, opaque_to_c, newType);
     if (rv != FFI_OK) {
@@ -366,6 +367,7 @@ static  ffi_cif* new_cif = NULL;
             "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
+
     to_c = (PyObjCPointerWrapper_FromPythonFunc)cl;
     cl = NULL;
 
@@ -380,10 +382,11 @@ static  ffi_cif* new_cif = NULL;
             "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
+
     from_c = (PyObjCPointerWrapper_ToPythonFunc)cl;
     cl = NULL;
 
-    r = PyObjCPointerWrapper_Register(typestr, from_c, to_c);
+    r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
     if (r == -1) {
         goto error_cleanup;
     }
@@ -397,15 +400,19 @@ error_cleanup:
         Py_XDECREF(newType->ht_type.tp_dict);
         PyMem_Free(newType);
     }
+
     if (cl) {
         PyObjC_free_closure(cl);
     }
+
     if (to_c) {
         PyObjC_free_closure((ffi_closure*)to_c);
     }
+
     if (from_c) {
         PyObjC_free_closure((ffi_closure*)from_c);
     }
+
     Py_XDECREF(v);
     Py_XDECREF(w);
     return NULL;

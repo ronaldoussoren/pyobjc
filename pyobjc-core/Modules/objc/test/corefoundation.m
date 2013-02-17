@@ -177,7 +177,7 @@ initcorefoundation(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCoreFoundation",
-        PyObjCClass_New([OC_TestCoreFoundation class])) < 0) {
+        PyObjC_IdToPython([OC_TestCoreFoundation class])) < 0) {
         INITERROR();
     }
 

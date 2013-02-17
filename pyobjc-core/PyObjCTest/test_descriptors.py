@@ -3,12 +3,13 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-try:
-    from  Foundation import NSRange
-
-    _C_NSRange = NSRange.__typestr__
-
-except ImportError:
+#try:
+#    from  Foundation import NSRange
+#
+#    _C_NSRange = NSRange.__typestr__
+#
+#except ImportError:
+if 1:
     if sys.maxsize > 2 ** 32:
         _C_NSRange = b"{_NSRange=QQ}"
     else:

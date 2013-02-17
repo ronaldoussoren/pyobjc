@@ -100,7 +100,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
      * First look for an already registerd type
      */
     if (encoding[0] != _C_ID) {
-        if (PyObjCPointerWrapper_RegisterID(encoding) == -1) {
+        if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) {
             return NULL;
         }
     }

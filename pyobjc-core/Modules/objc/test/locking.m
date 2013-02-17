@@ -96,7 +96,7 @@ initlocking(void)
     }
 
     if (PyModule_AddObject(m, "OC_LockTest",
-        PyObjCClass_New([OC_LockTest class])) < 0) {
+        PyObjC_IdToPython([OC_LockTest class])) < 0) {
         INITERROR();
     }
 

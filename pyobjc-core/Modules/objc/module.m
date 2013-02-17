@@ -1267,7 +1267,7 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
                     tollfreeName);
             return NULL;
         }
-        if (PyObjCPointerWrapper_RegisterID(encoding) == -1) {
+        if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) {
             return NULL;
         }
 

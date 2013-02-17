@@ -292,7 +292,7 @@ initarrays(void)
     PyObjC_ImportAPI(m);
 
     if (PyModule_AddObject(m, "OC_ArrayTest",
-        PyObjCClass_New([OC_ArrayTest class])) < 0) {
+        PyObjC_IdToPython([OC_ArrayTest class])) < 0) {
         INITERROR();
     }
 

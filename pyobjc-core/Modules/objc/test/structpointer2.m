@@ -47,7 +47,6 @@ initstructpointer2(void)
 #endif
 {
     PyObject* m;
-    PyObject* v;
 
 #if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
@@ -62,15 +61,16 @@ initstructpointer2(void)
     if (PyObjC_ImportAPI(m) < 0) {
         INITERROR();
     }
-    v = PyObjCCreateOpaquePointerType("TestStructPointerStructPtr",
-            @encode(Foo), NULL);
-    if (v == NULL) {
+
+#if PY_VERSION_HEX >= 0x03000000
+    if (PyModule_AddObject(m, "FooEncoded",  PyBytes_FromString(@encode(Foo))) < 0) {
         INITERROR();
     }
-    if (PyDict_SetItemString(PyModule_GetDict(m), "TestStructPointerStructPtr",
-            v) < 0) {
+#else
+    if (PyModule_AddObject(m, "FooEncoded",  PyString_FromString(@encode(Foo))) < 0) {
         INITERROR();
     }
+#endif
 
     INITDONE();
 }

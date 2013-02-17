@@ -192,7 +192,7 @@ initpythonnumber(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestNumber",
-        PyObjCClass_New([OC_TestNumber class])) < 0){
+        PyObjC_IdToPython([OC_TestNumber class])) < 0){
         INITERROR();
     }
 

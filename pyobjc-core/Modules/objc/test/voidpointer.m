@@ -88,7 +88,7 @@ initvoidpointer(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestVoidPointer",
-            PyObjCClass_New([OC_TestVoidPointer class])) < 0){
+            PyObjC_IdToPython([OC_TestVoidPointer class])) < 0){
         INITERROR();
     }
 

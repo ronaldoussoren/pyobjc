@@ -12,18 +12,11 @@
  *   that happen to be represented using pointers (to structs). The functions
  *   in this file allow extension modules to register functions to convert these
  *   values to and from their Python representation.
- *
- * NOTE:
- * - The pythonify and depythonify functions have the same interface as
- *   the *_New and *_Convert functions in MacPython (pymactoolbox.h), this
- *   makes it easier to interface with that packages.
  */
 #include "pyobjc.h"
 
-
-#import <CoreFoundation/CoreFoundation.h>
-
 struct wrapper {
+    const char* name;
     const char* signature;
     size_t offset;
     PyObject* (*pythonify)(void*);
@@ -47,7 +40,9 @@ static Py_ssize_t item_count = 0;
  * We want to treat those two pointer as the same type, therefore we need to
  * ignore everything beyond the end of the struct name.
  */
-static size_t find_end_of_structname(const char* signature) {
+static size_t
+find_end_of_structname(const char* signature)
+{
     if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
         char* end1;
         char* end2;
@@ -57,6 +52,7 @@ static size_t find_end_of_structname(const char* signature) {
 
         if (end2 == NULL) {
             return (size_t)(end1 - signature);
+
         } else {
             return (size_t)(end2 - signature);
         }
@@ -70,6 +66,7 @@ static size_t find_end_of_structname(const char* signature) {
 
         if (end2 == NULL) {
             return (size_t)(end1 - signature);
+
         } else {
             return (size_t)(end2 - signature);
         }
@@ -119,19 +116,19 @@ py_to_ID(PyObject* obj, void* output)
     return depythonify_c_value(@encode(id), obj, output);
 }
 
-int PyObjCPointerWrapper_RegisterID(const char *signature) {
-    return PyObjCPointerWrapper_Register(signature,
+int
+PyObjCPointerWrapper_RegisterID(const char* name, const char *signature)
+{
+    return PyObjCPointerWrapper_Register(name, signature,
         (PyObjCPointerWrapper_ToPythonFunc)&ID_to_py,
         (PyObjCPointerWrapper_FromPythonFunc)&py_to_ID);
 }
 
 int
 PyObjCPointerWrapper_Register(
-    const char* signature,
+    const char* name, const char* signature,
     PyObjCPointerWrapper_ToPythonFunc pythonify,
-    PyObjCPointerWrapper_FromPythonFunc depythonify
-
-    )
+    PyObjCPointerWrapper_FromPythonFunc depythonify)
 {
     struct wrapper* value;
 
@@ -143,7 +140,9 @@ PyObjCPointerWrapper_Register(
     if (signature == NULL) {
         return -1;
     }
+
     value = FindWrapper(signature);
+
     if (value != NULL) {
         value->pythonify = pythonify;
         value->depythonify = depythonify;
@@ -157,6 +156,7 @@ PyObjCPointerWrapper_Register(
             return -1;
         }
         item_count = 1;
+
     } else {
         struct wrapper* tmp;
 
@@ -172,8 +172,16 @@ PyObjCPointerWrapper_Register(
 
     value = items + (item_count-1);
 
+    value->name = PyObjCUtil_Strdup(name);
+    if (value->name == NULL) {
+        PyErr_NoMemory();
+        item_count--;
+        return -1;
+    }
+
     value->signature = PyObjCUtil_Strdup(signature);
     if (value->signature == NULL) {
+        PyMem_Free((void*)value->name);
         PyErr_NoMemory();
         item_count --;
         return -1;
@@ -301,6 +309,7 @@ FILE_New(void *obj)
      */
     if (fp->_flags & __SWR) {
         mode = "w";
+
     } else if (fp->_flags & __SRW) {
         mode = "w+";
     }
@@ -327,17 +336,17 @@ PyObjCPointerWrapper_Init(void)
 {
     int r = 0;
 
-    r = PyObjCPointerWrapper_Register(@encode(PyObject*),
+    r = PyObjCPointerWrapper_Register("PyObject*", @encode(PyObject*),
         PyObjectPtr_New, PyObjectPtr_Convert);
     if (r == -1) return -1;
 
-    r = PyObjCPointerWrapper_Register("^{objc_class=}",
+    r = PyObjCPointerWrapper_Register("Class", "^{objc_class=}",
         class_new, class_convert);
     if (r == -1) return -1;
 
 
 #if PY_MAJOR_VERSION == 2
-    r = PyObjCPointerWrapper_Register(@encode(FILE*),
+    r = PyObjCPointerWrapper_Register("FILE*", @encode(FILE*),
         FILE_New, FILE_Convert);
     if (r == -1) return -1;
 #endif
@@ -345,24 +354,11 @@ PyObjCPointerWrapper_Init(void)
     return 0;
 }
 
-/*
- * XXX: Need a better mechanism for this, the current version is
- * a hardcoded mess.
- */
-const char* PyObjCPointerWrapper_Describe(const char* signature)
+const char*
+PyObjCPointerWrapper_Describe(const char* signature)
 {
     struct wrapper* wrapper = FindWrapper(signature);
     if (wrapper == NULL) return NULL;
 
-#if PY_MAJOR_VERSION == 2
-    if (wrapper->pythonify == FILE_New) return "FILE*";
-#endif
-
-    /* XXX: It would be nice to return the CF type name */
-    if (wrapper->pythonify == ID_to_py) return "id";
-
-    /* XXX: Handle 'opaque' pointers (handles);
-     *      Handle FSRef and FSSpec
-     */
-    return NULL;
+    return wrapper->name;
 }

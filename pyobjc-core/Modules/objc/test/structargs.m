@@ -113,7 +113,7 @@ initstructargs(void)
     }
 
     if (PyModule_AddObject(m, "StructArgClass",
-        PyObjCClass_New([StructArgClass class])) < 0) {
+        PyObjC_IdToPython([StructArgClass class])) < 0) {
         INITERROR();
     }
 

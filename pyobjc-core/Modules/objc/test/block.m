@@ -97,7 +97,7 @@ initblock(void)
     }
 
     if (PyModule_AddObject(m, "OCTestBlock",
-        PyObjCClass_New([OCTestBlock class])) < 0) {
+        PyObjC_IdToPython([OCTestBlock class])) < 0) {
         INITERROR();
     }
 

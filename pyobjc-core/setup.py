@@ -439,6 +439,7 @@ CFLAGS.extend([
     "-fvisibility=hidden",
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
     "-Wshorten-64-to-32",
+    "-Werror",
     ])
 
 ## Arghh, a stupid compiler flag can cause problems. Don't

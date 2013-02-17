@@ -83,7 +83,7 @@ initfilepointer(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestFilePointer",
-            PyObjCClass_New([OC_TestFilePointer class])) < 0) {
+            PyObjC_IdToPython([OC_TestFilePointer class])) < 0) {
         INITERROR();
     }
 

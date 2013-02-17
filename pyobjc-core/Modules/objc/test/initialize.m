@@ -142,7 +142,7 @@ initinitialize(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_TestInitialize",
-        PyObjCClass_New([OC_TestInitialize class])) < 0) {
+        PyObjC_IdToPython([OC_TestInitialize class])) < 0) {
         INITERROR();
     }
 

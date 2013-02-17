@@ -75,7 +75,7 @@ initprotected(void)
     }
 
     if (PyModule_AddObject(m, "PyObjCTest_Protected",
-        PyObjCClass_New([PyObjCTest_Protected class])) < 0){
+        PyObjC_IdToPython([PyObjCTest_Protected class])) < 0){
         INITERROR();
     }
     INITDONE();

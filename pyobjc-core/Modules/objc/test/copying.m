@@ -136,11 +136,11 @@ initcopying(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_CopyHelper",
-        PyObjCClass_New([OC_CopyHelper class])) < 0) {
+        PyObjC_IdToPython([OC_CopyHelper class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_CopyBase",
-        PyObjCClass_New([OC_CopyBase class])) < 0) {
+        PyObjC_IdToPython([OC_CopyBase class])) < 0) {
         INITERROR();
     }
 

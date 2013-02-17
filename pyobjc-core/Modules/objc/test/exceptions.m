@@ -126,7 +126,7 @@ initexceptions(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjCTestExceptions",
-        PyObjCClass_New([PyObjCTestExceptions class])) < 0) {
+        PyObjC_IdToPython([PyObjCTestExceptions class])) < 0) {
         INITERROR();
     }
     INITDONE();

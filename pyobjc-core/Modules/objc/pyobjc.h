@@ -101,6 +101,7 @@
 #include "closure_pool.h"
 #include "block_support.h"
 #include "helpers.h"
+#include "opaque-pointer.h"
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
@@ -131,10 +132,6 @@ extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
 extern PyTypeObject PyObjCMethodAccessor_Type;
 char* PyObjC_SELToPythonName(SEL, char*, size_t);
 
-
-/* opaque-pointer.m */
-PyObject* PyObjCCreateOpaquePointerType(const char* name,
-        const char* typestr, const char* docstr);
 
 /* objc-NULL.m */
 extern PyObject* PyObjC_NULL;

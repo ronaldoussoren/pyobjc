@@ -1968,33 +1968,33 @@ inittestbndl(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestClass1",
-        PyObjCClass_New([OC_TestClass1 class])) < 0) {
+        PyObjC_IdToPython([OC_TestClass1 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_TestClass2",
-        PyObjCClass_New([OC_TestClass2 class])) < 0) {
+        PyObjC_IdToPython([OC_TestClass2 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
-        PyObjCClass_New([PyObjC_TestClass3 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
-        PyObjCClass_New([PyObjC_TestClass4 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
-        PyObjCClass_New([PyObjCTest_KVBaseClass class])) < 0) {
+        PyObjC_IdToPython([PyObjCTest_KVBaseClass class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
-        PyObjCClass_New([PyObjCTest_KVPathClass class])) < 0) {
+        PyObjC_IdToPython([PyObjCTest_KVPathClass class])) < 0) {
         INITERROR();
     }
 
 #if defined (MAC_OS_X_VERSION_10_3) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
-        PyObjCClass_New([PyObjCTest_KeyValueObserver class])) < 0) {
+        PyObjC_IdToPython([PyObjCTest_KeyValueObserver class])) < 0) {
         INITERROR();
     }
 #else

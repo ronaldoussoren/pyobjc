@@ -847,7 +847,7 @@ initmetadata(void)
     }
 
     if (PyModule_AddObject(m, "OC_MetaDataTest",
-        PyObjCClass_New([OC_MetaDataTest class])) < 0) {
+        PyObjC_IdToPython([OC_MetaDataTest class])) < 0) {
 
         INITERROR();
     }

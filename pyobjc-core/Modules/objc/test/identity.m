@@ -187,7 +187,7 @@ initidentity(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "OC_TestIdentity",
-        PyObjCClass_New([OC_TestIdentity class])) < 0) {
+        PyObjC_IdToPython([OC_TestIdentity class])) < 0) {
         INITERROR();
     }
 

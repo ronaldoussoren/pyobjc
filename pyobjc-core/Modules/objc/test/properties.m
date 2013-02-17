@@ -119,7 +119,7 @@ initproperties(void)
     }
 
     if (PyModule_AddObject(m, "OCPropertyDefinitions",
-        PyObjCClass_New([OCPropertyDefinitions class])) < 0) {
+        PyObjC_IdToPython([OCPropertyDefinitions class])) < 0) {
         INITERROR();
     }
 

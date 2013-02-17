@@ -107,7 +107,7 @@ initinstanceVariables(void)
         INITERROR();
     }
     if (PyModule_AddObject(m, "ClassWithVariables",
-        PyObjCClass_New([ClassWithVariables class])) < 0) {
+        PyObjC_IdToPython([ClassWithVariables class])) < 0) {
         INITERROR();
     }
     INITDONE();

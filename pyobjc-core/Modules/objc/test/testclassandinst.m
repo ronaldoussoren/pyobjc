@@ -99,12 +99,12 @@ inittestclassandinst(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance",
-        PyObjCClass_New([PyObjC_TestClassAndInstance class])) < 0) {
+        PyObjC_IdToPython([PyObjC_TestClassAndInstance class])) < 0) {
         INITERROR();
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestUnallocatable",
-        PyObjCClass_New([PyObjC_TestUnallocatable class])) < 0) {
+        PyObjC_IdToPython([PyObjC_TestUnallocatable class])) < 0) {
         INITERROR();
     }
 

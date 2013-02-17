@@ -200,7 +200,7 @@ Version 3.0
 
        There will be futher cleanup of this API before the 3.0 release.
 
-
+    Added a *name* argument to PyObjCPointerWrapper_Register.
 
 
 Version 2.6

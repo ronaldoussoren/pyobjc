@@ -74,7 +74,7 @@ initcfsocket(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCFSocket",
-            PyObjCClass_New([OC_TestCFSocket class])) < 0) {
+            PyObjC_IdToPython([OC_TestCFSocket class])) < 0) {
         INITERROR();
     }
 

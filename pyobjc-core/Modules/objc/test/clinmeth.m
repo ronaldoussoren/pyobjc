@@ -128,11 +128,11 @@ initclinmeth(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_ClsInst1",
-        PyObjCClass_New([PyObjC_ClsInst1 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_ClsInst1 class])) < 0) {
         INITERROR();
     }
     if (PyModule_AddObject(m, "PyObjC_ClsInst2",
-        PyObjCClass_New([PyObjC_ClsInst2 class])) < 0) {
+        PyObjC_IdToPython([PyObjC_ClsInst2 class])) < 0) {
         INITERROR();
     }
 

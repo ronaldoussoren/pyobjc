@@ -91,7 +91,7 @@ inittestoutputinitializer(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestOutputInitializer",
-        PyObjCClass_New([PyObjC_TestOutputInitializer class])) < 0) {
+        PyObjC_IdToPython([PyObjC_TestOutputInitializer class])) < 0) {
         INITERROR();
     }
     INITDONE();

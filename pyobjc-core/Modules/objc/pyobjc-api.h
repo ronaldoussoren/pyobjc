@@ -61,7 +61,7 @@ struct pyobjc_api {
     void (*fill_super)(struct objc_super*, Class, id);
     void (*fill_super_cls)(struct objc_super*, Class, Class);
     int (*register_pointer_wrapper)(
-            const char*, PyObject* (*pythonify)(void*),
+            const char*, const char*, PyObject* (*pythonify)(void*),
             int (*depythonify)(PyObject*, void*)
         );
     void (*unsupported_method_imp)(void*, void*, void**, void*);
@@ -80,6 +80,13 @@ struct pyobjc_api {
     int (*dep_c_array_count)(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum);
     PyObject* (*varlistnew)(const char* tp, void* array);
     int (*pyobjcobject_convert)(PyObject*,void*);
+
+    /* ctests related stuff */
+    Py_ssize_t (*align_of_type)(const char*);
+    int (*simplify_signature)(const char*, char*, size_t);
+    const char* (*remove_fieldnames)(char*, const char*);
+    int (*is_ascii_string)(PyObject*, const char*);
+    int (*is_ascii_prefix)(PyObject*, const char*, size_t);
 };
 
 #ifndef PYOBJC_BUILD
@@ -117,6 +124,17 @@ static struct pyobjc_api*    PyObjC_API;
 #define PyObjC_DepythonifyCArray  (PyObjC_API->dep_c_array_count)
 #define PyObjC_VarList_New  (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
+
+#ifdef PyObjC_SELFTEST
+/* Definitions needed for test/ctests.m, need to find a way to do this properly...
+ * (Especially because more of the internals should be covered by ctests)
+ */
+#define PyObjCRT_AlignOfType	(PyObjC_API->align_of_type)
+#define PyObjCRT_SimplifySignature	(PyObjC_API->simplify_signature)
+#define PyObjCRT_RemoveFieldNames	(PyObjC_API->remove_fieldnames)
+#define PyObjC_is_ascii_string	(PyObjC_API->is_ascii_string)
+#define PyObjC_is_ascii_prefix	(PyObjC_API->is_ascii_prefix)
+#endif
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

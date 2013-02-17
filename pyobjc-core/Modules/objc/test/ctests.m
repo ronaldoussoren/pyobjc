@@ -5,6 +5,9 @@
  * The PyObjC unittest objc.test.test_ctests executes the tests in this file.
  */
 #include "Python.h"
+
+#define PyObjC_SELFTEST
+
 #include "pyobjc-api.h"
 #include "pyobjc-compat.h"
 
@@ -12,7 +15,6 @@
 #define PyInt_AsLong PyLong_AsLong
 #endif
 #include "pyobjc-unittest.h"
-
 
 #include <fcntl.h>
 

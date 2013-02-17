@@ -125,7 +125,7 @@ initfsref(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestFSRefHelper",
-            PyObjCClass_New([OC_TestFSRefHelper class])) < 0) {
+            PyObjC_IdToPython([OC_TestFSRefHelper class])) < 0) {
         INITERROR();
     }
 

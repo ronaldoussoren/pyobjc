@@ -29,6 +29,15 @@
 
 #endif
 
+#ifdef NO_OBJC2_RUNTIME
+
+static inline
+const char* sel_getName(SEL sel)
+{
+    return (const char*)sel;
+}
+#endif
+
 
 struct TestStruct1 {
     int i;
@@ -8094,7 +8103,7 @@ static id arg2id(const char* argtype, void* argptr)
         id sign = [target methodSignatureForSelector:selector];\
         if (sign == NULL) {\
             PyGILState_STATE state = PyGILState_Ensure();\
-            PyErr_SetString(PyExc_AttributeError, PyObjCRT_SELName(selector));\
+            PyErr_SetString(PyExc_AttributeError, sel_getName(selector));\
             PyObjCErr_ToObjCWithGILState(&state);\
         }\
         inv = [NSInvocation invocationWithMethodSignature:\
@@ -19656,11 +19665,11 @@ inittestbndl2(void)
     }
 
         if (PyModule_AddObject(m, "PyObjC_TestClass1",
-            PyObjCClass_New([PyObjC_TestClass1 class])) < 0) {
+            PyObjC_IdToPython([PyObjC_TestClass1 class])) < 0) {
         INITERROR();
     }
         if (PyModule_AddObject(m, "PyObjC_TestClass2",
-            PyObjCClass_New([PyObjC_TestClass2 class])) < 0) {
+            PyObjC_IdToPython([PyObjC_TestClass2 class])) < 0) {
         INITERROR();
     }
 #ifdef HAVE_BOOL

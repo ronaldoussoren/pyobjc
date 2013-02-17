@@ -236,7 +236,7 @@ initpythonset(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestSet",
-        PyObjCClass_New([OC_TestSet class])) < 0) {
+        PyObjC_IdToPython([OC_TestSet class])) < 0) {
         INITERROR();
     }
 

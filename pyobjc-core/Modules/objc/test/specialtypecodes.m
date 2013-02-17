@@ -423,7 +423,7 @@ initspecialtypecodes(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestSpecialTypeCode",
-        PyObjCClass_New([OC_TestSpecialTypeCode class])) < 0) {
+        PyObjC_IdToPython([OC_TestSpecialTypeCode class])) < 0) {
         INITERROR();
     }
 
