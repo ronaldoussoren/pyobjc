@@ -354,13 +354,6 @@ static  ffi_cif* new_cif = NULL;
     Py_INCREF(Py_TYPE(&(newType->ht_type)));
     PyType_Ready((PyTypeObject*)newType);
 
-    /* XXX: This doesn't seem right... */
-#if 1
-    Py_INCREF((PyObject*)newType);
-    Py_INCREF((PyObject*)newType);
-    Py_INCREF((PyObject*)newType);
-#endif
-
     rv = ffi_prep_closure(cl, convert_cif, opaque_to_c, newType);
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError,
