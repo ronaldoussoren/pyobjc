@@ -61,7 +61,35 @@ def describe_type(typestr):
         if nm is not None:
             return nm
 
-    # XXX: handle struct, union, array, bitfield
+        typestr = typestr[1:]
+        idx = typestr.find(b'=')
+        if idx == -1:
+            return 'struct <?>'
+
+        else:
+            nm = typestr[:idx]
+            return 'struct %s'%(nm.decode('utf-8'),)
+
+
+    if typestr.startswith(objc._C_ARY_B):
+        typestr = typestr[1:]
+        d = ''
+        while typestr[0].isdigit():
+            d += typestr[0]
+            typestr = typestr[1:]
+
+        return '%s[%s]' % (describe_type(typestr), d.decode('utf-8'))
+
+    if typestr.startswith(objc._C_UNION_B):
+        typestr = typestr[1:]
+        idx = typestr.find(b'=')
+        if idx == -1:
+            return 'union <?>'
+
+        else:
+            nm = typestr[:idx]
+            return 'union %s'%(nm.decode('utf-8'),)
+
     return "<?>"
 
 def describe_callable(callable):
@@ -175,7 +203,7 @@ if sys.version_info[:2] >= (3,3):
 
     def callable_signature(callable):
         # Create an inspect.Signature for an PyObjC callable
-        # both objc.function and objc.native_selector only support positional 
+        # both objc.function and objc.native_selector only support positional
         # arguments, and not keyword arguments.
         #
         # TODO: it might be useful to add annotations when the argument/result
@@ -197,7 +225,7 @@ if sys.version_info[:2] >= (3,3):
                     inspect.Parameter.POSITIONAL_ONLY
                 )
             )
-        
+
         return inspect.Signature(parameters)
 
     objc._setCallableSignature(callable_signature)
