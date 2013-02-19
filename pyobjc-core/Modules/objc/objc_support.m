@@ -15,12 +15,7 @@
  * Created Tue Sep 10 14:16:02 1996.
  */
 
-#ifndef PyOBjC_SELF_TEST
 #include "pyobjc.h"
-#else
-#include <Python.h>
-#include "objc_support.h"
-#endif
 #include <objc/Protocol.h>
 
 #include <unistd.h>
@@ -34,7 +29,6 @@
 
 #include <CoreFoundation/CFNumber.h>
 
-#ifndef PyOBjC_SELF_TEST
 /*
  * Category on NSObject to make sure that every object supports
  * the method  __pyobjc_PythonObject__, this helps to simplify
@@ -312,15 +306,16 @@
 }
 @end
 
-#endif /* PyOBjC_SELF_TEST */
 
-#ifndef MAX
+#ifdef MAX
+#undef MAX
+#endif
+
 static inline Py_ssize_t
 MAX(Py_ssize_t x, Py_ssize_t y)
 {
     return x > y ? x : y;
 }
-#endif
 
 static inline Py_ssize_t
 ROUND(Py_ssize_t v, Py_ssize_t a)
@@ -532,7 +527,17 @@ PyObjCRT_NextField(const char *type)
 
         while (isdigit (*++type));
         type = PyObjCRT_SkipTypeSpec (type);
-        assert (type == NULL || *type == _C_ARY_E);
+        if (unlikely(type == NULL)) {
+            if (!PyErr_Occurred()) {
+                PyErr_SetString(PyObjCExc_InternalError,
+                        "Unexpected NULL while parsing array encoding type");
+            }
+            return NULL;
+        } else if (unlikely(*type != _C_ARY_E)) {
+            PyErr_Format(PyObjCExc_InternalError,
+                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of array encoding, expecting '%#x'", *type, _C_ARY_E);
+            return NULL;
+        }
         if (type) type++;
         break;
 
@@ -551,7 +556,18 @@ PyObjCRT_NextField(const char *type)
             }
             type = PyObjCRT_SkipTypeSpec (type);
         }
-        if (type) type++;
+        if (unlikely(type == NULL)) {
+            if (!PyErr_Occurred()) {
+                PyErr_SetString(PyObjCExc_InternalError,
+                        "Unexpected NULL while parsing struct encoding type");
+            }
+            return NULL;
+        } else if (unlikely(*type != _C_STRUCT_E)) {
+            PyErr_Format(PyObjCExc_InternalError,
+                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of struct encoding, expecting '%#x'", *type, _C_STRUCT_E);
+            return NULL;
+        }
+        type++;
         break;
 
     case _C_UNION_B:
@@ -569,7 +585,18 @@ PyObjCRT_NextField(const char *type)
             }
             type = PyObjCRT_SkipTypeSpec (type);
         }
-        if (type) type++;
+        if (unlikely(type == NULL)) {
+            if (!PyErr_Occurred()) {
+                PyErr_SetString(PyObjCExc_InternalError,
+                        "Unexpected NULL while parsing union encoding type");
+            }
+            return NULL;
+        } else if (unlikely(*type != _C_STRUCT_E)) {
+            PyErr_Format(PyObjCExc_InternalError,
+                "PyObjCRT_SkipTypeSpec: Got '%#x' at end of union encoding, expecting '%#x'", *type, _C_UNION_E);
+            return NULL;
+        }
+        type++;
         break;
 
     case _C_PTR:
@@ -705,17 +732,22 @@ PyObjCRT_AlignOfType (const char *type)
                     type = strchr(type+1, '"');
                     if (type) type++;
                 }
+
                 if (have_align) {
                     align = MAX(align,
                        PyObjC_EmbeddedAlignOfType(type));
+
                 } else {
                     align = PyObjCRT_AlignOfType(type);
                     have_align = 1;
+
                 }
                 type = PyObjCRT_SkipTypeSpec(type);
             }
+
             if (type == NULL) return -1;
             return align;
+
         } else {
             return __alignof__ (fooalign);
         }
@@ -784,29 +816,29 @@ PyObjCRT_SizeOfType (const char *type)
 
     Py_ssize_t itemSize;
     switch (*type) {
-    case _C_VOID:    return 1; // More convenient than the correct value.
-    case _C_ID:      return sizeof(id);
-    case _C_CLASS:   return sizeof(Class);
-    case _C_SEL:     return sizeof(SEL);
-    case _C_CHR:     return sizeof(char);
-    case _C_UCHR:    return sizeof(unsigned char);
-    case _C_SHT:     return sizeof(short);
-    case _C_USHT:    return sizeof(unsigned short);
+    case _C_VOID:           return 1; // More convenient than the correct value.
+    case _C_ID:             return sizeof(id);
+    case _C_CLASS:          return sizeof(Class);
+    case _C_SEL:            return sizeof(SEL);
+    case _C_CHR:            return sizeof(char);
+    case _C_UCHR:           return sizeof(unsigned char);
+    case _C_SHT:            return sizeof(short);
+    case _C_USHT:           return sizeof(unsigned short);
 #ifdef _C_BOOL
-    case _C_BOOL:    return sizeof(bool);
+    case _C_BOOL:           return sizeof(bool);
 #endif
-    case _C_INT:     return sizeof(int);
-    case _C_UINT:    return sizeof(unsigned int);
-    case _C_LNG:     return sizeof(long);
-    case _C_ULNG:    return sizeof(unsigned long);
-    case _C_FLT:     return sizeof(float);
-    case _C_DBL:     return sizeof(double);
-    case _C_LNG_LNG:  return sizeof(long long);
-    case _C_ULNG_LNG: return sizeof(unsigned long long);
-    case _C_UNICHAR:    return sizeof(UniChar);
-    case _C_CHAR_AS_TEXT:    return sizeof(char);
+    case _C_INT:            return sizeof(int);
+    case _C_UINT:           return sizeof(unsigned int);
+    case _C_LNG:            return sizeof(long);
+    case _C_ULNG:           return sizeof(unsigned long);
+    case _C_FLT:            return sizeof(float);
+    case _C_DBL:            return sizeof(double);
+    case _C_LNG_LNG:        return sizeof(long long);
+    case _C_ULNG_LNG:       return sizeof(unsigned long long);
+    case _C_UNICHAR:        return sizeof(UniChar);
+    case _C_CHAR_AS_TEXT:   return sizeof(char);
     case _C_CHAR_AS_INT:    return sizeof(char);
-    case _C_NSBOOL:        return sizeof(BOOL);
+    case _C_NSBOOL:         return sizeof(BOOL);
 
     case _C_PTR:
     case _C_CHARPTR:
@@ -851,19 +883,23 @@ PyObjCRT_SizeOfType (const char *type)
 
         while (*type != _C_STRUCT_E && *type++ != '=')
             ; /* skip "<name>=" */
+
         while (*type != _C_STRUCT_E) {
             if (*type == '"') {
                 type = strchr(type+1, '"');
                 if (type) type++;
             }
+
             if (have_align) {
                 align = PyObjC_EmbeddedAlignOfType(type);
                 if (align == -1) return -1;
+
             } else {
                 align = PyObjCRT_AlignOfType(type);
                 if (align == -1) return -1;
                 have_align = 1;
             }
+
             max_align = MAX(align, max_align);
             acc_size = ROUND (acc_size, align);
 
@@ -872,6 +908,7 @@ PyObjCRT_SizeOfType (const char *type)
             acc_size += itemSize;
             type = PyObjCRT_SkipTypeSpec (type);
         }
+
         if (max_align) {
             acc_size = ROUND(acc_size, max_align);
         }
@@ -892,6 +929,7 @@ PyObjCRT_SizeOfType (const char *type)
             max_size = MAX (max_size, itemSize);
             type = PyObjCRT_SkipTypeSpec (type);
         }
+
         return max_size;
     }
 
@@ -977,6 +1015,7 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
             curdatum += sizeofitem;
         }
         break;
+
     case _C_SHT:
         while (*(short*)curdatum != 0) {
             count ++;
@@ -990,6 +1029,7 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
             curdatum += sizeofitem;
         }
         break;
+
     case _C_INT:
         while (*(int*)curdatum != 0) {
             count ++;
@@ -1003,6 +1043,7 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
             curdatum += sizeofitem;
         }
         break;
+
     case _C_LNG:
         while (*(long*)curdatum != 0) {
             count ++;
@@ -1016,6 +1057,7 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
             curdatum += sizeofitem;
         }
         break;
+
     case _C_LNG_LNG:
         while (*(long long*)curdatum != 0) {
             count ++;
@@ -1037,13 +1079,13 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
         }
         break;
 
-
     default:
         PyErr_Format(PyExc_TypeError,
             "Cannot deal with NULL-terminated array of %s",
             type);
         return NULL;
     }
+
     if (*type == _C_UNICHAR) {
         int byteorder = 0;
         return PyUnicode_DecodeUTF16(
@@ -1087,6 +1129,7 @@ pythonify_c_array (const char *type, void *datum)
 
         if (pyitem) {
             PyTuple_SET_ITEM (ret, itemidx, pyitem);
+
         } else {
             Py_DECREF(ret);
             return NULL;
@@ -1130,9 +1173,9 @@ pythonify_c_struct (const char *type, void *datum)
     if (IS_FSSPEC(type)) {
         return PyObjC_decode_fsspec(datum);
     }
-        if (IS_DECIMAL(type)) {
-            return pythonify_nsdecimal(datum);
-        }
+    if (IS_DECIMAL(type)) {
+        return pythonify_nsdecimal(datum);
+    }
 
     /* Skip back over digits at end of type in function prototypes */
     while (type_real_length > 0 && isdigit(type_start[type_real_length-1])) {
@@ -1171,6 +1214,7 @@ pythonify_c_struct (const char *type, void *datum)
         if (!ret) return NULL;
 
         item = type;
+
     } else {
         item = type;
 
@@ -1185,7 +1229,6 @@ pythonify_c_struct (const char *type, void *datum)
         }
     }
 
-
     offset = itemidx = 0;
     while (*item != _C_STRUCT_E) {
         PyObject *pyitem;
@@ -1198,9 +1241,11 @@ pythonify_c_struct (const char *type, void *datum)
         if (!have_align) {
             align = PyObjCRT_AlignOfType(item);
             have_align = 1;
+
         } else {
             align = PyObjC_EmbeddedAlignOfType(item);
         }
+
         if (pack != -1 && pack < align) {
             align = pack;
         }
@@ -1212,15 +1257,18 @@ pythonify_c_struct (const char *type, void *datum)
         if (pyitem) {
             if (haveTuple) {
                 PyTuple_SET_ITEM (ret, itemidx, pyitem);
+
             } else {
                 int r;
                 r = PySequence_SetItem(ret, itemidx, pyitem);
                 Py_DECREF(pyitem);
+
                 if (r == -1) {
                     Py_DECREF(ret);
                     return NULL;
                 }
             }
+
         } else {
             Py_DECREF(ret);
             return NULL;
@@ -1236,6 +1284,7 @@ pythonify_c_struct (const char *type, void *datum)
         converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
         Py_DECREF(ret);
         return converted;
+
     } else {
         return ret;
     }
@@ -1255,6 +1304,7 @@ depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject
     if (seq == NULL) {
         return -1;
     }
+
     if (count == -1) {
         count = PySequence_Fast_GET_SIZE(seq);
     }
@@ -1284,6 +1334,7 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
                              length: PyBytes_Size(arg)];
             *(void**)resp = [data mutableBytes];
             return 0;
+
 #ifdef PyByteArray_Check
         } else if (PyByteArray_Check(arg)) {
             NSMutableData* data = [NSMutableData dataWithBytes: PyByteArray_AsString(arg)
@@ -1293,7 +1344,6 @@ depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, vo
 #endif
         }
     }
-
 
     PyObject* seq = PySequence_Fast(arg, "Sequence required");
     if (seq == NULL) {
@@ -1338,6 +1388,7 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict, PyOb
                     nitems, PyBytes_Size(value));
                 return -1;
             }
+
         } else {
             if (PyBytes_Size(value) < nitems) {
                 PyErr_Format(PyExc_ValueError,
@@ -1364,6 +1415,7 @@ depythonify_c_array_count(const char* type, Py_ssize_t nitems, BOOL strict, PyOb
             Py_DECREF(seq);
             return -1;
         }
+
     } else {
         if (PySequence_Fast_GET_SIZE(seq) < nitems) {
             PyErr_Format(PyExc_ValueError,
@@ -1522,6 +1574,7 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
         seq = PyObject_GetAttrString(arg, "__struct_pack__");
         if (seq == NULL) {
             PyErr_Clear();
+
         } else {
             pack = PyNumber_AsSsize_t(seq, NULL);
             if (PyErr_Occurred()) {
@@ -1538,18 +1591,17 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
         }
         PyErr_Clear();
     }
+
     if (IS_FSSPEC(types)) {
         if (PyObjC_encode_fsspec(arg, datum) == 0) {
             return 0;
         }
         PyErr_Clear();
     }
-        if (IS_DECIMAL(types)) {
-            if (depythonify_nsdecimal(arg, datum) == 0) {
-                return 0;
-            }
-            PyErr_Clear();
-        }
+
+    if (IS_DECIMAL(types)) {
+        return depythonify_nsdecimal(arg, datum);
+    }
 
     while (*types != _C_STRUCT_E && *types++ != '='); /* skip "<name>=" */
 
@@ -1594,9 +1646,11 @@ depythonify_c_struct(const char *types, PyObject *arg, void *datum)
         if (!have_align) {
             align = PyObjCRT_AlignOfType(type);
             have_align = 1;
+
         } else {
             align = PyObjC_EmbeddedAlignOfType(type);
         }
+
         if (pack != -1 && pack < align) {
             align = pack;
         }
@@ -1668,6 +1722,7 @@ pythonify_c_value (const char *type, void *datum)
         if (cp == NULL) {
             Py_INCREF(Py_None);
             retobject = Py_None;
+
         } else {
             retobject = (PyObject*)PyBytes_FromString(cp);
         }
@@ -1744,8 +1799,6 @@ pythonify_c_value (const char *type, void *datum)
 #endif
         break;
 
-
-
     case _C_FLT:
         retobject = (PyObject *) PyFloat_FromDouble (*(float*) datum);
         break;
@@ -1772,6 +1825,7 @@ pythonify_c_value (const char *type, void *datum)
         if (obj == nil) {
             retobject = Py_None;
             Py_INCREF (retobject);
+
         } else {
             retobject = [obj  __pyobjc_PythonObject__];
         }
@@ -1782,6 +1836,7 @@ pythonify_c_value (const char *type, void *datum)
         if (*(SEL*)datum == NULL) {
             retobject = Py_None;
             Py_INCREF(retobject);
+
         } else {
             retobject = PyText_FromString(sel_getName(*(SEL*)datum));
         }
@@ -1794,6 +1849,7 @@ pythonify_c_value (const char *type, void *datum)
         if (c == Nil) {
             retobject = Py_None;
             Py_INCREF (retobject);
+
         } else {
             retobject = (PyObject *) PyObjCClass_New(c);
         }
@@ -1894,6 +1950,7 @@ depythonify_unsigned_int_value(
         if (PyErr_Occurred()) {
             return -1;
         }
+
         if (temp < 0) {
             if (PyErr_WarnEx(
                 PyExc_DeprecationWarning,
@@ -1903,6 +1960,7 @@ depythonify_unsigned_int_value(
                 return -1;
             }
         }
+
         if ((unsigned long long)temp > max) {
             PyErr_Format(PyExc_ValueError,
                 "depythonifying '%s', got '%s' of "
@@ -1916,6 +1974,7 @@ depythonify_unsigned_int_value(
 
     } else
 #endif
+
     if (PyLong_Check(argument)) {
         *out = PyLong_AsUnsignedLongLong(argument);
         if (*out == (unsigned long long)-1 && PyErr_Occurred()) {
@@ -1985,6 +2044,7 @@ depythonify_unsigned_int_value(
                     Py_DECREF(tmp);
                     return -1;
                 }
+
                 if ((long long)*out < 0) {
                     if (PyErr_WarnEx(
                         PyExc_DeprecationWarning,
@@ -2029,6 +2089,7 @@ depythonify_signed_int_value(
         if (PyErr_Occurred()) {
             return -1;
         }
+
         if (*out < min || *out > max) {
             PyErr_Format(PyExc_ValueError,
                 "depythonifying '%s', got '%s' of "
@@ -2040,6 +2101,7 @@ depythonify_signed_int_value(
 
     } else
 #endif
+
     if (PyLong_Check(argument)) {
         *out = PyLong_AsLongLong(argument);
         if (PyErr_Occurred()) {
@@ -2081,7 +2143,6 @@ depythonify_signed_int_value(
             return -1;
         }
 
-
         tmp = PyNumber_Long(argument);
         if (tmp != NULL) {
             *out = PyLong_AsLongLong(tmp);
@@ -2114,12 +2175,13 @@ const char* type, PyObject* argument, void* datum)
 #if defined(__ppc__) || defined(__i386__)
     long long temp;
     unsigned long long utemp;
-    int       r;
+    int r;
 
     /* Small integers are promoted to integers when returning them */
     switch (*type) {
 #ifdef _C_BOOL
     case _C_BOOL:
+#endif
     case _C_NSBOOL:
         if (PyObject_IsTrue(argument)) {
             *(int*) datum = YES;
@@ -2128,7 +2190,6 @@ const char* type, PyObject* argument, void* datum)
         }
         return 0;
 
-#endif
     case _C_CHAR_AS_INT:
         r = depythonify_signed_int_value(argument, "char",
             &temp, CHAR_MIN, CHAR_MAX);
@@ -2244,8 +2305,8 @@ pythonify_c_return_value (const char *type, void *datum)
       * On PowerPC short and char return values are returned
       * as full-size ints.
      */
-    static  const char intType[] = { _C_INT, 0 };
-    static  const char uintType[] = { _C_UINT, 0 };
+static const char intType[] = { _C_INT, 0 };
+static const char uintType[] = { _C_UINT, 0 };
 
     switch(*type) {
     case _C_BOOL:
@@ -2256,6 +2317,7 @@ pythonify_c_return_value (const char *type, void *datum)
     case _C_CHAR_AS_INT:
     case _C_SHT:
         return pythonify_c_value(intType, datum);
+
     case _C_UCHR: case _C_USHT:
         return pythonify_c_value(uintType, datum);
 
@@ -2362,15 +2424,16 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
         return r;
 
     case _C_CHAR_AS_TEXT:
-
         if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
             *(char*) datum = PyBytes_AsString (argument)[0];
             return 0;
+
 #ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
             *(char*) datum = PyByteArray_AsString (argument)[0];
             return 0;
 #endif
+
         } else {
             PyErr_Format(PyExc_ValueError,
                     "Expecting byte string of length 1, got a '%s'",
@@ -2383,12 +2446,14 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
             *(unsigned char*) datum =
                 PyBytes_AsString (argument)[0];
             return 0;
+
 #ifdef PyByteArray_Check
         } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
             *(unsigned char*) datum = PyByteArray_AsString (argument)[0];
             return 0;
 #endif
         }
+
         r = depythonify_unsigned_int_value(argument, "unsigned char",
             &utemp, UCHAR_MAX);
         if (r == 0) {
@@ -2493,26 +2558,6 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
         return r;
 
     case _C_ID:
-        /*
-            XXX
-
-            This should, for values other than Py_None, always return the same id
-            for the same PyObject for as long as that id lives.  I think that the
-            implementation of this should be moved to OC_PythonObject,
-            which would itself have a map of PyObject->id.  The dealloc
-            of each of these custom objects should notify OC_PythonObject
-            to remove map entry.  We need to significantly change how immutable types
-            are bridged, and create OC_PythonString, OC_PythonBool, etc. which are
-            subclasses of what they should be from the the Objective C side.
-
-            If we don't do this, we break binary plist serialization, and likely
-            other things, which assume that foo[bar] is foo[bar] for the duration of
-            the serialization process.  I would imagine that other things also
-            assume this kind of invariant, so we should do it here rather than in every
-            container object.
-        */
-
-
         return [OC_PythonObject wrapPyObject:argument toId:(id *)datum];
 
     case _C_CLASS:
@@ -2536,8 +2581,10 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
     case _C_SEL:
         if (argument == Py_None) {
             *(SEL*)datum = NULL;
+
         } else if (PyObjCSelector_Check (argument)) {
             *(SEL *) datum = PyObjCSelector_GetSelector(argument);
+
         } else if (PyUnicode_Check(argument)) {
             PyObject* bytes = PyUnicode_AsEncodedString(argument, NULL, NULL);
             if (bytes == NULL) {
@@ -2549,12 +2596,14 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
             if (*selname == '\0') {
                 *(SEL*)datum = NULL;
                 Py_DECREF(bytes);
+
             } else {
                 sel = sel_getUid (selname);
                 Py_DECREF(bytes);
 
                 if (sel)  {
                     *(SEL*) datum = sel;
+
                 } else {
                     PyErr_Format(PyExc_ValueError,
                         "depythonifying 'SEL', cannot "
@@ -2569,11 +2618,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
             if (*selname == '\0') {
                 *(SEL*)datum = NULL;
+
             } else {
                 sel = sel_getUid (selname);
 
                 if (sel)  {
                     *(SEL*) datum = sel;
+
                 } else {
                     PyErr_Format(PyExc_ValueError,
                         "depythonifying 'SEL', cannot "
@@ -2588,11 +2639,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
 
             if (*selname == '\0') {
                 *(SEL*)datum = NULL;
+
             } else {
                 sel = sel_getUid (selname);
 
                 if (sel)  {
                     *(SEL*) datum = sel;
+
                 } else {
                     PyErr_Format(PyExc_ValueError,
                         "depythonifying 'SEL', cannot "
@@ -2615,6 +2668,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
             *(void**)datum = NULL;
             return 0;
         }
+
         if (type[1] == _C_VOID) {
             r = depythonify_unsigned_int_value(argument,
                 "unsigned long",
@@ -2623,14 +2677,16 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
                 *(void**)datum = (void*)(unsigned long)utemp;
             }
             return r;
-
         }
+
         r = PyObjCPointerWrapper_FromPython(type, argument, datum);
         if (r == -1) {
             if (PyErr_Occurred()) {
                 return -1;
+
             } else if (PyObjCPointer_Check (argument)) {
                 *(void **) datum = PyObjCPointer_Ptr(argument);
+
             } else {
                 PyErr_Format(PyExc_ValueError,
                     "depythonifying 'pointer', got '%s'",
@@ -2643,15 +2699,18 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
     case _C_FLT:
         if (PyFloat_Check (argument)) {
             *(float *) datum = (float)PyFloat_AsDouble (argument);
+
 #if PY_MAJOR_VERSION == 2
         } else if (PyInt_Check (argument)) {
             *(float *) datum = (float) PyInt_AsLong (argument);
 #endif
+
         } else if (PyLong_Check (argument)) {
             *(float*) datum = (float) PyLong_AsDouble(argument);
             if (*(float*)datum == -1 && PyErr_Occurred()) {
                 return -1;
             }
+
         } else if (
 #if PY_MAJOR_VERSION == 2
                 PyString_Check(argument) ||
@@ -2666,6 +2725,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
                 "depythonifying 'float', got '%s'",
                     Py_TYPE(argument)->tp_name);
             return -1;
+
         } else {
             PyObject* tmp = PyNumber_Float(argument);
             if (tmp != NULL) {
@@ -2685,15 +2745,18 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
     case _C_DBL:
         if (PyFloat_Check (argument)) {
             *(double *) datum = PyFloat_AsDouble (argument);
+
 #if PY_MAJOR_VERSION == 2
         } else if (PyInt_Check (argument)) {
             *(double *) datum = (double) PyInt_AsLong (argument);
 #endif
+
         } else if (PyLong_Check (argument)) {
             *(double *) datum = PyLong_AsDouble (argument);
             if (*(double*)datum == -1 && PyErr_Occurred()) {
                 return -1;
             }
+
         } else if (
 #if PY_MAJOR_VERSION == 2
                 PyString_Check(argument) ||
@@ -2708,6 +2771,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
                 "depythonifying 'float', got '%s'",
                     Py_TYPE(argument)->tp_name);
             return -1;
+
         } else {
             PyObject* tmp = PyNumber_Float(argument);
             if (tmp != NULL) {
@@ -2733,6 +2797,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
                     "depythonifying 'union' of "
                     "unknown size");
                 return -1;
+
             } else if (expected_size != PyBytes_Size (argument)) {
                 PyErr_Format(PyExc_ValueError,
                     "depythonifying 'union' of size %"PY_FORMAT_SIZE_T"d, "
@@ -2740,11 +2805,13 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
                            expected_size,
                            PyBytes_Size (argument));
                 return -1;
+
             } else {
                 memcpy ((void *) datum,
                     PyBytes_AS_STRING (argument),
                 expected_size);
             }
+
         } else {
             PyErr_Format(PyExc_ValueError,
                 "depythonifying 'union', got '%s'",
@@ -2778,26 +2845,31 @@ PyObjCRT_RemoveFieldNames(char* buf, const char* type)
         type++;
         while (*type++ != '"') {}
     }
+
     end = PyObjCRT_SkipTypeQualifiers(type);
     if (end == NULL) {
         return NULL;
     }
+
     switch (*end) {
     case _C_STRUCT_B:
         /* copy struct header */
         while (*end && *end != '=' && *end != _C_STRUCT_E) {
             end++;
         }
+
         if (*end == '\0') {
             PyErr_SetString(PyExc_ValueError, "Bad type string");
             return NULL;
         }
+
         if (*end == _C_STRUCT_E) {
             end ++;
             memcpy(buf, type, end-type);
             buf[end-type] = '\0';
             return end;
         }
+
         end++;
         memcpy(buf, type, end-type);
         buf += end - type;
@@ -2855,12 +2927,14 @@ PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 }
 
 
-PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie)
+PyObject*
+PyObjCObject_NewTransient(id objc_object, int* cookie)
 {
     return [(NSObject*)objc_object __pyobjc_PythonTransient__:cookie];
 }
 
-void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
+void
+PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
 {
     if (cookie && Py_REFCNT(proxy) != 1) {
         CFRetain(PyObjCObject_GetObject(proxy));
@@ -2869,7 +2943,8 @@ void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie)
     Py_DECREF(proxy);
 }
 
-BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
+BOOL
+PyObjC_signatures_compatible(const char* type1, const char* type2)
 {
     /* Ignore type modifiers */
     type1 = PyObjCRT_SkipTypeQualifiers(type1);
@@ -2890,10 +2965,10 @@ BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
         return NO;
     }
 
-
     if (PyObjCRT_SizeOfType(type1) != PyObjCRT_SizeOfType(type2)) {
         return NO;
     }
+
     switch (*type1) {
     case _C_FLT: case _C_DBL:
         switch (*type2) {
@@ -2945,118 +3020,3 @@ BOOL PyObjC_signatures_compatible(const char* type1, const char* type2)
         }
     }
 }
-
-static const char* type_name(const char* type)
-{
-    switch (*type) {
-    case '"':
-        /* Embedded name in ivar or compound type */
-        type++;
-        while (*type != '\0' && *type != '"') type++;
-        break;
-
-    /* The following are one character type codes */
-    case _C_UNDEF:        return "<unknown>";
-    case _C_CLASS:        return "Class";
-    case _C_SEL:        return "SEL";
-    case _C_CHR:        return "char";
-    case _C_UCHR:        return "unsigned char";
-    case _C_CHARPTR:    return "char*";
-#ifdef _C_ATOM
-    case _C_ATOM:        return "<atom>";
-#endif
-#ifdef _C_BOOL
-    case _C_BOOL:        return "bool";
-#endif
-    case _C_SHT:        return "short";
-    case _C_USHT:        return "unsigned short";
-    case _C_INT:        return "int";
-    case _C_UINT:        return "unsigned int";
-    case _C_LNG:        return "long";
-    case _C_ULNG:        return "unsigned long";
-    case _C_FLT:        return "float";
-    case _C_DBL:        return "double";
-    case _C_VOID:        return "void";
-    case _C_LNG_LNG:    return "long long";
-    case _C_ULNG_LNG:    return "unsigned long";
-    case _C_UNICHAR:    return "UniChar";
-    case _C_CHAR_AS_TEXT:    return "char(text)";
-    case _C_CHAR_AS_INT:    return "int8_t";
-    case _C_NSBOOL:        return "BOOL";
-    case _C_ID:        return "id";
-    case _C_PTR:
-                if (type[1] == '?') {
-                    return "<function>";
-                }
-                break;
-    }
-    return NULL;
-}
-
-size_t describe_type(const char* type, char* buf, size_t buflen)
-{
-    const char* name;
-
-    if (*type == '"') {
-        type++;
-        while (*type != '\0' && *type != '"') type++;
-    }
-
-    name = type_name(type);
-    if (name != NULL) {
-        return snprintf(buf, buflen, "%s", name);
-    }
-
-    return snprintf(buf, buflen, "<TODO>");
-}
-
-#if 0
-    switch (*type) {
-    case _C_BFLD:
-    case _C_ARY_B:
-        /* skip digits, typespec and closing ']' */
-
-        while (isdigit (*++type));
-        type = PyObjCRT_SkipTypeSpec (type);
-        assert (type == NULL || *type == _C_ARY_E);
-        if (type) type++;
-        break;
-
-    case _C_STRUCT_B:
-        /* skip name, and elements until closing '}'  */
-        while (*type != _C_STRUCT_E && *type++ != '=');
-        while (type && *type != _C_STRUCT_E) {
-            if (*type == '"') {
-                /* embedded field names */
-                type = strchr(type+1, '"');
-                if (type != NULL) {
-                    type++;
-                } else {
-                    return NULL;
-                }
-            }
-            type = PyObjCRT_SkipTypeSpec (type);
-        }
-        if (type) type++;
-        break;
-
-    case _C_UNION_B:
-        /* skip name, and elements until closing ')'  */
-        while (*type != _C_UNION_E && *type++ != '=');
-        while (type && *type != _C_UNION_E) {
-            if (*type == '"') {
-                /* embedded field names */
-                type = strchr(type+1, '"');
-                if (type != NULL) {
-                    type++;
-                } else {
-                    return NULL;
-                }
-            }
-            type = PyObjCRT_SkipTypeSpec (type);
-        }
-        if (type) type++;
-        break;
-
-    case _C_PTR:
-#endif

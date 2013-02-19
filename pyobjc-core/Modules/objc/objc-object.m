@@ -7,7 +7,6 @@
 #include "pyobjc.h"
 
 #include <stddef.h>
-
 #include <objc/Object.h>
 
 /*

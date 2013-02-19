@@ -18,7 +18,8 @@
  * NOTE: updated for 3.2, and 2.7
  */
 typedef struct {
-        PyObject_HEAD
+    PyObject_HEAD
+
     PyTypeObject *type;
     PyObject *obj;
     PyTypeObject *obj_type;
@@ -31,10 +32,10 @@ super_getattro(PyObject *self, PyObject *name)
     int skip = su->obj_type == NULL;
     SEL sel;
 
-
     if (!skip) {
         /* We want __class__ to return the class of the super object
-           (i.e. super, or a subclass), not the class of su->obj. */
+         *  (i.e. super, or a subclass), not the class of su->obj.
+         */
         if (PyUnicode_Check(name)) {
             skip = (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
 #if PY_MAJOR_VERSION == 2
@@ -50,15 +51,27 @@ super_getattro(PyObject *self, PyObject *name)
     }
 
     if (PyUnicode_Check(name)) {
+#ifdef PyObjC_FAST_UNICODE_ASCII
+        const char* b = PyObjC_Unicode_Fast_Bytes(name);
+        if (name == NULL) {
+            return NULL;
+        }
+        sel = PyObjCSelector_DefaultSelector(b);
+
+#else /* !PyObjC_FAST_UNICODE_ASCII */
+
         PyObject* bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
         if (bytes == NULL) {
             return NULL;
         }
-        sel = sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(bytes));
+        sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(bytes));
+#endif /* !PyObjC_FAST_UNICODE_ASCII */
+
 #if PY_MAJOR_VERSION == 2
     } else if (PyBytes_Check(name)) {
         sel = PyObjCSelector_DefaultSelector(PyBytes_AsString(name));
 #endif
+
     } else if (!skip) {
         PyErr_SetString(PyExc_TypeError, "attribute name is not a string");
         return NULL;
@@ -73,16 +86,18 @@ super_getattro(PyObject *self, PyObject *name)
         starttype = su->obj_type;
         mro = starttype->tp_mro;
 
-        if (mro == NULL)
+        if (mro == NULL) {
             n = 0;
-        else {
+        } else {
             assert(PyTuple_Check(mro));
             n = PyTuple_GET_SIZE(mro);
         }
+
         for (i = 0; i < n; i++) {
             if ((PyObject *)(su->type) == PyTuple_GET_ITEM(mro, i))
                 break;
         }
+
         i++;
         res = NULL;
         for (; i < n; i++) {
@@ -137,6 +152,7 @@ super_getattro(PyObject *self, PyObject *name)
                 } else {
                     res = PyObjCMetaClass_TryResolveSelector((PyObject*)Py_TYPE(tmp), name, sel);
                 }
+
                 if (res) {
                     Py_INCREF(res);
                     f = Py_TYPE(res)->tp_descr_get;
@@ -154,7 +170,9 @@ super_getattro(PyObject *self, PyObject *name)
                         Py_DECREF(res);
                         res = tmp;
                     }
+
                     return res;
+
                 } else if (PyErr_Occurred()) {
                     return NULL;
                 }
@@ -166,55 +184,12 @@ super_getattro(PyObject *self, PyObject *name)
 
 PyTypeObject PyObjCSuper_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    "objc.super",
-    sizeof(superobject),
-    0,
-    /* methods */
-    0,                     /* tp_dealloc */
-    0,                    /* tp_print */
-    0,                    /* tp_getattr */
-    0,                    /* tp_setattr */
-    0,                    /* tp_compare */
-    0,                    /* tp_repr */
-    0,                    /* tp_as_number */
-    0,                    /* tp_as_sequence */
-    0,                           /* tp_as_mapping */
-    0,                    /* tp_hash */
-    0,                    /* tp_call */
-    0,                    /* tp_str */
-    super_getattro,                /* tp_getattro */
-    0,                    /* tp_setattro */
-    0,                    /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC |
-        Py_TPFLAGS_BASETYPE,        /* tp_flags */
-     0,                    /* tp_doc */
-     0,                    /* tp_traverse */
-     0,                    /* tp_clear */
-    0,                    /* tp_richcompare */
-    0,                    /* tp_weaklistoffset */
-    0,                    /* tp_iter */
-    0,                    /* tp_iternext */
-    0,                    /* tp_methods */
-    0,                    /* tp_members */
-    0,                    /* tp_getset */
-    0,                    /* tp_base */
-    0,                    /* tp_dict */
-    0,                    /* tp_descr_get */
-    0,                    /* tp_descr_set */
-    0,                    /* tp_dictoffset */
-    0,                    /* tp_init */
-    PyType_GenericAlloc,            /* tp_alloc */
-    PyType_GenericNew,            /* tp_new */
-    PyObject_GC_Del,                /* tp_free */
-    0,                    /* tp_is_gc */
-    0,                    /* tp_bases */
-    0,                    /* tp_mro */
-    0,                    /* tp_cache */
-    0,                    /* tp_mro */
-    0,                    /* tp_weaklist */
-    0                    /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                     /* tp_version_tag */
-#endif
-
+    .tp_name        = "objc.super",
+    .tp_basicsize   = sizeof(superobject),
+    .tp_itemsize    = 0,
+    .tp_getattro    = super_getattro,
+    .tp_flags       = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+    .tp_alloc       = PyType_GenericAlloc,
+    .tp_new         = PyType_GenericNew,
+    .tp_free        = PyObject_GC_Del,
 };

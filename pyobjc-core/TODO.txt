@@ -168,3 +168,7 @@ Medium term
 
 * Is Selector_FindNative needed with the new lookup mechanism?
   (also check explict class/instance method lookup mechanism)
+
+* Remove PyObjCUtil_Strdup, use regular strdup instead
+
+* Add tests using NumPy/numarray (and check if those implement the memoryview interface)

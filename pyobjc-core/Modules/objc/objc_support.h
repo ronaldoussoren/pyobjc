@@ -29,8 +29,6 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
  * - 'float'/'double' are not compatible with integer types.
  */
 
-extern size_t describe_type(const char* type, char* buf, size_t buflen);
-
 /*#F Takes a C value pointed by @var{datum} with its type encoded in
   @var{type}, that should be coming from an ObjC @encode directive,
   and returns an equivalent Python object where C structures and
@@ -77,7 +75,8 @@ extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 /*
  * Compatibility with pyobjc-api.h
  */
-static inline id PyObjC_PythonToId(PyObject* value)
+static inline id
+PyObjC_PythonToId(PyObject* value)
 {
     id res;
     int r;
@@ -90,7 +89,8 @@ static inline id PyObjC_PythonToId(PyObject* value)
     }
 }
 
-static inline PyObject* PyObjC_IdToPython(id value)
+static inline PyObject*
+PyObjC_IdToPython(id value)
 {
     PyObject* res;
 

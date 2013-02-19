@@ -893,7 +893,7 @@ BEGIN_UNITTEST(UnicodeFunctions)
     ASSERT(ok);
 
     ok = PyObjC_is_ascii_prefix(unicode, "hello world!", 12);
-    ASSERT(ok);
+    ASSERT(!ok);
 
 END_UNITTEST
 
