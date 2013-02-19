@@ -21,6 +21,7 @@ from PyObjCTest.fnd import NSArchiver, NSUnarchiver
 from PyObjCTest.fnd import NSKeyedArchiver, NSKeyedUnarchiver
 from PyObjCTest.fnd import NSData, NSArray, NSDictionary
 from PyObjCTest.fnd import NSMutableArray, NSMutableDictionary
+from PyObjCTest.fnd import NSMutableData
 
 #
 # First set of tests: the stdlib tests for pickling, this
@@ -131,16 +132,22 @@ class TestKeyedArchiveSimple (TestCase):
                 return dir, 'foo'
         object1 = Error1()
 
-        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_,
-                object1)
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, object1)
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
 
         class Error2 (object):
             def __reduce__(self):
                 return 'foo', (1, 2)
         object2 = Error2()
 
-        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_,
-                object2)
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, object2)
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
 
     def test_various_objects(self):
         o = a_newstyle_class()
@@ -157,13 +164,19 @@ class TestKeyedArchiveSimple (TestCase):
 
     # XXX: Disabled due to deadlock?
     def test_misc_globals(self):
-        global mystr 
+        global mystr
         orig = mystr
         try:
             del mystr
 
             o = orig('hello')
-            self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, o)
+
+            data = NSMutableData.alloc().init()
+            archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+            self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, o)
+
+            if self.archiverClass is NSKeyedArchiver:
+                archiver.finishEncoding()
 
         finally:
             mystr = orig
@@ -172,7 +185,11 @@ class TestKeyedArchiveSimple (TestCase):
             mystr = None
 
             o = orig('hello')
-            self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, o)
+            data = NSMutableData.alloc().init()
+            archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+            self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, o)
+            if self.archiverClass is NSKeyedArchiver:
+                archiver.finishEncoding()
 
         finally:
             mystr = orig
@@ -257,7 +274,7 @@ class TestKeyedArchiveSimple (TestCase):
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, newstyle_with_setstate)
         self.assertEqual(v.state, {'a': 1, 'b': 2})
-        
+
     def test_reduce_as_global(self):
         # Test class where __reduce__ returns a string (the name of a global)
 
@@ -272,17 +289,30 @@ class TestKeyedArchiveSimple (TestCase):
         class invalid_reduce (object):
             def __reduce__(self):
                 return 42
-        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
+
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
 
         class invalid_reduce (object):
             def __reduce__(self):
                 return (1,)
-        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
 
         class invalid_reduce (object):
             def __reduce__(self):
                 return (1,2,3,4,5,6)
-        self.assertRaises(pickle.PicklingError, self.archiverClass.archivedDataWithRootObject_, invalid_reduce())
+        data = NSMutableData.alloc().init()
+        archiver = self.archiverClass.alloc().initForWritingWithMutableData_(data)
+        self.assertRaises(pickle.PicklingError, archiver.encodeRootObject_, invalid_reduce())
+        if self.archiverClass is NSKeyedArchiver:
+            archiver.finishEncoding()
 
 
     def test_basic_objects(self):
