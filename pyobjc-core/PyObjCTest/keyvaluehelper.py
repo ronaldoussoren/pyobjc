@@ -89,4 +89,7 @@ class PyObjCTestObserver (NSObject):
         self.observed.append( (keyPath, obj, change, context) )
 
     def willChangeValueForKey_(self, key):
-        self.willChange.append(key)
+        try:
+            self.willChange.append(key)
+        except AttributeError:
+            pass

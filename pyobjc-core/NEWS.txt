@@ -202,6 +202,14 @@ Version 3.0
 
     Added a *name* argument to PyObjCPointerWrapper_Register.
 
+* The KVO implementation for Cocoa subclasses used to ignore exceptions
+  in the implementation of ``[obj willChangeValueForKey:]`` and
+  ``[obj didChangeValueForKey:]`` and no longer does so.
+
+  One side effect of this is that ``willChangeForForKey_`` and
+  ``didChangeValueForKey_`` can now cause user visible exceptions
+  when "__useKVO__" is true (the default) and these methods are implemented
+  in Python.
 
 Version 2.6
 -----------

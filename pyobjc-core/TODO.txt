@@ -172,3 +172,5 @@ Medium term
 * Remove PyObjCUtil_Strdup, use regular strdup instead
 
 * Add tests using NumPy/numarray (and check if those implement the memoryview interface)
+
+* PyObjCObject_GetAttrString can be removed?
