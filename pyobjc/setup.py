@@ -30,7 +30,6 @@ REQUIRES=[
         'pyobjc-framework-CoreData=='+VERSION,
         'pyobjc-framework-CoreText=='+VERSION,
         'pyobjc-framework-ExceptionHandling=='+VERSION,
-        'pyobjc-framework-FSEvents=='+VERSION,
         'pyobjc-framework-InstallerPlugins=='+VERSION,
         'pyobjc-framework-LatentSemanticMapping=='+VERSION,
         'pyobjc-framework-LaunchServices=='+VERSION,
@@ -46,6 +45,7 @@ REQUIRES=[
 ]
 
 REQUIRES_10_5=[
+        'pyobjc-framework-FSEvents=='+VERSION,
         'pyobjc-framework-CalendarStore=='+VERSION,
         'pyobjc-framework-Collaboration=='+VERSION,
         'pyobjc-framework-DictionaryServices=='+VERSION,
