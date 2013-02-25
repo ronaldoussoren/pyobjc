@@ -79,8 +79,9 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
     var = class_getInstanceVariable(
             object_getClass(objc), self->name);
     if (var == NULL) {
-        PyErr_SetString(PyExc_RuntimeError,
-            "objc_ivar descriptor for non-existing instance variable");
+        PyErr_Format(PyExc_RuntimeError,
+            "objc_ivar descriptor for non-existing instance variable '%s' in class '%s'",
+            self->name, class_getName(object_getClass(objc)));
         return NULL;
     }
 
