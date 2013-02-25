@@ -14,6 +14,9 @@ from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
 import objc
 ModuleType = type(sys)
 
+
+
+
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
         bundle = loadBundle(
@@ -244,7 +247,8 @@ class ObjCLazyModule (ModuleType):
                         val, = struct.unpack('>l', val[1:-1].encode('latin1'))
 
                 elif '.' in val:
-                    val = float(val)
+                    val = float(name, val)
+
                 else:
                     val = int(val)
 

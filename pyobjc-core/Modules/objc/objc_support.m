@@ -1157,8 +1157,6 @@ pythonify_c_struct (const char *type, void *datum)
     int haveTuple;
     const char* type_start = type;
     const char* type_end = PyObjCRT_SkipTypeSpec(type);
-    const char* type_real_start = type;
-    Py_ssize_t type_real_length = type_end - type_start;
     Py_ssize_t pack;
 
     /* Hacked up support for socket addresses */
@@ -1175,11 +1173,6 @@ pythonify_c_struct (const char *type, void *datum)
     }
     if (IS_DECIMAL(type)) {
         return pythonify_nsdecimal(datum);
-    }
-
-    /* Skip back over digits at end of type in function prototypes */
-    while (type_real_length > 0 && isdigit(type_start[type_real_length-1])) {
-        type_real_length --;
     }
 
     /* The compiler adds useless digits at the end of the signature */
@@ -1279,15 +1272,7 @@ pythonify_c_struct (const char *type, void *datum)
         item = PyObjCRT_SkipTypeSpec (item);
     }
 
-    if (haveTuple) {
-        PyObject *converted;
-        converted = [OC_PythonObject __pythonifyStruct:ret withType:type_real_start length:type_real_length];
-        Py_DECREF(ret);
-        return converted;
-
-    } else {
-        return ret;
-    }
+    return ret;
 }
 
 int

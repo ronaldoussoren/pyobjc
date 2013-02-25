@@ -24,18 +24,7 @@
 
 #include <dlfcn.h>
 
-
-int PyObjC_VerboseLevel = 0;
-BOOL PyObjC_useKVO = YES;
-BOOL PyObjC_nativeProperties = NO;
-
 PyObject* PyObjCClass_DefaultModule = NULL;
-PyObject* PyObjC_NSNumberWrapper = NULL;
-#if PY_MAJOR_VERSION == 2
-PyObject* PyObjCStrBridgeWarning = NULL;
-int PyObjC_StrBridgeEnabled = 1;
-#endif
-
 
 PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 
@@ -52,6 +41,7 @@ static NSAutoreleasePool* global_release_pool = nil;
 +(void)newAutoreleasePool;
 +(void)targetForBecomingMultiThreaded:(id)sender;
 @end
+
 @implementation OC_NSAutoreleasePoolCollector
 +(void)newAutoreleasePool
 {
@@ -85,10 +75,11 @@ PyObject *kwds)
 {
     static char* keywords[] = { "obj", NULL };
     PyObject *o;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
-        keywords, &o)) {
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &o)) {
         return NULL;
     }
+
     if (!PyObjCObject_Check(o)) {
         PyErr_SetString(PyExc_TypeError, "not an Objective-C object");
         return NULL;
@@ -115,68 +106,39 @@ PyObject *kwds)
     void *datum;
     Py_ssize_t size;
     PyObject *o;
+
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
                 "O|"Py_ARG_BYTES,
         keywords, &o, &type)) {
         return NULL;
     }
+
     size = PyObjCRT_SizeOfType(type);
     if (size < 1) {
         PyErr_SetString(PyExc_ValueError, "Can not calculate size for type");
         return NULL;
     }
+
     datum = PyMem_Malloc(size);
     if (datum == NULL) {
         return PyErr_NoMemory();
     }
+
     if (depythonify_c_value(type, o, datum)) {
         PyMem_Free(datum);
         return NULL;
     }
+
     rval = pythonify_c_value(type, datum);
     PyMem_Free(datum);
     return rval;
 }
 
 #if PY_MAJOR_VERSION == 2
-PyDoc_STRVAR(setStrBridgeEnabled_doc,
-  "setStrBridgeEnabled(bool)\n"
-  "\n"
-  "False disables the transparent str bridge (not default) \n"
-  "True enables the transparent str bridge\n");
 
-static PyObject*
-setStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-    static char* keywords[] = { "enabled", NULL };
-    PyObject *o;
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setStrBridgeEnabled",
-        keywords, &o)) {
-        return NULL;
-    }
-    PyObjC_StrBridgeEnabled = PyObject_IsTrue(o);
-    Py_INCREF(Py_None);
-    return Py_None;
-}
+PyObject* PyObjCStrBridgeWarning = NULL;
 
-PyDoc_STRVAR(getStrBridgeEnabled_doc,
-    "getStrBridgeEnabled() -> bool\n"
-    "\n"
-    "Return the status of the transparent str bridge.");
-
-static PyObject*
-getStrBridgeEnabled(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-    static char* keywords[] = { NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, ":getStrBridgeEnabled",
-            keywords)) {
-        return NULL;
-    }
-
-    return PyBool_FromLong(PyObjC_StrBridgeEnabled);
-}
-#endif /* !Py3k */
+#endif /* PY_VERSION_MAJOR == 2 */
 
 PyDoc_STRVAR(lookUpClass_doc,
   "lookUpClass(class_name) -> class\n"
@@ -188,7 +150,7 @@ static PyObject*
 lookUpClass(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
-    static     char* keywords[] = { "class_name", NULL };
+static char* keywords[] = { "class_name", NULL };
     char* class_name = NULL;
     Class objc_class;
 
@@ -250,13 +212,12 @@ classAddMethods(PyObject* self __attribute__((__unused__)),
     return Py_None;
 }
 
-
-
 PyDoc_STRVAR(remove_autorelease_pool_doc,
   "removeAutoreleasePool()\n"
   "\n"
   "This removes the global NSAutoreleasePool.  You should do this\n"
   "at the end of a plugin's initialization script.\n");
+
 static PyObject*
 remove_autorelease_pool(PyObject* self __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
@@ -269,6 +230,7 @@ remove_autorelease_pool(PyObject* self __attribute__((__unused__)),
     PyObjC_DURING
         [global_release_pool release];
         global_release_pool = nil;
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
     PyObjC_ENDHANDLER
@@ -299,8 +261,10 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)),
         PyObjC_DURING
             [global_release_pool release];
             [OC_NSAutoreleasePoolCollector newAutoreleasePool];
+
         PyObjC_HANDLER
             PyObjCErr_FromObjC(localException);
+
         PyObjC_ENDHANDLER
 
         if (PyErr_Occurred()) return NULL;
@@ -344,9 +308,7 @@ static     char* keywords[] = { "callback", NULL };
         return NULL;
     }
 
-    Py_INCREF(callback);
-    Py_XDECREF(PyObjC_ClassExtender);
-    PyObjC_ClassExtender = callback;
+    SET_FIELD_INCREF(PyObjC_ClassExtender, callback);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -362,155 +324,6 @@ static PyObject*
 getClassList(PyObject* self __attribute__((__unused__)))
 {
     return PyObjC_GetClassList();
-}
-
-PyDoc_STRVAR(setNSNumberWrapper_doc,
-    "_setNSNumberWrapper(wrapper) -> None\n"
-    "\n"
-    "Set the NSNumber wrapper function to the new value."
-);
-static PyObject*
-setNSNumberWrapper(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { "wrapper", NULL };
-    PyObject* o;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &o)) {
-        return NULL;
-    }
-
-    Py_XDECREF(PyObjC_NSNumberWrapper);
-    Py_INCREF(o);
-    PyObjC_NSNumberWrapper = o;
-
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
-PyDoc_STRVAR(getNSNumberWrapper_doc,
-    "_getNSNumberWrapper() -> wrapper\n"
-    "\n"
-    "Get the current NSNumber wrapper function."
-);
-static PyObject*
-getNSNumberWrapper(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "",
-            keywords)) {
-        return NULL;
-    }
-
-    if (PyObjC_NSNumberWrapper == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-    Py_INCREF(PyObjC_NSNumberWrapper);
-    return PyObjC_NSNumberWrapper;
-}
-
-
-PyDoc_STRVAR(setObjCPointerIsError_doc,
-    "setObjCPointerIsError(bool) -> None\n"
-    "\n"
-    "If the argument is True PyObjC will raise an exception when it tries to wrap a C pointer it doesn't know about."
-);
-static PyObject*
-setObjCPointerIsError(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { "value", NULL };
-    PyObject* o;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O",
-            keywords, &o)) {
-        return NULL;
-    }
-
-    PyObjCPointer_RaiseException = PyObject_IsTrue(o);
-
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
-PyDoc_STRVAR(setVerbose_doc,
-    "setVerbose(bool) -> None\n"
-    "\n"
-    "Set verbosity to the new value."
-);
-static PyObject*
-setVerbose(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { "level", NULL };
-    PyObject* o;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:setVerbose",
-            keywords, &o)) {
-        return NULL;
-    }
-
-    PyObjC_VerboseLevel = PyObject_IsTrue(o);
-
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
-PyDoc_STRVAR(setUseKVOForSetattr_doc,
-    "setUseKVOForSetattr(bool) -> bool\n"
-    "\n"
-    "Specify the default value for __useKVO__ on classes defined "
-    "after this call. Returns the previous value."
-);
-static PyObject*
-setUseKVOForSetattr(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { "value", NULL };
-    PyObject* o;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &o)) {
-        return NULL;
-    }
-
-    PyObject* result = PyBool_FromLong(PyObjC_useKVO);
-    PyObjC_useKVO = PyObject_IsTrue(o);
-
-    return result;
-}
-
-PyDoc_STRVAR(getVerbose_doc,
-    "getVerbose() -> bool\n"
-    "\n"
-    "Return the verbosity value."
-);
-static PyObject*
-getVerbose(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, ":getVerbose",
-            keywords)) {
-        return NULL;
-    }
-
-    return PyBool_FromLong(PyObjC_VerboseLevel);
-}
-
-PyDoc_STRVAR(getObjCPointerIsError_doc,
-    "getObjCPointerIsError() -> bool\n"
-    "\n"
-    "Returns True if PyObjC raises an exception when it tries to wrap a pointer it doesn't know about."
-);
-static PyObject*
-getObjCPointerIsError(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-static     char* keywords[] = { NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "",
-            keywords)) {
-        return NULL;
-    }
-
-    return PyBool_FromLong(PyObjCPointer_RaiseException);
 }
 
 
@@ -776,12 +589,14 @@ static  char* keywords[] = { "signature", NULL };
     if (end == signature+1) {
         structname = Py_None;
         Py_INCREF(structname);
+
     } else {
         structname = PyText_FromStringAndSize(signature, end-signature-1);
         if (structname == NULL) {
             return NULL;
         }
     }
+
     if (*end == '=') {
         signature = end+1;
     } else {
@@ -809,7 +624,9 @@ static  char* keywords[] = { "signature", NULL };
                 Py_DECREF(fields);
                 return NULL;
             }
+
             signature = end + 1;
+
         } else {
             name = Py_None;
             Py_INCREF(name);
@@ -853,12 +670,14 @@ static  char* keywords[] = { "signature", NULL };
 
         signature = end;
     }
+
     if (signature && *signature != _C_STRUCT_E) {
         Py_DECREF(structname);
         Py_DECREF(fields);
         PyErr_SetString(PyExc_ValueError, "Value is not a complete struct signature");
         return NULL;
     }
+
     if (signature && signature[1]) {
         Py_DECREF(structname);
         Py_DECREF(fields);
@@ -924,9 +743,11 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
     }
 
     protocols = PyList_New(protCount);
+
     if (protocols == NULL) {
         return NULL;
     }
+
     for (i = 0; i < protCount; i++) {
         PyObject *p = PyObjCFormalProtocol_ForProtocol(protlist[i]);
         if (p == NULL) {
@@ -934,8 +755,10 @@ protocolsForProcess(PyObject* self __attribute__((__unused__)))
             free(protlist);
             return NULL;
         }
+
         PyList_SET_ITEM(protocols, i, p);
     }
+
     free(protlist);
     return protocols;
 }
@@ -954,10 +777,12 @@ static     char* keywords[] = { "name", NULL };
     }
 
     p = objc_getProtocol(name);
+
     if (p == NULL) {
         PyErr_SetString(PyExc_AttributeError, name);
         return NULL;
     }
+
     return PyObjCFormalProtocol_ForProtocol(p);
 }
 
@@ -978,14 +803,17 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
     unsigned int protocol_count, i;
     PyObject *protocols;
     Class cls;
+
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:protocolsForClass", keywords,
             PyObjCClass_Convert, &cls)) {
         return NULL;
     }
+
     protocols = PyList_New(0);
     if (protocols == NULL) {
         return NULL;
     }
+
     protocol_list = class_copyProtocolList(cls, &protocol_count);
     for (i = 0; i < protocol_count; i++) {
         PyObject *protocol = PyObjCFormalProtocol_ForProtocol(protocol_list[i]);
@@ -997,6 +825,7 @@ protocolsForClass(PyObject* self __attribute__((__unused__)),
         PyList_Append(protocols, protocol);
         Py_DECREF(protocol);
     }
+
     free(protocol_list);
     return protocols;
 }
@@ -1039,7 +868,6 @@ static char* keywords[] = { "class_", "selector", "metadata", NULL };
     PyObject* class_name;
     PyObject* selector;
     PyObject* metadata;
-
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "SSO", keywords,
             &class_name, &selector, &metadata)) {
@@ -1146,26 +974,29 @@ static char* keywords[] = { "name", "typestr", "fieldnames", "doc", "pack", NULL
                 }
                 fieldnames[i] = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
                 Py_DECREF(bytes);
+
 #if PY_MAJOR_VERSION == 2
             } else if (PyString_Check(v)) {
                 fieldnames[i] = PyObjCUtil_Strdup(PyString_AS_STRING(v));
 #endif
+
             } else {
                 PyErr_SetString(PyExc_TypeError,
                     "fieldnames must be a sequence of strings");
                 goto error_cleanup;
             }
+
             if (fieldnames[i] == NULL) {
                 PyErr_NoMemory();
                 goto error_cleanup;
             }
         }
         field_count = PySequence_Fast_GET_SIZE(pyfieldnames);
+
     } else {
         field_count = -1;
         fieldnames = NULL;
     }
-
 
     retval = PyObjC_RegisterStructType(typestr, name, docstr, NULL,
             field_count, (const char**)fieldnames, pack);
@@ -1178,12 +1009,14 @@ error_cleanup:
     if (name) PyMem_Free(name);
     if (typestr) PyMem_Free(typestr);
     if (docstr) PyMem_Free(docstr);
+
     if (fieldnames) {
         for (i = 0; i < PySequence_Fast_GET_SIZE(pyfieldnames); i++) {
             if (fieldnames[i]) PyMem_Free(fieldnames[i]);
         }
         PyMem_Free(fieldnames);
     }
+
     Py_XDECREF(pyfieldnames);
 
     return NULL;
@@ -1262,11 +1095,13 @@ registerCFSignature(PyObject* self __attribute__((__unused__)),
 
     if (tollfreeName) {
         Class cls = objc_lookUpClass(tollfreeName);
+
         if (cls == nil) {
             PyErr_SetString(PyObjCExc_NoSuchClassError,
                     tollfreeName);
             return NULL;
         }
+
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) {
             return NULL;
         }
@@ -1372,12 +1207,14 @@ static void _callback_cleanup(void* closure)
 {
     PyObjCFFI_FreeIMP((IMP)closure);
 }
-#else
+
+#else /* Python >= 2.7 */
+
 static void _callback_cleanup(PyObject* closure)
 {
     PyObjCFFI_FreeIMP((IMP)PyCapsule_GetPointer(closure, "objc.__imp__"));
 }
-#endif
+#endif /* Python >= 2.7 */
 
 static PyObject*
 _makeClosure(
@@ -1430,6 +1267,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
                 break;
             }
         }
+
         if (argIndex == -1) {
             PyErr_SetString(PyExc_ValueError,
                 "No callback argument in the specified object");
@@ -1442,13 +1280,13 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
                 "No such argument");
             return NULL;
         }
+
         if (methinfo->argtype[argIndex].callable == NULL) {
             PyErr_Format(PyExc_ValueError,
                 "Argument %" PY_FORMAT_SIZE_T "d is not callable", argIndex);
             return NULL;
         }
     }
-
 
     PyObjC_callback_function result;
 
@@ -1474,33 +1312,10 @@ ivar_dict(PyObject* self __attribute__((__unused__)))
     return PyObjCInstanceVariable_Type.tp_dict;
 }
 
-PyObject*
-PyObjC_AdjustSelf(PyObject* object)
-{
-    if (PyType_Check(object) && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
-        PyObject* temp = PyObjCClass_ClassForMetaClass(object);
-        Py_INCREF(temp);
-        Py_DECREF(object);
-        return temp;
-    }
-    return object;
-}
-
 static PyObject*
 mod_propertiesForClass(PyObject* mod __attribute__((__unused__)), PyObject* object)
 {
     return PyObjCClass_ListProperties(object);
-}
-
-static PyObject*
-mod_setClassSetupHook(PyObject* mod __attribute__((__unused__)), PyObject* hook)
-{
-    PyObject* curval = PyObjC_class_setup_hook;
-
-    PyObjC_class_setup_hook = hook;
-    Py_INCREF(hook);
-
-    return curval;
 }
 
 /*
@@ -1512,7 +1327,8 @@ mod_setClassSetupHook(PyObject* mod __attribute__((__unused__)), PyObject* hook)
  * PPC. Therefore swap usage of _C_BOOL and _C_NSBOOL in data
  * from metadata files.
  */
-static void typecode2typecode(char* buf)
+static void
+typecode2typecode(char* buf)
 {
     /* Skip pointer declarations and anotations */
     for (;;) {
@@ -1603,7 +1419,6 @@ typestr2typestr(PyObject* args)
         return NULL;
     }
 
-
     if (buf == NULL) {
         PyErr_NoMemory();
         return NULL;
@@ -1631,8 +1446,6 @@ typestr2typestr(PyObject* args)
     return result;
 }
 
-
-
 #if    PyObjC_BUILD_RELEASE >= 1006
     /* Associated Object support. Functionality is available on OSX 10.6 or later. */
 
@@ -1649,14 +1462,14 @@ static char* keywords[] = { "object", "key", "value", "policy", NULL };
     id object;
     PyObject* key;
     id value;
-    long      policy = OBJC_ASSOCIATION_RETAIN;
+    long policy = OBJC_ASSOCIATION_RETAIN;
 
     if (objc_setAssociatedObject == NULL) {
         PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
         return NULL;
     }
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO&|i",
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO&|l",
         keywords,
         PyObjCObject_Convert, &object,
         &key,
@@ -1669,8 +1482,10 @@ static char* keywords[] = { "object", "key", "value", "policy", NULL };
 
     PyObjC_DURING
         objc_setAssociatedObject(object, (void*)key, value, policy);
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
+
     PyObjC_ENDHANDLER
 
     if (PyErr_Occurred()) return NULL;
@@ -1710,6 +1525,7 @@ static char* keywords[] = { "object", "key", NULL};
 
     PyObjC_DURING
         value = objc_getAssociatedObject(object, (void*)key);
+
     PyObjC_HANDLER
         value = nil;
         PyObjCErr_FromObjC(localException);
@@ -1734,7 +1550,7 @@ static char* keywords[] = { "object", NULL};
     id object;
 
     if (objc_removeAssociatedObjects == NULL) {
-        PyErr_SetString(PyObjCExc_Error, "setAssociatedObject not available on this platform");
+        PyErr_SetString(PyObjCExc_Error, "removeAssociatedObjects not available on this platform");
         return NULL;
     }
 
@@ -1748,8 +1564,10 @@ static char* keywords[] = { "object", NULL};
 
     PyObjC_DURING
         objc_removeAssociatedObjects(object);
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
+
     PyObjC_ENDHANDLER
 
     if (PyErr_Occurred()) return NULL;
@@ -1795,53 +1613,27 @@ static char* keywords[] = { "name", "type", "magic", NULL };
 }
 
 
-static PyObject* callable_doc_function = NULL;
-
 PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__unused__)))
 
 {
-    if (callable_doc_function == NULL) {
+    if (PyObjC_CallableDocFunction == NULL) {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    return PyObject_CallFunction(callable_doc_function, "O", callable);
+    return PyObject_CallFunction(PyObjC_CallableDocFunction, "O", callable);
 }
-
-static PyObject*
-set_callable_doc(PyObject* mod __attribute__((__unused__)), PyObject* hook)
-{
-    Py_INCREF(hook);
-    Py_XDECREF(callable_doc_function);
-    callable_doc_function = hook;
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-
 
 #if PY_VERSION_HEX >= 0x03030000
-static PyObject* callable_signature_function = NULL;
-
 PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure __attribute__((__unused__)))
 
 {
-    if (callable_signature_function == NULL) {
+    if (PyObjC_CallableSignatureFunction == NULL) {
         Py_INCREF(Py_None);
         return Py_None;
     }
-    return PyObject_CallFunction(callable_signature_function, "O", callable);
+    return PyObject_CallFunction(PyObjC_CallableSignatureFunction, "O", callable);
 }
-
-
-static PyObject*
-set_callable_signature(PyObject* mod __attribute__((__unused__)), PyObject* hook)
-{
-    Py_INCREF(hook);
-    Py_XDECREF(callable_signature_function);
-    callable_signature_function = hook;
-    Py_INCREF(Py_None);
-    return Py_None;
-}
-#endif
+#endif /* PY_VERSION_HEX >= 0x03030000 */
 
 static PyObject*
 name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signature)
@@ -1882,13 +1674,6 @@ name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signatur
 
 static PyMethodDef mod_methods[] = {
     {
-        "_setClassSetUpHook",
-        (PyCFunction)mod_setClassSetupHook,
-        METH_O,
-        "Private: set hook used during subclass creation",
-    },
-
-    {
         "propertiesForClass",
           (PyCFunction)mod_propertiesForClass,
         METH_O,
@@ -1923,19 +1708,8 @@ static PyMethodDef mod_methods[] = {
     { "_setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
     { "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
     { "removeAutoreleasePool", (PyCFunction)remove_autorelease_pool, METH_VARARGS|METH_KEYWORDS, remove_autorelease_pool_doc },
-    { "_setNSNumberWrapper", (PyCFunction)setNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, setNSNumberWrapper_doc },
-    { "_getNSNumberWrapper", (PyCFunction)getNSNumberWrapper, METH_VARARGS|METH_KEYWORDS, getNSNumberWrapper_doc },
-    { "setVerbose", (PyCFunction)setVerbose, METH_VARARGS|METH_KEYWORDS, setVerbose_doc },
-    { "setObjCPointerIsError", (PyCFunction)setObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, setObjCPointerIsError_doc },
-    { "setUseKVOForSetattr", (PyCFunction)setUseKVOForSetattr, METH_VARARGS|METH_KEYWORDS, setUseKVOForSetattr_doc },
-    { "getVerbose", (PyCFunction)getVerbose, METH_VARARGS|METH_KEYWORDS, getVerbose_doc },
-    { "getObjCPointerIsError", (PyCFunction)getObjCPointerIsError, METH_VARARGS|METH_KEYWORDS, getObjCPointerIsError_doc },
     { "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
     { "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
-#if PY_MAJOR_VERSION == 2
-    { "setStrBridgeEnabled", (PyCFunction)setStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, setStrBridgeEnabled_doc },
-    { "getStrBridgeEnabled", (PyCFunction)getStrBridgeEnabled, METH_VARARGS|METH_KEYWORDS, getStrBridgeEnabled_doc },
-#endif
     { "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
     { "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
     { "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
@@ -1999,12 +1773,6 @@ static PyMethodDef mod_methods[] = {
 
     { "_loadConstant", (PyCFunction)PyObjC_LoadConstant,
         METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
-    { "_setCallableDoc", (PyCFunction)set_callable_doc,
-        METH_O, "private function" },
-#if PY_VERSION_HEX >= 0x03030000
-    { "_setCallableSignature", (PyCFunction)set_callable_signature,
-        METH_O, "private function" },
-#endif
     { "_nameForSignature", (PyCFunction)name_for_signature,
         METH_O, "private function" },
 
@@ -2169,6 +1937,10 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
+    if (PyObjC_SetupOptions(m) < 0) {
+        PyObjC_INITERROR();
+    }
+
     if (PyObjC_setup_nsdecimal(m) < 0) {
         PyObjC_INITERROR();
     }
@@ -2178,7 +1950,6 @@ PyObjC_MODULE_INIT(_objc)
     if (d == 0) {
         PyObjC_INITERROR();
     }
-    /* use PyDict_SetItemString for the retain, non-heap types can't be dealloc'ed */
 
     if (PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
         PyObjC_INITERROR();
@@ -2281,16 +2052,12 @@ PyObjC_MODULE_INIT(_objc)
     if (PyModule_AddObject(m, "_C_CGFloat", PyBytes_FromString(@encode(CGFloat))) < 0) {
         PyObjC_INITERROR();
     }
-
-
     if (PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in)) < 0) {
         PyObjC_INITERROR();
     }
     if (PyModule_AddIntConstant(m, "_size_sockaddr_ip6", sizeof(struct sockaddr_in6)) < 0) {
         PyObjC_INITERROR();
     }
-
-
     if (PyModule_AddStringConstant(m, "__version__", OBJC_VERSION) < 0) {
         PyObjC_INITERROR();
     }
@@ -2403,11 +2170,11 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
-
     PyEval_InitThreads();
     if (![NSThread isMultiThreaded]) {
         [NSThread detachNewThreadSelector:@selector(targetForBecomingMultiThreaded:) toTarget:[OC_NSAutoreleasePoolCollector class] withObject:nil];
     }
+
     [initReleasePool release];
     /* Allocate an auto-release pool for our own use, this avoids numerous
      * warnings during startup of a python script.

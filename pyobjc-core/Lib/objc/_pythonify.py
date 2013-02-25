@@ -90,4 +90,4 @@ def numberWrapper(obj):
     else: # pragma: no cover (py3k)
         return OC_PythonLong(obj, obj.longValue())
 
-_objc._setNSNumberWrapper(numberWrapper)
+_objc.options._nsnumber_wrapper = numberWrapper

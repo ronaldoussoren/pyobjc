@@ -292,7 +292,7 @@ PyObjCErr_AsExc(void)
     Py_XDECREF(typerepr);
     Py_XDECREF(repr);
 
-    if (PyObjC_VerboseLevel) {
+    if (PyObjC_Verbose) {
         PyErr_Restore(exc_type, exc_value , exc_traceback);
         NSLog(@"PyObjC: Converting exception to Objective-C:");
         PyErr_Print();
@@ -1351,4 +1351,16 @@ PyObjC_ImportName(const char* name)
         Py_DECREF(mod);
         return v;
     }
+}
+
+PyObject*
+PyObjC_AdjustSelf(PyObject* object)
+{
+    if (PyType_Check(object) && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
+        PyObject* temp = PyObjCClass_ClassForMetaClass(object);
+        Py_INCREF(temp);
+        Py_DECREF(object);
+        return temp;
+    }
+    return object;
 }

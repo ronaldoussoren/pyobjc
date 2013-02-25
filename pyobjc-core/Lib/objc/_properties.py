@@ -690,7 +690,7 @@ class array_property (object_property):
 
     def __getvalue__(self, object):
         v = object_property.__get__(self, object, None)
-        if v is None: 
+        if v is None:
             v = list()
             object_property.__set__(self, object, v)
         return v

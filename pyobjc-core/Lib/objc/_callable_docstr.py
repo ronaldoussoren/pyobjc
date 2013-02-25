@@ -1,5 +1,4 @@
 __all__ = ()
-from objc._objc import _setCallableDoc, _nameForSignature
 import sys
 import objc
 
@@ -196,9 +195,9 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
 
     return ('\n'+offset).join(result)
 
-_setCallableDoc(describe_callable)
+objc.options._callable_doc = describe_callable
 
-if sys.version_info[:2] >= (3,3):
+if hasattr(objc.options, '_callable_signature'):
     import inspect
 
     def callable_signature(callable):
@@ -228,4 +227,4 @@ if sys.version_info[:2] >= (3,3):
 
         return inspect.Signature(parameters)
 
-    objc._setCallableSignature(callable_signature)
+    objc.options._callable_signature = callable_signature

@@ -6,8 +6,6 @@
 
 #import <Foundation/NSInvocation.h>
 
-PyObject* PyObjC_class_setup_hook = NULL;
-
 #if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
 
 /*
@@ -864,37 +862,21 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
          PyErr_Clear();
 
       } else {
-         PyObject* rv = PyObject_CallFunction(m, "OOOO",
-               key, class_dict,
-               instance_methods,
-               class_methods);
-         Py_DECREF(m);
-         if (rv == NULL) {
-            goto error_cleanup;
-         }
-         Py_DECREF(rv);
+            PyObject* rv = PyObject_CallFunction(m, "OOOO", key, class_dict,
+                                                 instance_methods, class_methods);
+            Py_DECREF(m);
+            if (rv == NULL) {
+                goto error_cleanup;
+            }
+            Py_DECREF(rv);
       }
    }
 
-   Py_DECREF(key_list);
+   /* The class_setup_hooks may have changed the class dictionary, hence
+    * we need to recalculate the key list.
+    */
+   Py_XDECREF(key_list);
 
-   /* Second step: call global class construction hook */
-   if (PyObjC_class_setup_hook != NULL) {
-      PyObject* rv = PyObject_CallFunction(
-         PyObjC_class_setup_hook,
-         "sOOOOO", name, py_superclass,
-         class_dict, instance_variables,
-         instance_methods, class_methods);
-      if (rv == NULL) {
-         goto error_cleanup;
-      }
-
-      /* Todo: do we need to do something with a result? */
-      Py_XDECREF(rv);
-   }
-
-
-   /* The class hooks can modify the class dict, recalculate the key list */
    key_list = PyDict_Keys(class_dict);
    if (key_list == NULL) {
       goto error_cleanup;

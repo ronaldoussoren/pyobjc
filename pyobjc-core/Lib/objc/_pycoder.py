@@ -28,8 +28,6 @@ if sys.version_info[0] == 3: # pragma: no cover (py3k)
     intern = sys.intern
 
 
-OC_PythonObject = objc.lookUpClass("OC_PythonObject")
-
 NSArray = objc.lookUpClass("NSArray")
 NSDictionary = objc.lookUpClass("NSDictionary")
 NSString = objc.lookUpClass("NSString")
@@ -455,7 +453,7 @@ def pyobjectEncode(self, coder):
 
     # Check for a class with a custom metaclass
     # NOTE: pickle.py catches TypeError here, that's for
-    #       compatibility with ancient versions of Boost 
+    #       compatibility with ancient versions of Boost
     #       (before Python 2.2) and is not needed here.
     issc = issubclass(t, type)
 
@@ -474,7 +472,7 @@ def pyobjectEncode(self, coder):
             rv = reduce(2)
 
         else: # pragma: no cover
-            # This path will never be used because object implements 
+            # This path will never be used because object implements
             # __reduce_ex__ (at least in python2.6 and later)
             rv = getattr(self, "__reduce__", None)
             if reduce is not None:
@@ -510,5 +508,7 @@ def pyobjectDecode(coder, setValue):
     return f(coder, setValue)
 
 # An finally register the coder/decoder
-OC_PythonObject.setVersion_coder_decoder_copier_(
-        1, pyobjectEncode, pyobjectDecode, copy.copy)
+objc.options._nscoding_version = 1
+objc.options._nscoding_encoder = pyobjectEncode
+objc.options._nscoding_decoder = pyobjectDecode
+objc.options._copy = copy.copy

@@ -24,14 +24,7 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
-extern PyObject* PyObjC_Encoder;
-extern PyObject* PyObjC_Decoder;
-extern PyObject* PyObjC_CopyFunc;
-
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
-
-
-
 
 @interface OC_PythonObject : NSProxy  <NSCopying>
 {
@@ -40,9 +33,6 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
 + (id <NSObject>)objectWithPythonObject:(PyObject *) obj;
-+ (id)depythonifyTable;
-+ (id)pythonifyStructTable;
-+ (PyObject *)__pythonifyStruct:(PyObject *) obj withType:(const char *) type length:(Py_ssize_t) length;
 + (id <NSObject>)objectWithCoercedPyObject:(PyObject *) obj;
 - (id)initWithPyObject:(PyObject *) obj;
 

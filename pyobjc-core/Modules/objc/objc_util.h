@@ -45,4 +45,7 @@ extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_st
 
 extern PyObject* PyObjC_ImportName(const char* name);
 
+extern PyObject* PyObjC_AdjustSelf(PyObject* object);
+
+
 #endif /* OBJC_UTIL */

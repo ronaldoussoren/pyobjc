@@ -14,8 +14,6 @@
 
 #include "pyobjc.h"
 
-int PyObjCPointer_RaiseException = 0;
-
 static void
 PyObjCPointer_dealloc (PyObject* _self)
 {
@@ -31,6 +29,14 @@ static PyObject *
 PyObjCPointer_unpack (PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
+
+    if (PyErr_WarnEx(
+        PyExc_DeprecationWarning,
+            "Using ObjCPointer is deprecated, unpack will be removed in PyObjC 3.1",
+            1) < 0) {
+
+        return NULL;
+    }
 
     if (self->ptr) {
         const char *type = PyBytes_AS_STRING(self->type);

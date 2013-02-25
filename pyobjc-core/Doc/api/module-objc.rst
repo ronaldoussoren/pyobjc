@@ -23,6 +23,58 @@ be removed from release without warning.
 NOTE: This document is currently mostly an exhaustive list of stuff and
 needs to be reorganised once I've filled in the technical details.
 
+Bridge options
+..............
+
+.. data:: options
+
+   The object :data:`options` has attributes for reading and setting
+   a number of configuration options for the bridge.
+
+   Attributes whose names start with an underscore are reserved for
+   use by the bridge and can appear or disappear with every release
+   of PyObjC.
+
+   .. versionadded:: 3.0
+
+
+   .. data:: objc.options.verbose
+
+      When the value is :const:`True` the bridge will log more information.
+
+      This currently results in output on the standard error stream whenever
+      an exception is translated from Python to Objective-C.
+
+   .. data:: objc.options.use_kvo
+
+      The default value for the *__useKVO__* attribute on
+      classes.
+
+      When the *__useKVO__* attribute of a class is true instances
+      of the class will generate Key-Value Observation notifications when
+      setting attributes from Python.
+
+
+   .. data:: objc.options.unknown_pointer_raises
+
+      When True (the default) the bridge will raise an exception when
+      it encounters a pointer value that cannot be converted to Python,
+      otherwise it it creates instances of :class:`ObjCPointer`.
+
+   .. data:: objc.options.strbridge_enabled
+
+      Python 2 only: When True (the default) instances of :class:`str`
+      are bridged as instances of a subclass of *NSString*, otherwise
+      strings are not bridged.
+
+      .. note::
+
+         This option is only relevant for Python 2.x, for Python 3.x
+         instances of :class:`str` are bridged as instances of a
+         subclass of *NSString* and instances of :class:`bytes` (
+         the :class:`str` class in Python 2) are bridged as instances
+         of a subclass of *NSData*.
+
 Debugging
 .........
 
@@ -33,10 +85,14 @@ Debugging
    This currently results in output on the standard error stream whenever
    an exception is translated from Python to Objective-C.
 
+   .. deprecated:: 3.0 Use :data:`objc.options` instead
+
 
 .. function:: getVerbose()
 
    Returns the current value of the verbose flag.
+
+   .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 
 Tweaking behaviour
@@ -51,13 +107,7 @@ Tweaking behaviour
    of the class will generate Key-Value Observation notifications when
    setting attributes from Python.
 
-.. function:: setHideProtected(yesOrNo)
-
-   When the argument is :const:`True` protected methods of an Objective-C
-   class will not be included in the output of :func:`dir`. Protected methods
-   are those whose selector starts with an underscore.
-
-   This option is on by default.
+   .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 .. function:: setStrBridgeEnabled(yesOrNo)
 
@@ -76,6 +126,9 @@ Tweaking behaviour
       Setting this option to false is discouraged and is mostly usefull when porting
       to Python 3.
 
+   .. deprecated:: 3.0 Use :data:`objc.options` instead
+
+
 .. function:: getStrBridgeEnabled
 
    Returns :data:`True` if the str bridge is enabled and :data:`False` when it is
@@ -85,6 +138,7 @@ Tweaking behaviour
 
       This function is not available in Python 3.x
 
+   .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 Utilities
 ..........
@@ -1425,3 +1479,31 @@ These collection properties are at this time experimental and do not yet
 provide proper hooks for tweaking their behavior. Future versions of PyObjC
 will provide such hooks (for example a method that will be called when an
 item is inserted in an array property).
+
+
+Unconvertable pointer values
+----------------------------
+
+With incomplete metadata the bridge can run into pointer values that
+it cannot convert to normal Python values. When
+:data:`options.unknown_pointer_raises <objc.options.unknown_pointer_raises>`
+is false such pointer values are bridged as instances of :class:`ObjCPointer`.
+
+The bridge will unconditionally emit a warning before creating such instances,
+the reason for this is that the use of :class:`ObjCPointer` is unwanted
+(that's why the creation of such objects is disabled by default in PyObjC 3.0).
+
+.. class:: ObjCPointer
+
+   .. data:: type
+
+      A bytes string with the Objective-C type encoding for
+      the pointed to value.
+
+   .. data:: pointerAsInteger
+
+      An integer value with the raw pointer value.
+
+   .. method:: unpack()
+
+      Returns a python representation of the pointed-to value.

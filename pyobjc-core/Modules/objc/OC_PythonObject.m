@@ -30,29 +30,7 @@
 
 extern NSString * const NSUnknownKeyException; /* Radar #3336042 */
 
-PyObject *OC_PythonObject_DepythonifyTable = NULL;
-PyObject *OC_PythonObject_PythonifyStructTable = NULL;
-
-static int       py_version = 0;
-PyObject* PyObjC_Encoder = NULL;
-PyObject* PyObjC_Decoder = NULL;
-PyObject* PyObjC_CopyFunc = NULL;
-
 @implementation OC_PythonObject
-+ (void)setVersion:(int) version coder:(NSObject*)coder decoder:(NSObject*)decoder copier:(NSObject*)copier
-{
-    py_version = version;
-
-    Py_XDECREF(PyObjC_Encoder);
-    PyObjC_Encoder = PyObjC_IdToPython(coder);
-
-    Py_XDECREF(PyObjC_Decoder);
-    PyObjC_Decoder = PyObjC_IdToPython(decoder);
-
-    Py_XDECREF(PyObjC_CopyFunc);
-    PyObjC_CopyFunc = PyObjC_IdToPython(copier);
-}
-
 + (int)wrapPyObject:(PyObject *)argument toId:(id *)datum
 {
     int r;
@@ -232,38 +210,6 @@ end:
             instance = PyObjCFormalProtocol_GetProtocol(obj);
             PyObjC_GIL_RETURN(instance);
         }
-        if (OC_PythonObject_DepythonifyTable != NULL &&
-            PyList_Check(OC_PythonObject_DepythonifyTable)) {
-            int i;
-            for (i=0; i<PyList_GET_SIZE(OC_PythonObject_DepythonifyTable); i++) {
-                PyObject *tpl = PyList_GET_ITEM(OC_PythonObject_DepythonifyTable, i);
-                PyObject *cls;
-                if (!PyTuple_Check(tpl)) continue;
-
-                cls = PyTuple_GET_ITEM(tpl, 0);
-                if (PyObject_IsInstance(obj, cls)) {
-                    PyObject *fn;
-                    PyObject *res;
-                    int err;
-                    fn = PyTuple_GET_ITEM(tpl, 1);
-                    res = PyObject_CallFunctionObjArgs(fn, obj, NULL);
-                    if (res == NULL) {
-                        PyObjC_GIL_FORWARD_EXC();
-                    }
-                    if (PyObject_IsInstance(res, cls)) {
-                        Py_DECREF(res);
-                        continue;
-                    }
-                    err = depythonify_c_value (@encode(id), res, &instance);
-                    Py_DECREF(res);
-                    if (err == -1) {
-                        PyObjC_GIL_FORWARD_EXC();
-                    } else {
-                        PyObjC_GIL_RETURN(instance);
-                    }
-                }
-            }
-        }
 
         /* Check if the object is "sequence-like" */
         instance = [OC_PythonArray depythonifyObject:obj];
@@ -309,69 +255,6 @@ end:
     PyObjC_END_WITH_GIL
     [instance autorelease];
     return instance;
-}
-
-+(id)depythonifyTable
-{
-    id rval;
-    PyObjC_BEGIN_WITH_GIL
-        int err;
-
-        if (OC_PythonObject_DepythonifyTable == NULL) {
-            OC_PythonObject_DepythonifyTable = PyList_New(0);
-        }
-
-        err = depythonify_c_value(@encode(id), OC_PythonObject_DepythonifyTable, &rval);
-        if (err == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-
-    return rval;
-}
-
-+(id)pythonifyStructTable
-{
-    id rval;
-    PyObjC_BEGIN_WITH_GIL
-        int err;
-        if (OC_PythonObject_PythonifyStructTable == NULL) {
-            OC_PythonObject_PythonifyStructTable = PyDict_New();
-        }
-
-        err = depythonify_c_value(@encode(id), OC_PythonObject_PythonifyStructTable, &rval);
-        if (err == -1) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-    PyObjC_END_WITH_GIL
-    return rval;
-}
-
-+(PyObject *)__pythonifyStruct:(PyObject*)obj withType:(const char *)type length:(Py_ssize_t)length
-{
-    PyObject* typeString;
-    PyObject* convert;
-    PyObject* result;
-
-    if (OC_PythonObject_PythonifyStructTable == NULL) {
-        Py_INCREF(obj);
-        return obj;
-    }
-
-    typeString = PyText_FromStringAndSize(type, length);
-    if (type == NULL) {
-        return NULL;
-    }
-
-    convert = PyDict_GetItem(OC_PythonObject_PythonifyStructTable, typeString);
-    Py_DECREF(typeString);
-    if (convert == NULL) {
-        Py_INCREF(obj);
-        return obj;
-    }
-    result = PyObject_CallFunctionObjArgs(convert, obj, NULL);
-    Py_DECREF(convert);
-    return result;
 }
 
 -(id)initWithPyObject:(PyObject *) obj

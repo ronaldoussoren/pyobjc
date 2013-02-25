@@ -95,26 +95,24 @@ typedef struct _PyObjCClassObject {
 
 
 extern PyObject* PyObjCClass_DefaultModule;
-PyObject* PyObjCClass_New(Class objc_class);
-Class PyObjCClass_GetClass(PyObject* object);
-PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method);
-void PyObjCClass_MaybeRescan(PyObject* class);
-int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
-Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
-PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
-void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
-int  PyObjCClass_HasPythonImplementation(PyObject* cls);
-PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
-PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
-int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadata);
-int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
-
-PyObject* PyObjCClass_ListProperties(PyObject* cls);
+extern PyObject* PyObjCClass_New(Class objc_class);
+extern Class PyObjCClass_GetClass(PyObject* object);
+extern PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method);
+extern void PyObjCClass_MaybeRescan(PyObject* class);
+extern int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
+extern void PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
+extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
+extern PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
+extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
+extern int PyObjCClass_HasPythonImplementation(PyObject* cls);
+extern PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
+extern PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
+extern int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadata);
+extern int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
+extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 
 /* Returns a borrowed reference or NULL (without necessarily raising an exception) */
-PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
-PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
-
+extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
+extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 
 #endif /* PyObjC_OBJC_CLASS_H */

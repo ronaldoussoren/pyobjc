@@ -360,6 +360,7 @@ static  ffi_cif* new_cif = NULL;
             "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
+    Py_INCREF(newType); /* Store reference, hence INCREF */
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)cl;
     cl = NULL;
@@ -375,6 +376,7 @@ static  ffi_cif* new_cif = NULL;
             "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
+    Py_INCREF(newType); /* Store reference, hence INCREF */
 
     from_c = (PyObjCPointerWrapper_ToPythonFunc)cl;
     cl = NULL;

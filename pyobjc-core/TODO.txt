@@ -174,3 +174,35 @@ Medium term
 * Add tests using NumPy/numarray (and check if those implement the memoryview interface)
 
 * PyObjCObject_GetAttrString can be removed?
+
+* Replace 'assert' calls by calls to 'PyObjC_Assert'
+
+* Remove PyObjCPointer completely?
+
+* Add objc.options object, instead of having a large set of
+  functions to manipulate options.
+
+  Simple python helper functions can provide backward compatiblity.
+
+
+* From Cocoa-dev:
+	NSArray *a = @[ @"$nill", @"$null", @"$nall" ];
+	NSLog(@"%s NSKeyedArchiver archiving %@", __FUNCTION__, a);
+	NSData *e = [ NSKeyedArchiver archivedDataWithRootObject: a ];
+	NSArray *b = [ NSKeyedUnarchiver unarchiveObjectWithData: e ];
+	NSLog(@"%s NSKeyedUnarchiver got %@", __FUNCTION__, b);
+	/*NSKeyedArchiver archiving (
+	 "$nill",
+	 "$null",
+	 "$nall"
+	 )
+	 NSKeyedUnarchiver got ()
+	 **/
+
+  That is, some strins don't archive properly? Work around this in
+  OC_PythonUnicode's archiving support
+
+* Add _named_int, _named_long, _named_float to lazy loader to get nicer
+  repr/str for named constants.
+
+  Problem: non-empty slots is not supported for type long

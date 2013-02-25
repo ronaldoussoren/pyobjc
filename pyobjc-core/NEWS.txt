@@ -211,6 +211,39 @@ Version 3.0
   when "__useKVO__" is true (the default) and these methods are implemented
   in Python.
 
+* PyObjC 3 requires a compiler that supports Objective-C with C99 as the base
+  language.
+
+* PyObjC will now raise an exception instead of creating instances of
+  :class:`objc.PyObjCPointer`. You can set :data:`objc.options.unknown_pointer_raises`
+  to False to re-enable the previous behavior (although that is almost always the
+  wrong solution).
+
+* Configuration options are now attributes of special object :data:`objc.options`.
+
+  The following functions are therefore now deprecated and will be removed
+  in PyObjC 3.1:
+
+  * :func:`objc.getVerbose`
+
+  * :func:`objc.setVerbose`
+
+  * :func:`objc.setUseKVOForSetAttr`
+
+  * :func:`objc.setStrBridgeEnabled`
+
+  * :func:`objc.getStrBridgeEnabled`
+
+* Removed objc._setClassSetUpHook, an internal method that is not used
+  anymore.
+
+* Removed +[OC_PythonObject setVersion:encoder:decoder:],
+ +[OC_PythonObject pythonifyStructTable], +[OC_PythonObject depythonifyTable].
+
+ All were private methods used by the core bridge and are no longer necessary.
+
+
+
 Version 2.6
 -----------
 

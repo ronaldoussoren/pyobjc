@@ -6,13 +6,13 @@ This module contains no user callable code.
 
 FIXME: this module needs to be cleaned up
 - all _CONVENIENCE_METHOD updates need to go (move to CLASS_METHODS mechanism instead,
-  and for anything not in Foundation those CLASS_METHODS updates should be in the 
+  and for anything not in Foundation those CLASS_METHODS updates should be in the
   relevant framework wrapper)
 - remove all functions that are no longer used
 - group the others (possibly splitting this file into a number of modules)
 
 """
-from objc._objc import _setClassExtender, selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call
+from objc._objc import selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call, options
 from objc._objc import registerMetaDataForSelector, _updatingMetadata
 import sys
 import warnings
@@ -65,7 +65,7 @@ def add_convenience_methods(super_class, name, type_dict):
             type_dict[nm] = value
 
 
-_setClassExtender(add_convenience_methods)
+options._class_extender = add_convenience_methods
 
 
 #
