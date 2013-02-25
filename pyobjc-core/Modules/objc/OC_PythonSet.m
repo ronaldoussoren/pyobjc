@@ -391,11 +391,10 @@ static PyObject* mapTypes = NULL;
 
                 if (r) {
                     /* Found the object */
-                    Py_DECREF(tmp);
-                    Py_DECREF(tmpMember);
-
                     result = PyObjC_PythonToId(v);
                     if (PyErr_Occurred()) {
+                        Py_DECREF(tmp);
+                        Py_DECREF(tmpMember);
                         PyObjC_GIL_FORWARD_EXC();
                     }
                     break;
