@@ -533,7 +533,9 @@ static PyObject* mapTypes = NULL;
           if ([coder allowsKeyedCoding]) {
               size = [coder decodeInt32ForKey:@"pylength"];
           } else {
-              [coder decodeValueOfObjCType:@encode(int) at:&size];
+              int isize;
+              [coder decodeValueOfObjCType:@encode(int) at:&isize];
+              size = isize;
           }
 
           PyObjC_BEGIN_WITH_GIL
