@@ -447,22 +447,15 @@ CFLAGS.extend([
 ## on i386 systems when a method returns a struct that isn't returned
 ## in registers.
 if '-O0' in get_config_var('CFLAGS'):
-    print ("Change -O0 to -O1")
+    print ("Change -O0 to -O1 (-O0 miscompiles libffi)")
     vars = get_config_vars()
     for k in vars:
         if isinstance(vars[k], str) and '-O0' in vars[k]:
             vars[k] = vars[k].replace('-O0', '-O1')
 
-if '-O2' in get_config_var('CFLAGS'):
-    print ("Change -O2 to -O1")
-    vars = get_config_vars()
-    for k in vars:
-        if isinstance(vars[k], str) and '-O2' in vars[k]:
-            vars[k] = vars[k].replace('-O2', '-O1')
-
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
-if 0:
+if 1:
     # XXX: This block is enabled for two reasons:
     # 1) Testsuite crashes with an incomplete testcase (python2.7, OSX 10.8)
     # 2) There should be a build-time check to see if these options are supported
@@ -472,8 +465,12 @@ if 0:
     for k in vars: # XXX
         if isinstance(vars[k], str) and '-O2' in vars[k]:
             vars[k] = vars[k].replace('-O2', '-O4')
-    OBJC_LDFLAGS.append("-fvisibility=hidden")
-    CFLAGS.append("-fcatch-undefined-behavior")
+
+OBJC_LDFLAGS.append("-fvisibility=hidden")
+
+# XXX: disabled 'catch-undefined-behavior' due to (unexplained) crash.
+#      the crash should be investigated and fixed.
+#CFLAGS.append("-fcatch-undefined-behavior")
 
 if not os.path.exists('/usr/include/objc/runtime.h'):
     # XXX: fixme: this ^^^ should test for a header file in the location

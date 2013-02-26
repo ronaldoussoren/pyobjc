@@ -206,3 +206,5 @@ Medium term
   repr/str for named constants.
 
   Problem: non-empty slots is not supported for type long
+
+* Crash with -fcatch-undefined-behavior (see setup.py)
