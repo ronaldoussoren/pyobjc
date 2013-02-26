@@ -208,3 +208,49 @@ Medium term
   Problem: non-empty slots is not supported for type long
 
 * Crash with -fcatch-undefined-behavior (see setup.py)
+
+* Finish AVFoundation bindings
+
+* Create AppleShareClientCore bindings? (there are headers, but no documentation)
+
+* Create AudioToolbox bindings
+
+* Create AudioUnit bindings
+
+* Create AudioVideoBridging bindings
+
+* Create CoreAudio, CoreAudioKit bindings
+
+* Create CoreMIDI bindings
+
+* Create CoreMedia, CoreMediaIO bindings
+
+* Create DVComponentGlue bindings
+
+* Create DVDPlayback bindings
+
+* Create DiscRecording, DiscRecordingUI bindings
+
+* Create DiskArbitration bindings
+
+* Create GSS bindings
+
+* Create GameKit bindings
+
+* Create ICADevices bindings
+
+* Create IMServicePlugIn bindings
+
+* Create IOBluetooth, IOBluetoothUI bindings
+
+* Create IOKit, IOSurface bindings (?)
+
+* Create ImageCaptureCore bindings (add to Quartz)
+
+* Create OSAKit bindings?
+
+* Create SceneKit bindings (add to Quartz)
+
+* Create Security, SecurityFoundation, SecurityInterface bindings
+
+* Create StoreKit bindings
