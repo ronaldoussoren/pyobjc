@@ -255,6 +255,8 @@ Version 3.0
   available. This shouldn't affect normal code because these methods aren't
   part of the public API for PyObjC.
 
+* Added bindings to the CoreWLAN framework (Mac OS X 10.6 or later) in
+  package "pyobjc-framework-CoreWLAN"
 
 Version 2.6
 -----------

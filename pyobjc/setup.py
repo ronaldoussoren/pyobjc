@@ -62,6 +62,7 @@ REQUIRES_10_6=[
         'pyobjc-framework-CoreLocation=='+VERSION,
         'pyobjc-framework-ServerNotification=='+VERSION,
         'pyobjc-framework-ServiceManagement=='+VERSION,
+        'pyobjc-framework-CoreWLAN=='+VERSION,
 ]
 
 DEL_REQUIRES_10_7=[
