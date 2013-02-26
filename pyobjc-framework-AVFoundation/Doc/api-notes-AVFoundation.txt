@@ -1,0 +1,15 @@
+API notes: AVFoundation framework
+=================================
+
+API Notes
+---------
+
+The entire "AVFoundation" framework on MacOSX 10.7 (or later) is available from Python.
+
+
+AVAssetWriterInput
+..................
+
+* ``-requestMediaDataWhenReadyOnQueue:usingBlock:``
+
+   Dispatch queues aren't exposed to Python at this time.

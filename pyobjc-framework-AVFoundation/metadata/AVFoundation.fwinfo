@@ -1,0 +1,509 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "AVAssetImageGenerator": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o" },
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "retval": { "already_cfretained": true },
+      "selector": "copyCGImageAtTime:actualTime:error:"
+     }
+    ]
+   },
+   "AVAssetReader": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "assetReaderWithAsset:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithAsset:error:"
+     }
+    ]
+   },
+   "AVAssetReaderOutput": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "copyNextSampleBuffer"
+     }
+    ]
+   },
+   "AVAssetWriter": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": true,
+      "selector": "assetWriterWithURL:fileType:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithURL:fileType:error:"
+     }
+    ]
+   },
+   "AVAssetWriterInput": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": true,
+      "selector": "assetWriterInputWithMediaType:outputSettings:sourceFormatHint:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithMediaType:outputSettings:sourceFormatHint:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "requestMediaDataWhenReadyOnQueue:usingBlock:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "appendSampleBuffer:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "sourceFormatHint"
+     }
+    ]
+   },
+   "AVAssetWriterInputPixelBufferAdaptor": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "appendPixelBuffer:withPresentationTime:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "pixelBufferPool"
+     }
+    ]
+   },
+   "AVAudioMixInputParameters": {
+    "methods": [
+     {
+      "args": {
+       "1": {},
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "getVolumeRampForTime:startVolume:endVolume:timeRange:"
+     }
+    ]
+   },
+   "AVAudioPlayer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithContentsOfURL:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithData:error:"
+     }
+    ]
+   },
+   "AVAudioRecorder": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithURL:settings:error:"
+     }
+    ]
+   },
+   "AVCaptureAudioDataOutput": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setSampleBufferDelegate:queue:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "sampleBufferCallbackQueue"
+     }
+    ]
+   },
+   "AVCaptureDevice": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "lockForConfiguration:"
+     }
+    ]
+   },
+   "AVCaptureDeviceFormat": {
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "formatDescription"
+     }
+    ]
+   },
+   "AVCaptureDeviceInput": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": true,
+      "selector": "deviceInputWithDevice:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:error:"
+     }
+    ]
+   },
+   "AVCaptureInputPort": {
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "formatDescription"
+     }
+    ]
+   },
+   "AVCaptureStillImageOutput": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "jpegStillImageNSDataRepresentation:"
+     }
+    ]
+   },
+   "AVCaptureVideoDataOutput": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setSampleBufferDelegate:queue:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "sampleBufferCallbackQueue"
+     }
+    ]
+   },
+   "AVMetadataItem": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "statusOfValueForKey:error:"
+     }
+    ]
+   },
+   "AVMutableComposition": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "insertTimeRange:ofAsset:atTime:error:"
+     }
+    ]
+   },
+   "AVMutableCompositionTrack": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "insertTimeRange:ofTrack:atTime:error:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "insertTimeRanges:ofTracks:atTime:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "validateTrackSegments:error:"
+     }
+    ]
+   },
+   "AVMutableVideoCompositionInstruction": {
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "retain"
+      ],
+      "name": "backgroundColor"
+     }
+    ]
+   },
+   "AVPlayer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "addPeriodicTimeObserverForInterval:queue:usingBlock:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "addBoundaryTimeObserverForTimes:queue:usingBlock:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "retain"
+      ],
+      "name": "masterClock"
+     }
+    ]
+   },
+   "AVPlayerItem": {
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "timebase"
+     }
+    ]
+   },
+   "AVPlayerItemVideoOutput": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "retval": {},
+      "selector": "copyPixelBufferForItemTime:itemTimeForDisplay:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "setDelegate:queue:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "delegateQueue"
+     }
+    ]
+   },
+   "AVSampleBufferDisplayLayer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "enqueueSampleBuffer:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "requestMediaDataWhenReadyOnQueue:usingBlock:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "retain"
+      ],
+      "name": "controlTimebase"
+     }
+    ]
+   },
+   "AVVideoCompositionInstruction": {
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "retain"
+      ],
+      "name": "backgroundColor"
+     }
+    ]
+   },
+   "AVVideoCompositionLayerInstruction": {
+    "methods": [
+     {
+      "args": {
+       "1": {},
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "getTransformRampForTime:startTransform:endTransform:timeRange:"
+     },
+     {
+      "args": {
+       "1": {},
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "getOpacityRampForTime:startOpacity:endOpacity:timeRange:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "AVAsynchronousKeyValueLoading": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "statusOfValueForKey:error:"
+     }
+    ]
+   },
+   "AVCaptureAudioDataOutputSampleBufferDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "captureOutput:didOutputSampleBuffer:fromConnection:"
+     }
+    ]
+   },
+   "AVCaptureFileOutputDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "captureOutput:didOutputSampleBuffer:fromConnection:"
+     }
+    ]
+   },
+   "AVCaptureVideoDataOutputSampleBufferDelegate": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "captureOutput:didOutputSampleBuffer:fromConnection:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "captureOutput:didDropSampleBuffer:fromConnection:"
+     }
+    ]
+   }
+  },
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

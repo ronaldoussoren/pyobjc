@@ -258,6 +258,9 @@ Version 3.0
 * Added bindings to the CoreWLAN framework (Mac OS X 10.6 or later) in
   package "pyobjc-framework-CoreWLAN"
 
+* Added bindings to the AVFoundation framework (Mac OS X 10.7 or later) in
+  package "pyobjc-framework-AVFoundation"
+
 Version 2.6
 -----------
 
