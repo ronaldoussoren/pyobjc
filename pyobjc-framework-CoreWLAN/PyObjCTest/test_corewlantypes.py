@@ -4,7 +4,7 @@ import CoreWLAN
 import Foundation
 
 class TestCoreWLANTypes (TestCase):
-    def testConstants(Self):
+    def testConstants(self):
         self.assertEqual(CoreWLAN.kCWNoErr, 0)
         self.assertEqual(CoreWLAN.kCWEAPOLErr, 1)
         self.assertEqual(CoreWLAN.kCWInvalidParameterErr, -3900)
@@ -107,7 +107,7 @@ class TestCoreWLANTypes (TestCase):
         self.assertEqual(CoreWLAN.kCWInterfaceStateScanning, 1)
         self.assertEqual(CoreWLAN.kCWInterfaceStateAuthenticating, 2)
         self.assertEqual(CoreWLAN.kCWInterfaceStateAssociating, 3)
-        self.assertEqual(CoreWLAN.kCWInterfaceStateRunning 4)
+        self.assertEqual(CoreWLAN.kCWInterfaceStateRunning, 4)
         self.assertEqual(CoreWLAN.kCWScanTypeActive, 0)
         self.assertEqual(CoreWLAN.kCWScanTypePassive, 1)
         self.assertEqual(CoreWLAN.kCWScanTypeFast, 2)

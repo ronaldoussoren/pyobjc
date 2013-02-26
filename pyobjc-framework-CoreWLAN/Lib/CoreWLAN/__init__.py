@@ -11,13 +11,13 @@ import Foundation
 
 from CoreWLAN import _metadata
 
-def CW8021XProfile__eq__(self, other):
+def _CW8021XProfile__eq__(self, other):
     if not isinstance(other, type(self)):
         return False
 
     return self.isEqualToProfile_(other)
 
-def CW8021XProfile__ne__(self, other):
+def _CW8021XProfile__ne__(self, other):
     if not isinstance(other, type(self)):
         return True
 

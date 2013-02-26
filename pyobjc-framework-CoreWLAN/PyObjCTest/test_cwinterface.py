@@ -65,8 +65,8 @@ class TestCWInterface (TestCase):
         self.assertResultIsBOOL(CoreWLAN.CWInterface.associateToNetwork_parameters_error_);
         self.assertArgIsOut(CoreWLAN.CWInterface.associateToNetwork_parameters_error_, 2);
 
-        self.assertResultIsBOOL(CoreWLAN.CWInterface.enableIBSSWithParameters_parameters_error_);
-        self.assertArgIsOut(CoreWLAN.CWInterface.enableIBSSWithParameters_parameters_error_, 2);
+        self.assertResultIsBOOL(CoreWLAN.CWInterface.enableIBSSWithParameters_error_);
+        self.assertArgIsOut(CoreWLAN.CWInterface.enableIBSSWithParameters_error_, 1);
 
         self.assertResultIsBOOL(CoreWLAN.CWInterface.commitConfiguration_error_);
         self.assertArgIsOut(CoreWLAN.CWInterface.commitConfiguration_error_, 1);
