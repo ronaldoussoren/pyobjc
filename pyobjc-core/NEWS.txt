@@ -242,6 +242,18 @@ Version 3.0
 
  All were private methods used by the core bridge and are no longer necessary.
 
+* Added :func:`objc.registerSetType` and :func:`objc.registerDateType`, with
+  simular semantics as the already existing functions :func:`objc.registerMappingType`
+  and :func:`objc.registerListType`.
+
+* Moved the logic for creating Objective-C proxies for Python objects from
+  class methods on OC_PythonObject, OC_PythonArray, OC_PythonDictionary,
+  OC_PythonSet and OC_PythonDate to a C function to simplify this logic and
+  make it easier to further optimize.
+
+  Because of this a number of (private) class methods are no longer
+  available. This shouldn't affect normal code because these methods aren't
+  part of the public API for PyObjC.
 
 
 Version 2.6

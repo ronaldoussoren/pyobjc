@@ -1,57 +1,7 @@
 #include "pyobjc.h"
 #import "OC_PythonDate.h"
 
-static PyObject* datetime_types = NULL;
-
 @implementation OC_PythonDate
-
-+ (instancetype)depythonifyObject:(PyObject*)object
-{
-    if (datetime_types == NULL) {
-        /* Initialize the mapping table, don't worry about
-         * import errors: if we're running in an Py2app application
-         * that doesn't use datetime we won't be able to import the
-         * module
-         */
-        PyObject* name;
-        PyObject* datetime;
-
-        datetime_types = PyList_New(0);
-        if (datetime_types == NULL) {
-            return nil;
-        }
-
-        name = PyText_FromString("datetime");
-        if (name == NULL) {
-            Py_CLEAR(datetime_types);
-            return nil;
-        }
-
-        datetime = PyImport_Import(name);
-        Py_CLEAR(name);
-
-        if (datetime == NULL) {
-            PyErr_Clear();
-            return nil;
-        }
-
-        PyList_Append(datetime_types,
-            PyObject_GetAttrString(datetime, "date"));
-
-        PyList_Append(datetime_types,
-            PyObject_GetAttrString(datetime, "datetime"));
-        if (PyErr_Occurred()) {
-            Py_DECREF(datetime);
-            return nil;
-        }
-        Py_DECREF(datetime);
-    }
-
-    if (PySequence_Contains(datetime_types, (PyObject*)(Py_TYPE(object)))) {
-        return [[[OC_PythonDate alloc] initWithPythonObject:object] autorelease];
-    }
-    return nil;
-}
 
 + (instancetype)dateWithPythonObject:(PyObject*)v
 {

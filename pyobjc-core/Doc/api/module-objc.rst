@@ -75,8 +75,8 @@ Bridge options
          the :class:`str` class in Python 2) are bridged as instances
          of a subclass of *NSData*.
 
-Debugging
-.........
+Deprecated functions for changing options
+.........................................
 
 .. function:: setVerbose(yesOrNo)
 
@@ -94,9 +94,6 @@ Debugging
 
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
-
-Tweaking behaviour
-..................
 
 .. function:: setUseKVOForSetattr
 
@@ -141,7 +138,7 @@ Tweaking behaviour
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
 Utilities
-..........
+---------
 
 .. function:: allocateBuffer(size)
 
@@ -177,7 +174,7 @@ Utilities
 
 
 Accessing classes and protocols
-...............................
+-------------------------------
 
 .. function:: lookUpClass(classname)
 
@@ -308,7 +305,7 @@ Accessing classes and protocols
 
 
 Dynamic modification of classes
-...............................
+-------------------------------
 
 .. function:: classAddMethods(cls, methods)
 
@@ -364,8 +361,7 @@ Dynamic modification of classes
 
 
 Plugin bundles
-..............
-
+--------------
 
 .. function:: currentBundle
 
@@ -377,7 +373,7 @@ Plugin bundles
    to get the bundle.
 
 Memory management
-.................
+-----------------
 
 PyObjC automaticly manages Cocoa reference counts for you, the functions
 in this section help in finetuning this behaviour.
@@ -396,7 +392,7 @@ in this section help in finetuning this behaviour.
 
 
 Test support
-............
+------------
 
 The functions in this section are present as support code for PyObjC's
 unittests and are not part of the stable API. Please let us know if you
@@ -430,7 +426,7 @@ use these functions in your code.
 
 
 Framework wrappers
-..................
+------------------
 
 .. function:: pyobjc_id(obj)
 
@@ -801,10 +797,6 @@ Types
    for Cocoa classes, the default function doesn't support custom attribute
    getters as used by PyObjC.
 
-   .. note::
-
-      The statement :samp:`from {Framework} import \*` will replace the
-      built-in :class:`super <__builtin__.super>` by this class.
 
 Constants
 ---------

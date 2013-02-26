@@ -23,17 +23,6 @@
 }
 
 /*!
- * @method depythonifyObject:
- * @abstract Create a new instance when appropriate
- * @param value A python object
- * @result Returns an autoreleased value or nil. Might set error in latter case.
- *
- * Caller must own the GIL
- */
-+(OC_PythonArray*)depythonifyObject:(PyObject*)object;
-
-
-/*!
  * @method arrayWithPythonObject:
  * @abstract Create a new OC_PythonArray for a specific Python sequence
  * @param value A python sequence

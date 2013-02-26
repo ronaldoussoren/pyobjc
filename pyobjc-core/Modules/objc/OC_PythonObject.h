@@ -31,9 +31,7 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
   PyObject *pyObject;
 }
 
-+ (int)wrapPyObject:(PyObject *)argument toId:(id *)datum;
 + (id <NSObject>)objectWithPythonObject:(PyObject *) obj;
-+ (id <NSObject>)objectWithCoercedPyObject:(PyObject *) obj;
 - (id)initWithPyObject:(PyObject *) obj;
 
 /*!

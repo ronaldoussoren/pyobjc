@@ -2331,6 +2331,190 @@ static const char uintType[] = { _C_UINT, 0 };
 #endif
 }
 
+static int
+depythonify_python_object(PyObject* argument, id* datum)
+{
+    PyObject* anObject;
+
+    if (argument == Py_None) {
+        *datum = nil;
+        return 0;
+    }
+
+    *datum = PyObjC_FindObjCProxy(argument);
+    if (*datum != nil) {
+        [[(*datum) retain] autorelease];
+        return 0;
+    }
+
+    if (PyObjCObject_Check(argument)) {
+        *datum = PyObjCObject_GetObject(argument);
+        return 0;
+    }
+
+    if (PyObjCClass_Check(argument)) {
+        *datum = PyObjCClass_GetClass(argument);
+        return 0;
+    }
+
+    anObject = PyObject_GetAttrString(argument, "__pyobjc_object__");
+    if (anObject != NULL) {
+        if (anObject != argument) {
+            int r = depythonify_python_object(anObject, datum);
+            Py_DECREF(anObject);
+            return r;
+        } else {
+            Py_DECREF(anObject);
+        }
+    } else {
+        PyErr_Clear();
+    }
+
+    if (PyUnicode_Check(argument)) {
+        *datum = [OC_PythonUnicode unicodeWithPythonObject:argument];
+
+    } else if (PyBool_Check(argument)) {
+        if (argument == Py_True) {
+            *datum = [NSNumber numberWithBool:YES];
+        } else  {
+            *datum = [NSNumber numberWithBool:NO];
+        }
+
+#if PY_MAJOR_VERSION == 2
+    } else if (PyInt_Check(argument)) {
+        *datum = [OC_PythonNumber numberWithPythonObject:argument];
+#endif /* PY_MAJOR_VERSION == 2 */
+
+    } else if (PyFloat_Check(argument) || PyLong_Check(argument)) {
+        *datum = [OC_PythonNumber numberWithPythonObject:argument];
+
+    } else if (PyList_Check(argument) || PyTuple_Check(argument)) {
+        *datum = [OC_PythonArray arrayWithPythonObject:argument];
+
+    } else if (PyDict_Check(argument)) {
+        *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
+
+#if PY_MAJOR_VERSION == 2
+    } else if (PyString_Check(argument)) {
+        if (!PyObjC_StrBridgeEnabled) {
+            if (PyErr_Warn(PyObjCStrBridgeWarning, "use unicode(str, encoding) for NSString")) {
+                *datum = nil;
+                return -1;
+            }
+        }
+
+        *datum = [OC_PythonString stringWithPythonObject:argument];
+#endif /* PY_MAJOR_VERSION == 2 */
+
+    } else if (PyObject_CheckReadBuffer(argument)) {
+        *datum = [OC_PythonData dataWithPythonObject:argument];
+
+    } else if (PyAnySet_Check(argument)) {
+        *datum = [OC_PythonSet setWithPythonObject:argument];
+
+
+    } else if (PyObjCFormalProtocol_Check(argument)) {
+        *datum = PyObjCFormalProtocol_GetProtocol(argument);
+        return 0;
+
+    } else {
+
+        if (*datum == nil && PyObjC_ListLikeTypes != NULL && PyList_Check(PyObjC_ListLikeTypes)) {
+            Py_ssize_t i;
+            int r;
+
+            for (i = 0; i < PyList_GET_SIZE(PyObjC_ListLikeTypes); i++) {
+                PyObject* tp = PyList_GET_ITEM(PyObjC_ListLikeTypes, i);
+                r = PyObject_IsInstance(argument, tp);
+                if (r == -1) {
+                    return -1;
+                }
+
+                if (r) {
+                    *datum = [OC_PythonArray arrayWithPythonObject:argument];
+                    if (*datum == nil) {
+                        return -1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (*datum == nil && PyObjC_DictLikeTypes != NULL && PyList_Check(PyObjC_DictLikeTypes)) {
+            Py_ssize_t i;
+            int r;
+
+            for (i = 0; i < PyList_GET_SIZE(PyObjC_DictLikeTypes); i++) {
+                PyObject* tp = PyList_GET_ITEM(PyObjC_DictLikeTypes, i);
+                r = PyObject_IsInstance(argument, tp);
+                if (r == -1) {
+                    return -1;
+                }
+
+                if (r) {
+                    *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
+                    if (*datum == nil) {
+                        return -1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (*datum == nil && PyObjC_SetLikeTypes != NULL && PyList_Check(PyObjC_SetLikeTypes)) {
+            Py_ssize_t i;
+            int r;
+
+            for (i = 0; i < PyList_GET_SIZE(PyObjC_SetLikeTypes); i++) {
+                PyObject* tp = PyList_GET_ITEM(PyObjC_SetLikeTypes, i);
+                r = PyObject_IsInstance(argument, tp);
+                if (r == -1) {
+                    return -1;
+                }
+
+                if (r) {
+                    *datum = [OC_PythonSet setWithPythonObject:argument];
+                    if (*datum == nil) {
+                        return -1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (*datum == nil && PyObjC_DateLikeTypes != NULL && PyList_Check(PyObjC_DateLikeTypes)) {
+            Py_ssize_t i;
+            int r;
+
+            for (i = 0; i < PyList_GET_SIZE(PyObjC_DateLikeTypes); i++) {
+                PyObject* tp = PyList_GET_ITEM(PyObjC_DateLikeTypes, i);
+                r = PyObject_IsInstance(argument, tp);
+                if (r == -1) {
+                    return -1;
+                }
+
+                if (r) {
+                    *datum = [OC_PythonDate dateWithPythonObject:argument];
+                    if (*datum == nil) {
+                        return -1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (*datum == nil) {
+            *datum = [OC_PythonObject objectWithPythonObject:argument];
+        }
+    }
+
+    if (*datum) {
+        PyObjC_RegisterObjCProxy(argument, *datum);
+        return 0;
+    }  else {
+        return -1;
+    }
+}
 
 int
 depythonify_c_value (const char *type, PyObject *argument, void *datum)
@@ -2543,7 +2727,7 @@ depythonify_c_value (const char *type, PyObject *argument, void *datum)
         return r;
 
     case _C_ID:
-        return [OC_PythonObject wrapPyObject:argument toId:(id *)datum];
+        return depythonify_python_object(argument, (id*)datum);
 
     case _C_CLASS:
         if (PyObjCClass_Check(argument))  {

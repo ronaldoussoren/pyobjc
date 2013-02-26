@@ -1,55 +1,7 @@
 #include "pyobjc.h"
 
 
-static PyObject* mapTypes = NULL;
-
 @implementation OC_PythonSet
-
-+ (instancetype)depythonifyObject:(PyObject*)object
-{
-    Py_ssize_t i, len;
-
-    if (mapTypes == NULL) return NULL;
-
-    len = PyList_GET_SIZE(mapTypes);
-
-    for (i = 0; i < len; i++) {
-        PyObject* tp = PyList_GET_ITEM(mapTypes, i);
-        int r = PyObject_IsInstance(object, tp);
-        if (r == -1) {
-            return NULL;
-        }
-
-        if (!r) continue;
-
-        /* Instance of this type should be pythonifyed as a sequence */
-        return [OC_PythonSet setWithPythonObject:object];
-    }
-
-    return NULL;
-}
-
-+ (id)depythonifyTable
-{
-    NSObject* result;
-
-    PyObjC_BEGIN_WITH_GIL
-
-        if (mapTypes == NULL) {
-            mapTypes = PyList_New(0);
-            if (mapTypes == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-        result = PyObjC_PythonToId(mapTypes);
-        if (result == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
-    PyObjC_END_WITH_GIL
-
-    return result;
-}
 
 + (instancetype)setWithPythonObject:(PyObject*)v
 {

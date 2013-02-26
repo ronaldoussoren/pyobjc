@@ -27,17 +27,6 @@
 }
 
 /*!
- * @method depythonifyObject:
- * @abstract Create a new instance when appropriate
- * @param value A python object
- * @result Returns an autoreleased value or nil. Might set error in latter case.
- *
- * Caller must own the GIL
- */
-+(OC_PythonDictionary*)depythonifyObject:(PyObject*)object;
-
-
-/*!
  * @method newWithPythonObject:
  * @abstract Create a new autoreleased proxy object
  * @param value  A Python dict

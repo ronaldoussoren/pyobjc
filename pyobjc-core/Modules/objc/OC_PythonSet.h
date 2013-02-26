@@ -5,7 +5,6 @@
     PyObject* value;
 }
 
-+(instancetype)depythonifyObject:(PyObject*)object;
 +(instancetype)setWithPythonObject:(PyObject*)value;
 -(id)initWithPythonObject:(PyObject*)value;
 -(void)dealloc;

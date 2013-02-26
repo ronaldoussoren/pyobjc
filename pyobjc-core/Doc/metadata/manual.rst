@@ -477,3 +477,34 @@ Metadata for Objective-C methods and classes
    .. warning:: ``readonly==False`` is not supported at the moment.
 
    .. versionadded:: 3.0
+
+Register proxy types
+....................
+
+.. function:: registerSetType(type)
+
+   Register *type* as a type that should be proxied as an NSMutableSet subclass.
+
+   .. note::
+
+      The *type* can be immutable, such :class:`frozenset`.
+
+.. function:: registerDictType(type)
+
+   Register *type* as a type that should be proxied as an NSMutableDictionary subclass.
+
+   .. note::
+
+      The *type* can be immutable.
+
+.. function:: registerListType(type)
+
+   Register *type* as a type that should be proxied as an NSMutableArray subclass.
+
+   .. note::
+
+      The *type* can be immutable, such as :class:`tuple`.
+
+.. function:: registerDateType(type)
+
+   Register *type* as a type that should be proxied as an NSDate subclass.

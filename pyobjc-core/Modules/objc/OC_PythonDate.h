@@ -6,7 +6,6 @@
     NSDate*   oc_value;
 }
 
-+(instancetype)depythonifyObject:(PyObject*)object;
 +(instancetype)dateWithPythonObject:(PyObject*)value;
 -(instancetype)initWithPythonObject:(PyObject*)value;
 -(void)dealloc;
