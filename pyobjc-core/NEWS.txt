@@ -270,6 +270,11 @@ Version 3.0
 * Removed workarounds for KVO bugs in Mac OS X 10.3.9, which means KVO
   will likely not work properly anymore on that release of OS X.
 
+* Earlier versions of PyObjC accidently exposed ``-[NSObject respondsToSelector:]``
+  as ``NSObject.respondsToSelector()`` as well as the expected
+  ``NSObject.respondsToSelector_()``. The first incorrect binding no
+  longer works.
+
 Version 2.6
 -----------
 

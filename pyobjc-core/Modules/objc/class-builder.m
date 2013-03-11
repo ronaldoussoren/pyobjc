@@ -13,13 +13,36 @@ static void object_method_methodSignatureForSelector(ffi_cif* cif, void* retval,
 static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_valueForKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_setValue_forKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
+static void object_method_copyWithZone_(ffi_cif* cif, void* resp, void** args, void* userdata);
 
-static char copyWithZone_signature[132] = { '\0' };
-static void object_method_copyWithZone_(
-      ffi_cif* cif __attribute__((__unused__)),
-      void* resp,
-      void** args,
-      void* userdata);
+struct method_info {
+    SEL selector;
+    const char* sel_name;
+    const char* method_name;
+    const char* typestr;
+    void (*func)(ffi_cif*, void*, void**, void*);
+    BOOL override_only;
+    BOOL use_intermediate;
+
+} gMethods[] = {
+
+    { 0, "dealloc", "dealloc", "v@:", object_method_dealloc, NO, YES },
+    { 0, "storedValueForKey:", "storedValueForKey_", "@@:@", object_method_valueForKey_, NO, YES },
+    { 0, "valueForKey:", "valueForKey_", "@@:@", object_method_valueForKey_, NO, YES },
+    { 0, "takeStoredValue:forKey:", "takeStoredValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
+    { 0, "takeValue:forKey:", "takeValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
+    { 0, "setValue:forKey:", "setValue_forKey_", "v@:@@", object_method_setValue_forKey_, NO, YES },
+    { 0, "forwardInvocation:", "forwardInvocation_", "v@:@@", object_method_forwardInvocation, NO, YES },
+    { 0, "methodSignatureForSelector:", "methodSignatureForSelector_", "@@::", object_method_methodSignatureForSelector, NO, YES },
+    { 0, "respondsToSelector:", "respondsToSelector_", "c@::", object_method_respondsToSelector, NO, YES },
+    { 0, "copyWithZone:", "copyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_, YES, YES },
+    { 0, "mutableCopyWithZone:", "mutableCopyWithZone_", "@@:^{_NSZone=}", object_method_copyWithZone_, YES, YES },
+
+    { 0, 0, 0, 0, 0, 0, 0 }
+};
+
+
+
 
 #define IDENT_CHARS "ABCDEFGHIJKLMNOPQSRTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -184,14 +207,6 @@ static Class
 build_intermediate_class(Class base_class, char* name)
 {
     Class intermediate_class = nil;
-    IMP closure;
-    PyObjCMethodSignature* methinfo = NULL;
-
-    if (copyWithZone_signature[0] == '\0') {
-        snprintf(copyWithZone_signature,
-            sizeof(copyWithZone_signature),
-            "@@:%s", @encode(NSZone*));
-    }
 
     intermediate_class = objc_allocateClassPair(base_class, strdup(name), 0);
     if (intermediate_class == NULL) {
@@ -199,41 +214,30 @@ build_intermediate_class(Class base_class, char* name)
         goto error_cleanup;
     }
 
-#define ADD_SELECTOR(SELECTOR, SIGNATURE, FUNCTION)                         \
-    do {                                                                    \
-        methinfo = PyObjCMethodSignature_FromSignature(SIGNATURE, NO);      \
-        if (methinfo == NULL) goto error_cleanup;                           \
-        closure = PyObjCFFI_MakeClosure(methinfo, FUNCTION, base_class);    \
-        Py_CLEAR(methinfo);                                                 \
-        if (closure == NULL) goto error_cleanup;                            \
-                                                                            \
-        preclass_addMethod(                                                 \
-            intermediate_class,                                             \
-            @selector(SELECTOR),                                            \
-            (IMP)closure,                                                   \
-            SIGNATURE);                                                     \
-        closure = NULL;                                                     \
-    } while(0)
+    struct method_info* cur;
+    for (cur = gMethods; cur->method_name != NULL; cur++) {
+        if (unlikely(cur->selector == NULL)) {
+            cur->selector = sel_registerName(cur->sel_name);
+        }
+        if (cur->override_only) {
+            if (![base_class instancesRespondToSelector:cur->selector]) {
+                continue;
+            }
+        }
 
-    if ([base_class instancesRespondToSelector:@selector(copyWithZone:)]) {
-         ADD_SELECTOR(copyWithZone:, copyWithZone_signature, object_method_copyWithZone_);
+        PyObjCMethodSignature* methinfo = PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+        if (methinfo == NULL) goto error_cleanup;
+        IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, base_class);
+        Py_CLEAR(methinfo);
+        if (closure == NULL) goto error_cleanup;
+
+        preclass_addMethod(
+            intermediate_class,
+            cur->selector,
+            (IMP)closure,
+            cur->typestr);
+        closure = NULL;
     }
-
-    if ([base_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
-        ADD_SELECTOR(mutableCopyWithZone:, copyWithZone_signature, object_method_copyWithZone_);
-    }
-
-    ADD_SELECTOR(dealloc, "v@:", object_method_dealloc);
-    ADD_SELECTOR(valueForKey:, "@@:@", object_method_valueForKey_);
-    ADD_SELECTOR(storedValueForKey:, "@@:@", object_method_valueForKey_);
-    ADD_SELECTOR(setValue:forKey:, "v@:@@", object_method_setValue_forKey_);
-    ADD_SELECTOR(takeStoredValue:forKey:, "v@:@@", object_method_setValue_forKey_);
-    ADD_SELECTOR(takeValue:forKey:, "v@:@@", object_method_setValue_forKey_);
-    ADD_SELECTOR(respondsToSelector:, "c@::", object_method_respondsToSelector);
-    ADD_SELECTOR(methodSignatureForSelector:, "@@::", object_method_methodSignatureForSelector);
-    ADD_SELECTOR(forwardInvocation:, "v@:@", object_method_forwardInvocation);
-
-#undef ADD_SELECTOR
 
     objc_registerClassPair(intermediate_class);
     return (Class)intermediate_class;
@@ -242,7 +246,6 @@ error_cleanup:
     if (intermediate_class) {
         objc_disposeClassPair(intermediate_class);
     }
-    Py_XDECREF(methinfo);
 
     return NULL;
 }
@@ -354,6 +357,23 @@ PyObjC_RemoveInternalTypeCodes(char* buf)
    }
 }
 
+static BOOL
+need_intermediate(PyObject* class_dict)
+{
+    struct method_info* cur;
+
+    for (cur = gMethods; cur->method_name != NULL; cur++) {
+        /* XXX: Should look for a selector, not necessarily using the
+         * method name.
+         */
+        if (PyDict_GetItemString(class_dict, cur->method_name) != NULL) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
 Class
 PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
       char* name, PyObject* class_dict, PyObject* meta_dict,
@@ -372,7 +392,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
     Class cur_class;
     PyObject* py_superclass = NULL;
     int have_intermediate = 0;
-    int need_intermediate = 0;
     PyObject* instance_variables = NULL;
     PyObject* instance_methods = NULL;
     PyObject* class_methods = NULL;
@@ -453,93 +472,8 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
      * The same issue is present with a number of other methods.
      */
 
-    need_intermediate = 0;
-
-    /* XXX: The need_intermediate calculation should be table driven */
-
-    if (PyDict_GetItemString(class_dict, "copyWithZone_") == NULL) {
-        PyErr_Clear();
-    } else {
-        if ([super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
-            need_intermediate = 1;
-        }
-    }
-
-    if (PyDict_GetItemString(class_dict, "mutableCopyWithZone_") == NULL) {
-        PyErr_Clear();
-    } else {
-        if ([super_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
-            need_intermediate = 1;
-        }
-    }
-
-    if (PyDict_GetItemString(class_dict, "dealloc") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "finalize") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "valueForKey_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "storedValueForKey_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "setValue_forKey_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "takeValue_forKey_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "takeStoredValue_forKey_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "respondsToSelector_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "instancesRespondToSelector_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "methodSignatureForSelector_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (PyDict_GetItemString(class_dict, "forwardInvocation_") == NULL) {
-        PyErr_Clear();
-    } else {
-        need_intermediate = 1;
-    }
-
-    if (!PyObjCClass_HasPythonImplementation(py_superclass) && need_intermediate) {
+    if (!PyObjCClass_HasPythonImplementation(py_superclass)
+                    && need_intermediate(class_dict)) {
         Class intermediate_class;
         char  buf[1024];
 
@@ -1033,54 +967,36 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
          * methods and variables
          */
 
-        PyObject* sel;
-        IMP closure;
-        PyObjCMethodSignature* methinfo;
-
-#       define METH(pyname, selector, types, imp)                           \
-            methinfo = PyObjCMethodSignature_FromSignature(types, NO);      \
-            if (methinfo == NULL) goto error_cleanup;                       \
-            closure = PyObjCFFI_MakeClosure(methinfo, imp, super_class);    \
-            Py_CLEAR(methinfo);                                             \
-            if (closure == NULL) goto error_cleanup;                        \
-            preclass_addMethod(new_class, selector, closure, types);        \
-            sel = PyObjCSelector_NewNative(new_class, selector,  types, 0); \
-            if (sel == NULL) goto error_cleanup;                            \
-            PyDict_SetItemString(class_dict, pyname, sel);                  \
-            Py_DECREF(sel)
 
         if (!have_intermediate) {
-            METH("dealloc", @selector(dealloc), "v@:", object_method_dealloc);
-            METH("storedValueForKey_", @selector(storedValueForKey:), "@@:@", object_method_valueForKey_);
-            METH("valueForKey_", @selector(valueForKey:), "@@:@", object_method_valueForKey_);
-            METH("takeStoredValue_forKey_", @selector(takeStoredValue:forKey:), "v@:@@", object_method_setValue_forKey_);
-            METH("takeValue_forKey_", @selector(takeValue:forKey:), "v@:@@", object_method_setValue_forKey_);
-            METH("setValue_forKey_", @selector(setValue:forKey:), "v@:@@", object_method_setValue_forKey_);
-            METH("forwardInvocation_", @selector(forwardInvocation:), "v@:@", object_method_forwardInvocation);
-            METH("methodSignatureForSelector_", @selector(methodSignatureForSelector:), "@@::", object_method_methodSignatureForSelector);
-            METH("respondsToSelector", @selector(respondsToSelector:), "c@::", object_method_respondsToSelector);
-        }
+            struct method_info* cur;
+            for (cur = gMethods; cur->method_name != NULL; cur++) {
+                if (unlikely(cur->selector == NULL)) {
+                    cur->selector = sel_registerName(cur->sel_name);
+                }
+                if (cur->override_only) {
+                    if (![super_class instancesRespondToSelector:cur->selector]) {
+                        continue;
+                    }
+                }
 
-        if (!have_intermediate && [super_class instancesRespondToSelector:@selector(copyWithZone:)]) {
-            if (copyWithZone_signature[0] == '\0') {
-                snprintf(copyWithZone_signature,
-                    sizeof(copyWithZone_signature),
-                    "@@:%s", @encode(NSZone*));
+                PyObjCMethodSignature* methinfo = PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+                if (methinfo == NULL) goto error_cleanup;
+
+                IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, super_class);
+                Py_CLEAR(methinfo);
+                if (closure == NULL) goto error_cleanup;
+
+                preclass_addMethod(new_class, cur->selector, closure, cur->typestr);
+                PyObject* sel = PyObjCSelector_NewNative(new_class, cur->selector,  cur->typestr, 0);
+                if (sel == NULL) goto error_cleanup;
+
+                int r = PyDict_SetItemString(class_dict, cur->method_name, sel);
+                Py_DECREF(sel);
+
+                if (r == -1) goto error_cleanup;
             }
-
-            METH("copyWithZone_", @selector(copyWithZone:), copyWithZone_signature, object_method_copyWithZone_);
         }
-
-        if (!have_intermediate && [super_class instancesRespondToSelector:@selector(mutableCopyWithZone:)]) {
-            if (copyWithZone_signature[0] == '\0') {
-                snprintf(copyWithZone_signature,
-                    sizeof(copyWithZone_signature),
-                    "@@:%s", @encode(NSZone*));
-            }
-
-            METH("mutableCopyWithZone_", @selector(copyWithZone:), copyWithZone_signature, object_method_copyWithZone_);
-        }
-#undef  METH
     }
 
     /* add instance variables */
