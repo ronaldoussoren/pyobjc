@@ -11,12 +11,12 @@ supports the wrappers for these types in ``Carbon.File``.
     New instances are created using the ``from_pathname`` method:
 
     .. sourcecode:: python
-    
+
         >>> ref = objc.FSRef.from_pathname("/Libray")
         >>> isinstance(ref, objc.FSRef)
         True
-    
-    Instances of ``objc.FSRef`` are opaque and don't provide access to 
+
+    Instances of ``objc.FSRef`` are opaque and don't provide access to
     specific fields in the structure. The following methods and properties
     are available to access an instance:
 
@@ -32,8 +32,10 @@ supports the wrappers for these types in ``Carbon.File``.
 
         Returns a ``Carbon.File.FSRef`` instance for the ``FSRef`` object.
 
-        NOTE: This method is only available when ``Carbon`` support is
-        enabled in the Python build.
+        ..note::
+
+          This method is only available when ``Carbon`` support is
+          enabled in the Python build.
 
     .. note:: ``Carbon.File.FSRef`` instances can be used as the argument
        of functions that have an ``FSRef`` structure as one of their
@@ -41,6 +43,7 @@ supports the wrappers for these types in ``Carbon.File``.
 
 
     .. note::
+
        All API's using the FSRef type are deprecated by Apple as of Mac OS X 10.8,
        for most of those APIs there are alternate APIs that use URL objects
        (:c:type:`NSURL` or :c:type:`CFURL`).
@@ -50,7 +53,7 @@ supports the wrappers for these types in ``Carbon.File``.
     This type represents an opaque ``FSSpec`` structure. It is not possible
     to create ``FSSpec`` instances in Python code.
 
-    Instances of ``objc.FSSpec`` are opaque and don't provide access to 
+    Instances of ``objc.FSSpec`` are opaque and don't provide access to
     specific fields in the structure. The following methods and properties
     are available to access an instance:
 
@@ -62,10 +65,12 @@ supports the wrappers for these types in ``Carbon.File``.
 
         Returns a ``Carbon.File.FSRef`` instance for the ``FSRef`` object.
 
-        NOTE: This method is only available when ``Carbon`` support is
-        enabled in the Python build.
-    
-    .. note:: 
+        ..note::
+
+          This method is only available when ``Carbon`` support is
+          enabled in the Python build.
+
+    .. note::
 
        ``Carbon.File.FSSpec`` instances can be used as the argument
        of functions that have an ``FSSpec`` structure as one of their
@@ -73,5 +78,5 @@ supports the wrappers for these types in ``Carbon.File``.
 
     .. note::
 
-       "FSSpec" is a deprecated type in Apple's APIs. The type is not 
+       "FSSpec" is a deprecated type in Apple's APIs. The type is not
        availble for 64-bit code, and shouldn't be used for new development.

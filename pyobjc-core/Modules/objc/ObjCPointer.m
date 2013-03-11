@@ -14,6 +14,27 @@
 
 #include "pyobjc.h"
 
+
+typedef struct
+{
+    PyObject_VAR_HEAD
+
+    void *ptr;
+    PyObject *type;
+    char contents[1];
+} PyObjCPointer;
+
+
+void*
+PyObjCPointer_Ptr(PyObject* obj)
+{
+    if (!PyObjCPointer_Check(obj)) {
+        PyErr_SetString(PyExc_TypeError, "Unexpected type");
+        return NULL;
+    }
+    return ((PyObjCPointer*)(obj))->ptr;
+}
+
 static void
 PyObjCPointer_dealloc (PyObject* _self)
 {
@@ -24,7 +45,8 @@ PyObjCPointer_dealloc (PyObject* _self)
 
 PyDoc_STRVAR(PyObjCPointer_unpack_doc,
     "Unpack the pointed value accordingly to its type.\n"
-        "obj.unpack() -> value");
+    "obj.unpack() -> value");
+
 static PyObject *
 PyObjCPointer_unpack (PyObject* _self)
 {
@@ -86,59 +108,17 @@ static PyMemberDef PyObjCPointer_members[] = {
 PyTypeObject PyObjCPointer_Type =
 {
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    "PyObjCPointer",                         /* tp_name */
-    sizeof (PyObjCPointer),                  /* tp_basicsize */
-    sizeof (char),                           /* tp_itemsize */
-
-    /* methods */
-    PyObjCPointer_dealloc,                   /* tp_dealloc */
-    0,                                       /* tp_print */
-    0,                                       /* tp_getattr */
-    0,                                       /* tp_setattr */
-    0,                                       /* tp_compare */
-    0,                                       /* tp_repr */
-    0,                                       /* tp_as_number */
-    0,                                       /* tp_as_sequence */
-    0,                                       /* tp_as_mapping */
-    0,                                       /* tp_hash */
-    0,                                       /* tp_call */
-    0,                                       /* tp_str */
-    0,                                       /* tp_getattro */
-    0,                                       /* tp_setattro */
-    0,                                       /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                      /* tp_flags */
-    "Wrapper around a Objective-C Pointer",  /* tp_doc */
-    0,                                       /* tp_traverse */
-    0,                                       /* tp_clear */
-    0,                                       /* tp_richcompare */
-    0,                                       /* tp_weaklistoffset */
-    0,                                       /* tp_iter */
-    0,                                       /* tp_iternext */
-    PyObjCPointer_methods,                   /* tp_methods */
-    PyObjCPointer_members,                   /* tp_members */
-    0,                                       /* tp_getset */
-    0,                                       /* tp_base */
-    0,                                       /* tp_dict */
-    0,                                       /* tp_descr_get */
-    0,                                       /* tp_descr_set */
-    0,                                       /* tp_dictoffset */
-    0,                                       /* tp_init */
-    0,                                       /* tp_alloc */
-    0,                                       /* tp_new */
-    0,                                       /* tp_free */
-    0,                                       /* tp_is_gc */
-    0,                                       /* tp_bases */
-    0,                                       /* tp_mro */
-    0,                                       /* tp_cache */
-    0,                                       /* tp_subclasses */
-    0,                                       /* tp_weaklist */
-    0                                        /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                      /* tp_version_tag */
-#endif
+    .tp_name        = "PyObjCPointer",
+    .tp_basicsize   = sizeof (PyObjCPointer),
+    .tp_itemsize    = sizeof (char),
+    .tp_dealloc     = PyObjCPointer_dealloc,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    .tp_doc         = "Wrapper around a Objective-C Pointer",
+    .tp_methods     = PyObjCPointer_methods,
+    .tp_members     = PyObjCPointer_members,
 };
 
-PyObjCPointer *
+PyObject *
 PyObjCPointer_New(void *p, const char *t)
 {
     Py_ssize_t size = PyObjCRT_SizeOfType (t);
@@ -172,5 +152,5 @@ PyObjCPointer_New(void *p, const char *t)
         self->ptr = p;
     }
 
-    return self;
+    return (PyObject*)self;
 }

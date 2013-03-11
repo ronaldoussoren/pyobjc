@@ -1,11 +1,5 @@
 /*
  * Implementation of support type for formal protocols.
- *
- * See the module DOCSTR for more information.
- *
- * XXX:
- * - deal with optional methods (new in ObjC 2.0)
- * - creating new protocols isn't actually supported in ObjC 2.0
  */
 #include "pyobjc.h"
 
@@ -71,7 +65,8 @@ static PyObject*
 proto_new(PyTypeObject* type __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
-static    char*    keywords[] = { "name", "supers", "selectors", NULL };
+static char* keywords[] = { "name", "supers", "selectors", NULL };
+
     char* name;
     PyObject* supers;
     PyObject* selectors;
@@ -87,8 +82,12 @@ static    char*    keywords[] = { "name", "supers", "selectors", NULL };
 
     if (supers != Py_None) {
         supers = PySequence_Fast(supers, "supers need to be a sequence of objc.formal_protocols");
-        if (supers == NULL) return NULL;
+        if (supers == NULL) {
+            return NULL;
+        }
+
         len = PySequence_Fast_GET_SIZE(supers);
+
         for (i = 0; i < len; i++) {
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
             if (!PyObjCFormalProtocol_Check(v)) {
@@ -146,9 +145,11 @@ static    char*    keywords[] = { "name", "supers", "selectors", NULL };
         PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
         SEL theSel = PyObjCSelector_GetSelector(sel);
         const char* theSignature = PyObjCSelector_Signature(sel);
+
         if (theSignature == NULL) {
             goto error;
         }
+
         protocol_addMethodDescription(
             theProtocol,
             theSel,
@@ -233,9 +234,9 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
         PyObject* item = Py_BuildValue(
 #if PY_MAJOR_VERSION == 2
             "{sssssO}",
-#else
+#else /* PY_MAJOR_VERSION == 3 */
             "{sysysO}",
-#endif
+#endif /* PY_MAJOR_VERSION == 3 */
             "selector", sel_getName(methods[i].name),
             "typestr",  buf,
             "required", isRequired?Py_True:Py_False);
@@ -319,12 +320,14 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 
     if (PyObjCSelector_Check(sel)) {
         aSelector = PyObjCSelector_GetSelector(sel);
+
 #if PY_MAJOR_VERSION == 2
     } else if (PyUnicode_Check(sel)) {
         PyObject* bytes = PyUnicode_AsEncodedString(sel, NULL, NULL);
         if (bytes == NULL) {
             return NULL;
         }
+
         char* s = PyBytes_AsString(bytes);
         if (s == NULL || *s == '\0') {
             PyErr_SetString(PyExc_ValueError,
@@ -335,9 +338,11 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
         aSelector = sel_getUid(s);
         Py_DECREF(bytes);
 
-#endif
+#endif /* PY_MAJOR_VERSION == 2 */
+
     } else if (PyBytes_Check(sel)) {
         char* s = PyBytes_AsString(sel);
+
         if (*s == '\0') {
             PyErr_SetString(PyExc_ValueError,
                     "empty selector name");
@@ -366,9 +371,9 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
         return Py_BuildValue(
 #if PY_MAJOR_VERSION == 2
             "(ss)",
-#else
+#else /* PY_MAJOR_VERSION == 3 */
             "(yy)",
-#endif
+#endif /* PY_MAJOR_VERSION == 3 */
             sel_getName(descr.name),
             buf);
     }
@@ -389,6 +394,7 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
         if (bytes == NULL) {
             return NULL;
         }
+
         char* s = PyBytes_AsString(bytes);
         if (s == NULL || *s == '\0') {
             PyErr_SetString(PyExc_ValueError,
@@ -399,7 +405,8 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
         aSelector = sel_getUid(s);
         Py_DECREF(bytes);
 
-#endif
+#endif /* PY_MAJOR_VERSION == 2 */
+
     } else if (PyBytes_Check(sel)) {
         char* s = PyBytes_AsString(sel);
         if (*s == '\0') {
@@ -428,9 +435,9 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
         return Py_BuildValue(
 #if PY_MAJOR_VERSION == 2
             "(ss)",
-#else
+#else /* PY_MAJOR_VERSION == 3 */
             "(yy)",
-#endif
+#endif /* PY_MAJOR_VERSION == 3 */
             sel_getName(descr.name),
             buf);
     }
@@ -496,55 +503,17 @@ static PyGetSetDef proto_getset[] = {
 
 PyTypeObject PyObjCFormalProtocol_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    "objc.formal_protocol",                 /* tp_name */
-    sizeof(PyObjCFormalProtocol),           /* tp_basicsize */
-    0,                                      /* tp_itemsize */
-    /* methods */
-    proto_dealloc,                          /* tp_dealloc */
-    0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
-    proto_repr,                             /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
-    0,                                      /* tp_str */
-    PyObject_GenericGetAttr,                /* tp_getattro */
-    0,                                      /* tp_setattro */
-    0,                                      /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                     /* tp_flags */
-     proto_cls_doc,                         /* tp_doc */
-     0,                                     /* tp_traverse */
-     0,                                     /* tp_clear */
-    0,                                      /* tp_richcompare */
-    0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    proto_methods,                          /* tp_methods */
-    0,                                      /* tp_members */
-    proto_getset,                           /* tp_getset */
-    0,                                      /* tp_base */
-    0,                                      /* tp_dict */
-    0,                                      /* tp_descr_get */
-    0,                                      /* tp_descr_set */
-    0,                                      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    proto_new,                              /* tp_new */
-    0,                                      /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
-    0                                       /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                     /* tp_version_tag */
-#endif
+    .tp_name        = "objc.formal_protocol",
+    .tp_basicsize   = sizeof(PyObjCFormalProtocol),
+    .tp_itemsize    = 0,
+    .tp_dealloc     = proto_dealloc,
+    .tp_repr        = proto_repr,
+    .tp_getattro    = PyObject_GenericGetAttr,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    .tp_doc         = proto_cls_doc,
+    .tp_methods     = proto_methods,
+    .tp_getset      = proto_getset,
+    .tp_new         = proto_new,
 };
 
 
@@ -564,10 +533,12 @@ PyObjCFormalProtocol_FindSelectorSignature(PyObject* object, SEL selector, int i
     if (descr.name != NULL) {
         return descr.types;
     }
+
     descr = protocol_getMethodDescription(self->objc, selector, NO, !isClassMethod);
     if (descr.name != NULL) {
         return descr.types;
     }
+
     return NULL;
 }
 
@@ -588,6 +559,7 @@ do_verify(
     } else {
         meth = PyObjC_FindSELInDict(clsdict, descr->name);
     }
+
     if (meth == NULL || !PyObjCSelector_Check(meth)) {
 
         meth = PyObjCClass_FindSelector(super_class, descr->name, is_class);
@@ -619,6 +591,7 @@ do_verify(
             );
             return 0;
         }
+
     } else {
         if (PyObjCSelector_IsClassMethod(meth)) {
             PyErr_Format(PyExc_TypeError,
@@ -738,12 +711,14 @@ PyObjCFormalProtocol_CheckClass(
             "'%s'", Py_TYPE(obj)->tp_name);
         return 0;
     }
+
     if (!PyObjCClass_Check(super_class)) {
         PyErr_Format(PyExc_TypeError,
             "Third argument is not an 'objc.objc_class' but "
             "'%s'", Py_TYPE(super_class)->tp_name);
         return 0;
     }
+
     if (!PyDict_Check(clsdict)) {
         PyErr_Format(PyExc_TypeError,
             "Fourth argument is not a 'dict' but '%s'",

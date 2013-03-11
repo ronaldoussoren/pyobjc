@@ -30,6 +30,7 @@ cf_repr(PyObject* self)
         PyObject* result = pythonify_c_value(@encode(id), &repr);
         CFRelease(repr);
         return result;
+
     } else {
         char buf[128];
         snprintf(buf, sizeof(buf), "<%s object at %p>",
@@ -104,6 +105,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
             return NULL;
         }
     }
+
     if (typeID == 0) {
         /* Partially registered type, just wrap as a
          * a plain CFTypeRef
@@ -185,8 +187,8 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
      * class.
      * XXX: This code is wrong, it hides the real problem, but I (ronald)
      * have no idea where that problem hides itself.
-     */
     Py_INCREF(Py_TYPE(result));
+     */
 
     return result;
 }
@@ -207,11 +209,13 @@ PyObjCCFType_Setup(void)
     if (cls == nil) {
         cls = objc_lookUpClass("NSCFType");
     }
+
     if (cls == nil) {
         PyErr_SetString(PyExc_RuntimeError,
             "Cannot locate NSCFType");
         return -1;
     }
+
     PyObjC_NSCFTypeClass = PyObjCClass_New(cls);
     if (PyObjC_NSCFTypeClass == NULL) {
         return -1;
@@ -241,11 +245,12 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
 {
     PyObject* rval = NULL;
     PyObject* v = PyDict_GetItemString(PyObjC_TypeStr2CFTypeID, typestr);
+    CFTypeID typeid;
+
     if (v == NULL) {
         PyErr_Format(PyExc_ValueError, "Don't know CF type for typestr '%s', cannot create special wrapper", typestr);
         return NULL;
     }
-    CFTypeID typeid;
 
     if (depythonify_c_value(@encode(CFTypeID), v, &typeid) < 0) {
         return NULL;
@@ -268,6 +273,7 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
             ((PyObjCObject*)rval)->objc_object = (id)datum;
             ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT|PyObjCObject_kSHOULD_NOT_RELEASE|PyObjCObject_kMAGIC_COOKIE;
         }
+
     } else {
         rval = NULL;
         PyErr_Format(PyExc_ValueError,
@@ -306,6 +312,7 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
             ((PyObjCObject*)rval)->objc_object = (id)datum;
             ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT|PyObjCObject_kSHOULD_NOT_RELEASE|PyObjCObject_kMAGIC_COOKIE;
         }
+
     } else {
         rval = NULL;
         PyErr_Format(PyExc_ValueError,

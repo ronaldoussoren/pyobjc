@@ -50,4 +50,13 @@ extern PyObject* PyObjC_AdjustSelf(PyObject* object);
 extern PyObject* PyObjC_FindSELInDict(PyObject*, SEL);
 extern int PyObjCRT_SignaturesEqual(const char*, const char*);
 
+static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
+{
+    Py_ssize_t rest = offset % alignment;
+    if (rest == 0) return offset;
+    return offset + (alignment - rest);
+}
+
+
+
 #endif /* OBJC_UTIL */

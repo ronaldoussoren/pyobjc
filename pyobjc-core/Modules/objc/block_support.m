@@ -17,45 +17,10 @@
  * Definitions are copied from the clang documentation on blocks.
  */
 
-#if 0
-  /* Full definition, contains bits we don't need at this point in time */
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < 1060
-#define BLOCK_FUNC_ATTRIBUTE __attribute__((__weak_import__))
-#else
-#define BLOCK_FUNC_ATTRIBUTE
-#endif
-
-enum {
-    BLOCK_FIELD_IS_OBJECT   =  3,  // id, NSObject, __attribute__((NSObject)), block, ...
-    BLOCK_FIELD_IS_BLOCK    =  7,  // a block variable
-    BLOCK_FIELD_IS_BYREF    =  8,  // the on stack structure holding the __block variable
-    BLOCK_FIELD_IS_WEAK     = 16,  // declared __weak
-    BLOCK_BYREF_CALLER      = 128, // called from byref copy/dispose helpers
-};
-
-enum {
-    BLOCK_HAS_COPY_DISPOSE =  (1 << 25),
-    BLOCK_HAS_CTOR =          (1 << 26), // helpers have C++ code
-    BLOCK_IS_GLOBAL =         (1 << 28),
-    BLOCK_HAS_DESCRIPTOR =    (1 << 29), // interim until complete world build is accomplished
-    BLOCK_HAS_SIGNATURE  =    (1 << 30), // interim until complete world build is accomplished
-};
-
-
-void _Block_object_assign(void *destAddr, const void *object, const int flags) BLOCK_FUNC_ATTRIBUTE;
-void _Block_object_dispose(const void *object, const int flags) BLOCK_FUNC_ATTRIBUTE;
-
-#else
-    /* minimal definition, only contains the definitions we actually use */
-
 enum {
     BLOCK_HAS_COPY_DISPOSE =  (1 << 25),
     BLOCK_HAS_SIGNATURE    =  (1 << 30) /* interim until complete world build is accomplished */
 };
-
-#endif
-
 
 /*
  * End of definitions.
@@ -154,14 +119,6 @@ static struct block_literal gLiteralTemplate = {
  * the class dictionary as well (including those of subclasses). There is no public API for
  * that.
  */
-static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
-{
-    Py_ssize_t rest = offset % alignment;
-    if (rest == 0) return offset;
-    return offset + (alignment - rest);
-}
-
-
 PyObject*
 PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_args)
 {

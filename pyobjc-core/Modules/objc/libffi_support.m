@@ -119,14 +119,6 @@ static void describe_cif(ffi_cif* cif)
 
 
 
-static inline Py_ssize_t
-align(Py_ssize_t offset, Py_ssize_t alignment)
-{
-    Py_ssize_t rest = offset % alignment;
-    if (rest == 0) return offset;
-    return offset + (alignment - rest);
-}
-
 static Py_ssize_t
 num_struct_fields(const char* argtype)
 {

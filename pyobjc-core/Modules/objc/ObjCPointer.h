@@ -8,20 +8,10 @@
  * that contains pointers.
  */
 
-typedef struct
-{
-  PyObject_VAR_HEAD
-
-  void *ptr;
-  PyObject *type;
-  char contents[1];
-} PyObjCPointer;
-
 extern PyTypeObject PyObjCPointer_Type;
-
 #define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)
 
-extern PyObjCPointer *PyObjCPointer_New(void *ptr, const char *type);
-#define PyObjCPointer_Ptr(obj) (((PyObjCPointer*)(obj))->ptr)
+extern PyObject* PyObjCPointer_New(void *ptr, const char *type);
+extern void* PyObjCPointer_Ptr(PyObject* object);
 
 #endif /* PyObjC_OBJC_POINTER_H */
