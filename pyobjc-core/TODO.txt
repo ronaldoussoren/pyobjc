@@ -254,3 +254,5 @@ Medium term
 * Create Security, SecurityFoundation, SecurityInterface bindings
 
 * Create StoreKit bindings
+
+* objc.IMP should work for Python methods (see XXX comment)

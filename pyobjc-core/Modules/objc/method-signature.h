@@ -19,31 +19,31 @@ struct _PyObjC_ArgDescr {
     /* If typeOverride the type field should be freed when the descriptor
      * is cleaned up, otherwise is isn't owned by this descriptor.
      */
-    const char*     type;
+    const char* type;
     PyObjCMethodSignature* callable;
 
-    enum _PyObjC_PointerType        ptrType;
-    int16_t         arrayArg;
-    int16_t         arrayArgOut;
-    const char*    sel_type;
-    BOOL            allowNULL:1;
-    BOOL            typeOverride:1;
-    BOOL        arraySizeInRetval:1;
-    BOOL        printfFormat:1;
-    BOOL         alreadyRetained:1;
-    BOOL         alreadyCFRetained:1;
-    BOOL        callableRetained:1; /* False iff the closure can be cleaned up after the call */
+    enum _PyObjC_PointerType ptrType;
+    int16_t arrayArg;
+    int16_t arrayArgOut;
+    const char* sel_type;
+    BOOL allowNULL:1;
+    BOOL typeOverride:1;
+    BOOL arraySizeInRetval:1;
+    BOOL printfFormat:1;
+    BOOL alreadyRetained:1;
+    BOOL alreadyCFRetained:1;
+    BOOL callableRetained:1; /* False iff the closure can be cleaned up after the call */
 };
 
 struct _PyObjCMethodSignature {
     PyObject_VAR_HEAD
 
-    const char*         signature;
-    int              arrayArg;
-    unsigned char        variadic:1;
-    unsigned char        null_terminated_array:1;
-    unsigned char        free_result:1;
-    PyObject*           suggestion;
+    const char* signature;
+    int arrayArg;
+    unsigned char variadic:1;
+    unsigned char null_terminated_array:1;
+    unsigned char free_result:1;
+    PyObject* suggestion;
     struct _PyObjC_ArgDescr rettype;
     struct _PyObjC_ArgDescr argtype[1];
 };
@@ -55,8 +55,6 @@ extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(
 extern PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
     Class cls, BOOL isClassMethod, SEL sel, const char* signature, BOOL is_native);
 
-
-
 extern char*
 PyObjC_NSMethodSignatureToTypeString(
     NSMethodSignature* sig, char* buf, size_t buflen);
@@ -67,10 +65,7 @@ PyObjC_registerMetaData(PyObject*, PyObject*, PyObject*);
 extern PyObject*
 PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
-static inline PyObjCMethodSignature* PyObjCMethodSignature_FromSignature(
-    const char* sig, BOOL is_native)
-{
-    return PyObjCMethodSignature_WithMetaData(sig, NULL, is_native);
-}
+#define PyObjCMethodSignature_FromSignature(sig, is_native) \
+	PyObjCMethodSignature_WithMetaData((sig), NULL, (is_native))
 
 #endif /* PyObjC_METHODSIGNATURE_H */

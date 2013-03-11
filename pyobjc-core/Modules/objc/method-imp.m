@@ -9,12 +9,9 @@ typedef struct {
     int flags;
 } PyObjCIMPObject;
 
-PyObject* PyObjCIMP_New(
-        IMP imp,
-        SEL selector,
-        PyObjC_CallFunc callfunc,
-        PyObjCMethodSignature* signature,
-        int flags)
+PyObject*
+PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
+        PyObjCMethodSignature* signature, int flags)
 {
     PyObjCIMPObject* result;
 
@@ -25,14 +22,17 @@ PyObject* PyObjCIMP_New(
     result->selector = selector;
     result->callfunc = callfunc;
     result->signature = signature;
+
     if (signature) {
         Py_INCREF(signature);
     }
+
     result->flags = flags;
     return (PyObject*)result;
 }
 
-SEL PyObjCIMP_GetSelector(PyObject* self)
+SEL
+PyObjCIMP_GetSelector(PyObject* self)
 {
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
@@ -42,7 +42,8 @@ SEL PyObjCIMP_GetSelector(PyObject* self)
     return ((PyObjCIMPObject*)self)->selector;
 }
 
-IMP PyObjCIMP_GetIMP(PyObject* self)
+IMP
+PyObjCIMP_GetIMP(PyObject* self)
 {
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
@@ -52,7 +53,8 @@ IMP PyObjCIMP_GetIMP(PyObject* self)
     return ((PyObjCIMPObject*)self)->imp;
 }
 
-int PyObjCIMP_GetFlags(PyObject* self)
+int
+PyObjCIMP_GetFlags(PyObject* self)
 {
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
@@ -62,7 +64,8 @@ int PyObjCIMP_GetFlags(PyObject* self)
     return ((PyObjCIMPObject*)self)->flags;
 }
 
-PyObjC_CallFunc PyObjCIMP_GetCallFunc(PyObject* self)
+PyObjC_CallFunc
+PyObjCIMP_GetCallFunc(PyObject* self)
 {
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
@@ -72,7 +75,8 @@ PyObjC_CallFunc PyObjCIMP_GetCallFunc(PyObject* self)
     return ((PyObjCIMPObject*)self)->callfunc;
 }
 
-PyObjCMethodSignature*   PyObjCIMP_GetSignature(PyObject* self)
+PyObjCMethodSignature*
+PyObjCIMP_GetSignature(PyObject* self)
 {
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
@@ -119,6 +123,7 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
     arglist = PyTuple_New(argslen - 1);
     for (i = 1; i < argslen; i++) {
         PyObject* v = PyTuple_GET_ITEM(args, i);
+
         if (v == NULL) {
             Py_DECREF(arglist);
             return NULL;
@@ -147,6 +152,7 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
     if (pyres && PyObjCObject_Check(res)) {
         if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
             ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+
         } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
             ((PyObjCObject*)pyres)->flags &=
                 ~PyObjCObject_kUNINITIALIZED;
@@ -177,6 +183,7 @@ imp_dealloc(PyObject* _self)
 }
 
 PyDoc_STRVAR(imp_signature_doc, "Objective-C signature for the IMP");
+
 static PyObject*
 imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -190,6 +197,7 @@ imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(imp_selector_doc, "Objective-C name for the IMP");
+
 static PyObject*
 imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -199,6 +207,7 @@ imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(imp_class_method_doc,
     "True if this is a class method, False otherwise");
+
 static PyObject*
 imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
@@ -255,6 +264,17 @@ static PyGetSetDef imp_getset[] = {
         imp_selector_doc,
         0
     },
+#if PY_VERSION_HEX >= 0x03030000
+    {
+        "__signature__",
+        PyObjC_callable_signature_get,
+        0,
+        "inspect.Signature for an IMP",
+        0
+    },
+#endif
+
+
     { 0, 0, 0, 0, 0 }
 };
 
@@ -264,16 +284,18 @@ imp_metadata(PyObject* self)
     PyObject* result = PyObjCMethodSignature_AsDict(
             ((PyObjCIMPObject*)self)->signature);
     int r;
+
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
         r = PyDict_SetItemString(result, "classmethod", Py_True);
+
     } else {
         r = PyDict_SetItemString(result, "classmethod", Py_False);
     }
+
     if (r == -1) {
         Py_DECREF(result);
         return NULL;
     }
-
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
         r = PyDict_SetItemString(result, "return_unitialized_object", Py_True);
@@ -299,56 +321,16 @@ static PyMethodDef imp_methods[] = {
 
 PyTypeObject PyObjCIMP_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "objc.IMP",                     /* tp_name */
-    sizeof(PyObjCIMPObject),        /* tp_basicsize */
-    0,                              /* tp_itemsize */
-    /* methods */
-    imp_dealloc,                    /* tp_dealloc */
-    0,                              /* tp_print */
-    0,                              /* tp_getattr */
-    0,                              /* tp_setattr */
-    0,                              /* tp_compare */
-    imp_repr,                       /* tp_repr */
-    0,                              /* tp_as_number */
-    0,                              /* tp_as_sequence */
-    0,                              /* tp_as_mapping */
-    0,                              /* tp_hash */
-    imp_call,                       /* tp_call */
-    0,                              /* tp_str */
-    PyObject_GenericGetAttr,        /* tp_getattro */
-    0,                              /* tp_setattro */
-    0,                              /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,             /* tp_flags */
-     0,                             /* tp_doc */
-     0,                             /* tp_traverse */
-     0,                             /* tp_clear */
-    0,                              /* tp_richcompare */
-    0,                              /* tp_weaklistoffset */
-    0,                              /* tp_iter */
-    0,                              /* tp_iternext */
-    imp_methods,                    /* tp_methods */
-    0,                              /* tp_members */
-    imp_getset,                     /* tp_getset */
-    0,                              /* tp_base */
-    0,                              /* tp_dict */
-    0,                              /* tp_descr_get */
-    0,                              /* tp_descr_set */
-    0,                              /* tp_dictoffset */
-    0,                              /* tp_init */
-    0,                              /* tp_alloc */
-    0,                              /* tp_new */
-    0,                              /* tp_free */
-    0,                              /* tp_is_gc */
-    0,                              /* tp_bases */
-    0,                              /* tp_mro */
-    0,                              /* tp_cache */
-    0,                              /* tp_subclasses */
-    0,                              /* tp_weaklist */
-    0                               /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                             /* tp_version_tag */
-#endif
-
+    .tp_name        = "objc.IMP",
+    .tp_basicsize   = sizeof(PyObjCIMPObject),
+    .tp_itemsize    = 0,
+    .tp_dealloc     = imp_dealloc,
+    .tp_repr        = imp_repr,
+    .tp_call        = imp_call,
+    .tp_getattro    = PyObject_GenericGetAttr,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    .tp_methods     = imp_methods,
+    .tp_getset      = imp_getset,
 };
 
 
@@ -382,6 +364,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
         retval = (IMP)objc_msgSend(PyObjCClass_GetClass(self),
             PyObjCSelector_GetSelector(method),
             selector);
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
         retval = NULL;
@@ -449,15 +432,18 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     if (PyObjCClass_Check(self)) {
         objc_superSetReceiver(super, PyObjCClass_GetClass(self));
+
     } else {
         objc_superSetReceiver(super, PyObjCObject_GetObject(self));
     }
+
     objc_superSetClass(super, object_getClass(objc_superGetReceiver(super)));
 
     PyObjC_DURING
         retval = (IMP)objc_msgSendSuper(&super,
             PyObjCSelector_GetSelector(method),
             selector);
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
         retval = NULL;
@@ -473,9 +459,11 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     if (PyObjCClass_Check(self)) {
         attr = PyObjCClass_FindSelector(self, selector, YES);
+
     } else {
         attr = PyObjCObject_FindSelector(self, selector);
     }
+
     if (attr == NULL) {
         return NULL;
     }
@@ -496,7 +484,6 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
             return NULL;
         }
     }
-
 
     res = PyObjCIMP_New(
             retval,

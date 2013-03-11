@@ -300,9 +300,11 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
     if (mro == NULL) {
         return NULL;
     }
+
     res = NULL;
-    assert(PyTuple_Check(mro));
+    PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
+
     for (i = 0; i < n; i++) {
         Class cls;
         Method*   methods;
@@ -496,15 +498,17 @@ object_getattro(PyObject *obj, PyObject * volatile name)
         if (tp != Py_TYPE(obj)) {
             /* Workaround for KVO implementation feature */
             PyObject* dict;
+            PyTypeObject* tmp;
 
             if (tp->tp_dict == NULL) {
                 if (PyType_Ready(tp) < 0)
                     goto done;
             }
 
-            Py_DECREF(Py_TYPE(obj));
+            tmp = Py_TYPE(obj);
             Py_TYPE(obj) = tp;
             Py_INCREF(tp);
+            Py_DECREF(tmp);
 
             PyObjCClass_CheckMethodList((PyObject*)tp, 0);
             dict = tp->tp_dict;
@@ -583,10 +587,12 @@ object_getattro(PyObject *obj, PyObject * volatile name)
                 }
                 res = *dictptr;
             }
+
             if (res != NULL) {
                 Py_INCREF(res);
                 goto done;
             }
+
         } else {
             dict = *dictptr;
             if (dict != NULL) {
@@ -611,6 +617,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
             , name_bytes
 #endif
         );
+
         if (descr != NULL
 #if PY_MAJOR_VERSION == 2
             && PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
@@ -696,6 +703,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
     } else if (PyString_Check(name)) {
         name_bytes = name; Py_INCREF(name_bytes);
 #endif
+
     } else {
         PyErr_Format(PyExc_TypeError,
             "attribute name must be string, got %s",
@@ -1025,11 +1033,10 @@ static PyObject*
 meth_dir(PyObject* self)
 {
     PyObject* result;
-    Class     cls;
-    Method*   methods;
+    Class cls;
+    Method* methods;
     unsigned int method_count, i;
-    char      selbuf[2048];
-
+    char selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(Py_TYPE(self)->tp_dict);
@@ -1188,8 +1195,10 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 
         if (((PyObjCObject*)obj)->flags & PyObjCObject_kSHOULD_NOT_RELEASE) {
             /* pass */
+
         } else if (((PyObjCObject*)obj)->flags & PyObjCObject_kUNINITIALIZED) {
             /* pass */
+
         } else {
             CFRelease(objc_object);
         }
@@ -1243,7 +1252,7 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 
     if (flags & PyObjCObject_kBLOCK) {
         ((PyObjCBlockObject*)res)->signature = NULL;
-        }
+    }
 
     if (retain) {
         if (strcmp(object_getClassName(objc_object),
@@ -1273,6 +1282,7 @@ PyObjCObject_FindSelector(PyObject* object, SEL selector)
 
     if (meth == NULL) {
         return NULL;
+
     } else {
         return meth;
     }
@@ -1287,6 +1297,7 @@ id
             Py_TYPE(object)->tp_name);
 
     }
+
     return PyObjCObject_GetObject(object);
 }
 

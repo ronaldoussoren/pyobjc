@@ -104,6 +104,7 @@
 #include "opaque-pointer.h"
 #include "objc-NULL.h"
 #include "options.h"
+#include "method-accessor.h"
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"
@@ -114,17 +115,9 @@
  * headers
  */
 
-
 extern PyObject *PyObjCStrBridgeWarning;
 
 int PyObjCAPI_Register(PyObject* module);
-
-extern PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method);
-
-/* Needed by method-accessor, name will be changed soon */
-extern PyTypeObject PyObjCMethodAccessor_Type;
-char* PyObjC_SELToPythonName(SEL, char*, size_t);
-
 
 /* module.m */
 extern PyObject* PyObjC_TypeStr2CFTypeID;
@@ -164,7 +157,7 @@ extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure
 #define SET_FIELD_INCREF(op, value)             \
     do {                                        \
         PyObject* _py_tmp = (PyObject*)(op);    \
-        Py_XINCREF(value);                       \
+        Py_XINCREF(value);                      \
         (op) = value;                           \
         Py_XDECREF(_py_tmp);                    \
     } while(0)

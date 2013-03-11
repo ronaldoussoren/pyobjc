@@ -10,6 +10,7 @@ sig_str(PyObject* _self)
     if (v == NULL) {
         PyErr_Clear();
         return PyText_FromString(self->signature);
+
     } else {
         PyObject* r = PyObject_Repr(v);
         Py_DECREF(v);
@@ -30,10 +31,12 @@ sig_dealloc(PyObject* _self)
     if (self->rettype.typeOverride) {
         PyMem_Free((char*)self->rettype.type);
     }
+
     for (i = 0; i < Py_SIZE(self); i++) {
         if (self->argtype[i].typeOverride) {
             PyMem_Free((char*)self->argtype[i].type);
         }
+
         if (self->argtype[i].sel_type != NULL) {
             PyMem_Free((char*)self->argtype[i].sel_type);
         }
@@ -44,61 +47,19 @@ sig_dealloc(PyObject* _self)
 
 PyTypeObject PyObjCMethodSignature_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
-    "objc._method_signature",               /* tp_name */
-    sizeof(PyObjCMethodSignature),          /* tp_basicsize */
-    sizeof(struct _PyObjC_ArgDescr),        /* tp_itemsize */
-    /* methods */
-    sig_dealloc,                            /* tp_dealloc */
-    0,                                      /* tp_print */
-    0,                                      /* tp_getattr */
-    0,                                      /* tp_setattr */
-    0,                                      /* tp_compare */
-    sig_str,                                /* tp_repr */
-    0,                                      /* tp_as_number */
-    0,                                      /* tp_as_sequence */
-    0,                                      /* tp_as_mapping */
-    0,                                      /* tp_hash */
-    0,                                      /* tp_call */
-    sig_str,                                /* tp_str */
-    PyObject_GenericGetAttr,                /* tp_getattro */
-    0,                                      /* tp_setattro */
-    0,                                      /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                     /* tp_flags */
-     0,                                     /* tp_doc */
-     0,                                     /* tp_traverse */
-     0,                                     /* tp_clear */
-    0,                                      /* tp_richcompare */
-    0,                                      /* tp_weaklistoffset */
-    0,                                      /* tp_iter */
-    0,                                      /* tp_iternext */
-    0,                                      /* tp_methods */
-    0,                                      /* tp_members */
-    0,                                      /* tp_getset */
-    0,                                      /* tp_base */
-    0,                                      /* tp_dict */
-    0,                                      /* tp_descr_get */
-    0,                                      /* tp_descr_set */
-    0,                                      /* tp_dictoffset */
-    0,                                      /* tp_init */
-    0,                                      /* tp_alloc */
-    0,                                      /* tp_new */
-    0,                                      /* tp_free */
-    0,                                      /* tp_is_gc */
-    0,                                      /* tp_bases */
-    0,                                      /* tp_mro */
-    0,                                      /* tp_cache */
-    0,                                      /* tp_subclasses */
-    0,                                      /* tp_weaklist */
-    0                                       /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                     /* tp_version_tag */
-#endif
-
+    .tp_name        = "objc._method_signature",
+    .tp_basicsize   = sizeof(PyObjCMethodSignature),
+    .tp_itemsize    = sizeof(struct _PyObjC_ArgDescr),
+    .tp_dealloc     = sig_dealloc,
+    .tp_repr        = sig_str,
+    .tp_str         = sig_str,
+    .tp_getattro    = PyObject_GenericGetAttr,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
 };
 
 
-static PyObjCMethodSignature* new_methodsignature(
-        const char* signature)
+static PyObjCMethodSignature*
+new_methodsignature(const char* signature)
 {
     Py_ssize_t nargs;
     const char* cur;
@@ -168,18 +129,12 @@ static PyObjCMethodSignature* new_methodsignature(
     }
     Py_SIZE(retval) = nargs;
 
-
     return retval;
 }
 
 
 
 
-/* XXX: Oh joy, on GNUstep [sig methodReturnType] and
- * [sig getArgumentTypeAtIndex:] return the actual string-value
- * followed by the rest of the signature. MacOS X returns a buffer
- * that contains only the requested signature.
- */
 char*
 PyObjC_NSMethodSignatureToTypeString(
         NSMethodSignature* sig, char* buf, size_t buflen)
@@ -189,7 +144,6 @@ PyObjC_NSMethodSignatureToTypeString(
     NSUInteger arg_count = [sig numberOfArguments];
     NSUInteger i;
     size_t r;
-
 
     r = snprintf(buf, buflen, "%s", [sig methodReturnType]);
     if (r > buflen) {
@@ -230,7 +184,6 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector,
     return PyObjC_AddToRegistry(registry, class_name, selector, metadata);
 }
 
-
 static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 {
     PyObject* d;
@@ -245,6 +198,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         if (r == NULL) {
             return -1;
         }
+
         PyErr_Format(PyExc_TypeError, "metadata of type %s: %s",
                 Py_TYPE(meta)->tp_name,
                 PyText_AsString(r));
@@ -298,11 +252,13 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
                 if (bytes == NULL) {
                     return -1;
                 }
+
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(bytes));
                 Py_DECREF(bytes);
                 if (descr->sel_type == NULL) {
                     return -1;
                 }
+
             } else if (PyBytes_Check(d)) {
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
                 if (descr->sel_type == NULL) {
@@ -320,6 +276,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
              */
             char buffer[64];
             PyObject* a = PyDict_GetItemString(d, "arguments");
+
             if (a != NULL) {
                 Py_ssize_t i, len = PyDict_Size(a);
                 if (len == -1) {
@@ -331,10 +288,12 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
                 }
                 buffer[len] = _C_ID;
                 buffer[len+1] = '\0';
+
             } else {
                 buffer[0] = _C_ID;
                 buffer[1] = '\0';
             }
+
             descr->callable = PyObjCMethodSignature_WithMetaData(buffer, d, NO);
             if (descr->callable == NULL) {
                 return -1;
@@ -482,6 +441,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
 
     if (meta) {
         d = PyDict_GetItemString(meta, "type");
+
     } else {
         d = NULL;
     }
@@ -495,6 +455,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
 #endif
           PyUnicode_Check(d))
         ) {
+
         PyObject* bytes = NULL;
 
         if (PyUnicode_Check(d)) {
@@ -502,14 +463,17 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
             if (bytes == NULL) {
                 return -1;
             }
+
 #if PY_MAJOR_VERSION == 2
         } else if (PyString_Check(d)) {
             bytes = d; Py_INCREF(bytes);
-#else
+#else /* PY_MAJOR_VERSION == 3 */
+
         } else if (PyBytes_Check(d)) {
             bytes = d; Py_INCREF(bytes);
 
-#endif
+#endif /* PY_MAJOR_VERSION == 3 */
+
         } else {
             PyErr_SetString(PyExc_SystemError, "Inconsistent if-case");
             return -1;
@@ -638,7 +602,6 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
     PyObject* v;
     ssize_t i;
 
-    //methinfo = PyObjCMethodSignature_FromSignature(signature);
     methinfo = new_methodsignature(signature);
     if (methinfo == NULL) {
         return NULL;
@@ -667,9 +630,11 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
 
 
     PyObject* args = NULL;
+
     if (metadata) {
         args = PyDict_GetItemString(metadata, "arguments");
     }
+
     if (args != NULL && !PyDict_Check(args)) {
         args = NULL;
     }
@@ -680,9 +645,11 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
 
         if (args) {
             d = PyDict_GetItem(args, k);
+
         } else {
             d = NULL;
         }
+
         if (setup_meta(methinfo->argtype + i, d, is_native) == -1) {
             Py_DECREF(k);
             Py_DECREF(methinfo);
@@ -770,6 +737,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
             methinfo->rettype.alreadyRetained = YES;
         }
     }
+
     Py_XDECREF(metadata);
     return methinfo;
 }
@@ -779,10 +747,10 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
 {
     PyObject* result;
     PyObject* v;
-    const char*     end;
+    const char* end;
     int r;
 
-    result  = PyDict_New();
+    result = PyDict_New();
     if (result == NULL) return NULL;
 
     /*
@@ -922,6 +890,7 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
         Py_DECREF(v);
         if (r == -1) goto error;
     }
+
     if (methinfo->variadic && methinfo->arrayArg != -1) {
         v = PyInt_FromLong(methinfo->arrayArg);
         if (v == NULL) goto error;

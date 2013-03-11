@@ -75,9 +75,9 @@ Version 3.0
 
   As a side-effect of this the docstring is no longer writeable.
 
-* :class:`objc.selector` and :class:`objc.function` now have an implementation for the "__signature__"
-  property when using Python 3.3 or later. This makes it possible to use :func:`inspect.signature` with
-  these objects.
+* :class:`objc.selector`, :class:`objc.function` and :class:`objc.IMP` now have an implementation for
+  the "__signature__" property when using Python 3.3 or later. This makes it possible to use
+  :func:`inspect.signature` with these objects.
 
 * It should now be possible to write tuples with more than INT_MAX elements to an NSArchive. Those archives
   cannot be read back by older versions of PyObjC (or python running in 32-bit mode), but archives that
@@ -260,6 +260,12 @@ Version 3.0
 
 * Added bindings to the AVFoundation framework (Mac OS X 10.7 or later) in
   package "pyobjc-framework-AVFoundation"
+
+* The *__dict__* for ``anObject.pyobjc_instanceMethods`` and
+  ``AClass.pyobjc_classMethods`` is now read-only instead of read-write.
+
+  Updates of *__dict__* already did not affect anything (the value is
+  calculated on access).
 
 Version 2.6
 -----------

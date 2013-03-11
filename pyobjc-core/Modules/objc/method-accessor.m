@@ -9,21 +9,19 @@
 static PyObject*
 find_selector(PyObject* self, const char* name, int class_method)
 {
-    SEL   sel = PyObjCSelector_DefaultSelector(name);
-    volatile id    objc_object;
+    SEL sel = PyObjCSelector_DefaultSelector(name);
+    id objc_object;
     NSMethodSignature* methsig;
-    char  buf[1024];
-    volatile int   unbound_instance_method = 0;
+    char buf[1024];
+    int unbound_instance_method = 0;
     char* flattened = NULL;
     PyObject* class_object;
 
     if (name[0] == '_' && name[1] == '_') {
-        /*
-         * FIXME: Some classes (NSFault, NSFinalProxy) crash hard
-         * on these names
+        /* There are no public methods that start with a double underscore,
+         * and some Cocoa classes crash hard when looking for them.
          */
-        PyErr_Format(PyExc_AttributeError,
-            "No selector %s", name);
+        PyErr_Format(PyExc_AttributeError, "No selector %s", name);
         return NULL;
     }
 
@@ -34,6 +32,7 @@ find_selector(PyObject* self, const char* name, int class_method)
         if (!class_method) {
             unbound_instance_method = 1;
         }
+
     } else if (PyObjCObject_Check(self)) {
         class_object = (PyObject*)Py_TYPE(self);
 
@@ -47,6 +46,7 @@ find_selector(PyObject* self, const char* name, int class_method)
         if (class_method) {
             objc_object = (id)object_getClass(objc_object);
         }
+
     } else {
         PyErr_Format(PyExc_TypeError,
             "Need Objective-C class or instance, got "
@@ -59,7 +59,6 @@ find_selector(PyObject* self, const char* name, int class_method)
             "<nil> doesn't have attribute %s", name);
         return NULL;
     }
-
 
     if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) {
         PyErr_Format(PyExc_AttributeError,
@@ -75,10 +74,10 @@ find_selector(PyObject* self, const char* name, int class_method)
         }
     }
 
-
     PyObjC_DURING
         if (unbound_instance_method) {
             methsig = [objc_object instanceMethodSignatureForSelector:sel];
+
         } else {
             methsig = [objc_object methodSignatureForSelector:sel];
         }
@@ -99,13 +98,16 @@ find_selector(PyObject* self, const char* name, int class_method)
     }
 
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
+
     if (meta && meta != Py_None) {
         flattened = (char*)((PyObjCMethodSignature*)meta)->signature;
     }
+
     if (flattened == NULL) {
         flattened = PyObjC_NSMethodSignatureToTypeString(
             methsig, buf, sizeof(buf));
     }
+
     if (flattened == NULL) {
         return NULL;
     }
@@ -117,16 +119,17 @@ find_selector(PyObject* self, const char* name, int class_method)
 static PyObject*
 make_dict(PyObject* self, int class_method)
 {
-    Class     cls;
+    Class cls;
     PyObject* res;
     Method* methods;
     unsigned int i, method_count;
     void* iterator;
-    char  buf[256];
-    Class    objc_class;
+    char buf[256];
+    Class objc_class;
 
     if (PyObjCObject_Check(self)) {
         id obj = PyObjCObject_GetObject(self);
+
         if (obj == NULL) {
             return PyDict_New();
         }
@@ -134,6 +137,7 @@ make_dict(PyObject* self, int class_method)
         if (class_method) {
             cls = object_getClass(obj);
             objc_class = object_getClass(cls);
+
         } else {
             cls = object_getClass(obj);
             objc_class = cls;
@@ -142,6 +146,7 @@ make_dict(PyObject* self, int class_method)
     } else if (PyObjCClass_Check(self)) {
         cls = PyObjCClass_GetClass(self);
         objc_class = cls;
+
         if (class_method) {
             objc_class = object_getClass(cls);
         }
@@ -159,6 +164,7 @@ make_dict(PyObject* self, int class_method)
     while (objc_class != NULL && cls != NULL) {
         iterator = NULL;
         methods = class_copyMethodList(objc_class, &method_count);
+
         if (methods == NULL) {
             objc_class = class_getSuperclass((Class)objc_class);
             cls = class_getSuperclass((Class)cls);
@@ -174,16 +180,19 @@ make_dict(PyObject* self, int class_method)
                     buf, sizeof(buf));
 
             v = PyObject_GetAttrString(self, name);
+
             if (v == NULL) {
                 PyErr_Clear();
+
             } else if (!PyObjCSelector_Check(v)) {
                 Py_DECREF(v);
                 free(methods);
                 v = NULL;
+
             } else {
-                int cm;
-                cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
-                if (!cm  != !class_method) {
+                int cm = ((PyObjCSelector*)v)->sel_flags & PyObjCSelector_kCLASS_METHOD;
+
+                if (!cm != !class_method) {
                     Py_DECREF(v);
                     v = NULL;
                 }
@@ -194,6 +203,7 @@ make_dict(PyObject* self, int class_method)
                     cls, method_getName(methods[i]),
                     method_getTypeEncoding(methods[i]),
                     class_method);
+
                 if (v == NULL) {
                     free(methods);
                     Py_DECREF(res);
@@ -207,8 +217,8 @@ make_dict(PyObject* self, int class_method)
                 free(methods);
                 return NULL;
             }
-            Py_DECREF(v);
 
+            Py_DECREF(v);
         }
 
         free(methods);
@@ -236,6 +246,7 @@ obj_dealloc(PyObject* _self)
 
     if (Py_TYPE(self)->tp_free) {
         Py_TYPE(self)->tp_free((PyObject*)self);
+
     } else {
         PyObject_Del(self);
     }
@@ -288,16 +299,9 @@ obj_getattro(PyObject* _self, PyObject* name)
         dict = make_dict(self->base, self->class_method);
         return dict;
 
-        /*
-         * Ronald: I'd prefer to add the code below, because our
-         * __dict__ cannot be modified, but then dir() doesn't work.
-         * The current version is save enough, but might give surprising
-         * behaviour (you can change pyobjc_instancMethods.__dict__,
-         * but those changes have no effect).
         result  = PyDictProxy_New(dict);
         Py_DECREF(dict);
         return result;
-         */
     }
 
     if (strcmp(
@@ -476,61 +480,46 @@ obj_repr(PyObject* _self)
     return rval;
 }
 
-PyTypeObject PyObjCMethodAccessor_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    "objc.method_acces",                /* tp_name */
-    sizeof(ObjCMethodAccessor),         /* tp_basicsize */
-    0,                                  /* tp_itemsize */
-    /* methods */
-    obj_dealloc,                        /* tp_dealloc */
-    0,                                  /* tp_print */
-    0,                                  /* tp_getattr */
-    0,                                  /* tp_setattr */
-    0,                                  /* tp_compare */
-    obj_repr,                           /* tp_repr */
-    0,                                  /* tp_as_number */
-    0,                                  /* tp_as_sequence */
-    0,                                  /* tp_as_mapping */
-    0,                                  /* tp_hash */
-    0,                                  /* tp_call */
-    0,                                  /* tp_str */
-    obj_getattro,                       /* tp_getattro */
-    0,                                  /* tp_setattro */
-    0,                                  /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                 /* tp_flags */
-    0,                                  /* tp_doc */
-    0,                                  /* tp_traverse */
-    0,                                  /* tp_clear */
-    0,                                  /* tp_richcompare */
-    0,                                  /* tp_weaklistoffset */
-    0,                                  /* tp_iter */
-    0,                                  /* tp_iternext */
-    0,                                  /* tp_methods */
-    0,                                  /* tp_members */
-    0,                                  /* tp_getset */
-    0,                                  /* tp_base */
-    0,                                  /* tp_dict */
-    0,                                  /* tp_descr_get */
-    0,                                  /* tp_descr_set */
-    0,                                  /* tp_dictoffset */
-    0,                                  /* tp_init */
-    0,                                  /* tp_alloc */
-    0,                                  /* tp_new */
-    0,                                  /* tp_free */
-    0,                                  /* tp_is_gc */
-    0,                                  /* tp_bases */
-    0,                                  /* tp_mro */
-    0,                                  /* tp_cache */
-    0,                                  /* tp_subclasses */
-    0,                                  /* tp_weaklist */
-    0                                   /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                 /* tp_version_tag */
-#endif
+static PyObject*
+obj_dir(PyObject* self)
+{
+    PyObject* dict = make_dict(((ObjCMethodAccessor*)self)->base, ((ObjCMethodAccessor*)self)->class_method);
+    PyObject* result;
 
+    if (dict == NULL) {
+        return NULL;
+    }
+
+    result = PyMapping_Keys(dict);
+    Py_DECREF(dict);
+
+    return result;
+}
+
+static PyMethodDef obj_methods[] = {
+    {
+        "__dir__",
+        (PyCFunction)obj_dir,
+        METH_NOARGS,
+        0
+        },
+    { 0, 0, 0, 0 }
 };
 
-PyObject* PyObjCMethodAccessor_New(PyObject* base, int class_method)
+PyTypeObject PyObjCMethodAccessor_Type = {
+    PyVarObject_HEAD_INIT(&PyType_Type, 0)
+    .tp_name        = "objc.method_acces",
+    .tp_basicsize   = sizeof(ObjCMethodAccessor),
+    .tp_itemsize    = 0,
+    .tp_dealloc     = obj_dealloc,
+    .tp_repr        = obj_repr,
+    .tp_getattro    = obj_getattro,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    .tp_methods     = obj_methods,
+};
+
+PyObject*
+PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
     ObjCMethodAccessor* result;
 

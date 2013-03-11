@@ -115,4 +115,8 @@ extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 
+/* XXX: This should be in a different file! */
+char* PyObjC_SELToPythonName(SEL, char*, size_t);
+
+
 #endif /* PyObjC_OBJC_CLASS_H */

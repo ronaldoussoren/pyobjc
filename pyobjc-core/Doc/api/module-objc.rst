@@ -555,6 +555,16 @@ Types
 
       Documentation string for the selector
 
+   .. data:: __signature__
+
+      An :class:`inspect.Signature` for the object
+
+      .. versionadded:: 3.0
+
+      .. note::
+
+         Only available for Python 3.3 or later.
+
    .. method:: __metadata__
 
       Returns a copy of the metadata dictionary for the selector.  See the
@@ -748,6 +758,16 @@ Types
 
       Read-write property with the module that defined the function
 
+   .. data:: __signature__
+
+      An :class:`inspect.Signature` for the object
+
+      .. versionadded:: 3.0
+
+      .. note::
+
+         Only available for Python 3.3 or later.
+
    .. method:: __metadata__
 
       Returns a copy of the metadata dictionary for the selector.  See the
@@ -781,6 +801,16 @@ Types
    .. data:: __name__
 
       Alias for :data:`selector`.
+
+   .. data:: __signature__
+
+      An :class:`inspect.Signature` for the object
+
+      .. versionadded:: 3.0
+
+      .. note::
+
+         Only available for Python 3.3 or later.
 
    .. method:: __metadata__
 
