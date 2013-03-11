@@ -10,7 +10,7 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
     struct objc_super spr;
     IMP anIMP;
     Class aClass;
-    SEL volatile aSel;
+    SEL aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -115,7 +115,7 @@ call_NSObject_dealloc(PyObject* method,
     struct objc_super spr;
     IMP anIMP;
     Class aClass;
-    SEL volatile aSel;
+    SEL aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -221,7 +221,7 @@ call_NSObject_release(PyObject* method,
     struct objc_super spr;
     IMP anIMP;
     Class aClass;
-    SEL volatile aSel;
+    SEL aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -277,8 +277,8 @@ call_NSObject_retain(PyObject* method,
     struct objc_super spr;
     IMP anIMP;
     Class aClass;
-    SEL volatile aSel;
-    volatile id retval = nil;
+    SEL aSel;
+    id retval = nil;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;

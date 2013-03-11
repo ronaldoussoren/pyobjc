@@ -416,8 +416,8 @@ _get_dictptr(PyObject* obj)
     return (PyObject**)(((char*)obj_object) + dictoffset);
 }
 
-static PyObject *
-object_getattro(PyObject *obj, PyObject * volatile name)
+static PyObject*
+object_getattro(PyObject* obj, PyObject* name)
 {
     PyTypeObject *tp = NULL;
     PyObject *descr = NULL;

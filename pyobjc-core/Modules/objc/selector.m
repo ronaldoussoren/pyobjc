@@ -576,7 +576,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 }
 
 static PyObject*
-objcsel_descr_get(PyObject* _self, PyObject* volatile obj, PyObject* class)
+objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
 {
     PyObjCNativeSelector* meth = (PyObjCNativeSelector*)_self;
     PyObjCNativeSelector* result;

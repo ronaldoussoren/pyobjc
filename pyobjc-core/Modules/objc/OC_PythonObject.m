@@ -496,7 +496,7 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
     const char* rettype = [msign methodReturnType];
     int err;
     PyObject* args = NULL;
-    volatile unsigned int i;
+    unsigned int i;
     NSUInteger argcount;
     Py_ssize_t retsize;
     char* retbuffer;

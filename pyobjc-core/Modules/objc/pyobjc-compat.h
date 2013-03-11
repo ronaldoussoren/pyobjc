@@ -434,7 +434,7 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
         Py_BEGIN_ALLOW_THREADS \
         @try {
 
-#define PyObjC_HANDLER } @catch(volatile NSObject* _localException) { \
+#define PyObjC_HANDLER } @catch(NSObject* _localException) { \
         NSException* localException __attribute__((__unused__))= (NSException*)_localException;
 
 #define PyObjC_ENDHANDLER \

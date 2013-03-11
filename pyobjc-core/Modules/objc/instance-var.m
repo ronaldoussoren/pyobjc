@@ -118,8 +118,8 @@ static int
 ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
-    volatile Ivar var;
-    id   objc;
+    Ivar var;
+    id objc;
     Py_ssize_t  size;
     int res;
 

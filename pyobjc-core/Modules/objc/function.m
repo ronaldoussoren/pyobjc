@@ -136,7 +136,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     void**      byref = NULL;
     struct byref_attr* byref_attr = NULL;
     ffi_cif cif;
-    ffi_cif* volatile cifptr;
+    ffi_cif* cifptr;
 
     PyObject* retval;
 

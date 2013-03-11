@@ -1166,7 +1166,7 @@ error_cleanup:
 
 
 static void
-free_ivars(id self, PyObject* volatile cls )
+free_ivars(id self, PyObject* cls)
 {
     /* Free all instance variables introduced through python */
     Ivar var;
@@ -1543,7 +1543,7 @@ object_method_forwardInvocation(
     Py_ssize_t arglen;
     PyObject* pymeth;
     PyObject* pyself;
-    volatile int have_output = 0;
+    int have_output = 0;
     PyGILState_STATE state = PyGILState_Ensure();
 
     pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
