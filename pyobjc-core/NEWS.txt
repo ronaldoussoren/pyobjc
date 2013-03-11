@@ -267,6 +267,9 @@ Version 3.0
   Updates of *__dict__* already did not affect anything (the value is
   calculated on access).
 
+* Removed workarounds for KVO bugs in Mac OS X 10.3.9, which means KVO
+  will likely not work properly anymore on that release of OS X.
+
 Version 2.6
 -----------
 

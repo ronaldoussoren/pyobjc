@@ -6,90 +6,6 @@
 
 #import <Foundation/NSInvocation.h>
 
-#if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-
-/*
- * KVO was introduced in 10.3, but wasn't perfect and needs workarounds. Starting from 10.4 we can
- * use KVO as-is without causing problems.
- *
- * Code to be removed when we no longer whish to support 10.3.
- */
-
-#define TO_CHECK (0)      // Didn't check yet
-#define NO_KVO   (-1)      // No KVO available
-#define BROKEN_KVO (1)      // KVO available, but needs workaround
-#define OK_KVO (2)      // KVO available
-
-static int
-_KVOHackLevel(void) {
-   static int _checkedKVO = TO_CHECK;
-   if (_checkedKVO == TO_CHECK) {
-      if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:)] &&
-         [NSObject instancesRespondToSelector:@selector(didChangeValueForKey:)]) {
-         _checkedKVO = BROKEN_KVO;
-         if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:withSetMutation:usingObjects:)]) {
-            _checkedKVO = OK_KVO;
-         }
-      } else {
-         _checkedKVO = NO_KVO;
-      }
-   }
-   return _checkedKVO;
-}
-
-static BOOL
-_UseKVO(NSObject *self, NSString *key, BOOL isSet)
-{
-static NSMapTable* kvo_stack = nil;
-
-   int _checkedKVO = _KVOHackLevel();
-   NSNumber *n;
-   if (_checkedKVO == NO_KVO) {
-      return NO;
-   } else if (_checkedKVO == OK_KVO) {
-      return YES;
-   }
-
-   if (kvo_stack == nil) {
-      kvo_stack = NSCreateMapTable(
-         PyObjCUtil_ObjCIdentityKeyCallBacks,
-         PyObjCUtil_ObjCValueCallBacks,
-         0);
-   }
-   /*  Hacks for Panther so that you don't get nested observations */
-   NSMutableDictionary *kvoDict = (NSMutableDictionary *)NSMapGet(kvo_stack, (const void *)self);
-   if (!kvoDict) {
-      kvoDict = [[NSMutableDictionary alloc] initWithCapacity:0];
-      NSMapInsert(kvo_stack, (const void *)self, (const void *)kvoDict);
-      [kvoDict release];
-   }
-   if (isSet) {
-      int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] + 1;
-      n = [[NSNumber alloc] initWithInt:setCount];
-      [kvoDict setValue:n forKey:key];
-      [n release];
-      if (setCount != 1) {
-         return NO;
-      }
-   } else {
-      int setCount = [(NSNumber *)[kvoDict objectForKey:key] intValue] - 1;
-      if (setCount != 0) {
-         n = [[NSNumber alloc] initWithInt:setCount];
-         [kvoDict setValue:n forKey:key];
-         [n release];
-         return NO;
-      } else {
-         [kvoDict removeObjectForKey:key];
-         if (![kvoDict count]) {
-            NSMapRemove(kvo_stack, (const void *)self);
-         }
-      }
-   }
-   return YES;
-}
-
-#endif
-
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_finalize(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
@@ -98,11 +14,6 @@ static void object_method_methodSignatureForSelector(ffi_cif* cif, void* retval,
 static void object_method_forwardInvocation(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_valueForKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_setValue_forKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
-
-#if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-
-static void object_method_willOrDidChangeValueForKey_(ffi_cif* cif, void* retval, void** args, void* userarg);
-#endif
 
 static char copyWithZone_signature[132] = { '\0' };
 static void object_method_copyWithZone_(
@@ -390,26 +301,6 @@ build_intermediate_class(Class base_class, char* name)
    preclass_addMethod(intermediate_class,
       @selector(forwardInvocation:),
       (IMP)closure, "v@:@");
-
-
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-   if (_KVOHackLevel() == BROKEN_KVO) {
-      methinfo = PyObjCMethodSignature_FromSignature("v@:@", NO);
-      if (methinfo == NULL) goto error_cleanup;
-      closure = PyObjCFFI_MakeClosure(methinfo, object_method_willOrDidChangeValueForKey_,
-         base_class);
-      Py_DECREF(methinfo); methinfo = NULL;
-      if (closure == NULL) goto error_cleanup;
-      preclass_addMethod(intermediate_class,
-         @selector(willChangeValueForKey:),
-         (IMP)closure, "v@:@");
-      preclass_addMethod(intermediate_class,
-         @selector(didChangeValueForKey:),
-         (IMP)closure, "v@:@");
-   }
-#endif
-
    objc_registerClassPair(intermediate_class);
 
    return (Class)intermediate_class;
@@ -744,21 +635,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
    } else {
       need_intermediate = 1;
    }
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-   if (_KVOHackLevel() == BROKEN_KVO) {
-      if (PyDict_GetItemString(class_dict, "willChangeValueForKey_") == NULL) {
-         PyErr_Clear();
-      } else {
-         need_intermediate = 1;
-      }
-      if (PyDict_GetItemString(class_dict, "didChangeValueForKey_") == NULL) {
-         PyErr_Clear();
-      } else {
-         need_intermediate = 1;
-      }
-   }
-#endif
 
    if (!PyObjCClass_HasPythonImplementation(py_superclass) && need_intermediate) {
       Class intermediate_class;
@@ -1327,21 +1203,6 @@ PyObjCClass_BuildClass(Class super_class,  PyObject* protocols,
             @selector(respondsToSelector:),
             "c@::",
             object_method_respondsToSelector);
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-         if (_KVOHackLevel() == BROKEN_KVO) {
-            METH(
-               "willChangeValueForKey_",
-               @selector(willChangeValueForKey:),
-               "v@:@",
-               object_method_willOrDidChangeValueForKey_);
-            METH(
-               "didChangeValueForKey_",
-               @selector(didChangeValueForKey:),
-               "v@:@",
-               object_method_willOrDidChangeValueForKey_);
-         }
-#endif
       }
 
 
@@ -2438,37 +2299,6 @@ object_method_valueForKey_(
 }
 
 
-#if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-
-static void
-object_method_willOrDidChangeValueForKey_(
-      ffi_cif* cif __attribute__((__unused__)),
-      void* retval __attribute__((__unused__)),
-      void** args,
-      void* userdata) {
-   struct objc_super spr;
-   id self = *(id*)args[0];
-   SEL _meth = *(SEL*)args[1];
-   NSString* key = *(NSString**)args[2];
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-   BOOL isSet = (_meth == @selector(willChangeValueForKey:));
-   if (_UseKVO(self, key, isSet)) {
-      objc_superSetClass(spr, (Class)userdata);
-      objc_superSetReceiver(spr, self);
-      (void)objc_msgSendSuper(&spr, _meth, key);
-   }
-
-#else
-   objc_superSetClass(spr, (Class)userdata);
-   objc_superSetReceiver(spr, self);
-   (void)objc_msgSendSuper(&spr, _meth, key);
-#endif
-
-}
-
-#endif
-
 static void
 object_method_setValue_forKey_(
       ffi_cif* cif __attribute__((__unused__)),
@@ -2488,16 +2318,6 @@ object_method_setValue_forKey_(
    id value = *(id*)args[2];
    NSString* key = *(NSString**)args[3];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-   // Set up a KVO stack so you only get one notification from this
-   NS_DURING
-      if (_KVOHackLevel() == BROKEN_KVO) {
-         [self willChangeValueForKey:key];
-      }
-   NS_HANDLER
-   NS_ENDHANDLER
-#endif
-
    NS_DURING
       // First check super
       objc_superSetClass(spr, (Class)userdata);
@@ -2515,13 +2335,6 @@ object_method_setValue_forKey_(
          if (val == NULL) {
             PyErr_Clear();
             PyGILState_Release(state);
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-            // Pop the KVO stack
-            if (_KVOHackLevel() == BROKEN_KVO) {
-                [self didChangeValueForKey:key];
-            }
-#endif
 
             [localException raise];
          }
@@ -2547,30 +2360,11 @@ object_method_setValue_forKey_(
          if (r == -1) {
             PyErr_Clear();
             PyGILState_Release(state);
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-            // Pop the KVO stack
-            if (_KVOHackLevel() == BROKEN_KVO) {
-                [self didChangeValueForKey:key];
-            }
-#endif
             [localException raise];
          }
          PyGILState_Release(state);
       } else {
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-         // Pop the KVO stack
-         if (_KVOHackLevel() == BROKEN_KVO) {
-            [self didChangeValueForKey:key];
-         }
-#endif
          [localException raise];
       }
    NS_ENDHANDLER
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_4
-   // Pop the KVO stack
-   if (_KVOHackLevel() == BROKEN_KVO) {
-      [self didChangeValueForKey:key];
-   }
-#endif
 }
