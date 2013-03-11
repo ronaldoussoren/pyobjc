@@ -275,7 +275,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     values[0] = &block_ptr;
 
     r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-            signature_to_ffi_return_type(signature->rettype.type), arglist);
+            PyObjCFFI_Typestr2FFI(signature->rettype.type), arglist);
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error;

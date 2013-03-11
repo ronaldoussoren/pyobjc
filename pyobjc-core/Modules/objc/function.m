@@ -220,7 +220,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     if (variadicAllArgs) {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-            signature_to_ffi_return_type(self->methinfo->rettype.type), arglist);
+        PyObjCFFI_Typestr2FFI(self->methinfo->rettype.type), arglist);
         if (r != FFI_OK) {
             PyErr_Format(PyExc_RuntimeError,
                 "Cannot setup FFI CIF [%d]", r);
