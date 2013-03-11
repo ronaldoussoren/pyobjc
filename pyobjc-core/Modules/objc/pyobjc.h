@@ -83,7 +83,6 @@
 #include "ObjCPointer.h"
 #include "informal-protocol.h"
 #include "formal-protocol.h"
-#include "alloc_hack.h"
 #include "pyobjc_unicode.h"
 #include "class-descriptor.h"
 #include "class-list.h"
@@ -105,6 +104,7 @@
 #include "objc-NULL.h"
 #include "options.h"
 #include "method-accessor.h"
+#include "ivar-accessor.h"
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"

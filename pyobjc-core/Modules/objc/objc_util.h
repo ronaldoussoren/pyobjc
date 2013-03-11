@@ -47,5 +47,7 @@ extern PyObject* PyObjC_ImportName(const char* name);
 
 extern PyObject* PyObjC_AdjustSelf(PyObject* object);
 
+extern PyObject* PyObjC_FindSELInDict(PyObject*, SEL);
+extern int PyObjCRT_SignaturesEqual(const char*, const char*);
 
 #endif /* OBJC_UTIL */

@@ -1927,6 +1927,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyObjC_setup_nscoder() < 0) {
         PyObjC_INITERROR();
     }
+    if (PyObjC_setup_nsobject() < 0) {
+        PyObjC_INITERROR();
+    }
 
     if (PyObjCCFType_Setup() == -1) {
         PyObjC_INITERROR();
@@ -2067,7 +2070,6 @@ PyObjC_MODULE_INIT(_objc)
     }
 
     PyObjCPointerWrapper_Init();
-    PyObjC_InstallAllocHack();
 
 #if    PyObjC_BUILD_RELEASE >= 1006
     if (objc_setAssociatedObject != NULL) {

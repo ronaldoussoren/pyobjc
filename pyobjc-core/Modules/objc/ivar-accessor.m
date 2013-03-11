@@ -1,9 +1,7 @@
-/*
- */
 #include "pyobjc.h"
 
 static Ivar
-find_ivar(NSObject* base, char* name)
+find_ivar(NSObject* base, const char* name)
 {
     Class cur = object_getClass((id)base);
     Ivar ivar;
@@ -44,7 +42,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 
     /* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
     v = Py_BuildValue(
-            "(s"Py_ARG_BYTES")",
+            "(s" Py_ARG_BYTES ")",
             "isa", @encode(Class));
     if (v == NULL) {
         Py_DECREF(result);
@@ -85,11 +83,13 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
                 "(s"Py_ARG_BYTES")",
                 ivar_name,
                 ivar_getTypeEncoding(ivar));
+
             if (v == NULL) {
                 free(ivarList);
                 Py_DECREF(result);
                 return NULL;
             }
+
             r = PyList_Append(result, v);
             Py_DECREF(v);
             if (r == -1) {
@@ -112,9 +112,10 @@ PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
         PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = {"obj", "name", NULL };
+
     PyObject* anObject;
-    char*     name;
-    Ivar      ivar;
+    char* name;
+    Ivar ivar;
     NSObject* objcValue;
     PyObject* result;
     const char* ivar_type;
@@ -151,6 +152,7 @@ static char* keywords[] = {"obj", "name", NULL };
     if (strcmp(ivar_type, @encode(PyObject*)) == 0) {
         result = *(PyObject**)(((char*)(objcValue)) + ivar_offset);
         Py_XINCREF(result);
+
     } else {
         result = pythonify_c_value(ivar_type,
             ((char*)(objcValue)) + ivar_offset);
@@ -164,13 +166,14 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
         PyObject* args, PyObject* kwds)
 {
 static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
+
     PyObject* anObject;
-    char*     name;
-    Ivar      ivar;
+    char* name;
+    Ivar ivar;
     PyObject* value;
     PyObject* updateRefCounts = NULL;
     NSObject* objcValue;
-    int       result;
+    int result;
     const char* ivar_type;
     ptrdiff_t ivar_offset;
 
@@ -195,6 +198,7 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
          */
         Class cls;
         PyObject* pycls;
+        PyTypeObject* curType;
 
         result = depythonify_c_value(@encode(Class), value, &cls);
         if (result == -1) {
@@ -208,8 +212,9 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
             return NULL;
         }
 
-        Py_DECREF((PyObject*)(Py_TYPE(anObject)));
+        curType = Py_TYPE(anObject);
         Py_TYPE(anObject) = (PyTypeObject*)pycls;
+        Py_DECREF((PyObject*)curType);
         Py_INCREF(Py_None);
         return Py_None;
     }
@@ -228,10 +233,7 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
         /*
          * Python object, need to handle refcounts
          */
-        PyObject* tmp = *(PyObject**)(((char*)(objcValue)) + ivar_offset);
-        Py_XINCREF(value);
-        *(PyObject**)(((char*)(objcValue)) + ivar_offset) = value;
-        Py_XDECREF(tmp);
+        SET_FIELD_INCREF(*(PyObject**)(((char*)(objcValue)) + ivar_offset), value);
 
     } else if (ivar_type[0] == _C_ID) {
         /*
@@ -258,6 +260,7 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
             id v = object_getIvar(objcValue, ivar);
             [v release];
         }
+        /* XXX: Does this work correct? depythonify_c_value doesn't return a 'new' reference */
         object_setIvar(objcValue, ivar, tmpValue);
 
     } else {
@@ -269,6 +272,7 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
             return NULL;
         }
     }
+
     Py_INCREF(Py_None);
     return Py_None;
 }

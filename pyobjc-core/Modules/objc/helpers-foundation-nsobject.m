@@ -426,7 +426,7 @@ imp_NSObject_retain(
 
 
 int
-PyObjC_InstallAllocHack(void)
+PyObjC_setup_nsobject(void)
 {
     int r;
 

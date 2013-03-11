@@ -58,13 +58,16 @@ proto_repr(PyObject* object)
 
     if (PyUnicode_Check(self->name)) {
         b = PyUnicode_AsEncodedString(self->name, NULL, NULL);
+
 #if PY_MAJOR_VERSION == 2
     } else if (PyString_Check(self->name)) {
         b = self->name; Py_INCREF(b);
 #endif
+
     } else {
         b = PyBytes_FromString("<null>");
     }
+
     if (b == NULL) {
         return NULL;
     }
@@ -78,11 +81,12 @@ static PyObject*
 proto_new(PyTypeObject* type __attribute__((__unused__)),
     PyObject* args, PyObject* kwds)
 {
-static    char*    keywords[] = { "name", "selectors", NULL };
+static char* keywords[] = { "name", "selectors", NULL };
+
     PyObjCInformalProtocol* result;
     PyObject* name;
     PyObject* selectors;
-    Py_ssize_t       i, len;
+    Py_ssize_t i, len;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol",
             keywords, &name, &selectors)) {
@@ -91,10 +95,12 @@ static    char*    keywords[] = { "name", "selectors", NULL };
 
     if (PyUnicode_Check(name)) {
         /* pass */
+
 #if PY_MAJOR_VERSION == 2
     } else if (PyString_Check(name)) {
         /* pass */
 #endif
+
     } else {
         PyErr_SetString(PyExc_TypeError,
             "Name must be a string");
@@ -176,58 +182,18 @@ static PyMemberDef proto_members[] = {
 
 PyTypeObject PyObjCInformalProtocol_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    "objc.informal_protocol",           /* tp_name */
-    sizeof(PyObjCInformalProtocol),     /* tp_basicsize */
-    0,                                  /* tp_itemsize */
-    /* methods */
-    proto_dealloc,                      /* tp_dealloc */
-    0,                                  /* tp_print */
-    0,                                  /* tp_getattr */
-    0,                                  /* tp_setattr */
-    0,                                  /* tp_compare */
-    proto_repr,                         /* tp_repr */
-    0,                                  /* tp_as_number */
-    0,                                  /* tp_as_sequence */
-    0,                                  /* tp_as_mapping */
-    0,                                  /* tp_hash */
-    0,                                  /* tp_call */
-    0,                                  /* tp_str */
-    PyObject_GenericGetAttr,            /* tp_getattro */
-    0,                                  /* tp_setattro */
-    0,                                  /* tp_as_buffer */
-    Py_TPFLAGS_DEFAULT,                 /* tp_flags */
-     proto_cls_doc,                     /* tp_doc */
-     proto_traverse,                    /* tp_traverse */
-     0,                                 /* tp_clear */
-    0,                                  /* tp_richcompare */
-    0,                                  /* tp_weaklistoffset */
-    0,                                  /* tp_iter */
-    0,                                  /* tp_iternext */
-    0,                                  /* tp_methods */
-    proto_members,                      /* tp_members */
-    0, /* proto_getset , */             /* tp_getset */
-    0,                                  /* tp_base */
-    0,                                  /* tp_dict */
-    0,                                  /* tp_descr_get */
-    0,                                  /* tp_descr_set */
-    0,                                  /* tp_dictoffset */
-    0,                                  /* tp_init */
-    0,                                  /* tp_alloc */
-    proto_new,                          /* tp_new */
-    0,                                  /* tp_free */
-    0,                                  /* tp_is_gc */
-    0,                                  /* tp_bases */
-    0,                                  /* tp_mro */
-    0,                                  /* tp_cache */
-    0,                                  /* tp_subclasses */
-    0,                                  /* tp_weaklist */
-    0                                   /* tp_del */
-#if PY_VERSION_HEX >= 0x02060000
-    , 0                                 /* tp_version_tag */
-#endif
-
+    .tp_name        = "objc.informal_protocol",
+    .tp_basicsize   = sizeof(PyObjCInformalProtocol),
+    .tp_itemsize    = 0,
+    .tp_dealloc     = proto_dealloc,
+    .tp_repr        = proto_repr,
+    .tp_getattro    = PyObject_GenericGetAttr,
+    .tp_flags       = Py_TPFLAGS_DEFAULT,
+    .tp_doc         = proto_cls_doc,
+    .tp_traverse    = proto_traverse,
+    .tp_members     = proto_members,
+    .tp_new         = proto_new,
 };
-
 
 /*
  * Find information about a selector in the protocol.
@@ -266,6 +232,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMeth
             int class_sel = (
                 PyObjCSelector_GetFlags(cur)
                 & PyObjCSelector_kCLASS_METHOD) != 0;
+
             if ((isClassMethod && !class_sel)
                     || (!isClassMethod && class_sel)) {
                 continue;
@@ -277,67 +244,11 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMeth
             }
         }
     }
+
     Py_DECREF(seq);
     return NULL;
 }
 
-PyObject*
-findSelInDict(PyObject* clsdict, SEL selector)
-{
-    PyObject* values;
-    PyObject* seq;
-    Py_ssize_t i, len;
-
-    values = PyDict_Values(clsdict);
-    if (values == NULL) {
-        return NULL;
-    }
-
-    seq = PySequence_Fast(values, "PyDict_Values result not a sequence");
-    if (seq == NULL) {
-        return NULL;
-    }
-
-    len = PySequence_Fast_GET_SIZE(seq);
-    for (i = 0; i < len; i++) {
-        PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
-        if (!PyObjCSelector_Check(v)) continue;
-        if (PyObjCSelector_GetSelector(v) == selector) {
-            Py_DECREF(seq);
-            Py_DECREF(values);
-            Py_INCREF(v);
-            return v;
-        }
-    }
-    Py_DECREF(seq);
-    Py_DECREF(values);
-    return NULL;
-}
-
-int
-signaturesEqual(const char* sig1, const char* sig2)
-{
-    char buf1[1024];
-    char buf2[1024];
-    int r;
-
-    /* Return 0 if the two signatures are not equal */
-    if (strcmp(sig1, sig2) == 0) return 1;
-
-    /* For some reason compiler-generated signatures contain numbers that
-     * are not used by the runtime. These are irrelevant for our comparison
-     */
-    r = PyObjCRT_SimplifySignature(sig1, buf1, sizeof(buf1));
-    if (r == -1) {
-        return 0;
-    }
-
-    r = PyObjCRT_SimplifySignature(sig2, buf2, sizeof(buf2));
-    if (r == -1) {
-        return 0;
-    }
-    return strcmp(buf1, buf2) == 0;
-}
 
 /*
  * Verify that 'cls' conforms to the informal protocol
@@ -357,12 +268,14 @@ PyObjCInformalProtocol_CheckClass(
             "but '%s'", Py_TYPE(obj)->tp_name);
         return 0;
     }
+
     if (!PyObjCClass_Check(super_class)) {
         PyErr_Format(PyExc_TypeError,
             "Third argument is not an 'objc.objc_class' but "
             "'%s'", Py_TYPE(super_class)->tp_name);
         return 0;
     }
+
     if (!PyDict_Check(clsdict)) {
         PyErr_Format(PyExc_TypeError,
             "Fourth argument is not a 'dict' but '%s'",
@@ -391,7 +304,7 @@ PyObjCInformalProtocol_CheckClass(
 
         sel = PyObjCSelector_GetSelector(cur);
 
-        m = findSelInDict(clsdict, sel);
+        m = PyObjC_FindSELInDict(clsdict, sel);
         if (m == NULL) {
             m = PyObjCClass_FindSelector(super_class, sel, PyObjCSelector_IsClassMethod(cur));
         }
@@ -407,11 +320,13 @@ PyObjCInformalProtocol_CheckClass(
                     sel_getName(sel));
                 Py_DECREF(seq);
                 return 0;
+
             } else {
                 PyErr_Clear();
             }
+
         } else {
-            if (!signaturesEqual(PyObjCSelector_Signature(m),
+            if (!PyObjCRT_SignaturesEqual(PyObjCSelector_Signature(m),
                 PyObjCSelector_Signature(cur)) != 0) {
 
                 PyErr_Format(PyExc_TypeError,
@@ -425,6 +340,7 @@ PyObjCInformalProtocol_CheckClass(
                     PyObjCSelector_Signature(m),
                     PyObjCSelector_Signature(cur)
                 );
+
                 Py_DECREF(seq);
                 Py_DECREF(m);
                 return 0;

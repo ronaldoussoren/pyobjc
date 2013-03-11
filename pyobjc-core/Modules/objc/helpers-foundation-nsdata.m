@@ -4,7 +4,7 @@ static PyObject* call_NSData_bytes(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
     const void* bytes;
-    NSUInteger    bytes_len;
+    NSUInteger bytes_len;
     PyObject* result;
     struct objc_super super;
 
@@ -15,11 +15,9 @@ static PyObject* call_NSData_bytes(
     PyObjC_DURING
         objc_superSetReceiver(super, PyObjCObject_GetObject(self));
         objc_superSetClass(super, PyObjCSelector_GetClass(method));
-
         bytes = ((void*(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super,
-                PyObjCSelector_GetSelector(method));
+            PyObjCSelector_GetSelector(method));
         bytes_len = ((NSUInteger(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, @selector(length));
-
 
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
@@ -101,13 +99,15 @@ imp_NSData_bytes(
         if (PyObject_AsReadBuffer(result, &p, &len) == -1) {
             goto error;
         }
+
         Py_DECREF(result);
         *pretval =  (void *)p;
         PyGILState_Release(state);
         return;
 
     } else
-#endif
+#endif /* PY_MAJOR_VERSION == 2 */
+
     if (PyBytes_Check(result)) {
         void* p;
 

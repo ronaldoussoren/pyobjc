@@ -6,14 +6,13 @@ call_NSCoder_encodeValueOfObjCType_at_(
 {
     char* typestr;
     PyObject* value;
-    void*     buf;
-    Py_ssize_t    size;
+    void* buf;
+    Py_ssize_t size;
     int err;
     struct objc_super super;
     Py_ssize_t typestr_len;
 
-    if  (
-        !PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
+    if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O", &typestr, &typestr_len, &value)) {
         return NULL;
     }
 
@@ -34,13 +33,15 @@ call_NSCoder_encodeValueOfObjCType_at_(
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     NS_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL, char*,void*))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
                     PyObjCIMP_GetSelector(method),
                     typestr, buf);
+
         } else {
             objc_superSetReceiver(super, PyObjCObject_GetObject(self));
             objc_superSetClass(super, PyObjCSelector_GetClass(method));
@@ -49,6 +50,7 @@ call_NSCoder_encodeValueOfObjCType_at_(
                     PyObjCSelector_GetSelector(method),
                     typestr, buf);
         }
+
     NS_HANDLER
         PyObjCErr_FromObjC(localException);
 
@@ -88,7 +90,7 @@ imp_NSCoder_encodeValueOfObjCType_at_(
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
     if (pyself == NULL) goto error;
-    PyTuple_SetItem(arglist, 0,  pyself);
+    PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     v = PyBytes_FromString(typestr);
@@ -129,12 +131,12 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
     char* typestr;
-    NSUInteger   count;
-    NSUInteger   i;
-    Py_ssize_t   value_len;
+    NSUInteger count;
+    NSUInteger i;
+    Py_ssize_t value_len;
     PyObject* value;
-    void*     buf;
-    Py_ssize_t    size;
+    void* buf;
+    Py_ssize_t size;
     int err;
     struct objc_super super;
     Py_ssize_t typestr_len;
@@ -147,6 +149,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
     if (size == -1) {
         return NULL;
     }
+
     buf = PyMem_Malloc(size * (count+1));
     if (buf == NULL) {
         PyErr_NoMemory();
@@ -163,6 +166,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
     if (value_len == -1) {
         PyMem_Free(buf);
         return NULL;
+
     } else if ((NSUInteger)value_len > count) {
         PyMem_Free(buf);
         PyErr_SetString(PyExc_ValueError, "Inconsistent arguments");
@@ -179,8 +183,9 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
         }
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL, char*,NSUInteger, void*))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
@@ -195,6 +200,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(
                     PyObjCSelector_GetSelector(method),
                     typestr, count, buf);
         }
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
     PyObjC_ENDHANDLER
@@ -313,13 +319,15 @@ call_NSCoder_decodeValueOfObjCType_at_(
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL, char*,void*))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
                     PyObjCIMP_GetSelector(method),
                     typestr, buf);
+
         } else {
             objc_superSetReceiver(super, PyObjCObject_GetObject(self));
             objc_superSetClass(super, PyObjCSelector_GetClass(method));
@@ -328,8 +336,10 @@ call_NSCoder_decodeValueOfObjCType_at_(
                     PyObjCSelector_GetSelector(method),
                     typestr, buf);
         }
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
+
     PyObjC_ENDHANDLER
 
     if (PyErr_Occurred()) {
@@ -428,14 +438,16 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
     if (size == -1) {
         return NULL;
     }
+
     buf = PyMem_Malloc(size * (count+1));
     if (buf == NULL) {
         PyErr_NoMemory();
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL, char*,NSUInteger, void*))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
@@ -450,8 +462,10 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(
                 PyObjCSelector_GetSelector(method),
                 typestr, (NSUInteger)count, buf);
         }
+
     PyObjC_HANDLER
         PyObjCErr_FromObjC(localException);
+
     PyObjC_ENDHANDLER
 
     if (PyErr_Occurred()) {
@@ -495,8 +509,8 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(
     PyObject* arglist = NULL;
     PyObject* v;
     PyObject* seq = NULL;
-    Py_ssize_t       size;
-    NSUInteger       i;
+    Py_ssize_t size;
+    NSUInteger i;
     int res;
     PyObject* pyself = NULL;
     int cookie = 0;
@@ -564,8 +578,8 @@ call_NSCoder_encodeBytes_length_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
     char* bytes;
-    Py_ssize_t    size;
-    Py_ssize_t    length;
+    Py_ssize_t size;
+    Py_ssize_t length;
 
     struct objc_super super;
 
@@ -579,8 +593,9 @@ call_NSCoder_encodeBytes_length_(
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL,void*,NSUInteger))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
@@ -681,8 +696,9 @@ call_NSCoder_decodeBytesWithReturnedLength_(
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             bytes = ((void*(*)(id,SEL,NSUInteger*))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
@@ -835,8 +851,8 @@ static PyObject*
 call_NSCoder_decodeBytesForKey_returnedLength_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
-    char*         bytes;
-    NSUInteger    size = 0;
+    char* bytes;
+    NSUInteger size = 0;
     PyObject* v;
     PyObject* result;
     PyObject* py_buf;
@@ -846,6 +862,7 @@ call_NSCoder_decodeBytesForKey_returnedLength_(
     if  (!PyArg_ParseTuple(arguments, "O&O", PyObjCObject_Convert, &key, &py_buf)) {
         return NULL;
     }
+
     if (py_buf != NULL) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
@@ -1012,9 +1029,9 @@ static PyObject*
 call_NSCoder_encodeBytes_length_forKey_(
     PyObject* method, PyObject* self, PyObject* arguments)
 {
-    char*         bytes;
-    Py_ssize_t      size;
-    id             key;
+    char* bytes;
+    Py_ssize_t size;
+    id key;
     struct objc_super super;
 
     if  (!PyArg_ParseTuple(arguments, Py_ARG_BYTES "#O&", &bytes, &size,
@@ -1022,8 +1039,9 @@ call_NSCoder_encodeBytes_length_forKey_(
         return NULL;
     }
 
+    int isIMP = PyObjCIMP_Check(method);
     PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
+        if (isIMP) {
             ((void(*)(id,SEL,void*, NSUInteger, id))
                 (PyObjCIMP_GetIMP(method)))(
                     PyObjCObject_GetObject(self),
@@ -1100,6 +1118,7 @@ imp_NSCoder_encodeBytes_length_forKey_(
         PyErr_SetString(PyExc_TypeError, "Must return None");
         goto error;
     }
+
     Py_DECREF(result);
     PyGILState_Release(state);
     return;

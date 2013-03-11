@@ -584,9 +584,9 @@ do_verify(
     PyObject* meth;
 
     if (is_class) {
-        meth = findSelInDict(metadict, descr->name);
+        meth = PyObjC_FindSELInDict(metadict, descr->name);
     } else {
-        meth = findSelInDict(clsdict, descr->name);
+        meth = PyObjC_FindSELInDict(clsdict, descr->name);
     }
     if (meth == NULL || !PyObjCSelector_Check(meth)) {
 
@@ -633,7 +633,7 @@ do_verify(
         }
     }
 
-    if (signaturesEqual(descr->types,
+    if (PyObjCRT_SignaturesEqual(descr->types,
                 PyObjCSelector_Signature(meth))) {
         return 1;
     }
