@@ -27,7 +27,6 @@ static void
 proto_dealloc(PyObject* object)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;
-#if 0
     /*
      * For some reason this code causes a crash, while it should
      * be the reverse of the code in proto_new.
@@ -35,15 +34,16 @@ proto_dealloc(PyObject* object)
     Py_ssize_t len = PyTuple_Size(self->selectors);
     Py_ssize_t i;
 
-    for (i = 0; i < len; i++) {
-        PyObjCSelector* tmp =
-            (PyObjCSelector*)PyTuple_GET_ITEM(
-                self->selectors, i);
+    if (selToProtocolMapping) {
+        for (i = 0; i < len; i++) {
+            PyObjCSelector* tmp =
+                (PyObjCSelector*)PyTuple_GET_ITEM(
+                    self->selectors, i);
 
-        PyDict_DelItemString(selToProtocolMapping,
-            sel_getName(tmp->sel_selector));
+            PyDict_DelItemString(selToProtocolMapping,
+                sel_getName(tmp->sel_selector));
+        }
     }
-#endif
 
     Py_CLEAR(self->name);
     Py_CLEAR(self->selectors);
