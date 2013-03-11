@@ -8,8 +8,7 @@
     OC_PythonArray* res;
 
     res = [[OC_PythonArray alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [res autorelease];
 }
 
 - (id)initWithPythonObject:(PyObject*)v
@@ -30,8 +29,13 @@
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
-    Py_INCREF(value);
-    return value;
+    if (likely(value)) {
+        Py_INCREF(value);
+        return value;
+    } else {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
 }
 
 -(BOOL)supportsWeakPointers {
@@ -65,11 +69,14 @@
 
     PyObjC_BEGIN_WITH_GIL
         result = PySequence_Length(value);
+        if (result < 0 && PyErr_Occurred()) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
 
     PyObjC_END_WITH_GIL
 
-    if (result > INT_MAX) {
-        return INT_MAX;
+    if (unlikely(result < 0)) {
+        return 0;
     }
 
     return result;
@@ -82,12 +89,12 @@
     int err;
 
     PyObjC_BEGIN_WITH_GIL
-        if (idx > PY_SSIZE_T_MAX) {
+        if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        v = PySequence_GetItem(value, idx);
+        v = PySequence_GetItem(value, (Py_ssize_t)idx);
         if (unlikely(v == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -100,7 +107,7 @@
 
     PyObjC_END_WITH_GIL
 
-    if (!result) {
+    if (result == nil) {
         result = [NSNull null];
     }
     return result;
@@ -112,7 +119,7 @@
     PyObject* v;
 
     PyObjC_BEGIN_WITH_GIL
-        if (idx > PY_SSIZE_T_MAX) {
+        if (unlikely(idx > PY_SSIZE_T_MAX)) {
             PyErr_SetString(PyExc_IndexError, "out of range");
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -132,6 +139,7 @@
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
+
         Py_DECREF(v);
 
     PyObjC_END_WITH_GIL;
@@ -164,8 +172,7 @@
             }
         }
 
-        w = PyObject_CallMethod(value, "append", "O", v);
-        Py_DECREF(v);
+        w = PyObject_CallMethod(value, "append", "N", v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -180,7 +187,7 @@
     PyObject* v;
     PyObject* w;
 
-    if (idx > PY_SSIZE_T_MAX) {
+    if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
             PyErr_SetString(PyExc_IndexError, "No such index");
             PyObjC_GIL_FORWARD_EXC();
@@ -192,6 +199,7 @@
         if (unlikely(anObject == [NSNull null])) {
             Py_INCREF(Py_None);
             v = Py_None;
+
         } else {
             v = PyObjC_IdToPython(anObject);
             if (v == NULL) {
@@ -199,8 +207,7 @@
             }
         }
 
-        w = PyObject_CallMethod(value, "insert", "nO", theIndex, v);
-        Py_DECREF(v);
+        w = PyObject_CallMethod(value, "insert", "nN", theIndex, v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -272,10 +279,12 @@
             if (size > INT_MAX) {
                 [coder encodeInt32:5 forKey:@"pytype"];
                 [coder encodeInt64:(int64_t)PyTuple_Size(value) forKey:@"pylength"];
+
             } else {
                 [coder encodeInt32:4 forKey:@"pytype"];
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
+
         } else {
             if (size > INT_MAX) {
                 int v = 5;
@@ -295,28 +304,27 @@
     } else if (PyList_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:2 forKey:@"pytype"];
+
         } else {
             int v = 2;
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
+
         [super encodeWithCoder:coder];
 
     } else {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:3 forKey:@"pytype"];
+
         } else {
             int v = 3;
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
-        PyObjC_encodeWithCoder(value, coder);
 
+        PyObjC_encodeWithCoder(value, coder);
     }
 }
 
-/*
- * A basic implementation of -initWithObjects:count:. This method is needed
- * to support NSCoding for Python sequences.
- */
 -(Class)classForCoder
 {
     return [OC_PythonArray class];
@@ -324,6 +332,9 @@
 
 -(id)initWithObjects:(NSObject**)objects count:(NSUInteger)count
 {
+    /* initWithObjects:count: is primarily present to support the NSCoding
+     * protocol of NSArray.
+     */
     NSUInteger i;
     PyObjC_BEGIN_WITH_GIL
         if (PyTuple_CheckExact(value) && (NSUInteger)PyTuple_Size(value) == count) {
@@ -343,31 +354,36 @@
                 }
 
                 if (PyTuple_GET_ITEM(value, i) != NULL) {
-                    /* use temporary option to avoid race condition */
+                    /* use temporary object to avoid race condition */
                     PyObject* t = PyTuple_GET_ITEM(value, i);
                     PyTuple_SET_ITEM(value, i, NULL);
                     Py_DECREF(t);
                 }
                 PyTuple_SET_ITEM(value, i, v);
-                /* Don't DECREF v; SetItem stole a reference */
             }
+
         } else {
 
             for  (i = 0; i < count; i++) {
                 PyObject* v;
                 int r;
+
                 if (objects[i] == [NSNull null]) {
                     v = Py_None; Py_INCREF(Py_None);
+
                 } else {
                     v = PyObjC_IdToPython(objects[i]);
                 }
+
                 if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
+
                 r = PyList_Append(value,  v);
                 if (r == -1) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
+
                 Py_DECREF(v);
             }
         }
@@ -397,6 +413,7 @@
 
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
+
     } else {
         [coder decodeValueOfObjCType:@encode(int) at:&code];
     }
@@ -459,12 +476,18 @@
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+                if (selfAsPython == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
 
-                v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
-                Py_DECREF(cdr);
-                Py_DECREF(setValue);
+                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
                 Py_DECREF(selfAsPython);
+
+                if (setValue == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
+
+                v = PyObject_CallFunction(PyObjC_Decoder, "NN", cdr, setValue);
 
                 if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
@@ -483,6 +506,7 @@
           /* tuple with less than MAX_INT elements */
           if ([coder allowsKeyedCoding]) {
               size = [coder decodeInt32ForKey:@"pylength"];
+
           } else {
               int isize;
               [coder decodeValueOfObjCType:@encode(int) at:&isize];
@@ -520,16 +544,17 @@
           return self;
 #else
           [NSException raise:NSInvalidArgumentException
-            format:@"decoding tuple with more than INT_MAX elements in 32-bit"];
+                      format:@"decoding tuple with more than INT_MAX elements in 32-bit"];
           [self release];
           return nil;
 #endif
-    }
 
-    [NSException raise:NSInvalidArgumentException
-                format:@"decoding Python objects is not supported"];
-    [self release];
-    return nil;
+    default:
+        [self release];
+        [NSException raise:NSInvalidArgumentException
+                    format:@"Cannot decode OC_PythonArray with type-id %d", code];
+        return nil;
+    }
 }
 
 
@@ -555,6 +580,7 @@
             PyObjC_GIL_RETURN(result);
 
         PyObjC_END_WITH_GIL
+
     } else {
         return [super copyWithZone:zone];
     }
