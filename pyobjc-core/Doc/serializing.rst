@@ -1,6 +1,10 @@
 Object-graph serialization
 ==========================
 
+.. |br| raw:: html
+
+   <br/>
+
 Introduction
 ------------
 
@@ -28,6 +32,15 @@ that can be serialized using :mod:`pickle`. During serialization
 and deserialization PyObjC will use the same hooks and mechanisms
 as the :mod:`pickle` module.
 
+Archiving instances of :class:`str` (:class:`unicode` in Python 2),
+:class:`bytes` (Python 3 only), :class:`list`, :class:`tuple`,
+:class:`set`, :class:`frozenset` and :class:`dict` (but not instances
+of subclasses of these types) with a plain, not keyed, archiver
+and will result in objects of the corresponding Cocoa type when
+reading them back, even when reading them back in Python. Programs
+than need high fidility when roundtripping object graphs therefore
+need to use keyed archiving when possible.
+
 .. todo::
 
    Does PyObjC automaticly implement NSCoding for subclasses of
@@ -41,12 +54,58 @@ of times. Because of this it is not always possible to read back
 archives created with a newer version of PyObjC using older versions
 of PyObjC.
 
-.. todo::
+The following table lists the changes in the encoding, with "forward compatible" meaning
+that this version of PyObjC can read older archives, and "backward compatible" meaning that older
+versions of PyObjC can read back newer archives.
 
-   Insert table that lists incompatibilities.
-
-Backward compatibility code does ensure that newer versions of PyObjC
-can read archives created by older versions of PyObjC
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | *Version* | *Backward*  |br|   | *Forward* |br|     | *Notes*                              |
+  |           | *compatible*       | *compatbile*       |                                      |
+  +===========+====================+====================+======================================+
+  |           |                    |                    | TODO: check C code                   |
+  |           |                    |                    |                                      |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 2.5       | Yes                | Maybe              | Encoding of pure python objects      |
+  |           |                    |                    | other than those with explicit       |
+  |           |                    |                    | support in PyObjC was broken for a   |
+  |           |                    |                    | number of edge cases.                |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 2.5.1     | Yes                | Yes                | Instances of :class:`unicode`        |
+  |           |                    |                    | (or :class:`str` in Python 3) or now |
+  |           |                    |                    | archived as instances of NSString.   |
+  |           |                    |                    | These archives can be read back by   |
+  |           |                    |                    | pure Objective-C code, and when using|
+  |           |                    |                    | using plain archiving the object will|
+  |           |                    |                    | be read as an NSString instance in   |
+  |           |                    |                    | Python code.                         |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 3.0       | Yes                | No                 | Changes in encoding of               |
+  |           |                    |                    | archives for OC_PythonData .         |
+  |           |                    |                    | These archives can now be read back  |
+  |           |                    |                    | by pure Objective-C programs when    |
+  |           |                    |                    | the python object has type           |
+  |           |                    |                    | :class:`bytes` (only for Python 3)   |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 3.0       | Yes                | Yes                | Changes in encoding of keyed         |
+  |           |                    |                    | archives for OC_PythonArray.         |
+  |           |                    |                    | These archives can now be read back  |
+  |           |                    |                    | by pure Objective-C programs when    |
+  |           |                    |                    | the python object has type           |
+  |           |                    |                    | :class:`list` or :class:`tuple`.     |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 3.0       | Yes                | Yes                | Changes in encoding of keyed         |
+  |           |                    |                    | archives for OC_PythonDictionary.    |
+  |           |                    |                    | These archives can now be read back  |
+  |           |                    |                    | by pure Objective-C programs when    |
+  |           |                    |                    | the python object has type           |
+  |           |                    |                    | :class:`dict`.                       |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 3.0       | No                 | No                 | Changes in encoding of OC_PythonSet. |
+  |           |                    |                    | Instances of :class:`set` and        |
+  |           |                    |                    | :class:`frozenset` can now be read   |
+  |           |                    |                    | back by pure Objective-C code when   |
+  |           |                    |                    | using keyed archiving.               |
+  +-----------+--------------------+--------------------+--------------------------------------+
 
 
 Interoperability with pure Objective-C programs
