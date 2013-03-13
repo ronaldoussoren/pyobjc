@@ -53,8 +53,9 @@ int main(int argc, char** argv)
                      options:NSPropertyListMutableContainersAndLeaves
                        error:&error];
     if (data == nil) {
-        printf("Cannot encode archive as property list\n");
-        return 3;
+        /* Some types we test cannot be represented as a plist */
+        printf("%s\n", [[value description] UTF8String]);
+        return 0;
     }
 
     fwrite([data bytes], 1, [data length], stdout);
