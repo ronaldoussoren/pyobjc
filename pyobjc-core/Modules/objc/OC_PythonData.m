@@ -121,22 +121,14 @@
 
     PyObjC_BEGIN_WITH_GIL
         if (PyBytes_CheckExact(value)) {
-            Py_ssize_t buffer_len;
-            const void *buffer;
-
-            if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-
             if ([coder allowsKeyedCoding]) {
-                [coder encodeInt32:1 forKey:@"pytype"];
-                [coder encodeBytes:buffer length:buffer_len forKey: @"pybytes"];
+                [coder encodeInt32:3 forKey:@"pytype"];
 
             } else {
-                int v = 1;
+                int v = 3;
                 [coder encodeValueOfObjCType:@encode(int) at:&v];
-                [coder encodeBytes:buffer length:buffer_len];
             }
+            [super encodeWithCoder:coder];
 
         } else {
             if ([coder allowsKeyedCoding]) {
@@ -176,6 +168,9 @@
 
     }
     if (v == 1) {
+        /* Backward compatibility:
+         * PyObjC upto version 3 used this type to archive instances of bytes
+         */
         self = [super init];
         if (unlikely(self == nil)) return nil;
 
@@ -240,6 +235,9 @@
 
         }
 
+    } else if (v == 3) {
+        return [super initWithCoder:coder];
+
     } else {
         [NSException raise:NSInvalidArgumentException
                 format:@"encoding Python objects is not supported"];
@@ -247,5 +245,14 @@
     }
     return self;
 }
+
+/* Ensure that we can be unarchived as a generic string by pure ObjC
+ *  * code.
+ *   */
++(NSArray*)classFallbacksForKeyedArchiver
+{
+    return [NSArray arrayWithObject:@"NSData"];
+}
+
 
 @end /* implementation OC_PythonData */

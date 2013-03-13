@@ -275,6 +275,15 @@ Version 3.0
   ``NSObject.respondsToSelector_()``. The first incorrect binding no
   longer works.
 
+* Python 3 only: NSKeyedArchives with a bytes object can now be read
+  back by a pure Objective-C program (that program will decode it
+  as an NSData object).
+
+  Because of this the encoding for method for OC_PythonData was changed,
+  archives created by PyObjC 3.0 can therefore not be read back
+  by earlier PyObjC versions (but PyObjC 3.0 can read archives created
+  by those older versions)
+
 Version 2.6
 -----------
 

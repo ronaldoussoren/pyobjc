@@ -26,12 +26,19 @@ int main(int argc, char** argv)
 
     NSString* path = [[NSString alloc] initWithUTF8String:argv[2]];
     NSObject* value;
-    if (keyed) {
-        value = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 
-    } else {
-        value = [NSUnarchiver unarchiveObjectWithFile:path];
+    @try {
+        if (keyed) {
+            value = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+
+        } else {
+            value = [NSUnarchiver unarchiveObjectWithFile:path];
+        }
+    } @catch (NSException* localException) {
+        printf("Exception during unarchiving: %s\n", [[localException description] UTF8String]);
+        return 2;
     }
+
     [path release];
 
     if (value == nil) {
