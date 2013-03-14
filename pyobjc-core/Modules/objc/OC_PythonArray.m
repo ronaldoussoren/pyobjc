@@ -285,30 +285,17 @@
                 [coder encodeInt32:(int32_t)PyTuple_Size(value) forKey:@"pylength"];
             }
 
-        } else {
-            if (size > INT_MAX) {
-                int v = 5;
-                [coder encodeValueOfObjCType:@encode(int) at:&v];
-                v = (int)PyTuple_Size(value);
-                [coder encodeValueOfObjCType:@encode(long long) at:&v];
-
-            } else {
-                int v = 4;
-                [coder encodeValueOfObjCType:@encode(int) at:&v];
-                v = (int)PyTuple_Size(value);
-                [coder encodeValueOfObjCType:@encode(int) at:&v];
-            }
         }
+        /* Else: When using a non-keyed archiver delegate to superclass unconditionally */
+
         [super encodeWithCoder:coder];
 
     } else if (PyList_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:2 forKey:@"pytype"];
 
-        } else {
-            int v = 2;
-            [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
+        /* Else: When using a non-keyed archiver delegate to superclass unconditionally */
 
         [super encodeWithCoder:coder];
 
@@ -326,6 +313,19 @@
 }
 
 -(Class)classForCoder
+{
+    if (value == NULL || PyTuple_CheckExact(value)) {
+        return [NSArray class];
+
+    } else if (PyList_CheckExact(value)) {
+        return [NSMutableArray class];
+
+    } else {
+        return [OC_PythonArray class];
+    }
+}
+
+-(Class)classForKeyedArchiver
 {
     return [OC_PythonArray class];
 }
@@ -610,5 +610,11 @@
         return [super mutableCopyWithZone:zone];
     }
 }
+
++(NSArray*)classFallbacksForKeyedArchiver
+{
+    return [NSArray arrayWithObject:@"NSArray"];
+}
+
 
 @end /* implementation OC_PythonArray */

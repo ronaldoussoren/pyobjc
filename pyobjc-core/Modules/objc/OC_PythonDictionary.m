@@ -488,9 +488,17 @@
 
 -(Class)classForCoder
 {
-    return [OC_PythonDictionary class];
+    if (PyDict_CheckExact(value)) {
+        return [NSMutableDictionary class];
+    } else {
+        return [OC_PythonDictionary class];
+    }
 }
 
+-(Class)classForKeyedArchiver
+{
+    return [OC_PythonDictionary class];
+}
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
@@ -498,9 +506,6 @@
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
 
-        } else {
-            int v = 1;
-            [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
         [super encodeWithCoder:coder];
 
@@ -578,5 +583,11 @@
             return [super mutableCopyWithZone:zone];
     }
 }
+
++(NSArray*)classFallbacksForKeyedArchiver
+{
+    return [NSArray arrayWithObject:@"NSDictionary"];
+}
+
 
 @end  // interface OC_PythonDictionary

@@ -127,37 +127,19 @@ Medium term
 * Remove use of CFRetain/CFRelease, use regular -retain/-release messages
   instead (or even 'objc_retain/objc_release)'
 
-* Add __signature__ to objc.selector and objc.function (see inspect.signature)
-
 * PyList_GET_ITEM/PyTuple_GET_ITEM + usage without INCREF is unsafe when code
   might call back into python!
 
-* The initWithCoder methods contain a large blob of shared code, move to
-  a separate function
-
-* Add tests to check that serializing list, tuple, unicode, str, ... (but not subtypes)
-  results in an NSArchive/NSKeyedArchive that can be read back in a pure ObjC
-  process (without PyObjC subclasses in the process)
-
-  NOTE: might require further update to the serialization code
-
-* #include -> #import (and remove include guards), alternatively cleanup
-  include guards.
+* Add tests for backward compatibility in archiving code (that is, create
+  some archives/keyed-archives with PyObjC 2.3, 2.5, 2.5.1, 3.0, check those
+  in as binary files and test that the can be read back)
 
 * See XXX in block-support.m: need some extra code to get the
   same block objects as emitted by recent Clang versions
 
-* Remove 10.3 support from class-builder.m (KVOHackLevel.m)
-
-* FIXME in classbuilder.m
-
-* Remove 'volatile' where possible (almost everywhere)
-
-* Scare XXX in corefoundation.m
+* Look for XXX/TODO/FIXME in code and fix those problems.
 
 * getattro for NSDecimal values seems dodgy
-
-* Remove use of 'volatile'
 
 * special_registry in supercall should be a dictionary
   (selector -> list of structs)
@@ -176,13 +158,6 @@ Medium term
 * PyObjCObject_GetAttrString can be removed?
 
 * Replace 'assert' calls by calls to 'PyObjC_Assert'
-
-* Remove PyObjCPointer completely?
-
-* Add objc.options object, instead of having a large set of
-  functions to manipulate options.
-
-  Simple python helper functions can provide backward compatiblity.
 
 
 * From Cocoa-dev:
@@ -256,3 +231,6 @@ Medium term
 * Create StoreKit bindings
 
 * objc.IMP should work for Python methods (see XXX comment)
+
+* Improve documentation, both end-user documentation and documentation
+  on how the bridge works.

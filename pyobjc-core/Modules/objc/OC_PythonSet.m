@@ -69,6 +69,29 @@
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
+    int code;
+    if (PyAnySet_CheckExact(value)) {
+        if (PyFrozenSet_Check(value)) {
+            code = 1;
+        } else {
+            code = 2;
+        }
+
+    } else {
+        code = 3;
+    }
+
+    if ([coder allowsKeyedCoding]) {
+        [coder encodeInt32:5 forKey:@"pytype"];
+    } else {
+        [coder encodeValueOfObjCType:@encode(int) at:&code];
+    }
+
+    if (code == 1 || code == 2) {
+        [super encodeWithCoder:coder];
+        return;
+    }
+
     PyObjC_encodeWithCoder(value, coder);
 }
 
@@ -86,8 +109,48 @@
     PyObjC_END_WITH_GIL
 }
 
+- (id)initWithObjects:(const id*)objects count:(NSUInteger)cnt
+{
+    NSUInteger i;
+    PyObjC_BEGIN_WITH_GIL
+        for (i = 0; i < cnt; i++) {
+            PyObject* cur = PyObjC_IdToPython(objects[i]);
+            if (cur == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+            if (PySet_Add(value, cur) < 0) {
+                Py_DECREF(cur);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_DECREF(cur);
+        }
+
+    PyObjC_END_WITH_GIL
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder*)coder
 {
+    int code;
+
+    if ([coder allowsKeyedCoding]) {
+        code = [coder decodeInt32ForKey:@"pytype"];
+
+    } else {
+        [coder decodeValueOfObjCType:@encode(int) at:&code];
+    }
+
+    if (code == 1) {
+        value = PyFrozenSet_New(NULL);
+        return [super initWithCoder:coder];
+    } else if (code == 2) {
+        value = PySet_New(NULL);
+        return [super initWithCoder:coder];
+    }
+
+    /* Else: code 3 == set-like class or 0 == no code (older archives) */
+
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* cdr = PyObjC_IdToPython(coder);
@@ -459,5 +522,11 @@
 
     PyObjC_END_WITH_GIL
 }
+
++(NSArray*)classFallbacksForKeyedArchiver
+{
+    return [NSArray arrayWithObject:@"NSSet"];
+}
+
 
 @end

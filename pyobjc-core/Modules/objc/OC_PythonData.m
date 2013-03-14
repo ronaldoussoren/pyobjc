@@ -112,6 +112,21 @@
 
 -(Class)classForCoder
 {
+    if (PyBytes_CheckExact(value)) {
+        return [NSData class];
+
+#if PY_VERSION_HEX >= 0x02060000
+    } else if (PyByteArray_CheckExact(value)) {
+        return [NSMutableData class];
+#endif /* PY_VERSION_HEX >= 0x02060000  */
+
+    } else {
+        return [OC_PythonData class];
+    }
+}
+
+-(Class)classForKeyedArchiver
+{
     return [OC_PythonData class];
 }
 
@@ -124,11 +139,17 @@
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:3 forKey:@"pytype"];
 
-            } else {
-                int v = 3;
-                [coder encodeValueOfObjCType:@encode(int) at:&v];
             }
             [super encodeWithCoder:coder];
+
+#if PY_VERSION_HEX >= 0x02060000
+        } else if (PyByteArray_CheckExact(value)) {
+            if ([coder allowsKeyedCoding]) {
+                [coder encodeInt32:4 forKey:@"pytype"];
+
+            }
+            [super encodeWithCoder:coder];
+#endif /* PY_VERSION_HEX >= 0x02060000  */
 
         } else {
             if ([coder allowsKeyedCoding]) {
@@ -238,11 +259,52 @@
     } else if (v == 3) {
         return [super initWithCoder:coder];
 
+    } else if (v == 4) {
+#if PY_VERSION_HEX >= 0x02060000
+        PyObjC_BEGIN_WITH_GIL
+            value = PyByteArray_FromStringAndSize(NULL, 0);
+            if (value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+        PyObjC_END_WITH_GIL
+#endif /* PY_VERSION_HEX >= 0x02060000 */
+        return [super initWithCoder:coder];
+
     } else {
         [NSException raise:NSInvalidArgumentException
                 format:@"encoding Python objects is not supported"];
 
     }
+    return self;
+}
+
+- (id)initWithBytes:(const void*) bytes length:(NSUInteger)length
+{
+    PyObjC_BEGIN_WITH_GIL
+        if (length > PY_SSIZE_T_MAX) {
+            PyErr_SetString(PyExc_ValueError, "Trying to decode a too long data object");
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+#if PY_VERSION_HEX >= 0x02060000
+        if (value != NULL && PyByteArray_CheckExact(value)) {
+            if (PyByteArray_Resize(value, length) < 0) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            memcmp(PyByteArray_AS_STRING(value), bytes, length);
+        } else {
+#endif /* PY_VERSION_HEX >= 0x02060000 */
+            value = PyBytes_FromStringAndSize(bytes, length);
+            if (value == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
+#if PY_VERSION_HEX >= 0x02060000
+        }
+#endif /* PY_VERSION_HEX >= 0x02060000 */
+    PyObjC_END_WITH_GIL
+
     return self;
 }
 

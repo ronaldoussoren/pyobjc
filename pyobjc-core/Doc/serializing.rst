@@ -24,6 +24,17 @@ time it is not possible to encode Cocoa objects using the
 
    Explain why it is not possible to pickle Cocoa objects.
 
+Pickling support for Cocoa objects
+----------------------------------
+
+It is currently not possible to serialize a arbitrary Cocoa
+object into a :mod:`pickle` archive due to slight
+incompatibilities in the overal serialization mechanism.
+
+It is possible to pickle a Python subclass of a Cocoa
+class when that Python class implements the "__reduce__"
+hook.
+
 NSCoding support for Python objects
 -----------------------------------
 
@@ -41,10 +52,10 @@ reading them back, even when reading them back in Python. Programs
 than need high fidility when roundtripping object graphs therefore
 need to use keyed archiving when possible.
 
-.. todo::
-
-   Does PyObjC automaticly implement NSCoding for subclasses of
-   NSObject that implemented NSCoding?
+Python subclasses of a Cocoa class can only be archived when they
+implement the NSCoding protocol, that is the subclass must implement
+"initWithCoder:" and "encodeWithCoder:" to serialize the object
+state.
 
 Backward compatibility
 ......................
@@ -78,6 +89,11 @@ versions of PyObjC can read back newer archives.
   |           |                    |                    | using plain archiving the object will|
   |           |                    |                    | be read as an NSString instance in   |
   |           |                    |                    | Python code.                         |
+  +-----------+--------------------+--------------------+--------------------------------------+
+  | 3.0       | Yes                | Yes                | Instances of basic types (...)       |
+  |           |                    |                    | are archived as instances of the     |
+  |           |                    |                    | Cocoa class when using a non-keyed   |
+  |           |                    |                    | archiver.                            |
   +-----------+--------------------+--------------------+--------------------------------------+
   | 3.0       | Yes                | No                 | Changes in encoding of               |
   |           |                    |                    | archives for OC_PythonData .         |

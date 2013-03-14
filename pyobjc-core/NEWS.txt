@@ -284,6 +284,24 @@ Version 3.0
   by earlier PyObjC versions (but PyObjC 3.0 can read archives created
   by those older versions)
 
+* NSKeyedArchives with a python list or tuple (but not subclasses) can
+  now be read back as NSArrays in Objective-C programs.
+
+* NSKeyedArchives with a python set or frozenset (but not subclasses)
+  can now be read back as NSSets in Objective-C programs.
+
+  This required a change in the format used to create the archive,
+  which means that archives with a set or frozenset (but not subclasses)
+  cannot be read back by earlier versions of PyObjC.
+
+* When writing instances of list, tuple, dict, set and frozenset to
+  an NSArchive, but not an NSKeyedArchiver, the objects are stored
+  with the same encoding as the corresponding Cocoa class.
+
+  This has two side effects: the archive can be read back by pure
+  Objective-C code and when you read back the archive using PyObjC you'll
+  get instances of Cocoa classes instead of the native python classes.
+
 Version 2.6
 -----------
 
