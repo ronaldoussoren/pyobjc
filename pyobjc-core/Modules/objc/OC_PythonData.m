@@ -279,6 +279,11 @@
     return self;
 }
 
+- (id)initWithData:(NSData*)data
+{
+    return [self initWithBytes:[data bytes] length:[data length]];
+}
+
 - (id)initWithBytes:(const void*) bytes length:(NSUInteger)length
 {
     PyObjC_BEGIN_WITH_GIL
