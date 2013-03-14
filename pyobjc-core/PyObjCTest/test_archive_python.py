@@ -37,6 +37,12 @@ import test.pickletester
 
 MyList = test.pickletester.MyList
 
+class tuple_subclass (tuple): pass
+class list_subclass (list): pass
+class dict_subclass (dict): pass
+class set_subclass (set): pass
+class frozenset_subclass (frozenset): pass
+
 class reduce_global (object):
     def __reduce__(self):
         return "reduce_global"
@@ -108,6 +114,7 @@ class a_reducing_class (object):
 
 class TestKeyedArchiveSimple (TestCase):
     def setUp(self):
+        self.isKeyed       = True
         self.archiverClass = NSKeyedArchiver
         self.unarchiverClass = NSKeyedUnarchiver
 
@@ -459,14 +466,37 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, list)
-        self.assertEqual(v, o)
+        if self.isKeyed:
+            self.assertIsInstance(v, list)
+            self.assertEqual(v, o)
+        else:
+            self.assertIsInstance(v, NSMutableArray)
+            self.assertEqual(list(v), o)
 
         o = [unicode("hello"), 42]
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, list)
+        if self.isKeyed:
+            self.assertIsInstance(v, list)
+            self.assertEqual(v, o)
+        else:
+            self.assertIsInstance(v, NSMutableArray)
+            self.assertEqual(list(v), o)
+
+    def testSimpleListSubclass(self):
+        o = list_subclass([])
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, list_subclass)
+        self.assertEqual(v, o)
+
+        o = list_subclass([unicode("hello"), 42])
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, list_subclass)
         self.assertEqual(v, o)
 
     def testSimpleTuples(self):
@@ -474,30 +504,76 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, tuple)
-        self.assertEqual(v, o)
+        if self.isKeyed:
+            self.assertIsInstance(v, tuple)
+            self.assertEqual(v, o)
+        else:
+            self.assertIsInstance(v, NSArray)
+            self.assertEqual(tuple(v), o)
 
         o = (unicode("hello"), 42)
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, tuple)
+        if self.isKeyed:
+            self.assertIsInstance(v, tuple)
+            self.assertEqual(v, o)
+        else:
+            self.assertIsInstance(v, NSArray)
+            self.assertEqual(tuple(v), o)
+
+    def testSimpleTupleSubclass(self):
+        o = tuple_subclass()
+        o.a = 42
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, tuple_subclass)
         self.assertEqual(v, o)
+        self.assertEqual(v.a, o.a)
+
+        o = tuple_subclass([unicode("hello"), 42])
+        o.a = 99
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, tuple_subclass)
+        self.assertEqual(v, o)
+        self.assertEqual(v.a, o.a)
 
     def testSimpleDicts(self):
         o = {}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, dict)
-        self.assertEqual(v, o)
+        self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
+        self.assertEqual(dict(v), o)
 
         o = {unicode("hello"): unicode("bar"), 42: 1.5 }
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, dict)
+        self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
+        self.assertEqual(dict(v), o)
+
+    def testSimpleDictSubclass(self):
+        o = dict_subclass({})
+        o.a = 1
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, dict_subclass)
         self.assertEqual(v, o)
+        self.assertEqual(v.a, o.a)
+
+        o = dict_subclass({unicode("hello"): unicode("bar"), 42: 1.5 })
+        o.a = 99
+        buf = self.archiverClass.archivedDataWithRootObject_(o)
+        self.assertIsInstance(buf, NSData)
+        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
+        self.assertIsInstance(v, dict_subclass)
+        self.assertEqual(v, o)
+        self.assertEqual(v.a, o.a)
 
     def testNestedDicts(self):
         o = {
@@ -507,7 +583,7 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, dict)
+        self.assertIsInstance(v, dict if self.isKeyed else NSMutableDictionary)
         self.assertEqual(v, o)
 
         o = {}
@@ -515,7 +591,7 @@ class TestKeyedArchiveSimple (TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, dict)
+        self.assertIsInstance(v, dict if self.isKeyed else NSMutableDictionary)
         self.assertIs(v[unicode('self')], v)
 
     def testNestedSequences(self):
@@ -599,7 +675,8 @@ class TestKeyedArchiveSimple (TestCase):
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
-        self.assertIsInstance(v, tuple)
+        self.assertIsInstance(v, tuple if self.isKeyed else NSArray)
+        v = tuple(v)
         self.assertEqual(len(v), 3)
         self.assertIsInstance(v[0], a_classic_class)
         self.assertIs(v[0], v[1])
@@ -607,6 +684,7 @@ class TestKeyedArchiveSimple (TestCase):
 
 class TestArchiveSimple (TestKeyedArchiveSimple):
     def setUp(self):
+        self.isKeyed = False
         self.archiverClass = NSArchiver
         self.unarchiverClass = NSUnarchiver
 
@@ -868,6 +946,8 @@ class TestArchivePlainPython (TestKeyedArchivePlainPython):
 # contains both python and objective-C objects works correctly.
 #
 class TestKeyedArchiveMixedGraphs (TestCase):
+    isKeyed = True
+
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
         return NSKeyedArchiver.archivedDataWithRootObject_(arg)
@@ -894,7 +974,7 @@ class TestKeyedArchiveMixedGraphs (TestCase):
 
         self.assertIsInstance(p1, a_classic_class)
         self.assertIsInstance(p2, a_newstyle_class)
-        self.assertIsInstance(p3, list)
+        self.assertIsInstance(p3, list if self.isKeyed else NSArray)
         self.assertIs(p3[0], p1)
         self.assertIs(p3[1], p2)
         self.assertIsInstance(p2.lst , NSArray)
@@ -902,6 +982,8 @@ class TestKeyedArchiveMixedGraphs (TestCase):
 
 
 class TestArchiveMixedGraphs (TestKeyedArchiveMixedGraphs):
+    isKeyed = False
+
     def dumps(self, arg, proto=0, fast=0):
         # Ignore proto and fast
         return NSArchiver.archivedDataWithRootObject_(arg)

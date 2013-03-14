@@ -29,8 +29,11 @@ if sys.version_info[0] == 3: # pragma: no cover (py3k)
 
 
 NSArray = objc.lookUpClass("NSArray")
+NSMutableArray = objc.lookUpClass("NSMutableArray")
 NSDictionary = objc.lookUpClass("NSDictionary")
 NSString = objc.lookUpClass("NSString")
+NSSet = objc.lookUpClass("NSSet")
+NSMutableSet = objc.lookUpClass("NSMutableSet")
 
 kOP_REDUCE=0
 kOP_INST=1
@@ -385,6 +388,23 @@ def load_reduce(coder, setValue):
     else:
         func = coder.decodeObject()
         args = coder.decodeObject()
+
+        new_args = []
+        for a in args:
+            if isinstance(a, NSDictionary):
+                new_args.append(dict(a))
+            elif isinstance(a, NSMutableArray):
+                new_args.append(list(a))
+            elif isinstance(a, NSArray):
+                new_args.append(tuple(a))
+            elif isinstance(a, NSMutableSet):
+                new_args.append(set(a))
+            elif isinstance(a, NSSet):
+                new_args.append(frozenset(a))
+            else:
+                new_args.append(a)
+        args = new_args
+        del new_args
 
     value = func(*args)
 
