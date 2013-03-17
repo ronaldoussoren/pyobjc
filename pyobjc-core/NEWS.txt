@@ -316,6 +316,10 @@ Version 3.0
   These expose sets with the same members to ObjC code, but those objects
   didn't compare equal.
 
+* Python 2 only: NSDictionary instances now have the same internal
+  other as dict instances with the same value, that is
+  ``cmp(anNSDict1, anNSDict2) == ``cmp(dict(anNSDict1), dict(anNSDict2))``.
+
 Version 2.6
 -----------
 

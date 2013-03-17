@@ -1081,9 +1081,70 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
     def nsdict__ne__(self, other):
         return not nsdict__eq__(self, other)
 
-    def nsdict__richcmp__(self, other):
-        return NotImplemented
+    if sys.version_info[0] == 3:
+        def nsdict__lt__(self, other):
+            return NotImplemented
 
+        def nsdict__le__(self, other):
+            return NotImplemented
+
+        def nsdict__ge__(self, other):
+            return NotImplemented
+
+        def nsdict__gt__(self, other):
+            return NotImplemented
+
+    else:
+        def nsdict__cmp__(self, other):
+            if not isinstance(other, collections.Mapping):
+                return NotImplemented
+
+            if len(self) < len(other):
+                return -1
+
+            elif len(self) > len(other):
+                return 1
+
+            sentinel = object()
+
+            for a_key in sorted(self):
+                try:
+                    if self[a_key] != other[a_key]:
+                        break
+
+                except KeyError:
+                    break
+
+            else:
+                a_key = sentinel
+
+            for b_key in sorted(self):
+                try:
+                    if self[b_key] != other[b_key]:
+                        break
+
+                except KeyError:
+                    break
+            else:
+                b_key = sentinel
+
+            r = cmp(a_key, b_key)
+            if r == 0 and a_key is not sentinel:
+                r =  cmp(self[a_key], other[a_key])
+
+            return r
+
+        def nsdict__lt__(self, other):
+            return nsdict_cmp(self, other) < 0
+
+        def nsdict__le__(self, other):
+            return nsdict_cmp(self, other) <= 0
+
+        def nsdict__ge__(self, other):
+            return nsdict_cmp(self, other) >= 0
+
+        def nsdict__gt__(self, other):
+            return nsdict_cmp(self, other) > 0
 
     if sys.version_info[0] == 3:
         CLASS_METHODS['NSDictionary'] = (
@@ -1139,14 +1200,19 @@ if sys.version_info[0] == 3 or (sys.version_info[0] == 2 and sys.version_info[1]
     CLASS_METHODS['NSDictionary'] += (
         ('__eq__', nsdict__eq__),
         ('__ne__', nsdict__ne__),
-        ('__lt__', nsdict__richcmp__),
-        ('__le__', nsdict__richcmp__),
-        ('__gt__', nsdict__richcmp__),
-        ('__ge__', nsdict__richcmp__),
+        ('__lt__', nsdict__lt__),
+        ('__le__', nsdict__le__),
+        ('__gt__', nsdict__gt__),
+        ('__ge__', nsdict__ge__),
         ('__new__', staticmethod(nsdict_new)),
         ('__len__', lambda self: self.count()),
         ('__iter__', __iter__objectEnumerator_keyEnumerator),
     )
+    if sys.version_info[0] == 2:
+        CLASS_METHODS['NSDictionary'] += (
+            ('__cmp__', nsdict__cmp__),
+        )
+
     CLASS_METHODS['NSMutableDictionary'] += (
         ('__new__', staticmethod(nsmutabledict_new)),
         ('__setitem__', __setitem__setObject_forKey_),
