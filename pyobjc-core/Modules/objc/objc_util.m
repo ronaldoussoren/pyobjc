@@ -1317,7 +1317,7 @@ int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, s
             return 0;
         }
     }
-    if (ascii_string[i] != 0) {
+    if (i != n) {
         return 0;
     }
     return 1;
