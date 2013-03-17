@@ -155,10 +155,6 @@ Medium term
 
 * Add tests using NumPy/numarray (and check if those implement the memoryview interface)
 
-* PyObjCObject_GetAttrString can be removed?
-
-* Replace 'assert' calls by calls to 'PyObjC_Assert'
-
 
 * From Cocoa-dev:
 	NSArray *a = @[ @"$nill", @"$null", @"$nall" ];

@@ -410,7 +410,7 @@ PyObjCRT_SkipTypeSpec (const char *type)
 
         while (isdigit (*++type));
         type = PyObjCRT_SkipTypeSpec (type);
-        assert (type == NULL || *type == _C_ARY_E);
+        PyObjC_Assert(type == NULL || *type == _C_ARY_E, NULL);
         if (type) type++;
         break;
 

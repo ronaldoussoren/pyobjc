@@ -938,7 +938,6 @@ PyObjC_PythonToCArray(
             return -1;
         }
 
-        assert(eltsize != 0);
         if (eltsize == 0) {
             PyErr_SetString(PyExc_ValueError, "array.array with elements without a size");
             return -1;

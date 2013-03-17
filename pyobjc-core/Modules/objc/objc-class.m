@@ -1199,7 +1199,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name
         return NULL;
     }
     res = NULL;
-    assert(PyTuple_Check(mro));
+    PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
@@ -1255,7 +1255,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
         return NULL;
     }
     res = NULL;
-    assert(PyTuple_Check(mro));
+    PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         Class cls;
@@ -1389,7 +1389,7 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name
         return NULL;
     }
     res = NULL;
-    assert(PyTuple_Check(mro));
+    PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         base = PyTuple_GET_ITEM(mro, i);
@@ -1485,7 +1485,7 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
         return NULL;
     }
     res = NULL;
-    assert(PyTuple_Check(mro));
+    PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
         Class cls;

@@ -141,7 +141,10 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
             {
                 PyObject *obj = va_arg(count, PyObject *);
                 PyObject *str;
-                assert(obj);
+                if (obj == NULL) {
+                    PyErr_SetString(PyExc_ValueError, "NULL argument for %R");
+                    goto fail;
+                }
                 str = PyObject_Repr(obj);
                 if (!str)
                     goto fail;
@@ -160,7 +163,10 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
             {
                 PyObject *obj = va_arg(count, PyObject *);
                 PyObject *str;
-                assert(obj);
+                if (obj == NULL) {
+                    PyErr_SetString(PyExc_ValueError, "NULL argument for %S");
+                    goto fail;
+                }
                 str = PyObject_Str(obj);
                 if (!str)
                     goto fail;
