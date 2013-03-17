@@ -27,6 +27,19 @@ if sys.version_info[0] == 3: # pragma: no cover (py3k)
     long = int
     intern = sys.intern
 
+bltin_intern = intern
+
+if sys.version_info[0] == 2:
+    def intern(value):
+        if isinstance(value, objc.pyobjc_unicode):
+            return bltin_intern(value.encode('utf-8'))
+        return bltin_intern(value)
+
+else:
+    def intern(value):
+        if isinstance(value, objc.pyobjc_unicode):
+            return bltin_intern(str(value))
+        return bltin_intern(value)
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -347,6 +360,9 @@ def load_inst(coder, setValue):
         state = coder.decodeObjectForKey_(kSTATE)
     else:
         state = coder.decodeObject()
+        if isinstance(state, NSArray):
+            state = tuple(state)
+
     setstate = getattr(value, "__setstate__", None)
     if setstate is not None:
         setstate(state)
@@ -374,7 +390,7 @@ def load_inst(coder, setValue):
     if slotstate:
         for k, v in slotstate.items():
             if isinstance(k, objc.pyobjc_unicode):
-                k = unicode(k)
+                k = k.encode('utf-8')
             setattr(value, intern(k), v)
 
     return value
@@ -422,6 +438,8 @@ def load_reduce(coder, setValue):
         listitems = coder.decodeObject()
         dictitems = coder.decodeObject()
         state = coder.decodeObject()
+        if isinstance(state, NSArray):
+            state = tuple(state)
 
     setstate = getattr(value, "__setstate__", None)
     if setstate:
@@ -440,8 +458,12 @@ def load_reduce(coder, setValue):
 
         for k in state:
             v = state[k]
-            if type(k) == str:
+            if type(k) == objc.pyobjc_unicode:
                 inst_dict[intern(k)] = v
+
+            elif type(k) == str:
+                inst_dict[intern(k)] = v
+
             else:
                 inst_dict[k] = v
 

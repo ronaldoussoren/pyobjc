@@ -44,7 +44,12 @@
             }
 
         }
-        result = PyObjC_PythonToId(object);
+
+        if (object == Py_None) {
+            result = [NSNull null];
+        } else {
+            result = PyObjC_PythonToId(object);
+        }
         if (result == nil) {
             if (PyErr_Occurred()) {
                 PyObjC_GIL_FORWARD_EXC();

@@ -28,6 +28,21 @@ class ReturnAStruct (NSObject):
 
 
 class TestRegressions(TestCase):
+    def testSetCompare(self):
+        oc = objc.lookUpClass('NSSet').setWithArray_([None])
+        oc2 = objc.lookUpClass('NSMutableSet').setWithArray_([None])
+        py = { None }
+
+        self.assertEqual(list(oc.allObjects()), [None])
+        for o in oc.allObjects():
+            self.assertIn(o, py)
+        self.assertEqual(oc, oc2)
+        self.assertIsNot(oc, oc2)
+        self.assertEqual(oc, py)
+
+        if sys.version_info[0] == 3:
+            self.assertEqual(py, oc)
+
     def testNSObjectPerforming(self):
         # XXX: 3.x test: regression w.r.t 2.5
         o = NSObject.performSelector_('new')

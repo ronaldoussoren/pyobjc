@@ -99,17 +99,19 @@
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        err = depythonify_c_value(@encode(id), v, &result);
-        if (unlikely(err == -1)) {
-            PyObjC_GIL_FORWARD_EXC();
+        if (v == Py_None) {
+            result = [NSNull null];
+
+        } else {
+            err = depythonify_c_value(@encode(id), v, &result);
+            if (unlikely(err == -1)) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_CLEAR(v);
         }
-        Py_CLEAR(v);
 
     PyObjC_END_WITH_GIL
 
-    if (result == nil) {
-        result = [NSNull null];
-    }
     return result;
 }
 

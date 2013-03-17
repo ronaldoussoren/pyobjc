@@ -158,10 +158,13 @@ class TestNSKeyedArchivingInterop (TestCase):
                 fp.write(data.bytes())
                 fp.flush()
 
-                subprocess.call([self.progpath, 'keyed', fp.name])
                 converted = subprocess.check_output([self.progpath, 'keyed', fp.name])
 
+            self.assertTrue(converted.startswith(b'{('))
+            self.assertTrue(converted.endswith(b')}\n'))
+            converted = b'{' + converted[2:-3] + b'}'
             converted = eval(converted.decode('utf-8'), dict(a='a', b='b'))
+
             self.assertEqual(converted, set(testval))
 
     def test_interop_dict(self):
@@ -309,9 +312,11 @@ class TestNSArchivingInterop (TestCase):
                 fp.write(data.bytes())
                 fp.flush()
 
-                subprocess.call([self.progpath, 'plain', fp.name])
                 converted = subprocess.check_output([self.progpath, 'plain', fp.name])
 
+            self.assertTrue(converted.startswith(b'{('))
+            self.assertTrue(converted.endswith(b')}\n'))
+            converted = b'{' + converted[2:-3] + b'}'
             converted = eval(converted.decode('utf-8'), dict(a='a', b='b'))
             self.assertEqual(converted, set(testval))
 

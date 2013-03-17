@@ -63,9 +63,17 @@
 
 -(Class)classForCoder
 {
-    return [OC_PythonSet class];
+    if (PyAnySet_CheckExact(value)) {
+        return [NSSet class];
+    } else {
+        return [OC_PythonSet class];
+    }
 }
 
+-(Class)classForKeyedArchiver
+{
+    return [OC_PythonSet class];
+}
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
@@ -77,22 +85,23 @@
             code = 2;
         }
 
+        if ([coder allowsKeyedCoding]) {
+            [coder encodeInt32:code forKey:@"pytype"];
+        }
+
+        [super encodeWithCoder:coder];
+
     } else {
         code = 3;
-    }
 
-    if ([coder allowsKeyedCoding]) {
-        [coder encodeInt32:5 forKey:@"pytype"];
-    } else {
-        [coder encodeValueOfObjCType:@encode(int) at:&code];
-    }
+        if ([coder allowsKeyedCoding]) {
+            [coder encodeInt32:code forKey:@"pytype"];
+        } else {
+            [coder encodeValueOfObjCType:@encode(int) at:&code];
+        }
 
-    if (code == 1 || code == 2) {
-        [super encodeWithCoder:coder];
-        return;
+        PyObjC_encodeWithCoder(value, coder);
     }
-
-    PyObjC_encodeWithCoder(value, coder);
 }
 
 
@@ -114,9 +123,16 @@
     NSUInteger i;
     PyObjC_BEGIN_WITH_GIL
         for (i = 0; i < cnt; i++) {
-            PyObject* cur = PyObjC_IdToPython(objects[i]);
-            if (cur == NULL) {
-                PyObjC_GIL_FORWARD_EXC();
+            PyObject* cur;
+
+            if (objects[i] == [NSNull null]) {
+                cur = Py_None;
+                Py_INCREF(Py_None);
+            } else {
+                    cur = PyObjC_IdToPython(objects[i]);
+                if (cur == NULL) {
+                    PyObjC_GIL_FORWARD_EXC();
+                }
             }
 
             if (PySet_Add(value, cur) < 0) {
@@ -309,9 +325,16 @@
 {
     int r;
     PyObjC_BEGIN_WITH_GIL
-        PyObject* tmp = PyObjC_IdToPython(anObject);
-        if (tmp == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
+        PyObject* tmp;
+
+        if (anObject == [NSNull null]) {
+            tmp = Py_None;
+            Py_INCREF(Py_None);
+        } else {
+            tmp = PyObjC_IdToPython(anObject);
+            if (tmp == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
 
         r = PySequence_Contains(value, tmp);
@@ -369,10 +392,18 @@
     NSObject* result = nil;
 
     PyObjC_BEGIN_WITH_GIL
-        PyObject* tmpMember = PyObjC_IdToPython(anObject);
         int r;
-        if (tmpMember == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
+        PyObject* tmpMember;
+
+        if (anObject == [NSNull null]) {
+            tmpMember = Py_None;
+            Py_INCREF(Py_None);
+
+        } else {
+            tmpMember = PyObjC_IdToPython(anObject);
+            if (tmpMember == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
         }
 
         r = PySequence_Contains(value, tmpMember);
@@ -384,6 +415,7 @@
         if (!r) {
             Py_DECREF(tmpMember);
             result = nil;
+
         } else {
             /* This sucks, we have to iterate over the contents of the
              * set to find the object we need...
@@ -406,11 +438,15 @@
 
                 if (r) {
                     /* Found the object */
-                    result = PyObjC_PythonToId(v);
-                    if (PyErr_Occurred()) {
-                        Py_DECREF(tmp);
-                        Py_DECREF(tmpMember);
-                        PyObjC_GIL_FORWARD_EXC();
+                    if (v == Py_None) {
+                        result = [NSNull null];
+                    } else {
+                        result = PyObjC_PythonToId(v);
+                        if (PyErr_Occurred()) {
+                            Py_DECREF(tmp);
+                            Py_DECREF(tmpMember);
+                            PyObjC_GIL_FORWARD_EXC();
+                        }
                     }
                     break;
                 }

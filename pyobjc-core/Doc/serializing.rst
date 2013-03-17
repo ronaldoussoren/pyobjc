@@ -16,9 +16,9 @@ all objects that implemented the NSCoding protocol).
 
 There is currently only one way to serialize an object
 graph that contains both Python and Cocoa objects: using
-Cocoa's "NSArchiver" or "NSKeyedArchiver" classes. At this
-time it is not possible to encode Cocoa objects using the
-:mod:`pickle` module.
+Cocoa's "NSKeyedArchiver" or "NSArchiver" classes (and
+preferably the former). At this time it is not possible to
+encode Cocoa objects using the :mod:`pickle` module.
 
 .. todo::
 
@@ -56,6 +56,26 @@ Python subclasses of a Cocoa class can only be archived when they
 implement the NSCoding protocol, that is the subclass must implement
 "initWithCoder:" and "encodeWithCoder:" to serialize the object
 state.
+
+.. note::
+
+   In Mac OS X 10.8, an likely other OSX releases as well, the
+   Cocoa collection classes cannot properly archive and unarchive
+   object graphs with cycles between collections.
+
+   Because of this serializing the graph below with an NSArchiver
+   will result in a grabled datastructure when read back. The
+   same will be true when archiving with NSKeyedArchiver and
+   reading the archive back in pure Objective-C.
+
+   .. sourcecode:: python
+
+      a = []
+      a.append(a)
+
+   This is an unfortunate limitation in Cocoa that PyObjC cannot
+   paper over.
+
 
 Backward compatibility
 ......................

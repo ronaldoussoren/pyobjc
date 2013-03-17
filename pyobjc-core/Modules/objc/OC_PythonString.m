@@ -265,9 +265,6 @@
     if (PyString_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
-        } else {
-            int v = 1;
-            [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
         [super encodeWithCoder:coder];
     } else {
@@ -306,11 +303,6 @@
     return self;
 }
 
--(Class)classForArchiver
-{
-    return [OC_PythonString class];
-}
-
 -(Class)classForKeyedArchiver
 {
     return [OC_PythonString class];
@@ -318,12 +310,12 @@
 
 -(Class)classForCoder
 {
-    return [OC_PythonString class];
-}
+    if (PyString_CheckExact(value)) {
+        return [NSString class];
 
--(Class)classForPortCoder
-{
-    return [OC_PythonString class];
+    } else {
+        return [OC_PythonString class];
+    }
 }
 
 /* Ensure that we can be unarchived as a generic string by pure ObjC

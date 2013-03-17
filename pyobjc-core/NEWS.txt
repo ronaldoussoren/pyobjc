@@ -302,6 +302,20 @@ Version 3.0
   Objective-C code and when you read back the archive using PyObjC you'll
   get instances of Cocoa classes instead of the native python classes.
 
+* ``-[OC_PythonEnumerator nextObject]`` now returns ``[NSNull null]`` instead
+  of ``nil``, to be compatible with the behavior of item getters/setters
+  and to avoid ending iteration premature when a Python sequence contains
+  :data:`None`.
+
+* Fixed a number of issues with :data:`None` as a member of a set-like
+  object proxied by ``OC_PythonSet``. The easiest way to trigger the
+  issue in earlier versions::
+
+     assert {None} == NSSet.setWithArray([None])
+
+  These expose sets with the same members to ObjC code, but those objects
+  didn't compare equal.
+
 Version 2.6
 -----------
 
