@@ -320,6 +320,14 @@ Version 3.0
   other as dict instances with the same value, that is
   ``cmp(anNSDict1, anNSDict2) == ``cmp(dict(anNSDict1), dict(anNSDict2))``.
 
+* In previous versions of PyObjC instances of ``Foundation.NSDecimal`` behaved
+  as if they had the same methods as ``Foundation.NSDecimalNumber``. In 3.0
+  PyObjC no longer exposes these methods.
+
+* Python blocks (that is, Python callables passed to a method/function that
+  expects an Objective-C block argument) now include an Objective-C
+  signature string (introduced in "ABI.2010.3.16").
+
 Version 2.6
 -----------
 

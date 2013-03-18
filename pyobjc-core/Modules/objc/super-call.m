@@ -161,7 +161,7 @@ int PyObjC_RegisterSignatureMapping(
     char signature_buf[1024];
     int r;
 
-    if (special_registry == NULL) {
+    if (signature_registry == NULL) {
         if (init_registry() < 0) return -1;
     }
 

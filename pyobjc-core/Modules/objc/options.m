@@ -47,6 +47,7 @@ struct options {
         if (VAR != NULL) {                                                  \
             Py_INCREF(VAR);                                                 \
             return VAR;                                                     \
+                                                                            \
         } else {                                                            \
             Py_INCREF(Py_None);                                             \
             return Py_None;                                                 \
@@ -192,19 +193,15 @@ static PyTypeObject PyObjCOptions_Type = {
 
 int PyObjC_SetupOptions(PyObject* m)
 {
-    PyObject* o;
-    int r;
-
     if (PyType_Ready(&PyObjCOptions_Type) < 0) {
         return -1;
     }
 
-    o = (PyObject*)PyObject_New(struct object, &PyObjCOptions_Type);
+    PyObject* o = (PyObject*)PyObject_New(struct object, &PyObjCOptions_Type);
     if (o == NULL) {
         return -1;
     }
 
-    r = PyModule_AddObject(m, "options", o);
-    Py_INCREF(o); /* XXX */
+    int r = PyModule_AddObject(m, "options", o);
     return r;
 }

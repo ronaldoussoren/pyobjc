@@ -290,6 +290,13 @@ Accessing classes and protocols
       tool and could negatively affect the invariants that a class tries to
       maintain.
 
+   .. warning::
+
+      It is very easy to introduce memory corruption when  *updateRefCounts* is false.
+      In particular the caller of this method must ensure that the Objective-C
+      representation of *value* is kept alive, when *value* is not a Cocoa object
+      just keeping *value* alive isn't good enough.
+
 
 .. function:: protocolNamed(name)
 

@@ -139,8 +139,6 @@ Medium term
 
 * Look for XXX/TODO/FIXME in code and fix those problems.
 
-* getattro for NSDecimal values seems dodgy
-
 * special_registry in supercall should be a dictionary
   (selector -> list of structs)
 
@@ -215,3 +213,5 @@ Medium term
 * Modules/objc/test/ctests needs to be merged into the core
   module, otherwise core has the expose too much functionality
   (especially when enhancing the test suite)
+
+* tests with blocks that return a large struct (stret calling convention)

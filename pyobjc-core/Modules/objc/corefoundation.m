@@ -182,14 +182,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     }
 
     Py_DECREF(cf); cf = NULL;
-
-    /* Force an artificially high refcount to avoid deallocation of the
-     * class.
-     * XXX: This code is wrong, it hides the real problem, but I (ronald)
-     * have no idea where that problem hides itself.
-    Py_INCREF(Py_TYPE(result));
-     */
-
     return result;
 }
 

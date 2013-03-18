@@ -260,7 +260,14 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
             id v = object_getIvar(objcValue, ivar);
             [v release];
         }
-        /* XXX: Does this work correct? depythonify_c_value doesn't return a 'new' reference */
+        /* else:
+         *   This can cause memory corruption when *tmpValue*
+         *   isn't kept alive through other means, in general
+         *   by storing it in a Cooa collection (just keeping
+         *   the python variable alive isn't good enough when
+         *   the *value* isn't a Cocoa object).
+         */
+
         object_setIvar(objcValue, ivar, tmpValue);
 
     } else {

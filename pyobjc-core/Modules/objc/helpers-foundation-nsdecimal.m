@@ -120,19 +120,7 @@ static PyMethodDef decimal_methods[] = {
 static PyObject*
 decimal_getattro(PyObject *o, PyObject *attr_name)
 {
-    PyObject *res;
-    res = PyObject_GenericGetAttr(o, attr_name);
-    if (res == NULL) {
-        /*
-         * XXX: This is dodgy, NSDecimal behaves like NSDecimalNumber???
-         */
-        PyObject *tmp;
-        PyErr_Clear();
-        tmp = decimal_get__pyobjc_object__(o, NULL);
-        res = PyObject_GenericGetAttr(tmp, attr_name);
-        Py_XDECREF(tmp);
-    }
-    return res;
+    return PyObject_GenericGetAttr(o, attr_name);
 }
 
 static PyTypeObject Decimal_Type = {

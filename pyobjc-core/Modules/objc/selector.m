@@ -916,7 +916,6 @@ PyObjCSelector_New(PyObject* callable,
         result->argcount = 0;
 
     } else {
-        /* XXX: Should not happen... */
         result->argcount = 0;
         const char* s = sel_getName(selector);
         while ((s = strchr(s, ':')) != NULL) {

@@ -132,7 +132,6 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
                 /* maximum 64-bit pointer representation:
                  * 0xffffffffffffffff
                  * so 19 characters is enough.
-                 * XXX I count 18 -- what's the extra for?
                  */
                 n += 19;
                 break;

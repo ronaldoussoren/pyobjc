@@ -19,7 +19,9 @@
 
 enum {
     BLOCK_HAS_COPY_DISPOSE =  (1 << 25),
-    BLOCK_HAS_SIGNATURE    =  (1 << 30) /* interim until complete world build is accomplished */
+    BLOCK_IS_GLOBAL        =  (1 << 28),
+    BLOCK_HAS_STRET        =  (1 << 29),
+    BLOCK_HAS_SIGNATURE    =  (1 << 30)
 };
 
 /*
@@ -297,6 +299,33 @@ static void PyObjCBlock_CleanupCapsule(PyObject* ptr)
 
 #endif /* Python <= 2.6 */
 
+static char*
+block_signature(PyObjCMethodSignature* signature)
+{
+    Py_ssize_t i;
+    Py_ssize_t buflen = 1;
+    char* buf;
+    char* cur;
+
+    buflen += strlen(signature->rettype.type);
+    for (i = 0; i < Py_SIZE(signature); i++) {
+        buflen += strlen(signature->argtype[i].type);
+    }
+
+    buf = PyMem_Malloc(buflen);
+    if (buf == NULL) {
+        return NULL;
+    }
+
+    cur = buf;
+    strcpy(cur, signature->rettype.type);
+    cur = strchr(cur, '\0');
+    for (i = 0; i < Py_SIZE(signature); i++) {
+        strcpy(cur, signature->argtype[i].type);
+        cur = strchr(cur, '\0');
+    }
+    return buf;
+}
 
 void*
 PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
@@ -308,14 +337,24 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
         return NULL;
     }
 
-    block = PyMem_Malloc(sizeof(struct block_literal));
+    block = PyMem_Malloc(sizeof(struct block_literal) + sizeof(struct block_literal));
     if (block == NULL) {
         PyErr_NoMemory();
         return NULL;
     }
 
     *block = gLiteralTemplate;
-    /* XXX: block->descriptor needs to be copied to be able to add a signature to it */
+    block->descriptor = (struct block_descriptor*)(((char*)block) + sizeof(struct block_literal));
+    *(block->descriptor) = *(gLiteralTemplate.descriptor);
+    if (signature->signature == NULL) {
+        signature->signature = block_signature(signature);
+        if (signature->signature == NULL) {
+            PyMem_Free(block);
+            return NULL;
+        }
+    }
+    block->descriptor->signature = signature->signature;
+    block->flags |= BLOCK_HAS_SIGNATURE;
     block->isa = gStackBlockClass;
     block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
     if (block->invoke == NULL) {

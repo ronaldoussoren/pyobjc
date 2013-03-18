@@ -859,7 +859,7 @@ static char* keywords[] = { "name", "typestr", "doc", NULL };
 PyDoc_STRVAR(registerMetaData_doc,
     "registerMetaDataForSelector(class, selector, metadata) -> None\n"
     "\n"
-    "XXX: work out documentation.");
+    "Registers a metadata dictionary for method *selector* in *class*");
 static PyObject*
 registerMetaData(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
