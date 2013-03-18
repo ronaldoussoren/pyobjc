@@ -180,49 +180,32 @@ Medium term
 
 * Crash with -fcatch-undefined-behavior (see setup.py)
 
-* Finish AVFoundation bindings
+* Finish partial bindings:
+  - AVFoundation
+  - GameKit
 
-* Create AppleShareClientCore bindings? (there are headers, but no documentation)
+* Create framework bindings:
 
-* Create AudioToolbox bindings
-
-* Create AudioUnit bindings
-
-* Create AudioVideoBridging bindings
-
-* Create CoreAudio, CoreAudioKit bindings
-
-* Create CoreMIDI bindings
-
-* Create CoreMedia, CoreMediaIO bindings
-
-* Create DVComponentGlue bindings
-
-* Create DVDPlayback bindings
-
-* Create DiscRecording, DiscRecordingUI bindings
-
-* Create DiskArbitration bindings
-
-* Create GSS bindings
-
-* Create GameKit bindings
-
-* Create ICADevices bindings
-
-* Create IMServicePlugIn bindings
-
-* Create IOBluetooth, IOBluetoothUI bindings
-
-* Create IOKit, IOSurface bindings (?)
-
-* Create ImageCaptureCore bindings (add to Quartz)
-
-* Create OSAKit bindings?
-
-* Create SceneKit bindings (add to Quartz)
-
-* Create Security, SecurityFoundation, SecurityInterface bindings
+  - AppleShareClientCore bindings? (there are headers, but no documentation)
+  - AudioToolbox
+  - AudioUnit
+  - AudioVideoBridging
+  - CoreAudio, CoreAudioKit
+  - CoreMIDI
+  - CoreMedia, CoreMediaIO
+  - DVComponentGlue
+  - DVDPlayback
+  - DiscRecording, DiscRecordingUI
+  - DiskArbitration
+  - GSS
+  - ICADevices
+  - IMServicePlugIn
+  - IOBluetooth, IOBluetoothUI
+  - IOKit, IOSurface (?)
+  - ImageCaptureCore (add to Quartz)
+  - OSAKit?
+  - SceneKit (add to Quartz)
+  - Security, SecurityFoundation, SecurityInterface
 
 * objc.IMP should work for Python methods (see XXX comment)
 

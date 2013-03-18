@@ -8,4 +8,4 @@ API Notes
 This framework is available on OS X 10.7 or later, and is only usefull for
 applications that are signed by Apple and distributed through the App Store.
 
-The StoreKit bindings are barely tested at this time.
+The entire framework is available from Python.

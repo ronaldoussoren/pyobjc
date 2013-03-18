@@ -1,0 +1,29 @@
+# objective.metada exceptions file, see its document
+# for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "GKMatch": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      }, 
+      "class_method": false, 
+      "selector": "sendData:toPlayers:withDataMode:error:"
+     }, 
+     {
+      "args": {
+       "2": {}
+      }, 
+      "class_method": false, 
+      "selector": "sendDataToAllPlayers:withDataMode:error:"
+     }
+    ]
+   }
+  }, 
+  "formal_protocols": {}, 
+  "functions": {}, 
+  "informal_protocols": {}
+ }
+}
