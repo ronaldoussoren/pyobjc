@@ -29,6 +29,7 @@ REQUIRES=[
         'pyobjc-framework-Cocoa=='+VERSION,
         'pyobjc-framework-CoreData=='+VERSION,
         'pyobjc-framework-CoreText=='+VERSION,
+        'pyobjc-framework-DiskArbitration=='+VERSION,
         'pyobjc-framework-ExceptionHandling=='+VERSION,
         'pyobjc-framework-FSEvents=='+VERSION,
         'pyobjc-framework-InstallerPlugins=='+VERSION,
@@ -70,6 +71,7 @@ DEL_REQUIRES_10_7=[
 ]
 REQUIRES_10_7=[
         'pyobjc-framework-AVFoundation='+VERSION,
+        'pyobjc-framework-StoreKit=='+VERSION,
 ]
 
 REQUIRES_10_8=[
@@ -77,7 +79,7 @@ REQUIRES_10_8=[
 #        'pyobjc-framework-AudioVideoBridging=='+VERSION,
         'pyobjc-framework-EventKit=='+VERSION,
 #        'pyobjc-framework-GLKit=='+VERSION,
-#        'pyobjc-framework-GameKit=='+VERSION,
+        'pyobjc-framework-GameKit=='+VERSION,
 #        'pyobjc-framework-MediaToolbox=='+VERSION,
 #        'pyobjc-framework-SceneKit=='+VERSION,
         'pyobjc-framework-Social=='+VERSION,

@@ -183,6 +183,7 @@ Medium term
 * Finish partial bindings:
   - AVFoundation
   - GameKit
+  - DiskArbitration
 
 * Create framework bindings:
 
@@ -196,7 +197,6 @@ Medium term
   - DVComponentGlue
   - DVDPlayback
   - DiscRecording, DiscRecordingUI
-  - DiskArbitration
   - GSS
   - ICADevices
   - IMServicePlugIn
