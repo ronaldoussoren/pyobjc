@@ -2,12 +2,12 @@
 #include <Python.h>
 #include "pyobjc-api.h"
 
-#import <AddressBook/AddressBook.h>
+#import <StoreKit/StoreKit.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
-#include "_AddressBook_protocols.m"
+#include "_StoreKit_protocols.m"
 
 
 static PyMethodDef mod_methods[] = {
