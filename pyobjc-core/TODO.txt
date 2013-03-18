@@ -211,3 +211,7 @@ Medium term
 
 * Improve documentation, both end-user documentation and documentation
   on how the bridge works.
+
+* Modules/objc/test/ctests needs to be merged into the core
+  module, otherwise core has the expose too much functionality
+  (especially when enhancing the test suite)
