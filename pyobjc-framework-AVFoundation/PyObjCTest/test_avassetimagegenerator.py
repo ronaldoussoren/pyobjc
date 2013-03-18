@@ -1,7 +1,7 @@
 from PyObjCTools.TestSupport import *
 
 import AVFoundation
-import obj
+import objc
 
 try:
     unicode

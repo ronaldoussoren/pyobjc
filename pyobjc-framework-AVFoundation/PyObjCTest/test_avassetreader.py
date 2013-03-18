@@ -4,7 +4,7 @@ import AVFoundation
 
 class TestAVAssetReader (TestCase):
     def test_constants(self):
-        self.assertEqual(AVFoundation.AVAssetReaderStatusUnknown = 0)
+        self.assertEqual(AVFoundation.AVAssetReaderStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetReaderStatusReading, 1)
         self.assertEqual(AVFoundation.AVAssetReaderStatusCompleted, 2)
         self.assertEqual(AVFoundation.AVAssetReaderStatusFailed, 3)

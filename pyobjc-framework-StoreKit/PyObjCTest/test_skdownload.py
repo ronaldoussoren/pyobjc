@@ -3,7 +3,6 @@ from PyObjCTools.TestSupport import *
 import StoreKit
 
 class TestSKDownload (TestCase):
-
     def test_constants(self):
         self.assertEqual(StoreKit.SKDownloadStateWaiting, 0)
         self.assertEqual(StoreKit.SKDownloadStateActive, 1)

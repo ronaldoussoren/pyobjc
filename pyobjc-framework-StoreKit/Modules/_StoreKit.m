@@ -16,10 +16,10 @@ static PyMethodDef mod_methods[] = {
 
 
 /* Python glue */
-PyObjC_MODULE_INIT(_AddressBook)
+PyObjC_MODULE_INIT(_StoreKit)
 {
 	PyObject* m;
-	m = PyObjC_MODULE_CREATE(_AddressBook)
+	m = PyObjC_MODULE_CREATE(_StoreKit)
 	if (!m) {
 		PyObjC_INITERROR();
 	}

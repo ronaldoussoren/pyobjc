@@ -25,7 +25,7 @@ class TestAVAssetExportSession (TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleProRes422LPCM, unicode)
 
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusUnknown, 0)
-        self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting 1),
+        self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting, 1),
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusExporting, 2)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusCompleted, 3)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusFailed, 4)

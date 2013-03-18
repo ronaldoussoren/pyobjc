@@ -1,4 +1,4 @@
-from PyObjCToolest.TestSupport import *
+from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
