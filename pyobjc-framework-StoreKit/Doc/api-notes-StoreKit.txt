@@ -1,0 +1,7 @@
+API Notes: StoreKit framework
+================================
+
+API Notes
+---------
+
+The StoreKit bindings are barely tested at this time.
