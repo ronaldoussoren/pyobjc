@@ -53,16 +53,17 @@ struct block_literal {
     PyObject* invoke_cleanup;
 };
 
-extern const char* PyObjCBlock_GetSignature(void* _block)
+const char*
+PyObjCBlock_GetSignature(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
     struct block_descriptor_basic* descriptor = (struct block_descriptor_basic*)block->descriptor;
-    int offset = 0;
+    size_t offset = 0;
 
-    offset = 0;
     if (block->flags & BLOCK_HAS_COPY_DISPOSE) {
         offset += 2;
     }
+
     if (block->flags & BLOCK_HAS_SIGNATURE) {
         return descriptor->rest[offset];
     }
@@ -388,6 +389,7 @@ PyObjCBlock_Setup(void)
 
     return 0;
 }
+
 
 _block_func_ptr
 PyObjCBlock_GetFunction(void* block)

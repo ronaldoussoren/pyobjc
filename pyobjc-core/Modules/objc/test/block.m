@@ -9,6 +9,7 @@
 
 -(int(^)(void))getIntBlock;
 -(double(^)(double,double))getFloatBlock;
+-(NSRect(^)(double, double, double, double))getStructBlock;
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value;
 -(double)callDoubleBlock:(double(^)(double, double))block withValue:(double)v1 andValue:(double)v2;
 #endif
@@ -18,6 +19,13 @@
 @implementation OCTestBlock
 
 #if PyObjC_BUILD_RELEASE >= 1006 && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
+
+-(NSRect(^)(double, double, double, double))getStructBlock
+{
+    return [[^(double a, double b, double c, double d) {
+        return NSMakeRect(a, b, c, d);
+    } copy] autorelease];
+}
 
 -(int(^)(void))getIntBlock
 {
@@ -38,6 +46,13 @@
 {
     return block(v1, v2);
 }
+
+-(NSRect)callStructBlock: (NSRect(^)(double, double, double, double))block
+                   withA:(double)a b:(double)b c:(double)c d:(double)d
+{
+    return block(a, b, c, d);
+}
+
 #endif
 
 @end

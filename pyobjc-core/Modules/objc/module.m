@@ -1672,6 +1672,25 @@ name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signatur
     return Py_None;
 }
 
+static PyObject*
+block_signature(PyObject* mod __attribute__((__unused__)), PyObject* block)
+{
+    if (!PyObjCObject_Check(block) || !PyObjCObject_IsBlock(block)) {
+        PyErr_SetString(PyExc_ValueError, "Not a block");
+        return NULL;
+    }
+
+    const char* sig = PyObjCBlock_GetSignature(PyObjCObject_GetObject(block));
+    if (sig == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
+    return PyBytes_FromString(sig);
+}
+
+
+
 static PyMethodDef mod_methods[] = {
     {
         "propertiesForClass",
@@ -1757,6 +1776,8 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         "_block_call(block, signature, args, kwds) -> retval" },
 
+    { "_block_signature", (PyCFunction)block_signature,
+        METH_O, "return signature string for a block, or None" },
     { "_typestr2typestr", (PyCFunction)typestr2typestr,
         METH_O, "private function" },
 
