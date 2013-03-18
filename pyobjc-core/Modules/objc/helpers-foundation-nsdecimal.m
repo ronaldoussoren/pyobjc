@@ -219,6 +219,104 @@ decimal_dealloc(PyObject* self)
     PyObject_Free(self);
 }
 
+int
+PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
+{
+    BOOL negative;
+    unsigned long long mantissa;
+    short int exponent;
+
+    if (PyLong_Check(pyValue)) {
+        mantissa = PyLong_AsUnsignedLongLong(pyValue);
+        if (PyErr_Occurred()) {
+            long long lng;
+            PyErr_Clear();
+            lng = PyLong_AsLongLong(pyValue);
+
+            if (PyErr_Occurred()) {
+                return -1;
+            }
+
+            if (lng < 0) {
+                mantissa = -lng;
+                exponent = 0;
+                negative = YES;
+
+            } else {
+                mantissa = lng;
+                exponent = 0;
+                negative = NO;
+            }
+
+            DecimalFromComponents(outResult, mantissa, exponent, negative);
+            return 0;
+
+        } else {
+            DecimalFromComponents(outResult, mantissa, 0, NO);
+            return 0;
+        }
+
+#if PY_MAJOR_VERSION == 2
+    } else if (PyInt_Check(pyValue)) {
+        long lng = PyInt_AsLong(pyValue);
+
+        if (lng < 0) {
+            mantissa = -lng;
+            exponent = 0;
+            negative = YES;
+
+        } else{
+            mantissa = lng;
+            exponent = 0;
+            negative = NO;
+        }
+
+        DecimalFromComponents(outResult, mantissa, exponent, negative);
+        return 0;
+#endif
+    } else if (PyFloat_Check(pyValue)) {
+        /* Explicit conversion from float to NSDecimal
+         * first convert the float to a string using repr, that
+         * is easier than extracting the components of the
+         * float.
+         */
+        NSString* stringVal;
+#if PY_MAJOR_VERSION == 2
+        PyObject* strVal = PyObject_Repr(pyValue);
+        PyObject* uniVal = NULL;
+
+        if (strVal == NULL) return -1;
+
+        uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
+        Py_DECREF(strVal);
+
+#else /* PY_MAJOR_VERSION == 2 */
+        PyObject* uniVal = PyObject_Repr(pyValue);
+        if (uniVal == NULL) return -1;
+#endif /* PY_MAJOR_VERSION == 2 */
+
+        if (uniVal == NULL) return -1;
+
+        stringVal = PyObjC_PythonToId(uniVal);
+        Py_DECREF(uniVal);
+
+        PyObjC_DURING
+            DecimalFromString(outResult, stringVal, NULL);
+
+        PyObjC_HANDLER
+            PyObjCErr_FromObjC(localException);
+
+        PyObjC_ENDHANDLER
+
+        if (PyErr_Occurred()) return -1;
+        return 0;
+
+    }
+
+    PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
+    return -1;
+}
+
 static int
 decimal_init(PyObject* self, PyObject* args, PyObject* kwds)
 {
@@ -235,103 +333,15 @@ static char* keywords2[] = { "string", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &pyMantissa, &pyExponent, &pyNegative)) {
         PyObject* pyValue;
-        NSString* stringVal;
 
         PyErr_Clear();
         if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords2, &pyValue)) {
             PyErr_SetString(PyExc_TypeError,
-                "NSDecimal(stringValue) or NSDecimal(mantissa, exponent, isNegative)");
+                "NSDecimal(value) or NSDecimal(mantissa, exponent, isNegative)");
             return -1;
         }
 
-        if (PyLong_Check(pyValue)) {
-            mantissa = PyLong_AsUnsignedLongLong(pyValue);
-            if (PyErr_Occurred()) {
-                long long lng;
-                PyErr_Clear();
-                lng = PyLong_AsLongLong(pyValue);
-
-                if (PyErr_Occurred()) {
-                    return -1;
-                }
-
-                if (lng < 0) {
-                    mantissa = -lng;
-                    exponent = 0;
-                    negative = YES;
-
-                } else {
-                    mantissa = lng;
-                    exponent = 0;
-                    negative = NO;
-                }
-
-                DecimalFromComponents(&Decimal_Value(self),
-                    mantissa, exponent, negative);
-                return 0;
-
-            } else {
-                DecimalFromComponents(&Decimal_Value(self),
-                    mantissa, 0, NO);
-                return 0;
-            }
-
-#if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(pyValue)) {
-            long lng = PyInt_AsLong(pyValue);
-
-            if (lng < 0) {
-                mantissa = -lng;
-                exponent = 0;
-                negative = YES;
-
-            } else{
-                mantissa = lng;
-                exponent = 0;
-                negative = NO;
-            }
-
-            DecimalFromComponents(&Decimal_Value(self),
-                mantissa, exponent, negative);
-            return 0;
-#endif
-        } else if (PyFloat_Check(pyValue)) {
-            /* Explicit conversion from float to NSDecimal
-             * first convert the float to a string using repr, that
-             * is easier than extracting the components of the
-             * float.
-             */
-#if PY_MAJOR_VERSION == 2
-            PyObject* strVal = PyObject_Repr(pyValue);
-            PyObject* uniVal = NULL;
-
-            if (strVal == NULL) return -1;
-
-            uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
-            Py_DECREF(strVal);
-
-#else /* PY_MAJOR_VERSION == 2 */
-            PyObject* uniVal = PyObject_Repr(pyValue);
-            if (uniVal == NULL) return -1;
-#endif /* PY_MAJOR_VERSION == 2 */
-
-            if (uniVal == NULL) return -1;
-
-            stringVal = PyObjC_PythonToId(uniVal);
-            Py_DECREF(uniVal);
-
-            PyObjC_DURING
-                DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-
-            PyObjC_HANDLER
-                PyObjCErr_FromObjC(localException);
-
-            PyObjC_ENDHANDLER
-
-            if (PyErr_Occurred()) return -1;
-            return 0;
-
-        } else if (PyObjCObject_Check(pyValue)) {
+        if (PyObjCObject_Check(pyValue)) {
             NSObject* value = PyObjC_PythonToId(pyValue);
 
             if ([value isKindOfClass:[NSDecimalNumber class]]) {
@@ -350,23 +360,25 @@ static char* keywords2[] = { "string", NULL };
 
         } else if (
 #if PY_MAJOR_VERSION == 2
-                !PyString_Check(pyValue) &&
+                PyString_Check(pyValue) ||
 #endif /* PY_MAJOR_VERSION == 2 */
-                !PyUnicode_Check(pyValue)) {
-            PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
-            return -1;
+                PyUnicode_Check(pyValue)) {
+
+            NSString* stringVal;
+
+            stringVal = PyObjC_PythonToId(pyValue);
+            PyObjC_DURING
+                DecimalFromString(&Decimal_Value(self), stringVal, NULL);
+            PyObjC_HANDLER
+                PyObjCErr_FromObjC(localException);
+            PyObjC_ENDHANDLER
+
+            if (PyErr_Occurred()) return -1;
+            return 0;
+
+        } else {
+            return PyObjC_number_to_decimal(pyValue, &Decimal_Value(self));
         }
-
-        stringVal = PyObjC_PythonToId(pyValue);
-        PyObjC_DURING
-            DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-        PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred()) return -1;
-        return 0;
-
     }
 
     negative = PyObject_IsTrue(pyNegative);
