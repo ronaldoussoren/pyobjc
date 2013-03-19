@@ -328,6 +328,10 @@ Version 3.0
   expects an Objective-C block argument) now include an Objective-C
   signature string (introduced in "ABI.2010.3.16").
 
+* PyObjC now supports blocks that have a large struct as the return value
+  (for example a block that returns an NSRect structure).
+
+
 Version 2.6
 -----------
 

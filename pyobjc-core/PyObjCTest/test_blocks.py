@@ -16,6 +16,15 @@ objc.parseBridgeSupport('''\
     <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
     <signatures version='1.0'>
       <class name='OCTestBlock'>
+        <method selector='getStructBlock'>
+          <retval block='true' >
+              <retval type='%(NSRect_tp)s' />
+              <arg type='d' />
+              <arg type='d' />
+              <arg type='d' />
+              <arg type='d' />
+          </retval>
+        </method>
         <method selector='getIntBlock'>
           <retval block='true' >
               <retval type='i' />
@@ -41,9 +50,19 @@ objc.parseBridgeSupport('''\
               <arg type='d' />
           </arg>
         </method>
+        <method selector='callStructBlock:withA:b:c:d:'>
+          <arg index='0' block='true' >
+              <retval type='%(NSRect_tp)s' />
+              <arg type='d' />
+              <arg type='d' />
+              <arg type='d' />
+              <arg type='d' />
+          </arg>
+        </method>
       </class>
     </signatures>
-    ''', globals(), 'PyObjCTest')
+    ''' % dict(NSRect_tp=NSRect_tp if sys.version_info[0] == 2 else NSRect_tp.decode('ascii')),
+    globals(), 'PyObjCTest')
 
 # The blocks tests can only run when PyObjC was compiled with
 # GCC 4.2 or later.
@@ -86,8 +105,6 @@ class TestBlocks (TestCase):
     @min_os_level('10.6')
     @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC3(self):
-        return
-
         obj = OCTestBlock.alloc().init()
 
         lst = []
@@ -95,7 +112,7 @@ class TestBlocks (TestCase):
             return ((a, b), (c, d))
 
         v = obj.callStructBlock_withA_b_c_d_(callback, 1.5, 2.5, 3.5, 4.5)
-        print(v)
+        self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
 
     @min_os_level('10.6')
@@ -127,12 +144,9 @@ class TestBlocks (TestCase):
     def testBlockFromObjC3(self):
         obj = OCTestBlock.alloc().init()
 
-        return
-
         block = obj.getStructBlock()
-        value = block(1, 2, 3, 4)
-        self.assertEqual(len(value), 4)
-        self.assertEqual(list(value), ((1.0, 2.0), (3.0, 4.0)))
+        v = block(1.5, 2.5, 3.5, 4.5)
+        self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
 
     @min_os_level('10.6')

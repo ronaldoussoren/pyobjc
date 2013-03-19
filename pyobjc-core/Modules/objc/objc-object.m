@@ -886,6 +886,17 @@ obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__))
         if (v != NULL) {
             Py_INCREF(v);
             return v;
+        } else {
+            const char* typestr = PyObjCBlock_GetSignature(PyObjCObject_GetObject(self));
+            if (typestr != NULL) {
+                v = (PyObject*)PyObjCMethodSignature_FromSignature(typestr, YES);
+                if (v == NULL) {
+                    return NULL;
+                }
+                PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)v);
+                Py_INCREF(v);
+                return v;
+            }
         }
     }
 
@@ -909,12 +920,11 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribu
     }
 
     PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
+    Py_XINCREF(newVal);
+    PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
     if (v != NULL) {
         Py_DECREF(v);
     }
-
-    Py_XINCREF(newVal);
-    PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
     return 0;
 }
 

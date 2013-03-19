@@ -2117,6 +2117,7 @@ PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
 
     stubUserdata->methinfo = methinfo;
     Py_INCREF(methinfo);
+
     stubUserdata->closureType = PyObjC_Block;
 
     if (callable) {
@@ -3730,6 +3731,46 @@ int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* by
     return 0;
 }
 
+int
+PyObjCRT_ResultUsesStret(const char* typestr)
+{
+    Py_ssize_t resultSize = PyObjCRT_SizeOfReturnType(typestr);
+    if (resultSize == -1) {
+        return -1;
+    }
+
+    if (*typestr == _C_STRUCT_B &&
+#ifdef  __ppc64__
+        ffi64_stret_needs_ptr((typestr), NULL, NULL)
+
+#else /* !__ppc64__ */
+        (resultSize > SMALL_STRUCT_LIMIT
+#ifdef __i386__
+         /* darwin/x86 ABI is slightly odd ;-) */
+         || (resultSize != 1
+            && resultSize != 2
+            && resultSize != 4
+            && resultSize != 8)
+#endif
+#ifdef __x86_64__
+             /* darwin/x86-64 ABI is slightly odd ;-) */
+         || (resultSize != 1
+            && resultSize != 2
+            && resultSize != 4
+            && resultSize != 8
+            && resultSize != 16
+            )
+#endif
+        )
+#endif /* !__ppc64__ */
+        ) {
+
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 
 PyObject *
 PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
@@ -3907,6 +3948,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     }
     /* XXX: Ronald: why the XXX? */
 
+
     useStret = 0;
 
     if (PyObjCIMP_Check(aMeth)) {
@@ -3928,35 +3970,11 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
             objc_superSetClass(super,  meth->sel_class);
         }
 
-        useStret = 0;
-        if (*rettype == _C_STRUCT_B &&
-#ifdef  __ppc64__
-            ffi64_stret_needs_ptr((rettype), NULL, NULL)
-
-#else /* !__ppc64__ */
-            (resultSize > SMALL_STRUCT_LIMIT
-#ifdef __i386__
-             /* darwin/x86 ABI is slightly odd ;-) */
-             || (resultSize != 1
-                && resultSize != 2
-                && resultSize != 4
-                && resultSize != 8)
-#endif
-#ifdef __x86_64__
-             /* darwin/x86-64 ABI is slightly odd ;-) */
-             || (resultSize != 1
-                && resultSize != 2
-                && resultSize != 4
-                && resultSize != 8
-                && resultSize != 16
-                )
-#endif
-            )
-#endif /* !__ppc64__ */
-            ) {
-
-            useStret = 1;
+        useStret = PyObjCRT_ResultUsesStret(rettype);
+        if (useStret == -1) {
+            goto error_cleanup;
         }
+
         superPtr = &super;
         arglist[ 0] = &ffi_type_pointer;
         values[ 0] = &superPtr;
