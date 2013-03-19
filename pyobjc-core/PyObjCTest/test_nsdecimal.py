@@ -16,7 +16,7 @@ class TestNSDecimalWrwapper (TestCase):
         d = objc.NSDecimal(-5)
         self.assertEqual(str(d), "-5")
 
-        self.assertRaises(OverflowError, objc.NSDecimal, sys.maxsize * 3)
+        self.assertRaises(OverflowError, objc.NSDecimal, 1<<66)
 
         d = objc.NSDecimal(0.0)
         self.assertEqual(str(d), "0")
@@ -61,7 +61,7 @@ class TestNSDecimalWrwapper (TestCase):
         self.assertFalse(d1 > d2)
         self.assertTrue(d1 > d3)
         self.assertFalse(d1  > d4)
-        
+
         self.assertTrue(d1 >= d1)
         self.assertTrue(d1 >= d2)
         self.assertTrue(d1 >= d3)
