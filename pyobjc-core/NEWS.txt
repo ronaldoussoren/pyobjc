@@ -339,6 +339,8 @@ Version 3.0
 * ``del NSObject.__version__`` crashed the interpreter because the setter
   didn't guard against deletion attempts.
 
+* ``del aSelector.isHidden`` crashed the interpreter (see above)
+
 Version 2.6
 -----------
 
