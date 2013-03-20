@@ -2090,12 +2090,35 @@ cls_set_version(PyObject* self, PyObject* newVal, void* closure __attribute__((_
     int   val;
     int   r;
 
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete __version__  attribute");
+        return -1;
+    }
+
     r = depythonify_c_value(@encode(int), newVal, &val);
     if (r == -1) {
         return -1;
     }
 
     class_setVersion(cls, val);
+    return 0;
+}
+
+static PyObject*
+cls_get_useKVO(PyObject* self, void* closure __attribute__((__unused__)))
+{
+    return PyBool_FromLong(((PyObjCClassObject*)self)->useKVO);
+}
+
+static  int
+cls_set_useKVO(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
+{
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete __useKVO__ attribute");
+        return -1;
+    }
+
+    ((PyObjCClassObject*)self)->useKVO = PyObject_IsTrue(newVal);
     return 0;
 }
 
@@ -2122,7 +2145,13 @@ static PyGetSetDef class_getset[] = {
         cls_version_doc,
         0
     },
-
+    {
+        "__useKVO__",
+        cls_get_useKVO,
+        cls_set_useKVO,
+        "Use KVO notifications when setting attributes from Python",
+        0
+    },
     {
         /* Access __name__ through a property: Objective-C name
          * might change due to posing.
@@ -2225,18 +2254,6 @@ static PyMethodDef class_methods[] = {
     }
 };
 
-static PyMemberDef class_members[] = {
-    {
-        "__useKVO__",
-        T_INT,
-        offsetof(PyObjCClassObject, useKVO),
-        0,
-        "Use KVO notifications when setting attributes from Python",
-    },
-    { NULL, 0, 0, 0, NULL}
-};
-
-
 /*
  * This is the class for type(NSObject), and is a subclass of type()
  * with an overridden tp_getattro that is used to dynamicly look up
@@ -2271,38 +2288,11 @@ PyTypeObject PyObjCClass_Type = {
     .tp_doc         = class_doc,
     .tp_richcompare = class_richcompare,
     .tp_methods     = class_methods,
-    .tp_members     = class_members,
     .tp_getset      = class_getset,
     .tp_base        = &PyObjCMetaClass_Type,
     .tp_init        = class_init,
     .tp_new         = class_new,
 };
-
-char*
-PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
-{
-    size_t res = snprintf(buf, buflen, "%s", sel_getName(sel));
-    char* cur;
-
-    if (res != strlen(sel_getName(sel))) {
-        return NULL;
-    }
-
-    if (PyObjC_IsPythonKeyword(buf)) {
-        res = snprintf(buf, buflen, "%s__", sel_getName(sel));
-        if (res != 2+strlen(sel_getName(sel))) {
-            return NULL;
-        }
-        return buf;
-    }
-
-    cur = strchr(buf, ':');
-    while (cur) {
-        *cur = '_';
-        cur = strchr(cur, ':');
-    }
-    return buf;
-}
 
 /*
  * Create a new objective-C class  proxy.

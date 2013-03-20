@@ -331,6 +331,13 @@ Version 3.0
 * PyObjC now supports blocks that have a large struct as the return value
   (for example a block that returns an NSRect structure).
 
+* Reduced the number of unnecessary methods implemented by the various
+  OC_Python* classes, this might affect some Objective-C code that directly
+  uses these classes instead of just using the interface of their
+  superclasses.
+
+* ``del NSObject.__version__`` crashed the interpreter because the setter
+  didn't guard against deletion attempts.
 
 Version 2.6
 -----------

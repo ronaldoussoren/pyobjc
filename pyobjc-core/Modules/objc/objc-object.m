@@ -907,8 +907,12 @@ obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__))
 static int
 obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete '__block_signature'");
+        return -1;
+    }
     if (!PyObjCObject_IsBlock(self)) {
-        PyErr_SetString(PyExc_TypeError, "You can only change this value on blocks");
+        PyErr_SetString(PyExc_TypeError, "'__block_signature__' can only be set on Block objects");
         return  -1;
     }
 

@@ -382,10 +382,6 @@
 
 /* It seems impossible to create an efficient implementation of this method,
  * iteration is basicly the only way to fetch the requested object
- *
- * XXX: this means we should implement more of NS(Mutable)Set interface,
- * that's a lot more efficient than iterating over and over again.
- *
  */
 -(id)member:(id)anObject
 {
@@ -563,6 +559,5 @@
 {
     return [NSArray arrayWithObject:@"NSSet"];
 }
-
 
 @end

@@ -1426,3 +1426,29 @@ PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
     Py_DECREF(values);
     return NULL;
 }
+
+char*
+PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
+{
+    size_t res = snprintf(buf, buflen, "%s", sel_getName(sel));
+    char* cur;
+
+    if (res != strlen(sel_getName(sel))) {
+        return NULL;
+    }
+
+    if (PyObjC_IsPythonKeyword(buf)) {
+        res = snprintf(buf, buflen, "%s__", sel_getName(sel));
+        if (res != 2+strlen(sel_getName(sel))) {
+            return NULL;
+        }
+        return buf;
+    }
+
+    cur = strchr(buf, ':');
+    while (cur) {
+        *cur = '_';
+        cur = strchr(cur, ':');
+    }
+    return buf;
+}

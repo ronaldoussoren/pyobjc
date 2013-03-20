@@ -25,7 +25,6 @@
 @end /* interface OC_PythonDictionaryEnumerator */
 
 
-
 @implementation OC_PythonDictionaryEnumerator
 
 +(instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
@@ -53,10 +52,28 @@
 -(id)nextObject
 {
     id key = nil;
+    PyObject* pykey = NULL;
 
-    if (valid) {
-        valid = [value wrappedKey:&key value:nil atPosition:&pos];
-    }
+    PyObjC_BEGIN_WITH_GIL
+        PyObject* dct = [value __pyobjc_PythonObject__];
+        if (unlikely(!PyDict_Next(dct, &pos, &pykey, NULL))) {
+            key = nil;
+
+        } else if (pykey == Py_None) {
+            key = [NSNull null];
+
+        } else {
+            if (depythonify_c_value(@encode(id), pykey, &key) == -1) {
+                Py_DECREF(dct);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+        Py_DECREF(dct);
+
+    PyObjC_END_WITH_GIL
+
+    valid = (key != nil) ? YES : NO;
+
     return key;
 }
 
@@ -94,8 +111,6 @@
     PyObjC_END_WITH_GIL
 }
 
-
-
 -(void)dealloc
 {
     PyObjC_BEGIN_WITH_GIL
@@ -109,14 +124,14 @@
 
 -(PyObject*)__pyobjc_PythonObject__
 {
-    Py_INCREF(value);
+    Py_XINCREF(value);
     return value;
 }
 
 -(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
-    Py_INCREF(value);
+    Py_XINCREF(value);
     return value;
 }
 
@@ -144,17 +159,6 @@
     }
 
     return result;
-}
-
--(int)depythonify:(PyObject*)v toId:(id*)datum
-{
-    if (unlikely(depythonify_c_value(@encode(id), v, datum) == -1)) {
-        return -1;
-    }
-    if (unlikely(*datum == nil)) {
-        *datum = [NSNull null];
-    }
-    return 0;
 }
 
 -(id)objectForKey:key
@@ -195,10 +199,12 @@
             PyObjC_GIL_RETURN(nil);
         }
 
-        if (unlikely([self depythonify:v toId:&result] == -1)) {
+        if (v == Py_None) {
+            result = [NSNull null];
+
+        } else if (unlikely(depythonify_c_value(@encode(id), v, &result) == -1)) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
-
         }
         Py_DECREF(v);
 
@@ -259,30 +265,6 @@
     PyObjC_END_WITH_GIL
 }
 
--(BOOL)wrappedKey:(id*)keyPtr value:(id*)valuePtr atPosition:(Py_ssize_t*)positionPtr
-{
-    PyObject *pykey = NULL;
-    PyObject *pyvalue = NULL;
-    PyObject **pykeyptr = (keyPtr == nil) ? NULL : &pykey;
-    PyObject **pyvalueptr = (valuePtr == nil) ? NULL : &pyvalue;
-
-    PyObjC_BEGIN_WITH_GIL
-        if (unlikely(!PyDict_Next(value, positionPtr, pykeyptr, pyvalueptr))) {
-            PyObjC_GIL_RETURN(NO);
-        }
-        if (keyPtr) {
-            if (unlikely([self depythonify:pykey toId:keyPtr] == -1)) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-        if (likely(valuePtr)) {
-            if (unlikely([self depythonify:pyvalue toId:valuePtr] == -1)) {
-                PyObjC_GIL_FORWARD_EXC();
-            }
-        }
-    PyObjC_END_WITH_GIL
-    return YES;
-}
 
 -(void)removeObjectForKey:key
 {
@@ -500,6 +482,11 @@
     return [OC_PythonDictionary class];
 }
 
++(NSArray*)classFallbacksForKeyedArchiver
+{
+    return [NSArray arrayWithObject:@"NSDictionary"];
+}
+
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     if (PyDict_CheckExact(value)) {
@@ -583,11 +570,5 @@
             return [super mutableCopyWithZone:zone];
     }
 }
-
-+(NSArray*)classFallbacksForKeyedArchiver
-{
-    return [NSArray arrayWithObject:@"NSDictionary"];
-}
-
 
 @end  // interface OC_PythonDictionary

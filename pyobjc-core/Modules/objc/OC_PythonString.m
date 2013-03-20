@@ -255,7 +255,7 @@
 
     } else {
         [NSException raise:NSInvalidArgumentException
-                    format:@"encoding Python objects is not supported"];
+                    format:@"encoding Python string objects is not supported"];
     }
     return self;
 }

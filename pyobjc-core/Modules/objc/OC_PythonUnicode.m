@@ -39,7 +39,6 @@
 }
 
 
-
 -(BOOL)supportsWeakPointers {
     return YES;
 }
@@ -87,42 +86,6 @@
 
     [super dealloc];
 }
-
-/*
- * XXX: The code below should work for PyObjC_UNICODE_FAST_PATH
- * but causes failures on 64-bit builds on OSX 10.7
- *
-
--(NSUInteger)length
-{
-    return (NSUInteger)PyUnicode_GET_SIZE(value);
-}
-
--(unichar)characterAtIndex:(NSUInteger)anIndex
-{
-    if (anIndex > PY_SSIZE_T_MAX) {
-        [NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
-    }
-    if (anIndex >= (NSUInteger)PyUnicode_GET_SIZE(value)) {
-        [NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
-    }
-
-    return (unichar)PyUnicode_AS_UNICODE(value)[anIndex];
-}
-
--(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
-{
-    if (aRange.location + aRange.length > (NSUInteger)PyUnicode_GET_SIZE(value)) {
-        [NSException raise:@"NSRangeException" format:@"Range or index out of bounds"];
-    }
-
-    memmove(buffer,
-           (PyUnicode_AS_UNICODE(value)) + aRange.location,
-           sizeof(unichar) * aRange.length);
-}
-
-*/
-
 
 #if PY_VERSION_HEX >= 0x03030000
 
@@ -215,53 +178,17 @@
 
 -(NSUInteger)length
 {
-#ifdef PyObjC_STR_CACHE_IMP
-    if (!imp_length) {
-        [self __realObject__];
-        imp_length = (__typeof__(imp_length))([realObject methodForSelector:@selector(length)]);
-    }
-    if (!imp_length) abort();
-    if (!realObject) abort();
-    return imp_length(realObject, @selector(length));
-
-#else /* !PyObjC_STR_CACHE_IMP */
     return [[self __realObject__] length];
-
-#endif /* !PyObjC_STR_CACHE_IMP */
 }
 
 -(unichar)characterAtIndex:(NSUInteger)anIndex
 {
-#ifdef PyObjC_STR_CACHE_IMP
-    if (!imp_charAtIndex) {
-        [self __realObject__];
-        imp_charAtIndex = (__typeof__(imp_charAtIndex))([realObject methodForSelector:@selector(characterAtIndex:)]);
-    }
-    if (!imp_charAtIndex) abort();
-    if (!realObject) abort();
-    return imp_charAtIndex(realObject, @selector(characterAtIndex:), anIndex);
-
-#else /* !PyObjC_STR_CACHE_IMP */
     return [[self __realObject__] characterAtIndex:anIndex];
-
-#endif /* !PyObjC_STR_CACHE_IMP */
 }
 
 -(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
 {
-#ifdef PyObjC_STR_CACHE_IMP
-    if (!imp_getCharacters) {
-        [self __realObject__];
-        imp_getCharacters = (__typeof__(imp_getCharacters))([realObject methodForSelector:@selector(getCharacters:range:)]);
-    }
-    if (!imp_getCharacters) abort();
-    if (!realObject) abort();
-    imp_getCharacters(realObject, @selector(getCharacters:range:), buffer, aRange);
-
-#else    /* !PyObjC_STR_CACHE_IMP */
     return [[self __realObject__] getCharacters:buffer range:aRange];
-
-#endif
 }
 
 -(void)getCharacters:(unichar*)buffer
@@ -271,9 +198,6 @@
 
 /*
  * NSCoding support
- *
- * We need explicit NSCoding support to get full fidelity, otherwise we'll
- * get archived as generic NSStrings.
  */
 - (id)initWithCharactersNoCopy:(unichar *)characters
             length:(NSUInteger)length
@@ -453,7 +377,7 @@
         }
     } else {
         [NSException raise:NSInvalidArgumentException
-            format:@"encoding Python objects is not supported"];
+            format:@"encoding Python unicode objects is not supported"];
         return nil;
     }
 }
@@ -466,6 +390,9 @@
     PyObjC_END_WITH_GIL
 
     if (is_exact_unicode) {
+        if ([coder allowsKeyedCoding]) {
+            [coder encodeInt32:1 forKey:@"pytype"];
+        }
         [super encodeWithCoder:coder];
     } else {
         if ([coder allowsKeyedCoding]) {
@@ -509,7 +436,7 @@
  * when reading them back, but does allow for better interop with code
  * that uses a non-keyed archiver.
  */
--(Class)classForArchiver
+-(Class)classForCoder
 {
     Class result;
     PyObjC_BEGIN_WITH_GIL
@@ -524,18 +451,9 @@
 
 -(Class)classForKeyedArchiver
 {
-    return [self classForArchiver];
+    return [OC_PythonUnicode class];
 }
 
--(Class)classForCoder
-{
-    return [self classForArchiver];
-}
-
--(Class)classForPortCoder
-{
-    return [self classForArchiver];
-}
 
 /* Ensure that we can be unarchived as a generic string by pure ObjC
  * code.

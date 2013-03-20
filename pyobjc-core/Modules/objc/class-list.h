@@ -1,5 +1,13 @@
 #ifndef PyObjC_CLASS_LIST_H
 #define PyObjC_CLASS_LIST_H
+
+/*!
+ * PYOBJC_EXPECTED_CLASS_COUNT: Hint about the number of classes to expect
+ *
+ * Loading Quartz results close to 5K classes on OSX 10.8
+ */
+#define PYOBJC_EXPECTED_CLASS_COUNT 10000
+
 /*!
  * @header class-list.h
  * @abstract Get the list of classes in the Objective-C runtime

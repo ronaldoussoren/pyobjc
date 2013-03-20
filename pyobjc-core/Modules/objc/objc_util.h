@@ -50,6 +50,8 @@ extern PyObject* PyObjC_AdjustSelf(PyObject* object);
 extern PyObject* PyObjC_FindSELInDict(PyObject*, SEL);
 extern int PyObjCRT_SignaturesEqual(const char*, const char*);
 
+extern char* PyObjC_SELToPythonName(SEL, char*, size_t);
+
 static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
 {
     Py_ssize_t rest = offset % alignment;
@@ -57,6 +59,32 @@ static inline Py_ssize_t align(Py_ssize_t offset, Py_ssize_t alignment)
     return offset + (alignment - rest);
 }
 
+/*
+ * SET_FIELD(op, value):
+ *    macro for updating the value of 'op' to 'value',
+ *    steals a reference to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); op = value'
+ */
+#define SET_FIELD(op, value)                    \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
 
+/*
+ * SET_FIELD_INCREF(op, value):
+ *    macro for updating the value of 'op' to 'value'.
+ *
+ *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
+ */
+#define SET_FIELD_INCREF(op, value)             \
+    do {                                        \
+        PyObject* _py_tmp = (PyObject*)(op);    \
+        Py_XINCREF(value);                      \
+        (op) = value;                           \
+        Py_XDECREF(_py_tmp);                    \
+    } while(0)
 
 #endif /* OBJC_UTIL */

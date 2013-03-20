@@ -80,15 +80,15 @@ extern PyObject* PyObjC_ClassExtender;
  */
 typedef struct _PyObjCClassObject {
     PyHeapTypeObject base;
-    __strong Class class;
+    Class class;
     PyObject* sel_to_py;
-    Py_ssize_t dictoffset;
     PyObject* delmethod;
-    Py_ssize_t generation;
     PyObject* hiddenSelectors;
     PyObject* hiddenClassSelectors;
 
-    int  useKVO;     /* FIXME: swith to getset in python API  and switch this to a bitfield as well. */
+    Py_ssize_t dictoffset;
+    Py_ssize_t generation;
+    unsigned int useKVO:1;
     unsigned int hasPythonImpl:1;
     unsigned int isCFWrapper:1;
 } PyObjCClassObject;
@@ -114,9 +114,5 @@ extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 /* Returns a borrowed reference or NULL (without necessarily raising an exception) */
 extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
-
-/* XXX: This should be in a different file! */
-char* PyObjC_SELToPythonName(SEL, char*, size_t);
-
 
 #endif /* PyObjC_OBJC_CLASS_H */

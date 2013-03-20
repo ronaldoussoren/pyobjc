@@ -115,10 +115,6 @@
  * headers
  */
 
-extern PyObject *PyObjCStrBridgeWarning;
-
-int PyObjCAPI_Register(PyObject* module);
-
 /* module.m */
 extern PyObject* PyObjC_TypeStr2CFTypeID;
 extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
@@ -127,68 +123,16 @@ extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure
 #endif
 
 
-/*!
- * PYOBJC_EXPECTED_CLASS_COUNT: Hint about the number of classes to expect
- *
- * Loading Quartz results close to 5K classes on OSX 10.8
- */
-#define PYOBJC_EXPECTED_CLASS_COUNT 10000
-
-/*
- * SET_FIELD(op, value):
- *    macro for updating the value of 'op' to 'value',
- *    steals a reference to 'value'.
- *
- *    use this instead of 'Py_XDECREF(op); op = value'
- */
-#define SET_FIELD(op, value)                    \
-    do {                                        \
-        PyObject* _py_tmp = (PyObject*)(op);    \
-        (op) = value;                           \
-        Py_XDECREF(_py_tmp);                    \
-    } while(0)
-
-/*
- * SET_FIELD_INCREF(op, value):
- *    macro for updating the value of 'op' to 'value'.
- *
- *    use this instead of 'Py_XDECREF(op); Py_INCREF(value); op = value'
- */
-#define SET_FIELD_INCREF(op, value)             \
-    do {                                        \
-        PyObject* _py_tmp = (PyObject*)(op);    \
-        Py_XINCREF(value);                      \
-        (op) = value;                           \
-        Py_XDECREF(_py_tmp);                    \
-    } while(0)
-
-
-/* Define PyObjC_UNICODE_FAST_PATH when
- * 1) We're before Python 3.3, and
- * 2) Py_UNICODE has the same size as unichar
- *
- * Python 3.3 has an optimized representation that
- * makes it impossible (and unnecessary) to use the
- * "fast path"
- */
-#if PY_VERSION_HEX >= 0x03030000
-
-#undef PyObjC_UNICODE_FAST_PATH
-
-#elif Py_UNICODE_SIZE == 2
-
-#define PyObjC_UNICODE_FAST_PATH
-
-#endif
 
 #ifdef PyObjC_DEBUG
 
+#ifdef PyObjC_ERROR_ABORT
+#   define _PyObjC_InternalError_Bailout()    abort()
 
-#if 1 /* def PyObjCErr_InternalError */
-#define _PyObjC_InternalError_Bailout()    abort()
-#else
-#define _PyObjC_InternalError_Bailout()    ((void)0)
-#endif
+#else /* !PyObjC_ERROR_ABORT */
+#   define _PyObjC_InternalError_Bailout()    ((void)0)
+
+#endif /* !PyObjC_ERROR_ABORT */
 
 #define PyObjCErr_InternalError() 				\
     do { 							\

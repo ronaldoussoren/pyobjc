@@ -224,6 +224,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 #else /* PyObjC_BUILD */
 
 extern struct pyobjc_api    objc_api;
+extern int PyObjCAPI_Register(PyObject* module);
 
 #endif /* !PYOBJC_BUILD */
 

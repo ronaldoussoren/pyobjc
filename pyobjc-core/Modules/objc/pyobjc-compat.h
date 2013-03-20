@@ -240,10 +240,23 @@ typedef unsigned int NSUInteger;
 #define PyObjC__STR(x) #x
 #define PyObjC_STR(x) PyObjC__STR(x)
 
+/* Define PyObjC_UNICODE_FAST_PATH when
+ * 1) We're before Python 3.3, and
+ * 2) Py_UNICODE has the same size as unichar
+ *
+ * Python 3.3 has an optimized representation that
+ * makes it impossible (and unnecessary) to use the
+ * "fast path"
+ */
+#if PY_VERSION_HEX >= 0x03030000
 
+#undef PyObjC_UNICODE_FAST_PATH
 
+#elif Py_UNICODE_SIZE == 2
 
+#define PyObjC_UNICODE_FAST_PATH
 
+#endif
 
 #if PY_MAJOR_VERSION == 2
 

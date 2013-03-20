@@ -34,6 +34,10 @@ struct options {
     static int NAME ## _set(PyObject* s __attribute__((__unused__)),        \
             PyObject* newVal, void* c __attribute__((__unused__)))          \
     {                                                                       \
+        if (newVal == NULL) {                                               \
+            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'"); \
+            return -1;                                                      \
+        }                                                                   \
         VAR = PyObject_IsTrue(newVal) ? YES : NO;                           \
         return 0;                                                           \
     }
@@ -57,6 +61,10 @@ struct options {
     static int NAME ## _set(PyObject* s __attribute__((__unused__)),        \
             PyObject* newVal, void* c __attribute__((__unused__)))          \
     {                                                                       \
+        if (newVal == NULL) {                                               \
+            PyErr_SetString(PyExc_TypeError, "Cannot delete option '" STR(NAME) "'"); \
+            return -1;                                                      \
+        }                                                                   \
         SET_FIELD_INCREF(VAR, newVal);                                      \
         return 0;                                                           \
     }
@@ -92,6 +100,10 @@ static PyObject* _nscoding_version_get(PyObject* s __attribute__((__unused__)),
 static int _nscoding_version_set(PyObject* s __attribute__((__unused__)),
         PyObject* newVal, void* c __attribute__((__unused__)))
 {
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'nscoding_version'");
+        return -1;
+    }
     if (PyArg_Parse(newVal, "i", &PyObjC_NSCoding_Version) < 0) {
         return -1;
     }

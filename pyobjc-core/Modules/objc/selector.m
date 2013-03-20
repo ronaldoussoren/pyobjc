@@ -139,6 +139,12 @@ base_signature_setter(PyObject* _self, PyObject* newVal, void* closure __attribu
 {
     PyObjCNativeSelector* self = (PyObjCNativeSelector*)_self;
     char* t;
+
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete 'signature'");
+        return -1;
+    }
+
     if (!PyBytes_Check(newVal)) {
         PyErr_SetString(PyExc_TypeError, "signature must be byte string");
         return -1;
@@ -165,6 +171,11 @@ base_hidden(PyObject* _self, void* closure __attribute__((__unused__)))
 static int
 base_hidden_setter(PyObject* _self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete 'isHidden'");
+        return -1;
+    }
+
     if (PyObject_IsTrue(newVal)) {
         ((PyObjCSelector*)_self)->sel_flags |= PyObjCSelector_kHIDDEN;
     } else {
