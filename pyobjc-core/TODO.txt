@@ -215,3 +215,15 @@ Medium term
 
 * Is it possible to implement pyobjc_unicode in Python?
   (not really: need to copy the data somehow)
+
+* Add some more tests for method resolution:
+
+  - Add methods after object is first used from python:
+
+    1. a completely new method
+
+    2. a method that overrides a method from the superclass
+
+    In both cases check that the method can be called (both directly
+    and through super)
+
