@@ -9,6 +9,8 @@ Version 2.5.2
 - "easy_install pyobjc" always tried to install the FSEvents binding,
   even when running on OSX 10.4 (where that API is not available).
 
+- ``objc.ObjCPointer`` didn't implement *__getattribute__*.
+
 Version 2.5.1
 -------------
 
