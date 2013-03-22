@@ -36,7 +36,7 @@ PyObjCPointer_unpack (PyObject* _self)
 		const char *type = PyBytes_AS_STRING (self->type);
 
 		if (*type == _C_VOID) {
-			PyErr_SetString (PyObjCExc_Error, 
+			PyErr_SetString (PyObjCExc_Error,
 				"Cannot dereference a pointer to void");
 			return NULL;
 		} else {
@@ -51,10 +51,10 @@ PyObjCPointer_unpack (PyObject* _self)
 static PyMethodDef PyObjCPointer_methods[] =
 {
 	{
-		"unpack",   
-		(PyCFunction)PyObjCPointer_unpack,       
-		METH_NOARGS,   
-		PyObjCPointer_unpack_doc 
+		"unpack",
+		(PyCFunction)PyObjCPointer_unpack,
+		METH_NOARGS,
+		PyObjCPointer_unpack_doc
 	},
 	{ 0, 0, 0, 0 }
 };
@@ -83,11 +83,11 @@ PyTypeObject PyObjCPointer_Type =
 	"PyObjCPointer",			/* tp_name */
 	sizeof (PyObjCPointer),			/* tp_basicsize */
 	sizeof (char),				/* tp_itemsize */
-  
+
 	/* methods */
 	PyObjCPointer_dealloc,			/* tp_dealloc */
 	0,					/* tp_print */
-	0,					/* tp_getattr */
+	PyObject_GenericGetAttr,                /* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
 	0,					/* tp_repr */
@@ -153,7 +153,7 @@ PyObjCPointer_New(void *p, const char *t)
 	if (typeend == NULL) {
 		return NULL;
 	}
-  
+
 	self = PyObject_NEW_VAR (PyObjCPointer, &PyObjCPointer_Type, size);
 	if (self == NULL) {
 		return NULL;
@@ -166,6 +166,6 @@ PyObjCPointer_New(void *p, const char *t)
 	} else {
 		self->ptr = p;
 	}
-  
+
 	return self;
 }
