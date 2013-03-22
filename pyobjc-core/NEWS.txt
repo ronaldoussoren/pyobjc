@@ -214,10 +214,13 @@ Version 3.0
 * PyObjC 3 requires a compiler that supports Objective-C with C99 as the base
   language.
 
-* PyObjC will now raise an exception instead of creating instances of
-  :class:`objc.PyObjCPointer`. You can set :data:`objc.options.unknown_pointer_raises`
-  to False to re-enable the previous behavior (although that is almost always the
-  wrong solution).
+* PyObjC raises an exception instead of creating instances of
+  :class:`objc.PyObjCPointer` when you set :data:`objc.options.unknown_pointer_raises`
+  to :data:`True`.
+
+  The default is currently :data:`False`, that will be changed in a future version
+  and the entire `objc.ObjCPointer` class will likely be removed some releases
+  after that.
 
 * Configuration options are now attributes of special object :data:`objc.options`.
 
@@ -340,6 +343,20 @@ Version 3.0
   didn't guard against deletion attempts.
 
 * ``del aSelector.isHidden`` crashed the interpreter (see above)
+
+* Class :class:`objc.ObjCPointer` was not exposed in the :mod:`objc` module.
+
+* The implementation of :class:`objc.ObjCPointer` didn't have a proper
+  implementation of *__getattribute__* and that made objects of this
+  class even more useless than they should have been.
+
+* Values of :class:`objc.ObjCPointer` no longer have an unpack method
+  (the method has been inaccisible for several releases and its implementation
+  as unsafe)
+
+* The *type* attribute of :class:`objc.ObjCPointer` now starts with
+  :data:`objc._C_PTR` (that is, the *type* attribute is the encoded type
+  of the pointer, instead of the encoded type of the pointed-to value).
 
 Version 2.6
 -----------

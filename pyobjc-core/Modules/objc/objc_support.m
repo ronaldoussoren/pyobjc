@@ -1854,7 +1854,7 @@ pythonify_c_value(const char *type, void *datum)
             retobject = PyObjCPointerWrapper_ToPython(type, datum);
             if (retobject == NULL && !PyErr_Occurred()) {
                 retobject = (PyObject*)PyObjCPointer_New(
-                    *(void**) datum, type+1);
+                    *(void**) datum, type);
             }
         }
         break;

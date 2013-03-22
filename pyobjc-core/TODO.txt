@@ -211,6 +211,9 @@ Medium term
   module, otherwise core has the expose too much functionality
   (especially when enhancing the test suite)
 
+  Use Py_FindMethod for this:
+     PyObject* Py_FindMethod(PyMethodDef table[], PyObject *ob, char *name)
+
 * tests with blocks that return a large struct (stret calling convention)
 
 * Is it possible to implement pyobjc_unicode in Python?
@@ -227,3 +230,7 @@ Medium term
     In both cases check that the method can be called (both directly
     and through super)
 
+
+* JavsaScriptCore bindings need work (missing opaque pointer types, no tests, no examples, ...)
+
+* Add tests for objc.ObjCPointer (creating, introspection, accessing value, accessing pointer)

@@ -10,12 +10,18 @@ struct TestStructPointerStruct {
     int i1;
 };
 
+struct UnwrappedStruct {
+    int i1;
+    int i2;
+};
+
 static struct TestStructPointerStruct myGlobal = { 1 };
 
 @interface OC_TestStructPointer : NSObject
 {
 }
 +(struct TestStructPointerStruct*)returnPointerToStruct;
++(struct UnwrappedStruct*)returnUnwrapped;
 @end
 
 @implementation OC_TestStructPointer
@@ -23,6 +29,12 @@ static struct TestStructPointerStruct myGlobal = { 1 };
 {
     return &myGlobal;
 }
+
++(struct UnwrappedStruct*)returnUnwrapped
+{
+    return (struct UnwrappedStruct*)42;
+}
+
 @end
 
 

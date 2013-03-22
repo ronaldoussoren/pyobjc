@@ -17,11 +17,10 @@
 
 typedef struct
 {
-    PyObject_VAR_HEAD
+    PyObject_HEAD
 
     void *ptr;
     PyObject *type;
-    char contents[1];
 } PyObjCPointer;
 
 
@@ -42,50 +41,6 @@ PyObjCPointer_dealloc (PyObject* _self)
     Py_CLEAR (self->type);
     PyObject_Free((PyObject*)self);
 }
-
-PyDoc_STRVAR(PyObjCPointer_unpack_doc,
-    "Unpack the pointed value accordingly to its type.\n"
-    "obj.unpack() -> value");
-
-static PyObject *
-PyObjCPointer_unpack (PyObject* _self)
-{
-    PyObjCPointer* self = (PyObjCPointer*)_self;
-
-    if (PyErr_WarnEx(
-        PyExc_DeprecationWarning,
-            "Using ObjCPointer is deprecated, unpack will be removed in PyObjC 3.1",
-            1) < 0) {
-
-        return NULL;
-    }
-
-    if (self->ptr) {
-        const char *type = PyBytes_AS_STRING(self->type);
-
-        if (*type == _C_VOID) {
-            PyErr_SetString (PyObjCExc_Error,
-                "Cannot dereference a pointer to void");
-            return NULL;
-        } else {
-            return pythonify_c_value(type, self->ptr);
-        }
-    } else {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-}
-
-static PyMethodDef PyObjCPointer_methods[] =
-{
-    {
-        "unpack",
-        (PyCFunction)PyObjCPointer_unpack,
-        METH_NOARGS,
-        PyObjCPointer_unpack_doc
-    },
-    { 0, 0, 0, 0 }
-};
 
 static PyMemberDef PyObjCPointer_members[] = {
     {
@@ -110,11 +65,11 @@ PyTypeObject PyObjCPointer_Type =
     PyVarObject_HEAD_INIT(&PyType_Type, 0)
     .tp_name        = "PyObjCPointer",
     .tp_basicsize   = sizeof (PyObjCPointer),
-    .tp_itemsize    = sizeof (char),
+    .tp_itemsize    = 0,
     .tp_dealloc     = PyObjCPointer_dealloc,
+    .tp_getattro    = PyObject_GenericGetAttr,
     .tp_flags       = Py_TPFLAGS_DEFAULT,
     .tp_doc         = "Wrapper around a Objective-C Pointer",
-    .tp_methods     = PyObjCPointer_methods,
     .tp_members     = PyObjCPointer_members,
 };
 
@@ -123,6 +78,9 @@ PyObjCPointer_New(void *p, const char *t)
 {
     Py_ssize_t size = PyObjCRT_SizeOfType (t);
     const char *typeend = PyObjCRT_SkipTypeSpec (t);
+    while (isdigit(typeend[-1])) {
+        typeend --;
+    }
     PyObjCPointer *self;
 
     if (PyObjCPointer_RaiseException) {
@@ -139,18 +97,13 @@ PyObjCPointer_New(void *p, const char *t)
         return NULL;
     }
 
-    self = PyObject_NEW_VAR(PyObjCPointer, &PyObjCPointer_Type, size);
+    self = PyObject_NEW(PyObjCPointer, &PyObjCPointer_Type);
     if (self == NULL) {
         return NULL;
     }
 
     self->type = PyBytes_FromStringAndSize ((char *) t, typeend-t);
-
-    if (size && p) {
-        memcpy ((self->ptr = self->contents), p, size);
-    } else {
-        self->ptr = p;
-    }
+    self->ptr = p;
 
     return (PyObject*)self;
 }

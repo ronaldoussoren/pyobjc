@@ -83,7 +83,7 @@ struct options {
 /* Public properties */
 BOOL_PROP(verbose, PyObjC_Verbose, NO)
 BOOL_PROP(use_kvo, PyObjC_UseKVO, YES)
-BOOL_PROP(unknown_pointer_raises, PyObjCPointer_RaiseException, YES)
+BOOL_PROP(unknown_pointer_raises, PyObjCPointer_RaiseException, NO)
 
 #if PY_MAJOR_VERSION == 2
 BOOL_PROP(strbridge_enabled, PyObjC_StrBridgeEnabled, YES)

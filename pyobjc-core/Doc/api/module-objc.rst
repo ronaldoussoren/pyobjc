@@ -1532,7 +1532,3 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
    .. data:: pointerAsInteger
 
       An integer value with the raw pointer value.
-
-   .. method:: unpack()
-
-      Returns a python representation of the pointed-to value.

@@ -1882,6 +1882,9 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
+    if (PyType_Ready(&PyObjCPointer_Type) < 0) {
+        PyObjC_INITERROR();
+    }
     if (PyType_Ready(&PyObjCMetaClass_Type) < 0) {
         PyObjC_INITERROR();
     }
@@ -1975,6 +1978,9 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
+    if (PyDict_SetItemString(d, "ObjCPointer", (PyObject*)&PyObjCPointer_Type) < 0) {
+        PyObjC_INITERROR();
+    }
     if (PyDict_SetItemString(d, "objc_meta_class", (PyObject*)&PyObjCMetaClass_Type) < 0) {
         PyObjC_INITERROR();
     }
