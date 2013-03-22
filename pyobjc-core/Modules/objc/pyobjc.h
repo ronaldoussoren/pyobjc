@@ -105,6 +105,7 @@
 #include "options.h"
 #include "method-accessor.h"
 #include "ivar-accessor.h"
+#include "ctests.h"
 
 #define PYOBJC_BUILD
 #include "pyobjc-api.h"

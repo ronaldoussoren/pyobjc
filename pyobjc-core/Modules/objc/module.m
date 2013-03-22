@@ -2044,6 +2044,10 @@ PyObjC_MODULE_INIT(_objc)
     if (PyObjCIMP_SetUpMethodWrappers() < 0) {
         PyObjC_INITERROR();
     }
+    if (PyObjC_init_ctests(m) < 0) {
+        PyObjC_INITERROR();
+    }
+
 
 #if PY_MAJOR_VERSION == 2
     PyObjCStrBridgeWarning = PyErr_NewException("objc.PyObjCStrBridgeWarning", PyExc_DeprecationWarning, NULL);
