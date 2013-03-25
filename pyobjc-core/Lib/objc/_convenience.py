@@ -34,7 +34,6 @@ def addConvenienceForClass(classname, methods):
     """
     Add the list with methods to the class with the specified name
     """
-    # XXX: Need to be sightly smarter than this.
     if classname in CLASS_METHODS:
         CLASS_METHODS[classname] += tuple(methods)
 

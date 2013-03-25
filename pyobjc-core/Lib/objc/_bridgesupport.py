@@ -632,20 +632,6 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
         for class_name, sel_name, is_class in prs.meta:
             objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
 
-        for name, method_list in prs.informal_protocols:
-            proto = objc.informal_protocol(name, method_list)
-
-            # XXX: protocols submodule should be deprecated
-            if "protocols" not in globals:
-                mod_name = "%s.protocols"%(frameworkName,)
-                m = globals["protocols"] = type(objc)(mod_name)
-                sys.modules[mod_name] = m
-
-            else:
-                m = globals["protocols"]
-
-            setattr(m, name, proto)
-
         if prs.functions:
             objc.loadBundleFunctions(None, globals, prs.functions)
 
@@ -667,18 +653,10 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
 
 def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):
     try:
-        try:
-            objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
-        except objc.internal_error as e:
-            import warnings
-            warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
-    finally:
-        # Add formal protocols to the protocols submodule, for backward
-        # compatibility with earlier versions of PyObjC
-        if 'protocols' in globals:
-            for p in objc.protocolsForProcess():
-                setattr(globals['protocols'], p.__name__, p)
-
+        objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
+    except objc.internal_error as e:
+        import warnings
+        warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
 
 def safe_resource_exists(package, resource):
     try:

@@ -25,9 +25,7 @@ struct registry
 /* Dict mapping from signature-string to a 'struct registry' */
 static PyObject* signature_registry = NULL;
 
-/* Dict mapping from selector to a list of (Class, struct registry) tuples
- * XXX: Isn't this a registry (PyObjC_NewRegistry)?
- */
+/* Dict mapping from selector to a list of (Class, struct registry) tuples */
 static PyObject* special_registry  = NULL;
 
 /*

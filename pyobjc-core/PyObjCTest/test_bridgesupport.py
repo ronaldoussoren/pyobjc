@@ -1470,13 +1470,7 @@ class TestParseBridgeSupport (TestCase):
 
             from distutils.sysconfig import get_config_var
 
-            self.assertIn('protocols', module_globals)
-            m = module_globals.pop('protocols')
-            self.assertIsInstance(m, type(objc))
-            self.assertEqual(m.__name__, 'TestFramework.protocols')
-            self.assertEqual(m.protocol1, "<informal_protocol 'protocol1'>")
-            self.assertEqual(m.protocol2, "<informal_protocol 'protocol2'>")
-            self.assertIs(sys.modules['TestFramework.protocols'], m)
+            self.assertNotIn('protocols', module_globals)
             self.assertEqual(module_globals, {
                 "enum_value":   42,
                 "const_value":  "<constant 'const_value'>",
@@ -1604,10 +1598,7 @@ class TestInitFrameworkWrapper (TestCase):
                 self.assertEqual(g, update_globals)
                 self.assertEqual(calls, [('', g, 'TestFramework', None, None)])
 
-                self.assertNotEqual(len(g['protocols'].__dict__), 0)
-                for v in g['protocols'].__dict__.values():
-                    self.assertIsInstance(v, objc.formal_protocol)
-
+                self.assertEqual(len(g['protocols'].__dict__), 0)
 
             # 2. Run without problems, without 'protocols' in dictionary
             raise_exception = None
@@ -1636,18 +1627,14 @@ class TestInitFrameworkWrapper (TestCase):
             bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
             self.assertEqual(g, update_globals)
             self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
-            self.assertNotEqual(len(g['protocols'].__dict__), 0)
-            for v in g['protocols'].__dict__.values():
-                self.assertIsInstance(v, objc.formal_protocol)
+            self.assertEqual(len(g['protocols'].__dict__), 0)
 
             calls = []
             g = {}
             bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
             self.assertEqual(g, update_globals)
             self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
-            self.assertNotEqual(len(g['protocols'].__dict__), 0)
-            for v in g['protocols'].__dict__.values():
-                self.assertIsInstance(v, objc.formal_protocol)
+            self.assertEqual(len(g['protocols'].__dict__), 0)
 
 
     def test_calls_initwrappper(self):
@@ -2063,7 +2050,7 @@ class TestInitFrameworkWrapper (TestCase):
                 arch = '-i386'
             else:
                 arch = '-x86_64'
-        
+
         return # XXX
         p = subprocess.Popen([
             '/usr/bin/arch', arch,

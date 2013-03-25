@@ -207,11 +207,6 @@ Medium term
 * Improve documentation, both end-user documentation and documentation
   on how the bridge works.
 
-* tests with blocks that return a large struct (stret calling convention)
-
-* Is it possible to implement pyobjc_unicode in Python?
-  (not really: need to copy the data somehow)
-
 * Add some more tests for method resolution:
 
   - Add methods after object is first used from python:

@@ -358,6 +358,9 @@ Version 3.0
   :data:`objc._C_PTR` (that is, the *type* attribute is the encoded type
   of the pointer, instead of the encoded type of the pointed-to value).
 
+* Framework wrappers no longer have a 'protocols' submodule, use
+  :func:`objc.protocolNamed` to access a protocol.
+
 Version 2.6
 -----------
 
