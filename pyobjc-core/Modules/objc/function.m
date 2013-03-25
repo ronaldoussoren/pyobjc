@@ -131,10 +131,10 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     BOOL variadicAllArgs = NO;
 
     unsigned char* argbuf = NULL;
-    ffi_type* arglist[64];
-    void*     values[64];
-    void**      byref = NULL;
-    struct byref_attr* byref_attr = NULL;
+    ffi_type* arglist[MAX_ARGCOUNT];
+    void*     values[MAX_ARGCOUNT];
+    void*      byref[MAX_ARGCOUNT] = { 0 };
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = { {0, 0} };
     ffi_cif cif;
     ffi_cif* cifptr;
 
@@ -194,16 +194,6 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    if (variadicAllArgs) {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(self->methinfo)+PyTuple_Size(args), &byref, &byref_attr) < 0) {
-            goto error;
-        }
-    } else {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(self->methinfo), &byref, &byref_attr) < 0) {
-            goto error;
-        }
-    }
-
     cif_arg_count = PyObjCFFI_ParseArguments(
         self->methinfo, 0, args,
         align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type), sizeof(void*)),
@@ -245,13 +235,11 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo)+PyTuple_Size(args), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error;
         }
 
     } else {
         if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error;
         }
     }
@@ -261,16 +249,10 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
 error:
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
-            goto error;
-        }
+        PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr);
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
-            goto error;
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
     }
 
     if (argbuf) {

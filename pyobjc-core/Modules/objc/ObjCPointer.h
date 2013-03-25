@@ -11,7 +11,7 @@
 extern PyTypeObject PyObjCPointer_Type;
 #define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)
 
-extern PyObject* PyObjCPointer_New(void *ptr, const char *type);
-extern void* PyObjCPointer_Ptr(PyObject* object);
+extern PyObject* PyObjCPointer_New(void *ptr, const char *type) __attribute__((__nonnull__(2))) __attribute__((__warn_unused_result__));
+extern void* PyObjCPointer_Ptr(PyObject* object) __attribute__((__nonnull__(1)));
 
 #endif /* PyObjC_OBJC_POINTER_H */

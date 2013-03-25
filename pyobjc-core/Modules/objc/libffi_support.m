@@ -537,6 +537,11 @@ parse_printf_args(
     const char* format;
     PyObject* v;
 
+    if (byref == NULL || byref_attr == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Byref/byref_attr == NULL?");
+        return -1;
+    }
+
     if (PyBytes_Check(py_format)) {
         encoded = py_format;
         Py_INCREF(encoded);
@@ -978,6 +983,12 @@ static Py_ssize_t parse_varargs_array(
     Py_ssize_t curarg = Py_SIZE(methinfo)-1;
     Py_ssize_t maxarg = PyTuple_Size(argtuple);
     Py_ssize_t argSize;
+
+
+    if (byref == NULL) {
+        PyErr_SetString(PyExc_TypeError, "byref == NULL");
+        return -1;
+    }
 
     if (count != -1) {
         if (maxarg - curarg != count) {
@@ -2204,6 +2215,12 @@ PyObjCFFI_CountArguments(
 
     *byref_in_count = *byref_out_count = *plain_count = 0;
 
+    if (methinfo->shortcut_signature) {
+        *argbuf_len += methinfo->shortcut_argbuf_size;
+        *variadicAllArgs = NO;
+        return 0;
+    }
+
     for (i = argOffset; i < Py_SIZE(methinfo); i++) {
         const char *argtype = methinfo->argtype[i].type;
 
@@ -2440,12 +2457,17 @@ PyObjCFFI_ParseArguments(
 
             } else if (argument == PyObjC_NULL) {
                 if (methinfo->argtype[i].allowNULL) {
+                    if (byref == NULL) {
+                        PyErr_SetString(PyExc_TypeError, "byref == NULL");
+                        error = -1;
+                    } else {
 
-                    byref[i] = NULL;
-                    arglist[i] = &ffi_type_pointer;
-                    values[i] = byref + i;
+                        byref[i] = NULL;
+                        arglist[i] = &ffi_type_pointer;
+                        values[i] = byref + i;
 
-                    error = 0;
+                        error = 0;
+                    }
 
                 } else {
                     PyErr_Format(
@@ -2492,6 +2514,7 @@ PyObjCFFI_ParseArguments(
                 argbuf_cur = align(argbuf_cur,
                     PyObjCRT_AlignOfType(resttype));
                 sz = PyObjCRT_SizeOfType(resttype);
+                /* XXX */
                 byref[i] = PyMem_Malloc(sz);
                 arg = NULL;
 
@@ -3680,30 +3703,6 @@ error_cleanup:
     return NULL;
 }
 
-int PyObjCFFI_AllocByRef(Py_ssize_t argcount, void*** byref, struct byref_attr** byref_attr)
-{
-    *byref = NULL; *byref_attr = NULL;
-
-    *byref = PyMem_Malloc(sizeof(void*) * argcount);
-    if (*byref == NULL) {
-        PyErr_NoMemory();
-        return -1;
-    }
-    memset(*byref, 0, sizeof(void*) * argcount);
-
-    *byref_attr = PyMem_Malloc(sizeof(struct byref_attr) * argcount);
-    if (*byref_attr == NULL) {
-        free(*byref);
-        *byref = NULL;
-
-        PyErr_NoMemory();
-        return -1;
-    }
-    memset(*byref_attr, 0, sizeof(struct byref_attr) * argcount);
-
-    return 0;
-}
-
 int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
 {
     Py_ssize_t i;
@@ -3721,11 +3720,6 @@ int PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* by
                 PyMem_Free(byref[i]); byref[i] = NULL;
             }
         }
-        PyMem_Free(byref);
-    }
-
-    if (byref_attr) {
-        PyMem_Free(byref_attr);
     }
 
     return 0;
@@ -3781,9 +3775,6 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     Py_ssize_t byref_in_count = 0;
     Py_ssize_t byref_out_count = 0;
     Py_ssize_t plain_count = 0;
-    void** byref = NULL; /* offset for arguments in argbuf */
-    struct byref_attr* byref_attr = NULL;
-    const char*       rettype;
     PyObjCMethodSignature*  methinfo;
     PyObjCNativeSelector* meth = (PyObjCNativeSelector*)aMeth;
     PyObject* objc_result = NULL;
@@ -3792,8 +3783,10 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     struct objc_super super;
     struct objc_super* superPtr;
     ffi_cif cif;
-    ffi_type* arglist[128]; /* XX: Magic constant */
-    void* values[128];
+    ffi_type* arglist[MAX_ARGCOUNT];
+    void* values[MAX_ARGCOUNT];
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = { {0, 0} };
+    void* byref[MAX_ARGCOUNT] = { 0 };
     Py_ssize_t r;
     void* msgResult;
     Py_ssize_t resultSize;
@@ -3802,6 +3795,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     SEL theSel;
     int isUninitialized;
     BOOL variadicAllArgs = NO;
+    const char* rettype;
 
     if (PyObjCIMP_Check(aMeth)) {
         methinfo = PyObjCIMP_GetSignature(aMeth);
@@ -3876,12 +3870,17 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
             goto error_cleanup;
         }
 
-        if (PyTuple_Size(args) > 127) {
-            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", 127, PyTuple_Size(args));
+        if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
+            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
             goto error_cleanup;
         }
 
     } else if (PyTuple_Size(args) != Py_SIZE(methinfo) - 2) {
+        if (Py_SIZE(methinfo) > MAX_ARGCOUNT) {
+            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
+            goto error_cleanup;
+        }
+
 
         PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
             Py_SIZE(methinfo) - 2, PyTuple_Size(args));
@@ -3892,18 +3891,6 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
     if (argbuf == 0) {
         PyErr_NoMemory();
         goto error_cleanup;
-    }
-
-    if (variadicAllArgs) {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(methinfo)+PyTuple_Size(args),
-                    &byref, &byref_attr) < 0) {
-            goto error_cleanup;
-        }
-
-    } else {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(methinfo), &byref, &byref_attr) < 0) {
-            goto error_cleanup;
-        }
     }
 
     /* Set 'self' argument, for class methods we use the class */
@@ -3946,8 +3933,6 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
             }
         }
     }
-    /* XXX: Ronald: why the XXX? */
-
 
     useStret = 0;
 
@@ -4044,13 +4029,11 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo)+PyTuple_Size(args), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error_cleanup;
         }
 
     } else {
         if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error_cleanup;
         }
     }
@@ -4072,17 +4055,13 @@ error_cleanup:
         result = NULL;
     }
 
-    if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
-            goto error_cleanup;
-        }
+    if (methinfo->shortcut_signature) {
+        /* pass */
+    } else if (variadicAllArgs) {
+        PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr);
 
     } else {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
-            goto error_cleanup;
-        }
+        PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);
     }
 
     if (argbuf) {

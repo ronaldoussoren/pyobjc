@@ -139,10 +139,10 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     BOOL variadicAllArgs = NO;
     int r;
     unsigned char* argbuf = NULL;
-    ffi_type* arglist[64];
-    void* values[64];
-    void** byref = NULL;
-    struct byref_attr* byref_attr = NULL;
+    ffi_type* arglist[MAX_ARGCOUNT];
+    void* values[MAX_ARGCOUNT];
+    void* byref[MAX_ARGCOUNT] =  { 0 };
+    struct byref_attr byref_attr[MAX_ARGCOUNT] =  { {0, 0} };
     ffi_cif cif;
     PyObject* retval;
 
@@ -204,9 +204,19 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
             return NULL;
         }
 
+        if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
+            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
+            return NULL;
+        }
+
     } else if (PyTuple_Size(args) != Py_SIZE(signature) - 1) {
+        if (Py_SIZE(signature) > MAX_ARGCOUNT) {
+            PyErr_Format(PyExc_TypeError, "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T "d arguments", MAX_ARGCOUNT, PyTuple_Size(args));
+            return NULL;
+        }
+
         PyErr_Format(PyExc_TypeError, "Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-        Py_SIZE(signature), PyTuple_Size(args));
+            Py_SIZE(signature), PyTuple_Size(args));
         return NULL;
     }
 
@@ -215,18 +225,6 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         PyErr_NoMemory();
         return NULL;
     }
-
-    if (variadicAllArgs) {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(signature) + PyTuple_Size(args), &byref, &byref_attr) < 0) {
-            goto error;
-        }
-
-    } else {
-        if (PyObjCFFI_AllocByRef(Py_SIZE(signature), &byref, &byref_attr) < 0) {
-            goto error;
-        }
-    }
-
 
     cif_arg_count = PyObjCFFI_ParseArguments(
         signature, 1, args,
@@ -277,13 +275,11 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(signature)+PyTuple_Size(args), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error;
         }
 
     } else {
         if (PyObjCFFI_FreeByRef(Py_SIZE(signature), byref, byref_attr) < 0) {
-            byref = NULL; byref_attr = NULL;
             goto error;
         }
     }

@@ -61,13 +61,13 @@ extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t coun
 extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
 
 
-extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type);
-extern Py_ssize_t PyObjCRT_SizeOfType(const char *type);
-extern Py_ssize_t PyObjCRT_AlignOfType(const char *type);
+extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t PyObjCRT_SizeOfType(const char *type) __attribute__((__pure__));
+extern Py_ssize_t PyObjCRT_AlignOfType(const char *type) __attribute__((__pure__));
 extern const char *PyObjCRT_SkipTypeSpec (const char *type);
 extern const char* PyObjCRT_NextField(const char *type);
 extern const char* PyObjCRT_SkipTypeQualifiers (const char* type);
-extern Py_ssize_t PyObjCRT_AlignedSize (const char *type);
+extern Py_ssize_t PyObjCRT_AlignedSize (const char *type) __attribute__((__pure__));
 
 
 extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
@@ -92,10 +92,7 @@ PyObjC_PythonToId(PyObject* value)
 static inline PyObject*
 PyObjC_IdToPython(id value)
 {
-    PyObject* res;
-
-    res = pythonify_c_value(@encode(id), &value);
-    return res;
+    return pythonify_c_value(@encode(id), &value);
 }
 
 #endif /* _objc_support_H */

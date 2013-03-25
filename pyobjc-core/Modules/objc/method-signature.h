@@ -39,10 +39,12 @@ struct _PyObjCMethodSignature {
     PyObject_VAR_HEAD
 
     const char* signature;
-    int arrayArg;
     unsigned char variadic:1;
     unsigned char null_terminated_array:1;
     unsigned char free_result:1;
+    unsigned char shortcut_signature:1;
+    unsigned int shortcut_argbuf_size:12;
+    int16_t arrayArg;
     PyObject* suggestion;
     struct _PyObjC_ArgDescr rettype;
     struct _PyObjC_ArgDescr argtype[1];

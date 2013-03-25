@@ -2,6 +2,7 @@
 
 static PyObjCMethodSignature* new_methodsignature(const char*);
 
+
 static PyObject*
 sig_str(PyObject* _self)
 {
@@ -57,6 +58,51 @@ PyTypeObject PyObjCMethodSignature_Type = {
     .tp_flags       = Py_TPFLAGS_DEFAULT,
 };
 
+static void determine_if_shortcut(PyObjCMethodSignature* methinfo)
+{
+    /* TODO:
+     * Set shortcut_signature and shortcut_argbuf_size if appropriate,
+     * clear otherwise
+     *
+     * These should be set if all arguments are basic types (no functions, no byreference, ...)
+     * and method parts of the function setup code can be skipped.
+     *
+     * Note that shortcut_argbuf_size has a limited size, this will also not work when
+     * there are a lot, or large, arguments/return values.
+     */
+    Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
+    BOOL variadic_args = NO;
+
+    methinfo->shortcut_signature = NO;
+    methinfo->shortcut_argbuf_size = 0;
+
+    if (methinfo->variadic) {
+        return;
+    }
+
+    int r = PyObjCFFI_CountArguments(
+            methinfo, 0, &byref_in_count, &byref_out_count, &plain_count, &argbuf_len, &variadic_args);
+    if (r == -1) {
+        PyErr_Clear();
+        return;
+    }
+
+    if (byref_in_count || byref_out_count) {
+        /* TODO: simple pass-by-reference objects args should work (NSError** arguments) */
+        return;
+    }
+
+    if (argbuf_len >= 1 << 12) {
+        return;
+    }
+
+    if (variadic_args) {
+        return;
+    }
+
+    methinfo->shortcut_signature = YES;
+    methinfo->shortcut_argbuf_size = (unsigned int)argbuf_len;
+}
 
 static PyObjCMethodSignature*
 new_methodsignature(const char* signature)
@@ -84,6 +130,8 @@ new_methodsignature(const char* signature)
     retval->suggestion = NULL;
     retval->variadic = NO;
     retval->free_result = NO;
+    retval->shortcut_signature = NO;
+    retval->shortcut_argbuf_size = 0;
     retval->null_terminated_array = NO;
     retval->signature = PyObjCUtil_Strdup(signature);
     if (retval->signature == NULL) {
@@ -129,6 +177,7 @@ new_methodsignature(const char* signature)
     }
     Py_SIZE(retval) = nargs;
 
+    determine_if_shortcut(retval);
     return retval;
 }
 
@@ -626,6 +675,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
             }
             Py_XDECREF(av);
         }
+
     }
 
 
@@ -660,7 +710,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
     }
 
     if (!metadata) {
-        return methinfo;
+        goto done;
     }
 
 
@@ -702,7 +752,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
                     && (methinfo->arrayArg == -1)) {
             for (i = 0; i < Py_SIZE(methinfo); i++) {
                 if (methinfo->argtype[i].printfFormat) {
-                    return methinfo;
+                    goto done;
                 }
             }
 
@@ -717,6 +767,8 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
         }
     }
 
+done:
+    determine_if_shortcut(methinfo);
     return methinfo;
 }
 
