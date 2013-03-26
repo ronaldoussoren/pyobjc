@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax.  All Rights Reserved
- * Copyright (2) 2003 Ronald Oussoren
+ * Copyright (c) 2003-2013 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all

@@ -9,6 +9,8 @@
 #ifndef PyObjC_PROXY_REGISTRY_H
 #define PyObjC_PROXY_REGISTRY_H
 
+extern int PyObjC_weakref_proxy_registry;
+
 extern int PyObjC_InitProxyRegistry(void);
 
 extern int PyObjC_RegisterPythonProxy(id original, PyObject* proxy);

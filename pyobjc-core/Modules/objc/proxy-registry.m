@@ -3,6 +3,13 @@
 static NSMapTable* python_proxies = NULL;
 static NSMapTable* objc_proxies = NULL;
 
+/*
+ * Iff true the python->objc proxy registry uses a zero-ing weakref
+ * for the value, and hence it is not necessary to get the Python
+ * GIL in -release for the OC_Python* classes
+ */
+int PyObjC_weakref_proxy_registry = 0;
+
 int
 PyObjC_InitProxyRegistry(void)
 {

@@ -52,15 +52,7 @@
      * That's why we need to grab the GIL here (getting it in dealloc is
      * too late, we'd already be dead).
      */
-    /* FIXME: it should be possible to grab the lock only when really
-     * needed, but the test below isn't good enough. Be heavy handed to
-     * make sure we're right, rather than crashing sometimes anyway.
-     */
-    /* FIXME2: in rare occasions we're trying to acquire the GIL during
-     * shutdown and if we're very unlucky this can happen after the
-     * GILState machinery has shut down...
-     */
-    /* FIXME3: Should switch to __weak on OSX 10.7 or later, that should
+    /* FIXME: Should switch to __weak on OSX 10.7 or later, that should
      * fix this issue without a performance penalty.
      */
     PyObjC_BEGIN_WITH_GIL
