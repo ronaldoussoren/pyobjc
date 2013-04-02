@@ -1318,9 +1318,22 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
 
 PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
-    Class cls = objc_metaclass_locate(base);
-    Method m = class_getClassMethod(cls, sel);
+    Class cls;
+    Method m;
     PyObject* dict = ((PyTypeObject *)base)->tp_dict;
+
+    PyObjC_DURING
+        cls = objc_metaclass_locate(base);
+        m = class_getClassMethod(cls, sel);
+
+    PyObjC_HANDLER
+        PyObjCErr_FromObjC(localException);
+        m = nil;
+
+    PyObjC_ENDHANDLER
+    if (m == nil && PyErr_Occurred()) {
+        return NULL;
+    }
 
     if (PyObjCClass_HiddenSelector(PyObjCClass_ClassForMetaClass(base), sel, YES)) {
         return NULL;
@@ -1659,10 +1672,6 @@ class_getattro(PyObject* self, PyObject* name)
     }
 
     if (descr == NULL) {
-        /* XXX: Should this block be here or above _type_lookup_instance. The latter
-         *      is more correct, but more likely to be inefficient (but how often are
-         *      instance methods accessed through the class anyway?
-         */
         descr = _type_lookup_harder(Py_TYPE(self), name
 #ifndef PyObjC_FAST_UNICODE_ASCII
             , name_bytes
