@@ -87,7 +87,7 @@ PyTypeObject PyObjCPointer_Type =
 	/* methods */
 	PyObjCPointer_dealloc,			/* tp_dealloc */
 	0,					/* tp_print */
-	PyObject_GenericGetAttr,                /* tp_getattr */
+	0,                                      /* tp_getattr */
 	0,					/* tp_setattr */
 	0,					/* tp_compare */
 	0,					/* tp_repr */
@@ -97,7 +97,7 @@ PyTypeObject PyObjCPointer_Type =
 	0,					/* tp_hash */
 	0,					/* tp_call */
 	0,					/* tp_str */
-	0,					/* tp_getattro */
+	PyObject_GenericGetAttr,				/* tp_getattro */
 	0,					/* tp_setattro */
 	0,					/* tp_as_buffer */
 	Py_TPFLAGS_DEFAULT,			/* tp_flags */
