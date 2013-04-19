@@ -359,6 +359,7 @@ PyObjCString_FromFormatV(const char* format, va_list vargs)
 }
 
 
+PyObject*
 PyObjCErr_Format(PyObject* exception, const char* format, ...)
 {
     /* This is an enhanced version of PyErr_Format for python 2.x that

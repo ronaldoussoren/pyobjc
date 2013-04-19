@@ -3,6 +3,18 @@
 
 /*
  *
+ * Start of compiler definitions
+ *
+ */
+#ifndef __has_feature
+#  define __has_feature(x) 0
+#endif
+#ifndef __has_extension
+#  define __has_extension(x) __has_feature(x)
+#endif
+
+/*
+ *
  * Start of Cocoa definitions
  *
  *

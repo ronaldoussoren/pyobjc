@@ -111,6 +111,10 @@
 #include "pyobjc-api.h"
 #undef PyObjC_BUILD
 
+#if __has_feature(objc_arc_weak)
+#  error "It is not possible to compile PyObjC with ARC enabled"
+#endif
+
 /*
  * XXX: All definitions below here should be moved to different/new
  * headers
@@ -123,6 +127,9 @@ extern PyObject* PyObjC_callable_docstr_get(PyObject* callable, void* closure);
 extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure);
 #endif
 
+#if PY_MAJOR_VERSION == 2
+extern PyObject* PyObjCStrBridgeWarning;
+#endif
 
 
 #ifdef PyObjC_DEBUG

@@ -5,7 +5,11 @@
 extern PyTypeObject PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj) PyObject_TypeCheck(obj, &PyObjCMethodSignature_Type)
 
-enum _PyObjC_PointerType {
+enum _PyObjC_PointerType
+#if __has_feature(objc_fixed_enum)
+	: unsigned char
+#endif /* __has_feature(objc_fixed_enum) */
+{
     PyObjC_kPointerPlain = 0,
     PyObjC_kNullTerminatedArray = 1,
     PyObjC_kArrayCountInArg = 2,
@@ -22,17 +26,17 @@ struct _PyObjC_ArgDescr {
     const char* type;
     PyObjCMethodSignature* callable;
 
-    enum _PyObjC_PointerType ptrType;
+    const char* sel_type;
     int16_t arrayArg;
     int16_t arrayArgOut;
-    const char* sel_type;
-    BOOL allowNULL:1;
-    BOOL typeOverride:1;
-    BOOL arraySizeInRetval:1;
-    BOOL printfFormat:1;
-    BOOL alreadyRetained:1;
-    BOOL alreadyCFRetained:1;
-    BOOL callableRetained:1; /* False iff the closure can be cleaned up after the call */
+    enum _PyObjC_PointerType ptrType:3;
+    unsigned int allowNULL:1;
+    unsigned int typeOverride:1;
+    unsigned int arraySizeInRetval:1;
+    unsigned int printfFormat:1;
+    unsigned int alreadyRetained:1;
+    unsigned int alreadyCFRetained:1;
+    unsigned int callableRetained:1; /* False iff the closure can be cleaned up after the call */
 };
 
 struct _PyObjCMethodSignature {
