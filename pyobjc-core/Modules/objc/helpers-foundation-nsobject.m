@@ -3,6 +3,117 @@
  */
 #include "pyobjc.h"
 
+/* Temporary code: used to get a baseline for attempts to reduce the overhead
+ * of calling ObjC methods. This direct call of the description should be as
+ * close to optimal as we'll be able to get the generic code.
+ *
+ * First tests appear to indicate that there are significant improvements on
+ * the table (20% to 30% change in method call overhead)
+ */
+#undef PyObjC_EXPLICT_DESCRIPTION_HELPER
+
+#ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
+static PyObject*
+call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
+{
+    id result = nil;
+    struct objc_super spr;
+    IMP anIMP;
+    NSObject* anObject;
+    SEL aSel;
+
+    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
+        return NULL;
+    }
+
+    if (unlikely(PyObjCIMP_Check(method))) {
+        anIMP = PyObjCIMP_GetIMP(method);
+        anObject = PyObjCObject_GetObject(self);
+        aSel = PyObjCIMP_GetSelector(method);
+
+        PyObjC_DURING
+            result = anIMP(anObject, aSel);
+
+        PyObjC_HANDLER
+            PyObjCErr_FromObjC(localException);
+            result = nil;
+
+        PyObjC_ENDHANDLER;
+
+    } else {
+        objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
+        objc_superSetClass(spr, PyObjCSelector_GetClass(method));
+        aSel = PyObjCSelector_GetSelector(method);
+
+        PyObjC_DURING
+            result = objc_msgSendSuper(&spr, aSel);
+
+        PyObjC_HANDLER
+            PyObjCErr_FromObjC(localException);
+            result = nil;
+
+        PyObjC_ENDHANDLER;
+    }
+
+    if (unlikely(result == nil && PyErr_Occurred())) {
+        return NULL;
+    }
+
+    return PyObjCObject_New(result, 0, YES);
+}
+
+static void
+imp_NSObject_description(
+    ffi_cif* cif __attribute__((__unused__)),
+    void* resp,
+    void** args __attribute__((__unused__)),
+    void* callable)
+{
+    int err;
+    PyObject* arglist = NULL;
+    PyObject* v = NULL;
+    PyObject* result = NULL;
+
+    PyObjC_BEGIN_WITH_GIL
+
+        arglist = PyTuple_New(1);
+        if (unlikely(arglist == NULL)) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        v = PyObjC_IdToPython(*(id*)args[0]);
+        if (unlikely(v == NULL)) {
+            Py_DECREF(arglist);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        v = PyObjC_AdjustSelf(v);
+        if (unlikely(v == NULL)) {
+            Py_DECREF(arglist);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        PyTuple_SET_ITEM(arglist, 0, v);
+        v = NULL;
+
+        result = PyObject_Call((PyObject*)callable, arglist, NULL);
+        if (unlikely(result == NULL)) {
+            Py_DECREF(arglist);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        Py_DECREF(arglist);
+
+        err = depythonify_c_value(@encode(id), result, resp);
+        Py_DECREF(result);
+        if (unlikely(err == -1)) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+    PyObjC_END_WITH_GIL
+}
+
+#endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
+
 static PyObject*
 call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
@@ -429,6 +540,15 @@ int
 PyObjC_setup_nsobject(void)
 {
     int r;
+
+#ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
+    r = PyObjC_RegisterMethodMapping(
+        objc_lookUpClass("NSObject"),
+        @selector(description),
+        call_NSObject_description,
+        imp_NSObject_description);
+    if (r != 0) return r;
+#endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
 
     r = PyObjC_RegisterMethodMapping(
         objc_lookUpClass("NSObject"),

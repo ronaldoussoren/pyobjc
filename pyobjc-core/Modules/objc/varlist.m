@@ -303,24 +303,25 @@ object_typestr_get(PyObject* self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef object_getset[] = {
     {
-        "__typestr__",
-        object_typestr_get,
-        0,
-        "type encoding for elements of the array",
-        0
+        .name   = "__typestr__",
+        .get    = object_typestr_get,
+        .doc    = "type encoding for elements of the array",
     },
-    { 0, 0, 0, 0, 0}
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 static PyMethodDef object_methods[] = {
-        {
-        "as_tuple",
-        (PyCFunction)object_as_tuple,
-        METH_VARARGS|METH_KEYWORDS,
-        object_as_tuple_doc
+    {
+        .ml_name    = "as_tuple",
+        .ml_meth    = (PyCFunction)object_as_tuple,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = object_as_tuple_doc
     },
-
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 PyTypeObject PyObjC_VarList_Type = {

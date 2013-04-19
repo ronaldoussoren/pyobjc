@@ -2134,44 +2134,37 @@ cls_set_useKVO(PyObject* self, PyObject* newVal, void* closure __attribute__((__
 
 static PyGetSetDef class_getset[] = {
     {
-        "pyobjc_classMethods",
-        cls_get_classMethods,
-        NULL,
-        cls_get_classMethods_doc,
-        0
+        .name   = "pyobjc_classMethods",
+        .get    = cls_get_classMethods,
+        .doc    = cls_get_classMethods_doc,
     },
     {
-        "pyobjc_instanceMethods",
-        cls_get_instanceMethods,
-        NULL,
-        cls_get_instanceMethods_doc,
-        0
+        .name   = "pyobjc_instanceMethods",
+        .get    = cls_get_instanceMethods,
+        .doc    = cls_get_instanceMethods_doc,
     },
     {
-        "__version__",
-        cls_get_version,
-        cls_set_version,
-        cls_version_doc,
-        0
+        .name   = "__version__",
+        .get    = cls_get_version,
+        .set    = cls_set_version,
+        .doc    = cls_version_doc,
     },
     {
-        "__useKVO__",
-        cls_get_useKVO,
-        cls_set_useKVO,
-        "Use KVO notifications when setting attributes from Python",
-        0
+        .name   = "__useKVO__",
+        .get    = cls_get_useKVO,
+        .set    = cls_set_useKVO,
+        .doc    = "Use KVO notifications when setting attributes from Python",
     },
     {
         /* Access __name__ through a property: Objective-C name
          * might change due to posing.
          */
-        "__name__",
-        cls_get__name__,
-        NULL,
-        NULL,
-        0
+        .name   = "__name__",
+        .get    = cls_get__name__,
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 static PyObject*
@@ -2234,32 +2227,26 @@ meth_dir(PyObject* self)
 
 static PyMethodDef metaclass_methods[] = {
     {
-        "__dir__",
-        (PyCFunction)metaclass_dir,
-        METH_NOARGS,
-        "dir() hook, don't call directly"
+        .ml_name    = "__dir__",
+        .ml_meth    = (PyCFunction)metaclass_dir,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "dir() hook, don't call directly"
     },
     {
-        NULL,
-        NULL,
-        0,
-        NULL
+        .ml_name    = NULL /* SENTINEL */
     }
 };
 
 
 static PyMethodDef class_methods[] = {
     {
-        "__dir__",
-        (PyCFunction)meth_dir,
-        METH_NOARGS,
-        "dir() hook, don't call directly"
+        .ml_name    = "__dir__",
+        .ml_meth    = (PyCFunction)meth_dir,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "dir() hook, don't call directly"
     },
     {
-        NULL,
-        NULL,
-        0,
-        NULL
+        .ml_name    = NULL /* SENTINEL */
     }
 };
 

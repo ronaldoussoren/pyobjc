@@ -303,14 +303,13 @@ static char* keywords[] = { "name", "class_dict", "instance_method_list", "class
 
 static PyMethodDef ivar_methods[] = {
     {
-        "__pyobjc_class_setup__",
-        (PyCFunction)ivar_class_setup,
-        METH_VARARGS|METH_KEYWORDS,
-        NULL
+        .ml_name    = "__pyobjc_class_setup__",
+        .ml_meth    = (PyCFunction)ivar_class_setup,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
     },
 
     {
-        NULL, NULL, 0, NULL
+        .ml_name    = NULL /* SENTINEL */
     }
 };
 
@@ -375,34 +374,28 @@ ivar_get_isSlot(PyObject* _self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef ivar_getset[] = {
     {
-        "__typestr__",
-        ivar_get_typestr,
-        0,
-        ivar_typestr_doc,
-        0
+        .name   = "__typestr__",
+        .get    = ivar_get_typestr,
+        .doc    = ivar_typestr_doc,
     },
     {
-        "__name__",
-        ivar_get_name,
-        0,
-        ivar_name_doc,
-        0
+        .name   = "__name__",
+        .get    = ivar_get_name,
+        .doc    = ivar_name_doc,
     },
     {
-        "__isOutlet__",
-        ivar_get_isOutlet,
-        0,
-        ivar_isOutlet_doc,
-        0
+        .name   = "__isOutlet__",
+        .get    = ivar_get_isOutlet,
+        .doc    = ivar_isOutlet_doc,
     },
     {
-        "__isSlot__",
-        ivar_get_isSlot,
-        0,
-        ivar_isSlot_doc,
-        0
+        .name   = "__isSlot__",
+        .get    = ivar_get_isSlot,
+        .doc    = ivar_isSlot_doc,
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 

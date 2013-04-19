@@ -1186,9 +1186,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
             if (userdata->argCount == Py_SIZE(methinfo)-1) {
                 /* Python method has parameters for the output
                  * arguments as well, pass a placeholder value.
-                 *
-                 * XXX: For some types of arguments we could
-                 * well pass in a buffer/array.array-style object!
                  */
                 if (*(void**)args[i] == NULL) {
                     v = PyObjC_NULL;
@@ -1203,7 +1200,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
             break;
 
         case _C_CHARPTR:
-             /* XXX: Not quite happy about this, why special case 'char*' but not 'int*' (both without in/out/inout markup) */
             if (*(void**)args[i] == NULL) {
                 v = PyObjC_NULL;
                 Py_INCREF(v);
@@ -2514,7 +2510,6 @@ PyObjCFFI_ParseArguments(
                 argbuf_cur = align(argbuf_cur,
                     PyObjCRT_AlignOfType(resttype));
                 sz = PyObjCRT_SizeOfType(resttype);
-                /* XXX */
                 byref[i] = PyMem_Malloc(sz);
                 arg = NULL;
 
@@ -2599,7 +2594,7 @@ PyObjCFFI_ParseArguments(
         } else {
             /* Encode argument, maybe after allocating space */
 
-            if (argtype[0] == _C_OUT) argtype ++; /* XXX: is this correct ???? */
+            if (argtype[0] == _C_OUT) argtype ++;
 
             argument = PyTuple_GET_ITEM (args, py_arg);
             switch (*argtype) {
@@ -4203,7 +4198,7 @@ PyObjCFFI_FreeClosure(IMP closure)
     cl = (ffi_closure*)closure;
     retval = cl->user_data;
     PyObjCFFI_FreeCIF(cl->cif);
-    PyObjC_free_closure(cl); /* XXX: error handling */
+    PyObjC_free_closure(cl);
 
     return retval;
 }

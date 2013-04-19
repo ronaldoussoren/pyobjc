@@ -665,8 +665,6 @@ code_compatible(char array_code, char type_code)
  * The pythonList should either be a python sequence with appropriate entries,
  * an array.array whose element-types match the element-types of the
  * 'elementType' or an appropriatly typed and shaped numeric array.
- *
- * XXX: Numeric arrays are not yet supported.
  */
 int
 PyObjC_PythonToCArray(
@@ -885,7 +883,6 @@ PyObjC_PythonToCArray(
          * The array must be large enough and  mustn't contain holes
          * in the fragment that gets used by us.
          */
-
     }
 
 #endif

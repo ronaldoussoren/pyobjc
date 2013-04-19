@@ -365,6 +365,8 @@ def _fixup_compiler():
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
         _fixup_compiler()
+        CFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer',])
+        OBJC_LDFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer',])
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
@@ -465,8 +467,8 @@ if 1:
     for k in vars: # XXX
         if isinstance(vars[k], str) and '-O2' in vars[k]:
             vars[k] = vars[k].replace('-O2', '-O4')
-        #elif isinstance(vars[k], str) and '-O3' in vars[k]:
-        #    vars[k] = vars[k].replace('-O3', '-O4')
+        elif isinstance(vars[k], str) and '-O3' in vars[k]:
+            vars[k] = vars[k].replace('-O3', '-O4')
 
 OBJC_LDFLAGS.append("-fvisibility=hidden")
 

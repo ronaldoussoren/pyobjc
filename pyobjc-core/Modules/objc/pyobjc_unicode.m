@@ -111,18 +111,19 @@ error:
 
 static PyMethodDef class_methods[] = {
     {
-      "nsstring",
-      (PyCFunction)meth_nsstring,
-      METH_NOARGS,
-      "directly access NSString instance"
+        .ml_name    = "nsstring",
+        .ml_meth    = (PyCFunction)meth_nsstring,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "directly access NSString instance"
     },
     {
-      "__reduce__",
-      (PyCFunction)meth_reduce,
-      METH_NOARGS,
-      "Used for pickling"
+        .ml_name    = "__reduce__",
+        .ml_meth    = (PyCFunction)meth_reduce,
+        .ml_flags   = METH_NOARGS,
     },
-    { 0, 0, 0, 0 } /* sentinel */
+    {
+        .ml_name    = NULL  /* SENTINEL */
+    }
 };
 
 static PyObject*
@@ -132,16 +133,12 @@ nsstring_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unu
 
 static PyGetSetDef nsstring_getsetters[] = {
     {
-        "__pyobjc_object__",
-        (getter)nsstring_get__pyobjc_object__, NULL,
-        "raw NSString instance",
-        NULL
+        .name   = "__pyobjc_object__",
+        .get    = (getter)nsstring_get__pyobjc_object__,
+        .doc    = "raw NSString instance",
     },
     {
-        NULL,
-        NULL, NULL,
-        NULL,
-        NULL
+        .name   = NULL /* SENTINEL */
     }
 };
 

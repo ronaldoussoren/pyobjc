@@ -33,22 +33,22 @@ extern void PyObjC_FreeCArray(int, void*);
 extern int PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*, PyObject**);
 extern PyObject* PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
 extern PyObject* PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t, bool already_retained, bool already_cfretained);
-extern int PyObjC_IsPythonKeyword(const char* word);
+extern int PyObjC_IsPythonKeyword(const char* word) __attribute__((__pure__));
 
 extern int PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen);
 
 extern int PyObjCObject_Convert(PyObject* object, void* pvar);
 extern int PyObjCClass_Convert(PyObject* object, void* pvar);
 
-extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string);
-extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n);
+extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string) __attribute__((__pure__));
+extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n) __attribute__((__pure__));
 
 extern PyObject* PyObjC_ImportName(const char* name);
 
 extern PyObject* PyObjC_AdjustSelf(PyObject* object);
 
 extern PyObject* PyObjC_FindSELInDict(PyObject*, SEL);
-extern int PyObjCRT_SignaturesEqual(const char*, const char*);
+extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__pure__));
 
 extern char* PyObjC_SELToPythonName(SEL, char*, size_t);
 

@@ -498,12 +498,13 @@ obj_dir(PyObject* self)
 
 static PyMethodDef obj_methods[] = {
     {
-        "__dir__",
-        (PyCFunction)obj_dir,
-        METH_NOARGS,
-        0
-        },
-    { 0, 0, 0, 0 }
+        .ml_name    = "__dir__",
+        .ml_meth    = (PyCFunction)obj_dir,
+        .ml_flags   = METH_NOARGS,
+    },
+    {
+        .ml_name = NULL /* SENTINEL */
+    }
 };
 
 PyTypeObject PyObjCMethodAccessor_Type = {

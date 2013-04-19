@@ -1693,111 +1693,271 @@ block_signature(PyObject* mod __attribute__((__unused__)), PyObject* block)
 
 static PyMethodDef mod_methods[] = {
     {
-        "propertiesForClass",
-          (PyCFunction)mod_propertiesForClass,
-        METH_O,
-        "Return information about properties from the runtim",
+        .ml_name    = "propertiesForClass",
+        .ml_meth    = (PyCFunction)mod_propertiesForClass,
+        .ml_flags   = METH_O,
+        .ml_doc     = "Return information about properties from the runtim",
     },
     {
-      "splitSignature",
-      (PyCFunction)objc_splitSignature,
-      METH_VARARGS|METH_KEYWORDS,
-      objc_splitSignature_doc
+        .ml_name    = "splitSignature",
+        .ml_meth    = (PyCFunction)objc_splitSignature,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = objc_splitSignature_doc
     },
     {
-      "splitStructSignature",
-      (PyCFunction)objc_splitStructSignature,
-      METH_VARARGS|METH_KEYWORDS,
-      objc_splitStructSignature_doc,
+        .ml_name    = "splitStructSignature",
+        .ml_meth    = (PyCFunction)objc_splitStructSignature,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = objc_splitStructSignature_doc,
     },
     {
-      "lookUpClass",
-      (PyCFunction)lookUpClass,
-      METH_VARARGS|METH_KEYWORDS,
-      lookUpClass_doc
+        .ml_name    = "lookUpClass",
+        .ml_meth    = (PyCFunction)lookUpClass,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = lookUpClass_doc
     },
     {
-      "classAddMethods",
-      (PyCFunction)classAddMethods,
-      METH_VARARGS|METH_KEYWORDS,
-      classAddMethods_doc
+        .ml_name    = "classAddMethods",
+        .ml_meth    = (PyCFunction)classAddMethods,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = classAddMethods_doc
     },
-    { "currentBundle", (PyCFunction)currentBundle, METH_NOARGS, currentBundle_doc },
-    { "getClassList", (PyCFunction)getClassList, METH_NOARGS, getClassList_doc },
-    { "_setClassExtender", (PyCFunction)set_class_extender, METH_VARARGS|METH_KEYWORDS, set_class_extender_doc  },
-    { "recycleAutoreleasePool", (PyCFunction)recycle_autorelease_pool, METH_VARARGS|METH_KEYWORDS, recycle_autorelease_pool_doc },
-    { "removeAutoreleasePool", (PyCFunction)remove_autorelease_pool, METH_VARARGS|METH_KEYWORDS, remove_autorelease_pool_doc },
-    { "pyobjc_id", (PyCFunction)pyobjc_id, METH_VARARGS|METH_KEYWORDS, pyobjc_id_doc },
-    { "repythonify", (PyCFunction)repythonify, METH_VARARGS|METH_KEYWORDS, repythonify_doc },
-    { "loadBundle", (PyCFunction)loadBundle, METH_VARARGS|METH_KEYWORDS, loadBundle_doc },
-    { "allocateBuffer", (PyCFunction)allocateBuffer, METH_VARARGS|METH_KEYWORDS, allocateBuffer_doc },
-    { "protocolsForClass", (PyCFunction)protocolsForClass, METH_VARARGS|METH_KEYWORDS, protocolsForClass_doc },
-    { "protocolsForProcess", (PyCFunction)protocolsForProcess, METH_NOARGS, protocolsForProcess_doc },
-    { "_protocolNamed", (PyCFunction)protocolNamed, METH_VARARGS|METH_KEYWORDS, protocolNamed_doc },
-    { "registerCFSignature", (PyCFunction)registerCFSignature, METH_VARARGS|METH_KEYWORDS, registerCFSignature_doc },
-    { "loadBundleVariables", (PyCFunction)PyObjC_loadBundleVariables,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleVariables_doc },
-    { "loadSpecialVar", (PyCFunction)PyObjC_loadSpecialVar,
-        METH_VARARGS|METH_KEYWORDS, NULL },
-    { "loadBundleFunctions", (PyCFunction)PyObjC_loadBundleFunctions,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_loadBundleFunctions_doc },
-    { "loadFunctionList", (PyCFunction)PyObjC_loadFunctionList,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_loadFunctionList_doc },
-    { "listInstanceVariables", (PyCFunction)PyObjCIvar_Info,
-        METH_O, PyObjCIvar_Info_doc },
-    { "getInstanceVariable", (PyCFunction)PyObjCIvar_Get,
-        METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Get_doc },
-    { "setInstanceVariable", (PyCFunction)PyObjCIvar_Set,
-        METH_VARARGS|METH_KEYWORDS, PyObjCIvar_Set_doc },
-    { "createOpaquePointerType", (PyCFunction)createOpaquePointerType,
-        METH_VARARGS|METH_KEYWORDS, createOpaquePointerType_doc },
-    { "createStructType", (PyCFunction)createStructType,
-        METH_VARARGS|METH_KEYWORDS, createStructType_doc },
-    { "registerStructAlias", (PyCFunction)registerStructAlias,
-        METH_VARARGS|METH_KEYWORDS, registerStructAlias_doc },
-    { "registerMetaDataForSelector", (PyCFunction)registerMetaData,
-        METH_VARARGS|METH_KEYWORDS, registerMetaData_doc },
-    { "_updatingMetadata", (PyCFunction)_updatingMetadata,
-        METH_VARARGS|METH_KEYWORDS, _updatingMetadata_doc },
-    { "_makeClosure", (PyCFunction)_makeClosure,
-        METH_VARARGS|METH_KEYWORDS, _makeClosure_doc },
-
-    { "_sockaddrFromPython", (PyCFunction)PyObjC_SockAddrFromPython,
-        METH_VARARGS, "private function" },
-    { "_sockaddrToPython", (PyCFunction)PyObjC_SockAddrToPython,
-        METH_VARARGS, "private function" },
-    { "_ivar_dict", (PyCFunction)ivar_dict, METH_NOARGS, "private functions" },
-
-    { "_objc_sync_enter", (PyCFunction)PyObjC_objc_sync_enter,
-        METH_VARARGS, "acquire mutex for an object" },
-    { "_objc_sync_exit", (PyCFunction)PyObjC_objc_sync_exit,
-        METH_VARARGS, "release mutex for an object" },
-    { "_block_call", (PyCFunction)PyObjCBlock_Call,
-        METH_VARARGS,
-        "_block_call(block, signature, args, kwds) -> retval" },
-
-    { "_block_signature", (PyCFunction)block_signature,
-        METH_O, "return signature string for a block, or None" },
-    { "_typestr2typestr", (PyCFunction)typestr2typestr,
-        METH_O, "private function" },
+    {
+        .ml_name    = "currentBundle",
+        .ml_meth    = (PyCFunction)currentBundle,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = currentBundle_doc
+    },
+    {
+        .ml_name    = "getClassList",
+        .ml_meth    = (PyCFunction)getClassList,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = getClassList_doc
+    },
+    {
+        .ml_name    = "_setClassExtender",
+        .ml_meth    = (PyCFunction)set_class_extender,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = set_class_extender_doc
+    },
+    {
+        .ml_name    = "recycleAutoreleasePool",
+        .ml_meth    = (PyCFunction)recycle_autorelease_pool,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = recycle_autorelease_pool_doc
+    },
+    {
+        .ml_name    = "removeAutoreleasePool",
+        .ml_meth    = (PyCFunction)remove_autorelease_pool,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = remove_autorelease_pool_doc
+    },
+    {
+        .ml_name    = "pyobjc_id",
+        .ml_meth    = (PyCFunction)pyobjc_id,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = pyobjc_id_doc
+    },
+    {
+        .ml_name    = "repythonify",
+        .ml_meth    = (PyCFunction)repythonify,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = repythonify_doc
+    },
+    {
+        .ml_name    = "loadBundle",
+        .ml_meth    = (PyCFunction)loadBundle,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = loadBundle_doc
+    },
+    {
+        .ml_name    = "allocateBuffer",
+        .ml_meth    = (PyCFunction)allocateBuffer,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = allocateBuffer_doc
+    },
+    {
+        .ml_name    = "protocolsForClass",
+        .ml_meth    = (PyCFunction)protocolsForClass,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = protocolsForClass_doc
+    },
+    {
+        .ml_name    = "protocolsForProcess",
+        .ml_meth    = (PyCFunction)protocolsForProcess,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = protocolsForProcess_doc
+    },
+    {
+        .ml_name    = "_protocolNamed",
+        .ml_meth    = (PyCFunction)protocolNamed,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = protocolNamed_doc
+    },
+    {
+        .ml_name    = "registerCFSignature",
+        .ml_meth    = (PyCFunction)registerCFSignature,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = registerCFSignature_doc
+    },
+    {
+        .ml_name    = "loadBundleVariables",
+        .ml_meth    = (PyCFunction)PyObjC_loadBundleVariables,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_loadBundleVariables_doc
+    },
+    {
+        .ml_name    = "loadSpecialVar",
+        .ml_meth    = (PyCFunction)PyObjC_loadSpecialVar,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+    },
+    {
+        .ml_name    = "loadBundleFunctions",
+        .ml_meth    = (PyCFunction)PyObjC_loadBundleFunctions,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_loadBundleFunctions_doc
+    },
+    {
+        .ml_name    = "loadFunctionList",
+        .ml_meth    = (PyCFunction)PyObjC_loadFunctionList,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_loadFunctionList_doc
+    },
+    {
+        .ml_name    = "listInstanceVariables",
+        .ml_meth    = (PyCFunction)PyObjCIvar_Info,
+        .ml_flags   = METH_O,
+        .ml_doc     = PyObjCIvar_Info_doc
+    },
+    {
+        .ml_name    = "getInstanceVariable",
+        .ml_meth    = (PyCFunction)PyObjCIvar_Get,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjCIvar_Get_doc
+    },
+    {
+        .ml_name    = "setInstanceVariable",
+        .ml_meth    = (PyCFunction)PyObjCIvar_Set,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjCIvar_Set_doc
+    },
+    {
+        .ml_name    = "createOpaquePointerType",
+        .ml_meth    = (PyCFunction)createOpaquePointerType,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = createOpaquePointerType_doc
+    },
+    {
+        .ml_name    = "createStructType",
+        .ml_meth    = (PyCFunction)createStructType,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = createStructType_doc
+    },
+    {
+        .ml_name    = "registerStructAlias",
+        .ml_meth    = (PyCFunction)registerStructAlias,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = registerStructAlias_doc
+    },
+    {
+        .ml_name    = "registerMetaDataForSelector",
+        .ml_meth    = (PyCFunction)registerMetaData,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = registerMetaData_doc
+    },
+    {
+        .ml_name    = "_updatingMetadata",
+        .ml_meth    = (PyCFunction)_updatingMetadata,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = _updatingMetadata_doc
+    },
+    {
+        .ml_name    = "_makeClosure",
+        .ml_meth    = (PyCFunction)_makeClosure,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = _makeClosure_doc
+    },
+    {
+        .ml_name    = "_sockaddrFromPython",
+        .ml_meth    = (PyCFunction)PyObjC_SockAddrFromPython,
+        .ml_flags   = METH_VARARGS,
+    },
+    {
+        .ml_name    = "_sockaddrToPython",
+        .ml_meth    = (PyCFunction)PyObjC_SockAddrToPython,
+        .ml_flags   = METH_VARARGS,
+    },
+    {
+        .ml_name    = "_ivar_dict",
+        .ml_meth    = (PyCFunction)ivar_dict,
+        .ml_flags   = METH_NOARGS,
+    },
+    {
+        .ml_name    = "_objc_sync_enter",
+        .ml_meth    = (PyCFunction)PyObjC_objc_sync_enter,
+        .ml_flags   = METH_VARARGS,
+        "acquire mutex for an object"
+    },
+    {
+        .ml_name    = "_objc_sync_exit",
+        .ml_meth    = (PyCFunction)PyObjC_objc_sync_exit,
+        .ml_flags   = METH_VARARGS,
+        "release mutex for an object"
+    },
+    {
+        .ml_name    = "_block_call",
+        .ml_meth    = (PyCFunction)PyObjCBlock_Call,
+        .ml_flags   = METH_VARARGS,
+        "_block_call(block, signature, args, kwds) -> retval"
+    },
+    {
+        .ml_name    = "_block_signature",
+        .ml_meth    = (PyCFunction)block_signature,
+        .ml_flags   = METH_O,
+        "return signature string for a block, or None"
+    },
+    {
+        .ml_name    = "_typestr2typestr",
+        .ml_meth    = (PyCFunction)typestr2typestr,
+        .ml_flags   = METH_O,
+    },
 
 #if    PyObjC_BUILD_RELEASE >= 1006
 
-    { "setAssociatedObject", (PyCFunction)PyObjC_setAssociatedObject,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_setAssociatedObject_doc },
-    { "getAssociatedObject", (PyCFunction)PyObjC_getAssociatedObject,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_getAssociatedObject_doc },
-    { "removeAssociatedObjects", (PyCFunction)PyObjC_removeAssociatedObjects,
-        METH_VARARGS|METH_KEYWORDS, PyObjC_removeAssociatedObjects_doc },
+    {
+        .ml_name    = "setAssociatedObject",
+        .ml_meth    = (PyCFunction)PyObjC_setAssociatedObject,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_setAssociatedObject_doc
+    },
+    {
+        .ml_name    = "getAssociatedObject",
+        .ml_meth    = (PyCFunction)PyObjC_getAssociatedObject,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_getAssociatedObject_doc
+    },
+    {
+        .ml_name    = "removeAssociatedObjects",
+        .ml_meth    = (PyCFunction)PyObjC_removeAssociatedObjects,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = PyObjC_removeAssociatedObjects_doc
+    },
 
 #endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
-    { "_loadConstant", (PyCFunction)PyObjC_LoadConstant,
-        METH_VARARGS|METH_KEYWORDS, "(PRIVATE)" },
-    { "_nameForSignature", (PyCFunction)name_for_signature,
-        METH_O, "private function" },
-
-    { 0, 0, 0, 0 } /* sentinel */
+    {
+        .ml_name    = "_loadConstant",
+        .ml_meth    = (PyCFunction)PyObjC_LoadConstant,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+    },
+    {
+        .ml_name    = "_nameForSignature",
+        .ml_meth    = (PyCFunction)name_for_signature,
+        .ml_flags   = METH_O,
+    },
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 struct objc_typestr_values {

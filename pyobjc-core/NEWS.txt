@@ -361,6 +361,13 @@ Version 3.0
 * Framework wrappers no longer have a 'protocols' submodule, use
   :func:`objc.protocolNamed` to access a protocol.
 
+* ``-[OC_PythonObject valueForKeyPath:]`` and ``-[OC_PythonObject setValue:forKeyPath:]``
+  now call helper functions in :mod:`PyObjCTools.KeyValueCoding`, just
+  like ``-[OC_PythonObject valueForKey:]`` and ``-[OC_PythonObject setValue:forKey:]``.
+
+  This should give better results in some edge cases when dealing with
+  complicated keypaths.
+
 Version 2.6
 -----------
 

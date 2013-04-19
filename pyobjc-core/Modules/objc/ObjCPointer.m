@@ -44,20 +44,20 @@ PyObjCPointer_dealloc (PyObject* _self)
 
 static PyMemberDef PyObjCPointer_members[] = {
     {
-        "type",
-        T_OBJECT,
-        offsetof(PyObjCPointer, type),
-        READONLY,
-        NULL
+        .name   = "type",
+        .type   = T_OBJECT,
+        .offset = offsetof(PyObjCPointer, type),
+        .flags  = READONLY,
     },
     {
-        "pointerAsInteger",
-        T_INT,
-        offsetof(PyObjCPointer, ptr),
-        READONLY,
-        NULL
+        .name   = "pointerAsInteger",
+        .type   = T_INT,
+        .offset = offsetof(PyObjCPointer, ptr),
+        .flags  = READONLY,
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 PyTypeObject PyObjCPointer_Type =

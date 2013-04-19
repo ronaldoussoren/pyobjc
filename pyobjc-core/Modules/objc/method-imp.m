@@ -230,52 +230,42 @@ imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef imp_getset[] = {
     {
-        "isAlloc",
-        imp_is_alloc,
-        0,
-        imp_is_alloc_doc,
-        0
+        .name   = "isAlloc",
+        .get    = imp_is_alloc,
+        .doc    = imp_is_alloc_doc,
     },
     {
-        "isClassMethod",
-        imp_class_method,
-        0,
-        imp_class_method_doc,
-        0
+        .name   = "isClassMethod",
+        .get    = imp_class_method,
+        .doc    = imp_class_method_doc,
     },
     {
-        "signature",
-        imp_signature,
-        0,
-        imp_signature_doc,
-        0
+        .name   = "signature",
+        .get    = imp_signature,
+        .doc    = imp_signature_doc,
     },
     {
-        "selector",
-        imp_selector,
-        0,
-        imp_selector_doc,
-        0
+        .name   = "selector",
+        .get    = imp_selector,
+        .doc    = imp_selector_doc,
     },
     {
-        "__name__",
-        imp_selector,
-        0,
-        imp_selector_doc,
-        0
+        .name   = "__name__",
+        .get    = imp_selector,
+        .doc    = imp_selector_doc,
     },
+
 #if PY_VERSION_HEX >= 0x03030000
     {
-        "__signature__",
-        PyObjC_callable_signature_get,
-        0,
-        "inspect.Signature for an IMP",
-        0
+        .name   = "__signature__",
+        .get    = PyObjC_callable_signature_get,
+        .doc    = "inspect.Signature for an IMP",
     },
 #endif
 
-
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 static PyObject*
@@ -310,12 +300,14 @@ imp_metadata(PyObject* self)
 
 static PyMethodDef imp_methods[] = {
     {
-        "__metadata__",
-        (PyCFunction)imp_metadata,
-        METH_NOARGS,
-        "Return metadata for the method",
+        .ml_name    = "__metadata__",
+        .ml_meth    = (PyCFunction)imp_metadata,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return metadata for the method",
     },
-    { 0, 0, 0, 0}
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 

@@ -86,35 +86,36 @@ decimal_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unus
 
 static PyGetSetDef decimal_getseters[] = {
     {
-        "__pyobjc_object__",
-        (getter)decimal_get__pyobjc_object__,
-        NULL,
-        "NSDecimalNumber instance",
-        NULL
+        .name   = "__pyobjc_object__",
+        .get    = (getter)decimal_get__pyobjc_object__,
+        .doc    = "NSDecimalNumber instance",
     },
-    { NULL, NULL, NULL, NULL, NULL }
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 static PyMethodDef decimal_methods[] = {
     {
-        "as_int",
-        (PyCFunction)decimal_asint,
-        METH_NOARGS,
-        "Convert decimal to a Python int"
+        .ml_name    = "as_int",
+        .ml_meth    = (PyCFunction)decimal_asint,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Convert decimal to a Python int"
     },
     {
-        "as_float",
-        (PyCFunction)decimal_asfloat,
-        METH_NOARGS,
-        "Convert decimal to a Python float"
+        .ml_name    = "as_float",
+        .ml_meth    = (PyCFunction)decimal_asfloat,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Convert decimal to a Python float"
     },
     {
-        "__round__",
-        (PyCFunction)decimal_round,
-        METH_VARARGS|METH_KEYWORDS,
-        NULL
+        .ml_name    = "__round__",
+        .ml_meth    = (PyCFunction)decimal_round,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS
     },
-    { NULL, NULL, 0, NULL }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 static PyObject*

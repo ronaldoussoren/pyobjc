@@ -139,47 +139,47 @@ fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
 
 static PyGetSetDef fsref_getset[] = {
     {
-        "data",
-        fsref_as_bytes,
-        0,
-        "bytes in the FSRef",
-        0
+        .name   = "data",
+        .get    = fsref_as_bytes,
+        .doc    = "bytes in the FSRef",
     },
-    { 0, 0, 0, 0, 0}
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 
 static PyMethodDef fsref_methods[] = {
     {
-        "as_pathname",
-        (PyCFunction)fsref_as_path,
-        METH_NOARGS,
-        "return POSIX path for this object (Unicode string)"
+        .ml_name    = "as_pathname",
+        .ml_meth    = (PyCFunction)fsref_as_path,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "return POSIX path for this object (Unicode string)"
     },
     {
-        "from_pathname",
-        (PyCFunction)fsref_from_path,
-        METH_O|METH_CLASS,
-        "create FSRef instance for an POSIX path"
+        .ml_name    = "from_pathname",
+        .ml_meth    = (PyCFunction)fsref_from_path,
+        .ml_flags   = METH_O|METH_CLASS,
+        .ml_doc     = "create FSRef instance for an POSIX path"
     },
 
 #if USE_TOOLBOX_OBJECT_GLUE
     {
-        "as_carbon",
-        (PyCFunction)fsref_as_carbon,
-        METH_NOARGS,
-        "return Carbon.File.FSRef instance for this object"
+        .ml_name    = "as_carbon",
+        .ml_meth    = (PyCFunction)fsref_as_carbon,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "return Carbon.File.FSRef instance for this object"
     },
 #endif /* USE_TOOLBOX_OBJECT_GLUE */
 
     {
-        "__sizeof__",
-        (PyCFunction)fsref_sizeof,
-        METH_NOARGS,
-        0
+        .ml_name    = "__sizeof__",
+        .ml_meth    = (PyCFunction)fsref_sizeof,
+        .ml_flags   = METH_NOARGS,
     },
-
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 

@@ -363,10 +363,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 -(BOOL)_forwardNative:(NSInvocation*) invocation
 {
-    /* XXX: This should use libffi to call call native methods of this
-     *      class. The implementation below works good enough for
-     *      now...
-     */
     SEL aSelector = [invocation selector];
 
     if (sel_isEqual(aSelector, @selector(description))) {
@@ -488,7 +484,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
 
 -(void)forwardInvocation:(NSInvocation *) invocation
 {
-    /* XXX: Needs cleanup */
     NSMethodSignature* msign = [invocation methodSignature];
     SEL aSelector = [invocation selector];
     PyObject* pymethod;
@@ -535,8 +530,6 @@ get_method_for_selector(PyObject *obj, SEL aSelector)
             PyObject *pyarg;
 
             argtype = [msign getArgumentTypeAtIndex:i];
-
-            /* What if argtype is a pointer? */
 
             argsize = PyObjCRT_SizeOfType(argtype);
             if (argsize == -1) {
@@ -727,9 +720,6 @@ static  PyObject* getKeyFunc = NULL;
 }
 
 
-/* Calls PyObjCTools.KeyValueCoding.setKey to set the key */
-
-/* This is the 10.2 flavour of this method, deprecated in 10.3 */
 -(void)takeValue: value forKey: (NSString*) key
 {
     [self setValue: value forKey: key];
@@ -802,23 +792,45 @@ static  PyObject* setKeyFunc = NULL;
 
 -(id)valueForKeyPath: (NSString*) keyPath
 {
-    /* XXX: Wrong: won't work properly with somearray.@avg.x, call
-     *      the python implementation like valueForKey.
-     */
-    NSArray* elems = [keyPath componentsSeparatedByString:@"."];
-    NSEnumerator* enumerator = [elems objectEnumerator];
-    id aKey;
-    id target;
+static  PyObject* getKeyFunc = NULL;
 
-    target = self;
-    while ((aKey = [enumerator nextObject]) != NULL) {
-        target = [target valueForKey: aKey];
-    }
+    PyObject* keyName;
+    PyObject* val;
+    id res = nil;
 
-    return target;
+    PyObjC_BEGIN_WITH_GIL
+
+        if (getKeyFunc == NULL) {
+            getKeyFunc = getModuleFunction(
+                "PyObjCTools.KeyValueCoding",
+                "getKeyPath");
+            if (getKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(keyPath);
+        if (keyName == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+        Py_DECREF(keyName);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        if (depythonify_c_value(@encode(id), val, &res) < 0) {
+            Py_DECREF(val);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+        Py_DECREF(val);
+
+    PyObjC_END_WITH_GIL
+
+    return res;
 }
 
-/* takeValue:forKeyPath: was deprecated in 10.3, and is the right way on 10.2 */
 -(void)takeValue: value forKeyPath: (NSString*)keyPath
 {
     [self setValue:value forKeyPath:keyPath];
@@ -826,18 +838,45 @@ static  PyObject* setKeyFunc = NULL;
 
 -(void)setValue: value forKeyPath: (NSString*) keyPath
 {
-    NSArray* elems = [keyPath componentsSeparatedByString:@"."];
-    id target;
-    NSInteger len;
-    NSInteger i;
+static  PyObject* setKeyFunc = NULL;
 
-    len = [elems count];
-    target = self;
-    for (i = 0; i < len-1; i++) {
-        target = [target valueForKey: [elems objectAtIndex: i]];
-    }
+    PyObject* keyName;
+    PyObject* pyValue;
+    PyObject* val;
 
-    [target takeValue: value forKey: [elems objectAtIndex: len-1]];
+    PyObjC_BEGIN_WITH_GIL
+
+        if (setKeyFunc == NULL) {
+            setKeyFunc = getModuleFunction(
+                "PyObjCTools.KeyValueCoding",
+                "setKeyPath");
+            if (setKeyFunc == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+        }
+
+        keyName = PyObjC_IdToPython(keyPath);
+        if (keyName == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        pyValue = PyObjC_IdToPython(value);
+        if (pyValue == NULL) {
+            Py_DECREF(keyName);
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        val = PyObject_CallFunction(setKeyFunc, "OOO",
+                pyObject, keyName, pyValue);
+        Py_DECREF(keyName);
+        Py_DECREF(pyValue);
+        if (val == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        Py_DECREF(val);
+
+    PyObjC_END_WITH_GIL
 }
 
 -(void)takeValuesFromDictionary: (NSDictionary*) aDictionary

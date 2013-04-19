@@ -445,60 +445,58 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 
 static PyMethodDef proto_methods[] = {
     {
-        "name",
-        (PyCFunction)proto_name,
-        METH_NOARGS,
-        "Return the  protocol name",
+        .ml_name    = "name",
+        .ml_meth    = (PyCFunction)proto_name,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return the  protocol name",
     },
     {
-        "conformsTo_",
-        (PyCFunction)proto_conformsTo_,
-        METH_VARARGS,
-        "Does this protocol conform to another protocol"
+        .ml_name    = "conformsTo_",
+        .ml_meth    = (PyCFunction)proto_conformsTo_,
+        .ml_flags   = METH_VARARGS,
+        .ml_doc     = "Does this protocol conform to another protocol"
     },
     {
-        "descriptionForInstanceMethod_",
-        (PyCFunction)descriptionForInstanceMethod_,
-        METH_O,
-        "Description for an instance method in the protocol"
+        .ml_name    = "descriptionForInstanceMethod_",
+        .ml_meth    = (PyCFunction)descriptionForInstanceMethod_,
+        .ml_flags   = METH_O,
+        .ml_doc     = "Description for an instance method in the protocol"
     },
     {
-        "descriptionForClassMethod_",
-        (PyCFunction)descriptionForClassMethod_,
-        METH_O,
-        "Description for a class method in the protocol"
+        .ml_name    = "descriptionForClassMethod_",
+        .ml_meth    = (PyCFunction)descriptionForClassMethod_,
+        .ml_flags   = METH_O,
+        .ml_doc     = "Description for a class method in the protocol"
     },
     {
-        "instanceMethods",
-        (PyCFunction)instanceMethods,
-        METH_NOARGS,
-        "List of instance methods in this protocol"
+        .ml_name    = "instanceMethods",
+        .ml_meth    = (PyCFunction)instanceMethods,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "List of instance methods in this protocol"
     },
     {
-        "classMethods",
-        (PyCFunction)classMethods,
-        METH_NOARGS,
-        "List of class methods in this protocol"
+        .ml_name    = "classMethods",
+        .ml_meth    = (PyCFunction)classMethods,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "List of class methods in this protocol"
     },
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL  /* SENTINEL */
+    }
 };
 
 static PyGetSetDef proto_getset[] = {
     {
-        "__class__",
-        (getter)proto_get__class__,
-        NULL,
-        NULL,
-        0
+        .name   = "__class__",
+        .get    = (getter)proto_get__class__,
     },
     {
-        "__name__",
-        (getter)proto_get__name__,
-        NULL,
-        NULL,
-        0
+        .name   = "__name__",
+        .get    = (getter)proto_get__name__,
     },
-    { NULL, NULL, NULL, NULL, 0 }
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 PyTypeObject PyObjCFormalProtocol_Type = {

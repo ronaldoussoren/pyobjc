@@ -11,13 +11,15 @@ typedef struct {
 
 static PyMemberDef opaque_members[] = {
     {
-        "__pointer__",
-        T_LONG,
-        offsetof(OpaquePointerObject, pointer_value),
-        READONLY,
-        "raw value of the pointer"
+        .name   = "__pointer__",
+        .type   = T_LONG,
+        .offset = offsetof(OpaquePointerObject, pointer_value),
+        .flags  = READONLY,
+        .doc    = "raw value of the pointer"
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 static PyObject*
@@ -60,24 +62,25 @@ opaque_sizeof(PyObject* self)
 
 static PyMethodDef opaque_methods[] = {
     {
-          "__cobject__",
-          (PyCFunction)as_cobject,
-          METH_NOARGS,
-          "get a CObject representing this object"
+        .ml_name    = "__cobject__",
+        .ml_meth    = (PyCFunction)as_cobject,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "get a CObject representing this object"
     },
     {
-          "__c_void_p__",
-          (PyCFunction)as_ctypes_voidp,
-          METH_NOARGS,
-          "get a ctypes.void_p representing this object"
+        .ml_name    = "__c_void_p__",
+        .ml_meth    = (PyCFunction)as_ctypes_voidp,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "get a ctypes.void_p representing this object"
     },
     {
-        "__sizeof__",
-          (PyCFunction)opaque_sizeof,
-          METH_NOARGS,
-          0,
+        .ml_name    = "__sizeof__",
+        .ml_meth    = (PyCFunction)opaque_sizeof,
+        .ml_flags   = METH_NOARGS,
     },
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 

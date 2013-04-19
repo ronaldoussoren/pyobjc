@@ -276,17 +276,6 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name
         , PyObject* name_bytes
 #endif
     )
-    /* XXX: Name needs changing.
-     *      Second pass through the class hierarchy when _type_lookup failed and the name is not in __dict__
-     *      Used to look for selectors that cannot be found using the default translation from Python to ObjC
-     *      (for example 'some_methodWithArg:andArg').
-     *
-     *      The assumption is that user code is not buggy, and hence it is acceptable to take an expensive
-     *      path once in a while.
-     * XXX: May need to cache the found methods in subclasses as well to be 100% reliable, add test
-     *      that first finds the method in a superclass, then loads a shared library with a subclass that
-     *      also defines the method. This should find the subclass method (but might not with current code).
-     */
 {
     Py_ssize_t i, n;
     PyObject *mro, *base;
@@ -934,27 +923,24 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribu
 
 static PyGetSetDef obj_getset[] = {
     {
-        "pyobjc_ISA",
-        objc_get_real_class,
-        NULL,
-        objc_get_real_class_doc,
-        0
+        .name   = "pyobjc_ISA",
+        .get    = objc_get_real_class,
+        .doc    = objc_get_real_class_doc,
     },
     {
-        "pyobjc_instanceMethods",
-        obj_get_instanceMethods,
-        NULL,
-        obj_get_instanceMethods_doc,
-        0
+        .name   = "pyobjc_instanceMethods",
+        .get    = obj_get_instanceMethods,
+        .doc    = obj_get_instanceMethods_doc,
     },
     {
-        "__block_signature__",
-        obj_get_blocksignature,
-        obj_set_blocksignature,
-        "Call signature for a block, or None",
-        0
+        .name   = "__block_signature__",
+        .get    = obj_get_blocksignature,
+        .set    = obj_set_blocksignature,
+        .doc    = "Call signature for a block, or None",
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 /*
@@ -1102,40 +1088,36 @@ meth_dir(PyObject* self)
 
 static PyMethodDef obj_methods[] = {
     {
-        "__reduce__",
-        (PyCFunction)meth_reduce,
-        METH_NOARGS,
-        "Used for pickling"
+        .ml_name    = "__reduce__",
+        .ml_meth    = (PyCFunction)meth_reduce,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Used for pickling"
     },
     {
-        "__cobject__",
-        (PyCFunction)as_cobject,
-        METH_NOARGS,
-        "Return a CObject representing this object"
+        .ml_name    = "__cobject__",
+        .ml_meth    = (PyCFunction)as_cobject,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return a CObject representing this object"
     },
     {
-        "__c_void_p__",
-        (PyCFunction)as_ctypes_voidp,
-        METH_NOARGS,
-        "Return a ctypes.c_void_p representing this object"
+        .ml_name    = "__c_void_p__",
+        .ml_meth    = (PyCFunction)as_ctypes_voidp,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return a ctypes.c_void_p representing this object"
     },
     {
-        "__sizeof__",
-        (PyCFunction)meth_sizeof,
-        METH_NOARGS,
-        0
+        .ml_name    = "__sizeof__",
+        .ml_meth    = (PyCFunction)meth_sizeof,
+        .ml_flags   = METH_NOARGS,
     },
     {
-        "__dir__",
-        (PyCFunction)meth_dir,
-        METH_NOARGS,
-        "dir() hook, don't call directly"
+        .ml_name    = "__dir__",
+        .ml_meth    = (PyCFunction)meth_dir,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "dir() hook, don't call directly"
     },
     {
-        NULL,
-        NULL,
-        0,
-        NULL
+        .ml_name    = NULL /* SENTINEL */
     }
 };
 

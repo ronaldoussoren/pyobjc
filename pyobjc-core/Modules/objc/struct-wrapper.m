@@ -480,41 +480,38 @@ static PyMappingMethods struct_as_mapping = {
 
 static PyMethodDef struct_methods[] = {
     {
-        "__reduce__",
-        (PyCFunction)struct_reduce,
-        METH_NOARGS,
-        NULL
+        .ml_name    = "__reduce__",
+        .ml_meth    = (PyCFunction)struct_reduce,
+        .ml_flags   = METH_NOARGS,
     },
     {
-        "copy",
-        (PyCFunction)struct_copy,
-        METH_NOARGS,
-        "Return a copy of the struct",
+        .ml_name    = "copy",
+        .ml_meth    = (PyCFunction)struct_copy,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return a copy of the struct",
     },
     {
-        "__pyobjc_copy__",
-        (PyCFunction)struct_copy,
-        METH_NOARGS,
-        NULL,
+        .ml_name    = "__pyobjc_copy__",
+        .ml_meth    = (PyCFunction)struct_copy,
+        .ml_flags   = METH_NOARGS,
     },
     {
-        "__sizeof__",
-        (PyCFunction)struct_sizeof,
-        METH_NOARGS,
-        NULL,
+        .ml_name    = "__sizeof__",
+        .ml_meth    = (PyCFunction)struct_sizeof,
+        .ml_flags   = METH_NOARGS,
     },
     /* NamedTuple interface */
     {
-        "_asdict",
-        (PyCFunction)struct_asdict,
-        METH_NOARGS,
-        NULL
+        .ml_name    = "_asdict",
+        .ml_meth    = (PyCFunction)struct_asdict,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return dict representation of the object"
     },
     {
-        "_replace",
-        (PyCFunction)struct_replace,
-        METH_VARARGS|METH_KEYWORDS,
-        NULL
+        .ml_name    = "_replace",
+        .ml_meth    = (PyCFunction)struct_replace,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
+        .ml_doc     = "Return a copy with some fields replaced by other values"
     },
     { NULL, NULL, 0, NULL }
 };

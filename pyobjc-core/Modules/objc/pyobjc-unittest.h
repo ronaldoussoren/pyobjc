@@ -118,10 +118,9 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
 
 #define TESTDEF(name) \
     { \
-        #name, \
-        (PyCFunction)test_##name,  \
-        METH_NOARGS,  \
-        NULL \
+        .ml_name	= #name, \
+        .ml_meth	= (PyCFunction)test_##name,  \
+        .ml_flags	= METH_NOARGS,  \
     }
 
 #endif /* PyObjC_UNITTEST_H */

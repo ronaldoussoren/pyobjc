@@ -64,33 +64,33 @@ static PyObject* fsspec_as_carbon(PyObject* ref)
 
 static PyGetSetDef fsspec_getset[] = {
     {
-        "data",
-        fsspec_as_bytes,
-        0,
-        "bytes in the FSSpec",
-        0
+        .name   = "data",
+        .get    = fsspec_as_bytes,
+        .doc    = "bytes in the FSSpec",
     },
-    { 0, 0, 0, 0, 0}
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 
 static PyMethodDef fsspec_methods[] = {
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
     {
-        "as_carbon",
-        (PyCFunction)fsspec_as_carbon,
-        METH_NOARGS,
-        "return Carbon.File.FSSpec instance for this object"
+        .ml_name    = "as_carbon",
+        .ml_meth    = (PyCFunction)fsspec_as_carbon,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "return Carbon.File.FSSpec instance for this object"
     },
 #endif /* defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__) */
     {
-        "__sizeof__",
-        (PyCFunction)fsspec_sizeof,
-        METH_NOARGS,
-        0
+        .ml_name    = "__sizeof__",
+        .ml_meth    = (PyCFunction)fsspec_sizeof,
+        .ml_flags   = METH_NOARGS,
     },
-
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 

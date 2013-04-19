@@ -70,13 +70,12 @@ struct options {
     }
 
 
-#define GETSET(NAME, DOC)      \
+#define GETSET(NAME, DOC)           \
     {                               \
-        STR(NAME),                  \
-        NAME ## _get,               \
-        NAME ## _set,               \
-        DOC,                        \
-        0                           \
+        .name   = STR(NAME),        \
+        .get    = NAME ## _get,     \
+        .set    = NAME ## _set,     \
+        .doc    = DOC,              \
     }
 
 
@@ -176,19 +175,18 @@ object_dont_call(PyObject* self __attribute__((__unused__)),
 
 static PyMethodDef object_methods[] = {
     {
-        "__copy__",
-        (PyCFunction)object_dont_call,
-        METH_VARARGS|METH_KEYWORDS,
-        0,
+        .ml_name    = "__copy__",
+        .ml_meth    = (PyCFunction)object_dont_call,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
     },
     {
-        "__reduce__",
-        (PyCFunction)object_dont_call,
-        METH_VARARGS|METH_KEYWORDS,
-        0,
+        .ml_name    = "__reduce__",
+        .ml_meth    = (PyCFunction)object_dont_call,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
     },
-
-    { 0, 0, 0, 0 } /* sentinel */
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 static PyTypeObject PyObjCOptions_Type = {

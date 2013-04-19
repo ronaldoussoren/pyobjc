@@ -163,21 +163,20 @@ proto_traverse(PyObject* _self, visitproc visit, void* arg)
 
 static PyMemberDef proto_members[] = {
     {
-        "__name__",
-        T_OBJECT,
-        offsetof(PyObjCInformalProtocol, name),
-        READONLY,
-        NULL
+        .name   = "__name__",
+        .type   = T_OBJECT,
+        .offset = offsetof(PyObjCInformalProtocol, name),
+        .flags  = READONLY,
     },
     {
-        "selectors",
-        T_OBJECT,
-        offsetof(PyObjCInformalProtocol, selectors),
-        READONLY,
-        NULL
+        .name   = "selectors",
+        .type   = T_OBJECT,
+        .offset = offsetof(PyObjCInformalProtocol, selectors),
+        .flags  = READONLY,
     },
-
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 PyTypeObject PyObjCInformalProtocol_Type = {

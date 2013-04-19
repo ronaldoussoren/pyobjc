@@ -86,12 +86,14 @@ static PyObject* sel_metadata(PyObject* self)
 
 static PyMethodDef sel_methods[] = {
     {
-          "__metadata__",
-              (PyCFunction)sel_metadata,
-              METH_NOARGS,
-          sel_metadata_doc
+        .ml_name    = "__metadata__",
+        .ml_meth    = (PyCFunction)sel_metadata,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = sel_metadata_doc
     },
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL /* SENTINEL */
+    }
 };
 
 
@@ -243,76 +245,60 @@ base_required(PyObject* _self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef base_getset[] = {
     {
-        "isHidden",
-        base_hidden,
-        base_hidden_setter,
-        base_hidden_doc,
-        0
+        .name   = "isHidden",
+        .get    = base_hidden,
+        .set    = base_hidden_setter,
+        .doc    = base_hidden_doc,
     },
     {
-        "isRequired",
-        base_required,
-        0,
-        base_required_doc,
-        0
+        .name   = "isRequired",
+        .get    = base_required,
+        .doc    = base_required_doc,
     },
     {
-        "isClassMethod",
-        base_class_method,
-        0,
-        base_class_method_doc,
-        0
+        .name   = "isClassMethod",
+        .get    = base_class_method,
+        .doc    = base_class_method_doc,
     },
     {
-        "definingClass",
-        base_class,
-        0,
-        base_class_doc,
-        0
+        .name   = "definingClass",
+        .get    = base_class,
+        .doc    = base_class_doc,
     },
     {
-        "__objclass__",
-        base_class,
-        0,
-        base_class_doc,
-        0
+        .name   = "__objclass__",
+        .get    = base_class,
+        .doc    = base_class_doc,
     },
     {
-        "signature",
-        base_signature,
-        base_signature_setter,
-        base_signature_doc,
-        0
+        .name   = "signature",
+        .get    = base_signature,
+        .set    = base_signature_setter,
+        .doc    = base_signature_doc,
     },
     {
-        "native_signature",
-        base_native_signature,
-        0,
-        base_native_signature_doc,
-        0
+        .name   = "native_signature",
+        .get    = base_native_signature,
+        .doc    = base_native_signature_doc,
     },
     {
-        "self",
-        base_self,
-        0,
-        base_self_doc,
-        0
+        .name   = "self",
+        .get    = base_self,
+        .doc    = base_self_doc,
     },
     {
-        "selector",
-        base_selector,
-        0,
-        base_selector_doc,
-        0
+        .name   = "selector",
+        .get    = base_selector,
+        .doc    = base_selector_doc,
     },
     {
-        "__name__",
-        base_name,
-        0,
-        base_name_doc,
-        0
+        .name   = "__name__",
+        .get    = base_name,
+        .doc    = base_name_doc,
     },
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 static void
@@ -664,22 +650,20 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
 
 static PyGetSetDef objcsel_getset[] = {
     {
-        "__doc__",
-        PyObjC_callable_docstr_get,
-        0,
-        "The document string for a method",
-        0
+        .name   = "__doc__",
+        .get    = PyObjC_callable_docstr_get,
+        .doc    = "The document string for a method",
     },
 #if PY_VERSION_HEX >= 0x03030000
     {
-        "__signature__",
-        PyObjC_callable_signature_get,
-        0,
-        "inspect.Signature for a method",
-        0
+        .name   = "__signature__",
+        .get    = PyObjC_callable_signature_get,
+        .doc    = "inspect.Signature for a method",
     },
 #endif
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
 
 
@@ -1062,6 +1046,8 @@ pysel_repr(PyObject* _self)
 
 
 /*
+ * XXX: This function shouldn't be necesary anymore, output arguments are
+ *      required since long ago!
  * Calling the method from Python is sligtly complicated by the fact that
  * output arguments are optionally present (both in the method signature
  * and the actual argument list).
@@ -1659,35 +1645,24 @@ pysel_docstring(PyObject* _self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef pysel_getset[] = {
     {
-        "callable",
-        pysel_get_callable,
-        0,
-        pysel_get_callable_doc,
-        0
+        .name   = "callable",
+        .get    = pysel_get_callable,
+        .doc    = pysel_get_callable_doc,
     },
     {
-        "__doc__",
-        pysel_docstring,
-        0,
-        pysel_docstring_doc,
-        0
+        .name   = "__doc__",
+        .get    = pysel_docstring,
+        .doc    = pysel_docstring_doc,
     },
 #if PY_VERSION_HEX >= 0x03030000
     {
-        "__signature__",
-        PyObjC_callable_signature_get,
-        0,
-            "inspect.Signaturefor a method",
-        0
+        .name   = "__signature__",
+        .get    = PyObjC_callable_signature_get,
+        .doc    = "inspect.Signaturefor a method",
     },
 #endif
-
     {
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        0
+        .name   = NULL /* SENTINEL */
     }
 };
 

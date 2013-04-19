@@ -17,8 +17,6 @@ typedef struct {
 
 
 
-PyDoc_STRVAR(func_metadata_doc, "Return a dict that describes the metadata for this function.");
-
 static PyObject* func_metadata(PyObject* self)
 {
     return PyObjCMethodSignature_AsDict(((func_object*)self)->methinfo);
@@ -26,55 +24,55 @@ static PyObject* func_metadata(PyObject* self)
 
 static PyMethodDef func_methods[] = {
     {
-          "__metadata__",
-          (PyCFunction)func_metadata,
-          METH_NOARGS,
-          func_metadata_doc
+        .ml_name    = "__metadata__",
+        .ml_meth    = (PyCFunction)func_metadata,
+        .ml_flags   = METH_NOARGS,
+        .ml_doc     = "Return a dict that describes the metadata for this function."
     },
-    { 0, 0, 0, 0 }
+    {
+        .ml_name    = NULL  /* SENTINEL */
+    }
 };
 
 static PyGetSetDef func_getset[] = {
     {
-        "__doc__",
-        PyObjC_callable_docstr_get,
-        0,
-        "Documentation for a function",
-        0
+        .name   = "__doc__",
+        .get    = PyObjC_callable_docstr_get,
+        .doc    = "Documentation for a function",
     },
 
 #if PY_VERSION_HEX >= 0x03030000
     {
-        "__signature__",
-        PyObjC_callable_signature_get,
-        0,
-        "inspect.Signature for a function",
-        0
+        .name   = "__signature__",
+        .get    = PyObjC_callable_signature_get,
+        .doc    = "inspect.Signature for a function",
     },
 #endif /* PY_VERSION_HEX >= 0x03030000 */
 
-    { 0, 0, 0, 0, 0 }
+    {
+        .name   = NULL /* SENTINEL */
+    }
 };
 
 
 
 static PyMemberDef func_members[] = {
     {
-        "__name__",
-        T_OBJECT,
-        offsetof(func_object, name),
-        READONLY,
-        NULL
+        .name   = "__name__",
+        .type   = T_OBJECT,
+        .offset = offsetof(func_object, name),
+        .flags  = READONLY,
     },
     {
-        "__module__",
-        T_OBJECT,
-        offsetof(func_object, module),
-        0,
-        NULL
+        .name   = "__module__",
+        .type   = T_OBJECT,
+        .offset = offsetof(func_object, module),
     },
-    { NULL, 0, 0, 0, NULL }
+    {
+        .name   = NULL  /* SENTINEL */
+    }
 };
+
 
 static PyObject*
 func_repr(PyObject* _self)
