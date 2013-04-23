@@ -749,6 +749,12 @@ class TestKeyedArchivePlainPython (TestCase, test.pickletester.AbstractPickleTes
     def test_badly_escaped_string(self): pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
+    def test_appends_on_non_lists(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_setitems_on_non_dicts(self): pass
+
+    @onlyIf(0, "python unittest not relevant for archiving")
     def test_int_pickling_efficiency(self): pass
 
     @onlyIf(0, "python unittest not relevant for archiving")
