@@ -156,7 +156,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type);
+    argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(
         self->methinfo, 0,
@@ -194,7 +194,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     cif_arg_count = PyObjCFFI_ParseArguments(
         self->methinfo, 0, args,
-        align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype.type), sizeof(void*)),
+        align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type), sizeof(void*)),
         argbuf, argbuf_len, byref, byref_attr, arglist, values);
 
     if (cif_arg_count == -1) {
@@ -203,7 +203,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     if (variadicAllArgs) {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-        PyObjCFFI_Typestr2FFI(self->methinfo->rettype.type), arglist);
+        PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 
         if (r != FFI_OK) {
             PyErr_Format(PyExc_RuntimeError,

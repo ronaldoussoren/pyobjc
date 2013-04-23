@@ -27,8 +27,8 @@ struct _PyObjC_ArgDescr {
     PyObjCMethodSignature* callable;
 
     const char* sel_type;
-    int16_t arrayArg;
-    int16_t arrayArgOut;
+    int8_t arrayArg;
+    int8_t arrayArgOut;
     enum _PyObjC_PointerType ptrType:3;
     unsigned int allowNULL:1;
     unsigned int typeOverride:1;
@@ -37,21 +37,22 @@ struct _PyObjC_ArgDescr {
     unsigned int alreadyRetained:1;
     unsigned int alreadyCFRetained:1;
     unsigned int callableRetained:1; /* False iff the closure can be cleaned up after the call */
+    unsigned int tmpl:1;
 };
 
 struct _PyObjCMethodSignature {
     PyObject_VAR_HEAD
 
     const char* signature;
+    PyObject* suggestion;
     unsigned char variadic:1;
     unsigned char null_terminated_array:1;
     unsigned char free_result:1;
     unsigned char shortcut_signature:1;
     unsigned int shortcut_argbuf_size:12;
     int16_t arrayArg;
-    PyObject* suggestion;
-    struct _PyObjC_ArgDescr rettype;
-    struct _PyObjC_ArgDescr argtype[1];
+    struct _PyObjC_ArgDescr* rettype;
+    struct _PyObjC_ArgDescr* argtype[1];
 };
 
 

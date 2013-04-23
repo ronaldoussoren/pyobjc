@@ -41,11 +41,11 @@ id_to_python(id object)
 static Class
 sel_get_class(PyObject* sel)
 {
-    if (!PyObjCNativeSelector_Check(sel)) {
+    if (!PyObjCSelector_Check(sel)) {
         PyErr_SetString(PyExc_TypeError, "Expecting PyObjCSelector");
         return NULL;
     }
-    return ((PyObjCNativeSelector*)sel)->sel_class;
+    return ((PyObjCSelector*)sel)->sel_class;
 }
 
 static SEL

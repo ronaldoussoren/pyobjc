@@ -135,10 +135,14 @@ extern PyObject* PyObjCStrBridgeWarning;
 #ifdef PyObjC_DEBUG
 
 #ifdef PyObjC_ERROR_ABORT
-#   define _PyObjC_InternalError_Bailout()    abort()
+#   define _PyObjC_InternalError_Bailout(args...)    	\
+	do {						\
+		fprintf(stderr, args); 			\
+		abort();				\
+	} while(0)
 
 #else /* !PyObjC_ERROR_ABORT */
-#   define _PyObjC_InternalError_Bailout()    ((void)0)
+#   define _PyObjC_InternalError_Bailout(args...)    ((void)0)
 
 #endif /* !PyObjC_ERROR_ABORT */
 
@@ -147,7 +151,9 @@ extern PyObject* PyObjCStrBridgeWarning;
     PyErr_Format(PyObjCExc_InternalError, 			\
        "PyObjC: internal error in %s at %s:%d", 		\
        __FUNCTION__, __FILE__, __LINE__); 			\
-       _PyObjC_InternalError_Bailout(); 			\
+       _PyObjC_InternalError_Bailout(	 			\
+       "PyObjC: internal error in %s at %s:%d\n", 		\
+       __FUNCTION__, __FILE__, __LINE__); 			\
     } while (0)
 
 #define PyObjCErr_InternalErrorMesg(msg) 			\
@@ -155,7 +161,9 @@ extern PyObject* PyObjCStrBridgeWarning;
     PyErr_Format(PyObjCExc_InternalError, 			\
       "PyObjC: internal error in %s at %s:%d: %s", 		\
        __FUNCTION__, __FILE__, __LINE__, msg); 			\
-       _PyObjC_InternalError_Bailout(); 			\
+       _PyObjC_InternalError_Bailout(	 			\
+      "PyObjC: internal error in %s at %s:%d: %s\n", 		\
+       __FUNCTION__, __FILE__, __LINE__, msg); 			\
     } while (0)
 
 #define PyObjC_Assert(expr, retval) 				\

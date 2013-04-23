@@ -173,10 +173,10 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     block_ptr = PyObjCObject_GetObject(self);
     call_func = PyObjCBlock_GetFunction(block_ptr);
 
-    argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype.type);
+    argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
 
-    int useStret =  PyObjCRT_ResultUsesStret(signature->rettype.type);
+    int useStret =  PyObjCRT_ResultUsesStret(signature->rettype->type);
     if (useStret == -1) {
         goto error;
     }
@@ -228,7 +228,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     cif_arg_count = PyObjCFFI_ParseArguments(
         signature, 1, args,
-        align(PyObjCRT_SizeOfReturnType(signature->rettype.type), sizeof(void*)) + sizeof(void*),
+        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*)) + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist, useStret ? values + 1 : values);
 
     if (cif_arg_count == -1) {
@@ -248,7 +248,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     }
 
     r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype.type), arglist);
+            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error;
@@ -323,9 +323,9 @@ block_signature(PyObjCMethodSignature* signature)
     char* buf;
     char* cur;
 
-    buflen += strlen(signature->rettype.type);
+    buflen += strlen(signature->rettype->type);
     for (i = 0; i < Py_SIZE(signature); i++) {
-        buflen += strlen(signature->argtype[i].type);
+        buflen += strlen(signature->argtype[i]->type);
     }
 
     buf = PyMem_Malloc(buflen);
@@ -334,10 +334,10 @@ block_signature(PyObjCMethodSignature* signature)
     }
 
     cur = buf;
-    strcpy(cur, signature->rettype.type);
+    strcpy(cur, signature->rettype->type);
     cur = strchr(cur, '\0');
     for (i = 0; i < Py_SIZE(signature); i++) {
-        strcpy(cur, signature->argtype[i].type);
+        strcpy(cur, signature->argtype[i]->type);
         cur = strchr(cur, '\0');
     }
     return buf;

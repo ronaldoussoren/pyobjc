@@ -11,15 +11,6 @@
 #define PyObjCSelector_kREQUIRED              0x000004
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
 
-#define PyObjCSelector_HEAD \
-    PyObject_HEAD             			\
-    const char*    sel_python_signature;  	\
-    const char*     sel_native_signature;	\
-    SEL        sel_selector;    		\
-    PyObject*    sel_self;    			\
-    Class        sel_class;    			\
-    int        sel_flags;    			\
-    PyObjCMethodSignature* sel_methinfo;
 
 
 /*!
@@ -33,16 +24,23 @@ typedef PyObject* (*PyObjC_CallFunc)(
     PyObject* meth, PyObject* self, PyObject* args);
 
 typedef struct {
-    PyObjCSelector_HEAD
+    PyObject_HEAD
+    const char*  sel_python_signature;
+    const char*  sel_native_signature;
+    SEL          sel_selector;
+    PyObject*    sel_self;
+    Class        sel_class;
+    int          sel_flags;
+    PyObjCMethodSignature* sel_methinfo;
 } PyObjCSelector;
 
 typedef struct {
-    PyObjCSelector_HEAD
+    PyObjCSelector base;
     PyObjC_CallFunc sel_call_func;
 } PyObjCNativeSelector;
 
 typedef struct {
-    PyObjCSelector_HEAD
+    PyObjCSelector base;
     PyObject*    callable;
     Py_ssize_t    argcount;
     Py_ssize_t    numoutput;

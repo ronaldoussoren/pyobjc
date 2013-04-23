@@ -1740,9 +1740,9 @@ class_getattro(PyObject* self, PyObject* name)
         int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);
         PyObjCNativeSelector* x = (PyObjCNativeSelector*)result;
 
-        if (x->sel_flags & PyObjCSelector_kCLASS_METHOD) {
-            x->sel_self = self;
-            Py_INCREF(x->sel_self);
+        if (x->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
+            x->base.sel_self = self;
+            Py_INCREF(x->base.sel_self);
         }
         if (res < 0) {
             if (PyObjC_Verbose) {

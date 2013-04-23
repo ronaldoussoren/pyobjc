@@ -442,6 +442,8 @@ CFLAGS.extend([
     #"-Warray-bounds", # XXX: Needed to avoid False positives for PyTuple access macros
     "-Wshorten-64-to-32",
     "-Werror",
+    "-DPyObjC_DEBUG", # XXX
+    #"-fno-strict-aliasing", # XXX
     ])
 
 ## Arghh, a stupid compiler flag can cause problems. Don't
@@ -457,18 +459,25 @@ if '-O0' in get_config_var('CFLAGS'):
 
 OBJC_LDFLAGS = frameworks('CoreFoundation', 'Foundation', 'Carbon')
 
-if 1:
-    # XXX: This block is enabled for two reasons:
-    # 1) Testsuite crashes with an incomplete testcase (python2.7, OSX 10.8)
-    # 2) There should be a build-time check to see if these options are supported
+if get_config_var('Py_DEBUG'):
+    # Running with Py_DEBUG, reduce optimization level
+    # to make it easier to debug the code.
+    cfg_vars = get_config_vars()
+    for k in vars:
+        if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1')
+        elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1')
 
-    # Enable more optimization.
-    vars = get_config_vars()
-    for k in vars: # XXX
-        if isinstance(vars[k], str) and '-O2' in vars[k]:
-            vars[k] = vars[k].replace('-O2', '-O4')
-        elif isinstance(vars[k], str) and '-O3' in vars[k]:
-            vars[k] = vars[k].replace('-O3', '-O4')
+else:
+    # Enable -O4, which enables link-time optimization with
+    # clang. This appears to have a positive effect on performance.
+    cfg_vars = get_config_vars()
+    for k in cfg_vars:
+        if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1')
+        elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1')
 
 OBJC_LDFLAGS.append("-fvisibility=hidden")
 

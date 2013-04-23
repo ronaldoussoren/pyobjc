@@ -1600,7 +1600,7 @@ object_method_forwardInvocation(
     pyself = NULL;
 
     for (i = 2; i < len; i++) {
-        type = signature->argtype[i].type;
+        type = signature->argtype[i]->type;
         if (type == NULL) {
             PyErr_SetString(PyObjCExc_InternalError, "corrupt metadata");
             Py_DECREF(arglist);
@@ -1681,7 +1681,7 @@ object_method_forwardInvocation(
         return;
     }
 
-    type = signature->rettype.type;
+    type = signature->rettype->type;
     arglen = PyObjCRT_SizeOfType(type);
 
     if (arglen == -1) {
@@ -1728,7 +1728,7 @@ object_method_forwardInvocation(
 
             for (i = 2; i < len;i++) {
                 void* ptr;
-                type = signature->argtype[i].type;
+                type = signature->argtype[i]->type;
 
                 if (arglen == -1) {
                     Py_DECREF(signature);
@@ -1821,7 +1821,7 @@ object_method_forwardInvocation(
 
         for (i = 2; i < len;i++) {
             void* ptr;
-            type = signature->argtype[i].type;
+            type = signature->argtype[i]->type;
 
             if (arglen == -1) {
                 Py_DECREF(signature);
@@ -1913,11 +1913,11 @@ PyObjC_CallPython( id self, SEL selector, PyObject* arglist, BOOL* isAlloc, BOOL
     }
 
     if (isAlloc != NULL) {
-        *isAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype.alreadyRetained;
+        *isAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype->alreadyRetained;
     }
 
     if (isCFAlloc != NULL) {
-        *isCFAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype.alreadyCFRetained;
+        *isCFAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype->alreadyCFRetained;
     }
 
     result = PyObject_Call(pymeth, arglist, NULL);

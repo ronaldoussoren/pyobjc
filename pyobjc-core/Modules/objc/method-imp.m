@@ -387,7 +387,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
     }
 
     if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->sel_class, ((PyObjCNativeSelector*)attr)->sel_selector);
+        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class, ((PyObjCNativeSelector*)attr)->base.sel_selector);
         if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
             return NULL;
         }
@@ -471,7 +471,7 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 
     /* FIXME: there should be a function for retrieving the call function */
     if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
-        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->sel_class, ((PyObjCNativeSelector*)attr)->sel_selector);
+        ((PyObjCNativeSelector*)attr)->sel_call_func = PyObjC_FindCallFunc(((PyObjCNativeSelector*)attr)->base.sel_class, ((PyObjCNativeSelector*)attr)->base.sel_selector);
         if (((PyObjCNativeSelector*)attr)->sel_call_func == NULL) {
             return NULL;
         }

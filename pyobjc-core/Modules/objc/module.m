@@ -1262,7 +1262,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
 
     if (argIndex == -1) {
         for (i = 0; i < Py_SIZE(methinfo); i++) {
-            if (methinfo->argtype[i].callable != NULL) {
+            if (methinfo->argtype[i]->callable != NULL) {
                 argIndex = i;
                 break;
             }
@@ -1281,7 +1281,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
             return NULL;
         }
 
-        if (methinfo->argtype[argIndex].callable == NULL) {
+        if (methinfo->argtype[argIndex]->callable == NULL) {
             PyErr_Format(PyExc_ValueError,
                 "Argument %" PY_FORMAT_SIZE_T "d is not callable", argIndex);
             return NULL;
@@ -1290,7 +1290,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
 
     PyObjC_callback_function result;
 
-    result = PyObjCFFI_MakeFunctionClosure(methinfo->argtype[argIndex].callable, callable);
+    result = PyObjCFFI_MakeFunctionClosure(methinfo->argtype[argIndex]->callable, callable);
     if (result == NULL) {
         return NULL;
     }
