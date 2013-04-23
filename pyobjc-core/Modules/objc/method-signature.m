@@ -136,7 +136,6 @@ PyTypeObject PyObjCMethodSignature_Type = {
 static int
 determine_if_shortcut(PyObjCMethodSignature* methinfo)
 {
-    return 0; /* XXX: disable for now */
     /*
      * Set shortcut_signature and shortcut_argbuf_size if appropriate,
      * clear otherwise
@@ -168,7 +167,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
 #endif /* PyObjC_DEBUG */
 
     int r = PyObjCFFI_CountArguments(
-            methinfo, 2, &byref_in_count, &byref_out_count, &plain_count, &argbuf_len, &variadic_args);
+            methinfo, 0, &byref_in_count, &byref_out_count, &plain_count, &argbuf_len, &variadic_args);
     if (r == -1) {
         PyErr_Clear();
         return 0;

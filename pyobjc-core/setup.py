@@ -443,7 +443,6 @@ CFLAGS.extend([
     "-Wshorten-64-to-32",
     "-Werror",
     "-DPyObjC_DEBUG", # XXX
-    #"-fno-strict-aliasing", # XXX
     ])
 
 ## Arghh, a stupid compiler flag can cause problems. Don't
