@@ -298,9 +298,12 @@ typedef unsigned int NSUInteger;
 #       define PyCapsule_CheckExact(object)    PyCObject_Check(object)
 #   endif /* Python < 2.7 */
 
+#ifdef OBJC_VERSION
 #   define PyErr_Format PyObjCErr_Format
+#endif
 
     extern PyObject* PyObjCErr_Format(PyObject* exception, const char* format, ...);
+
 
 #   define PyText_Check PyString_Check
 #   define PyText_FromFormat PyString_FromFormat
