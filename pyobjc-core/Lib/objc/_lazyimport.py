@@ -203,12 +203,9 @@ class ObjCLazyModule (ModuleType):
         return list(all)
 
     def __get_constant(self, name):
-        # FIXME: Loading variables and functions requires too much
-        # code at the moment, the objc API can be adjusted for
-        # this later on.
         if self.__varmap_dct:
             if name in self.__varmap_dct:
-                tp = self.__varmap_dct[name]
+                tp = self.__varmap_dct.pop(name)
                 return objc._loadConstant(name, tp, False)
 
         if self.__varmap:
@@ -256,7 +253,11 @@ class ObjCLazyModule (ModuleType):
 
         if self.__funcmap:
             if name in self.__funcmap:
-                info = self.__funcmap[name]
+                # NOTE: Remove 'name' from funcmap because
+                #       it won't be needed anymore (either the
+                #       function doesn't exist, or it is loaded)
+                #       Should use slightly less memory.
+                info = self.__funcmap.pop(name)
 
                 func_list = [ (name,) + info ]
 
@@ -278,7 +279,10 @@ class ObjCLazyModule (ModuleType):
 
         if self.__expressions:
             if name in self.__expressions:
-                info = self.__expressions[name]
+                # NOTE: 'name' is popped because it is no longer needed
+                #       in the metadata and popping should slightly reduce
+                #       memory usage.
+                info = self.__expressions.pop(name)
                 try:
                     return eval(info, {}, self.__expressions_mapping)
                 except NameError:
@@ -286,7 +290,7 @@ class ObjCLazyModule (ModuleType):
 
         if self.__aliases:
             if name in self.__aliases:
-                alias = self.__aliases[name]
+                alias = self.__aliases.pop(name)
                 if alias == 'ULONG_MAX':
                     return (sys.maxsize * 2) + 1
                 elif alias == 'LONG_MAX':
