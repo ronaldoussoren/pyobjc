@@ -37,7 +37,7 @@
 
 #define PyObjC_Assert(expr, retval) 				\
     do { 							\
-    if (!(expr)) { PyObjCErr_InternalErrorMesg(			\
+    if (unlikely(!(expr))) { PyObjCErr_InternalErrorMesg(			\
             "assertion failed: " #expr); return (retval); } 	\
     } while (0)
 #else

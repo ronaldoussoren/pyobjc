@@ -474,9 +474,9 @@ else:
     cfg_vars = get_config_vars()
     for k in cfg_vars:
         if isinstance(cfg_vars[k], str) and '-O2' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O1')
+            cfg_vars[k] = cfg_vars[k].replace('-O2', '-O4')
         elif isinstance(cfg_vars[k], str) and '-O3' in cfg_vars[k]:
-            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O1')
+            cfg_vars[k] = cfg_vars[k].replace('-O3', '-O4')
 
 OBJC_LDFLAGS.append("-fvisibility=hidden")
 

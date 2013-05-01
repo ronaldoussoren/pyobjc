@@ -3,51 +3,12 @@
 static PyObjCMethodSignature* new_methodsignature(const char*);
 
 /*
- * TODO:
- * - If this works out: als create templates for byref in/out/inout types
- * - Compile metadata into partial MethodSignature struct in "PyObjC_registerMetaData"
- *   (set 'tmpl' bit in all entries). Be careful to not cause memory corruption when
- *   existing metadata is replaced (but leak memory instead)
+ * Define static strings and struct _PyObjC_ArgDescr values that
+ * are used to share compiled metadata for basic types. These
+ * shared "template" structures reduce the amount of memory used
+ * by metadata structures, at a slight cost in static read-only
+ * data and slightly more complicated code.
  */
-
-#define TC(VAL)  [VAL] = { VAL, 0 }
-static const char _static_typecodes[256][2] = {
-    TC(_C_VOID),
-    TC(_C_ID),
-    TC(_C_CLASS),
-    TC(_C_SEL),
-    TC(_C_BOOL),    TC(_C_NSBOOL),
-    TC(_C_CHR),     TC(_C_UCHR),
-    TC(_C_SHT),     TC(_C_USHT),
-    TC(_C_INT),     TC(_C_UINT),
-    TC(_C_LNG),     TC(_C_ULNG),
-    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
-    TC(_C_FLT),     TC(_C_DBL),
-    TC(_C_CHAR_AS_TEXT),
-    TC(_C_CHAR_AS_INT),
-    TC(_C_UNICHAR),
-};
-#undef TC
-
-#define TC(VAL)  [VAL] = { _C_PTR, VAL, 0 }
-static const char _ptr_typecodes[256][3] = {
-    TC(_C_VOID),
-    TC(_C_ID),
-    TC(_C_CLASS),
-    TC(_C_SEL),
-    TC(_C_BOOL),    TC(_C_NSBOOL),
-    TC(_C_CHR),     TC(_C_UCHR),
-    TC(_C_SHT),     TC(_C_USHT),
-    TC(_C_INT),     TC(_C_UINT),
-    TC(_C_LNG),     TC(_C_ULNG),
-    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
-    TC(_C_FLT),     TC(_C_DBL),
-    TC(_C_CHAR_AS_TEXT),
-    TC(_C_CHAR_AS_INT),
-    TC(_C_UNICHAR),
-};
-#undef TC
-
 #define TC(VAL)  [VAL] = { _C_IN, _C_PTR, VAL, 0 }
 static const char _ptr_in_typecodes[256][4] = {
     TC(_C_VOID),
@@ -108,7 +69,7 @@ static const char _ptr_inout_typecodes[256][4] = {
 
 static const char _block_typecode[] = { _C_ID, _C_UNDEF, 0 };
 
-#define TC(VAL) [VAL] = { .type = _static_typecodes[VAL], .tmpl = 1, .allowNULL = 1 }
+#define TC(VAL) [VAL] = { .type = _ptr_in_typecodes[VAL]+2, .tmpl = 1, .allowNULL = 1 }
 static const struct _PyObjC_ArgDescr descr_templates[256] = {
     TC(_C_VOID),
     TC(_C_ID),
@@ -127,7 +88,7 @@ static const struct _PyObjC_ArgDescr descr_templates[256] = {
 };
 #undef TC
 
-#define TC(VAL) [VAL] = { .type = _ptr_typecodes[VAL], .tmpl = 1, .allowNULL = 1 }
+#define TC(VAL) [VAL] = { .type = _ptr_in_typecodes[VAL]+1, .tmpl = 1, .allowNULL = 1 }
 static const struct _PyObjC_ArgDescr ptr_templates[256] = {
     TC(_C_VOID),
     TC(_C_ID),
