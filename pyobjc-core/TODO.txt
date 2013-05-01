@@ -227,3 +227,7 @@ Medium term
   use that to reduce the memory use of the 'lazy' modules used by metadata
   (either by generating calls in the metadata converted or converting manually in the
   laze module)
+
+* Further speedups in method calls: I've already reduced the amount of
+  memory allocations (PyMem_Alloc, ...), and it should be possible to
+  further reduce this.
