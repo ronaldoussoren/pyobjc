@@ -27,7 +27,9 @@
 /* PyObjC_DEBUG: If defined the bridge will perform more internal checks */
 #ifdef Py_DEBUG
    /* Enable when Python is compiled with internal checks enabled */
+# ifndef PyObjC_DEBUG
 #  define PyObjC_DEBUG
+# endif
 #endif
 
 /* PyObjC_ERROR_ABORT: If defined an internal error will result in an abort() */
@@ -51,7 +53,8 @@
  */
 
 
-
+#include "objc_util.h"
+#include "pyobjc-assert.h"
 #include "arc-runtime.h"
 #include "objc-runtime-compat.h"
 #include "proxy-registry.h"
@@ -72,7 +75,6 @@
 #include "OC_PythonNumber.h"
 #include "OC_PythonSet.h"
 #include "method-signature.h"
-#include "objc_util.h"
 #include "objc-class.h"
 #include "objc-object.h"
 #include "selector.h"
@@ -129,55 +131,6 @@ extern PyObject* PyObjC_callable_signature_get(PyObject* callable, void* closure
 
 #if PY_MAJOR_VERSION == 2
 extern PyObject* PyObjCStrBridgeWarning;
-#endif
-
-
-#ifdef PyObjC_DEBUG
-
-#ifdef PyObjC_ERROR_ABORT
-#   define _PyObjC_InternalError_Bailout(args...)    	\
-	do {						\
-		fprintf(stderr, args); 			\
-		abort();				\
-	} while(0)
-
-#else /* !PyObjC_ERROR_ABORT */
-#   define _PyObjC_InternalError_Bailout(args...)    ((void)0)
-
-#endif /* !PyObjC_ERROR_ABORT */
-
-#define PyObjCErr_InternalError() 				\
-    do { 							\
-    PyErr_Format(PyObjCExc_InternalError, 			\
-       "PyObjC: internal error in %s at %s:%d", 		\
-       __FUNCTION__, __FILE__, __LINE__); 			\
-       _PyObjC_InternalError_Bailout(	 			\
-       "PyObjC: internal error in %s at %s:%d\n", 		\
-       __FUNCTION__, __FILE__, __LINE__); 			\
-    } while (0)
-
-#define PyObjCErr_InternalErrorMesg(msg) 			\
-    do { 							\
-    PyErr_Format(PyObjCExc_InternalError, 			\
-      "PyObjC: internal error in %s at %s:%d: %s", 		\
-       __FUNCTION__, __FILE__, __LINE__, msg); 			\
-       _PyObjC_InternalError_Bailout(	 			\
-      "PyObjC: internal error in %s at %s:%d: %s\n", 		\
-       __FUNCTION__, __FILE__, __LINE__, msg); 			\
-    } while (0)
-
-#define PyObjC_Assert(expr, retval) 				\
-    do { 							\
-    if (!(expr)) { PyObjCErr_InternalErrorMesg(			\
-            "assertion failed: " #expr); return (retval); } 	\
-    } while (0)
-#else
-
-#define PyObjCErr_InternalError()    ((void)0)
-#define PyObjCErr_InternalErrorMesg(mesg)    ((void)0)
-
-#define PyObjC_Assert(expr, retval)    ((void)0)
-
 #endif
 
 #endif /* PyObjC_H */
