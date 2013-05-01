@@ -60,6 +60,16 @@ objc.parseBridgeSupport('''\
           </arg>
         </method>
       </class>
+      <class name='NSObject'>
+        <method selector='processBlock:'>
+          <retval type='d' />
+          <arg index='0' block='true' type='@?'>
+            <retval type='d'/>
+            <arg type='d' />
+            <arg type='d' />
+          </arg>
+        </method>
+      </class>
     </signatures>
     ''' % dict(NSRect_tp=NSRect_tp if sys.version_info[0] == 2 else NSRect_tp.decode('ascii')),
     globals(), 'PyObjCTest')
@@ -72,6 +82,12 @@ if hasattr(v, 'getIntBlock'):
 else:
     blocksEnabled = False
 del v
+
+class BlocksHelper (objc.lookUpClass('NSObject')):
+    def processBlock_(self, block):
+        return -block(2.5, 4.0)
+
+
 
 class TestBlocks (TestCase):
     @min_os_level('10.6')
@@ -162,7 +178,13 @@ class TestBlocks (TestCase):
         sig = objc.splitSignature(objc._block_signature(block))
         self.assertEqual(sig,  (NSRect_tp, objc._C_ID + b'?', objc._C_DBL, objc._C_DBL, objc._C_DBL, objc._C_DBL))
 
-
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlockArgumentToPython(self):
+        obj = OCTestBlock.alloc().init()
+        helper = BlocksHelper.alloc().init()
+        value = obj.callProcessBlockOn_(helper)
+        self.assertEqual(value, -(2.5 * 4.0))
 
 if __name__ == "__main__":
     main()
