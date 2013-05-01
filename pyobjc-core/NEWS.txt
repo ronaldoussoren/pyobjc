@@ -8,6 +8,14 @@ Version 3.0
 
    The 3.0 branch is currently highly experimental, don't uses this version!
 
+* The "lazy" modules used by framework wrappers now always have a ``__loader__``
+  attribute (as required by PEP 302). The value can be :data:`None` when there
+  is no explicit loader (such as when importing from the filesystem in Python 3.2
+  or earlier).
+
+* Method (and function) metadata is stored in a more compact manner, reducing the
+  memory use of PyObjC applications.
+
 * Removed support for hiding "protected" methods, :func:`objc.setHideProtected` is gone,
   it complicated the code without real advantages.
 
