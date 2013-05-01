@@ -39,7 +39,6 @@
 
 -(void)callIntBlock:(void(^)(int))block withValue:(int)value
 {
-    NSLog(@"callIntBlock: self=%@ cmd=%s block=%@ value=%d", self, sel_getName(_cmd), block, value);
     block(value);
 }
 

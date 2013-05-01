@@ -16,22 +16,15 @@ static const char _static_typecodes[256][2] = {
     TC(_C_ID),
     TC(_C_CLASS),
     TC(_C_SEL),
-    TC(_C_CHR),
-    TC(_C_UCHR),
-    TC(_C_SHT),
-    TC(_C_USHT),
-    TC(_C_BOOL),
-    TC(_C_INT),
-    TC(_C_UINT),
-    TC(_C_LNG),
-    TC(_C_ULNG),
-    TC(_C_FLT),
-    TC(_C_DBL),
-    TC(_C_LNG_LNG),
-    TC(_C_ULNG_LNG),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
     TC(_C_CHAR_AS_TEXT),
     TC(_C_CHAR_AS_INT),
-    TC(_C_NSBOOL),
     TC(_C_UNICHAR),
 };
 #undef TC
@@ -44,22 +37,15 @@ static const struct _PyObjC_ArgDescr descr_templates[256] = {
     TC(_C_ID),
     TC(_C_CLASS),
     TC(_C_SEL),
-    TC(_C_CHR),
-    TC(_C_UCHR),
-    TC(_C_SHT),
-    TC(_C_USHT),
-    TC(_C_BOOL),
-    TC(_C_INT),
-    TC(_C_UINT),
-    TC(_C_LNG),
-    TC(_C_ULNG),
-    TC(_C_FLT),
-    TC(_C_DBL),
-    TC(_C_LNG_LNG),
-    TC(_C_ULNG_LNG),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
     TC(_C_CHAR_AS_TEXT),
     TC(_C_CHAR_AS_INT),
-    TC(_C_NSBOOL),
     TC(_C_UNICHAR),
 };
 #undef TC
@@ -158,12 +144,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
         return 0;
     }
 #ifdef PyObjC_DEBUG
-    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
-        PyObjC_Assert(methinfo->argtype[i] != NULL, -1);
-        PyObjC_Assert(methinfo->argtype[i]->type != NULL, -1);
-    }
-    PyObjC_Assert(methinfo->rettype != NULL, -1);
-    PyObjC_Assert(methinfo->rettype->type != NULL, -1);
+    if (PyObjCMethodSignature_Validate(methinfo) == -1) return -1;
 #endif /* PyObjC_DEBUG */
 
     int r = PyObjCFFI_CountArguments(
@@ -190,7 +171,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     return 0;
 }
 
-static struct _PyObjC_ArgDescr* alloc_meta(struct _PyObjC_ArgDescr* tmpl)
+static struct _PyObjC_ArgDescr* alloc_descr(struct _PyObjC_ArgDescr* tmpl)
 {
     struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
     if (retval == NULL) {
@@ -199,6 +180,7 @@ static struct _PyObjC_ArgDescr* alloc_meta(struct _PyObjC_ArgDescr* tmpl)
     }
     retval->type = tmpl?tmpl->type:NULL;
     retval->typeOverride = NO;
+    retval->modifier = '\0';
     retval->ptrType = PyObjC_kPointerPlain;
     retval->allowNULL = YES;
     retval->arraySizeInRetval = NO;
@@ -303,7 +285,7 @@ new_methodsignature(const char* signature)
         retval->rettype = (__typeof__(retval->rettype))&descr_templates[*(unsigned char*)(cur)];
     }
     if (unlikely(retval->rettype->type == NULL)) {
-        retval->rettype = alloc_meta(NULL);
+        retval->rettype = alloc_descr(NULL);
         if (retval->rettype == NULL) {
             Py_DECREF(retval);
             return NULL;
@@ -334,7 +316,7 @@ new_methodsignature(const char* signature)
             retval->argtype[nargs] = (__typeof__(retval->argtype[nargs]))&descr_templates[*(unsigned char*)cur];
         }
         if (unlikely(retval->argtype[nargs]->type == NULL)) {
-            retval->argtype[nargs] = alloc_meta(NULL);
+            retval->argtype[nargs] = alloc_descr(NULL);
             if (unlikely(retval->argtype[nargs] == NULL)) {
                 Py_DECREF(retval);
                 return NULL;
@@ -353,12 +335,7 @@ new_methodsignature(const char* signature)
 
 #ifdef PyObjC_DEBUG
     PyObjC_Assert(Py_SIZE(retval) == nargs, NULL);
-    for (Py_ssize_t i = 0; i < Py_SIZE(retval); i++) {
-        PyObjC_Assert(retval->argtype[i] != NULL, NULL);
-        PyObjC_Assert(retval->argtype[i]->type != NULL, NULL);
-    }
-    PyObjC_Assert(retval->rettype != NULL, NULL);
-    PyObjC_Assert(retval->rettype->type != NULL, NULL);
+    if (PyObjCMethodSignature_Validate(retval) == -1) return NULL;
 #endif /* PyObjC_DEBUG */
 
     if (determine_if_shortcut(retval) < 0) {
@@ -406,34 +383,17 @@ PyObjC_NSMethodSignatureToTypeString(
     return result;
 }
 
-static PyObject* registry = NULL;
-
-int
-PyObjC_registerMetaData(PyObject* class_name, PyObject* selector,
-                            PyObject* metadata)
-{
-    if (registry == NULL) {
-        registry = PyObjC_NewRegistry();
-        if (registry == NULL) {
-            return -1;
-        }
-    }
-    return PyObjC_AddToRegistry(registry, class_name, selector, metadata);
-}
-
-
 /*
  * Return values:
  *  0: OK
  * -1: error
  * -2: 'descr' is template, but would have to be updated.
  */
-static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
+static int
+setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 {
     PyObject* d;
     char typeModifier = 0;
-
-    PyObjC_Assert(descr->type != NULL, -1);
 
     if (meta == Py_None) {
         return 0;
@@ -453,13 +413,15 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         return -1;
     }
 
-    PyObjC_Assert(descr->allowNULL, -1);
+    PyObjC_Assert(meta == NULL || PyDict_Check(meta), -1);
+
+    PyObjC_Assert(descr == NULL || descr->allowNULL, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "null_accepted");
         if (d == NULL || PyObject_IsTrue(d)) {
             /* pass */
         } else {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
             descr->allowNULL = NO;
         }
     }
@@ -468,37 +430,37 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
     if (meta) {
         d = PyDict_GetItemString(meta, "already_retained");
         if (d && PyObject_IsTrue(d)) {
-            if (descr->tmpl && !descr->alreadyRetained) return -2;
+            if (descr == NULL || (descr->tmpl && !descr->alreadyRetained)) return -2;
             descr->alreadyRetained = YES;
         } else {
-            if (descr->tmpl && descr->alreadyRetained) return -2;
+            if (descr == NULL || (descr->tmpl && descr->alreadyRetained)) return -2;
             descr->alreadyRetained = NO;
         }
     }
 
-    PyObjC_Assert(!descr->alreadyCFRetained, -1);
+    PyObjC_Assert(descr == NULL || !descr->alreadyCFRetained, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "already_cfretained");
         if (d && PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
             descr->alreadyCFRetained = YES;
         } else {
             /* pass */
         }
     }
 
-    PyObjC_Assert(!descr->callableRetained, -1);
+    PyObjC_Assert(descr == NULL || !descr->callableRetained, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "callable_retained");
         if (d == NULL || PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
             descr->callableRetained = YES;
         } else {
             /* pass */
         }
     }
 
-    PyObjC_Assert(descr->sel_type == NULL, -1);
+    PyObjC_Assert(descr == NULL || descr->sel_type == NULL, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "sel_of_type");
         if (d) {
@@ -508,7 +470,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
                     return -1;
                 }
 
-                if (descr->tmpl) {
+                if (descr == NULL || descr->tmpl) {
                     Py_DECREF(bytes);
                     return -2;
                 }
@@ -520,7 +482,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
                 }
 
             } else if (PyBytes_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 descr->sel_type = PyObjCUtil_Strdup(PyBytes_AsString(d));
                 if (descr->sel_type == NULL) {
                     return -1;
@@ -532,7 +495,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
     if (meta) {
         d = PyDict_GetItemString(meta, "callable");
         if (d) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
 
             /* Make up a dummy signature, will be overridden bij
              * the metadata.
@@ -564,21 +527,22 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         }
     }
 
-    PyObjC_Assert(!descr->arraySizeInRetval, -1);
+    PyObjC_Assert(descr == NULL || !descr->arraySizeInRetval, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "c_array_length_in_result");
         if (d != NULL && PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
 
             descr->arraySizeInRetval = YES;
         }
     }
 
-    PyObjC_Assert(!descr->printfFormat, -1);
+    PyObjC_Assert(descr == NULL || !descr->printfFormat, -1);
     if (meta) {
         d = PyDict_GetItemString(meta, "printf_format");
         if (d != NULL && PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
+
             descr->printfFormat = YES;
         }
     }
@@ -586,7 +550,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
     if (meta) {
         d = PyDict_GetItemString(meta, "c_array_delimited_by_null");
         if (d != NULL && PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
+
             descr->ptrType = PyObjC_kNullTerminatedArray;
         }
     }
@@ -595,7 +560,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         d = PyDict_GetItemString(meta, "c_array_of_fixed_length");
         if (d != NULL) {
             if (PyLong_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 descr->ptrType = PyObjC_kFixedLengthArray;
                 descr->arrayArg = PyLong_AsLong(d);
                 descr->arrayArgOut = descr->arrayArg;
@@ -605,7 +571,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
             }
 #if PY_MAJOR_VERSION == 2
             else if (PyInt_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 descr->ptrType = PyObjC_kFixedLengthArray;
                 descr->arrayArg = PyInt_AsLong(d);
                 descr->arrayArgOut = descr->arrayArg;
@@ -617,7 +584,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
     if (meta) {
         d = PyDict_GetItemString(meta, "c_array_of_variable_length");
         if (d != NULL && PyObject_IsTrue(d)) {
-            if (descr->tmpl) return -2;
+            if (descr == NULL || descr->tmpl) return -2;
+
             descr->ptrType = PyObjC_kVariableLengthArray;
             descr->arrayArg = 0;
             descr->arrayArg = 0;
@@ -628,7 +596,8 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         d = PyDict_GetItemString(meta, "c_array_length_in_arg");
         if (d != NULL) {
             if (PyLong_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 descr->ptrType = PyObjC_kArrayCountInArg;
                 descr->arrayArg = PyLong_AsLong(d);
                 if (PyErr_Occurred()) {
@@ -638,13 +607,14 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
 
 #if PY_MAJOR_VERSION == 2
             } else if (PyInt_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 descr->ptrType = PyObjC_kArrayCountInArg;
                 descr->arrayArg = PyInt_AsLong(d);
                 descr->arrayArgOut = descr->arrayArg;
 #endif
             } else if (PyTuple_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
 
                 if (PyTuple_GET_SIZE(d) == 1) {
                     descr->ptrType = PyObjC_kArrayCountInArg;
@@ -702,19 +672,23 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
                 if (bytes == NULL) {
                     return -1;
                 }
-                if (descr->tmpl) {
+
+                if (descr == NULL || descr->tmpl) {
                     Py_DECREF(bytes);
                     return -2;
                 }
+
                 typeModifier = *PyBytes_AsString(bytes);
                 Py_DECREF(bytes);
 #if PY_MAJOR_VERSION == 2
             } else if (PyString_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 typeModifier = *PyString_AsString(d);
 #else
             } else if (PyBytes_Check(d)) {
-                if (descr->tmpl) return -2;
+                if (descr == NULL || descr->tmpl) return -2;
+
                 typeModifier = *PyBytes_AsString(d);
 #endif
             }
@@ -740,7 +714,7 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
 
         PyObject* bytes = NULL;
 
-        if (descr->tmpl) return -2;
+        if (descr == NULL || descr->tmpl) return -2;
 
         if (PyUnicode_Check(d)) {
             bytes = PyUnicode_AsEncodedString(d, NULL, NULL);
@@ -793,7 +767,14 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
         descr->type = tp;
         Py_XDECREF(bytes);
 
-    } else {
+    } else if (descr != NULL && descr->type == NULL) {
+        if (typeModifier != '\0') {
+            if (descr->tmpl) return -2;
+        }
+        descr->modifier = typeModifier;
+
+    } else if (descr != NULL && descr->type != NULL) {
+        /* XXX: Is this case still needed? */
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
         PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);
         if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID &&
@@ -823,50 +804,40 @@ static int setup_meta(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_na
             descr->type = tp;
         }
     }
-
     return 0;
 }
 
-PyObjCMethodSignature*
-PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BOOL is_native)
+
+static int
+process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL is_native)
 {
-    PyObjCMethodSignature* methinfo;
     PyObject* v;
-    ssize_t i;
-
-    PyObjC_Assert(signature != NULL, NULL);
-
-    methinfo = new_methodsignature(signature);
-    if (methinfo == NULL) {
-        return NULL;
-    }
 
     if (metadata != NULL && !PyDict_Check(metadata)) {
         metadata = NULL;
     }
 
-
     if (metadata) {
         PyObject* retval = PyDict_GetItemString(metadata, "retval");
 
         if (retval != NULL) {
-            int r = setup_meta(methinfo->rettype, retval, is_native);
+            int r = setup_descr(methinfo->rettype, retval, is_native);
             if (r == -1) {
                 Py_DECREF(methinfo);
-                return NULL;
+                return -1;
 
             } else if (r == -2) {
-                methinfo->rettype = alloc_meta(methinfo->rettype);
+                methinfo->rettype = alloc_descr(methinfo->rettype);
                 if (methinfo->rettype == NULL) {
                     Py_DECREF(methinfo);
-                    return NULL;
+                    return -1;
                 }
-                r = setup_meta(methinfo->rettype, retval, is_native);
+                r = setup_descr(methinfo->rettype, retval, is_native);
                 if (r == -1) {
                     Py_DECREF(methinfo);
-                    return NULL;
+                    return -1;
                 }
-                PyObjC_Assert(r != -2, NULL);
+                PyObjC_Assert(r != -2, -1);
             }
 
             if (retval != NULL) {
@@ -886,6 +857,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
         }
 
         if (args != NULL) {
+            Py_ssize_t i;
             for (i = 0; i < Py_SIZE(methinfo); i++) {
                 PyObject* k = PyInt_FromLong(i);
                 PyObject* d;
@@ -896,28 +868,30 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
                     Py_DECREF(k);
 
                 } else {
-                    /* No metadata, hence no need to call setup_meta */
+                    /* No metadata, hence no need to call setup_descr */
+                    PyObjC_Assert(methinfo->argtype[i] == NULL, -1);
                     continue;
                 }
 
-                PyObjC_Assert(methinfo->argtype[i]->allowNULL, NULL);
-                r = setup_meta(methinfo->argtype[i], d, is_native);
+
+                PyObjC_Assert(methinfo->argtype[i] == NULL || methinfo->argtype[i]->allowNULL, -1);
+                r = setup_descr(methinfo->argtype[i], d, is_native);
                 if (r == -1) {
                     Py_DECREF(methinfo);
-                    return NULL;
+                    return -1;
 
                 } else if (r == -2) {
-                    methinfo->argtype[i] = alloc_meta(methinfo->argtype[i]);
+                    methinfo->argtype[i] = alloc_descr(methinfo->argtype[i]);
                     if (methinfo->argtype[i] == NULL) {
                         Py_DECREF(methinfo);
-                        return NULL;
+                        return -1;
                     }
-                    r = setup_meta(methinfo->argtype[i], d, is_native);
+                    r = setup_descr(methinfo->argtype[i], d, is_native);
                     if (r == -1) {
                         Py_DECREF(methinfo);
-                        return NULL;
+                        return -1;
                     }
-                    PyObjC_Assert(r != -2, NULL);
+                    PyObjC_Assert(r != -2, -1);
                 }
 
             }
@@ -941,7 +915,7 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
             if (PyLong_Check(v)) {
                 methinfo->arrayArg = (int)PyLong_AsLong(v);
                 if (PyErr_Occurred()) {
-                    return NULL;
+                    return -1;
                 }
             }
 #if PY_MAJOR_VERSION == 2
@@ -959,7 +933,9 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
             if ((methinfo->suggestion == NULL)
                         && (!methinfo->null_terminated_array)
                         && (methinfo->arrayArg == -1)) {
+                Py_ssize_t i;
                 for (i = 0; i < Py_SIZE(methinfo); i++) {
+                    if (methinfo->argtype[i] == NULL) continue;
                     if (methinfo->argtype[i]->printfFormat) {
                         goto done;
                     }
@@ -971,46 +947,312 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
                 methinfo->suggestion = PyText_FromString("Variadic functions/methods are not supported");
                 if (methinfo->suggestion == NULL) {
                     Py_DECREF(methinfo);
-                    return NULL;
+                    return -1;
                 }
             }
         }
     }
 
 done:
-#ifdef PyObjC_DEBUG
-    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
-        PyObjC_Assert(methinfo->argtype[i] != NULL, NULL);
-        PyObjC_Assert(methinfo->argtype[i]->type != NULL, NULL);
-    }
-    PyObjC_Assert(methinfo->rettype != NULL, NULL);
-    PyObjC_Assert(methinfo->rettype->type != NULL, NULL);
-#endif /* PyObjC_DEBUG */
+    return 0;
+}
 
-    if (determine_if_shortcut(methinfo) < 0) {
+static PyObject* registry = NULL;
+
+static PyObjCMethodSignature*
+compiled_metadata(PyObject* metadata)
+{
+    PyObjCMethodSignature* result;
+    PyObject* key;
+    PyObject* value;
+    Py_ssize_t max_idx;
+    Py_ssize_t pos;
+    Py_ssize_t i;
+
+    PyObjC_Assert(metadata != NULL, NULL);
+    PyObjC_Assert(PyDict_Check(metadata), NULL);
+
+
+    PyObject* arguments = PyDict_GetItemString(metadata, "arguments");
+    if (arguments == NULL || !PyDict_Check(arguments)) {
+        max_idx = 0;
+    } else {
+        pos = 0;
+        max_idx = -1;
+        while (PyDict_Next(arguments, &pos, &key, &value)) {
+            if (PyLong_Check(key)
+#if PY_MAJOR_VERSION == 2
+                    || PyInt_Check(key)
+#endif /* PY_MAJOR_VERSION == 2 */
+                ) {
+
+                Py_ssize_t k = PyLong_AsSsize_t(key);
+                if (k == -1 && PyErr_Occurred()) {
+                    PyErr_Clear();
+                }
+                if (k > max_idx) {
+                    max_idx = k;
+                }
+            }
+        }
+
+        max_idx += 1;
+    }
+
+    result = PyObject_NewVar(PyObjCMethodSignature,
+            &PyObjCMethodSignature_Type, max_idx);
+    Py_SIZE(result) = max_idx;
+    result->suggestion = NULL;
+    result->variadic = NO;
+    result->free_result = NO;
+    result->shortcut_signature = NO;
+    result->shortcut_argbuf_size = 0;
+    result->null_terminated_array = NO;
+    result->rettype = NULL;
+    result->signature = NULL;
+    for (i = 0; i < max_idx; i++) {
+        result->argtype[i] = NULL;
+    }
+
+    if (process_metadata_dict(result, metadata, NO) < 0) {
+        Py_DECREF(result);
+        return NULL;
+    }
+
+    if (result->rettype != NULL && !result->rettype->tmpl) {
+        result->rettype->tmpl = YES;
+    }
+    for (i = 0; i < max_idx; i++) {
+        if (result->argtype[i] == NULL) continue;
+        if (!result->argtype[i]->tmpl) {
+            result->argtype[i]->tmpl = YES;
+        }
+    }
+    return result;
+}
+
+
+int
+PyObjC_registerMetaData(PyObject* class_name, PyObject* selector,
+                            PyObject* metadata)
+{
+    PyObject* compiled;
+    int r;
+    if (registry == NULL) {
+        registry = PyObjC_NewRegistry();
+        if (registry == NULL) {
+            return -1;
+        }
+    }
+    if (!PyDict_Check(metadata)) {
+        PyErr_SetString(PyExc_TypeError, "metadata should be a dictionary");
+        return -1;
+    }
+
+    compiled = (PyObject*)compiled_metadata(metadata);
+    if (compiled == NULL) {
+        return -1;
+    }
+
+    r = PyObjC_AddToRegistry(registry, class_name, selector, compiled);
+
+    /*
+     * Leak a reference to 'compiled' to ensure it stays alive
+     * even when someone registers new metadata for the same
+     * selector.
+     * -- Py_DECREF(compiled); --
+     */
+    return r;
+}
+
+
+
+PyObjCMethodSignature*
+PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BOOL is_native)
+{
+    PyObjCMethodSignature* methinfo;
+
+    PyObjC_Assert(signature != NULL, NULL);
+
+    methinfo = new_methodsignature(signature);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    if (process_metadata_dict(methinfo, metadata, is_native) < 0) {
         Py_DECREF(methinfo);
         return NULL;
     }
 
+#if 0
+    if (determine_if_shortcut(methinfo) < 0) {
+        Py_DECREF(methinfo);
+        return NULL;
+    }
+#endif
+
     return methinfo;
 }
 
+static struct _PyObjC_ArgDescr*
+merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta)
+{
+    if (meta == NULL) {
+        return descr;
+    }
+    if (meta->type != NULL) {
+        if (!descr->tmpl) {
+            if (descr->typeOverride) {
+                PyMem_Free((void*)descr->type);
+            }
+            PyMem_Free(descr);
+        }
+        return meta;
+    } else {
+        /* Copy argdescr, assume there is no trivial metadata */
+        BOOL copied = NO;
+
+        if (descr->tmpl) {
+            descr = alloc_descr(descr);
+            if (descr == NULL) {
+                return NULL;
+            }
+            copied = YES;
+        }
+        if (meta->callable) {
+            Py_XINCREF(meta->callable);
+            Py_XDECREF(descr->callable);
+            descr->callable = meta->callable;
+        }
+
+        if (descr->sel_type) {
+            PyMem_Free((void*)descr->sel_type);
+        }
+        if (meta->sel_type) {
+            descr->sel_type = PyObjCUtil_Strdup(meta->sel_type);
+            if (descr->sel_type == NULL) {
+                if (copied) {
+                    PyMem_Free(descr);
+                }
+                PyErr_NoMemory();
+                return NULL;
+            }
+        } else {
+            descr->sel_type = NULL;
+        }
+
+        descr->arrayArg = meta->arrayArg;
+        descr->arrayArgOut = meta->arrayArgOut;
+        descr->ptrType = meta->ptrType;
+        descr->allowNULL = meta->allowNULL;
+        descr->arraySizeInRetval = meta->arraySizeInRetval;
+        descr->printfFormat = meta->printfFormat;
+        descr->alreadyRetained = meta->alreadyRetained;
+        descr->alreadyCFRetained = meta->alreadyCFRetained;
+        descr->callableRetained = meta->callableRetained;
+
+        if (meta->modifier != '\0') {
+            const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
+            PyObjC_Assert(*withoutModifiers != _C_ARY_B, NULL);
+            if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID &&
+                descr->ptrType == PyObjC_kPointerPlain) {
+
+                /* Plain old void*, ignore type modifiers */
+
+            } else {
+                char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
+                if (tp == NULL) {
+                    if (copied) {
+                        PyMem_Free(descr);
+                    }
+                    PyErr_NoMemory();
+                    return NULL;
+                }
+
+                if (descr->typeOverride) {
+                    PyMem_Free((void*)(descr->type));
+                    descr->type = NULL;
+                }
+
+                /* Skip existing modifiers, we're overriding those */
+                strcpy(tp+1, withoutModifiers);
+                tp[0]  = meta->modifier;
+                PyObjC_Assert(tp != NULL, NULL);
+                descr->typeOverride = YES;
+                descr->type = tp;
+            }
+        }
+    }
+
+    return descr;
+}
+
+static int
+process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* metadata)
+{
+    Py_ssize_t i, len;
+    struct _PyObjC_ArgDescr* tmp;
+    if (metadata == NULL) {
+        return 0;
+    }
+
+    if (metadata->suggestion) {
+        methinfo->suggestion = metadata->suggestion;
+        Py_INCREF(metadata->suggestion);
+    }
+    methinfo->variadic = metadata->variadic;
+    methinfo->null_terminated_array = metadata->null_terminated_array;
+    methinfo->free_result = metadata->free_result;
+    methinfo->arrayArg = metadata->arrayArg;
+
+    tmp = merge_descr(methinfo->rettype, metadata->rettype);
+    if (tmp == NULL) {
+        return -1;
+    }
+    methinfo->rettype = tmp;
+
+    len = Py_SIZE(methinfo);
+    if (Py_SIZE(metadata) < Py_SIZE(methinfo)) {
+        len = Py_SIZE(metadata);
+    }
+
+    for (i = 0; i < len; i++) {
+        tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i]);
+        if (tmp == NULL) {
+            return -1;
+        }
+        methinfo->argtype[i] = tmp;
+    }
+
+    return determine_if_shortcut(methinfo);
+}
 
 PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
         Class cls, BOOL isClassMethod, SEL sel, const char* signature,
-        BOOL is_native)
+        BOOL is_native __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo;
     PyObject* metadata;
 
     metadata = PyObjC_FindInRegistry(registry, cls, sel);
+    PyObjC_Assert(metadata == NULL || PyObjCMethodSignature_Check(metadata), NULL);
 
-    methinfo =  PyObjCMethodSignature_WithMetaData(signature, metadata, is_native);
+    methinfo = new_methodsignature(signature);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    if (process_metadata_object(methinfo, (PyObjCMethodSignature*)metadata) == -1) {
+        Py_DECREF(methinfo);
+        Py_XDECREF(metadata);
+        return NULL;
+    }
+
     if (isClassMethod) {
         const char* nm  = sel_getName(sel);
         if (strncmp(nm, "new", 3) == 0 && ((nm[3] == 0) || isupper(nm[3]))) {
             if (methinfo->rettype->tmpl) {
-                methinfo->rettype = alloc_meta(methinfo->rettype);
+                methinfo->rettype = alloc_descr(methinfo->rettype);
                 if (methinfo->rettype == NULL) {
                     Py_XDECREF(methinfo);
                     Py_XDECREF(metadata);
@@ -1022,12 +1264,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
     }
 
 #ifdef PyObjC_DEBUG
-    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
-        PyObjC_Assert(methinfo->argtype[i] != NULL, NULL);
-        PyObjC_Assert(methinfo->argtype[i]->type != NULL, NULL);
-    }
-    PyObjC_Assert(methinfo->rettype != NULL, NULL);
-    PyObjC_Assert(methinfo->rettype->type != NULL, NULL);
+    if (PyObjCMethodSignature_Validate(methinfo) == -1) return NULL;
 #endif /* PyObjC_DEBUG */
 
     Py_XDECREF(metadata);
@@ -1049,16 +1286,18 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
      * FromStringAndSize because the type is a segment of the full
      * method signature.
      */
-    end = PyObjCRT_SkipTypeSpec(descr->type) - 1;
-    while ((end != descr->type) && isdigit(*end)) {
-        end --;
+    if (descr->type != NULL) {
+        end = PyObjCRT_SkipTypeSpec(descr->type) - 1;
+        while ((end != descr->type) && isdigit(*end)) {
+            end --;
+        }
+        end ++;
+        v = PyBytes_FromStringAndSize(descr->type,  end - descr->type);
+        if (v == NULL) goto error;
+        r = PyDict_SetItemString(result, "type", v);
+        Py_DECREF(v);
+        if (r == -1) goto error;
     }
-    end ++;
-    v = PyBytes_FromStringAndSize(descr->type,  end - descr->type);
-    if (v == NULL) goto error;
-    r = PyDict_SetItemString(result, "type", v);
-    Py_DECREF(v);
-    if (r == -1) goto error;
 
     if (descr->printfFormat) {
         v = PyBool_FromLong(descr->printfFormat);
@@ -1142,7 +1381,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
         if (r == -1) goto error;
     }
 
-    if (*PyObjCRT_SkipTypeQualifiers(descr->type) == _C_PTR) {
+    if (descr->type == NULL || *PyObjCRT_SkipTypeQualifiers(descr->type) == _C_PTR) {
         v = PyBool_FromLong(descr->allowNULL);
         if (v == NULL) goto error;
         r = PyDict_SetItemString(result, "null_accepted", v);
@@ -1197,8 +1436,12 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
         if (r == -1) goto error;
     }
 
-    v = argdescr2dict(methinfo->rettype);
-    if (v == NULL) goto error;
+    if (methinfo->rettype == NULL) {
+        v = Py_None; Py_INCREF(Py_None);
+    } else {
+        v = argdescr2dict(methinfo->rettype);
+        if (v == NULL) goto error;
+    }
     r = PyDict_SetItemString(result, "retval", v);
     Py_DECREF(v);
     if (r == -1) goto error;
@@ -1212,8 +1455,12 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
     for (i = 0; i < Py_SIZE(methinfo); i++) {
         PyObject* t;
 
-        t = argdescr2dict(methinfo->argtype[i]);
-        if (t == NULL) goto error;
+        if (methinfo->argtype[i] == NULL) {
+            t = Py_None; Py_INCREF(Py_None);
+        } else {
+            t = argdescr2dict(methinfo->argtype[i]);
+            if (t == NULL) goto error;
+        }
 
         PyTuple_SET_ITEM(v, i, t);
     }

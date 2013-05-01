@@ -3469,7 +3469,8 @@ PyObjCFFI_BuildResult(
                     } else {
                         const char* signature = PyObjCBlock_GetSignature(objc_result);
                         if (signature != NULL) {
-                            PyObjCMethodSignature* sig = PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
+                            PyObjCMethodSignature* sig = PyObjCMethodSignature_FromSignature(signature, YES);
+
                             if (sig == NULL) {
                                 Py_DECREF(objc_result);
                                 return NULL;

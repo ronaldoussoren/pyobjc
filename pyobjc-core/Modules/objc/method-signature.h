@@ -27,6 +27,7 @@ struct _PyObjC_ArgDescr {
     PyObjCMethodSignature* callable;
 
     const char* sel_type;
+    char modifier;
     int8_t arrayArg;
     int8_t arrayArgOut;
     enum _PyObjC_PointerType ptrType:3;
@@ -74,5 +75,24 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 #define PyObjCMethodSignature_FromSignature(sig, is_native) \
 	PyObjCMethodSignature_WithMetaData((sig), NULL, (is_native))
+
+
+#ifdef PyObjC_DEBUG
+
+static inline int
+PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
+{
+    PyObjC_Assert(methinfo->signature != NULL, -1);
+    for (Py_ssize_t i = 0; i < Py_SIZE(methinfo); i++) {
+        PyObjC_Assert(methinfo->argtype[i] != NULL, -1);
+        PyObjC_Assert(methinfo->argtype[i]->type != NULL, -1);
+    }
+    PyObjC_Assert(methinfo->rettype != NULL, -1);
+    PyObjC_Assert(methinfo->rettype->type != NULL, -1);
+    return 0;
+}
+#endif /* PyObjC_DEBUG */
+
+
 
 #endif /* PyObjC_METHODSIGNATURE_H */

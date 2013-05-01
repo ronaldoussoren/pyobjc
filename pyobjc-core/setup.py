@@ -365,8 +365,8 @@ def _fixup_compiler():
 class pyobjc_build_ext (build_ext.build_ext):
     def run(self):
         _fixup_compiler()
-        CFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer',])
-        OBJC_LDFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer',])
+        CFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer', '-g'])
+        OBJC_LDFLAGS.extend(['-fsanitize=undefined', '-fsanitize=address', '-fsanitize=integer', '-g'])
         build_ext.build_ext.run(self)
         extensions = self.extensions
         self.extensions = [
