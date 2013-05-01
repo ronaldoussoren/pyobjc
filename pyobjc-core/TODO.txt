@@ -222,3 +222,8 @@ Medium term
 * JavsaScriptCore bindings need work (missing opaque pointer types, no tests, no examples, ...)
 
 * Add tests for objc.ObjCPointer (creating, introspection, accessing value, accessing pointer)
+
+* Add (private) function to convert dictionary to a compiled metadata object,
+  use that to reduce the memory use of the 'lazy' modules used by metadata
+  (either by generating calls in the metadata converted or converting manually in the
+  laze module)

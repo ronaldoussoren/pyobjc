@@ -350,6 +350,7 @@ static BOOL
 __attribute__((__unused__))
 is_default_descr(struct _PyObjC_ArgDescr* descr)
 {
+    if (descr->type != NULL) return NO;
     /* ignore modifier */
     if (descr->ptrType != PyObjC_kPointerPlain) return NO;
     if (descr->allowNULL != YES) return NO;
@@ -1388,21 +1389,18 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     methinfo->free_result = metadata->free_result;
     methinfo->arrayArg = metadata->arrayArg;
 
-#if 0
-    if (descr->rettype.tmpl && metadata->rettype != NULL && metadata->rettype->modifier != '\0' && is_default_descr(metadata->rettype)) {
+    if (methinfo->rettype->tmpl && metadata->rettype != NULL && metadata->rettype->modifier != '\0' && is_default_descr(metadata->rettype)) {
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(methinfo->rettype->type);
         if (withoutModifiers[0] == _C_PTR) {
             switch (metadata->rettype->modifier) {
-            case _C_IN: metadata->rettype = ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
-            case _C_OUT: metadata->rettype = ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
-            case _C_INOUT: metadata->rettype = ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
+            case _C_IN: metadata->rettype = (struct _PyObjC_ArgDescr*)&ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
+            case _C_OUT: metadata->rettype = (struct _PyObjC_ArgDescr*)&ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
+            case _C_INOUT: metadata->rettype = (struct _PyObjC_ArgDescr*)&ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
             }
         }
         /* No 'else': the metadata is default and hence won't update what we already have */
 
-    } else
-#endif
-    {
+    } else {
         tmp = merge_descr(methinfo->rettype, metadata->rettype, is_native);
         if (tmp == NULL) {
             return -1;
@@ -1416,21 +1414,18 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     }
 
     for (i = 0; i < len; i++) {
-#if 0
-        if (descr->argtype[i].tmpl && metadata->argtype[i] != NULL && metadata->argtype[i]->modifier != '\0' && is_default_descr(metadata->argtype[i])) {
+        if (methinfo->argtype[i]->tmpl && metadata->argtype[i] != NULL && metadata->argtype[i]->modifier != '\0' && is_default_descr(metadata->argtype[i])) {
             const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(methinfo->argtype[i]->type);
             if (withoutModifiers[0] == _C_PTR) {
                 switch (metadata->argtype[i]->modifier) {
-                case _C_IN: metadata->argtype[i] = ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
-                case _C_OUT: metadata->argtype[i] = ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
-                case _C_INOUT: metadata->argtype[i] = ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
+                case _C_IN: metadata->argtype[i] = (struct _PyObjC_ArgDescr*)&ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
+                case _C_OUT: metadata->argtype[i] = (struct _PyObjC_ArgDescr*)&ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
+                case _C_INOUT: metadata->argtype[i] = (struct _PyObjC_ArgDescr*)&ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
                 }
             }
             /* No 'else': the metadata is default and hence won't update what we already have */
 
-        } else
-#endif
-        {
+        } else {
             tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);
             if (tmp == NULL) {
                 return -1;

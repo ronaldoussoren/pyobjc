@@ -241,12 +241,6 @@ class _BridgeSupportParser (object):
             v = self.attribute_bool(node, "function_pointer_retained", None, True)
             result["callable_retained"] = v
 
-            # Force the right type encoding for the argument
-            #if self.attribute_bool(node, "block", None, False):
-            #    result["type"] = b"@?"
-            #else:
-            #    result["type"] = b"^?"
-
             meta = result["callable"] = {}
             arguments = meta["arguments"] = {}
             idx = 0
