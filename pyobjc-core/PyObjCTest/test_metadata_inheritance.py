@@ -10,7 +10,7 @@ objc.registerMetaDataForSelector(b"NSObject", b"selector",
 
 
 class MetadataInheritanceHelper (NSObject):
-    def selector(self): return
+    def selector(self): return 1
 
 class TestMetadataInheritance (TestCase):
 

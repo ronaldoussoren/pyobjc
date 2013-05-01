@@ -29,10 +29,163 @@ static const char _static_typecodes[256][2] = {
 };
 #undef TC
 
+#define TC(VAL)  [VAL] = { _C_PTR, VAL, 0 }
+static const char _ptr_typecodes[256][3] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL)  [VAL] = { _C_IN, _C_PTR, VAL, 0 }
+static const char _ptr_in_typecodes[256][4] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL)  [VAL] = { _C_OUT, _C_PTR, VAL, 0 }
+static const char _ptr_out_typecodes[256][4] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL)  [VAL] = { _C_INOUT, _C_PTR, VAL, 0 }
+static const char _ptr_inout_typecodes[256][4] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+
 static const char _block_typecode[] = { _C_ID, _C_UNDEF, 0 };
 
 #define TC(VAL) [VAL] = { .type = _static_typecodes[VAL], .tmpl = 1, .allowNULL = 1 }
 static const struct _PyObjC_ArgDescr descr_templates[256] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL) [VAL] = { .type = _ptr_typecodes[VAL], .tmpl = 1, .allowNULL = 1 }
+static const struct _PyObjC_ArgDescr ptr_templates[256] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL) [VAL] = { .type = _ptr_in_typecodes[VAL], .tmpl = 1, .allowNULL = 1, .ptrType = PyObjC_kPointerPlain }
+static const struct _PyObjC_ArgDescr ptr_in_templates[256] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL) [VAL] = { .type = _ptr_out_typecodes[VAL], .tmpl = 1, .allowNULL = 1, .ptrType = PyObjC_kPointerPlain }
+static const struct _PyObjC_ArgDescr ptr_out_templates[256] = {
+    TC(_C_VOID),
+    TC(_C_ID),
+    TC(_C_CLASS),
+    TC(_C_SEL),
+    TC(_C_BOOL),    TC(_C_NSBOOL),
+    TC(_C_CHR),     TC(_C_UCHR),
+    TC(_C_SHT),     TC(_C_USHT),
+    TC(_C_INT),     TC(_C_UINT),
+    TC(_C_LNG),     TC(_C_ULNG),
+    TC(_C_LNG_LNG), TC(_C_ULNG_LNG),
+    TC(_C_FLT),     TC(_C_DBL),
+    TC(_C_CHAR_AS_TEXT),
+    TC(_C_CHAR_AS_INT),
+    TC(_C_UNICHAR),
+};
+#undef TC
+
+#define TC(VAL) [VAL] = { .type = _ptr_inout_typecodes[VAL], .tmpl = 1, .allowNULL = 1, .ptrType = PyObjC_kPointerPlain }
+static const struct _PyObjC_ArgDescr ptr_inout_templates[256] = {
     TC(_C_VOID),
     TC(_C_ID),
     TC(_C_CLASS),
@@ -105,7 +258,6 @@ sig_dealloc(PyObject* _self)
     }
     PyObject_Free(self);
 }
-
 
 PyTypeObject PyObjCMethodSignature_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
@@ -192,6 +344,23 @@ static struct _PyObjC_ArgDescr* alloc_descr(struct _PyObjC_ArgDescr* tmpl)
     retval->callable = NULL;
     retval->sel_type = NULL;
     return retval;
+}
+
+static BOOL
+__attribute__((__unused__))
+is_default_descr(struct _PyObjC_ArgDescr* descr)
+{
+    /* ignore modifier */
+    if (descr->ptrType != PyObjC_kPointerPlain) return NO;
+    if (descr->allowNULL != YES) return NO;
+    if (descr->arraySizeInRetval != NO) return NO;
+    if (descr->printfFormat != NO) return NO;
+    if (descr->alreadyRetained != NO) return NO;
+    if (descr->alreadyCFRetained != NO) return NO;
+    if (descr->callableRetained != NO) return NO;
+    if (descr->callable != NULL) return NO;
+    if (descr->sel_type != NULL) return NO;
+    return YES;
 }
 
 static int
@@ -281,9 +450,22 @@ new_methodsignature(const char* signature)
     PyObjC_Assert(cur != NULL, NULL);
     if (unlikely(cur[0] == _C_ID && cur[1] == _C_UNDEF)) {
         retval->rettype = (__typeof__(retval->rettype))&block_template;
+    } else if (unlikely(cur[0] == _C_PTR)) {
+        retval->rettype = (__typeof__(retval->rettype))&ptr_templates[*(unsigned char*)(cur+1)];
+
+    } else if (unlikely(cur[0] == _C_IN && cur[1] == _C_PTR)) {
+        retval->rettype = (__typeof__(retval->rettype))&ptr_in_templates[*(unsigned char*)(cur+2)];
+
+    } else if (unlikely(cur[0] == _C_OUT && cur[1] == _C_PTR)) {
+        retval->rettype = (__typeof__(retval->rettype))&ptr_out_templates[*(unsigned char*)(cur+2)];
+
+    } else if (unlikely(cur[0] == _C_INOUT && cur[1] == _C_PTR)) {
+        retval->rettype = (__typeof__(retval->rettype))&ptr_inout_templates[*(unsigned char*)(cur+2)];
+
     } else {
         retval->rettype = (__typeof__(retval->rettype))&descr_templates[*(unsigned char*)(cur)];
     }
+
     if (unlikely(retval->rettype->type == NULL)) {
         retval->rettype = alloc_descr(NULL);
         if (retval->rettype == NULL) {
@@ -1084,103 +1266,104 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata, BO
         return NULL;
     }
 
-#if 0
     if (determine_if_shortcut(methinfo) < 0) {
         Py_DECREF(methinfo);
         return NULL;
     }
-#endif
 
     return methinfo;
 }
 
+
 static struct _PyObjC_ArgDescr*
-merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta)
+merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL is_native)
 {
     if (meta == NULL) {
         return descr;
     }
     if (meta->type != NULL) {
-        if (!descr->tmpl) {
-            if (descr->typeOverride) {
-                PyMem_Free((void*)descr->type);
+        if (!is_native || PyObjC_signatures_compatible(descr->type, meta->type)) {
+            if (!descr->tmpl) {
+                if (descr->typeOverride) {
+                    PyMem_Free((void*)descr->type);
+                }
+                PyMem_Free(descr);
             }
-            PyMem_Free(descr);
+            return meta;
         }
-        return meta;
+    }
+
+    /* Copy argdescr, assume there is no trivial metadata */
+    BOOL copied = NO;
+
+    if (descr->tmpl) {
+        descr = alloc_descr(descr);
+        if (descr == NULL) {
+            return NULL;
+        }
+        copied = YES;
+    }
+    if (meta->callable) {
+        Py_XINCREF(meta->callable);
+        Py_XDECREF(descr->callable);
+        descr->callable = meta->callable;
+    }
+
+    if (descr->sel_type) {
+        PyMem_Free((void*)descr->sel_type);
+    }
+    if (meta->sel_type) {
+        descr->sel_type = PyObjCUtil_Strdup(meta->sel_type);
+        if (descr->sel_type == NULL) {
+            if (copied) {
+                PyMem_Free(descr);
+            }
+            PyErr_NoMemory();
+            return NULL;
+        }
     } else {
-        /* Copy argdescr, assume there is no trivial metadata */
-        BOOL copied = NO;
+        descr->sel_type = NULL;
+    }
 
-        if (descr->tmpl) {
-            descr = alloc_descr(descr);
-            if (descr == NULL) {
-                return NULL;
-            }
-            copied = YES;
-        }
-        if (meta->callable) {
-            Py_XINCREF(meta->callable);
-            Py_XDECREF(descr->callable);
-            descr->callable = meta->callable;
-        }
+    descr->arrayArg = meta->arrayArg;
+    descr->arrayArgOut = meta->arrayArgOut;
+    descr->ptrType = meta->ptrType;
+    descr->allowNULL = meta->allowNULL;
+    descr->arraySizeInRetval = meta->arraySizeInRetval;
+    descr->printfFormat = meta->printfFormat;
+    descr->alreadyRetained = meta->alreadyRetained;
+    descr->alreadyCFRetained = meta->alreadyCFRetained;
+    descr->callableRetained = meta->callableRetained;
 
-        if (descr->sel_type) {
-            PyMem_Free((void*)descr->sel_type);
-        }
-        if (meta->sel_type) {
-            descr->sel_type = PyObjCUtil_Strdup(meta->sel_type);
-            if (descr->sel_type == NULL) {
+    if (meta->modifier != '\0') {
+        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
+        PyObjC_Assert(*withoutModifiers != _C_ARY_B, NULL);
+        if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID &&
+            descr->ptrType == PyObjC_kPointerPlain) {
+
+            /* Plain old void*, ignore type modifiers */
+
+        } else {
+            char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
+            if (tp == NULL) {
                 if (copied) {
                     PyMem_Free(descr);
                 }
                 PyErr_NoMemory();
                 return NULL;
             }
-        } else {
-            descr->sel_type = NULL;
-        }
 
-        descr->arrayArg = meta->arrayArg;
-        descr->arrayArgOut = meta->arrayArgOut;
-        descr->ptrType = meta->ptrType;
-        descr->allowNULL = meta->allowNULL;
-        descr->arraySizeInRetval = meta->arraySizeInRetval;
-        descr->printfFormat = meta->printfFormat;
-        descr->alreadyRetained = meta->alreadyRetained;
-        descr->alreadyCFRetained = meta->alreadyCFRetained;
-        descr->callableRetained = meta->callableRetained;
-
-        if (meta->modifier != '\0') {
-            const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(descr->type);
-            PyObjC_Assert(*withoutModifiers != _C_ARY_B, NULL);
-            if (descr->type[0] == _C_PTR && descr->type[1] == _C_VOID &&
-                descr->ptrType == PyObjC_kPointerPlain) {
-
-                /* Plain old void*, ignore type modifiers */
-
-            } else {
-                char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
-                if (tp == NULL) {
-                    if (copied) {
-                        PyMem_Free(descr);
-                    }
-                    PyErr_NoMemory();
-                    return NULL;
-                }
-
-                if (descr->typeOverride) {
-                    PyMem_Free((void*)(descr->type));
-                    descr->type = NULL;
-                }
-
-                /* Skip existing modifiers, we're overriding those */
-                strcpy(tp+1, withoutModifiers);
-                tp[0]  = meta->modifier;
-                PyObjC_Assert(tp != NULL, NULL);
-                descr->typeOverride = YES;
-                descr->type = tp;
+            if (descr->typeOverride) {
+                PyMem_Free((void*)(descr->type));
+                descr->type = NULL;
             }
+
+            /* Skip existing modifiers, we're overriding those */
+            strcpy(tp+1, withoutModifiers);
+            tp[0]  = meta->modifier;
+            PyObjC_Assert(tp != NULL, NULL);
+            descr->typeOverride = YES;
+            descr->type = tp;
         }
     }
 
@@ -1188,7 +1371,7 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta)
 }
 
 static int
-process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* metadata)
+process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* metadata, BOOL is_native)
 {
     Py_ssize_t i, len;
     struct _PyObjC_ArgDescr* tmp;
@@ -1205,11 +1388,27 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     methinfo->free_result = metadata->free_result;
     methinfo->arrayArg = metadata->arrayArg;
 
-    tmp = merge_descr(methinfo->rettype, metadata->rettype);
-    if (tmp == NULL) {
-        return -1;
+#if 0
+    if (descr->rettype.tmpl && metadata->rettype != NULL && metadata->rettype->modifier != '\0' && is_default_descr(metadata->rettype)) {
+        const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(methinfo->rettype->type);
+        if (withoutModifiers[0] == _C_PTR) {
+            switch (metadata->rettype->modifier) {
+            case _C_IN: metadata->rettype = ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
+            case _C_OUT: metadata->rettype = ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
+            case _C_INOUT: metadata->rettype = ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
+            }
+        }
+        /* No 'else': the metadata is default and hence won't update what we already have */
+
+    } else
+#endif
+    {
+        tmp = merge_descr(methinfo->rettype, metadata->rettype, is_native);
+        if (tmp == NULL) {
+            return -1;
+        }
+        methinfo->rettype = tmp;
     }
-    methinfo->rettype = tmp;
 
     len = Py_SIZE(methinfo);
     if (Py_SIZE(metadata) < Py_SIZE(methinfo)) {
@@ -1217,11 +1416,27 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     }
 
     for (i = 0; i < len; i++) {
-        tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i]);
-        if (tmp == NULL) {
-            return -1;
+#if 0
+        if (descr->argtype[i].tmpl && metadata->argtype[i] != NULL && metadata->argtype[i]->modifier != '\0' && is_default_descr(metadata->argtype[i])) {
+            const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(methinfo->argtype[i]->type);
+            if (withoutModifiers[0] == _C_PTR) {
+                switch (metadata->argtype[i]->modifier) {
+                case _C_IN: metadata->argtype[i] = ptr_in_templates[(unsigned char)(withoutModifiers[1])]; break;
+                case _C_OUT: metadata->argtype[i] = ptr_out_templates[(unsigned char)(withoutModifiers[1])]; break;
+                case _C_INOUT: metadata->argtype[i] = ptr_inout_templates[(unsigned char)(withoutModifiers[1])]; break;
+                }
+            }
+            /* No 'else': the metadata is default and hence won't update what we already have */
+
+        } else
+#endif
+        {
+            tmp = merge_descr(methinfo->argtype[i], metadata->argtype[i], is_native);
+            if (tmp == NULL) {
+                return -1;
+            }
+            methinfo->argtype[i] = tmp;
         }
-        methinfo->argtype[i] = tmp;
     }
 
     return determine_if_shortcut(methinfo);
@@ -1242,7 +1457,7 @@ PyObjCMethodSignature* PyObjCMethodSignature_ForSelector(
         return NULL;
     }
 
-    if (process_metadata_object(methinfo, (PyObjCMethodSignature*)metadata) == -1) {
+    if (process_metadata_object(methinfo, (PyObjCMethodSignature*)metadata, is_native) == -1) {
         Py_DECREF(methinfo);
         Py_XDECREF(metadata);
         return NULL;
@@ -1282,6 +1497,12 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
     result = PyDict_New();
     if (result == NULL) return NULL;
 
+    if (descr->tmpl) {
+        /* Add _template to the metadata, mostly for the testsuite */
+        r = PyDict_SetItemString(result, "_template", Py_True);
+        if (r == -1) goto error;
+    }
+
     /*
      * FromStringAndSize because the type is a segment of the full
      * method signature.
@@ -1315,17 +1536,21 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
         if (r == -1) goto error;
     }
 
-    v = PyBool_FromLong(descr->alreadyRetained);
-    if (v == NULL) goto error;
-    r = PyDict_SetItemString(result, "already_retained", v);
-    Py_DECREF(v);
-    if (r == -1) goto error;
+    if (descr->alreadyRetained) {
+        v = PyBool_FromLong(descr->alreadyRetained);
+        if (v == NULL) goto error;
+        r = PyDict_SetItemString(result, "already_retained", v);
+        Py_DECREF(v);
+        if (r == -1) goto error;
+    }
 
-    v = PyBool_FromLong(descr->alreadyCFRetained);
-    if (v == NULL) goto error;
-    r = PyDict_SetItemString(result, "already_cfretained", v);
-    Py_DECREF(v);
-    if (r == -1) goto error;
+    if (descr->alreadyCFRetained) {
+        v = PyBool_FromLong(descr->alreadyCFRetained);
+        if (v == NULL) goto error;
+        r = PyDict_SetItemString(result, "already_cfretained", v);
+        Py_DECREF(v);
+        if (r == -1) goto error;
+    }
 
     if (descr->callable) {
         v = PyObjCMethodSignature_AsDict(descr->callable);
@@ -1408,11 +1633,13 @@ PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
     if (result == NULL) {
         return NULL;
     }
-    v = PyBool_FromLong(methinfo->variadic);
-    if (v == NULL) goto error;
-    r = PyDict_SetItemString(result, "variadic", v);
-    Py_DECREF(v);
-    if (r == -1) goto error;
+    if (methinfo->variadic) {
+        v = PyBool_FromLong(methinfo->variadic);
+        if (v == NULL) goto error;
+        r = PyDict_SetItemString(result, "variadic", v);
+        Py_DECREF(v);
+        if (r == -1) goto error;
+    }
 
     if (methinfo->variadic && methinfo->null_terminated_array) {
         v = PyBool_FromLong(methinfo->null_terminated_array);

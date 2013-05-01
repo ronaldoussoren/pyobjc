@@ -943,16 +943,16 @@ class TestMetaDataAccess (TestCase):
 
     def testPrintfFormat(self):
         meta = OC_MetaDataTest.makeArrayWithFormat_.__metadata__()
-        self.assertEqual(meta['variadic'], True)
+        self.assertEqual(meta.get('variadic', False), True)
         self.assertNotIn('printf_format', meta['arguments'][0])
         self.assertEqual(meta['arguments'][2]['printf_format'], True)
 
     def testVariadic(self):
         meta = OC_MetaDataTest.makeArrayWithFormat_.__metadata__()
-        self.assertEqual(meta['variadic'], True)
+        self.assertEqual(meta.get('variadic', False), True)
 
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()
-        self.assertEqual(meta['variadic'], False)
+        self.assertEqual(meta.get('variadic', False), False)
 
     def testTypes(self):
         meta = OC_MetaDataTest.ignoreMethod.__metadata__()

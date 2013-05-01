@@ -8,6 +8,10 @@ Version 3.0
 
    The 3.0 branch is currently highly experimental, don't uses this version!
 
+* Exclude a number of keys from the metadata dictionary when they have the
+  default value (in the result from the *__metadata__()* method on methods
+  and functions)
+
 * The "lazy" modules used by framework wrappers now always have a ``__loader__``
   attribute (as required by PEP 302). The value can be :data:`None` when there
   is no explicit loader (such as when importing from the filesystem in Python 3.2
