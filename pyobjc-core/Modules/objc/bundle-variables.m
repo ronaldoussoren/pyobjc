@@ -437,7 +437,7 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
         if (value == NULL) {
             if (!skip_undefined) {
                 PyErr_Format(PyObjCExc_Error,
-                    "cannot find function %s", name);
+                    "cannot find function %R", name);
                 Py_DECREF(seq);
                 return NULL;
             }
