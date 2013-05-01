@@ -16,6 +16,7 @@ sys.modules['CoreFoundation'] = mod = objc.ObjCLazyModule('CoreFoundation',
     {
         '__doc__': __doc__,
         '__path__': __path__,
+        '__loader__': globals().get('__loader__', None),
     }, ())
 
 import CoreFoundation._CoreFoundation

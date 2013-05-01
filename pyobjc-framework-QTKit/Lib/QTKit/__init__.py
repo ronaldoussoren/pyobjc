@@ -17,5 +17,6 @@ sys.modules['QTKit'] = mod = objc.ObjCLazyModule('QTKit',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Cocoa, Quartz,))

@@ -51,6 +51,7 @@ sys.modules['AppKit'] = mod = objc.ObjCLazyModule('AppKit',
             'objc': objc,
             'NSDictionaryOfVariableBindings': NSDictionaryOfVariableBindings,
             '__path__': __path__,
+            '__loader__': globals().get('__loader__', None),
         }, (Foundation,))
 
 # NSApp is a global variable that can be changed in ObjC,

@@ -16,5 +16,6 @@ sys.modules['Quartz.ImageKit'] = mod = objc.ObjCLazyModule('Quartz.ImageKit',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Cocoa, ))

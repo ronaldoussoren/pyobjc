@@ -18,4 +18,5 @@ sys.modules['CalendarStore'] = objc.ObjCLazyModule(
         '__doc__': __doc__,
         '__path__': __path__,
         'objc': objc,
+        '__loader__': globals().get('__loader__', None),
     }, (Foundation,))

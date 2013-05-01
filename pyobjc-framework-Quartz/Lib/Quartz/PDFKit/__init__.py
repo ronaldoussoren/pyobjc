@@ -16,5 +16,6 @@ sys.modules['Quartz.PDFKit'] = mod = objc.ObjCLazyModule('Quartz.PDFKit',
     _metadata.__dict__, None, {
        '__doc__': __doc__,
        '__path__': __path__,
+       '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( AppKit,))

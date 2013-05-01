@@ -17,6 +17,7 @@ mod = objc.ObjCLazyModule(
         '__doc__': __doc__,
         'objc': objc,
         '__path__': __path__,
+        '__loader__': globals().get('__loader__', None),
     }, (CoreFoundation,))
 
 
