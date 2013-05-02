@@ -39,3 +39,5 @@ sys.modules['CFNetwork'] = mod = objc.ObjCLazyModule(
 import CFNetwork._manual
 for nm in dir(CFNetwork._manual):
     setattr(mod, nm, getattr(CFNetwork._manual, nm))
+
+del sys.modules['CFNetwork._metadata']

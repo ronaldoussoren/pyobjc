@@ -19,3 +19,5 @@ sys.modules['DictionaryServices'] = mod = objc.ObjCLazyModule('DictionaryService
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['DictionaryServices._metadata']

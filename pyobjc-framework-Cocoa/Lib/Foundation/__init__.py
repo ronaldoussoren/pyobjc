@@ -175,6 +175,8 @@ sys.modules['Foundation'] = mod = objc.ObjCLazyModule('Foundation',
             '__loader__': globals().get('__loader__', None),
         }, (CoreFoundation,))
 
+del sys.modules['Foundation._metadata']
+
 import Foundation._Foundation
 for nm in dir(Foundation._Foundation):
     if nm.startswith('_'): continue

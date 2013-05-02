@@ -19,3 +19,5 @@ sys.modules['PubSub'] = mod = objc.ObjCLazyModule('PubSub',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['PubSub._metadata']

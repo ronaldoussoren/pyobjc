@@ -26,6 +26,8 @@ sys.modules['LaunchServices'] = mod = objc.ObjCLazyModule(
     '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
 
+del sys.modules['LaunchServices._metadata']
+
 
 # Load an undocumented, yet announced function. This function was announced
 # in TN2029 (http://developer.apple.com/technotes/tn/tn2029.html)

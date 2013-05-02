@@ -20,3 +20,4 @@ sys.modules['SyncServices'] = mod = objc.ObjCLazyModule('SyncServices',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( CoreData,))
+del sys.modules['SyncServices._metadata']

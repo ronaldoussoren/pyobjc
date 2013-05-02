@@ -19,3 +19,5 @@ sys.modules['Quartz.QuartzFilters'] = mod = objc.ObjCLazyModule('Quartz.QuartzFi
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['Quartz.QuartzFilters._metadata']

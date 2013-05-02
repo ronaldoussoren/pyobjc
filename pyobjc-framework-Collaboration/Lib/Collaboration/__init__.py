@@ -20,3 +20,5 @@ sys.modules['Collaboration'] = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
         'objc': objc,
     }, (Foundation,))
+
+del sys.modules['Collaboration._metadata']

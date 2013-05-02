@@ -20,3 +20,5 @@ sys.modules['Quartz.QuartzComposer'] = mod = objc.ObjCLazyModule('Quartz.QuartzC
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Quartz.CoreGraphics, Foundation,))
+
+del sys.modules['Quartz.QuartzComposer._metadata']

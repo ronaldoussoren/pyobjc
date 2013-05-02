@@ -19,3 +19,5 @@ sys.modules['Message'] = mod = objc.ObjCLazyModule('Message',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['Message._metadata']

@@ -20,6 +20,7 @@ sys.modules['SystemConfiguration'] = mod = objc.ObjCLazyModule('SystemConfigurat
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation, SystemConfiguration._manual,))
+del sys.modules['SystemConfiguration._metadata']
 
 import SystemConfiguration._manual as m
 for nm in dir(m):

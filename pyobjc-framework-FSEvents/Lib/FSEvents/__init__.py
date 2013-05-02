@@ -20,3 +20,5 @@ sys.modules['FSEvents'] = mod = objc.ObjCLazyModule('FSEvents',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation, FSEvents._callbacks,))
+
+del sys.modules['FSEvents._metadata']

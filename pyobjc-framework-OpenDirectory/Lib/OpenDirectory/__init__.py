@@ -16,3 +16,5 @@ sys.modules['OpenDirectory'] = mod = objc.ObjCLazyModule('OpenDirectory',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, (CFOpenDirectory,))
+
+del sys.modules['OpenDirectory._metadata']

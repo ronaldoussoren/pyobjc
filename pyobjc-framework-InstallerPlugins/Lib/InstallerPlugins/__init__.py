@@ -19,3 +19,5 @@ sys.modules['InstallerPlugins'] = mod = objc.ObjCLazyModule('InstallerPlugins',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( AppKit,))
+
+del sys.modules['InstallerPlugins._metadata']

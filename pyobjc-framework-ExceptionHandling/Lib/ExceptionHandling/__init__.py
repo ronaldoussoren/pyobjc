@@ -19,3 +19,5 @@ sys.modules['ExceptionHandling'] = mod = objc.ObjCLazyModule('ExceptionHandling'
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['ExceptionHandling._metadata']

@@ -19,3 +19,5 @@ sys.modules['LatentSemanticMapping'] = mod = objc.ObjCLazyModule('LatentSemantic
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['LatentSemanticMapping._metadata']

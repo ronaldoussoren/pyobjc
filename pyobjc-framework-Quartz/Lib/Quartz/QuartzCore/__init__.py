@@ -49,3 +49,4 @@ sys.modules['Quartz.QuartzCore'] = mod = objc.ObjCLazyModule('Quartz.QuartzCore'
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, (Foundation,))
+del sys.modules['Quartz.QuartzCore._metadata']

@@ -19,3 +19,5 @@ sys.modules['Quartz.ImageIO'] = mod = objc.ObjCLazyModule('Quartz.ImageIO',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Quartz.CoreGraphics,))
+
+del sys.modules['Quartz.ImageIO._metadata']

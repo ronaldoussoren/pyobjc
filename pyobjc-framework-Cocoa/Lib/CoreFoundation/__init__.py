@@ -25,3 +25,5 @@ for nm in dir(CoreFoundation._CoreFoundation):
     setattr(mod, nm, getattr(CoreFoundation._CoreFoundation, nm))
 for nm in dir(CoreFoundation._static):
     setattr(mod, nm, getattr(CoreFoundation._static, nm))
+
+del sys.modules['CoreFoundation._metadata']

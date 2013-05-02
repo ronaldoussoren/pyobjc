@@ -19,3 +19,5 @@ sys.modules['InterfaceBuilderKit'] = mod = objc.ObjCLazyModule('InterfaceBuilder
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( AppKit,))
+
+del sys.modules['InterfaceBuilderKit._metadata']

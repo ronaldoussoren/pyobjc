@@ -19,3 +19,4 @@ sys.modules['ServerNotification'] = mod = objc.ObjCLazyModule('ServerNotificatio
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+del sys.modules['ServerNotification._metadata']

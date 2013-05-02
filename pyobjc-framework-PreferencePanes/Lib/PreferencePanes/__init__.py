@@ -19,3 +19,5 @@ sys.modules['PreferencePanes'] = mod = objc.ObjCLazyModule('PreferencePanes',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( AppKit,))
+
+del sys.modules['PreferencePanes._metadata']

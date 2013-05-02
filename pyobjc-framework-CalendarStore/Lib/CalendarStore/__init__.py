@@ -20,3 +20,5 @@ sys.modules['CalendarStore'] = objc.ObjCLazyModule(
         'objc': objc,
         '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
+
+del sys.modules['CalendarStore._metadata']

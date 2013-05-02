@@ -21,3 +21,5 @@ sys.modules['CoreData'] = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
         'objc': objc
     }, (Foundation,))
+
+del sys.modules['CoreData._metadata']

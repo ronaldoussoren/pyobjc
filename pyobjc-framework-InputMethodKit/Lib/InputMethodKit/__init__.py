@@ -20,3 +20,5 @@ sys.modules['InputMethodKit'] = mod = objc.ObjCLazyModule('InputMethodKit',
        '__loader__': globals().get('__loader__', None),
        'objc': objc,
     }, ( Foundation,))
+
+del sys.modules['InputMethodKit._metadata']

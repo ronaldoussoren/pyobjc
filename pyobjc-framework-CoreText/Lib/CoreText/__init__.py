@@ -25,3 +25,5 @@ sys.modules['CoreText'] = mod = objc.ObjCLazyModule('CoreText',
 import CoreText._manual as m
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
+
+del sys.modules['CoreText._metadata']

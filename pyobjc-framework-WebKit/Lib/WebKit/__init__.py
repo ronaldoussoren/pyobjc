@@ -21,3 +21,5 @@ sys.modules['WebKit'] = mod = objc.ObjCLazyModule(
         '__path__': __path__,
         '__loader__': globals().get('__loader__', None),
     }, (Foundation,))
+
+del sys.modules['WebKit._metadata']
