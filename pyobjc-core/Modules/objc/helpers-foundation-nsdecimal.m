@@ -727,10 +727,16 @@ pythonify_nsdecimal(void* value)
 }
 
 int
-depythonify_nsdecimal(PyObject* value, void* out)
+depythonify_nsdecimal(PyObject* value, void* ptr)
 {
-    printf("depythonfy decimal '%s'", PyObject_REPR(value));
-    return Decimal_Convert(value, out) == 1 ? 0 : -1;
+    if (Decimal_Check(value)) {
+        *(NSDecimal*)ptr = Decimal_Value(value);
+        return 0;
+
+    } else {
+        PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'", Py_TYPE(value)->tp_name);
+        return -1;
+    }
 }
 
 int IS_DECIMAL(const char* typestr)
@@ -1002,18 +1008,6 @@ PyObjC_setup_nsdecimal(PyObject* m)
     PyType_Ready(&Decimal_Type);
 
     if (PyModule_AddObject(m, "NSDecimal", (PyObject*)&Decimal_Type) == -1) {
-        return -1;
-    }
-
-    if (PyObjCPointerWrapper_Register("NSDecimal*", @encode(NSDecimal*),
-            pythonify_nsdecimal,
-            depythonify_nsdecimal) < 0) {
-        return -1;
-    }
-
-    if (PyObjCPointerWrapper_Register("NSDecimal*", @encode(const NSDecimal*),
-            pythonify_nsdecimal,
-            depythonify_nsdecimal) < 0) {
         return -1;
     }
 

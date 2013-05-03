@@ -3,10 +3,17 @@ Tests for the NSDecimal wrapper type
 """
 from PyObjCTools.TestSupport import *
 
+from PyObjCTest.decimal import OC_TestDecimal
+
 import sys
 import operator
 import objc
 import decimal
+
+try:
+    unicode
+except NameError:
+    unicode = str
 
 class TestNSDecimalWrwapper (TestCase):
     def test_creation(self):
@@ -221,6 +228,38 @@ class TestUsingNSDecimalNumber (TestCase):
         v = n.decimalValue()
         self.assertEqual(d, v)
 
+class TestDecimalByReference (TestCase):
+    def test_byref_in(self):
+        d = objc.NSDecimal("1.5")
+
+        o = OC_TestDecimal.alloc().init()
+        self.assertArgIsIn(o.stringFromDecimal_, 0)
+        r = o.stringFromDecimal_(d)
+
+        self.assertIsInstance(r, unicode)
+        self.assertEqual(r, "1.5")
+
+    def test_byref_out(self):
+        o = OC_TestDecimal.alloc().init()
+        self.assertArgIsOut(o.getDecimal_, 0)
+        r = o.getDecimal_(None)
+
+        self.assertIsInstance(r, tuple)
+        self.assertEqual(r[0], 1)
+        d = r[1]
+        self.assertIsInstance(d, objc.NSDecimal)
+        self.assertEqual(str(d), "2.5")
+
+    def test_byref_inout(self):
+        d1 = objc.NSDecimal("1.25")
+        o = OC_TestDecimal.alloc().init()
+        self.assertArgIsInOut(o.doubleDecimal_, 0)
+
+        d2 = o.doubleDecimal_(d1)
+        self.assertIsNot(d1, d2)
+        self.assertEqual(str(d1), "1.25")
+        self.assertIsInstance(d2, objc.NSDecimal)
+        self.assertEqual(str(d2), "2.5")
 
 if __name__ == "__main__":
     main()

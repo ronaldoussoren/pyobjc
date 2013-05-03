@@ -898,7 +898,7 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         }
 
         const char* withoutModifiers = PyObjCRT_SkipTypeQualifiers(type);
-        PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);
+        /*PyObjC_Assert(*withoutModifiers != _C_ARY_B, -1);*/
         if (typeModifier != '\0') {
             /* Skip existing modifiers, we're overriding those */
             strcpy(tp+1, withoutModifiers);

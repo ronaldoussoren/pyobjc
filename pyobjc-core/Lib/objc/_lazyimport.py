@@ -146,7 +146,7 @@ class ObjCLazyModule (ModuleType):
 
         # Ensure that all dynamic entries get loaded
         if self.__varmap_dct:
-            for nm in self.__varmap_dct:
+            for nm in list(self.__varmap_dct):
                 try:
                     getattr(self, nm)
                 except AttributeError:
@@ -167,21 +167,21 @@ class ObjCLazyModule (ModuleType):
                     pass
 
         if self.__funcmap:
-            for nm in self.__funcmap:
+            for nm in list(self.__funcmap):
                 try:
                     getattr(self, nm)
                 except AttributeError:
                     pass
 
         if self.__expressions:
-            for nm in self.__expressions:
+            for nm in list(self.__expressions):
                 try:
                     getattr(self, nm)
                 except AttributeError:
                     pass
 
         if self.__aliases:
-            for nm in self.__aliases:
+            for nm in list(self.__aliases):
                 try:
                     getattr(self, nm)
                 except AttributeError:

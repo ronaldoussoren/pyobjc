@@ -772,7 +772,10 @@ PyObjCRT_AlignOfType(const char *type)
         return PyObjCRT_AlignOfType(type+1);
 
     case _C_BFLD:
-        return 1;
+        /* Calculating the alignment of bitfields appears to need informatin
+         * that's not present here. This hack is good enough for now.
+         */
+        return 4;
 
     case _C_UNDEF:
         return __alignof__(void*);
@@ -875,6 +878,14 @@ PyObjCRT_SizeOfType(const char *type)
 
             return sizeof(struct sockaddr_in6);
         }
+
+        if (unlikely(IS_DECIMAL(type))) {
+            /* NSDecimal contains embedded bitfields and those
+             * aren't handled properly by this code.
+             */
+            return sizeof(NSDecimal);
+        }
+
 
         while (*type != _C_STRUCT_E && *type++ != '=')
             ; /* skip "<name>=" */

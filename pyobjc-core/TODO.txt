@@ -231,3 +231,5 @@ Medium term
 * Further speedups in method calls: I've already reduced the amount of
   memory allocations (PyMem_Alloc, ...), and it should be possible to
   further reduce this.
+
+* IS_DECIMAL/IS_FSREF/IS_FSSPEC are a hack and slow down the common code-path.

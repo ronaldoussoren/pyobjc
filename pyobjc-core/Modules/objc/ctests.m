@@ -890,11 +890,15 @@ BEGIN_UNITTEST(DecimalSize)
         long encoded_size = (long)PyObjCRT_SizeOfType(@encode(NSDecimal));
         long actual_size = (long)sizeof(NSDecimal);
 
-        /* "ASSERT_EQUAL" would be nice, but ASSERT_GE is good enough
-         * for now.
-         */
-        ASSERT_GE(encoded_size, actual_size, "%ld");
+        ASSERT_EQUALS(encoded_size, actual_size, "%ld");
 
+END_UNITTEST
+
+BEGIN_UNITTEST(DecimalAlign)
+        long encoded_align = (long)PyObjCRT_AlignOfType(@encode(NSDecimal));
+        long actual_align = (long)__alignof__(NSDecimal);
+
+        ASSERT_EQUALS(encoded_align, actual_align, "%ld");
 END_UNITTEST
 
 static PyMethodDef mod_methods[] = {
@@ -926,6 +930,7 @@ static PyMethodDef mod_methods[] = {
     TESTDEF(RemoveFieldNames),
     TESTDEF(UnicodeFunctions),
     TESTDEF(DecimalSize),
+    TESTDEF(DecimalAlign),
     { 0, 0, 0, 0 }
 };
 

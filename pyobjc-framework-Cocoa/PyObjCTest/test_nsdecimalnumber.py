@@ -49,8 +49,8 @@ class TestNSDecimalNumber (TestCase):
     def testNSScannerWithDecimal(self):
         v = NSScanner.alloc().initWithString_("55.23")
 
-        dec = NSDecimal()
-        o = v.scanDecimal_(dec)
+        o, dec = v.scanDecimal_(None)
+        self.assertIsInstance(dec, NSDecimal)
         self.assertIs(o, True)
         self.assertEqual(dec.description(), '55.23')
 

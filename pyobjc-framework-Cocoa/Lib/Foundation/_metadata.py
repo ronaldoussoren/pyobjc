@@ -826,7 +826,7 @@ try:
     r(b'NSScanner', b'caseSensitive', {'retval': {'type': 'Z'}})
     r(b'NSScanner', b'isAtEnd', {'retval': {'type': 'Z'}})
     r(b'NSScanner', b'scanCharactersFromSet:intoString:', {'retval': {'type': 'Z'}, 'arguments': {3: {'null_accepted': False, 'type_modifier': b'o'}}})
-    r(b'NSScanner', b'scanDecimal:', {'retval': {'type': 'Z'}, 'arguments': {2: {'null_accepted': False, 'type': b'^{_NSDecimal=b8b4b1b1b18[8S]}'}}})
+    r(b'NSScanner', b'scanDecimal:', {'retval': {'type': 'Z'}, 'arguments': {2: {'null_accepted': False, 'type_modifier': b'o'}}})
     r(b'NSScanner', b'scanDouble:', {'retval': {'type': 'Z'}, 'arguments': {2: {'null_accepted': False, 'type_modifier': b'o'}}})
     r(b'NSScanner', b'scanFloat:', {'retval': {'type': 'Z'}, 'arguments': {2: {'null_accepted': False, 'type_modifier': b'o'}}})
     r(b'NSScanner', b'scanHexDouble:', {'retval': {'type': 'Z'}, 'arguments': {2: {'null_accepted': False, 'type': '^d', 'type_modifier': b'o'}}})

@@ -131,6 +131,16 @@ Version 3.0
 * The type :class:`objc.NSDecimal` is now an immutable type, just like
   :class:`decimal.Decimal` and other Python value types.
 
+  Because of this the interface of ``Foundation.NSScanner.scanDecimal_`` has changed, in
+  previous versions it is used as::
+
+      dec = Foundation.NSDecimal()
+      ok = scanner.scanDecimal_(dec)
+
+  In the current version it is called just like any other method with an output argument::
+
+      ok, dec = scanner.scanDecimal_(None)
+
 * The C code is more careful about updating Python reference counts, in earlier versions
   it was possible to trigger access to a field in a datastructure that was being deallocated
   because the calls to :c:macro:`Py_DECREF` for the field happened before setting the
