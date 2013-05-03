@@ -28,29 +28,8 @@ class TestFoundation (TestCase):
         self.assert_( hasattr(Foundation, 'NSStringFromSelector') )
 
     def testProtocols(self):
-        self.assert_( hasattr(Foundation, 'protocols') )
+        self.assertFalse( hasattr(Foundation, 'protocols') )
 
-        for nm in [
-                'NSArchiverCallback',
-                'NSClassDescriptionPrimitives',
-                'NSComparisonMethods',
-                #'NSConnectionDelegateMethods',
-                'NSCopyLinkMoveHandler',
-                'NSDelayedPerforming',
-                #'NSDistantObjectRequestMethods',
-                'NSDistributedObjects',
-                'NSErrorRecoveryAttempting',
-                'NSKeyValueCoding',
-                'NSKeyValueObserverNotification',
-                'NSKeyValueObserverRegistration',
-                'NSKeyValueObserving',
-                'NSKeyValueObservingCustomization',
-                #'NSKeyedArchiverDelegate',
-                'NSKeyedArchiverObjectSubstitution',
-            ]:
-
-            self.assert_( hasattr(Foundation.protocols, nm), 'protocol %s'%(nm,))
-            self.assert_( isinstance(getattr(Foundation.protocols, nm), objc.informal_protocol) )
 
     def test_structs(self):
         self.assert_( hasattr(Foundation, 'NSPoint') )

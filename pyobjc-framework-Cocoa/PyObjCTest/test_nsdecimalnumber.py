@@ -52,7 +52,7 @@ class TestNSDecimalNumber (TestCase):
         o, dec = v.scanDecimal_(None)
         self.assertIsInstance(dec, NSDecimal)
         self.assertIs(o, True)
-        self.assertEqual(dec.description(), '55.23')
+        self.assertEqual(str(dec), '55.23')
 
     def testMethods(self):
         self.assertArgIsBOOL(NSDecimalNumber.initWithMantissa_exponent_isNegative_, 2)
