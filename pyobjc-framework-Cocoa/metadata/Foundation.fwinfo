@@ -13247,81 +13247,81 @@
    },
    "NSDecimalAdd": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
     }
    },
    "NSDecimalCompact": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "N" }
     }
    },
    "NSDecimalCompare": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "n" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalCopy": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalDivide": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
     }
    },
    "NSDecimalIsNotANumber": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "NSDecimalMultiply": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
     }
    },
    "NSDecimalMultiplyByPowerOf10": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalNormalize": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalPower": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalRound": {
     "args": {
-     "0": {},
-     "1": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" }
     }
    },
    "NSDecimalString": {
     "args": {
-     "0": {}
+     "0": { "type_modifier": "n" }
     }
    },
    "NSDecimalSubtract": {
     "args": {
-     "0": {},
-     "1": {},
-     "2": {}
+     "0": { "type_modifier": "o" },
+     "1": { "type_modifier": "n" },
+     "2": { "type_modifier": "n" }
     }
    },
    "NSDefaultMallocZone": {
