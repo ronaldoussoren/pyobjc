@@ -4,13 +4,6 @@ TODO's for the 3.0 branch
 Short term
 ----------
 
-* Better tests for the new C code, especially:
-
-  - lookup of selectors like 'prefix_suffixCanDo:withObject:' (with an embedded underscore)
-    test if a subclass version is found when the superclass version is already in __dict__.
-
-  - test_methodlookup might not yet test all relevant code paths
-
 * Code cleanup for the new C code, I've done too much copy&paste editing
   while getting the new code to work properly.
 
@@ -105,9 +98,6 @@ Medium term
 
 * Look for a more efficient encoding of _metadata.py, possibly using a C exension
 
-* Look for a more efficient encoding of method metadata registry (the data
-  structure maintained by ``objc.registerMetaDataForSelector``)
-
 * Try adding support for ARC runtime functions (to avoid hitting
   the autorelease pool on systems using ARC)
 
@@ -168,13 +158,6 @@ Medium term
   That is, some strins don't archive properly? Work around this in
   OC_PythonUnicode's archiving support
 
-* Add _named_int, _named_long, _named_float to lazy loader to get nicer
-  repr/str for named constants.
-
-  Problem: non-empty slots is not supported for type long
-
-* Crash with -fcatch-undefined-behavior (see setup.py)
-
 * Finish partial bindings:
   - AVFoundation
   - GameKit
@@ -207,26 +190,12 @@ Medium term
 * Improve documentation, both end-user documentation and documentation
   on how the bridge works.
 
-* Add some more tests for method resolution:
-
-  - Add methods after object is first used from python:
-
-    1. a completely new method
-
-    2. a method that overrides a method from the superclass
-
-    In both cases check that the method can be called (both directly
-    and through super)
-
-
 * JavsaScriptCore bindings need work (missing opaque pointer types, no tests, no examples, ...)
-
-* Add tests for objc.ObjCPointer (creating, introspection, accessing value, accessing pointer)
 
 * Add (private) function to convert dictionary to a compiled metadata object,
   use that to reduce the memory use of the 'lazy' modules used by metadata
   (either by generating calls in the metadata converted or converting manually in the
-  laze module)
+  lazy module)
 
 * Further speedups in method calls: I've already reduced the amount of
   memory allocations (PyMem_Alloc, ...), and it should be possible to
