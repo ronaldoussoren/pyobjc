@@ -50,8 +50,19 @@
 
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
+        rval = PyObjC_TryCreateCFProxy(self);
+        if (rval == NULL && PyErr_Occurred()) {
+            return NULL;
+        }
+        PyObjC_RegisterPythonProxy(self, rval);
+    }
+
+    if (rval == NULL) {
         rval = (PyObject *)PyObjCObject_New(self,
                 PyObjCObject_kDEFAULT, YES);
+        if (rval == NULL) {
+            return NULL;
+        }
         PyObjC_RegisterPythonProxy(self, rval);
     }
 

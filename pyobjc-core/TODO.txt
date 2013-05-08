@@ -202,3 +202,9 @@ Medium term
   further reduce this.
 
 * IS_DECIMAL/IS_FSREF/IS_FSSPEC are a hack and slow down the common code-path.
+
+* Corefoundation: instead of trying to detect NSCFType use the __PythonObject__
+  method on NSObject.
+
+* objc.WeakRef: look into using MAZeroingWeekRef (sp?) for the implementation
+  on older platforms.

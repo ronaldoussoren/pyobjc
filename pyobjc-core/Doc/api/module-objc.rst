@@ -137,6 +137,102 @@ Deprecated functions for changing options
 
    .. deprecated:: 3.0 Use :data:`objc.options` instead
 
+Weak references
+---------------
+
+
+.. class:: WeakRef(object)
+
+   It is not possible to use the :mod:`weakref` module to create
+   weak references to Cocoa objects due to implementation restrictions
+   (at best it would be possible to create a weakref to the Python
+   proxy for such objects).
+
+   PyObjC implements a zero-ing weakref object when running on
+   Mac OS X 10.7 or later. These objects more or less behave the
+   same as ``__weak`` variables in Objective-C.
+
+   The *object* must be a Cocoa object, and must not be a CoreFoundation
+   object (unless the CoreFoundation type is transparently bridged to Cocoa).
+
+   .. versionadded: 3.0
+
+   .. method:: __call__()
+
+      Returns the weakly references object when that is still alive,
+      otherwise returns :data:`None`.
+
+    .. note::
+
+       Unlike :class:`weakref.ref` this class cannot be subclasses, and
+       does not have a callback option. The callback option cannot be
+       reliably be implemented with the current Objective-C runtime API.
+
+    .. warning::
+
+       Some Cocoa classes do not support weak references, see Apple's
+       documentation for more information. Creating a weak reference
+       to instances of such classes can be a hard error (that is,
+       the interpreter crashes, you won't get a nice exception).
+
+Associated Objects
+------------------
+
+On Mac OS X 10.6 or later the Objective-C runtime has an API for
+associated objects, which are more or less additional instance variables
+for objects.
+
+.. function:: setAssociatedObject(object, key, value, policy)
+
+   :param object: the base object (a Cocoa instance)
+   :type key: an arbitrary object, the same object must be used to
+               retrieve the value.
+   :param value: value for the associated object
+   :param policy: policy for the assiocation (see below)
+
+   Associate *assoc* with *object* under name *name*.
+
+.. function:: getAssociatedObject(object, key)
+
+   :param object: an object (a Cocoa instance)
+   :param key: the key object that was used with :func:`setAssociatedObject`
+   :return: the value for the key, or :data:`None`.
+
+   Returns the value of an associated object.
+
+.. function:: removeAssociatedObjects(object)
+
+   :param object: an object (a Cocoa instance)
+
+   Remove all associations for *object*. It is generally a bad idea to
+   use this function, because other libraries might have set assocations
+   as well.
+
+.. data:: OBJC_ASSOCIATION_ASSIGN
+
+   Policy for creating a weak reference to the associated object
+
+   .. note:: Don't use this when the value is a pure python object, unless
+             you arrange to keep the proxy object alive some other way.
+
+.. data:: OBJC_ASSOCIATION_RETAIN_NONATOMIC
+
+   Policy for creating a strong reference to the associated object.
+
+.. data:: OBJC_ASSOCIATION_COPY_NONATOMIC
+
+   Policy for creating a strong reference to a copy of the assocated object.
+
+.. data:: OBJC_ASSOCIATION_RETAIN
+
+   Policy for creating a strong reference to the associated object, the
+   assocation is made atomically.
+
+.. data:: OBJC_ASSOCIATION_COPY
+
+   Policy for creating a strong reference to a copy of the assocated object,
+   the assocation is made atomically.
+
 Utilities
 ---------
 

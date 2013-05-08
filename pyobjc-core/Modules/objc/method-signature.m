@@ -304,6 +304,8 @@ static struct _PyObjC_ArgDescr* alloc_descr(struct _PyObjC_ArgDescr* tmpl)
     retval->tmpl = NO;
     retval->callable = NULL;
     retval->sel_type = NULL;
+    retval->arrayArg = 0;
+    retval->arrayArgOut = 0;
     return retval;
 }
 
@@ -1287,9 +1289,15 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
         descr->sel_type = NULL;
     }
 
-    descr->arrayArg = meta->arrayArg;
-    descr->arrayArgOut = meta->arrayArgOut;
-    descr->ptrType = meta->ptrType;
+    if (meta->arrayArg != 0) {
+        descr->arrayArg = meta->arrayArg;
+    }
+    if (meta->arrayArgOut != 0) {
+        descr->arrayArgOut = meta->arrayArgOut;
+    }
+    if (meta->ptrType != PyObjC_kPointerPlain) {
+        descr->ptrType = meta->ptrType;
+    }
     descr->allowNULL = meta->allowNULL;
     descr->arraySizeInRetval = meta->arraySizeInRetval;
     descr->printfFormat = meta->printfFormat;
@@ -1307,6 +1315,7 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
 
         } else {
             char* tp = PyMem_Malloc(strlen(withoutModifiers)+2);
+            char* to_free = NULL;
             if (tp == NULL) {
                 if (copied) {
                     PyMem_Free(descr);
@@ -1316,7 +1325,7 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
             }
 
             if (descr->typeOverride) {
-                PyMem_Free((void*)(descr->type));
+                to_free = (char*)(descr->type);
                 descr->type = NULL;
             }
 
@@ -1326,6 +1335,10 @@ merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL 
             PyObjC_Assert(tp != NULL, NULL);
             descr->typeOverride = YES;
             descr->type = tp;
+
+            if (to_free) {
+                PyMem_Free(to_free);
+            }
         }
     }
 
@@ -1554,7 +1567,7 @@ argdescr2dict(struct _PyObjC_ArgDescr* descr)
 
     }
 
-    if (descr->ptrType != PyObjC_kPointerPlain) {
+    if (descr->ptrType != PyObjC_kPointerPlain && descr->arraySizeInRetval) {
         v = PyBool_FromLong(descr->arraySizeInRetval);
         if (v == NULL) goto error;
         r = PyDict_SetItemString(result, "c_array_length_in_result", v);

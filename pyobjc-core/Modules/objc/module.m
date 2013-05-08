@@ -2105,6 +2105,12 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 
+#if PyObjC_BUILD_RELEASE >= 1007
+    if (PyType_Ready(&PyObjCWeakRef_Type) < 0) {
+        PyObjC_INITERROR();
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1007 */
+
     if (PyObjC_setup_nsdata() < 0) {
         PyObjC_INITERROR();
     }
@@ -2183,6 +2189,14 @@ PyObjC_MODULE_INIT(_objc)
     if (PyDict_SetItemString(d, "super", (PyObject*)&PyObjCSuper_Type) < 0) {
         PyObjC_INITERROR();
     }
+
+#if PyObjC_BUILD_RELEASE >= 1007
+    if (objc_loadWeak != NULL) {
+        if (PyDict_SetItemString(d, "WeakRef", (PyObject*)&PyObjCWeakRef_Type) < 0) {
+            PyObjC_INITERROR();
+        }
+    }
+#endif /* PyObjC_BUILD_RELEASE >= 1007 */
 
     v = PyObjCInitNULL();
     if (v == NULL) {

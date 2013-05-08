@@ -597,7 +597,7 @@ class TestCase (_unittest.TestCase):
             i = info['arguments'][argno+offset]
         except (KeyError, IndexError):
             self.fail(message or "arg %d of %s has no metadata (or doesn't exist)"%(argno, method))
-        
+
         type = i.get('type', b'@')
         if type != objc._C_SEL:
             self.fail(message or "arg %d of %s is not of type SEL"%(
@@ -807,10 +807,10 @@ class TestCase (_unittest.TestCase):
             if hasattr(value, key):
                 self.fail(message or "%s is an attribute of %r"%(key, value))
 
-    if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
-        def assertIsInstance(self, value, types, message=None):
-            if not isinstance(value, types):
-                self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
+    #if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
+    def assertIsInstance(self, value, types, message=None):
+        if not isinstance(value, types):
+            self.fail(message or "%s is not an instance of %r but %s"%(value, types, type(value)))
 
     if not hasattr(_unittest.TestCase, 'assertIsNotInstance'): # pragma: no cover
         def assertIsNotInstance(self, value, types, message=None):

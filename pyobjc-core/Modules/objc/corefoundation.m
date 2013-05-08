@@ -41,36 +41,47 @@ cf_repr(PyObject* self)
     }
 }
 
+PyObject*
+PyObjC_TryCreateCFProxy(NSObject* value)
+{
+    PyObject *rval = NULL;
+    if (gTypeid2class != NULL) {
+        PyObject* cfid;
+        PyTypeObject* tp;
+
+        cfid = PyInt_FromLong(CFGetTypeID((CFTypeRef)value));
+        tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
+        Py_DECREF(cfid);
+
+        if (tp != NULL) {
+            rval = tp->tp_alloc(tp, 0);
+            if (rval == NULL) {
+                return NULL;
+            }
+
+            ((PyObjCObject*)rval)->objc_object = value;
+            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+            CFRetain(value);
+        }
+    }
+    return rval;
+}
 
 /* Implementation for: -(PyObject*)__pyobjc_PythonObject__ on NSCFType. We cannot
  * define a category on that type because the class definition isn't public.
  */
-static PyObject* pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
+#if 0
+static PyObject*
+pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 {
     PyObject *rval = NULL;
 
     rval = PyObjC_FindPythonProxy(self);
     if (rval == NULL) {
-        if (gTypeid2class != NULL) {
-            PyObject* cfid;
-            PyTypeObject* tp;
-
-            cfid = PyInt_FromLong(CFGetTypeID((CFTypeRef)self));
-            tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
-            Py_DECREF(cfid);
-
-            if (tp != NULL) {
-                rval = tp->tp_alloc(tp, 0);
-                if (rval == NULL) {
-                    return NULL;
-                }
-
-                ((PyObjCObject*)rval)->objc_object = self;
-                ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
-                CFRetain(self);
-            }
+        rval = PyObjC_TryCreateCFProxy(self);
+        if (rval == NULL && PyErr_Occurred()) {
+            return NULL;
         }
-
         if (rval == NULL) {
             /* There is no wrapper for this type, fall back to
              * the generic behaviour.
@@ -86,6 +97,7 @@ static PyObject* pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__u
 
     return rval;
 }
+#endif
 
 
 PyObject*
@@ -185,43 +197,63 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     return result;
 }
 
+static const char* gNames[] = {
+    "NSCFType",
+    "__NSCFType",
+    NULL,
+};
 
 int
 PyObjCCFType_Setup(void)
 {
+#if 0
     static char encodingBuf[128];
+#endif
     Class cls;
+    const char** cur;
 
     gTypeid2class = PyDict_New();
     if (gTypeid2class == NULL) {
         return -1;
     }
 
-    cls = objc_lookUpClass("__NSCFType");
-    if (cls == nil) {
-        cls = objc_lookUpClass("NSCFType");
+#if 0
+    snprintf(encodingBuf, sizeof(encodingBuf), "%s%c%c", @encode(PyObject*), _C_ID, _C_SEL);
+#endif
+
+    for (cur = gNames; *cur != NULL; cur++) {
+        cls = objc_lookUpClass(*cur);
+        if (cls == Nil) continue;
+
+#if 0
+        /* Add a __pyobjc_PythonObject__ method to NSCFType. Can't use a
+         * category because the type isn't public.
+         */
+        if (!class_addMethod(cls, @selector(__pyobjc_PythonObject__),
+            (IMP)pyobjc_PythonObject, encodingBuf)) {
+
+            return -1;
+        }
+#endif
+
+        if (PyObjC_NSCFTypeClass == NULL) {
+            PyObjC_NSCFTypeClass = PyObjCClass_New(cls);
+            if (PyObjC_NSCFTypeClass == NULL) {
+                return -1;
+            }
+        }
+#if 1
+        break;
+#endif
     }
 
-    if (cls == nil) {
+    if (PyObjC_NSCFTypeClass == NULL) {
         PyErr_SetString(PyExc_RuntimeError,
             "Cannot locate NSCFType");
         return -1;
     }
 
-    PyObjC_NSCFTypeClass = PyObjCClass_New(cls);
-    if (PyObjC_NSCFTypeClass == NULL) {
-        return -1;
-    }
 
-    /* Add a __pyobjc_PythonObject__ method to NSCFType. Can't use a
-     * category because the type isn't public.
-     */
-    snprintf(encodingBuf, sizeof(encodingBuf), "%s%c%c", @encode(PyObject*), _C_ID, _C_SEL);
-    if (!class_addMethod(cls, @selector(__pyobjc_PythonObject__),
-        (IMP)pyobjc_PythonObject, encodingBuf)) {
-
-        return -1;
-    }
 
     return 0;
 }
