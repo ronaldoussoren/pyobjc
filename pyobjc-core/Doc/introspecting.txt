@@ -1,0 +1,10 @@
+Introspecting PyObjC
+====================
+
+* explain dir(NSObject) vs. dir(type(NSObject))
+
+* metadata introspection (and use)
+
+* listing instance variables, its use and warnings
+
+* protocols
