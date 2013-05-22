@@ -184,8 +184,9 @@ def callbackFor(callable, argIndex=-1):
             return 1
     """
     def addClosure(function):
-        closure = _makeClosure(function, callable, argIndex)
+        closure, meta = _makeClosure(function, callable, argIndex)
         function.pyobjc_closure = closure
+        function.__metadata__ = lambda: meta
         return function
 
     return addClosure

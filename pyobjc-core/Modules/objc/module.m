@@ -1197,7 +1197,7 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 
 
 PyDoc_STRVAR(_makeClosure_doc,
-  "_makeClosure(callable, closureFor, [argIndex]) -> closure\n"
+  "_makeClosure(callable, closureFor, [argIndex]) -> closure, metadata\n"
   "\n"
   "Returns a closure object that can be used to call the function from\n"
   "C. This object has no useable interface from Python.\n"
@@ -1302,7 +1302,7 @@ static  char* keywords[] = { "callable", "closureFor", "argIndex", NULL };
         return NULL;
     }
 
-    return retval;
+    return Py_BuildValue("NN", retval, PyObjCMethodSignature_AsDict(methinfo->argtype[argIndex]->callable));
 }
 
 static PyObject*

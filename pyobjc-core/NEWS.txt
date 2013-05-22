@@ -8,6 +8,9 @@ Version 3.0
 
    The 3.0 branch is currently highly experimental, don't uses this version!
 
+* :func:`objc.callbackFor` now also adds a *__metadata__* method to decorated
+  functions. This is primarily to make it easier to test the metadata values.
+
 * The *__typestr__* attribute of opaque pointer types is now a byte string,
   in previous versions this was an instance of :class:`str` (this only affects
   Python 3 support)
