@@ -54,7 +54,6 @@
         if (rval == NULL && PyErr_Occurred()) {
             return NULL;
         }
-        PyObjC_RegisterPythonProxy(self, rval);
     }
 
     if (rval == NULL) {
@@ -63,6 +62,9 @@
         if (rval == NULL) {
             return NULL;
         }
+    }
+
+    if (rval != NULL) {
         PyObjC_RegisterPythonProxy(self, rval);
     }
 

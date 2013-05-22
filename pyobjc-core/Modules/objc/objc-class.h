@@ -115,4 +115,10 @@ extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 
+static inline int PyObjCClass_IsCFWrapper(PyTypeObject* tp)
+{
+	return ((PyObjCClassObject*)tp)->isCFWrapper;
+}
+
+
 #endif /* PyObjC_OBJC_CLASS_H */

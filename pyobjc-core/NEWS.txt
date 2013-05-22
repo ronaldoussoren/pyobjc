@@ -8,6 +8,14 @@ Version 3.0
 
    The 3.0 branch is currently highly experimental, don't uses this version!
 
+* The *__typestr__* attribute of opaque pointer types is now a byte string,
+  in previous versions this was an instance of :class:`str` (this only affects
+  Python 3 support)
+
+* The JavaScriptCore bindings (in pyobjc-framework-WebKit) are now more usable
+  because types like "JSValueRef" are now exposed to Python (they were missing
+  due to incomplete metadata).
+
 * Exclude a number of keys from the metadata dictionary when they have the
   default value (in the result from the *__metadata__()* method on methods
   and functions)

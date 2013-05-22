@@ -59,7 +59,7 @@ PyInit_methres1(void)
 void initmethres1(void);
 
 void __attribute__((__visibility__("default")))
-initinitialize(void)
+initmethres1(void)
 #endif
 {
     PyObject* m;

@@ -32,6 +32,15 @@
 # endif
 #endif
 
+/* When this is defined the bridge adds a category to NSCFType (and known variants)
+ * to help with the conversion to Python.
+ *
+ * This shouldn't be necessary anymore because the category on NSObject is sufficient,
+ * but it is left here just in case someone decides that CFType's can be bridged to
+ * a new root Objective-C class.
+ */
+#define PyObjC_ENABLE_CFTYPE_CATEGORY 1
+
 /* PyObjC_ERROR_ABORT: If defined an internal error will result in an abort() */
 #define    PyObjC_ERROR_ABORT 1
 

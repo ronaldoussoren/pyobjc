@@ -484,7 +484,7 @@ object_getattro(PyObject* obj, PyObject* name)
 
         descr = NULL;
 
-        if (tp != Py_TYPE(obj)) {
+        if (tp != Py_TYPE(obj) && !PyObjCClass_IsCFWrapper(Py_TYPE(obj))) {
             /* Workaround for KVO implementation feature */
             PyObject* dict;
             PyTypeObject* tmp;

@@ -1606,9 +1606,6 @@ static char* keywords[] = { "name", "type", "magic", NULL };
         v = pythonify_c_value(type, buf);
     }
 
-    if (v == NULL) {
-        return NULL;
-    }
     return v;
 }
 

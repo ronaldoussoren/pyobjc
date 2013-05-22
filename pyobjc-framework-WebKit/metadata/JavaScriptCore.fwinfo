@@ -194,8 +194,8 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {},
-     "4": {}
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "4": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -204,8 +204,8 @@
      "0": {},
      "1": {},
      "2": {},
-     "4": {},
-     "5": {}
+     "4": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+     "5": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -223,7 +223,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     }
    },
    "JSObjectGetPrivate": {
@@ -237,7 +237,7 @@
      "0": {},
      "1": {},
      "2": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -245,7 +245,7 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {}
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -286,8 +286,8 @@
    "JSObjectMakeArray": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {}
+     "2": { "c_array_length_in_arg": 1, "type_modifier": "n"},
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -299,41 +299,26 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{OpaqueJSContext=}",
-          false
-         ]
+         "typestr": "^{OpaqueJSContext=}"
         },
         {
-         "typestr": [
-          "^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^{OpaqueJSValue=}"
         },
         {
-         "typestr": [
-          "l",
-          false
-         ]
+         "typestr": "l"
         },
         {
-         "typestr": [
-          "^^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^^{OpaqueJSValue=}",
+	 "type_modifier": "n",
+	 "c_array_lenght_in_arg": 3
         },
         {
-         "typestr": [
-          "^^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^^{OpaqueJSValue=}",
+	 "type_modifier": "o"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{OpaqueJSValue=}",
-         false
-        ]
+        "typestr": "^{OpaqueJSValue=}"
        }
       }
      }
@@ -343,16 +328,16 @@
    "JSObjectMakeDate": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
    "JSObjectMakeError": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -360,10 +345,10 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {},
+     "3": { "c_array_length_in_arg": 2, "type_modifier": "n" },
      "4": {},
      "5": {},
-     "7": {}
+     "7": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -375,47 +360,29 @@
       "function": {
        "args": [
         {
-         "typestr": [
-          "^{OpaqueJSContext=}",
-          false
-         ]
+         "typestr": "^{OpaqueJSContext=}"
         },
         {
-         "typestr": [
-          "^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^{OpaqueJSValue=}"
         },
         {
-         "typestr": [
-          "^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^{OpaqueJSValue=}"
         },
         {
-         "typestr": [
-          "l",
-          false
-         ]
+         "typestr": "l"
         },
         {
-         "typestr": [
-          "^^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^^{OpaqueJSValue=}",
+	 "type_modifier": "n",
+	 "c_array_length_in_arg": 3
         },
         {
-         "typestr": [
-          "^^{OpaqueJSValue=}",
-          false
-         ]
+         "typestr": "^^{OpaqueJSValue=}",
+	 "type_modifier": "o"
         }
        ],
        "retval": {
-        "typestr": [
-         "^{OpaqueJSValue=}",
-         false
-        ]
+        "typestr": "^{OpaqueJSValue=}"
        }
       }
      }
@@ -425,8 +392,8 @@
    "JSObjectMakeRegExp": {
     "args": {
      "0": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+     "3": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -442,7 +409,7 @@
      "1": {},
      "2": {},
      "3": {},
-     "5": {}
+     "5": { "type_modifier": "o" }
     }
    },
    "JSObjectSetPropertyAtIndex": {
@@ -450,7 +417,7 @@
      "0": {},
      "1": {},
      "3": {},
-     "4": {}
+     "4": { "type_modifier": "o" }
     }
    },
    "JSObjectSetPrototype": {

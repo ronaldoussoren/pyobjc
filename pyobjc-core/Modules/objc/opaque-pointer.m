@@ -327,7 +327,7 @@ static  ffi_cif* new_cif = NULL;
         goto error_cleanup;
     }
 
-    w = PyText_FromString(typestr);
+    w = PyBytes_FromString(typestr);
     if (w ==  NULL) {
         goto error_cleanup;
     }

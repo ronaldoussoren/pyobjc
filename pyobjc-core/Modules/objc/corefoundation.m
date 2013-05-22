@@ -45,6 +45,7 @@ PyObject*
 PyObjC_TryCreateCFProxy(NSObject* value)
 {
     PyObject *rval = NULL;
+
     if (gTypeid2class != NULL) {
         PyObject* cfid;
         PyTypeObject* tp;
@@ -67,10 +68,10 @@ PyObjC_TryCreateCFProxy(NSObject* value)
     return rval;
 }
 
+#ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
 /* Implementation for: -(PyObject*)__pyobjc_PythonObject__ on NSCFType. We cannot
  * define a category on that type because the class definition isn't public.
  */
-#if 0
 static PyObject*
 pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 {
@@ -198,15 +199,15 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 }
 
 static const char* gNames[] = {
-    "NSCFType",
     "__NSCFType",
+    "NSCFType",
     NULL,
 };
 
 int
 PyObjCCFType_Setup(void)
 {
-#if 0
+#ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
     static char encodingBuf[128];
 #endif
     Class cls;
@@ -217,7 +218,7 @@ PyObjCCFType_Setup(void)
         return -1;
     }
 
-#if 0
+#ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
     snprintf(encodingBuf, sizeof(encodingBuf), "%s%c%c", @encode(PyObject*), _C_ID, _C_SEL);
 #endif
 
@@ -225,7 +226,7 @@ PyObjCCFType_Setup(void)
         cls = objc_lookUpClass(*cur);
         if (cls == Nil) continue;
 
-#if 0
+#ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
         /* Add a __pyobjc_PythonObject__ method to NSCFType. Can't use a
          * category because the type isn't public.
          */
@@ -242,7 +243,7 @@ PyObjCCFType_Setup(void)
                 return -1;
             }
         }
-#if 1
+#ifndef PyObjC_ENABLE_CFTYPE_CATEGORY
         break;
 #endif
     }
@@ -252,8 +253,6 @@ PyObjCCFType_Setup(void)
             "Cannot locate NSCFType");
         return -1;
     }
-
-
 
     return 0;
 }

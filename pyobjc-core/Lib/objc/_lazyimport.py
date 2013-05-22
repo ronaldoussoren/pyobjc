@@ -224,11 +224,7 @@ class ObjCLazyModule (ModuleType):
                 else:
                     magic = False
 
-                #try:
                 return objc._loadConstant(name, tp, magic)
-                #except Exception as exc:
-                #    print "LOAD %r %r %r -> raise %s"%(name, tp, magic, exc)
-                #    raise
 
         if self.__enummap:
             m = re.search(r"\$%s@([^$]*)\$"%(name,), self.__enummap)
