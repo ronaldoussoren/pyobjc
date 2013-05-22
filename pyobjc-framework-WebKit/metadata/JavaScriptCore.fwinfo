@@ -507,7 +507,7 @@
    },
    "JSStringCreateWithCharacters": {
     "args": {
-     "0": {}
+     "0": { "type_override": "^T", "c_array_length_in_arg": 1, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
@@ -515,17 +515,14 @@
    },
    "JSStringCreateWithUTF8CString": {
     "args": {
-     "0": {}
+     "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
     },
     "retval": {
      "already_cfretained": true
     }
    },
    "JSStringGetCharactersPtr": {
-    "args": {
-     "0": {}
-    },
-    "retval": {}
+    "ignore": true
    },
    "JSStringGetLength": {
     "args": {
@@ -540,7 +537,7 @@
    "JSStringGetUTF8CString": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "c_array_length_in_arg": 2, "c_array_length_in_result": true, "type_modifier": "o", "type_override": "^t" }
     }
    },
    "JSStringIsEqual": {
@@ -552,7 +549,7 @@
    "JSStringIsEqualToUTF8CString": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "c_array_delimited_by_null": true, "type_override": "^t", "type_modifier": "n" }
     }
    },
    "JSStringRelease": {

@@ -6,11 +6,11 @@ import objc
 class TestJSBase (TestCase):
     def test_functions(self):
         self.assertResultHasType(JavaScriptCore.JSStringCreateWithCharacters, JavaScriptCore.JSStringRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSStringCreateWithCharacters, 0, b'n^', objc._C_UNICHAR)
+        self.assertArgHasType(JavaScriptCore.JSStringCreateWithCharacters, 0, b'n^' + objc._C_UNICHAR)
         self.assertArgSizeInArg(JavaScriptCore.JSStringCreateWithCharacters, 0, 1)
 
         self.assertResultHasType(JavaScriptCore.JSStringCreateWithUTF8CString, JavaScriptCore.JSStringRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSStringCreateWithUTF8CString, 0, b'n^', objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(JavaScriptCore.JSStringCreateWithUTF8CString, 0, b'n^' + objc._C_CHAR_AS_TEXT)
         self.assertArgIsNullTerminated(JavaScriptCore.JSStringCreateWithUTF8CString, 0)
 
         self.assertResultHasType(JavaScriptCore.JSStringRetain, JavaScriptCore.JSStringRef.__typestr__)
@@ -32,7 +32,7 @@ class TestJSBase (TestCase):
         self.assertResultHasType(JavaScriptCore.JSStringIsEqual, objc._C_BOOL)
 
         self.assertResultHasType(JavaScriptCore.JSStringIsEqualToUTF8CString, objc._C_BOOL)
-        self.assertArgHasType(JavaScriptCore.JSStringIsEqualToUTF8CString, 1, b'n^', objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(JavaScriptCore.JSStringIsEqualToUTF8CString, 1, b'n^' + objc._C_CHAR_AS_TEXT)
         self.assertArgIsNullTerminated(JavaScriptCore.JSStringIsEqualToUTF8CString, 1)
 
 
