@@ -1,6 +1,16 @@
 API Notes: JavaScriptCore framework
 ===================================
 
+API Level
+---------
+
+The JavaScriptCore library is very low-level and the Python bindings don't change that. This means interacting with JavaScript
+through these bindings require a fairly large amount of code.
+
+A future version of these bindings might grow a simpler to use convenience API, but that is unlikely to happen soon because
+I have no pressing need for such an API. Contributions that make the JavaScriptCore APIs easier to use would be greatly appreciated.
+
+
 Reference counting
 ------------------
 
@@ -9,7 +19,38 @@ does *not* manage the reference counts for you, you'll have to call the correct 
 leaking memory and/or crashing.
 
 
+``autoreleasing``
+-----------------
+
+This is a context manager that makes it easier to deal with reference counts::
+
+    with JavaScriptCore.autoreleasing(expression) as value:
+       pass
+
+is more or less equivalant to::
+
+     value = expression
+     try:
+          pass
+
+     finally:
+          JavaScriptCore.JSReleaseContext(value)
+
+The actual release function used depends on the type of *value*.
+
+
+
 ``JSStringGetCharactersPtr``
 ----------------------------
 
 This function is not supported. Convert the string to a Python type using ``JSStringCopyCFString`` or ``JSStringGetUTF8CString``.
+
+``JSObjectMake``, ``JSObjectGetPrivate``, ``JSObjectSetPrivate``
+----------------------------------------------------------------
+
+The private data of an object is a ``void*`` in (Objective-)C, and an integer in Python. Use the ``objc.context`` object to attach
+arbitrary data to an object::
+
+   anObj = ... #
+   JavaScriptCore.JSOObjectSetPrivate(anObject, objc.context.register(aValue))
+   aValue = objc.context.get(JavaScriptCore.JSObjectGetPrivate(anObject))

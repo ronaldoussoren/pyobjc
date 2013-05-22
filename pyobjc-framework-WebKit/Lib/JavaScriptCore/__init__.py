@@ -21,3 +21,6 @@ sys.modules['JavaScriptCore'] = mod = objc.ObjCLazyModule(
         '__loader__': globals().get('__loader__', None),
     }, (CoreFoundation,))
 del sys.modules['JavaScriptCore._metadata']
+
+import JavaScriptCore._util
+mod.autoreleasing = JavaScriptCore._util.autoreleasing
