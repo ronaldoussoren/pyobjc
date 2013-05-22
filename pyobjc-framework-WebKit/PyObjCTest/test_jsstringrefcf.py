@@ -17,7 +17,7 @@ class TestJSStrintRefCF (TestCase):
         o = JavaScriptCore.JSStringCopyCFString(None, v)
         self.assertEqual(o, "hello world")
         self.assertIsInstance(o, unicode)
-        self.assertResultIsAlreadyCFRetained(JavaScriptCore.JSStringCopyCFString)
+        self.assertResultIsCFRetained(JavaScriptCore.JSStringCopyCFString)
 
         JavaScriptCore.JSStringRelease(v)
 

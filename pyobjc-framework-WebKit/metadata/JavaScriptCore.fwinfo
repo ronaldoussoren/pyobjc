@@ -28,8 +28,8 @@
       }
   },
   "aliases": {
-    "JSGlobalContextRef": { "value": "JSContextRef" },
-    "JSObjectRef": { "value": "JSValueRef" },
+    "JSGlobalContextRef": { "alias": "JSContextRef" },
+    "JSObjectRef": { "alias": "JSValueRef" },
     "AVAILABLE_AFTER_WEBKIT_VERSION_4_0": { "ignore": true },
     "AVAILABLE_AFTER_WEBKIT_VERSION_4_0_BUT_DEPRECATED": { "ignore": true },
     "AVAILABLE_IN_WEBKIT_VERSION_4_0": { "ignore": true },

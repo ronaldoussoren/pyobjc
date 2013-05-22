@@ -12,8 +12,8 @@ class TestJSBase (TestCase):
         self.assertIsOpaquePointer(JavaScriptCore.JSPropertyNameAccumulatorRef)
         self.assertIsOpaquePointer(JavaScriptCore.JSValueRef)
 
-        self.assertIs(JavasScriptCore.JSObjectRef, JavaScriptCore.JSValueRef)
-        self.assertIs(JavasScriptCore.JSGlobalContextRef, JavaScriptCore.JSContextRef)
+        self.assertIs(JavaScriptCore.JSObjectRef, JavaScriptCore.JSValueRef)
+        self.assertIs(JavaScriptCore.JSGlobalContextRef, JavaScriptCore.JSContextRef)
 
     def test_functions(self):
         self.assertResultHasType(JavaScriptCore.JSEvaluateScript, JavaScriptCore.JSValueRef.__typestr__)
@@ -24,7 +24,7 @@ class TestJSBase (TestCase):
         self.assertArgHasType(JavaScriptCore.JSEvaluateScript, 4, objc._C_INT)
         self.assertArgHasType(JavaScriptCore.JSEvaluateScript, 5, b'o^' + JavaScriptCore.JSValueRef.__typestr__)
 
-        self.assertResultHasType(objc._C_BOOL, JavaScriptCore.JSCheckScriptSyntax)
+        self.assertResultHasType(JavaScriptCore.JSCheckScriptSyntax, objc._C_BOOL)
         self.assertArgIsOut(JavaScriptCore.JSCheckScriptSyntax, 4)
 
         self.assertArgHasType(JavaScriptCore.JSGarbageCollect, 0, JavaScriptCore.JSContextRef.__typestr__)

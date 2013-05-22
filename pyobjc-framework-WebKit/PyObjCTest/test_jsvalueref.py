@@ -12,7 +12,7 @@ class TestJSValueRef (TestCase):
         self.assertEqual(JavaScriptCore.kJSTypeObject, 5)
 
     def test_functions(self):
-        self.assertArgHasType(JavaScriptCore.JSValueGetType, 0, JSContextRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSValueGetType, 0, JavaScriptCore.JSContextRef.__typestr__)
 
         self.assertResultHasType(JavaScriptCore.JSValueIsUndefined, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsNull, objc._C_BOOL)
@@ -31,15 +31,15 @@ class TestJSValueRef (TestCase):
         self.assertResultHasType(JavaScriptCore.JSValueMakeNumber, JavaScriptCore.JSValueRef.__typestr__)
         self.assertResultHasType(JavaScriptCore.JSValueMakeString, JavaScriptCore.JSValueRef.__typestr__)
         self.assertResultHasType(JavaScriptCore.JSValueMakeFromJSONString, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueCreateJSONString, JavaScriptCore.JSValueRef.__typestr__)
+        self.assertResultHasType(JavaScriptCore.JSValueCreateJSONString, JavaScriptCore.JSStringRef.__typestr__)
 
         self.assertResultHasType(JavaScriptCore.JSValueToBoolean, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueToNumber, objc._C_DBL)
-        self.assertResultHasType(JavaScriptCore.JSValueToStringCopy, JavaScriptCore.JSStringRef)
-        self.assertResultHasType(JavaScriptCore.JSValueToObject, JavaScriptCore.JSObjectRef)
+        self.assertResultHasType(JavaScriptCore.JSValueToStringCopy, JavaScriptCore.JSStringRef.__typestr__)
+        self.assertResultHasType(JavaScriptCore.JSValueToObject, JavaScriptCore.JSObjectRef.__typestr__)
 
-        self.assertArgHasType(JavaScriptCore.JSValueProtect, 0, JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSValueUnprotect, 0, JSContextRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSValueProtect, 0, JavaScriptCore.JSContextRef.__typestr__)
+        self.assertArgHasType(JavaScriptCore.JSValueUnprotect, 0, JavaScriptCore.JSContextRef.__typestr__)
 
 if __name__ == "__main__":
     main()
