@@ -163,22 +163,53 @@ class TestJSObjectRef (TestCase):
         self.assertArgHasType(JavaScriptCore.JSObjectCallAsConstructor, 4, b'o^' + JavaScriptCore.JSObjectRef.__typestr__)
 
     def test_functions(self):
-        self.fail("Need to think about these wrappers....")
 
         self.assertResultHasType(JavaScriptCore.JSObjectMakeConstructor, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeConstructor, 0, JavaScriptCore.JSContextRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeConstructor, 1, JavaScriptCore.JSClassRef.__typestr__)
         self.assertArgIsFunction(JavaScriptCore.JSObjectMakeConstructor, 2,
-                b'', # FIXME: requires complicated metadata
+                b''.join([
+                    JavaScriptCore.JSObjectRef.__typestr__,
+                    JavaScriptCore.JSContextRef.__typestr__,
+                    JavaScriptCore.JSObjectRef.__typestr__,
+                    objc._C_ULNG,
+                    b"n^" + JavaScriptCore.JSObjectRef.__typestr__,
+                    b"o^" + JavaScriptCore.JSValueRef.__typestr__
+                ]),
                 True)
+
+        @objc.callbackFor(JavaScriptCore.JSObjectMakeConstructor)
+        def constructor(ctx, constr, argumentCount, arguments, exception):
+            return None
+
+        self.assertArgSizeInArg(constructor, 3, 2)
+        self.assertArgIsIn(constructor, 3)
+        self.assertArgIsOut(constructor, 4)
 
         self.assertResultHasType(JavaScriptCore.JSObjectMakeFunctionWithCallback, JavaScriptCore.JSObjectRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeFunctionWithCallback, 0, JavaScriptCore.JSContextRef.__typestr__)
         self.assertArgHasType(JavaScriptCore.JSObjectMakeFunctionWithCallback, 1, JavaScriptCore.JSStringRef.__typestr__)
         self.assertArgIsFunction(JavaScriptCore.JSObjectMakeFunctionWithCallback, 2,
-                b'', # FIXME: requires complicated metadata
+                b''.join([
+                    JavaScriptCore.JSValueRef.__typestr__,
+                    JavaScriptCore.JSContextRef.__typestr__,
+                    JavaScriptCore.JSObjectRef.__typestr__,
+                    JavaScriptCore.JSObjectRef.__typestr__,
+                    objc._C_ULNG,
+                    b"n^" + JavaScriptCore.JSObjectRef.__typestr__,
+                    b"o^" + JavaScriptCore.JSValueRef.__typestr__
+                ]),
                 True)
 
+        @objc.callbackFor(JavaScriptCore.JSObjectMakeFunctionWithCallback)
+        def func(ctx, function, thisObject, argumentCount, arguments, exception):
+            return None
+
+        self.assertArgSizeInArg(func, 4, 3)
+        self.assertArgIsIn(func, 4)
+        self.assertArgIsOut(func, 5)
+
+        self.fail("Need to think about these wrappers....")
 
         # XXX: Creating classes is probably easiest using custom code, I don't think the
         #      bridge metadata can fully describe the C level interface.

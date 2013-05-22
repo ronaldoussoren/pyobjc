@@ -54,3 +54,9 @@ arbitrary data to an object::
    anObj = ... #
    JavaScriptCore.JSOObjectSetPrivate(anObject, objc.context.register(aValue))
    aValue = objc.context.get(JavaScriptCore.JSObjectGetPrivate(anObject))
+
+
+``JSClassCreate``, ``kJSClassDefinitionEmpty``
+----------------------------------------------
+
+Not supported at the moment as this requires manual wrappers (C code).

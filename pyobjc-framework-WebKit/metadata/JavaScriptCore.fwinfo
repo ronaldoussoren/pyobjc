@@ -305,12 +305,12 @@
          "typestr": "^{OpaqueJSValue=}"
         },
         {
-         "typestr": "l"
+         "typestr": "L"
         },
         {
          "typestr": "^^{OpaqueJSValue=}",
 	 "type_modifier": "n",
-	 "c_array_lenght_in_arg": 3
+	 "c_array_length_in_arg": 2
         },
         {
          "typestr": "^^{OpaqueJSValue=}",
@@ -369,7 +369,7 @@
          "typestr": "^{OpaqueJSValue=}"
         },
         {
-         "typestr": "l"
+         "typestr": "L"
         },
         {
          "typestr": "^^{OpaqueJSValue=}",
