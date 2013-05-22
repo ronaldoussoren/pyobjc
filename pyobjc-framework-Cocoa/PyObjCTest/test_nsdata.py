@@ -154,6 +154,8 @@ class TestNSData(TestCase):
         except (TypeError, ValueError) as r:
             if str(r).find('right operand length must match slice length') == 0:
                 pass
+            elif str(r).find('lvalue and rvalue have different structures') != -1:
+                pass
             elif 'cannot modify size of memoryview object' in str(r):
                 pass
             elif 'ndarray assignment: lvalue and rvalue have different structures' in str(r):

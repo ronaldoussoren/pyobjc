@@ -24,24 +24,24 @@ class TestCharacterSet (TestCase):
 
     def testCreation(self):
         set = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateWithCharactersInRange(None, (ord('A'), ord('Z')-ord('A')))
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateWithCharactersInString(None, b"abcdefABCDEF0123456789".decode('latin1'))
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         bytes = b"0123" * (8192//4)
         if sys.version_info[0] == 2:
             bytes = buffer(bytes)
         set = CFCharacterSetCreateWithBitmapRepresentation(None, bytes)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateInvertedSet(None, set)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateMutable(None)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateCopy(None, set)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
         set = CFCharacterSetCreateMutableCopy(None, set)
-        self.assertIsInstance(set, CFCharacterSetRef)
+        self.assertIsInstance(set, (CFCharacterSetRef, CFMutableCharacterSetRef))
 
     def testInspection(self):
         letters = CFCharacterSetGetPredefined(kCFCharacterSetLetter)
