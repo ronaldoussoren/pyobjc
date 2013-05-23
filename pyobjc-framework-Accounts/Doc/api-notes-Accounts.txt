@@ -1,11 +1,18 @@
 API notes: Accounts framework
 =============================
 
+Apple Documentation
+-------------------
+
+The framework is documented on `Apple's developer website`__
+
+.. __: http://developer.apple.com/library/mac/#documentation/Accounts/Reference/AccountsFrameworkRef/_index.html
+
 API Notes
 ---------
 
 The entire "Accounts" framework on MacOSX 10.8 (or later) is available from Python.
 
-.. note:: 
+.. note::
 
    The Accounts framework is only available in 64-bit applications.
