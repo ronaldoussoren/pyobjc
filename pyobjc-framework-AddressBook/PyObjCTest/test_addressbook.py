@@ -8,17 +8,15 @@ class TestAddressBook (TestCase):
         self.assert_( not hasattr(AddressBook, 'ABActionGetPropertyCallback') )
 
     def testOpaque(self):
-        self.assert_( hasattr(AddressBook, 'ABPickerRef') )
+        self.assertTrue(hasattr(AddressBook, 'ABPickerRef'))
 
         # Supporting this would require C code, but that won't happen as
         # this type basically just C-glue around an Objective-C class which is
         # available:
-        self.assert_( not hasattr(AddressBook, 'ABActionCallbacks') )
+        self.assertFalse(hasattr(AddressBook, 'ABActionCallbacks'))
 
     def testProtocols (self):
-        self.assert_( hasattr(AddressBook, 'protocols') )
-        self.assert_( hasattr(AddressBook.protocols, 'ABActionDelegate') )
-        self.assertIsInstance(AddressBook.protocols.ABActionDelegate, (objc.informal_protocol, objc.formal_protocol))
+        self.assertFalse( hasattr(AddressBook, 'protocols') )
 
 
 if __name__ == "__main__":

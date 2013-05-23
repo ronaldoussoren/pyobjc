@@ -12,6 +12,11 @@ import Foundation
 from AddressBook import _metadata
 from AddressBook._AddressBook import *
 
+try:
+    long
+except NameError:
+    long = int
+
 sys.modules['AddressBook'] = mod = objc.ObjCLazyModule(
     "AddressBook",
     "com.apple.AddressBook.framework",
