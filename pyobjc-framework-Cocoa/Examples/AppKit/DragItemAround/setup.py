@@ -7,8 +7,12 @@ Usage:
 from setuptools import setup
 
 setup(
-    name='DragItemAround',
+    name="DragItemAround",
     app=["DragItemAround.py"],
     data_files=["MainMenu.nib"],
     setup_requires=["py2app"],
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )
