@@ -5,6 +5,7 @@ from PyObjCTest import testbndl
 from PyObjCTest import copying
 
 import objc, sys
+import functools
 from PyObjCTest.fnd import NSObject, NSAutoreleasePool
 
 rct = structargs.StructArgClass.someRect.__metadata__()['retval']['type']
@@ -267,6 +268,29 @@ class TestInitMemoryLeak (TestCase):
         self.assertEqual(v.objectForKey_("foo"), "ofk2: foo")
         self.assertEqual(v["foo"], "gi: foo")
 
+    def testExceptionOnWrapper(self):
+        # NOTE: I'm not to happy about the type error and will
+        #       likely change PyObjC. The test primarily checks
+        #       that this code doesn't crash the interpreter.
+
+        def decorator(function):
+            @functools.wraps(function)
+            def wrapper(*args, **kwds):
+                return function(*args, **kwds)
+
+            return wrapper
+
+        try:
+            class OCTestRegrWithWrapped (NSObject):
+                @decorator
+                def someMethod(self):
+                    pass
+
+        except TypeError:
+            pass
+
+        else:
+            self.fail("TypeError not raised")
 
 if __name__ == '__main__':
     main()

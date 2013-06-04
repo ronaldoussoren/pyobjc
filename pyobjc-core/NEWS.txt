@@ -6,7 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
-   The 3.0 branch is currently highly experimental, don't uses this version!
+* BUGFIX: using a method definition with only ``*args`` and ``**kwds`` used
+  to crash the interpreter, the now once again raise a TypeError exception.
+
+* The metadata for pyobjc-framework-Accounts was incomplete, fixed that.
 
 * :func:`objc.callbackFor` now also adds a *__metadata__* method to decorated
   functions. This is primarily to make it easier to test the metadata values.

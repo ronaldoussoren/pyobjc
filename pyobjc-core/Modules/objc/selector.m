@@ -2021,6 +2021,9 @@ PyObjCSelector_FromFunction(
             signature,
             is_class_method,
             oc_class);
+        if (value == NULL) {
+            return NULL;
+        }
     }
 
     if (PyObjCClass_HiddenSelector(template_class, selector, PyObjCSelector_IsClassMethod(value))) {
