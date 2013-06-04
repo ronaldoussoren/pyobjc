@@ -4,16 +4,15 @@ Script for building the example:
 Usage:
     python setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
     CFBundleDocumentTypes = [
         dict(
-            CFBundleTypeExtensions=[u'GraphicsBindings', u'*'],
-            CFBundleTypeName=u'GraphicsBindings File',
-            CFBundleTypeRole=u'Editor',
-            NSDocumentClass=u'GraphicsBindingsDocument',
+            CFBundleTypeExtensions=["GraphicsBindings", "*"],
+            CFBundleTypeName="GraphicsBindings File",
+            CFBundleTypeRole="Editor",
+            NSDocumentClass="GraphicsBindingsDocument",
         ),
     ],
 )
@@ -25,4 +24,8 @@ setup(
     options=dict(py2app=dict(
         plist=plist,
     )),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )
