@@ -10,5 +10,8 @@ setup(
     name="iClass",
     app=["main.py"],
     data_files=["English.lproj"],
-    setup_requires=["py2app"],
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )
