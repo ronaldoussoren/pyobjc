@@ -5,9 +5,8 @@ The PyDocEventHandler handles just the event that is used to open URLs. Thanks
 to this class you can use ``open pydoc:///os.open`` from a command-line, or
 add ``pydoc:///`` to HTML files.
 """
-from Foundation import *
+from Cocoa import NSObject, NSAppleEventManager
 
-from Carbon.AppleEvents import kAEISGetURL, kAEInternetSuite
 import struct
 import objc
 

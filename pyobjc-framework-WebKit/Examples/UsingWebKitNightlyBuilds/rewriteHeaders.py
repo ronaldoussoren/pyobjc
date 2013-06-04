@@ -22,11 +22,11 @@ def rewriteFramework(framework, frameworkMap):
         return frameworkMap.get(filename)
 
     macho.rewriteLoadCommands(changefunc)
-    macho.write(open(dyld, 'rb+'))
+    macho.write(open(dyld, "rb+"))
 
 def rewriteFrameworksInDirectory(dirname):
     frameworks = [
-            fn for fn in os.listdir(dirname) if fn.endswith('.framework') ]
+            fn for fn in os.listdir(dirname) if fn.endswith(".framework") ]
     mapping = {}
     for fn in frameworks:
         mapping[os.path.splitext(fn)[0]] = os.path.join(os.path.abspath(dirname), fn , os.path.splitext(fn)[0])
@@ -35,9 +35,9 @@ def rewriteFrameworksInDirectory(dirname):
         rewriteFramework(fn, mapping)
 
 def extractWebKitApp(pathToApp, outputDir):
-    resources = os.path.join(pathToApp, 'Contents', 'Resources')
+    resources = os.path.join(pathToApp, "Contents", "Resources")
     frameworks = [
-            fn for fn in os.listdir(resources) if fn.endswith('.framework') ]
+            fn for fn in os.listdir(resources) if fn.endswith(".framework") ]
     for framework in frameworks:
         if os.path.exists(os.path.join(outputDir, framework)):
             shutil.rmtree(os.path.join(outputDir, framework))
@@ -49,8 +49,8 @@ def extractWebKitApp(pathToApp, outputDir):
         rewriteFrameworksInDirectory(outputDir)
 
 def main():
-    extractWebKitApp('WebKit.app', '.')
+    extractWebKitApp("WebKit.app", ".")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

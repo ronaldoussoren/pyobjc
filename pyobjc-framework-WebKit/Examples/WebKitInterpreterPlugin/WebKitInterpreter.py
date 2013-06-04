@@ -7,12 +7,20 @@ from code import InteractiveConsole, softspace
 from StringIO import StringIO
 import objc
 from objc import YES, NO, selector
-from Foundation import *
-from AppKit import *
+from Cocoa import NSBundle, NSObject, NSFont
+from Cocoa import NSColor, NSApplication, NSFontAttributeName
+from Cocoa import NSForegroundColorAttributeName, NSAnyEventMask, NSDate
+from Cocoa import NSDefaultRunLoopMode, NSKeyDown, NSAttributedString
+from Cocoa import NSLog
 from PyObjCTools import AppHelper
 import os
 
 FLT_MAX = 3.40282347e+38
+
+try:
+    unicode
+except NameError:
+    unicode = str
 
 try:
     sys.ps1
@@ -30,7 +38,7 @@ class PseudoUTF8Output(object):
 
     def write(self, s):
         if not isinstance(s, unicode):
-            s = s.decode('utf-8', 'replace')
+            s = s.decode("utf-8", "replace")
         self._write(s)
 
     def writelines(self, lines):
@@ -46,36 +54,40 @@ class PseudoUTF8Output(object):
 class PseudoUTF8Input(object):
     softspace = 0
     def __init__(self, readlinemethod):
-        self._buffer = u''
+        self._buffer = ""
         self._readline = readlinemethod
 
     def read(self, chars=None):
         if chars is None:
             if self._buffer:
                 rval = self._buffer
-                self._buffer = u''
-                if rval.endswith(u'\r'):
-                    rval = rval[:-1]+u'\n'
-                return rval.encode('utf-8')
+                self._buffer = ""
+                if rval.endswith("\r"):
+                    rval = rval[:-1]+"\n"
+                return rval.encode("utf-8")
             else:
-                return self._readline(u'\x04')[:-1].encode('utf-8')
+                return self._readline("\x04")[:-1].encode("utf-8")
+
         else:
             while len(self._buffer) < chars:
-                self._buffer += self._readline(u'\x04\r')
-                if self._buffer.endswith('\x04'):
+                self._buffer += self._readline("\x04\r")
+                if self._buffer.endswith("\x04"):
                     self._buffer = self._buffer[:-1]
                     break
             rval, self._buffer = self._buffer[:chars], self._buffer[chars:]
-            return rval.encode('utf-8').replace('\r','\n')
+            return rval.encode("utf-8").replace("\r","\n")
 
     def readline(self):
-        if u'\r' not in self._buffer:
-            self._buffer += self._readline(u'\x04\r')
-        if self._buffer.endswith('\x04'):
-            rval = self._buffer[:-1].encode('utf-8')
-        elif self._buffer.endswith('\r'):
-            rval = self._buffer[:-1].encode('utf-8')+'\n'
-        self._buffer = u''
+        if "\r" not in self._buffer:
+            self._buffer += self._readline("\x04\r")
+
+        if self._buffer.endswith("\x04"):
+            rval = self._buffer[:-1].encode("utf-8")
+
+        elif self._buffer.endswith("\r"):
+            rval = self._buffer[:-1].encode("utf-8")+"\n"
+
+        self._buffer = ""
 
         return rval
 
@@ -85,7 +97,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def __init__(self, *args, **kwargs):
         InteractiveConsole.__init__(self, *args, **kwargs)
-        self.locals['__interpreter__'] = self
+        self.locals["__interpreter__"] = self
 
     def asyncinteract(self, write=None, banner=None):
         if self.lock:
@@ -93,15 +105,16 @@ class AsyncInteractiveConsole(InteractiveConsole):
         self.lock = True
         if write is None:
             write = self.write
-        cprt = u'Type "help", "copyright", "credits" or "license" for more information.'
+        cprt = "Type \"help", \"copyright", \"credits" or \"license\" for more information."
         if banner is None:
-            write(u"Python %s in %s\n%s\n" % (
+            write("Python %s in %s\n%s\n" % (
                 sys.version,
-                NSBundle.mainBundle().objectForInfoDictionaryKey_('CFBundleName'),
+                NSBundle.mainBundle().objectForInfoDictionaryKey_("CFBundleName"),
                 cprt,
             ))
         else:
-            write(banner + '\n')
+            write(banner + "\n")
+
         more = 0
         _buff = []
         try:
@@ -138,27 +151,27 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
 
     def recommendCompletionsFor(self, word):
-        parts = word.split('.')
+        parts = word.split(".")
         if len(parts) > 1:
             # has a . so it must be a module or class or something
-            # using eval, which shouldn't normally have side effects
-            # unless there's descriptors/metaclasses doing some nasty
+            # using eval, which shouldn"t normally have side effects
+            # unless there"s descriptors/metaclasses doing some nasty
             # get magic
-            objname = '.'.join(parts[:-1])
+            objname = ".".join(parts[:-1])
             try:
                 obj = eval(objname, self.locals)
             except:
                 return None, 0
             wordlower = parts[-1].lower()
-            if wordlower == '':
+            if wordlower == "":
                 # they just punched in a dot, so list all attributes
-                # that don't look private or special
-                prefix = '.'.join(parts[-2:])
+                # that don"t look private or special
+                prefix = ".".join(parts[-2:])
                 check = [
                     (prefix+_method)
                     for _method
                     in dir(obj)
-                    if _method[:1] != '_' and _method.lower().startswith(wordlower)
+                    if _method[:1] != "_" and _method.lower().startswith(wordlower)
                 ]
             else:
                 # they started typing the method name
@@ -175,10 +188,10 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
 DEBUG_DELEGATE = 0
 PASSTHROUGH = (
-   'deleteBackward:',
-   'complete:',
-   'moveRight:',
-   'moveLeft:',
+   "deleteBackward:",
+   "complete:",
+   "moveRight:",
+   "moveLeft:",
 )
 
 class PyInterpreter(NSObject):
@@ -187,7 +200,7 @@ class PyInterpreter(NSObject):
     turning it into a full featured interactive Python interpreter.
     """
 
-    textView = objc.ivar('textView')
+    textView = objc.ivar("textView")
 
     def initWithTextView_(self, textView):
         self = super(PyInterpreter, self).init()
@@ -220,7 +233,7 @@ class PyInterpreter(NSObject):
         self._stdoutColor = NSColor.blueColor()
         self._codeColor = NSColor.blackColor()
         self._historyLength = 50
-        self._history = [u'']
+        self._history = [""]
         self._historyView = 0
         self._characterIndexForInput = 0
         self._stdin = PseudoUTF8Input(self._nestedRunLoopReaderUntilEOLchars_)
@@ -265,8 +278,8 @@ class PyInterpreter(NSObject):
                     break
             app.sendEvent_(event)
         cl = self.currentLine()
-        if eol == '\r':
-            self.writeCode_('\n')
+        if eol == "\r":
+            self.writeCode_("\n")
         return cl+eol
 
     #
@@ -289,7 +302,7 @@ class PyInterpreter(NSObject):
         self.addHistoryLine_(line)
         self._executeWithRedirectedIO(self._executeLine_, line)
         self._history = filter(None, self._history)
-        self._history.append(u'')
+        self._history.append("")
         self._historyView = len(self._history) - 1
 
     def _executeLine_(self, line):
@@ -320,7 +333,7 @@ class PyInterpreter(NSObject):
         self._historyLength = length
 
     def addHistoryLine_(self, line):
-        line = line.rstrip('\n')
+        line = line.rstrip("\n")
         if self._history[-1] == line:
             return False
         if not line:
@@ -355,12 +368,12 @@ class PyInterpreter(NSObject):
             s,
             {
                 NSFontAttributeName:self.font(),
-                NSForegroundColorAttributeName:getattr(self, name+'Color')(),
+                NSForegroundColorAttributeName:getattr(self, name+"Color")(),
             },
         )
 
     def _writeString_forOutput_(self, s, name):
-        self.textView.textStorage().appendAttributedString_(getattr(self, name+'String_')(s))
+        self.textView.textStorage().appendAttributedString_(getattr(self, name+"String_")(s))
 
         window = self.textView.window()
         app = NSApplication.sharedApplication()
@@ -382,18 +395,18 @@ class PyInterpreter(NSObject):
 
             if (event.type() == NSKeyDown) and (event.window() == window):
                 chr = event.charactersIgnoringModifiers()
-                if chr == 'c' and (event.modifierFlags() & NSControlKeyMask):
+                if chr == "c" and (event.modifierFlags() & NSControlKeyMask):
                     raise KeyboardInterrupt
 
             app.sendEvent_(event)
 
 
-    codeString_   = lambda self, s: self._formatString_forOutput_(s, 'code')
-    stderrString_ = lambda self, s: self._formatString_forOutput_(s, 'stderr')
-    stdoutString_ = lambda self, s: self._formatString_forOutput_(s, 'stdout')
-    writeCode_    = lambda self, s: self._writeString_forOutput_(s, 'code')
-    writeStderr_  = lambda self, s: self._writeString_forOutput_(s, 'stderr')
-    writeStdout_  = lambda self, s: self._writeString_forOutput_(s, 'stdout')
+    codeString_   = lambda self, s: self._formatString_forOutput_(s, "code")
+    stderrString_ = lambda self, s: self._formatString_forOutput_(s, "stderr")
+    stdoutString_ = lambda self, s: self._formatString_forOutput_(s, "stdout")
+    writeCode_    = lambda self, s: self._writeString_forOutput_(s, "code")
+    writeStderr_  = lambda self, s: self._writeString_forOutput_(s, "stderr")
+    writeStdout_  = lambda self, s: self._writeString_forOutput_(s, "stdout")
 
     #
     #  Accessors
@@ -467,7 +480,7 @@ class PyInterpreter(NSObject):
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, (begin, length), index):
         txt = self.textView.textStorage().mutableString()
         end = begin+length
-        while (begin>0) and (txt[begin].isalnum() or txt[begin] in '._'):
+        while (begin>0) and (txt[begin].isalnum() or txt[begin] in "._"):
             begin -= 1
         while not txt[begin].isalnum():
             begin += 1
@@ -479,8 +492,8 @@ class PyInterpreter(NSObject):
         if begin < lastLocation:
             # no editing anywhere but the interactive line
             return NO
-        newString = newString.replace('\r', '\n')
-        if '\n' in newString:
+        newString = newString.replace("\r", "\n")
+        if "\n" in newString:
             if begin != lastLocation:
                 # no pasting multiline unless you're at the end
                 # of the interactive line
@@ -488,8 +501,8 @@ class PyInterpreter(NSObject):
             # multiline paste support
             #self.clearLine()
             newString = self.currentLine() + newString
-            for s in newString.strip().split('\n'):
-                self.writeCode_(s+'\n')
+            for s in newString.strip().split("\n"):
+                self.writeCode_(s+"\n")
                 self.executeLine_(s)
             return NO
         return YES
@@ -505,10 +518,10 @@ class PyInterpreter(NSObject):
     def textView_doCommandBySelector_(self, aTextView, aSelector):
         # deleteForward: is ctrl-d
         if self.isInteracting():
-            if aSelector == 'insertNewline:':
-                self.writeCode_('\n')
+            if aSelector == "insertNewline:":
+                self.writeCode_("\n")
             return NO
-        responder = getattr(self, aSelector.replace(':','_'), None)
+        responder = getattr(self, aSelector.replace(":","_"), None)
         if responder is not None:
             responder(aTextView)
             return YES
@@ -522,7 +535,7 @@ class PyInterpreter(NSObject):
     #
 
     def insertTabIgnoringFieldEditor_(self, sender):
-        # this isn't terribly necessary, b/c F5 and opt-esc do completion
+        # this isn"t terribly necessary, b/c F5 and opt-esc do completion
         # but why not
         sender.complete_(self)
 
@@ -547,7 +560,7 @@ class PyInterpreter(NSObject):
 
     def insertNewline_(self, sender):
         line = self.currentLine()
-        self.writeCode_('\n')
+        self.writeCode_("\n")
         self.executeInteractiveLine_(line)
 
     moveToBeginningOfParagraph_ = moveToBeginningOfLine_
@@ -558,24 +571,24 @@ class PyInterpreter(NSObject):
 
 class WebKitInterpreter(NSView):
 
-    arguments = objc.ivar('arguments')
-    pyInterpreter = objc.ivar('pyInterpreter')
-    scrollView = objc.ivar('scrollView')
-    textView = objc.ivar('textView')
+    arguments = objc.ivar("arguments")
+    pyInterpreter = objc.ivar("pyInterpreter")
+    scrollView = objc.ivar("scrollView")
+    textView = objc.ivar("textView")
 
     def container(self):
-        return self.arguments.get(u'WebPluginContainer')
+        return self.arguments.get("WebPluginContainer")
 
     def pluginViewWithArguments_(cls, arguments):
         self = super(WebKitInterpreter, cls).alloc().initWithFrame_(NSZeroRect)
-        NSLog('pluginViewWithArguments:')
+        NSLog("pluginViewWithArguments:")
         NSLog(arguments)
         self.arguments = arguments
         return self
     pluginViewWithArguments_ = classmethod(pluginViewWithArguments_)
 
     def pluginStart(self):
-        NSLog('pluginStart')
+        NSLog("pluginStart")
         try:
             self.doPluginStart()
         except:
@@ -583,8 +596,8 @@ class WebKitInterpreter(NSView):
             traceback.print_exc()
 
     def doPluginStart(self):
-        dct = self.arguments[u'WebPluginAttributes']
-        w, h = [float(dct.get(k, 0)) for k in ('width', 'height')]
+        dct = self.arguments["WebPluginAttributes"]
+        w, h = [float(dct.get(k, 0)) for k in ("width", "height")]
 
         self.setFrame_(((0.0, 0.0), (w, h)))
         scrollView = NSScrollView.alloc().initWithFrame_(self.frame())
@@ -613,11 +626,11 @@ class WebKitInterpreter(NSView):
         self.pyInterpreter = PyInterpreter.alloc().initWithTextView_(
             textView)
 
-        self.pyInterpreter.interpreterLocals()[u'container'] = self.container()
+        self.pyInterpreter.interpreterLocals()["container"] = self.container()
 
     def objectForWebScript(self):
         return self
 
-NSLog('loaded WebKitInterpreter')
+NSLog("loaded WebKitInterpreter")
 
 objc.removeAutoreleasePool()
