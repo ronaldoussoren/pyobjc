@@ -4,19 +4,18 @@ Script for building the example.
 Usage:
     python setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
-MIME = 'application/x-pyobjc-demo-webkitinterpreter'
+MIME = "application/x-pyobjc-demo-webkitinterpreter"
 plist = dict(
-    NSPrincipalClass='WebKitInterpreter',
-    WebPluginName='WebKit PyInterpreter Plug-In',
-    WebPluginDescription='PyObjC demo that embeds a Python interpreter',
-    CFBundlePackageType='WBPL',
+    NSPrincipalClass="WebKitInterpreter",
+    WebPluginName="WebKit PyInterpreter Plug-In",
+    WebPluginDescription="PyObjC demo that embeds a Python interpreter",
+    CFBundlePackageType="WBPL",
     WebPluginMIMETypes={
         MIME: dict(
-            WebPluginExtensions=['webkitinterpreter'],
-            WebPluginTypeDescription='WebKit PyInterpreter',
+            WebPluginExtensions=["webkitinterpreter"],
+            WebPluginTypeDescription="WebKit PyInterpreter",
         ),
     },
 )
@@ -24,5 +23,14 @@ plist = dict(
 setup(
     name="WebKitInterpreter",
     plugin = ["WebKitInterpreter.py"],
-    options = dict(py2app=dict(plist=plist)),
+    options = dict(
+        py2app=dict(
+            plist=plist
+        ),
+    ),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+        "pyobjc-framework-WebKit",
+    ]
 )
