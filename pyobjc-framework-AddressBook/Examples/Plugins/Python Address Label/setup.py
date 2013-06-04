@@ -11,21 +11,21 @@ To use this copy dist/PyAddressLabel.plugin to the plugin directory:
 from setuptools import setup
 
 infoPlist = dict(
-    CFBundleName='PyAddressLabel',
-    CFBundleGetInfoString='Silly PopUp for AddressBook',
-    CFBundleVersion='0.1',
-    CFBundleShortVersionString='0.1',
-    NSPrincipalClass='PyAddressLabelDelegate',
+    CFBundleName="PyAddressLabel",
+    CFBundleGetInfoString="Silly PopUp for AddressBook",
+    CFBundleVersion="0.1",
+    CFBundleShortVersionString="0.1",
+    NSPrincipalClass="PyAddressLabelDelegate",
 )
 
 setup(
-    name='PyAddressLabel',
-    plugin=['plugin.py'],
+    name="PyAddressLabel",
+    plugin=["plugin.py"],
     data_files=[],
     setup_request=[
-        'py2app',
-        'pyobjc-framework-AddressBook',
-        'pyobjc-framework-Cocoa',
+        "py2app",
+        "pyobjc-framework-AddressBook",
+        "pyobjc-framework-Cocoa",
     ],
     options=dict(
         py2app=dict(
