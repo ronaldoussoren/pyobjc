@@ -8,6 +8,7 @@ doesn't use PPP :-)
 Usage:
     python netcon.py
 """
+from __future__ import print_function
 from SystemConfiguration import *
 
 def connectionChanged(connection, status, info):
@@ -15,12 +16,11 @@ def connectionChanged(connection, status, info):
 
 
 def main():
-    conn = SCNetworkConnectionCreateWithServiceID(None,
-            "Automatic",
-            connectionChanged,
-            "foobar")
+    conn = SCNetworkConnectionCreateWithServiceID(
+        None, "Automatic",
+        connectionChanged, "foobar")
 
-    print conn
+    print(conn)
     assert conn is not None
 
     loop = CFRunLoopGetCurrent()
