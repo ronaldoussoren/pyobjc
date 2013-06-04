@@ -38,11 +38,11 @@ static const char gCFRangeEncoding[1024] = { 0 };
 
 #   define SMALL_STRUCT_LIMIT	8
 
-#elif defined(__i386__) 
+#elif defined(__i386__)
 
 #   define SMALL_STRUCT_LIMIT 	8
 
-#elif defined(__x86_64__) 
+#elif defined(__x86_64__)
 
 #   define SMALL_STRUCT_LIMIT	16
 
@@ -89,7 +89,7 @@ static void describe_ffitype(ffi_type* type)
 	       break;
 
 	default:
-	       // Don't abort, this is called from the debugger 
+	       // Don't abort, this is called from the debugger
 	       printf("?(%d)", type->type);
 	}
 }
@@ -129,7 +129,7 @@ num_struct_fields(const char* argtype)
 	if (*argtype != _C_STRUCT_B) return -1;
 	while (*argtype != _C_STRUCT_E && *argtype != '=') argtype++;
 	if (*argtype == _C_STRUCT_E) return 0;
-	
+
 	argtype++;
 	while (*argtype != _C_STRUCT_E) {
 		if (*argtype == '"') {
@@ -167,7 +167,7 @@ static void cleanup_ffitype_capsule(PyObject* ptr)
 }
 #endif
 
-static ffi_type* 
+static ffi_type*
 array_to_ffi_type(const char* argtype)
 {
 static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
@@ -187,11 +187,11 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 		return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
 	}
 
-	/* We don't have a type description yet, dynamicly 
+	/* We don't have a type description yet, dynamicly
 	 * create it.
 	 */
 	field_count = atoi(argtype+1);
-			
+
 	type = PyMem_Malloc(sizeof(*type));
 	if (type == NULL) {
 		PyErr_NoMemory();
@@ -200,9 +200,9 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	type->size = PyObjCRT_SizeOfType(argtype);
 	type->alignment = PyObjCRT_AlignOfType(argtype);
 
-	/* Libffi doesn't really know about arrays as part of larger 
+	/* Libffi doesn't really know about arrays as part of larger
 	 * data-structures (e.g. struct foo { int field[3]; };). We fake it
-	 * by treating the nested array as a struct. These seems to work 
+	 * by treating the nested array as a struct. These seems to work
 	 * fine on MacOS X.
 	 */
 	type->type = FFI_TYPE_STRUCT;
@@ -212,7 +212,7 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 		PyErr_NoMemory();
 		return NULL;
 	}
-	
+
 	while (isdigit(*++argtype));
 	type->elements[0] = signature_to_ffi_type(argtype);
 	for (i = 1; i < field_count; i++) {
@@ -235,7 +235,7 @@ static  PyObject* array_types = NULL; /* XXX: Use NSMap  */
 	return type;
 }
 
-static ffi_type* 
+static ffi_type*
 struct_to_ffi_type(const char* argtype)
 {
 	static  PyObject* struct_types = NULL; /* XXX: Use NSMap  */
@@ -254,7 +254,7 @@ struct_to_ffi_type(const char* argtype)
 		return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
 	}
 
-	/* We don't have a type description yet, dynamicly 
+	/* We don't have a type description yet, dynamicly
 	 * create it.
 	 */
 	field_count = num_struct_fields(argtype);
@@ -263,7 +263,7 @@ struct_to_ffi_type(const char* argtype)
 			"Cannot determine layout of %s", argtype);
 		return NULL;
 	}
-			
+
 	type = PyMem_Malloc(sizeof(*type));
 	if (type == NULL) {
 		PyErr_NoMemory();
@@ -278,7 +278,7 @@ struct_to_ffi_type(const char* argtype)
 		PyErr_NoMemory();
 		return NULL;
 	}
-	
+
 	field_count = 0;
 	curtype = argtype+1;
 	while (*curtype != _C_STRUCT_E && *curtype != '=') curtype++;
@@ -290,7 +290,7 @@ struct_to_ffi_type(const char* argtype)
 				curtype++;
 				while (*curtype++ != '"') {}
 			}
-			type->elements[field_count] = 
+			type->elements[field_count] =
 				signature_to_ffi_type(curtype);
 			if (type->elements[field_count] == NULL) {
 				PyMem_Free(type->elements);
@@ -331,12 +331,12 @@ static const char ulong_type[] = { _C_ULNG, 0 };
 	switch (*argtype) {
 	case _C_CHR: case _C_SHT: case _C_UNICHAR:
 		return signature_to_ffi_type(long_type);
-	case _C_UCHR: case _C_USHT: 
+	case _C_UCHR: case _C_USHT:
 		return signature_to_ffi_type(ulong_type);
 #ifdef _C_BOOL
 	case _C_BOOL: return signature_to_ffi_type(long_type);
-#endif	
-	case _C_NSBOOL: 
+#endif
+	case _C_NSBOOL:
 		      return signature_to_ffi_type(long_type);
 	default:
 		return signature_to_ffi_type(argtype);
@@ -360,7 +360,7 @@ signature_to_ffi_type(const char* argtype)
 	case _C_CHAR_AS_INT: return &ffi_type_schar;
 	case _C_CHAR_AS_TEXT: return &ffi_type_schar;
 #ifdef _C_BOOL
-	case _C_BOOL: 
+	case _C_BOOL:
 	     /* sizeof(bool) == 4 on PPC32, and 1 on all others */
 #if defined(__ppc__) && !defined(__LP__)
 	     return &ffi_type_sint;
@@ -368,7 +368,7 @@ signature_to_ffi_type(const char* argtype)
 	     return &ffi_type_schar;
 #endif
 
-#endif	
+#endif
 	case _C_NSBOOL: return &ffi_type_schar;
 	case _C_UCHR: return &ffi_type_uchar;
 	case _C_SHT: return &ffi_type_sshort;
@@ -378,7 +378,7 @@ signature_to_ffi_type(const char* argtype)
 	case _C_UINT: return &ffi_type_uint;
 
 	 /* The next to defintions are incorrect, but the correct definitions
-	  * don't work (e.g. give testsuite failures). 
+	  * don't work (e.g. give testsuite failures).
 	  */
 #ifdef __LP64__
 	case _C_LNG: return &ffi_type_sint64;  /* ffi_type_slong */
@@ -393,14 +393,14 @@ signature_to_ffi_type(const char* argtype)
 	case _C_DBL: return &ffi_type_double;
 	case _C_CHARPTR: return &ffi_type_pointer;
 	case _C_PTR: return &ffi_type_pointer;
-	case _C_ARY_B: 
+	case _C_ARY_B:
 		return array_to_ffi_type(argtype);
-	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST: 
+	case _C_IN: case _C_OUT: case _C_INOUT: case _C_CONST:
 #if 0	/* 'O' is used by remote objects ??? */
 	  case 'O':
 #endif
 		return signature_to_ffi_type(argtype+1);
-	case _C_STRUCT_B: 
+	case _C_STRUCT_B:
 		return struct_to_ffi_type(argtype);
 	case _C_UNDEF:
 		return &ffi_type_pointer;
@@ -498,12 +498,12 @@ static Py_ssize_t extract_count(const char* type, void* pvalue)
 		return ((CFRange*)pvalue)->length;
 	}
 
-	if (strncmp(type, @encode(CFArrayRef), sizeof(@encode(CFArrayRef))-1) == 0 || 
+	if (strncmp(type, @encode(CFArrayRef), sizeof(@encode(CFArrayRef))-1) == 0 ||
 		strncmp(type, @encode(CFMutableArrayRef), sizeof(@encode(CFMutableArrayRef))-1) == 0) {
-	
+
 		return CFArrayGetCount(*(CFArrayRef*)pvalue);
 	}
-	PyErr_Format(PyExc_TypeError, 
+	PyErr_Format(PyExc_TypeError,
 			"Don't know how to convert to extract count: %s", type);
 	return -1;
 }
@@ -554,7 +554,7 @@ parse_printf_args(
 		char typecode;
 
 		/* Skip '%' */
-		format ++; 
+		format ++;
 
 		/* Check for '%%' escape */
 		if (*format == '%') {
@@ -597,13 +597,13 @@ parse_printf_args(
 			if (depythonify_c_value(@encode(int), PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 				Py_DECREF(encoded);
 				return -1;
-			}	
+			}
 			values[curarg] = byref[curarg];
 			arglist[curarg] = signature_to_ffi_type(@encode(int));
 
 			argoffset++;
 			curarg++;
-			
+
 		} else {
 			while (isdigit(*format)) format++;
 		}
@@ -628,7 +628,7 @@ parse_printf_args(
 				if (depythonify_c_value(@encode(int), PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 					Py_DECREF(encoded);
 					return -1;
-				}	
+				}
 				values[curarg] = byref[curarg];
 				arglist[curarg] = signature_to_ffi_type(@encode(int));
 				argoffset++;
@@ -702,10 +702,10 @@ parse_printf_args(
 					return -1;
 				}
 				*(int*)byref[curarg] = (wchar_t)*PyString_AsString(v);
-			} else 
+			} else
 #endif
 			if (PyUnicode_Check(v)) {
-				
+
 				if (PyUnicode_GetSize(v) != 1) {
 					PyErr_SetString(PyExc_ValueError, "Expecting string of length 1");
 					Py_DECREF(encoded);
@@ -727,11 +727,11 @@ parse_printf_args(
 			/* INT */
 			if (*format == 'D') {
 				typecode = _C_LNG;
-			} 
+			}
 
 			if (typecode == _C_LNG_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long long));
-			
+
 			} else if (typecode == _C_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long));
 
@@ -746,7 +746,7 @@ parse_printf_args(
 			if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 				Py_DECREF(encoded);
 				return -1;
-			}	
+			}
 			values[curarg] = byref[curarg];
 			arglist[curarg] = signature_to_ffi_type(&typecode);
 
@@ -764,7 +764,7 @@ parse_printf_args(
 			if (typecode == _C_LNG_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long long));
 				typecode = _C_ULNG_LNG;
-			
+
 			} else if (typecode == _C_LNG) {
 				byref[curarg] = PyMem_Malloc(sizeof(long));
 				typecode = _C_ULNG;
@@ -781,7 +781,7 @@ parse_printf_args(
 			if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 				Py_DECREF(encoded);
 				return -1;
-			}	
+			}
 			values[curarg] = byref[curarg];
 			arglist[curarg] = signature_to_ffi_type(&typecode);
 
@@ -803,9 +803,9 @@ parse_printf_args(
 			if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 				Py_DECREF(encoded);
 				return -1;
-			}	
+			}
 			values[curarg] = byref[curarg];
-#if defined(__ppc__) 
+#if defined(__ppc__)
 			/* Passing floats to variadic functions on darwin/ppc
 			 * is slightly convoluted. Lying to libffi about the
 			 * type of the argument seems to trick it into doing
@@ -858,7 +858,7 @@ parse_printf_args(
 				if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 					Py_DECREF(encoded);
 					return -1;
-				}	
+				}
 				arglist[curarg] = signature_to_ffi_type(&typecode);
 				values[curarg] = byref[curarg];
 			}
@@ -879,7 +879,7 @@ parse_printf_args(
 			if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset), byref[curarg]) < 0) {
 				Py_DECREF(encoded);
 				return -1;
-			}	
+			}
 			values[curarg] = byref[curarg];
 			arglist[curarg] = signature_to_ffi_type(&typecode);
 
@@ -972,8 +972,8 @@ static int parse_varargs_array(
 		if (byref[curarg] == NULL) {
 			return -1;
 		}
-		if (depythonify_c_value(argType->type, 
-			PyTuple_GET_ITEM(argtuple, argoffset), 
+		if (depythonify_c_value(argType->type,
+			PyTuple_GET_ITEM(argtuple, argoffset),
 			byref[curarg]) < 0) {
 
 			return -1;
@@ -1005,7 +1005,7 @@ typedef struct {
 	enum closureType	  closureType;
 } _method_stub_userdata;
 
-static void 
+static void
 method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, void* _userdata)
 {
 	int err;
@@ -1051,7 +1051,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 		startArg = 0;
 		pyself = NULL;
 	}
-	
+
 	for (i = startArg; i < Py_SIZE(methinfo); i++) {
 
 		const char* argtype = methinfo->argtype[i].type;
@@ -1063,7 +1063,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 #endif
 
 		switch (*argtype) {
-		case _C_INOUT: 
+		case _C_INOUT:
 			if (argtype[1] == _C_PTR) {
 				have_output ++;
 			}
@@ -1194,14 +1194,25 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			break;
 
 		case _C_ARY_B:
-			/* An array is actually a pointer to the first 
+			/* An array is actually a pointer to the first
 			 * element of the array. Libffi passes a pointer to
-			 * that pointer, we need to strip one level of 
+			 * that pointer, we need to strip one level of
 			 * indirection to ensure that pythonify_c_value works
 			 * correctly.
 			 */
 			v = pythonify_c_value(argtype, *(void**)args[i]);
 			break;
+
+                case _C_ID:
+			v = pythonify_c_value(argtype, args[i]);
+                        if (v != NULL && PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL) {
+                            /* Argument is a block */
+                            if (methinfo->argtype[i].callable != NULL) {
+                                    PyObjCObject_SET_BLOCK(v, methinfo->argtype[i].callable);
+                                    Py_INCREF(methinfo->argtype[i].callable);
+                            }
+                        }
+                        break;
 
 		default:
 			v = pythonify_c_value(argtype, args[i]);
@@ -1215,7 +1226,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 			Py_DECREF(arglist);
 			goto error;
 		}
-		Py_DECREF(v); 
+		Py_DECREF(v);
 	}
 
 	v = PyList_AsTuple(arglist);
@@ -1231,7 +1242,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	if (!callable) {
 		abort();
-	} 
+	}
 
 	/* Avoid calling a PyObjCPythonSelector directory, it does
 	 * additional work that we don't need.
@@ -1263,7 +1274,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					case PyObjC_kPointerPlain:
 						err = depythonify_c_return_value(unqualified_type, res, resp);
 						if (err == -1) {
-							Py_DECREF(res); 
+							Py_DECREF(res);
 							goto error;
 						}
 						break;
@@ -1296,8 +1307,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					case PyObjC_kArrayCountInArg:
 						/* We don't have output arguments, thus can calculate the response immediately */
 						count = extract_count(
-							methinfo->argtype[methinfo->rettype.arrayArg].type, 
-							args[methinfo->rettype.arrayArg]); 
+							methinfo->argtype[methinfo->rettype.arrayArg].type,
+							args[methinfo->rettype.arrayArg]);
 						if (count == -1 && PyErr_Occurred()) {
 							goto error;
 						}
@@ -1310,17 +1321,17 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				}
 
 			} else {
-				err = depythonify_c_return_value(rettype, 
+				err = depythonify_c_return_value(rettype,
 					res, resp);
 
 				if (methinfo->rettype.alreadyRetained) {
-				   /* Must return a 'new' instead of a borrowed 
+				   /* Must return a 'new' instead of a borrowed
 				    * reference.
 				    */
 				   [(*(id*)resp) retain];
 
 				} else if (methinfo->rettype.alreadyCFRetained) {
-				   /* Must return a 'new' instead of a borrowed 
+				   /* Must return a 'new' instead of a borrowed
 				    * reference.
 				    */
 				   CFRetain((*(id*)resp));
@@ -1347,7 +1358,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 						}
 
 					}
-					Py_DECREF(res); 
+					Py_DECREF(res);
 					goto error;
 				}
 			}
@@ -1422,7 +1433,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					break;
 
 				case PyObjC_kNullTerminatedArray:
-					count = c_array_nullterminated_size(res, &seq);            
+					count = c_array_nullterminated_size(res, &seq);
 					if (count == -1) {
 						goto error;
 					}
@@ -1435,8 +1446,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 				case PyObjC_kArrayCountInArg:
 					count = extract_count(
-							methinfo->argtype[methinfo->argtype[i].arrayArg].type, 
-							args[methinfo->argtype[i].arrayArg]); 
+							methinfo->argtype[methinfo->argtype[i].arrayArg].type,
+							args[methinfo->argtype[i].arrayArg]);
 					if (count == -1 && PyErr_Occurred()) {
 						goto error;
 					}
@@ -1496,7 +1507,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 						err = depythonify_c_return_value(unqualified_type,
 							real_res, resp);
 						if (err == -1) {
-							Py_DECREF(res); 
+							Py_DECREF(res);
 							goto error;
 						}
 						break;
@@ -1529,8 +1540,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					case PyObjC_kArrayCountInArg:
 						if (*PyObjCRT_SkipTypeQualifiers(methinfo->argtype[methinfo->rettype.arrayArg].type) != _C_PTR) {
 							count = extract_count(
-								methinfo->argtype[methinfo->rettype.arrayArg].type, 
-								args[methinfo->rettype.arrayArg]); 
+								methinfo->argtype[methinfo->rettype.arrayArg].type,
+								args[methinfo->rettype.arrayArg]);
 							if (count == -1 && PyErr_Occurred()) {
 								goto error;
 							}
@@ -1544,16 +1555,16 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 							*(void**)resp = NULL;
 							break;
 						}
-					
+
 					}
 				}
 
 			} else {
-				err = depythonify_c_return_value(rettype, 
+				err = depythonify_c_return_value(rettype,
 					real_res, resp);
 
 				if (methinfo->rettype.alreadyRetained) {
-				   /* Must return a 'new' instead of a borrowed 
+				   /* Must return a 'new' instead of a borrowed
 				    * reference.
 				    */
 				   [(*(id*)resp) retain];
@@ -1574,7 +1585,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 						   "a value",
 						   sel_getName(*(SEL*)args[1]));
 					}
-					Py_DECREF(res); 
+					Py_DECREF(res);
 					goto error;
 				}
 			}
@@ -1634,7 +1645,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 				break;
 
 			case PyObjC_kNullTerminatedArray:
-				count = c_array_nullterminated_size(PyTuple_GET_ITEM(res, idx++), &seq);            
+				count = c_array_nullterminated_size(PyTuple_GET_ITEM(res, idx++), &seq);
 				if (count == -1) {
 					goto error;
 				}
@@ -1729,8 +1740,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 				case PyObjC_kArrayCountInArg:
 					count = extract_count(
-							methinfo->argtype[methinfo->argtype[i].arrayArg].type, 
-							args[methinfo->argtype[i].arrayArg]); 
+							methinfo->argtype[methinfo->argtype[i].arrayArg].type,
+							args[methinfo->argtype[i].arrayArg]);
 					if (count == -1 && PyErr_Occurred()) {
 						goto error;
 					}
@@ -1753,8 +1764,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 					}
 
 					count = extract_count(
-						methinfo->argtype[methinfo->rettype.arrayArg].type, 
-						args[methinfo->rettype.arrayArg]); 
+						methinfo->argtype[methinfo->rettype.arrayArg].type,
+						args[methinfo->rettype.arrayArg]);
 					if (count == -1 && PyErr_Occurred()) {
 						goto error;
 					}
@@ -1772,7 +1783,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 
 	/* Do this at the end to ensure we work correctly when
 	 * 'res' is 'pyself' and 'pyself' those are the only
-	 * references from Python (that is, 'pyself' is a 
+	 * references from Python (that is, 'pyself' is a
 	 * "transient" reference.
 	 */
 	if (pyself) {
@@ -1780,7 +1791,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args, v
 	}
 
 	PyGILState_Release(state);
-	
+
 	return;
 
 error:
@@ -1790,7 +1801,7 @@ error:
 	PyObjCErr_ToObjCWithGILState(&state);
 }
 
-/* 
+/*
  * Return an IMP that is suitable for forwarding a method with the specified
  * signature from Objective-C to Python.
  */
@@ -1821,7 +1832,7 @@ static int _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds)
 	} else if (PyObjCNativeSelector_Check(callable)) {
 		PyObjCMethodSignature* sig = PyObjCSelector_GetMetadata(callable);
 		 int result = Py_SIZE(sig) - 1;
-		 
+
 		 Py_DECREF(sig);
 		 return result;
 
@@ -1864,15 +1875,15 @@ PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callabl
 		if (stubUserdata->argCount == Py_SIZE(methinfo) && !haveVarArgs && !haveVarKwds) {
 			/* OK */
 		} else if ((stubUserdata->argCount <= 1) && (haveVarArgs || haveVarKwds)) {
-			/* OK: 
-			 *    def m(self, *args, **kwds), or 
-			 *    def m(*args, **kwds)  
+			/* OK:
+			 *    def m(self, *args, **kwds), or
+			 *    def m(*args, **kwds)
 			 */
 		} else {
 			/* Wrong number of arguments, raise an error */
 			PyErr_Format(PyObjCExc_BadPrototypeError,
 				"Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has %d arguments for %R",
-				Py_SIZE(methinfo), stubUserdata->argCount, 
+				Py_SIZE(methinfo), stubUserdata->argCount,
 				callable);
 			Py_DECREF(methinfo);
 			PyMem_Free(stubUserdata);
@@ -1946,7 +1957,7 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel, PyObject
 			/* Wrong number of arguments, raise an error */
 			PyErr_Format(PyObjCExc_BadPrototypeError,
 				"Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has %d arguments for %R",
-				Py_SIZE(methinfo) - 1, stubUserdata->argCount, 
+				Py_SIZE(methinfo) - 1, stubUserdata->argCount,
 				callable);
 			Py_DECREF(methinfo);
 			PyMem_Free(stubUserdata);
@@ -2002,10 +2013,10 @@ PyObjCFFI_FreeIMP(IMP imp)
 }
 
 IMP
-PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector) 
+PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 {
 	if (PyObjCNativeSelector_Check(aSelector)) {
-		PyObjCNativeSelector *nativeSelector = 
+		PyObjCNativeSelector *nativeSelector =
 			(PyObjCNativeSelector *) aSelector;
 		Method aMeth;
 
@@ -2020,7 +2031,7 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector *aSelector)
 
 		PyObjCPythonSelector *pythonSelector = (PyObjCPythonSelector *) aSelector;
 		PyObjCMethodSignature* methinfo = PyObjCMethodSignature_ForSelector(
-				pythonSelector->sel_class, 
+				pythonSelector->sel_class,
 				(pythonSelector->sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
 				pythonSelector->sel_selector,
 				pythonSelector->sel_python_signature,
@@ -2066,7 +2077,7 @@ PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
 			/* Wrong number of arguments, raise an error */
 			PyErr_Format(PyObjCExc_BadPrototypeError,
 				"Objective-C expects %"PY_FORMAT_SIZE_T"d arguments, Python argument has %d arguments for %R",
-				Py_SIZE(methinfo) - 1, stubUserdata->argCount, 
+				Py_SIZE(methinfo) - 1, stubUserdata->argCount,
 				callable);
 			Py_DECREF(methinfo);
 			PyMem_Free(stubUserdata);
@@ -2111,7 +2122,7 @@ PyObjCFFI_FreeBlockFunction(PyObjCBlockFunction imp)
  */
 int PyObjCFFI_CountArguments(
 		PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
-		Py_ssize_t* byref_in_count, 
+		Py_ssize_t* byref_in_count,
 		Py_ssize_t* byref_out_count,
 		Py_ssize_t* plain_count,
 		Py_ssize_t* argbuf_len,
@@ -2122,7 +2133,7 @@ int PyObjCFFI_CountArguments(
 	Py_ssize_t itemSize;
 
 	*byref_in_count = *byref_out_count = *plain_count = 0;
-	
+
 	for (i = argOffset; i < Py_SIZE(methinfo); i++) {
 		const char *argtype = methinfo->argtype[i].type;
 #if 0
@@ -2307,8 +2318,8 @@ int PyObjCFFI_ParseArguments(
 	void* buffer = NULL;
 	Py_ssize_t bufferlen = 0;
 
-	/* We have to do two passes over the argument array: the first to deal 
-	 * with plain arguments, the second deals with arrays whose size is 
+	/* We have to do two passes over the argument array: the first to deal
+	 * with plain arguments, the second deals with arrays whose size is
 	 * the value of another argument.
 	 */
 
@@ -2340,7 +2351,7 @@ int PyObjCFFI_ParseArguments(
 			py_arg ++;
 
 			if (argument == Py_None) {
-				/* Fall through to the default 
+				/* Fall through to the default
 				 * behaviour
 				 */
 				error = 1; /* misuse of this flag ... */
@@ -2356,15 +2367,15 @@ int PyObjCFFI_ParseArguments(
 				} else {
 					PyErr_Format(
 						PyExc_ValueError,
-						"argument %" PY_FORMAT_SIZE_T "d isn't allowed to be NULL", 
+						"argument %" PY_FORMAT_SIZE_T "d isn't allowed to be NULL",
 						i - argOffset);
 					error = -1;
 				}
 			} else {
 
 				switch (methinfo->argtype[i].ptrType) {
-				case PyObjC_kFixedLengthArray: 
-				case PyObjC_kVariableLengthArray: 
+				case PyObjC_kFixedLengthArray:
+				case PyObjC_kVariableLengthArray:
 				case PyObjC_kArrayCountInArg:
 					if (PyObject_AsWriteBuffer(argument, &buffer, &bufferlen) != -1) {
 						error = 1;
@@ -2378,7 +2389,7 @@ int PyObjCFFI_ParseArguments(
 				default:
 					PyErr_Format(
 						PyExc_ValueError,
-						"argument %" PY_FORMAT_SIZE_T "d must be None or objc.NULL", 
+						"argument %" PY_FORMAT_SIZE_T "d must be None or objc.NULL",
 						i - argOffset);
 					error = -1;
 				}
@@ -2389,12 +2400,12 @@ int PyObjCFFI_ParseArguments(
 
 			}  else if (error == 0) {
 				continue;
-				
-			} 
+
+			}
 
 			switch (methinfo->argtype[i].ptrType) {
 			case PyObjC_kPointerPlain:
-				argbuf_cur = align(argbuf_cur, 
+				argbuf_cur = align(argbuf_cur,
 					PyObjCRT_AlignOfType(resttype));
 				sz = PyObjCRT_SizeOfType(resttype);
 				byref[i] = PyMem_Malloc(sz);
@@ -2410,7 +2421,7 @@ int PyObjCFFI_ParseArguments(
 				break;
 
 			case PyObjC_kNullTerminatedArray:
-				PyErr_SetString(PyExc_TypeError, 
+				PyErr_SetString(PyExc_TypeError,
 					"NULL-terminated 'out' arguments are not supported");
 				return -1;
 
@@ -2494,8 +2505,8 @@ int PyObjCFFI_ParseArguments(
 					return -1;
 				}
 				error = depythonify_c_value (
-					argtype, 
-					argument, 
+					argtype,
+					argument,
 					byref[i]);
 
 				arglist[i] = signature_to_ffi_type(argtype);
@@ -2522,8 +2533,8 @@ int PyObjCFFI_ParseArguments(
 					}
 
 					error = depythonify_c_value (
-						argtype, 
-						argument, 
+						argtype,
+						argument,
 						arg);
 
 					arglist[i] = signature_to_ffi_type(argtype);
@@ -2564,7 +2575,7 @@ int PyObjCFFI_ParseArguments(
 									PyErr_Clear();
 
 									closure = PyObjCFFI_MakeFunctionClosure(
-											methinfo->argtype[i].callable, 
+											methinfo->argtype[i].callable,
 											argument
 										);
 									if (closure == NULL) {
@@ -2613,9 +2624,9 @@ int PyObjCFFI_ParseArguments(
 						case PyObjC_kPointerPlain:
 							byref[i] = PyMem_Malloc(PyObjCRT_SizeOfType(resttype));
 							error = depythonify_c_value (
-								resttype, 
-								argument, 
-								byref[i]); 
+								resttype,
+								argument,
+								byref[i]);
 							break;
 
 
@@ -2670,7 +2681,7 @@ int PyObjCFFI_ParseArguments(
 										PyErr_NoMemory();
 										error = -1;
 									} else {
-										error = depythonify_c_array_nullterminated(resttype, 
+										error = depythonify_c_array_nullterminated(resttype,
 											count,
 											seq,
 											byref[i], methinfo->argtype[i].alreadyRetained, methinfo->argtype[i].alreadyCFRetained);
@@ -2704,10 +2715,10 @@ int PyObjCFFI_ParseArguments(
 					if (methinfo->argtype[i].printfFormat) {
 						printf_format = argument;
 						Py_INCREF(argument);
-					} 
+					}
 					error = depythonify_c_value (
-						argtype+1, 
-						argument, 
+						argtype+1,
+						argument,
 						arg);
 
 					arglist[i] = signature_to_ffi_type(
@@ -2744,10 +2755,10 @@ int PyObjCFFI_ParseArguments(
 							printf_format = argument;
 							Py_INCREF(argument);
 
-						} 
+						}
 						error = depythonify_c_value (
-							argtype, 
-							argument, 
+							argtype,
+							argument,
 							arg);
 
 						arglist[i] = signature_to_ffi_type(argtype);
@@ -2865,7 +2876,7 @@ int PyObjCFFI_ParseArguments(
 								PyErr_Clear();
 
 								closure = PyObjCFFI_MakeFunctionClosure(
-										methinfo->argtype[i].callable, 
+										methinfo->argtype[i].callable,
 										argument
 									);
 								if (closure == NULL) {
@@ -2939,8 +2950,8 @@ int PyObjCFFI_ParseArguments(
 				}
 
 				error = depythonify_c_value (
-					argtype, 
-					argument, 
+					argtype,
+					argument,
 					arg);
 
 				arglist[i] = signature_to_ffi_type(argtype);
@@ -2972,8 +2983,8 @@ int PyObjCFFI_ParseArguments(
 
 				if (methinfo->argtype[i].ptrType == PyObjC_kArrayCountInArg) {
 					count = extract_count(
-							methinfo->argtype[methinfo->argtype[i].arrayArg].type, 
-							values[methinfo->argtype[i].arrayArg]); 
+							methinfo->argtype[methinfo->argtype[i].arrayArg].type,
+							values[methinfo->argtype[i].arrayArg]);
 					if (count == -1 && PyErr_Occurred()) {
 						return -1;
 					}
@@ -3009,7 +3020,7 @@ int PyObjCFFI_ParseArguments(
 				if (argtype[0] == _C_OUT) argtype ++;
 
 				argument = PyTuple_GET_ITEM (args, py_arg);
-				py_arg ++; 
+				py_arg ++;
 
 				switch (*argtype) {
 				case _C_INOUT:
@@ -3033,8 +3044,8 @@ int PyObjCFFI_ParseArguments(
 
 							case PyObjC_kArrayCountInArg:
 								count = extract_count(
-										methinfo->argtype[methinfo->argtype[i].arrayArg].type, 
-										values[methinfo->argtype[i].arrayArg]); 
+										methinfo->argtype[methinfo->argtype[i].arrayArg].type,
+										values[methinfo->argtype[i].arrayArg]);
 								if (count == -1 && PyErr_Occurred()) {
 									return -1;
 								}
@@ -3070,8 +3081,8 @@ int PyObjCFFI_ParseArguments(
 
 						case PyObjC_kArrayCountInArg:
 							count = extract_count(
-									methinfo->argtype[methinfo->argtype[i].arrayArg].type, 
-									values[methinfo->argtype[i].arrayArg]); 
+									methinfo->argtype[methinfo->argtype[i].arrayArg].type,
+									values[methinfo->argtype[i].arrayArg]);
 							if (count == -1 && PyErr_Occurred()) {
 								return -1;
 							}
@@ -3088,7 +3099,7 @@ int PyObjCFFI_ParseArguments(
 							arglist[i] = &ffi_type_pointer;
 							values[i] = byref + i;
 						}
-					}	
+					}
 				}
 			}
 		}
@@ -3106,7 +3117,7 @@ int PyObjCFFI_ParseArguments(
 		if (r == -1) {
 			return -1;
 		}
-		Py_DECREF(printf_format); 
+		Py_DECREF(printf_format);
 		printf_format = NULL;
 
 		return r;
@@ -3115,7 +3126,7 @@ int PyObjCFFI_ParseArguments(
 
 		r = parse_varargs_array(
 				methinfo,
-				args, py_arg, byref, 
+				args, py_arg, byref,
 				arglist, values, -1);
 		if (r == -1) {
 			return -1;
@@ -3132,7 +3143,7 @@ int PyObjCFFI_ParseArguments(
 
 		r = parse_varargs_array(
 				methinfo,
-				args, py_arg, byref, 
+				args, py_arg, byref,
 				arglist, values, cnt);
 		if (r == -1) {
 			return -1;
@@ -3144,11 +3155,11 @@ int PyObjCFFI_ParseArguments(
 }
 
 
-PyObject* 
+PyObject*
 PyObjCFFI_BuildResult(
 	PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 	void* pRetval, void** byref, struct byref_attr* byref_attr,
-	Py_ssize_t byref_out_count, PyObject* self, int flags, 
+	Py_ssize_t byref_out_count, PyObject* self, int flags,
 	void** argvalues)
 {
 	PyObject* objc_result = NULL;
@@ -3198,7 +3209,7 @@ PyObjCFFI_BuildResult(
 				if (methinfo->rettype.alreadyRetained) {
 					if (PyObjCObject_Check(objc_result)) {
 						/* pythonify_c_return_value has retained the object, but we already
-						 * own a reference, therefore give the ref away again 
+						 * own a reference, therefore give the ref away again
 						 */
 						[PyObjCObject_GetObject(objc_result) release];
 					}
@@ -3206,7 +3217,7 @@ PyObjCFFI_BuildResult(
 				if (methinfo->rettype.alreadyCFRetained) {
 					if (PyObjCObject_Check(objc_result)) {
 						/* pythonify_c_return_value has retained the object, but we already
-						 * own a reference, therefore give the ref away again 
+						 * own a reference, therefore give the ref away again
 						 */
 						CFRelease(PyObjCObject_GetObject(objc_result));
 					}
@@ -3230,7 +3241,7 @@ PyObjCFFI_BuildResult(
 						}
 					}
 					break;
-				
+
 				case PyObjC_kFixedLengthArray:
 					if (*(void**)pRetval == NULL) {
 						Py_INCREF(PyObjC_NULL);
@@ -3238,7 +3249,7 @@ PyObjCFFI_BuildResult(
 
 					} else {
 						objc_result = PyObjC_CArrayToPython2(
-							resttype, 
+							resttype,
 							*(void**)pRetval,
 							methinfo->rettype.arrayArg, methinfo->rettype.alreadyRetained, methinfo->rettype.alreadyCFRetained);
 						if (objc_result == NULL) {
@@ -3258,7 +3269,7 @@ PyObjCFFI_BuildResult(
 					break;
 
 				case PyObjC_kArrayCountInArg:
-					
+
 					if (*(void**)pRetval == NULL) {
 						Py_INCREF(PyObjC_NULL);
 						objc_result = PyObjC_NULL;
@@ -3347,7 +3358,7 @@ PyObjCFFI_BuildResult(
 			if (methinfo->rettype.alreadyRetained) {
 				if (PyObjCObject_Check(objc_result)) {
 					/* pythonify_c_return_value has retained the object, but we already
-					 * own a reference, therefore give the ref away again 
+					 * own a reference, therefore give the ref away again
 					 */
 					[PyObjCObject_GetObject(objc_result) release];
 				}
@@ -3355,7 +3366,7 @@ PyObjCFFI_BuildResult(
 			if (methinfo->rettype.alreadyCFRetained) {
 				if (PyObjCObject_Check(objc_result)) {
 					/* pythonify_c_return_value has retained the object, but we already
-					 * own a reference, therefore give the ref away again 
+					 * own a reference, therefore give the ref away again
 					 */
 					CFRelease(PyObjCObject_GetObject(objc_result));
 				}
@@ -3460,16 +3471,16 @@ PyObjCFFI_BuildResult(
 							} else {
 								count = methinfo->argtype[i].arrayArg;
 							}
-							
+
 							if (*resttype == _C_UNICHAR) {
-								
+
 								int byteorder = 0;
 								v = PyUnicode_DecodeUTF16(
 									arg, count*2, NULL, &byteorder);
 								if (!v) goto error_cleanup;
 
 							} else {
-								v = PyObjC_CArrayToPython2(resttype, 
+								v = PyObjC_CArrayToPython2(resttype,
 									arg,
 									count, methinfo->argtype[i].alreadyRetained, methinfo->argtype[i].alreadyCFRetained);
 								if (!v) goto error_cleanup;
@@ -3482,7 +3493,7 @@ PyObjCFFI_BuildResult(
 								count = extract_count(methinfo->rettype.type, pRetval);
 								if (count == -1 && PyErr_Occurred()) goto error_cleanup;
 
-								v = PyObjC_CArrayToPython2(resttype, 
+								v = PyObjC_CArrayToPython2(resttype,
 									arg,
 									count, methinfo->argtype[i].alreadyRetained, methinfo->argtype[i].alreadyCFRetained);
 								if (!v) goto error_cleanup;
@@ -3491,7 +3502,7 @@ PyObjCFFI_BuildResult(
 								v = PyObjC_VarList_New(methinfo->rettype.type, pRetval);
 								if (!v) goto error_cleanup;
 							}
-							
+
 							break;
 
 						case PyObjC_kNullTerminatedArray:
@@ -3507,7 +3518,7 @@ PyObjCFFI_BuildResult(
 
 							} else {
 								count = extract_count(
-									methinfo->argtype[methinfo->argtype[i].arrayArgOut].type, 
+									methinfo->argtype[methinfo->argtype[i].arrayArgOut].type,
 									argvalues[methinfo->argtype[i].arrayArgOut]);
 							}
 							if (count == -1 && PyErr_Occurred()) goto error_cleanup;
@@ -3531,7 +3542,7 @@ PyObjCFFI_BuildResult(
 					}
 
 					if (result != NULL) {
-						if (PyTuple_SetItem(result, 
+						if (PyTuple_SetItem(result,
 							py_arg++, v) < 0) {
 
 							Py_DECREF(v);
@@ -3675,8 +3686,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	 */
 	argbuf_len = align(resultSize, sizeof(void*));
 	r = PyObjCFFI_CountArguments(
-		methinfo, 2, 
-		&byref_in_count, 
+		methinfo, 2,
+		&byref_in_count,
 		&byref_out_count,
 		&plain_count,
 		&argbuf_len,
@@ -3686,7 +3697,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 
-	/* 
+	/*
 	 * We need input arguments for every normal argument and for every
 	 * input argument that is passed by reference.
 	 */
@@ -3697,9 +3708,9 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 		if (methinfo->null_terminated_array) {
 			if (PyTuple_Size(args) < Py_SIZE(methinfo) - 3) {
-				PyErr_Format(PyExc_TypeError, 
+				PyErr_Format(PyExc_TypeError,
 					"Need %"PY_FORMAT_SIZE_T"d arguments, got %"PY_FORMAT_SIZE_T"d",
-					Py_SIZE(methinfo) - 3, 
+					Py_SIZE(methinfo) - 3,
 					PyTuple_Size(args));
 				goto error_cleanup;
 			}
@@ -3722,14 +3733,14 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 
-	argbuf = PyMem_Malloc(argbuf_len); 
+	argbuf = PyMem_Malloc(argbuf_len);
 	if (argbuf == 0) {
 		PyErr_NoMemory();
 		goto error_cleanup;
 	}
 
 	if (variadicAllArgs) {
-		if (PyObjCFFI_AllocByRef(Py_SIZE(methinfo)+PyTuple_Size(args), 
+		if (PyObjCFFI_AllocByRef(Py_SIZE(methinfo)+PyTuple_Size(args),
 					&byref, &byref_attr) < 0) {
 			goto error_cleanup;
 		}
@@ -3739,7 +3750,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		}
 	}
 
-	/* Set 'self' argument, for class methods we use the class */ 
+	/* Set 'self' argument, for class methods we use the class */
 	if (flags & PyObjCSelector_kCLASS_METHOD) {
 		if (PyObjCObject_Check(self)) {
 			self_obj = PyObjCObject_GetObject(self);
@@ -3760,8 +3771,8 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 			}
 
 		} else {
-			PyErr_Format(PyExc_TypeError, 
-				"Need objective-C object or class as self, not an instance of '%s'", 
+			PyErr_Format(PyExc_TypeError,
+				"Need objective-C object or class as self, not an instance of '%s'",
 					Py_TYPE(self)->tp_name);
 			goto error_cleanup;
 		}
@@ -3789,18 +3800,18 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 		values[1] = &theSel;
 		msgResult = argbuf;
 		argbuf_cur = align(resultSize, sizeof(void*));
-		
+
 	} else {
 		objc_superSetReceiver(super, self_obj);
 		if (meth->sel_flags & PyObjCSelector_kCLASS_METHOD) {
-			objc_superSetClass(super, 
+			objc_superSetClass(super,
 					object_getClass(meth->sel_class));
 		} else {
 			objc_superSetClass(super,  meth->sel_class);
 		}
 
 		useStret = 0;
-		if (*rettype == _C_STRUCT_B && 
+		if (*rettype == _C_STRUCT_B &&
 #ifdef  __ppc64__
 			ffi64_stret_needs_ptr(signature_to_ffi_return_type(rettype), NULL, NULL)
 
@@ -3808,16 +3819,16 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 			(resultSize > SMALL_STRUCT_LIMIT
 #ifdef __i386__
 			 /* darwin/x86 ABI is slightly odd ;-) */
-			 || (resultSize != 1 
-				&& resultSize != 2 
-				&& resultSize != 4 
+			 || (resultSize != 1
+				&& resultSize != 2
+				&& resultSize != 4
 				&& resultSize != 8)
 #endif
 #ifdef __x86_64__
 			 /* darwin/x86-64 ABI is slightly odd ;-) */
-			 || (resultSize != 1 
-				&& resultSize != 2 
-				&& resultSize != 4 
+			 || (resultSize != 1
+				&& resultSize != 2
+				&& resultSize != 4
 				&& resultSize != 8
 				&& resultSize != 16
 				)
@@ -3825,7 +3836,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 			)
 #endif /* !__ppc64__ */
 			) {
-		
+
 			useStret = 1;
 		}
 		superPtr = &super;
@@ -3868,15 +3879,15 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 
 	PyObjC_DURING
 		if (PyObjCIMP_Check(aMeth)) {
-			ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), 
+			ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)),
 				msgResult, values);
 
 		} else {
 			if (useStret) {
-				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), 
+				ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret),
 					msgResult, values);
 			} else {
-				ffi_call(&cif, FFI_FN(objc_msgSendSuper), 
+				ffi_call(&cif, FFI_FN(objc_msgSendSuper),
 					msgResult, values);
 
 			}
@@ -3898,7 +3909,7 @@ PyObjCFFI_Caller(PyObject *aMeth, PyObject* self, PyObject *args)
 	}
 
 	result = PyObjCFFI_BuildResult(methinfo, 2, msgResult, byref,
-			byref_attr, byref_out_count, 
+			byref_attr, byref_out_count,
 			self, flags, values);
 
 	if (variadicAllArgs) {
@@ -3994,7 +4005,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 		return NULL;
 	}
 
-	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, Py_SIZE(methinfo), 
+	rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, Py_SIZE(methinfo),
 		cl_ret_type, cl_arg_types);
 
 	if (rv != FFI_OK) {
@@ -4063,7 +4074,7 @@ PyObjCFFI_MakeClosure(
 	return (IMP)cl;
 }
 
-/* 
+/*
  * PyObjCFFI_FreeClosure - Free the closure created by PyObjCFFI_MakeClosure
  *
  * Returns the userdata.

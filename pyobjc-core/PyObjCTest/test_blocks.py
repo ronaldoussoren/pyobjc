@@ -36,6 +36,16 @@ objc.parseBridgeSupport('''\
           </arg>
         </method>
       </class>
+      <class name='NSObject'>
+        <method selector='processBlock:'>
+          <retval type='d' />
+          <arg index='0' block='true' type='@?'>
+            <retval type='d'/>
+            <arg type='d' />
+            <arg type='d' />
+          </arg>
+        </method>
+      </class>
     </signatures>
     ''', globals(), 'PyObjCTest')
 
@@ -47,6 +57,10 @@ if hasattr(v, 'getIntBlock'):
 else:
     blocksEnabled = False
 del v
+
+class BlocksHelper (objc.lookUpClass('NSObject')):
+    def processBlock_(self, block):
+        return -block(2.5, 4.0)
 
 class TestBlocks (TestCase):
     @min_os_level('10.6')
@@ -101,6 +115,15 @@ class TestBlocks (TestCase):
 
         value = block(2.5, 7.0)
         self.assertEqual(value, 9.5)
+
+    @min_os_level('10.6')
+    @onlyIf(blocksEnabled, "no blocks")
+    def testBlockArgumentToPython(self):
+        obj = OCTestBlock.alloc().init()
+        helper = BlocksHelper.alloc().init()
+        value = obj.callProcessBlockOn_(helper)
+        self.assertEqual(value, -(2.5 * 4.0))
+
 
 if __name__ == "__main__":
     main()

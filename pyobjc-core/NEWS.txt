@@ -18,6 +18,22 @@ Version 2.5.2
 
 - ``objc.ObjCPointer`` didn't implement *__getattribute__*.
 
+  (reported by private mail)
+
+- Implementing a python method that has a block as one of its arguments
+  didn't work. It now works when there is metadata that describes the
+  method signature.
+
+  (reported by private mail)
+
+- BUGFIX: a method definition like this now once again raises TypeError
+  instead of crashing the interpreter::
+
+      def myMethod(*args):
+         pass
+
+  (reported by private mail)
+
 Version 2.5.1
 -------------
 

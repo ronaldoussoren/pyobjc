@@ -3,6 +3,12 @@
 
 #import <Foundation/Foundation.h>
 
+#if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
+@interface NSObject (IndirectBlockTest)
+-(double)processBlock:(double(^)(double, double))aBlock;
+@end
+#endif
+
 @interface OCTestBlock : NSObject {}
 
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
@@ -38,6 +44,12 @@
 {
 	return block(v1, v2);
 }
+
+-(double)callProcessBlockOn:(NSObject*)testObject
+{
+    return [testObject processBlock:^(double a, double b) { return a*b; }];
+}
+
 #endif
 
 @end

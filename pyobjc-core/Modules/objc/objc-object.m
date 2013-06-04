@@ -1,7 +1,7 @@
 /*
  * Implementation of objective-C object wrapper
  *
- * NOTE: We're using CFRetain and CFRelease to manage the retaincount of the Objective-C 
+ * NOTE: We're using CFRetain and CFRelease to manage the retaincount of the Objective-C
  * objects because that will do the right thing when Garbage Collection is involved.
  */
 #include "pyobjc.h"
@@ -10,12 +10,12 @@
 
 #include <objc/Object.h>
 
-/* 
+/*
  * Support for NSKeyValueObserving on MacOS X 10.3 and later.
- *      
- */     
+ *
+ */
 
-/* 
+/*
  * XXX: for reasons beyond my current comprehension the "legacy" block must be active, otherwise we
  * get a fatal python error.
  */
@@ -29,7 +29,7 @@ _KVOHackLevel(void) {
 	if (_checkedKVO == 0) {
 		if ([NSObject instancesRespondToSelector:@selector(willChangeValueForKey:)] &&
 			[NSObject instancesRespondToSelector:@selector(didChangeValueForKey:)]) {
-			_checkedKVO = 1; 
+			_checkedKVO = 1;
 
 		} else {
 
@@ -41,7 +41,7 @@ _KVOHackLevel(void) {
 
 static void
 _UseKVO(NSObject *self, NSString *key, BOOL willChange)
-{           
+{
     PyObjC_DURING
         int _checkedKVO = _KVOHackLevel();
         if (_checkedKVO == -1 || [key characterAtIndex:0] == (unichar)'_') {
@@ -53,13 +53,13 @@ _UseKVO(NSObject *self, NSString *key, BOOL willChange)
         }
     PyObjC_HANDLER
     PyObjC_ENDHANDLER
-}           
+}
 
-#else 
+#else
 
 static void
 _UseKVO(NSObject *self, NSString *key, BOOL willChange)
-{           
+{
     PyObjC_DURING
         if ([key characterAtIndex:0] == (unichar)'_') {
 	    /* pass */
@@ -70,10 +70,10 @@ _UseKVO(NSObject *self, NSString *key, BOOL willChange)
         }
     PyObjC_HANDLER
     PyObjC_ENDHANDLER
-}           
+}
 
 #endif
-			
+
 static PyObject*
 object_new(
 	PyTypeObject*  type __attribute__((__unused__)),
@@ -142,7 +142,7 @@ static char* keywords[] = { "cobject", "c_void_p", NULL };
 		return PyObjC_IdToPython(p);
 
 	} else {
-		PyErr_SetString(PyExc_TypeError, 
+		PyErr_SetString(PyExc_TypeError,
 			"Use class methods to instantiate new Objective-C objects");
 		return NULL;
 	}
@@ -199,12 +199,12 @@ object_dealloc(PyObject* obj)
 
 	if (PyObjCObject_IsBlock(obj)) {
 		PyObjCMethodSignature* v = PyObjCObject_GetBlock(obj);
-		PyObjCObject_SET_BLOCK(obj, NULL);	
+		PyObjCObject_SET_BLOCK(obj, NULL);
 		Py_XDECREF(v);
 	}
-			
 
-	if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER 
+
+	if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
 			&& PyObjCObject_GetObject(obj) != nil) {
 		/* Release the proxied object, we don't have to do this when
 		 * there is no proxied object.
@@ -219,20 +219,20 @@ object_dealloc(PyObject* obj)
 				& PyObjCObject_kSHOULD_NOT_RELEASE)) {
 			/* pass */
 
-		} else if (((PyObjCObject*)obj)->flags 
+		} else if (((PyObjCObject*)obj)->flags
 				& PyObjCObject_kUNINITIALIZED) {
-			/* Freeing of an uninitialized object, just leak because 
+			/* Freeing of an uninitialized object, just leak because
 			 * there is no reliable manner to free such objects.
 			 *
-			 * - [obj release] doesn't work because some classes 
+			 * - [obj release] doesn't work because some classes
 			 *   cause crashes for uninitialized objects
-			 * - [[obj init] release] also doesn't work because 
+			 * - [[obj init] release] also doesn't work because
 			 *   not all classes implement -init
-			 * - [obj dealloc] doesn't work for class 
+			 * - [obj dealloc] doesn't work for class
 			 *   clusters like NSArray.
 			 */
 			char buf[256];
-			snprintf(buf, sizeof(buf), 
+			snprintf(buf, sizeof(buf),
 				"leaking an uninitialized object of type %s",
 				Py_TYPE(obj)->tp_name);
 			PyErr_Warn(PyObjCExc_UnInitDeallocWarning, buf);
@@ -242,7 +242,7 @@ object_dealloc(PyObject* obj)
 			PyObjC_DURING
 				if (((PyObjCObject*)obj)->flags & PyObjCObject_kCFOBJECT) {
 					CFRelease(((PyObjCObject*)obj)->objc_object);
-				} else if (strcmp(object_getClassName(((PyObjCObject*)obj)->objc_object), 
+				} else if (strcmp(object_getClassName(((PyObjCObject*)obj)->objc_object),
 						"NSAutoreleasePool") != 0) {
 
 				        CFRelease(((PyObjCObject*)obj)->objc_object);
@@ -397,7 +397,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 		 */
 
 	} else {
-		/* Special hack for KVO on MacOS X, when an object is observed it's 
+		/* Special hack for KVO on MacOS X, when an object is observed it's
 		 * ISA is changed by the runtime. We change the python type as well.
 		 */
 		tp = (PyTypeObject*)PyObjCClass_New(object_getClass(obj_inst));
@@ -416,7 +416,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 // XXX: You'd expect the code below works, but it actually doesn't. Need to check why.
 //			Py_DECREF(Py_TYPE(obj));
 //			Py_TYPE(obj) = tp;
-//			
+//
 
 			PyObjCClass_CheckMethodList((PyObject*)tp, 0);
 			dict = tp->tp_dict;
@@ -439,7 +439,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	}
 
 	f = NULL;
-	if (descr != NULL 
+	if (descr != NULL
 #if PY_MAJOR_VERSION == 2
 		&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
 #endif
@@ -454,7 +454,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 	if (strcmp(PyBytes_AS_STRING(bytes), "__del__") == 0) {
 		res = PyObjCClass_GetDelMethod((PyObject*)Py_TYPE(obj));
 		if (res != NULL) {
-			/* XXX: bind self */	
+			/* XXX: bind self */
 		}
 		goto done;
 	}
@@ -513,7 +513,7 @@ object_getattro(PyObject *obj, PyObject * volatile name)
 done:
 	if (res != NULL) {
 		/* class methods cannot be accessed through instances */
-		if (PyObjCSelector_Check(res) 
+		if (PyObjCSelector_Check(res)
 				&& PyObjCSelector_IsClassMethod(res)) {
 			Py_DECREF(res);
 #if PY_MAJOR_VERSION == 2
@@ -544,7 +544,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	id obj_inst;
 	NSString *obj_name;
 	PyObject* bytes;
-	
+
 	if (PyUnicode_Check(name)) {
 		bytes = PyUnicode_AsEncodedString(name, NULL, NULL);
 		if (bytes == NULL) return -1;
@@ -578,7 +578,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 	}
 	descr = _type_lookup(tp, name);
 	f = NULL;
-	if (descr != NULL 
+	if (descr != NULL
 #if PY_MAJOR_VERSION == 2
 		&& PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_HAVE_CLASS)
 #endif
@@ -595,14 +595,14 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 		PyObject *dict;
 
 		dict = *dictptr;
-		
+
 		if (dict == NULL && value != NULL) {
 			dict = PyDict_New();
 			if (dict == NULL) {
 				res = -1;
 				goto done;
 			}
-			
+
 			*dictptr = dict;
 		}
 		if (dict != NULL) {
@@ -644,7 +644,7 @@ object_setattro(PyObject *obj, PyObject *name, PyObject *value)
 }
 
 PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
-static PyObject* 
+static PyObject*
 objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
 	id obj_object;
@@ -694,12 +694,30 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribu
 		return  -1;
 	}
 
-	if (newVal != NULL) {
-		if (!PyObjCMethodSignature_Check(newVal)) {
-			PyErr_SetString(PyExc_TypeError, "New value must be a method signature");
-			return -1;
-		}
-	}
+        if (newVal == NULL) {
+            PyErr_SetString(PyExc_TypeError, "Cannot delete __block_signature__ attribute");
+            return -1;
+        }
+
+
+        if (newVal == Py_None) {
+            newVal = NULL;
+
+#if 0
+        } else if (PyDict_Check(newVal)) {
+            newVal = PyObjCMethodSignature_WithMetaData(NULL, newVal);
+            if (newVal == NULL) {
+                return -1;
+            }
+#endif
+
+        } else if (PyObjCMethodSignature_Check(newVal)) {
+            Py_INCREF(newVal);
+
+        } else {
+                PyErr_SetString(PyExc_TypeError, "New value must be a method signature");
+                return -1;
+        }
 
 	PyObject* v = (PyObject*)PyObjCObject_GetBlock(self);
 	if (v != NULL) {
@@ -707,7 +725,6 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal, void* closure __attribu
 	}
 
 
-	Py_XINCREF(newVal);
 	PyObjCObject_SET_BLOCK(self, (PyObjCMethodSignature*)newVal);
 	return 0;
 }
@@ -854,7 +871,7 @@ PyObjCClassObject PyObjCObject_Type = {
 	object_getattro,			/* tp_getattro */
 	object_setattro,			/* tp_setattro */
 	0,					/* tp_as_buffer */
-	Py_TPFLAGS_DEFAULT 
+	Py_TPFLAGS_DEFAULT
 		| Py_TPFLAGS_BASETYPE,          /* tp_flags */
  	0,					/* tp_doc */
  	0,					/* tp_traverse */
@@ -890,14 +907,14 @@ PyObjCClassObject PyObjCObject_Type = {
      },
 #if PY_MAJOR_VERSION == 2
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 #if PY_VERSION_HEX >= 0x02050000
        , 0
 #endif
      }, /* as_number */
      { 0, 0, 0 },			/* as_mapping */
      { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },	/* as_sequence */
-     { 0, 0, 0, 0 
+     { 0, 0, 0, 0
 #if PY_VERSION_HEX >= 0x02060000
 	 , 0, 0
 #endif
@@ -905,7 +922,7 @@ PyObjCClassObject PyObjCObject_Type = {
      0,					/* name */
      0,					/* slots */
 #else /* Python 3 */
-     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 
+     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
      }, /* as_number */
      { 0,0,0
      }, /* as_mapping */
@@ -927,7 +944,7 @@ PyObjCClassObject PyObjCObject_Type = {
  *  Allocate a proxy object for use during the call of __del__,
  *  this isn't a full-featured proxy object.
  */
-PyObject* 
+PyObject*
 _PyObjCObject_NewDeallocHelper(id objc_object)
 {
 	PyObject* res;
@@ -946,7 +963,7 @@ _PyObjCObject_NewDeallocHelper(id objc_object)
 	}
 
 	PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
-	
+
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = PyObjCObject_kDEALLOC_HELPER;
 	return res;
@@ -961,7 +978,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 		 * zero out the instance.
 		 */
 		char buf[256];
-		snprintf(buf, sizeof(buf), 
+		snprintf(buf, sizeof(buf),
 			"revived Objective-C object of type %s. Object is zero-ed out.",
 			Py_TYPE(obj)->tp_name);
 
@@ -990,7 +1007,7 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 }
 
 
-PyObject* 
+PyObject*
 PyObjCObject_New(id objc_object, int flags, int retain)
 {
 	Class cls = object_getClass(objc_object);
@@ -1017,11 +1034,11 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 		flags |= PyObjCObject_kBLOCK;
 	}
 
-	/* This should be in the tp_alloc for the new class, but 
+	/* This should be in the tp_alloc for the new class, but
 	 * adding a tp_alloc to PyObjCClass_Type doesn't seem to help
 	 */
 	PyObjCClass_CheckMethodList((PyObject*)Py_TYPE(res), 1);
-	
+
 	((PyObjCObject*)res)->objc_object = objc_object;
 	((PyObjCObject*)res)->flags = flags;
 
@@ -1030,7 +1047,7 @@ PyObjCObject_New(id objc_object, int flags, int retain)
         }
 
 	if (retain) {
-		if (strcmp(object_getClassName(objc_object), 
+		if (strcmp(object_getClassName(objc_object),
 						"NSAutoreleasePool") != 0) {
 			/* NSAutoreleasePool doesn't like retain */
 			CFRetain(objc_object);
@@ -1048,18 +1065,18 @@ PyObjCObject_New(id objc_object, int flags, int retain)
 	return res;
 }
 
-PyObject* 
+PyObject*
 PyObjCObject_FindSelector(PyObject* object, SEL selector)
 {
 	PyObject* meth;
-	
+
 	meth = PyObjCClass_FindSelector((PyObject*)Py_TYPE(object), selector, NO);
 
 	if (meth == NULL) {
-		return NULL; 
+		return NULL;
 	} else {
 		return meth;
-	}	
+	}
 }
 
 id
@@ -1069,19 +1086,19 @@ id
 		PyErr_Format(PyExc_TypeError,
 			"'objc.objc_object' expected, got '%s'",
 			Py_TYPE(object)->tp_name);
-		
+
 	}
 	return PyObjCObject_GetObject(object);
 }
 
-void        
+void
 PyObjCObject_ClearObject(PyObject* object)
 {
 	if (!PyObjCObject_Check(object)) {
 		PyErr_Format(PyExc_TypeError,
 			"'objc.objc_object' expected, got '%s'",
 			Py_TYPE(object)->tp_name);
-		
+
 	}
 	PyObjC_UnregisterPythonProxy(
 			((PyObjCObject*)object)->objc_object, object);
