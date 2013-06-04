@@ -4,8 +4,7 @@ Script for building the example.
 Usage:
     python setup.py py2app
 """
-from distutils.core import setup
-import py2app
+from setuptools import setup
 
 plist = dict(
     CFBundleDocumentTypes = [
@@ -18,10 +17,13 @@ plist = dict(
     ]
 )
 
-
 setup(
-    name='Tiny Tiny Edit',
+    name="Tiny Tiny Edit",
     app=["TinyTinyEdit.py"],
     data_files=["MainMenu.nib", "TinyTinyDocument.nib"],
     options=dict(py2app=dict(plist=plist)),
+    setup_requires=[
+        "py2app",
+        "pyobjc-framework-Cocoa",
+    ]
 )
