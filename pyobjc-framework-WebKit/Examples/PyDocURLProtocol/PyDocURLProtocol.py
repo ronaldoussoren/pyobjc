@@ -1,9 +1,11 @@
 from __future__ import print_function
-from Cocoa import NSURLProtocol, NSURLResponse, NSError, NSString, NSURL
+from Cocoa import NSURLProtocol, NSURLResponse, NSError, NSString, NSURL, NSData
 from Cocoa import NSURLErrorDomain, NSURLErrorResourceUnavailable, NSURLCacheStorageNotAllowed
 import objc
 from pydochelper import gethtmldoc
 import sys
+
+PY3K = (sys.version_info[0] == 3)
 
 PYDOCSCHEME = u"pydoc"
 
@@ -25,9 +27,14 @@ class PyDocURLProtocol(NSURLProtocol):
             ).lstrip("."
             ).replace(".html", "")
 
+        if not PY3K:
+            modpath = modpath.encode("utf-8")
+
         try:
-            data = gethtmldoc(modpath.encode("utf-8"))
-        except Exception, e:
+            data = gethtmldoc(modpath)
+            if PY3K:
+                data = data.encode("utf-8")
+        except Exception as e:
             client.URLProtocol_didFailWithError_(
                 self,
                 NSError.errorWithDomain_code_userInfo_(

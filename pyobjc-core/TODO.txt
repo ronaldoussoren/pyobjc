@@ -4,6 +4,12 @@ TODO's for the 3.0 branch
 Short term
 ----------
 
+* AppHelper doesn't work? I got an objc stacktrace with an exception in one of the webkit examples
+
+* All examples should work cleanly in Python 3 (no 2to3)
+
+* 'del sys.modules["_metadata"]' in wrappers: add 'import sys' just above
+
 * Code cleanup for the new C code, I've done too much copy&paste editing
   while getting the new code to work properly.
 
