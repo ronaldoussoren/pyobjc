@@ -166,4 +166,5 @@ try:
 except AttributeError:
     mod.NSImageNameApplicationIcon = "NSApplicationIcon"
 
+import sys
 del sys.modules['AppKit._metadata']

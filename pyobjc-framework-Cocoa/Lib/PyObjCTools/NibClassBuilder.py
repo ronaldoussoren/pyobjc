@@ -68,6 +68,7 @@ arguments. It also contains a simple test program.
 import sys
 import os
 import objc
+from objc import super
 
 import warnings
 warnings.warn("PyObjCTools.NibClassBuilder is deprecated, use explicit definitions instead", DeprecationWarning)

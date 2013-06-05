@@ -175,6 +175,7 @@ sys.modules['Foundation'] = mod = objc.ObjCLazyModule('Foundation',
             '__loader__': globals().get('__loader__', None),
         }, (CoreFoundation,))
 
+import sys
 del sys.modules['Foundation._metadata']
 
 import Foundation._Foundation
@@ -182,6 +183,7 @@ for nm in dir(Foundation._Foundation):
     if nm.startswith('_'): continue
     setattr(mod, nm, getattr(Foundation._Foundation, nm))
 
+import objc
 mod.NSDecimal = objc.NSDecimal
 
 import Foundation._nsobject

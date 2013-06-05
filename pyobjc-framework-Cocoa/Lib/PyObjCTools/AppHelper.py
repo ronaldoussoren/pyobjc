@@ -20,6 +20,7 @@ import os
 import sys
 import traceback
 import objc
+from objc import super
 
 class PyObjCAppHelperCaller(NSObject):
 

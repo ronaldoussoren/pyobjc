@@ -58,7 +58,7 @@ class MHTLoader (object):
         """
         rootType, rootText = self.parts[self.root]
         pageResource = WebResource.alloc().initWithData_URL_MIMEType_textEncodingName_frameName_(
-            NSData.dataWithBytes_length_(rootText.replace("\\", "/"), len(rootText)),
+            NSData.dataWithBytes_length_(rootText.replace(b"\\", b"/"), len(rootText)),
             NSURL.URLWithString_(self.fixupURL(self.root)),
             NSString.stringWithString_(rootType),
             None,
