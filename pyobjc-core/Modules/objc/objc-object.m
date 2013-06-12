@@ -1138,7 +1138,7 @@ PyObjCClassObject PyObjCObject_Type = {
             .tp_getset      = obj_getset,
             .tp_alloc       = PyType_GenericAlloc,
             .tp_new         = object_new,
-            .tp_del         = (destructor)object_del
+            .tp_del         = (destructor)object_del,
         },
     }
 };
