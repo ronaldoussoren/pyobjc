@@ -146,25 +146,43 @@ class ObjCLazyModule (ModuleType):
 
         # Ensure that all dynamic entries get loaded
         if self.__varmap_dct:
-            for nm in list(self.__varmap_dct):
-                try:
-                    getattr(self, nm)
-                except AttributeError:
-                    pass
+            if self.__varmap_dct:
+                tp = self.__varmap_dct.pop(name)
+                return objc._loadConstant(name, tp, False)
+                dct = {}
+                objc.loadBundleVariables(self.__bundle, dct,
+                        [ (nm, self.__varmap[nm]) for nm in self.__varmap_dct ])
+                for nm in dct:
+                    if nm not in self.__dict__:
+                        self.__dict__[nm] = dct[nm]
+
+                self.__varmap_dct = {}
 
         if self.__varmap:
-            for nm in re.findall(r"\$([A-Z0-9a-z_]*)(?:@[^$]*)?(?=\$)", self.__varmap):
+            varmap = []
+            for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap):
+                varmap.append((nm, b'@' if tp is None else tp))
+
+            dct = {}
+            objc.loadBundleVariables(self.__bundle, dct,
+                    [ (nm, self.__varmap[nm]) for nm in self.__varmap_dct ])
+
+            for nm in dct:
+                if nm not in self.__dict__:
+                    self.__dict__[nm] = dct[nm]
+
+            self.__varmap = ""
+
+        if self.__enummap:
+            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$])*(?=\$)", self.__enummap):
+                if nm not in self.__dict__:
+                    self.__dict__[nm] = self.__prs_enum(val)
                 try:
                     getattr(self, nm)
                 except AttributeError:
                     pass
 
-        if self.__enummap:
-            for nm in re.findall(r"\$([A-Z0-9a-z_]*)@[^$]*(?=\$)", self.__enummap):
-                try:
-                    getattr(self, nm)
-                except AttributeError:
-                    pass
+            self.__enummap = ""
 
         if self.__funcmap:
             for nm in list(self.__funcmap):
@@ -172,6 +190,18 @@ class ObjCLazyModule (ModuleType):
                     getattr(self, nm)
                 except AttributeError:
                     pass
+
+            func_list = []
+            for nm in self.__funcmap:
+                func_list.append((nm,) + self.__funcmap[nm])
+
+            dct = {}
+            objc.loadBundleFunctions(self.__bundle, dct, func_list)
+            for nm in dct:
+                if nm not in self.__dict__:
+                    self.__dict__[nm] = dct[nm]
+
+            self.__funcmap = {}
 
         if self.__expressions:
             for nm in list(self.__expressions):
@@ -197,10 +227,24 @@ class ObjCLazyModule (ModuleType):
         # Add all class names
         all.update(cls.__name__ for cls in getClassList())
 
-
         return [ v for v in all if not v.startswith('_') ]
 
-        return list(all)
+    def __prs_enum(self, val):
+        if val.startswith("'"):
+            if isinstance(val, bytes):
+                # Python 2.x
+                val, = struct.unpack('>l', val[1:-1])
+            else:
+                # Python 3.x
+                val, = struct.unpack('>l', val[1:-1].encode('latin1'))
+
+        elif '.' in val:
+            val = float(name, val)
+
+        else:
+            val = int(val)
+
+        return val
 
     def __get_constant(self, name):
         if self.__varmap_dct:
@@ -230,20 +274,7 @@ class ObjCLazyModule (ModuleType):
             m = re.search(r"\$%s@([^$]*)\$"%(name,), self.__enummap)
             if m is not None:
                 val = m.group(1)
-
-                if val.startswith("'"):
-                    if isinstance(val, bytes):
-                        # Python 2.x
-                        val, = struct.unpack('>l', val[1:-1])
-                    else:
-                        # Python 3.x
-                        val, = struct.unpack('>l', val[1:-1].encode('latin1'))
-
-                elif '.' in val:
-                    val = float(name, val)
-
-                else:
-                    val = int(val)
+                val = self.__prs_enum(val)
 
                 return val
 

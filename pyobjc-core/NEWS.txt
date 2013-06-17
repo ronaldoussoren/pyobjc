@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* The lazy importer has smarter calculation of the ``__all__`` attribute,
+  which should speed up 'from Cocoa import *'.
+
 * BUGFIX: using a method definition with only ``*args`` and ``**kwds`` used
   to crash the interpreter, the now once again raise a TypeError exception.
 
