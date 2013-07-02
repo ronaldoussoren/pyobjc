@@ -1,6 +1,7 @@
 """
 Tests for the NSDecimal wrapper type
 """
+from __future__ import absolute_import
 from PyObjCTools.TestSupport import *
 
 from PyObjCTest.decimal import OC_TestDecimal

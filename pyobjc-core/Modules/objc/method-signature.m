@@ -253,6 +253,8 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     methinfo->shortcut_signature = NO;
     methinfo->shortcut_argbuf_size = 0;
 
+    return 0;
+
     if (methinfo == NULL || methinfo->variadic) {
         return 0;
     }
@@ -1126,11 +1128,7 @@ compiled_metadata(PyObject* metadata)
         pos = 0;
         max_idx = -1;
         while (PyDict_Next(arguments, &pos, &key, &value)) {
-            if (PyLong_Check(key)
-#if PY_MAJOR_VERSION == 2
-                    || PyInt_Check(key)
-#endif /* PY_MAJOR_VERSION == 2 */
-                ) {
+            if (PyLong_Check(key)) {
 
                 Py_ssize_t k = PyLong_AsSsize_t(key);
                 if (k == -1 && PyErr_Occurred()) {
@@ -1139,6 +1137,17 @@ compiled_metadata(PyObject* metadata)
                 if (k > max_idx) {
                     max_idx = k;
                 }
+#if PY_MAJOR_VERSION == 2
+            } else if (PyInt_Check(key)) {
+
+                Py_ssize_t k = (ssize_t)PyInt_AsLong(key);
+                if (k == -1 && PyErr_Occurred()) {
+                    PyErr_Clear();
+                }
+                if (k > max_idx) {
+                    max_idx = k;
+                }
+#endif /* PY_MAJOR_VERSION == 2 */
             }
         }
 
