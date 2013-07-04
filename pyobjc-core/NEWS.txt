@@ -6,6 +6,23 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* The build of pyobjc-core can now be configured by editing setup.cfg (or
+  providing arguments to the build_ext command), instead of editing the
+  setup.py file.
+
+  Currently the following options are availabel for the build_ext command:
+
+  * ``--use-system-libffi``: When this option is used the build will use
+    /usr/lib/libffi.dylib instead of the embedded copy of libffi. The latter
+    is the default is and is better tested.
+
+  * ``--deployment-target=VAL``: The value of ``MACOSX_DEPLOYMENT_TARGET`` to use,
+    defaults to the deployment target used for building Python itself
+
+  * ``--sdk-root=VAL``: Path to the SDK root used to build PyObjC, or "python" to
+    use the default SDK selected by distutils. The default is to use the
+    most recent SDK available.
+
 * The lazy importer has smarter calculation of the ``__all__`` attribute,
   which should speed up 'from Cocoa import *'.
 
