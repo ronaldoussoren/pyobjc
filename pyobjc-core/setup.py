@@ -22,7 +22,7 @@ from pkg_resources import working_set, normalize_path, add_activation_listener, 
 from setuptools import setup, Extension, find_packages
 from distutils import log
 from distutils.core import Command
-from distutils.errors import DistutilsPlatformError, DistutilsSetupError
+from distutils.errors import DistutilsPlatformError, DistutilsSetupError, DistutilsError
 from setuptools.command import build_py, test, egg_info
 from setuptools.command import build_ext, install_lib
 
@@ -302,6 +302,9 @@ class oc_test (test.test):
                 skip=len(getattr(result, 'skipped', [])),
             )
             print("SUMMARY: %s"%(summary,))
+
+            if not result.wasSuccessful():
+                raise DistutilsError("some tests failed")
 
         finally:
             self.remove_from_sys_path()

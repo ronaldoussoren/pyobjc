@@ -36,6 +36,7 @@ class oc_build_py (build_py.build_py):
 
 
 from pkg_resources import working_set, normalize_path, add_activation_listener, require
+from distutils.errors import DistutilsPlatformError, DistutilsError
 
 class oc_test (test.test):
     description = "run test suite"
@@ -139,13 +140,14 @@ class oc_test (test.test):
                 skip=len(getattr(result, 'skipped', [])),
             )
             print("SUMMARY: %s"%(summary,))
+            if not result.wasSuccessful():
+                raise DistutilsError("some tests failed")
 
         finally:
             self.remove_from_sys_path()
 
 
 from setuptools import setup as _setup, Extension as _Extension, Command
-from distutils.errors import DistutilsPlatformError
 from distutils.command import build, install
 from setuptools.command import develop, test, build_ext, install_lib
 import pkg_resources
