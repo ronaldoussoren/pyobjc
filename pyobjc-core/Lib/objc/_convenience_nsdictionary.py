@@ -10,47 +10,14 @@ from objc._objc import lookUpClass
 import collections
 import sys
 
+NSDictionary = lookUpClass('NSDictionary')
+NSMutableDictionary = lookUpClass('NSMutableDictionary')
+
 addConvenienceForBasicMapping('NSDictionary', True)
 addConvenienceForBasicMapping('NSMutableDictionary', False)
 
-def dict_items(aDict):
-    """
-    NSDictionary.items()
-    """
-    keys = aDict.allKeys()
-    return zip(keys, map(aDict.__getitem__, keys))
 
-def itemsGenerator(aDict):
-    for key in aDict:
-        yield (key, aDict[key])
-
-def __iter__objectEnumerator_keyEnumerator(self):
-    meth = getattr(self, 'keyEnumerator', None)
-    if meth is None:
-        meth = self.objectEnumerator
-    return iter(meth())
-
-def fromkeys_dictionaryWithObjects_forKeys_(cls, keys, values=None):
-    if not isinstance(keys, (list, tuple)):
-        keys = list(keys)
-    if values is None:
-        values = (None,) * len(keys)
-    elif not isinstance(values, (list, tuple)):
-        values = list(values)
-    return cls.dictionaryWithObjects_forKeys_(values, keys)
-
-if sys.version_info[0] == 3:
-    def cmp(a, b):
-        if a == b:
-            return 0
-        elif a < b:
-            return -1
-        else:
-            return 1
-
-#
-
-def all_contained_in(inner, outer):
+def _all_contained_in(inner, outer):
     """
     Return True iff all items in ``inner`` are also in ``outer``.
     """
@@ -60,6 +27,18 @@ def all_contained_in(inner, outer):
 
     return True
 
+
+def nsdict__len__(self):
+    return self.count()
+
+
+def nsdict__iter__(self):
+    meth = getattr(self, 'keyEnumerator', None)
+    if meth is None:
+        meth = self.objectEnumerator
+    return iter(meth())
+
+
 class nsdict_view (collections.Set):
     __slots__ = ()
 
@@ -68,7 +47,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) == len(other):
-            return all_contained_in(self, other)
+            return _all_contained_in(self, other)
 
         else:
             return False
@@ -78,7 +57,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) == len(other):
-            return not all_contained_in(self, other)
+            return not _all_contained_in(self, other)
 
         else:
             return True
@@ -88,7 +67,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) < len(other):
-            return all_contained_in(self, other)
+            return _all_contained_in(self, other)
 
         else:
             return False
@@ -98,7 +77,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) <= len(other):
-            return all_contained_in(self, other)
+            return _all_contained_in(self, other)
 
         else:
             return False
@@ -108,7 +87,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) > len(other):
-            return all_contained_in(other, self)
+            return _all_contained_in(other, self)
 
         else:
             return False
@@ -118,7 +97,7 @@ class nsdict_view (collections.Set):
             return NotImplemented
 
         if len(self) >= len(other):
-            return all_contained_in(other, self)
+            return _all_contained_in(other, self)
 
         else:
             return False
@@ -158,19 +137,17 @@ class nsdict_view (collections.Set):
         result.symmetric_difference_update(other)
         return result
 
-#collections.Set.register(nsdict_view)
 
 class nsdict_keys(nsdict_view):
-    __slots__=('__value')
+    __slots__ = ('__value', )
+
     def __init__(self, value):
-        self.__value =  value
+        self.__value = value
 
     def __repr__(self):
         keys = list(self.__value)
-        #keys.sort()
 
         return "<nsdict_keys({0})>".format(keys)
-
 
     def __len__(self):
         return len(self.__value)
@@ -181,10 +158,12 @@ class nsdict_keys(nsdict_view):
     def __contains__(self, value):
         return value in self.__value
 
+
 class nsdict_values(nsdict_view):
-    __slots__=('__value')
+    __slots__ = ('__value',)
+
     def __init__(self, value):
-        self.__value =  value
+        self.__value = value
 
     def __repr__(self):
         values = list(self)
@@ -204,11 +183,12 @@ class nsdict_values(nsdict_view):
                 return True
         return False
 
+
 class nsdict_items(nsdict_view):
-    __slots__=('__value')
+    __slots__ = ('__value',)
 
     def __init__(self, value):
-        self.__value =  value
+        self.__value = value
 
     def __repr__(self):
         values = list(self)
@@ -229,13 +209,13 @@ class nsdict_items(nsdict_view):
                 return True
         return False
 
+
 collections.KeysView.register(nsdict_keys)
 collections.ValuesView.register(nsdict_values)
 collections.ItemsView.register(nsdict_items)
 
-collections.Mapping.register(lookUpClass('NSDictionary'))
-collections.MutableMapping.register(lookUpClass('NSMutableDictionary'))
-
+collections.Mapping.register(NSDictionary)
+collections.MutableMapping.register(NSMutableDictionary)
 
 
 def nsdict_fromkeys(cls, keys, value=None):
@@ -244,15 +224,8 @@ def nsdict_fromkeys(cls, keys, value=None):
 
     return cls.dictionaryWithObjects_forKeys_(values, keys)
 
-def nsmutabledict_fromkeys(cls, keys, value=None):
-    result = cls.dictionary()
-    value = container_wrap(value)
-    for k in keys:
-        result[container_wrap(k)] = value
 
-    return result
-
-def dict_new(cls, args, kwds):
+def nsdict_new(cls, *args, **kwds):
     if len(args) == 0:
         pass
 
@@ -274,6 +247,7 @@ def dict_new(cls, args, kwds):
         raise TypeError(
                 "dict expected at most 1 arguments, got {0}".format(
                     len(args)))
+
     if kwds:
         d = dict()
         for k, v in kwds.items():
@@ -283,12 +257,6 @@ def dict_new(cls, args, kwds):
 
     return cls.dictionary()
 
-def nsdict_new(cls, *args, **kwds):
-    return dict_new(cls, args, kwds)
-
-def nsmutabledict_new(cls, *args, **kwds):
-    return dict_new(cls, args, kwds)
-
 
 def nsdict__eq__(self, other):
     if not isinstance(other, collections.Mapping):
@@ -296,8 +264,10 @@ def nsdict__eq__(self, other):
 
     return self.isEqualToDictionary_(other)
 
+
 def nsdict__ne__(self, other):
     return not nsdict__eq__(self, other)
+
 
 if sys.version_info[0] == 3:
     def nsdict__lt__(self, other):
@@ -311,6 +281,12 @@ if sys.version_info[0] == 3:
 
     def nsdict__gt__(self, other):
         return NotImplemented
+
+    addConvenienceForClass('NSDictionary', (
+        ('keys', lambda self: nsdict_keys(self)),
+        ('values', lambda self: nsdict_values(self)),
+        ('items', lambda self: nsdict_items(self)),
+    ))
 
 else:
     def nsdict__cmp__(self, other):
@@ -364,20 +340,19 @@ else:
     def nsdict__gt__(self, other):
         return nsdict_cmp(self, other) > 0
 
-if sys.version_info[0] == 3:
-    addConvenienceForClass('NSDictionary', (
-        ('fromkeys', classmethod(nsdict_fromkeys)),
-        ('keys', lambda self: nsdict_keys(self)),
-        ('values', lambda self: nsdict_values(self)),
-        ('items', lambda self: nsdict_items(self)),
-    ))
 
-    addConvenienceForClass('NSMutableDictionary', (
-        ('fromkeys', classmethod(nsmutabledict_fromkeys)),
-    ))
+    def nsdict_iterkeys(aDict):
+        return iter(self.keyEnumerator())
 
-else:
+    def nsdict_itervalues(aDict):
+        return iter(self.objectEnumerator())
+
+    def nsdict_iteritems(aDict):
+        for key in aDict:
+            yield (key, aDict[key])
+
     addConvenienceForClass('NSDictionary', (
+        ('__cmp__', nsdict__cmp__),
         ('fromkeys', classmethod(nsdict_fromkeys)),
         ('viewkeys', lambda self: nsdict_keys(self)),
         ('viewvalues', lambda self: nsdict_values(self)),
@@ -385,33 +360,28 @@ else:
         ('keys', lambda self: self.allKeys()),
         ('items', lambda self: dictItems(self)),
         ('values', lambda self: self.allValues()),
-        ('__getitem__', __getitem__objectForKey_),
-        ('iterkeys', lambda self: iter(self.keyEnumerator())),
-        ('iteritems', lambda self: itemsGenerator(self)),
-        ('itervalues', lambda self: iter(self.objectEnumerator())),
+        ('iterkeys', nsdict_iterkeys),
+        ('iteritems', nsdict_iteritems),
+        ('itervalues', nsdict_itervalues),
     ))
 
+
 addConvenienceForClass('NSDictionary', (
+    ('__new__', staticmethod(nsdict_new)),
+    ('fromkeys', classmethod(nsdict_fromkeys)),
     ('__eq__', nsdict__eq__),
     ('__ne__', nsdict__ne__),
     ('__lt__', nsdict__lt__),
     ('__le__', nsdict__le__),
     ('__gt__', nsdict__gt__),
     ('__ge__', nsdict__ge__),
+    ('__len__', nsdict__len__),
+    ('__iter__', nsdict__iter__),
+))
+
+
+addConvenienceForClass('NSMutableDictionary', (
     ('__new__', staticmethod(nsdict_new)),
-    ('__len__', lambda self: self.count()),
-    ('__iter__', __iter__objectEnumerator_keyEnumerator),
-))
-
-addConvenienceForClass('NSMutableDictionary', (
+    ('fromkeys', classmethod(nsdict_fromkeys)),
     ('clear',     lambda self: self.removeAllObjects()),
-))
-
-if sys.version_info[0] == 2:
-    addConvenienceForClass('NSDictionary', (
-        ('__cmp__', nsdict__cmp__),
-    ))
-
-addConvenienceForClass('NSMutableDictionary', (
-    ('__new__', staticmethod(nsmutabledict_new)),
 ))
