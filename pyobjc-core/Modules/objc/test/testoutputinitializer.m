@@ -1,6 +1,6 @@
 /*
- * XXX: PyObjC_TestOutputInitializer is a class that can't be created
- *      from Python but ends up in some fun places like NSAttributedString
+ * NOTE: PyObjC_TestOutputInitializer is a class that can't be created
+ *       from Python but ends up in some fun places like NSAttributedString
  */
 
 #include <Python.h>

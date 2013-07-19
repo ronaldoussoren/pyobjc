@@ -135,7 +135,7 @@ class _ArrayOperators (object):
                 s.add(item)
 
             except TypeError:
-                if item in rval: 
+                if item in rval:
                     continue
 
                 rval.append(item)
@@ -304,7 +304,7 @@ def setKey(obj, key, value):
                 return
             except AttributeError:
                 raise KeyError("Key %s does not exist" % (key,))
-    
+
     try:
         getattr(obj, "_" + key)
     except AttributeError:
@@ -391,19 +391,3 @@ class kvc(object):
         if not isinstance(item, basestring):
             raise TypeError('Keys must be strings')
         setKeyPath(self.__pyobjc_object__, item, value)
-
-
-
-# XXX: Undocumented and deprecated functions, only present because these had public
-#      names in previous releases and the module has suboptimal documentation.
-#      To be removed in PyObjC 3.0
-class ArrayOperators (_ArrayOperators):
-    def __init__(self):
-        warnings.warn("Don't use PyObjCTools.KeyValueCoding.ArrayOperators", DeprecationWarning)
-
-class _Deprecated (object):
-    def __getattr__(self, nm):
-        warnings.warn("Don't use PyObjCTools.KeyValueCoding.arrayOperators", DeprecationWarning)
-        return getattr(_ArrayOperators, nm)
-
-arrayOperators = _Deprecated()

@@ -1,9 +1,4 @@
-/* Some testhelpers for CF-type support.
- * XXX: should define our own CF-type for at least the non-tollfree bridged
- * tests to avoid interfering with the real CF-wrappers.
- * XXX: add a second type that isn't tollfree bridged to check that the
- * default behaviour works as well.
- */
+/* Some testhelpers for CF-type support. */
 #include "Python.h"
 #include "pyobjc-api.h"
 

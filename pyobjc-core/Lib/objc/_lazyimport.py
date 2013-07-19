@@ -15,8 +15,6 @@ import objc
 ModuleType = type(sys)
 
 
-
-
 def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     if frameworkIdentifier is None:
         bundle = loadBundle(

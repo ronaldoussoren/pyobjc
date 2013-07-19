@@ -19,9 +19,9 @@ Short term
 
 * Lib/objc/_convenience.py cleanup:
 
-  - Remove all _CONVENIENCE_METHODS, as well as functions that aren't used anymore
-
   - Move bits of _convenience.py to the right framework wrapper
+
+  - Split into smaller modules even for the parts kept in core
 
 * Issue #29: Move some Foundation helpers to core
 

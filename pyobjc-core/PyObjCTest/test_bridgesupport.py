@@ -454,7 +454,7 @@ class TestBridgeSupportParser (TestCase):
         for item in self.iter_framework_dir('/System/Library/Frameworks'):
             yield item
 
-    def test_system_bridgesupport(self): # XXX
+    def test_system_bridgesupport(self):
         with filterWarnings("ignore", RuntimeWarning):
             # Check that all system bridgesupport files can be processed correctly
             for fn in self.iter_system_bridgesupport_files():
@@ -2006,7 +2006,6 @@ class TestInitFrameworkWrapper (TestCase):
                 (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, True),
             ])
             self.assertEqual(parse_calls, [])
-
 
             # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter

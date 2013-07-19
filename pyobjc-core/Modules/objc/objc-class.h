@@ -120,5 +120,6 @@ static inline int PyObjCClass_IsCFWrapper(PyTypeObject* tp)
 	return ((PyObjCClassObject*)tp)->isCFWrapper;
 }
 
+PyObject* objc_class_locate(Class objc_class);
 
 #endif /* PyObjC_OBJC_CLASS_H */

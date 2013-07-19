@@ -45,7 +45,6 @@ class TestRegressions(TestCase):
             self.assertEqual(py, oc)
 
     def testNSObjectPerforming(self):
-        # XXX: 3.x test: regression w.r.t 2.5
         o = NSObject.performSelector_('new')
         self.assertIsInstance(o, NSObject)
 

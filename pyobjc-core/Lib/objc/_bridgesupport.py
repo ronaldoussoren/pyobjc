@@ -26,9 +26,6 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 #
 # The rest of this file contains support for bridgesupport
 # XML files.
-#
-# TODO: parseBridgeSupport (and its support class) is a
-#       basic port from C, check if it can be simplified.
 
 # NOTE: This search path only contains system locations to
 # avoid accidently reiying on system-specific functionality.

@@ -11,18 +11,6 @@
  *     for most methods, but for some methods we need specialized functions.
  */
 
-/*!
- * @constant PyObjC_MappingCount
- * @abstract The number of registered special mappings
- * @discussion
- *     This is NOT a constant, but there seems to be no way to mark up
- *     variables.
- *
- *     This value is used by the objc-class module to detect if the methods in
- *     a class should be regenerated.
- */
-extern Py_ssize_t PyObjC_MappingCount;
-
 extern BOOL PyObjC_UpdatingMetaData;
 
 

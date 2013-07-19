@@ -1686,6 +1686,30 @@ block_signature(PyObject* mod __attribute__((__unused__)), PyObject* block)
     return PyBytes_FromString(sig);
 }
 
+static PyObject*
+force_rescan(PyObject* mod __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+static char* keywords[] = { "name", NULL };
+    const char* class_name;
+    PyObject* py_cls;
+    Class cls;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", keywords, &class_name)) {
+        return NULL;
+    }
+
+    cls = objc_lookUpClass(class_name);
+    if (cls == Nil) goto done;
+
+    py_cls = objc_class_locate(cls);
+    if (py_cls == NULL) goto done;
+
+    PyObjCClass_CheckMethodList(py_cls, NO);
+
+done:
+    Py_INCREF(Py_None);
+    return Py_None;
+}
 
 
 static PyMethodDef mod_methods[] = {
@@ -1951,6 +1975,11 @@ static PyMethodDef mod_methods[] = {
         .ml_name    = "_nameForSignature",
         .ml_meth    = (PyCFunction)name_for_signature,
         .ml_flags   = METH_O,
+    },
+    {
+        .ml_name    = "_rescanClass",
+        .ml_meth    = (PyCFunction)force_rescan,
+        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
     },
     {
         .ml_name    = NULL /* SENTINEL */
@@ -2369,6 +2398,10 @@ PyObjC_MODULE_INIT(_objc)
         PyObjC_INITERROR();
     }
 #endif /* MAC_OS_X_VERSION_10_8 */
+
+    if (PyModule_AddIntConstant(m, "_NSNotFound", NSNotFound) < 0) {
+        PyObjC_INITERROR();
+    }
 
     if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
         PyObjC_INITERROR();

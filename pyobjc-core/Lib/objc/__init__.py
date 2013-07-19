@@ -25,6 +25,16 @@ _update()
 del _update
 
 from objc._convenience import *
+from objc._convenience_nsobject import *
+from objc._convenience_nsdecimal import *
+from objc._convenience_nsdata import *
+from objc._convenience_nsdictionary import *
+from objc._convenience_nsset import *
+from objc._convenience_nsarray import *
+from objc._convenience_nsstring import *
+from objc._convenience_mapping import *
+from objc._convenience_sequence import *
+
 from objc._bridgesupport import *
 
 from objc._dyld import *

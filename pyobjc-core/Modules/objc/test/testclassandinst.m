@@ -1,5 +1,5 @@
 /*
- * XXX: PyObjC_TestClassAndInstance is a class that can't be created
+ * NOTE: PyObjC_TestClassAndInstance is a class that can't be created
  *      from Python but ends up in some fun places like NSWindow
  */
 

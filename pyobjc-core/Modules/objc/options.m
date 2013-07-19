@@ -110,6 +110,30 @@ static int _nscoding_version_set(PyObject* s __attribute__((__unused__)),
     return 0;
 }
 
+Py_ssize_t PyObjC_MappingCount = 0;
+
+static PyObject* _mapping_count_get(PyObject* s __attribute__((__unused__)),
+        void *c __attribute__((__unused__)))
+{
+    return Py_BuildValue("n", PyObjC_MappingCount);
+}
+
+static int _mapping_count_set(PyObject* s __attribute__((__unused__)),
+        PyObject* newVal, void* c __attribute__((__unused__)))
+{
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete option 'nscoding_version'");
+        return -1;
+    }
+    if (PyArg_Parse(newVal, "n", &PyObjC_MappingCount) < 0) {
+        return -1;
+    }
+
+    return 0;
+}
+
+
+
 
 /* Private properties */
 OBJECT_PROP(_nscoding_encoder, PyObjC_Encoder, NULL)
@@ -140,6 +164,7 @@ static PyGetSetDef object_getset[] = {
     GETSET(_nscoding_version,       "Private version number for NSCoding support"),
     GETSET(_nscoding_encoder,       "Private helper function for NSCoding support"),
     GETSET(_nscoding_decoder,       "Private helper function for NSCoding support"),
+    GETSET(_mapping_count,          "Private counter for noticing metadata updates"),
     GETSET(_copy,                   "Private helper function for copy support"),
     GETSET(_class_extender,         "Private helper function for enriching class APIs"),
     GETSET(_nsnumber_wrapper,       "Private type used for proxying NSNumber instances"),

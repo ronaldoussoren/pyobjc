@@ -1,6 +1,4 @@
 """
-XXX: Should verify if test_methods2.py implements all tests in this file.
-
 Test lowlevel message passing details (Python -> ObjC)
 
 

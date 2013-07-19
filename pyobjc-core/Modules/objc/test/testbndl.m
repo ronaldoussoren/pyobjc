@@ -1,8 +1,4 @@
 /*
- * XXX: TestClass3 is contains some test-code that is not replicated in
- *      testbndl2.m, the rest should be removed after checking that
- *      testbndl2.m really does contain all tests in this file!.
- *
  * This file implements a (number of) class(es) that are used to test
  * method calling with PyObjC (both python -> ObjC and back)
  *
@@ -112,7 +108,6 @@ struct complexStruct
 /* returns of complex values */
 - (struct dummy)dummyFunc;
 - (struct dummy2)dummy2Func;
-/* TODO: Nested structs, unions, strings */
 
 /* argument passing for simple types */
 - (long long)longlongArg:(long long)arg;
@@ -133,7 +128,6 @@ struct complexStruct
 /* argument passing for complex values */
 - (struct dummy)dummyArg:(struct dummy)arg;
 - (struct dummy2)dummy2Arg:(struct dummy2)arg;
-/* TODO: Nested structs, unions, strings */
 
 /* in, out and in-out arguments */
 - (char)passInChar:(char*)arg;

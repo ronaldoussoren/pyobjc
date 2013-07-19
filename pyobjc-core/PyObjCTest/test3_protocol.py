@@ -1,4 +1,5 @@
 from PyObjCTools.TestSupport import *
+from PyObjCTest.protocol import OC_TestProtocol
 import objc
 import warnings
 import platform
@@ -6,14 +7,6 @@ import sys
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass('NSObject')
-
-
-# XXX : This is a really dumb way to detect < 10.3
-if not NSObject.instancesRespondToSelector_('setValue:forKey:'):
-    # Defining protocols in an MH_BUNDLE makes < 10.3 explode
-    OC_TestProtocol = None
-else:
-    from PyObjCTest.protocol import OC_TestProtocol
 
 
 MyProto3 = objc.informal_protocol("MyProto3", (
@@ -49,48 +42,45 @@ if (sys.maxsize < 2 ** 32) or (platform.mac_ver()[0] >= '10.7'):
         objc.selector(None, selector=b"aClassOne:", signature=b"@@:i", isClassMethod=1),
     ])
 
-    if OC_TestProtocol is not None:
+    class TestFormalOCProtocols(TestCase):
 
-        class TestFormalOCProtocols(TestCase):
+        def testImplementFormalProtocol(self):
 
-            def testImplementFormalProtocol(self):
+            class MyClassNotImplementingProtocol(NSObject):
+                pass
 
-                class MyClassNotImplementingProtocol(NSObject):
-                    pass
+            self.assertFalse(MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
-                self.assertFalse(MyClassNotImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
-
-                try:
-                    class MyClassNotAlsoImplementingProtocol(NSObject, protocols=[OC_TestProtocol]):
-                        def method1(self): pass
-
-                    self.fail("class not implementing protocol, yet created")
-                except TypeError:
-                    pass
-
-                class MyClassImplementingProtocol(NSObject, protocols=[OC_TestProtocol]):
+            try:
+                class MyClassNotAlsoImplementingProtocol(NSObject, protocols=[OC_TestProtocol]):
                     def method1(self): pass
-                    def method2_(self, a): pass
 
-                self.assertTrue(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+                self.fail("class not implementing protocol, yet created")
+            except TypeError:
+                pass
+
+            class MyClassImplementingProtocol(NSObject, protocols=[OC_TestProtocol]):
+                def method1(self): pass
+                def method2_(self, a): pass
+
+            self.assertTrue(MyClassImplementingProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
+            # The PyObjC implementation of formal protocols is slightly looser
+            # than Objective-C itself: you can inherit part of the protocol
+            # from the superclass.
+            # XXX: not really: you won't inherit the right signatures by default
 
-                # The PyObjC implementation of formal protocols is slightly looser
-                # than Objective-C itself: you can inherit part of the protocol
-                # from the superclass.
-                # XXX: not really: you won't inherit the right signatures by default
+            class MyClassImplementingHalfOfProtocol(NSObject):
+                def method1(self): pass
+                method1 = objc.selector(method1, signature=b'i@:')
 
-                class MyClassImplementingHalfOfProtocol(NSObject):
-                    def method1(self): pass
-                    method1 = objc.selector(method1, signature=b'i@:')
+            self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
-                self.assertFalse(MyClassImplementingHalfOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+            class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, protocols=[OC_TestProtocol]):
+                def method2_(self, v): pass
 
-                class MyClassImplementingAllOfProtocol(MyClassImplementingHalfOfProtocol, protocols=[OC_TestProtocol]):
-                    def method2_(self, v): pass
-
-                self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
+            self.assertTrue(MyClassImplementingAllOfProtocol.pyobjc_classMethods.conformsToProtocol_(OC_TestProtocol))
 
 
 

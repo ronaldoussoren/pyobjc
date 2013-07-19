@@ -311,7 +311,7 @@ objc_metaclass_locate(PyObject* meta_class)
  *     This function does not raise an Python exception when the
  *     wrapper cannot be found.
  */
-static PyObject*
+PyObject*
 objc_class_locate(Class objc_class)
 {
     PyObject* result;

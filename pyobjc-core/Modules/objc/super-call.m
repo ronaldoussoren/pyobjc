@@ -9,13 +9,6 @@
  */
 #include "pyobjc.h"
 
-/*
- * Serial number for metadata and helper functions. Classes contain
- * the version number that was present when they were initialized and
- * will reinitalize when they notice the global value has changed.
- */
-Py_ssize_t PyObjC_MappingCount = 0;
-
 struct registry
 {
     PyObjC_CallFunc call_to_objc;

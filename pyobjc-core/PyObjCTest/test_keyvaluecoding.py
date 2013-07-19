@@ -121,7 +121,7 @@ class TestArrayOperators (TestCase):
                 { 'a' : { 'b': 2 } },
                 { 'a' : { 'b': 3 } },
         ]
-        
+
         self.assertEqual(arrayOperators.unionOfObjects(values, ('a', 'b')), [1, 1, 2, 3 ])
         self.assertEqual(KeyValueCoding.getKeyPath(values, '@unionOfObjects.a.b'), [1, 1, 2, 3])
 
@@ -157,7 +157,7 @@ class TestArrayOperators (TestCase):
                 { 'a' : { 'b': Int(3) } },
                 { 'a' : { 'b': Int(3) } },
         ]
-        
+
         self.assertEqual(arrayOperators.distinctUnionOfObjects(values, ('a', 'b')), [1, 2, 3 ])
         self.assertEqual(KeyValueCoding.getKeyPath(values, '@distinctUnionOfObjects.a.b'), [1, 2, 3 ])
 
@@ -254,47 +254,47 @@ class TestArrayOperators (TestCase):
         self.assertEqual(arrayOperators.distinctUnionOfArrays(transactions, ('payee',)), ['Green Power', 'Car Loan', 'General Cable', 'Mortgage', 'Animal Hospital', 'General Cable - Cottage', 'Second Mortgage', 'Hobby Shop'])
         self.assertEqual(KeyValueCoding.getKeyPath(transactions, '@distinctUnionOfArrays.payee'), ['Green Power', 'Car Loan', 'General Cable', 'Mortgage', 'Animal Hospital', 'General Cable - Cottage', 'Second Mortgage', 'Hobby Shop'])
         self.assertEqual(arrayOperators.unionOfArrays(transactions, ('payee',)), [
-            'Green Power', 
-            'Green Power', 
-            'Green Power', 
-            'Car Loan', 
-            'Car Loan', 
-            'Car Loan', 
-            'General Cable', 
-            'General Cable', 
-            'General Cable', 
-            'Mortgage', 
-            'Mortgage', 
-            'Mortgage', 
-            'Animal Hospital', 
-            'General Cable - Cottage', 
-            'General Cable - Cottage', 
-            'General Cable - Cottage', 
-            'Second Mortgage', 
-            'Second Mortgage', 
-            'Second Mortgage', 
+            'Green Power',
+            'Green Power',
+            'Green Power',
+            'Car Loan',
+            'Car Loan',
+            'Car Loan',
+            'General Cable',
+            'General Cable',
+            'General Cable',
+            'Mortgage',
+            'Mortgage',
+            'Mortgage',
+            'Animal Hospital',
+            'General Cable - Cottage',
+            'General Cable - Cottage',
+            'General Cable - Cottage',
+            'Second Mortgage',
+            'Second Mortgage',
+            'Second Mortgage',
             'Hobby Shop'
         ])
         self.assertEqual(KeyValueCoding.getKeyPath(transactions, '@unionOfArrays.payee'), [
-            'Green Power', 
-            'Green Power', 
-            'Green Power', 
-            'Car Loan', 
-            'Car Loan', 
-            'Car Loan', 
-            'General Cable', 
-            'General Cable', 
-            'General Cable', 
-            'Mortgage', 
-            'Mortgage', 
-            'Mortgage', 
-            'Animal Hospital', 
-            'General Cable - Cottage', 
-            'General Cable - Cottage', 
-            'General Cable - Cottage', 
-            'Second Mortgage', 
-            'Second Mortgage', 
-            'Second Mortgage', 
+            'Green Power',
+            'Green Power',
+            'Green Power',
+            'Car Loan',
+            'Car Loan',
+            'Car Loan',
+            'General Cable',
+            'General Cable',
+            'General Cable',
+            'Mortgage',
+            'Mortgage',
+            'Mortgage',
+            'Animal Hospital',
+            'General Cable - Cottage',
+            'General Cable - Cottage',
+            'General Cable - Cottage',
+            'Second Mortgage',
+            'Second Mortgage',
+            'Second Mortgage',
             'Hobby Shop'
         ])
 
@@ -314,7 +314,7 @@ class TestArrayOperators (TestCase):
             def __hash__(self):
                 return hash(self.n)
 
-        
+
         values = {
             frozenset({
                 Rec(1),
@@ -328,23 +328,6 @@ class TestArrayOperators (TestCase):
         }
 
         self.assertEqual(arrayOperators.distinctUnionOfSets(values, 'n'), {1,2,3})
-
-class TestDeprecatedJunk (TestCase):
-    def test_deprecated_class (self):
-        with filterWarnings('error', DeprecationWarning):
-            self.assertRaises(DeprecationWarning, KeyValueCoding.ArrayOperators)
-
-
-        o = KeyValueCoding.ArrayOperators()
-        self.assertIsInstance(o, KeyValueCoding._ArrayOperators)
-
-    def test_deprecated_object (self):
-        with filterWarnings('error', DeprecationWarning):
-            self.assertRaises(DeprecationWarning, getattr, KeyValueCoding.arrayOperators, 'avg')
-
-        self.assertEqual(KeyValueCoding.arrayOperators.avg, KeyValueCoding._ArrayOperators.avg)
-
-
 
 null = objc.lookUpClass('NSNull').null()
 
@@ -561,7 +544,7 @@ class TestPythonObject (TestCase):
 
             def set_attr3(self, value):
                 self._attr3 = (3, value)
-            
+
             set_no_attr = 4
 
         o = Record()
@@ -575,7 +558,7 @@ class TestPythonObject (TestCase):
         KeyValueCoding.setKey(o, 'attr3', 11)
         KeyValueCoding.setKey(o, 'no_attr', 12)
 
-        
+
         self.assertEqual(o._attr1, (1, 9))
         self.assertEqual(o._attr2, (2, 10))
         self.assertEqual(o._attr3, (3, 11))
@@ -584,7 +567,7 @@ class TestPythonObject (TestCase):
         KeyValueCoding.setKeyPath(o, 'attr1', 29)
         KeyValueCoding.setKeyPath(o, 'attr2', 210)
         KeyValueCoding.setKeyPath(o, 'attr3', 211)
-        
+
         self.assertEqual(o._attr1, (1, 29))
         self.assertEqual(o._attr2, (2, 210))
         self.assertEqual(o._attr3, (3, 211))
@@ -599,7 +582,7 @@ class TestPythonObject (TestCase):
         d1 = objc.lookUpClass('NSMutableDictionary').alloc().init()
         d2 = objc.lookUpClass('NSMutableDictionary').alloc().init()
         d3 = {}
-        
+
         root = { 'a': arr, 'd': d2 }
 
         arr.addObject_(d1)
@@ -619,7 +602,7 @@ class TestPythonObject (TestCase):
         d1 = objc.lookUpClass('NSMutableDictionary').alloc().init()
         d2 = objc.lookUpClass('NSMutableDictionary').alloc().init()
         d3 = {}
-        
+
         root = objc.lookUpClass('NSMutableDictionary').dictionaryWithDictionary_({ 'a': arr, 'd': d2 })
 
         arr.addObject_(d1)

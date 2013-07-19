@@ -1,7 +1,6 @@
 """
 'test' action for setup.py
 """
-# XXX - use setuptools test suite support
 import sys, os, string, glob
 from os.path import basename, dirname, splitext, join, expanduser, walk
 from fnmatch import fnmatch

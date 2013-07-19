@@ -6,6 +6,18 @@ An overview of the relevant changes in new, and older, releases.
 Version 3.0
 -----------
 
+* ``PyObjCTools.KeyValueCoding.ArrayOperators`` and
+  ``PyObjCTools.KeyValueCoding.arrayOperators`` were accidently public
+  names in previous releases, and are now removed. Use the array operators
+  in the KVC protocol instead.
+
+* Restructured the "convenience" method code. This shouldn't have user
+  visible effects, but makes the code easier to maintain.
+
+* ``objc.addConvienceForSelector`` no longer exists, it isn't possible
+  to provide this functionality with the current implementation of the
+  bridge.
+
 * The build of pyobjc-core can now be configured by editing setup.cfg (or
   providing arguments to the build_ext command), instead of editing the
   setup.py file.

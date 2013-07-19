@@ -7,18 +7,18 @@ class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):
     pass
 
 
-# XXX: Huh? The next two classes have the same definition?
 class PyObjC_TestClassAndInstanceClassOverride(PyObjC_TestClassAndInstance):
     """return YES for both"""
+    @classmethod
     def isInstance(klass):
         return objc.YES
-    isInstance = classmethod(isInstance)
 
 class PyObjC_TestClassAndInstanceInstanceOverride(PyObjC_TestClassAndInstance):
     """return NO for both"""
     def isInstance(self):
         return objc.NO
 
+# XXX
 # class PyObjC_TestClassAndInstanceBothOverride(PyObjC_TestClassAndInstance):
 #     """flipped"""
 #     def isInstance__class__(self):

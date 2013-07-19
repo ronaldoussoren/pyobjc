@@ -1,8 +1,8 @@
 #ifdef __i386__
 /* -----------------------------------------------------------------------
    darwin.S - Copyright (c) 1996, 1998, 2001, 2002, 2003  Red Hat, Inc.
-   
-   X86 Foreign Function Interface 
+
+   X86 Foreign Function Interface
 
    Permission is hereby granted, free of charge, to any person obtaining
    a copy of this software and associated documentation files (the
@@ -23,7 +23,7 @@
    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
    OTHER DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
-  
+
 /*
  * This file is based on sysv.S and then hacked up by Ronald who hasn't done
  * assembly programming in 8 years.
@@ -31,15 +31,14 @@
 
 #ifndef __x86_64__
 
-#define LIBFFI_ASM	
+#define LIBFFI_ASM
 #include <fficonfig.h>
 #include <ffi.h>
 
 #ifdef PyObjC_STRICT_DEBUGGING
-  /* XXX: Debugging of stack alignment, to be removed */
 #define ASSERT_STACK_ALIGNED movdqa -16(%esp), %xmm0
 #else
-#define ASSERT_STACK_ALIGNED 
+#define ASSERT_STACK_ALIGNED
 #endif
 
 .text
@@ -69,7 +68,7 @@ LCFI1:
 	call  *8(%ebp)
 
 	/* Return stack to previous state and call the function  */
-	addl  $16,%esp	
+	addl  $16,%esp
 
 	call  *28(%ebp)
 
@@ -78,13 +77,13 @@ LCFI1:
 	addl  %ecx,%esp
 
 	/* Load %ecx with the return type code  */
-	movl  20(%ebp),%ecx	
+	movl  20(%ebp),%ecx
 
 	/* If the return value pointer is NULL, assume no return value.  */
 	cmpl  $0,24(%ebp)
 	jne   Lretint
 
-	/* Even if there is no space for the return value, we are 
+	/* Even if there is no space for the return value, we are
 	   obliged to handle floating-point values.  */
 	cmpl  $FFI_TYPE_FLOAT,%ecx
 	jne   Lnoretval
@@ -96,7 +95,7 @@ Lretint:
 	cmpl  $FFI_TYPE_INT,%ecx
 	jne   Lretfloat
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	movl  %eax,0(%ecx)
 	jmp   Lepilogue
 
@@ -104,7 +103,7 @@ Lretfloat:
 	cmpl  $FFI_TYPE_FLOAT,%ecx
 	jne   Lretdouble
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	fstps (%ecx)
 	jmp   Lepilogue
 
@@ -112,7 +111,7 @@ Lretdouble:
 	cmpl  $FFI_TYPE_DOUBLE,%ecx
 	jne   Lretlongdouble
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	fstpl (%ecx)
 	jmp   Lepilogue
 
@@ -120,32 +119,32 @@ Lretlongdouble:
 	cmpl  $FFI_TYPE_LONGDOUBLE,%ecx
 	jne   Lretint64
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	fstpt (%ecx)
 	jmp   Lepilogue
-	
-Lretint64:	
+
+Lretint64:
 	cmpl  $FFI_TYPE_SINT64,%ecx
     jne   Lretstruct1b
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	movl  %eax,0(%ecx)
 	movl  %edx,4(%ecx)
 	jmp   Lepilogue
-	
-Lretstruct1b:	
+
+Lretstruct1b:
 	cmpl  $FFI_TYPE_SINT8,%ecx
     jne   Lretstruct2b
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	movb  %al,0(%ecx)
 	jmp   Lepilogue
 
-Lretstruct2b:	
+Lretstruct2b:
 	cmpl  $FFI_TYPE_SINT16,%ecx
     jne   Lretstruct
 	/* Load %ecx with the pointer to storage for the return value  */
-	movl  24(%ebp),%ecx	
+	movl  24(%ebp),%ecx
 	movw  %ax,0(%ecx)
 	jmp   Lepilogue
 

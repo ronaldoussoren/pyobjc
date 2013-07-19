@@ -36,7 +36,7 @@ class TestFilePointer (TestCase):
         self.assertEqual(fp.mode, 'w')
 
         fp.write('foobar\n')
-        fp.flush() # XXX: this isn't quite correct?
+        fp.flush()
         fp.close()
 
         fp = open('/tmp/pyobjc.filepointer.txt')

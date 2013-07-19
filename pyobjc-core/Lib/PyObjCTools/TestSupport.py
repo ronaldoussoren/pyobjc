@@ -892,8 +892,8 @@ else: # pragma: no cover (py2.6)
 
         return test
 
-# XXX: filterwarnings relies on implementation details of
-#      the warnings module
+# NOTE: filterwarnings relies on implementation details of
+#       the warnings module
 class filterWarnings (object):
     def __init__(self, kind, category):
         self._kind = kind
