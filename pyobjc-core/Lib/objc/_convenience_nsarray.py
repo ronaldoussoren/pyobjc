@@ -16,7 +16,7 @@ NSMutableArray = lookUpClass('NSMutableArray')
 collections.Sequence.register(NSArray)
 collections.MutableSequence.register(NSMutableArray)
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     INT_TYPES = (int, long)
     STR_TYPES = (str, unicode)
 
@@ -320,7 +320,7 @@ def nsarray_clear(self):
     self.removeAllObjects()
 
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsarray_sort(self, cmp=cmp, key=None, reverse=False):
         if key is None:
             if reverse:
@@ -401,7 +401,7 @@ addConvenienceForClass('NSMutableArray', (
 ))
 
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsarray__getslice__(self, i, j):
         i = max(i, 0); j = max(j, 0)
         return nsarray__getitem__(self, slice(i, j))

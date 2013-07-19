@@ -10,7 +10,7 @@ __all__ = ()
 import sys
 from objc._convenience import addConvenienceForClass
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     STR_TYPES=(str, unicode)
 else:
     STR_TYPES=str
@@ -99,7 +99,7 @@ addConvenienceForClass("NSObject", (
     ('_',   property(kvc)),
 ))
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsobject__cmp__(self, other):
         try:
             func = self.compare_

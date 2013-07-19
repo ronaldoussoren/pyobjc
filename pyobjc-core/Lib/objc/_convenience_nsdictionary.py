@@ -33,10 +33,7 @@ def nsdict__len__(self):
 
 
 def nsdict__iter__(self):
-    meth = getattr(self, 'keyEnumerator', None)
-    if meth is None:
-        meth = self.objectEnumerator
-    return iter(meth())
+    return iter(self.keyEnumerator())
 
 
 class nsdict_view (collections.Set):
@@ -269,7 +266,7 @@ def nsdict__ne__(self, other):
     return not nsdict__eq__(self, other)
 
 
-if sys.version_info[0] == 3:
+if sys.version_info[0] == 3:  # pragma: no 2.x cover
     def nsdict__lt__(self, other):
         return NotImplemented
 
@@ -288,7 +285,7 @@ if sys.version_info[0] == 3:
         ('items', lambda self: nsdict_items(self)),
     ))
 
-else:
+else:  # pragma: no 3.x cover
     def nsdict__cmp__(self, other):
         if not isinstance(other, collections.Mapping):
             return NotImplemented

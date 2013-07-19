@@ -21,7 +21,7 @@ if sys.version_info[:2] <= (2,6):
     def NSData__str__(self):
         return self.bytes()[:]
 
-elif sys.version_info[0] == 2:
+elif sys.version_info[0] == 2:  # pragma: no 3.x cover
     def NSData__str__(self):
         if len(self) == 0:
             return str(b"")
@@ -42,7 +42,7 @@ addConvenienceForClass('NSData', (
     ('__getitem__', NSData__getitem__),
 ))
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def NSData__getslice__(self, i, j):
         return self.bytes()[i:j]
 
@@ -64,7 +64,7 @@ addConvenienceForClass('NSMutableData', (
     ('__setitem__', NSMutableData__setitem__),
 ))
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def NSMutableData__setslice__(self, i, j, sequence):
         start, stop = slice(i, j).indices(self.length())
         try:

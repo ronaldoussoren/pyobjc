@@ -1,6 +1,7 @@
 __all__ = ()
 import sys
 import objc
+from objc._objc import _nameForSignature
 
 basic_types = {
         objc._C_VOID:     "void",

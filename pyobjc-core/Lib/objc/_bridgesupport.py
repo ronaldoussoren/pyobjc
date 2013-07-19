@@ -46,16 +46,11 @@ _BOOLEAN_ATTRIBUTES=[
 ]
 
 
-if sys.version_info[0] == 2:
-    _unicode = unicode
-
+if sys.version_info[0] == 2: # pragma: no 3.x cover
     def _as_bytes(value):
         return value
 
-else: # pragma: no cover (py3k)
-
-    _unicode = str
-
+else: # pragma: no 2.x cover
     def _as_bytes(value):
         if isinstance(value, bytes):
             return value
@@ -579,12 +574,6 @@ class _BridgeSupportParser (object):
                 except UnicodeError as e:
                     warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
                     return
-
-        if nsstring:
-            assert isinstance(value, _unicode)
-        else:
-            assert isinstance(value, bytes)
-
 
         self.values[name] = value
 

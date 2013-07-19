@@ -12,12 +12,6 @@ NO = False
 
 # Import the namespace from the _objc extension
 def _update(g=globals()):
-
-    # Dummy import of copy_reg, needed
-    # for py2app.
-    if sys.version_info[0] == 2:
-        import copy_reg
-
     import objc._objc as _objc
     for k in _objc.__dict__:
         g.setdefault(k, getattr(_objc, k))
@@ -51,14 +45,6 @@ from objc._compat import *
 import objc._callable_docstr
 
 import objc._pycoder as _pycoder
-
-# Make sure our global autorelease pool is
-# recycled when the interpreter shuts down.
-# This avoids issue1402 in the python
-# bugtracker
-import atexit
-atexit.register(recycleAutoreleasePool)
-
 
 # Helper function for new-style metadata modules
 def _resolve_name(name):

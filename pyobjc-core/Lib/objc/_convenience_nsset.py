@@ -167,7 +167,7 @@ def nsset__gt__(self, other):
         raise TypeError()
     return (self >= other) and (self != other)
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def nsset__cmp__(self, other):
         raise TypeError("Cannot compare sets using cmp")
 
@@ -284,7 +284,7 @@ addConvenienceForClass('NSSet', (
     ('__sub__', nsset__sub__),
 ))
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     addConvenienceForClass('NSSet', (
         ('__cmp__', nsset__cmp__),
     ))
