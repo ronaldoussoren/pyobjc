@@ -111,10 +111,12 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
         hdr_name = []
         if len(metadata['arguments']) > arg_offset:
             for idx, (nm, info) in enumerate(zip(name_parts, metadata['arguments'][arg_offset:])):
+                if hdr_name:
+                    hdr_name.append(' ')
                 hdr_name.append(nm)
                 hdr_name.append(':(')
                 hdr_name.append(describe_type(info['type']))
-                hdr_name.append(')arg%d '%(idx,))
+                hdr_name.append(')arg%d'%(idx,))
 
                 if info['type'][:1] in prefixes and info['type'][:1] not in (objc._C_ONEWAY, objc._C_CONST):
                     arg_info.append((idx, info))
@@ -123,12 +125,11 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
                 if info.get('callable'):
                     arg_info.append((idx, info))
 
-
-            if metadata.get('variadic'):
-                hdr_name.append(", ...")
         else:
             hdr_name.append(name)
 
+        if metadata.get('variadic'):
+            hdr_name.append(", ...")
 
         header = "%s (%s)%s;"%(
                 "+" if metadata['classmethod'] else "-",
@@ -150,6 +151,9 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
                 arg_info.append((idx, info))
         if metadata.get('variadic'):
             hdr_name.append(", ...")
+
+        if not hdr_name:
+            hdr_name.append('void')
 
         header = "%s %s(%s);"%(
                 describe_type(metadata['retval']['type']),
