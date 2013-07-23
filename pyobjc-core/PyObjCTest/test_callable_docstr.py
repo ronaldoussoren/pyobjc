@@ -141,13 +141,32 @@ class TestDescribeCallable (TestCase):
 
     def test_metadata_special_arguments(self):
         # - in/out/inout
-        # - function pointers
-        # - block pointers
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'nf' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(in float arg0);\n\narg0: pass-by-reference in argument')
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'Nf' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(inout float arg0);\n\narg0: pass-by-reference inout argument')
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'of' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(out float arg0);\n\narg0: pass-by-reference out argument')
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'rf' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(const float arg0);')
+
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'of' }, {'type': b'ni' } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                'void array(out float arg0, in int arg1);\n\narg0: pass-by-reference out argument\narg1: pass-by-reference in argument')
+
+        # - function pointers (simple and nested)
+
+        # - block pointers (simple and nested)
+
         # - array arguments (fixed size, size in argument(s), ...)
-        # - 1, 2 special arguments
+
+
         # - printf_format
+        self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'arguments':[ { 'type': b'n^' + objc._C_CHAR_AS_TEXT, 'printf_format': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                'void printf(in char* arg0, ...);\n\narg0: %-style format string')
+        self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'arguments':[ { 'type': objc._C_CHARPTR, 'printf_format': True } ], 'retval': { 'type': b'i'}}, ismethod=False),
+                'int printf(char* arg0, ...);\n\narg0: %-style format string')
+
         # - description of variadic arguments
+
         # ...
+
+        # - 1, 2 special arguments
         self.fail()
 
     def test_docattr(self):

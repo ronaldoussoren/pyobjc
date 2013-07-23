@@ -145,9 +145,9 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
             hdr_name.append(' arg%d'%(idx,))
             if info['type'][:1] in prefixes and info['type'][:1] not in (objc._C_ONEWAY, objc._C_CONST):
                 arg_info.append((idx, info))
-            if info.get('printf_format'):
+            elif info.get('printf_format'):
                 arg_info.append((idx, info))
-            if info.get('callable'):
+            elif info.get('callable'):
                 arg_info.append((idx, info))
         if metadata.get('variadic'):
             hdr_name.append(", ...")
@@ -169,7 +169,7 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
         result.append('')
         for idx, info in arg_info:
             if info.get('printf_format'):
-                result.append('arg%d: %%-style format'%(idx,))
+                result.append('arg%d: %%-style format string'%(idx,))
                 continue
 
             elif info.get('callable'):
