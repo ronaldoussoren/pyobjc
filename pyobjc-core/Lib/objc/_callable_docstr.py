@@ -68,14 +68,16 @@ def describe_type(typestr):
 
         else:
             nm = typestr[:idx]
+            if not nm:
+                nm = b'<?>'
             return 'struct %s'%(nm.decode('utf-8'),)
 
 
     if typestr.startswith(objc._C_ARY_B):
         typestr = typestr[1:]
-        d = ''
-        while typestr[0].isdigit():
-            d += typestr[0]
+        d = b''
+        while typestr[:1].isdigit():
+            d += typestr[:1]
             typestr = typestr[1:]
 
         return '%s[%s]' % (describe_type(typestr), d.decode('utf-8'))
@@ -88,6 +90,8 @@ def describe_type(typestr):
 
         else:
             nm = typestr[:idx]
+            if not nm:
+                nm = b'<?>'
             return 'union %s'%(nm.decode('utf-8'),)
 
     return "<?>"

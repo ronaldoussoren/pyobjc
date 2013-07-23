@@ -1204,6 +1204,10 @@ PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len)
     PyObject* type;
     PyObject* v;
 
+    if (structRegistry==NULL) {
+        return NULL;
+    }
+
     v = PyText_FromStringAndSize(signature, len);
     type = PyDict_GetItem(structRegistry, v);
     Py_DECREF(v);

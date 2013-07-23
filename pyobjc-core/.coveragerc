@@ -1,0 +1,13 @@
+[run]
+branch = True
+
+[report]
+exclude_lines =
+    pragma: no 3.x cover
+    def __repr__
+    if 0:
+    if __name__ == .__main__.:
+
+omit =
+   PyObjCTest/*
+   setup*
