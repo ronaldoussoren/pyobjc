@@ -124,7 +124,7 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
                     arg_info.append((idx, info))
 
 
-            if metadata['variadic']:
+            if metadata.get('variadic'):
                 hdr_name.append(", ...")
         else:
             hdr_name.append(name)
@@ -148,7 +148,7 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
                 arg_info.append((idx, info))
             if info.get('callable'):
                 arg_info.append((idx, info))
-        if metadata['variadic']:
+        if metadata.get('variadic'):
             hdr_name.append(", ...")
 
         header = "%s %s(%s);"%(
@@ -209,9 +209,6 @@ if hasattr(objc.options, '_callable_signature'):
         # Create an inspect.Signature for an PyObjC callable
         # both objc.function and objc.native_selector only support positional
         # arguments, and not keyword arguments.
-        #
-        # TODO: it might be useful to add annotations when the argument/result
-        #       value is not an object.
         metadata = callable.__metadata__()
         ismethod = isinstance(callable, objc.selector)
 

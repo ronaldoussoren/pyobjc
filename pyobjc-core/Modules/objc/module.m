@@ -2286,6 +2286,9 @@ PyObjC_MODULE_INIT(_objc)
     if (PyModule_AddObject(m, "_C_CGFloat", PyBytes_FromString(@encode(CGFloat))) < 0) {
         PyObjC_INITERROR();
     }
+    if (PyModule_AddObject(m, "_C_FSRef", PyBytes_FromString(@encode(FSRef))) < 0) {
+        PyObjC_INITERROR();
+    }
     if (PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in)) < 0) {
         PyObjC_INITERROR();
     }

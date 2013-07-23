@@ -1,10 +1,12 @@
 from PyObjCTools.TestSupport import *
 
 import sys
+import inspect
 
 from objc import _callable_docstr as mod
 import objc
 
+NSArray = objc.lookUpClass('NSArray')
 
 class TestDescribeType (TestCase):
     def test_basic_types(self):
@@ -33,7 +35,6 @@ class TestDescribeType (TestCase):
         self.assertEqual(mod.describe_type(objc._C_UNICHAR), "UniChar")
         self.assertEqual(mod.describe_type(objc._C_NSBOOL), "BOOL")
 
-
     def test_inout(self):
         self.assertEqual(mod.describe_type(objc._C_IN + objc._C_PTR + objc._C_INT), "in int*")
         self.assertEqual(mod.describe_type(objc._C_OUT + objc._C_PTR + objc._C_INT), "out int*")
@@ -48,7 +49,8 @@ class TestDescribeType (TestCase):
         self.assertEqual(mod.describe_type(objc._C_PTR + objc._C_PTR + objc._C_FLT), "float**")
         self.assertEqual(mod.describe_type(objc._C_PTR + objc._C_STRUCT_B + b'hello=' + objc._C_INT + objc._C_STRUCT_E), "struct hello*")
 
-        # XXX: Register an opaque pointer and use that
+        handle = objc.createOpaquePointerType("NamedPointer", b"^{NamedTestPointer1=}")
+        self.assertEqual(mod.describe_type(b"^{NamedTestPointer1=}"), "NamedPointer")
 
     def test_callable(self):
         self.assertEqual(mod.describe_type(objc._C_ID + b'?'), "<BLOCK>")
@@ -63,7 +65,8 @@ class TestDescribeType (TestCase):
         self.assertEqual(mod.describe_type(objc._C_STRUCT_B + b"name=" + objc._C_ID + objc._C_INT + objc._C_STRUCT_E), "struct name")
         self.assertEqual(mod.describe_type(objc._C_STRUCT_B + b"name=\"field\"" + objc._C_ID + b'"field2"' + objc._C_INT + objc._C_STRUCT_E), "struct name")
 
-        # XXX: Register a struct type and use that.
+        strType = objc.createStructType("NamedTestStruct", b'{NamedTestStruct1="a"i"b"i}', None)
+        self.assertEqual(mod.describe_type(b'{NamedTestStruct1=ii}'), "NamedTestStruct")
 
     def test_union(self):
         self.assertEqual(mod.describe_type(objc._C_UNION_B + b"=" + objc._C_ID + objc._C_UNION_E), "union <?>")
@@ -71,24 +74,68 @@ class TestDescribeType (TestCase):
         self.assertEqual(mod.describe_type(objc._C_UNION_B + b"name=\"field\"" + objc._C_ID + b'"field2"' + objc._C_INT + objc._C_UNION_E), "union name")
 
 class TestDescribeCallable (TestCase):
-    def test_missing(self):
+    def test_not_for_regular_types(self):
+        self.assertRaises(AttributeError, mod.describe_callable, 42)
+        self.assertRaises(AttributeError, mod.describe_callable, int)
+        self.assertRaises(AttributeError, mod.describe_callable, dir)
+        self.assertRaises(AttributeError, mod.describe_callable, lambda x: x*2)
+
+    def test_sel(self):
+        # Basicly just test that this calls the metadata function
+        self.fail()
+
+    def test_func(self):
+        # Basicly just test that this calls the metadata function
+        self.fail()
+
+    def test_metadata(self):
+        # Add variants for the various types of metadata.
         self.fail()
 
     def test_docattr(self):
         # Check that someFunction.__doc__ == describe_callable(someFunction),
         # and likewise for a class and instance selector.
-        self.fail()
+        self.assertEqual(NSArray.arrayWithObjects_.__doc__, mod.describe_callable(NSArray.arrayWithObjects_))
+        self.assertEqual(NSArray.array.__doc__, mod.describe_callable(NSArray.array))
+
+        # TODO: Same for functions
 
 if sys.version_info[:2] >= (3, 3):
     class TestCallableSignature (TestCase):
-        def test_missing(self):
+        def test_function(self):
             self.fail()
 
-
-        def test_signatureattr(self):
-            # Check that someFunction.__signature__ == desribe_signature(someFunction),
+            # Also: Check that someFunction.__signature__ == desribe_signature(someFunction),
             # and likewise for a class and instance selectors.
             self.fail()
+
+        def test_selector(self):
+            m = NSArray.array
+            self.assertEqual(m.__signature__, mod.callable_signature(m))
+
+            sig = m.__signature__
+            self.assertIsInstance(sig, inspect.Signature)
+            self.assertEqual(len(sig.parameters), 0)
+
+            m = NSArray.arrayWithObjects_
+            sig = m.__signature__
+            self.assertIsInstance(sig, inspect.Signature)
+            self.assertEqual(len(sig.parameters), 1)
+            self.assertEqual(sig.parameters['arg0'], inspect.Parameter('arg0', inspect.Parameter.POSITIONAL_ONLY))
+
+            m = NSArray.indexOfObject_inRange_
+            sig = m.__signature__
+            self.assertIsInstance(sig, inspect.Signature)
+            self.assertEqual(len(sig.parameters), 2)
+            self.assertEqual(sig.parameters['arg0'], inspect.Parameter('arg0', inspect.Parameter.POSITIONAL_ONLY))
+            self.assertEqual(sig.parameters['arg1'], inspect.Parameter('arg1', inspect.Parameter.POSITIONAL_ONLY))
+            self.assertEqual(list(sig.parameters), ['arg0', 'arg1'])
+
+        def test_not_for_regular_types(self):
+            self.assertRaises(AttributeError, mod.callable_signature, 42)
+            self.assertRaises(AttributeError, mod.callable_signature, int)
+            self.assertRaises(AttributeError, mod.callable_signature, dir)
+            self.assertRaises(AttributeError, mod.callable_signature, lambda x: x*2)
 
 if __name__ == "__main__":
     main()
