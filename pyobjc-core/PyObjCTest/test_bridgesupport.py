@@ -94,7 +94,7 @@ TEST_XML=b"""\
     <method selector='method3' variadic='true' c_array_delimited_by_null='true'></method>
     <method selector='method4' variadic='true' c_array_length_in_arg='4'></method>
     <method selector='method5' c_array_delimited_by_null='true'><retval type='d'/></method><!-- c_array... ignored -->
-    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /></method><!-- c_array... ignored -->
+    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /><dummy/></method><!-- c_array... ignored -->
     <method selector='method7' ignore='true'></method>
     <method selector='method8' ignore='true' suggestion='ignore me'></method>
     <method selector='method9' suggestion='ignore me'><retval type='d'/></method><!-- suggestion ignored -->
@@ -139,6 +139,7 @@ TEST_XML=b"""\
           <retval type='v' />
           <arg type='@' />
           <arg type='d' />
+          <dummy />
        </retval>
     </method>
     <method selector='method22'>
@@ -419,6 +420,9 @@ TEST_XML=b"""\
     <method selector='selector6' type64='v@:@' /><!-- ignore 32-bit -->
     <method selector='selector7' type='v@:f' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
     <method selector='selector8' type='v@:f' class_method='true' />
+    <method/>
+    <method selector='selector9'/>
+    <method type='v@:f'/>
   </informal_protocol>
   <struct/><!-- ignore -->
   <struct type='{foo=dd}' /><!--ignore-->
@@ -1439,6 +1443,7 @@ class TestParseBridgeSupport (TestCase):
                  <retval type='f' />
                  <arg type='@' />
                  <arg type='d' />
+                 <dummy />
               </function>
               <function name='function2'>
                  <retval type='d' />
@@ -1686,7 +1691,10 @@ class TestInitFrameworkWrapper (TestCase):
                 return (package, name) in resources
 
             def resource_string(package, name):
-                return resources[(package, name)]
+                try:
+                    return resources[(package, name)]
+                except KeyError:
+                    raise os.error(name)
 
             parse_calls = []
             def parseBridgeSupport(xml,  globals, framework, dylib_path=None, inlineTab=None):
@@ -1716,6 +1724,17 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g)
+            basic_verify(g)
+            self.assertEqual(len(g), 2)
+            self.assertEqual(load_calls, [
+                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
+            ])
+            self.assertEqual(parse_calls, [])
+
+            load_calls = []
+            parse_calls = []
+            g = {}
+            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, frameworkResourceName='TestResources')
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(load_calls, [

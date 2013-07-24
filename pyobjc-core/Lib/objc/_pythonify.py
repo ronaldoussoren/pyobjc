@@ -46,7 +46,7 @@ class OC_PythonLong(base_class):
         return (base_class, (base_class(self),))
 
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     class OC_PythonInt(int):
         __slots__=('__pyobjc_object__',)
 
@@ -85,9 +85,9 @@ def numberWrapper(obj):
             return OC_PythonLong(obj, obj.unsignedLongLongValue())
         else:
             return OC_PythonFloat(obj, obj.doubleValue())
-    elif sys.version_info[0] == 2:
+    elif sys.version_info[0] == 2:  # pragma: no 3.x cover
         return OC_PythonInt(obj, obj.longValue())
-    else: # pragma: no cover (py3k)
+    else: # pragma: no 2.x cover
         return OC_PythonLong(obj, obj.longValue())
 
 _objc.options._nsnumber_wrapper = numberWrapper

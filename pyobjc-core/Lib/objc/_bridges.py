@@ -13,9 +13,9 @@ def registerListType(type):
     as an NSMutableArray subclass.
     """
     if options._sequence_types is None:
-        options._sequence_types = []
+        options._sequence_types = ()
 
-    options._sequence_types.append(type)
+    options._sequence_types += (type,)
 
 def registerMappingType(type):
     """
@@ -23,9 +23,9 @@ def registerMappingType(type):
     as an NSMutableDictionary subclass.
     """
     if options._mapping_types is None:
-        options._mapping_types = []
+        options._mapping_types = ()
 
-    options._mapping_types.append(type)
+    options._mapping_types += (type,)
 
 def registerSetType(type):
     """
@@ -33,9 +33,9 @@ def registerSetType(type):
     as an NSMutableSet subclass.
     """
     if options._set_types is None:
-        options._set_types = []
+        options._set_types = ()
 
-    options._set_types.append(type)
+    options._set_types += (type,)
 
 def registerDateType(type):
     """
@@ -43,14 +43,17 @@ def registerDateType(type):
     as an NSDate subclass.
     """
     if options._date_types is None:
-        options._date_types = []
+        options._date_types = ()
 
-    options._date_types.append(type)
+    options._date_types += (type,)
 
-registerListType(xrange if sys.version_info[0] == 2 else range)
 
 registerListType(collections.Sequence)
+registerListType(xrange if sys.version_info[0] == 2 else range)
 registerMappingType(collections.Mapping)
+registerMappingType(dict)
+registerSetType(set)
+registerSetType(frozenset)
 registerSetType(collections.Set)
 registerDateType(datetime.date)
 registerDateType(datetime.datetime)

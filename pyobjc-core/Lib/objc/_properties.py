@@ -10,13 +10,13 @@ import sys
 NSSet = lookUpClass('NSSet')
 NSObject = lookUpClass('NSObject')
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     range = xrange
 
     def _str(value):
         return value
 
-else: # pragma: no cover (py3k)
+else:  # pragma: no 2.x cover
     long = int
 
     def _str(value):
@@ -536,7 +536,7 @@ class array_proxy (collections.MutableSequence):
             return self._wrapped >= other
 
 
-    if sys.version_info[0] == 2:
+    if sys.version_info[0] == 2:  # pragma: no 3.x cover
         def __cmp__(self, other):
             if isinstance(other, array_proxy):
                 return cmp(self._wrapped, other._wrapped)
@@ -544,7 +544,6 @@ class array_proxy (collections.MutableSequence):
             else:
                 return cmp(self._wrapped, other)
 
-    if sys.version_info[0] == 2:
         def sort(self, cmp=None, key=None, reverse=False):
             if self._ro:
                 raise ValueError("Property '%s' is read-only"%(self._name,))
@@ -561,7 +560,7 @@ class array_proxy (collections.MutableSequence):
                     NSKeyValueChangeReplacement,
                     indexes, self._name)
 
-    else: # pragma: no cover (py3k)
+    else:  # pragma: no 2.x cover
         def sort(self, key=None, reverse=False):
             if self._ro:
                 raise ValueError("Property '%s' is read-only"%(self._name,))
@@ -779,7 +778,7 @@ class set_proxy (collections.MutableSet):
             return self._wrapped >= other
 
 
-    if sys.version_info[0] == 2:
+    if sys.version_info[0] == 2:  # pragma: no 3.x cover
         def __cmp__(self, other):
             raise TypeError('cannot compare sets using cmp()')
 
@@ -1032,12 +1031,13 @@ def makeSetAccessors(name):
 
     def memberOf(self, value):
         collection =  getattr(self, name)
-        if value not in collection:
-            return None
 
         for item in collection:
             if item == value:
                 return item
+
+        else:
+            return None
 
     def add(self, value):
         getattr(self, name).add(value)

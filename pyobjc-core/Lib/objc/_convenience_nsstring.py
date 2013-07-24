@@ -8,7 +8,6 @@ __all__ = ()
 _no_value = object()
 
 def nsstring_new(cls, value=_no_value):
-    # XXX: behave more like str() ?
     if value is _no_value:
         return cls.alloc().init()
     else:

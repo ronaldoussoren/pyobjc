@@ -13,8 +13,9 @@ def protocolNamed(name):
     equivalent of @protocol(name) in Objective-C.
     Raises objc.ProtocolError when the protocol does not exist.
     """
-    if sys.version_info[0] == 2:
+    if sys.version_info[0] == 2:  # pragma: no 3.x cover
         name = unicode(name)
+
     try:
         return PROTOCOL_CACHE[name]
     except KeyError:

@@ -152,8 +152,128 @@ class TestDescribeCallable (TestCase):
                 '- (void)array:(in float)arg0;\n\narg0: pass-by-reference in argument')
 
         # - function pointers (simple and nested)
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'^?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<FUNCTION> arg0);\n\narg0: int callback(void);')
+
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'^?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [
+                                { 'type': b'f' },
+                                { 'type': b'd' },
+                            ],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<FUNCTION> arg0);\n\narg0: int callback(float arg0, double arg1);')
+
+        self.maxDiff = None
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'^?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [
+                                { 'type': b'^?',
+                                    'callable': {
+                                        'retval': { 'type': b'd' },
+                                        'arguments': [
+                                            { 'type': b'n@', 'c_array_length_in_arg': 1 },
+                                            { 'type': b'@' },
+                                        ],
+                                    }
+                                },
+                            ],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<FUNCTION> arg0);\n\narg0: int callback(<FUNCTION> arg0);\n\n    arg0: double callback(in id arg0, id arg1);\n\n        arg0: array with length in arg1')
 
         # - block pointers (simple and nested)
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'@?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<BLOCK> arg0);\n\narg0: int callback(void);')
+
+        self.assertEqual(
+            mod.describe_callable_metadata('performCallback:', {
+                'classmethod': False,
+                'arguments':[
+                    { 'type': b'@' },
+                    { 'type': b':' },
+                    {
+                        'type': b'@?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=True
+            ), '- (void)performCallback:(<BLOCK>)arg0;\n\narg0: int callback(void);')
+
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'@?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [
+                                { 'type': b'f' },
+                                { 'type': b'd' },
+                            ],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<BLOCK> arg0);\n\narg0: int callback(float arg0, double arg1);')
+
+        self.maxDiff = None
+        self.assertEqual(
+            mod.describe_callable_metadata('function', {
+                'arguments':[
+                    {
+                        'type': b'@?',
+                        'callable': {
+                            'retval': { 'type': b'i' },
+                            'arguments': [
+                                { 'type': b'@?',
+                                    'callable': {
+                                        'retval': { 'type': b'd' },
+                                        'arguments': [
+                                            { 'type': b'n@', 'c_array_length_in_arg': 1 },
+                                            { 'type': b'@' },
+                                        ],
+                                    }
+                                },
+                            ],
+                        }
+                    }
+                ], 'retval': { 'type': b'v'}}, ismethod=False
+            ), 'void function(<BLOCK> arg0);\n\narg0: int callback(<BLOCK> arg0);\n\n    arg0: double callback(in id arg0, id arg1);\n\n        arg0: array with length in arg1')
 
         # - variadic arguments
         self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'c_array_delimited_by_null': True, 'arguments':[ { 'type': b'@' } ], 'retval': { 'type': b'v'}}, ismethod=False),
@@ -201,8 +321,6 @@ class TestDescribeCallable (TestCase):
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[], 'retval': { 'type': b'v'}, 'suggestion': "Please don't"}, ismethod=False), "void array(void);\n\nWARNING: Please don't")
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni' } ], 'retval': { 'type': b'v'}, 'suggestion': "Please don't"}, ismethod=False), "void array(in int arg0);\n\nWARNING: Please don't\n\narg0: pass-by-reference in argument")
 
-
-        self.fail()
 
     def test_docattr(self):
         # Check that someFunction.__doc__ == describe_callable(someFunction),

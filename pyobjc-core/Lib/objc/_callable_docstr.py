@@ -213,11 +213,11 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
 
             result.append('Variadic arguments form an array of C type %s'%(describe_type(metadata['arguments'][-1]['type']),))
 
-    return ('\n'+offset).join(result)
+    return ('\n'+offset).join(result).replace('\n' + offset + '\n', '\n\n')
 
 objc.options._callable_doc = describe_callable
 
-if hasattr(objc.options, '_callable_signature'):
+if hasattr(objc.options, '_callable_signature'):  # pragma: no branch
     import inspect
 
     def callable_signature(callable):

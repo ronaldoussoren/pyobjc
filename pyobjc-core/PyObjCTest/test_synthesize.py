@@ -13,6 +13,7 @@ class TestSynthesizeHelper (NSObject):
     objc.synthesize('someTitle', copy=True)
     objc.synthesize('stringValue', copy=False)
     objc.synthesize('read', readwrite=False)
+    objc.synthesize('write', ivarName='_do_write')
 
 
 class TestSynthesize (TestCase):
@@ -25,6 +26,24 @@ class TestSynthesize (TestCase):
 
         self.assertHasAttr(TestSynthesizeHelper, 'read')
         self.assertNotHasAttr(TestSynthesizeHelper, 'setRead_')
+
+        self.assertHasAttr(TestSynthesizeHelper, 'write')
+        self.assertHasAttr(TestSynthesizeHelper, 'setWrite_')
+
+    def testAttributes(self):
+        o = TestSynthesizeHelper.alloc().init()
+        o.setWrite_('42')
+        self.assertEqual(o._do_write, '42')
+        self.assertEqual(o.write(), '42')
+
+        o.setStringValue_('hello')
+        self.assertEqual(o._stringValue, 'hello')
+        self.assertEqual(o.stringValue(), 'hello')
+
+        o._read = 1
+        self.assertEqual(o.read(), 1)
+        o._read = 2
+        self.assertEqual(o.read(), 2)
 
     def testCopying(self):
         obj = TestSynthesizeHelper.alloc().init()

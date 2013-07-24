@@ -29,7 +29,7 @@ from __future__ import unicode_literals
 import sys
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     __all__ = tuple(str(x) for x in __all__)
 
 
@@ -39,9 +39,8 @@ import sys
 import collections
 import warnings
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     from itertools import imap as map
-    pass
 
 else:   # pragma: no cover (py3k)
     basestring = str

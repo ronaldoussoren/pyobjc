@@ -129,9 +129,15 @@ Version 3.0
   possible to delete them.
 
 * :class:`objc.native_selector` and :class:`objc.function` now have a (minimal) docstring with information
-  object.  This makes :func:`help <pydoc.help>` for Cocoa classes and functions more usefull.
+  object.  This makes :func:`help <pydoc.help>` for Cocoa classes and functions more useful.
 
   As a side-effect of this the docstring is no longer writeable.
+
+  .. note::
+
+     The docstring show the interface of a block with a function prototype instead of the proper
+     C declaration, that makes the implementation slightly easier and the function prototype syntax
+     is slightly easier to read for users that aren't C experts.
 
 * :class:`objc.selector`, :class:`objc.function` and :class:`objc.IMP` now have an implementation for
   the "__signature__" property when using Python 3.3 or later. This makes it possible to use

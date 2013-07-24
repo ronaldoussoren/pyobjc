@@ -14,32 +14,32 @@ from types import *
 
 try:
     import copyreg
-except ImportError:
-    # Python 2.x
+except ImportError:  # pragma: no 3.x cover
     import copy_reg as copyreg
+
 import copy
 
 from pickle import PicklingError, UnpicklingError, whichmodule
 
 
-if sys.version_info[0] == 3: # pragma: no cover (py3k)
-    unicode = str
-    long = int
-    intern = sys.intern
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
+    bltin_intern = intern
 
-bltin_intern = intern
-
-if sys.version_info[0] == 2:
     def intern(value):
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(value.encode('utf-8'))
         return bltin_intern(value)
 
-else:
+else:   # pragma: no 2.x cover
+    unicode = str
+    long = int
+    bltin_intern = sys.intern
+
     def intern(value):
         if isinstance(value, objc.pyobjc_unicode):
             return bltin_intern(str(value))
         return bltin_intern(value)
+
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -124,7 +124,7 @@ def save_reduce(coder, func, args,
             coder.encodeObject_(dict(dictitems))
         coder.encodeObject_(state)
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def save_inst(coder, obj):
         if hasattr(obj, '__getinitargs__'):
             args = obj.__getinitargs__()
@@ -160,7 +160,7 @@ if sys.version_info[0] == 2:
 
     encode_dispatch[InstanceType] = save_inst
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     def save_int(coder, obj):
         if coder.allowsKeyedCoding():
             coder.encodeInt_forKey_(kOP_INT, kKIND)
@@ -250,7 +250,7 @@ def save_global(coder, obj, name=None):
             coder.encodeObject_(unicode(module))
             coder.encodeObject_(unicode(name))
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     encode_dispatch[ClassType] = save_global
 encode_dispatch[type(save_global)] = save_global
 encode_dispatch[type(dir)] = save_global
@@ -338,7 +338,7 @@ def load_inst(coder, setValue):
 
     if (sys.version_info[0] == 2 and not initargs and
             type(cls) is ClassType and
-            not hasattr(cls, "__getinitargs__")):
+            not hasattr(cls, "__getinitargs__")):  # pragma: no 3.x cover
         value = _EmptyClass()
         value.__class__ = cls
 

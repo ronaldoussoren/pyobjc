@@ -305,6 +305,9 @@ class TestBasicDescriptors (TestCase):
             pass
 
 
+        def countOfFoo_withBar_withBaz_withNone_(self, foo, bar, baz, none):
+            pass
+        self.assertRaises(TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_)
 
 
     def test_typedAccessor(self):
@@ -662,12 +665,6 @@ class TestBasicDescriptors (TestCase):
         self.assertIsInstance(method, objc.selector)
         self.assertEqual(method.signature, b'q@:@q')
         self.assertEqual(method.selector, b'foo:bar:')
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

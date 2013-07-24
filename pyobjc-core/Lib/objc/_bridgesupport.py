@@ -556,7 +556,7 @@ class _BridgeSupportParser (object):
         if not name or not value:
             return
 
-        if sys.version_info[0] == 2:
+        if sys.version_info[0] == 2:  # pragma: no 3.x cover
             if nsstring:
                 if not isinstance(value, unicode):
                     value = value.decode('utf-8')
@@ -567,7 +567,7 @@ class _BridgeSupportParser (object):
                     except UnicodeError as e:
                         warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
                         return
-        else: # pragma: no cover (py3k)
+        else:  # pragma: no 2.x cover
             if not nsstring:
                 try:
                     value = value.encode('latin1')
@@ -720,8 +720,7 @@ def initFrameworkWrapper(frameworkName,
     if safe_resource_exists(frameworkResourceName, "PyObjC.bridgesupport"):
         data = pkg_resources.resource_string(frameworkResourceName,
             "PyObjC.bridgesupport")
-        if data:
-            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+        _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
         return bundle
 
     # Look for metadata in the framework bundle
@@ -739,8 +738,7 @@ def initFrameworkWrapper(frameworkName,
         if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
             data = pkg_resources.resource_string(frameworkResourceName,
                 "PyObjCOverrides.bridgesupport")
-            if data:
-                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+            _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
 
@@ -751,7 +749,7 @@ def initFrameworkWrapper(frameworkName,
         path = os.path.join(dn, fn)
         if os.path.exists(path):
             with open(path, 'rb') as fp:
-                data = fp.read()
+                data = fp.read()  # pragma: no branch
 
             dylib_path = os.path.join(dn, frameworkName + '.dylib')
             if os.path.exists(dylib_path):
@@ -763,8 +761,7 @@ def initFrameworkWrapper(frameworkName,
             if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
                 data = pkg_resources.resource_string(frameworkResourceName,
                     "PyObjCOverrides.bridgesupport")
-                if data:
-                    _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
+                _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
             return bundle
 

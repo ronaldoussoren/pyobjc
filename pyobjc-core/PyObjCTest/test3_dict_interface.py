@@ -629,11 +629,38 @@ class DictSetTest (DictSetTest):
 
 
 
-
-
 class GeneralMappingTestsNSMutableDictionary (
         mapping_tests.BasicTestMappingProtocol):
     type2test = NSMutableDictionary
+
+
+class TestDictUpdates (TestCase):
+
+    def do_test(self, dictType):
+        d = dictType()
+        d['a'] = 42
+        self.assertRaises(TypeError, d.update, {}, {})
+
+        d.update({'b': 9})
+        self.assertEqual(dict(d), {'a':42, 'b':9})
+
+        d.update({'a': 2})
+        self.assertEqual(dict(d), {'a':2, 'b':9})
+
+        d.update([('a', 1), ('c', 3)])
+        self.assertEqual(dict(d), {'a':1, 'b':9, 'c': 3})
+
+        d.update(d=4, a=9, e=3)
+        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+
+        d.update()
+        self.assertEqual(dict(d), {'a':9, 'b':9, 'c': 3, 'd': 4, 'e': 3})
+
+    def test_native(self):
+        self.do_test(dict)
+
+    def test_objc(self):
+        self.do_test(NSMutableDictionary)
 
 
 import collections

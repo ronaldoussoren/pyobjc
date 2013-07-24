@@ -43,6 +43,9 @@ class ArrayTests (seq_tests.CommonTest):
         # disables the 'count' test because NSArray.count
         # is not the regular python one.
 
+        u = self.type2test()
+        self.assertRaises(ValueError, u.index, 1)
+
         u = self.type2test([0, 1])
         self.assertEqual(u.index(0), 0)
         self.assertEqual(u.index(1), 1)
@@ -116,6 +119,26 @@ class MutableArrayTest (list_tests.CommonTest):
     @onlyIf(0, "Not relevant for NSArray")
     def test_pickle(self):
         pass
+
+    def test_pyobjc_insert(self):
+        u = self.type2test([1,2,3,4,])
+        u.insert(-8, 0)
+
+        v = self.type2test([0, 1,2,3,4,])
+        self.assertEqual(u, v)
+
+    def test_pyobjc_pop(self):
+        u = self.type2test([1,2,3,4,])
+        self.assertRaises(IndexError, u.pop, -8)
+
+    def test_pyobjc_delitem(self):
+        u = self.type2test([1,2,3,4,])
+        del u[3:1]
+
+        v = self.type2test([1,2,3,4,])
+        self.assertEqual(u, v)
+
+
 
     def test_init(self):
         # Removed tests that are not relevant

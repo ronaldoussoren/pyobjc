@@ -807,6 +807,15 @@ class TestCase (_unittest.TestCase):
             if hasattr(value, key):
                 self.fail(message or "%s is an attribute of %r"%(key, value))
 
+    def assertIsSubclass(self, value, type, message=None):
+        if not issubclass(value, type):
+            print(value, type)
+            self.fail(message or "%s is not a subclass of %r but %s"%(value, type, type(value)))
+
+    def assertIsNotSubclass(self, value, type, message=None):
+        if issubclass(value, type):
+            self.fail(message or "%s is a subclass of %r but %s"%(value, type, type(value)))
+
     #if not hasattr(_unittest.TestCase, 'assertIsInstance'): # pragma: no cover
     def assertIsInstance(self, value, types, message=None):
         if not isinstance(value, types):

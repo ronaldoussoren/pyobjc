@@ -107,7 +107,7 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
         if ln == 0:
             raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
 
-        if ln > sys.maxsize:
+        if ln > sys.maxsize:   # pragma: no cover
             ln = sys.maxsize
 
         res = self.indexOfObject_inRange_(item, (start, ln))
@@ -121,7 +121,7 @@ def nsarray_insert(self, idx, item):
     if idx < 0:
         idx += self.count()
         if idx < 0:
-            raise IndexError("list index out of range")
+            idx = 0
     self.insertObject_atIndex_(container_wrap(item), idx)
 
 
@@ -146,7 +146,8 @@ def nsarray__delitem__(self, idx):
         start, stop, step = idx.indices(self.count())
         if step == 1:
             if start > stop:
-                start, stop = stop, start
+                # Nothing to remove
+                return
 
             return self.removeObjectsInRange_((start, stop-start))
 
@@ -370,6 +371,11 @@ else:
         self.sortUsingFunction_context_(sort_func, None)
 
 
+def nsarray__len__(self):
+    return self.count()
+
+def nsarray__copy__(self):
+    return self.copy()
 
 addConvenienceForClass('NSArray', (
     ('__new__', staticmethod(nsarray_new)),
@@ -377,19 +383,21 @@ addConvenienceForClass('NSArray', (
     ('__radd__', nsarray_radd),
     ('__mul__', nsarray_mul),
     ('__rmul__', nsarray_mul),
-    ('__len__', lambda self: self.count()),
+    ('__len__', nsarray__len__),
     ('__contains__', nsarray__contains__),
     ('__getitem__', nsarray__getitem__),
-    ('__copy__', lambda self: self.copy()),
+    ('__copy__', nsarray__copy__),
     ('index', nsarray_index),
     ('remove', nsarray_remove),
     ('pop', nsarray_pop),
 ))
 
+def nsmutablearray__copy__(self):
+    return self.mutableCopy()
 
 addConvenienceForClass('NSMutableArray', (
     ('__new__', staticmethod(nsmutablearray_new)),
-    ('__copy__', lambda self: self.mutableCopy()),
+    ('__copy__', nsmutablearray__copy__),
     ('__setitem__', nsarray__setitem__),
     ('__delitem__', nsarray__delitem__),
     ('extend', nsarray_extend),

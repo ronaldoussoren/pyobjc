@@ -2432,96 +2432,72 @@ depythonify_python_object(PyObject* argument, id* datum)
     } else if (PyObject_CheckReadBuffer(argument)) {
         *datum = [OC_PythonData dataWithPythonObject:argument];
 
-    } else if (PyAnySet_Check(argument)) {
-        *datum = [OC_PythonSet setWithPythonObject:argument];
-
-
     } else if (PyObjCFormalProtocol_Check(argument)) {
         *datum = PyObjCFormalProtocol_GetProtocol(argument);
         return 0;
 
     } else {
 
-        if (*datum == nil && PyObjC_ListLikeTypes != NULL && PyList_Check(PyObjC_ListLikeTypes)) {
-            Py_ssize_t i;
+        if (*datum == nil && PyObjC_ListLikeTypes != NULL) {
             int r;
 
-            for (i = 0; i < PyList_GET_SIZE(PyObjC_ListLikeTypes); i++) {
-                PyObject* tp = PyList_GET_ITEM(PyObjC_ListLikeTypes, i);
-                r = PyObject_IsInstance(argument, tp);
-                if (r == -1) {
-                    return -1;
-                }
+            r = PyObject_IsInstance(argument, PyObjC_ListLikeTypes);
+            if (r == -1) {
+                return -1;
+            }
 
-                if (r) {
-                    *datum = [OC_PythonArray arrayWithPythonObject:argument];
-                    if (*datum == nil) {
-                        return -1;
-                    }
-                    break;
+            if (r) {
+                *datum = [OC_PythonArray arrayWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
                 }
             }
         }
 
-        if (*datum == nil && PyObjC_DictLikeTypes != NULL && PyList_Check(PyObjC_DictLikeTypes)) {
-            Py_ssize_t i;
+        if (*datum == nil && PyObjC_DictLikeTypes != NULL) {
             int r;
 
-            for (i = 0; i < PyList_GET_SIZE(PyObjC_DictLikeTypes); i++) {
-                PyObject* tp = PyList_GET_ITEM(PyObjC_DictLikeTypes, i);
-                r = PyObject_IsInstance(argument, tp);
-                if (r == -1) {
-                    return -1;
-                }
+            r = PyObject_IsInstance(argument, PyObjC_DictLikeTypes);
+            if (r == -1) {
+                return -1;
+            }
 
-                if (r) {
-                    *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
-                    if (*datum == nil) {
-                        return -1;
-                    }
-                    break;
+            if (r) {
+                *datum = [OC_PythonDictionary dictionaryWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
                 }
             }
         }
 
-        if (*datum == nil && PyObjC_SetLikeTypes != NULL && PyList_Check(PyObjC_SetLikeTypes)) {
-            Py_ssize_t i;
+        if (*datum == nil && PyObjC_SetLikeTypes != NULL) {
             int r;
 
-            for (i = 0; i < PyList_GET_SIZE(PyObjC_SetLikeTypes); i++) {
-                PyObject* tp = PyList_GET_ITEM(PyObjC_SetLikeTypes, i);
-                r = PyObject_IsInstance(argument, tp);
-                if (r == -1) {
-                    return -1;
-                }
+            r = PyObject_IsInstance(argument, PyObjC_SetLikeTypes);
+            if (r == -1) {
+                return -1;
+            }
 
-                if (r) {
-                    *datum = [OC_PythonSet setWithPythonObject:argument];
-                    if (*datum == nil) {
-                        return -1;
-                    }
-                    break;
+            if (r) {
+                *datum = [OC_PythonSet setWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
                 }
             }
         }
 
-        if (*datum == nil && PyObjC_DateLikeTypes != NULL && PyList_Check(PyObjC_DateLikeTypes)) {
-            Py_ssize_t i;
+        if (*datum == nil && PyObjC_DateLikeTypes != NULL) {
             int r;
 
-            for (i = 0; i < PyList_GET_SIZE(PyObjC_DateLikeTypes); i++) {
-                PyObject* tp = PyList_GET_ITEM(PyObjC_DateLikeTypes, i);
-                r = PyObject_IsInstance(argument, tp);
-                if (r == -1) {
-                    return -1;
-                }
+            r = PyObject_IsInstance(argument, PyObjC_DateLikeTypes);
+            if (r == -1) {
+                return -1;
+            }
 
-                if (r) {
-                    *datum = [OC_PythonDate dateWithPythonObject:argument];
-                    if (*datum == nil) {
-                        return -1;
-                    }
-                    break;
+            if (r) {
+                *datum = [OC_PythonDate dateWithPythonObject:argument];
+                if (*datum == nil) {
+                    return -1;
                 }
             }
         }

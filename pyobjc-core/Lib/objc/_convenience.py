@@ -89,7 +89,7 @@ def container_unwrap(v, exc_type, *exc_args):
 #
 #
 
-if sys.version_info[0] == 2:
+if sys.version_info[0] == 2:  # pragma: no 3.x cover
     addConvenienceForClass('NSNull', (
         ('__nonzero__',  lambda self: False ),
     ))
@@ -99,7 +99,7 @@ if sys.version_info[0] == 2:
         ('next',    lambda self: container_unwrap(self.nextObject(), StopIteration)),
     ))
 
-else:
+else:  # pragma: no 2.x cover
     addConvenienceForClass('NSNull', (
         ('__bool__',  lambda self: False ),
     ))
@@ -112,6 +112,7 @@ else:
 
 def __call__(self, *args, **kwds):
     return _block_call(self, self.__block_signature__, args, kwds)
+
 
 addConvenienceForClass('NSBlock', (
     ('__call__', __call__),
