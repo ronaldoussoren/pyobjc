@@ -120,9 +120,9 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
 
                 if info['type'][:1] in prefixes and info['type'][:1] not in (objc._C_ONEWAY, objc._C_CONST):
                     arg_info.append((idx, info))
-                if info.get('printf_format'):
+                elif info.get('printf_format'):
                     arg_info.append((idx, info))
-                if info.get('callable'):
+                elif info.get('callable'):
                     arg_info.append((idx, info))
 
         else:
@@ -200,7 +200,18 @@ def describe_callable_metadata(name, metadata, offset='', ismethod=False):
                     result.append('arg%d: array with unknown length'%(idx,))
                     continue
 
+                if info.get('c_array_delimited_by_null'):
+                    result.append('arg%d: array (will be NULL terminated in C)'%(idx,))
+                    continue
+
                 result.append('arg%d: pass-by-reference %sargument'%(idx, prefixes.get(info['type'][:1]),))
+
+    if len(metadata['arguments']) > arg_offset:
+        if metadata.get('variadic') and metadata.get('c_array_delimited_by_null'):
+            if not arg_info:
+                result.append('')
+
+            result.append('Variadic arguments form an array of C type %s'%(describe_type(metadata['arguments'][-1]['type']),))
 
     return ('\n'+offset).join(result)
 

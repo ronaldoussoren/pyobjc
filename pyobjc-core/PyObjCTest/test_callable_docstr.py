@@ -145,28 +145,63 @@ class TestDescribeCallable (TestCase):
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'Nf' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(inout float arg0);\n\narg0: pass-by-reference inout argument')
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'of' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(out float arg0);\n\narg0: pass-by-reference out argument')
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'rf' } ], 'retval': { 'type': b'v'}}, ismethod=False), 'void array(const float arg0);')
-
         self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'of' }, {'type': b'ni' } ], 'retval': { 'type': b'v'}}, ismethod=False),
                 'void array(out float arg0, in int arg1);\n\narg0: pass-by-reference out argument\narg1: pass-by-reference in argument')
+
+        self.assertEqual(mod.describe_callable_metadata('array:', {'classmethod': False, 'arguments':[ { 'type': b'@' }, {'type': b':' }, { 'type': b'nf' } ], 'retval': { 'type': b'v'}}, ismethod=True),
+                '- (void)array:(in float)arg0;\n\narg0: pass-by-reference in argument')
 
         # - function pointers (simple and nested)
 
         # - block pointers (simple and nested)
 
-        # - array arguments (fixed size, size in argument(s), ...)
-
+        # - variadic arguments
+        self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'c_array_delimited_by_null': True, 'arguments':[ { 'type': b'@' } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                'void printf(id arg0, ...);\n\nVariadic arguments form an array of C type id')
+        self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'c_array_delimited_by_null': True, 'arguments':[ {'type': b'@' }, { 'type': b'i' } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                'void printf(id arg0, int arg1, ...);\n\nVariadic arguments form an array of C type int')
+        self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'c_array_delimited_by_null': True, 'arguments':[ {'type': b'n@' }, { 'type': b'i' } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                'void printf(in id arg0, int arg1, ...);\n\narg0: pass-by-reference in argument\nVariadic arguments form an array of C type int')
 
         # - printf_format
         self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'arguments':[ { 'type': b'n^' + objc._C_CHAR_AS_TEXT, 'printf_format': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
                 'void printf(in char* arg0, ...);\n\narg0: %-style format string')
         self.assertEqual(mod.describe_callable_metadata('printf', {'variadic': True, 'arguments':[ { 'type': objc._C_CHARPTR, 'printf_format': True } ], 'retval': { 'type': b'i'}}, ismethod=False),
                 'int printf(char* arg0, ...);\n\narg0: %-style format string')
+        self.assertEqual(mod.describe_callable_metadata('printf:', {'classmethod': False, 'variadic': True, 'arguments':[ {'type': b'@'}, {'type': b':' }, { 'type': objc._C_CHARPTR, 'printf_format': True } ], 'retval': { 'type': b'i'}}, ismethod=True),
+                '- (int)printf:(char*)arg0, ...;\n\narg0: %-style format string')
 
         # - description of variadic arguments
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni' } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: pass-by-reference in argument")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_length_in_arg': 2 } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with length in arg2")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_length_in_arg': (2, 3) } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with length on input in arg2, and output in arg3")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_length_in_arg': 2, 'c_array_length_in_result': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with length on input in arg2, and output in return value")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_length_in_result': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with length in return value")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_of_fixed_length': 42 } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with length 42")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_of_variable_length': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array with unknown length")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni', 'c_array_delimited_by_null': True } ], 'retval': { 'type': b'v'}}, ismethod=False),
+                "void array(in int arg0);\n\narg0: array (will be NULL terminated in C)")
 
-        # ...
+        self.assertEqual(mod.describe_callable_metadata('array:', {'classmethod': False, 'arguments':[ {'type':b'@'}, {'type': b':'}, { 'type': b'ni', 'c_array_length_in_arg': 2 } ], 'retval': { 'type': b'v'}}, ismethod=True),
+                "- (void)array:(in int)arg0;\n\narg0: array with length in arg0")
+        self.assertEqual(mod.describe_callable_metadata('array:', {'classmethod': False, 'arguments':[ {'type':b'@'}, {'type': b':'}, { 'type': b'ni', 'c_array_length_in_arg': (2, 3) } ], 'retval': { 'type': b'v'}}, ismethod=True),
+                "- (void)array:(in int)arg0;\n\narg0: array with length on input in arg0, and output in arg1")
+        self.assertEqual(mod.describe_callable_metadata('array:', {'classmethod': False, 'arguments':[ {'type':b'@'}, {'type': b':'}, { 'type': b'ni', 'c_array_length_in_arg': 2, 'c_array_length_in_result': True } ], 'retval': { 'type': b'v'}}, ismethod=True),
+                "- (void)array:(in int)arg0;\n\narg0: array with length on input in arg0, and output in return value")
 
-        # - 1, 2 special arguments
+
+        # - warnings
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[], 'retval': { 'type': b'v'}, 'suggestion': "Please don't"}, ismethod=False), "void array(void);\n\nWARNING: Please don't")
+        self.assertEqual(mod.describe_callable_metadata('array', {'arguments':[ { 'type': b'ni' } ], 'retval': { 'type': b'v'}, 'suggestion': "Please don't"}, ismethod=False), "void array(in int arg0);\n\nWARNING: Please don't\n\narg0: pass-by-reference in argument")
+
+
         self.fail()
 
     def test_docattr(self):
